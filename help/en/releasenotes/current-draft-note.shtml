@@ -86,7 +86,20 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Updated "LocoNet Monitor" to give some detail when the command 
+                    station reports that a throttle's attempt to control a train's
+                    speed/direction or functions was ignored by the command station because 
+                    the LocoNet "Expanded Slot" is "In-Use" by a different throttle
+                    than the one which attempted to control the slot.  Other 
+                    operations can also cause this message when the requesting throttle 
+                    is not the throttle which "owns" the slot.  This message 
+                    (an "<OPC_LONG_ACK>" message) is only sent by 
+                    command stations that support "Expanded Slot" messaging, and
+                    is not used by older Digitrax command stations which do not 
+                    support "Expanded Slots".</li>
+                <li>Updated LocoNet Monitor to show certain current-generation
+                    Digitrax command stations as "sourcing" certain LocoNet 
+                    messages.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -647,4 +660,3 @@
         <ul>
             <li></li>
         </ul>
-

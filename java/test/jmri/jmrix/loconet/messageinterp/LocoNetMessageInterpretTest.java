@@ -5083,7 +5083,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7E, 0x00, 0x3A} );
         Assert.assertEquals(" Slot test 9",
-                "Request Extended Command Station OpSwitches (DCS210/DCS240 only).\n",
+                "Request Extended Command Station OpSwitches (DCS210/DCS210+/DCS240/DCS240+/DCS52 only).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xE7, 0x0E, 0x7E, 0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x6F} );
@@ -5384,7 +5384,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7f, 0x00, 0x3A} );
         Assert.assertEquals(" Slot test 72",
-                "Request Command Station OpSwitches (or DCS210/DCS240 check for multiple command stations on LocoNet).\n",
+                "Request Command Station OpSwitches (or DCS210/DCS210+/DCS240/DCS240+/DCS52 check for multiple command stations on LocoNet).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBA, 0x04, 0x43, 0x41});
@@ -5412,7 +5412,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xBB, 0x7E, 0x00, 0x4D} );
         Assert.assertEquals(" Slot test 78",
-                "Request Extended Command Station OpSwitches (DCS210/DCS240 only).\n",
+                "Request Extended Command Station OpSwitches (DCS210/DCS210+/DCS240/DCS240+/DCS52 only).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
         l = new LocoNetMessage(new int[] {0xBF, 0x7d, 0x04, 0x40} );
@@ -7189,7 +7189,7 @@ public class LocoNetMessageInterpretTest {
     public void testVariousLAKs() {
         // general nothing known
         LocoNetMessage m;
-        String s = "LONG_ACK: previous message with opcode 0xD5 returned 0x59.\n";
+        String s = "LONG_ACK: Command Station is ignoring throttle message (from one having Throttle ID 7 LSbits of 0x59) when trying to set the train speed/direction, functions, or similar.\n";
         m = new LocoNetMessage(
                     new int[] {LnConstants.OPC_LONG_ACK, 0x55, 0x59, 0x47});
         Assert.assertEquals("Verify data ",
