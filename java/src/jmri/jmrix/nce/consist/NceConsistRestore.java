@@ -10,8 +10,6 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
-import org.python.jline.internal.Log;
-
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;

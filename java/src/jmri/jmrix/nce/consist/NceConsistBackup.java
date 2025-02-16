@@ -222,52 +222,32 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         return true;
     }
 
-    // USB set cab memory pointer
-    private void setUsbCabMemoryPointer(int cab, int offset) {
-        log.debug("Macro base address: {}, offset: {}", Integer.toHexString(cab), offset);
-        replyLen = NceMessage.REPLY_1; // Expect 1 byte response
-        waiting++;
-        byte[] bl = NceBinaryCommand.usbMemoryPointer(cab, offset);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
-        tc.sendNceMessage(m, this);
-    }
-
-    // USB Read N bytes of NCE cab memory
-    private void readUsbMemoryN(int num) {
-        switch (num) {
-            case 1:
-                replyLen = NceMessage.REPLY_1; // Expect 1 byte response
-                break;
-            case 2:
-                replyLen = NceMessage.REPLY_2; // Expect 2 byte response
-                break;
-            case 4:
-                replyLen = NceMessage.REPLY_4; // Expect 4 byte response
-                break;
-            default:
-                log.error("Invalid usb read byte count");
-                return;
-        }
-        waiting++;
-        byte[] bl = NceBinaryCommand.usbMemoryRead((byte) num);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
-        tc.sendNceMessage(m, this);
-    }
-
-    /**
-     * USB Write 1 byte of NCE memory
-     *
-     * @param value byte being written+
+    /*
+     * // USB set cab memory pointer private void setUsbCabMemoryPointer(int
+     * cab, int offset) { log.debug("Macro base address: {}, offset: {}",
+     * Integer.toHexString(cab), offset); replyLen = NceMessage.REPLY_1; //
+     * Expect 1 byte response waiting++; byte[] bl =
+     * NceBinaryCommand.usbMemoryPointer(cab, offset); NceMessage m =
+     * NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+     * tc.sendNceMessage(m, this); }
+     * 
+     * // USB Read N bytes of NCE cab memory private void readUsbMemoryN(int
+     * num) { switch (num) { case 1: replyLen = NceMessage.REPLY_1; // Expect 1
+     * byte response break; case 2: replyLen = NceMessage.REPLY_2; // Expect 2
+     * byte response break; case 4: replyLen = NceMessage.REPLY_4; // Expect 4
+     * byte response break; default: log.error("Invalid usb read byte count");
+     * return; } waiting++; byte[] bl = NceBinaryCommand.usbMemoryRead((byte)
+     * num); NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
+     * tc.sendNceMessage(m, this); }
+     * 
+     * // USB Write 1 byte of NCE memory private void writeUsbMemory1(byte
+     * value) { log.debug("Write byte: {}", String.format("%2X", value));
+     * replyLen = NceMessage.REPLY_1; // Expect 1 byte response waiting++;
+     * byte[] bl = NceBinaryCommand.usbMemoryWrite1(value); NceMessage m =
+     * NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+     * tc.sendNceMessage(m, this); }
      */
-    private void writeUsbMemory1(byte value) {
-        log.debug("Write byte: {}", String.format("%2X", value));
-        replyLen = NceMessage.REPLY_1; // Expect 1 byte response
-        waiting++;
-        byte[] bl = NceBinaryCommand.usbMemoryWrite1(value);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
-        tc.sendNceMessage(m, this);
-    }
-
+    
     // Reads 16 bytes of NCE consist memory
     private NceMessage readConsistMemory(int consistNum) {
 
