@@ -61,11 +61,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     // added for PC, SB5, Twin usb memory
     Thread nceMemoryThread;
     private boolean isUsb = false;
-    private boolean consistValid = false;
-    private boolean readRequested = false;
-    private boolean writeRequested = false;
-    
-    private static final int FAILED = -1;
+    /*
+     * private boolean consistValid = false; private boolean readRequested =
+     * false; private boolean writeRequested = false;
+     */    
+//    private static final int FAILED = -1;
 
     private int consistNum = 0;     // consist being worked
     private boolean newConsist = true;    // new consist is displayed
@@ -808,14 +808,14 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             if (!isUsb) {
                 readConsistMemory(consistNumber - 7, LEAD);
             } else {
-                readConsistMemoryUsb(consistNumber - 7, LEAD);
+                // readConsistMemoryUsb(consistNumber - 7, LEAD);
             }
         } else {
             // Get or Previous button
             if (!isUsb) {
                 readConsistMemory(consistNumber, LEAD);
             } else {
-                readConsistMemoryUsb(consistNumber, LEAD);
+                // readConsistMemoryUsb(consistNumber, LEAD);
             }
         }
         return consistNumber;
@@ -2267,7 +2267,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                     jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
         }
     }
-
+    /**
     // USB set memory pointer
     private void setUsbMemoryPointer(int cab, int offset) {
         log.debug("Consist base address: {}, offset: {}", Integer.toHexString(cab), offset);
@@ -2300,11 +2300,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         tc.sendNceMessage(m, this);
     }
 
-    /**
-     * USB Write 1 byte of NCE memory
-     *
-     * @param value byte being written+
-     */
+    // USB Write 1 byte of NCE memory
     private void writeUsbMemory1(byte value) {
         log.debug("Write byte: {}", String.format("%2X", value));
         replyLen = NceMessage.REPLY_1; // Expect 1 byte response
@@ -2313,7 +2309,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
         tc.sendNceMessage(m, this);
     }
-/**
+
     private void processMemory(boolean doRead, boolean doWrite, int consistId, byte[] consistArray) {
         final byte[] consistData = new byte[consistSize];
         consistValid = false;
@@ -2389,13 +2385,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         nceMemoryThread.setPriority(Thread.MIN_PRIORITY);
         nceMemoryThread.start();
     }
-*/
     
-    /**
-     * Reads 2 or 4 bytes of NCE USB consist memory based on consist number and loco
-     * position in the consist 0=lead 1=rear 2=mid
-     * @return 
-     */
+    // Reads 2 or 4 bytes of NCE USB consist memory based on consist number and loco
+    // position in the consist 0=lead 1=rear 2=mid
     private int readConsistMemoryUsb(int consistNum, int engPosition) {
         locoPosition = engPosition;
         int memAddr = (tc.csm.getConsistMidEntries() * (-1 * (consistNum - tc.csm.getConsistMax())));
@@ -2444,6 +2436,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
         return true;
     }
+
+*/
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceConsistEditPanel.class);
 
