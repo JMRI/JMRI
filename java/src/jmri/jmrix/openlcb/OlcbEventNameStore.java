@@ -35,7 +35,7 @@ public final class OlcbEventNameStore implements EventNameStore {
      * @return true if there is an associated name
      */
     public boolean hasEventName(EventID eventID) {
-        var tag = tagmgr.getBySystemName(OlcbConstants.tagPrefix+eventID.toShortString());
+        var tag = tagmgr.getBySystemName(OlcbConstants.tagPrefix + eventID.toShortString());
         if (tag == null) return false;
         var name = tag.getUserName();
         if (name == null || name.isEmpty()) return false;

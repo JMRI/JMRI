@@ -81,9 +81,8 @@ public final class OlcbAddress {
         if (memo != null) { 
             nameStore = memo.get(OlcbEventNameStore.class);
         }
-        EventID eid;
-        if (nameStore != null && nameStore.hasEventID(s)) {
-            eid = nameStore.getEventID(s);
+         if (nameStore != null && nameStore.hasEventID(s)) {
+            EventID eid = nameStore.getEventID(s);
             // name form
             // load the event ID into the aFrame c.f. OlcbAddress(EventID) ctor
             byte[] contents = eid.getContents();
