@@ -187,7 +187,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static Pattern PARSE_TIMERVAR = Pattern.compile("([T]\\d{1,2})", Pattern.CASE_INSENSITIVE);
     private static Pattern PARSE_COMMENT1 = Pattern.compile("//(.*)\\n");
     private static Pattern PARSE_COMMENT2 = Pattern.compile("/\\*(.*?)\\*/");
-    private static Pattern PARSE_HEXPAIR = Pattern.compile("^[0-9a-fA-F]{2}$");
     private static Pattern PARSE_VERSION = Pattern.compile("^.*(\\d+)\\.(\\d+)$");
 
 
@@ -2279,33 +2278,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     static boolean isEventValid(String event) {
         var valid = true;
-
-/* 
-        if (event.isEmpty()) {
-            return valid;
-        }
-
-        var hexPairs = event.split("\\.");
-        if (hexPairs.length != 8) {
-            valid = false;
-        } else {
-            for (int i = 0; i < 8; i++) {
-                var match = PARSE_HEXPAIR.matcher(hexPairs[i]);
-                if (!match.find()) {
-                    valid = false;
-                    break;
-                }
-            }
-        }
-
-        if (!valid) {
-            JmriJOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("MessageEvent", event),
-                    Bundle.getMessage("TitleEvent"),
-                    JmriJOptionPane.ERROR_MESSAGE);
-            log.error("bad event: {}", event);
-        }
- */
 
         return valid;
     }
