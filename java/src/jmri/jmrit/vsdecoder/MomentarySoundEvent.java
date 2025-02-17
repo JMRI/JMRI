@@ -4,8 +4,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import jmri.util.swing.JmriMouseListener;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Momentary Sound Event.
@@ -29,21 +27,8 @@ public class MomentarySoundEvent extends SoundEvent {
 
     JButton button;
 
-    Trigger t; // used in setXml as a temporary holder for creating the
-    // event listener class.
-    ButtonTrigger bt; // used in setupButtonAction() as a temporary holder
-    // for creating the button listeners.
-
-    public MomentarySoundEvent() {
-        this(null, null);
-    }
-
     public MomentarySoundEvent(String n) {
-        this(n, n);
-    }
-
-    public MomentarySoundEvent(String n, String bl) {
-        super(n, bl);
+        super(n);
         button = null;
     }
 
@@ -136,6 +121,6 @@ public class MomentarySoundEvent extends SoundEvent {
          */
     }  // end setXml()
 
-    private static final Logger log = LoggerFactory.getLogger(MomentarySoundEvent.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MomentarySoundEvent.class);
 
 }
