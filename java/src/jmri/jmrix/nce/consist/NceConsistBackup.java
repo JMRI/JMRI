@@ -149,8 +149,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
                 }
                 if (fileValid) {
                     StringBuilder buf = new StringBuilder();
-                    buf.append(":").append(Integer.toHexString(
-                            tc.csm.getConsistHeadAddr() + memOffset));
+                    buf.append(":").append(Integer.toHexString(tc.csm.getConsistHeadAddr() + memOffset));
 
                     for (int i = 0; i < consistRecLen; i++) {
                         buf.append(" ").append(StringUtil.twoHexFromInt(nceConsistData[i++]));

@@ -130,7 +130,13 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Fix to the Consist Backup/Restore program. All versions from 5.7.1 to5.11.3
+                create a backup file including command station memory space beyond the consist tables.
+                The bigger issue is that the restore does not check that the addresses in the backup file
+                are within the consist tables. Restoring one of those backup files could corrupt the
+                memory used for AIU status and RS-232 buffers. This fixes both of those and makes sure the
+                restore will only restore within the consist tables.</li>
+               
             </ul>
 
         <h4>Oak Tree</h4>
