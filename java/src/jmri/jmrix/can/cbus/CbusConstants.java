@@ -26,8 +26,9 @@ public final class CbusConstants {
      * @return list of CAN IDs from 100 to 127
      */
     public static String[] getValidFixedCanIds() {
-        String[] result = new String[28];
-        for (int i = 0; i < 28; i++) {
+        final byte MAX = 28;
+        String[] result = new String[MAX];
+        for (int i = 0; i < MAX; i++) {
             result[i] = String.valueOf(i + 100);
         }
         return result;
