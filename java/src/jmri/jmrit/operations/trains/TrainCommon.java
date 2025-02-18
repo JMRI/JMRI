@@ -1570,7 +1570,7 @@ public class TrainCommon {
             return padAndTruncateIfNeeded(car.getKernelName(),
                     InstanceManager.getDefault(KernelManager.class).getMaxNameLength());
         } else if (attribute.equals(Setup.KERNEL_SIZE)) {
-            if (car.getKernel() != null) {
+            if (car.isLead()) {
                 return padAndTruncateIfNeeded(Integer.toString(car.getKernel().getSize()), 2);
             } else {
                 return SPACE + SPACE; // assumes that kernel size is 99 or less
