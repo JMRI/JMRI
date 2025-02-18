@@ -155,13 +155,13 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                 if (macroMemAddr < macroMemMim) {
                     log.warn("macro mem file out of range, ending restore, got: {} mimimum: {} ",
                             Integer.toHexString(macroMemAddr), Integer.toHexString(macroMemMim));
-                    fileValid = true;
+                    fileValid = false;
                     break;
                 }
                 if (macroMemAddr >= macroMemMax ) {
                     log.warn("macro mem file out of range, ending restore, got: {} maximum: {} ",
                             Integer.toHexString(macroMemAddr), Integer.toHexString(macroMemMax));
-                    fileValid = true;
+                    fileValid = false;
                     break;
                 }
 
