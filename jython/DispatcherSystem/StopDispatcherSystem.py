@@ -25,7 +25,7 @@ class createandshowGUI3(TableModelListener):
 
         self.initialise_model(class_StopMaster)
         self.frame = JFrame("Modify System")
-        self.frame.setSize(600, 600);
+        self.frame.setSize(600, 600)
 
         self.completeTablePanel()
         # print "about to populate"
@@ -35,16 +35,16 @@ class createandshowGUI3(TableModelListener):
 
     def completeTablePanel(self):
 
-        self.topPanel= JPanel();
+        self.topPanel= JPanel()
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
 
-        scrollPane = JScrollPane(self.table);
-        scrollPane.setPreferredSize( Dimension(1000, 300))
+        scrollPane = JScrollPane(self.table)
+        scrollPane.setPreferredSize(Dimension(1000, 300))
 
-        self.topPanel.add(scrollPane);
+        self.topPanel.add(scrollPane)
 
-        self.buttonPane = JPanel();
+        self.buttonPane = JPanel()
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
         #
@@ -53,7 +53,7 @@ class createandshowGUI3(TableModelListener):
         # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
         button_populate = JButton("Refresh", actionPerformed = self.populate_action)
-        self.buttonPane.add(button_populate);
+        self.buttonPane.add(button_populate)
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
         # button_tidy = JButton("Tidy", actionPerformed = self.tidy_action)
@@ -62,19 +62,19 @@ class createandshowGUI3(TableModelListener):
 
         button_del_trains = JButton("Delete Trains", actionPerformed = self.del_trains_action)
         self.buttonPane.add(button_del_trains)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         button_del_transits = JButton("Delete Transits", actionPerformed = self.del_transits_action)
         self.buttonPane.add(button_del_transits)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         button_del_routes = JButton("Delete Routes", actionPerformed = self.del_routes_action)
         self.buttonPane.add(button_del_routes)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         button_cancel = JButton("Close", actionPerformed = self.cancel_action)
         self.buttonPane.add(button_cancel)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         contentPane = self.frame.getContentPane()
 
@@ -82,7 +82,7 @@ class createandshowGUI3(TableModelListener):
         contentPane.add(self.topPanel, BorderLayout.CENTER)
         contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
 
-        self.frame.pack();
+        self.frame.pack()
         self.frame.setVisible(True)
         return
 
@@ -246,7 +246,7 @@ class MyModelListener3(TableModelListener):
                 #tablemodel.fireTableDataChanged()
                 #self.class_createandshowGUI3.refresh()
                 self.class_createandshowGUI3.populate_action(None)
-
+            self.class_createandshowGUI3.completeTablePanel()
 
             # train_name = str(model.getValueAt(row, setup_train_col))
             # self.delete_transit(train_name)
@@ -263,6 +263,7 @@ class MyModelListener3(TableModelListener):
                 #tablemodel.fireTableDataChanged()
                 #self.class_createandshowGUI3.refresh()
                 self.class_createandshowGUI3.populate_action(None)
+            self.class_createandshowGUI3.completeTablePanel()
         else:
             pass
 
@@ -324,7 +325,8 @@ class MyModelListener3(TableModelListener):
 
     def swap_direction(self, train_name):
         global trains
-        train = [trains[t_name] for t_name in trains if t_name ==train_name]
+        # train = [trains[t_name] for t_name in trains if t_name == train_name]
+        train = trains[train_name]
         print "train", train
         direction_of_train = train["direction"]
         print "direction_of_train", direction_of_train

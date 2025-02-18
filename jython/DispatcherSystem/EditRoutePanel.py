@@ -177,6 +177,7 @@ class CreateAndShowGUI5(TableModelListener):
             value = self.model.getValueAt(row, duration_col)
             if value is not None:
                 self.model.setValueAt(str(value), row, duration_col)
+        self.completeTablePanel()
 
 
     def update_journey_time_action(self, e):
@@ -556,7 +557,9 @@ class MyModelListener5(TableModelListener):
                     # print "duration", my_duration
                     self.model.setValueAt(my_duration, row, duration_sec_col)
 
-        # class_CreateAndShowGUI5.save()    # save everything when the table is changed
+
+
+        class_CreateAndShowGUI5.save()    # save everything when the table is changed
 
     def save_value_to_operations(self, row, col):
         value = self.model.getValueAt(row, col)

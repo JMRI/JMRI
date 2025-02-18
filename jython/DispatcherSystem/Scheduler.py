@@ -49,7 +49,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         global scheduling_in_operation_gbl
         # print "class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):"
-        self.logLevel = 0
+        self.logLevel = 1
         self.frame = None
         self.f = None
         scheduling_in_operation_gbl = False
@@ -132,7 +132,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         # print "Y"
         if self.timetable_sensor.getKnownState() == ACTIVE:
             title = ""
-            if self.logLevel > 0: print "station list", station_list
             if "station_name_gbl" not in globals():
                 station_name_gbl = ""
             # print "b"
@@ -142,7 +141,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "my_scheduled_route_list", my_scheduled_route_list
             # print "c"
             RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-            station_list = []
             # print "d"
             station_list = []
             for route in my_scheduled_route_list:
@@ -157,6 +155,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 station_list.sort()
                 # print "station_list", station_list, type(station_list)
 
+            if self.logLevel > 0: print "station list", station_list
             # LocationsManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
             # locations_list = LocationsManager.getLocationsByNameList()
             # station_list = [str(location.getName()) for location in locations_list \
@@ -417,7 +416,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return
             elif option == "Run Route":
                 train = [trn for [rte, trn] in list_items_with_trains if rte == route_name][0]
-                # print "running route", route_name
+                print "running route", route_name
                 set_departure_times = True
                 param_scheduled_start = "00:00"
                 journey_time_row_displayed = True
@@ -448,6 +447,13 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 train_name = start_block.getValue()
                 no_repetitions = 0
                 delay_val = 0
+                # print "%%%%%%%%%%%%%%train_name%%%%%%%%%%%%%%", train_name
+                if train_name is None:
+                    OptionDialog().displayMessage("No train is in the start position \n\n(maybe it has not been set up so the system recognises it)\npress setup train - register the train -  and try again")
+                    return
+                else:
+                    # print "train_name is not none"
+                    pass
 
                 if "stopping" in train.getDescription():
                     if self.logLevel > 0: print "A"
@@ -535,6 +541,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             my_list = [[train.getRoute().getName(), train] for train in train_list]
         else:
             my_list = [train.getRoute().getName() for train in train_list]
+        print "*********************************my_list************************************************", my_list
         return sorted(my_list)
 
     def start_and_end_time_scheduling(self):
@@ -2037,8 +2044,8 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         self.route = route
         self.train = train   # only used if scheduling_train = True
 
-        if route == None:
-            if self.logLevel > 0: print "RunRoute: route == None"
+        if route is None or train_name is None:
+            if self.logLevel > 0: print "RunRoute: route == " + route + " train_name == " + train_name
         else:
             if self.logLevel > 0: print "RunRoute: route =", route
             self.graph = graph
@@ -2253,8 +2260,9 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 self.waitMsec(fast_minute)
         return False
 
-
     def check_train_in_block_allow_manual_repositioning(self, train_name, station_from_name):
+        i = 0
+        print "train_name", train_name, "station_from_name", station_from_name
         while self.check_train_in_start_block(train_name, station_from_name) == False:
             if i > 2: # allow some time to recover
                 title = ""
@@ -2265,8 +2273,8 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 opt2 = "cancel moving train"
                 reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
                 if reply == opt1:  # "have moved train, try again"
-                    pass
-                else:  #opt2
+                    i = -1
+                else:  # opt2
                     return False   # "cancel moving train"
             self.waitMsec(5000)
             i += 1
