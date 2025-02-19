@@ -47,7 +47,7 @@ import org.jdom2.Element;
 public class VSDecoder implements PropertyChangeListener {
 
     boolean initialized = false; // This decoder has been initialized
-    boolean enabled = false; // This decoder is enabled
+    private boolean enabled = false; // This decoder is enabled
     private boolean create_xy_series = false; // Create xy coordinates in console
 
     private VSDConfig config;
@@ -59,8 +59,6 @@ public class VSDecoder implements PropertyChangeListener {
     PhysicalLocation startPos;
     int topspeed;
     int topspeed_rev;
-    float lastspeed;
-    float avgspeed;
     int setup_index; // Can be set by a Route
     boolean is_muted;
     VSDSound savedSound;
@@ -353,7 +351,7 @@ public class VSDecoder implements PropertyChangeListener {
     }
 
     private void forwardMasterVolume(float volume) {
-        log.debug("VSD config id: {}, Master volume: {}, Decoder volume: {}", config.getId(), volume, config.getVolume());
+        log.debug("VSD config id: {}, Master volume: {}, Decoder volume: {}", getId(), volume, config.getVolume());
         for (VSDSound vs : sound_list.values()) {
             vs.setVolume(volume * config.getVolume());
         }
