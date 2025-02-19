@@ -212,7 +212,7 @@ public class CbusFilterTreePane extends JPanel {
                     getModelForType(CFNODEMIN).setMaximum(newVal);
                     break;
                 case CFNODEMIN:
-                    getModelForType(CFEVENTMAX).setMinimum(newVal);
+                    getModelForType(CFNODEMAX).setMinimum(newVal);
                     break;
                 default:
                     break;
