@@ -82,6 +82,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private OlcbInterface _iface;
     private ConfigRepresentation _cdi;
     private MimicNodeStore _store;
+    private OlcbEventNameStore _nameStore;
 
     /* Preferences setup */
     final String _previewModeCheck = this.getClass().getName() + ".Preview";
@@ -187,6 +188,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static Pattern PARSE_TIMERVAR = Pattern.compile("([T]\\d{1,2})", Pattern.CASE_INSENSITIVE);
     private static Pattern PARSE_COMMENT1 = Pattern.compile("//(.*)\\n");
     private static Pattern PARSE_COMMENT2 = Pattern.compile("/\\*(.*?)\\*/");
+    private static Pattern PARSE_HEXPAIR = Pattern.compile("^[0-9a-fA-F]{2}$");
     private static Pattern PARSE_VERSION = Pattern.compile("^.*(\\d+)\\.(\\d+)$");
 
 
@@ -215,6 +217,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         _canMemo = memo;
         _iface = memo.get(OlcbInterface.class);
         _store = memo.get(MimicNodeStore.class);
+        _nameStore = memo.get(OlcbEventNameStore.class);
 
         // Add to GUI here
         setLayout(new BorderLayout());
@@ -1145,7 +1148,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             _cdi = _iface.getConfigForNode(node.getNodeID());
             // make sure that the EventNameStore is present
             _cdi.eventNameStore = _canMemo.get(OlcbEventNameStore.class);
-            
+
             if (_cdi.getRoot() != null) {
                 loadCdiData();
             } else {
@@ -1507,9 +1510,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(INPUT_NAME, i, j));
                 inputRow.setName(entry.getValue());
                 var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_TRUE, i, j));
-                inputRow.setEventTrue(event.getValue());
+                inputRow.setEventTrue(event.getNumericalEventValue());
                 event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_FALSE, i, j));
-                inputRow.setEventFalse(event.getValue());
+                inputRow.setEventFalse(event.getNumericalEventValue());
             }
         }
         _inputTable.revalidate();
@@ -1523,9 +1526,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(OUTPUT_NAME, i, j));
                 outputRow.setName(entry.getValue());
                 var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_TRUE, i, j));
-                outputRow.setEventTrue(event.getValue());
+                outputRow.setEventTrue(event.getNumericalEventValue());
                 event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_FALSE, i, j));
-                outputRow.setEventFalse(event.getValue());
+                outputRow.setEventFalse(event.getNumericalEventValue());
             }
         }
         _outputTable.revalidate();
@@ -1538,7 +1541,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(RECEIVER_NAME, i));
             receiverRow.setName(entry.getValue());
             var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(RECEIVER_EVENT, i));
-            receiverRow.setEventId(event.getValue());
+            receiverRow.setEventId(event.getNumericalEventValue());
         }
         _receiverTable.revalidate();
     }
@@ -1550,7 +1553,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var entry = (ConfigRepresentation.StringEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_NAME, i));
             transmitterRow.setName(entry.getValue());
             var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(TRANSMITTER_EVENT, i));
-            transmitterRow.setEventId(event.getValue());
+            transmitterRow.setEventId(event.getNumericalEventValue());
         }
         _transmitterTable.revalidate();
     }
@@ -2279,6 +2282,32 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     static boolean isEventValid(String event) {
         var valid = true;
 
+
+//         if (event.isEmpty()) {
+//             return valid;
+//         }
+//
+//         var hexPairs = event.split("\\.");
+//         if (hexPairs.length != 8) {
+//             valid = false;
+//         } else {
+//             for (int i = 0; i < 8; i++) {
+//                 var match = PARSE_HEXPAIR.matcher(hexPairs[i]);
+//                 if (!match.find()) {
+//                     valid = false;
+//                     break;
+//                 }
+//             }
+//         }
+//
+//         if (!valid) {
+//             JmriJOptionPane.showMessageDialog(null,
+//                     Bundle.getMessage("MessageEvent", event),
+//                     Bundle.getMessage("TitleEvent"),
+//                     JmriJOptionPane.ERROR_MESSAGE);
+//             log.error("bad event: {}", event);
+//         }
+
         return valid;
     }
 
@@ -2819,9 +2848,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case NAME_COLUMN:
                     return _inputList.get(r).getName();
                 case TRUE_COLUMN:
-                    return _inputList.get(r).getEventTrue();
+                    var trueID = new EventID(_inputList.get(r).getEventTrue());
+                    return _nameStore.getEventName(trueID);
                 case FALSE_COLUMN:
-                    return _inputList.get(r).getEventFalse();
+                    var falseID = new EventID(_inputList.get(r).getEventFalse());
+                    return _nameStore.getEventName(falseID);
                 default:
                     return null;
             }
@@ -2921,9 +2952,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case NAME_COLUMN:
                     return _outputList.get(r).getName();
                 case TRUE_COLUMN:
-                    return _outputList.get(r).getEventTrue();
+                    var trueID = new EventID(_outputList.get(r).getEventTrue());
+                    return _nameStore.getEventName(trueID);
                 case FALSE_COLUMN:
-                    return _outputList.get(r).getEventFalse();
+                    var falseID = new EventID(_outputList.get(r).getEventFalse());
+                    return _nameStore.getEventName(falseID);
                 default:
                     return null;
             }
@@ -3019,7 +3052,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case NAME_COLUMN:
                     return _receiverList.get(r).getName();
                 case EVENTID_COLUMN:
-                    return _receiverList.get(r).getEventId();
+                    var eventID = new EventID(_receiverList.get(r).getEventId());
+                    return _nameStore.getEventName(eventID);
                 default:
                     return null;
             }
@@ -3110,7 +3144,8 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 case NAME_COLUMN:
                     return _transmitterList.get(r).getName();
                 case EVENTID_COLUMN:
-                    return _transmitterList.get(r).getEventId();
+                    var eventID = new EventID(_transmitterList.get(r).getEventId());
+                    return _nameStore.getEventName(eventID);
                 default:
                     return null;
             }
@@ -3503,14 +3538,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             super(name,
                     iface,
                     StlEditorPane.class.getName(),
-                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
         }
 
         public Default(String name, Icon icon, jmri.util.swing.WindowInterface iface) {
             super(name,
                     icon, iface,
                     StlEditorPane.class.getName(),
-                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));        
+                    jmri.InstanceManager.getNullableDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
         }
     }
 
