@@ -24,6 +24,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.StringUtil;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJFileChooser;
 import jmri.util.swing.JmriJOptionPane;
@@ -1786,13 +1787,63 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         return newLine;
     }
 
+    /**
+     * The event id will be a dotted-hex or an 'event name'.  Event names need to be converted to
+     * the actual dotted-hex value.  If the name no longer exists in the ID Tags table, a zeros
+     * event is created as 00.00.00.00.00.AA.BB.CC.  AA will the hex value of one of IQYZ.  BB and
+     * CC are hex values of the group (0-15) and item ((0-7) numbers.
+     * @param event The dotted-hex event id or event name
+     * @param iqyz The character for the table.
+     * @param row The row number.
+     * @return a dotted-hex event id string.
+     */
+    private String getLoadEventID(String event, char iqyz, int row) {
+        if (isEventValid(event)) {
+            return event;
+        }
+
+        try {
+            EventID eventID = _nameStore.getEventID(event);
+            return eventID.toShortString();
+        }
+        catch (NumberFormatException ex) {
+            log.error("STL Editor getLoadEventID event failed for event name {}", event);
+        }
+
+        // Create zeros event dotted-hex string
+        var group = row;
+        var item = 0;
+        if (iqyz == 'I' || iqyz == 'Q') {
+            group = row / 8;
+            item = row % 8;
+        }
+
+        var sb = new StringBuilder("00.00.00.00.00.");
+        sb.append(StringUtil.twoHexFromInt((int) iqyz));
+        sb.append(".");
+        sb.append(StringUtil.twoHexFromInt(group));
+        sb.append(".");
+        sb.append(StringUtil.twoHexFromInt(item));
+        var zeroEvent = sb.toString();
+
+        JmriJOptionPane.showMessageDialog(null,
+                Bundle.getMessage("MessageEvent", event, zeroEvent, iqyz),
+                Bundle.getMessage("TitleEvent"),
+                JmriJOptionPane.ERROR_MESSAGE);
+
+        return zeroEvent;
+    }
+
     private void loadBackupInputs(int index, List<String> lines) {
         for (int i = 0; i < 128; i++) {
             var inputRow = _inputList.get(i);
 
             inputRow.setName(getLineValue(lines.get(index)));
-            inputRow.setEventTrue(getLineValue(lines.get(index + 1)));
-            inputRow.setEventFalse(getLineValue(lines.get(index + 2)));
+            var trueName = getLineValue(lines.get(index + 1));
+            inputRow.setEventTrue(getLoadEventID(trueName, 'I', i));
+            var falseName = getLineValue(lines.get(index + 2));
+            inputRow.setEventFalse(getLoadEventID(falseName, 'I',i));
+
             index += 3;
         }
 
@@ -1804,8 +1855,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var outputRow = _outputList.get(i);
 
             outputRow.setName(getLineValue(lines.get(index)));
-            outputRow.setEventTrue(getLineValue(lines.get(index + 1)));
-            outputRow.setEventFalse(getLineValue(lines.get(index + 2)));
+            var trueName = getLineValue(lines.get(index + 1));
+            outputRow.setEventTrue(getLoadEventID(trueName, 'Q', i));
+            var falseName = getLineValue(lines.get(index + 2));
+            outputRow.setEventFalse(getLoadEventID(falseName, 'Q', i));
+
             index += 3;
         }
 
@@ -1817,7 +1871,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var receiverRow = _receiverList.get(i);
 
             receiverRow.setName(getLineValue(lines.get(index)));
-            receiverRow.setEventId(getLineValue(lines.get(index + 1)));
+            var event = getLineValue(lines.get(index + 1));
+            receiverRow.setEventId(getLoadEventID(event, 'Y', i));
+
             index += 2;
         }
 
@@ -1829,7 +1885,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var transmitterRow = _transmitterList.get(i);
 
             transmitterRow.setName(getLineValue(lines.get(index)));
-            transmitterRow.setEventId(getLineValue(lines.get(index + 1)));
+            var event = getLineValue(lines.get(index + 1));
+            transmitterRow.setEventId(getLoadEventID(event, 'Z', i));
+
             index += 2;
         }
 
@@ -2282,31 +2340,22 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     static boolean isEventValid(String event) {
         var valid = true;
 
+        if (event.isEmpty()) {
+            return valid;
+        }
 
-//         if (event.isEmpty()) {
-//             return valid;
-//         }
-//
-//         var hexPairs = event.split("\\.");
-//         if (hexPairs.length != 8) {
-//             valid = false;
-//         } else {
-//             for (int i = 0; i < 8; i++) {
-//                 var match = PARSE_HEXPAIR.matcher(hexPairs[i]);
-//                 if (!match.find()) {
-//                     valid = false;
-//                     break;
-//                 }
-//             }
-//         }
-//
-//         if (!valid) {
-//             JmriJOptionPane.showMessageDialog(null,
-//                     Bundle.getMessage("MessageEvent", event),
-//                     Bundle.getMessage("TitleEvent"),
-//                     JmriJOptionPane.ERROR_MESSAGE);
-//             log.error("bad event: {}", event);
-//         }
+        var hexPairs = event.split("\\.");
+        if (hexPairs.length != 8) {
+            valid = false;
+        } else {
+            for (int i = 0; i < 8; i++) {
+                var match = PARSE_HEXPAIR.matcher(hexPairs[i]);
+                if (!match.find()) {
+                    valid = false;
+                    break;
+                }
+            }
+        }
 
         return valid;
     }
@@ -2461,10 +2510,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setEventTrue(String newEventTrue) {
-            var event = newEventTrue.trim();
-            if (isEventValid(event)) {
-                _eventTrue = event;
-            }
+            _eventTrue = newEventTrue.trim();
         }
 
         String getEventFalse() {
@@ -2474,9 +2520,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         void setEventFalse(String newEventFalse) {
             var event = newEventFalse.trim();
-            if (isEventValid(event)) {
-                _eventFalse = event;
-            }
+            _eventFalse = newEventFalse.trim();
         }
     }
 
@@ -2508,10 +2552,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setEventTrue(String newEventTrue) {
-            var event = newEventTrue.trim();
-            if (isEventValid(event)) {
-                _eventTrue = event;
-            }
+            _eventTrue = newEventTrue.trim();
         }
 
         String getEventFalse() {
@@ -2520,10 +2561,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setEventFalse(String newEventFalse) {
-            var event = newEventFalse.trim();
-            if (isEventValid(event)) {
-                _eventFalse = event;
-            }
+            _eventFalse = newEventFalse.trim();
         }
     }
 
@@ -2553,10 +2591,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setEventId(String newEventid) {
-            var event = newEventid.trim();
-            if (isEventValid(event)) {
-                _eventid = event;
-            }
+            _eventid = newEventid.trim();
         }
     }
 
@@ -2586,10 +2621,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setEventId(String newEventid) {
-            var event = newEventid.trim();
-            if (isEventValid(event)) {
-                _eventid = event;
-            }
+            _eventid = newEventid.trim();
         }
     }
 
