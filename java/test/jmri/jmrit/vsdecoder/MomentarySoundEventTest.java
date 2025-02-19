@@ -13,7 +13,7 @@ public class MomentarySoundEventTest {
 
     @Test
     public void testCTor() {
-        MomentarySoundEvent t = new MomentarySoundEvent();
+        MomentarySoundEvent t = new MomentarySoundEvent("test");
         Assert.assertNotNull("exists",t);
     }
 
