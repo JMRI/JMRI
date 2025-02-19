@@ -561,13 +561,11 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
     /**
      * Check whether a Event Name tag is defined or not.
      * Check for other uses before changing this.
-     * @param eventID EventID as dotted-hex string
+     * @param eventID EventID in native form
      * @return true is the event name tag is present
      */
     public boolean isEventNamePresent(EventID eventID) {
-        var name = nameStore.getEventName(eventID);
-        if (name == null) return false;
-        return ! name.isEmpty();
+        return nameStore.hasEventName(eventID);
     }
     
     /**
@@ -693,9 +691,8 @@ public class EventTablePane extends jmri.util.swing.JmriPanel
                     if (!memo.rangeSuffix.isEmpty()) retval += " - "+memo.rangeSuffix;
                     return retval;
                 case COL_EVENTNAME:
-                    var name = nameStore.getEventName(memo.eventID);
-                    if (name != null) {
-                        return name;
+                    if (nameStore.hasEventName(memo.eventID)) {
+                        return nameStore.getEventName(memo.eventID);
                     } else {
                         return "";
                     }

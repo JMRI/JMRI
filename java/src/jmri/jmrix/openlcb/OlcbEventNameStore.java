@@ -20,26 +20,50 @@ public final class OlcbEventNameStore implements EventNameStore {
     
     /**
      * @param eventID The EventID being searched for
-     * @return The name associated with that EventID or null
+     * @return The name associated with that EventID or the event ID in dotted hex
      */
     public String getEventName(EventID eventID) {
         var tag = tagmgr.getBySystemName(OlcbConstants.tagPrefix+eventID.toShortString());
-        if (tag == null) return null;
+        if (tag == null) return eventID.toShortString();
         var name = tag.getUserName();
-        if (name == null || name.isEmpty()) return null;
+        if (name == null || name.isEmpty()) return eventID.toShortString();
         return name;
     }
     
     /**
+     * @param eventID The EventID being searched for
+     * @return true if there is an associated name
+     */
+    public boolean hasEventName(EventID eventID) {
+        var tag = tagmgr.getBySystemName(OlcbConstants.tagPrefix + eventID.toShortString());
+        if (tag == null) return false;
+        var name = tag.getUserName();
+        if (name == null || name.isEmpty()) return false;
+        return true;
+    }
+
+    /**
      * @param name The event name being searched for
-     * @return The EventID associated with that name
+     * @return The EventID associated with that name or an event ID constructed from the input
      */
     public EventID getEventID(String name) {
         var tag = tagmgr.getByUserName(name);
-        if (tag == null) return null;
+        if (tag == null) return new EventID(name);
         
         var eid = tag.getSystemName().substring(OlcbConstants.tagPrefix.length());
         return new EventID(eid);
+    }
+        
+    /**
+     * @param name The event name being searched for
+     * @return true if an EventID is associated with that name
+     */
+    public boolean hasEventID(String name) {
+        var tag = tagmgr.getByUserName(name);
+        if (tag == null) return false;
+        
+        var eid = tag.getSystemName().substring(OlcbConstants.tagPrefix.length());
+        return eid != null;
     }
         
     /**
