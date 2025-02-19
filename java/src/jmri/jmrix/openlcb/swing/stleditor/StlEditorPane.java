@@ -1789,9 +1789,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     /**
      * The event id will be a dotted-hex or an 'event name'.  Event names need to be converted to
-     * the actual dotted-hex value.  If the name no longer exists in the ID Tags table, a zeros
+     * the actual dotted-hex value.  If the name no longer exists in the name store, a zeros
      * event is created as 00.00.00.00.00.AA.BB.CC.  AA will the hex value of one of IQYZ.  BB and
-     * CC are hex values of the group (0-15) and item ((0-7) numbers.
+     * CC are hex values of the group and item numbers.
      * @param event The dotted-hex event id or event name
      * @param iqyz The character for the table.
      * @param row The row number.
@@ -1819,7 +1819,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         var sb = new StringBuilder("00.00.00.00.00.");
-        sb.append(StringUtil.twoHexFromInt((int) iqyz));
+        sb.append(StringUtil.twoHexFromInt(iqyz));
         sb.append(".");
         sb.append(StringUtil.twoHexFromInt(group));
         sb.append(".");
@@ -2519,7 +2519,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         void setEventFalse(String newEventFalse) {
-            var event = newEventFalse.trim();
             _eventFalse = newEventFalse.trim();
         }
     }
@@ -2626,6 +2625,35 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     // --------------  table models ---------
+
+    /**
+     * The table input can be either a valid dotted-hex string or an "event name". If the input is
+     * an event name, the name has to be converted to a dotted-hex string.  Creating a new event
+     * name is not supported.
+     * @param event The dotted-hex or event name string.
+     * @return the dotted-hex string or null if the event name is not in the name store.
+     */
+    private String getTableInputEventID(String event) {
+        if (isEventValid(event)) {
+            return event;
+        }
+
+        try {
+            EventID eventID = _nameStore.getEventID(event);
+            return eventID.toShortString();
+        }
+        catch (NumberFormatException ex) {
+            log.error("STL Editor getTableInputEventID event failed for event name {}", event);
+        }
+
+        JmriJOptionPane.showMessageDialog(null,
+                Bundle.getMessage("MessageEventTable", event),
+                Bundle.getMessage("TitleEventTable"),
+                JmriJOptionPane.ERROR_MESSAGE);
+
+        return null;
+
+    }
 
     /**
      * TableModel for Group table entries.
@@ -2898,12 +2926,18 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     setDirty(true);
                     break;
                 case TRUE_COLUMN:
-                    _inputList.get(r).setEventTrue((String) type);
-                    setDirty(true);
+                    var trueEvent = getTableInputEventID((String) type);
+                    if (trueEvent != null) {
+                        _inputList.get(r).setEventTrue(trueEvent);
+                        setDirty(true);
+                    }
                     break;
                 case FALSE_COLUMN:
-                    _inputList.get(r).setEventFalse((String) type);
-                    setDirty(true);
+                    var falseEvent = getTableInputEventID((String) type);
+                    if (falseEvent != null) {
+                        _inputList.get(r).setEventFalse(falseEvent);
+                        setDirty(true);
+                    }
                     break;
                 default:
                     break;
@@ -3002,12 +3036,18 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     setDirty(true);
                     break;
                 case TRUE_COLUMN:
-                    _outputList.get(r).setEventTrue((String) type);
-                    setDirty(true);
+                    var trueEvent = getTableInputEventID((String) type);
+                    if (trueEvent != null) {
+                        _outputList.get(r).setEventTrue(trueEvent);
+                        setDirty(true);
+                    }
                     break;
                 case FALSE_COLUMN:
-                    _outputList.get(r).setEventFalse((String) type);
-                    setDirty(true);
+                    var falseEvent = getTableInputEventID((String) type);
+                    if (falseEvent != null) {
+                        _outputList.get(r).setEventFalse(falseEvent);
+                        setDirty(true);
+                    }
                     break;
                 default:
                     break;
@@ -3099,8 +3139,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     setDirty(true);
                     break;
                 case EVENTID_COLUMN:
-                    _receiverList.get(r).setEventId((String) type);
-                    setDirty(true);
+                    var event = getTableInputEventID((String) type);
+                    if (event != null) {
+                        _receiverList.get(r).setEventId(event);
+                        setDirty(true);
+                    }
                     break;
                 default:
                     break;
@@ -3191,8 +3234,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     setDirty(true);
                     break;
                 case EVENTID_COLUMN:
-                    _transmitterList.get(r).setEventId((String) type);
-                    setDirty(true);
+                    var event = getTableInputEventID((String) type);
+                    if (event != null) {
+                        _transmitterList.get(r).setEventId(event);
+                        setDirty(true);
+                    }
                     break;
                 default:
                     break;
