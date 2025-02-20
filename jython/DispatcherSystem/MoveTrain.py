@@ -26,9 +26,6 @@ from org.apache.commons.io import FilenameUtils
 from java.io import File
 #, defaultTableModel
 
-
-#import platform
-
 class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     global trains_dispatched
@@ -205,6 +202,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                         if opt1:
                             pass
                         else:
+                            if str(train_name) in trains_dispatched:
+                                trains_dispatched.remove(str(train_name))
                             break
                     iter += 1
                 else:
@@ -762,6 +761,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             station_name = block_name
         return station_name
+
+
 
     def get_substring_between_delimeters(self, comment, delimeter):
         start = delimeter
@@ -1769,7 +1770,7 @@ class createandshowGUI(TableModelListener):
         self.mode = mode1  # "several trains" or "modify existing trains"
         self.initialise_model(super1)
         self.frame = JFrame("Set up trains")
-        self.frame.setSize(800, 600);
+        self.frame.setPreferredSize(Dimension(800, 600));
 
         self.completeTablePanel()
         # print "about to populate"
@@ -1949,13 +1950,13 @@ class createandshowGUI(TableModelListener):
             not_allocated_blocks = self.super.occupied_blocks_not_allocated()
             # print "not_allocated_blocks", not_allocated_blocks
             blocks_to_put_in_dropdown = [s for s in not_allocated_blocks if s not in blocks_in_table]
+            # blocks_to_put_in_dropdown = [s for s in all_blocks if s not in blocks_in_table]
             self.model.populate(blocks_to_put_in_dropdown)
         else:
-
             allocated_blocks = self.super.blocks_allocated()
-            print "allocated_blocks", allocated_blocks
+            # print "allocated_blocks", allocated_blocks
             blocks_to_put_in_dropdown = [s for s in allocated_blocks]
-            print "blocks to put in derpdown", blocks_to_put_in_dropdown
+            # print "blocks to put in dropdown", blocks_to_put_in_dropdown
             self.model.populate_existing(blocks_to_put_in_dropdown)
             self.tidy_action(None)
         # print "blocks_to_put_in_dropdown", blocks_to_put_in_dropdown
@@ -1965,6 +1966,13 @@ class createandshowGUI(TableModelListener):
 
     def tidy_action(self,e):
         self.model.remove_not_set_row()
+        size_of_one_row = 30
+        height = 130
+        for row in reversed(range(len(self.model.data))):
+            height += size_of_one_row
+            print "height" , height
+        print "height" , height
+        self.frame.setPreferredSize(Dimension(800, height));
         self.completeTablePanel()
 
     def savetofile_action(self, event):
@@ -2370,20 +2378,25 @@ class MyTableModel (DefaultTableModel):
         items_to_put_in_dropdown = []
         for block_name in blocks_to_put_in_dropdown:
             train_name = NewTrainMaster().get_blockcontents(block_name)
+            # if train_name == "" or train_name is None:
+            #     continue
             if train_name == "" or train_name is None:
-                continue
-            print "block_name", block_name, "train_name", train_name
-            [engine,current_length] = NewTrainMaster().get_train_length(train_name)
-            train_length = engine.getLength()
-            [engine, current_speed_factor] = NewTrainMaster().get_train_speed_factor(train_name)
-    # current_speed_factor_str = "speed factor " + current_speed_factor
-            current_speed_factor_str = engine.getComment()
-            train = trains[train_name]
-            result = train["direction"]
-            if result == "forward":
-                train_direction = "reverse"
+                train_direction = "unassigned"
+                train_length = -1
+                current_speed_factor = -1
             else:
-                train_direction = "forward"
+                print "block_name", block_name, "train_name", train_name
+                [engine,current_length] = NewTrainMaster().get_train_length(train_name)
+                train_length = engine.getLength()
+                [engine, current_speed_factor] = NewTrainMaster().get_train_speed_factor(train_name)
+                # current_speed_factor_str = "speed factor " + current_speed_factor
+                current_speed_factor_str = engine.getComment()
+                train = trains[train_name]
+                result = train["direction"]
+                if result == "forward":
+                    train_direction = "reverse"
+                else:
+                    train_direction = "forward"
             items_to_put_in_dropdown.append([train_name,block_name,train_direction, False, train_length, current_speed_factor ])
 
         print "items_to_put_in_dropdown", items_to_put_in_dropdown

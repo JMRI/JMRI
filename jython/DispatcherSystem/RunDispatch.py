@@ -1121,7 +1121,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         return True
 
     def modify_stop_sensors1(self, sensor_changed, button_sensor_name, button_station_name):
-        msg = "selected station " + button_station_name + ". \nSelect the next station to modify the stopping length?"
+        msg = "selected station " + button_station_name + ". \nSelect the next station to modify the stop sensor?"
         title = "Select next Station"
 
         opt1 = "Select next station"

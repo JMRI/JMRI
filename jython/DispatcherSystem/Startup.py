@@ -85,6 +85,38 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         # [list, option] = OptionDialog().ListOptions(list_items, title, options)
         # print "option= " ,option, " list = ",list
 
+    def MultipleListOptions(self, list_items, title, options, preferred_size = "default"):
+        my_list = JList(list_items)
+        if list_items != []:
+            my_list.setSelectedIndex(0)
+        scrollPane = JScrollPane(my_list);
+        if preferred_size != "default":
+            scrollPane.setPreferredSize(preferred_size)   # preferred_size should be set to Dimension(300, 500) say
+        else:
+            no_rows_to_display = min(40, len(list_items))
+            my_list.setVisibleRowCount(no_rows_to_display)
+            dim = my_list.getPreferredScrollableViewportSize()
+            w = int(dim.getWidth()) + 20
+            h = int(dim.getHeight()) + 20  # to leave a bit of space at bottom. Height of row = approx 20
+            scrollPane.setPreferredSize(Dimension(w,h))
+        self.CLOSED_OPTION = False
+        s = JOptionPane.showOptionDialog(None,
+                                         scrollPane,
+                                         title,
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.PLAIN_MESSAGE,
+                                         None,
+                                         options,
+                                         options[1])
+        if s == JOptionPane.CLOSED_OPTION:
+            self.CLOSED_OPTION = True
+            return [None,None]
+        if list_items == []:
+            return [None, options[s]]
+        indices = my_list.getSelectedIndices()
+        list_items = [list_items[index] for index in indices]
+        return [list_items, options[s]]
+
     def variable_combo_box(self, options, default, msg, title = None, type = JOptionPane.QUESTION_MESSAGE):
 
 
