@@ -1,7 +1,5 @@
 package jmri.util.swing;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.util.*;
 
@@ -54,24 +52,7 @@ public class JCheckBoxTree extends JTree {
             }
         };
         // Calling checking mechanism on mouse click
-        this.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent arg0) {
-                treePathClicked(getPathForLocation(arg0.getX(), arg0.getY()), true);
-            }           
-            @Override
-            public void mouseEntered(MouseEvent arg0) {         
-            }           
-            @Override
-            public void mouseExited(MouseEvent arg0) {              
-            }
-            @Override
-            public void mousePressed(MouseEvent arg0) {             
-            }
-            @Override
-            public void mouseReleased(MouseEvent arg0) {
-            }           
-        });
+        this.addMouseListener(JmriMouseListener.adapt(new TreePathClickListener()));
         this.setSelectionModel(dtsm);
         ToolTipManager.sharedInstance().registerComponent(JCheckBoxTree.this);
     }
@@ -268,6 +249,31 @@ public class JCheckBoxTree extends JTree {
 
         void setSelected( boolean newVal) {
             isSelected = newVal;
+        }
+
+    }
+
+    private class TreePathClickListener implements JmriMouseListener {
+
+        @Override
+        public void mouseClicked(JmriMouseEvent e) {
+            treePathClicked(getPathForLocation(e.getX(), e.getY()), true);
+        }
+
+        @Override
+        public void mousePressed(JmriMouseEvent e) {
+        }
+
+        @Override
+        public void mouseReleased(JmriMouseEvent e) {
+        }
+
+        @Override
+        public void mouseEntered(JmriMouseEvent e) {
+        }
+
+        @Override
+        public void mouseExited(JmriMouseEvent e) {
         }
 
     }
