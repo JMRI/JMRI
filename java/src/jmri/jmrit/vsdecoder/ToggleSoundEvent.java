@@ -3,8 +3,6 @@ package jmri.jmrit.vsdecoder;
 import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Toggle Sound Event.
@@ -28,21 +26,8 @@ public class ToggleSoundEvent extends SoundEvent {
 
     JToggleButton button;
 
-    Trigger t; // used in setXml as a temporary holder for creating the
-    // event listener class.
-    ButtonTrigger bt; // used in setupButtonAction() as a temporary holder
-    // for creating the button listeners.
-
-    public ToggleSoundEvent() {
-        this(null, null);
-    }
-
     public ToggleSoundEvent(String n) {
-        this(n, n);
-    }
-
-    public ToggleSoundEvent(String n, String bl) {
-        super(n, bl);
+        super(n);
         button = null;
     }
 
@@ -133,6 +118,6 @@ public class ToggleSoundEvent extends SoundEvent {
          */
     }
 
-    private static final Logger log = LoggerFactory.getLogger(ToggleSoundEvent.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ToggleSoundEvent.class);
 
 }

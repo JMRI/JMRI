@@ -574,6 +574,7 @@ class Diesel3Sound extends EngineSound {
             _parent = d;
             _notch = n;
             _sound = new SoundBite(s);
+            _sound.isInitialized();
             _sound.setGain(_parent.engine_gain);
             _throttle = 0.0f;
             rpm_dirfn = 0.0f;

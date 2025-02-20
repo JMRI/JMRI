@@ -26,7 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>The default CAN ID for new connections is restored to 126</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -86,19 +86,19 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Updated "LocoNet Monitor" to give some detail when the command 
+                <li>Updated "LocoNet Monitor" to give some detail when the command
                     station reports that a throttle's attempt to control a train's
-                    speed/direction or functions was ignored by the command station because 
+                    speed/direction or functions was ignored by the command station because
                     the LocoNet "Expanded Slot" is "In-Use" by a different throttle
-                    than the one which attempted to control the slot.  Other 
-                    operations can also cause this message when the requesting throttle 
-                    is not the throttle which "owns" the slot.  This message 
-                    (an "<OPC_LONG_ACK>" message) is only sent by 
+                    than the one which attempted to control the slot.  Other
+                    operations can also cause this message when the requesting throttle
+                    is not the throttle which "owns" the slot.  This message
+                    (an "<OPC_LONG_ACK>" message) is only sent by
                     command stations that support "Expanded Slot" messaging, and
-                    is not used by older Digitrax command stations which do not 
+                    is not used by older Digitrax command stations which do not
                     support "Expanded Slots".</li>
                 <li>Updated LocoNet Monitor to show certain current-generation
-                    Digitrax command stations as "sourcing" certain LocoNet 
+                    Digitrax command stations as "sourcing" certain LocoNet
                     messages.</li>
                 <li>Updated LocoNet Monitor to better decode certain messages.</li>
             </ul>
@@ -130,7 +130,13 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>Fix to the Consist Backup/Restore program. All versions from 5.7.1 to5.11.3
+                create a backup file including command station memory space beyond the consist tables.
+                The bigger issue is that the restore does not check that the addresses in the backup file
+                are within the consist tables. Restoring one of those backup files could corrupt the
+                memory used for AIU status and RS-232 buffers. This fixes both of those and makes sure the
+                restore will only restore within the consist tables.</li>
+
             </ul>
 
         <h4>Oak Tree</h4>
@@ -142,6 +148,19 @@
             <ul>
                 <li>Improved how Event with Payload messages are displayed in the monitor.</li>
                 <li>Enabled the Abort button in the Update Firmware window.</li>
+                <li>Backup files are now written with dotted-hex event ID values,
+                    whether or not an event name is available.  This makes them more reliable
+                    and more portable.</li>
+                <li>Update the STL Editor to support "event names".
+                    <ul>
+                      <li>When available, event names will be displayed in the IQYZ tables.</li>
+                      <li>The load from backup process will handle event names in older CDI backups.
+                      If the event name is no longer in the name store, a temporary event id will
+                      be created.</li>
+                      <li>Existing event names can be entered in the event columns of the IQYZ tables.
+                      Creating new event names is NOT supported.</li>
+                    </ul>
+                </li>
             </ul>
 
         <h4>Powerline</h4>
@@ -666,6 +685,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The pop-up menu in the various Tables now has an entry 
+            <li>The pop-up menu in the various Tables now has an entry
                 for "Copy System Name".</li>
         </ul>
