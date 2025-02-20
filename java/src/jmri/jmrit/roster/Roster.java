@@ -1394,6 +1394,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         String str = Roster.getRosterGroupProperty(rg);
         group.getEntries().stream().forEach((re) -> {
             re.deleteAttribute(str);
+            re.updateFile();
         });
         firePropertyChange(ROSTER_GROUP_REMOVED, rg, null);
     }

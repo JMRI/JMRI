@@ -37,6 +37,12 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add English translations</revremark>
 		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2025-02-13</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add CV250 bit3 and bit4</revremark>
+		</revision>
 	</revhistory>
 	<variable item="Motor Management 1" CV="240" default="16">
 		<decVal max="32"/>
@@ -95,11 +101,11 @@
 		<tooltip xml:lang="de">Dämpfen des Aufschwingens beim Schleudern (0-255)</tooltip>
 	</variable>
 	<variable item="Motor Management 9" CV="250" default="0">
-		<decVal max="7"/>
+		<decVal max="31"/>
 		<label>Extended central station compatibility (CV 250)</label>
 		<label xml:lang="de">Erweiterte Zentralen Kompatibilität (CV 250)</label>
-		<tooltip>Enhanced Central Station Compatibility</tooltip>
-		<tooltip xml:lang="de">Erweiterte Zentralen Kompatibilität  (0-7)</tooltip>
+		<tooltip>Enhanced Central Station Compatibility bit 0 - 4</tooltip>
+		<tooltip xml:lang="de">Erweiterte Zentralen Kompatibilität Bit 0 bis Bit 4 (0-31)</tooltip>
 	</variable>
 	<variable item="Motor Management 9 Bit 0" CV="250" default="0" mask="XXXXXXXV">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -121,5 +127,19 @@
 		<label xml:lang="de">Programmiergleisbefehl ohne Wiederholung</label>
 		<tooltip>Programming track accept commands even without repetition (0 / 1)</tooltip>
 		<tooltip xml:lang="de">Programmiergleis Befehle auch ohne Wiederholung akzeptieren (0 / 1)</tooltip>
+	</variable>
+	<variable item="Motor Management 9 Bit 3" CV="250" default="0" mask="XXXXVXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Function Reset</label>
+		<label xml:lang="de">Funktionen bei Reset</label>
+		<tooltip>Do not reset functions after DCC reset (Activate in case of problems with Z21) (0 / 1)</tooltip>
+		<tooltip xml:lang="de">Funkktionen nach DCC-Reset nicht zurücksetzen (Aktivieren bei Problemen mit Z21) (0 / 1)</tooltip>
+	</variable>
+	<variable item="Motor Management 9 Bit 4" CV="250" default="0" mask="XXXVXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Light buffering analogue mode</label>
+		<label xml:lang="de">Lichtpufferung Analog Modus</label>
+		<tooltip>(0 / 1)</tooltip>
+		<tooltip xml:lang="de">(0 / 1)</tooltip>
 	</variable>
 </variables>

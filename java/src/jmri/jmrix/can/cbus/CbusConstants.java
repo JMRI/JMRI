@@ -238,6 +238,17 @@ public final class CbusConstants {
     public static final int CBUS_BOOT_ENABLES = 0x07;
 
     /**
+     * Bootloader protocol
+     *
+     * These define options for the bootloader mode
+     */
+    public static final int CBUS_BOOT_MODE_WRT_UNLCK  = 0x01;   // Unlock write and erase
+    public static final int CBUS_BOOT_MODE_ERASE_ONLY = 0x02;   // Erase without write
+    public static final int CBUS_BOOT_MODE_AUTO_ERASE = 0x04;   // Enable auto erase before write
+    public static final int CBUS_BOOT_MODE_AUTO_INC   = 0x08;   // Enable auto inc the address
+    public static final int CBUS_BOOT_MODE_ACK        = 0x10;   // Acknowledge mode
+
+    /**
      * Programming modes
      */
     public static final int CBUS_PROG_DIRECT_BYTE = 0;
@@ -246,7 +257,7 @@ public final class CbusConstants {
     public static final int CBUS_PROG_REGISTER = 3;
     public static final int CBUS_PROG_ADDRESS = 4;
     public static final int CBUS_OPS_BYTE = 5;
-
+    
     /**
      * Error codes returned by CBUS_ERR
      */

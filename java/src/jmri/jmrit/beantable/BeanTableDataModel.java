@@ -836,7 +836,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("CopyName"));
-        menuItem.addActionListener((ActionEvent e1) -> copyName(rowindex, 0));
+        menuItem.addActionListener((ActionEvent e1) -> copyUserName(rowindex, 0));
         popupMenu.add(menuItem);
 
         menuItem = new JMenuItem(Bundle.getMessage("Rename"));
@@ -860,6 +860,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         menuItem.addActionListener((ActionEvent e1) -> editComment(rowindex, 0));
         popupMenu.add(menuItem);
 
+        menuItem = new JMenuItem(Bundle.getMessage("CopySystemName"));
+        menuItem.addActionListener((ActionEvent e1) -> copySystemName(rowindex, 0));
+        popupMenu.add(menuItem);
+
         menuItem = new JMenuItem(Bundle.getMessage("ButtonDelete"));
         menuItem.addActionListener((ActionEvent e1) -> deleteBean(rowindex, 0));
         popupMenu.add(menuItem);
@@ -867,10 +871,17 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
-    public void copyName(int row, int column) {
+    public void copyUserName(int row, int column) {
         T nBean = getBySystemName(sysNameList.get(row));
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection name = new StringSelection(nBean.getUserName());
+        clipboard.setContents(name, null);
+    }
+
+    public void copySystemName(int row, int column) {
+        String systemName = sysNameList.get(row);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection name = new StringSelection(systemName);
         clipboard.setContents(name, null);
     }
 

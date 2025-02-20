@@ -33,6 +33,8 @@ public class AutoSave {
                 autoSave.join();
             } catch (InterruptedException e) {
                 // Do nothing
+            } catch (NullPointerException e) {
+                // Do nothing
             }
             autoSave = null;
         }

@@ -76,6 +76,11 @@ public class LocoNetMessageInterpret {
      * string contains a message indicating that the message is not decoded followed
      * by the individual bytes of the message (in hexadecimal).
      *
+     * Note that many message types are "poorly defined" here, with many 
+     * "reverse-engineered" messages, and many that do not define actual bits.  This 
+     * means that this code can give interpretations that may not actually "decode"
+     * an actual message. 
+     * 
      * @param l Message to parse
      * @param turnoutPrefix "System Name+ prefix which designates the connection's
      *          Turnouts, such as "LT"
@@ -1978,17 +1983,25 @@ public class LocoNetMessageInterpret {
                                     ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_CLOSED")
                                     : Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_OPSW_HELPER_THROWN")));
                 }
+            case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:
+                return Bundle.getMessage("LN_MSG_LONG_ACK_WRONG_THROTTLE_ID",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                    StringUtil.twoHexFromInt(l.getElement(2))));
+                
             case LnConstants.OPC_ALM_READ:
                 if (l.getElement(2) == 0) {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_SLOT_NOT_SUPPORTED",
                             Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(opcode)));
                 }
-                break;
+                //$FALL-THROUGH$
             default:
-                break;
+                return Bundle.getMessage("LN_MSG_LONG_ACK_NOT_KNOWN",
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(opcode | 0x80)),
+                        Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
+                                StringUtil.twoHexFromInt(l.getElement(2))));
         }
-        return "";
     }
 
     private static String interpretPm4xPowerEvent(LocoNetMessage l) {
@@ -3793,7 +3806,11 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR91",
                         l.getElement(3) & 0x07);
             }
-            default: {
+            case 0x22: {
+                return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR93",
+                        l.getElement(3) & 0x07);
+            }
+           default: {
                 return "";
             }
         }
@@ -3805,6 +3822,7 @@ public class LocoNetMessageInterpret {
          *
          * LISSY is an automatic train detection system made by Uhlenbrock.
          * All documentation appears to be in German.
+         * Also used by LocoIO-based RFID readers eg. GCA51
          */
         log.debug("Message from LISSY: {}", Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString()));
         switch (l.getElement(1)) {
@@ -3874,6 +3892,28 @@ public class LocoNetMessageInterpret {
                 if (l.getElement(4) == 0x00) {
                     return Bundle.getMessage("LN_MSG_UNRECOGNIZED_SIG_STATE_REPORT_MAY_BE_FROM_CML_HW")+
                                 Bundle.getMessage("LN_MONITOR_MESSAGE_RAW_HEX_INFO", l.toString());
+                }
+                break;
+            case 0x0C:
+            case 0x0E:
+                if (l.getElement(2) == 0x41 ) {
+                    // RFID-5 or 7 reader report
+                    // RFID-7 reader report [E4 0E 41 00 02 04 3A 4B 4A 60 60 01 50 38]
+                    // elem[3] = sensorAddr >> 7; addr.high
+                    // elem[4] = sensorAddr & 0x7F; addr.low
+                    StringBuilder tg = new StringBuilder();
+                    int max = l.getElement(1) - 2; // GCA51 RFID-7 elem(1) = size = 0x0E; RFID-5 elem(1) = size = 0x0C
+                    int rfidHi = l.getElement(max); // MSbits are transmitted via element(max)
+                    for (int j = 5; j < max; j++) {
+                        int shift = j-5;
+                        int hi = 0x0;
+                        if(((rfidHi >> shift) & 0x1) == 1) hi = 0x80;
+                        tg.append(String.format("%1$02X", l.getElement(j) + hi));
+                    }
+                    int portAddress = l.getElement(3) << 7 | l.getElement(4);
+                    int msgType = 7;
+                    if (max == 9) msgType = 5;
+                    return Bundle.getMessage("LN_MSG_LISSY_RFIDX_REPORT", msgType, portAddress, tg.toString());
                 }
                 break;
             default:
@@ -4868,6 +4908,13 @@ public class LocoNetMessageInterpret {
         if ((dest >= 0x79) && (dest <= 0x7f)) {
             return "";
         }
+        
+        if ((l.getElement(1) & 0x78) != 0x38) {
+            // Ignore if message is not one from a DCS240 (or newer) command
+            // station's "Expanded" slot messaging.   The message is probably
+            // from an Intellibox or other non-Digitrax command station.
+            return "";
+        }
 
         boolean isSettingStatus = ((l.getElement(3) & 0b01110000) == 0b01100000);
         if (isSettingStatus) {
@@ -4893,19 +4940,15 @@ public class LocoNetMessageInterpret {
        /* check special cases */
         if (src == 0) {
             /* DISPATCH GET */
-            // maybe
             return Bundle.getMessage("LN_MSG_MOVE_SL_GET_DISP");
         } else if (src == dest) {
             /* IN USE */
-            // correct
             return Bundle.getMessage("LN_MSG_MOVE_SL_NULL_MOVE", src);
         } else if (dest == 0) {
             /* DISPATCH PUT */
-
             return Bundle.getMessage("LN_MSG_MOVE_SL_DISPATCH_PUT", src);
         } else {
             /* general move */
-
             return Bundle.getMessage("LN_MSG_MOVE_SL_MOVE", src, dest);
         }
     }

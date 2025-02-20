@@ -106,16 +106,16 @@ public class PrintEngineRosterFrame extends OperationsFrame {
 
     @Override
     public void initComponents() {
-        sortByComboBox.setSelectedItem(_etf.enginesModel.getSortByName());
+        sortByComboBox.setSelectedItem(_etf.enginesTableModel.getSortByName());
     }
 
     private void loadSortByComboBox(JComboBox<String> box) {
         box.removeAllItems();
         for (int i =
-                _etf.enginesModel.SORTBY_NUMBER; i <= _etf.enginesModel.SORTBY_COMMENT; i++) {
-            box.addItem(_etf.enginesModel.getSortByName(i));
+                _etf.enginesTableModel.SORTBY_NUMBER; i <= _etf.enginesTableModel.SORTBY_COMMENT; i++) {
+            box.addItem(_etf.enginesTableModel.getSortByName(i));
         }
-        box.setSelectedItem(_etf.enginesModel.getSortByName());
+        box.setSelectedItem(_etf.enginesTableModel.getSortByName());
     }
 
     @Override
@@ -165,8 +165,8 @@ public class PrintEngineRosterFrame extends OperationsFrame {
                         InstanceManager.getDefault(EngineTypes.class).getMaxNameLength()) +
                 padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name));
 
-        if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_TRAIN ||
-                sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_DESTINATION) {
+        if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_TRAIN ||
+                sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_DESTINATION) {
             header.append(padAttribute(Bundle.getMessage("Train"), Control.max_len_string_train_name / 2));
         } else {
             header.append(padAttribute(Bundle.getMessage("Consist"),
@@ -175,21 +175,21 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         header.append(padAttribute(Bundle.getMessage("Location"),
                 locationManager.getMaxLocationAndTrackNameLength() + 3));
         // one of eight user selections
-        if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_OWNER) {
+        if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_OWNER) {
             header.append(padAttribute(Bundle.getMessage("Owner"), Control.max_len_string_attibute));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_MOVES) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_MOVES) {
             header.append(padAttribute(Bundle.getMessage("Moves"), 5));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_VALUE) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_VALUE) {
             header.append(padAttribute(Setup.getValueLabel(), Control.max_len_string_attibute));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_LAST) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_LAST) {
             header.append(padAttribute(Bundle.getMessage("LastMoved"), lastLength));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_RFID) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_RFID) {
             header.append(padAttribute(Setup.getRfidLabel(), Control.max_len_string_attibute));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_DCC_ADDRESS) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_DCC_ADDRESS) {
             header.append(padAttribute(Bundle.getMessage("DccAddress"), 5));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_BUILT) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_BUILT) {
             header.append(padAttribute(Bundle.getMessage("Built"), Control.max_len_string_built_name));
-        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_DESTINATION) {
+        } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_DESTINATION) {
             header.append(Bundle.getMessage("Destination"));
         } else {
             header.append(padAttribute(Bundle.getMessage("Comment"), engineManager.getMaxCommentLength()));
@@ -216,7 +216,7 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         String last = "";
         String comment = "";
 
-        List<Engine> engines = _etf.enginesModel.getEngineList(sortByComboBox.getSelectedIndex());
+        List<Engine> engines = _etf.enginesTableModel.getEngineList(sortByComboBox.getSelectedIndex());
         for (Engine engine : engines) {
             if (printLocosWithLocation.isSelected() && engine.getLocation() == null) {
                 continue;
@@ -233,8 +233,8 @@ public class PrintEngineRosterFrame extends OperationsFrame {
             length = padAttribute(engine.getLength(), Control.max_len_string_length_name);
 
             // show train or consist name
-            if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_TRAIN ||
-                    sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_DESTINATION) {
+            if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_TRAIN ||
+                    sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_DESTINATION) {
                 train = padAttribute(engine.getTrainName().trim(), Control.max_len_string_train_name / 2);
             } else {
                 consist = padAttribute(engine.getConsistName(),
@@ -242,23 +242,23 @@ public class PrintEngineRosterFrame extends OperationsFrame {
             }
 
             // show one of 8 options, comment is default
-            if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_OWNER) {
+            if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_OWNER) {
                 owner = padAttribute(engine.getOwnerName(), Control.max_len_string_attibute);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_MOVES) {
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_MOVES) {
                 moves = padAttribute(Integer.toString(engine.getMoves()), 5);
             } else if (sortByComboBox
-                    .getSelectedIndex() == _etf.enginesModel.SORTBY_DCC_ADDRESS) {
+                    .getSelectedIndex() == _etf.enginesTableModel.SORTBY_DCC_ADDRESS) {
                 dccAddress = padAttribute(engine.getDccAddress(), 5);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_LAST) {
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_LAST) {
                 last = padAttribute(engine.getSortDate(), lastLength);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_VALUE) {
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_VALUE) {
                 value = padAttribute(engine.getValue(), Control.max_len_string_attibute);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_RFID) {
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_RFID) {
                 rfid = padAttribute(engine.getRfid(), Control.max_len_string_attibute);
-            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesModel.SORTBY_BUILT) {
+            } else if (sortByComboBox.getSelectedIndex() == _etf.enginesTableModel.SORTBY_BUILT) {
                 built = padAttribute(engine.getBuilt(), Control.max_len_string_built_name);
             } else if (sortByComboBox
-                    .getSelectedIndex() == _etf.enginesModel.SORTBY_DESTINATION) {
+                    .getSelectedIndex() == _etf.enginesTableModel.SORTBY_DESTINATION) {
                 if (engine.getDestination() != null) {
                     destination = padAttribute(
                             engine.getDestinationName() + " - " + engine.getDestinationTrackName(),

@@ -278,13 +278,22 @@
         <tooltip>Message DSTL byte</tooltip>
       </variable>
 
-      <variable item="User Id #2" CV="2" default="1" exclude="135,139,140,141,142,144,145">
-        <!-- only editable in v1.46 and higher -->
+      <variable item="User Id #2" CV="2" default="1" exclude="135,139,140,141,142,144,145,GCA51">
+        <!-- only editable in v1.46 and higher. GCA51 can't encode subaddress in LISSY RFID-7 message -->
         <decVal min="1" max="127"/>
         <label>/ SubAddress (7-bit high):</label>
         <label xml:lang="de">/ Unteradresse (7-bit high):</label>
         <label xml:lang="nl">/ Sub-adres (7-bit high):</label>
         <tooltip>Message DSTH byte (editable in v1.46 and higher)</tooltip>
+      </variable>
+
+      <variable item="User Id #2" CV="2" default="1" include="135,139,140,141,142,144,145,GCA51">
+        <!-- only editable in v1.46 and higher. GCA51 can't encode subaddress in LISSY RFID-7 message -->
+        <decVal min="1" max="1"/>
+        <label>/ SubAddress (fixed):</label>
+        <label xml:lang="de">/ Unteradresse (fest):</label>
+        <label xml:lang="nl">/ Sub-adres (vast):</label>
+        <tooltip>Message DSTH byte (editable in v1.46 and higher, nor GCA51)</tooltip>
       </variable>
 
       <variable item="User Id #2" CV="2" readOnly="yes" default="1" include="135,139,140,141,142,144,145">
@@ -13418,7 +13427,7 @@
         <label>
           <text>&lt;html&gt;Max port address: 2048 (7 x 128 + 127 + 1). Checkbox "o" for Detector style address.&lt;br/&gt;
             Use the Mode combo boxes to define the port operation mode, autofilling the Config and Value2 fields.&lt;/html&gt;</text>
-          <text xml:lang="nl">&lt;html&gt;Hoogste poortadres: 2048 (7 x 128 + 127 + 1). Aankruisvak "o" for Detector adres.&lt;br/&gt;
+          <text xml:lang="nl">&lt;html&gt;Hoogste poortadres: 2048 (7 x 128 + 127 + 1). Aankruisvak "o" markeert een Terugmelder-adres.&lt;br/&gt;
             Selecteer in de keuzelijst het type poort. Dit vult de Config- en Value2-velden.&lt;/html&gt;</text>
         </label>
       </row>

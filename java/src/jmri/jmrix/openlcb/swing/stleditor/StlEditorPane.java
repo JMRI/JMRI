@@ -21,6 +21,7 @@ import javax.swing.table.AbstractTableModel;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
@@ -186,7 +187,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     private static Pattern PARSE_TIMERVAR = Pattern.compile("([T]\\d{1,2})", Pattern.CASE_INSENSITIVE);
     private static Pattern PARSE_COMMENT1 = Pattern.compile("//(.*)\\n");
     private static Pattern PARSE_COMMENT2 = Pattern.compile("/\\*(.*?)\\*/");
-    private static Pattern PARSE_HEXPAIR = Pattern.compile("^[0-9a-fA-F]{2}$");
     private static Pattern PARSE_VERSION = Pattern.compile("^.*(\\d+)\\.(\\d+)$");
 
 
@@ -1143,6 +1143,9 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
         if (isValidNodeVersionNumber(node.getNodeMemo())) {
             _cdi = _iface.getConfigForNode(node.getNodeID());
+            // make sure that the EventNameStore is present
+            _cdi.eventNameStore = _canMemo.get(OlcbEventNameStore.class);
+            
             if (_cdi.getRoot() != null) {
                 loadCdiData();
             } else {
@@ -1617,14 +1620,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_TRUE, i, j));
                 if (!row.getEventTrue().equals(event.getValue())) {
                     event.addPropertyChangeListener(_entryListener);
-                    event.setValue(new EventID(row.getEventTrue()));
+                    event.setValue(row.getEventTrue());
                     currentCount = _storeQueueLength.incrementAndGet();
                 }
 
                 event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(INPUT_FALSE, i, j));
                 if (!row.getEventFalse().equals(event.getValue())) {
                     event.addPropertyChangeListener(_entryListener);
-                    event.setValue(new EventID(row.getEventFalse()));
+                    event.setValue(row.getEventFalse());
                     currentCount = _storeQueueLength.incrementAndGet();
                 }
             }
@@ -1649,14 +1652,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                 var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_TRUE, i, j));
                 if (!row.getEventTrue().equals(event.getValue())) {
                     event.addPropertyChangeListener(_entryListener);
-                    event.setValue(new EventID(row.getEventTrue()));
+                    event.setValue(row.getEventTrue());
                     currentCount = _storeQueueLength.incrementAndGet();
                 }
 
                 event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(OUTPUT_FALSE, i, j));
                 if (!row.getEventFalse().equals(event.getValue())) {
                     event.addPropertyChangeListener(_entryListener);
-                    event.setValue(new EventID(row.getEventFalse()));
+                    event.setValue(row.getEventFalse());
                     currentCount = _storeQueueLength.incrementAndGet();
                 }
             }
@@ -1680,7 +1683,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             var event = (ConfigRepresentation.EventEntry) _cdi.getVariableForKey(String.format(RECEIVER_EVENT, i));
             if (!row.getEventId().equals(event.getValue())) {
                 event.addPropertyChangeListener(_entryListener);
-                event.setValue(new EventID(row.getEventId()));
+                event.setValue(row.getEventId());
                 currentCount = _storeQueueLength.incrementAndGet();
             }
         }
@@ -2275,31 +2278,6 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     static boolean isEventValid(String event) {
         var valid = true;
-
-        if (event.isEmpty()) {
-            return valid;
-        }
-
-        var hexPairs = event.split("\\.");
-        if (hexPairs.length != 8) {
-            valid = false;
-        } else {
-            for (int i = 0; i < 8; i++) {
-                var match = PARSE_HEXPAIR.matcher(hexPairs[i]);
-                if (!match.find()) {
-                    valid = false;
-                    break;
-                }
-            }
-        }
-
-        if (!valid) {
-            JmriJOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("MessageEvent", event),
-                    Bundle.getMessage("TitleEvent"),
-                    JmriJOptionPane.ERROR_MESSAGE);
-            log.error("bad event: {}", event);
-        }
 
         return valid;
     }
