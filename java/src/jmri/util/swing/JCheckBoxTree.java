@@ -57,6 +57,18 @@ public class JCheckBoxTree extends JTree {
         ToolTipManager.sharedInstance().registerComponent(JCheckBoxTree.this);
     }
 
+    // helper method to convert to JmriMouseEvent
+    @Override
+    public String getToolTipText( java.awt.event.MouseEvent ev) {
+        JmriMouseEvent e = new JmriMouseEvent(ev);
+        return getToolTipText(e);
+    }
+
+    // overriding classes use JmriMouseEvent
+    public String getToolTipText( JmriMouseEvent ev) {
+        return null;
+    }
+
     /**
      * Click on a TreePath.
      * @param tp the TreePath clicked on, may be null.
