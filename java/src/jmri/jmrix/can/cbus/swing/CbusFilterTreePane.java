@@ -4,7 +4,6 @@ import java.awt.*;
 
 import java.util.HashMap;
 
-import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.annotation.Nonnull;
@@ -16,12 +15,12 @@ import javax.swing.tree.TreePath;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
-import jmri.util.ThreadingUtil;
+import jmri.util.TimerUtil;
 import jmri.util.swing.JCheckBoxTree;
 import jmri.util.swing.JCheckBoxTreeCellRenderer;
+import jmri.util.swing.JmriMouseEvent;
 
 import static jmri.jmrix.can.cbus.CbusFilterType.*;
-
 
 /**
  * CbusFilterTreePane contains a JCheckBoxTree customised to display and
@@ -150,7 +149,7 @@ public class CbusFilterTreePane extends JPanel {
     }
 
     public void dispose() {
-        cbt.timer.cancel();
+        cbt.dispose();
     }
 
     private class SpinnerJPanel extends JPanel {
@@ -182,9 +181,7 @@ public class CbusFilterTreePane extends JPanel {
 
             setBackground(Color.white);
 
-            setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(fType.getName()),
-                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+            setBorder(BorderFactory.createTitledBorder(fType.getName()));
 
             SpinnerJPanel.this.setEnabled(false);
 
@@ -230,7 +227,7 @@ public class CbusFilterTreePane extends JPanel {
         }
 
         @Override
-        public String getToolTipText( java.awt.event.MouseEvent e) {
+        public String getToolTipText( JmriMouseEvent e) {
             TreePath tp = getPathForLocation(e.getX(), e.getY());
             if ( tp != null ) {
                 var ft = CbusFilterType.getFilterByName(tp.getLastPathComponent().toString());
@@ -241,36 +238,42 @@ public class CbusFilterTreePane extends JPanel {
             return super.getToolTipText(e);
         }
 
-        private Timer timer;
+        void dispose() {
+            if ( task != null ) {
+                task.cancel();
+                task = null;
+            }
+        }
+
+        private TimerTask task;
         private long iteration;
         private long numFrames = 0;
 
         private void startRefreshTimer() {
 
             int refreshPeriod = 300;
-            timer = new Timer();
-            TimerTask task = new TimerTask() {
+
+            task = new TimerTask() {
                 @Override
                 public void run() {
-                    ThreadingUtil.runOnGUI( () -> {
-                        iteration++;
-                        if ( iteration % 10 == 0 ) {
-                            // updateUI in case Node names added / numbers get larger
-                            CbusFilterJCheckBoxTree.this.updateUI();
-                        } else {
-                            long total = filter.getFilteredMessage()+filter.getFilteredReply()
-                                +filter.getPassedMessage()+filter.getPassedReply();
-                            if ( numFrames != total ) {
-                                numFrames = total;
-                                // CAN frames heard, repaint to update the numbers.
-                                CbusFilterJCheckBoxTree.this.repaint();
-                            }
+
+                    iteration++;
+                    if ( iteration % 10 == 0 ) {
+                        // updateUI in case Node names added / numbers get larger
+                        CbusFilterJCheckBoxTree.this.updateUI();
+                    } else {
+                        long total = filter.getFilteredMessage()+filter.getFilteredReply()
+                            +filter.getPassedMessage()+filter.getPassedReply();
+                        if ( numFrames != total ) {
+                            numFrames = total;
+                            // CAN frames heard, repaint to update the numbers.
+                            CbusFilterJCheckBoxTree.this.repaint();
                         }
-                    });
+                    }
+
                 }
             };
-            timer.scheduleAtFixedRate(task, 0, refreshPeriod);
-
+            TimerUtil.scheduleOnGUIThread(task, refreshPeriod, refreshPeriod);
         }
 
     }
