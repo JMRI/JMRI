@@ -43,7 +43,7 @@ public class CbusFilterTreePane extends JPanel {
 
     /**
      * Create a new CbusFilterTreePane for a given system connection.
-     * @param memo
+     * @param memo the System Connection to look up node names from.
      */
     public CbusFilterTreePane( CanSystemConnectionMemo memo ) {
         super();
