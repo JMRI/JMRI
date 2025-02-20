@@ -1,13 +1,17 @@
 package jmri.jmrix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.SystemConnectionMemo;
 
 /**
@@ -155,7 +159,7 @@ abstract public class AbstractPortController implements PortAdapter {
     @Override
     public String[] getOptions() {
         Set<String> keySet = options.keySet();
-        String[] result = keySet.toArray(new String[keySet.size()]);
+        String[] result = keySet.toArray(String[]::new);
         java.util.Arrays.sort(result);
         return result;
     }
@@ -183,8 +187,6 @@ abstract public class AbstractPortController implements PortAdapter {
      * @return the option value
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "availability was checked before, should never get here")
     public String getOptionState(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getCurrent();
@@ -228,8 +230,6 @@ abstract public class AbstractPortController implements PortAdapter {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "availability was checked before, should never get here")
     public String getOptionDisplayName(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getDisplayText();
@@ -247,7 +247,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     protected HashMap<String, Option> options = new HashMap<>();
 
-    static protected class Option {
+    protected static class Option {
 
         public enum Type {
             JCOMBOBOX,
@@ -266,15 +266,22 @@ abstract public class AbstractPortController implements PortAdapter {
 
         String displayText;
         String[] options;
+        private final String defaultChoice;
         Type type;
 
-        Boolean advancedOption = true;  // added options in advanced section by default
+        boolean advancedOption = true;  // added options in advanced section by default
 
-        public Option(String displayText, @Nonnull String[] options, boolean advanced, Type type) {
+        public Option(String displayText, @Nonnull String[] options,
+            boolean advanced, Type type, @CheckForNull String defaultValue ) {
             this.displayText = displayText;
             this.options = java.util.Arrays.copyOf(options, options.length);
             this.advancedOption = advanced;
             this.type = type;
+            this.defaultChoice = defaultValue;
+        }
+
+        public Option(String displayText, @Nonnull String[] options, boolean advanced, Type type) {
+            this(displayText, options, advanced, type, null);
         }
 
         public Option(String displayText, String[] options, boolean advanced) {
@@ -289,6 +296,10 @@ abstract public class AbstractPortController implements PortAdapter {
             this(displayText, options, true, Type.JCOMBOBOX);
         }
 
+        public Option(String displayText, String[] options, @CheckForNull String defaultValue) {
+            this(displayText, options, true, Type.JCOMBOBOX, defaultValue);
+        }
+
         void configure(String value) {
             log.trace("Option.configure({}) with \"{}\", \"{}\"", value, getConfiguredValue(), getCurrentValue());
             if (getConfiguredValue() == null ) {
@@ -299,7 +310,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
         String getCurrent() {
             if (getCurrentValue() == null) {
-                return options[0];
+                return defaultChoice != null ? defaultChoice : options[0];
             }
             return getCurrentValue();
         }

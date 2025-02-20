@@ -5,8 +5,6 @@ import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the OpenLCB system network connection.
@@ -40,12 +38,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
             case ConfigurationManager.SPROGCBUS:
                 // Register the CAN traffic controller being used for this connection
                 tc = new MergTrafficController();
-                 try {
-                    tc.setCanId(Integer.parseInt(getOptionState("CANID")));
-                } catch (NumberFormatException e) {
-                    log.error("Cannot parse CAN ID \"{}\" - check your preference settings", getOptionState("CANID"), e);
-                    log.error("Now using default CAN ID {}",tc.getCanid());
-                }
+                tc.setCanId(getOptionState("CANID"));
                 break;
             default:
                 tc = new GcTrafficController();
@@ -88,6 +81,6 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }
