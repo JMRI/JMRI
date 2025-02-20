@@ -77,7 +77,7 @@
   <version author="Egbert Broerse" version="2" lastUpdated="20180426"/>
   <version author="Egbert Broerse" version="3" lastUpdated="20190410"/>
   <version author="Egbert Broerse" version="4" lastUpdated="20200920"/>
-  <version author="Egbert Broerse" version="5" lastUpdated="20250115"/>
+  <version author="Egbert Broerse" version="5" lastUpdated="20250220"/>
   <decoder>
     <family name="Hans Deloof LocoIO" mfg="Public-domain and DIY">
       <model model="HDL LocoIO v1.54" productID="154"/>
@@ -119,10 +119,10 @@
       <model model="HDL LocoRCD2 v2.11" productID="211"/>
 
       <model model="GCA50(a) LocoIO v1.06" productID="GCA50"/>
-      <!--GCA50 (classic PIC) or GCA50a (Arduino Nano) v1.00, support same options as v1.48 uses LOCONETSV2MODE? -->
+      <!--GCA50 (classic PIC) or GCA50a (Arduino Nano) v1.00, support same options as v1.48 -->
       <model model="GCA51 2x RFID + 8x LocoIO v1.50" productID="GCA51"/>
       <!-- GCA51 only allows config of ports 9-16 for input/output -->
-      <!-- GCA51 uses ports 1-8 for 2 RFID RC522 cards, only as inputs. Only config is address of ports 1-2 -->
+      <!-- GCA51 uses ports 1-2 for 0-2 RFID-RC522 cards, only as Block Inputs. Only config is address of ports 1-2 -->
 
       <model model="Original LocoIO" productID="135"/>
     </family>
@@ -341,10 +341,10 @@
       <variable item="Port1 SensorAddress" CV="5,4,5" mask="XXVXXXXX XVVVVVVV XXXXVVVV" include="GCA51">
         <!-- RFID Detector 1 Input -->
         <splitVal offset="1" min="1" max="4096" default="1"/>
-        <label>RFID (J2) reporting address :</label> <!-- RC522 reporting sensor -->
-        <label xml:lang="de">Melderadresse RFID (J2) :</label>
-        <label xml:lang="nl">RFID (J2) meldadres :</label>
-        <tooltip>Port 1 DCC Block Occupancy Sensor Address (decimal, 1-4096)</tooltip>
+        <label>RC522-1 reporting address :</label> <!-- RC522 reporting sensor -->
+        <label xml:lang="de">Melderadresse RC522-1 :</label>
+        <label xml:lang="nl">RC522-1 melderadres :</label>
+        <tooltip>Port 1 RFID-RC522 Sensor Address (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port1 Config" CV="3" default="0">
@@ -435,7 +435,7 @@
       </variable>
 
       <!--Port1 Opcode1-->
-      <variable item="Port1 Opcode1 Address" CV="52" mask="XVVVVVVV">
+      <variable item="Port1 Opcode1 Address" CV="52" mask="XVVVVVVV" exclude="GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port1 Config</variableref>
@@ -535,25 +535,25 @@
             <compositeSetting label="Port1 Opcode1 Arg2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Contact1 Direct">
+          <compositeChoice choice="Contact1 Direct" exclude="GCA51">
             <choice>Contact1 Direct</choice>
             <compositeSetting label="Port1 Opcode1 Opc" value="176"/>
             <compositeSetting label="Port1 Opcode1 Arg2sub" value="1"/>
           </compositeChoice>
 
-          <compositeChoice choice="Contact1 Indirect">
+          <compositeChoice choice="Contact1 Indirect" exclude="GCA51">
             <choice>Contact1 Indirect</choice>
             <compositeSetting label="Port1 Opcode1 Opc" value="177"/>
             <compositeSetting label="Port1 Opcode1 Arg2sub" value="1"/>
           </compositeChoice>
 
-          <compositeChoice choice="Contact2 Direct">
+          <compositeChoice choice="Contact2 Direct" exclude="GCA51">
             <choice>Contact2 Direct</choice>
             <compositeSetting label="Port1 Opcode1 Opc" value="176"/>
             <compositeSetting label="Port1 Opcode1 Arg2sub" value="3"/>
           </compositeChoice>
 
-          <compositeChoice choice="Contact2 Indirect">
+          <compositeChoice choice="Contact2 Indirect" exclude="GCA51">
             <choice>Contact2 Indirect</choice>
             <compositeSetting label="Port1 Opcode1 Opc" value="177"/>
             <compositeSetting label="Port1 Opcode1 Arg2sub" value="3"/>
@@ -726,13 +726,13 @@
         <tooltip>Port 2 DCC Block Occupancy Sensor Address (decimal, 1-4096)</tooltip>
       </variable>
 
-      <variable item="Port2 SensorAddress" CV="5,4,5" mask="XXVXXXXX XVVVVVVV XXXXVVVV" include="GCA51">
+      <variable item="Port2 SensorAddress" CV="8,7,8" mask="XXVXXXXX XVVVVVVV XXXXVVVV" include="GCA51">
         <!-- RFID Detector 2 Input -->
         <splitVal offset="1" min="1" max="4096" default="1"/>
-        <label>RFID (J3) address :</label> <!-- RC522 reporting sensor -->
-        <label xml:lang="de">Melderadresse RFID (J3) :</label>
-        <label xml:lang="nl">RFID (J3) meldadres :</label>
-        <tooltip>Port 2 DCC Block Occupancy Sensor Address (decimal, 1-4096)</tooltip>
+        <label>RC522-2 address:</label> <!-- RC522 reporting sensor -->
+        <label xml:lang="de">Melderadresse RC522-2:</label>
+        <label xml:lang="nl">RC522-2 melderadres:</label>
+        <tooltip>Port 2 RFID-RC522 Sensor Address  (decimal, 1-4096)</tooltip>
       </variable>
 
       <variable item="Port2 Config" CV="6" default="0">
@@ -788,7 +788,7 @@
       </variable>
 
       <!--Port2 Opcode1-->
-      <variable item="Port2 Opcode1 Address" CV="55" mask="XVVVVVVV">
+      <variable item="Port2 Opcode1 Address" CV="55" mask="XVVVVVVV" exclude="GCA51">
         <!--only show opcode for inputs, does not work as pane qualifier-->
         <qualifier>
           <variableref>Port2 Config</variableref>
@@ -888,25 +888,25 @@
             <compositeSetting label="Port2 Opcode1 Arg2" value="0"/>
           </compositeChoice>
 
-          <compositeChoice choice="Contact1 Direct">
+          <compositeChoice choice="Contact1 Direct" exclude="GCA51">
             <choice>Contact1 Direct</choice>
             <compositeSetting label="Port2 Opcode1 Opc" value="176"/>
             <compositeSetting label="Port2 Opcode1 Arg2sub" value="1"/>
           </compositeChoice>
 
-          <compositeChoice choice="Contact1 Indirect">
+          <compositeChoice choice="Contact1 Indirect" exclude="GCA51">
             <choice>Contact1 Indirect</choice>
             <compositeSetting label="Port2 Opcode1 Opc" value="177"/>
             <compositeSetting label="Port2 Opcode1 Arg2sub" value="1"/>
           </compositeChoice>
 
-          <compositeChoice choice="Contact2 Direct">
+          <compositeChoice choice="Contact2 Direct" exclude="GCA51">
             <choice>Contact2 Direct</choice>
             <compositeSetting label="Port2 Opcode1 Opc" value="176"/>
             <compositeSetting label="Port2 Opcode1 Arg2sub" value="3"/>
           </compositeChoice>
 
-          <compositeChoice choice="Contact2 Indirect">
+          <compositeChoice choice="Contact2 Indirect" exclude="GCA51">
             <choice>Contact2 Indirect</choice>
             <compositeSetting label="Port2 Opcode1 Opc" value="177"/>
             <compositeSetting label="Port2 Opcode1 Arg2sub" value="3"/>
@@ -5914,6 +5914,7 @@
       <!-- Some, like LocoRCD operate sets of 2 or more ports at once -->
 
       <!--Note: Port 1, 5, 9, 13 Type contain an extra option for LocoView, turning off the next 3 ports-->
+      <!-- GCA51 ports 1-2 only Block Sensor, ports 3-8 not available -->
 
       <!--Port 1 Type-->
       <variable item="Port1 Type" exclude="200,210,211">
@@ -5980,25 +5981,25 @@
             <compositeSetting label="Port1 Value2A" value="3"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146,GCA51">
+          <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="1"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146,GCA51">
+          <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port1 Config" value="27"/>
             <compositeSetting label="Port1 Value2A" value="3"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu High" exclude="135,139,140">
+          <compositeChoice choice="Input Occu High" exclude="135,139,140,GCA51">
             <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port1 Config" value="95"/>
             <compositeSetting label="Port1 Value2A" value="0"/>
             <compositeSetting label="Port1 OccuMode" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
+          <compositeChoice choice="Input Occu High Even" exclude="135,139,140,GCA51">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port1 Config" value="95"/>
             <compositeSetting label="Port1 Value2A" value="2"/>
@@ -6389,25 +6390,25 @@
             <compositeSetting label="Port2 Value2A" value="3"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146,GCA51">
+          <compositeChoice choice="Input Occu Low Delayed" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active Low Delayed (odd)</choice>
             <compositeSetting label="Port2 Config" value="27"/>
             <compositeSetting label="Port2 Value2A" value="1"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146,GCA51">
+          <compositeChoice choice="Input Occu Low Delayed Even" exclude="101,135,139,140,141,142,144,145,146">
             <choice>Input: Block Detector - active Low Delayed (even)</choice>
             <compositeSetting label="Port2 Config" value="27"/>
             <compositeSetting label="Port2 Value2A" value="3"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu High" exclude="135,139,140">
+          <compositeChoice choice="Input Occu High" exclude="135,139,140,GCA51">
             <choice>Input: Block Detector - active High (odd address)</choice>
             <compositeSetting label="Port2 Config" value="95"/>
             <compositeSetting label="Port2 Value2A" value="0"/>
             <compositeSetting label="Port2 OccuMode" value="1"/>
           </compositeChoice>
-          <compositeChoice choice="Input Occu High Even" exclude="135,139,140">
+          <compositeChoice choice="Input Occu High Even" exclude="135,139,140,GCA51">
             <choice>Input: Block Detector - active High (even address)</choice>
             <compositeSetting label="Port2 Config" value="95"/>
             <compositeSetting label="Port2 Value2A" value="2"/>
@@ -6713,7 +6714,7 @@
       </variable>
 
       <!--Port3 Type-->
-      <variable item="Port3 Type" exclude="200,210,211">
+      <variable item="Port3 Type" exclude="200,210,211,GCA51">
         <compositeVal>
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
             <choice>Port Not In Use</choice>
@@ -7091,7 +7092,7 @@
       </variable>
 
       <!--Port4 Type-->
-      <variable item="Port4 Type" exclude="200,210,211">
+      <variable item="Port4 Type" exclude="200,210,211,GCA51">
         <compositeVal>
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
             <choice>Port Not In Use</choice>
@@ -7469,7 +7470,7 @@
       </variable>
 
       <!--Port5 Type-->
-      <variable item="Port5 Type" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
+      <variable item="Port5 Type" exclude="003,004,005,101,102,103,104,105,106,200,210,211,GCA51">
         <compositeVal>
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
             <choice>Port Not In Use</choice>
@@ -7902,7 +7903,7 @@
       </variable>
 
       <!--Port6 Type-->
-      <variable item="Port6 Type" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
+      <variable item="Port6 Type" exclude="003,004,005,101,102,103,104,105,106,200,210,211,GCA51">
         <!--exclude 210,211 LocoRCD2 to hide the combo, port 6 Config is set from Port5 Type combo-->
         <compositeVal>
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
@@ -8336,7 +8337,7 @@
       </variable>
 
       <!--Port7 Type-->
-      <variable item="Port7 Type" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
+      <variable item="Port7 Type" exclude="003,004,005,101,102,103,104,105,106,200,210,211,GCA51">
         <compositeVal>
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
             <choice>Port Not In Use</choice>
@@ -8763,7 +8764,7 @@
       </variable>
 
       <!--Port8 Type-->
-      <variable item="Port8 Type" exclude="003,004,005,101,102,103,104,105,106,200,210,211">
+      <variable item="Port8 Type" exclude="003,004,005,101,102,103,104,105,106,200,210,211,GCA51">
         <!--exclude 210,211 LocoRCD2 to hide the combo, port 8 Config is set from Port7 Type combo-->
         <compositeVal>
           <compositeChoice choice="Port Not In Use" exclude="135,139,140,141,142,144,145,146,148">
