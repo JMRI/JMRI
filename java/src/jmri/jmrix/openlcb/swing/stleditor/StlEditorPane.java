@@ -2642,8 +2642,10 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             EventID eventID = _nameStore.getEventID(event);
             return eventID.toShortString();
         }
-        catch (NumberFormatException ex) {
-            log.error("STL Editor getTableInputEventID event failed for event name {}", event);
+        catch (NumberFormatException num) {
+            log.error("STL Editor getTableInputEventID event failed for event name {} (NumberFormatException)", event);
+        } catch (IllegalArgumentException arg) {
+            log.error("STL Editor getTableInputEventID event failed for event name {} (IllegalArgumentException)", event);
         }
 
         JmriJOptionPane.showMessageDialog(null,
