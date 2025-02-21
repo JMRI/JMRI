@@ -13326,7 +13326,7 @@
     <name>Loco...</name>
 
     <column>
-      <group exclude="003,004,005,101,102,103,104,105,106,200,210,211,GCA51">
+      <group exclude="003,004,005,101,102,103,104,105,106,200,210,211,GCA50,GCA51">
         <label>
           <text>&lt;html&gt;&lt;strong&gt;LocoIO Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
           <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoIO Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
@@ -13359,6 +13359,13 @@
           <text>&lt;html&gt;&lt;strong&gt;LocoRCD2 Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
           <text xml:lang="de">&lt;html&gt;&lt;strong&gt;LocoRCD2 Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
           <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;LocoRCD2 Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+      </group>
+      <group include="GCA50">
+        <label>
+          <text>&lt;html&gt;&lt;strong&gt;GCA50(a) LocoIO Board Settings&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="de">&lt;html&gt;&lt;strong&gt;GCA50(a) LocoIO Modulkonfiguration&lt;/strong&gt;&lt;/html&gt;</text>
+          <text xml:lang="nl">&lt;html&gt;&lt;strong&gt;GCA50(a) LocoIO Module-instellingen&lt;/strong&gt;&lt;/html&gt;</text>
         </label>
       </group>
       <group include="GCA51">
