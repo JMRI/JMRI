@@ -9,8 +9,6 @@ import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.FileUtil;
 import jmri.util.PhysicalLocation;
 import org.jdom2.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manage VSDecoder Preferences.
@@ -70,14 +68,17 @@ public class VSDecoderPreferences {
             root = null;
         }
         if (root != null) {
-            load(root.getChild("VSDecoderPreferences"));
+            Element rf = root.getChild("VSDecoderPreferences");
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                load(rf);
+            });
         }
     }
 
     public VSDecoderPreferences() {
     }
 
-    public void load(org.jdom2.Element e) {
+    private void load(Element e) {
         if (e == null) {
             return;
         }
@@ -109,7 +110,7 @@ public class VSDecoderPreferences {
         }
         c = e.getChild("ListenerPosition");
         if (c != null) {
-            _listenerPosition = new ListeningSpot(c);
+            _listenerPosition.parseListeningSpot(c);
         } else {
             _listenerPosition = new ListeningSpot();
         }
@@ -243,7 +244,7 @@ public class VSDecoderPreferences {
     }
 
     public ListeningSpot getListenerPosition() {
-        log.debug("getListenerPosition() : {}", _listenerPosition);
+        log.debug("getListenerPosition(): {}", _listenerPosition);
         return _listenerPosition;
     }
 
@@ -305,6 +306,6 @@ public class VSDecoderPreferences {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(VSDecoderPreferences.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VSDecoderPreferences.class);
 
 }
