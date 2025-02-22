@@ -17,8 +17,6 @@ import jmri.jmrit.display.EditorManager;
 import jmri.util.FileUtil;
 import jmri.util.PhysicalLocation;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Load parameter from XML for the Advanced Location Following.
@@ -36,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
  * for more details.
  *
- * @author Klaus Killinger Copyright (C) 2018-2022
+ * @author Klaus Killinger Copyright (C) 2018-2022, 2025
  */
 public class VSDGeoFile extends XmlFile {
 
@@ -54,7 +52,6 @@ public class VSDGeoFile extends XmlFile {
     private int num_setups;
     private Scale _layout_scale;
     float layout_scale;
-    int check_time; // Time interval in ms for track following updates
     private ArrayList<LayoutEditor> panels;
     private ArrayList<LayoutEditor> panelsFinal;
     HashMap<Block, LayoutEditor> possibleStartBlocks;
@@ -63,6 +60,7 @@ public class VSDGeoFile extends XmlFile {
     PhysicalLocation models_origin;
     int lf_version;  // location following
     int alf_version; // advanced location following
+    private String check_time_str;
 
     /**
      * Looking for additional parameter for train tracking
@@ -117,26 +115,21 @@ public class VSDGeoFile extends XmlFile {
         layout_scale = (float) _layout_scale.getScaleRatio(); // Take this for further calculations
         log.debug("layout-scale: {}, used for further calculations: {}", _layout_scale.toString(), layout_scale);
 
+        check_time_str = "2000"; // string with default value; see getCheckTime() below
         n = root.getChildText("check-time");
         if (n != null) {
-            check_time = Integer.parseInt(n);
-            // Process some limitations; values in milliseconds
-            if (check_time < 500 || check_time > 5000) {
-                check_time = 2000; // default
-                log.info("File {}: Element check-time not in range, defaulting to {} ms", VSDGeoDataFileName, check_time);
-            }
-        } else {
-            check_time = 2000; // default
-            log.info("File {}: Element check-time missing, defaulting to {} ms", VSDGeoDataFileName, check_time);
+            check_time_str = n.trim();
         }
-        log.debug("check-time: {} ms", check_time);
+        log.debug("check time: {}", check_time_str);
 
         // Now look if the file contains "setup" data or "panel" data
         n = root.getChildText("setup");
         if ((n != null) && (!n.isEmpty())) {
             log.debug("A setup found for ALF version 1");
             alf_version = 1;
-            readGeoInfos();
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                readGeoInfos();
+            });
 
         } else {
 
@@ -515,6 +508,22 @@ public class VSDGeoFile extends XmlFile {
         }
     }
 
+    // Set a range to protect the process
+    int getCheckTime() {
+        int check_time = 2000; // default
+        if (org.apache.commons.lang3.StringUtils.isNumeric(check_time_str)) {
+            int ct = Integer.parseInt(check_time_str);
+            if (ct >= 500 && ct <= 5000) {
+                check_time = ct; // new valid value
+            } else {
+                log.info("Parameter check-time not in range 500 - 5000, defaulting to {} ms", ct);
+            }
+        } else {
+            log.info("Parameter check-time not numeric, defaulting to {} ms", check_time);
+        }
+        return check_time;
+    }
+
     // Number of setups
     public int getNumberOfSetups() {
         return num_setups;
@@ -540,6 +549,6 @@ public class VSDGeoFile extends XmlFile {
         return circlelist;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDGeoFile.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VSDGeoFile.class);
 
 }

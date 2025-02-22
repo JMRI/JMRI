@@ -159,11 +159,12 @@ public class EngineSoundEvent extends SoundEvent {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="BC_UNCONFIRMED_CAST", justification="DieselPane extends EnginePane")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="BC_UNCONFIRMED_CAST",
+            justification="DieselPane extends EnginePane")
     private void setDecoderVolume() {
         // Get decoder volume and pass it to the spinner
         int dv = Math.round(this.getParent().getDecoderVolume() * 100f);
-        ((DieselPane) engine_pane).volume_slider.setValue(dv);
+        ((DieselPane) engine_pane).getVolumeSlider().setValue(dv);
     }
 
     @Override
