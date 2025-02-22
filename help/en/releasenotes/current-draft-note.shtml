@@ -517,6 +517,8 @@
               <strong>Listen On Beans - Local variable</strong> and
               <strong>Listen On Beans - Table</strong> actions
               can now listen on Audio beans.</li>
+          <li><strong>Occupancy Blocks</strong> can now be used in
+              the <strong>For each</strong> action.</li>
           <li></li>
         </ul>
 

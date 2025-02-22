@@ -53,6 +53,7 @@
                     <xs:enumeration value="SignalMasts"/>
                     <xs:enumeration value="Routes"/>
                     <xs:enumeration value="Blocks"/>
+                    <xs:enumeration value="OBlocks"/>
                     <xs:enumeration value="Reporters"/>
                     <xs:enumeration value="Memories"/>
                     <xs:enumeration value="Audio"/>
