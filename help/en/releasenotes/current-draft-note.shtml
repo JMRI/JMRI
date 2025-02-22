@@ -136,7 +136,6 @@
                 are within the consist tables. Restoring one of those backup files could corrupt the
                 memory used for AIU status and RS-232 buffers. This fixes both of those and makes sure the
                 restore will only restore within the consist tables.</li>
-
             </ul>
 
         <h4>Oak Tree</h4>
@@ -278,6 +277,15 @@
                 <li></li>
             </ul>
 
+        <h4>GCA</h4>
+            <ul>
+                <li>
+                   Added GCA50 (Arduino Nano based LocoIO) and
+                   GCA51 (2x RFID reader + 8 port LocoIO) models
+                   to the DIY HDL_LocoIO decoder definition.
+                </li>
+            </ul>
+
         <h4>Hattoms</h4>
             <ul>
                 <li></li>
@@ -350,7 +358,8 @@
 
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li></li>
+                <li>Added GCA50 and GCA51 models to the HDL_LocoIO
+                decoder file, showing only valid modes.</li>
             </ul>
 
         <h4>QSI</h4>
