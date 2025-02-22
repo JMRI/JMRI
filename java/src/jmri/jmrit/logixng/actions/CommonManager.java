@@ -16,6 +16,7 @@ public enum CommonManager {
     SignalMasts(() -> InstanceManager.getNullableDefault(SignalMastManager.class), Bundle.getMessage("CommonManager_SignalMasts")),
     Routes(() -> InstanceManager.getNullableDefault(RouteManager.class), Bundle.getMessage("CommonManager_Routes")),
     Blocks(() -> InstanceManager.getNullableDefault(BlockManager.class), Bundle.getMessage("CommonManager_Blocks")),
+    OBlocks(() -> InstanceManager.getNullableDefault(jmri.jmrit.logix.OBlockManager.class), Bundle.getMessage("CommonManager_OBlocks")),
     Reporters(() -> InstanceManager.getNullableDefault(ReporterManager.class), Bundle.getMessage("CommonManager_Reporters")),
     Memories(() -> InstanceManager.getNullableDefault(MemoryManager.class), Bundle.getMessage("CommonManager_Memories")),
     Audio(() -> InstanceManager.getNullableDefault(AudioManager.class), Bundle.getMessage("CommonManager_Audio")),
