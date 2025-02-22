@@ -513,6 +513,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The <strong>Listen On Beans</strong>,
+              <strong>Listen On Beans - Local variable</strong> and
+              <strong>Listen On Beans - Table</strong> actions
+              can now listen on Audio beans.</li>
           <li></li>
         </ul>
 
