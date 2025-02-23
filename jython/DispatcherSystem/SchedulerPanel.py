@@ -24,21 +24,23 @@ class CreateAndShowGUI4(TableModelListener):
         self.frame = CreateAndShowGUI4_frame
         self.frame.setSize(600, 600);
 
-        self.completeTablePanel()
+
+
+        self.completeTablePanel1()
         # print "about to populate"
         self.populate_action(None)
         self.cancel = False
 
-    def completeTablePanel(self):
+    def completeTablePanel1(self):
 
         self.topPanel= JPanel();
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
 
-        scrollPane = JScrollPane(self.table);
-        scrollPane.setSize(600,600);
+        self.scrollPane = JScrollPane(self.table);
+        self.scrollPane.setPreferredSize(Dimension(600,600))
 
-        self.topPanel.add(scrollPane);
+        self.topPanel.add(self.scrollPane);
 
         self.buttonPane = JPanel();
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
@@ -89,6 +91,27 @@ class CreateAndShowGUI4(TableModelListener):
         contentPane.removeAll()
         contentPane.add(self.topPanel, BorderLayout.CENTER)
         contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
+
+        self.frame.pack();
+        self.frame.setVisible(True)
+        return
+
+    def completeTablePanel(self):
+        # self.self_table()
+
+        contentPane = self.frame.getContentPane()
+
+        contentPane.removeAll()
+        contentPane.add(self.topPanel, BorderLayout.CENTER)
+        contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
+        size_of_one_row = 30
+        height = 50
+        for row in reversed(range(len(self.model.data))):
+            height += size_of_one_row
+            print "height" , height
+        print "height" , height
+        height = min(height, 800)
+        self.scrollPane.setPreferredSize(Dimension(600,height))
 
         self.frame.pack();
         self.frame.setVisible(True)
