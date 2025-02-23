@@ -204,7 +204,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                         else:
                             if str(train_name) in trains_dispatched:
                                 trains_dispatched.remove(str(train_name))
-                            break
+                            result = True  # break from loop
                     iter += 1
                 else:
                     break
@@ -455,7 +455,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     if opt1:
                         pass
                     else:
-                        break
+                        return result
             iter += 1
 
         #return result
@@ -572,7 +572,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
         # setMaxTrainLength  (in scale metres)
         [engine,current_length] = self.get_train_length(train_name)  #get the engine name
-        print "in modify_trainInfo1a length = ", current_length
+        # print "in modify_trainInfo1a length = ", current_length
         self.trainInfo.setMaxTrainLengthScaleMeters(float(current_length))
 
         # setSpeedFactor
@@ -2038,10 +2038,15 @@ class createandshowGUI(TableModelListener):
         j = JFileChooser(dir);
         j.setAcceptAllFileFilterUsed(False)
         filter = FileNameExtensionFilter("text files txt", ["txt"])
-        j.setDialogTitle("Select a .txt file");
-        j.addChoosableFileFilter(filter);
+        j.setDialogTitle("Select a .txt file")
+        j.addChoosableFileFilter(filter)
+
+        # Automatically select the first file in the directory
+        files = j.getCurrentDirectory().listFiles()
+        j.setSelectedFile(files[0])
+
         ret = j.showOpenDialog(None);
-        if (ret == JFileChooser.APPROVE_OPTION) :
+        if (ret == JFileChooser.APPROVE_OPTION):
             file = j.getSelectedFile()
             if self.logLevel > 0: print "about to read list", file
             my_list = self.read_list(file)

@@ -49,10 +49,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         global scheduling_in_operation_gbl
         # print "class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):"
-        self.logLevel = 0
+        self.logLevel = 1
         self.frame = None
         self.f = None
         scheduling_in_operation_gbl = False
+        self.od = OptionDialog()
         # print "scheduling_in_operation_gbl 5", scheduling_in_operation_gbl
 
     def exit(self):       # called explicitly when scheduler thread is killed to stop multiple frames being visible
@@ -97,10 +98,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         return True
 
     def init(self):
-        global run_timetable_gbl
+        global run_local_timetable_gbl
         # print "scheduling_in_operation_gbl 7 - init", scheduling_in_operation_gbl
         if "run_timetable_gbl" not in globals():
-            run_timetable_gbl = False
+            run_local_timetable_gbl = False
         self.train_scheduler_setup = False
         # print "scheduling_in_operation_gbl 7 - init end", scheduling_in_operation_gbl
         if self.logLevel > 0: print "returned from init"
@@ -111,8 +112,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         # print "start handle 0"
         global schedule_trains_hourly
         global schedule_trains_glb
-        global run_timetable_gbl
+        global run_local_timetable_gbl
         global station_name_list_gbl
+        global station_name_list_mqtt_gbl
         global group_location_gbl
         global timetable_triggered_gbl
         if self.logLevel > 0: print "start handle"
@@ -133,8 +135,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         # print "Y"
         if self.timetable_sensor.getKnownState() == ACTIVE:
             title = ""
-            if "station_name_gbl" not in globals():
-                station_name_list_gbl = ""
+            # if "station_name_list_gbl" not in globals():
+            #     station_name_list_gbl = ""
             # print "b"
             TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
             train_list = TrainManager.getTrainsByTimeList()
@@ -175,14 +177,14 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             if reply == JOptionPane.CANCEL_OPTION:
                 pass
             elif reply == opt1:
-                run_timetable_gbl = False
+                run_local_timetable_gbl = False
                 # OptionDialog().displayMessage("turned timetabling off")
                 # timetable_gbl = None
             elif reply == opt2:
                 # OptionDialog().displayMessage("turned timetabling on\n Select the station you wish to display")
                 msg = "show timetable of what station?"
                 # print "station list", station_list
-                if "station_name_gbl" not in globals():
+                if "station_name_list_gbl" not in globals():
                     station_name_list_gbl = ""
                 title = "Show timetable of what station?"
                 list_items_no_trains = self.get_scheduled_routes("no_train")
@@ -200,14 +202,14 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 print "group_location_gbl", group_location_gbl
                 option = result[1]
                 if option == "Cancel":
-                    run_timetable_gbl = False
+                    run_local_timetable_gbl = False
                     self.timetable_sensor.setKnownState(INACTIVE)
                 else:
                     # station_name_gbl = modifiableJComboBox(station_list,msg, station_name_gbl).return_val()
                     # print "station_name_gbl", station_name_gbl
                     # if 'run_timetable_gbl' not in globals():
                     #     OptionDialog().displayMessage("You need to schedule trains before the timetable appears")
-                    run_timetable_gbl = True
+                    run_local_timetable_gbl = True
                     # print "run_timetable_gbl set", run_timetable_gbl
                     if not self.conditions_for_timetable_to_show_are_met():
                         # print "You need to schedule trains before the timetable appears"
@@ -220,30 +222,46 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # station_name_mqtt = modifiableJComboBox(station_list,msg, station_name_gbl).return_val()
 
                 title = "Show timetable of what station?"
+
                 options = ["Cancel", "Generate Timetable"]
-                od = OptionDialog()
-                result = od.ListOptions(station_list, title, options, preferred_size = "default")
-                # print "result", result
-                station_name_mqtt = result[0]
+                result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
+                # result = [[station1,station2],"Show Timetable"]
+                print "result", result
+                if "station_name_list_mqtt_gbl" not in globals():
+                    station_name_list_mqtt_gbl = ""
+                station_name_list_mqtt_gbl = result[0]
+                concatenated_names = " ".join(station_name_list_mqtt_gbl)    # [station1,station2]
+                if len(station_name_list_mqtt_gbl) == 1:
+                    group_location_mqtt_gbl = station_name_list_mqtt_gbl[0]   # the first and only station  station1
+                else:
+                    group_location_mqtt_gbl = concatenated_names    # need an option to rename this
+                print "group_location_mqtt_gbl", group_location_mqtt_gbl
                 option = result[1]
-                if option == "Cancel" or od.CLOSED_OPTION == True:
-                    run_timetable_gbl = False
+
+                # options = ["Cancel", "Generate Timetable"]
+                # od = OptionDialog()
+                # result = od.ListOptions(station_list, title, options, preferred_size = "default")
+                # # print "result", result
+                # station_name_mqtt = result[0]
+                # option = result[1]
+                if option == "Cancel" or self.od.CLOSED_OPTION == True:
+                    # run_local_timetable_gbl = False
                     self.timetable_sensor.setKnownState(INACTIVE)
                 else:
-                    station_name_mqtt = station_name_mqtt
+                    # station_name_mqtt = station_name_mqtt
 
                     title = "Display Train Operator Emblem?"
                     emblem_list = ["GB (British Rail)", "Germany (DB)", "No Emblem"]
                     options = ["Cancel", "Generate Timetable"]
-                    result = od.ListOptions(emblem_list, title, options, preferred_size = "default")
+                    result = self.od.ListOptions(emblem_list, title, options, preferred_size = "default")
                     # print "result", result
                     train_operator_emblem = result[0]
                     option1 = result[1]
-                    if option1 == "Cancel" or od.CLOSED_OPTION == True:
-                        run_timetable_gbl = False
+                    if option1 == "Cancel" or self.od.CLOSED_OPTION == True:
+                        # run_local_timetable_gbl = False
                         self.timetable_sensor.setKnownState(INACTIVE)
                     else:
-                        self.generate_node_red_code(station_name_mqtt, train_operator_emblem)
+                        self.generate_node_red_code(station_name_list_mqtt_gbl, group_location_mqtt_gbl, train_operator_emblem)
                         # file = self.directory() + "train_operator_emblem.txt"
                         self.write_list2([train_operator_emblem])
 
@@ -313,8 +331,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return False
         return True
 
-    def generate_node_red_code(self, station_name, train_operator_emblem):
-
+    def generate_node_red_code(self, station_name_list, station_name, train_operator_emblem):
+        print "A"
         node_red_template_path = \
             jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/timetable_template/node_red_flow.json"')
         # read the file into a string
@@ -328,15 +346,19 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             #close file
             text_file.close()
-
+            print "B"
             # change the file to work with station_name
             # websocket names cannot have spaces in them
             # so where we need to replace spaces we have My_Station$ instaed of MyStation
-            new_data = data.replace('My_Station$', station_name.replace(" ","")) \
+            new_data = data.replace('My_Station$', station_name.replace(" ","-")) \
+                .replace("My_Station_List", str(station_name_list)) \
                 .replace("My_Station", station_name) \
                 .replace("My_Emblem", train_operator_emblem)
+            # 'My_Station$' for url without spaces
+            # "My_Station" for title
+            # "My_Station_List" for list of stations to include
 
-
+            print "C"
 
             # store the modified file to a file in the user directory
             new_node_red_template_directory = jmri.util.FileUtil.getExternalFilename('preference:dispatcher/mqtt_timetables/')
@@ -353,10 +375,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         else:
             OptionDialog().displayMessage(file_path + "does not exist, reinstall latest JMRI")
 
-        msg = "node red file for station is in " + file_path + "\n" + \
+        msg = "node red file for '" + station_name + "' is in " + file_path + "\n" + \
               "import the file into a node_red instance on computer on same network \n" + \
               "and edit as illustrated in the help, and open indicated web page on tablet/laptop \n" + \
-              "e.g. http://localhost:1880/" + station_name + ", where localhost should be replaced by network address \n" + \
+              "e.g. http://localhost:1880/" + station_name.replace(" ", "-") + ", where localhost should be replaced by network address \n" + \
               "of computer hosting node_red instance\n\n" + \
               "ALSO ensure an MQTT Connection is set up in preferences, as detailed in help."
         OptionDialog().displayMessage(msg)
@@ -582,7 +604,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     #         return False
 
     def set_period_trains_will_run_frame(self):
-        global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
+        global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+            scheduling_margin_gbl, scheduling_in_operation_gbl
         if self.frame == None:
             # print "frame is None"
             self.frame = jmri.util.JmriJFrame('Schedule Trains Hourly');
@@ -689,7 +712,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowStage1Button = JPanel()
             rowStage1Button.setLayout(BoxLayout(rowStage1Button, BoxLayout.X_AXIS))
 
-            global rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, rowEStage1Button_1, rowFStage1Button_1
+            global rowrowStage4Button_4, rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, rowEStage1Button_1, rowFStage1Button_1
             rowAStage1Button = JPanel()
             rowAStage1Button.setLayout(BoxLayout(rowAStage1Button, BoxLayout.X_AXIS))
 
@@ -936,6 +959,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     def swap_timebase_state_run_stop(self):
         global timebase
         global fast_clock_rate
+        global rowrowStage4Button_4
         if timebase.getRun() == True:
             timebase.removeMinuteChangeListener(tListener)
             timebase.setRun(False)
@@ -943,7 +967,18 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         else:
             timebase.addMinuteChangeListener(tListener)
             timebase.setRun(True)
-            # print "fast_clock_rate", fast_clock_rate
+        if "rowrowStage4Button_4" in globals():
+            if timebase.getRun():
+                state = "Started"
+            else:
+                state = "Stopped"
+            stringToDisplay = "Stop/Start Clock:  " + state
+            rowrowStage4Button_4.setText(stringToDisplay) # Update the label
+        else:
+            print '"rowrowStage4Button_4" not in globals()'
+
+
+        # print "fast_clock_rate", fast_clock_rate
     def start_schedule_trains_master(self):
 
         global instanceList
@@ -1020,7 +1055,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                          scheduling_margin_gbl, scheduling_in_operation_gbl])
         # print "fast_clock_rate in set_default_scheduling_values", fast_clock_rate
     def CheckHourlyParameters_action(self, event):
-        global rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, rowEStage1Button_1, rowFStage1Button_1
+        global rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, \
+            rowEStage1Button_1, rowFStage1Button_1, rowrowStage4Button_4
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
             scheduling_margin_gbl, scheduling_in_operation_gbl
         # read parameters
@@ -1384,7 +1420,7 @@ class TimeListener(java.beans.PropertyChangeListener):
             fast_clock_running_at_operational_speed = True
         global minutes_old2, minutes_old3
         global schedule_trains_hourly
-        global timetable_gbl, run_timetable_gbl
+        global timetable_gbl, run_local_timetable_gbl
         global fast_clock_rate
         global send_mqtt_messages_gbl
 
@@ -1423,10 +1459,10 @@ class TimeListener(java.beans.PropertyChangeListener):
             send_mqtt_messages_gbl = True
             if 'send_mqtt_messages_gbl' not in globals():
                 send_mqtt_messages_gbl = False
-            if 'run_timetable_gbl' not in globals():
-                run_timetable_gbl = False
+            if 'run_local_timetable_gbl' not in globals():
+                run_local_timetable_gbl = False
             # print "send_mqtt_messages_gbl", send_mqtt_messages_gbl
-            if run_timetable_gbl or send_mqtt_messages_gbl:
+            if run_local_timetable_gbl or send_mqtt_messages_gbl:
                 # do not display more frequently than 5 secs
                 # print "f1", fast_clock_rate
                 fcr = int(str(fast_clock_rate))
@@ -1655,7 +1691,7 @@ class Trigger_Timetable:
         t1.join()
 
     def send_timetable_and_clock_via_mqtt(self, minutes):
-        global station_name_list_gbl, group_location_gbl, run_timetable_gbl
+        global station_name_list_gbl, group_location_gbl, run_local_timetable_gbl
         self.logLevel = 0
         global timebase
         # print "****************start send_timetable_and_clock_via_mqtt"
@@ -1671,11 +1707,14 @@ class Trigger_Timetable:
         except:
             print "clock message not sent"
 
+        if "station_name_list_mqtt_gbl" not in globals():
+            station_name_list_mqtt_gbl = ""
+
 
         # get list of origins, destinations and times at intermediate stations
         timetable = self.get_timetable(hour, minutes)
         # print "timetable", timetable
-        if 'group_location_gbl' in globals() and 'station_name_list_gbl' in globals():
+        if 'group_location_gbl' != "" and 'station_name_list_gbl' != "":
             station_name = group_location_gbl
             station_names_list = station_name_list_gbl
         else:
@@ -1683,7 +1722,7 @@ class Trigger_Timetable:
             station_name = 'Not Set'
             station_names_list = ['Not Set']
         # print "******run_timetable_gbl", run_timetable_gbl
-        if run_timetable_gbl:
+        if run_local_timetable_gbl:
             if "timetable_gbl" in globals():
                 # print "timetable_gbl", timetable_gbl
                 if timetable_gbl != None:
@@ -1898,12 +1937,12 @@ class Trigger_Timetable:
 
                                 timetable.append(timetable_entry)
         #sort timetable by time
-        timetable.sort(key = lambda row: max(row[2],row[3])         )
+        timetable.sort(key = lambda row: max(row[3],row[4])         )
         return timetable
 
     def generate_local_timetable(self, station_name, station_names_list, time, timetable):
         global timetable_gbl
-        if self.logLevel > -1: print "generating timetable" , "for", station_name, "station_names", station_names_list
+        # if self.logLevel > -1: print "generating timetable" , "for", station_name, "station_names", station_names_list
         if "timetable_gbl" not in globals():
             # print "A"
             timetable_gbl = Timetable(station_name)
@@ -1927,6 +1966,7 @@ class Trigger_Timetable:
         msg = "["
         for [train_name, \
              station_name , \
+             platform , \
              station_arrival_time, \
              station_departure_time, \
              first_station, \
@@ -1942,6 +1982,7 @@ class Trigger_Timetable:
             msg += '{"type" : "' + "schedule" + '", ' + \
                    '"train_name" : "' + str(train_name) + '", ' + \
                    '"station_name" : "' + str(station_name) + '", ' + \
+                   '"platform" : "' + str(platform) + '", ' + \
                    '"station_arrival_time" : "' + str(station_arrival_time) + '", ' + \
                    '"station_departure_time" : "' + str(station_departure_time) + '", ' + \
                    '"first_station" : "' + str(first_station) + '", ' + \
@@ -1961,19 +2002,22 @@ class Trigger_Timetable:
     def send_mqtt_message(self, msg):
         # print
         # print
-        # print "sending mqtt message", msg
-        try:
-            # Find the MqttAdapter
-            mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
+        # print "sending mqtt message"
+        # try:
+        # Find the MqttAdapter
+        mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
+        print "adaptor found"
+        # create content to send "/jmri/timetable message content"
+        topic = "jmri/timetable"
+        payload = msg
+        print "about to send"
 
-            # create content to send "/jmri/timetable message content"
-            topic = "jmri/timetable"
-            payload = msg
-
-            # send
-            mqttAdapter.publish(topic, payload)
-        except:
-            pass
+        # send
+        mqttAdapter.publish(topic, payload)
+        print "published mqtt message"
+        # except:
+        #     print "failure mqtt message"
+        #     pass
 
     def send_clock_message(self, hour, minutes, event):
 

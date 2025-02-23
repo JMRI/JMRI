@@ -182,7 +182,7 @@ class Timetable:
         #     print "about to get_html2"
         self.html_content = self.get_html()
         self.html_content = self.edit_html_station(station)
-        print "about to load html"
+        # print "about to load html"
         self.load_html(self.html_content)
         # print "loaded html"
         jScrollPane = JScrollPane(self.jEditorPane)
