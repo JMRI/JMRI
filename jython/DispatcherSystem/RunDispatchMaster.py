@@ -22,6 +22,9 @@ exec(open(CreateSchedulerPanel).read())
 CreateSimulation = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Simulation.py')
 exec(open(CreateSimulation).read())
 
+CreatePlatformPanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/PlatformPanel.py')
+exec(open(CreatePlatformPanel).read())
+
 global instanceList
 
 instanceList = []

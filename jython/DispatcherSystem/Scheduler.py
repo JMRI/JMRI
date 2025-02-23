@@ -21,6 +21,8 @@ import java
 import time
 from org.python.core.util import StringUtil
 from threading import Thread
+from collections import Counter
+
 
 
 CreateSchedulerPanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/SchedulerPanel.py')
@@ -151,12 +153,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # print "route", route.getName(), "route_locations_list", route_locations_list
                 station_list1 = [str(route_location.getName()) for route_location in route_locations_list \
                                  if ".py" not in route_location.getName()]
-                # print "e" , "station_list1", station_list1
+                print "e" , "station_list1", station_list1
                 for x in station_list1:
                     if x not in station_list:
                         station_list.append(x)
                 station_list.sort()
-                # print "station_list", station_list, type(station_list)
+            print "station_list", station_list
 
             if self.logLevel > 0: print "station list", station_list
             # LocationsManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
@@ -167,12 +169,14 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                   "on remote computers/tablets communicating by mqtt\n\n" + \
                   "scheduler needs to be on and clock running"
             opt1 = "turn timetable off"
+            opt4 = "set platforms and station groups"
             opt2 = "select station for local timetable"
             opt3 = "select station for mqtt timetable"
             if 'timetable_triggered_gbl' not in globals():
-                reply = OptionDialog().customQuestionMessage2str(msg, title, opt2, opt3)
+                reply = OptionDialog().customQuestionMessage3str(msg, title, opt4, opt2, opt3)
             else:
-                reply = OptionDialog().customQuestionMessage3str(msg, title, opt1, opt2, opt3)
+                reply = OptionDialog().customQuestionMessage4str(msg, title, opt1, opt4, opt2, opt3)
+            print "reply", reply
             if self.logLevel > 0: print "timetable_sensor active"
             if reply == JOptionPane.CANCEL_OPTION:
                 pass
@@ -180,6 +184,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 run_local_timetable_gbl = False
                 # OptionDialog().displayMessage("turned timetabling off")
                 # timetable_gbl = None
+            elif reply == opt4:
+                print "opt4"
+                CreateAndShowGUI7()
             elif reply == opt2:
                 # OptionDialog().displayMessage("turned timetabling on\n Select the station you wish to display")
                 msg = "show timetable of what station?"
@@ -194,12 +201,34 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # result = [[station1,station2],"Show Timetable"]
                 print "result", result
                 station_name_list_gbl = result[0]
+                print "station_name_list_gbl", station_name_list_gbl
                 concatenated_names = " ".join(station_name_list_gbl)    # [station1,station2]
+                print "concatenated_names", concatenated_names
                 if len(station_name_list_gbl) == 1:
                     group_location_gbl = station_name_list_gbl[0]   # the first and only station  station1
                 else:
-                    group_location_gbl = concatenated_names    # need an option to rename this
+                    station_groups = []
+                    for station_name in station_name_list_gbl:
+                        LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
+                        location = LocationManager.getLocationByName(station_name)
+                        station_group = MyTableModel7().get_location_station_group(location)
+                        if station_group != " ":
+                            station_groups.append(station_group)
+                        print "station_groups", station_groups
+                    counter = Counter(station_groups)
+                    print "counter", counter
+                    print "counter.most_common(1)", counter.most_common(1)
+                    most_common_item = " "
+                    if counter.most_common() != []:
+                        most_common_item = counter.most_common(1)[0][0]
+                        print "most_common_item", most_common_item
+
+                if most_common_item != " ":
+                    group_location_gbl = most_common_item    # need an option to rename this
+                else:
+                    group_location_gbl = concatenated_names
                 print "group_location_gbl", group_location_gbl
+
                 option = result[1]
                 if option == "Cancel":
                     run_local_timetable_gbl = False
@@ -265,6 +294,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                         # file = self.directory() + "train_operator_emblem.txt"
                         self.write_list2([train_operator_emblem])
 
+            print "fred"
             self.timetable_sensor.setKnownState(INACTIVE)
         # print "X"
         if self.scheduler_master_sensor.getKnownState() == ACTIVE:   # pause processing if we turn the sensor off
