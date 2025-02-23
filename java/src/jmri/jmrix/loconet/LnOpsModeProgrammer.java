@@ -213,6 +213,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             int locoIOAddress = mAddress;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
             m = jmri.jmrix.loconet.locoio.LocoIO.writeCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
+            // TODO refactor to lnsv1.LnSv1MessageContents.writeCV
             // force version 1 tag
             m.setElement(4, 0x01);
             log.debug("  Message {}", m);
@@ -382,6 +383,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             int locoIOAddress = mAddress&0xFF;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
             m = jmri.jmrix.loconet.locoio.LocoIO.readCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
+            // TODO refactor to lnsv1.LnSv1MessageContents.readCV()
             // force version 1 tag
             m.setElement(4, 0x01);
             log.debug("  Message {}", m);
@@ -565,7 +567,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             scheduleReplyForLater(val, code);
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
-            // see if reply to LNSV 1 or LNSV2 request
+            // see if reply to LNSV1 or LNSV2 request
             if ((m.getOpCode() != LnConstants.OPC_PEER_XFER) ||
                     (m.getElement( 1) != 0x10) ||
                     (m.getElement( 4) != 0x01) || // format 1

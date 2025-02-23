@@ -1,51 +1,49 @@
 package jmri.jmrix.loconet;
 
-import java.util.List;
-
-import javax.annotation.concurrent.GuardedBy;
-
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-
 import jmri.jmrix.ProgrammingTool;
-import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
-import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
-import jmri.jmrix.loconet.uhlenbrock.LncvDevices;
+import jmri.jmrix.loconet.lnsvf1.LnSv1Device;
+import jmri.jmrix.loconet.lnsvf1.LnSv1Devices;
+import jmri.jmrix.loconet.lnsvf1.LnSv1MessageContents;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.util.swing.JmriJOptionPane;
 
+import javax.annotation.concurrent.GuardedBy;
+import java.util.List;
+
 /**
- * LocoNet LNCV Devices Manager
+ * LocoNet LNSVf1 Devices Manager
  * <p>
- * A centralized resource to help identify LocoNet "LNCV Format"
+ * A centralized resource to help identify LocoNet "LNSVf1 Format"
  * devices and "manage" them.
  * <p>
  * Supports the following features:
- *  - LNCV "discovery" process supported via PROG_START_ALL call
- *  - LNCV Device "destination address" change supported by writing a new value to LNCV 0 (close session next)
- *  - LNCV Device "reconfigure/reset" not supported/documented
+ *  - LNSVf1 "discovery" process supported via BROADCAST call
+ *  - LNSVf1 Device "destination address" change supported by writing a new value to LNSV 0 (close session next)
+ *  - LNSVf1 Device "reconfigure/reset" not supported/documented
  *  - identification of devices with conflicting "destination address"es (warning before program start)
  *  - identification of a matching JMRI "decoder definition" for each discovered
- *    device, if an appropriate definition exists (only 1 value is matched, checks for LNCV protocol support)
+ *    device, if an appropriate definition exists (only 1 value is matched, checks for LNSVf1 protocol support)
  *  - identification of matching JMRI "roster entry" which matches each
  *    discovered device, if an appropriate roster entry exists
  *  - ability to open a symbolic programmer for a given discovered device, if
  *    an appropriate roster entry exists
  *
  * @author B. Milhaupt Copyright (c) 2020
- * @author Egbert Broerse (c) 2021
+ * @author Egbert Broerse (c) 2021, 2025
  */
 
-public class LncvDevicesManager extends PropertyChangeSupport
+public class LnSv1DevicesManager extends PropertyChangeSupport
         implements LocoNetListener {
     private final LocoNetSystemConnectionMemo memo;
     @GuardedBy("this")
-    private final LncvDevices lncvDevices;
+    private final LnSv1Devices lnsv1Devices;
 
-    public LncvDevicesManager(LocoNetSystemConnectionMemo memo) {
+    public LnSv1DevicesManager(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
         if (memo.getLnTrafficController() != null) {
             memo.getLnTrafficController().addLocoNetListener(~0, this);
@@ -53,28 +51,28 @@ public class LncvDevicesManager extends PropertyChangeSupport
             log.error("No LocoNet connection available, this tool cannot function"); // NOI18N
         }
         synchronized (this) {
-            lncvDevices = new LncvDevices();
+            lnsv1Devices = new LnSv1Devices();
         }
     }
 
-    public synchronized LncvDevices getDeviceList() {
-        return lncvDevices;
+    public synchronized LnSv1Devices getDeviceList() {
+        return lnsv1Devices;
     }
 
     public synchronized int getDeviceCount() {
-        return lncvDevices.size();
+        return lnsv1Devices.size();
     }
 
     public void clearDevicesList() {
         synchronized (this) {
-            lncvDevices.removeAllDevices();
+            lnsv1Devices.removeAllDevices();
         }
         jmri.util.ThreadingUtil.runOnLayoutEventually( ()-> firePropertyChange("DeviceListChanged", true, false));
     }
 
     /**
-     * Extract module information from LNCV READREPLY/READREPLY2 message,
-     * if not already in the lncvDevices list, try to find a matching decoder definition (by article number)
+     * Extract module information from LNSVf1 READREPLY message,
+     * if not already in the lnsv1Devices list, try to find a matching decoder definition (by article number)
      * and add it. Skip if already in the list.
      *
      * @param m The received LocoNet message. Note that this same object may
@@ -83,34 +81,32 @@ public class LncvDevicesManager extends PropertyChangeSupport
      */
     @Override
     public void message(LocoNetMessage m) {
-        if (LncvMessageContents.isSupportedLncvMessage(m)) {
-            if ((LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY) ||
-                    //Updated 2022 to also accept undocumented Digikeijs DR5088 reply format LNCV_READ_REPLY2
-                    (LncvMessageContents.extractMessageType(m) == LncvMessageContents.LncvCommand.LNCV_READ_REPLY2)) {
+        if (LnSv1MessageContents.isSupportedSv1Message(m)) {
+            if (LnSv1MessageContents.extractMessageType(m) == LnSv1MessageContents.Sv1Command.SV1_READ_REPLY) {
                 // it's an LNCV ReadReply message, decode contents:
-                LncvMessageContents contents = new LncvMessageContents(m);
-                int art = contents.getLncvArticleNum();
+                LnSv1MessageContents contents = new LnSv1MessageContents(m);
+                int vrs = contents.getVersionNum();
                 int addr = -1;
-                int cv = contents.getCvNum();
-                int val = contents.getCvValue();
-                log.debug("LncvDevicesManager got read reply: art:{}, address:{} cv:{} val:{}", art, addr, cv, val);
+                int cv = contents.getSvNum();
+                int val = contents.getSvValue();
+                log.debug("LncvDevicesManager got read reply: art:{}, address:{} cv:{} val:{}", vrs, addr, cv, val);
                 if (cv == 0) { // trust last used address
                     addr = val; // if cvNum = 0, this is the LNCV module address
-                    log.debug("LNCV read reply: device address {} of LNCV returns {}", addr, val);
+                    log.debug("LNSV1 read reply: device address {} of LNSV1 returns {}", addr, val);
 
                     synchronized (this) {
-                        if (lncvDevices.addDevice(new LncvDevice(art, addr, cv, val, "", "", -1))) {
-                            log.debug("new LncvDevice added to table");
-                            // Annotate the discovered device LNCV data based on address
-                            for (int i = 0; i < lncvDevices.size(); ++i) {
-                                LncvDevice dev = lncvDevices.getDevice(i);
-                                if ((dev.getProductID() == art) && (dev.getDestAddr() == addr)) {
+                        if (lnsv1Devices.addDevice(new LnSv1Device(vrs, addr, cv, val, "", "", -1))) {
+                            log.debug("new LnSv1Device added to table");
+                            // Annotate the discovered device LNCV1 data based on address
+                            for (int i = 0; i < lnsv1Devices.size(); ++i) {
+                                LnSv1Device dev = lnsv1Devices.getDevice(i);
+                                if ((dev.getSwVersion() == vrs) && (dev.getDestAddr() == addr)) {
                                     // need to find a corresponding roster entry?
                                     if (dev.getRosterName() != null && dev.getRosterName().isEmpty()) {
                                         // Yes. Try to find a roster entry which matches the device characteristics
-                                        log.debug("Looking for prodID {}/adr {} in Roster", dev.getProductID(), dev.getDestAddr());
-                                        List<RosterEntry> l = Roster.getDefault().matchingList(Integer.toString(dev.getDestAddr()), Integer.toString(dev.getProductID()));
-                                        log.debug("LncvDeviceManager found {} matches in Roster", l.size());
+                                        log.debug("Looking for version {}/adr {} in Roster", dev.getSwVersion(), dev.getDestAddr());
+                                        List<RosterEntry> l = Roster.getDefault().matchingList(Integer.toString(dev.getDestAddr()), Integer.toString(dev.getSwVersion()));
+                                        log.debug("LnSvf1DeviceManager found {} matches in Roster", l.size());
                                         if (l.isEmpty()) {
                                             log.debug("No corresponding roster entry found");
                                         } else if (l.size() == 1) {
@@ -118,7 +114,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
                                             dev.setRosterEntry(l.get(0)); // link this device to the entry
                                         } else {
                                             JmriJOptionPane.showMessageDialog(null,
-                                                    Bundle.getMessage("WarnMultipleLncvModsFound", art, addr, l.size()),
+                                                    Bundle.getMessage("WarnMultipleLncvModsFound", vrs, addr, l.size()),
                                                     Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                                             log.info("Found multiple matching roster entries. " + "Cannot associate any one to this device.");
                                         }
@@ -128,33 +124,33 @@ public class LncvDevicesManager extends PropertyChangeSupport
                                 }
                             }
                         } else {
-                            log.debug("LNCV device was already in list");
+                            log.debug("LNSVf1 device was already in list");
                         }
                     }
                 } else {
-                    log.debug("LNCV device check skipped as value not CV0/module address");
+                    log.debug("LNSVf1 device check skipped as value not CV0/module address");
                 }
             } else {
-                log.debug("LNCV message not a READ REPLY [{}]", m);
+                log.debug("LNSVf1 message not a READ REPLY [{}]", m);
             }
         } else {
-            log.debug("LNCV message not recognized");
+            log.debug("LNSVf1 message not recognized");
         }
     }
 
-    public synchronized LncvDevice getDevice(int art, int addr) {
-        for (int i = 0; i < lncvDevices.size(); ++ i) {
-            LncvDevice dev = lncvDevices.getDevice(i);
-            if ((dev.getProductID() == art) && (dev.getDestAddr() == addr)) {
+    public synchronized LnSv1Device getDevice(int vrs, int addr) {
+        for (int i = 0; i < lnsv1Devices.size(); ++ i) {
+            LnSv1Device dev = lnsv1Devices.getDevice(i);
+            if ((dev.getSwVersion() == vrs) && (dev.getDestAddr() == addr)) {
                 return dev;
             }
         }
         return null;
     }
 
-    public ProgrammingResult prepareForSymbolicProgrammer(LncvDevice dev, ProgrammingTool t) {
+    public ProgrammingResult prepareForSymbolicProgrammer(LnSv1Device dev, ProgrammingTool t) {
         synchronized(this) {
-            if (lncvDevices.isDeviceExistant(dev) < 0) {
+            if (lnsv1Devices.isDeviceExistant(dev) < 0) {
                 return ProgrammingResult.FAIL_NO_SUCH_DEVICE;
             }
             int destAddr = dev.getDestAddr();
@@ -162,7 +158,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
                 return ProgrammingResult.FAIL_DESTINATION_ADDRESS_IS_ZERO;
             }
             int deviceCount = 0;
-            for (LncvDevice d : lncvDevices.getDevices()) {
+            for (LnSv1Device d : lnsv1Devices.getDevices()) {
                 if (destAddr == d.getDestAddr()) {
                     deviceCount++;
                 }
@@ -188,12 +184,12 @@ public class LncvDevicesManager extends PropertyChangeSupport
 
         //if (p.getClass() != ProgDebugger.class) {
             // ProgDebugger is used for LocoNet HexFile Sim, uncommenting above line allows testing of LNCV Tool
-            if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETLNCVMODE)) {
+            if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETSV1MODE)) {
                 return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
             }
-            p.setMode(LnProgrammerManager.LOCONETLNCVMODE);
+            p.setMode(LnProgrammerManager.LOCONETSV1MODE);
             ProgrammingMode prgMode = p.getMode();
-            if (!prgMode.equals(LnProgrammerManager.LOCONETLNCVMODE)) {
+            if (!prgMode.equals(LnProgrammerManager.LOCONETSV1MODE)) {
                 return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
             }
         //}
@@ -215,6 +211,6 @@ public class LncvDevicesManager extends PropertyChangeSupport
         FAIL_NO_LNCV_PROGRAMMER
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LncvDevicesManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnSv1DevicesManager.class);
 
 }

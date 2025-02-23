@@ -354,13 +354,13 @@ public class LocoIOData extends PropertyChangeSupport
     private String dotme(int val) {
         int dit;
         int x = val;
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         if (val == 0) {
             return "0"; // NOI18N
         }
         while (x != 0) {
             dit = x % 10;
-            ret.insert(0, Integer.toString(dit));
+            ret.insert(0, dit);
             x = x / 10;
             if (x != 0) {
                 ret.insert(0, ".");

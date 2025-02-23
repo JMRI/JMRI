@@ -20,6 +20,7 @@ import jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel;
 import jmri.jmrix.loconet.swing.throttlemsg.MessagePanel;
 import jmri.jmrix.loconet.locogen.LocoGenPanel;
 import jmri.jmrix.loconet.swing.lncvprog.LncvProgPane;
+import jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane;
 import jmri.jmrix.loconet.pr3.swing.Pr3SelectPane;
 import jmri.jmrix.loconet.soundloader.LoaderPane;
 import jmri.jmrix.loconet.soundloader.EditorPane;
@@ -86,6 +87,7 @@ public class LocoNetMenu extends JMenu {
         panelItems.add(new LocoNetMenuItem("MenuItemSetID", LocoIdPanel.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemDuplex", DuplexGroupTabbedPanel.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemLncvProg", LncvProgPane.class, true, true)); // NOI18N
+        panelItems.add(new LocoNetMenuItem("MenuItemLnsvProg", Lnsv1ProgPane.class, true, true)); // NOI18N
         panelItems.add(null);
         panelItems.add(new LocoNetMenuItem("MenuItemThrottleMessages", MessagePanel.class, true, true)); // NOI18N
         panelItems.add(new LocoNetMenuItem("MenuItemSendPacket", LocoGenPanel.class, false, true)); // NOI18N
