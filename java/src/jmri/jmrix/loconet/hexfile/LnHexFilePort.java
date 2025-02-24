@@ -6,6 +6,7 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import org.slf4j.Logger;
@@ -338,7 +339,23 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         LocoNetMessage reply = null;
         //log.debug("generateReply for {}", m.toMonitorString());
 
-        if (LnSv2MessageContents.isSupportedSv2Message(m)) {
+        if (Lnsv1MessageContents.isSupportedSv1Message(m)) {
+            log.debug("generate reply for SV1 message ");
+            Lnsv1MessageContents c = new Lnsv1MessageContents(m);
+            log.debug("c.getDestAddr() = {}", c.getDestAddr());
+            if (c.getDestAddr() == -1) { // Sv1 Probe, reply
+                // [E5 10 50 00 01 00 02 02 00 00 10 00 00 00 00 4B]  LocoBuffer => LocoIO@broadcast Query SV2.
+                log.debug("generate LNSV1 ProbeAll reply message");
+                int myAddrL = 12; // a random value
+                int myAddrH = 3;
+                int destL = 0x50; // keep it simple, don't fetch src from m
+                int destH = 0; // simulate LocoBuffer
+                int version = 123;
+                int sv = 2;
+                int val = 0;
+                reply = Lnsv1MessageContents.createSv1ReadReply(myAddrL, myAddrH, destL, destH, version, sv, val);
+            }
+        } else if (LnSv2MessageContents.isSupportedSv2Message(m)) {
             //log.debug("generate reply for SV2 message");
             LnSv2MessageContents c = new LnSv2MessageContents(m);
             if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (content includes no address)

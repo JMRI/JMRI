@@ -77,23 +77,23 @@ import java.util.Objects;
  * @author B. Milhaupt Copyright (C) 2015
  * @author E. Broerse Copyright (C) 2025
  */
-public class LnSv1MessageContents {
+public class Lnsv1MessageContents {
     public static final int LNSV1_WRITE = 0x01;
     public static final int LNSV1_READ = 0x02;
-    public static final int LNSV1_BROADCAST_ADDRESS = 0x0100; // CHECK
+    public static final int LNSV1_BROADCAST_ADDRESS = 0x0100; // addr_H = 0
     public static final int LOCOIO_PEER_CODE_SV_VER1 = 0x08;
 
-    private int src_l;
-    private int src_h;
-    private int sv_cmd;
-    private int dst_l;
-    private int dst_h;
-    private int sv_adr;
-    private int vrs;
-    private int d4;
-    private int d6;
-    private int d7;
-    private int d8;
+    private final int src_l;
+    private final int src_h;
+    private final int sv_cmd;
+    private final int dst_l;
+    private final int dst_h;
+    private final int sv_adr;
+    private final int vrs;
+    private final int d4;
+    private final int d6;
+    private final int d7;
+    private final int d8;
 
     // LocoNet "SV 1 format" helper definitions: length byte value for OPC_PEER_XFER message
     public final static int SV1_LENGTH_ELEMENT_VALUE = 0x10;
@@ -119,19 +119,21 @@ public class LnSv1MessageContents {
     public final static int SV1_SVD7_ELEMENT_INDEX = 13;
     public final static int SV1_SVD8_ELEMENT_INDEX = 14;
 
-    //  helpers for decoding SV format 1 messages (versus other OCP_PEER_XFER messages with length 0x10) TODO
+    //  helpers for decoding SV format 1 messages (versus other OCP_PEER_XFER messages with length 0x10)
     public final static int SV1_SRC_L_ELEMENT_MASK = 0x7f;
     public final static int SV1_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
-    public final static int SV1_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
-    public final static int SV1_SV_CMD_CMDX7_CHECK_MASK = 0x04;
-    public final static int SV1_SV_ADR_SVADRX7_CHECK_MASK = 0x04;
-    public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
-    public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
+    public final static int SV1_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x00;
+    // no high bit for SV1_SV_CMD_ELEMENT
+    public final static int SV1_SV_ADR_SVADRX7_CHECK_MASK = 0x02;
     public final static int SV1_SV_VRS_VRSX7_CHECK_MASK = 0x04;
     public final static int SV1_SV_D4_D4X7_CHECK_MASK = 0x08;
-    public final static int SV1_SV_D6_D6X7_CHECK_MASK = 0x01;
-    public final static int SV1_SV_D7_D7X7_CHECK_MASK = 0x01;
-    public final static int SV1_SV_D8_D8X7_CHECK_MASK = 0x02;
+    public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
+    public final static int SV0_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
+    public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x00;
+    // no high bit for sub-address SV1_SV_SRC_H_ELEMENT
+    public final static int SV1_SV_D6_D6X7_CHECK_MASK = 0x02;
+    public final static int SV1_SV_D7_D7X7_CHECK_MASK = 0x04;
+    public final static int SV1_SV_D8_D8X7_CHECK_MASK = 0x08;
 
     // helpers for decoding SV_CMD
     public final static int SV_CMD_WRITE_ONE = 0x01;
@@ -151,7 +153,7 @@ public class LnSv1MessageContents {
      * @throws IllegalArgumentException if the LocoNet message is not a valid, supported
      *      SV Programming Format 1 message
      */
-    public LnSv1MessageContents(LocoNetMessage m)
+    public Lnsv1MessageContents(LocoNetMessage m)
             throws IllegalArgumentException {
 
         log.debug("interpreting a LocoNet message - may be an SV1 message");  // NOI18N
@@ -165,10 +167,7 @@ public class LnSv1MessageContents {
         dst_h = m.getElement(SV1_SV_DST_H_ELEMENT_INDEX);
         int svx1 = m.getElement(SV1_SVX1_ELEMENT_INDEX);
         int svx2 = m.getElement(SV1_SVX2_ELEMENT_INDEX);
-
-        sv_cmd = m.getElement(SV1_SV_CMD_ELEMENT_INDEX)
-                + (((svx1 & SV1_SV_CMD_CMDX7_CHECK_MASK) == SV1_SV_CMD_CMDX7_CHECK_MASK)
-                ? 0x80 : 0);
+        sv_cmd = m.getElement(SV1_SV_CMD_ELEMENT_INDEX);
 
         sv_adr  = m.getElement(SV1_SV_ADR_ELEMENT_INDEX)
                 + (((svx1 & SV1_SV_ADR_SVADRX7_CHECK_MASK) == SV1_SV_ADR_SVADRX7_CHECK_MASK)
@@ -215,26 +214,29 @@ public class LnSv1MessageContents {
             return false;
         }
 
-        // "extended command" identifier must be correct.  Check part of the
-        // "extended command" identifier
+        // Check PXCT1
         if ((m.getElement(SV1_SVX1_ELEMENT_INDEX)
                 & SV1_SVX1_ELEMENT_VALIDITY_CHECK_MASK)
                 != SV1_SVX1_ELEMENT_VALIDITY_CHECK_VALUE) {
             log.debug ("cannot be SV1 message because SVX1 upper nibble wrong");  // NOI18N
             return false;
         }
-        // "extended command" identifier must be correct.  Check the rest
-        // of the "extended command" identifier
-        if ((m.getElement(SV1_SVX2_ELEMENT_INDEX)
+        // Check PXCT2
+        if ((m.getElement(SV1_SVX2_ELEMENT_INDEX) // SV0 Broadcast/Write from LocoBuffer
                 & SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK)
-                != SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE) {
-            log.debug ("cannot be SV1 message because SVX2 upper nibble wrong");  // NOI18N
-            return false;
+                != SV0_SVX2_ELEMENT_VALIDITY_CHECK_VALUE) {
+            if ((m.getElement(SV1_SVX2_ELEMENT_INDEX) // SV1 Read/Write reply from LocoIO
+                    & SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK)
+                    != SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE) {
+                log.debug ("cannot be SV1 message because SVX2 upper nibble wrong: {}",
+                        m.getElement(SV1_SVX2_ELEMENT_INDEX) & SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK);  // NOI18N
+                return false;
+            }
         }
 
         // check the <SV_CMD> value
         if (isSupportedSv1Command(m.getElement(SV1_SV_CMD_ELEMENT_INDEX))) {
-            log.debug("LocoNet message is a supported SV Format 2 message");
+            log.debug("LocoNet message is a supported SV Format 1 message");
             return true;
         }
         log.debug("LocoNet message is not a supported SV Format 2 message");  // NOI18N
@@ -263,21 +265,25 @@ public class LnSv1MessageContents {
             return false;
         }
 
-        // "extended command" identifier must be correct.  Check part of the
-        // "extended command" identifier
+        // The upper nibble of PXCT1 must be 0, and the upper nibble of PXCT2 must be 1 or 2.
+        // Check PCX1
         if ((m.getElement(SV1_SVX1_ELEMENT_INDEX)
                 & SV1_SVX1_ELEMENT_VALIDITY_CHECK_MASK)
                 != SV1_SVX1_ELEMENT_VALIDITY_CHECK_VALUE) {
             log.debug ("cannot be SV1 message because SVX1 upper nibble wrong");  // NOI18N
             return false;
         }
-        // "extended command" identifier must be correct.  Check the rest
-        // of the "extended command" identifier
-        if ((m.getElement(SV1_SVX2_ELEMENT_INDEX)
+        // Check PCX2
+        if ((m.getElement(SV1_SVX2_ELEMENT_INDEX) // SV0 Broadcast/Write from LocoBuffer
                 & SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK)
-                != SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE) {
-            log.debug ("cannot be SV1 message because SVX2 upper nibble wrong");  // NOI18N
-            return false;
+                != SV0_SVX2_ELEMENT_VALIDITY_CHECK_VALUE) {
+            if ((m.getElement(SV1_SVX2_ELEMENT_INDEX) // SV1 Read/Write reply from LocoIO
+                    & SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK)
+                    != SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE) {
+                log.debug ("cannot be SV1 message because SVX2 upper nibble wrong {}",
+                        m.getElement(SV1_SVX2_ELEMENT_INDEX) & SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK);  // NOI18N
+                return false;
+            }
         }
 
         // check the <SV_CMD> value
@@ -313,6 +319,24 @@ public class LnSv1MessageContents {
     }
 
     /**
+     * Interpret a LocoNet message to determine its SV Programming Format 1 &lt;SV_CMD&gt;.
+     * If the message is not an SV Programming Format 1 message, return null.
+     *
+     * @param m  LocoNet message containing SV Programming Format 1 version field
+     * @return Version found in the SV Programming Format 1 message or -1 if not found
+     */
+    public static int extractMessageVersion(LocoNetMessage m) {
+        if (isSupportedSv1Message(m)) {
+            int msgVrs = m.getElement(SV1_SV_VRS_ELEMENT_INDEX)
+                    + (((m.getElement(SV1_SVX2_ELEMENT_INDEX) & SV1_SV_VRS_VRSX7_CHECK_MASK) == SV1_SV_VRS_VRSX7_CHECK_MASK)
+                    ? 0x80 : 0);
+            log.debug("LocoNet LNSV1 message contains version {}", msgVrs);  // NOI18N
+            return msgVrs;
+        }
+        return -1;
+    }
+
+    /**
      * Interpret the SV Programming Format 1 message into a human-readable string.
      *
      * @return String containing a human-readable version of the SV Programming
@@ -321,7 +345,7 @@ public class LnSv1MessageContents {
     @Override
     public String toString() {
         Locale l = Locale.getDefault();
-        return LnSv1MessageContents.this.toString(l);
+        return Lnsv1MessageContents.this.toString(l);
     }
 
     /**
@@ -359,11 +383,6 @@ public class LnSv1MessageContents {
                         d7,
                         d8);
                 break;
-
-//            case (SV_CMD_PROBE_ALL):
-//                returnString = Bundle.getMessage(locale, "SV1_PROBE_ALL_INTERPRETED",
-//                        src);
-//                break;
 
             default:
                 return Bundle.getMessage(locale, "SV1_UNDEFINED_MESSAGE") + "\n";
@@ -492,10 +511,10 @@ public class LnSv1MessageContents {
     }
 
     /**
-     * Create a LocoNet message containing an SV Programming Format 1 message.
+     * Create a LocoNet message containing an SV Programming Format 1 message. TODO update doc
      * See Programmer message code in {@link jmri.jmrix.loconet.LnOpsModeProgrammer} loadSV1MessageFormat
      *
-     * @param source  source device low address (14 bit, (for &lt;SRC_L&gt; and &lt;SRC_H&gt;)
+     * @param source  source device address (14 bit, (for &lt;SRC_L&gt; and &lt;SRC_H&gt;)
      * @param destination = SV format 1 destination address (for &lt;DST_L&gt; and &lt;DST_H&gt;)
      * @param command  SV Programming Format 1 command number (for &lt;SV_CMD&gt;)
      * @param svNum  SV Programming Format 1 7-bit SV number
@@ -548,11 +567,27 @@ public class LnSv1MessageContents {
         return m;
     }
 
+    public int getSrcL() {
+        return src_l;
+    }
+
+    public int getSrcH() {
+        return src_h;
+    }
+
+    public int getDstL() {
+        return dst_l;
+    }
+
+    public int getDstH() {
+        return dst_h;
+    }
+
     public int getDestAddr() {
-        //if (sv_cmd != Sv1Command.SV1_PROBE_ALL.sv_cmd) {
-        return dst_l + 256*dst_h;
-        //}
-        //return -1;
+        if ((dst_l != 0x0100) && (dst_h != 0x0)) {
+            return dst_l + 256*dst_h;
+        }
+        return -1;
     }
 
     public int getCmd() {
@@ -560,26 +595,26 @@ public class LnSv1MessageContents {
     }
 
     public int getSvNum() {
-        if ((sv_cmd == LnSv1MessageContents.Sv1Command.SV1_READ_ONE.sv_cmd) ||
-                (sv_cmd == LnSv1MessageContents.Sv1Command.SV1_WRITE_ONE.sv_cmd)) {
+        if ((sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_READ_ONE.sv_cmd) ||
+                (sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_WRITE_ONE.sv_cmd)) {
             return sv_adr;
         }
         return -1;
     }
 
     public int getSvValue() {
-        if ((sv_cmd == LnSv1MessageContents.Sv1Command.SV1_READ_REPLY.sv_cmd) ||
-                (sv_cmd == LnSv1MessageContents.Sv1Command.SV1_WRITE_ONE.sv_cmd)) {
-            return 1; // mod;
+        if ((sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_READ_REPLY.sv_cmd) ||
+                (sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_WRITE_ONE.sv_cmd)) {
+            return d6;
         }
         return -1;
     }
 
     public int getVersionNum() {
-        if ((sv_cmd == LnSv1MessageContents.Sv1Command.SV1_READ_ONE.sv_cmd) ||
-                (sv_cmd == LnSv1MessageContents.Sv1Command.SV1_WRITE_ONE.sv_cmd) ||
-                (sv_cmd == LnSv1MessageContents.Sv1Command.SV1_READ_REPLY.sv_cmd)) {
-            return 2; // art;
+        if ((sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_READ_ONE.sv_cmd) ||
+                (sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_WRITE_ONE.sv_cmd) ||
+                (sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_READ_REPLY.sv_cmd)) {
+            return vrs;
         }
         return -1;
     }
@@ -669,6 +704,13 @@ public class LnSv1MessageContents {
         return d8;
     }
 
+    public static LocoNetMessage createSv1ReadReply(int addrL, int addrH, int dstL, int dstH, int version, int svNum, int value) {
+        return createSv1Message(addrH * 255 + addrL,
+                dstH * 255 + dstL,
+                Sv1Command.SV1_READ_ONE.sv_cmd,
+                2, version, 0, value, 0, 0);
+    }
+
     public static LocoNetMessage createSv1WriteRequest(int deviceAddress, int svNum, int value) {
         return createSv1Message(0x50, deviceAddress,
                 Sv1Command.SV1_WRITE_ONE.sv_cmd,
@@ -708,6 +750,6 @@ public class LnSv1MessageContents {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnSv1MessageContents.class);
+    private final static Logger log = LoggerFactory.getLogger(Lnsv1MessageContents.class);
 
 }

@@ -76,7 +76,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
     protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
     private LncvDevicesManager lncvdm = null;
-    private LnSv1DevicesManager lnsv1dm = null;
+    private Lnsv1DevicesManager lnsv1dm = null;
     private LnMessageManager lnm = null;
     private Ln7gAccyRoutesManager ln7gAcRtm;
 
@@ -129,7 +129,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         this.lncvdm = lncvdm;
     }
 
-    public void setLnSv1DevicesManager(LnSv1DevicesManager lnsv1dm) {
+    public void setLnSv1DevicesManager(Lnsv1DevicesManager lnsv1dm) {
         this.lnsv1dm = lnsv1dm;
     }
 
@@ -317,12 +317,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class<?> c) -> new LnLightManager(this));
     }
 
-    public LnSv1DevicesManager getLnSv1DevicesManager() {
+    public Lnsv1DevicesManager getLnsv1DevicesManager() {
         if (getDisabled()) {
             return null;
         }
         if (lnsv1dm == null) {
-            setLnSv1DevicesManager(new LnSv1DevicesManager(this));
+            setLnSv1DevicesManager(new Lnsv1DevicesManager(this));
             log.debug("Auto create of LnSv1DevicesManager for initial configuration");
         }
         return lnsv1dm;

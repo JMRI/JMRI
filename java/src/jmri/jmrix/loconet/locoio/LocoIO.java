@@ -68,7 +68,7 @@ public class LocoIO {
 
     public static final int LOCOIO_SV_WRITE = 0x01;
     public static final int LOCOIO_SV_READ = 0x02;
-    public static final int LOCOIO_BROADCAST_ADDRESS = 0x1000; // LocoIO broadcast
+    public static final int LOCOIO_BROADCAST_ADDRESS = 0x0100; // LocoIO broadcast
 
     public static final int LOCOIO_PEER_CODE_7BIT_ADDRS = 0x00;
     public static final int LOCOIO_PEER_CODE_ANSI_TEXT = 0x00; // not used
@@ -91,16 +91,16 @@ public class LocoIO {
      *
      * @param locoIOAddress base address of the LocoIO board to read from
      * @param locoIOSubAddress subAddress of the LocoIO board
-     * @param cv the SV index to query
+     * @param sv the SV index to query
      * @return complete message to send
      */
-    public static LocoNetMessage readCV(int locoIOAddress, int locoIOSubAddress, int cv) {
-        int[] contents = {LOCOIO_SV_READ, cv, 0, 0, locoIOSubAddress, 0, 0, 0};
+    public static LocoNetMessage readSV(int locoIOAddress, int locoIOSubAddress, int sv) {
+        int[] contents = {LOCOIO_SV_READ, sv, 0, 0, locoIOSubAddress, 0, 0, 0};
 
         return LocoNetMessage.makePeerXfr(
                 0x1050, // B'cast locobuffer address
                 locoIOAddress,
-                contents, // CV and SubAddr to read
+                contents, // SV and SubAddr to read
                 LOCOIO_PEER_CODE_SV_VER1
         );
     }
@@ -111,17 +111,17 @@ public class LocoIO {
      *
      * @param locoIOAddress base address of the LocoIO board to read from
      * @param locoIOSubAddress subAddress of the LocoIO board
-     * @param cv the SV index to change
+     * @param sv the SV index to change
      * @param data the new value to store in the board's SV
      * @return complete message to send
      */
-    public static LocoNetMessage writeCV(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
-        int[] contents = {LOCOIO_SV_WRITE, cv, 0, data, locoIOSubAddress, 0, 0, 0};
+    public static LocoNetMessage writeSV(int locoIOAddress, int locoIOSubAddress, int sv, int data) {
+        int[] contents = {LOCOIO_SV_WRITE, sv, 0, data, locoIOSubAddress, 0, 0, 0};
 
         return LocoNetMessage.makePeerXfr(
                 0x1050, // B'cast locobuffer address
                 locoIOAddress,
-                contents, // CV and SubAddr to read
+                contents, // SV and SubAddr to read
                 LOCOIO_PEER_CODE_SV_VER1
         );
     }
@@ -138,10 +138,10 @@ public class LocoIO {
      */
     public static void programLocoIOAddress(int address, int subAddress, LnTrafficController ln) {
         LocoNetMessage msg;
-        msg = LocoIO.writeCV(0x0100, 0, 1, address & 0xFF);
+        msg = LocoIO.writeSV(LOCOIO_BROADCAST_ADDRESS, 0, 1, address & 0xFF);
         ln.sendLocoNetMessage(msg);
         if (subAddress != 0) {
-            msg = LocoIO.writeCV(0x0100, 0, 2, subAddress);
+            msg = LocoIO.writeSV(LOCOIO_BROADCAST_ADDRESS, 0, 2, subAddress);
             ln.sendLocoNetMessage(msg);
         }
     }
@@ -153,7 +153,7 @@ public class LocoIO {
      */
     public static void probeLocoIOs(LnTrafficController ln) {
         LocoNetMessage msg;
-        msg = LocoIO.readCV(0x0100, 0, 2);
+        msg = LocoIO.readSV(LOCOIO_BROADCAST_ADDRESS, 0, 2);
         ln.sendLocoNetMessage(msg);
     }
 

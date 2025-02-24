@@ -212,7 +212,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // make message
             int locoIOAddress = mAddress;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
-            m = jmri.jmrix.loconet.locoio.LocoIO.writeCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
+            m = jmri.jmrix.loconet.locoio.LocoIO.writeSV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
             // TODO refactor to lnsv1.LnSv1MessageContents.writeCV
             // force version 1 tag
             m.setElement(4, 0x01);
@@ -382,7 +382,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // make message
             int locoIOAddress = mAddress&0xFF;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
-            m = jmri.jmrix.loconet.locoio.LocoIO.readCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
+            m = jmri.jmrix.loconet.locoio.LocoIO.readSV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
             // TODO refactor to lnsv1.LnSv1MessageContents.readCV()
             // force version 1 tag
             m.setElement(4, 0x01);

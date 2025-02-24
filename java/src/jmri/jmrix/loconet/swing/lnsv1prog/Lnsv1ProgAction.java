@@ -12,7 +12,7 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
 public class Lnsv1ProgAction extends LnNamedPaneAction {
 
     public Lnsv1ProgAction() {
-        super(Bundle.getMessage("MenuItemLnsvProg"),
+        super(Bundle.getMessage("MenuItemLnsv1Prog"),
                 new JmriJFrameInterface(),
                 Lnsv1ProgPane.class.getName(),
                 InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));

@@ -10,10 +10,10 @@ import jmri.jmrit.roster.RosterEntry;
  * @author B. Milhaupt 2020
  * @author Egbert Broerse 2020, 2025
  */
-public class LnSv1Device {
+public class Lnsv1Device {
     private int deviceAddressLow; // Module address in reply, value of -1 is ignored, LNSV1 default address : 88
     private int deviceAddressHi;
-    private int deviceAddress;
+    private final int deviceAddress; // required by symbolicProgrammer
     private String deviceName;
     private String rosterEntryName;
     private int swVersion;
@@ -22,10 +22,10 @@ public class LnSv1Device {
     private int cvNum;
     private int cvValue;
 
-    public LnSv1Device(int addressL, int addressH, int lastCv, int lastVal, String deviceName, String rosterName, int swVersion) {
+    public Lnsv1Device(int addressL, int addressH, int lastCv, int lastVal, String deviceName, String rosterName, int swVersion) {
         this.deviceAddressLow = addressL;
         this.deviceAddressHi = addressH;
-        this.deviceAddress = addressL;
+        this.deviceAddress = 256*addressH + addressL;
         cvNum = lastCv;
         cvValue = lastVal;
         this.deviceName = deviceName;
@@ -41,7 +41,7 @@ public class LnSv1Device {
     public int getSwVersion() {return swVersion;}
 
     /**
-     * Set the table view of the device's destination high address.
+     * Set the table view of the device's low and high address.
      * This routine does _not_ program the device's destination address.
      *
      * @param destAddrL device destination low address
