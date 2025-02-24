@@ -36,7 +36,7 @@ class CreateAndShowGUI5(TableModelListener):
 
         self.initialise_model(class_ResetButtonMaster)
         self.frame = JFrame("Train Route: " + route_name)
-        self.frame.setSize(700, 600)
+        self.frame.setSize(800, 600)
 
         config = self.frame.getGraphicsConfiguration()
         bounds = config.getBounds()
@@ -66,10 +66,19 @@ class CreateAndShowGUI5(TableModelListener):
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
 
-        scrollPane = JScrollPane(self.table);
-        scrollPane.setSize(600,600);
+        self.scrollPane = JScrollPane(self.table)
 
-        self.topPanel.add(scrollPane);
+        size_of_one_row = 30
+        height = 50
+        for row in reversed(range(len(self.model.data))):
+            height += size_of_one_row
+            # print "height" , height
+        # print "height" , height
+        height = min(height, 800)
+        self.scrollPane.setPreferredSize(Dimension(800, height))
+
+
+        self.topPanel.add(self.scrollPane)
 
         self.buttonPane = JPanel();
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
@@ -77,7 +86,7 @@ class CreateAndShowGUI5(TableModelListener):
 
         button_close = JButton("Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         button_show_wait = JButton("Toggle Journey/Wait Times", actionPerformed = self.show_wait_action)
         self.buttonPane.add(button_show_wait)
@@ -93,7 +102,7 @@ class CreateAndShowGUI5(TableModelListener):
             else:
                 label_info = JLabel("Displays to the precision of 1 fast minute. Several seconds = 1 fast minute")
             self.buttonPane.add(label_info)
-            self.buttonPane.add(Box.createHorizontalGlue());
+            self.buttonPane.add(Box.createHorizontalGlue())
 
         if self.journey_time_row_displayed == True:
 

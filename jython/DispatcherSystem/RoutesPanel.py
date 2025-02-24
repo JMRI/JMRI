@@ -75,8 +75,8 @@ class CreateAndShowGUI6(TableModelListener):
         height = 50
         for row in reversed(range(len(self.model.data))):
             height += size_of_one_row
-            print "height" , height
-        print "height" , height
+            # print "height" , height
+        # print "height" , height
         height = min(height, 800)
         self.scrollPane.setPreferredSize(Dimension(600, height))
 

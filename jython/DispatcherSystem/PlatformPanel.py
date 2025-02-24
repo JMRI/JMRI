@@ -121,7 +121,7 @@ class CreateAndShowGUI7(TableModelListener):
         for row in reversed(range(len(self.model.data))):
             height += size_of_one_row
         height = min(height, 800)
-        print "height", height
+        # print "height", height
         return height
 
     def close_action(self, event):

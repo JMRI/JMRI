@@ -51,7 +51,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         global scheduling_in_operation_gbl
         # print "class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):"
-        self.logLevel = 1
+        self.logLevel = 0
         self.frame = None
         self.f = None
         scheduling_in_operation_gbl = False
@@ -146,7 +146,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             if None in my_scheduled_route_list:
                 OptionDialog().displayMessage("check scheduled routes are entered correctly\ncannot proceed with timetable")
             else:
-                print "my_scheduled_route_list", my_scheduled_route_list
+                # print "my_scheduled_route_list", my_scheduled_route_list
                 # print "c"
                 RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
                 # print "d"
@@ -157,12 +157,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     # print "route", route.getName(), "route_locations_list", route_locations_list
                     station_list1 = [str(route_location.getName()) for route_location in route_locations_list \
                                      if ".py" not in route_location.getName()]
-                    print "e" , "station_list1", station_list1
+                    # print "e" , "station_list1", station_list1
                     for x in station_list1:
                         if x not in station_list:
                             station_list.append(x)
                     station_list.sort()
-                print "station_list", station_list
+                # print "station_list", station_list
 
 
                 if self.logLevel > 0: print "station list", station_list
@@ -181,7 +181,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     reply = OptionDialog().customQuestionMessage3str(msg, title, opt4, opt2, opt3)
                 else:
                     reply = OptionDialog().customQuestionMessage4str(msg, title, opt1, opt4, opt2, opt3)
-                print "reply", reply
+                # print "reply", reply
                 if self.logLevel > 0: print "timetable_sensor active"
                 if reply == JOptionPane.CANCEL_OPTION:
                     pass
@@ -191,7 +191,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     # timetable_gbl = None
 
                 elif reply == opt4:
-                    print "opt4"
+                    # print "opt4"
                     CreateAndShowGUI7()
 
                 elif reply == opt2:
@@ -205,13 +205,13 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
                     # result = [[station1,station2],"Show Timetable"]
                     option = result[1]
-                    print "option", option
+                    # print "option", option
 
                     if option == "Cancel" or self.od.CLOSED_OPTION == True:
                         run_local_timetable_gbl = False
                         self.timetable_sensor.setKnownState(INACTIVE)
                     else:
-                        print "result", result
+                        # print "result", result
                         station_name_list_gbl = result[0]
 
                         # get group_station_name
@@ -232,7 +232,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     options = ["Cancel", "Generate Timetable"]
                     result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
                     option = result[1]
-                    print "option", option
+                    # print "option", option
                     if option == "Cancel" or self.od.CLOSED_OPTION == True:
                         self.timetable_sensor.setKnownState(INACTIVE)
                     else:
@@ -241,7 +241,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                             group_location_mqtt_gbl = station_name_list_gbl[0]   # the first and only station  station1
                         else:
                             group_location_mqtt_gbl = self.get_group_station_name(station_name_list_gbl)
-                        print "group_location_mqtt_gbl", group_location_mqtt_gbl
+                        # print "group_location_mqtt_gbl", group_location_mqtt_gbl
                         # get emblem
                         title = "Display Train Operator Emblem?"
                         emblem_list = ["GB (British Rail)", "Germany (DB)", "No Emblem"]
@@ -306,9 +306,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_group_station_name(self, station_name_list_gbl):
 
-        print "station_name_list_gbl", station_name_list_gbl
+        # print "station_name_list_gbl", station_name_list_gbl
         concatenated_names = " ".join(station_name_list_gbl)    # [station1,station2]
-        print "concatenated_names", concatenated_names
+        # print "concatenated_names", concatenated_names
 
         station_groups = []
         for station_name in station_name_list_gbl:
@@ -317,20 +317,20 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             station_group = MyTableModel7().get_location_station_group(location)
             if station_group != " ":
                 station_groups.append(station_group)
-            print "station_groups", station_groups
+            # print "station_groups", station_groups
         counter = Counter(station_groups)
-        print "counter", counter
-        print "counter.most_common(1)", counter.most_common(1)
+        # print "counter", counter
+        # print "counter.most_common(1)", counter.most_common(1)
         most_common_item = " "
         if counter.most_common() != []:
             most_common_item = counter.most_common(1)[0][0]
-            print "most_common_item", most_common_item
+            # print "most_common_item", most_common_item
 
         if most_common_item != " ":
             group_location_gbl = most_common_item .strip()   # need an option to rename this
         else:
             group_location_gbl = concatenated_names
-        print "group_location_gbl", group_location_gbl
+        # print "group_location_gbl", group_location_gbl
 
         return group_location_gbl
 
@@ -349,7 +349,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         return True
 
     def generate_node_red_code(self, station_name_list, station_name, train_operator_emblem):
-        print "A"
         node_red_template_path = \
             jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/timetable_template/node_red_flow.json"')
         # read the file into a string
@@ -363,7 +362,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             #close file
             text_file.close()
-            print "B"
             # change the file to work with station_name
             # websocket names cannot have spaces in them
             # so where we need to replace spaces we have My_Station$ instaed of MyStation
@@ -375,7 +373,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             # "My_Station" for title
             # "My_Station_List" for list of stations to include
 
-            print "C"
 
             # store the modified file to a file in the user directory
             new_node_red_template_directory = jmri.util.FileUtil.getExternalFilename('preference:dispatcher/mqtt_timetables/')
@@ -462,7 +459,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return
             elif option == "Run Route":
                 train = [trn for [rte, trn] in list_items_with_trains if rte == route_name][0]
-                print "running route", route_name
                 set_departure_times = True
                 param_scheduled_start = "00:00"
                 journey_time_row_displayed = True
@@ -587,7 +583,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             my_list = [[train.getRoute().getName(), train] for train in train_list]
         else:
             my_list = [train.getRoute().getName() for train in train_list]
-        print "*********************************my_list************************************************", my_list
         return sorted(my_list)
 
     def start_and_end_time_scheduling(self):
@@ -2010,21 +2005,20 @@ class Trigger_Timetable:
         # print
         # print
         # print "sending mqtt message"
-        # try:
-        # Find the MqttAdapter
-        mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
-        print "adaptor found"
-        # create content to send "/jmri/timetable message content"
-        topic = "jmri/timetable"
-        payload = msg
-        print "about to send"
+        try:
+            # Find the MqttAdapter
+            mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
+            # create content to send "/jmri/timetable message content"
+            topic = "jmri/timetable"
+            payload = msg
+            # print "about to send"
 
-        # send
-        mqttAdapter.publish(topic, payload)
-        print "published mqtt message"
-        # except:
-        #     print "failure mqtt message"
-        #     pass
+            # send
+            mqttAdapter.publish(topic, payload)
+            # print "published mqtt message"
+        except:
+            print "failure mqtt message"
+            pass
 
     def send_clock_message(self, hour, minutes, event):
 
@@ -2336,7 +2330,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
     def check_train_in_block_allow_manual_repositioning(self, train_name, station_from_name):
         i = 0
-        print "train_name", train_name, "station_from_name", station_from_name
+        # print "train_name", train_name, "station_from_name", station_from_name
         while self.check_train_in_start_block(train_name, station_from_name) == False:
             if i > 2: # allow some time to recover
                 title = ""

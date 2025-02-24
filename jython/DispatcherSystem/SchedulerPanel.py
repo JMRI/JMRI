@@ -108,8 +108,6 @@ class CreateAndShowGUI4(TableModelListener):
         height = 50
         for row in reversed(range(len(self.model.data))):
             height += size_of_one_row
-            print "height" , height
-        print "height" , height
         height = min(height, 800)
         self.scrollPane.setPreferredSize(Dimension(600,height))
 
@@ -354,23 +352,23 @@ class CreateAndShowGUI4(TableModelListener):
         self.save()
         # Open and close the Operations Panel to force save of any extra trains
         if self.find_frame_by_title("Trains") is None:
-            print "did not find frame Trains so creating it"
+            # print "did not find frame Trains so creating it"
             a = jmri.jmrit.operations.trains.TrainsTableAction()
             a.actionPerformed(None)
         # now close
         f = self.find_frame_by_title("Trains")
         if f is not None:
-            print f
+            # print f
             f.dispose()
         # f = None
-        print "should be closed"
+        # print "should be closed"
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
 
     # Function to find a frame by name
     def find_frame_by_name(self, name):
         frames = JFrame.getFrames()
         for f in frames:
-            print f.getName()
+            # print f.getName()
             if f.getName() == name:
                 return f
         return None

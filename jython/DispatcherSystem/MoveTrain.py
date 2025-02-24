@@ -1970,8 +1970,8 @@ class createandshowGUI(TableModelListener):
         height = 130
         for row in reversed(range(len(self.model.data))):
             height += size_of_one_row
-            print "height" , height
-        print "height" , height
+            # print "height" , height
+        # print "height" , height
         self.frame.setPreferredSize(Dimension(800, height));
         self.completeTablePanel()
 
