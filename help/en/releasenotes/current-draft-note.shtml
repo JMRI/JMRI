@@ -693,4 +693,5 @@
         <ul>
             <li>The pop-up menu in the various Tables now has an entry
                 for "Copy System Name".</li>
+            <li>Bug fix: Add new editor panel to the Editor Manager when doing a CPE/PE switch.</li>
         </ul>
