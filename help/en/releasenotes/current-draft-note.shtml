@@ -161,6 +161,7 @@
                       Creating new event names is NOT supported.</li>
                     </ul>
                 </li>
+                <li>Correctly decode events-with-payload</li>
             </ul>
 
         <h4>Powerline</h4>
