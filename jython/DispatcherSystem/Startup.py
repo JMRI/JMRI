@@ -110,7 +110,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
                                          options[1])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
-            return [None,None]
+            return [None,"Cancel"]
         if list_items == []:
             return [None, options[s]]
         indices = my_list.getSelectedIndices()

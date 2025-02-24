@@ -106,14 +106,23 @@ class CreateAndShowGUI7(TableModelListener):
 
     def tidy_action(self,e):
         self.model.remove_not_set_row()
+        height = self.set_frame_height()
+        self.frame.setPreferredSize(Dimension(600, height))
+        self.completeTablePanel()
+
+        height = CreateAndShowGUI7().set_frame_height()
+        self.frame.setPreferredSize(Dimension(600, height))
+
+    def set_frame_height(self):
         size_of_one_row = 30
+        # set height of non row data
         height = 130
+        # add height of row data
         for row in reversed(range(len(self.model.data))):
             height += size_of_one_row
-            print "height" , height
-        print "height" , height
-        self.frame.setPreferredSize(Dimension(600, height));
-        self.completeTablePanel()
+        height = min(height, 800)
+        print "height", height
+        return height
 
     def close_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
