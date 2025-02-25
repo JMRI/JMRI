@@ -19,6 +19,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,13 +32,13 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
 
     public static final int COUNT_COLUMN = 0;
     public static final int MODADDR_COLUMN = 1;
-    public static final int MODADDRL_COLUMN = 2;
-    public static final int MODADDRH_COLUMN = 3;
-    public static final int VERSION_COLUMN = 4;
-    public static final int CV_COLUMN = 5;
-    public static final int VALUE_COLUMN = 6;
-    public static final int DEVICENAMECOLUMN = 7;
-    public static final int ROSTERENTRYCOLUMN = 8;
+    public static final int MODADDRSPLIT_COLUMN = 2;
+    public static final int VERSION_COLUMN = 3;
+    public static final int CV_COLUMN = 4;
+    public static final int VALUE_COLUMN = 5;
+    public static final int ROSTERENTRYCOLUMN = 6;
+    public static final int ROSTERSV1MODECOLUMN = 7;
+    public static final int ROSTERNAMECOLUMN = 8;
     public static final int OPENPRGMRBUTTONCOLUMN = 9;
     static public final int NUMCOLUMNS = 10;
     private final Lnsv1ProgPane parent;
@@ -64,20 +65,20 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
        switch (c) {
            case MODADDR_COLUMN:
                return Bundle.getMessage("HeadingAddress");
-           case MODADDRL_COLUMN:
-               return Bundle.getMessage("HeadingAddressLow");
-           case MODADDRH_COLUMN:
-               return Bundle.getMessage("HeadingAddressHigh");
+           case MODADDRSPLIT_COLUMN:
+               return Bundle.getMessage("HeadingAddressSplit");
            case VERSION_COLUMN:
                return Bundle.getMessage("HeadingVersion");
            case CV_COLUMN:
                return Bundle.getMessage("HeadingCvLastRead");
            case VALUE_COLUMN:
                return Bundle.getMessage("HeadingValue");
-           case DEVICENAMECOLUMN:
-               return Bundle.getMessage("HeadingDeviceModel");
            case ROSTERENTRYCOLUMN:
                return Bundle.getMessage("HeadingDeviceId");
+           case ROSTERNAMECOLUMN:
+               return Bundle.getMessage("HeadingDeviceModel");
+           case ROSTERSV1MODECOLUMN:
+               return Bundle.getMessage("HeadingIsSv1");
            case OPENPRGMRBUTTONCOLUMN:
                return Bundle.getMessage("ButtonProgram");
            case COUNT_COLUMN:
@@ -89,16 +90,18 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
    @Override
    public Class<?> getColumnClass(int c) {
        switch (c) {
+           case MODADDR_COLUMN:
            case COUNT_COLUMN:
            case VERSION_COLUMN:
-           case MODADDRL_COLUMN:
-           case MODADDRH_COLUMN:
            case CV_COLUMN:
            case VALUE_COLUMN:
                return Integer.class;
            case OPENPRGMRBUTTONCOLUMN:
                return javax.swing.JButton.class;
-           case DEVICENAMECOLUMN:
+           case ROSTERSV1MODECOLUMN:
+               return Boolean.class;
+           case MODADDRSPLIT_COLUMN:
+           case ROSTERNAMECOLUMN:
            case ROSTERENTRYCOLUMN:
            default:
                return String.class;
@@ -132,12 +135,9 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
               case MODADDR_COLUMN:
                   assert dev != null;
                   return dev.getDestAddr();
-              case MODADDRL_COLUMN:
+              case MODADDRSPLIT_COLUMN:
                   assert dev != null;
-                  return dev.getDestAddrLow();
-              case MODADDRH_COLUMN:
-                  assert dev != null;
-                  return dev.getDestAddrHigh();
+                  return dev.getDestAddrLow() + "/" + dev.getDestAddrHigh();
               case VERSION_COLUMN:
                   assert dev != null;
                   return dev.getSwVersion();
@@ -147,33 +147,25 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
               case VALUE_COLUMN:
                   assert dev != null;
                   return dev.getCvValue();
-              case DEVICENAMECOLUMN:
-                   //    <programming direct="no" paged="no" register="no" ops="no">
-                   //        <mode>LOCONETSV1MODE</mode>
-                   //    </programming>
-//                  assert dev != null;
-//                  if (dev.getDeviceName().isEmpty()) { // not yet filled in, look for a candidate
+              case ROSTERENTRYCOLUMN:
+                  assert dev != null;
+                  return dev.getRosterEntry().getId();
+              case ROSTERSV1MODECOLUMN:
+                  assert dev != null;
+                  if (dev.getRosterEntry() != null) {
+                      log.debug("========");
+
 //                      List<DecoderFile> l =
-//                          InstanceManager.getDefault(
-//                              DecoderIndexFile.class).
-//                              matchingDecoderList(
-//                                      null,
-//                                      null,
-//                                      null,
-//                                      null,
-//                                      String.valueOf(dev.getSwVersion()), // a bit risky to check just 1 value
-//                                      null,
-//                                      null,
-//                                      null,
-//                                      null
-//                              );
-//                      //log.debug("found {} possible decoder matches for LNSV1 device", l.size());
+//                              InstanceManager.getDefault(
+//                                      DecoderIndexFile.class).
+//                                      matchingDecoderList((int) dev.getDestAddr());
+//                      //log.debug("found {} possible decoder matches for LNCV device", l.size());
 //                      String lastModelName = "";
-//                      if (!l.isEmpty()) {
+//                      if (l.size() > 0) {
 //                          for (DecoderFile d : l) {
 //                              // we do not check for LNSV1 programmingMode support since we do not expect replies from non-LNSV1 devices
 //                              // (and there is currently no access to supported modes in the DecoderIndexFile)
-//                              if (d.getModel().isEmpty()) {
+//                              if (d.getModel().equals("")) {
 //                                  log.warn("Empty model(name) in decoderfile {}", d.getFileName());
 //                                  continue;
 //                              }
@@ -181,20 +173,29 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
 //                          }
 //                          dev.setDevName(lastModelName);
 //                          dev.setDecoderFile(l.get(l.size() - 1));
-//                      }
-//                      return lastModelName;
-//                  }
-//                  return dev.getDeviceName();
-                  return ""; // dev.getRosterEntry().getProtocolAsString();
-              case ROSTERENTRYCOLUMN:
+
+                      if (dev.getDecoderFile() != null) {
+                          //    <programming direct="no" paged="no" register="no" ops="no">
+                          //        <mode>LOCONETSV1MODE</mode>
+                          //    </programming>
+                          log.debug("========isSv1Mode() {}", Arrays.toString(dev.getDecoderFile().getProgrammingModes()));
+                          return (Arrays.equals(dev.getDecoderFile().getProgrammingModes(), new String[]{"LOCONETSV1MODE"}));
+                      } else {
+                          return false;
+                      }
+                  } else {
+                      return false;
+                  }
+              case ROSTERNAMECOLUMN:
                   assert dev != null;
-                  return dev.getRosterEntry();
+                  if (dev.getRosterEntry() != null) {
+                      return dev.getRosterEntry().getDecoderModel();
+                  } else {
+                      return "";
+                  }
               case OPENPRGMRBUTTONCOLUMN:
                   assert dev != null;
-                  if (!dev.getDeviceName().isEmpty()) {
-                      if ((dev.getRosterName() != null) && (dev.getRosterName().isEmpty())) {
-                          return Bundle.getMessage("ButtonCreateEntry");
-                      }
+                  if (!dev.getRosterName().isEmpty()) {
                       return Bundle.getMessage("ButtonProgram");
                   }
                   return Bundle.getMessage("ButtonNoMatchInRoster");
@@ -202,7 +203,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                  return r + 1;
           }
       } catch (NullPointerException npe) {
-        log.warn("Caught NPE reading Module {}", r);
+        log.warn("Caught NPE reading Module {}, c{}", r, c);
         return "";
       }
    }
@@ -215,14 +216,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
         }
         Lnsv1Device dev = memo.getLnsv1DevicesManager().getDeviceList().getDevice(r);
         if (c == OPENPRGMRBUTTONCOLUMN) {
-            if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonCreateEntry")) == 0) {
-                //createRosterEntry(dev); // Too risky!
-                if (dev.getRosterEntry() != null) {
-                    setValueAt(dev.getRosterName(), r, c);
-                } else {
-                    log.warn("Failed to connect RosterEntry to device {}", dev.getRosterName());
-                }
-            } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
+            if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
                 openProgrammer(r);
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonNoMatchInRoster")) == 0){
                 // need to rebuild decoderIndex, tooltip?
@@ -304,33 +298,6 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
         progFrame.pack();
         progFrame.setVisible(true);
     }
-
-//    private void createRosterEntry(LnSv1Device dev) {
-//        if (dev.getDestAddrLow() == 0) {
-//            JmriJOptionPane.showMessageDialog(parent,
-//                    Bundle.getMessage("FAIL_ADD_ENTRY_0"),
-//                    Bundle.getMessage("ButtonCreateEntry"), JmriJOptionPane.ERROR_MESSAGE);
-//        } else {
-//            String s = null;
-//            while (s == null) {
-//                s = JmriJOptionPane.showInputDialog(parent,
-//                        Bundle.getMessage("DialogEnterEntryName"),
-//                        Bundle.getMessage("EnterEntryNameTitle"),JmriJOptionPane.QUESTION_MESSAGE);
-//                if (s == null) {
-//                    // Cancel button hit
-//                    return;
-//                }
-//            }
-//
-//            RosterEntry re = new RosterEntry(dev.getDecoderFile().getFileName());
-//            re.setDccAddress(Integer.toString(dev.getDestAddr()));
-//            re.setDecoderModel(dev.getDecoderFile().getModel());
-//            re.setVersion(Integer.toString(dev.getSwVersion()));
-//            re.setId(s);
-//            _roster.addEntry(re);
-//            dev.setRosterEntry(re);
-//        }
-//    }
 
     private void warnRecreate() {
         // show dialog to inform and allow rebuilding index

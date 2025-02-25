@@ -1,8 +1,11 @@
 package jmri.jmrix.loconet;
 
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.ProgrammingTool;
@@ -10,6 +13,7 @@ import jmri.jmrix.loconet.lnsvf1.Lnsv1Device;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1Devices;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.progdebugger.ProgDebugger;
 import jmri.util.swing.JmriJOptionPane;
 
 import javax.annotation.concurrent.GuardedBy;
@@ -83,7 +87,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
     public void message(LocoNetMessage m) {
         if (Lnsv1MessageContents.isSupportedSv1Message(m)) {
             if ((Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_READ_ONE) &&
-                    (Lnsv1MessageContents.extractMessageVersion(m) > 0)) {
+                    (Lnsv1MessageContents.extractMessageVersion(m) > 0)) { // which marks replies from devices
                 // it's an LNSV1 Read_One Reply message, decode contents:
                 Lnsv1MessageContents contents = new Lnsv1MessageContents(m);
                 int vrs = contents.getVersionNum();
@@ -95,28 +99,32 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
 
                 synchronized (this) {
                     if (lnsv1Devices.addDevice(new Lnsv1Device(addrL, addrH, sv, val, "", "", vrs))) {
-                        log.debug("new LnSv1Device added to table");
+                        log.debug("new Lnsv1Device added to table");
                         // Annotate the discovered device LNSV1 data based on address
                         for (int i = 0; i < lnsv1Devices.size(); ++i) {
                             Lnsv1Device dev = lnsv1Devices.getDevice(i);
-                            if ((dev.getSwVersion() == vrs) && (dev.getDestAddr() == addrH)) {
-                                // need to find a corresponding roster entry?
-                                if (dev.getRosterName() != null && dev.getRosterName().isEmpty()) {
-                                    // Yes. Try to find a roster entry which matches the device characteristics
-                                    log.debug("Looking for version {}/adr {} in Roster", dev.getSwVersion(), dev.getDestAddr());
-                                    List<RosterEntry> l = Roster.getDefault().matchingList(Integer.toString(dev.getDestAddr()), Integer.toString(dev.getSwVersion()));
-                                    log.debug("LnSvf1DeviceManager found {} matches in Roster", l.size());
-                                    if (l.isEmpty()) {
-                                        log.debug("No corresponding roster entry found");
-                                    } else if (l.size() == 1) {
-                                        log.debug("Matching roster entry found");
-                                        dev.setRosterEntry(l.get(0)); // link this device to the entry
+                            if ((dev.getDestAddrHigh() == addrH) && (dev.getDestAddrHigh() == addrH)) {
+                                // Try to find a roster entry which matches the device characteristics
+                                log.debug("Looking for adr {} in Roster", dev.getDestAddr());
+                                List<RosterEntry> l = Roster.getDefault().matchingList(Integer.toString(dev.getDestAddr()));
+                                log.debug("LnSvf1DeviceManager found {} matches in Roster", l.size());
+                                if (l.isEmpty()) {
+                                    log.debug("No corresponding roster entry found");
+                                } else if (l.size() == 1) {
+                                    log.debug("Matching roster entry found");
+                                    dev.setRosterEntry(l.get(0)); // link this device to the entry
+                                    DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(l.get(0).getFileName());
+                                    if (decoderFile != null) {
+                                        dev.setDecoderFile(decoderFile); // link to decoderFile (to check programming mode from table)
+                                        log.debug("Attached a decoderfile to entry {}", i);
                                     } else {
-                                        JmriJOptionPane.showMessageDialog(null,
-                                                Bundle.getMessage("WarnMultipleLnsv1ModsFound", l.size(), addrL, addrH),
-                                                Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
-                                        log.info("Found multiple matching roster entries. " + "Cannot associate any one to this device.");
+                                        log.warn("Could not attach decoderfile {} to entry {}", l.get(0).getFileName(), i);
                                     }
+                                } else {
+                                    JmriJOptionPane.showMessageDialog(null,
+                                            Bundle.getMessage("WarnMultipleLnsv1ModsFound", l.size(), addrL, addrH),
+                                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
+                                    log.info("Found multiple matching LNSV1 roster entries. " + "Cannot associate any one to this device.");
                                 }
                                 // notify listeners of pertinent change to device list
                                 firePropertyChange("DeviceListChanged", true, false);
@@ -178,9 +186,9 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
             return ProgrammingResult.FAIL_NO_ADDRESSED_PROGRAMMER;
         }
 
-        //if (p.getClass() != ProgDebugger.class) {
-            // ProgDebugger is used for LocoNet HexFile Sim, uncommenting above line allows testing of LNSV1 Tool
-            if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETSV1MODE)) {
+        if (p.getClass() != ProgDebugger.class) { // Debug TODO remove EBR
+            // ProgDebugger is used for LocoNet HexFile Sim; uncommenting above line allows testing of LNSV1 Tool
+            if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETOPSBOARD)) {
                 return ProgrammingResult.FAIL_NO_LNSV1_PROGRAMMER;
             }
             p.setMode(LnProgrammerManager.LOCONETSV1MODE);
@@ -188,7 +196,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
             if (!prgMode.equals(LnProgrammerManager.LOCONETSV1MODE)) {
                 return ProgrammingResult.FAIL_NO_LNSV1_PROGRAMMER;
             }
-        //}
+        }
         RosterEntry re = Roster.getDefault().entryFromTitle(dev.getRosterName());
         String name = re.getId();
 

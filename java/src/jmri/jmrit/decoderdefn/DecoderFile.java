@@ -135,7 +135,7 @@ public class DecoderFile extends XmlFile {
         if (mfgID == null) {
             log.error("mfgID missing for decoder file {}", filename);
         }
-        if ((manufacturerID.length() > 0) && (manufacturerID.compareTo("-1") != 0)) {
+        if ((!manufacturerID.isEmpty()) && (manufacturerID.compareTo("-1") != 0)) {
             // prefer manufacturerID over mfgID
             _manufacturerID = manufacturerID;
         } else if ((mfgID != null) && (mfgID.compareTo("") != 0)) {
@@ -197,8 +197,7 @@ public class DecoderFile extends XmlFile {
     /**
      * return array of versions
      *
-     * @return array of boolean where each element is true if version matches;
-     *         false otherwise
+     * @return array of boolean where each element is true if version matches,
      */
     public boolean[] getVersions() {
         return Arrays.copyOf(versions, versions.length);
@@ -273,7 +272,7 @@ public class DecoderFile extends XmlFile {
 
     /**
      * Get the SV2 "Developer ID" number.
-     *
+     * <p>
      * This value is assigned by the device
      * manufacturer and is an 8-bit number.
      * @return the developerID number
@@ -284,7 +283,7 @@ public class DecoderFile extends XmlFile {
 
     /**
      * Get the SV2 "Manufacturer ID" number.
-     *
+     * <p>
      * This value typically matches the NMRA
      * manufacturer ID number and is an 8-bit number.
      *
@@ -336,7 +335,6 @@ public class DecoderFile extends XmlFile {
     }
 
     public enum Showable {
-
         YES, NO, MAYBE
     }
 
@@ -391,6 +389,20 @@ public class DecoderFile extends XmlFile {
                 protocols.add(LocoAddress.Protocol.getByShortName(e.getText()));
             });
         }
+    }
+
+    String[] modes = null;
+
+    public String[] getProgrammingModes() {
+        if (modes == null) {
+            if (_element.getChild("programming") != null) {
+                List<Element> modeList = _element.getChild("programming").getChildren("mode");
+                modes = (String[]) modeList.stream().toArray();
+            } else {
+                modes = new String[] {};
+            }
+        }
+        return modes;
     }
 
     boolean isProductIDok(Element e, String extraInclude, String extraExclude) {
@@ -453,7 +465,7 @@ public class DecoderFile extends XmlFile {
         if (test.contains("," + checkFor + ",")) {
             return true;
         } else if (checkFor != null) {
-            String testList[] = checkFor.split(",");
+            String[] testList = checkFor.split(",");
             if (testList.length > 1) {
                 for (String item : testList) {
                     if (test.contains("," + item + ",")) {
@@ -498,13 +510,13 @@ public class DecoderFile extends XmlFile {
         // load variables to table
         for (Element e : variablesElement.getChildren("variable")) {
             try {
-                // if its associated with an inconsistent number of functions,
+                // if it's associated with an inconsistent number of functions,
                 // skip creating it
                 if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
                         && getNumFunctions() < e.getAttribute("minFn").getIntValue()) {
                     continue;
                 }
-                // if its associated with an inconsistent number of outputs,
+                // if it's associated with an inconsistent number of outputs,
                 // skip creating it
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
                         && getNumOutputs() < Integer.parseInt(e.getAttribute("minOut").getValue())) {
@@ -524,13 +536,13 @@ public class DecoderFile extends XmlFile {
         // load constants to table
         for (Element e : variablesElement.getChildren("constant")) {
             try {
-                // if its associated with an inconsistent number of functions,
+                // if it's associated with an inconsistent number of functions,
                 // skip creating it
                 if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
                         && getNumFunctions() < e.getAttribute("minFn").getIntValue()) {
                     continue;
                 }
-                // if its associated with an inconsistent number of outputs,
+                // if it's associated with an inconsistent number of outputs,
                 // skip creating it
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
                         && getNumOutputs() < e.getAttribute("minOut").getIntValue()) {

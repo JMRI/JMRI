@@ -3,15 +3,20 @@ package jmri.jmrix.loconet.lnsvf1;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A class to hold LocoNet LNSVf1 (LocoIO) device identity information.
- * See jmri.jmrix.loconet.lnsvf1.Sv1DiscoverPane
+ * See jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane
  *
  * @author B. Milhaupt 2020
  * @author Egbert Broerse 2020, 2025
  */
 public class Lnsv1Device {
-    private int deviceAddressLow; // Module address in reply, value of -1 is ignored, LNSV1 default address : 88
+    private int deviceAddressLow; // Module address in reply, value of -1 is ignored, LNSV1 default address: 88
     private int deviceAddressHi;
     private final int deviceAddress; // required by symbolicProgrammer
     private String deviceName;
@@ -25,7 +30,7 @@ public class Lnsv1Device {
     public Lnsv1Device(int addressL, int addressH, int lastCv, int lastVal, String deviceName, String rosterName, int swVersion) {
         this.deviceAddressLow = addressL;
         this.deviceAddressHi = addressH;
-        this.deviceAddress = 256*addressH + addressL;
+        this.deviceAddress = 256 * (addressH - 1) + addressL; // equals: addressH << 7 + addressL
         cvNum = lastCv;
         cvValue = lastVal;
         this.deviceName = deviceName;
@@ -44,9 +49,9 @@ public class Lnsv1Device {
      * Set the table view of the device's low and high address.
      * This routine does _not_ program the device's destination address.
      *
-     * @param destAddrL device destination low address
+     * @param destAddrL device low address
      */
-    public void setDestAddr(int destAddrL) {this.deviceAddressLow = destAddrL;}
+    public void setDestAddrLow(int destAddrL) {this.deviceAddressLow = destAddrL;}
     public void setDestAddrHigh(int destAddrH) {this.deviceAddressHi = destAddrH;}
     public void setDevName(String s) {deviceName = s;}
     public void setRosterName(String s) {rosterEntryName = s;}
@@ -80,6 +85,6 @@ public class Lnsv1Device {
         cvValue = val;
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(Lnsv1Device.class);
+    private final static Logger log = LoggerFactory.getLogger(Lnsv1Device.class);
 
 }

@@ -651,6 +651,28 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
+     * Get a List of {@link RosterEntry} objects in Roster matching the address and the programming mode LNSV1.
+     * The list will be empty if there are no matches.
+     * <p>
+     * This method calls {@link #getEntriesMatchingCriteria(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     * }
+     * with a null group.
+     * This pattern is specifically for LNSV1 (since 5.13) and will only return entries from the "Hans Deloof LocoIO" family.
+     *
+     * @param dccAddress    address of entry or null for any address
+     * @return List of matching RosterEntries or an empty List
+     * @see #getEntriesMatchingCriteria(java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String)
+     */
+    @Nonnull
+    public List<RosterEntry> matchingList(String dccAddress) {
+        return this.getEntriesMatchingCriteria(null, null, dccAddress,
+                null, null, "Hans Deloof LocoIO", null, null, null,
+                null, null);
+    }
+
+    /**
      * Check if an entry is consistent with specific properties.
      * <p>
      * A null String argument always matches. Strings are used for convenience

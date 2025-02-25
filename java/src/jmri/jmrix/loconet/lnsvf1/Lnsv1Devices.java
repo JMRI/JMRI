@@ -23,20 +23,18 @@ public class Lnsv1Devices {
     }
 
     /**
-     * Add a device that responded to a PROG_START request to the list of LNCV Devices.
+     * Add a device that responded to a PROBE_ALL request (or simply sent a READ_ONE reply) to the list of LNSV1 Devices.
      *
      * @param d the device object, containing its properties
-     * @return true if device was added, false if not eg it was already in the list
+     * @return true if device was added, false if not eg. it was already in the list
      */
     public synchronized boolean addDevice(Lnsv1Device d) {
         if (!deviceExists(d)) {
             deviceList.add(d);
-            log.debug("added device with version {}, addr {}",
-                    d.getSwVersion(), d.getDestAddr());
+            log.debug("added device with addr {}", d.getDestAddr());
             return true;
         } else {
-            log.debug("device already in list: version {}, addr {}",
-                    d.getSwVersion(), d.getDestAddr());
+            log.debug("device already in list: addr {} ", d.getDestAddr());
             return false;
         }
     }
@@ -46,31 +44,24 @@ public class Lnsv1Devices {
     }
 
     /**
-     * Get index of device with matching Mfg, ProdID, Num and
-     * Device Address.
+     * Get index of device with matching Device Address (only).
      * Where a deviceToBeFound parameter is -1, that parameter is not compared.
      *
      * @param deviceToBeFound Device we try to find in known LNSV1 devices list
-     * @return index of found device, else -1 if matching device not found
+     * @return index of found device, -1 if matching device not found
      */
     public synchronized int isDeviceExistant(Lnsv1Device deviceToBeFound) {
-        log.debug("Looking for a known LNSV1 device which matches characteristics: version {}, addr {}.",
-                deviceToBeFound.getSwVersion(),
+        log.debug("Looking for a known LNSV1 device which matches characteristics: address {}.",
                 deviceToBeFound.getDestAddr());
         for (int i = 0; i < deviceList.size(); ++i) {
             Lnsv1Device dev = deviceList.get(i);
-            log.trace("Comparing against known device: version {}, addr {}.",
-                    dev.getSwVersion(),
+            log.debug("Comparing against known device: addr {}.",
                     deviceToBeFound.getDestAddr());
-            if ((deviceToBeFound.getSwVersion() == -1) ||
-                    (dev.getSwVersion() == deviceToBeFound.getSwVersion())) {
-                if ((deviceToBeFound.getDestAddr() == -1) ||
-                        (dev.getDestAddr() == deviceToBeFound.getDestAddr())) {
-                    log.debug("Match Found! Searched device matched against known device: article {}, addr {}.",
-                            dev.getSwVersion(),
-                            dev.getDestAddr());
-                    return i;
-                }
+            if ((deviceToBeFound.getDestAddr() == -1) ||
+                    (dev.getDestAddr() == deviceToBeFound.getDestAddr())) {
+                log.debug("Match Found! Searched device matched against known device: addr {}.",
+                        dev.getDestAddr());
+                return i;
             }
         }
         log.debug("No matching known device was found!");

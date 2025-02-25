@@ -2,6 +2,7 @@ package jmri.jmrix.loconet.swing.lnsv1prog;
 
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
+import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1Device;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
@@ -142,12 +143,14 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         moduleTable.setRowHeight(ROW_HEIGHT);
         moduleTable.setDefaultEditor(JButton.class, new ButtonEditor(new JButton()));
         moduleTable.setDefaultRenderer(JButton.class, new ButtonRenderer());
+        moduleTable.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
         moduleTable.setRowSelectionAllowed(true);
         moduleTable.getSelectionModel().addListSelectionListener(event -> {
             synchronized (this) {
                 if (moduleTable.getSelectedRow() > -1 && moduleTable.getSelectedRow() < moduleTable.getRowCount()) {
-                    // print low + high column values from selected row
-                    copyEntry((int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 1), (int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 2));
+                    // copy low + high column values from selected row
+                    int dcc = (int) moduleTable.getValueAt(moduleTable.getSelectedRow(), 1);
+                    copyEntrytoFields(dcc & 0x7F, (dcc >> 7) + 1);
                 }
             }
         });
@@ -343,9 +346,8 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             try {
                 adrL = inDomain(addressLField.getText(), 255);
                 adrH = inDomain(addressHField.getText(), 255);
-                //vrs = inDomain(versionField.getText(), 255);
-                //memo.getLnTrafficController().sendLocoNetMessage(LnSv1MessageContents.createModProgEndRequest(adr, adrH));
-                //statusText1.setText(Bundle.getMessage("FeedBackModProgClosed", adrL));
+                //memo.getLnTrafficController().sendLocoNetMessage(LnSv1MessageContents.createModProgEndRequest(adrL, adrH));
+                //statusText1.setText(Bundle.getMessage("FeedBackModProgClosed", adrL, adrH));
                 //modProgButton.setText(Bundle.getMessage("ButtonSetModuleAddress"));
                 moduleProgRunning = -1;
                 addressLField.setEditable(true);
@@ -357,8 +359,8 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         }
         if ((!addressLField.getText().isEmpty()) && (!addressHField.getText().isEmpty())) {
             try {
-                adrL = inDomain(addressLField.getText(), 255); // goes in d5-d6 as module address
-                adrH = inDomain(addressHField.getText(), 255);
+                adrL = inDomain(addressLField.getText(), 127); // goes in SCR + d5 as module address
+                adrH = inDomain(addressHField.getText(), 127);
                 //vrs = inDomain(versionField.getText(), 255);
                 //memo.getLnTrafficController().sendLocoNetMessage(LnSv1MessageContents.createModProgStartRequest(adr, adrH));
                 statusText1.setText(Bundle.getMessage("FeedBackModProgOpen", adrL));
@@ -387,10 +389,10 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 //        }
         if (addressLField.getText() != null && addressHField.getText() != null &&svField.getText() != null) {
             try {
-                adrL = inDomain(addressLField.getText(), 255); // used as address for reply
-                adrH = inDomain(addressHField.getText(), 255); // used as address for reply
+                adrL = inDomain(addressLField.getText(), 127); // used as address for reply
+                adrH = inDomain(addressHField.getText(), 127); // used as address for reply
                 vrs = inDomain(versionField.getText(), 255);
-                cv = inDomain(svField.getText(), 9999); // decimal entry
+                cv = inDomain(svField.getText(), 127); // decimal entry
                 // memo.getLnTrafficController().sendLocoNetMessage(LnSv1MessageContents.createSv1ReadRequest(adrL, adrH, cv));
 
                 Lnsv1MessageContents.probeLocoIOs(memo.getLnTrafficController());
@@ -453,7 +455,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         }
     }
 
-    public void copyEntry(int adrL, int adrH) {
+    public void copyEntrytoFields(int adrL, int adrH) {
         if (moduleProgRunning < 0) { // protect locked fields while programming
             addressLField.setText(adrL + "");
             addressHField.setText(adrH + "");
