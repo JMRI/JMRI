@@ -94,7 +94,7 @@
           <li>ERROR</li>
           <li>OFF</li>
           </ul>
-          </p>
+
           <p>The FATAL level ( not in the SLF4J interface hence not used by JMRI ) between ERROR and OFF is omitted for clarity</p>
           
         <h3 id="logging_configuration">Logging Configuration</h3>
@@ -109,12 +109,33 @@
            href="https://github.com/JMRI/JMRI/blob/master/default_lcf.xml">default_lcf.xml</a>&quot; file.
           </p>
 
-          <p>A &quot;default_lcf.xml&quot; file in the User Settings directory will take
+          <p>A &quot;default_lcf.xml&quot; file in the Settings directory will take
           precedence over the default_lcf.xml file in the main program directory.
+
           <br>
           The main program directory version will be reset each time JMRI is updated,
           whereas the user preference version will not be updated.
+
+          <br>
+          Some parts of the file are required for JMRI logging setup.
+          The settings version does not inherit from the program directory version.
           </p>
+
+          <ul>
+            <li>Use the existing default_lcf.xml from the program directory as a starting template.
+              <br>For a Windows install that's typically &quot;C:\Program Files (x86)\JMRI\default_lcf.xml&quot;, or see 
+                <a href="https://github.com/JMRI/JMRI/blob/master/default_lcf.xml"
+                  title="JMRI Default Logging Configuration File">https://github.com/JMRI/JMRI/blob/master/default_lcf.xml</a>.
+            </li>
+            <li>Copy and paste the file from program directory to Settings.
+                <br>For a Windows install, that's typically C&colon;&sol;Users&sol;&lt;username&gt;&sol;JMRI&sol; , or see
+                <a href="../setup/Files.shtml" title="JMRI Setup: Configuration Files">JMRI Setup: Configuration Files</a>.
+            </li>
+            <li>Open up the file using a text editor.</li>
+            <li>Add customisations towards the end of the Loggers section, where the examples are ( see below ).</li>
+            <li>Save the file.</li>
+            <li>JMRI will read the file on each restart.</li>
+          </ul>
 
           <p>The &quot;default_lcf.xml&quot; file contains lots of comments on what the various terms mean.
           <br>Content within the <code>&lt;&#33;&#45;&#45; &#45;&#45;&gt;</code> symbols is processed as a comment,
@@ -140,7 +161,7 @@
           
           <br><code><strong>&lt;Logger name=&quot;jmri.jmrit.display.layoutEditor&quot; level=&quot;DEBUG&quot;&sol;&gt;</strong></code>
 
-          <p>Remember to save the default_lcf.xml file in your user Settings Files for the configuration to be retained
+          <p>Remember to save the default_lcf.xml file in your Settings for the configuration to be retained
           following JMRI being updated.</p>
           
           <p class="important">Prior to JMRI 5.5.4 , logging configuration was controlled by a &quot;default.lcf&quot;
