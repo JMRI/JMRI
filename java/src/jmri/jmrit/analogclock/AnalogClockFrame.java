@@ -10,14 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import jmri.InstanceManager;
-import jmri.Timebase;
+import jmri.FastClock;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
@@ -32,7 +32,7 @@ import jmri.util.ThreadingUtil;
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations
-    Timebase clock;
+    FastClock clock;
     double minuteAngle;
     double hourAngle;
     String amPm;
@@ -40,7 +40,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     public AnalogClockFrame() {
         super(Bundle.getMessage("MenuItemAnalogClock"));
 
-        clock = InstanceManager.getDefault(jmri.Timebase.class);
+        clock = InstanceManager.getDefault(jmri.FastClock.class);
 
         // init GUI
         setPreferredSize(new java.awt.Dimension(200, 200));
@@ -68,7 +68,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             AnalogClockFrame.this.update();  // set proper time
         });
 
-        // listen for changes to the Timebase parameters
+        // listen for changes to the FastClock parameters
         clock.addPropertyChangeListener(AnalogClockFrame.this);
 
         // request callback to update time
@@ -269,9 +269,9 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
     @SuppressWarnings("deprecation") // Date.getHours, getMinutes, getSeconds
     void update() {
-        Date now = clock.getTime();
-        int hours = now.getHours();
-        int minutes = now.getMinutes();
+        Calendar now = clock.getTime();
+        int hours = now.get(Calendar.HOUR);
+        int minutes = now.get(Calendar.MINUTE);
         minuteAngle = minutes * 6.;
         hourAngle = hours * 30. + 30. * minuteAngle / 360.;
         if (hours < 12) {

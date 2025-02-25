@@ -2,9 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
@@ -1251,11 +1249,9 @@ public class ActiveTrain implements PropertyChangeProvider {
         setStatus(READY);
         restartPoint = true;
         if (delayType == TIMEDDELAY) {
-            Date now = jmri.InstanceManager.getDefault(jmri.Timebase.class).getTime();
-            @SuppressWarnings("deprecation") // Date.getHours
-            int nowHours = now.getHours();
-            @SuppressWarnings("deprecation") // Date.getMinutes
-            int nowMinutes = now.getMinutes();
+            Calendar now = jmri.InstanceManager.getDefault(jmri.FastClock.class).getTime();
+            int nowHours = now.get(Calendar.HOUR);
+            int nowMinutes = now.get(Calendar.MINUTE);
             int hours = restartDelay / 60;
             int minutes = restartDelay % 60;
             restartHr = nowHours + hours + ((nowMinutes + minutes) / 60);

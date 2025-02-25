@@ -4,7 +4,7 @@ import jmri.InstanceManager;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Date;
+import java.util.Calendar;
 
 /*
  * The SRCP protocol requires that response messages include a timestamp based
@@ -29,8 +29,8 @@ public class TimeStampedOutput extends OutputStream {
 
     @Override
     public synchronized void write(byte[] bytes) throws IOException {
-        Date currentTime = InstanceManager.getDefault(jmri.Timebase.class).getTime();
-        long time = currentTime.getTime();
+        Calendar currentTime = InstanceManager.getDefault(jmri.FastClock.class).getTime();
+        long time = currentTime.getTimeInMillis();
         String timeString = String.format("%s.%s ",time/1000,time%1000);
         byte[] outputBytes = new byte[timeString.length() + bytes.length];
         System.arraycopy(timeString.getBytes(),0,outputBytes,0,timeString.length());

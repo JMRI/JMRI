@@ -37,7 +37,7 @@ import jmri.Section;
 import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.SignalMast;
-import jmri.Timebase;
+import jmri.FastClock;
 import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
@@ -556,7 +556,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         newTrainActive = boo;
     }
     private AutoTrainsFrame _autoTrainsFrame = null;
-    private final Timebase fastClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
+    private final FastClock fastClock = InstanceManager.getNullableDefault(jmri.FastClock.class);
     private final Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
     private transient java.beans.PropertyChangeListener minuteChangeListener = null;
 
@@ -2890,7 +2890,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      */
     public boolean isFastClockTimeGE(int hr, int min) {
         Calendar now = Calendar.getInstance();
-        now.setTime(fastClock.getTime());
+        now.setTimeInMillis(fastClock.getTime().getTimeInMillis());
         int nowHours = now.get(Calendar.HOUR_OF_DAY);
         int nowMinutes = now.get(Calendar.MINUTE);
         return ((nowHours * 60) + nowMinutes) == ((hr * 60) + min);
