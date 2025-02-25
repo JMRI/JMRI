@@ -75,18 +75,18 @@ public class LocoNetMessageInterpret {
      * Where the code is unable to determine a correct interpretation, the returned
      * string contains a message indicating that the message is not decoded followed
      * by the individual bytes of the message (in hexadecimal).
-     *
+     * <p>
      * Note that many message types are "poorly defined" here, with many 
      * "reverse-engineered" messages, and many that do not define actual bits.  This 
      * means that this code can give interpretations that may not actually "decode"
      * an actual message. 
      * 
      * @param l Message to parse
-     * @param turnoutPrefix "System Name+ prefix which designates the connection's
+     * @param turnoutPrefix "System Name" + prefix which designates the connection's
      *          Turnouts, such as "LT"
-     * @param sensorPrefix "System Name+ prefix which designates the connection's
+     * @param sensorPrefix "System Name" + prefix which designates the connection's
      *          Turnouts, such as "LS"
-     * @param reporterPrefix "System Name+ prefix which designates the connection's
+     * @param reporterPrefix "System Name" + prefix which designates the connection's
      *          Turnouts, such as "LR"
      * @return String representation of the interpretation of the message
      */
@@ -94,7 +94,6 @@ public class LocoNetMessageInterpret {
 
         String result;
 
-        result = "";
         /*
          * 2 Byte MESSAGE OPCODES
          * ; FORMAT = <OPC>,<CKSUM>
@@ -203,7 +202,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_SW_ACK: {
                 result = interpretOpcSwAck(l, turnoutPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -218,7 +217,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_SW_STATE: {
                 result = interpretOpcSwState(l, turnoutPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -234,7 +233,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_RQ_SL_DATA: {
                 result = interpretOpcRqSlData(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -261,7 +260,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_MOVE_SLOTS: {
                 result = interpretOpcMoveSlots(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -316,7 +315,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_CONSIST_FUNC: {
                 result = interpretOpcConsistFunc(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -348,7 +347,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_LONG_ACK: {
                 result = interpretLongAck(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -377,7 +376,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_INPUT_REP: {
                 result = interpretOpcInputRep(l, sensorPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -416,7 +415,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_SW_REP: {
                 result = interpretOpcSwRep(l, turnoutPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -444,7 +443,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_SW_REQ: {
                 result = interpretOpcSwReq(l, turnoutPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -457,7 +456,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_LOCO_SND: {
                 result = interpretOpcLocoSnd(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -470,7 +469,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_LOCO_DIRF: {
                 result = interpretOpcLocoDirf(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -483,7 +482,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_LOCO_SPD: {
                 result = interpretOpcLocoSpd(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -491,7 +490,7 @@ public class LocoNetMessageInterpret {
 
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR: {
                 result = interpretPocExpLocoSpdDirFunction(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -507,7 +506,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_PANEL_QUERY: {
                 result = interpretOpcPanelQuery(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -524,7 +523,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_PANEL_RESPONSE: {
                 result = interpretOpcPanelResponse(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -543,7 +542,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_MULTI_SENSE: {
                 result = interpretOpcMultiSense(l, reporterPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -562,7 +561,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_MULTI_SENSE_LONG: {
                 result = interpretOpcMultiSenseLong(l, reporterPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -650,7 +649,7 @@ public class LocoNetMessageInterpret {
             case LnConstants.OPC_WR_SL_DATA:
             case LnConstants.OPC_SL_RD_DATA: {
                 result = interpretOpcWrSlDataOpcSlRdData(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -663,7 +662,7 @@ public class LocoNetMessageInterpret {
             // case OPC_EXP_WR_SL_DATA: // NOTE: Duplicate of definition of OPC_ALM_READ!
 
                 result = interpretAlm(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -684,7 +683,7 @@ public class LocoNetMessageInterpret {
              */
             case LnConstants.OPC_PEER_XFER: {
                 result = interpretOpcPeerXfer(l, reporterPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -693,7 +692,7 @@ public class LocoNetMessageInterpret {
             //                   0xE4
             case LnConstants.OPC_LISSY_UPDATE: {
                 result = interpretOpcLissyUpdate(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -702,7 +701,7 @@ public class LocoNetMessageInterpret {
             //                    0xED
             case LnConstants.OPC_IMM_PACKET: {
                 result = interpretOpcImmPacket(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -711,7 +710,7 @@ public class LocoNetMessageInterpret {
             //                     0xD3
             case LnConstants.RE_OPC_PR3_MODE: {
                 result = interpretOpcPr3Mode(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -720,7 +719,7 @@ public class LocoNetMessageInterpret {
             //                      0xA3
             case LnConstants.RE_OPC_IB2_F9_F12: {
                 result = interpretIb2F9_to_F12(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -731,11 +730,11 @@ public class LocoNetMessageInterpret {
             //                        0xD4
             case LnConstants.OPC_EXP_SLOT_MOVE_RE_OPC_IB2_SPECIAL: {
                 result = interpretIb2Special(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 result = interpretOpcExpMoveSlots(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -973,7 +972,7 @@ public class LocoNetMessageInterpret {
         // The LocoNet request message encodes a serial number but NOT a device type.
         //
         // Depending on which devices are selected in DigiIPL when the "ping"
-        // is selected, (and probably the S/Ns of the devices attached to the LocoNet,
+        // is selected, (and probably the S/Ns of the devices attached to the LocoNet),
         // the response is as follows:
         //     DT402D  LocoNet message includes the serial number from the DT402D's
         //             Slave (RF24) serial number.  If a UR92 is attached to LocoNet,
@@ -1161,7 +1160,7 @@ public class LocoNetMessageInterpret {
             case 0x01: {
                 // Seems to be a query for just duplex devices.
                 String result = interpretOpcPeerXfer20_1(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -1169,7 +1168,7 @@ public class LocoNetMessageInterpret {
             case 0x02: {
                 // Request Duplex Radio Channel
                 String result = interpretOpcPeerXfer20_2(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -1178,7 +1177,7 @@ public class LocoNetMessageInterpret {
             case 0x03: {
                 // Duplex Group Name
                 String result = interpretOpcPeerXfer20_3(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -1186,7 +1185,7 @@ public class LocoNetMessageInterpret {
             case 0x04: {
                 // Duplex Group ID
                 String result = interpretOpcPeerXfer20_4(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -1194,7 +1193,7 @@ public class LocoNetMessageInterpret {
             case 0x07: {
                 // Duplex Group Password
                 String result = interpretOpcPeerXfer20_7(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -1202,7 +1201,7 @@ public class LocoNetMessageInterpret {
             case 0x10: {
                 // Radio Channel Noise/Activity
                 String result = interpretOpcPeerXfer20_10(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -1210,7 +1209,7 @@ public class LocoNetMessageInterpret {
 
             case LnConstants.RE_IPL_PING_OPERATION: { // case 0x08, which decodes 0xe5 0x14 0x08
                 String result = interpretOpcPeerXfer20_8(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -1219,7 +1218,7 @@ public class LocoNetMessageInterpret {
             case LnConstants.RE_IPL_IDENTITY_OPERATION: { // case 0x0f, which decodes 0xe5 0x14 0x0f
                 // Operations related to DigiIPL "Ping", "Identify" and "Discover"
                 String result = interpretOpcPeerXfer20_0f(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -1234,90 +1233,91 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcPeerXfer20Sub10(LocoNetMessage l) {
-        /**
-         * **********************************************************************************
-         * IPL device identity report - RE_IPL_IDENTITY_OPERATION (Device
-         * Report) * The message bytes are assigned as follows:
-         * <p>
-         * <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst>
-         * <DI_Slv> <DI_Smf> <DI_Hsw> ...
-         * <p>
-         * <DI_F1> <DI_Ssw> <DI_Hs0> <DI_Hs1>
-         * <DI_Hs2> <DI_F2> <DI_Ss0> ...
-         * <p>
-         * <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK> * where:
-         * <p>
-         * <DI_Hmf> DigiIPL-capable Host device manufacturer number. This is not
-         * * the same as an NMRA Manufacturer ID. * 0x00 Digitrax * Others No
-         * other Host device manufacturer * numbers have been reverse- *
-         * engineered
-         * <p>
-         * <DI_Hst> encodes the DigiIPL-capable Host device type as follows: *
-         * When
-         * <DI_Hmf> = 0x00 * 0x00 (0 decimal) No Host device type reported *
-         * 0x04 (4 decimal) UT4D * 0x23 (35 decimal) PR3 * 0x2A (42 decimal)
-         * DT402 (or DT402R or DT402D) * 0x33 (51 decimal) DCS51 * 0x5C (92
-         * decimal) UR92 * Others No other Host device types have been *
-         * reverse-engineered * When <DI_Hmf> is not 0x00 * All values Not
-         * reverse-engineered
-         * <p>
-         * <DI_Slv> encodes the DigiIPL-capable Slave device type as follows: *
-         * When
-         * <DI_Smf> = 0x00 * 0x00 (0 decimal) Report for all Slave device types
-         * * 0x18 (24 decimal) RF24 * Others No other Slave device types have
-         * been * reverse-engineered
-         * <p>
-         * <DI_Smf> DigiIPL-capable Slave device manufacturer number. This is
-         * not * the same as an NMRA Manufacturer ID. * 0x00 Digitrax * Others
-         * No other Slave device manufacturer * numbers have been reverse- *
-         * engineered
-         * <p>
-         * <DI_Hsw> encodes the DigiIPL-capable Host device firmware revision *
-         * number as follows: * bit 7 always 0 * bits 6-3 Host device firmware
-         * major revision number * bits 2-0 Host device firmware minor revision
-         * number
-         * <p>
-         * <DI_F1> encodes additional bits for the Slave device firmware major *
-         * revision number and for the Host device serial number. * bits 7-4
-         * always 0000b * bit 3 Bit 23 of Host Device Serial Number * bit 2 Bit
-         * 15 of Host Device Serial Number * bit 1 Bit 7 of Host Device Serial
-         * Number * bit 0 bit 4 of Slave device firmware Major number
-         * <p>
-         * <DI_Ssw> encodes the DigiIPL-capable Slave device firmware revision *
-         * number as follows: * bit 7 always 0 * bits 6-3 Host device firmware
-         * major revision number * bits 6-3 4 least-significant bits of Slave
-         * device firmware major * revision number (see also <DI_F1>[0]) * bits
-         * 2-0 Slave device firmware minor revision number
-         * <p>
-         * <DI_Hs0> encodes 7 bits of the 24 bit Host device serial number: *
-         * bit 7 always 0 * bits 6-3 Bits 6-0 of Host device serial number
-         * <p>
-         * <DI_Hs1> encodes 7 bits of the 24 bit Host device serial number: *
-         * bit 7 always 0 * bits 6-3 Bits 14-9 of Host device serial number
-         * <p>
-         * <DI_Hs2> encodes 7 bits of the 24 bit Host device serial number: *
-         * bit 7 always 0 * bits 6-3 Bits 22-16 of Host device serial number
-         * <p>
-         * <DI_F2> encodes additional bits for the Slave device serial number. *
-         * bits 7-4 always 0000b * bit 3 Bit 31 of Slave Device Serial Number *
-         * bit 2 Bit 23 of Slave Device Serial Number * bit 1 Bit 15 of Slave
-         * Device Serial Number * bit 0 Bit 7 of Slave Device Serial Number
-         * <p>
-         * <DI_Ss0> encodes 7 bits of the 32 bit Slave device serial number: *
-         * bit 7 always 0 * bits 6-3 Bits 6-0 of Slave device serial number
-         * <p>
-         * <DI_Ss1> encodes 7 bits of the 32 bit Slave device serial number: *
-         * bit 7 always 0 * bits 6-3 Bits 14-9 of Slave device serial number
-         * <p>
-         * <DI_Ss2> encodes 7 bits of the 32 bit Slave device serial number: *
-         * bit 7 always 0 * bits 6-3 Bits 22-16 of Slave device serial number
-         * <p>
-         * <DI_Ss3> encodes 7 bits of the 32 bit Slave device serial number: *
-         * bit 7 always 0 * bits 6-3 Bits 30-24 of Slave device serial number *
-         * * Information reverse-engineered by B. Milhaupt and used with
-         * permission *
-         * **********************************************************************************
+        /*
+          **********************************************************************************
+          IPL device identity report - RE_IPL_IDENTITY_OPERATION (Device
+          Report) * The message bytes are assigned as follows:
+          <p>
+          <E5> <14> <0F> <08> <DI_Hmf> <DI_Hst>
+          <DI_Slv> <DI_Smf> <DI_Hsw> ...
+          <p>
+          <DI_F1> <DI_Ssw> <DI_Hs0> <DI_Hs1>
+          <DI_Hs2> <DI_F2> <DI_Ss0> ...
+          <p>
+          <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK> * where:
+          <p>
+          <DI_Hmf> DigiIPL-capable Host device manufacturer number. This is not
+          * the same as an NMRA Manufacturer ID. * 0x00 Digitrax * Others No
+          other Host device manufacturer * numbers have been reverse- *
+          engineered
+          <p>
+          <DI_Hst> encodes the DigiIPL-capable Host device type as follows: *
+          When
+          <DI_Hmf> = 0x00 * 0x00 (0 decimal) No Host device type reported *
+          0x04 (4 decimal) UT4D * 0x23 (35 decimal) PR3 * 0x2A (42 decimal)
+          DT402 (or DT402R or DT402D) * 0x33 (51 decimal) DCS51 * 0x5C (92
+          decimal) UR92 * Others No other Host device types have been *
+          reverse-engineered * When <DI_Hmf> is not 0x00 * All values Not
+          reverse-engineered
+          <p>
+          <DI_Slv> encodes the DigiIPL-capable Slave device type as follows: *
+          When
+          <DI_Smf> = 0x00 * 0x00 (0 decimal) Report for all Slave device types
+          * 0x18 (24 decimal) RF24 * Others No other Slave device types have
+          been * reverse-engineered
+          <p>
+          <DI_Smf> DigiIPL-capable Slave device manufacturer number. This is
+          not * the same as an NMRA Manufacturer ID. * 0x00 Digitrax * Others
+          No other Slave device manufacturer * numbers have been reverse- *
+          engineered
+          <p>
+          <DI_Hsw> encodes the DigiIPL-capable Host device firmware revision *
+          number as follows: * bit 7 always 0 * bits 6-3 Host device firmware
+          major revision number * bits 2-0 Host device firmware minor revision
+          number
+          <p>
+          <DI_F1> encodes additional bits for the Slave device firmware major *
+          revision number and for the Host device serial number. * bits 7-4
+          always 0000b * bit 3 Bit 23 of Host Device Serial Number * bit 2 Bit
+          15 of Host Device Serial Number * bit 1 Bit 7 of Host Device Serial
+          Number * bit 0 bit 4 of Slave device firmware Major number
+          <p>
+          <DI_Ssw> encodes the DigiIPL-capable Slave device firmware revision *
+          number as follows: * bit 7 always 0 * bits 6-3 Host device firmware
+          major revision number * bits 6-3 4 least-significant bits of Slave
+          device firmware major * revision number (see also <DI_F1>[0]) * bits
+          2-0 Slave device firmware minor revision number
+          <p>
+          <DI_Hs0> encodes 7 bits of the 24 bit Host device serial number: *
+          bit 7 always 0 * bits 6-3 Bits 6-0 of Host device serial number
+          <p>
+          <DI_Hs1> encodes 7 bits of the 24 bit Host device serial number: *
+          bit 7 always 0 * bits 6-3 Bits 14-9 of Host device serial number
+          <p>
+          <DI_Hs2> encodes 7 bits of the 24 bit Host device serial number: *
+          bit 7 always 0 * bits 6-3 Bits 22-16 of Host device serial number
+          <p>
+          <DI_F2> encodes additional bits for the Slave device serial number. *
+          bits 7-4 always 0000b * bit 3 Bit 31 of Slave Device Serial Number *
+          bit 2 Bit 23 of Slave Device Serial Number * bit 1 Bit 15 of Slave
+          Device Serial Number * bit 0 Bit 7 of Slave Device Serial Number
+          <p>
+          <DI_Ss0> encodes 7 bits of the 32 bit Slave device serial number: *
+          bit 7 always 0 * bits 6-3 Bits 6-0 of Slave device serial number
+          <p>
+          <DI_Ss1> encodes 7 bits of the 32 bit Slave device serial number: *
+          bit 7 always 0 * bits 6-3 Bits 14-9 of Slave device serial number
+          <p>
+          <DI_Ss2> encodes 7 bits of the 32 bit Slave device serial number: *
+          bit 7 always 0 * bits 6-3 Bits 22-16 of Slave device serial number
+          <p>
+          <DI_Ss3> encodes 7 bits of the 32 bit Slave device serial number: *
+          bit 7 always 0 * bits 6-3 Bits 30-24 of Slave device serial number *
+          * Information reverse-engineered by B. Milhaupt and used with
+          permission *
+          **********************************************************************************
          */
+
         // Request for one specific IPL-queryable device to return its identity information.
         // Expected response is of type <E5><14><10>...
         //
@@ -1400,7 +1400,7 @@ public class LocoNetMessageInterpret {
         int pxct1 = l.getElement(5);
         int pxct2 = l.getElement(10);
 
-        int d[] = l.getPeerXfrData();
+        int[] d = l.getPeerXfrData();
 
         if ((src == 0x7F) && (dst_l == 0x7F) && (dst_h == 0x7F)
                 && ((pxct1 & 0x70) == 0x40)) {
@@ -1465,7 +1465,7 @@ public class LocoNetMessageInterpret {
         if ((src == 0x7F) && ((pxct1 & 0x70) == 0x00)) {
 
             if ((dst_l == 0x00) && (dst_h == 0x00)) {
-                char c[] = new char[]{0, 0, 0, 0, 0, 0, 0, 0};
+                char[] c = new char[]{0, 0, 0, 0, 0, 0, 0, 0};
                 c[0] = (char) d[0];
                 c[1] = (char) d[1];
                 c[2] = (char) d[2];
@@ -1487,18 +1487,18 @@ public class LocoNetMessageInterpret {
         }
 
         String result = interpretSV1Message(l);
-        if (result.length() > 0) {
+        if (!result.isEmpty()) {
             return result;
         }
 
         result = interpretSV0Message(l);
-        if (result.length() > 0) {
+        if (!result.isEmpty()) {
             return result;
         }
 
         // check for a specific type - SV Programming messages format 2
         result = interpretSV2Message(l);
-        if (result.length() > 0) {
+        if (!result.isEmpty()) {
             return result;
         }
 
@@ -1513,7 +1513,7 @@ public class LocoNetMessageInterpret {
 
         // check for a specific type - Uhlenbrock LNSV Programming messages format
         String result = interpretLncvMessage(l);
-        if (result.length() > 0) {
+        if (!result.isEmpty()) {
             return result;
         }
 
@@ -1521,7 +1521,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretSV1Message(LocoNetMessage l) {
-        int d[] = l.getPeerXfrData();
+        int[] d = l.getPeerXfrData();
         if ((l.getElement(4) != 1)
                 || ((l.getElement(5) & 0x70) != 0)
                 || ((l.getElement(10) & 0x70) != 0x10)) {
@@ -1550,9 +1550,9 @@ public class LocoNetMessageInterpret {
             return "";
         }
 
-        // (Jabour/Deloof LocoIO), SV Programming messages format 1
+        // (Jabour/DeLoof LocoIO), SV Programming messages format 1
         int dst_l = l.getElement(3);
-        int d[] = l.getPeerXfrData();
+        int[] d = l.getPeerXfrData();
         int src = l.getElement(2);
 
         String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
@@ -1669,7 +1669,7 @@ public class LocoNetMessageInterpret {
          * Information reverse-engineered by B. Milhaupt and used with permission */
         switch (l.getElement(2)) {
             case 0x40: {
-                /**
+                /*
                  * **********************************************************************************
                  * Transponding "find" query message * The message bytes are
                  * assigned as follows:
@@ -1693,7 +1693,7 @@ public class LocoNetMessageInterpret {
                         locoAddr);
             }
             case 0x00: {
-                /**
+                /*
                  * **********************************************************************************
                  * Transponding "find" report message * The message bytes are
                  * assigned as follows:
@@ -1811,26 +1811,26 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcPeerXfer(LocoNetMessage l, String reporterPrefix) {
-        String result = "";
+        String result;
         // The first byte seems to determine the type of message.
         switch (l.getElement(1)) {
             case 0x10: { //l.getZElement(1)
                 result = interpretOpcPeerXfer16(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
             }
             case 0x0F: {
                 result = interpretOpcPeerXfer15(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
             }
             case 0x0A: {
                 result = interpretOpcPeerXfer10(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -1838,21 +1838,21 @@ public class LocoNetMessageInterpret {
             }
             case 0x14: {
                 result = interpretOpcPeerXfer20(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
             }
             case 0x09: { // l.getZElement(1)
                 result = interpretOpcPeerXfer9(l, reporterPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
             }
             case 0x07: {
                 result = interpretOpcPeerXfer7(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -2198,7 +2198,7 @@ public class LocoNetMessageInterpret {
     private static String interpretDeviceType(LocoNetMessage l) {
         int pCMD = (l.getElement(3) & 0xF0);
         if (pCMD == 0x00) {
-            /**
+            /*
              * **************************************************
              * Device type report * The message bytes as assigned as follows:
              * <p>
@@ -2266,19 +2266,20 @@ public class LocoNetMessageInterpret {
 
     private static String interpretOpcMultiSense(LocoNetMessage l, String reporterPrefix) {
         int type = l.getElement(1) & LnConstants.OPC_MULTI_SENSE_MSG;
+        String result;
         switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
                 // This is a PM42 power event.
-                String result = interpretPm4xPowerEvent(l);
-                if (result.length() > 0) {
+                result = interpretPm4xPowerEvent(l);
+                if (!result.isEmpty()) {
                     return result;
                 }
                 result = interpretOpSws(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 result = interpretDeviceType(l);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 } else {
                     break;
@@ -2287,13 +2288,13 @@ public class LocoNetMessageInterpret {
             case LnConstants.OPC_MULTI_SENSE_PRESENT:
             case LnConstants.OPC_MULTI_SENSE_ABSENT:
                 result = interpretOpcMultiSenseTranspPresence(l, reporterPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
             case LnConstants.OPC_MULTI_SENSE_RAILCOM_AD:
                 result = interpretOpcMultiSenseRailcomAD(l, reporterPrefix);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -2374,14 +2375,14 @@ public class LocoNetMessageInterpret {
     }
 
     private static String convertRailComAD(int indexValue, int dynamicValue) {
-        /**
+        /*
          ***************************************************
          * RailCom App DYN (ID 7) message
          * indexValue = 6 bit value value per standard
          * dynamicValue = 8 bit value per standard
          **/
 
-        String indexString = "";
+        String indexString;
         switch (indexValue) {
             case 0: //Speed
                 indexString = Bundle.getMessage("LN_MSG_RAILCOM_HELPER_INDEX_VALUE_0");
@@ -2399,10 +2400,10 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcMultiSenseRailcomAD(LocoNetMessage l, String reporterPrefix) {
-        /**
+        /*
         ***************************************************
         * Multi Sense Standard RailCom App DYN message (Loconet OpCode 0xD0)
-        * The message bytes as assigned as follows:
+        * The message bytes are assigned as follows:
         *
         * <0xD0> <RC_I> <RCDV_L> <AD_H> <AD_L> <CHK>
         *
@@ -2420,7 +2421,7 @@ public class LocoNetMessageInterpret {
         * value; AD_H{6:0} represent the upper 7 bits * of the 14 bit
         * address.
         *
-        * Information reverse-engineered by Michael Ricahrdson
+        * Information reverse-engineered by Michael Richardson
         **/
 
         String locoAddr = convertToMixed(l.getElement(4), l.getElement(3));
@@ -2434,7 +2435,8 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcMultiSenseLong(LocoNetMessage l, String reporterPrefix) {
-         /***************************************************
+         /*
+         **************************************************
          * Multi Sense Long RailCom App DYN message (Loconet OpCode 0xE0)
          * The message bytes as assigned as follows:
          *
@@ -2496,7 +2498,7 @@ public class LocoNetMessageInterpret {
 
             String locoAddr = convertToMixed(l.getElement(5), l.getElement(4));
 
-            String transpActivity = "";
+            String transpActivity;
 
             String direction = ((l.getElement(6) & 0x40) == 0)
                     ? Bundle.getMessage("LN_MSG_OPC_MULTI_SENSE_LONG_LOCO_DIRECTION_HELPER_EAST")
@@ -2562,17 +2564,17 @@ public class LocoNetMessageInterpret {
             mode = Bundle.getMessage("LN_MSG_SLOT_HELPER_ACCESS_TYPE_RESPONSE");
         }
 
+        String result;
         switch (slot) {
             case LnConstants.FC_SLOT:
-                String result;
                 result = interpretFastClockSlot(l, mode, id1, id2);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
             case LnConstants.PRG_SLOT:
                 result = interpretProgSlot(l, mode, id1, id2, command);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -2583,7 +2585,7 @@ public class LocoNetMessageInterpret {
                 return "";
             case LnConstants.CFG_EXT_SLOT:
                 result = interpretCmdStnExtCfgSlotRdWr(l, command);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -2591,14 +2593,14 @@ public class LocoNetMessageInterpret {
             // end programming track block
             case LnConstants.CFG_SLOT:
                 result = interpretCmdStnCfgSlotRdWr(l, command);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
 
             default:
                 result = interpretStandardSlotRdWr(l, id1, id2, command, slot);
-                if (result.length() > 0) {
+                if (!result.isEmpty()) {
                     return result;
                 }
                 break;
@@ -2613,7 +2615,7 @@ public class LocoNetMessageInterpret {
         int contactNum = ((SENSOR_ADR(in1, in2) - 1) * 2 + ((in2 & LnConstants.OPC_INPUT_REP_SW) != 0 ? 2 : 1));
         // get system and user names
         String sensorSystemName = sensorPrefix + contactNum;
-        String sensorUserName = "";
+        String sensorUserName;
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorSystemName);
         sensorUserName = "";
         if (sensor != null) {
@@ -2647,7 +2649,7 @@ public class LocoNetMessageInterpret {
         }
 
         // There is no way to tell what kind of a board sent the message.
-        // To be user friendly, we just print all the known combos.
+        // To be user-friendly, we just print all the known combos.
         return Bundle.getMessage("LN_MSG_OPC_INPUT_REP",
                 sensorSystemName, sensorUserName,
                 Bundle.getMessage((in2 & LnConstants.OPC_INPUT_REP_HI) != 0
@@ -2666,7 +2668,7 @@ public class LocoNetMessageInterpret {
                 + SENSOR_ADR(sn1, sn2);
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutSystemName);
 
-        String uname = "";
+        String uname;
         if (turnout != null) {
             uname = turnout.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
@@ -2708,7 +2710,7 @@ public class LocoNetMessageInterpret {
                 + SENSOR_ADR(l.getElement(1), l.getElement(2));
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutSystemName);
 
-        String uname = "";
+        String uname;
         if (turnout != null) {
             uname = turnout.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
@@ -2738,7 +2740,7 @@ public class LocoNetMessageInterpret {
                 + SENSOR_ADR(l.getElement(1), l.getElement(2));
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutSystemName);
 
-        String uname = "";
+        String uname;
         if (turnout != null) {
             uname = turnout.getUserName();
             if ((uname != null) && (!uname.isEmpty())) {
@@ -2755,7 +2757,7 @@ public class LocoNetMessageInterpret {
 
     private static String interpretOpcRqSlData(LocoNetMessage l) {
         int slot = l.getElement(1) + 128 * (l.getElement(2) & 0x07);
-        boolean expSlotRequ = (l.getElement(2) & 0x40) == 0X40 ? true : false;
+        boolean expSlotRequ = (l.getElement(2) & 0x40) == 0X40;
         switch (slot) {
          // Slots > 120 & < 128 are all special, but these are the only ones we know to decode.
          // Extended System Slots 248 thru 251 dealt with separately, not here
@@ -2842,7 +2844,7 @@ public class LocoNetMessageInterpret {
         if ((dirf & 0x40) == 0x40) {
             return "";
         }
-        String dirf0_4[] = interpretF0_F4toStrings(dirf);
+        String[] dirf0_4 = interpretF0_F4toStrings(dirf);
         return Bundle.getMessage("LN_MSG_HELPER_DIRF",
                 Bundle.getMessage((dirf & LnConstants.DIRF_DIR) != 0
                         ? "LN_MSG_DIRECTION_REV" : "LN_MSG_DIRECTION_FWD"),
@@ -2855,7 +2857,7 @@ public class LocoNetMessageInterpret {
         int dirf = l.getElement(2);
 
         String dirFinfo = interpretDIRF(dirf);
-        if (dirFinfo.length() == 0) {
+        if (dirFinfo.isEmpty()) {
             return "";
         }
 
@@ -2913,7 +2915,7 @@ public class LocoNetMessageInterpret {
                     + SENSOR_ADR(l.getElement(1), l.getElement(2));
             Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutSystemName);
 
-            String uname = "";
+            String uname;
             if (turnout != null) {
                 uname = turnout.getUserName();
                 if ((uname != null) && (!uname.isEmpty())) {
@@ -2929,7 +2931,7 @@ public class LocoNetMessageInterpret {
             String outputState = ((sw2 & LnConstants.OPC_SW_ACK_OUTPUT) != 0
                     ? Bundle.getMessage("LN_MSG_SW_OUTPUT_STATE_ON")
                     : Bundle.getMessage("LN_MSG_SW_OUTPUT_STATE_OFF"));
-            if (turnoutUserName.length() == 0) {
+            if (turnoutUserName.isEmpty()) {
                 return Bundle.getMessage("LN_MSG_OPC_SW_REQ_NORMAL_WITHOUT_USERNAME",
                         turnoutSystemName,
                         pointsDirection, outputState);
@@ -2960,7 +2962,7 @@ public class LocoNetMessageInterpret {
          * so on such that if they are all in a row they don't get hit at
          * the same time.
          */
-        int topbits = 0;
+        int topbits;
         int midbits = (a << 2) + (c << 1) + b;
         int count = 0;
         StringBuilder addrListB = new StringBuilder();
@@ -2979,7 +2981,7 @@ public class LocoNetMessageInterpret {
                     addrListB.append(",\n\t");  // NOI18N
                 }
             }
-            addrListB.append("").append(lval);  // NOI18N
+            addrListB.append(lval);  // NOI18N
             addrListB.append("-").append(hval); // NOI18N
             count++;
         }
@@ -3019,7 +3021,7 @@ public class LocoNetMessageInterpret {
          * <p>
          * where:
          * <p>
-         * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, 10=10:1 etc, max
+         * <CLK_RATE> 0=Freeze clock, * 1=normal 1:1 rate, 10=10:1 etc., max
          * VALUE is 7F/128 to 1
          * <p>
          * <FRAC_MINSL> FRAC mins hi/lo are a sub-minute counter, depending on
@@ -3553,8 +3555,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretCmdStnCfgSlotRdWr(LocoNetMessage l, int command) {
-
-        /**
+        /*
          * ************************************************
          * Configuration slot, holding op switches
          * ************************************************
@@ -3741,8 +3742,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretStandardSlotRdWr(LocoNetMessage l, int id1, int id2, int command, int slot) {
-
-        /**
+        /*
          * ************************************************
          * normal slot read/write message - see info above *
          * ************************************************
@@ -3925,7 +3925,6 @@ public class LocoNetMessageInterpret {
 
     private static String interpretOpcImmPacket(LocoNetMessage l) {
         String result;
-        result = "";
 
         /*
          * OPC_IMM_PACKET   0xED
@@ -3933,7 +3932,7 @@ public class LocoNetMessageInterpret {
         if (l.getElement(1) == 0x0F) { // length = 15
             // check for a specific type - Uhlenbrock LNSV Programming messages format
             result = interpretLncvMessage(l);
-            if (result.length() > 0) {
+            if (!result.isEmpty()) {
                 return result;
             }
 
@@ -4036,9 +4035,8 @@ public class LocoNetMessageInterpret {
                 if ((nmraSubInstructionType == 0x1d) && (packetInt[3] == 0x7f)) {
                     playableWhistleLevel = packetInt[4];
                 }
-            } else {
-                // immediate packet not addressed to a multi-function (mobile) decoder
             }
+            // immediate packet not addressed to a multi-function (mobile) decoder
             if ((mobileDecoderAddress >= 0)
                     && (nmraInstructionType == 1)
                     && (nmraSubInstructionType == 0x1D)) {
@@ -4195,7 +4193,7 @@ public class LocoNetMessageInterpret {
                             * 2.3.7.2 Configuration Variable Access Instruction - Short Form
                             * This instruction has the format of:
                             * {instruction bytes} = 1111GGGG 0 DDDDDDDD 0 DDDDDDDD
-                            * The 8 bit data DDDDDDDD is placed in the configuration
+                            * The 8-bit data DDDDDDDD is placed in the configuration
                             * variable identified by GGGG according
                             */
                             log.debug("Is an Short-form Extended Accessory Ops-mode CV access");
@@ -4434,7 +4432,7 @@ public class LocoNetMessageInterpret {
             } else {
                 encodingType = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_IB2");
             }
-            String funcInfo[] = new String[7];
+            String[] funcInfo = new String[7];
             int mask = 1;
             for (int i = 0; i < 7; i++) {
                 // handle 7 bits of data
@@ -4467,7 +4465,7 @@ public class LocoNetMessageInterpret {
         } else if ((l.getElement(1) == LnConstants.RE_IB2_SPECIAL_FUNCS_TOKEN)
                 && (l.getElement(3) == LnConstants.RE_IB1_SPECIAL_F0_F4_TOKEN)) {
             // For Intellibox-I "one" with SW version 2.x - Special-case for F0 to F4
-            String funcInfo[] = new String[7];
+            String[] funcInfo = new String[7];
             funcInfo[0] = Bundle.getMessage("LN_MSG_INTELLIBOX_FUNC_CTL_HELPER_INDIV_FUNC",
                     0,
                     (l.getElement(4) & LnConstants.RE_IB1_F0_MASK) == 0 ? Bundle.getMessage("LN_MSG_FUNC_ON")
@@ -4570,13 +4568,12 @@ public class LocoNetMessageInterpret {
         String decimalIdValueWithoutLocale_SpecificFormatting
                 = Integer.toString(((id2 & 0x7F) * 128 + (id1 & 0x7F)));
 
-        String s = Bundle.getMessage("LN_MSG_THROTTLE_ID",
+        return Bundle.getMessage("LN_MSG_THROTTLE_ID",
                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                         StringUtil.twoHexFromInt(id2 & 0x7F)),
                 Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                         StringUtil.twoHexFromInt(id1 & 0x7F)),
                 decimalIdValueWithoutLocale_SpecificFormatting);
-        return s;
     }
 
     /**
@@ -4893,7 +4890,7 @@ public class LocoNetMessageInterpret {
             int slot = ( (l.getElement(2) & 0x07 ) *128) + l.getElement(3); // slot number for this request
 
             String result = interpretExtendedSlotRdWr(l, slot) ;
-            if (result.length() > 0) {
+            if (!result.isEmpty()) {
                 return result;
             }
         }
@@ -4996,13 +4993,13 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretExtendedSlotRdWr(LocoNetMessage l, int slot) {
-        /**
+        /*
          * ************************************************
          * extended slot read/write message               *
          * ************************************************
          */
         /*
-         * If its a "Special" slot (Stats etc) use a different routine
+         * If it's a "Special" slot (Stats etc) use a different routine
          */
         if (slot > 247 && slot < 253) {
             return interpretExtendedSlot_StatusData(l,slot);
@@ -5054,15 +5051,15 @@ public class LocoNetMessageInterpret {
     /**
      * Interprets an Enhanced Slot Report message in the "Query Mode" range of
      * slot numbers.
-     *
+     * <p>
      * Only the primary slot numbers are interpreted, not any "aliases".
      *
      * @param l Enhanced Slot report LocoNetMessage to be interpreted
-     * @param slot
+     * @param slot Slot number
      * @return String showing interpretation.
      */
     private static String interpretExtendedSlot_StatusData(LocoNetMessage l, int slot) {
-       String baseInfo = "";
+       String baseInfo;
        String detailInfo = "";
        switch (slot) {
            case 248:
@@ -5089,7 +5086,7 @@ public class LocoNetMessageInterpret {
                 detailInfo = interpretExtendedSlot_Query_Mode_252(l); // DCC track status info
                 break;
             default:
-                baseInfo = "Wrong Slot # ("+Integer.toString(slot)+")";
+                baseInfo = "Wrong Slot # ("+ slot +")";
         }
        return Bundle.getMessage("LN_MSG_OPC_EXP_QUERY_MODE_OVERALL",
                slot, baseInfo, detailInfo);
@@ -5243,9 +5240,9 @@ public class LocoNetMessageInterpret {
                 flt, arv, dst);
     }
 
-    private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
-    private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
-    private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
+    private static final String[] ds54sensors = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
+    private static final String[] ds64sensors = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
+    private static final String[] se8csensors = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetMessageInterpret.class);
 }
