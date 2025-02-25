@@ -76,6 +76,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
     private RosterEntry rosterEntry;
 
+    private boolean hideConsistTools = true;
     /**
      * Constructor
      * @param throttleManager the throttle manager
@@ -516,6 +517,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
         getRosterEntrySelector().setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
         topPanel.add(getRosterEntrySelector());
 
+        if (!hideConsistTools) {
         if (InstanceManager.getDefault(NceConsistRoster.class).numEntries() > 0) { // NCE consists
             // NCE implementation of consists is specific, TODO: refactor to use generic JMRI consists
             conRosterBox = InstanceManager.getDefault(NceConsistRoster.class).fullRosterComboBox();
@@ -535,7 +537,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 topPanel.add(consistPanel);
             }
         }
-
+        }
         mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // bottom : buttons
