@@ -1060,6 +1060,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
 //            ed.pack();
             ed.setVisible(true);
             dispose();
+            InstanceManager.getDefault(EditorManager.class).add(ed);
             return ed;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException cnfe) {
             log.error("changeView exception {}", cnfe.toString());
