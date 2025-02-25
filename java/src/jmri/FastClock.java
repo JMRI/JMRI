@@ -53,6 +53,13 @@ public interface FastClock extends NamedBean {
     /**
      * Set the current time.
      *
+     * @param d the new time in milliseconds
+     */
+    void setTime(@Nonnull long d);
+
+    /**
+     * Set the current time.
+     *
      * @param i the new time
      */
     void setTime(@Nonnull Instant i);

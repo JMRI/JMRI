@@ -126,6 +126,14 @@ public class DefaultFastClock extends jmri.implementation.AbstractNamedBean impl
      * {@inheritDoc}
      */
     @Override
+    public void setTime(long time) {
+        setTime(getCalendarByMillisec(time));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setTime(Instant i) {
         setTime(getCalendarByMillisec(i.getEpochSecond() * 1000));
     }
