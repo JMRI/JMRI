@@ -1,7 +1,9 @@
 import java
 import jmri
 
-# This produces a user interface to Dispatcher to allow running and simulation of trains.
+# Dispatcher System extends Dispatcher by automatically creating stations and associated dispatcher files
+# allowing trains to be dispatched between the stations and scheduled with timetables.
+# Simulation is supported and can be used to try out the system before the physical layout is built.
 
 # You have to first set up:
 
