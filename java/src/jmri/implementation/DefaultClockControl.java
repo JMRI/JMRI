@@ -1,7 +1,10 @@
 package jmri.implementation;
 
+import java.util.Calendar;
 import java.util.Date;
+
 import javax.annotation.CheckForNull;
+
 import jmri.ClockControl;
 import jmri.InstanceManager;
 
@@ -50,7 +53,7 @@ public class DefaultClockControl implements ClockControl {
 
     /**
      * Returns true if hardware clock accuracy can be corrected using the
-     * computer clock. 
+     * computer clock.
      * <p>
      * Hardware implementations should override this and return
      * true if they can correct their hardware clock.
@@ -111,6 +114,15 @@ public class DefaultClockControl implements ClockControl {
     }
 
     /**
+     * For the default implementation, set time is ignored.
+     * {@inheritDoc}
+     */
+    @Override
+    public void setTime(Calendar now) {
+        setTime(now.getTime());
+    }
+
+    /**
      * Default implementation returns InstanceM default jmri.Timebase getTime().
      * ie. the time of the internal clock.
      * {@inheritDoc}
@@ -130,6 +142,15 @@ public class DefaultClockControl implements ClockControl {
     }
 
     /**
+     * Default implementation is to call SetTime to now.
+     * {@inheritDoc}
+     */
+    @Override
+    public void startHardwareClock(Calendar now) {
+        startHardwareClock(now.getTime());
+    }
+
+    /**
      * Default implementation is to ignore.
      * {@inheritDoc}
      */
@@ -143,5 +164,14 @@ public class DefaultClockControl implements ClockControl {
      */
     @Override
     public void initializeHardwareClock(double rate, Date now, boolean getTime) {
+    }
+
+    /**
+     * Default implementation is to ignore this request.
+     * {@inheritDoc}
+     */
+    @Override
+    public void initializeHardwareClock(double rate, Calendar now, boolean getTime) {
+        initializeHardwareClock(rate, now.getTime(), getTime);
     }
 }

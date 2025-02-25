@@ -1,5 +1,7 @@
 package jmri.implementation;
 
+import java.util.Calendar;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -23,16 +25,16 @@ public class DefaultClockControlTest {
         t.setRate(2.0); // doesn't do anything
         Assert.assertEquals(1.0, t.getRate(), 0.01);
 
-        t.setTime(null); // doesn't do anything
+        t.setTime((Calendar)null); // doesn't do anything
         t.getTime();
-        
+
         Assert.assertEquals(0, t.getStatus());
 
         Assert.assertEquals(null, t.getHardwareClockName());
-        
+
         Assert.assertTrue(! t.canCorrectHardwareClock());
         Assert.assertTrue(! t.canSet12Or24HourClock());
-        
+
     }
 
     @BeforeEach
