@@ -60,9 +60,16 @@ public interface FastClock extends NamedBean {
     /**
      * Set the current time and force a synchronization with the DCC system.
      *
-     * @param d the new time
+     * @param time the new time
      */
-    void userSetTime(@Nonnull Calendar d);
+    void userSetTime(@Nonnull Calendar time);
+
+    /**
+     * Set the current time in milliseconds and force a synchronization with the DCC system.
+     *
+     * @param time the new time
+     */
+    void userSetTime(@Nonnull long time);
 
     /**
      * Get the current time.
@@ -241,6 +248,13 @@ public interface FastClock extends NamedBean {
      * @param time startup time.
      */
     void setStartSetTime(boolean set, Calendar time);
+
+    /**
+     * Set time at start up option, and start up time.
+     * @param set true for set time at startup, else false.
+     * @param time startup time in milliseconds.
+     */
+    void setStartSetTime(boolean set, long time);
 
     /**
      * Get if to use a set start time.
