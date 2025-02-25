@@ -15,7 +15,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.*;
@@ -24,7 +23,7 @@ import org.netbeans.jemmy.operators.*;
  * @author Paul Bender Copyright (C) 2017
  * @author Steve Young Copyright (C) 2020
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
 
     protected static class FtTestConsole extends jmri.jmrix.can.cbus.swing.console.CbusConsolePane {
