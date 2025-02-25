@@ -87,14 +87,6 @@ class SteamSound extends EngineSound {
         super(name);
     }
 
-    // Responds to throttle loco direction key (see EngineSound.java and EngineSoundEvent.java)
-    @Override
-    public void changeLocoDirection(int d) {
-        // If loco direction was changed we need to set topspeed of the loco to new value
-        // (this is necessary, when topspeed-forward and topspeed-reverse differs)
-        log.debug("loco direction: {}", d);
-    }
-
     @Override
     public void startEngine() {
         log.debug("Starting Engine");
@@ -104,10 +96,14 @@ class SteamSound extends EngineSound {
 
     @Override
     public void stopEngine() {
-        current_rpm_sound.sound.fadeOut();
+        getCurrSound().fadeOut();
         if (current_rpm_sound.use_chuff) {
             current_rpm_sound.stopChuff();
         }
+    }
+
+    private SoundBite getCurrSound() {
+        return current_rpm_sound.sound;
     }
 
     private RPMSound getRPMSound(int rpm) {
@@ -148,7 +144,7 @@ class SteamSound extends EngineSound {
                 // DO something to shut down
                 //t = 0.0f;
                 setActualSpeed(0.0f);
-                current_rpm_sound.sound.fadeOut();
+                getCurrSound().fadeOut();
                 if (current_rpm_sound.use_chuff) {
                     current_rpm_sound.stopChuff();
                 }
