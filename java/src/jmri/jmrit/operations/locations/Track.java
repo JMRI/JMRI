@@ -1453,7 +1453,7 @@ public class Track extends PropertyChangeSupport {
                         if (rLoc.getName().equals(getLocation().getName()) &&
                                 rLoc.isPickUpAllowed() &&
                                 rLoc.getMaxCarMoves() > 0 &&
-                                !train.isLocationSkipped(rLoc.getId()) &&
+                                !train.isLocationSkipped(rLoc) &&
                                 ((getTrainDirections() & rLoc.getTrainDirection()) != 0 || train.isLocalSwitcher()) &&
                                 ((getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 ||
                                         train.isLocalSwitcher())) {

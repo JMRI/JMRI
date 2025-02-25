@@ -286,7 +286,7 @@ public class SpurEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(f.isActive());
 
         // try having the train skip the location
-        trainA.addTrainSkipsLocation(rloc.getId());
+        trainA.addTrainSkipsLocation(rloc);
 
         JemmyUtil.enterClickAndLeaveThreadSafe(f.saveTrackButton);
         // error dialog should have appeared

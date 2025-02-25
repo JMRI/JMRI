@@ -291,7 +291,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
      *
      * @return route location
      */
-    public RouteLocation getLocationById(String id) {
+    public RouteLocation getRouteLocationById(String id) {
         return _routeHashTable.get(id);
     }
 
