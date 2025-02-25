@@ -119,7 +119,7 @@ public class DefaultClockControl implements ClockControl {
      */
     @Override
     public void setTime(Calendar now) {
-        setTime(now.getTime());
+        setTime(now != null ? now.getTime() : null);
     }
 
     /**

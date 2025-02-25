@@ -779,7 +779,10 @@ public class DefaultFastClock extends jmri.implementation.AbstractNamedBean impl
                 timeStorageFormat = new java.text.SimpleDateFormat("h:mm a");
             }
         }
-        clockMemory.setValue(timeStorageFormat.format(date));
+
+        // SimpleDateFormat needs a Date, not a Calendar
+        clockMemory.setValue(timeStorageFormat.format(date.getTime()));
+//        clockMemory.setValue(timeStorageFormat.format(date));
     }
 
     void updateMemory(double factor) {
