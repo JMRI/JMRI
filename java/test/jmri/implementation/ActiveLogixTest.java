@@ -99,6 +99,7 @@ public class ActiveLogixTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation")    // jmri.Timebase
     public void testCheckFastClock() throws TimebaseRateException {
         Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).getTurnout("IT301");
         Assert.assertNotNull(turnout1);

@@ -154,7 +154,7 @@ public class InstanceManagerTest {
         InstanceManager.store(t1, TurnoutManager.class);
 
         var set = InstanceManager.getInstanceClasses();
-        
+
         Assert.assertTrue("PowerManager", set.contains(PowerManager.class));
         Assert.assertTrue("TurnoutManager", set.contains(TurnoutManager.class));
     }
@@ -217,7 +217,7 @@ public class InstanceManagerTest {
     static synchronized void setavoidLoopAutoCreateCycle( boolean newVal) {
         avoidLoopAutoCreateCycle = newVal;
     }
-    
+
     public static class AutoCreateCycle implements InstanceManagerAutoDefault {
 
         public AutoCreateCycle() {
@@ -299,6 +299,7 @@ public class InstanceManagerTest {
      * Test of types that have defaults, even with no system attached.
      */
     @Test
+    @SuppressWarnings("deprecation")    // jmri.Timebase
     public void testAllDefaults() {
         Assert.assertNotNull(InstanceManager.getDefault(SensorManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(TurnoutManager.class));

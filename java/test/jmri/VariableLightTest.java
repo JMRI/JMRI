@@ -45,6 +45,7 @@ public class VariableLightTest {
     private jmri.Timebase clock;
 
     @BeforeEach
+    @SuppressWarnings("deprecation")    // jmri.Timebase
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
