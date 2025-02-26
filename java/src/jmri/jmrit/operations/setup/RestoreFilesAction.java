@@ -10,12 +10,11 @@ import javax.swing.JFileChooser;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.util.swing.ExceptionContext;
-import jmri.util.swing.ExceptionDisplayFrame;
-import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.*;
 
 /**
- * Swing action to backup operation files to a directory selected by the user.
+ * Swing action to restore operation files from a directory selected by the
+ * user.
  *
  * @author Daniel Boudreau Copyright (C) 2011
  * @author Gregory Madsen Copyright (C) 2012
@@ -32,7 +31,7 @@ public class RestoreFilesAction extends AbstractAction {
     }
 
     private void restore() {
-  // This method can restore files from any directory selected by the File
+        // This method can restore files from any directory selected by the File
         // Chooser.
 
         // check to see if files are dirty
@@ -122,5 +121,3 @@ public class RestoreFilesAction extends AbstractAction {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RestoreFilesAction.class);
 }
-
-

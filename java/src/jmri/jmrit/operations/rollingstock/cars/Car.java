@@ -433,12 +433,26 @@ public class Car extends RollingStock {
         return _previousFinalDestination;
     }
 
+    public String getPreviousFinalDestinationName() {
+        if (getPreviousFinalDestination() != null) {
+            return getPreviousFinalDestination().getName();
+        }
+        return NONE;
+    }
+
     public void setPreviousFinalDestinationTrack(Track track) {
         _previousFinalDestTrack = track;
     }
 
     public Track getPreviousFinalDestinationTrack() {
         return _previousFinalDestTrack;
+    }
+
+    public String getPreviousFinalDestinationTrackName() {
+        if (getPreviousFinalDestinationTrack() != null) {
+            return getPreviousFinalDestinationTrack().getName();
+        }
+        return NONE;
     }
 
     public void setPreviousScheduleId(String id) {
