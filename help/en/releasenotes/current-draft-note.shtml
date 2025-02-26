@@ -136,7 +136,6 @@
                 are within the consist tables. Restoring one of those backup files could corrupt the
                 memory used for AIU status and RS-232 buffers. This fixes both of those and makes sure the
                 restore will only restore within the consist tables.</li>
-
             </ul>
 
         <h4>Oak Tree</h4>
@@ -278,6 +277,15 @@
                 <li></li>
             </ul>
 
+        <h4>GCA</h4>
+            <ul>
+                <li>
+                   Added GCA50 (Arduino Nano based LocoIO) and
+                   GCA51 (2x RFID reader + 8 port LocoIO) models
+                   to the DIY HDL_LocoIO decoder definition.
+                </li>
+            </ul>
+
         <h4>Hattoms</h4>
             <ul>
                 <li></li>
@@ -350,7 +358,8 @@
 
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li></li>
+                <li>Added GCA50 and GCA51 models to the HDL_LocoIO
+                decoder file, showing only valid modes.</li>
             </ul>
 
         <h4>QSI</h4>
@@ -513,6 +522,12 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The <strong>Listen On Beans</strong>,
+              <strong>Listen On Beans - Local variable</strong> and
+              <strong>Listen On Beans - Table</strong> actions
+              can now listen on Audio beans.</li>
+          <li><strong>Occupancy Blocks</strong> can now be used in
+              the <strong>For each</strong> action.</li>
           <li></li>
         </ul>
 
@@ -687,4 +702,5 @@
         <ul>
             <li>The pop-up menu in the various Tables now has an entry
                 for "Copy System Name".</li>
+            <li>Bug fix: Add new editor panel to the Editor Manager when doing a CPE/PE switch.</li>
         </ul>

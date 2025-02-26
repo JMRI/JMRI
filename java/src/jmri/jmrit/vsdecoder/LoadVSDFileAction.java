@@ -96,16 +96,16 @@ public class LoadVSDFileAction extends AbstractAction {
             log.debug("VSD File name: {}", vsdfile.getName());
             if (vsdfile.isInitialized()) {
                 VSDecoderManager.instance().loadProfiles(vsdfile);
+                // Cleanup and close files.
+                vsdfile.close();
+            } else {
+                if (!GraphicsEnvironment.isHeadless()) {
+                    JmriJOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(),
+                            Bundle.getMessage("VSDFileError"), JmriJOptionPane.ERROR_MESSAGE);
+                }
+                vsdfile.close();
+                return false;
             }
-            // Cleanup and close files.
-            vsdfile.close();
-
-            if (!vsdfile.isInitialized() && !GraphicsEnvironment.isHeadless()) {
-                JmriJOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(),
-                        Bundle.getMessage("VSDFileError"), JmriJOptionPane.ERROR_MESSAGE);
-            }
-
-            return vsdfile.isInitialized();
 
         } catch (java.util.zip.ZipException ze) {
             log.error("ZipException opening file {}", fp, ze);
@@ -114,6 +114,7 @@ public class LoadVSDFileAction extends AbstractAction {
             log.error("IOException opening file {}", fp, ze);
             return false;
         }
+        return true;
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadVSDFileAction.class);

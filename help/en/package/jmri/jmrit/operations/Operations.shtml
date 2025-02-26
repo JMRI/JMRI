@@ -396,10 +396,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#EditRoute">Edit Route</a>
               <ul>
-                <li>Train Direction</li>
+                <li><a href="#TrainDirection">Train Direction</a></li>
                 <li><a href="#RouteMoves">Moves</a></li>
-                <li>Random Moves</li>
-                <li>Pick ups and Set outs</li>
+                <li><a href="#RandomMoves">Random Moves</a></li>
+                <li><a href="#PullsAndSpots">Pick ups and Set outs</a></li>
                 <li><a href="#RouteSwitchTime">Travel and Departure Times</a></li>
 
                 <li><a href="#RouteMaxTrainLength">Maximum Train Length</a></li>
@@ -4228,7 +4228,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         RWE uses the <a href="#CarRouting">Car Routing</a> feature to return cars to the specified
         location. The RWE fields are disabled if routing is disabled. Note that manually changing
         the load name will not cause the Return When Empty (RWE) destination to become active, only
-        when the car is set out by the program will the RWE destination and RWE load become active.
+        when the car is delivered by the program to a spur or staging will the RWE destination and RWE
+        load become active.
       </p>
 
       <h4 id="ReturnWhenLoaded">Return When Loaded</h4>
@@ -4246,8 +4247,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         RWL uses the <a href="#CarRouting">Car Routing</a> feature to return cars to the specified
         location. The RWL fields are disabled if routing is disabled. Note that manually changing
         the load name will not cause the Return When Loaded (RWL) destination to become active, only
-        when the car is set out by the program will the RWL destination and RWL load name become
-        active.
+        when the car is delivered by the program to a spur or staging will the RWL destination and RWL
+        load name become active.
       </p>
 
       <h4 id="HomeDivision">Home Division</h4>
@@ -4705,7 +4706,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>Each route location has the train's departure direction, number of desired car moves,
         and whether car pick ups and or car set outs are allowed at that location.</p>
 
-      <h4>Train Direction</h4>
+      <h4 id="TrainDirection">Train Direction</h4>
 
       Select the direction the train departs each location in the route. If the train reverses
       direction see <a href="#TrainTurnRoute">Train Turn Route</a> below.
@@ -4733,7 +4734,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         pick up more cars along the train's route, increase the move count for the last location,
         and decrease the move count for the departure location.</p>
 
-      <h4>Random Moves</h4>
+      <h4 id="RandomMoves">Random Moves</h4>
 
       <p>You can also request that the program randomly reduce the number of desired car moves
         for a location. Use this feature if you find that the program is consistently generating the
@@ -4750,14 +4751,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         greater than 50% to reduce the move count by one, and 100% if you wanted the move count to
         be reduced by 2.</p>
 
-      <h4>Pick ups? and Set outs?</h4>
+      <h4 id="PullsAndSpots">Pick ups? and Set outs?</h4>
 
       If the train is allowed to pull cars from the location select "Yes" under "Pick ups?",
       otherwise select "No". Same goes for "Set outs?", select "Yes" if the train is allowed to spot
       cars at the location, and "No" if set outs aren't allowed. Selecting "Yes" for both pick ups
       and set outs allows the train to do both and also perform local moves. A local move is when a
       car is pulled and spotted at the same location. You can prevent local moves using one of the
-      train build options, see <a href="TrainLocalMoveOption">Allow local moves when a car has a
+      train build options, see <a href="#TrainLocalMoveOption">Allow local moves when a car has a
         custom load or FD</a>. Another method to disallow local moves is to enter a location twice in
       the route, and in the first location only allow set outs, and in the second only allow pick
       ups.

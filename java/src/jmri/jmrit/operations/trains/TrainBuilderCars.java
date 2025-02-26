@@ -1452,7 +1452,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         rld.getId(), rld.getName()));
                 continue;
             }
-            if (_train.isLocationSkipped(rld.getId())) {
+            if (_train.isLocationSkipped(rld)) {
                 addLine(_buildReport, FIVE,
                         Bundle.getMessage("buildLocSkipped", rld.getName(), rld.getId(), _train.getName()));
                 continue;
@@ -1658,7 +1658,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         rld.getId(), rld.getName()));
                 continue;
             }
-            if (_train.isLocationSkipped(rld.getId())) {
+            if (_train.isLocationSkipped(rld)) {
                 addLine(_buildReport, FIVE,
                         Bundle.getMessage("buildLocSkipped", rld.getName(), rld.getId(), _train.getName()));
                 continue;

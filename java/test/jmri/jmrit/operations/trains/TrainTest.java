@@ -219,19 +219,23 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train Id", "TESTTRAINID", train1.getId());
         Assert.assertEquals("Train Name", "TESTTRAINNAME", train1.getName());
 
-        train1.addTrainSkipsLocation("TESTLOCATIONID2");
-        Assert.assertTrue("Location 2 to be skipped", train1.isLocationSkipped("TESTLOCATIONID2"));
+        Location loc2 = new Location("LOCATIONID2", "TESTLOCATION2");
+        RouteLocation rl2 = new RouteLocation("TESTLOCATIONID2", loc2);
+        train1.addTrainSkipsLocation(rl2);
+        Assert.assertTrue("Location 2 to be skipped", train1.isLocationSkipped(rl2));
 
-        train1.addTrainSkipsLocation("TESTLOCATIONID4");
-        Assert.assertTrue("Location 4 to be skipped", train1.isLocationSkipped("TESTLOCATIONID4"));
+        Location loc4 = new Location("LOCATIONID4", "TESTLOCATION4");
+        RouteLocation rl4 = new RouteLocation("TESTLOCATIONID4", loc4);
+        train1.addTrainSkipsLocation(rl4);
+        Assert.assertTrue("Location 4 to be skipped", train1.isLocationSkipped(rl4));
 
-        train1.deleteTrainSkipsLocation("TESTLOCATIONID2");
-        Assert.assertFalse("Location 2 not to be skipped", train1.isLocationSkipped("TESTLOCATIONID2"));
-        Assert.assertTrue("Location 4 still to be skipped", train1.isLocationSkipped("TESTLOCATIONID4"));
+        train1.deleteTrainSkipsLocation(rl2);
+        Assert.assertFalse("Location 2 not to be skipped", train1.isLocationSkipped(rl2));
+        Assert.assertTrue("Location 4 still to be skipped", train1.isLocationSkipped(rl4));
 
-        train1.deleteTrainSkipsLocation("TESTLOCATIONID4");
-        Assert.assertFalse("Location 2 still not to be skipped", train1.isLocationSkipped("TESTLOCATIONID2"));
-        Assert.assertFalse("Location 4 not to be skipped", train1.isLocationSkipped("TESTLOCATIONID4"));
+        train1.deleteTrainSkipsLocation(rl4);
+        Assert.assertFalse("Location 2 still not to be skipped", train1.isLocationSkipped(rl2));
+        Assert.assertFalse("Location 4 not to be skipped", train1.isLocationSkipped(rl4));
     }
 
     // test Train accepts types support
@@ -4126,7 +4130,7 @@ public class TrainTest extends OperationsTestCase {
         train1.setRoute(rte1);
 
         // train skips Boston
-        train1.addTrainSkipsLocation(rl3.getId());
+        train1.addTrainSkipsLocation(rl3);
 
         // Place cars
         // Set up 3 cabooses, 1 Flat, and 7 boxcars
@@ -4767,16 +4771,16 @@ public class TrainTest extends OperationsTestCase {
 
         // train is to skip Boston
         RouteLocation bostonRl = route.getLastLocationByName("Boston");
-        train1.addTrainSkipsLocation(bostonRl.getId());
+        train1.addTrainSkipsLocation(bostonRl);
         Assert.assertFalse(train1.isServiceable(c1));
-        train1.deleteTrainSkipsLocation(bostonRl.getId());
+        train1.deleteTrainSkipsLocation(bostonRl);
         Assert.assertTrue(train1.isServiceable(c1));
 
         // train is to skip Chelmsford
         RouteLocation chelmsfordRl = route.getLastLocationByName("Chelmsford");
-        train1.addTrainSkipsLocation(chelmsfordRl.getId());
+        train1.addTrainSkipsLocation(chelmsfordRl);
         Assert.assertFalse(train1.isServiceable(c1));
-        train1.deleteTrainSkipsLocation(chelmsfordRl.getId());
+        train1.deleteTrainSkipsLocation(chelmsfordRl);
         Assert.assertTrue(train1.isServiceable(c1));
 
         // only allow car to terminal

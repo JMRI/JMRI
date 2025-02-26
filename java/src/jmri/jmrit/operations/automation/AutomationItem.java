@@ -444,7 +444,7 @@ public class AutomationItem extends PropertyChangeSupport implements java.beans.
             _train = InstanceManager.getDefault(TrainManager.class).getTrainById(a.getValue());
         }
         if ((a = e.getAttribute(Xml.ROUTE_LOCATION_ID)) != null && getTrain() != null) {
-            _routeLocation = getTrain().getRoute().getLocationById(a.getValue());
+            _routeLocation = getTrain().getRoute().getRouteLocationById(a.getValue());
         }
         if ((a = e.getAttribute(Xml.AUTOMATION_ID)) != null) {
             // in the process of loading automations, so we can't get them now, save id and get later.

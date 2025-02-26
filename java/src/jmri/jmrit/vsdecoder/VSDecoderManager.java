@@ -83,7 +83,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private HashMap<Integer, VSDecoder> decoderInBlock; // list of active decoders by LocoAddress.getNumber()
     private HashMap<String, String> profiletable; // list of loaded profiles key = profile name, value = path
     HashMap<VSDecoder, Block> currentBlock; // list of active blocks by decoders
-    public HashMap<Block, LayoutEditor> possibleStartBlocks; // list of possible start blocks and their LE panel
+    private HashMap<Block, LayoutEditor> possibleStartBlocks; // list of possible start blocks and their LE panel
     private Timer timer;
 
     private int locoInBlock[][]; // Block status for locos
@@ -158,7 +158,7 @@ public class VSDecoderManager implements PropertyChangeListener {
             blockParameter = gf.getBlockParameter();
             blockPositionlists = gf.getBlockPosition();
             circlelist = gf.getCirclingList();
-            check_time = gf.check_time;
+            check_time = gf.getCheckTime();
             layout_scale = gf.layout_scale;
             models_origin = gf.models_origin;
             possibleStartBlocks = gf.possibleStartBlocks;
@@ -205,6 +205,22 @@ public class VSDecoderManager implements PropertyChangeListener {
      */
     public void setMasterVolume(int mv) {
         getVSDecoderPreferences().setMasterVolume(mv);
+    }
+
+    /**
+     * Check if Block is a possible startblock.
+     * @param blk Block to check
+     * @return true if possible, else false
+     */
+    public boolean checkForPossibleStartblock(Block blk) {
+        if (possibleStartBlocks.containsKey(blk)) {
+            return true;
+        } else {
+            if (geofile_ok) {
+                log.warn("Block {} is not a valid starting block", blk);
+            }
+            return false;
+        }
     }
 
     public void doResume() {
@@ -1034,7 +1050,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                     }
                 }
             }
-            //startSoundPositionTimer(d);
         } else {
            log.warn(" Same PhysicalLocationReporter, position not set!");
         }
