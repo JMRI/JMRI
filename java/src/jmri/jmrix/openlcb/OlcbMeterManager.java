@@ -35,11 +35,12 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
         this.memo = memo;
         if (memo != null) { // greatly simplify testing
             this.iface = memo.get(OlcbInterface.class);
+            iface.registerMessageListener(new EWPListener());
+            this.store = memo.get(MimicNodeStore.class);
         } else {
             this.iface = null;
+            this.store = null;
         }
-        iface.registerMessageListener(new EWPListener());
-        store = memo.get(MimicNodeStore.class);
     }
 
     private final OlcbInterface iface;
@@ -56,7 +57,8 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
             // process the blocks looking for an analog block
             int ordinal = 1;
             var scannedNode = content.getScannedDevice();
-            String scannedName = store.findNode(scannedNode).getSimpleNodeIdent().getUserName();
+            String scannedName ="";
+            if (store != null) scannedName = store.findNode(scannedNode).getSimpleNodeIdent().getUserName();
             log.info("Retrieved scannedNode {} scannedName {}", scannedNode, scannedName);
             if (scannedName == null || scannedName.isEmpty()) scannedName = scannedNode.toString();
             
