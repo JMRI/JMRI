@@ -15,7 +15,7 @@ import jmri.VoltageMeter;
  */
 public class DefaultMeter extends AbstractAnalogIO implements Meter {
     
-    @Nonnull private final MeterUpdateTask _updateTask;
+    private final MeterUpdateTask _updateTask;
     @Nonnull private final Unit _unit;
     private final double _min;
     private final double _max;
