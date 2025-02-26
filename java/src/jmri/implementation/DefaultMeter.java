@@ -25,7 +25,7 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
             @Nonnull String sys,
             @Nonnull Unit unit,
             double min, double max, double resolution,
-            @Nonnull MeterUpdateTask updateTask) {
+            MeterUpdateTask updateTask) { // null is valid if no updater needed
         super(sys, true);
         this._unit = unit;
         this._updateTask = updateTask;

@@ -7,6 +7,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import org.openlcb.*;
 import org.openlcb.implementations.LocationServiceUtils;
 
+import javax.annotation.Nonnull;
+
 /**
  * Central functions for OlcbMeters.
  *
@@ -30,17 +32,12 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
      * 
      * @param memo the system connection
      */
-    public OlcbMeterManager(CanSystemConnectionMemo memo) {
+    public OlcbMeterManager(@Nonnull CanSystemConnectionMemo memo) {
         super(memo);
         this.memo = memo;
-        if (memo != null) { // greatly simplify testing
-            this.iface = memo.get(OlcbInterface.class);
-            iface.registerMessageListener(new EWPListener());
-            this.store = memo.get(MimicNodeStore.class);
-        } else {
-            this.iface = null;
-            this.store = null;
-        }
+        this.iface = memo.get(OlcbInterface.class);
+        iface.registerMessageListener(new EWPListener());
+        this.store = memo.get(MimicNodeStore.class);
     }
 
     private final OlcbInterface iface;
@@ -64,7 +61,7 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
             
             for (LocationServiceUtils.Block block : content.getBlocks()) {
                 log.debug("  Block of type {}", block.getType());
-                if (block.getType() == LocationServiceUtils.Block.Type.ANALOG) {
+                if (block instanceof LocationServiceUtils.AnalogBlock ) {
                     var analog = (LocationServiceUtils.AnalogBlock) block;
                     // analog block: find an existing meter or make a new one
                     var text = analog.getText();
