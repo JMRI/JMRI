@@ -380,7 +380,7 @@ public class TrainBuilder extends TrainBuilderCars {
         // now go through each location starting at departure and place cars as
         // requested
         for (RouteLocation rl : _routeList) {
-            if (_train.isLocationSkipped(rl.getId())) {
+            if (_train.isLocationSkipped(rl)) {
                 addLine(_buildReport, ONE,
                         Bundle.getMessage("buildLocSkipped", rl.getName(), rl.getId(), _train.getName()));
                 continue;

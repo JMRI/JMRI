@@ -90,7 +90,7 @@ public class TrainBuilderBase extends TrainCommon {
      * JMRI version, train schedule, build report display levels, setup comment.
      */
     protected void showBuildReportInfo() {
-        addLine(_buildReport, ONE, Bundle.getMessage("BuildReportMsg", _train.getName(), _startTime));
+        addLine(_buildReport, ONE, Bundle.getMessage("BuildReportMsg", _train.getName(), getDate(_startTime)));
         addLine(_buildReport, ONE,
                 Bundle.getMessage("BuildReportVersion", Version.name()));
         if (!trainScheduleManager.getTrainScheduleActiveId().equals(TrainScheduleManager.NONE)) {
@@ -359,7 +359,7 @@ public class TrainBuilderBase extends TrainCommon {
                 rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves
                                                      // for this location
                 // if a location is skipped, no car drops or pick ups
-            } else if (_train.isLocationSkipped(rl.getId())) {
+            } else if (_train.isLocationSkipped(rl)) {
                 addLine(_buildReport, THREE,
                         Bundle.getMessage("buildLocSkippedMaxTrain", rl.getId(), rl.getName(),
                                 rl.getTrainDirectionString(), _train.getName(), rl.getMaxTrainLength(),

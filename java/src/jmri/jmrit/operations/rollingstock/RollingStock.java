@@ -1387,9 +1387,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (getTrain() != null &&
                 getTrain().getRoute() != null &&
                 (a = e.getAttribute(Xml.ROUTE_LOCATION_ID)) != null) {
-            _routeLocation = getTrain().getRoute().getLocationById(a.getValue());
+            _routeLocation = getTrain().getRoute().getRouteLocationById(a.getValue());
             if ((a = e.getAttribute(Xml.ROUTE_DESTINATION_ID)) != null) {
-                _routeDestination = getTrain().getRoute().getLocationById(a.getValue());
+                _routeDestination = getTrain().getRoute().getRouteLocationById(a.getValue());
             }
         }
         if ((a = e.getAttribute(Xml.LAST_ROUTE_ID)) != null) {
