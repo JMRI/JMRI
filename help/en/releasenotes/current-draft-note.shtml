@@ -161,6 +161,8 @@
                     </ul>
                 </li>
                 <li>Correctly decode events-with-payload</li>
+                <li>First implementation of LCC Location Services which will decode analog-carrying 
+                    location services reports to drive volt and amp meters.
             </ul>
 
         <h4>Powerline</h4>

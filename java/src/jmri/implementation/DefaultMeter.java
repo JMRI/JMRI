@@ -32,21 +32,23 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
         this._min = min;
         this._max = max;
         this._resolution = resolution;
-        _updateTask.addMeter(DefaultMeter.this);
+        if (_updateTask != null)  {
+            _updateTask.addMeter(DefaultMeter.this);
+        }
     }
     
     /** {@inheritDoc} */
     @Override
     public void enable() {
         log.debug("Enabling meter.");
-        _updateTask.enable(this);
+        if (_updateTask != null) _updateTask.enable(this);
     }
 
     /** {@inheritDoc} */
     @Override
     public void disable() {
         log.debug("Disabling meter.");
-        _updateTask.disable(this);
+        if (_updateTask != null) _updateTask.disable(this);
     }
 
     /**
@@ -116,7 +118,7 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
     /** {@inheritDoc} */
     @Override
     public void dispose() {
-        _updateTask.removeMeter(this);
+        if (_updateTask != null)_updateTask.removeMeter(this);
         super.dispose();
     }
     
@@ -125,7 +127,7 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
      */
     @Override
     public void requestUpdateFromLayout() {
-        _updateTask.requestUpdateFromLayout();
+        if (_updateTask != null)_updateTask.requestUpdateFromLayout();
     }
     
     

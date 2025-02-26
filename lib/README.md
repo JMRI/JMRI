@@ -138,8 +138,8 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.8.5 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.5/openlcb-0.8.5.jar
-    with merged PR #287
-    with PR #288 from 2025-02-24
+    with merged PR #287, #288
+    with PR #289 from 2025-02-25
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
