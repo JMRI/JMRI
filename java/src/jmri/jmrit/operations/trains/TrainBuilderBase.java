@@ -2857,7 +2857,8 @@ public class TrainBuilderBase extends TrainCommon {
                 _warnings++;
                 addLine(_buildReport, ONE,
                         Bundle.getMessage("buildCarNotRoutable", car.toString(), car.getLocationName(),
-                                car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
+                                car.getTrackName(), car.getPreviousFinalDestinationName(),
+                                car.getPreviousFinalDestinationTrackName()));
             }
             addLine(_buildReport, ONE, BLANK_LINE);
         }
