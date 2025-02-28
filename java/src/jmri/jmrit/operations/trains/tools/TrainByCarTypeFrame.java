@@ -251,7 +251,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(TrainBuilt)"));
                 } else if (_car != null && !_train.isOwnerNameAccepted(_car.getOwnerName())) {
                     op.setText(Bundle.getMessage("X(TrainOwner)"));
-                } else if (_train.isLocationSkipped(rl.getId())) {
+                } else if (_train.isLocationSkipped(rl)) {
                     op.setText(Bundle.getMessage("X(TrainSkips)"));
                 } else if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
                     op.setText(Bundle.getMessage("X(Route)"));

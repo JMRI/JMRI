@@ -237,7 +237,7 @@ public class XmlTest extends OperationsTestCase {
         t1.setThirdLegNumberEngines("3");
         t1.setThirdLegOptions(Train.HELPER_ENGINES);
         t1.setThirdLegStartRouteLocation(midC);
-        t1.addTrainSkipsLocation(midC.getId());
+        t1.addTrainSkipsLocation(midC);
 
         t3.setBuildEnabled(false);
         t3.setBuildFailed(true);
@@ -356,9 +356,9 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 third leg number of engines", "3", t1.getThirdLegNumberEngines());
         Assert.assertEquals("t1 third leg options", Train.HELPER_ENGINES, t1.getThirdLegOptions());
         Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartRouteLocation());
-        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC.getId()));
-        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC.getId()));
-        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC));
+        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
         Assert.assertEquals("t3 build failed", true, t3.isBuildFailed());
@@ -537,9 +537,9 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 third leg number of engines", "3", t1.getThirdLegNumberEngines());
         Assert.assertEquals("t1 third leg options", Train.HELPER_ENGINES, t1.getThirdLegOptions());
         Assert.assertEquals("t1 third leg start location", midC, t1.getThirdLegStartRouteLocation());
-        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC.getId()));
-        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC.getId()));
-        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC.getId()));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(startC));
+        Assert.assertEquals("t1 skips location", true, t1.isLocationSkipped(midC));
+        Assert.assertEquals("t1 skips location", false, t1.isLocationSkipped(endC));
 
         Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
         Assert.assertEquals("t3 build failed", true, t3.isBuildFailed());

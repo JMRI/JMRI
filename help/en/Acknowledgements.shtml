@@ -912,6 +912,8 @@
         <li>Simon Reader, who improved the throttle, added a check for completed status to Routes,
         and added the "invert" option to LocoNet Turnouts.</li>
 
+        <li>Michael Richardson, who sorted out some formats for the LocoNet Monitor.</li>
+        
         <li>Mark Riddoch, who provided the Reporter implementation for CBus to enable the use of
         CBus attached RFID readers.</li>
 
