@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
  * @author Bob Jacobsen      Copyright (C) 2004, 2007, 2008
  * @author Daniel Bergqvist  Copyright (C) 2025
  */
-public interface ClockTime {
+public interface ClockTime extends Clock {
 
     /**
      * Property Change sent when the minute value changes.
