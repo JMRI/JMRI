@@ -213,9 +213,9 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             int locoIOAddress = mAddress;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
             m = jmri.jmrix.loconet.locoio.LocoIO.writeSV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
-            // TODO refactor to lnsv1.LnSv1MessageContents.writeCV
+            // TODO refactor to lnsv1.LnSv1MessageContents.writeCV EBR
             // force version 1 tag
-            m.setElement(4, 0x01);
+            m.setElement(4, 0x01); //
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
 

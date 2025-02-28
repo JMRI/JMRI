@@ -93,7 +93,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     private String rosterIndexFileName = Roster.DEFAULT_ROSTER_INDEX;
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
-    // Note that dispose() doesn't act on these.  Its not clear whether it should...
+    // Note that dispose() doesn't act on these.  It isn't clear whether it should...
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     static final public String schemaVersion = ""; // NOI18N
     private String defaultRosterGroup = null;
@@ -724,7 +724,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Check if an entry is consistent with specific properties.
+     * Check if an entry is consistent with specific (LNSV2/LNCV) properties.
      * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
@@ -783,6 +783,40 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
                 || Roster.ALLENTRIES.equals(group)
                 || (r.getAttribute(Roster.getRosterGroupProperty(group)) != null
                 && r.getAttribute(Roster.getRosterGroupProperty(group)).equals("yes")));
+    }
+
+    /**
+     * Check if an entry is consistent with specific (LNSV1/LocoIO) properties.
+     * <p>
+     * A null String argument always matches. Strings are used for convenience
+     * in GUI building.
+     *
+     * @param r             the roster entry being checked
+     * @param dccAddress    address of entry or null for any address
+     * @param decoderModel  decoder model of entry or null for any model
+     * @param decoderFamily decoder family of entry or null for any family
+     * @param id            id of entry or null for any id
+     * @param programmingMode mode of entry, or null for any mode
+     * @return True if the entry matches
+     */
+    public boolean checkEntry(RosterEntry r, String dccAddress,
+                              String decoderModel, String decoderFamily,
+                              String id, String programmingMode) {
+        // specifically created for SV1 (LocoIO)
+
+        if (id != null && !id.equals(r.getId())) {
+            return false;
+        }
+        if (dccAddress != null && !dccAddress.equals(r.getDccAddress())) {
+            return false;
+        }
+        if (decoderModel != null && !decoderModel.equals(r.getDecoderModel())) {
+            return false;
+        }
+        if (decoderFamily != null && !decoderFamily.equals(r.getDecoderFamily())) {
+            return false;
+        }
+        return programmingMode == null || programmingMode.equals(r.getProgrammingMode());
     }
 
     /**

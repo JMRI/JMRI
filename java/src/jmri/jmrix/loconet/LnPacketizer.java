@@ -92,7 +92,9 @@ public class LnPacketizer extends LnTrafficController {
         transmittedMsgCount++;
 
         // set the error correcting code byte(s) before transmittal
+        log.debug("sendLocoNet msg (packetizer) pre parity m={}", m); // debug EBR
         m.setParity();
+        log.debug("sendLocoNet msg (packetizer) post parity m={}", m); // debug EBR
 
         // stream to port in single write, as that's needed by serial
         int len = m.getNumDataElements();

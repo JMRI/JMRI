@@ -2,6 +2,7 @@ package jmri.jmrit.decoderdefn;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +18,7 @@ import jmri.jmrit.symbolicprog.ExtraMenuTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -146,6 +148,21 @@ public class DecoderFile extends XmlFile {
         }
 
         _productID = productID;
+    }
+
+    /**
+     * Create a mechanism to manipulate a (stationary/LNSV1) decoder definition.
+     *
+     * @param model decoder model designation
+     * @param family decoder family name, where applicable
+     * @param filename filename of decoder XML definition
+     * @param decoder Element containing decoder XML definition
+     */
+    public DecoderFile(String model, String family, String filename,
+                       Element decoder) {
+        this(null, null, model, null,
+                null, family, filename,
+                0, 0, decoder);
     }
 
     // store acceptable version numbers
@@ -391,18 +408,19 @@ public class DecoderFile extends XmlFile {
         }
     }
 
-    String[] modes = null;
+    String mode = null;
 
-    public String[] getProgrammingModes() {
-        if (modes == null) {
+    public String getProgrammingMode() {
+        if (mode == null) {
+            log.debug("getProgrammingMode() modes==null");
             if (_element.getChild("programming") != null) {
-                List<Element> modeList = _element.getChild("programming").getChildren("mode");
-                modes = (String[]) modeList.stream().toArray();
+                log.debug("getProgrammingModes child Programming nonnull {}", _element.getChild("programming"));
+                mode = _element.getChild("programming").getChild("mode").getText();
             } else {
-                modes = new String[] {};
+                mode = "";
             }
         }
-        return modes;
+        return mode;
     }
 
     boolean isProductIDok(Element e, String extraInclude, String extraExclude) {

@@ -75,8 +75,8 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
     }
 
     /**
-     * Extract module information from LNSVf1 READ_ONE REPLY message,
-     * if not already in the lnsv1Devices list, try to find a matching decoder definition (by address number)
+     * Extract module information from LNSVf1 READ_ONE REPLY message;
+     * if not already in the lnsv1Devices list, try to find a matching decoder definition (by address number and TODO mode)
      * and add it. Skip if already in the list.
      *
      * @param m The received LocoNet message. Note that this same object may
@@ -113,7 +113,9 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                                 } else if (l.size() == 1) {
                                     log.debug("Matching roster entry found");
                                     dev.setRosterEntry(l.get(0)); // link this device to the entry
-                                    DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(l.get(0).getFileName());
+                                    String title = l.get(0).getDecoderModel() + " (" + l.get(0).getDecoderFamily() + ")";
+                                    // fileFromTitle() matches by model + " (" + family + ")"
+                                    DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(title);
                                     if (decoderFile != null) {
                                         dev.setDecoderFile(decoderFile); // link to decoderFile (to check programming mode from table)
                                         log.debug("Attached a decoderfile to entry {}", i);

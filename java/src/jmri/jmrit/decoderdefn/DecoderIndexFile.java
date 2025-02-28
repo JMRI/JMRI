@@ -97,6 +97,17 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
+     * Get a List of decoders matching (only) the programming mode.
+     *
+     * @param progMode             decoder programming mode
+     * @return a list, possibly empty, of matching decoders
+     */
+    @Nonnull
+    public List<DecoderFile> matchingDecoderList(String progMode) {
+        return (matchingDecoderList(null, null, null, null, null, null, null, null, null, progMode));
+    }
+
+    /**
      * Get a List of decoders matching some information.
      *
      * @param mfg              decoder manufacturer
@@ -111,7 +122,7 @@ public class DecoderIndexFile extends XmlFile {
     public List<DecoderFile> matchingDecoderList(String mfg, String family,
             String decoderMfgID, String decoderVersionID, String decoderProductID,
             String model) {
-        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null, null, null));
+        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null, null, null, null));
     }
 
     /**
@@ -132,9 +143,31 @@ public class DecoderIndexFile extends XmlFile {
     public List<DecoderFile> matchingDecoderList(String mfg, String family,
             String decoderMfgID, String decoderVersionID,
             String decoderProductID, String model, String developerID, String manufacturerID, String productID) {
+        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null, null, null, null));
+    }
+
+    /**
+     * Get a List of decoders matching some information.
+     *
+     * @param mfg              decoder manufacturer
+     * @param family           decoder family
+     * @param decoderMfgID     NMRA decoder manufacturer ID
+     * @param decoderVersionID decoder version ID
+     * @param decoderProductID decoder product ID
+     * @param model            decoder model
+     * @param developerID      developer ID number
+     * @param manufacturerID   manufacturerID number
+     * @param productID        productID number
+     * @param progMode         programming mode
+     * @return a list, possibly empty, of matching decoders
+     */
+    @Nonnull
+    public List<DecoderFile> matchingDecoderList(String mfg, String family,
+                                                 String decoderMfgID, String decoderVersionID,
+                                                 String decoderProductID, String model, String developerID, String manufacturerID, String productID, String progMode) {
         List<DecoderFile> l = new ArrayList<>();
         for (int i = 0; i < numDecoders(); i++) {
-            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, developerID, manufacturerID, productID)) {
+            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, developerID, manufacturerID, productID, progMode)) {
                 l.add(decoderList.get(i));
             }
         }
@@ -215,11 +248,12 @@ public class DecoderIndexFile extends XmlFile {
      * @param developerID      developer ID number
      * @param manufacturerID   manufacturer ID number
      * @param productID        product ID number
+     * @param progMode         programming mode
      * @return true if entry at i matches the other parameters; false otherwise
      */
     public boolean checkEntry(int i, String mfgName, String family, String mfgID,
             String decoderVersionID, String decoderProductID, String model,
-            String developerID, String manufacturerID, String productID) {
+            String developerID, String manufacturerID, String productID, String progMode) {
         DecoderFile r = decoderList.get(i);
         if (mfgName != null && !mfgName.equals(r.getMfg())) {
             return false;
@@ -260,7 +294,6 @@ public class DecoderIndexFile extends XmlFile {
             log.debug("developerID match");
         }
 
-
         if (manufacturerID != null) {
             log.debug("checking manufactureriD {}, mfgID {}, modelElement[manufacturerID] {}",
                     manufacturerID, r._mfgID, r.getModelElement().getAttribute("manufacturerID"));
@@ -296,6 +329,15 @@ public class DecoderIndexFile extends XmlFile {
             }
             log.debug("productID match");
         }
+
+        if (progMode != null) {
+            // must have a progMode value that matches to consider this entry a match
+            if (!progMode.equals(r.getProgrammingMode())) {
+                return false;
+            }
+            log.debug("programmermode match");
+        }
+
         return true;
     }
 
@@ -779,7 +821,7 @@ public class DecoderIndexFile extends XmlFile {
                 family.setAttribute("file", fileName);
 
                 // drop the decoder implementation content
-                    // comment is kept so it displays
+                // comment is kept so it displays
                 // don't remove "outputs" due to use by ESU function map pane
                 // family.removeChildren("output");
                 // family.removeChildren("functionlabels");

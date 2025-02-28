@@ -17,7 +17,11 @@ import org.slf4j.LoggerFactory;
  */
 public class Lnsv1Device {
     private int deviceAddressLow; // Module address in reply, value of -1 is ignored, LNSV1 default address: 88
+    // High byte of the Address is fixed to 0x01 (not displayed as part of board address)
+    // valid deviceAddressLow (aka low byte "Address") is in the range of 0x01 .. 0x4F, 0x51 .. 0x7F
+    // (deviceAddressLow 0x50 is reserved for the LocoBuffer)
     private int deviceAddressHi;
+    // valid deviceAddressHi (aka "subAddress") is in the range of 0x01 .. 0x7E (0x7F is reserved)
     private final int deviceAddress; // required by symbolicProgrammer
     private String deviceName;
     private String rosterEntryName;

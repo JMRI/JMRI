@@ -19,8 +19,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Table model for the programmed LNSV1 Modules table.
@@ -153,36 +151,11 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
               case ROSTERSV1MODECOLUMN:
                   assert dev != null;
                   if (dev.getRosterEntry() != null) {
-                      log.debug("========");
-
-//                      List<DecoderFile> l =
-//                              InstanceManager.getDefault(
-//                                      DecoderIndexFile.class).
-//                                      matchingDecoderList((int) dev.getDestAddr());
-//                      //log.debug("found {} possible decoder matches for LNCV device", l.size());
-//                      String lastModelName = "";
-//                      if (l.size() > 0) {
-//                          for (DecoderFile d : l) {
-//                              // we do not check for LNSV1 programmingMode support since we do not expect replies from non-LNSV1 devices
-//                              // (and there is currently no access to supported modes in the DecoderIndexFile)
-//                              if (d.getModel().equals("")) {
-//                                  log.warn("Empty model(name) in decoderfile {}", d.getFileName());
-//                                  continue;
-//                              }
-//                              lastModelName = d.getModel();
-//                          }
-//                          dev.setDevName(lastModelName);
-//                          dev.setDecoderFile(l.get(l.size() - 1));
-
-                      if (dev.getDecoderFile() != null) {
-                          //    <programming direct="no" paged="no" register="no" ops="no">
-                          //        <mode>LOCONETSV1MODE</mode>
-                          //    </programming>
-                          log.debug("========isSv1Mode() {}", Arrays.toString(dev.getDecoderFile().getProgrammingModes()));
-                          return (Arrays.equals(dev.getDecoderFile().getProgrammingModes(), new String[]{"LOCONETSV1MODE"}));
-                      } else {
-                          return false;
-                      }
+                      // <programming direct="no" paged="no" register="no" ops="no">
+                      //     <mode>LOCONETSV1MODE</mode>
+                      // </programming>
+                      log.debug("======== {} isSv1Mode() {}", r, dev.getRosterEntry().getProgrammingMode());
+                      return (dev.getRosterEntry().getProgrammingMode().equals("LOCONETSV1MODE"));
                   } else {
                       return false;
                   }
@@ -205,7 +178,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
       } catch (NullPointerException npe) {
         log.warn("Caught NPE reading Module {}, c{}", r, c);
         return "";
-      }
+       }
    }
 
     @Override
@@ -214,7 +187,6 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
             // prevent update of a row that does not (yet) exist
             return;
         }
-        Lnsv1Device dev = memo.getLnsv1DevicesManager().getDeviceList().getDevice(r);
         if (c == OPENPRGMRBUTTONCOLUMN) {
             if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
                 openProgrammer(r);

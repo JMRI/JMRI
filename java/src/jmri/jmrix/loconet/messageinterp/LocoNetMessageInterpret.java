@@ -1511,33 +1511,12 @@ public class LocoNetMessageInterpret {
          * and jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.java
          */
 
-        // check for a specific type - Uhlenbrock LNSV Programming messages format
+        // check for a specific type - Uhlenbrock LNCV Programming messages format
         String result = interpretLncvMessage(l);
         if (!result.isEmpty()) {
             return result;
         }
 
-        return "";
-    }
-
-    private static String interpretSV1Message(LocoNetMessage l) {
-        int[] d = l.getPeerXfrData();
-        if ((l.getElement(4) != 1)
-                || ((l.getElement(5) & 0x70) != 0)
-                || ((l.getElement(10) & 0x70) != 0x10)) {
-            // is not an SV1 message
-            return "";
-        }
-        if (l.getElement(2) == 0x50) {
-            // Packets from the LocoBuffer
-            String dst_subaddrx = (l.getElement(4) != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
-            // LocoBuffer to LocoIO
-            return "LocoBuffer => LocoIO@"
-                    + ((l.getElement(3) == 0) ? "broadcast" : Integer.toHexString(l.getElement(3)) + dst_subaddrx)
-                    + " "
-                    + (d[0] == 2 ? "Query SV" + d[1] : "Write SV" + d[1] + "=0x" + Integer.toHexString(d[3]))
-                    + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
-        }
         return "";
     }
 
@@ -1576,6 +1555,28 @@ public class LocoNetMessageInterpret {
                                 : (d[7] < 10) ? "" + d[7]
                                         : d[7] + " (0x" + Integer.toHexString(d[7]) + ")"))
                 + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
+    }
+
+
+    private static String interpretSV1Message(LocoNetMessage l) {
+        int[] d = l.getPeerXfrData();
+        if ((l.getElement(4) != 1)
+                || ((l.getElement(5) & 0x70) != 0)
+                || ((l.getElement(10) & 0x70) != 0x10)) {
+            // is not an SV1 message
+            return "";
+        }
+        if (l.getElement(2) == 0x50) {
+            // Packets from the LocoBuffer
+            String dst_subaddrx = (l.getElement(4) != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
+            // LocoBuffer to LocoIO
+            return "LocoBuffer => LocoIO@"
+                    + ((l.getElement(3) == 0) ? "broadcast" : Integer.toHexString(l.getElement(3)) + dst_subaddrx)
+                    + " "
+                    + (d[0] == 2 ? "Query SV" + d[1] : "Write SV" + d[1] + "=0x" + Integer.toHexString(d[3]))
+                    + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
+        }
+        return "";
     }
 
     private static String interpretSV2Message(LocoNetMessage l) {

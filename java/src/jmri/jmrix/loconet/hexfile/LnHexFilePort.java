@@ -327,7 +327,8 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      * Choose from a subset of hardware replies to send in HexFile simulator mode in response to specific messages.
      * Supported message types:
      * <ul>
-     *     <li>LN SV rev2 {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}</li>
+     *     <li>LN SV v1 {@link jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents}</li>
+     *     <li>LN SV v2 {@link jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents}</li>
      *     <li>LNCV {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
      * </ul>
      * Listener is attached to jmri.jmrix.loconet.hexfile.HexFileFrame with GUI box to turn this option on/off
@@ -337,23 +338,22 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      */
     static public LocoNetMessage generateReply(LocoNetMessage m) {
         LocoNetMessage reply = null;
-        //log.debug("generateReply for {}", m.toMonitorString());
+        log.debug("generateReply for {}", m.toMonitorString());
 
         if (Lnsv1MessageContents.isSupportedSv1Message(m)) {
             log.debug("generate reply for SV1 message ");
             Lnsv1MessageContents c = new Lnsv1MessageContents(m);
-            log.debug("c.getDestAddr() = {}", c.getDestAddr());
-            if (c.getDestAddr() == -1) { // Sv1 Probe, reply
+            log.debug("HEXFILESIM generateReply (c.getDestAddr() = {})", c.getDestAddr());
+            if (c.getDestAddr() == -1 || (c.getDstL() == 12 && c.getDstH() == 3)) { // Sv1 Probe, or specific 12/3 request
                 // [E5 10 50 00 01 00 02 02 00 00 10 00 00 00 00 4B]  LocoBuffer => LocoIO@broadcast Query SV2.
                 log.debug("generate LNSV1 ProbeAll reply message");
-                int myAddrL = 12; // a random value
-                int myAddrH = 3;
-                int destL = 0x50; // keep it simple, don't fetch src from m
-                int destH = 0; // simulate LocoBuffer
+                int myAddr = 12; // a random but valid board address
+                int subAddress = 3; // board sub-address
+                int dest = Lnsv1MessageContents.LNSV1_LOCOBUFFER_ADDRESS; // simulate LocoBuffer
                 int version = 123;
                 int sv = 2;
-                int val = 0;
-                reply = Lnsv1MessageContents.createSv1ReadReply(myAddrL, myAddrH, destL, destH, version, sv, val);
+                int val = 57;
+                reply = Lnsv1MessageContents.createSv1ReadReply(myAddr, dest, subAddress, version, sv, val);
             }
         } else if (LnSv2MessageContents.isSupportedSv2Message(m)) {
             //log.debug("generate reply for SV2 message");

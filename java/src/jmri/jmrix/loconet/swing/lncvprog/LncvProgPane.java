@@ -457,7 +457,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             return;
         }
         // stop and inform user
-        statusText1.setText(Bundle.getMessage("FeedBackRead"));
+        statusText1.setText(Bundle.getMessage("FeedBackRead", "LNCV"));
     }
 
     // WriteCV button
@@ -493,7 +493,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             return;
         }
         // stop and inform user
-        statusText1.setText(Bundle.getMessage("FeedBackWrite"));
+        statusText1.setText(Bundle.getMessage("FeedBackWrite", "LNCV"));
         // LACK reply will be received separately
         // if (received) {
         //      writeConfirmed = true;
