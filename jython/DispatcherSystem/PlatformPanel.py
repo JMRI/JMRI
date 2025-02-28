@@ -26,12 +26,13 @@ class CreateAndShowGUI7(TableModelListener):
         self.toggle = True
 
     def completeTablePanel(self):
-        self.topPanel= JPanel();
+        self.topPanel= JPanel()
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
 
         scrollPane = JScrollPane(self.table)
         scrollPane.setSize(600,600)
+
 
         self.topPanel.add(scrollPane)
 
@@ -108,10 +109,7 @@ class CreateAndShowGUI7(TableModelListener):
         self.model.remove_not_set_row()
         height = self.set_frame_height()
         self.frame.setPreferredSize(Dimension(600, height))
-        self.completeTablePanel()
 
-        height = CreateAndShowGUI7().set_frame_height()
-        self.frame.setPreferredSize(Dimension(600, height))
 
     def set_frame_height(self):
         size_of_one_row = 30
@@ -126,8 +124,6 @@ class CreateAndShowGUI7(TableModelListener):
 
     def close_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
-
-
 
     def save_action(self, event):
         self.save()
