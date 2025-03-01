@@ -1709,8 +1709,8 @@ class Trigger_Timetable:
         except:
             print "clock message not sent"
 
-        if "station_name_list_mqtt_gbl" not in globals():
-            station_name_list_mqtt_gbl = ""
+        if "station_name_list_gbl" not in globals():
+            station_name_list_gbl = ""
 
         if "group_location_gbl" not in globals():
             group_location_gbl = ""
@@ -1720,7 +1720,7 @@ class Trigger_Timetable:
         # print "timetable", timetable
         if 'group_location_gbl' != "" and 'station_name_list_gbl' != "":
             station_name = group_location_gbl
-            station_names_list = station_name_list_mqtt_gbl
+            station_names_list = station_name_list_gbl
         else:
             # stations = 'Not Set'
             station_name = 'Not Set'
