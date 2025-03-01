@@ -399,7 +399,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#TrainDirection">Train Direction</a></li>
                 <li><a href="#RouteMoves">Moves</a></li>
                 <li><a href="#RandomMoves">Random Moves</a></li>
-                <li><a href="#PullsAndSpots">Pick ups and Set outs</a></li>
+                <li><a href="#PullsAndSpots">Pick ups? Set outs? and Local moves?</a></li>
                 <li><a href="#RouteSwitchTime">Travel and Departure Times</a></li>
 
                 <li><a href="#RouteMaxTrainLength">Maximum Train Length</a></li>
@@ -4751,17 +4751,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         greater than 50% to reduce the move count by one, and 100% if you wanted the move count to
         be reduced by 2.</p>
 
-      <h4 id="PullsAndSpots">Pick ups? and Set outs?</h4>
+      <h4 id="PullsAndSpots">Pick ups? Set outs? and Local moves?</h4>
 
       If the train is allowed to pull cars from the location select "Yes" under "Pick ups?",
       otherwise select "No". Same goes for "Set outs?", select "Yes" if the train is allowed to spot
       cars at the location, and "No" if set outs aren't allowed. Selecting "Yes" for both pick ups
-      and set outs allows the train to do both and also perform local moves. A local move is when a
-      car is pulled and spotted at the same location. You can prevent local moves using one of the
-      train build options, see <a href="#TrainLocalMoveOption">Allow local moves when a car has a
-        custom load or FD</a>. Another method to disallow local moves is to enter a location twice in
-      the route, and in the first location only allow set outs, and in the second only allow pick
-      ups.
+      and set outs allows the train to do both. Selecting "Yes" for "Local moves" allows local moves
+      to be performed by the train. A local move is when a car is pulled and spotted at the same
+      location. You can also prevent local moves using one of the train build options, see
+      <a href="#TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</a>.
 
       <h4 id="RouteSwitchTime">Travel and Departure Times</h4>
 
@@ -5764,6 +5762,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5>Stop Automation</h5>
       This action can stop an automation that is running. You must select an automation from the
       "Automation" menu.
+
+      <h5>Counter</h5>
+      This action will increment a count starting from zero. The counter isn't saved when
+      OperationsPro is shutdown, and will restart at zero the next time the program is run. To reset
+      the count to zero without restarting OperationsPro, reselect the action "Counter".
 
       <h5>Message Yes or No</h5>
       This action can be used to ask a question to which the answer is Yes or No. Use the "If
