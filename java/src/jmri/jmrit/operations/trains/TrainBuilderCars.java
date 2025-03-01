@@ -482,6 +482,20 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 addLine(_buildReport, FIVE, Bundle.getMessage("buildExtraPassForLocation", rl.getName()));
                 addLine(_buildReport, SEVEN, BLANK_LINE);
             }
+            // are pick ups allowed?
+            if (!rl.isPickUpAllowed() &&
+                    !car.isLocalMove() &&
+                    !car.getSplitFinalDestinationName().equals(rl.getSplitName())) {
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildNoPickUpCar", car.toString(), rl.getLocation().getName(), rl.getId()));
+                addLine(_buildReport, FIVE, BLANK_LINE);
+                continue;
+            }
+            if (!rl.isLocalMovesAllowed() && car.getSplitFinalDestinationName().equals(rl.getSplitName())) {
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
+                                rl.getId(), rl.getName()));
+            }
             // can this car be picked up?
             if (!checkPickUpTrainDirection(car, rl)) {
                 addLine(_buildReport, FIVE, BLANK_LINE);
@@ -888,7 +902,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 log.debug("Car ({}) has home division ({}) and load type load", car.toString(), car.getDivisionName());
                 // 1st send car to staging dependent of shipping track division, then
                 // try spur
-                if (!sendCarToHomeDivisionTrack(car, Track.STAGING, car.getTrack().getDivision() != car.getDivision())) {
+                if (!sendCarToHomeDivisionTrack(car, Track.STAGING,
+                        car.getTrack().getDivision() != car.getDivision())) {
                     return sendCarToHomeDivisionTrack(car, Track.SPUR,
                             car.getTrack().getDivision() != car.getDivision());
                 }
@@ -1042,8 +1057,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 return true;
             }
         }
-        addLine(_buildReport, SEVEN, Bundle.getMessage("buildCouldNotFindTrack", Track.getTrackTypeName(Track.SPUR).toLowerCase(),
-                car.toString(), car.getLoadType().toLowerCase(), car.getLoadName()));
+        addLine(_buildReport, SEVEN,
+                Bundle.getMessage("buildCouldNotFindTrack", Track.getTrackTypeName(Track.SPUR).toLowerCase(),
+                        car.toString(), car.getLoadType().toLowerCase(), car.getLoadName()));
         if (_routeToTrackFound &&
                 !_train.isSendCarsWithCustomLoadsToStagingEnabled() &&
                 !car.getLocation().isStaging()) {
@@ -1308,7 +1324,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
 
         // no local moves for this train?
-        if (!_train.isLocalSwitcher() && !_train.isAllowLocalMovesEnabled() &&
+        if (!_train.isLocalSwitcher() &&
+                !_train.isAllowLocalMovesEnabled() &&
                 car.getSplitLocationName().equals(car.getSplitFinalDestinationName()) &&
                 car.getTrack() != _departStageTrack) {
             addLine(_buildReport, FIVE,
@@ -1447,8 +1464,14 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             log.debug("Car ({}) found a destination in train's route", car.toString());
             // are drops allows at this location?
-            if (!rld.isDropAllowed()) {
+            if (!rld.isDropAllowed() && !car.isLocalMove()) {
                 addLine(_buildReport, FIVE, Bundle.getMessage("buildRouteNoDropLocation", _train.getRoute().getName(),
+                        rld.getId(), rld.getName()));
+                continue;
+            }
+            // are local moves allows at this location?
+            if (!rld.isLocalMovesAllowed() && car.isLocalMove()) {
+                addLine(_buildReport, FIVE, Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
                         rld.getId(), rld.getName()));
                 continue;
             }

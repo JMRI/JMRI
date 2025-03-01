@@ -1790,7 +1790,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         List<RouteLocation> rLocations = route.getLocationsBySequenceList();
         for (RouteLocation rLoc : rLocations) {
             if (rLoc.getName().equals(car.getLocationName())) {
-                if (!rLoc.isPickUpAllowed() || rLoc.getMaxCarMoves() <= 0 || isLocationSkipped(rLoc)) {
+                if (rLoc.getMaxCarMoves() <= 0 ||
+                        isLocationSkipped(rLoc) ||
+                        !rLoc.isPickUpAllowed() && !car.isLocalMove() ||
+                        !rLoc.isLocalMovesAllowed() && car.isLocalMove()) {
                     addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarFrom",
                             getName(), car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId()));
                     continue;
@@ -1865,7 +1868,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         for (int k = rLocations.indexOf(rLoc); k < rLocations.size(); k++) {
             RouteLocation rldest = rLocations.get(k);
             if (rldest.getName().equals(car.getDestinationName()) &&
-                    rldest.isDropAllowed() &&
+                    (rldest.isDropAllowed() && !car.isLocalMove() ||
+                            rldest.isLocalMovesAllowed() && car.isLocalMove()) &&
                     rldest.getMaxCarMoves() > 0 &&
                     !isLocationSkipped(rldest) &&
                     (!Setup.isCheckCarDestinationEnabled() ||
@@ -1942,12 +1946,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                     car.getDestinationTrackName()));
                     return true; // done
                 }
-                // is this a local move allowed?
-                if (!isLocalMove(buildReport, car)) {
+                // is this local move allowed?
+                if (!isLocalMoveAllowed(buildReport, car, rLoc, rldest)) {
                     continue;
                 }
                 // Can cars travel from origin to terminal?
-                if (!isTravelOriginToTerminalOkay(buildReport, rLoc, rldest, car)) {
+                if (!isTravelOriginToTerminalAllowed(buildReport, rLoc, rldest, car)) {
                     continue;
                 }
                 // check to see if moves are available
@@ -2030,9 +2034,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return true;
     }
 
-    private boolean isLocalMove(PrintWriter buildReport, Car car) {
-        if (!isLocalSwitcher() &&
-                !isAllowLocalMovesEnabled() &&
+    private boolean isLocalMoveAllowed(PrintWriter buildReport, Car car, RouteLocation rLoc, RouteLocation rldest) {
+        if ((!isAllowLocalMovesEnabled() || !rLoc.isLocalMovesAllowed() || !rldest.isLocalMovesAllowed()) &&
+                !isLocalSwitcher() &&
                 !car.isCaboose() &&
                 !car.hasFred() &&
                 !car.isPassenger() &&
@@ -2047,7 +2051,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return true;
     }
 
-    private boolean isTravelOriginToTerminalOkay(PrintWriter buildReport, RouteLocation rLoc, RouteLocation rldest,
+    private boolean isTravelOriginToTerminalAllowed(PrintWriter buildReport, RouteLocation rLoc, RouteLocation rldest,
             Car car) {
         if (!isAllowThroughCarsEnabled() &&
                 TrainCommon.splitString(getTrainDepartsName())

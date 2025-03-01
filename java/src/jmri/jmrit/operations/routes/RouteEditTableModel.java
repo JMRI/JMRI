@@ -22,7 +22,7 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table Model for edit of route locations used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2013
+ * @author Daniel Boudreau Copyright (C) 2008, 2013, 2025
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -34,7 +34,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     private static final int RANDOM_CONTROL_COLUMN = MAXMOVES_COLUMN + 1;
     private static final int PICKUP_COLUMN = RANDOM_CONTROL_COLUMN + 1;
     private static final int DROP_COLUMN = PICKUP_COLUMN + 1;
-    private static final int TRAVEL_COLUMN = DROP_COLUMN + 1;
+    private static final int LOCAL_COLUMN = DROP_COLUMN + 1;
+    private static final int TRAVEL_COLUMN = LOCAL_COLUMN + 1;
     private static final int TIME_COLUMN = TRAVEL_COLUMN + 1;
     private static final int MAXLENGTH_COLUMN = TIME_COLUMN + 1;
     private static final int GRADE = MAXLENGTH_COLUMN + 1;
@@ -113,6 +114,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(RANDOM_CONTROL_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(PICKUP_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(DROP_COLUMN).setPreferredWidth(65);
+        table.getColumnModel().getColumn(LOCAL_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(TRAVEL_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(TIME_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(MAXLENGTH_COLUMN).setPreferredWidth(75);
@@ -161,6 +163,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("Pickups");
             case DROP_COLUMN:
                 return Bundle.getMessage("Drops");
+            case LOCAL_COLUMN:
+                return Bundle.getMessage("LocalMoves");
             case TRAVEL_COLUMN:
                 return Bundle.getMessage("Travel");
             case TIME_COLUMN:
@@ -204,6 +208,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case RANDOM_CONTROL_COLUMN:
             case PICKUP_COLUMN:
             case DROP_COLUMN:
+            case LOCAL_COLUMN:
             case TIME_COLUMN:
                 return JComboBox.class;
             case COMMENT_COLUMN:
@@ -225,6 +230,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case RANDOM_CONTROL_COLUMN:
             case PICKUP_COLUMN:
             case DROP_COLUMN:
+            case LOCAL_COLUMN:
             case TRAVEL_COLUMN:
             case TIME_COLUMN:
             case MAXLENGTH_COLUMN:
@@ -274,6 +280,11 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DROP_COLUMN: {
                 JComboBox<String> cb = getYesNoComboBox();
                 cb.setSelectedItem(rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
+                return cb;
+            }
+            case LOCAL_COLUMN: {
+                JComboBox<String> cb = getYesNoComboBox();
+                cb.setSelectedItem(rl.isLocalMovesAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
                 return cb;
             }
             case TRAVEL_COLUMN: {
@@ -347,6 +358,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 break;
             case DROP_COLUMN:
                 setDrop(value, rl);
+                break;
+            case LOCAL_COLUMN:
+                setLocal(value, rl);
                 break;
             case TRAVEL_COLUMN:
                 setTravel(value, rl);
@@ -427,6 +441,11 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     private void setPickup(Object value, RouteLocation rl) {
         rl.setPickUpAllowed(
+                ((String) ((JComboBox<?>) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
+    }
+    
+    private void setLocal(Object value, RouteLocation rl) {
+        rl.setLocalMovesAllowed(
                 ((String) ((JComboBox<?>) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
     }
 
