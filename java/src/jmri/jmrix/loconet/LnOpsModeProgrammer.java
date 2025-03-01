@@ -75,7 +75,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             csIsPresent = false;
             return;
         }
-        ConnectionConfig connection[] = {null, null, null, null};
+        ConnectionConfig[] connection = {null, null, null, null};
         int i = 0;
         for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
             if (!conn.getDisabled()) {
@@ -208,14 +208,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             doingWrite = true;
             // SV1 mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
-
             // make message
-            int locoIOAddress = mAddress;
-            int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
-            m = jmri.jmrix.loconet.locoio.LocoIO.writeSV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
-            // TODO refactor to lnsv1.LnSv1MessageContents.writeCV EBR
-            // force version 1 tag
-            m.setElement(4, 0x01); //
+            int locoIOAddress = mAddress & 0x7F;
+            int locoIOSubAddress = ((mAddress+256)/256) & 0x7F;
+            m = jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents.createSv1WriteRequest(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
 
@@ -380,12 +376,9 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // SV1 mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
             // make message
-            int locoIOAddress = mAddress&0xFF;
-            int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
-            m = jmri.jmrix.loconet.locoio.LocoIO.readSV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
-            // TODO refactor to lnsv1.LnSv1MessageContents.readCV()
-            // force version 1 tag
-            m.setElement(4, 0x01);
+            int locoIOAddress = mAddress & 0xFF;
+            int locoIOSubAddress = ((mAddress+256)/256) & 0x7F;
+            m = jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents.createSv1ReadRequest(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
 
@@ -551,7 +544,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // got a message that is LONG_ACK reply to a 7th-gen BdOpsSw access
             bdOpSwAccessTimer.stop();    // kill the timeout timer
             int code = ProgListener.UnknownError;
-            int val = 0;
+            int val;
 
             // LACK with 0x6E in byte 1; assume it's to us
             if (doingWrite
@@ -577,7 +570,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
 
             // check for src address (?) moved to 0x50
             // this might not be the right way to tell....
-            if ((m.getElement(3) & 0x7F) != 0x50) {
+            if ((m.getElement(3) & 0x7F) != 0x50) { // to LocoBuffer
                 return;
             }
 
@@ -884,7 +877,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
      */
     @Override
     public String getAddress() {
-        return "" + getAddressNumber() + " " + getLongAddress();
+        return getAddressNumber() + " " + getLongAddress();
     }
 
     void initializeBdOpsAccessTimer() {

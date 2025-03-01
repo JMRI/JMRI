@@ -96,10 +96,11 @@ public class LocoIO {
      */
     public static LocoNetMessage readSV(int locoIOAddress, int locoIOSubAddress, int sv) {
         int[] contents = {LOCOIO_SV_READ, sv, 0, 0, locoIOSubAddress, 0, 0, 0};
+        int dstExtr = locoIOAddress | 0x0100; // force version 1 tag, cf. LnOpsModeProgrammer
 
         return LocoNetMessage.makePeerXfr(
                 0x1050, // B'cast locobuffer address
-                locoIOAddress,
+                dstExtr,
                 contents, // SV and SubAddr to read
                 LOCOIO_PEER_CODE_SV_VER1
         );
@@ -117,10 +118,11 @@ public class LocoIO {
      */
     public static LocoNetMessage writeSV(int locoIOAddress, int locoIOSubAddress, int sv, int data) {
         int[] contents = {LOCOIO_SV_WRITE, sv, 0, data, locoIOSubAddress, 0, 0, 0};
+        int dstExtr = locoIOAddress | 0x0100; // force version 1 tag, cf. LnOpsModeProgrammer
 
         return LocoNetMessage.makePeerXfr(
                 0x1050, // B'cast locobuffer address
-                locoIOAddress,
+                dstExtr,
                 contents, // SV and SubAddr to read
                 LOCOIO_PEER_CODE_SV_VER1
         );

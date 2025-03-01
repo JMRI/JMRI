@@ -92,13 +92,11 @@ public class LnPacketizer extends LnTrafficController {
         transmittedMsgCount++;
 
         // set the error correcting code byte(s) before transmittal
-        log.debug("sendLocoNet msg (packetizer) pre parity m={}", m); // debug EBR
         m.setParity();
-        log.debug("sendLocoNet msg (packetizer) post parity m={}", m); // debug EBR
 
         // stream to port in single write, as that's needed by serial
         int len = m.getNumDataElements();
-        byte msg[] = new byte[len];
+        byte[] msg = new byte[len];
         for (int i = 0; i < len; i++) {
             msg[i] = (byte) m.getElement(i);
         }
@@ -321,11 +319,9 @@ public class LnPacketizer extends LnTrafficController {
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException", e); // NOI18N
-                    continue;
                 } catch (java.io.InterruptedIOException e) {
                     // posted from idle port when enableReceiveTimeout used
                     // Normal condition, go around the loop again
-                    continue;
                 } catch (java.io.IOException e) {
                     // fired when read detects end-of-file
                     log.info("End of file", e); // NOI18N
@@ -336,7 +332,6 @@ public class LnPacketizer extends LnTrafficController {
                     // normally, we don't catch RuntimeException, but in this
                     // permanently running loop it seems wise.
                     log.warn("run: unexpected Exception", e); // NOI18N
-                    continue;
                 }
             } // end of permanent loop
         }
@@ -380,7 +375,7 @@ public class LnPacketizer extends LnTrafficController {
                     // get content; blocks until present
                     log.trace("check for input"); // NOI18N
 
-                    byte msg[] = xmtList.take();
+                    byte[] msg = xmtList.take();
 
                     // input - now send
                     try {
