@@ -460,6 +460,13 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         if (_reqNumOfMoves <= 0) {
             return;
         }
+        if (!rl.isLocalMovesAllowed() && isSecondPass) {
+            addLine(_buildReport, FIVE,
+                    Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
+                            rl.getId(), rl.getName()));
+            addLine(_buildReport, FIVE, BLANK_LINE);
+            return;
+        }
         boolean messageFlag = true;
         boolean foundCar = false;
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {

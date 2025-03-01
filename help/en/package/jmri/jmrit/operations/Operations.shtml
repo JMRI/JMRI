@@ -4756,10 +4756,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If the train is allowed to pull cars from the location select "Yes" under "Pick ups?",
       otherwise select "No". Same goes for "Set outs?", select "Yes" if the train is allowed to spot
       cars at the location, and "No" if set outs aren't allowed. Selecting "Yes" for both pick ups
-      and set outs allows the train to do both. Selecting "Yes" for "Local moves" allows local moves
+      and set outs allows the train to do both. Selecting "Yes" for "Local moves?" allows local moves
       to be performed by the train. A local move is when a car is pulled and spotted at the same
-      location. You can also prevent local moves using one of the train build options, see
+      location. The "Local Moves?" control is only for cars with a
+      <a href="#EditCarLoads">custom load</a>, a <a href="#FinalDestination">final
+        destination</a> or a <a href="#LocationDivision">railroad division</a>. You can also prevent
+      local moves using one of the train build options, see
       <a href="#TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</a>.
+
+      <p>
+        A <a href="#SwitcherService">local switcher</a> uses only the "Pick up?" and "Set outs?"
+        options and ignores the "Local moves?" option when dealing with cars that have the default
+        load names. If you want your local switcher to only move cars with custom loads, final
+        destinations, or divisions, select "No" for both "Pick up?" and "Set outs?" and "Yes" for
+        "Local moves?".
+      </p>
 
       <h4 id="RouteSwitchTime">Travel and Departure Times</h4>
 
@@ -5225,12 +5236,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5 id="TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</h5>
       The program when generating car movement normally doesn't create local moves. A local move is
       a pick up and then a set out of a car at the same location. When you use custom loads, the
-      program can create local moves based on the car's custom load. So if you had a car sitting on
-      a track with a custom load, and you also had a spur with a schedule at the same location
-      requesting that load, the train's Manifest could show the pull and spot as a local move. The
-      same goes for a car with a final destination that's at the car's current location. So if you
-      don't want your train to perform local moves when a car has a custom load or a local final
-      destination, deselect this option.
+      program can create local moves based on the car's
+      <a href="#EditCarLoads">custom load</a>. So if you had a car sitting on a track with a custom
+      load, and you also had a spur with a schedule at the same location requesting that load, the
+      train's Manifest could show the pull and spot as a local move. The same goes for a car with a
+      <a href="#FinalDestination">final destination</a> that's at the car's current location. A car
+      that has been assigned a
+      <a href="#LocationDivision">railroad division</a> can also require a local move, for example a
+      return to a yard track at the same location. So if you don't want your train to perform local
+      moves when a car has a custom load, a local final destination, or railroad division, deselect
+      this option.
 
       <h5>Allow cars to travel from origin to terminal</h5>
       Normally the program allows cars to travel from the train's departure location (origin) to its
@@ -6117,11 +6132,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       location, the location that the switcher will service, and assign that route to a train. The
       "train" now becomes a switcher that will only service that location. Adjust the "Move" count
       in the route to control how many cars the switcher will service.
+      
       <p>Since a local switcher only services a single location, the program ignores the train
         direction control in the switcher's route, and therefore the location and track service
         direction controls for a train are also ignored by the program. If you only want a track to
         be serviced by a switcher, deselect all the train direction controls for that track. Only a
         switcher will service a track that doesn't have any direction boxes selected.</p>
+
+      <p>
+        The switcher's route has controls for car pick ups, set outs, and local moves. See <a
+          href="#PullsAndSpots">Pick ups? Set outs? and Local moves?</a> for more information.
+      </p>
 
       <h4>Switcher Restrictions</h4>
       OperationsPro&trade; when generating a Manifest for a switcher (a train with a single location
