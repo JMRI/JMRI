@@ -284,7 +284,6 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 self.modify_all_stopping_distances()
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
             else:    #opt2
-                print "123456"
                 stopping_sensor_choice = "setIndividualStoppingSensors"
                 msg = "Specify the transit whose stopping distance we will change\n\n" + \
                       "Press transit start station button\nthen the transit end station button\n" + \
@@ -1426,13 +1425,12 @@ class createandshowGUI2(TableModelListener):
 
             msg = "Deleting invalid rows"
             result = OptionDialog().displayMessage(msg)
-            if result == JOptionPane.NO_OPTION:
-                return
+
 
             # check the loaded contents
             # 1) check that the trains are valid
-            # 2) ckeck that the blocks are occupied by valid trains
-            # if either of the above are not valic we blank the entries
+            # 2) check that the blocks are occupied by valid trains
+            # if either of the above are not valid we blank the entries
             # 3) Tidy
 
             [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]

@@ -432,7 +432,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "wait_time", wait_time
             return
         elif reply == opt2:
-            title = "Run Route and Record Journey Times"
+            title = "Select Route to Record Journey Times"
             list_items_no_trains = self.get_scheduled_routes("no_train")
             list_items_with_trains = self.get_scheduled_routes("with_train")
             if list_items_no_trains == []:

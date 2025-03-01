@@ -244,10 +244,9 @@ class MyTableModel7 (DefaultTableModel):
             location = LocationManager.getLocationByName(location_name)
             platform = self.get_location_platform(location)
             station_group = self.get_location_station_group(location)
-            print "platform", platform, "station_group", station_group
             # self.data.append([location_name, " ", " "])
             self.data.append([location_name, platform, station_group])
-        print "populated"
+        # print "populated"
 
     def find_between(self, s, first, last):
         try:
