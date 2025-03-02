@@ -4753,16 +4753,51 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h4 id="PullsAndSpots">Pick ups? Set outs? and Local moves?</h4>
 
-      If the train is allowed to pull cars from the location select "Yes" under "Pick ups?",
-      otherwise select "No". Same goes for "Set outs?", select "Yes" if the train is allowed to spot
-      cars at the location, and "No" if set outs aren't allowed. Selecting "Yes" for both pick ups
-      and set outs allows the train to do both. Selecting "Yes" for "Local moves?" allows local moves
-      to be performed by the train. A local move is when a car is pulled and spotted at the same
-      location. The "Local Moves?" control is only for cars with a
-      <a href="#EditCarLoads">custom load</a>, a <a href="#FinalDestination">final
-        destination</a> or a <a href="#LocationDivision">railroad division</a>. You can also prevent
-      local moves for the entire route using one of the train build options, see
-      <a href="#TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</a>.
+      <p>
+        If the train is allowed to pull cars from the location select "Yes" under "Pick ups?",
+        otherwise select "No". Same goes for "Set outs?", select "Yes" if the train is allowed to
+        spot cars at the location, and "No" if set outs aren't allowed. Selecting "Yes" for both
+        pick ups and set outs allows the train to do both. Selecting "Yes" for "Local moves?" allows
+        local moves to be performed by the train. A local move is when a car is pulled and spotted
+        at the same location. The "Local Moves?" control is only for cars with a <a
+          href="#EditCarLoads">custom load</a>, <a href="#FinalDestination">final destination</a>
+        or <a href="#LocationDivision">railroad division</a>. You can also prevent local moves for
+        the entire route using one of the train build options, see <a href="#TrainLocalMoveOption">Allow
+          local moves when a car has a custom load or FD</a>. The table below provides a summary.
+      </p>
+
+      <table>
+        <tr>
+          <td>Pick up?</td>
+          <td>Set outs?</td>
+          <td>Local moves?</td>
+          <td>Operation</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Pick ups, set outs, and local moves for cars with final destinations, custom loads, or divisions</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Pick ups, set outs, and no local moves for any car</td>
+        </tr>
+        <tr>
+          <td>No</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>No Pick ups or set outs, and only local moves for cars with a final destination</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Pick ups, no set outs, and only local moves for cars with a final destination, custom load, or division</td>
+        </tr>
+      </table>
 
       <p>
         A <a href="#SwitcherService">local switcher</a> uses only the "Pick up?" and "Set outs?"
@@ -4791,19 +4826,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           <td>Yes</td>
           <td>Yes</td>
           <td>No</td>
-          <td>Local move cars without final destinations, custom loads, or divisions</td>
+          <td>Local move cars without a final destination, custom load, or division</td>
         </tr>
         <tr>
           <td>No</td>
           <td>No</td>
           <td>Yes</td>
-          <td>Only local move cars with final destinations</td>
+          <td>Local move cars with a final destination</td>
         </tr>
         <tr>
           <td>Yes</td>
           <td>No</td>
           <td>Yes</td>
-          <td>Only local move cars with final destinations, custom loads, or divisions</td>
+          <td>Local move cars with a final destination, custom load, or division</td>
         </tr>
       </table>
 
