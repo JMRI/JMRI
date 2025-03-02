@@ -935,7 +935,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                         services = true;
                     }
                     // check can drop and pick up, and moves > 0
-                    if (services && (rl.isDropAllowed() || rl.isPickUpAllowed()) && rl.getMaxCarMoves() > 0) {
+                    if (services &&
+                            (rl.isDropAllowed() || rl.isPickUpAllowed() || rl.isLocalMovesAllowed()) &&
+                            rl.getMaxCarMoves() > 0) {
                         checkBox.setSelected(!_train.isLocationSkipped(rl));
                     } else {
                         checkBox.setEnabled(false);

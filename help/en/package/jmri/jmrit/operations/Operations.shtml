@@ -399,7 +399,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#TrainDirection">Train Direction</a></li>
                 <li><a href="#RouteMoves">Moves</a></li>
                 <li><a href="#RandomMoves">Random Moves</a></li>
-                <li><a href="#PullsAndSpots">Pick ups and Set outs</a></li>
+                <li><a href="#PullsAndSpots">Pick ups? Set outs? and Local moves?</a></li>
                 <li><a href="#RouteSwitchTime">Travel and Departure Times</a></li>
 
                 <li><a href="#RouteMaxTrainLength">Maximum Train Length</a></li>
@@ -4751,17 +4751,96 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         greater than 50% to reduce the move count by one, and 100% if you wanted the move count to
         be reduced by 2.</p>
 
-      <h4 id="PullsAndSpots">Pick ups? and Set outs?</h4>
+      <h4 id="PullsAndSpots">Pick ups? Set outs? and Local moves?</h4>
 
-      If the train is allowed to pull cars from the location select "Yes" under "Pick ups?",
-      otherwise select "No". Same goes for "Set outs?", select "Yes" if the train is allowed to spot
-      cars at the location, and "No" if set outs aren't allowed. Selecting "Yes" for both pick ups
-      and set outs allows the train to do both and also perform local moves. A local move is when a
-      car is pulled and spotted at the same location. You can prevent local moves using one of the
-      train build options, see <a href="#TrainLocalMoveOption">Allow local moves when a car has a
-        custom load or FD</a>. Another method to disallow local moves is to enter a location twice in
-      the route, and in the first location only allow set outs, and in the second only allow pick
-      ups.
+      <p>
+        If the train is allowed to pull cars from the location select "Yes" under "Pick ups?",
+        otherwise select "No". Same goes for "Set outs?", select "Yes" if the train is allowed to
+        spot cars at the location, and "No" if set outs aren't allowed. Selecting "Yes" for both
+        pick ups and set outs allows the train to do both. Selecting "Yes" for "Local moves?" allows
+        local moves to be performed by the train. A local move is when a car is pulled and spotted
+        at the same location. The "Local Moves?" control is only for cars with a <a
+          href="#EditCarLoads">custom load</a>, <a href="#FinalDestination">final destination</a>
+        or <a href="#LocationDivision">railroad division</a>. You can also prevent local moves for
+        the entire route using one of the train build options, see <a href="#TrainLocalMoveOption">Allow
+          local moves when a car has a custom load or FD</a>. The table below provides a summary.
+      </p>
+
+      <table>
+        <tr>
+          <td>Pick up?</td>
+          <td>Set outs?</td>
+          <td>Local moves?</td>
+          <td>Operation</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Pick ups, set outs, and local moves for cars with final destinations, custom loads, or divisions</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Pick ups, set outs, and no local moves for any car</td>
+        </tr>
+        <tr>
+          <td>No</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>No Pick ups or set outs, and only local moves for cars with a final destination</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Pick ups, no set outs, and only local moves for cars with a final destination, custom load, or division</td>
+        </tr>
+      </table>
+
+      <p>
+        A <a href="#SwitcherService">local switcher</a> uses only the "Pick up?" and "Set outs?"
+        options and ignores the "Local moves?" option when dealing with cars that have the default
+        load names, and no final destination, or railroad division. If you want your local switcher
+        to only move cars with a local final destination, select "No" for both "Pick up?" and "Set
+        outs?" and "Yes" for "Local moves?". If you want your local switcher to also consider making
+        local moves for cars with custom loads and railroad divisions, select "No" for "Set outs?"
+        and "Yes" for "Pick up?" and "Local moves?" The table below provides a summary.
+      </p>
+
+      <table>
+        <tr>
+          <td>Pick up?</td>
+          <td>Set outs?</td>
+          <td>Local moves?</td>
+          <td>Operation</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Local move all cars</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Local move cars without a final destination, custom load, or division</td>
+        </tr>
+        <tr>
+          <td>No</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Local move cars with a final destination</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Local move cars with a final destination, custom load, or division</td>
+        </tr>
+      </table>
 
       <h4 id="RouteSwitchTime">Travel and Departure Times</h4>
 
@@ -5227,12 +5306,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5 id="TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</h5>
       The program when generating car movement normally doesn't create local moves. A local move is
       a pick up and then a set out of a car at the same location. When you use custom loads, the
-      program can create local moves based on the car's custom load. So if you had a car sitting on
-      a track with a custom load, and you also had a spur with a schedule at the same location
-      requesting that load, the train's Manifest could show the pull and spot as a local move. The
-      same goes for a car with a final destination that's at the car's current location. So if you
-      don't want your train to perform local moves when a car has a custom load or a local final
-      destination, deselect this option.
+      program can create local moves based on the car's
+      <a href="#EditCarLoads">custom load</a>. So if you had a car sitting on a track with a custom
+      load, and you also had a spur with a schedule at the same location requesting that load, the
+      train's Manifest could show the pull and spot as a local move. The same goes for a car with a
+      <a href="#FinalDestination">final destination</a> that's at the car's current location. A car
+      that has been assigned a
+      <a href="#LocationDivision">railroad division</a> can also require a local move, for example a
+      return to a yard track at the same location. So if you don't want your train to perform local
+      moves when a car has a custom load, a local final destination, or railroad division, deselect
+      this option.
 
       <h5>Allow cars to travel from origin to terminal</h5>
       Normally the program allows cars to travel from the train's departure location (origin) to its
@@ -5765,6 +5848,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       This action can stop an automation that is running. You must select an automation from the
       "Automation" menu.
 
+      <h5>Counter</h5>
+      This action will increment a count starting from zero. The counter isn't saved when
+      OperationsPro is shutdown, and will restart at zero the next time the program is run. To reset
+      the count to zero without restarting OperationsPro, reselect the action "Counter".
+
       <h5>Message Yes or No</h5>
       This action can be used to ask a question to which the answer is Yes or No. Use the "If
       Success GOTO" action to branch if the answer is Yes. Use the "If failure GOTO" action to
@@ -6114,11 +6202,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       location, the location that the switcher will service, and assign that route to a train. The
       "train" now becomes a switcher that will only service that location. Adjust the "Move" count
       in the route to control how many cars the switcher will service.
+      
       <p>Since a local switcher only services a single location, the program ignores the train
         direction control in the switcher's route, and therefore the location and track service
         direction controls for a train are also ignored by the program. If you only want a track to
         be serviced by a switcher, deselect all the train direction controls for that track. Only a
         switcher will service a track that doesn't have any direction boxes selected.</p>
+
+      <p>
+        The switcher's route has controls for car pick ups, set outs, and local moves. See <a
+          href="#PullsAndSpots">Pick ups? Set outs? and Local moves?</a> for more information.
+      </p>
 
       <h4>Switcher Restrictions</h4>
       OperationsPro&trade; when generating a Manifest for a switcher (a train with a single location

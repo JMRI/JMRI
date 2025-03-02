@@ -37,6 +37,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
     protected String _randomControl = DISABLED;
     protected boolean _drops = true; // when true set outs allowed at this location
     protected boolean _pickups = true; // when true pick ups allowed at this location
+    protected boolean _localMoves = true; // when true local moves allowed at this location
     protected int _sequenceNum = 0; // used to determine location order in a route
     protected double _grade = 0; // maximum grade between locations
     protected int _wait = 0; // wait time at this location
@@ -66,6 +67,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
 
     public static final String DROP_CHANGED_PROPERTY = "dropChange"; // NOI18N
     public static final String PICKUP_CHANGED_PROPERTY = "pickupChange"; // NOI18N
+    public static final String LOCAL_MOVES_CHANGED_PROPERTY = "localMovesChange"; // NOI18N
     public static final String MAX_MOVES_CHANGED_PROPERTY = "maxMovesChange"; // NOI18N
     public static final String TRAIN_DIRECTION_CHANGED_PROPERTY = "trainDirectionChange"; // NOI18N
     public static final String DEPARTURE_TIME_CHANGED_PROPERTY = "routeDepartureTimeChange"; // NOI18N
@@ -307,6 +309,23 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
 
     public boolean isPickUpAllowed() {
         return _pickups;
+    }
+    
+    /**
+     * When true allow local car moves at this location
+     *
+     * @param local when true local moves allowed at this location
+     */
+    public void setLocalMovesAllowed(boolean local) {
+        boolean old = _localMoves;
+        _localMoves = local;
+        if (old != local) {
+            setDirtyAndFirePropertyChange(LOCAL_MOVES_CHANGED_PROPERTY, old ? "true" : "false", local ? "true" : "false"); // NOI18N
+        }
+    }
+
+    public boolean isLocalMovesAllowed() {
+        return _localMoves;
     }
 
     /**
@@ -558,6 +577,13 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         if ((a = e.getAttribute(Xml.DROPS)) != null) {
             _drops = a.getValue().equals(Xml.YES);
         }
+        if ((a = e.getAttribute(Xml.LOCAL_MOVES)) != null) {
+            _localMoves = a.getValue().equals(Xml.YES);
+        } else {
+            if (!isPickUpAllowed() || !isDropAllowed()) {
+                _localMoves = false; // disable local moves
+            }
+        }
         if ((a = e.getAttribute(Xml.WAIT)) != null) {
             try {
                 _wait = Integer.parseInt(a.getValue());
@@ -624,6 +650,7 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         e.setAttribute(Xml.RANDOM_CONTROL, getRandomControl());
         e.setAttribute(Xml.PICKUPS, isPickUpAllowed() ? Xml.YES : Xml.NO);
         e.setAttribute(Xml.DROPS, isDropAllowed() ? Xml.YES : Xml.NO);
+        e.setAttribute(Xml.LOCAL_MOVES, isLocalMovesAllowed() ? Xml.YES : Xml.NO);
         e.setAttribute(Xml.WAIT, Integer.toString(getWait()));
         e.setAttribute(Xml.DEPART_TIME, getDepartureTime());
         e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));

@@ -385,7 +385,7 @@ public class TrainBuilder extends TrainBuilderCars {
                         Bundle.getMessage("buildLocSkipped", rl.getName(), rl.getId(), _train.getName()));
                 continue;
             }
-            if (!rl.isPickUpAllowed()) {
+            if (!rl.isPickUpAllowed() && !rl.isLocalMovesAllowed()) {
                 addLine(_buildReport, ONE,
                         Bundle.getMessage("buildLocNoPickups", _train.getRoute().getName(), rl.getId(), rl.getName()));
                 continue;

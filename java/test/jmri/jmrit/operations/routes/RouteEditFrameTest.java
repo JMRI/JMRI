@@ -21,7 +21,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 /**
- *
  * @author Paul Bender Copyright (C) 2017
  */
 @jmri.util.junit.annotations.DisabledIfHeadless
@@ -33,7 +32,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
     }
-    
+
     @Test
     public void testRouteNameTooLong() {
 
@@ -46,7 +45,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testRouteNameMissing() {
 
@@ -57,7 +56,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         JemmyUtil.waitFor(f);
         JUnitUtil.dispose(f);
     }
-    
+
     /**
      * Checks to see if route is assigned to train
      */
@@ -69,7 +68,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         RouteEditFrame f = new RouteEditFrame();
         f.initComponents(null, train);
-        
+
         // Add some locations to the route
         JUnitOperationsUtil.loadFiveLocations();
 
@@ -77,12 +76,12 @@ public class RouteEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Title", Bundle.getMessage("TitleRouteAdd"), f.getTitle());
         f.routeNameTextField.setText("New Test Route");
         JemmyUtil.enterClickAndLeave(f.addRouteButton);
-        
+
         Assert.assertNotNull(train.getRoute());
         Assert.assertEquals("Route Name", "New Test Route", train.getRoute().getName());
-        
+
         Assert.assertFalse("Add Route Button", f.addRouteButton.isEnabled());
-        
+
         JUnitUtil.dispose(f);
     }
 
@@ -152,12 +151,12 @@ public class RouteEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("3rd location", "Test Loc B", routeLocations.get(2).getName());
         Assert.assertEquals("4th location", "Test Loc D", routeLocations.get(3).getName());
         Assert.assertEquals("5th location", "Test Loc A", routeLocations.get(4).getName());
-        
+
         // put the next location in the middle
         JemmyUtil.enterClickAndLeave(f.addLocAtMiddle);
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc A"));
         JemmyUtil.enterClickAndLeave(f.addLocationButton);
-        
+
         // confirm that the route sequence is correct
         routeLocations = newRoute.getLocationsBySequenceList();
         Assert.assertEquals("1st location", "Test Loc E", routeLocations.get(0).getName());
@@ -283,7 +282,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testButtonUp() {
 
@@ -305,15 +304,15 @@ public class RouteEditFrameTest extends OperationsTestCase {
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
         // findColumn finds the first column with the letters "up"
-//        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("Up")));
-        tbl.clickOnCell(0, 13);
+        //        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("Up")));
+        tbl.clickOnCell(0, 14);
 
         rl = route.getDepartsRouteLocation();
         Assert.assertEquals("Confirm departure name", "Boston", rl.getName());
 
         rl = route.getRouteLocationBySequenceNumber(2);
         Assert.assertEquals("Confirm departure name", "Chelmsford", rl.getName());
-        
+
         rl = route.getTerminatesRouteLocation();
         Assert.assertEquals("Confirm departure name", "Acton", rl.getName());
 
@@ -346,7 +345,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
 
-        Assert.assertEquals("Travel Time", 4, (int)tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Travel"))));
+        Assert.assertEquals("Travel Time", 4, (int) tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Travel"))));
         tbl.setValueAt(20, 0, tbl.findColumn(Bundle.getMessage("Travel")));
         JemmyUtil.enterClickAndLeave(f.saveRouteButton);
         // wait = travel - time
@@ -433,8 +432,9 @@ public class RouteEditFrameTest extends OperationsTestCase {
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
         // findColumn returns the first column with the letter "x".
-//        tbl.setValueAt(23, 0, tbl.findColumn(Bundle.getMessage("X")));
-        tbl.setValueAt(23, 0, 10);
+        //        tbl.setValueAt(23, 0, tbl.findColumn(Bundle.getMessage("X")));
+        // not all columns are visible, only travel or time       
+        tbl.setValueAt(23, 0, 11);
         tbl.setValueAt(57, 0, tbl.findColumn(Bundle.getMessage("Y")));
         JemmyUtil.enterClickAndLeave(f.saveRouteButton);
         Assert.assertEquals("New X Corrdinate", 23, rl.getTrainIconX());
@@ -495,7 +495,7 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testMinTrainLength() {
 
@@ -512,17 +512,19 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         // confirm default value
         Assert.assertEquals("Max Length", 1000, rl.getMaxTrainLength());
-        
-        Thread t = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonCancel"));
+
+        Thread t = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"),
+                Bundle.getMessage("ButtonCancel"));
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
         tbl.setValueAt(499, 0, tbl.findColumn(Bundle.getMessage("MaxLength")));
-        JUnitUtil.waitFor(() -> !t.isAlive(),"TooShort Cancel dialog");
+        JUnitUtil.waitFor(() -> !t.isAlive(), "TooShort Cancel dialog");
         Assert.assertEquals("Old Max Length", 1000, rl.getMaxTrainLength());
-        
-        Thread tt = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"), Bundle.getMessage("ButtonOK"));
+
+        Thread tt = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTooShort"),
+                Bundle.getMessage("ButtonOK"));
         tbl.setValueAt(499, 0, tbl.findColumn(Bundle.getMessage("MaxLength")));
-        JUnitUtil.waitFor(() -> !tt.isAlive(),"TooShort OK dialog");
+        JUnitUtil.waitFor(() -> !tt.isAlive(), "TooShort OK dialog");
         Assert.assertEquals("New Max Length", 499, rl.getMaxTrainLength());
 
         JUnitUtil.dispose(f);

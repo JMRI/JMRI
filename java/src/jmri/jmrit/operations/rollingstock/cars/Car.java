@@ -599,8 +599,7 @@ public class Car extends RollingStock {
 
     /**
      * Used to determine if car is performing a local move. A local move is when
-     * a car is moved to a different track at the same location. Car has to be
-     * assigned to a train.
+     * a car is moved to a different track at the same location.
      * 
      * @return true if local move
      */
