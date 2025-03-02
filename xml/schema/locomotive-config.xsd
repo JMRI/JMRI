@@ -184,6 +184,7 @@
     <xs:attribute name="model" type="xs:string" use="required"/>
     <xs:attribute name="comment" type="xs:string"/>
     <xs:attribute name="maxFnNum" type="xs:int"/>
+    <xs:attribute name="programmingmode" type="xs:int"/>
   </xs:complexType>
 
 

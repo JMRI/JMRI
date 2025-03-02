@@ -4,7 +4,7 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 
 /**
- * Manage the communication to/from a LocoIO board.
+ * Manage the communication to/from a LocoIO board. Deprecated since version 5.12. Will be removed 2025 version 5.13
  * <p>
  * Uses the LOCONETSV1MODE programming mode.
  * <p>

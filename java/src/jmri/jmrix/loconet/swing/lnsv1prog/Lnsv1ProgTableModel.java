@@ -58,128 +58,128 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
        idColumn.setMaxWidth(8);
     }
 
-   @Override
-   public String getColumnName(int c) {
-       switch (c) {
-           case MODADDR_COLUMN:
-               return Bundle.getMessage("HeadingAddress");
-           case MODADDRSPLIT_COLUMN:
-               return Bundle.getMessage("HeadingAddressSplit");
-           case VERSION_COLUMN:
-               return Bundle.getMessage("HeadingVersion");
-           case CV_COLUMN:
-               return Bundle.getMessage("HeadingCvLastRead");
-           case VALUE_COLUMN:
-               return Bundle.getMessage("HeadingValue");
-           case ROSTERENTRYCOLUMN:
-               return Bundle.getMessage("HeadingDeviceId");
-           case ROSTERNAMECOLUMN:
-               return Bundle.getMessage("HeadingDeviceModel");
-           case ROSTERSV1MODECOLUMN:
-               return Bundle.getMessage("HeadingIsSv1");
-           case OPENPRGMRBUTTONCOLUMN:
-               return Bundle.getMessage("ButtonProgram");
-           case COUNT_COLUMN:
-           default:
-               return "#";
+    @Override
+    public String getColumnName(int c) {
+        switch (c) {
+            case MODADDR_COLUMN:
+                return Bundle.getMessage("HeadingDccAddress");
+            case MODADDRSPLIT_COLUMN:
+                return Bundle.getMessage("HeadingAddressSplit");
+            case VERSION_COLUMN:
+                return Bundle.getMessage("HeadingVersion");
+            case CV_COLUMN:
+                return Bundle.getMessage("HeadingCvLastRead");
+            case VALUE_COLUMN:
+                return Bundle.getMessage("HeadingValue");
+            case ROSTERENTRYCOLUMN:
+                return Bundle.getMessage("HeadingDeviceId");
+            case ROSTERNAMECOLUMN:
+                return Bundle.getMessage("HeadingDeviceModel");
+            case ROSTERSV1MODECOLUMN:
+                return Bundle.getMessage("HeadingIsSv1");
+            case OPENPRGMRBUTTONCOLUMN:
+                return Bundle.getMessage("ButtonProgram");
+            case COUNT_COLUMN:
+            default:
+                return "#";
+        }
+    }
+
+    @Override
+    public Class<?> getColumnClass(int c) {
+        switch (c) {
+            case MODADDR_COLUMN:
+            case COUNT_COLUMN:
+            case VERSION_COLUMN:
+            case CV_COLUMN:
+            case VALUE_COLUMN:
+                return Integer.class;
+            case OPENPRGMRBUTTONCOLUMN:
+                return javax.swing.JButton.class;
+            case ROSTERSV1MODECOLUMN:
+                return Boolean.class;
+            case MODADDRSPLIT_COLUMN:
+            case ROSTERNAMECOLUMN:
+            case ROSTERENTRYCOLUMN:
+            default:
+                return String.class;
        }
    }
 
-   @Override
-   public Class<?> getColumnClass(int c) {
-       switch (c) {
-           case MODADDR_COLUMN:
-           case COUNT_COLUMN:
-           case VERSION_COLUMN:
-           case CV_COLUMN:
-           case VALUE_COLUMN:
-               return Integer.class;
-           case OPENPRGMRBUTTONCOLUMN:
-               return javax.swing.JButton.class;
-           case ROSTERSV1MODECOLUMN:
-               return Boolean.class;
-           case MODADDRSPLIT_COLUMN:
-           case ROSTERNAMECOLUMN:
-           case ROSTERENTRYCOLUMN:
-           default:
-               return String.class;
-       }
-   }
-
-   @Override
-   public boolean isCellEditable(int r, int c) {
+    @Override
+    public boolean isCellEditable(int r, int c) {
        return (c == OPENPRGMRBUTTONCOLUMN);
    }
 
-   @Override
-   public int getColumnCount() {
+    @Override
+    public int getColumnCount() {
       return NUMCOLUMNS;
    }
 
-   @Override
-   public int getRowCount() {
+    @Override
+    public int getRowCount() {
         if (lnsv1dm == null) {
             return 0;
         } else {
             return lnsv1dm.getDeviceCount();
         }
-   }
+    }
 
-   @Override
-   public Object getValueAt(int r, int c) {
-       Lnsv1Device dev = memo.getLnsv1DevicesManager().getDeviceList().getDevice(r);
-       try {
-          switch (c) {
-              case MODADDR_COLUMN:
-                  assert dev != null;
-                  return dev.getDestAddr();
-              case MODADDRSPLIT_COLUMN:
-                  assert dev != null;
-                  return dev.getDestAddrLow() + "/" + dev.getDestAddrHigh();
-              case VERSION_COLUMN:
-                  assert dev != null;
-                  return dev.getSwVersion();
-              case CV_COLUMN:
-                  assert dev != null;
-                  return dev.getCvNum();
-              case VALUE_COLUMN:
-                  assert dev != null;
-                  return dev.getCvValue();
-              case ROSTERENTRYCOLUMN:
-                  assert dev != null;
-                  return dev.getRosterEntry().getId();
-              case ROSTERSV1MODECOLUMN:
-                  assert dev != null;
-                  if (dev.getRosterEntry() != null) {
-                      // <programming direct="no" paged="no" register="no" ops="no">
-                      //     <mode>LOCONETSV1MODE</mode>
-                      // </programming>
-                      log.debug("======== {} isSv1Mode() {}", r, dev.getRosterEntry().getProgrammingMode());
-                      return (dev.getRosterEntry().getProgrammingMode().equals("LOCONETSV1MODE"));
-                  } else {
-                      return false;
-                  }
-              case ROSTERNAMECOLUMN:
-                  assert dev != null;
-                  if (dev.getRosterEntry() != null) {
-                      return dev.getRosterEntry().getDecoderModel();
-                  } else {
-                      return "";
-                  }
-              case OPENPRGMRBUTTONCOLUMN:
-                  assert dev != null;
-                  if (!dev.getRosterName().isEmpty()) {
-                      return Bundle.getMessage("ButtonProgram");
-                  }
-                  return Bundle.getMessage("ButtonNoMatchInRoster");
-              default: // column 1
-                 return r + 1;
-          }
-      } catch (NullPointerException npe) {
-        log.warn("Caught NPE reading Module {}, c{}", r, c);
-        return "";
-       }
-   }
+    @Override
+    public Object getValueAt(int r, int c) {
+        Lnsv1Device dev = memo.getLnsv1DevicesManager().getDeviceList().getDevice(r);
+        try {
+            switch (c) {
+                case MODADDR_COLUMN:
+                    assert dev != null;
+                    return dev.getDestAddr();
+                case MODADDRSPLIT_COLUMN:
+                    assert dev != null;
+                    return dev.getDestAddrLow() + "/" + dev.getDestAddrHigh();
+                case VERSION_COLUMN:
+                    assert dev != null;
+                    return dev.getSwVersion();
+                case CV_COLUMN:
+                    assert dev != null;
+                    return dev.getCvNum();
+                case VALUE_COLUMN:
+                    assert dev != null;
+                    return dev.getCvValue();
+                case ROSTERENTRYCOLUMN:
+                    assert dev != null;
+                    return dev.getRosterEntry().getId();
+                case ROSTERSV1MODECOLUMN:
+                    assert dev != null;
+                    boolean isLnsv1 = false;
+                    if (dev.getDecoderFile() != null) {
+                        // <programming direct="no" paged="no" register="no" ops="no">
+                        //     <mode>LOCONETSV1MODE</mode>
+                        // </programming>
+                        log.debug("======== Line {} getProgrammingMode()={}", r, dev.getDecoderFile().getProgrammingMode());
+                        isLnsv1 = ((dev.getDecoderFile().getProgrammingMode()).equals("LOCONETSV1MODE")); // EBR TODO fix NPE
+                    }
+                    return isLnsv1;
+                case ROSTERNAMECOLUMN:
+                    assert dev != null;
+                    if (dev.getRosterEntry() != null) {
+                        return dev.getRosterEntry().getDecoderModel();
+                    } else {
+                        return "";
+                    }
+                case OPENPRGMRBUTTONCOLUMN:
+                    assert dev != null;
+                    if (!dev.getRosterName().isEmpty()) {
+                        return Bundle.getMessage("ButtonProgram");
+                    }
+                    return Bundle.getMessage("ButtonNoMatchInRoster");
+                default: // column 1
+                    return r + 1;
+            }
+        } catch (NullPointerException npe) {
+            log.warn("Caught NPE reading Module {}, c{}", r, c);
+            return "";
+        }
+    }
 
     @Override
     public void setValueAt(Object value, int r, int c) {
@@ -287,7 +287,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
     }
 
     /*
-     * Process the "property change" events from LnSv1DevicesManager.
+     * Process the "property change" events from Lnsv1DevicesManager.
      *
      * @param evt event
      */

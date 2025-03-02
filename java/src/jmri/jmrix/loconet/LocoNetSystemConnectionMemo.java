@@ -129,7 +129,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         this.lncvdm = lncvdm;
     }
 
-    public void setLnSv1DevicesManager(Lnsv1DevicesManager lnsv1dm) {
+    public void setLnsv1DevicesManager(Lnsv1DevicesManager lnsv1dm) {
         this.lnsv1dm = lnsv1dm;
     }
 
@@ -322,8 +322,8 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         if (lnsv1dm == null) {
-            setLnSv1DevicesManager(new Lnsv1DevicesManager(this));
-            log.debug("Auto create of LnSv1DevicesManager for initial configuration");
+            setLnsv1DevicesManager(new Lnsv1DevicesManager(this));
+            log.debug("Auto create of Lnsv1DevicesManager for initial configuration");
         }
         return lnsv1dm;
     }

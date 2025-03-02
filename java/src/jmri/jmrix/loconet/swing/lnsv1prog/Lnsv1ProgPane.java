@@ -147,7 +147,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         JScrollPane tableScrollPane = new JScrollPane(moduleTable);
         tablePanel = new JPanel();
         Border resultBorder = BorderFactory.createEtchedBorder();
-        Border resultTitled = BorderFactory.createTitledBorder(resultBorder, Bundle.getMessage("LnSv1TableTitle"));
+        Border resultTitled = BorderFactory.createTitledBorder(resultBorder, Bundle.getMessage("Lnsv1TableTitle"));
         tablePanel.setBorder(resultTitled);
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
         tablePanel.add(tableScrollPane, BorderLayout.CENTER);
@@ -174,7 +174,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         rawCheckBox.setToolTipText(Bundle.getMessage("TooltipShowRaw"));
         panel3.add(panel31);
         Border panel3Border = BorderFactory.createEtchedBorder();
-        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, Bundle.getMessage("LnSv1MonitorTitle"));
+        Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, Bundle.getMessage("Lnsv1MonitorTitle"));
         panel3.setBorder(panel3Titled);
         return panel3;
     }
@@ -318,13 +318,14 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         }
         if ((!addressField.getText().isEmpty()) && (!subAddressField.getText().isEmpty())) {
             try {
-                addr = inDomain(addressField.getText(), 127); // goes in SCR as module low address
-                subAddr = inDomain(subAddressField.getText(), 127); // goes in d5 as module high address
+                addr = inDomain(addressField.getText(), 1, 127); // goes in DST_L as module low address
+                subAddr = inDomain(subAddressField.getText(), 1,127); // goes in d5 as module high address
+                // TODO check for reserved LocoBuffer 0x50/0d80 address
                 modProgButton.setEnabled(false);
                 statusText1.setText(Bundle.getMessage("FeedBackModAddrStart", addr, subAddr));
                 addressField.setEditable(false); // lock addressL & H fields to prevent accidentally changing it
                 subAddressField.setEditable(false);
-                LocoNetMessage[] messageArray = Lnsv1MessageContents.createBroadcastAddress(addr, subAddr);
+                LocoNetMessage[] messageArray = Lnsv1MessageContents.createBroadcastSetAddress(addr, subAddr);
                 // send Lnsv1 broadcast write address command(s) onto LocoNet
                 for (LocoNetMessage m : messageArray) {
                     if (m != null) {
@@ -372,9 +373,10 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             return;
         }
         try {
-            addr = inDomain(addressField.getText(), 127); // used as address for reply
-            subAddr = inDomain(subAddressField.getText(), 127); // used as address for reply
-            sv = inDomain(svField.getText(), 127); // decimal entry
+            addr = inDomain(addressField.getText(), 1,127); // goes in DST_L, used as address for reply
+            subAddr = inDomain(subAddressField.getText(), 1,127); // goes in D5, used as subaddress for reply
+            // TODO check for reserved LocoBuffer 0x50/0d80 address
+            sv = inDomain(svField.getText(), 0,127); // decimal entry
             // LocoNetMessage m = Lnsv1MessageContents.readSV(adrL, adrH, sv);
             log.debug("ReadButtonPressed adrL={}, sub={}, sv={}", addr, subAddr, sv);
             LocoNetMessage m = Lnsv1MessageContents.createSv1ReadRequest(addr, subAddr, sv);
@@ -395,9 +397,12 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         if (addressField.getText() != null && subAddressField.getText() != null
                 && (svField.getText() != null) && (valueField.getText() != null)) {
             try {
-                sv = inDomain(svField.getText(), 255); // decimal entry
-                val = inDomain(valueField.getText(), 255); // decimal entry
-                if (sv == 100 || val > 255 || val < 0) {
+                addr = inDomain(addressField.getText(), 1,0x7F); // goes in DST_L as module low address
+                subAddr = inDomain(subAddressField.getText(), 1,0x7F); // goes in d5 as module high address
+                // TODO check for reserved LocoBuffer 0x50/0d80 address
+                sv = inDomain(svField.getText(), 1,0x7F); // decimal entry
+                val = inDomain(valueField.getText(), 0,0x7F); // decimal entry
+                if (sv == 100 || sv == 80) {
                     // reserved general module address, warn in status and abort
                     statusText1.setText(Bundle.getMessage("FeedBackValidAddressRange"));
                     valueField.setBackground(Color.RED);
@@ -419,14 +424,14 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         statusText1.setText(Bundle.getMessage("FeedBackWrite", "LNSV1"));
     }
 
-    private int inDomain(String entry, int max) {
+    private int inDomain(String entry, int min, int max) {
         int n = -1;
         try {
             n = Integer.parseInt(entry);
         } catch (NumberFormatException e) {
             log.error("invalid entry, must be number");
         }
-        if ((0 <= n) && (n <= max)) {
+        if ((min <= n) && (n <= max)) {
             return n;
         } else {
             statusText1.setText(Bundle.getMessage("FeedBackInputOutsideRange"));
@@ -449,7 +454,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     @Override
     public synchronized void message(LocoNetMessage m) { // receive a LocoNet message and log it
         // got a LocoNet message, see if it's an LNSV1 response
-        //log.debug("LnSv1ProgPane heard message {}", m.toMonitorString());
+        //log.debug("Lnsv1ProgPane heard message {}", m.toMonitorString());
 
         if (Lnsv1MessageContents.isSupportedSv1Message(m)) {
             // raw data, to display
@@ -480,20 +485,19 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 //            }
 //        }
         if (Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_WRITE_ONE) {
-
+            // it's an LNSV1 WriteReply message, decode contents:
+            log.debug("SV1_WRITE_ONE decode contents");
             Lnsv1MessageContents contents = new Lnsv1MessageContents(m);
 
             if (contents.getDestAddr() == 0x00) {
                 reply += Bundle.getMessage("LNSV1_CHANGE_ADDR_MONITOR",
                         (contents.getSvNum() == 1 ? "LOW" : "HIGH"), contents.getSvValue()) + "\n";
             } else if (contents.getVersionNum() > 0x00) { // Write reply from LocoIO
-                reply += Bundle.getMessage("LNSV1_CHANGE_ADDR_MONITOR",
-                        (contents.getSvNum() == 1 ? "LOW" : "HIGH"), contents.getSvValue()) + "\n";
+                reply += Bundle.getMessage("LNSV1_WRITE_REPLY_MONITOR",
+                        contents.getSv1D8(), contents.getSvNum(), contents.getDestAddr(), contents.getSubAddr()) + "\n";
             } else { // write request from LocoBuffer
-                if (contents.getDestAddr() == 0x00) {
-                    reply += Bundle.getMessage("LNSV1_WRITE_REPLY_MONITOR",
-                            contents.getSv1D8(), contents.getSvNum(), contents.getDestAddr(), contents.getSubAddr()) + "\n";
-                }
+                reply += Bundle.getMessage("LNSV1_WRITE_REQUEST_MONITOR",
+                        contents.getSv1D8(), contents.getSvNum(), contents.getDestAddr(), contents.getSubAddr()) + "\n";
             }
         }
         if (Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_READ_ONE) {
@@ -520,7 +524,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
                 // Use Programmer to read and write individual SV's
 
-                // storing a Module in the list using the (first) write reply is handled by loconet.LnSvf1DevicesManager
+                // storing a Module in the list using the (first) write reply is handled by loconet.Lnsv1DevicesManager
                 Lnsv1Device dev = memo.getLnsv1DevicesManager().getDevice(addr, subAddr); // TODO add vrs?
                 if (dev != null) {
                     dev.setCvNum(msgSv);

@@ -478,7 +478,6 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         msg.setElement(2, src & 0x7F); // src_l
         msg.setElement(3, dst & 0x7F); // dst_l
         msg.setElement(4, highByte(dst) & 0x7F); // dst_h
-        log.debug("makePeerXfr dst={}, elem[4]= {}", dst, msg.getElement(4)); // EBR Lnsv1 debug
 
         // store the data bytes
         msg.setElement(6, d[0] & 0x7F);
@@ -519,7 +518,6 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
         msg.setElement(5, pxct1);
         msg.setElement(10, pxct2);
 
-        log.debug("makePeerXfr elem[4]={} msg={}", msg.getElement(4), msg); // EBR Lnsv1 debug
         return msg;
     }
 
@@ -547,7 +545,6 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
             log.error("highByte called with too large value: {}", // NOI18N
                     Integer.toHexString(val));
         }
-        log.debug("======= highByte val={}, result={}", val, (val & 0xFF00) / 256); // EBR lnsv1
         return (val & 0xFF00) / 256;
     }
 

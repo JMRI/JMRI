@@ -11,11 +11,9 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.loconet.hexfile.HexFileFrame;
+import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
-
-import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvReadRequest;
-import static jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.createCvWriteRequest;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
@@ -84,7 +82,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             break;
         }
         
-        if ((csIsPresent == true) && (connection[0] != null)) {
+        if ((csIsPresent) && (connection[0] != null)) {
             if (connection[0].name().equalsIgnoreCase("LocoNet Simulator")) {
                 csIsPresent = false;
             }
@@ -204,6 +202,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             bdOpSwAccessTimer.restart();
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+            // LocoIO family
             p = pL;
             doingWrite = true;
             // SV1 mode
@@ -211,8 +210,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // make message
             int locoIOAddress = mAddress & 0x7F;
             int locoIOSubAddress = ((mAddress+256)/256) & 0x7F;
-            m = jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents.createSv1WriteRequest(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
-            log.debug("  Message {}", m);
+            m = Lnsv1MessageContents.createSv1WriteRequest(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
+            log.debug(" LNSV1 Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
@@ -226,7 +225,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             m = new LocoNetMessage(16);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), val);
             m.setElement(3, 0x01); // 1 byte write
-            log.debug("  Message {}", m);
+            log.debug(" LNSV2 Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             sv2AccessTimer.restart();
         } else if (getMode().equals(LnProgrammerManager.LOCONETLNCVMODE)) {
@@ -249,9 +248,9 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // LNCV mode
             log.debug("write CV \"{}\" to {} addr:{} (art. {})", cvNum, val, mAddress, artNum);
             // make message
-            m = createCvWriteRequest(artNum, cvNum, val);
+            m = LncvMessageContents.createCvWriteRequest(artNum, cvNum, val);
             // module must be in Programming mode (handled by LNCV tool), note that mAddress is not included in LNCV Write message
-            log.debug("  Message {}", m);
+            log.debug(" LNCV Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.restart();
         } else {
@@ -264,7 +263,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
 
     /**
      * {@inheritDoc}
-     * @param CV the CV to read, could be a composite string that is split in this method te pass eg. the module type
+     * @param CV the CV to read, could be a composite string that is split in this method te pass e.g. the module type
      * @param pL  the listener that will be notified of the read
      */
     @Override
@@ -371,6 +370,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             memo.getLnTrafficController().sendLocoNetMessage(m);
             bdOpSwAccessTimer.restart();
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+            // LocoIO family
             p = pL;
             doingWrite = false;
             // SV1 mode
@@ -378,8 +378,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // make message
             int locoIOAddress = mAddress & 0xFF;
             int locoIOSubAddress = ((mAddress+256)/256) & 0x7F;
-            m = jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents.createSv1ReadRequest(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
-            log.debug("  Message {}", m);
+            m = Lnsv1MessageContents.createSv1ReadRequest(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
+            log.debug(" LNSV1 Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
@@ -393,7 +393,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             m = new LocoNetMessage(16);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), 0);
             m.setElement(3, 0x02); // 1 byte read
-            log.debug("  Message {}", m);
+            log.debug(" LNSV2 Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             sv2AccessTimer.restart();
         } else if (getMode().equals(LnProgrammerManager.LOCONETLNCVMODE)) {
@@ -416,8 +416,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             // LNCV mode
             log.debug("read LNCV \"{}\" addr:{}", CV, mAddress);
             // make message
-            m = createCvReadRequest(artNum, mAddress, cvNum); // module must be in Programming mode (is handled by LNCV tool)
-            log.debug("  Message {}", m);
+            m = LncvMessageContents.createCvReadRequest(artNum, mAddress, cvNum); // module must be in Programming mode (is handled by LNCV tool)
+            log.debug(" LNCV Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
             lncvAccessTimer.restart();
         } else if (getMode().equals(LnProgrammerManager.LOCONETOPSBOARD)) {
@@ -543,7 +543,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
 
             // got a message that is LONG_ACK reply to a 7th-gen BdOpsSw access
             bdOpSwAccessTimer.stop();    // kill the timeout timer
-            int code = ProgListener.UnknownError;
+            int code; // redundant = ProgListener.UnknownError;
             int val;
 
             // LACK with 0x6E in byte 1; assume it's to us
@@ -675,8 +675,6 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     }
 
     private void scheduleReplyForLater(int val, int code) {
-        int _val = val;
-        int _code = code;
 
         jmri.util.TimerUtil.scheduleOnLayoutThread(new java.util.TimerTask() {
             @Override
@@ -684,7 +682,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
                 log.debug("Passing result from 7g Accy Ops access.");
                 ProgListener tempProgListener = p;
                 p = null;
-                notifyProgListenerEnd(tempProgListener, _val, _code);
+                notifyProgListenerEnd(tempProgListener, val, code);
             }
         }, 50);
     }

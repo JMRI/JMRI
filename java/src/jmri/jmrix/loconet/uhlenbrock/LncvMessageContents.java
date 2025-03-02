@@ -264,7 +264,7 @@ public class LncvMessageContents {
                 returnString = Bundle.getMessage(locale, "LNCV_READ_INTERPRETED", sArt, sMod, sCvn);
                 break;
             case LNCV_READ_REPLY: // mod positions store CV value in ReadReply
-            case LNCV_READ_REPLY2: // for Digikeijs DK5088RC not following specs? experimental EBR
+            case LNCV_READ_REPLY2: // for Digikeijs DK5088RC not following specs
                 returnString = Bundle.getMessage(locale, "LNCV_READ_REPLY_INTERPRETED", sArt, sCvn, sMod);
                 break;
             case LNCV_DIRECT_LED1: // CV position contains module address, Value position contains LED 0-15 on/off

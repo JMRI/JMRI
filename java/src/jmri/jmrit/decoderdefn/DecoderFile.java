@@ -2,7 +2,6 @@ package jmri.jmrit.decoderdefn;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +17,6 @@ import jmri.jmrit.symbolicprog.ExtraMenuTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -408,19 +406,19 @@ public class DecoderFile extends XmlFile {
         }
     }
 
-    String mode = null;
+    ArrayList<String> _modeList = null;
 
     public String getProgrammingMode() {
-        if (mode == null) {
-            log.debug("getProgrammingMode() modes==null");
-            if (_element.getChild("programming") != null) {
-                log.debug("getProgrammingModes child Programming nonnull {}", _element.getChild("programming"));
-                mode = _element.getChild("programming").getChild("mode").getText();
-            } else {
-                mode = "";
-            }
+        if (_modeList == null) {
+            log.debug("getProgrammingModeList creating...");
+            _modeList = new ArrayList<String>();
+            loadProgrammingModeList(_element, _modeList);
         }
-        return mode;
+        log.debug("getProgrammingModeList created. size={}", _modeList.size());
+        if (_modeList.size() > 0) {
+            return _modeList.get(0); // return just the first mode as String TODO EBR fix actual result
+        }
+        return "none";
     }
 
     boolean isProductIDok(Element e, String extraInclude, String extraExclude) {
@@ -615,6 +613,24 @@ public class DecoderFile extends XmlFile {
                 extraMenuModel.setRow(j, e, menuElement, _model);
             }
             i++;
+        }
+    }
+
+    // Use the decoder Element from the file to load a ProgrammingModesList for programming.
+    public void loadProgrammingModeList(Element decoderElement, List<String> programmingModes) {
+        if (decoderElement.getChild("programming") != null) {
+            List<Element> modesList = decoderElement.getChild("programming").getChildren("mode");
+            if (!modesList.isEmpty()) {
+                for (Element element : modesList) {
+                    programmingModes.add(element.getValue());
+                }
+            } else {
+                programmingModes.add("hi");
+                log.debug("Added \'hi\' to empty programmingModes List");
+            }
+        } else {
+            log.debug("decoderElement.getChild(\'programming\') returned null");
+            programmingModes.add("none");
         }
     }
 

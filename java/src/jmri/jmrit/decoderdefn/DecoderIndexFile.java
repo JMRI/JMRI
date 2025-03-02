@@ -335,7 +335,7 @@ public class DecoderIndexFile extends XmlFile {
             if (!progMode.equals(r.getProgrammingMode())) {
                 return false;
             }
-            log.debug("programmermode match");
+            log.debug("programmer mode match");
         }
 
         return true;

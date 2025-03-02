@@ -857,15 +857,15 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             if ((a = d.getAttribute("maxFnNum")) != null) {
                 _maxFnNum = a.getValue();
             }
-            if ((a = d.getAttribute("comment")) != null) {
-                _decoderComment = a.getValue();
+            Element e2;
+            if ((e2 = d.getChild("programming")) != null) {
+                _programmingMode = e2.getChild("mode").getValue();
             }
         }
 
         loadFunctions(e.getChild("functionlabels"), "RosterEntry");
         loadSounds(e.getChild("soundlabels"), "RosterEntry");
         loadAttributes(e.getChild("attributepairs"));
-        loadProgrammingModes(e.getChild("programming"));
 
         if (e.getChild(RosterEntry.SPEED_PROFILE) != null) {
             _sp = new RosterSpeedProfile(this);

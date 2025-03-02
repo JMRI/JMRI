@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Manage an array of LnSv1Device items. See {@link Lnsv1DevicesManager}
+ * Manage an array of Lnsv1Device items. See {@link Lnsv1DevicesManager}
  * Based on Lnsvf2Devices by B. Milhaupt
  * @author Egbert Broerse 2020, 2025
  */

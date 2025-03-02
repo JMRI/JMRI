@@ -20,15 +20,15 @@ import javax.annotation.concurrent.GuardedBy;
 import java.util.List;
 
 /**
- * LocoNet LNSVf1 Devices Manager
+ * LocoNet LNSV1 Devices Manager
  * <p>
- * A centralized resource to help identify LocoNet "LNSVf1 Format"
+ * A centralized resource to help identify LocoNet "LNSV1 Format"
  * devices and "manage" them.
  * <p>
  * Supports the following features:
- *  - LNSVf1 "discovery" process supported via BROADCAST call
- *  - LNSVf1 Device "destination address" change supported by writing a new value to LNSV 0 (close session next)
- *  - LNSVf1 Device "reconfigure/reset" not supported/documented
+ *  - LNSV1 "discovery" process supported via BROADCAST call
+ *  - LNSV1 Device "destination address" change supported by writing a new value to LNSV 0 (close session next)
+ *  - LNSV1 Device "reconfigure/reset" not supported/documented
  *  - identification of devices with conflicting "destination address"es (warning before program start)
  *  - identification of a matching JMRI "decoder definition" for each discovered
  *    device, if an appropriate definition exists (only 1 value is matched, checks for LNSVf1 protocol support)
@@ -107,7 +107,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                                 // Try to find a roster entry which matches the device characteristics
                                 log.debug("Looking for adr {} in Roster", dev.getDestAddr());
                                 List<RosterEntry> l = Roster.getDefault().matchingList(Integer.toString(dev.getDestAddr()));
-                                log.debug("LnSvf1DeviceManager found {} matches in Roster", l.size());
+                                log.debug("Lnsv1DeviceManager found {} matches in Roster", l.size());
                                 if (l.isEmpty()) {
                                     log.debug("No corresponding roster entry found");
                                 } else if (l.size() == 1) {
@@ -133,14 +133,14 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                             }
                         }
                     } else {
-                        log.debug("LNSVf1 device was already in list");
+                        log.debug("LNSV1 device was already in list");
                     }
                 }
             } else {
-                log.debug("LNSVf1 message not a READ REPLY [{}]", m);
+                log.debug("LNSV1 message not a READ REPLY [{}]", m);
             }
         } else {
-            log.debug("LNSVf1 message not recognized");
+            log.debug("LNSV1 message not recognized");
         }
     }
 
@@ -188,7 +188,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
             return ProgrammingResult.FAIL_NO_ADDRESSED_PROGRAMMER;
         }
 
-        if (p.getClass() != ProgDebugger.class) { // Debug TODO remove EBR
+        if (p.getClass() != ProgDebugger.class) { // Debug TODO comment out EBR
             // ProgDebugger is used for LocoNet HexFile Sim; uncommenting above line allows testing of LNSV1 Tool
             if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETOPSBOARD)) {
                 return ProgrammingResult.FAIL_NO_LNSV1_PROGRAMMER;

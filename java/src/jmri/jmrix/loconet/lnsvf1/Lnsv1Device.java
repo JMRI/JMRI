@@ -3,10 +3,8 @@ package jmri.jmrix.loconet.lnsvf1;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 
-import java.util.Arrays;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * A class to hold LocoNet LNSVf1 (LocoIO) device identity information.
@@ -89,6 +87,6 @@ public class Lnsv1Device {
         cvValue = val;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Lnsv1Device.class);
+    // private final static Logger log = LoggerFactory.getLogger(Lnsv1Device.class);
 
 }

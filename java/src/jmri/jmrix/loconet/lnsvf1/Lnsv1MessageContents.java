@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.lnsvf1;
 
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.locoio.LocoIO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,9 +77,10 @@ import java.util.Objects;
  * @author E. Broerse Copyright (C) 2025
  */
 public class Lnsv1MessageContents {
-    public static final int LNSV1_BROADCAST_ADDRESS = 0x0100; // LocoIO broadcast (addr_H = 1)
-    public static final int LNSV1_LOCOBUFFER_ADDRESS = 0x1050; // LocoBuffer reserved address (addr_H = 1)
-    public static final int LNSV1_PEER_CODE_SV_VER1 = 0x08;
+    public static final int LNSV1_BROADCAST_ADDRESS = 0x00; // LocoIO broadcast (addr_H = 1)
+    public static final int LNSV1_LOCOBUFFER_ADDRESS = 0x50; // LocoBuffer reserved address (addr_H = 1)
+    public static final int LNSV1_PEER_CODE_SV_VER0 = 0x00;
+    public static final int LNSV1_PEER_CODE_SV_VER1 = 0x08; //
 
     private final int src_l;
     private final int src_h;
@@ -95,12 +95,11 @@ public class Lnsv1MessageContents {
     private final int d8;
 
     // Helper to calculate LocoIO Sensor address from returned data - also in LocoNetMessage ?
-    public static int SENSOR_ADR(int a1, int a2) {
-        return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
-    }
+//    public static int SENSOR_ADR(int a1, int a2) {
+//        return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
+//    }
 
     // LocoNet "SV 1 format" helper definitions: indexes into the LocoNet message
-//    public final static int SV1_LENGTH_ELEMENT_INDEX = 1;
     public final static int SV1_SV_SRC_L_ELEMENT_INDEX = 2;
     public final static int SV1_SV_DST_L_ELEMENT_INDEX = 3;
     public final static int SV1_SV_DST_H_ELEMENT_INDEX = 4;
@@ -116,7 +115,7 @@ public class Lnsv1MessageContents {
     public final static int SV1_SVD8_ELEMENT_INDEX = 14;
 
     //  helpers for decoding SV format 1 messages (versus other OCP_PEER_XFER messages with length 0x10)
-    public final static int SV1_SRC_L_ELEMENT_MASK = 0x7f;
+    // public final static int SV1_SRC_L_ELEMENT_MASK = 0x7f;
     // public final static int SV1_DST_L_ELEMENT_MASK = 0x7f;
     public final static int SV1_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
     public final static int SV1_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x00;
@@ -125,7 +124,7 @@ public class Lnsv1MessageContents {
     public final static int SV1_SV_VRS_VRSX7_CHECK_MASK = 0x04;
     public final static int SV1_SV_D4_D4X7_CHECK_MASK = 0x08;
     public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
-    public final static int SV0_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
+    public final static int SV0_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x10; // TODO LnInterpret invalid replies LNSV0?
     public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x00;
     // no high bit for sub-address SV1_SV_SRC_H_ELEMENT
     public final static int SV1_SV_D6_D6X7_CHECK_MASK = 0x02;
@@ -138,7 +137,7 @@ public class Lnsv1MessageContents {
 
     // LocoNet "SV 1 format" helper definitions: SV_CMD "reply" bit
     public final static int SV1_SV_CMD_REPLY_BIT_NUMBER = 0x6;
-//    public final static int SV1_SV_CMD_REPLY_BIT_MASK = (2^SV1_SV_CMD_REPLY_BIT_NUMBER);
+    // public final static int SV1_SV_CMD_REPLY_BIT_MASK = (2^SV1_SV_CMD_REPLY_BIT_NUMBER);
 
     /**
      * Create a new LnSV1MessageContents object from a LocoNet message.
@@ -202,11 +201,16 @@ public class Lnsv1MessageContents {
             return false;
         }
 
-        // length of OPC_PEER_XFER must be 0x10
+        // Element 1 must be 0x10
         if (m.getElement(1) != 0x10) {
-            log.debug ("cannot be SV1 message because not length 0x10");  // NOI18N
+            log.debug ("cannot be SV1 message because elem. 1 not 0x10");  // NOI18N
             return false;
         }
+
+//        if (m.getElement(4) != 0x01) {
+//            log.debug ("cannot be SV1 message because elem. 4 not 0x01");  // NOI18N
+//            return false;
+//        }
 
         // Check PXCT1
         if ((m.getElement(SV1_SVX1_ELEMENT_INDEX)
@@ -233,7 +237,7 @@ public class Lnsv1MessageContents {
             log.debug("LocoNet message is a supported SV Format 1 message");
             return true;
         }
-        log.debug("LocoNet message is not a supported SV Format 2 message");  // NOI18N
+        log.debug("LocoNet message is not a supported SV Format 1 message");  // NOI18N
         return false;
     }
 
@@ -419,7 +423,7 @@ public class Lnsv1MessageContents {
      * @return true if the SV1 message is a SV1 Read One Reply message
      */
     public boolean isSupportedSv1ReadOneReply() {
-        return (sv_cmd == SV_CMD_READ_ONE);
+        return (sv_cmd == SV_CMD_READ_ONE && vrs != 0);
     }
 
     /**
@@ -449,7 +453,7 @@ public class Lnsv1MessageContents {
     }
 
     public int getDestAddr() {
-        if ((dst_l != 0x0100) && (dst_h != 0x0)) {
+        if ((dst_l != 0x00) && (dst_h != 0x00)) {
             return dst_l + 256*dst_h;
         }
         return -1;
@@ -487,8 +491,7 @@ public class Lnsv1MessageContents {
 
     public int getVersionNum() {
         if ((sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_READ_ONE.sv_cmd) ||
-                (sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_WRITE_ONE.sv_cmd) ||
-                (sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_READ_REPLY.sv_cmd)) {
+                (sv_cmd == Lnsv1MessageContents.Sv1Command.SV1_WRITE_ONE.sv_cmd)) {
             return vrs;
         }
         return -1;
@@ -528,10 +531,37 @@ public class Lnsv1MessageContents {
 
     // ****** Create LNSV1 messages ***** //
 
+    /* To simulate replies from LocoIO, Uses LNSV1_PEER_CODE_SV_VER0 */
+    public static LocoNetMessage createSv0Message (
+            int source,
+            int destination,
+            int subAddress,
+            int command,
+            int svNum,
+            int version,
+            int data,
+            int d6,
+            int d7,
+            int d8)
+            throws IllegalArgumentException {
+
+        if ( ! isSupportedSv1Command(command)) {
+            throw new IllegalArgumentException("Command is not a supported SV1 command"); // NOI18N
+        }
+        int[] contents = {command, svNum, version, data, subAddress, d6, d7, d8};
+        log.debug("createSv1Message src={} dst={} subAddr={} data[]={}", source, destination, subAddress, contents);
+        return LocoNetMessage.makePeerXfr(
+                source,
+                destination,
+                contents,
+                LNSV1_PEER_CODE_SV_VER0
+        );
+    }
+
     /**
      * Create a LocoNet message containing an SV Programming Format 1 message.
      * See Programmer message code in {@link jmri.jmrix.loconet.LnOpsModeProgrammer} loadSV1MessageFormat
-     * TODO update doc
+     *
      * @param source  source device address (for &lt;SRC_L&gt;)
      * @param destination = SV format 1 destination address (for &lt;DST_L&gt;)
      * @param subAddress = SV format 1 destination subaddress (for &lt;DST_H&gt;)
@@ -562,7 +592,7 @@ public class Lnsv1MessageContents {
             throw new IllegalArgumentException("Command is not a supported SV1 command"); // NOI18N
         }
         int[] contents = {command, svNum, version, data, subAddress, d6, d7, d8};
-        log.debug("createSv1Message0 src={} dst={} subAddr={} cata[]={}", source, destination, subAddress, contents);
+        log.debug("createSv1Message src={} dst={} subAddr={} data[]={}", source, destination, subAddress, contents);
         return LocoNetMessage.makePeerXfr(
                 source,
                 destination,
@@ -570,18 +600,6 @@ public class Lnsv1MessageContents {
                 LNSV1_PEER_CODE_SV_VER1
         );
     }
-
-//    public static LocoNetMessage readSV(int locoIOAddress, int locoIOSubAddress, int sv) {
-//        log.debug("readSV {} from {}/{}", sv, locoIOAddress, locoIOSubAddress);
-//        int[] contents = {Sv1Command.SV1_READ_ONE.sv_cmd, sv, 0, 0, locoIOSubAddress, 0, 0, 0};
-//
-//        return LocoNetMessage.makePeerXfr(
-//                LNSV1_LOCOBUFFER_ADDRESS, // B'cast LocoBuffer address
-//                locoIOAddress,
-//                contents, // contains SV and SubAddr to read
-//                LNSV1_PEER_CODE_SV_VER1
-//        );
-//    }
 
     /**
      * Create LocoNet message for a query of an SV of this object.
@@ -592,82 +610,32 @@ public class Lnsv1MessageContents {
      * @return LocoNet message
      */
 public static LocoNetMessage createSv1ReadRequest(int dst, int subAddress, int svNum) {
-        int dstExtr = dst | 0x0100; // force version 1 tag, cf. LnOpsModeProgrammer
-    log.debug("createSv1ReadRequest2 dst={} dstExtr={} subAddr={}", dst, dstExtr, subAddress);
+    int dstExtr = dst | 0x0100; // force version 1 tag, cf. LnOpsModeProgrammer
+    log.debug("createSv1ReadRequest dst={} dstExtr={} subAddr={}", dst, dstExtr, subAddress);
         return createSv1Message(LNSV1_LOCOBUFFER_ADDRESS, dstExtr, subAddress,
                 Sv1Command.SV1_READ_ONE.sv_cmd, svNum, 0,0, 0, 0, 0);
-        // TODO verify against LocoIO.read(): BUG elem(4) is 00, not 01!
     }
 
     /**
      * Simulate a read/probe reply for testing/developing.
      *
      * @param src board low address
-     * @param dst dest high address, usually 0x0150 for LocoBuffer/PC
+     * @param dst dest high address, usually 0x50 for LocoBuffer/PC
      * @param subAddress board high address
      * @param version fictional firmware version number to add
      * @param svNum SV read
      * @return LocoNet message containing the reply
      */
     public static LocoNetMessage createSv1ReadReply(int src, int dst, int subAddress, int version, int svNum, int value) {
-        log.debug("createSv1ReadReply0");
-        int srcExtr = src | 0x0100; // dst or src? EBR
-        return createSv1Message(srcExtr, dst, subAddress,
+        log.debug("createSv1ReadReply");
+        int dstExtr = dst | 0x0100; // force version 1 tag, cf. LnOpsModeProgrammer
+        return createSv1Message(src, dstExtr, subAddress,
                 Sv1Command.SV1_READ_ONE.sv_cmd,
                 svNum, version, 0, value, 0, 0);
     }
 
-    /**
-     * Simulate a read reply to a given LocoNet message for testing/developing.
-     *
-     * @param m  the preceding LocoNet message
-     * @param svValues  array containing the returned values for SV, SV+1 and SV+2.
-     * @return  LocoNet message containing the reply, or null if preceding
-     *          message isn't a query
-     */
-    public static LocoNetMessage createSv1ReadReply(LocoNetMessage m, int[] svValues, int version) {
-        log.debug("createSv1ReadReply1");
-        if (!isSupportedSv1Message(m)) {
-            return null;
-        }
-        if (m.getElement(SV1_SV_CMD_ELEMENT_INDEX) != Sv1Command.SV1_READ_ONE.sv_cmd) {
-            return null;
-        }
-        // first copy DST to SRC
-        if (m.getElement(SV1_SV_DST_L_ELEMENT_INDEX) != LNSV1_BROADCAST_ADDRESS) {
-            m.setElement(SV1_SV_SRC_L_ELEMENT_INDEX, m.getElement(SV1_SV_DST_L_ELEMENT_INDEX));
-            m.setElement(SV1_SV_SRC_H_ELEMENT_INDEX, m.getElement(SV1_SV_DST_H_ELEMENT_INDEX));
-        } else {
-            m.setElement(SV1_SV_SRC_L_ELEMENT_INDEX, 57);
-            m.setElement(SV1_SV_SRC_H_ELEMENT_INDEX, 1);
-        }
-        // then fill in LocoBuffer as DST
-        m.setElement(SV1_SV_DST_L_ELEMENT_INDEX, LNSV1_LOCOBUFFER_ADDRESS & 0x7F);
-        m.setElement(SV1_SV_DST_H_ELEMENT_INDEX, (LNSV1_LOCOBUFFER_ADDRESS >> 8) & 0x7F);
-
-        m.setElement(SV1_SV_VRS_ELEMENT_INDEX, version & 0x7F);
-        // TODO store hi bit of vrs in X1 bit 2
-        m.setElement(SV1_SVD6_ELEMENT_INDEX, svValues[0] & 0x7F);
-        m.setElement(SV1_SVD7_ELEMENT_INDEX, svValues[1] & 0x7F);
-        m.setElement(SV1_SVD8_ELEMENT_INDEX, svValues[2] & 0x7F);
-        // TODO store hi bits of svValues[0-2] in X2 bits 1-3
-
-        return m;
-    }
-
-//    public static LocoNetMessage writeSV(int locoIOAddress, int locoIOSubAddress, int sv, int data) {
-//        int[] contents = {Sv1Command.SV1_WRITE_ONE.sv_cmd, sv, 0, data, locoIOSubAddress, 0, 0, 0};
-//        log.debug("writeSV");
-//        return LocoNetMessage.makePeerXfr(
-//                LNSV1_LOCOBUFFER_ADDRESS, // B'cast LocoBuffer address
-//                locoIOAddress,
-//                contents, // contains SV and SubAddr to read
-//                LNSV1_PEER_CODE_SV_VER1
-//        );
-//    }
-
     public static LocoNetMessage createSv1WriteRequest(int dst, int subAddress, int svNum, int value) {
-        log.debug("createSv1WriteRequest1");
+        log.debug("createSv1WriteRequest");
         int dstExtr = dst | 0x0100; // force version 1 tag, cf. LnOpsModeProgrammer
         return createSv1Message(LNSV1_LOCOBUFFER_ADDRESS, dstExtr, subAddress,
                 Sv1Command.SV1_WRITE_ONE.sv_cmd, svNum, 0, value, 0, 0, 0);
@@ -684,44 +652,11 @@ public static LocoNetMessage createSv1ReadRequest(int dst, int subAddress, int s
      * @return LocoNet message containing the reply
      */
     public static LocoNetMessage createSv1WriteReply(int src, int dst, int subAddress, int version, int svNum, int value) {
-        log.debug("createSv1WriteReply0");
-        int srcExtr = src & 0xFF + 0x1000;
-        return createSv1Message(srcExtr, dst, subAddress,
+        log.debug("createSv1WriteReply");
+        int dstExtr = dst | 0x0100; // force version 1 tag, cf. LnOpsModeProgrammer
+        return createSv1Message(src, dstExtr, subAddress,
                 Sv1Command.SV1_WRITE_ONE.sv_cmd,
                 svNum, version, 0, 0, 0, value);
-    }
-
-    /**
-     * Simulate a write reply from LocoNet for testing/developing.
-     *
-     * @param m  the preceding LocoNet message
-     * @param version the device firmware version
-     * @return  LocoNet message containing the reply, or null if preceding
-     *          message isn't a WRITE_ONE request
-     */
-    public static LocoNetMessage createSv1WriteReply(LocoNetMessage m, int version) {
-        log.debug("createSv1WriteReply1");
-        if (!isSupportedSv1Message(m)) {
-            return null;
-        }
-        if (m.getElement(SV1_SV_CMD_ELEMENT_INDEX) != Sv1Command.SV1_WRITE_ONE.sv_cmd) {
-            return null;
-        }
-        int srcL = m.getElement(SV1_SV_SRC_L_ELEMENT_INDEX);
-        int srcH = m.getElement(SV1_SV_SRC_H_ELEMENT_INDEX);
-        int sv_val = m.getElement(SV1_SVD4_ELEMENT_INDEX);
-
-        m.setElement(SV1_SV_DST_L_ELEMENT_INDEX, LNSV1_LOCOBUFFER_ADDRESS);
-        m.setElement(SV1_SV_DST_H_ELEMENT_INDEX, 0x01);
-        m.setElement(SV1_SRC_L_ELEMENT_MASK, srcL & 0x7F);
-        m.setElement(SV1_SV_SRC_H_ELEMENT_INDEX, srcH & 0x7F);
-
-        m.setElement(SV1_SV_VRS_ELEMENT_INDEX, version & 0x7F);
-        // TODO store hi bit of vrs in X1 bit 2
-        m.setElement(SV1_SVD8_ELEMENT_INDEX, sv_val & 0x7F);
-        m.setElement(SV1_SVD4_ELEMENT_INDEX, 0x00);
-
-        return m;
     }
 
     /**
@@ -732,12 +667,11 @@ public static LocoNetMessage createSv1ReadRequest(int dst, int subAddress, int s
      * @param subAddress the new subAddress of the board
      * @return an array containing one or two LocoNet messages
      */
-    public static LocoNetMessage[] createBroadcastAddress(int address, int subAddress) {
-        log.debug("createBroadcastAddress");
+    public static LocoNetMessage[] createBroadcastSetAddress(int address, int subAddress) {
         LocoNetMessage[] messages = new LocoNetMessage[2];
-        messages[0] = LocoIO.writeSV(LNSV1_BROADCAST_ADDRESS, 0, 1, address & 0xFF);
+        messages[0] = createSv1WriteRequest(LNSV1_BROADCAST_ADDRESS, 0, 1, address & 0xFF);
         if (subAddress != 0) {
-            messages[1] = LocoIO.writeSV(LNSV1_BROADCAST_ADDRESS, 0, 2, subAddress);
+            messages[1] = createSv1WriteRequest(LNSV1_BROADCAST_ADDRESS, 0, 2, subAddress);
         }
         return messages;
     }
@@ -748,7 +682,7 @@ public static LocoNetMessage createSv1ReadRequest(int dst, int subAddress, int s
      * @return the complete LocoNet message
      */
     public static LocoNetMessage createBroadcastProbeAll() {
-        return LocoIO.readSV(LNSV1_BROADCAST_ADDRESS, 0, 2);
+        return createSv1ReadRequest(LNSV1_BROADCAST_ADDRESS, 0, 2);
     }
 
     public enum Sv1Command {
