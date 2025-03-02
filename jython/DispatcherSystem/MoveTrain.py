@@ -26,9 +26,6 @@ from org.apache.commons.io import FilenameUtils
 from java.io import File
 #, defaultTableModel
 
-
-#import platform
-
 class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     global trains_dispatched
@@ -205,7 +202,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                         if opt1:
                             pass
                         else:
-                            break
+                            if str(train_name) in trains_dispatched:
+                                trains_dispatched.remove(str(train_name))
+                            result = True  # break from loop
                     iter += 1
                 else:
                     break
@@ -456,7 +455,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     if opt1:
                         pass
                     else:
-                        break
+                        return result
             iter += 1
 
         #return result
@@ -497,6 +496,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         train = trains[train_name]
         self.trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
         self.modify_trainInfo(train_name)  # sets the speed factor and other train dependent factors
+        # print "traininfoFileName", traininfoFileName
+        jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(self.trainInfo, traininfoFileName)
         result = DF.loadTrainFromTrainInfo(self.trainInfo, type, value)
         if result == 0:
             self.set_whether_to_stop_at_sensor(DF)
@@ -563,9 +564,18 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
         # print "modify_trainInfo"
 
+        # setTrainLengthUnits to scalemetres
+        tlu = jmri.jmrit.dispatcher.ActiveTrain(None,None,0).TrainLengthUnits
+        # x = tlu.TRAINLENGTH_SCALEMETERS
+        # print "TRAINLENGTH_SCALEMETERS= ", x
+        self.trainInfo.setTrainLengthUnits(tlu.TRAINLENGTH_SCALEMETERS)  #scale metres
+
+        # setMaxTrainLength  (in scale metres)
         [engine,current_length] = self.get_train_length(train_name)  #get the engine name
         # print "in modify_trainInfo1a length = ", current_length
-        self.trainInfo.setMaxTrainLength(float(current_length))
+        self.trainInfo.setMaxTrainLengthScaleMeters(float(current_length))
+
+        # setSpeedFactor
         # print "in modify_trainInfo1 "
         [engine,current_speed_factor] = self.get_train_speed_factor(train_name)
         # print "in modify_trainInfo2 ", current_speed_factor
@@ -577,6 +587,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             msg = "speedFactor set is out of range " + str(current_speed_factor) + "\nSpeed Factor set to 100% " + "for train " + train_name
             OptionDialog().displayMessage(msg)
         self.trainInfo.setSpeedFactor(float(speedFactor))
+
+        # setMinReliableOperatingSpeed
+        percentage = 10.0
+        self.trainInfo.setMinReliableOperatingSpeed(percentage/100)
+
         if self.logLevel > 0: print "self.forward_stopping_sensor_exists(self.trainInfo)",self.forward_stopping_sensor_exists(self.trainInfo)
         # print "sensors.getSensor('stopAtStopSensor').getKnownState()", sensors.getSensor("stopAtStopSensor").getKnownState(), ACTIVE
 
@@ -747,6 +762,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             station_name = block_name
         return station_name
 
+
+
     def get_substring_between_delimeters(self, comment, delimeter):
         start = delimeter
         end = delimeter
@@ -906,8 +923,9 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         opt1 = "1 train"
         opt2 = "several trains"
         opt3 = "check/swap train direction"
+        opt4 = "modify existing trains"
         #opt4 = "reset trains"
-        action = self.od.customQuestionMessage3str(msg, title, opt1, opt2, opt3)
+        action = self.od.customQuestionMessage4str(msg, title, opt1, opt2, opt3, opt4)
         #msg = "choose"
         #actions = ["setup 1 train","setup several trains", "check/swap train direction", "reset trains"]
         #action = self.od.List(msg, actions)
@@ -955,11 +973,11 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 else:
                     if self.logLevel > 0 : print "!!!!5"
                     trains_to_choose = self.get_non_allocated_trains()
-                    msg = "In " + station_block_name + " Select train roster"
-                    new_train_name = modifiableJComboBox(trains_to_choose,msg).return_val()
+                    title = "In " + station_block_name + " Select train roster"
+                    list_items = trains_to_choose
+                    new_train_name = self.od.List(title, list_items, preferred_size = "default")
                     if new_train_name not in trains_allocated:
                         trains_allocated.append(new_train_name)
-
                     self.add_to_train_list_and_set_new_train_location(new_train_name, station_block_name)
                     self.set_blockcontents(station_block_name, new_train_name)
                     self.set_length(new_train_name)
@@ -971,51 +989,28 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 title = "All trains allocated"
                 opt1 = "Continue"
                 opt2 = "Delete the trains already set up and start again"
-                ans = self.od.customQuestionMessage2(msg, title, opt1, opt2)
+                ans = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
                 if self.od.CLOSED_OPTION == True:
                     pass
-                elif ans == JOptionPane.NO_OPTION:
-                    self.reset_allocation()
+                elif ans == opt2:
+                    self.reset_allocation1()
         elif action == "several trains":
-            createandshowGUI(self)
+            createandshowGUI(self, action)
 
-        elif action == "reset trains":
-            msg = self.get_all_trains_msg()
-            msg +=  "\nReset all these trains\n"
-            title = "Reset"
-            opt1 = "Continue"
-            opt2 = "Delete the trains already set up and start again"
-            ans = self.od.customQuestionMessage2(msg, title, opt1, opt2)
-            if self.od.CLOSED_OPTION == True:
-                pass
-            elif ans == JOptionPane.NO_OPTION:
-                self.reset_allocation1()
-        # elif action == "check/swap train direction" #"check train direction"  Keep in case new code has errors
-        #     all_trains = self.get_all_roster_entries_with_speed_profile()
-        #     if all_trains == []:
-        #         msg = "There are no engines with speed profiles, cannot operate without any"
-        #         JOptionPane.showMessageDialog(None,msg)
-        #     else:
-        #         # msg = self.get_allocated_trains_msg()
-        #         # title = None
-        #         # opt1 = "Select section"
-        #         # s = self.od.customMessage(msg, title, opt1)
-        #         # if self.logLevel > 0: print "station_block_name",station_block_name, "s", s
-        #         # if self.od.CLOSED_OPTION == False:
-        #
-        #         msg = "Select section"
-        #         sections_to_choose = self.get_allocated_trains_sections()
-        #         new_section_name = self.od.List(msg, sections_to_choose)
-        #         if self.od.CLOSED_OPTION == False:
-        #             msg = "Select the train in " + new_section_name
-        #             trains_to_choose = self.get_allocated_trains()
-        #             if trains_to_choose == []:
-        #                 s = OptionDialog().displayMessage("no more trains with speed profiles \nto select")
-        #             else:
-        #                 new_train_name = self.od.List(msg, trains_to_choose)
-        #                 if self.od.CLOSED_OPTION == False:
-        #                     #print "need to find the direction of train", new_train_name
-        #                     self.check_train_direction(new_train_name, new_section_name)
+        # elif action == "reset trains":
+        #     msg = self.get_all_trains_msg()
+        #     msg +=  "\nReset all these trains\n"
+        #     title = "Reset"
+        #     opt1 = "Continue"
+        #     opt2 = "Delete the trains already set up and start again"
+        #     ans = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
+        #     if self.od.CLOSED_OPTION == True:
+        #         pass
+        #     elif ans == opt2:
+        #         self.reset_allocation1()
+
+        elif action == "modify existing trains":
+            createandshowGUI(self, action)
         elif action == "check/swap train direction":
             trains_to_choose = self.get_allocated_trains()
             if trains_to_choose == []:
@@ -1081,8 +1076,9 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         current_length = engine.getLength()
         # print "current_length", current_length
         # print "type", type(current_length) , "test", str(current_length) == "0"
-        if str(current_length) == "0":
+        if str(current_length) == "0" or current_length is None:
             current_length = default     # current length is in unicode
+            engine.setLength(current_length)
         # print "current_length2", current_length
         return [engine, current_length]
 
@@ -1096,6 +1092,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         request = "Change"
         while request == "Change":
             [engine,current_length] = self.get_train_length(new_train_name)
+
             # print "current_length3", current_length
             # current_length is an integer, and is set to a default of 10 scale metres
             gauge = WarrantPreferences.getDefault().getLayoutScale()
@@ -1621,6 +1618,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         for station_block_name in g.station_block_list:
             block_value = self.get_blockcontents(station_block_name)
             block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
+            # print "trains_allocated", trains_allocated
             if block_occupied_state == True:
                 if block_value not in trains_allocated:
                     trains_in_sections_allocated.append([station_block_name, block_value, "non-allocated"])
@@ -1636,8 +1634,11 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         return occupied_blocks
 
     def occupied_blocks_not_allocated(self):
-        # print "self.trains_in_sections_allocated()", self.trains_in_sections_allocated()
         occupied_blocks = [block for [block, train,  state] in self.trains_in_sections_allocated() if state == "non-allocated"]
+        return occupied_blocks
+
+    def blocks_allocated(self):
+        occupied_blocks = [block for [block, train, state] in self.trains_in_sections_allocated()]
         return occupied_blocks
 
     def train_blocks(self, train_list, in_list):
@@ -1665,25 +1666,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         return self.train_blocks(train_list, True)
     def train_blocks_not_in_list(self,train_list):
         return self.train_blocks(train_list, False)
-
-
-    # def trains_in_sections(self, train_list):
-    #     # given the train list, return list of all trains [[station_block_name, block_value, msg],...]
-    #     # where msg says whether item in list or not
-    #     trains_in_sections = []
-    #     for station_block_name in g.station_block_list:
-    #         block_value = self.get_blockcontents(station_block_name)
-    #         block_occupied_state = self.check_sensor_state_given_block_name(station_block_name)
-    #         if block_occupied_state == True:
-    #             if block_value not in train_list:
-    #                 trains_in_sections.append([station_block_name, block_value, "non-in-list"])
-    #             elif (block_value != None and block_value != "" and block_value != "none"):
-    #                 trains_in_sections.append([station_block_name, block_value, "in-list"])
-    #             else:
-    #                 trains_in_sections.append([station_block_name, block_value, "other"])
-    # if self.logLevel > 0: print str(trains_in_sections)
-    # return trains_in_sections
-
 
     def check_new_train_in_siding(self):
 
@@ -1737,17 +1719,14 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         #if instanceList[idx].setup():               # Compile the train actions
         instanceList[idx].start()               # Compile was successful
 
-
     def get_blockcontents(self, block_name):
         block = blocks.getBlock(block_name)
         value =  block.getValue()
         return value
 
-
     def set_blockcontents(self, block_name, value):
         block = blocks.getBlock(block_name)
         value =  block.setValue(value)
-
 
     def check_sensor_state_given_block_name(self, station_block_name):
         #if self.logLevel > 0: print("station block name {}".format(station_block_name))
@@ -1761,74 +1740,71 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 class createandshowGUI(TableModelListener):
 
-    def __init__(self, super):
+    def __init__(self, super1, mode1):
         self.logLevel = 0
-        self.super = super
+        self.super = super1
         #Create and set up the window.
 
-        self.initialise_model(super)
-        self.frame = JFrame("Set up trains")
-        self.frame.setSize(600, 600);
-
-        self.completeTablePanel()
-        # print "about to populate"
+        self.mode = mode1  # "several trains" or "modify existing trains"
+        self.initialise_model(super1)
+        if self.mode == "modify existing trains":
+            self.frame = JFrame("occupied blocks, allocated or not")
+        else:
+            self.frame = JFrame("Set up trains. Any trains shown in blocks are showing on the track but not allocated. Save to allocate")
+        self.frame.setPreferredSize(Dimension(800, 600));
+        self.frame.setVisible(True)
+        self.completeTablePanel1()
         self.populate_action(None)
+        self.completeTablePanel()
         self.cancel = False
 
 
     def completeTablePanel(self):
+        self.tidy()
+        self.frame.pack()
+        self.frame.setVisible(True)
+        return
 
-        self.topPanel= JPanel();
+
+    def completeTablePanel1(self):
+        self.topPanel = JPanel();
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
 
         scrollPane = JScrollPane(self.table);
-        scrollPane.setSize(600,600);
-
+        scrollPane.setPreferredSize(Dimension(800, 600));
         self.topPanel.add(scrollPane);
 
         self.buttonPane = JPanel();
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
-
         # button_add = JButton("Add Row", actionPerformed = self.add_row_action)
         # self.buttonPane.add(button_add);
         # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
-
-        button_apply = JButton("Save", actionPerformed = self.apply_action)
+        button_apply = JButton("Save", actionPerformed=self.save_action)
         self.buttonPane.add(button_apply)
-        self.buttonPane.add(Box.createHorizontalGlue());
-
-        button_cancel = JButton("Close", actionPerformed = self.cancel_action)
+        self.buttonPane.add(Box.createHorizontalGlue())
+        button_cancel = JButton("Close", actionPerformed=self.cancel_action)
         self.buttonPane.add(button_cancel)
-        self.buttonPane.add(Box.createHorizontalGlue());
-
-        button_populate = JButton("Populate", actionPerformed = self.populate_action)
-        self.buttonPane.add(button_populate);
+        self.buttonPane.add(Box.createHorizontalGlue())
+        button_populate = JButton("Populate", actionPerformed=self.populate_action)
+        self.buttonPane.add(button_populate)
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
-
-        button_tidy = JButton("Tidy", actionPerformed = self.tidy_action)
-        self.buttonPane.add(button_tidy);
+        button_tidy = JButton("Tidy", actionPerformed=self.tidy_action)
+        self.buttonPane.add(button_tidy)
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
-
-        button_savetofile = JButton("Save To File", actionPerformed = self.savetofile_action)
+        button_savetofile = JButton("Save To File", actionPerformed=self.savetofile_action)
         self.buttonPane.add(button_savetofile)
-        self.buttonPane.add(Box.createHorizontalGlue());
-
-        button_loadfromfile = JButton("Load From File", actionPerformed = self.loadfromfile_action)
+        self.buttonPane.add(Box.createHorizontalGlue())
+        button_loadfromfile = JButton("Load From File", actionPerformed=self.loadfromfile_action)
         self.buttonPane.add(button_loadfromfile)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         contentPane = self.frame.getContentPane()
-
         contentPane.removeAll()
         contentPane.add(self.topPanel, BorderLayout.CENTER)
         contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
 
-        self.frame.pack();
-        self.frame.setVisible(True)
-
-        return
     def buttonPanel(self):
         row1_1_button = JButton("Add Row", actionPerformed = self.add_row_action)
         row1_2_button = JButton("Save", actionPerformed = self.save_action)
@@ -1843,8 +1819,6 @@ class createandshowGUI(TableModelListener):
         row1.add(row1_2_button)
 
         layout = BorderLayout()
-        # layout.setHgap(10);
-        # layout.setVgap(10);
 
         jPanel = JPanel()
         jPanel.setLayout(layout);
@@ -1859,11 +1833,11 @@ class createandshowGUI(TableModelListener):
         self.model = None
         self.model = MyTableModel()
         self.table = JTable(self.model)
-        self.model.addTableModelListener(MyModelListener(self, super));
-        pass
+        self.model.addTableModelListener(MyModelListener(self, super))
+
     def self_table(self):
 
-        #table.setPreferredScrollableViewportSize(Dimension(500, 70));
+        self.table.setPreferredScrollableViewportSize(Dimension(800, 600));
         #table.setFillsViewportHeight(True)
         #self.table.getModel().addtableModelListener(self)
         self.table.setFillsViewportHeight(True);
@@ -1879,23 +1853,35 @@ class createandshowGUI(TableModelListener):
         # column = [1,2,3]
 
 
-        self.trainColumn = self.table.getColumnModel().getColumn(0);
+        self.trainColumn = self.table.getColumnModel().getColumn(0)
+        self.trainColumn.setPreferredWidth(100)
         self.combobox0 = JComboBox()
 
         self.all_trains = self.super.get_all_roster_entries_with_speed_profile()
         self.non_allocated_trains = self.super.get_non_allocated_trains()
-        for train in self.non_allocated_trains:
+        self.allocated_trains = self.super.get_allocated_trains()
+        if self.mode == "several trains":
+            self.required_trains = self.non_allocated_trains
+        elif self.mode == "modify existing trains":
+            self.required_trains = self.allocated_trains
+        # print "self.non_allocated_trains", self.non_allocated_trains
+        # print "self.allocated_trains", self.allocated_trains
+        for train in self.required_trains:
             self.combobox0.addItem(train)
+            # print "adding train", train
         self.trainColumn.setCellEditor(DefaultCellEditor(self.combobox0));
         renderer0 = ComboBoxCellRenderer()
-        self.trainColumn.setCellRenderer(renderer0);
-
+        self.trainColumn.setCellRenderer(renderer0)
         self.all_sections = self.super.get_all_sections()
         self.all_blocks = self.super.get_all_blocks()
 
         self.sectionColumn = self.table.getColumnModel().getColumn(1);
+        self.sectionColumn.setPreferredWidth(100)
         self.combobox1 = JComboBox()
-        self.sections_to_choose = self.super.get_non_allocated_trains_sections()
+        if self.mode == "several trains":
+            self.sections_to_choose = self.super.get_non_allocated_trains_sections()
+        else:
+            self.sections_to_choose = self.super.get_allocated_trains_sections()
         for section in self.sections_to_choose:
             self.combobox1.addItem(section)
             #self.set_train_selections(combobox0)
@@ -1905,7 +1891,6 @@ class createandshowGUI(TableModelListener):
         jpane = JScrollPane(self.table)
         panel = JPanel()
         panel.add(jpane)
-        result = JScrollPane(panel)
         return self.table
 
     def add_row_action(self, e):
@@ -1917,30 +1902,60 @@ class createandshowGUI(TableModelListener):
         self.completeTablePanel()
 
     def populate_action(self, event):
+        # print "populate_action"
         column = 1  #block
         all_blocks = [block.getUserName() for block in self.all_blocks]
         blocks_in_table = [block for block in (self.model.getValueAt(r, column) for r in range(self.table.getRowCount())) if block in all_blocks]
-        #blocks_in_table1 = [section for section in (self.model.getValueAt(r, column) for r in range(self.table.getRowCount())) ]
-        # print "self.all_sections", all_sections
-        # print "sections in table", blocks_in_table
-        # print "sections in table1", blocks_in_table1
-        # # # starting with non_allocated_trains remove the ones in my_train_list
-        # # print "sections to choose", self.sections_to_choose
-        # # print "trains_in_table",trains_in_table
-        # # print "sections True", self.super.train_blocks(trains_in_table, True)
-        # # print "sections False", self.super.train_blocks(trains_in_table, False)
-        # # allocated_blocks = self.super.occupied_blocks_allocated()
-        not_allocated_blocks = self.super.occupied_blocks_not_allocated()
-        # print "not_allocated_blocks", not_allocated_blocks
-        blocks_to_put_in_dropdown = [s for s in not_allocated_blocks if s not in blocks_in_table]
-        # print "blocks_to_put_in_dropdown", blocks_to_put_in_dropdown
-        self.model.populate(blocks_to_put_in_dropdown)
+
+        if self.mode == "several trains":
+            not_allocated_blocks = self.super.occupied_blocks_not_allocated()
+            # print "not_allocated_blocks", not_allocated_blocks
+            blocks_to_put_in_dropdown = [s for s in not_allocated_blocks if s not in blocks_in_table]
+
+            # print "blocks_to_put_in_dropdown", blocks_to_put_in_dropdown
+            self.populate(blocks_to_put_in_dropdown)
+            # self.tidy()
+        else:
+            allocated_blocks = self.super.blocks_allocated()
+            # print "allocated_blocks", allocated_blocks
+            blocks_to_put_in_dropdown = [s for s in allocated_blocks]
+            # print "blocks to put in dropdown", blocks_to_put_in_dropdown
+            self.model.populate_existing(blocks_to_put_in_dropdown)
+            self.tidy()
+
         # print "COMPLETING TABLE PANEL"
         self.completeTablePanel()
 
+    def populate(self, blocks_to_put_in_dropdown):
+
+        # append all blocks to put in dropdown
+        for block in blocks_to_put_in_dropdown:
+            self.model.data.append(["", block, "click ->", False, 10, 100])
+
+        # delete rows with no blocks
+        for row in reversed(range(len(self.model.data))):
+            if self.model.data[row][1] == None or self.model.data[row][1] == "":
+                if len(self.model.data)>1:
+                    self.model.data.pop(row)
+
+    def remove_not_set_row(self):
+        # print "data", self.model.data
+        for row in reversed(range(len(self.model.data))):
+            # print "self.model.data[row][1]", self.model.data[row][1]
+            if self.model.data[row][1] == "":
+                self.model.data.pop(row)
+
     def tidy_action(self,e):
-        self.model.remove_not_set_row()
+        self.tidy()
         self.completeTablePanel()
+
+    def tidy(self):
+        self.remove_not_set_row()
+        size_of_one_row = 30
+        height = 130
+        for row in reversed(range(len(self.model.data))):
+            height += size_of_one_row
+        self.frame.setPreferredSize(Dimension(800, height));
 
     def savetofile_action(self, event):
 
@@ -1949,13 +1964,7 @@ class createandshowGUI(TableModelListener):
         self.completeTablePanel()
 
         if self.model.getRowCount() == 0:
-            msg = "There are no valid rows"
-            result = OptionDialog().displayMessage(msg)
             return
-
-        msg = "Saving Valid rows"
-        result = OptionDialog().displayMessage(msg)
-
 
         dir = self.directory()
         j = JFileChooser(dir);
@@ -1964,20 +1973,15 @@ class createandshowGUI(TableModelListener):
         j.addChoosableFileFilter(filter);
         j.setDialogTitle("Select a .txt file");
 
-
-
         ret = j.showSaveDialog(None);
         if (ret == JFileChooser.APPROVE_OPTION) :
             file = j.getSelectedFile()
             if file == "" or file == None:
-                msg = "No file selected"
-                result = OptionDialog().displayMessage(msg)
                 return
             if FilenameUtils.getExtension(file.getName()).lower() == "txt" :
                 #filename is OK as-is
                 pass
             else:
-                #file = File(file.toString() + ".txt");  # append .txt if "foo.jpg.txt" is OK
                 file = File(file.getParentFile(), FilenameUtils.getBaseName(file.getName())+".txt") # ALTERNATIVELY: remove the extension (if any) and replace it with ".xml"
 
         else:
@@ -2005,10 +2009,15 @@ class createandshowGUI(TableModelListener):
         j = JFileChooser(dir);
         j.setAcceptAllFileFilterUsed(False)
         filter = FileNameExtensionFilter("text files txt", ["txt"])
-        j.setDialogTitle("Select a .txt file");
-        j.addChoosableFileFilter(filter);
+        j.setDialogTitle("Select a .txt file")
+        j.addChoosableFileFilter(filter)
+
+        # Automatically select the first file in the directory
+        files = j.getCurrentDirectory().listFiles()
+        j.setSelectedFile(files[0])
+
         ret = j.showOpenDialog(None);
-        if (ret == JFileChooser.APPROVE_OPTION) :
+        if (ret == JFileChooser.APPROVE_OPTION):
             file = j.getSelectedFile()
             if self.logLevel > 0: print "about to read list", file
             my_list = self.read_list(file)
@@ -2026,6 +2035,8 @@ class createandshowGUI(TableModelListener):
                 self.model.data[i][length] = length_val.replace('"','')
                 self.model.data[i][speed_factor] = speed_factor_val.replace('"','')
                 i += 1
+
+            self.completeTablePanel1()
             self.completeTablePanel()
 
             msg = "Deleting invalid rows"
@@ -2035,7 +2046,7 @@ class createandshowGUI(TableModelListener):
 
             # check the loaded contents
             # 1) check that the trains are valid
-            # 2) ckeck that the blocks are occupied by valid trains
+            # 2) check that the blocks are occupied by valid trains
             # if either of the above are not valic we blank the entries
             # 3) Tidy
 
@@ -2050,10 +2061,9 @@ class createandshowGUI(TableModelListener):
 
             not_allocated_blocks = self.super.occupied_blocks_not_allocated()
             for row in reversed(range(len(self.model.data))):
-                # if len(self.model.data) >1:
-                    # print "row", row
                 if self.model.data[row][block] not in not_allocated_blocks:
                     self.model.data.pop(row)
+            self.completeTablePanel1()
             self.completeTablePanel()
 
     def cancel_action(self, event):
@@ -2065,12 +2075,12 @@ class createandshowGUI(TableModelListener):
         if reply == opt1:
             self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
         else:  #opt2
-            self.apply_action(None)
+            self.save_action(None)
 
 
-    def apply_action(self, event):
+    def save_action(self, event):
         [train, block, direction, length, speed_factor] = [0, 1, 2, 4, 5]
-        # print "apply action"
+        # print "save action"
         for row in reversed(range(len(self.model.data))):
             train_name = self.model.data[row][train]
             block_name = self.model.data[row][block]
@@ -2095,12 +2105,13 @@ class createandshowGUI(TableModelListener):
                 self.super.add_to_train_list_and_set_new_train_location0(train_name, block_name,
                                                 train_direction, train_length, train_speed_factor)
                 self.super.set_blockcontents(block_name, train_name)
-                [engine,current_length] = self.super.get_train_length(train_name)
+                [engine,current_length] = NewTrainMaster().get_train_length(train_name)
                 engine.setLength(train_length)
                 [engine, current_speed_factor] = self.super.get_train_speed_factor(train_name)
                 current_speed_factor_str = "speed factor " + current_speed_factor
                 engine.setComment(current_speed_factor_str)
                 self.model.data.pop(row)
+        # print "end save action"
         self.completeTablePanel()
         if self.model.getRowCount() == 0:
             self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
@@ -2131,8 +2142,6 @@ class createandshowGUI(TableModelListener):
                     if i != 4: fp.write(",")
                     i+=1
                 fp.write('\n')
-                #fp.write('\n'.join(item))
-                #fp.write(items)
 
     # Read list to memory
     def read_list(self, file):
@@ -2153,8 +2162,6 @@ class createandshowGUI(TableModelListener):
                 n_list.append(y)
 
         return n_list
-        # except:
-        #     return ["",""]
 
 class MyModelListener(TableModelListener):
 
@@ -2163,6 +2170,7 @@ class MyModelListener(TableModelListener):
         self.class_NewTrainMaster = class_NewTrainMaster
         self.super = super
         self.cancel = False
+        self.mode = class_createandshowGUI.mode
     def tableChanged(self, e) :
         global train_direction_gbl
         global trains_allocated
@@ -2180,15 +2188,14 @@ class MyModelListener(TableModelListener):
             # each time a cell is edited we regenerate the list if trains in the drop down
             # we set to the non_allocated_trains less the ones marked ro be allocated in the table
 
-            # for r in range(class_createandshowGUI.table.getRowCount()):
-                # print "r",r,"column",column
-                # print "r", r, "(model.getValueAt(r, column)", (model.getValueAt(r, column))
-            #trains_in_table = [train for train in (model.getValueAt(r, column) for r in range(class_createandshowGUI.table.getRowCount()))
             trains_in_table = [train for train in (model.getValueAt(r, column) for r in range(class_createandshowGUI.table.getRowCount())) if train in class_createandshowGUI.all_trains]
             # print "trains in table", trains_in_table
             # starting with non_allocated_trains remove the ones in my_train_list
             #trains_to_put_in_dropdown = [t for t in class_createandshowGUI.non_allocated_trains if t not in trains_in_table]
-            trains_to_put_in_dropdown = [t for t in class_createandshowGUI.non_allocated_trains]
+            if self.mode == "several trains":
+                trains_to_put_in_dropdown = [t for t in class_createandshowGUI.non_allocated_trains]
+            else:
+                trains_to_put_in_dropdown = [t for t in class_createandshowGUI.allocated_trains]
             # print "trains_to_put_in_dropdown", trains_to_put_in_dropdown
             class_createandshowGUI.combobox0.removeAllItems()
             #put the remaining trains in the combo dropdown
@@ -2263,21 +2270,11 @@ class MyModelListener(TableModelListener):
             else:
                 OptionDialog().displayMessage("must set Block first")
 
-
 class ComboBoxCellRenderer (TableCellRenderer):
     def getTableCellRendererComponent(self, jtable, value, isSelected, hasFocus, row, column):
         combo = JComboBox()
-        combo.setSelectedItem(value);
+        combo.setSelectedItem(value)
         return combo
-#
-
-
-    # def __init__(self, comboBox) :
-    #     for i in range(comboBox.getItemCount()):
-    #         self.combo.addItem(comboBox.getItemAt(i))
-    #         pass
-    #
-    # combo = JComboBox()
 
     def getTableCellRendererComponent(self, jtable, value, isSelected, hasFocus, row, column) :
         panel = self.createPanel(value)
@@ -2291,7 +2288,6 @@ class ComboBoxCellRenderer (TableCellRenderer):
         p.setBorder(BorderFactory.createLineBorder(Color.blue));
         return p;
 
-
 class MyTableModel (DefaultTableModel):
 
     columnNames = ["Train",
@@ -2302,33 +2298,48 @@ class MyTableModel (DefaultTableModel):
                    "Speed Factor"]
 
     def __init__(self):
-        l1 = ["", "", "click ->", False, 10, 100]
-        self.data = [l1]
+        self.data = []
+        self.add_row()
 
-    def remove_not_set_row(self):
-        b = False
-        for row in reversed(range(len(self.data))):
-            # print "row", row
-            if self.data[row][0] == "":
-                self.data.pop(row)
+
 
     def add_row(self):
-        # print "addidn row"
-        # if row < len(self.data):
-        # print "add"
         self.data.append(["", "", "click ->", False, 10, 100])
-        # print self.data
-        # print "added"
 
-    def populate(self, blocks_to_put_in_dropdown):
-        # append all blocks to put in dropdown
-        for block in blocks_to_put_in_dropdown:
-            self.data.append(["", block, "click ->", False, 10, 100])
-        # delete rows with no blocks
+    def populate_existing(self, blocks_to_put_in_dropdown):
+        # print "populate existing"
         for row in reversed(range(len(self.data))):
-            if self.data[row][1] == None or self.data[row][1] == "":
-                if len(self.data)>1:
-                    self.data.pop(row)
+            self.data.pop(row)
+        items_to_put_in_dropdown = []
+        for block_name in blocks_to_put_in_dropdown:
+            train_name = NewTrainMaster().get_blockcontents(block_name)
+            # if train_name == "" or train_name is None:
+            #     continue
+            if train_name == "" or train_name is None:
+                train_direction = "unassigned"
+                train_length = -1
+                current_speed_factor = -1
+            else:
+                # print "block_name", block_name, "train_name", train_name
+                [engine,current_length] = NewTrainMaster().get_train_length(train_name)
+                train_length = engine.getLength()
+                [engine, current_speed_factor] = NewTrainMaster().get_train_speed_factor(train_name)
+                # current_speed_factor_str = "speed factor " + current_speed_factor
+                current_speed_factor_str = engine.getComment()
+                train = trains[train_name]
+                result = train["direction"]
+                if result == "forward":
+                    train_direction = "reverse"
+                else:
+                    train_direction = "forward"
+            items_to_put_in_dropdown.append([train_name,block_name,train_direction, False, train_length, current_speed_factor ])
+
+        # print "items_to_put_in_dropdown", items_to_put_in_dropdown
+        for item in items_to_put_in_dropdown:
+            self.data.append(item)
+
+        # self.completeTablePanel()
+        pass
 
     def getColumnCount(self) :
         return len(self.columnNames)

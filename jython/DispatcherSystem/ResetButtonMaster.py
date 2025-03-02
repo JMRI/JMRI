@@ -3,8 +3,6 @@ from javax.swing.table import  TableCellRenderer, DefaultTableCellRenderer
 from java.awt.event import MouseAdapter,MouseEvent, WindowListener, WindowEvent
 from java.awt import GridLayout, Dimension, BorderLayout, Color
 from javax.swing.table import AbstractTableModel, DefaultTableModel
-from java.lang.Object import getClass
-import jarray
 from javax.swing.event import TableModelListener, TableModelEvent
 from javax.swing.filechooser import FileNameExtensionFilter
 from org.apache.commons.io import FilenameUtils
@@ -240,7 +238,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             #sensors.getSensor("setRouteSensor").setKnownState(INACTIVE)
             #sensors.getSensor("setStoppingDistanceSensor").setKnownState(INACTIVE)
             msg = "Press section buttons to set dispatch \nA train needs to be set up in a section first"
-            # self.od.displayMessage(msg)
+            self.od.displayMessage(msg)
             if self.od.CLOSED_OPTION == True:
                 if self.logLevel > 0: print "closed option"
                 #make so can select DispatchSensor again
@@ -255,7 +253,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             #stopping_sensor_choice = None
             #sensors.getSensor("setStoppingDistanceSensor").setKnownState(INACTIVE)
             #sensors.getSensor("setDispatchSensor").setKnownState(INACTIVE)
-            msg = "Press station buttons to set route \nThe route may be used to schedule a train"
+            msg = "Press station buttons to set route \n\nThe route may then be run directly or\nused to schedule a train"
             self.od.displayMessage(msg)
             if self.od.CLOSED_OPTION == True:
                 if self.logLevel > 0: print "closed option"
@@ -273,7 +271,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             #optionbox
             title = "Stopping distances?"
-            msg = "modify all stopping distances?"
+            msg = "Modify all stopping distances?"
             opt1 = "All"
             opt2 = "From one station to another"
             s = self.od.customQuestionMessage2str(msg,title,opt1,opt2)
@@ -286,7 +284,6 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 self.modify_all_stopping_distances()
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
             else:    #opt2
-                print "123456"
                 stopping_sensor_choice = "setIndividualStoppingSensors"
                 msg = "Specify the transit whose stopping distance we will change\n\n" + \
                       "Press transit start station button\nthen the transit end station button\n" + \
@@ -343,7 +340,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         elif sensor_changed == sensors.getSensor("setStationDirectionSensor"):
             #optionbox
-            title = "Station Directions"
+            title = "Restrict Trains to run in only one direction in Stations or Blocks"
             msg = "modify station directions?"
             try:
                 list_items1 = self.dm.read_list()
@@ -1290,7 +1287,7 @@ class createandshowGUI2(TableModelListener):
         for train in self.class_ResetButtonMaster.get_list_of_engines_to_move():
              self.combobox0.addItem(train)
 
-        self.trainColumn.setCellEditor(DefaultCellEditor(self.combobox0));
+        self.trainColumn.setCellEditor(DefaultCellEditor(self.combobox0))
         renderer0 = ComboBoxCellRenderer1()
         self.trainColumn.setCellRenderer(renderer0);
 
@@ -1428,13 +1425,12 @@ class createandshowGUI2(TableModelListener):
 
             msg = "Deleting invalid rows"
             result = OptionDialog().displayMessage(msg)
-            if result == JOptionPane.NO_OPTION:
-                return
+
 
             # check the loaded contents
             # 1) check that the trains are valid
-            # 2) ckeck that the blocks are occupied by valid trains
-            # if either of the above are not valic we blank the entries
+            # 2) check that the blocks are occupied by valid trains
+            # if either of the above are not valid we blank the entries
             # 3) Tidy
 
             [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
@@ -1671,13 +1667,13 @@ class ComboBoxCellRenderer1 (TableCellRenderer):
         panel = self.createPanel(value)
         return panel
 
-    def createPanel(self, s) :
+    def createPanel(self, s):
         p = JPanel(BorderLayout())
         p.add(JLabel(str(s), JLabel.LEFT), BorderLayout.WEST)
         icon = UIManager.getIcon("Table.descendingSortIcon");
         p.add(JLabel(icon, JLabel.RIGHT), BorderLayout.EAST);
         p.setBorder(BorderFactory.createLineBorder(Color.blue));
-        return p;
+        return p
 
 class MyTableModel1 (DefaultTableModel):
 
