@@ -4761,16 +4761,51 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       location. The "Local Moves?" control is only for cars with a
       <a href="#EditCarLoads">custom load</a>, a <a href="#FinalDestination">final
         destination</a> or a <a href="#LocationDivision">railroad division</a>. You can also prevent
-      local moves using one of the train build options, see
+      local moves for the entire route using one of the train build options, see
       <a href="#TrainLocalMoveOption">Allow local moves when a car has a custom load or FD</a>.
 
       <p>
         A <a href="#SwitcherService">local switcher</a> uses only the "Pick up?" and "Set outs?"
         options and ignores the "Local moves?" option when dealing with cars that have the default
-        load names. If you want your local switcher to only move cars with custom loads, final
-        destinations, or divisions, select "No" for both "Pick up?" and "Set outs?" and "Yes" for
-        "Local moves?".
+        load names, and no final destination, or railroad division. If you want your local switcher
+        to only move cars with a local final destination, select "No" for both "Pick up?" and "Set
+        outs?" and "Yes" for "Local moves?". If you want your local switcher to also consider making
+        local moves for cars with custom loads and railroad divisions, select "No" for "Set outs?"
+        and "Yes" for "Pick up?" and "Local moves?" The table below provides a summary.
       </p>
+
+      <table>
+        <tr>
+          <td>Pick up?</td>
+          <td>Set outs?</td>
+          <td>Local moves?</td>
+          <td>Operation</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>Local move all cars</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Local move cars without final destinations, custom loads, or divisions</td>
+        </tr>
+        <tr>
+          <td>No</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Only local move cars with final destinations</td>
+        </tr>
+        <tr>
+          <td>Yes</td>
+          <td>No</td>
+          <td>Yes</td>
+          <td>Only local move cars with final destinations, custom loads, or divisions</td>
+        </tr>
+      </table>
 
       <h4 id="RouteSwitchTime">Travel and Departure Times</h4>
 
