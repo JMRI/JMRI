@@ -1,12 +1,13 @@
 package jmri;
 
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import jmri.Conditional.Operator;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -600,9 +601,9 @@ public class ConditionalVariable {
                 }
                 break;
             case CLOCK:
-                Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
-                Date currentTime = fastClock.getTime();
-                int currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
+                FastClock fastClock = InstanceManager.getDefault(jmri.FastClock.class);
+                Calendar currentTime = fastClock.getTime();
+                int currentMinutes = (currentTime.get(Calendar.HOUR) * 60) + currentTime.get(Calendar.MINUTE);
                 int beginTime = fixMidnight(_num1);
                 int endTime = fixMidnight(_num2);
                 // check if current time is within range specified

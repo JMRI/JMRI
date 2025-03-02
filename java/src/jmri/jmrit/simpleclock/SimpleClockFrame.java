@@ -9,18 +9,18 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.annotation.CheckForNull;
 import javax.swing.*;
+
 import jmri.InstanceManager;
-import jmri.Timebase;
+import jmri.FastClock;
 import jmri.TimebaseRateException;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * Frame for user configuration of Simple Timebase.
+ * Frame for user configuration of Simple FastClock.
  * <p>
  * The current implementation (2007) handles the internal clock and one hardware
  * clock.
@@ -29,7 +29,7 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListener {
 
-    private Timebase clock;
+    private FastClock clock;
     private String hardwareName = null;
     private boolean changed = false;
     protected boolean showTime = false;
@@ -91,10 +91,10 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         setTitle(Bundle.getMessage("SimpleClockWindowTitle"));
 
         // Determine current state of the clock
-        clock = InstanceManager.getNullableDefault(jmri.Timebase.class);
+        clock = InstanceManager.getNullableDefault(jmri.FastClock.class);
         if (clock == null) {
             // could not initialize clock
-            log.error("Could not obtain a Timebase instance.");
+            log.error("Could not obtain a FastClock instance.");
             setVisible(false);
             dispose();
         }
@@ -297,7 +297,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         startSetTimeCheckBox.addActionListener(this::startSetTimeChanged);
         panel62.add(startSetTimeCheckBox);
         Calendar cal = Calendar.getInstance();
-        cal.setTime(clock.getStartTime());
+        cal.setTimeInMillis(clock.getStartTime().getTimeInMillis());
         startHoursField.setText("" + cal.get(Calendar.HOUR_OF_DAY));
         startHoursField.setToolTipText(Bundle.getMessage("TipStartHours"));
         panel62.add(startHoursField);
@@ -342,16 +342,16 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         clockStartBox.addItem(Bundle.getMessage("MenuItemLcdClock"));
         clockStartBox.addItem(Bundle.getMessage("MenuItemPragotronClock"));
         clockStartBox.setSelectedIndex(startNone);
-        if (clock.getStartClockOption() == Timebase.NIXIE_CLOCK) {
+        if (clock.getStartClockOption() == FastClock.NIXIE_CLOCK) {
             clockStartBox.setSelectedIndex(startNixieClock);
         } else {
-            if (clock.getStartClockOption() == Timebase.ANALOG_CLOCK) {
+            if (clock.getStartClockOption() == FastClock.ANALOG_CLOCK) {
                 clockStartBox.setSelectedIndex(startAnalogClock);
             } else {
-                if (clock.getStartClockOption() == Timebase.LCD_CLOCK) {
+                if (clock.getStartClockOption() == FastClock.LCD_CLOCK) {
                     clockStartBox.setSelectedIndex(startLcdClock);
                 } else {
-                    if (clock.getStartClockOption() == Timebase.PRAGOTRON_CLOCK) {
+                    if (clock.getStartClockOption() == FastClock.PRAGOTRON_CLOCK) {
                         clockStartBox.setSelectedIndex(startPragotronClock);
                     }
                 }
@@ -572,12 +572,12 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         long mSecPerHour = 3600000;
         long mSecPerMinute = 60000;
         Calendar cal = Calendar.getInstance();
-        cal.setTime(clock.getTime());
+        cal.setTimeInMillis(clock.getTime().getTimeInMillis());
         int cHours = cal.get(Calendar.HOUR_OF_DAY);
         long cNumMSec = cal.getTime().getTime();
         long nNumMSec = ((cNumMSec / mSecPerHour) * mSecPerHour) - (cHours * mSecPerHour)
                 + (hours * mSecPerHour) + (minutes * mSecPerMinute);
-        clock.userSetTime(new Date(nNumMSec));
+        clock.userSetTime(nNumMSec);
         showTime = true;
         updateTime();
     }
@@ -588,14 +588,14 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     private void startRunBoxChanged(ActionEvent e) {
         switch (startRunBox.getSelectedIndex()) {
             case START_STOPPED:
-                clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_STOP);
+                clock.setClockInitialRunState(FastClock.ClockInitialRunState.DO_STOP);
                 break;
             case START_RUNNING:
-                clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_START);
+                clock.setClockInitialRunState(FastClock.ClockInitialRunState.DO_START);
                 break;
             default:
             case START_NORUNCHANGE:
-                clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_NOTHING);
+                clock.setClockInitialRunState(FastClock.ClockInitialRunState.DO_NOTHING);
                 break;
         }
         changed = true;
@@ -651,7 +651,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         long cNumMSec = cal.getTime().getTime();
         long nNumMSec = ((cNumMSec / mSecPerHour) * mSecPerHour) - (cHours * mSecPerHour)
                 + (hours * mSecPerHour) + (minutes * mSecPerMinute);
-        clock.setStartSetTime(startSetTimeCheckBox.isSelected(), new Date(nNumMSec));
+        clock.setStartSetTime(startSetTimeCheckBox.isSelected(), nNumMSec);
         changed = true;
     }
 
@@ -659,19 +659,19 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
      * Handle start clock combo box change
      */
     private void setClockStartChanged(ActionEvent e) {
-        int sel = Timebase.NONE;
+        int sel = FastClock.NONE;
         switch (clockStartBox.getSelectedIndex()) {
             case startNixieClock:
-                sel = Timebase.NIXIE_CLOCK;
+                sel = FastClock.NIXIE_CLOCK;
                 break;
             case startAnalogClock:
-                sel = Timebase.ANALOG_CLOCK;
+                sel = FastClock.ANALOG_CLOCK;
                 break;
             case startLcdClock:
-                sel = Timebase.LCD_CLOCK;
+                sel = FastClock.LCD_CLOCK;
                 break;
             case startPragotronClock:
-                sel = Timebase.PRAGOTRON_CLOCK;
+                sel = FastClock.PRAGOTRON_CLOCK;
                 break;
             default:
                 break;
@@ -708,12 +708,12 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     }
 
     /**
-     * Set the current Timebase time into timeLabel
+     * Set the current FastClock time into timeLabel
      */
     void setTimeLabel() {
         // Get time
         Calendar cal = Calendar.getInstance();
-        cal.setTime(clock.getTime());
+        cal.setTimeInMillis(clock.getTime().getTimeInMillis());
         int hours = cal.get(Calendar.HOUR_OF_DAY);
         int minutes = cal.get(Calendar.MINUTE);
         // Format and display the time
@@ -760,20 +760,20 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
                 displayStartStopButton.setSelected(clock.getShowStopButton());
                 startSetRateCheckBox.setSelected(clock.getSetRateAtStart());
                 Calendar cal = Calendar.getInstance();
-                cal.setTime(clock.getStartTime());
+                cal.setTimeInMillis(clock.getStartTime().getTimeInMillis());
                 startHoursField.setText("" + cal.get(Calendar.HOUR_OF_DAY));
                 startMinutesField.setText("" + cal.get(Calendar.MINUTE));
                 startSetRateCheckBox.setSelected(clock.getSetRateAtStart());
                 startFactorField.setText(threeDigits.format(clock.getStartRate()));
                 if (clock.getStartClockOption() == startNone) {
                     clockStartBox.setSelectedIndex(startNone);
-                } else if (clock.getStartClockOption() == Timebase.NIXIE_CLOCK) {
+                } else if (clock.getStartClockOption() == FastClock.NIXIE_CLOCK) {
                     clockStartBox.setSelectedIndex(startNixieClock);
-                } else if (clock.getStartClockOption() == Timebase.ANALOG_CLOCK) {
+                } else if (clock.getStartClockOption() == FastClock.ANALOG_CLOCK) {
                     clockStartBox.setSelectedIndex(startAnalogClock);
-                } else if (clock.getStartClockOption() == Timebase.LCD_CLOCK) {
+                } else if (clock.getStartClockOption() == FastClock.LCD_CLOCK) {
                     clockStartBox.setSelectedIndex(startLcdClock);
-                } else if (clock.getStartClockOption() == Timebase.PRAGOTRON_CLOCK) {
+                } else if (clock.getStartClockOption() == FastClock.PRAGOTRON_CLOCK) {
                     clockStartBox.setSelectedIndex(startPragotronClock);
                 }
                 if (correctCheckBox != null) {

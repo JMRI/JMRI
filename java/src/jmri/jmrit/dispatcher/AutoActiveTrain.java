@@ -205,7 +205,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
 /**
- * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse 
+ * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse
  * @param set True if entire train is detectable
  */
     @Deprecated (since="5.7.6",forRemoval=true)
@@ -234,7 +234,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * 
+     *
      * @return train length in MM.
      */
     public long getMaxTrainLengthMM() {
@@ -972,7 +972,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
     }
-    
+
     private void checkForGhost() {
         if ( !(getTargetSpeed() == 0.0f || isStopping())
                 && _nextBlock != null
@@ -1194,7 +1194,7 @@ public class AutoActiveTrain implements ThrottleListener {
             stopInCurrentSection(NO_TASK);
             return;
         }
-        
+
 
         if (useSpeedProfile) {
             // find speed from signal.
@@ -1948,7 +1948,7 @@ public class AutoActiveTrain implements ThrottleListener {
             _activeTrain.setStatus(ActiveTrain.PAUSED);
             if (keepGoing) {
                 // wait for specified fast clock time
-                Timebase _clock = InstanceManager.getDefault(jmri.Timebase.class);
+                FastClock _clock = InstanceManager.getDefault(jmri.FastClock.class);
                 java.beans.PropertyChangeListener _clockListener = (java.beans.PropertyChangeEvent e) -> {
                     _fastMinutes--;
                 };

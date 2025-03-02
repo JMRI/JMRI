@@ -1,7 +1,7 @@
 package jmri.implementation;
 
 import java.io.File;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -355,21 +355,21 @@ public class DefaultConditionalExecute {
 
     @SuppressWarnings({"deprecation"})  // date.setHours, date.setMinutes, date.setSeconds
     void setFastClockTime(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount) {
-        Date date = InstanceManager.getDefault(jmri.Timebase.class).getTime();
-        date.setHours(action.getActionData() / 60);
-        date.setMinutes(action.getActionData() - ((action.getActionData() / 60) * 60));
-        date.setSeconds(0);
-        InstanceManager.getDefault(jmri.Timebase.class).userSetTime(date);
+        Calendar date = InstanceManager.getDefault(jmri.FastClock.class).getTime();
+        date.set(Calendar.HOUR, action.getActionData() / 60);
+        date.set(Calendar.MINUTE, action.getActionData() - ((action.getActionData() / 60) * 60));
+        date.set(Calendar.SECOND, 0);
+        InstanceManager.getDefault(jmri.FastClock.class).userSetTime(date);
         increaseCounter(actionCount);
     }
 
     void startFastClock(@Nonnull Reference<Integer> actionCount) {
-        InstanceManager.getDefault(jmri.Timebase.class).setRun(true);
+        InstanceManager.getDefault(jmri.FastClock.class).setRun(true);
         increaseCounter(actionCount);
     }
 
     void stopFastClock(@Nonnull Reference<Integer> actionCount) {
-        InstanceManager.getDefault(jmri.Timebase.class).setRun(false);
+        InstanceManager.getDefault(jmri.FastClock.class).setRun(false);
         increaseCounter(actionCount);
     }
 

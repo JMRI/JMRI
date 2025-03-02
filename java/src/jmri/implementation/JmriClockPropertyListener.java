@@ -1,10 +1,11 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
-import java.util.Date;
+import java.util.Calendar;
+
 import jmri.Conditional;
 import jmri.InstanceManager;
-import jmri.Timebase;
+import jmri.FastClock;
 
 /**
  * A service class for monitoring a bound property in one of the JMRI Named
@@ -31,7 +32,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
     int[] _beginTimes = new int[SIZE];
     int[] _endTimes = new int[SIZE];
     boolean[] _rangeList = new boolean[SIZE];
-    Timebase _fastClock;
+    FastClock _fastClock;
     int _currentMinutes;
 
     @SuppressWarnings("deprecation") // Date.getTime
@@ -42,9 +43,9 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
         _endTimes[0] = fixMidnight(endTime);
         _rangeList[0] = false;
         numRanges = 1;
-        _fastClock = InstanceManager.getDefault(jmri.Timebase.class);
-        Date currentTime = _fastClock.getTime();
-        _currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
+        _fastClock = InstanceManager.getDefault(jmri.FastClock.class);
+        Calendar currentTime = _fastClock.getTime();
+        _currentMinutes = (currentTime.get(Calendar.HOUR) * 60) + currentTime.get(Calendar.MINUTE);
     }
 
     private int fixMidnight(int time) {
@@ -80,9 +81,9 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
     @SuppressWarnings("deprecation")  // Date.getHours, getMinutes, getSeconds
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Date currentTime = _fastClock.getTime();
+        Calendar currentTime = _fastClock.getTime();
         //int oldMinutes = _currentMinutes;
-        _currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
+        _currentMinutes = (currentTime.get(Calendar.HOUR) * 60) + currentTime.get(Calendar.MINUTE);
         // check if we have entered or left one of the ranges
         boolean[] newRangeList = new boolean[_rangeList.length];
         for (int i = 0; i < numRanges; i++) {

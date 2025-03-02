@@ -2,14 +2,14 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
+
 import javax.annotation.Nonnull;
 import javax.swing.Timer;
+
 import jmri.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -318,7 +318,7 @@ public class DefaultLightControl implements LightControl {
     private NamedBeanHandle<Sensor> _namedControlSensor2 = null;
     private PropertyChangeListener _sensor2Listener = null;
     private PropertyChangeListener _timebaseListener = null;
-    private Timebase _clock = null;
+    private FastClock _clock = null;
     private Turnout _controlTurnout = null;
     private PropertyChangeListener _turnoutListener = null;
     private NamedBeanHandle<Sensor> _namedTimedControlSensor = null;
@@ -391,7 +391,7 @@ public class DefaultLightControl implements LightControl {
                         getDescriptionText(_parentLight.getDisplayName()));
                 }
                 if (_clock == null) {
-                    _clock = InstanceManager.getDefault(jmri.Timebase.class);
+                    _clock = InstanceManager.getDefault(jmri.FastClock.class);
                 }
                 // initialize light based on current fast time
                 updateClockControlLightFollower();
@@ -660,8 +660,8 @@ public class DefaultLightControl implements LightControl {
      */
     @SuppressWarnings("deprecation") // Date.getTime
     private void setTheTime(){
-        Date now = _clock.getTime();
-        _timeNow = now.getHours() * 60 + now.getMinutes();
+        Calendar now = _clock.getTime();
+        _timeNow = now.get(Calendar.HOUR) * 60 + now.get(Calendar.MINUTE);
     }
 
     /**
