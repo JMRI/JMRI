@@ -374,51 +374,26 @@ public class TrainBuilderBase extends TrainCommon {
                 // show the type of moves allowed at this location
                 if (!rl.isDropAllowed() && !rl.isPickUpAllowed() && !rl.isLocalMovesAllowed()) {
                     addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildLocNoDropsOrPickups", rl.getId(), rl.getName(),
+                            Bundle.getMessage("buildLocNoDropsOrPickups", rl.getId(),
+                                    location.isStaging() ? Bundle.getMessage("Staging") : Bundle.getMessage("Location"),
+                                    rl.getName(),
                                     rl.getTrainDirectionString(), rl.getMaxTrainLength(),
                                     Setup.getLengthUnit().toLowerCase()));
-                } else if (location.isStaging() &&
-                        rl.isPickUpAllowed() &&
-                        rl == _train.getTrainDepartsRouteLocation()) {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildStagingDeparts", rl.getId(), rl.getName(),
-                                    rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-                                    Setup.getLengthUnit().toLowerCase()));
-                } else if (location.isStaging() &&
-                        rl.isDropAllowed() &&
-                        rl == _train.getTrainTerminatesRouteLocation()) {
-                    addLine(_buildReport, THREE, Bundle.getMessage("buildStagingTerminates", rl.getId(), rl.getName(),
-                            rl.getTrainDirectionString(), rl.getMaxCarMoves()));
-                } else if (rl == _train.getTrainTerminatesRouteLocation() &&
-                        rl.isDropAllowed() &&
-                        rl.isLocalMovesAllowed()) {
-                    addLine(_buildReport, THREE, Bundle.getMessage("buildLocTerminatesMoves", rl.getId(), rl.getName(),
-                            rl.getTrainDirectionString(), rl.getMaxCarMoves()));
-                } else if (rl == _train.getTrainTerminatesRouteLocation() &&
-                        rl.isDropAllowed() &&
-                        !rl.isPickUpAllowed()) {
-                    addLine(_buildReport, THREE, Bundle.getMessage("buildLocTerminates", rl.getId(), rl.getName(),
-                            rl.getTrainDirectionString(), rl.getMaxCarMoves()));
-                } else if (rl.isDropAllowed() && rl.isPickUpAllowed()) {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildLocRequestMoves", rl.getId(), rl.getName(),
-                                    rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-                                    Setup.getLengthUnit().toLowerCase()));
-                } else if (!rl.isDropAllowed() && rl.isPickUpAllowed()) {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildLocRequestPickups", rl.getId(), rl.getName(),
-                                    rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-                                    Setup.getLengthUnit().toLowerCase()));
-                } else if (rl.isDropAllowed()) {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildLocRequestDrops", rl.getId(), rl.getName(),
-                                    rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-                                    Setup.getLengthUnit().toLowerCase()));
+                } else if (rl == _train.getTrainTerminatesRouteLocation()) {
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildLocTerminates", rl.getId(),
+                            location.isStaging() ? Bundle.getMessage("Staging") : Bundle.getMessage("Location"),
+                            rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves(),
+                            rl.isPickUpAllowed() ? Bundle.getMessage("Pickups").toLowerCase() + ", " : "",
+                            rl.isDropAllowed() ? Bundle.getMessage("Drop").toLowerCase() + ", " : "",
+                            rl.isLocalMovesAllowed() ? Bundle.getMessage("LocalMoves").toLowerCase() + ", " : ""));
                 } else {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildLocRequestLocalMoves", rl.getId(), rl.getName(),
-                                    rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-                                    Setup.getLengthUnit().toLowerCase()));
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildLocRequestMoves", rl.getId(),
+                            location.isStaging() ? Bundle.getMessage("Staging") : Bundle.getMessage("Location"),
+                            rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves(),
+                            rl.isPickUpAllowed() ? Bundle.getMessage("Pickups").toLowerCase() + ", " : "",
+                            rl.isDropAllowed() ? Bundle.getMessage("Drop").toLowerCase() + ", " : "",
+                            rl.isLocalMovesAllowed() ? Bundle.getMessage("LocalMoves").toLowerCase() + ", " : "",
+                            rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase()));
                 }
             }
             rl.setTrainWeight(0); // clear the total train weight
