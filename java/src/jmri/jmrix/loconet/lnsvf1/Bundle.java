@@ -15,7 +15,7 @@ import java.util.Locale;
 
 @javax.annotation.concurrent.Immutable
 
-/**
+/*
  * Provides standard access for resource bundles in a package.
  *
  * Convention is to provide a subclass of this name in each package, working off
@@ -27,7 +27,7 @@ import java.util.Locale;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @CheckForNull
-    private final static String name = "jmri.jmrix.loconet.lnsvf1.LnSvF1Bundle"; // NOI18N
+    private final static String name = "jmri.jmrix.loconet.lnsvf1.Lnsv1Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

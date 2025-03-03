@@ -106,15 +106,18 @@
         <!-- Valid Level names are OFF, FATAL, ERROR, WARN, INFO, DEBUG and TRACE. -->
 
         <!-- <Logger name="jmri" level="DEBUG"/> -->
-        <Logger name="jmri.jmrix.loconet.LnReporter" level="DEBUG"/>
-        <Logger name="jmri.jmrix.loconet.messageinterp.LocoNetMessageInterpret" level="DEBUG"/>
-        <Logger name="jmri.jmrix.loconet.LocoNetMessage" level="DEBUG"/>
-        <Logger name="jmri.jmrix.loconet.LnPacketizer" level="DEBUG"/>
-        <Logger name="jmri.jmrix.loconet.hexfile.LnHexFilePort" level="DEBUG"/>
-        <Logger name="jmri.jmrix.loconet.LnReporterManager" level="DEBUG"/>
-        <Logger name="jmri.jmrix.loconet.swing.lnsv1prog" level="DEBUG"/>
-        <Logger name="jmri.jmrix.loconet.lnsvf1" level="DEBUG"/>
-        <Logger name="jmri.jmrix.loconet.Lnsv1DevicesManager" level="DEBUG"/>
-        <Logger name="jmri.jmrit.decoderdefn.DecoderFile" level="DEBUG"/>
+        <!-- <Logger name="jmri.jmrit.beantable.LogixTableAction" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.display" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.display.IndicatorTrackPaths" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.progsupport" level="TRACE"/> -->
+        <!-- <Logger name="jmri.jmrit.symbolicprog.tabbedframe" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.symbolicprog.DecVariableValue" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrix" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrix.nce.NceTrafficController" level="WARN"/> -->
+
+        <!-- <Logger name="jmri.jmrit.display.layoutEditor" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.display.layoutEditor.LayoutBlock" level="DEBUG"/> -->
+        <!-- <Logger name="jmri.jmrit.operations" level="DEBUG"/> -->
+
     </Loggers>
 </Configuration>

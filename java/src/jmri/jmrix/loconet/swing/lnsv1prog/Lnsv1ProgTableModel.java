@@ -128,6 +128,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
     @Override
     public Object getValueAt(int r, int c) {
         Lnsv1Device dev = memo.getLnsv1DevicesManager().getDeviceList().getDevice(r);
+        log.debug("======== getValueAt starting");
         try {
             switch (c) {
                 case MODADDR_COLUMN:
@@ -149,14 +150,18 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                     assert dev != null;
                     return dev.getRosterEntry().getId();
                 case ROSTERSV1MODECOLUMN:
-                    assert dev != null;
                     boolean isLnsv1 = false;
-                    if (dev.getDecoderFile() != null) {
+                    if (dev != null && dev.getDecoderFile() != null) {
                         // <programming direct="no" paged="no" register="no" ops="no">
                         //     <mode>LOCONETSV1MODE</mode>
                         // </programming>
-                        log.debug("======== Line {} getProgrammingMode()={}", r, dev.getDecoderFile().getProgrammingMode());
-                        isLnsv1 = ((dev.getDecoderFile().getProgrammingMode()).equals("LOCONETSV1MODE")); // EBR TODO fix NPE
+                        try {
+                            log.debug("======== ROSTERSV1MODECOLUMN starting");
+                            log.debug("======== Line {} getProgrammingMode()={}", r, dev.getDecoderFile().getProgrammingModes());
+                            isLnsv1 = dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE"); // can't access LnProgrammerManager.LOCONETSV1MODE constant
+                        } catch (ClassCastException | NullPointerException cce) {
+                            log.warn("==== Caught ClassCastException reading checkbox", cce);
+                        }
                     }
                     return isLnsv1;
                 case ROSTERNAMECOLUMN:

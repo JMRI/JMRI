@@ -99,7 +99,7 @@ public class DecoderIndexFile extends XmlFile {
     /**
      * Get a List of decoders matching (only) the programming mode.
      *
-     * @param progMode             decoder programming mode
+     * @param progMode  decoder programming mode
      * @return a list, possibly empty, of matching decoders
      */
     @Nonnull
@@ -209,8 +209,7 @@ public class DecoderIndexFile extends XmlFile {
      */
     public static javax.swing.ComboBoxModel<String> jComboBoxModelFromList(List<DecoderFile> l) {
         javax.swing.DefaultComboBoxModel<String> b = new javax.swing.DefaultComboBoxModel<>();
-        for (int i = 0; i < l.size(); i++) {
-            DecoderFile r = l.get(i);
+        for (DecoderFile r : l) {
             b.addElement(r.titleString());
         }
         return b;
@@ -332,9 +331,16 @@ public class DecoderIndexFile extends XmlFile {
 
         if (progMode != null) {
             // must have a progMode value that matches to consider this entry a match
-            if (!progMode.equals(r.getProgrammingMode())) {
-                return false;
+            boolean modeMatch = false;
+            ArrayList<String> modes = r.getProgrammingModes();
+            for (String mode : modes) {
+                if (progMode.equals(mode)) {
+                    log.debug("mode: {}", mode);
+                    modeMatch = true;
+                    break;
+                }
             }
+            if (!modeMatch) return false;
             log.debug("programmer mode match");
         }
 
@@ -471,7 +477,7 @@ public class DecoderIndexFile extends XmlFile {
             log.error("Could not access decoder definition directory {}{}", XmlFile.xmlDir(), DecoderFile.fileLocation);
         }
         // copy the decoder entries to the final array
-        String[] sbox = al.toArray(new String[al.size()]);
+        String[] sbox = al.toArray(new String[0]);
 
         //the resulting array is now sorted on file-name to make it easier
         // for humans to read
@@ -587,12 +593,9 @@ public class DecoderIndexFile extends XmlFile {
             }
 
             List<Element> l = mfgList.getChildren(MANUFACTURER);
-            if (log.isDebugEnabled()) {
-                log.debug("readMfgSection sees {} children",l.size());
-            }
-            for (int i = 0; i < l.size(); i++) {
+            log.debug("readMfgSection sees {} children",l.size());
+            for (Element el : l) {
                 // handle each entry
-                Element el = l.get(i);
                 String mfg = el.getAttribute("mfg").getValue();
                 mMfgNameList.add(mfg);
                 Attribute attr = el.getAttribute(MFG_ID);
@@ -612,9 +615,8 @@ public class DecoderIndexFile extends XmlFile {
 
             List<Element> l = familyList.getChildren("family");
             log.trace("readFamilySection sees {} children", l.size());
-            for (int i = 0; i < l.size(); i++) {
+            for (Element el : l) {
                 // handle each entry
-                Element el = l.get(i);
                 readFamily(el);
             }
         } else {
@@ -640,6 +642,9 @@ public class DecoderIndexFile extends XmlFile {
             log.error("Did not find required mfg attribute, may not find proper manufacturer");
         }
 
+        // extract <programming> modes of a family's parent <decoder> element
+        String modes = ((attr = family.getAttribute("modes")) != null ? attr.getValue() : null);
+
         List<Element> l = family.getChildren("model");
         log.trace("readFamily sees {} children", l.size());
         Element modelElement;
@@ -661,14 +666,13 @@ public class DecoderIndexFile extends XmlFile {
                         (manufacturerID != null) ? manufacturerID : "-1",
                         (productID != null) ? productID : "-1",
                         -1, -1, modelElement,
-                        ParentReplacementFamilyName, ParentReplacementFamilyName); // numFns, numOuts, XML element equal
+                        ParentReplacementFamilyName, ParentReplacementFamilyName, modes); // numFns, numOuts, XML element equal
         // to the first decoder
         decoderList.add(vFamilyDecoderFile);
 
         // record each of the decoders
-        for (int i = 0; i < l.size(); i++) {
+        for (Element decoder : l) {
             // handle each entry by creating a DecoderFile object containing all it knows
-            Element decoder = l.get(i);
             String loVersID = ((attr = decoder.getAttribute(LOW_VERSION_ID)) != null ? attr.getValue() : parentLowVersID);
             String hiVersID = ((attr = decoder.getAttribute(HIGH_VERSION_ID)) != null ? attr.getValue() : parentHighVersID);
             String replacementModelName = ((attr = decoder.getAttribute("replacementModel")) != null ? attr.getValue() : null);
@@ -678,17 +682,17 @@ public class DecoderIndexFile extends XmlFile {
             String devId = ((attr = decoder.getAttribute("developerID")) != null ? attr.getValue() : "-1");
             String manufId = ((attr = decoder.getAttribute("manufacturerID")) != null ? attr.getValue() : "-1");
             String prodId = ((attr = decoder.getAttribute("productID")) != null ? attr.getValue() : "-1");
+
             DecoderFile df = new DecoderFile(mfg, mfgID,
                     ((attr = decoder.getAttribute("model")) != null ? attr.getValue() : null),
                     loVersID, hiVersID, familyName, filename, devId, manufId, prodId, numFns, numOuts, decoder,
-                    replacementModelName, replacementFamilyName);
+                    replacementModelName, replacementFamilyName, modes);
             // and store it
             decoderList.add(df);
             // if there are additional version numbers defined, handle them too
             List<Element> vcodes = decoder.getChildren("versionCV");
-            for (int j = 0; j < vcodes.size(); j++) {
+            for (Element vcv : vcodes) {
                 // for each versionCV element
-                Element vcv = vcodes.get(j);
                 String vLoVersID = ((attr = vcv.getAttribute(LOW_VERSION_ID)) != null ? attr.getValue() : loVersID);
                 String vHiVersID = ((attr = vcv.getAttribute(HIGH_VERSION_ID)) != null ? attr.getValue() : hiVersID);
                 df.setVersionRange(vLoVersID, vHiVersID);
@@ -698,17 +702,17 @@ public class DecoderIndexFile extends XmlFile {
 
     /**
      * Is target string in comma-delimited string
-     *
+     * <p>
      * Example:
      *      findString = "47"
      *      inString = "1,4,53,97"
      *      return value is 'false'
-     *
+     * <p>
      * Example:
      *      findString = "47"
      *      inString = "1,31,47,51"
      *      return value is 'true'
-     *
+     * <p>
      * Example:
      *      findString = "47"
      *      inString = "47"
@@ -727,7 +731,7 @@ public class DecoderIndexFile extends XmlFile {
 
     /**
      * Build and write the decoder index file, based on a set of decoder files.
-     *
+     * <p>
      * This creates the full DOM object for the decoder index based on reading the
      * supplied decoder xml files. It then saves the decoder index out to a new file.
      *
@@ -818,6 +822,22 @@ public class DecoderIndexFile extends XmlFile {
                 // get <family> element and add the file name
                 Element droot = d.rootFromName(DecoderFile.fileLocation + fileName);
                 Element family = droot.getChild("decoder").getChild("family").clone();
+
+                Element prog = droot.getChild("decoder").getChild("programming");
+                if (prog != null) {
+                    List<Element> modes = prog.getChildren("mode");
+                    if (modes != null) {
+                        StringBuilder supportedModes = new StringBuilder();
+                        for (Element md : modes) {
+                            String modeName = md.getText();
+                            if (supportedModes.length() > 0) supportedModes.append(",");
+                            supportedModes.append(modeName);
+                        }
+                        if (supportedModes.length() > 0) {
+                            family.setAttribute("modes", supportedModes.toString());
+                        }
+                    }
+                }
                 family.setAttribute("file", fileName);
 
                 // drop the decoder implementation content

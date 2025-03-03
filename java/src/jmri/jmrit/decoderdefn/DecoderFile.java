@@ -144,23 +144,45 @@ public class DecoderFile extends XmlFile {
         } else {
             _manufacturerID = "-1";
         }
-
         _productID = productID;
     }
 
     /**
-     * Create a mechanism to manipulate a (stationary/LNSV1) decoder definition.
+     * Create a mechanism to manipulate a decoder definition.
      *
+     * @param mfg manufacturer name
+     * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
      * @param model decoder model designation
+     * @param lowVersionID decoder version low byte, where applicable
+     * @param highVersionID decoder version high byte, where applicable
      * @param family decoder family name, where applicable
      * @param filename filename of decoder XML definition
+     * @param developerID SV2 developerID number (8 bits)
+     * @param manufacturerID SV2 manufacturerID number (8 bits)
+     * @param productID (typically) SV2 product ID number (16 bits)
+     * @param numFns decoder's number of available functions
+     * @param numOuts decoder's number of available function outputs
      * @param decoder Element containing decoder XML definition
+     * @param replacementModel name of decoder file (which replaces this one?)
+     * @param replacementFamily name of decoder family (which replaces this one?)
+     * @param programmingModes a comma-separated list of supported programming modes
      */
-    public DecoderFile(String model, String family, String filename,
-                       Element decoder) {
-        this(null, null, model, null,
-                null, family, filename,
-                0, 0, decoder);
+    public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
+                       String highVersionID, String family, String filename,
+                       String developerID, String manufacturerID, String productID,
+                       int numFns, int numOuts, Element decoder, String replacementModel,
+                       String replacementFamily, String programmingModes) {
+        this(mfg, mfgID, model, lowVersionID,
+                highVersionID, family, filename,
+                developerID, manufacturerID, productID,
+                numFns, numOuts, decoder, replacementModel,
+                replacementFamily);
+
+        log.debug("DecoderFile {} created with ProgModes: {}", model, programmingModes);
+        if (programmingModes != null && !programmingModes.isEmpty()) {
+            String regex = "[.,\\s]";
+            _programmingModes = programmingModes.split(regex);
+        }
     }
 
     // store acceptable version numbers
@@ -272,7 +294,7 @@ public class DecoderFile extends XmlFile {
     String _replacementFamily = null;
     String _developerID = null;
     String _manufacturerID = null;
-
+    String[] _programmingModes = null;
     int _numFns = -1;
     int _numOuts = -1;
     Element _element = null;
@@ -363,11 +385,11 @@ public class DecoderFile extends XmlFile {
 
     /**
      * Get the "Product ID" value.
-     *
+     * <p>
      * When applied to LocoNet devices programmed using the SV2 or the LNCV protocol,
      * this is a 16-bit value, and is used in identifying the decoder definition
      * file that matches an SV2 or LNCV device.
-     *
+     * <p>
      * Decoders which do not support LocoNet SV2 or LNCV programming may use the Product ID
      * value for other purposes.
      *
@@ -393,32 +415,36 @@ public class DecoderFile extends XmlFile {
         if (protocols == null) {
             setSupportedProtocols();
         }
-        return protocols.toArray(new LocoAddress.Protocol[protocols.size()]);
+        return protocols.toArray(new LocoAddress.Protocol[0]);
     }
 
     private void setSupportedProtocols() {
         protocols = new ArrayList<>();
         if (_element.getChild("protocols") != null) {
             List<Element> protocolList = _element.getChild("protocols").getChildren("protocol");
-            protocolList.forEach((e) -> {
-                protocols.add(LocoAddress.Protocol.getByShortName(e.getText()));
-            });
+            protocolList.forEach((e) -> protocols.add(LocoAddress.Protocol.getByShortName(e.getText())));
         }
     }
 
-    ArrayList<String> _modeList = null;
+    ArrayList<String> _modeArray = null;
 
-    public String getProgrammingMode() {
-        if (_modeList == null) {
+    public ArrayList<String> getProgrammingModes() {
+        if (_modeArray == null) {
             log.debug("getProgrammingModeList creating...");
-            _modeList = new ArrayList<String>();
+            ArrayList<String> _modeList = new ArrayList<>(0);
             loadProgrammingModeList(_element, _modeList);
         }
-        log.debug("getProgrammingModeList created. size={}", _modeList.size());
-        if (_modeList.size() > 0) {
-            return _modeList.get(0); // return just the first mode as String TODO EBR fix actual result
+        log.debug("getProgrammingModeList created. size={}", _modeArray.size());
+        return _modeArray;
+    }
+
+    public boolean isProgrammingMode(String mode) {
+        if (getProgrammingModes() != null) {
+            log.debug("=== getProgrammingModes() returned: {}", getProgrammingModes());
+            return getProgrammingModes().contains(mode);
         }
-        return "none";
+        log.debug("=== getProgrammingModes() returned null");
+        return false;
     }
 
     boolean isProductIDok(Element e, String extraInclude, String extraExclude) {
@@ -617,7 +643,7 @@ public class DecoderFile extends XmlFile {
     }
 
     // Use the decoder Element from the file to load a ProgrammingModesList for programming.
-    public void loadProgrammingModeList(Element decoderElement, List<String> programmingModes) {
+    public void loadProgrammingModeList(Element decoderElement, ArrayList<String> programmingModes) {
         if (decoderElement.getChild("programming") != null) {
             List<Element> modesList = decoderElement.getChild("programming").getChildren("mode");
             if (!modesList.isEmpty()) {
@@ -625,12 +651,10 @@ public class DecoderFile extends XmlFile {
                     programmingModes.add(element.getValue());
                 }
             } else {
-                programmingModes.add("hi");
-                log.debug("Added \'hi\' to empty programmingModes List");
+                log.debug("No <mode> elements discovered in programming element");
             }
         } else {
-            log.debug("decoderElement.getChild(\'programming\') returned null");
-            programmingModes.add("none");
+            log.debug("decoderElement.getChild('programming') returned null");
         }
     }
 
