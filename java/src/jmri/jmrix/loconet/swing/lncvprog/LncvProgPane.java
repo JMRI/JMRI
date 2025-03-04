@@ -21,12 +21,12 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Frame for discovery and display of LocoNet LNCV boards.
  * Derived from xbee node config. Verified with Digikeijs DR5033 hardware.
- *
+ * <p>
  * Some of the message formats used in this class are Copyright Uhlenbrock.de
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Uhlenbrock.
- *
+ * <p>
  * Buttons in table row allows to add roster entry for device, and switch to the
  * DecoderPro ops mode programmer.
  *
@@ -339,7 +339,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         articleField.setEditable(false);
         addressField.setEditable(false);
         art = -1;
-        if (!articleField.getText().equals("")) {
+        if (!articleField.getText().isEmpty()) {
             try {
                 art = inDomain(articleField.getText(), 9999);
             } catch (NumberFormatException e) {
@@ -382,13 +382,13 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             statusText1.setText(Bundle.getMessage("FeedBackDirectRunning"));
             return;
         }
-        if (articleField.getText().equals("")) {
+        if (articleField.getText().isEmpty()) {
             statusText1.setText(Bundle.getMessage("FeedBackEnterArticle"));
             articleField.setBackground(Color.RED);
             modProgButton.setSelected(false);
             return;
         }
-        if (addressField.getText().equals("")) {
+        if (addressField.getText().isEmpty()) {
             statusText1.setText(Bundle.getMessage("FeedBackEnterAddress"));
             addressField.setBackground(Color.RED);
             modProgButton.setSelected(false);
@@ -414,7 +414,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
             }
             return;
         }
-        if ((!articleField.getText().equals("")) && (!addressField.getText().equals(""))) {
+        if ((!articleField.getText().isEmpty()) && (!addressField.getText().isEmpty())) {
             try {
                 art = inDomain(articleField.getText(), 9999);
                 adr = inDomain(addressField.getText(), 65535); // goes in d5-d6 as module address
@@ -445,7 +445,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         if ((sArt != null) && (addressField.getText() != null) && (cvField.getText() != null)) {
             try {
                 art = inDomain(sArt, 9999); // limited according to Uhlenbrock info
-                adr = inDomain(addressField.getText(), 65535); // used as address for reply
+                adr = inDomain(addressField.getText(), 65535); // used as address for monitor reply
                 cv = inDomain(cvField.getText(), 9999); // decimal entry
                 memo.getLnTrafficController().sendLocoNetMessage(LncvMessageContents.createCvReadRequest(art, adr, cv));
             } catch (NumberFormatException e) {
@@ -816,7 +816,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     }
 
     protected void setCvFields(int cvNum, int cvVal) {
-        cvField.setText(""+cvNum);
+        cvField.setText("" + cvNum);
         if (cvVal > -1) {
             valueField.setText("" + cvVal);
         } else {

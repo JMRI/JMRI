@@ -128,7 +128,6 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
     @Override
     public Object getValueAt(int r, int c) {
         Lnsv1Device dev = memo.getLnsv1DevicesManager().getDeviceList().getDevice(r);
-        log.debug("======== getValueAt starting");
         try {
             switch (c) {
                 case MODADDR_COLUMN:
@@ -152,16 +151,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                 case ROSTERSV1MODECOLUMN:
                     boolean isLnsv1 = false;
                     if (dev != null && dev.getDecoderFile() != null) {
-                        // <programming direct="no" paged="no" register="no" ops="no">
-                        //     <mode>LOCONETSV1MODE</mode>
-                        // </programming>
-                        try {
-                            log.debug("======== ROSTERSV1MODECOLUMN starting");
-                            log.debug("======== Line {} getProgrammingMode()={}", r, dev.getDecoderFile().getProgrammingModes());
-                            isLnsv1 = dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE"); // can't access LnProgrammerManager.LOCONETSV1MODE constant
-                        } catch (ClassCastException | NullPointerException cce) {
-                            log.warn("==== Caught ClassCastException reading checkbox", cce);
-                        }
+                        isLnsv1 = dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE"); // can't access LnProgrammerManager.LOCONETSV1MODE constant
                     }
                     return isLnsv1;
                 case ROSTERNAMECOLUMN:
@@ -174,7 +164,11 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                 case OPENPRGMRBUTTONCOLUMN:
                     assert dev != null;
                     if (!dev.getRosterName().isEmpty()) {
-                        return Bundle.getMessage("ButtonProgram");
+                        if (dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE")) {
+                            return Bundle.getMessage("ButtonProgram");
+                        } else {
+                            return Bundle.getMessage("ButtonMatchNotLnsv1");
+                        }
                     }
                     return Bundle.getMessage("ButtonNoMatchInRoster");
                 default: // column 1
@@ -195,6 +189,8 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
         if (c == OPENPRGMRBUTTONCOLUMN) {
             if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
                 openProgrammer(r);
+            } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonMatchNotLnsv1")) == 0) {
+                infoNotForLnsv1();
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonNoMatchInRoster")) == 0){
                 // need to rebuild decoderIndex, tooltip?
                 warnRecreate();
@@ -289,6 +285,19 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
         if (userReply == 0) { // array position 0
             DecoderIndexFile.forceCreationOfNewIndex(false); // faster
         }
+    }
+
+    /**
+     * Show dialog to inform that address match decoder doesn't support LNSV1 mode.
+     */
+    private void infoNotForLnsv1() {
+        Object[] dialogBoxButtonOptions = {
+                Bundle.getMessage("ButtonOK")};
+        JmriJOptionPane.showOptionDialog(parent,
+                Bundle.getMessage("DialogInfoMatchNotLnsv1"),
+                Bundle.getMessage("TitleOpenRosterEntry"),
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE,
+                null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
     }
 
     /*

@@ -239,8 +239,9 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         readButton.addActionListener(e -> readButtonActionPerformed());
 
         panel432.add(writeButton);
-        writeButton.setEnabled(true); // EBR debug
+        writeButton.setEnabled(false); // disabled button, to write we point to Roster in button tooltip
         writeButton.addActionListener(e -> writeButtonActionPerformed());
+        writeButton.setToolTipText(Bundle.getMessage("ButtonWriteInactiveTip"));
         panel43.add(panel432);
         panel4.add(panel43);
 
@@ -320,7 +321,11 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             try {
                 addr = inDomain(addressField.getText(), 1, 127); // goes in DST_L as module low address
                 subAddr = inDomain(subAddressField.getText(), 1,127); // goes in d5 as module high address
-                // TODO check for reserved LocoBuffer 0x50/0d80 address
+                // check & warn for reserved LocoBuffer 0x50/0d80 address
+                if (addr == 0x50) {
+                    LocoBufferReservedAddress();
+                    return;
+                }
                 modProgButton.setEnabled(false);
                 statusText1.setText(Bundle.getMessage("FeedBackModAddrStart", addr, subAddr));
                 addressField.setEditable(false); // lock addressL & H fields to prevent accidentally changing it
@@ -373,11 +378,14 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             return;
         }
         try {
-            addr = inDomain(addressField.getText(), 1,127); // goes in DST_L, used as address for reply
-            subAddr = inDomain(subAddressField.getText(), 1,127); // goes in D5, used as subaddress for reply
-            // TODO check for reserved LocoBuffer 0x50/0d80 address
+            addr = inDomain(addressField.getText(), 1,127); // goes in DST_L, used as module base address
+            subAddr = inDomain(subAddressField.getText(), 1,127); // goes in D5, used as module subaddress
+            // check & warn for reserved LocoBuffer 0x50/0d80 address
+            if (addr == 0x50) {
+                LocoBufferReservedAddress();
+                return;
+            }
             sv = inDomain(svField.getText(), 0,127); // decimal entry
-            // LocoNetMessage m = Lnsv1MessageContents.readSV(adrL, adrH, sv);
             log.debug("ReadButtonPressed adrL={}, sub={}, sv={}", addr, subAddr, sv);
             LocoNetMessage m = Lnsv1MessageContents.createSv1ReadRequest(addr, subAddr, sv);
             memo.getLnTrafficController().sendLocoNetMessage(m);
@@ -399,7 +407,11 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             try {
                 addr = inDomain(addressField.getText(), 1,0x7F); // goes in DST_L as module low address
                 subAddr = inDomain(subAddressField.getText(), 1,0x7F); // goes in d5 as module high address
-                // TODO check for reserved LocoBuffer 0x50/0d80 address
+                // check & warn for reserved LocoBuffer 0x50/0d80 address
+                if (addr == 0x50) {
+                    LocoBufferReservedAddress();
+                    return;
+                }
                 sv = inDomain(svField.getText(), 1,0x7F); // decimal entry
                 val = inDomain(valueField.getText(), 0,0x7F); // decimal entry
                 if (sv == 100 || sv == 80) {
@@ -445,6 +457,19 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     }
 
     /**
+     * Show dialog to warn that address 0x50 is reserved and invalid entry in LNSV1 pane
+     */
+    private void LocoBufferReservedAddress() {
+        Object[] dialogBoxButtonOptions = {
+                Bundle.getMessage("ButtonOK")};
+        JmriJOptionPane.showOptionDialog(this.getParent(),
+                Bundle.getMessage("DialogWarnLbReserved"),
+                Bundle.getMessage("WarningTitle"),
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE,
+                null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
+    }
+
+    /**
      * {@inheritDoc}
      * Compare to {@link LnOpsModeProgrammer#message(LocoNetMessage)}.
      * Compare to existing messageinterp.LocoNetMessageInterpret#interpretSV1Message(LocoNetMessage).
@@ -452,10 +477,8 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
      * @param m a message received and analysed for LNSVf1 characteristics
      */
     @Override
-    public synchronized void message(LocoNetMessage m) { // receive a LocoNet message and log it
+    public synchronized void message(LocoNetMessage m) { // receive a LocoNet message and log it to monitor
         // got a LocoNet message, see if it's an LNSV1 response
-        //log.debug("Lnsv1ProgPane heard message {}", m.toMonitorString());
-
         if (Lnsv1MessageContents.isSupportedSv1Message(m)) {
             // raw data, to display
             String raw = (rawCheckBox.isSelected() ? ("[" + m + "] ") : "");
@@ -465,67 +488,53 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             reply += raw + formatted;
         } else {
             log.debug("Rejected by isSupportedSv1Message");
+            return;
         }
-        // or LACK write confirmation response from module? TODO
-//        if ((m.getOpCode() == LnConstants.OPC_LONG_ACK) &&
-//                (m.getElement(1) == 0x6D)) { // elem 1 = OPC (matches 0xED), elem 2 = ack1
-//            writeConfirmed = true;
-//            if (m.getElement(2) == 0x7f) {
-//                valueField.setBackground(Color.GREEN);
-//                reply += Bundle.getMessage("LNSV1_WRITE_CONFIRMED", moduleProgRunning) + "\n";
-//            } else if (m.getElement(2) == 1) {
-//                valueField.setBackground(Color.RED);
-//                reply += Bundle.getMessage("LNSV1_WRITE_CV_NOTSUPPORTED", moduleProgRunning, sv) + "\n";
-//            } else if (m.getElement(2) == 2) {
-//                valueField.setBackground(Color.RED);
-//                reply += Bundle.getMessage("LNSV1_WRITE_CV_READONLY", moduleProgRunning, sv) + "\n";
-//            } else if (m.getElement(2) == 3) {
-//                valueField.setBackground(Color.RED);
-//                reply += Bundle.getMessage("LNSV1_WRITE_CV_OUTOFBOUNDS", moduleProgRunning, val) + "\n";
-//            }
-//        }
-        if (Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_WRITE_ONE) {
+        // TODO isn't this duplicate info also added to LnMonitor by loconet.messageinterp ?
+        Lnsv1MessageContents contents = new Lnsv1MessageContents(m);
+        int msgVrs = contents.getVersionNum();
+        if (Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_WRITE) {
             // it's an LNSV1 WriteReply message, decode contents:
-            log.debug("SV1_WRITE_ONE decode contents");
-            Lnsv1MessageContents contents = new Lnsv1MessageContents(m);
-
-            if (contents.getDestAddr() == 0x00) {
-                reply += Bundle.getMessage("LNSV1_CHANGE_ADDR_MONITOR",
-                        (contents.getSvNum() == 1 ? "LOW" : "HIGH"), contents.getSvValue()) + "\n";
-            } else if (contents.getVersionNum() > 0x00) { // Write reply from LocoIO
+            log.debug("SV1_WRITE decode contents");
+            if (msgVrs == -1) {
+                log.debug("Write request from LocoBuffer/PC");
+                if (contents.getDstL() == 0x00) {
+                    reply += Bundle.getMessage("LNSV1_CHANGE_ADDR_MONITOR",
+                            (contents.getSvNum() == 1 ? "LOW" : "HIGH"), contents.getSvValue()) + "\n";
+                } else { // write request from LocoBuffer
+                    reply += Bundle.getMessage("LNSV1_WRITE_MONITOR",
+                            contents.getDstL(), contents.getSubAddress(), contents.getSvNum(), contents.getSv1D4()) + "\n";
+                }
+            } else {
+                // Write Reply from LocoIO
                 reply += Bundle.getMessage("LNSV1_WRITE_REPLY_MONITOR",
-                        contents.getSv1D8(), contents.getSvNum(), contents.getDestAddr(), contents.getSubAddr()) + "\n";
-            } else { // write request from LocoBuffer
-                reply += Bundle.getMessage("LNSV1_WRITE_REQUEST_MONITOR",
-                        contents.getSv1D8(), contents.getSvNum(), contents.getDestAddr(), contents.getSubAddr()) + "\n";
+                        contents.getDstL(), contents.getSubAddress(), contents.getSvNum(), contents.getSv1D8()) + "\n";
             }
         }
-        if (Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_READ_ONE) {
+        if (Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_READ) {
             // it's an LNSV1 ReadReply message, decode contents:
-            log.debug("SV1_READ_ONE decode contents");
-            Lnsv1MessageContents contents = new Lnsv1MessageContents(m);
-            int msgVrs = contents.getVersionNum();
-            if (msgVrs == 0) {
+            log.debug("SV1_READ decode contents");
+            if (msgVrs == -1) {
                 log.debug("Read request from LocoBuffer/PC");
                 // nothing to do
             } else {
                 // Read Reply from LocoIO
                 int msgSrcL = contents.getSrcL();
-                int msgSrcH = contents.getSrcH();
+                int msgSubAddress = contents.getSubAddress();
                 int msgSv = contents.getSvNum();
                 int msgVal = contents.getSvValue();
                 String foundMod = "(LNSV1) " + Bundle.getMessage("LabelAddress") + " " +
-                        msgSrcL + "/" + msgSrcH + " " +
+                        msgSrcL + "/" + msgSubAddress + " " +
                         Bundle.getMessage("LabelVersion") + msgVrs + " " +
                         Bundle.getMessage("LabelSv") + msgSv + " " +
                         Bundle.getMessage("LabelValue") + msgVal + "\n";
                 reply += foundMod;
                 log.debug("ReadReply={}", reply);
-
-                // Use Programmer to read and write individual SV's
+                // Use Programmer to (read and) write individual SV's - best done via Ports tab sheet
 
                 // storing a Module in the list using the (first) write reply is handled by loconet.Lnsv1DevicesManager
-                Lnsv1Device dev = memo.getLnsv1DevicesManager().getDevice(addr, subAddr); // TODO add vrs?
+                // here we only store the (last read) cvNum and cvValue to the Lnsv1Device
+                Lnsv1Device dev = memo.getLnsv1DevicesManager().getDevice(addr, subAddr);
                 if (dev != null) {
                     dev.setCvNum(msgSv);
                     dev.setCvValue(msgVal);

@@ -12,6 +12,8 @@ import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents.Sv1Command;
+
 /**
  * LnHexFilePort implements a LnPortController via an ASCII-hex input file. See
  * below for the file format. There are user-level controls for send next message
@@ -344,7 +346,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
             log.debug("generate reply for SV1 message ");
             Lnsv1MessageContents c = new Lnsv1MessageContents(m);
             log.debug("HEXFILESIM generateReply (c.getDestAddr() = {})", c.getDstL());
-            if (c.getCmd() == Lnsv1MessageContents.SV_CMD_READ_ONE && c.getDstL() == 0 && c.getVersionNum() == 0) {
+            if (c.getCmd() == Sv1Command.getCmd(Sv1Command.SV1_READ) && c.getDstL() == 0 && c.getVersionNum() == -1) {
                 // Sv1 Probe
                 // [E5 10 50 00 01 00 02 02 00 00 10 00 00 00 00 4B]  LocoBuffer => LocoIO@broadcast Query SV2.
                 log.debug("generate LNSV1 ProbeAll reply message");
@@ -355,19 +357,19 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                 int sv = 2;
                 int val = 12;
                 reply = Lnsv1MessageContents.createSv1ReadReply(myAddr, dest, subAddress, version, sv, val);
-            } else if (c.getCmd() == Lnsv1MessageContents.SV_CMD_READ_ONE && c.getDstL() > 0 &&
+            } else if (c.getCmd() == Sv1Command.getCmd(Sv1Command.SV1_READ) && c.getDstL() > 0 &&
                     c.getVersionNum() == 0 && c.getSvValue() == 0 ) {
                 // specific 12/3 read request
                 // [E5 10 50 0C 01 00 02 09 00 00 10 03 00 00 00 4F]  LocoBuffer => LocoIO@12/3 Query SV9.
                 log.debug("generate LNSV1 Read_One reply message");
                 int myAddr = c.getDstL(); // a random but valid board address
-                int subAddress = c.getSubAddr(); // board sub-address
+                int subAddress = c.getSubAddress(); // board sub-address
                 int dest = Lnsv1MessageContents.LNSV1_LOCOBUFFER_ADDRESS; // reply to LocoBuffer
                 int version = 120;
                 int sv = c.getSvNum();
                 int val = 124;
                 reply = Lnsv1MessageContents.createSv1ReadReply(myAddr, dest, subAddress, version, sv, val);
-            } else if (c.getCmd() == Lnsv1MessageContents.SV_CMD_WRITE_ONE && c.getVersionNum() == 0) {
+            } else if (c.getCmd() == Sv1Command.getCmd(Sv1Command.SV1_WRITE) && c.getVersionNum() == -1) {
                 // specific 12/3 write request
                 // [E5 10 50 0C 01 00 01 09 00 07 10 03 00 00 00 4B]  LocoBuffer => LocoIO@c/3 Write SV9=0x7.
                 log.debug("generate LNSV1 Write_One reply message");

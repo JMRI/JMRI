@@ -311,7 +311,7 @@ public class LnSv2MessageContents {
      * 
      * @param locale  locale to use for the human-readable string
      * @return String containing a human-readable version of the SV Programming 
-     *      Format 2 message, in the language specified by the Locale, if the 
+     *      Format 2 message, in the language specified by the Locale if the
      *      properties have been translated to that Locale, else in the default
      *      English language.
      */

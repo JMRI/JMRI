@@ -331,17 +331,7 @@ public class DecoderIndexFile extends XmlFile {
 
         if (progMode != null) {
             // must have a progMode value that matches to consider this entry a match
-            boolean modeMatch = false;
-            ArrayList<String> modes = r.getProgrammingModes();
-            for (String mode : modes) {
-                if (progMode.equals(mode)) {
-                    log.debug("mode: {}", mode);
-                    modeMatch = true;
-                    break;
-                }
-            }
-            if (!modeMatch) return false;
-            log.debug("programmer mode match");
+            return r.isProgrammingMode(progMode); // simplified as long as this is the last if in method
         }
 
         return true;

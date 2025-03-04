@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.swing.JLabel;
@@ -179,10 +180,7 @@ public class DecoderFile extends XmlFile {
                 replacementFamily);
 
         log.debug("DecoderFile {} created with ProgModes: {}", model, programmingModes);
-        if (programmingModes != null && !programmingModes.isEmpty()) {
-            String regex = "[.,\\s]";
-            _programmingModes = programmingModes.split(regex);
-        }
+        _programmingModes = Objects.requireNonNullElse(programmingModes, "");
     }
 
     // store acceptable version numbers
@@ -294,7 +292,7 @@ public class DecoderFile extends XmlFile {
     String _replacementFamily = null;
     String _developerID = null;
     String _manufacturerID = null;
-    String[] _programmingModes = null;
+    String _programmingModes = null;
     int _numFns = -1;
     int _numOuts = -1;
     Element _element = null;
@@ -426,25 +424,15 @@ public class DecoderFile extends XmlFile {
         }
     }
 
-    ArrayList<String> _modeArray = null;
-
-    public ArrayList<String> getProgrammingModes() {
-        if (_modeArray == null) {
-            log.debug("getProgrammingModeList creating...");
-            ArrayList<String> _modeList = new ArrayList<>(0);
-            loadProgrammingModeList(_element, _modeList);
+    public @Nonnull String getProgrammingModes() {
+        if (_programmingModes == null) {
+            _programmingModes = "";
         }
-        log.debug("getProgrammingModeList created. size={}", _modeArray.size());
-        return _modeArray;
+        return _programmingModes;
     }
 
     public boolean isProgrammingMode(String mode) {
-        if (getProgrammingModes() != null) {
-            log.debug("=== getProgrammingModes() returned: {}", getProgrammingModes());
-            return getProgrammingModes().contains(mode);
-        }
-        log.debug("=== getProgrammingModes() returned null");
-        return false;
+        return getProgrammingModes().contains(mode);
     }
 
     boolean isProductIDok(Element e, String extraInclude, String extraExclude) {
@@ -639,22 +627,6 @@ public class DecoderFile extends XmlFile {
                 extraMenuModel.setRow(j, e, menuElement, _model);
             }
             i++;
-        }
-    }
-
-    // Use the decoder Element from the file to load a ProgrammingModesList for programming.
-    public void loadProgrammingModeList(Element decoderElement, ArrayList<String> programmingModes) {
-        if (decoderElement.getChild("programming") != null) {
-            List<Element> modesList = decoderElement.getChild("programming").getChildren("mode");
-            if (!modesList.isEmpty()) {
-                for (Element element : modesList) {
-                    programmingModes.add(element.getValue());
-                }
-            } else {
-                log.debug("No <mode> elements discovered in programming element");
-            }
-        } else {
-            log.debug("decoderElement.getChild('programming') returned null");
         }
     }
 

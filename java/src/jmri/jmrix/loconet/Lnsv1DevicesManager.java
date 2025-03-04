@@ -75,8 +75,8 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
     }
 
     /**
-     * Extract module information from LNSVf1 READ_ONE REPLY message;
-     * if not already in the lnsv1Devices list, try to find a matching decoder definition (by address number and TODO mode)
+     * Extract module information from a LNSVf1 READ_ONE REPLY message.
+     * If not already in the lnsv1Devices list, try to find a matching decoder definition (by address number and programming mode)
      * and add it. Skip if already in the list.
      *
      * @param m The received LocoNet message. Note that this same object may
@@ -86,24 +86,24 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
     @Override
     public void message(LocoNetMessage m) {
         if (Lnsv1MessageContents.isSupportedSv1Message(m)) {
-            if ((Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_READ_ONE) &&
+            if ((Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_READ) &&
                     (Lnsv1MessageContents.extractMessageVersion(m) > 0)) { // which marks replies from devices
                 // it's an LNSV1 Read_One Reply message, decode contents:
                 Lnsv1MessageContents contents = new Lnsv1MessageContents(m);
                 int vrs = contents.getVersionNum();
                 int addrL = contents.getSrcL();
-                int addrH = contents.getSrcH();
+                int subAddr = contents.getSubAddress();
                 int sv = contents.getSvNum();
                 int val = contents.getSvValue();
-                log.debug("Lnsv1DevicesManager got read reply: vrs:{}, address:{}/{} cv:{} val:{}", vrs, addrL, addrH, sv, val);
+                log.debug("Lnsv1DevicesManager got read reply: vrs:{}, address:{}/{} cv:{} val:{}", vrs, addrL, subAddr, sv, val);
 
                 synchronized (this) {
-                    if (lnsv1Devices.addDevice(new Lnsv1Device(addrL, addrH, sv, val, "", "", vrs))) {
+                    if (lnsv1Devices.addDevice(new Lnsv1Device(addrL, subAddr, sv, val, "", "", vrs))) {
                         log.debug("new Lnsv1Device added to table");
                         // Annotate the discovered device LNSV1 data based on address
                         for (int i = 0; i < lnsv1Devices.size(); ++i) {
                             Lnsv1Device dev = lnsv1Devices.getDevice(i);
-                            if ((dev.getDestAddrHigh() == addrH) && (dev.getDestAddrHigh() == addrH)) {
+                            if ((dev.getDestAddrHigh() == subAddr) && (dev.getDestAddrHigh() == subAddr)) {
                                 // Try to find a roster entry which matches the device characteristics
                                 log.debug("Looking for adr {} in Roster", dev.getDestAddr());
                                 List<RosterEntry> l = Roster.getDefault().matchingList(Integer.toString(dev.getDestAddr()));
@@ -124,7 +124,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                                     }
                                 } else {
                                     JmriJOptionPane.showMessageDialog(null,
-                                            Bundle.getMessage("WarnMultipleLnsv1ModsFound", l.size(), addrL, addrH),
+                                            Bundle.getMessage("WarnMultipleLnsv1ModsFound", l.size(), addrL, subAddr),
                                             Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
                                     log.info("Found multiple matching LNSV1 roster entries. " + "Cannot associate any one to this device.");
                                 }
@@ -188,7 +188,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
             return ProgrammingResult.FAIL_NO_ADDRESSED_PROGRAMMER;
         }
 
-        if (p.getClass() != ProgDebugger.class) { // Debug TODO comment out EBR
+        if (p.getClass() != ProgDebugger.class) { // Debug
             // ProgDebugger is used for LocoNet HexFile Sim; uncommenting above line allows testing of LNSV1 Tool
             if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETOPSBOARD)) {
                 return ProgrammingResult.FAIL_NO_LNSV1_PROGRAMMER;
