@@ -31,6 +31,7 @@
 <!ATTLIST location maxCarMoves		CDATA #IMPLIED> 
 <!ATTLIST location drops			(yes | no) "yes"> 
 <!ATTLIST location pickups			(yes | no) "yes">
+<!ATTLIST location localMoves		(yes | no) "yes">
 <!ATTLIST location departTime		CDATA #IMPLIED> 
 <!ATTLIST location wait				CDATA #IMPLIED>
 <!ATTLIST location grade			CDATA #IMPLIED> 
