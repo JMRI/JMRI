@@ -402,11 +402,6 @@ public class DecoderFile extends XmlFile {
         return _element;
     }
 
-    // static service methods - extract info from a given Element
-    public static String getMfgName(Element decoderElement) {
-        return decoderElement.getChild("family").getAttribute("mfg").getValue();
-    }
-
     ArrayList<LocoAddress.Protocol> protocols = null;
 
     public LocoAddress.Protocol[] getSupportedProtocols() {
@@ -433,6 +428,15 @@ public class DecoderFile extends XmlFile {
 
     public boolean isProgrammingMode(String mode) {
         return getProgrammingModes().contains(mode);
+    }
+
+    // static service methods - extract info from a given Element
+    public static String getMfgName(Element decoderElement) {
+        return decoderElement.getChild("family").getAttribute("mfg").getValue();
+    }
+
+    public static String getProgrammingModes(Element decoderElement) {
+        return decoderElement.getChild("programming").getChild("mode").getText();
     }
 
     boolean isProductIDok(Element e, String extraInclude, String extraExclude) {
