@@ -103,29 +103,16 @@ public class Lnsv1MessageContents {
     public final static int SV1_SV_DST_H_ELEMENT_INDEX = 4;
     public final static int SV1_SVX1_ELEMENT_INDEX = 5;
     public final static int SV1_SV_CMD_ELEMENT_INDEX = 6;
-    public final static int SV1_SV_ADR_ELEMENT_INDEX = 7;
-    public final static int SV1_SV_VRS_ELEMENT_INDEX = 8;
-    public final static int SV1_SVD4_ELEMENT_INDEX = 9;
     public final static int SV1_SVX2_ELEMENT_INDEX = 10;
 
-    //  helpers for decoding SV format 1 messages (versus other OCP_PEER_XFER messages with length 0x10)
-    // public final static int SV1_SRC_L_ELEMENT_MASK = 0x7f;
-    // public final static int SV1_DST_L_ELEMENT_MASK = 0x7f;
+    // decoding SV format 1 messages (versus other OCP_PEER_XFER messages with length 0x10) uses m.getPeerXfrData()
     public final static int SV1_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
     public final static int SV1_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x00;
-    // no high bit for SV1_SV_CMD_ELEMENT
-    public final static int SV1_SV_ADR_SVADRX7_CHECK_MASK = 0x02;
-    public final static int SV1_SV_VRS_VRSX7_CHECK_MASK = 0x04;
-    public final static int SV1_SV_D4_D4X7_CHECK_MASK = 0x08;
     public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
     public final static int SV0_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x10; // LNSV0 mask
     public final static int SV1_SVX2_ELEMENT_VALIDITY_CHECK_VALUE = 0x00; // LNSV1 mask
-    // no high bit for sub-address SV1_SV_SRC_H_ELEMENT
-    public final static int SV1_SV_D6_D6X7_CHECK_MASK = 0x02;
-    public final static int SV1_SV_D7_D7X7_CHECK_MASK = 0x04;
-    public final static int SV1_SV_D8_D8X7_CHECK_MASK = 0x08;
 
-    // helpers for decoding SV_CMD
+    // helpers for decoding SV_CMD, compare to ENUM Sv1Command below
     public final static int SV_CMD_WRITE_ONE = 0x01;
     public final static int SV_CMD_READ_ONE = 0x02;
 
@@ -329,71 +316,6 @@ public class Lnsv1MessageContents {
         String returnString;
         log.debug("interpreting an SV1 message - sv_cmd is {}", sv_cmd);  // NOI18N
 
-        //    private static String interpretSV1Message(LocoNetMessage l) {
-        //    (pxct2 & 0xF0) == 0x10
-        //        int[] d = l.getPeerXfrData();
-        //        if (l.getElement(2) == 0x50) {
-        //            // Packets from the LocoBuffer
-        //            String subaddrx = (l.getElement(4) != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
-        //            // LocoBuffer to LocoIO
-        //            return "LocoBuffer => LocoIO@"
-        //                    + ((l.getElement(3) == 0) ? "broadcast" : Integer.toHexString(l.getElement(3)) + subaddrx)
-        //                    + " "
-        //                    + (d[0] == 2 ? "Query SV" + d[1] : "Write SV" + d[1] + "=0x" + Integer.toHexString(d[3]))
-        //                    + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
-        //        }
-        //        return "";
-        //    }
-
-        //    private static String interpretSV0Message(LocoNetMessage l) {
-        //    (pxct2 & 0xF0) == 0x00 // (Jabour/DeLoof LocoIO), SV Programming messages format 1
-        //    int dst_l = l.getElement(3);
-        //    int[] d = l.getPeerXfrData();
-        //    int src = l.getElement(2);
-        //
-        //    String subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
-        //
-        //    String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + subaddrx);
-        //    String dst_dev = ((dst_l == 0x50) ? "LocoBuffer "
-        //            : ((dst_l == 0x0) ? "broadcast"
-        //            : "LocoIO@0x" + Integer.toHexString(dst_l) + subaddrx));
-        //    String operation = (src == 0x50)
-        //            ? ((d[0] == 2) ? "Query" : "Write")
-        //            : ((d[0] == 2) ? "Report" : "Write");
-        //
-        //        return src_dev + "=> " + dst_dev + " "
-        //            + operation + " SV" + d[1]
-        //            + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
-        //            : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
-        //            : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
-        //            : (d[7] < 10) ? "" + d[7]
-        //            : d[7] + " (0x" + Integer.toHexString(d[7]) + ")")
-        //            : (d[7] < 10) ? "" + d[7]
-        //            : d[7] + " (0x" + Integer.toHexString(d[7]) + ")"))
-        //            + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
-        //}
-
-        // TO DO fine tune some strings, report as HEX (as option, because we enter as decimals in Programmer)
-        // Jabour/DeLoof LocoIO
-        //    String src_device = "LocoIO@0x" + Integer.toHexString(src_l) + "/" + sub_adr;
-        //
-        //    returnString = src_dev + "=> " + dst_dev + " "
-        //            + operation + " SV" + sv_num
-        //            + ((src_l == 0x50) ? (sv_cmd != 2 ? ("=0x" + Integer.toHexString(d4)) : "")
-        //            : " = " + ((sv_cmd == 2) ? ((vrs != 0) ? (d6 < 10) ? "" + d6
-        //            : d6 + " (0x" + Integer.toHexString(d6) + ")"
-        //            : (d8 < 10) ? "" + d8
-        //            : d8 + " (0x" + Integer.toHexString(d8) + ")")
-        //            : (d8 < 10) ? "" + d8
-        //            : d8 + " (0x" + Integer.toHexString(d8) + ")"))
-        //            + ((vrs != 0) ? " Firmware rev " + dotme(vrs) : "") + ".\n";
-        //
-        //    if (src_l == 0x50) {
-        //        // Packets from the LocoBuffer to LocoIO
-        //        Integer.toHexString(dst_l) + "/" + sub_adr) + " " +
-        //        (sv_cmd == 2 ? "Query SV" + sv_num : "Write SV" + sv_num + "=0x" + Integer.toHexString(d4)) + ".\n";
-        //    }
-
         //  use Integer.toHexString(i) and/or String.format("0x%02X", i))
         switch (sv_cmd) {
             case (SV_CMD_WRITE_ONE):
@@ -411,8 +333,6 @@ public class Lnsv1MessageContents {
                     } else {
                         returnString = Bundle.getMessage(locale, "SV1_WRITE_INTERPRETED",
                                 toHexComposite(dst_l, sub_adr),
-                                //toHexStr(dst_l),
-                                //(sub_adr > 0) ? "/" + toHexStr(sub_adr) : "",
                                 toHexStr(sv_num),
                                 toHexStr(d4),
                                 (vrs > 0) ? " Firmware rev " + LocoNetMessageInterpret.dotme(vrs) : ""); // NOI18N
@@ -420,8 +340,6 @@ public class Lnsv1MessageContents {
                 } else {
                     returnString = Bundle.getMessage(locale, "SV1_WRITE_REPLY_INTERPRETED",
                             toHexComposite(src_l, sub_adr),
-                            //toHexStr(src_l),
-                            //(sub_adr > 0) ? "/" + toHexStr(sub_adr) : "",
                             toHexStr(sv_num),
                             toHexStr(d8),
                             (vrs > 0) ? " Firmware rev " + LocoNetMessageInterpret.dotme(vrs) : ""); // NOI18N
@@ -439,20 +357,14 @@ public class Lnsv1MessageContents {
                     } else {
                         returnString = Bundle.getMessage(locale, "SV1_READ_INTERPRETED",
                                 toHexComposite(dst_l, sub_adr),
-                                //toHexStr(dst_l),
-                                //(sub_adr > 0) ? "/" + toHexStr(sub_adr) : "",
                                 toHexStr(sv_num),
                                 (vrs > 0) ? " Firmware rev " + LocoNetMessageInterpret.dotme(vrs) : "");
                     }
                 } else {
                     returnString = Bundle.getMessage(locale, "SV1_READ_REPLY_INTERPRETED",
                             toHexComposite(src_l, sub_adr),
-                            //toHexStr(src_l),
-                            //(sub_adr > 0) ? "/" + toHexStr(sub_adr) : "",
                             toHexStr(sv_num),
                             toHexStr(d6),
-                            toHexStr(d7),
-                            toHexStr(d8),
                             (vrs > 0) ? " Firmware rev " + LocoNetMessageInterpret.dotme(vrs) : ""); // NOI18N
                 }
                 break;
