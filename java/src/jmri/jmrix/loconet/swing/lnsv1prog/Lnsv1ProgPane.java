@@ -42,6 +42,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     protected JTextField svField = new JTextField(4);
     protected JTextField valueField = new JTextField(4);
     protected JCheckBox rawCheckBox = new JCheckBox(Bundle.getMessage("ButtonShowRaw"));
+    protected JCheckBox decimalCheckBox = new JCheckBox(Bundle.getMessage("ButtonShowDecimal"));
     protected JTable moduleTable = null;
     protected Lnsv1ProgTableModel moduleTableModel = null;
     public static final int ROW_HEIGHT = (new JButton("X").getPreferredSize().height)*9/10;
@@ -61,6 +62,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     protected int val;
     boolean writeConfirmed = false;
     private final String rawDataCheck = this.getClass().getName() + ".RawData"; // NOI18N
+    private final String decimalDataCheck = this.getClass().getName() + ".DecimalData"; // NOI18N
     private UserPreferencesManager pm;
     private transient TableRowSorter<Lnsv1ProgTableModel> sorter;
     private Lnsv1DevicesManager lnsv1dm;
@@ -155,6 +157,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         add(tablePanel);
         add(getMonitorPanel());
         rawCheckBox.setSelected(pm.getSimplePreferenceState(rawDataCheck));
+        decimalCheckBox.setSelected(pm.getSimplePreferenceState(decimalDataCheck));
     }
 
     /*
@@ -169,9 +172,16 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         JScrollPane resultScrollPane = new JScrollPane(result);
         panel31.add(resultScrollPane);
 
-        panel31.add(rawCheckBox);
+        JPanel panel31b = new JPanel();
+        panel31b.setLayout(new BoxLayout(panel31b, BoxLayout.X_AXIS));
+        panel31b.add(rawCheckBox);
         rawCheckBox.setVisible(true);
         rawCheckBox.setToolTipText(Bundle.getMessage("TooltipShowRaw"));
+        panel31b.add(decimalCheckBox);
+        decimalCheckBox.setVisible(true);
+        decimalCheckBox.setToolTipText(Bundle.getMessage("TooltipShowDecimal"));
+        panel31.add(panel31b);
+
         panel3.add(panel31);
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border, Bundle.getMessage("Lnsv1MonitorTitle"));
@@ -235,11 +245,11 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         JPanel panel432 = new JPanel();
         panel432.setLayout(new BoxLayout(panel432, BoxLayout.PAGE_AXIS));
         panel432.add(readButton);
-        readButton.setEnabled(true);
+        readButton.setEnabled(false); // set true to debug Write button, false on PR
         readButton.addActionListener(e -> readButtonActionPerformed());
 
         panel432.add(writeButton);
-        writeButton.setEnabled(false); // disabled button, to write we point to Roster in button tooltip
+        writeButton.setEnabled(true); // disabled button, to write we point to Roster in button tooltip
         writeButton.addActionListener(e -> writeButtonActionPerformed());
         writeButton.setToolTipText(Bundle.getMessage("ButtonWriteInactiveTip"));
         panel43.add(panel432);
@@ -471,13 +481,13 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
     /**
      * {@inheritDoc}
+     * See jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents.toString().
      * Compare to {@link LnOpsModeProgrammer#message(LocoNetMessage)}.
-     * Compare to existing messageinterp.LocoNetMessageInterpret#interpretSV1Message(LocoNetMessage).
-     *
+     * We pick up the SV + value add some details to status line (LnMonitor shows on our pane too).
      * @param m a message received and analysed for LNSVf1 characteristics
      */
     @Override
-    public synchronized void message(LocoNetMessage m) { // receive a LocoNet message and log it to monitor
+    public synchronized void message(LocoNetMessage m) { // receive a LocoNet message and log it to the monitor
         // got a LocoNet message, see if it's an LNSV1 response
         if (Lnsv1MessageContents.isSupportedSv1Message(m)) {
             // raw data, to display
@@ -490,54 +500,74 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             log.debug("Rejected by isSupportedSv1Message");
             return;
         }
-        // TODO isn't this duplicate info also added to LnMonitor by loconet.messageinterp ?
+        // use dec checkbox state to choose either LnMonitor by loconet.messageinterp
+        //  using Integer.toHexString(i) and/or String.format("0x%02X", i))
+        boolean addDec = decimalCheckBox.isSelected();
         Lnsv1MessageContents contents = new Lnsv1MessageContents(m);
-        int msgVrs = contents.getVersionNum();
+        // Use Programmer to (read and) write individual SV's - best done via Ports tab sheet
+
         if (Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_WRITE) {
             // it's an LNSV1 WriteReply message, decode contents:
             log.debug("SV1_WRITE decode contents");
-            if (msgVrs == -1) {
-                log.debug("Write request from LocoBuffer/PC");
+            if (contents.getSrcL() == 0x50) {
                 if (contents.getDstL() == 0x00) {
-                    reply += Bundle.getMessage("LNSV1_CHANGE_ADDR_MONITOR",
-                            (contents.getSvNum() == 1 ? "LOW" : "HIGH"), contents.getSvValue()) + "\n";
+                    log.debug("Write all from LocoBuffer/PC");
+                    if (addDec) {
+                        reply += Bundle.getMessage("SV1_WRITE_ALL_INTERPRETED_DEC",
+                                contents.getSvNum(),
+                                contents.getSv1D4()); // NOI18N
+                    }
                 } else { // write request from LocoBuffer
-                    reply += Bundle.getMessage("LNSV1_WRITE_MONITOR",
-                            contents.getDstL(), contents.getSubAddress(), contents.getSvNum(), contents.getSv1D4()) + "\n";
+                    log.debug("Write request from LocoBuffer/PC");
+                    if (addDec) {
+                        reply += Bundle.getMessage("SV1_WRITE_INTERPRETED_DEC",
+                                contents.getSrcL(),
+                                contents.getSubAddress(),
+                                contents.getSvNum(),
+                                contents.getSv1D4()); // NOI18N
+                    }
                 }
             } else {
                 // Write Reply from LocoIO
-                reply += Bundle.getMessage("LNSV1_WRITE_REPLY_MONITOR",
-                        contents.getDstL(), contents.getSubAddress(), contents.getSvNum(), contents.getSv1D8()) + "\n";
+                log.debug("Write Reply from LocoIO");
+                if (addDec) {
+                    reply += Bundle.getMessage("SV1_WRITE_REPLY_INTERPRETED_DEC",
+                            contents.getSrcL(),
+                            contents.getSubAddress(),
+                            contents.getSvNum(),
+                            contents.getSv1D8()); // NOI18N
+                }
             }
         }
         if (Lnsv1MessageContents.extractMessageType(m) == Lnsv1MessageContents.Sv1Command.SV1_READ) {
             // it's an LNSV1 ReadReply message, decode contents:
             log.debug("SV1_READ decode contents");
-            if (msgVrs == -1) {
-                log.debug("Read request from LocoBuffer/PC");
-                // nothing to do
+            if (contents.getSrcL() == 0x50) {
+                log.debug("Read request from LocoBuffer/PC"); // nothing else to do
+                if (addDec) {
+                    reply += Bundle.getMessage("SV1_READ_INTERPRETED_DEC",
+                            contents.getDstL(),
+                            contents.getSubAddress(),
+                            contents.getSvNum()); // NOI18N
+                }
             } else {
                 // Read Reply from LocoIO
-                int msgSrcL = contents.getSrcL();
-                int msgSubAddress = contents.getSubAddress();
-                int msgSv = contents.getSvNum();
-                int msgVal = contents.getSvValue();
-                String foundMod = "(LNSV1) " + Bundle.getMessage("LabelAddress") + " " +
-                        msgSrcL + "/" + msgSubAddress + " " +
-                        Bundle.getMessage("LabelVersion") + msgVrs + " " +
-                        Bundle.getMessage("LabelSv") + msgSv + " " +
-                        Bundle.getMessage("LabelValue") + msgVal + "\n";
-                reply += foundMod;
-                log.debug("ReadReply={}", reply);
-                // Use Programmer to (read and) write individual SV's - best done via Ports tab sheet
-
+                log.debug("Read Reply from LocoIO");
+                if (addDec) {
+                    reply += Bundle.getMessage("SV1_READ_REPLY_INTERPRETED_DEC",
+                            contents.getSrcL(),
+                            contents.getSubAddress(),
+                            contents.getSvNum(),
+                            contents.getSv1D6(),
+                            contents.getSv1D7(),
+                            contents.getSv1D8()); // NOI18N
+                }
                 // storing a Module in the list using the (first) write reply is handled by loconet.Lnsv1DevicesManager
-                // here we only store the (last read) cvNum and cvValue to the Lnsv1Device
+                // store the (last read) cvNum and cvValue to the Lnsv1Device
                 Lnsv1Device dev = memo.getLnsv1DevicesManager().getDevice(addr, subAddr);
                 if (dev != null) {
-                    dev.setCvNum(msgSv);
-                    dev.setCvValue(msgVal);
+                    dev.setCvNum(contents.getSvNum());
+                    dev.setCvValue(contents.getSv1D4());
                 }
                 memo.getLnsv1DevicesManager().firePropertyChange("DeviceListChanged", true, false);
             }
@@ -577,6 +607,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         // and unwind swing
         if (pm != null) {
             pm.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
+            pm.setSimplePreferenceState(decimalDataCheck, decimalCheckBox.isSelected());
         }
         super.setVisible(false);
 

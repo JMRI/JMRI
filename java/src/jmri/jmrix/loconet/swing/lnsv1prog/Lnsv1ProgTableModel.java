@@ -171,11 +171,11 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                         }
                     }
                     return Bundle.getMessage("ButtonNoMatchInRoster");
-                default: // column 1
+                default: // column 0
                     return r + 1;
             }
         } catch (NullPointerException npe) {
-            log.warn("Caught NPE reading Module {}, c{}", r, c);
+            log.warn("No match for Module {}, c{}", r, c);
             return "";
         }
     }
@@ -192,8 +192,8 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonMatchNotLnsv1")) == 0) {
                 infoNotForLnsv1();
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonNoMatchInRoster")) == 0){
-                // need to rebuild decoderIndex, tooltip?
-                warnRecreate();
+                // no match, info add roster entry
+                infoNoMatch(getValueAt(r, 1).toString());
             }
         } else {
             // no change, so do not fire a property change event
@@ -272,23 +272,22 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
         progFrame.setVisible(true);
     }
 
-    private void warnRecreate() {
-        // show dialog to inform and allow rebuilding index
+    /**
+     * Show dialog to instruct to add a roster entry supporting LNSV1 prog mode.
+     */
+    private void infoNoMatch(String address) {
+        //log.debug("address = {}", address);
         Object[] dialogBoxButtonOptions = {
-                Bundle.getMessage("ButtonRecreateIndex"),
-                Bundle.getMessage("ButtonCancel")};
-        int userReply = JmriJOptionPane.showOptionDialog(parent,
-                Bundle.getMessage("DialogWarnRecreate"),
+                Bundle.getMessage("ButtonOK")};
+        JmriJOptionPane.showOptionDialog(parent,
+                Bundle.getMessage("DialogInfoNoRosterMatch", address), // not displaying addr?
                 Bundle.getMessage("TitleOpenRosterEntry"),
-                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
-        if (userReply == 0) { // array position 0
-            DecoderIndexFile.forceCreationOfNewIndex(false); // faster
-        }
     }
 
     /**
-     * Show dialog to inform that address match decoder doesn't support LNSV1 mode.
+     * Show dialog to inform that address matched decoder doesn't support LNSV1 mode.
      */
     private void infoNotForLnsv1() {
         Object[] dialogBoxButtonOptions = {
@@ -296,7 +295,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
         JmriJOptionPane.showOptionDialog(parent,
                 Bundle.getMessage("DialogInfoMatchNotLnsv1"),
                 Bundle.getMessage("TitleOpenRosterEntry"),
-                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE,
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
     }
 

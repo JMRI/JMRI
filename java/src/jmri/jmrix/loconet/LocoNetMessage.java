@@ -325,7 +325,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
             return new int[] {0};
         }
 
-        int[] data = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+        int[] data = new int[] {0, 0, 0, 0, 0, 0, 0, 0};
 
         int pxct1 = getElement(5);
         int pxct2 = getElement(10);
