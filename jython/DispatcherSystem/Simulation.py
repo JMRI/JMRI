@@ -153,17 +153,19 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
     #
     #
     # make_next_block_occupied
-    #   if at end returm FINISHED
-    #   if not runnin go into wait state until running
+    #   if at end return FINISHED
+    #   if not running go into wait state until running
     #   then set next block occupied and return SUCCESS
     #
     ###########################################
 
     def __init__(self, block_list, activeTrain, activeTrainName):
         #global trains_being_simulated
-        self.block_list = block_list
+        self.block_list = block_list     # all the blocks in the transit
         self.activeTrain = activeTrain
         self.activeTrainName = activeTrainName
+        self.transit = activeTrain.getTransit()
+        self.allocatedSectionList = self.activeTrain.getAllocatedSectionList()
         #trains_being_simulated.append(activeTrainName)
         self.logLevel = 0
         if self.logLevel > 0: print "activeTrainName", activeTrainName
@@ -209,10 +211,12 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             response = "Waiting"
             while response == "Waiting":
                 response = self.make_next_block_occupied(self.block_list)
-                if self.logLevel > 0: print "response = " , response, "name", self.activeTrainName
+                if self.logLevel > 0: print "response = " , response, "name", self.activeTrainName , "count = ", count
                 if response == "Waiting":
                     if self.logLevel > 0: print "waiting"
                     self.waitMsec(50)
+                if response == "Success":
+                    break
 
         if response == "Finished":
             if self.forward_stopping_sensor_exists(self.activeTrain):
@@ -255,7 +259,6 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "self.start_position at end", self.start_position
         if self.logLevel > 0: print "**********"
 
-
     def make_next_block_occupied(self, block_list):
         if self.logLevel > 0: print "end pos at start", self.end_position
         title = "debug"
@@ -266,6 +269,12 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         else:
             at_last_block_in_section = self.at_last_block_in_section()
             if self.logLevel > 0: print "*******"
+            if self.logLevel > 0: print "at_last_block_in_section", at_last_block_in_section, \
+            "self.activeTrain.getStatus()", self.activeTrain.getStatus(), \
+            "self.activeTrain.RUNNING", self.activeTrain.RUNNING
+
+            if self.logLevel > 0: print "self.signal_ahead_clear()", self.signal_ahead_clear()
+
             if (self.signal_ahead_clear() or not at_last_block_in_section) and self.activeTrain.getStatus() == self.activeTrain.RUNNING:
                 self.end_position +=1
                 if self.logLevel > 0: print "end pos incremented", self.end_position
@@ -276,7 +285,6 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
                 # msg = "status is False, hence not proceeding " + str(self.activeTrain.getStatusText())
                 # title = self.activeTrainName
                 # JOptionPane.showMessageDialog(None, msg, title, JOptionPane.WARNING_MESSAGE)      # uncomment for debugging
-                if self.logLevel > 0: print "Waiting"
                 ret = "Waiting"
         self.waitMsec(500)     # to stop an error message
         if self.logLevel > 0: print "end pos at end", self.end_position
@@ -288,18 +296,20 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         return ret
 
     def current_section(self):
-        allocatedSectionList = self.activeTrain.getAllocatedSectionList()
-        current_section_list = [allocatedSection.getSection() for allocatedSection in allocatedSectionList \
-                                 if self.block_list[self.end_position] in allocatedSection.getSection().getBlockList()]
-        if current_section_list == []:
+        allocatedSectionList = self.allocatedSectionList
+        current_section_list = [allocatedSection.getSection() for allocatedSection in allocatedSectionList]
+                                 # if self.block_list[self.end_position] in allocatedSection.getSection().getBlockList()]
+        # if current_section_list == []:
+        if True:
+            # print "current_section_list", current_section_list
             # print "******* current_section list is empty in Simulate Instance +++****"
             # print "active train", self.activeTrain
             # print "allocatedSectionList", allocatedSectionList
             # print "allocatedSectionList", [allocatedSection.getSection().getUserName() for allocatedSection in allocatedSectionList]
-            # print "current_section_list", [section.getUserName() for section in current_section_list]
+            print "--" + str(self.activeTrain.getTrainName()) + " current_section_list: ", [str(section.getUserName()) for section in current_section_list]
             # print "self.block_list[self.end_position]", self.block_list[self.end_position].getUserName()
             # print "******* current_section ****"
-            return
+            # return
         current_section = current_section_list[0]
         return current_section
 
@@ -308,6 +318,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             blocks_in_section = self.current_section().getBlockList()
             last_block = blocks_in_section[-1]
             last_block_name = last_block.getUserName()
+            print "last_block_name", last_block_name
             return last_block_name
 
     def next_signal_mast(self):
@@ -318,9 +329,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         if ":" in current_section_name:
             next_signal_mast_name = current_section_name.split(":")[1]
         else:
-            # section_name_list = [allocated_section.getSection().getUserName() \
-            #                         for allocated_section in self.activeTrain.getAllocatedSectionList()]
-            transit = self.activeTrain.getTransit()
+            transit = self.transit
             sections_in_transit = [transit_section.getSection().getUserName() \
                                    for transit_section in transit.getTransitSectionList()]
             if self.logLevel > 0: print "sections_in_transit", sections_in_transit
@@ -334,18 +343,6 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         return signal_mast
 
     def at_last_block_in_section(self):
-        # startBlockSectionSeqNumber = self.activeTrain.getStartBlockSectionSequenceNumber()
-        # lastAllocatedSectionSeqNumber = self.activeTrain.getLastAllocatedSectionSeqNumber()
-        # transit = self.activeTrain.getTransit()
-        # current_section = transit.getSectionListBySeq(lastAllocatedSectionSeqNumber)[0]
-        # allocatedSectionList = self.activeTrain.getAllocatedSectionList()
-        # print "allocatedSectionList", allocatedSectionList
-        #
-        # current_section_list = [ allocatedSection.getSection() for allocatedSection in allocatedSectionList \
-        #                          if self.block_list[self.end_position] in allocatedSection.getSection().getBlockList()]
-        # current_section = current_section_list[0].getUserName()
-        # blocks_in_section = self.current_section().getBlockList()
-        # last_block = blocks_in_section[-1]
         last_block_name = self.last_block_name_in_current_section()
         if self.logLevel > 0: print "last_block_name", last_block_name
         current_block_name = self.block_list[self.end_position].getUserName()
@@ -363,13 +360,13 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         if signal_mast != None:
             if self.logLevel > 0: print "signal_mast" , signal_mast.getUserName()
             if self.logLevel > 0: print "signal_mast.isCleared()", signal_mast.isCleared()
+            if self.logLevel > 0: print "signal_mast.getAspect()", signal_mast.getAspect()
             if signal_mast.isCleared():
                 if self.logLevel > 0: print "clear True"
             else:
                 if self.logLevel > 0: print "clear False"
             return signal_mast.isCleared()
         else:
-            # print
             return False
 
 

@@ -928,6 +928,13 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         # set timebase to stop
         timebase.setRun(False)
+        if "rowrowStage4Button_4" in globals():
+            if timebase.getRun():
+                state = "Started"
+            else:
+                state = "Stopped"
+            stringToDisplay = "Stop/Start Clock:  " + state
+            rowrowStage4Button_4.setText(stringToDisplay) # Update the label
 
     def ToggleSchedulingtrains_action(self, event):
         global schedule_trains_glb
@@ -1056,6 +1063,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.write_list([start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
                          scheduling_margin_gbl, scheduling_in_operation_gbl])
         # print "fast_clock_rate in set_default_scheduling_values", fast_clock_rate
+
     def CheckHourlyParameters_action(self, event):
         global rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, \
             rowEStage1Button_1, rowFStage1Button_1, rowrowStage4Button_4
@@ -1142,7 +1150,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.speed_not_operational = int(reply)
         if self.logLevel > 0: print "speed_not_operational", self.speed_not_operational
 
-        # speed of running clock in non-operational times
+        # scheduling margin
         title = "scheduling_margin: (max 20 fast mins)"
         msg = "input scheduling margin "
         default_value = self.scheduling_margin
@@ -1416,7 +1424,7 @@ class TimeListener(java.beans.PropertyChangeListener):
 
     def propertyChange(self, event):
 
-        # print "property change"
+
         global fast_clock_running_at_operational_speed
         if 'fast_clock_running_at_at_operational_speed' not in globals():
             fast_clock_running_at_operational_speed = True
@@ -1426,29 +1434,37 @@ class TimeListener(java.beans.PropertyChangeListener):
         global fast_clock_rate
         global send_mqtt_messages_gbl
 
+        if 'minutes_old3' not in globals():
+            minutes_old3 = 0
         # print "a"
         minutes_old = int(event.getOldValue())
         # print "b"
         minutes = int(event.getNewValue())
         # print "c", minutes
 
+        if self.logLevel > 0: print "property change", "minutes", minutes,
+
         if 'minutes_old2' not in globals():
             minutes_old2 = minutes_old
 
+        if self.logLevel > 0: print "before: minutes_old3", minutes_old3
+
         if self.logLevel > 0: print "minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
-            "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60, \
-            "(minutes_old - minutes_old2) % 60 == 0", (minutes_old - minutes_old2) % 60 == 0
+            "(minutes_old - minutes_old2)", (minutes_old - minutes_old2), \
+            "(minutes_old - minutes_old2) % 60 == 1", (minutes_old - minutes_old2) % 60 == -1
 
         if self.logLevel > 0: print "property change", event.newValue
-        if (minutes_old - minutes_old2) % 60 == 0:      # when we set the fast clock in the event timer it triggers a new event at the same time
+        if (minutes_old - minutes_old2) % 60 != 0:
+            # when we set the fast clock in the event timer it triggers a new event at the same time
             # we then get into a recursion. This ignores the second call at the same time
-            # print "x"
-            if self.logLevel > 0: print "3 minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
+            if self.logLevel > 0: print "two events are triggered with the same minutes"
+        else:
+            if self.logLevel > 0: print "timeListener: normal Operation"
+            if self.logLevel > 0: print "minutes_old", minutes_old, "minutes", minutes, "minutes_old2", minutes_old2, \
                 "(minutes - minutes_old2) % 60 ", (minutes - minutes_old2) % 60
             # print "y", minutes, type(minutes), int(minutes)
             if int(minutes) % 10 == 0:               # only check every 10 minutes to prevent problens at non_operational_speeds
                 # don't just check at 0 minutes in case train us started not on the hour
-                # print "d"
                 if self.logLevel > 0: print "minutes", int(minutes), "int(minutes) % 10", int(minutes) % 10, "minutes", minutes
                 # print "e"
                 minutes_old2 = minutes
@@ -1457,7 +1473,6 @@ class TimeListener(java.beans.PropertyChangeListener):
             self.process_operations_trains(event)    # scheduled trains
             # print "attempting to send timetable via mqtt"
 
-            # if show
             send_mqtt_messages_gbl = True
             if 'send_mqtt_messages_gbl' not in globals():
                 send_mqtt_messages_gbl = False
@@ -1472,11 +1487,8 @@ class TimeListener(java.beans.PropertyChangeListener):
                 # print "x", x, "fcr", fcr, "x*fcr", x * fcr
                 no_fast_minutes = int(x * fcr)
                 if no_fast_minutes == 0: no_fast_minutes = 1
-                # print "no_fast_minutes", no_fast_minutes
                 if minutes % no_fast_minutes == 0:
-                    # print "H0"
                     Trigger_Timetable(minutes)
-                # print "H1"
             else:
                 # print "HIDING TIMETABLE WINDOW8888888888888888888888888888888888888888888888"
                 # print "run_timetable_gbl", run_timetable_gbl, "send_mqtt_messages_gbl", send_mqtt_messages_gbl
@@ -1486,7 +1498,9 @@ class TimeListener(java.beans.PropertyChangeListener):
                         timetable_gbl.hideWindow()
 
         minutes_old2 = minutes    # use minutes_old2 to prevent recursion
-        # print "end property change"
+        minutes_old3 = minutes_old
+        if self.logLevel > 0: print "after: minutes_old3", minutes_old3
+        if self.logLevel > 0: print "end property change" ; print ""
 
     def stop(self):
         tListener.cancel()
@@ -1541,6 +1555,7 @@ class TimeListener(java.beans.PropertyChangeListener):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
         global scheduled
         global trains_to_be_scheduled
+        if self.logLevel > 0: print " ******   in process_operations_trains"
         if self.logLevel > 0: print "A1"
         if 'schedule_trains_hourly' not in globals():
             schedule_trains_hourly = False
@@ -1582,19 +1597,19 @@ class TimeListener(java.beans.PropertyChangeListener):
 
         # schedule the train taking account of the repeat command
         trains_to_start = []
+        if self.logLevel > 0: print "trains_to_start", trains_to_start, "train_list", train_list
         for train in train_list:
             comment = train.getComment()
             repeat_command = self.find_between(comment, "[repeat-", "-repeat]")
-            # print "repeat1", repeat_command
-
-            max = minutes
-            min = (minutes - 1)
+            if self.logLevel > 0: print "repeat_command", repeat_command
+            max = int(minutes)
+            min = (int(minutes) - 1)
             mid = int(train.getDepartTimeMinutes())
+            # print "a"
             # else:
             #     max = minutes + 5               # add arbitrary value to test values to avoid texting with 59 and 0
             #     min = (minutes - 1) + 5
             #     mid = int(train.getDepartTimeMinutes()) + 5
-
 
             if repeat_command == "Once":
                 if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
@@ -1617,8 +1632,10 @@ class TimeListener(java.beans.PropertyChangeListener):
                         trains_to_start.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every Hour":
+                if self.logLevel > 0: print "min", min, "max", max, "mid", mid
                 if max == 0:
                     min += 1; mid += 1; max += 1
+                    if self.logLevel > 0: print "min", min, "max", max, "mid", mid
                 if (min < (mid % 60) <= max):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
@@ -1645,19 +1662,17 @@ class TimeListener(java.beans.PropertyChangeListener):
                         trains_to_start.append(train)
                         scheduled[train] = False
 
-            # print "trains_to_start", trains_to_start
+            if self.logLevel > 0: print "trains_to_start", trains_to_start
         # print "scheduled[train]", scheduled
 
-        if self.logLevel > 0: print "A8"
         for train in trains_to_start:
+            # print "x"
             if train not in trains_to_be_scheduled:
-                if self.logLevel > 0: print "A9"
                 trains_to_be_scheduled.append(train)
             scheduled[train] = False
-
-        if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
+        if self.logLevel > 0: print "Time listener: trains_to_be_scheduled", trains_to_be_scheduled, "trains_to_start", trains_to_start
         if self.logLevel > 0: print "scheduled", scheduled
-        if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
+        if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled, "trains_to_start", trains_to_start
 
     def speed_not_operational_gbl__is_defined(self):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
@@ -1703,7 +1718,6 @@ class Trigger_Timetable:
         event = ""
 
         event = self.read_list2()[0]
-        # print "event2", event
         try:
             self.send_clock_message(hour, minutes, event)
         except:
@@ -1946,7 +1960,6 @@ class Trigger_Timetable:
 
     def generate_local_timetable(self, station_name, station_names_list, time, timetable):
         global timetable_gbl
-        # if self.logLevel > -1: print "generating timetable" , "for", station_name, "station_names", station_names_list
         if "timetable_gbl" not in globals():
             # print "A"
             timetable_gbl = Timetable(station_name)
@@ -2098,7 +2111,6 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         # the route gives the stations on the route
 
         # note station_to and station_from are strings, while elements of route are locations
-
         self.logLevel = 0
         if self.logLevel > 0: print "loglevel", self.logLevel
 
@@ -2274,7 +2286,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
                     if self.scheduling_train:
                         self.wait_for_scheduled_time(self.route, station_index, accumulated_duration)
-                        success = self.check_train_in_block_for_scheduling_margin_fast_minutes(start_block)
+                        success = self.check_train_in_block_for_scheduling_margin_fast_minutes(start_block, train_to_move)
                         if success:
                             move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, station_comment, mode = "scheduling")
                             move_train.move_between_stations(station_from, station_to, train_to_move, self.graph, mode = "scheduling")
@@ -2315,17 +2327,20 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         if self.logLevel > 0:  print "!     finished run_train"
 
-    def check_train_in_block_for_scheduling_margin_fast_minutes(self, start_block):
+    def check_train_in_block_for_scheduling_margin_fast_minutes(self, start_block, train_to_move):
+        print "__________________________Start_____________________________________"
+        print "check_train_in_block_for_scheduling_margin_fast_minutes", start_block.getUserName(), train_to_move
         global fast_clock_rate
         if self.logLevel > 0: print "check_train_in_block_for_scheduling_margin_fast_minutes"
+
         for j in range(int(scheduling_margin_gbl)):    # try to schedule train for scheduling_margin_gbl fast minutes
             train_in_block = self.blockOccupied(start_block)
             if train_in_block:
-                # move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, station_comment, mode = "scheduling")
-                # move_train.move_between_stations(station_from, station_to, train_to_move, self.graph, mode = "scheduling")
+                print "--" + str(train_to_move) + " train in start block"
                 return True
             else:
-                print "no train in start_block ", start_block.getUserName(), "train_in_block", train_in_block
+                print (str(train_to_move) + " not in start_block: " + str(start_block.getUserName()) \
+                       + " time waited: " + str(j) + " fast minutes")
                 fast_minute = 1000*60/int(str(fast_clock_rate))
                 self.waitMsec(fast_minute)
         return False
@@ -2646,35 +2661,35 @@ class ScheduleTrains(jmri.jmrit.automat.AbstractAutomaton):
             # print "scheduled", scheduled
             if fast_clock_running_at_operational_speed:
                 for train in trains_to_be_scheduled:
-                    # print "train", train
                     # print "scheduled[train]", scheduled[train]
                     if scheduled[train] == False:
                         if self.logLevel > 0: print "train",train,"scheduled[train]",scheduled[train]
                         route = train.getRoute()
                         routeName = route.getName()
                         station_from, station_to = SchedulerMaster().get_first_and_last_station(route)   # starting from beginning of route
-                        # print "station_from", station_from, "station_to", station_to
                         start_block = blocks.getBlock(station_from)
                         if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
-                        train_name = start_block.getValue()
+                        train_block_name = start_block.getValue()
+                        run_route_flag = self.check_train_ok_to_start(train, train_block_name)
                         no_repetitions = 0
-                        # print "A"
-                        if "stopping" in train.getDescription():
-                            # print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-                            run_train = RunRoute(route, g.g_stopping, station_from, station_to, no_repetitions, train_name, \
-                                                 scheduling_train = True, train = train)
-                            run_train.setName("running_route_" + routeName)
-                            instanceList.append(run_train)
-                            run_train.start()
-                        else:
-                            run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name, \
-                                                 scheduling_train = True, train = train)
-                            run_train.setName("running_route_" + routeName)
-                            instanceList.append(run_train)
-                            run_train.start()
-                            # print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-                        scheduled[train] = True
-                        if self.logLevel > 0: print "scheduled train ", train
+                        if True:
+                            if "stopping" in train.getDescription():
+                                # print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", train
+                                run_train = RunRoute(route, g.g_stopping, station_from, station_to, no_repetitions, train_block_name, \
+                                                     scheduling_train = True, train = train)
+                                run_train.setName("running_route_" + routeName)
+                                instanceList.append(run_train)
+                                run_train.start()
+                            else:
+                                # print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", train
+                                run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_block_name, \
+                                                     scheduling_train = True, train = train)
+                                run_train.setName("running_route_" + routeName)
+                                instanceList.append(run_train)
+                                run_train.start()
+                            scheduled[train] = True
+                            trains_to_be_scheduled.pop(trains_to_be_scheduled.index(train))
+                            if self.logLevel > 0: print "scheduled train ", train
                 if self.logLevel > 0:  print "!!!!!!!!!!!!!!!!!!!!!run_trains finished"
                 if self.logLevel > 0:  print "trains_to_be_scheduled ", trains_to_be_scheduled
                 if 'timebase' in globals():
@@ -2684,3 +2699,29 @@ class ScheduleTrains(jmri.jmrit.automat.AbstractAutomaton):
         msecs_in_half_fast_minute = int(500.0 / float(str(fast_clock_rate)) * 60.0)
         # noMsec = int(1000/timebase.getRate())
         self.waitMsec(msecs_in_half_fast_minute)  # twice every fast minute
+
+    def check_train_ok_to_start(self, train, train_block_name):
+
+        # global trains_allocated
+        # global trains_allocated
+        # global trains_dispatched
+        #
+        # # check train in not in active trains
+        # DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        # java_active_trains_list = DF.getActiveTrainsList()
+        # java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
+        # active_train_names = [active_train.getTrainName() for active_train in java_active_trains_list]
+        #
+        # if train_name in active_train_names:
+        #     return False
+
+        # check scheduled train is same as train in block
+        # if self.blockOccupied(start_block):
+        if train_block_name == train.getDescription():
+            # print "returning true"
+            return True
+        else:
+            # print "returning false", "train_block_name", train_block_name, "train.getDescription()", train.getDescription()
+            return False
+
+
