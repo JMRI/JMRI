@@ -154,6 +154,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         moveRB.setToolTipText(Bundle.getMessage("MoveTip"));
         terminateRB.setToolTipText(Bundle.getMessage("TerminateTip"));
         resetRB.setToolTipText(Bundle.getMessage("ResetTip"));
+        conductorRB.setToolTipText(Bundle.getMessage("ConductorTip"));
 
         // row 2
         JPanel addTrain = new JPanel();
