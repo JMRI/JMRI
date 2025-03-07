@@ -9,6 +9,7 @@ from javax.swing.event import TableModelListener, TableModelEvent
 from javax.swing.filechooser import FileNameExtensionFilter
 from org.apache.commons.io import FilenameUtils
 from java.io import File
+import jmri
 
 class CreateAndShowGUI4(TableModelListener):
 
@@ -23,21 +24,23 @@ class CreateAndShowGUI4(TableModelListener):
         self.frame = CreateAndShowGUI4_frame
         self.frame.setSize(600, 600);
 
-        self.completeTablePanel()
+
+
+        self.completeTablePanel1()
         # print "about to populate"
         self.populate_action(None)
         self.cancel = False
 
-    def completeTablePanel(self):
+    def completeTablePanel1(self):
 
         self.topPanel= JPanel();
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
 
-        scrollPane = JScrollPane(self.table);
-        scrollPane.setSize(600,600);
+        self.scrollPane = JScrollPane(self.table);
+        self.scrollPane.setPreferredSize(Dimension(600,600))
 
-        self.topPanel.add(scrollPane);
+        self.topPanel.add(self.scrollPane);
 
         self.buttonPane = JPanel();
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
@@ -59,7 +62,7 @@ class CreateAndShowGUI4(TableModelListener):
         # self.buttonPane.add(button_apply)
         # self.buttonPane.add(Box.createHorizontalGlue());
 
-        button_close = JButton("Close", actionPerformed = self.close_action)
+        button_close = JButton("Save & Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
         self.buttonPane.add(Box.createHorizontalGlue());
 
@@ -91,12 +94,26 @@ class CreateAndShowGUI4(TableModelListener):
 
         self.frame.pack();
         self.frame.setVisible(True)
-
-
         return
 
+    def completeTablePanel(self):
+        # self.self_table()
 
+        contentPane = self.frame.getContentPane()
 
+        contentPane.removeAll()
+        contentPane.add(self.topPanel, BorderLayout.CENTER)
+        contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
+        size_of_one_row = 30
+        height = 50
+        for row in reversed(range(len(self.model.data))):
+            height += size_of_one_row
+        height = min(height, 800)
+        self.scrollPane.setPreferredSize(Dimension(600,height))
+
+        self.frame.pack();
+        self.frame.setVisible(True)
+        return
 
     def buttonPanel(self):
         row1_1_button = JButton("Add Row", actionPerformed = self.add_row_action)
@@ -161,7 +178,7 @@ class CreateAndShowGUI4(TableModelListener):
             self.combobox1.addItem(route)
         self.routesColumn.setCellEditor(DefaultCellEditor(self.combobox1));
         renderer1 = ComboBoxCellRenderer4()
-        self.routesColumn.setCellRenderer(renderer1);
+        self.routesColumn.setCellRenderer(renderer1)
 
         # first column is the trains
         self.taskColumn = self.table.getColumnModel().getColumn(repeat_col);
@@ -331,9 +348,38 @@ class CreateAndShowGUI4(TableModelListener):
         self.save()
 
     def close_action(self, event):
-        # self.completeTablePanel()
-        # self.save()
+        self.completeTablePanel()
+        self.save()
+        # Open and close the Operations Panel to force save of any extra trains
+        if self.find_frame_by_title("Trains") is None:
+            # print "did not find frame Trains so creating it"
+            a = jmri.jmrit.operations.trains.TrainsTableAction()
+            a.actionPerformed(None)
+        # now close
+        f = self.find_frame_by_title("Trains")
+        if f is not None:
+            # print f
+            f.dispose()
+        # f = None
+        # print "should be closed"
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
+
+    # Function to find a frame by name
+    def find_frame_by_name(self, name):
+        frames = JFrame.getFrames()
+        for f in frames:
+            # print f.getName()
+            if f.getName() == name:
+                return f
+        return None
+
+    # Function to find a frame by title
+    def find_frame_by_title(self, title):
+        frames = JFrame.getFrames()
+        for f in frames:
+            if f.getTitle() == title:
+                return f
+        return None
 
     def delay_action(self, event):
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]

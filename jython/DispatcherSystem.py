@@ -1,17 +1,21 @@
 import java
 import jmri
 
-# This produces a user interface to Dispatcher to speedily set it up.
+# Dispatcher System extends Dispatcher by automatically creating stations and associated dispatcher files
+# allowing trains to be dispatched between the stations and scheduled with timetables.
+# Simulation is supported and can be used to try out the system before the physical layout is built.
 
-# Starting from a system with
+# You have to first set up:
 
-# 1) a layout panel setup with track, blocks and signalmasts,
-# 2) certain blocks marked as stations, and
-# 3) some engines set up with speed profiles
+# 1) a layout panel setup with track, blocks and signal masts,
+# 2) certain blocks marked as stations (instructions given), and
+# 3) some engines set up with speed profiles (dummy speed profiles provided if you only want to simulate
+#    to see what is possible)
 
-# it creates a system with
+# You then run the system and the following are created automatically:
 
-# 1) signal logic, sections, transits and train info files enabling trains to run anywhere on the layout using dispatcher
+# 1) signal logic, sections, transits and train info files enabling trains to run anywhere on the layout
+#    using dispatcher
 # 2) A set of station buttons inserted on the panel which allow trains to run station to station under dispatcher
 # 3) Provision to set up routes so that trains can be sent along these routes
 # 4) A scheduler to enable trains to run at preset times
@@ -24,6 +28,7 @@ import jmri
 ##############
 # 1) Run the Toplevel DispatcherSystem.py (this file, or the one in the DispatcherSystem directory)
 # 2) Read the help accessed from the menu of the panel produced to get an detailed idea of what the system does
+# 3) The instructions can also be found by searching for 'Dispatcher System' in JMRI Help
 
 RunDispatcherSystem = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/DispatcherSystem.py')
 execfile(RunDispatcherSystem)

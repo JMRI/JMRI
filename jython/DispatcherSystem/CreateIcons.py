@@ -5,6 +5,9 @@
 
 from javax.swing import JOptionPane
 
+# from jython.DispatcherSystem.Startup import OptionDialog
+
+
 # IS:DSCT:nnn  Control sensors
 # IS:DSMT:nnn  Move TO sensors
 # IS:DSMP:nnn  Move Progress sensors
@@ -287,8 +290,11 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         if some_checks_OK:
             msg = "Performed some prelimiary checks to ensure the trains run correctly\n\nAll Checks OK"
-            reply = Query().customQuestionMessage2(msg, "Checks", "Continue", "Look in more detail")
-            if reply == JOptionPane.NO_OPTION:
+            title = "Checks"
+            opt1 = "Continue"
+            opt2 = "Look in more detail"
+            reply = Query().customQuestionMessage2str(msg, title, opt1, opt2)
+            if reply == opt2:
                 if sensors_OK:
                     Message = "All blocks have sensors"
                     JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
@@ -682,7 +688,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             vars.append(jmri.ConditionalVariable(False, jmri.Conditional.Operator.AND, jmri.Conditional.Type.SENSOR_ACTIVE, 'startDispatcherSensor', True))
             cdl.setStateVariables(vars)
             actions = []
-            actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/RunDispatchMaster.py'))
+            actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/Startup.py'))
             cdl.setAction(actions)
             lgx.activateLogix()
 
@@ -958,10 +964,8 @@ class DisplayProgress:
         self.frame1 = None
 
 
-
-
 class Query:
-    def customQuestionMessage2(self, msg, title, opt1, opt2):
+    def customQuestionMessage2str(self, msg, title, opt1, opt2):
         self.CLOSED_OPTION = False
         options = [opt1, opt2]
         s = JOptionPane.showOptionDialog(None,
@@ -971,11 +975,15 @@ class Query:
                                          JOptionPane.QUESTION_MESSAGE,
                                          None,
                                          options,
-                                         options[0])
+                                         options[1])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return
-        return s
+        if s == JOptionPane.YES_OPTION:
+            s1 = opt1
+        else:
+            s1 = opt2
+        return s1
 
     def displayMessage(self, msg, title = ""):
         self.CLOSED_OPTION = False
