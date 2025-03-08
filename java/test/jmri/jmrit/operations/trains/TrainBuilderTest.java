@@ -6114,7 +6114,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 274, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 275, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -6179,7 +6179,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 648, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 653, in.lines().count());
         in.close();
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
@@ -9473,9 +9473,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Create route with 3 location
         Route rte1 = rmanager.newRoute("Route Harvard-Acton-Boston");
         rte1.addLocation(harvard);
-        RouteLocation rlArlinton = rte1.addLocation(acton);
-        rlArlinton.setTrainIconX(75); // set the train icon coordinates
-        rlArlinton.setTrainIconY(150);
+        RouteLocation rlActon = rte1.addLocation(acton);
+        rlActon.setTrainIconX(75); // set the train icon coordinates
+        rlActon.setTrainIconY(150);
         RouteLocation rl3 = rte1.addLocation(boston);
         rl3.setTrainIconX(125); // set the train icon coordinates
         rl3.setTrainIconY(150);
@@ -9527,8 +9527,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // no engines, so the caboose with least moves should be used
         train1.setRequirements(Train.CABOOSE);
-        // don't allow pickups at second location Acton
-        rlArlinton.setPickUpAllowed(false);
+        // don't allow pickups at location Acton
+        rlActon.setPickUpAllowed(false);
 
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
@@ -9714,7 +9714,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // should default to the caboose with the least moves
         e1.setRoadName("X");
         // allow pickups at Acton
-        rlArlinton.setPickUpAllowed(true);
+        rlActon.setPickUpAllowed(true);
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 4", true, train1.isBuilt());
