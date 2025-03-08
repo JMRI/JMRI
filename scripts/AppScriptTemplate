@@ -571,7 +571,7 @@ OPTIONS="${OPTIONS} -Djava.rmi.server.codebase=file:target/classes/"
 OPTIONS="${OPTIONS} -Djava.library.path=.:$SYSLIBPATH:${LIBDIR}"
 OPTIONS="${OPTIONS} -Dnashorn.args=--no-deprecation-warning"
 # the next is used by DarkLAF
-OPTIONS="${OPTIONS} -add-exports java.desktop/sun.awt=ALL-UNNAMED"
+OPTIONS="${OPTIONS} --add-exports java.desktop/sun.awt=ALL-UNNAMED"
 
 # memory start and max limits
 OPTIONS="${OPTIONS} ${OS_OPTIONS-} ${jmri_xms} ${jmri_xmx}"
