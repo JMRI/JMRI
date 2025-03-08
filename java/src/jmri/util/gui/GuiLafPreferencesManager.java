@@ -95,8 +95,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (!this.initialized) {
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
             this.setLocale(Locale.forLanguageTag(preferences.get(LOCALE, this.getLocale().toLanguageTag())));
-            this.setLookAndFeel(preferences.get(LOOK_AND_FEEL, this.getLookAndFeel()));
 
+            var lookAndFeelClassname = preferences.get(LOOK_AND_FEEL, this.getLookAndFeel());
+            this.setLookAndFeel(lookAndFeelClassname);
+            
             this.setDefaultFontSize(); // before we change anything
             this.setFontSize(preferences.getInt(FONT_SIZE, this.getDefaultFontSize()));
             if (this.getFontSize() == 0) {
@@ -502,7 +504,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * Apply the existing look and feel.
      */
     public void applyLookAndFeel() {
-        String lafClassName = null;
+        String lafClassName = lookAndFeel;
         for (LookAndFeelInfo LAF : UIManager.getInstalledLookAndFeels()) {
             // accept either name or classname of look and feel
             if (LAF.getClassName().equals(this.lookAndFeel) || LAF.getName().equals(this.lookAndFeel)) {
@@ -516,7 +518,13 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             if (!lafClassName.equals(UIManager.getLookAndFeel().getClass().getName())) {
                 log.debug("Apply look and feel \"{}\" ({})", this.lookAndFeel, lafClassName);
                 try {
-                    UIManager.setLookAndFeel(lafClassName);
+                    if (lafClassName.startsWith("com.github.weisj.darklaf") ) {
+                        // DarkLAF special case - will have to use reflection if we have more than one in GuiLafConfigPane
+                        com.github.weisj.darklaf.LafManager.install(new com.github.weisj.darklaf.theme.HighContrastDarkTheme());
+                    } else {
+                        // Swing-handled class name
+                        UIManager.setLookAndFeel(lafClassName);
+                    }
                 } catch (ClassNotFoundException ex) {
                     log.error("Could not find look and feel \"{}\".", this.lookAndFeel);
                 } catch (
