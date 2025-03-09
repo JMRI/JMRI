@@ -151,7 +151,8 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                 case ROSTERSV1MODECOLUMN:
                     boolean isLnsv1 = false;
                     if (dev != null && dev.getDecoderFile() != null) {
-                        isLnsv1 = dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE"); // can't access LnProgrammerManager.LOCONETSV1MODE constant
+                        isLnsv1 = dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE");
+                        // can't access LnProgrammerManager.LOCONETSV1MODE constant
                     }
                     return isLnsv1;
                 case ROSTERNAMECOLUMN:

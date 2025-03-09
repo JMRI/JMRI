@@ -104,11 +104,12 @@ public class DecoderIndexFile extends XmlFile {
      */
     @Nonnull
     public List<DecoderFile> matchingDecoderList(String progMode) {
-        return (matchingDecoderList(null, null, null, null, null, null, null, null, null, progMode));
+        return (matchingDecoderList(null, null, null, null, null,
+                null, null, null, null, progMode));
     }
 
     /**
-     * Get a List of decoders matching some information.
+     * Get a List of decoders matching basic characteristics.
      *
      * @param mfg              decoder manufacturer
      * @param family           decoder family
@@ -122,11 +123,12 @@ public class DecoderIndexFile extends XmlFile {
     public List<DecoderFile> matchingDecoderList(String mfg, String family,
             String decoderMfgID, String decoderVersionID, String decoderProductID,
             String model) {
-        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null, null, null, null));
+        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model,
+                null, null, null, null));
     }
 
     /**
-     * Get a List of decoders matching some information.
+     * Get a List of decoders matching basic characteristics + product ID etc.
      *
      * @param mfg              decoder manufacturer
      * @param family           decoder family
@@ -143,11 +145,12 @@ public class DecoderIndexFile extends XmlFile {
     public List<DecoderFile> matchingDecoderList(String mfg, String family,
             String decoderMfgID, String decoderVersionID,
             String decoderProductID, String model, String developerID, String manufacturerID, String productID) {
-        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null, null, null, null));
+        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model,
+                null, null, null, null));
     }
 
     /**
-     * Get a List of decoders matching some information.
+     * Get a List of decoders matching basic characteristics + product ID etc. + programming mode.
      *
      * @param mfg              decoder manufacturer
      * @param family           decoder family
@@ -164,10 +167,12 @@ public class DecoderIndexFile extends XmlFile {
     @Nonnull
     public List<DecoderFile> matchingDecoderList(String mfg, String family,
                                                  String decoderMfgID, String decoderVersionID,
-                                                 String decoderProductID, String model, String developerID, String manufacturerID, String productID, String progMode) {
+                                                 String decoderProductID, String model, String developerID,
+                                                 String manufacturerID, String productID, String progMode) {
         List<DecoderFile> l = new ArrayList<>();
         for (int i = 0; i < numDecoders(); i++) {
-            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, developerID, manufacturerID, productID, progMode)) {
+            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, developerID,
+                    manufacturerID, productID, progMode)) {
                 l.add(decoderList.get(i));
             }
         }
@@ -175,7 +180,7 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
-     * Get a JComboBox representing the choices that match some information.
+     * Get a JComboBox representing the choices that match basic characteristics.
      *
      * @param mfg              decoder manufacturer
      * @param family           decoder family
@@ -185,13 +190,14 @@ public class DecoderIndexFile extends XmlFile {
      * @param model            decoder model
      * @return a combo box populated with matching decoders
      */
-    public JComboBox<String> matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model) {
+    public JComboBox<String> matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID,
+                                              String decoderProductID, String model) {
         List<DecoderFile> l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model);
         return jComboBoxFromList(l);
     }
 
     /**
-     * Get a JComboBox made with the titles from a list of DecoderFile entries.
+     * Get a new JComboBox made with the titles from a list of DecoderFile.
      *
      * @param l list of decoders
      * @return a combo box populated with the list
@@ -201,7 +207,7 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
-     * Get a new ComboBoxModel made with the titles from a list of DecoderFile
+     * Get a new ComboBoxModel made with the titles from a list of DecoderFile.
      * entries.
      *
      * @param l list of decoders
@@ -331,7 +337,7 @@ public class DecoderIndexFile extends XmlFile {
 
         if (progMode != null) {
             // must have a progMode value that matches to consider this entry a match
-            return r.isProgrammingMode(progMode); // simplified as long as this is the last if in method
+            return r.isProgrammingMode(progMode); // simplified logic while this is the last if in method
         }
 
         return true;
@@ -656,8 +662,9 @@ public class DecoderIndexFile extends XmlFile {
                         (manufacturerID != null) ? manufacturerID : "-1",
                         (productID != null) ? productID : "-1",
                         -1, -1, modelElement,
-                        ParentReplacementFamilyName, ParentReplacementFamilyName, modes); // numFns, numOuts, XML element equal
-        // to the first decoder
+                        ParentReplacementFamilyName, ParentReplacementFamilyName,
+                        modes); // numFns, numOuts, XML element equal
+        // add family model as the first decoder
         decoderList.add(vFamilyDecoderFile);
 
         // record each of the decoders

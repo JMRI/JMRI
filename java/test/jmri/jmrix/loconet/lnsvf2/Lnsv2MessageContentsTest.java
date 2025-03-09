@@ -10,12 +10,12 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class LnSv2MessageContentsTest {
+public class Lnsv2MessageContentsTest {
 
     @Test
     public void testCTorIllegalArgument() {
         LocoNetMessage lm = new LocoNetMessage(3);
-        Assert.assertThrows(IllegalArgumentException.class, () -> new LnSv2MessageContents(lm));
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Lnsv2MessageContents(lm));
     }
 
     @BeforeEach

@@ -31,7 +31,9 @@ public class Lnsv1Device {
 
     public Lnsv1Device(int addressL, int addressH, int lastCv, int lastVal, String deviceName, String rosterName, int swVersion) {
         this.deviceAddressLow = addressL;
+        // Low byte Address must be in the range of 0x01 .. 0x4F, 0x51 .. 0x7F
         this.deviceAddressHi = addressH;
+        // The subAddress is in the range of 0x01 .. 0x7E (0x7F is reserved)
         this.deviceAddress = 256 * (addressH - 1) + addressL; // equals: addressH << 7 + addressL
         cvNum = lastCv;
         cvValue = lastVal;

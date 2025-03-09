@@ -21,16 +21,16 @@
       tool in the LocoNet menu as long as a LocoNet connection is available.</p>
       <img src="images/LNCVTool1.png" alt="Initial view of LNCV Programming Tool pane"> <img src=
       "images/LNCVTool2.png" alt="LNCV Programming Tool pane with Article and Address filled in">
-      <p>As the tool is new, you might use it in combination with the "Show Raw Data" option in the
+      <p>You might use this tool in combination with the "Show Raw Data" option in the
       <a href="../../locomon/LocoMonFrame.shtml">LocoNet Monitor</a> to check for any additional
       responses rejected by the LNCV filters.</p>
 
       <p>Unless a programming session is running, LNCV modules will not respond to Write commands
-      (the Read and Write buttons in the tool are enabled during a session).</p>
+      (the Read and Write buttons in the tool are only enabled during a session).</p>
 
       <h2>Module LNCV Programming</h2>
 
-      <p>LNCV Programming requires 3 elements to address CV in an LNCV module on LocoNet:</p>
+      <p>LNCV Programming requires 3 elements to address CVs in an LNCV module on LocoNet:</p>
 
       <ol>
         <li>Article Number (aka type/class/productID)</li>
@@ -44,7 +44,7 @@
       example, the Digikeijs DigiBoost DR5033 has Article number 5033, which was registered with
       Uhlenbrock. The Uhlenbrock 63330 has Article number 6333, the Uhlenbrock 63410 has 6341
       (skip last zero).<br>
-      Enter the Article number eg. 5033 in the "Article" field before proceeding.<br>
+      Enter the Article number e.g. 5033 in the "Article" field before proceeding.<br>
       Next, enter the Module Address in the corresponding field.</p>
 
       <p>After opening a programming session, the "Open Module Programming" stays highlighted and
@@ -68,7 +68,7 @@
 
       <p>When your Roster contains (exactly) one entry for a decoder of this article number and
       address, it will be listed in the table as the Roster Entry ID, as shown below.<br>
-      When you have a matching Roster Entry, the button in teh Program column will read
+      When you have a matching Roster Entry, the button in the Program column will read
       [Program] and will directly open the Roster Entry tabs.</p>
       <img src=
       "../../../../../../html/hardware/loconet/images/LncvProgrammer/LncvProgrammerPane.png" alt=

@@ -216,8 +216,10 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         JPanel panel422 = new JPanel();
         panel422.add(addressFieldLabel);
         // entry field (decimal) for Module Low Address
+        addressField.setToolTipText(Bundle.getMessage("TipModuleAddrEntry"));
         panel422.add(addressField);
-        panel422.add(sepFieldLabel);
+        panel422.add(sepFieldLabel); // holds the slash between base and subaddress
+        subAddressField.setToolTipText(Bundle.getMessage("TipModuleSubaddrEntry"));
         panel422.add(subAddressField);
         panel42.add(panel422);
         panel4.add(panel42);
@@ -245,11 +247,11 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         JPanel panel432 = new JPanel();
         panel432.setLayout(new BoxLayout(panel432, BoxLayout.PAGE_AXIS));
         panel432.add(readButton);
-        readButton.setEnabled(false); // set true to debug Write button, false on PR
+        readButton.setEnabled(true);
         readButton.addActionListener(e -> readButtonActionPerformed());
 
         panel432.add(writeButton);
-        writeButton.setEnabled(true); // disabled button, to write we point to Roster in button tooltip
+        writeButton.setEnabled(false); // disabled button, to write we point to Roster in button tooltip
         writeButton.addActionListener(e -> writeButtonActionPerformed());
         writeButton.setToolTipText(Bundle.getMessage("ButtonWriteInactiveTip"));
         panel43.add(panel432);
@@ -289,7 +291,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         memo.getLnTrafficController().sendLocoNetMessage(m);
         // wait a second for replies
         try {
-            Thread.sleep(500);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
             return; // interrupt kills the thread

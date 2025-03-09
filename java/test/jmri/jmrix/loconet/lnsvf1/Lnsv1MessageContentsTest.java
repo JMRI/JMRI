@@ -25,7 +25,7 @@ public class Lnsv1MessageContentsTest {
         Assert.assertThrows(IllegalArgumentException.class, () -> new Lnsv1MessageContents(ln)); // invalid bytes
 
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE5, 0x10, 0x01, 0x47, 0x02, 0x10, 0x3D, 0x01, 0x0D, 0x01, 0x10, 0x0B, 0x00, 0x00, 0x00, 0x75});
-        Assertions.assertNull(Lnsv1MessageContents.extractMessageType(l), "check extract of cmd not lncv");
+        Assertions.assertNull(Lnsv1MessageContents.extractMessageType(l), "check extract of cmd not lnsv1");
     }
 
     @Test
@@ -50,23 +50,23 @@ public class Lnsv1MessageContentsTest {
     @Test
     public void testCreateMessage() {
         LocoNetMessage m1 = createSv1WriteRequest(0x13, 0x25, 0x20, 7);
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@19/37 (0x13/0x25): Write SV32 (0x20) = 7.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@19/37 (0x13/0x25): Write SV32 (0x20) = 7.\n",
                 m1.toMonitorString(), "Test Create Write");
 
         LocoNetMessage m2 = createSv1ReadRequest(0x100, 0x17, 0x2);
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => broadcast: Probe All.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => broadcast: Probe All.\n",
                 m2.toMonitorString(), "Test Create Read");
 
         LocoNetMessage[] mset = createBroadcastSetAddress(0x13, 0x25);
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@broadcast: Set subaddress SV2 = 37 (0x25).\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@broadcast: Set subaddress SV2 = 37 (0x25).\n",
                 mset[1].toMonitorString(), "Test Create Set address");
 
         LocoNetMessage m4 = createBroadcastProbeAll();
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => broadcast: Probe All.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => broadcast: Probe All.\n",
                 m4.toMonitorString(), "Test Create Probe All");
 
         LocoNetMessage m5 = createSv1ReadReply(81, 50, 80, 106, 8, 66);
-        Assertions.assertEquals("(SV Format 1) LocoIO@81/80 (0x51/0x50) => LocoBuffer: Report SV8 = 66 (0x42) Firmware rev 1.0.6.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@81/80 (0x51/0x50) => LocoBuffer: Report SV8 = 66 (0x42) Firmware rev 1.0.6.\n",
                 m5.toMonitorString(), "Test Create Sim Read Reply");
 
     }

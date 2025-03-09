@@ -34,7 +34,7 @@ public class LnHexFilePortTest {
     @Test
     public void testGenerateLnsv1Reply() {
         Assertions.assertEquals(LnHexFilePort.generateReply(new LocoNetMessage(new int[]{0xE5, 0x10, 0x50, 0x04, 0x01, 0x00, 0x02, 0x4A, 0x00, 0x00, 0x10, 0x02, 0x00, 0x00, 0x00, 0x05})).toMonitorString(),
-                "(SV Format 1) LocoIO@4/2 => LocoBuffer: Report SV74 (0x4A) = 76 (0x4C) Firmware rev 1.2.0.\n");
+                "(LNSV1) LocoIO@4/2 => LocoBuffer: Report SV74 (0x4A) = 76 (0x4C) Firmware rev 1.2.0.\n");
     }
 
     @BeforeEach
