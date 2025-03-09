@@ -1,11 +1,12 @@
 package jmri.time;
 
 /**
- * A time provider that implements this interface supports some kind of date.
+ * A {@link TimeProvider} that implements this interface supports some kind
+ * of date.
  *
  * @author Daniel Bergqvist (C) 2025
  */
-public interface DateSupport {
+public interface DateProvider {
 
     /**
      * Does this time provider has weekday?

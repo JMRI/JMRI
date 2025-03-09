@@ -2,16 +2,16 @@ package jmri.time.implementation;
 
 import java.time.LocalDateTime;
 
-import jmri.time.DateSupport;
 import jmri.time.Rate;
 import jmri.time.rate.IntegerRate;
+import jmri.time.DateProvider;
 
 /**
  * The system date and time.
  *
  * @author Daniel Bergqvist (C) 2025
  */
-public class SystemDateTime extends AbstractTimeProvider implements DateSupport {
+public class SystemDateTime extends AbstractTimeProvider implements DateProvider {
 
     // System date and time always has the rate 1:1.
     private static final Rate RATE = new IntegerRate(1);
