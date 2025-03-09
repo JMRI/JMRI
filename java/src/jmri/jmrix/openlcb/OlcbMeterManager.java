@@ -80,11 +80,9 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
                         log.debug("Creating new meter '{}' of type '{}'",
                                 text, unit);
                         if (unit == LocationServiceUtils.AnalogBlock.Unit.VOLTS) {
-                            meter = new DefaultMeter.DefaultVoltageMeter(
-                                    sysName, Meter.Unit.NoPrefix, 0., 50., 0.001, null); // no updateTask
+                            meter = createVoltageMeter(sysName);
                         } else if (unit == LocationServiceUtils.AnalogBlock.Unit.AMPERES) {
-                            meter = new DefaultMeter.DefaultCurrentMeter(
-                                    sysName, Meter.Unit.NoPrefix, 0., 50., 0.001, null); // no updateTask
+                            meter = createCurrentMeter(sysName);
                         } else {
                             log.warn("Meters of type {} are not supported yet", unit);
                             continue;
@@ -102,6 +100,20 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
         }
     }
 
+    public static Meter createVoltageMeter(String sysName) {
+        var meter = new DefaultMeter.DefaultVoltageMeter(
+                           sysName, Meter.Unit.NoPrefix, 0., 50., 0.001, null); // no updateTask
+        InstanceManager.getDefault(MeterManager.class).register(meter);
+        return meter;
+    }
+    
+    public static Meter createCurrentMeter(String sysName) {
+        var meter = new DefaultMeter.DefaultCurrentMeter(
+                           sysName, Meter.Unit.NoPrefix, 0., 50., 0.001, null); // no updateTask
+        InstanceManager.getDefault(MeterManager.class).register(meter);
+        return meter;
+    }
+    
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbMeterManager.class);
     
 }
