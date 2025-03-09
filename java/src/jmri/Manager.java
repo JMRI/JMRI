@@ -603,13 +603,13 @@ public interface Manager<E extends NamedBean> extends SilenceablePropertyChangeP
     /**
      * The order in which things get saved to the xml file.
      */
-    static final int CLOCKS = 10;
-    static final int SENSORS = CLOCKS + 10;
+    static final int SENSORS = 10;
     static final int TURNOUTS = SENSORS + 10;
     static final int LIGHTS = TURNOUTS + 10;
     static final int REPORTERS = LIGHTS + 10;
     static final int MEMORIES = REPORTERS + 10;
-    static final int SENSORGROUPS = MEMORIES + 10;
+    static final int CLOCKS = MEMORIES + 10;
+    static final int SENSORGROUPS = CLOCKS + 10;
     static final int SIGNALHEADS = SENSORGROUPS + 10;
     static final int SIGNALMASTS = SIGNALHEADS + 10;
     static final int SIGNALGROUPS = SIGNALMASTS + 10;
