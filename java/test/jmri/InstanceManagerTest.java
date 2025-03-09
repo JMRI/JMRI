@@ -154,7 +154,7 @@ public class InstanceManagerTest {
         InstanceManager.store(t1, TurnoutManager.class);
 
         var set = InstanceManager.getInstanceClasses();
-        
+
         Assert.assertTrue("PowerManager", set.contains(PowerManager.class));
         Assert.assertTrue("TurnoutManager", set.contains(TurnoutManager.class));
     }
@@ -217,7 +217,7 @@ public class InstanceManagerTest {
     static synchronized void setavoidLoopAutoCreateCycle( boolean newVal) {
         avoidLoopAutoCreateCycle = newVal;
     }
-    
+
     public static class AutoCreateCycle implements InstanceManagerAutoDefault {
 
         public AutoCreateCycle() {
@@ -324,6 +324,7 @@ public class InstanceManagerTest {
         Assert.assertNotNull(InstanceManager.getDefault(MemoryManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(AudioManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(RosterIconFactory.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.time.TimeProviderManager.class));
     }
 
     //
