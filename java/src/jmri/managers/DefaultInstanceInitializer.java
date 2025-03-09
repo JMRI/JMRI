@@ -14,6 +14,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import org.openide.util.lookup.ServiceProvider;
 
+import jmri.time.TimeProviderManager;
+
 /**
  * Provide the usual default implementations for the
  * {@link jmri.InstanceManager}.
@@ -59,6 +61,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == ClockControl.class) {
             return new DefaultClockControl();
+        }
+
+        if (type == TimeProviderManager.class) {
+            return new ProxyTimeProviderManager();
         }
 
         if (type == ConditionalManager.class) {
@@ -161,11 +167,11 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
     @Override
     public Set<Class<?>> getInitalizes() {
         Set<Class<?>> set = super.getInitalizes();
-        set.addAll(Arrays.asList(
-                AnalogIOManager.class,
+        set.addAll(Arrays.asList(AnalogIOManager.class,
                 AudioManager.class,
                 AudioSourceManager.class,
                 ClockControl.class,
+                TimeProviderManager.class,
                 ConditionalManager.class,
                 IdTagManager.class,
                 LightManager.class,
