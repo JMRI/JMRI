@@ -7,8 +7,6 @@ import jmri.Meter;
 import jmri.MeterManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides the basic load and store functionality for configuring
@@ -47,7 +45,6 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
             // store the meters
             for (Meter m : memList) {
                 var elem = storeMeter(m);
-                log.debug("store Meter {}", m.getSystemName());
                 meters.addContent(elem);
             }
         }
@@ -121,6 +118,11 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
 
             checkNameNormalization(sysName, userName, mm);
 
+            loadMeter(sysName, userName, el, mm);
+        }
+    }
+
+    protected void loadMeter(String sysName, String userName, Element el, MeterManager mm) {
             log.debug("get Meter: ({})({})", sysName, (userName == null ? "<null>" : userName));
             Meter m = mm.getBySystemName(sysName);
             if (m != null) {
@@ -129,8 +131,7 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
                 loadCommon(m, el);
             } else {
                 log.debug("Meter ({}) does not exists and cannot be created", sysName);
-            }
-        }
+            }    
     }
 
     @Override
@@ -138,6 +139,6 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
         return InstanceManager.getDefault(MeterManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMeterManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMeterManagerXml.class);
 
 }
