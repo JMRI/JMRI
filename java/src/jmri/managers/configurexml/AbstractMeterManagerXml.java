@@ -46,22 +46,32 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
             }
             // store the meters
             for (Meter m : memList) {
-                String mName = m.getSystemName();
-                log.debug("system name is {}", mName);
-
-                Element elem = new Element("meter");
-                elem.addContent(new Element("systemName").addContent(mName));
-
-                // store common part
-                storeCommon(m, elem);
-
-                log.debug("store Meter {}", mName);
+                var elem = storeMeter(m);
+                log.debug("store Meter {}", m.getSystemName());
                 meters.addContent(elem);
             }
         }
         return meters;
     }
 
+    /**
+     * Create an element representing a single Meter
+     * @param m The Meter being stored
+     * @return Element containing the Meter info
+     */
+    protected Element storeMeter(Meter m) {
+        String mName = m.getSystemName();
+        log.debug("system name is {}", mName);
+
+        Element elem = new Element("meter");
+        elem.addContent(new Element("systemName").addContent(mName));
+
+        // store common part
+        storeCommon(m, elem);
+        
+        return elem;
+    }
+    
     /**
      * Subclass provides implementation to create the correct top element,
      * including the type information. Default implementation is to use the
