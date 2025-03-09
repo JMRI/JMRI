@@ -56,7 +56,7 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
             var scannedNode = content.getScannedDevice();
             String scannedName ="";
             if (store != null) scannedName = store.findNode(scannedNode).getSimpleNodeIdent().getUserName();
-            log.info("Retrieved scannedNode {} scannedName {}", scannedNode, scannedName);
+            log.debug("Retrieved scannedNode {} scannedName {}", scannedNode, scannedName);
             if (scannedName == null || scannedName.isEmpty()) scannedName = scannedNode.toString();
             
             for (LocationServiceUtils.Block block : content.getBlocks()) {
@@ -68,9 +68,10 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
                     var unit = analog.getUnit();
                     
                     var systemLetter = memo.getSystemPrefix();
-                    var sysName = systemLetter+typeLetter()+" "+scannedName+" "+ordinal+" "+text;
+                    var sysName  = systemLetter+typeLetter()+" "+scannedNode.toString()+" "+ordinal+" "+text;
+                    var userName = scannedName+" "+ordinal+" "+text;
                     
-                    log.info("  Unit: {}, Text: '{}'  systemName: '{}'", unit, text, sysName);
+                    log.debug("  Unit: {}, Text: '{}'  systemName: '{}'", unit, text, sysName);
                     
                     var meter = getBySystemName(sysName);
                                         
@@ -90,6 +91,10 @@ public class OlcbMeterManager extends jmri.managers.AbstractMeterManager {
                         //store meter by incoming name for lookup later
                         InstanceManager.getDefault(MeterManager.class).register(meter);
                     }
+                    
+                    // set the user name to keep it updated
+                    meter.setUserName(userName);
+                    
                     // meter exists here - give it a value
                     ((AbstractAnalogIO)meter).setValue(analog.getValue());
                     
