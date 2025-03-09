@@ -20,7 +20,11 @@ public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
 
     @Override
     public void initialize() {
-        register(new SystemDateTime(makeSystemName("SYSTEMCLOCK")));
+        TimeProvider tp = new SystemDateTime(makeSystemName("SYSTEMCLOCK"));
+        register(tp);
+        MainTimeProviderHandler mtph = getMainTimeProviderHandler();
+        mtph.setPrimaryTimeProvider(tp);
+        mtph.setSecondaryTimeProvider(tp);
     }
 
     @Override
