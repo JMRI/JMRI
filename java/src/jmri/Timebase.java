@@ -17,9 +17,12 @@ import javax.annotation.Nonnull;
  * receive change notifications if the change is a minute or more, because it
  * changes continuously; query to {@code time} property when needed to get the
  * current value.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
+ *
+ * @deprecated As of 5.11.4, use {@link jmri.FastClock} instead
  */
+@Deprecated(since="5.11.4")
 public interface Timebase extends NamedBean {
 
     /**
@@ -124,7 +127,7 @@ public interface Timebase extends NamedBean {
     /**
      * Set internalMaster and update fields.
      *
-     * @param master true if fast clock time is derived from internal computer clock, 
+     * @param master true if fast clock time is derived from internal computer clock,
      *                  false if derived from hardware clock.
      * @param update true to send update, else false.
      */
@@ -133,7 +136,7 @@ public interface Timebase extends NamedBean {
     /**
      * Get internalMaster field.
      *
-     * @return true if fast clock time is derived from internal computer clock, 
+     * @return true if fast clock time is derived from internal computer clock,
      *  false if derived from hardware clock
      */
     boolean getInternalMaster();
@@ -284,7 +287,7 @@ public interface Timebase extends NamedBean {
      */
     void setStartClockOption(int option);
 
-    
+
     /**
      * Get the Start Clock Type.
      * @return Clock type, e.g. NIXIE_CLOCK or PRAGOTRON_CLOCK

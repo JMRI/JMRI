@@ -804,7 +804,7 @@ public class DefaultLogix extends AbstractNamedBean
         NamedBeanHandle<?> namedBeanHandle;
 
         if (listener.getType() == LISTENER_TYPE_FASTCLOCK) {
-            Timebase tb = InstanceManager.getDefault(jmri.Timebase.class);
+            FastClock tb = InstanceManager.getDefault(jmri.FastClock.class);
             tb.addMinuteChangeListener(listener);
         } else {
             namedBeanHandle = listener.getNamedBean();
@@ -862,7 +862,7 @@ public class DefaultLogix extends AbstractNamedBean
         try {
             switch (listener.getType()) {
                 case LISTENER_TYPE_FASTCLOCK:
-                    Timebase tb = InstanceManager.getDefault(jmri.Timebase.class);
+                    FastClock tb = InstanceManager.getDefault(jmri.FastClock.class);
                     tb.removeMinuteChangeListener(listener);
                     return;
                 case LISTENER_TYPE_ENTRYEXIT:

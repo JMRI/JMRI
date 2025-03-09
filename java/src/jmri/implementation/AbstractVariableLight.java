@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Timebase;
+import jmri.FastClock;
 import jmri.VariableLight;
 
 import org.slf4j.Logger;
@@ -265,7 +265,7 @@ public abstract class AbstractVariableLight
     protected double mTransitionTargetIntensity = 0.0;
     protected Date mLastTransitionDate = null;
     protected long mNextTransitionTs = 0;
-    protected Timebase internalClock = null;
+    protected FastClock internalClock = null;
     protected javax.swing.Timer alarmSyncUpdate = null;
     protected java.beans.PropertyChangeListener minuteChangeListener = null;
 
@@ -276,10 +276,10 @@ public abstract class AbstractVariableLight
         if (minuteChangeListener != null) {
             return; // already done
         }
-        // Create a Timebase listener for the Minute change events
-        internalClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
+        // Create a FastClock listener for the Minute change events
+        internalClock = InstanceManager.getNullableDefault(jmri.FastClock.class);
         if (internalClock == null) {
-            log.error("No Timebase Instance");
+            log.error("No FastClock Instance");
             return;
         }
         minuteChangeListener = (java.beans.PropertyChangeEvent e) -> {

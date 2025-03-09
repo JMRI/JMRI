@@ -1,5 +1,6 @@
 package jmri;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -59,7 +60,7 @@ public interface ClockControl {
      * @return true if correctable; false otherwise
      */
     boolean canCorrectHardwareClock();
-    
+
     /**
      * Returns 'true' if hardware clock can be set to 12 or 24 hour display from
      * JMRI software.
@@ -89,10 +90,10 @@ public interface ClockControl {
     /**
      * Get the rate of the Fast Clock.
      * <p>
-     * The rate is a number that multiplies the wall clock. 
+     * The rate is a number that multiplies the wall clock.
      * For example, a rate of 4 specifies that the
      * fast clock runs 4 times faster than the wall clock.
-     * 
+     *
      * @return Fast Clock rate.
      */
     double getRate();
@@ -103,6 +104,13 @@ public interface ClockControl {
      * @param now the new time
      */
     void setTime(Date now);
+
+    /**
+     * Set the fast clock time.
+     *
+     * @param now the new time
+     */
+    void setTime(Calendar now);
 
     /**
      * Get the fast clock time.
@@ -119,6 +127,15 @@ public interface ClockControl {
      * @param now the starting time
      */
     void startHardwareClock(Date now);
+
+    /**
+     * Start hardware fast clock Some hardware fast clocks continue to
+     * run indefinitely. This is provided for the case where the hardware clock
+     * can be stopped and started.
+     *
+     * @param now the starting time
+     */
+    void startHardwareClock(Calendar now);
 
     /**
      * Stop hardware fast clock.
@@ -143,5 +160,21 @@ public interface ClockControl {
      * @param getTime true if hardware clock should be used; false otherwise
      */
     void initializeHardwareClock(double rate, Date now, boolean getTime);
+
+    /**
+     * Initialize the hardware fast clock Note: When the hardware clock control
+     * receives this, it should initialize those clock settings that are
+     * available on the hardware clock. This method is used when the fast clock
+     * is started, and when time source, synchronize, or correct options are
+     * changed. If rate is 0.0, the hardware clock should be initialized
+     * "stopped", and the current rate saved for when the clock is restarted. If
+     * getTime is "true" the time from the hardware clock should be used in
+     * place of the supplied time if possible.
+     *
+     * @param rate    the rate
+     * @param now     the time
+     * @param getTime true if hardware clock should be used; false otherwise
+     */
+    void initializeHardwareClock(double rate, Calendar now, boolean getTime);
 
 }
