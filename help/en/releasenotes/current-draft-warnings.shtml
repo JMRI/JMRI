@@ -1,6 +1,7 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>
-    </li>
+    <li>The fast clock implementation has been reworked and therefore
+        tables and panel files stored with this JMRI release will not
+        load with earlier JMRI releases.</li>
     <li>
     </li>
