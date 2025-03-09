@@ -4874,9 +4874,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         The grade is optional and is used to determine how many locomotives the train will require
         for that segment when using the train <a href="#TrainRequires">Auto</a> locomotive
         assignment feature. Enter the maximum grade that the train will encounter between the two
-        locations. The program when determining the required HPT for a grade uses the prototypical
-        formula "HPT = Speed x % Grade / 12". The speed when determining the HPT is set to 36 MPH,
-        which means that a 1% grade will require 3 HPT.
+        locations. The program when determining the required horsepower per ton (HPT) for a grade
+        uses the prototypical formula "HPT = Speed x % Grade / 12". The speed when determining the
+        HPT is set to 36 MPH, which means that a 1% grade will require 3 HPT.
       </p>
 
       <h4 id="RouteIconCoordinates">Train Icon Coordinates</h4>
