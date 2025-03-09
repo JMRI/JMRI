@@ -3,9 +3,10 @@ package jmri.time;
 /**
  * Can the rate of the time provider be set?
  *
- * This is separated from {@link RateSetter} since the method {@link canSetRate()}
- * needs to be in the class implementing {@link Clock}, not the class implementing
- * {@link Rate} and {@link RateSetter}.
+ * This is separated from {@link RateSetter} since the method
+ * {@link #canSetRate()} needs to be in the class implementing
+ * {@link TimeProvider}, not the class implementing {@link Rate}
+ * and {@link RateSetter}.
  *
  * @author Daniel Bergqvist (C) 2025
  */
