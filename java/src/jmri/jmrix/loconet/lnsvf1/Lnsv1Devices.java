@@ -26,7 +26,7 @@ public class Lnsv1Devices {
      * Add a device that responded to a PROBE_ALL request (or simply sent a READ_ONE reply) to the list of LNSV1 Devices.
      *
      * @param d the device object, containing its properties
-     * @return true if device was added, false if not eg. it was already in the list
+     * @return true if device was added, false if not e.g. it was already in the list
      */
     public synchronized boolean addDevice(Lnsv1Device d) {
         if (!deviceExists(d)) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>JMRI: LocoNet LNSV1 Programming Pane</title>
+  <title>JMRI: Configure LocoIO (LNSV1) Devices Tool</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="JMRI help send loconet lnsv1 locoio">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
@@ -11,7 +11,7 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>LocoNet LNSV1 Programming Pane</h1>
+      <h1>Configure LocoIO (LNSV1) Devices Tool</h1>
 
       <p><span class="since">since 5.12.3</span>The "Configure LocoIO (LNSV1) Modules" tool lets you access
       and program connected LocoNet devices that respond to the LNSV version 1 LocoNet
@@ -29,7 +29,7 @@
       (only the Read button in the tool is enabled).</p>
 
       <p>LNSV1 Responses coming back from the layout will be listed in the LNSV1 Monitor, and if not already in the
-        list devices sending a read reply show up in the Devices table.</p>
+        list, devices sending a read reply will be added to the Devices table.</p>
 
       <h2>Module LNSV1 Programming</h2>
 
@@ -48,7 +48,7 @@
 
       <p>After first starting the tool, existing LocoIO modules are detected on LocoNet. After a couple of seconds
       they will appear in the table. Note the Version column and other properties.<br>
-      To repeat the probing, for example after you powered up a LocoIO, press the "Probe All" button top left.</p>
+      To repeat the probing, for example after you powered up a LocoIO, press the [Probe All] button at top left.</p>
 
       <p>When your Roster contains (exactly) one entry for a decoder of the same DCC address (the value in the second
       column), its name will be listed in the table as the Roster Entry ID, as shown below.<br>
@@ -74,20 +74,22 @@
       <p>Click on one of the rows to copy a modules' address and SV last read to the top part of the pane.<br>
       Enter an SV number in the SV: field on the right of the tool pane and click [Read] to
       find the value returned in the Value: field.<br>
-      The [Write] button is disabled to prevent messing up the complicated LocIO configuration variables (in contrast
-      to the Configure LNCV tool). The DecoderPro Operations programmer gives you access to the full suite.</p>
+      The [Write] button is disabled to prevent messing up the complicated LocoIO configuration variables (in contrast
+      to the <a href="../lncvprog/LncvProgPane.shtml">Configure LNCV</a> tool). DecoderPro <a
+      href="../../../../../../html/hardware/loconet/LocoIODefinition.shtml">Programming on Main</a> gives you
+      access to the full suite in a consistent and accessible way.</p>
 
       <img src="images/LNSV1Tool3.png"
            alt="LNSV1 Programming Tool pane with a selected device and address filled in">
 
       <h2>Broadcast LNSV1 Programming</h2>
 
-      <p class="important">Click "Start Broadcast Programming" to start a session.</p>
+      <p class="important">Click "Probe All" to start a session.</p>
 
-      <p>Module addresses can be changed from this tool using Broadcast mode [Set Address] button, but you have to be
-      sure only one such device is powered, as they all would respond to broadcast programming commands.</p>
+      <p>Module addresses can be changed from this tool using Broadcast mode [Set All Addresses] button, but you have
+      to make sure only one such device is powered, as they will all respond to broadcast programming commands.</p>
 
-      <p>WARNING: this will change a value in ALL connected LocoIO etc. boards</p>
+      <p>WARNING: this will change the SV1 and SV2 address values in ALL connected LocoIO family boards</p>
 
       <img src="images/LNSV1BroadcastWarning.png" alt="LocoIO (LNSV1) Tool warning for Broadcast">
 
@@ -95,15 +97,13 @@
 
       <p>You use the
       Roster entry programming panes for advanced (and accessible) configuration changes. Easily
-      switch to DecoderPro Roster either by clicking the [Program] button in the table or manually
+      switch to DecoderPro Roster either by clicking the [Program] button in the LNSV1 table or manually
       open the entry for the module in your Roster entries list.<br>
       Go to the "LocoIO" or "Ports" tabs to read and write options supported by the device.</p>
 
-      <p>Anyone interested in writing their own :NSV1 decoder definitions in JMRI, please note that
-      in the definition programming mode should be defined as
-      <code>&lt;mode&gt;LOCONETLNSV1MODE&lt;/mode&gt;</code>.<br>
-      To process LNSV1 commands in JMRI LnOpsProgrammer, elements 1. and 3. are combined into a single SV number as
-      "part_1.part_3".</p>
+      <p>Anyone interested in writing their own LNSV1 decoder definitions in JMRI, please note that
+      in the definition the programming mode should be defined as
+      <code>&lt;mode&gt;LOCONETLNSV1MODE&lt;/mode&gt;</code>.</p>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

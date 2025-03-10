@@ -562,87 +562,87 @@ public class LocoNetMessageInterpretTest {
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x53, 0x01, 0x00, 0x02, 0x03, 0x00, 0x00, 0x10, 0x01, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@83/1 (0x53/1): Query SV3.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@83/1 (0x53/1): Query SV3.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 1");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x53, 0x01, 0x00, 0x02, 0x03, 0x00, 0x00, 0x10, 0x01, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@83/1 (0x53/1): Query SV3.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@83/1 (0x53/1): Query SV3.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 2");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x51, 0x01, 0x00, 0x02, 0x34, 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@81/1 (0x51/1): Query SV52 (0x34) Firmware rev 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@81/1 (0x51/1): Query SV52 (0x34) Firmware rev 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 3");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x04, 0x01, 0x00, 0x02, 0x34, 0x12, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@4/2: Query SV52 (0x34) Firmware rev 1.8.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@4/2: Query SV52 (0x34) Firmware rev 1.8.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 4");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x51, 0x01, 0x00, 0x02, 0x34, 0x75, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@81/1 (0x51/1): Query SV52 (0x34) Firmware rev 1.1.7.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@81/1 (0x51/1): Query SV52 (0x34) Firmware rev 1.1.7.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 5");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x51, 0x01, 0x00, 0x02, 0x34, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@81/1 (0x51/1): Query SV52 (0x34).\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@81/1 (0x51/1): Query SV52 (0x34).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 6");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x50, 0x01, 0x00, 0x02, 0x34, 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoBuffer: Query SV52 (0x34) Firmware rev 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoBuffer: Query SV52 (0x34) Firmware rev 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 7");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x50, 0x01, 0x00, 0x02, 0x34, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoBuffer: Query SV52 (0x34) Firmware rev 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoBuffer: Query SV52 (0x34) Firmware rev 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 8");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x51, 0x50, 0x01, 0x02, 0x02, 0x33, 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@81/1 (0x51/1) => LocoBuffer: Report SV179 (0xB3) = 0 Firmware rev 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@81/1 (0x51/1) => LocoBuffer: Report SV179 (0xB3) = 0 Firmware rev 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 9");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x01, 0x02, 0x02, 0x33, 0x02, 0x00, 0x08, 0x00, 0x00, 0x00, 0x34, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@82 (0x52) => LocoBuffer: Report SV179 (0xB3) = 0 Firmware rev 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@82 (0x52) => LocoBuffer: Report SV179 (0xB3) = 0 Firmware rev 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 10");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x01, 0x02, 0x01, 0x33, 0x02, 0x00, 0x08, 0x00, 0x00, 0x00, 0x34, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV179 (0xB3) == 180 (0xB4) Firmware rev 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV179 (0xB3) == 180 (0xB4) Firmware rev 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " write SV 11");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x01, 0x02, 0x01, 0x33, 0x02, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV179 (0xB3) == 129 (0x81) Firmware rev 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV179 (0xB3) == 129 (0x81) Firmware rev 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " write SV 12");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x01, 0x02, 0x01, 0x7f, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV255 (0xFF) == 2 Firmware rev 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV255 (0xFF) == 2 Firmware rev 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " write SV 13");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x04, 0x50, 0x01, 0x02, 0x01, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@4 => LocoBuffer: Confirm Write SV255 (0xFF) == 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@4 => LocoBuffer: Confirm Write SV255 (0xFF) == 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " write SV 14");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x50, 0x01, 0x00, 0x02, 0x34, 0x63, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoBuffer: Query SV52 (0x34) Firmware rev 9.9.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoBuffer: Query SV52 (0x34) Firmware rev 9.9.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 15");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x50, 0x01, 0x00, 0x02, 0x34, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoBuffer: Query SV52 (0x34).\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoBuffer: Query SV52 (0x34).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 16");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x51, 0x50, 0x01, 0x02, 0x02, 0x33, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@81/1 (0x51/1) => LocoBuffer: Report SV179 (0xB3) = 0.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@81/1 (0x51/1) => LocoBuffer: Report SV179 (0xB3) = 0.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 17");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x01, 0x02, 0x02, 0x33, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x34, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@82 (0x52) => LocoBuffer: Report SV179 (0xB3) = 0.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@82 (0x52) => LocoBuffer: Report SV179 (0xB3) = 0.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " read SV 18");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x01, 0x02, 0x01, 0x33, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x34, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV179 (0xB3) == 180 (0xB4).\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV179 (0xB3) == 180 (0xB4).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " write SV 19");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x01, 0x02, 0x01, 0x33, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV179 (0xB3) == 129 (0x81).\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV179 (0xB3) == 129 (0x81).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " write SV 20");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x01, 0x02, 0x01, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x18});
-        Assertions.assertEquals("(SV Format 1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV255 (0xFF) == 2.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@82 (0x52) => LocoBuffer: Confirm Write SV255 (0xFF) == 2.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " write SV 21");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x01, 0x02, 0x00, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x18});
@@ -655,7 +655,7 @@ public class LocoNetMessageInterpretTest {
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x52, 0x50, 0x00, 0x02, 0x01, 0x7f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0x18});
         Assertions.assertEquals("Unable to parse LocoNet message. contents: E5 10 52 50 00 02 01 7F 00 00 00 00 00 00 02 18\n",
-                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " invalid dst_h SV 23");
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), " invalid dst_h SV 24");
     }
 
     @Test
@@ -1954,27 +1954,27 @@ public class LocoNetMessageInterpretTest {
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xe5, 0x10, 0x50, 0x51, 0x01, 0x00, 0x01, 0x02, 0x00, 0x04, 0x10, 0x05, 0x06, 0x07, 0x08, 0x00});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@81/5 (0x51/5): Write SV2 = 4.\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@81/5 (0x51/5): Write SV2 = 4.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), "SV1 test 1");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x04, 0x01, 0x00, 0x01, 0x10, 0x00, 0x14, 0x10, 0x05, 0x06, 0x07, 0x08, 0x12});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@4/5: Write SV16 (0x10) = 20 (0x14).\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@4/5: Write SV16 (0x10) = 20 (0x14).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), "SV1 test 2");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x04, 0x01, 0x00, 0x01, 0x10, 0x00, 0x24, 0x10, 0x55, 0x06, 0x07, 0x08, 0x12});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@4/85 (4/0x55): Write SV16 (0x10) = 36 (0x24).\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@4/85 (4/0x55): Write SV16 (0x10) = 36 (0x24).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), "SV1 test 3");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x50, 0x07, 0x01, 0x00, 0x02, 0x10, 0x00, 0x24, 0x10, 0x20, 0x06, 0x07, 0x08, 0x12});
-        Assertions.assertEquals("(SV Format 1) LocoBuffer => LocoIO@7/32 (7/0x20): Query SV16 (0x10).\n",
+        Assertions.assertEquals("(LNSV1) LocoBuffer => LocoIO@7/32 (7/0x20): Query SV16 (0x10).\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), "SV1 test 4");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x07, 0x50, 0x01, 0x00, 0x02, 0x10, 0x78, 0x24, 0x10, 0x20, 0x06, 0x07, 0x08, 0x12});
-        Assertions.assertEquals("(SV Format 1) LocoIO@7/32 (7/0x20) => LocoBuffer: Report SV16 (0x10) = 6 Firmware rev 1.2.0.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@7/32 (7/0x20) => LocoBuffer: Report SV16 (0x10) = 6 Firmware rev 1.2.0.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), "SV1 test 5");
 
         l = new LocoNetMessage(new int[] {0xE5, 0x10, 0x04, 0x50, 0x01, 0x04, 0x02, 0x21, 0x16, 0x7B, 0x02, 0x02, 0x50, 0x15, 0x01, 0x51});
-        Assertions.assertEquals("(SV Format 1) LocoIO@4/2 => LocoBuffer: Report SV33 (0x21) = 208 (0xD0) Firmware rev 1.5.0.\n",
+        Assertions.assertEquals("(LNSV1) LocoIO@4/2 => LocoBuffer: Report SV33 (0x21) = 208 (0xD0) Firmware rev 1.5.0.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"), "SV1 test 6");
     }
 

@@ -33,8 +33,8 @@ import java.awt.*;
 public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements LocoNetListener {
 
     private LocoNetSystemConnectionMemo memo;
-    protected JButton allProgButton = new JButton();
-    protected JButton modProgButton = new JButton();
+    protected JButton probeAllButton = new JButton();
+    protected JButton setAllAddressButton = new JButton();
     protected JButton readButton = new JButton(Bundle.getMessage("ButtonRead"));
     protected JButton writeButton = new JButton(Bundle.getMessage("ButtonWrite"));
     protected JTextField addressField = new JTextField(4);
@@ -158,6 +158,9 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         add(getMonitorPanel());
         rawCheckBox.setSelected(pm.getSimplePreferenceState(rawDataCheck));
         decimalCheckBox.setSelected(pm.getSimplePreferenceState(decimalDataCheck));
+
+        // Probe when ready
+        probeAllButtonActionPerformed();
     }
 
     /*
@@ -199,15 +202,15 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
 
         JPanel panel41 = new JPanel();
         panel41.setLayout(new BoxLayout(panel41, BoxLayout.PAGE_AXIS));
-        allProgButton.setText(Bundle.getMessage("ButtonProbe"));
-        allProgButton.setToolTipText(Bundle.getMessage("TipProbeAllButton"));
-        allProgButton.addActionListener(e -> allProgButtonActionPerformed());
-        panel41.add(allProgButton);
+        probeAllButton.setText(Bundle.getMessage("ButtonProbe"));
+        probeAllButton.setToolTipText(Bundle.getMessage("TipProbeAllButton"));
+        probeAllButton.addActionListener(e -> probeAllButtonActionPerformed());
+        panel41.add(probeAllButton);
 
-        modProgButton.setText(Bundle.getMessage("ButtonSetModuleAddress"));
-        modProgButton.setToolTipText(Bundle.getMessage("TipSetModuleAddrButton"));
-        modProgButton.addActionListener(e -> modProgButtonActionPerformed());
-        panel41.add(modProgButton);
+        setAllAddressButton.setText(Bundle.getMessage("ButtonSetModuleAddress"));
+        setAllAddressButton.setToolTipText(Bundle.getMessage("TipSetModuleAddrButton"));
+        setAllAddressButton.addActionListener(e -> setAllAddressButtonActionPerformed());
+        panel41.add(setAllAddressButton);
         panel4.add(panel41);
 
         JPanel panel42 = new JPanel();
@@ -283,10 +286,10 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     /**
      * PROBE button.
      */
-    public void allProgButtonActionPerformed() {
+    public void probeAllButtonActionPerformed() {
         // send probeAll command onto LocoNet
         statusText1.setText(Bundle.getMessage("FeedBackProbing"));
-        allProgButton.setText(Bundle.getMessage("ButtonProbing"));
+        probeAllButton.setText(Bundle.getMessage("ButtonProbing"));
         LocoNetMessage m = Lnsv1MessageContents.createBroadcastProbeAll();
         memo.getLnTrafficController().sendLocoNetMessage(m);
         // wait a second for replies
@@ -297,14 +300,14 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             return; // interrupt kills the thread
         }
         statusText1.setText(Bundle.getMessage("FeedBackProbingStop"));
-        allProgButton.setText(Bundle.getMessage("ButtonProbe"));
+        probeAllButton.setText(Bundle.getMessage("ButtonProbe"));
     }
 
     // MODULE_SET_ADDRESS button
     /**
      * Write SV1 and (optionally) SV2.
      */
-    public void modProgButtonActionPerformed() {
+    public void setAllAddressButtonActionPerformed() {
         addressField.setBackground(Color.WHITE);
         subAddressField.setBackground(Color.WHITE);
         if (addressField.getText().isEmpty() || subAddressField.getText().isEmpty()) {
@@ -314,7 +317,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             } else {
                 subAddressField.setBackground(Color.RED);
             }
-            modProgButton.setSelected(false);
+            setAllAddressButton.setSelected(false);
             return;
         }
         // show dialog to protect unwanted ALL messages
@@ -338,7 +341,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
                     LocoBufferReservedAddress();
                     return;
                 }
-                modProgButton.setEnabled(false);
+                setAllAddressButton.setEnabled(false);
                 statusText1.setText(Bundle.getMessage("FeedBackModAddrStart", addr, subAddr));
                 addressField.setEditable(false); // lock addressL & H fields to prevent accidentally changing it
                 subAddressField.setEditable(false);
@@ -356,7 +359,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
                     Thread.currentThread().interrupt(); // retain if needed later
                     return; // interrupt kills the thread
                 }
-                modProgButton.setEnabled(true);
+                setAllAddressButton.setEnabled(true);
                 addressField.setEditable(true); // unlock addressL fields
                 subAddressField.setEditable(true);
             } catch (NumberFormatException e) {
@@ -381,7 +384,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             } else {
                 subAddressField.setBackground(Color.RED);
             }
-            modProgButton.setSelected(false);
+            setAllAddressButton.setSelected(false);
             return;
         }
         if (svField.getText().isEmpty()) {
@@ -565,6 +568,12 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
                             contents.getSv1D8()); // NOI18N
                 }
                 // storing a Module in the list using the (first) write reply is handled by loconet.Lnsv1DevicesManager
+                // store in Value field if module address matches
+                if (("" + contents.getSrcL()).equals(addressField.getText()) &&
+                        ("" + contents.getSubAddress()).equals(subAddressField.getText()) &&
+                        ("" + contents.getSvNum()).equals(svField.getText())) {
+                    valueField.setText("" + contents.getSvValue());
+                }
                 // store the (last read) cvNum and cvValue to the Lnsv1Device
                 Lnsv1Device dev = memo.getLnsv1DevicesManager().getDevice(addr, subAddr);
                 if (dev != null) {
@@ -641,7 +650,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         if (lnsv1dm == null) {
             lnsv1dm = memo.getLnsv1DevicesManager();
         }
-        log.debug("lncvdm.getDeviceCount()={}", lnsv1dm.getDeviceCount());
+        //log.debug("lncvdm.getDeviceCount()={}", lnsv1dm.getDeviceCount());
         if (i > -1 && i < lnsv1dm.getDeviceCount()) {
             return lnsv1dm.getDeviceList().getDevice(i);
         } else {

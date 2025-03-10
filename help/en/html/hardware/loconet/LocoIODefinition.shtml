@@ -12,8 +12,13 @@
   <div id="mainContent">
     <h1>Configure LocoIO (LNSV1) Modules</h1>
 
-    <p>To <strong>program a LocoIO board</strong>is using
-      <a href="../../../apps/DecoderPro/index.shtml">DecoderPro</a> with the dedicated <a href=
+    <p>To access a list of all active LocoIO modules (and select one to program), turn on the layout and power up the
+    LocoIO hardware. No jumpers or buttons on the LocoIO need touching in order to proceed.<br>
+    Select <a href="../../../package/jmri/jmrix/loconet/lnsvf1/Sv1DiscoverPane.shtml">Configure LocoIO (LNSV1) Modules</a> from the LocoNet menu to open the tool.
+    Click [Probe All] if the list is empty.</p>
+
+    <p>To <strong>program a LocoIO board</strong> open
+      <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a> with a dedicated <a href=
       "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a>
       Decoder Definition. See full instructions <a href="#current">below</a>.</p>
 
@@ -27,17 +32,21 @@
     <span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri4.21.2.shtml" target=
             "_blank">JMRI 4.21.2</a></span>
     <p>The <a href=
-                      "../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a>
+                      "../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Public_Domain_HDL_LocoIO</a>
       Decoder Definition in the "Public Domain and DIY" category supports set-up of a wide range of
       LocoIO devices up to LocoIO/LocoBooster/LocoRCD/LocoServo rev 1.54 hardware since 2020.</p>
 
-    <p>To access the list of all active LocoIO modules and select one to Program, follow these steps:</p>
+    <p>To program a LocoIO module, follow these steps:</p>
 
     <ol>
       <li>Turn on the layout and power up the LocoIO hardware. No jumpers or buttons on the
-        LocoIO need touching in order to preceed.</li>
+        LocoIO need touching in order to proceed.</li>
 
-      <li>Open DecoderPro or the Roster menu option in PanelPro.</li>
+      <li>Open DecoderPro main roster view or the Roster menu option in PanelPro.</li>
+
+      <li>Click on the [Program] button in the last cell of a row in the LocoIO Tool.<br>
+        Create a new entry if the board shows up in the list but the button reads [No Entry in Roster] by
+        clicking the [Add New Loco] button at top left of the main Roster.</li>
 
       <li>In the Decoder Installed box, navigate to "Public-domain and DIY" &gt; "Hans Deloof
         LocoIO".</li>
@@ -172,6 +181,8 @@
       </li>
     </ol>
 
+    <h2>LocoIO Port Configuration</h2>
+
     <p>A typical LocoIO board contains 16 signal pins, also called channels or ports. Each port can be
       individually programmed as an input or an output, and to perform a number of different things
       (depending on the module's hardware and firmware (PIC) version:</p>
@@ -267,7 +278,7 @@
 
     <p>See the Cheat Sheet included in the DecoderPro LocoIO Programmer for further details.</p>
 
-    <p>The ports are configured via LocoNet messages, but the DecoderPro Programming interface
+    <p>The ports are configured via LocoNet LNSV1 messages, but the DecoderPro Programming interface
       takes care of many technical details. Documentation is included below and in the decoder
       definition file.</p>
 
@@ -283,22 +294,13 @@
       <li>For more information on the HDL LocoIO and how to use the boards, see <a href=
         "https://locohdl.synology.me/">LocoHDL</a>.
       </li>
-
       <li>A copy of the original LocoIO DIY project description is available courtesy of <a href=
-         "https://www.rr-cirkits.com/locobuffer/LocoIO/">www.rr-cirkits.com</a>
-      </li>
+        "https://www.rr-cirkits.com/locobuffer/LocoIO/">www.rr-cirkits.com</a></li>
     </ul>
 
-    <h2 id="second">LocoIO Programmer 2 <strong>(no longer supported)</strong></h2>
+    <h2 id="older">LocoIO History</h2>
 
-    <p>Version 2 was written by John Plocher for JMRI release 1.8 and <em>only</em> dealt with
-      SV1 &amp; SV2 (address/subaddress) and SV3-SV50 (primary Mode, Value1 and Value2 for ports 1-16).
-      In particular, it did not handle SV0 (board level configuration), SV51-SV98 (alternate
-      Opcodes) or SV101-124 (servo config).</p>
-    
-    <h2 id="older">LocoIO Programmer 1 <strong>(no longer supported)</strong></h2>
-    
-    <p>This initial version provided these options:</p>
+    <p>The initial LocoIO provided the following pin options:</p>
 
     <div class="list">
       <dl>

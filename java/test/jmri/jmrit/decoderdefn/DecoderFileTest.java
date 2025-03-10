@@ -96,7 +96,7 @@ public class DecoderFileTest {
     }
 
     @Test
-    public void testMode() {
+    public void testModes() {
         setupDecoder();
         Assertions.assertEquals("AMODE", DecoderFile.getProgrammingModes(decoder), "programming mode ");
     }

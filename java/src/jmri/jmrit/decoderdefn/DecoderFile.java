@@ -419,6 +419,13 @@ public class DecoderFile extends XmlFile {
         }
     }
 
+    /**
+     * Get all specified programming modes a decoder xml supports.
+     * This does not include the programming attributes (like ops=false).
+     *
+     * @return a comma separated string of modes as specified in the decoder xml
+     * or empty string when none are specified
+     */
     public @Nonnull String getProgrammingModes() {
         if (_programmingModes == null) {
             _programmingModes = "";
