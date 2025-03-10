@@ -28,6 +28,8 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
                 JSON.SYSTEM_CONNECTIONS,
                 JSON.CONFIG_PROFILE,
                 JSON.CONFIG_PROFILES,
+                JSON.SESSION_LOGIN,
+                JSON.SESSION_LOGOUT,
                 JSON.VERSION
         };
     }
