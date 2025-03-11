@@ -546,6 +546,10 @@ public class MeterFrame extends JmriJFrame {
             return;
         }
 
+        // we want to keep the title updated to the displayname 
+        // so we do it on updates
+        setTitle(meter.getDisplayName());
+        
         double meterValue = meter.getKnownAnalogValue() * selectedUnit.multiply;
 
         switch (meter.getUnit()) {
