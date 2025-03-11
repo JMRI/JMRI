@@ -1281,7 +1281,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 try {
                     (new Sound(outputSoundName)).play(true);
                 } catch (NullPointerException ex) {
-                    setRouteLog.error("Cannot find Sound file {} for Route", outputSoundName, r.getDisplayName());
+                    setRouteLog.error("Cannot find Sound file {} for Route {}", outputSoundName, r.getDisplayName());
                 }
             }
         }
