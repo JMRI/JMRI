@@ -12,10 +12,12 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
+
+      <h1>Configure Digitrax DS64</h1>
+
       <a href="../../../../../html/hardware/loconet/images/DS64TabbedPanel.png"><img src=
       "../../../../../html/hardware/loconet/images/DS64TabbedPanel.png" style=
       "float:right; margin: 5px;" height="408" width="438" alt="Configure DS64 panel image"></a>
-      <h1>Configure Digitrax DS64</h1>
 
       <p>The JMRI DS64 Configuration tool lets you configure the internal options of a Digitrax
       DS64 Stationary Decoder directly from your computer running JMRI.</p>

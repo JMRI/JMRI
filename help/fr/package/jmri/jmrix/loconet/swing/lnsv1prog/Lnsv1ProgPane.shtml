@@ -76,7 +76,7 @@
       find the value returned in the Value: field.<br>
       The [Write] button is disabled to prevent messing up the complicated LocoIO configuration variables (in contrast
       to the <a href="../lncvprog/LncvProgPane.shtml">Configure LNCV</a> tool). DecoderPro <a
-      href="../../../../../../html/hardware/loconet/LocoIO.shtml">Programming on Main</a> gives you
+      href="../../../../../../html/hardware/loconet/LocoIODefinition.shtml">Programming on Main</a> gives you
       access to the full suite in a consistent and accessible way.</p>
 
       <img src="images/LNSV1Tool3.png"

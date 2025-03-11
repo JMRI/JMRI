@@ -76,12 +76,13 @@ public class Lnsv1ProgPaneTest extends jmri.util.swing.JmriPanelTest {
 //        dialog_thread1.setName("BroadcastAll Dialog button Proceed clicked");
 //        dialog_thread1.start();
 //
-        ThreadingUtil.runOnGUI( () -> lnPanel.allProgButtonActionPerformed());
+        ThreadingUtil.runOnGUI( () -> lnPanel.probeAllButtonActionPerformed());
 //
 //        JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "BroadcastAll Warning Dialog closed");
 //        Assertions.assertEquals("locked", lnPanel.getAddressEntry(), "AddressField locked");
 //
-        //ThreadingUtil.runOnGUI( () -> lnPanel.allProgButtonActionPerformed()); // second click "Stop" will release buttons
+        // TODO Press Set All Addresses button after filling in low and high address fields
+
         lnPanel.setCvFields(2, 14);
         //Assertions.assertEquals("1", lnPanel.getAddressEntry(), "AddressField unlocked");
         // TODO Press Read button

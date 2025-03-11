@@ -5,8 +5,6 @@
         <ul>
             <li><a href="LocoNetTools.shtml">LocoNet Tools</a></li>
             <li><a href="LocoNetSim.shtml">LocoNet Simulator</a></li>
-            <li><a href="DS54.shtml">DS54</a></li>
-            <li><a href="LocoIO.shtml">LocoIO</a></li>
             <li>Command Stations</li>
             <ul>
                 <li><a href="DCS52.shtml">DCS52</a></li>

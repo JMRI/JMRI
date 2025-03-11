@@ -480,7 +480,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setProductID(@CheckForNull String s) {
         String old = _productID;
-        if (s == null) {s="";}
+        if (s == null) {s = "";}
         _productID = s;
         firePropertyChange(DECODER_PRODUCTID, old, s);
     }
@@ -491,7 +491,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     public void setProgrammingMode(@CheckForNull String s) {
         String old = _programmingMode;
-        if (s == null) {s="";}
+        if (s == null) {s = "";}
         _programmingMode = s;
         firePropertyChange(PROGRAMMINGMODE, old, s);
     }
@@ -858,7 +858,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 _maxFnNum = a.getValue();
             }
             Element e2;
-            if ((e2 = d.getChild("programming")) != null) {
+            if ((e2 = d.getChild("programming")) != null && (e2.getChild("mode") != null)) {
                 _programmingMode = e2.getChild("mode").getValue();
             }
         }

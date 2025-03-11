@@ -499,7 +499,7 @@ public class RosterEntryTest {
 
     @Test
     public void testToString() {
-        Assertions.assertEquals("[RosterEntry: id 3 file here SP 431 Athearn   14  35 91    ]",
+        Assertions.assertEquals("[RosterEntry: id 3 file here SP 431 Athearn   14  35 91     ]",
             RosterEntryImplementations.id3().toString());
     }
 

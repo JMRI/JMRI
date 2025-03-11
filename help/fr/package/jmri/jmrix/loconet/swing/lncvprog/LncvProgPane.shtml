@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: LocoNet LNCV Programming Pane</title>
+  <title>JMRI: LocoNet Util LNCV</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="JMRI help send loconet lncv uhlenbrock">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
@@ -12,15 +12,15 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>LocoNet > Manage LNCV Modules Pane</h1>
+      <h1>LocoNet Util LNCV</h1>
 
-      <p><span class="since">since 4.21.4</span>The "Manage LNCV Modules" tool lets you access
+      <p><span class="since">since 4.21.4</span>The "Configure LNCV Modules" tool lets you access
       and program connected LocoNet devices that respond to the (Uhlenbrock) LNCV LocoNet
       programming protocol.<br>
       Examples are the Uhlenbrock Switch Module 63410 and Digikeijs DR5033 booster. You find the
       tool in the LocoNet menu as long as a LocoNet connection is available.</p>
-      <img src="images/LNCVTool1.png" alt="Initial view of Manage LNCV Modules tool pane"> <img src=
-      "images/LNCVTool2.png" alt="Manage LNCV Modules tool pane with Article and Address filled in">
+      <img src="images/LNCVTool1.png" alt="Initial view of LNCV Programming Tool pane"> <img src=
+      "images/LNCVTool2.png" alt="LNCV Programming Tool pane with Article and Address filled in">
       <p>You might use this tool in combination with the "Show Raw Data" option in the
       <a href="../../locomon/LocoMonFrame.shtml">LocoNet Monitor</a> to check for any additional
       responses rejected by the LNCV filters.</p>
@@ -71,8 +71,8 @@
       When you have a matching Roster Entry, the button in the Program column will read
       [Program] and will directly open the Roster Entry tabs.</p>
       <img src=
-      "images/LncvProgrammerPane.png" alt=
-      "Manage LNCV Modules tool can't find a matching definition">
+      "../../../../../../html/hardware/loconet/images/LncvProgrammer/LncvProgrammerPane.png" alt=
+      "LNCV Programming Tool can't find a matching definition">
 
       <p>When no match was found in your Roster but a matching definition was found in the JMRI
       Decoder Index, the button will read [Create Entry]. Click on it and enter an ID (name) for your new roster
@@ -138,9 +138,7 @@
       LnOpsProgrammer, elements 1. and 3. are combined into a single CV number as
       "part_1.part_3".<br>
       For example CV6 in the DR5033 is defined as:<br>
-      <span class="wide">
-      <code>&lt;variable CV="5033.6" readOnly="yes" item="Temperature"&gt;</code>
-      </span></p>
+      <code>&lt;variable CV="5033.6" readOnly="yes" item="Temperature"&gt;</code></p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
