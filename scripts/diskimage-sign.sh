@@ -299,7 +299,7 @@ signFile "$OUTPUT"
 
 # notarize distribution: start by uploading
 # xcrun altool --notarize-app --primary-bundle-id "org.jmri" --username "$AC_USER" --password "$AC_PASSWORD" --file "$OUTPUT"
-xcrun notarytool submit /tmp/php-temp-out-file.dmg --apple-id jacobsen@mac.com --password uimn-htzy-igwa-aisd --team-id V2UXGA8SJW --wait
+xcrun notarytool submit /tmp/php-temp-out-file.dmg --apple-id "$AC_USER" --password "$AC_PASSWORD" --team-id V2UXGA8SJW --wait
 
 # stapling result will temporarily fail while the notatization is still happening at Apple
 # --wait in new (Nov 2022) notarytool operation above should make this redundant
