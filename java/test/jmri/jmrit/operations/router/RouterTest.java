@@ -322,7 +322,9 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
 
         // now test by modifying the route
-        rlActon1.setPickUpAllowed(false);
+        // DAB
+        //rlActon1.setPickUpAllowed(false);
+        rlActon1.setLocalMovesAllowed(false);
         // and the next destination for the car
         c3.setDestination(null, null); // clear previous destination
         c3.setFinalDestination(acton);
@@ -332,12 +334,14 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
         Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
 
-        rlActon1.setPickUpAllowed(true);
+        rlActon1.setLocalMovesAllowed(true);
         Assert.assertTrue("Try routing with train that that can pickup cars",
                 router.setDestination(c3, actonTrain, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
 
-        rlActon1.setDropAllowed(false);
+        // DAB
+        // rlActon1.setDropAllowed(false);
+        rlActon1.setLocalMovesAllowed(false);
         // and the next destination for the car
         c3.setDestination(null, null); // clear previous destination
         c3.setFinalDestination(acton);
@@ -347,7 +351,7 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
         Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
 
-        rlActon1.setDropAllowed(true);
+        rlActon1.setLocalMovesAllowed(true);
         Assert.assertTrue("Try routing with train that that can drop cars",
                 router.setDestination(c3, actonTrain, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
@@ -1066,10 +1070,11 @@ public class RouterTest extends OperationsTestCase {
         c3.setDestination(null, null); // clear previous destination
         c3.setFinalDestination(essex);
         // don't allow train 2 to pickup
-        rlA2.setPickUpAllowed(false);
+        // DAB
+        // rlA2.setPickUpAllowed(false);
+        rlA2.setLocalMovesAllowed(false);
         // routing should work using train 1, but destinations and track should
-        // not be
-        // set
+        // not be set
         Assert.assertTrue("Try routing five trains", router.setDestination(c3, actonTrain2, null));
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "", c3.getDestinationTrackName());
@@ -1322,7 +1327,9 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
 
         // now test by modifying the route
-        rlA.setPickUpAllowed(false);
+        // DAB
+        // rlA.setPickUpAllowed(false);
+        rlA.setLocalMovesAllowed(false);
         // and the next destination for the car
         c3.setDestination(null, null); // clear previous destination
         c3.setFinalDestination(acton);
@@ -1332,25 +1339,25 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
         Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
 
-        rlA.setPickUpAllowed(true);
+        rlA.setLocalMovesAllowed(true);
         Assert.assertTrue("Try routing with train that that can pickup cars",
                 router.setDestination(c3, actonTrain, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
 
-        rlA.setDropAllowed(false);
-        // and the next destination for the car
-        c3.setDestination(null, null); // clear previous destination
-        c3.setFinalDestination(acton);
-        c3.setFinalDestinationTrack(actonSpur2);
-        Assert.assertFalse("Try routing with train that doesn't drop cars",
-                router.setDestination(c3, actonTrain, null));
-        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
-        Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
-
-        rlA.setDropAllowed(true);
-        Assert.assertTrue("Try routing with train that that can drop cars",
-                router.setDestination(c3, actonTrain, null));
-        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
+//        rlA.setLocalMovesAllowed(false);
+//        // and the next destination for the car
+//        c3.setDestination(null, null); // clear previous destination
+//        c3.setFinalDestination(acton);
+//        c3.setFinalDestinationTrack(actonSpur2);
+//        Assert.assertFalse("Try routing with train that doesn't drop cars",
+//                router.setDestination(c3, actonTrain, null));
+//        Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
+//        Assert.assertEquals("Router status", Router.STATUS_NOT_ABLE, router.getStatus());
+//
+//        rlA.setLocalMovesAllowed(true);
+//        Assert.assertTrue("Try routing with train that that can drop cars",
+//                router.setDestination(c3, actonTrain, null));
+//        Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
 
         rlA.setMaxCarMoves(0);
         // and the next destination for the car
@@ -2313,7 +2320,9 @@ public class RouterTest extends OperationsTestCase {
 
         c3.setDestination(null, null); // clear previous destination
         // don't allow train 2 to pickup
-        rlA2.setPickUpAllowed(false);
+        // DAB
+        //rlA2.setPickUpAllowed(false);
+        rlA2.setLocalMovesAllowed(false);
         // routing should work using train 2, but destinations and track should
         // not be set
         Assert.assertTrue("Try routing five trains", router.setDestination(c3, actonTrain2, null));
@@ -2388,8 +2397,10 @@ public class RouterTest extends OperationsTestCase {
 
         c3.setDestination(null, null); // clear previous destination
         Assert.assertEquals("car still has final destination", foxboro, c3.getFinalDestination());
+
+        rlA2.setLocalMovesAllowed(true);
+        
         // don't allow train 2 to service cars built before 1985
-        rlA2.setPickUpAllowed(true);
         actonTrain2.setBuiltStartYear("1985");
         actonTrain2.setBuiltEndYear("2010");
         // routing should work using train 2, but destinations and track should
@@ -2645,7 +2656,9 @@ public class RouterTest extends OperationsTestCase {
 
         c3.setDestination(null, null); // clear previous destination
         // don't allow train 2 to pickup
-        rlA2.setPickUpAllowed(false);
+        // DAB
+        // rlA2.setPickUpAllowed(false);
+        rlA2.setLocalMovesAllowed(false);
         // routing should work using train 2, but destinations and track should
         // not be set
         Assert.assertTrue("Try routing five trains", router.setDestination(c3, actonTrain2, null));

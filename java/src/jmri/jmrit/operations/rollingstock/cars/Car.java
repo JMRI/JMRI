@@ -433,12 +433,26 @@ public class Car extends RollingStock {
         return _previousFinalDestination;
     }
 
+    public String getPreviousFinalDestinationName() {
+        if (getPreviousFinalDestination() != null) {
+            return getPreviousFinalDestination().getName();
+        }
+        return NONE;
+    }
+
     public void setPreviousFinalDestinationTrack(Track track) {
         _previousFinalDestTrack = track;
     }
 
     public Track getPreviousFinalDestinationTrack() {
         return _previousFinalDestTrack;
+    }
+
+    public String getPreviousFinalDestinationTrackName() {
+        if (getPreviousFinalDestinationTrack() != null) {
+            return getPreviousFinalDestinationTrack().getName();
+        }
+        return NONE;
     }
 
     public void setPreviousScheduleId(String id) {
@@ -585,8 +599,7 @@ public class Car extends RollingStock {
 
     /**
      * Used to determine if car is performing a local move. A local move is when
-     * a car is moved to a different track at the same location. Car has to be
-     * assigned to a train.
+     * a car is moved to a different track at the same location.
      * 
      * @return true if local move
      */

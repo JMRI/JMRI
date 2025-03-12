@@ -356,60 +356,44 @@ public class TrainBuilderBase extends TrainCommon {
                     rl != _train.getTrainTerminatesRouteLocation()) {
                 addLine(_buildReport, ONE,
                         Bundle.getMessage("buildLocStaging", rl.getName()));
-                rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves
-                                                     // for this location
-                // if a location is skipped, no car drops or pick ups
+                // don't allow car moves for this location
+                rl.setCarMoves(rl.getMaxCarMoves());
             } else if (_train.isLocationSkipped(rl)) {
+                // if a location is skipped, no car drops or pick ups
                 addLine(_buildReport, THREE,
                         Bundle.getMessage("buildLocSkippedMaxTrain", rl.getId(), rl.getName(),
                                 rl.getTrainDirectionString(), _train.getName(), rl.getMaxTrainLength(),
                                 Setup.getLengthUnit().toLowerCase()));
-                rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves
-                                                     // for this location            
-            } else {       
+                // don't allow car moves for this location
+                rl.setCarMoves(rl.getMaxCarMoves());
+            } else {
                 // we're going to use this location, so initialize
                 rl.setCarMoves(0); // clear the number of moves
                 // add up the total number of car moves requested
-                requestedCarMoves += rl.getMaxCarMoves(); 
+                requestedCarMoves += rl.getMaxCarMoves();
                 // show the type of moves allowed at this location
-                if (!rl.isDropAllowed() && !rl.isPickUpAllowed()) {
+                if (!rl.isDropAllowed() && !rl.isPickUpAllowed() && !rl.isLocalMovesAllowed()) {
                     addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildLocNoDropsOrPickups", rl.getId(), rl.getName(),
+                            Bundle.getMessage("buildLocNoDropsOrPickups", rl.getId(),
+                                    location.isStaging() ? Bundle.getMessage("Staging") : Bundle.getMessage("Location"),
+                                    rl.getName(),
                                     rl.getTrainDirectionString(), rl.getMaxTrainLength(),
                                     Setup.getLengthUnit().toLowerCase()));
-                } else if (location.isStaging() && rl.isPickUpAllowed() && rl == _train.getTrainDepartsRouteLocation()) {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildStagingDeparts", rl.getId(), rl.getName(),
-                                    rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-                                    Setup.getLengthUnit().toLowerCase()));
-                } else if (location.isStaging() &&
-                        rl.isDropAllowed() &&
-                        rl == _train.getTrainTerminatesRouteLocation()) {
-                    addLine(_buildReport, THREE, Bundle.getMessage("buildStagingTerminates", rl.getId(), rl.getName(),
-                            rl.getTrainDirectionString(), rl.getMaxCarMoves()));
-                } else if (rl == _train.getTrainTerminatesRouteLocation() &&
-                        rl.isDropAllowed() &&
-                        rl.isPickUpAllowed()) {
-                    addLine(_buildReport, THREE, Bundle.getMessage("buildLocTerminatesMoves", rl.getId(), rl.getName(),
-                            rl.getTrainDirectionString(), rl.getMaxCarMoves()));
-                } else if (rl.isDropAllowed() && rl.isPickUpAllowed()) {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildLocRequestMoves", rl.getId(), rl.getName(),
-                                    rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-                                    Setup.getLengthUnit().toLowerCase()));
-                } else if (!rl.isDropAllowed()) {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildLocRequestPickups", rl.getId(), rl.getName(),
-                                    rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-                                    Setup.getLengthUnit().toLowerCase()));
                 } else if (rl == _train.getTrainTerminatesRouteLocation()) {
-                    addLine(_buildReport, THREE, Bundle.getMessage("buildLocTerminates", rl.getId(), rl.getName(),
-                            rl.getTrainDirectionString(), rl.getMaxCarMoves()));
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildLocTerminates", rl.getId(),
+                            location.isStaging() ? Bundle.getMessage("Staging") : Bundle.getMessage("Location"),
+                            rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves(),
+                            rl.isPickUpAllowed() ? Bundle.getMessage("Pickups").toLowerCase() + ", " : "",
+                            rl.isDropAllowed() ? Bundle.getMessage("Drop").toLowerCase() + ", " : "",
+                            rl.isLocalMovesAllowed() ? Bundle.getMessage("LocalMoves").toLowerCase() + ", " : ""));
                 } else {
-                    addLine(_buildReport, THREE,
-                            Bundle.getMessage("buildLocRequestDrops", rl.getId(), rl.getName(),
-                                    rl.getTrainDirectionString(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-                                    Setup.getLengthUnit().toLowerCase()));
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildLocRequestMoves", rl.getId(),
+                            location.isStaging() ? Bundle.getMessage("Staging") : Bundle.getMessage("Location"),
+                            rl.getName(), rl.getTrainDirectionString(), rl.getMaxCarMoves(),
+                            rl.isPickUpAllowed() ? Bundle.getMessage("Pickups").toLowerCase() + ", " : "",
+                            rl.isDropAllowed() ? Bundle.getMessage("Drop").toLowerCase() + ", " : "",
+                            rl.isLocalMovesAllowed() ? Bundle.getMessage("LocalMoves").toLowerCase() + ", " : "",
+                            rl.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase()));
                 }
             }
             rl.setTrainWeight(0); // clear the total train weight
@@ -482,7 +466,7 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(_buildReport, ONE,
                     Bundle.getMessage("buildTrainReqConsist", Setup.getHorsePowerPerTon(), _train.getNumberEngines()));
         } else if (_train.getNumberEngines().equals("0")) {
-                addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
+            addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
         } else if (_train.getNumberEngines().equals("1")) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq1Engine", _train.getTrainDepartsName(),
                     _train.getEngineModel(), _train.getEngineRoad()));
@@ -706,7 +690,7 @@ public class TrainBuilderBase extends TrainCommon {
     }
 
     /**
-     * Save the car's final destination and schedule,  id in case of train reset
+     * Save the car's final destination and schedule id in case of train reset
      */
     protected void saveCarFinalDestinations() {
         for (Car car : _carList) {
@@ -1128,7 +1112,8 @@ public class TrainBuilderBase extends TrainCommon {
             }
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildTrackModePriority", car.toString(), car.getTrack().getTrackTypeName(),
-                            car.getLocationName(), car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
+                            car.getLocationName(), car.getTrackName(), car.getTrack().getServiceOrder(),
+                            car.getLastDate()));
             Car bestCar = car;
             for (int i = _carIndex + 1; i < _carList.size(); i++) {
                 Car testCar = _carList.get(i);
@@ -1242,10 +1227,9 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected void makeAdjustmentsIfDepartingStaging() {
         if (_train.isDepartingStaging()) {
-            _reqNumOfMoves = 0; // Move cars out of staging after working other
-                                // locations
-            // if leaving and returning to staging on the same track temporary
-            // pull cars off the track
+            _reqNumOfMoves = 0;
+            // Move cars out of staging after working other locations
+            // if leaving and returning to staging on the same track, temporary pull cars off the track
             if (_departStageTrack == _terminateStageTrack) {
                 if (!_train.isAllowReturnToStagingEnabled() && !Setup.isStagingAllowReturnEnabled()) {
                     // takes care of cars in a kernel by getting all cars
@@ -1415,10 +1399,8 @@ public class TrainBuilderBase extends TrainCommon {
                     kCar.setTrain(_train);
                     kCar.setRouteLocation(rl);
                     kCar.setRouteDestination(rld);
-                    kCar.setDestination(track.getLocation(), track, true); // force
-                                                                           // destination
-                    // save final destination and track values in case of train
-                    // reset
+                    kCar.setDestination(track.getLocation(), track, true); // force destination
+                    // save final destination and track values in case of train reset
                     kCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
                     kCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
                 }
@@ -2001,7 +1983,8 @@ public class TrainBuilderBase extends TrainCommon {
                 addLine(_buildReport, FIVE,
                         Bundle.getMessage("buildTrackHasPlannedPickups", terminateStageTrack.getName(),
                                 terminateStageTrack.getIgnoreUsedLengthPercentage(), terminateStageTrack.getLength(),
-                                Setup.getLengthUnit().toLowerCase(), terminateStageTrack.getUsedLength(), terminateStageTrack.getReserved(),
+                                Setup.getLengthUnit().toLowerCase(), terminateStageTrack.getUsedLength(),
+                                terminateStageTrack.getReserved(),
                                 terminateStageTrack.getReservedLengthDrops(),
                                 terminateStageTrack.getReservedLengthDrops() - terminateStageTrack.getReserved(),
                                 terminateStageTrack.getAvailableTrackSpace()));
@@ -2242,7 +2225,8 @@ public class TrainBuilderBase extends TrainCommon {
             if (!si.doRandom()) {
                 addLine(_buildReport, SEVEN,
                         Bundle.getMessage("buildScheduleRandom", track.getLocation().getName(), track.getName(),
-                                track.getScheduleName(), si.getId(), si.getReceiveLoadName(), si.getRandom(), si.getCalculatedRandom()));
+                                track.getScheduleName(), si.getId(), si.getReceiveLoadName(), si.getRandom(),
+                                si.getCalculatedRandom()));
                 return null;
             }
         }
@@ -2254,7 +2238,8 @@ public class TrainBuilderBase extends TrainCommon {
         if (!car.getTrack().getServiceOrder().equals(Track.NORMAL) && !car.getTrack().isStaging()) {
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildTrackModePriority", car.toString(), car.getTrack().getTrackTypeName(),
-                            car.getLocationName(), car.getTrackName(), car.getTrack().getServiceOrder(), car.getLastDate()));
+                            car.getLocationName(), car.getTrackName(), car.getTrack().getServiceOrder(),
+                            car.getLastDate()));
         }
     }
 
@@ -2524,7 +2509,8 @@ public class TrainBuilderBase extends TrainCommon {
     }
 
     private boolean checkLocalMovesAllowed(Car car, Track track) {
-        if (!_train.isLocalSwitcher() && !_train.isAllowLocalMovesEnabled() &&
+        if (!_train.isLocalSwitcher() &&
+                !_train.isAllowLocalMovesEnabled() &&
                 car.getSplitLocationName().equals(track.getLocation().getSplitName())) {
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildNoLocalMoveToTrack", car.getLocationName(), car.getTrackName(),
@@ -2857,7 +2843,8 @@ public class TrainBuilderBase extends TrainCommon {
                 _warnings++;
                 addLine(_buildReport, ONE,
                         Bundle.getMessage("buildCarNotRoutable", car.toString(), car.getLocationName(),
-                                car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
+                                car.getTrackName(), car.getPreviousFinalDestinationName(),
+                                car.getPreviousFinalDestinationTrackName()));
             }
             addLine(_buildReport, ONE, BLANK_LINE);
         }
@@ -3136,8 +3123,7 @@ public class TrainBuilderBase extends TrainCommon {
         for (RouteLocation rl : _routeList) {
             if (rl.isPickUpAllowed() && rl != _train.getTrainTerminatesRouteLocation()) {
                 moves += rl.getMaxCarMoves(); // assume all moves are pick ups
-                double carDivisor = 16; // number of 40' cars per engine 1%
-                                        // grade
+                double carDivisor = 16; // number of 40' cars per engine 1% grade
                 // change engine requirements based on grade
                 if (rl.getGrade() > 1) {
                     carDivisor = carDivisor / rl.getGrade();
@@ -3157,7 +3143,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         int nE = (int) numberEngines;
-        if(_train.isLocalSwitcher()) {
+        if (_train.isLocalSwitcher()) {
             nE = 1; // only one engine if switcher
         }
         addLine(_buildReport, ONE,

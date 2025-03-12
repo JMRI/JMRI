@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.11.2plus+jake+20250208T2122Z+R358e21721da on Sat Feb 08 16:22:48 EST 2025-->
-  <decoderIndex version="629">
+  <!--Written by JMRI version 5.11.3plus+jake+20250307T1826Z+R2d798333238 on Fri Mar 07 13:26:58 EST 2025-->
+  <decoderIndex version="631">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -7513,12 +7513,12 @@
           <output name="3,14" label="Sound fade" />
           <output name="3,15" label="Disable brake sound" />
           <output name="3,16" label="Volume &amp; Mute" />
-          <output name="3,17" label="Shift Mode 1" />
-          <output name="3,18" label="Shift Mode 2" />
-          <output name="3,19" label="Shift Mode 3" />
-          <output name="3,20" label="Shift Mode 4" />
-          <output name="3,21" label="Shift Mode 5" />
-          <output name="3,22" label="Shift Mode 6" />
+          <output name="3,17" label="|" />
+          <output name="3,18" label="|" />
+          <output name="3,19" label="|" />
+          <output name="3,20" label="|" />
+          <output name="3,21" label="|" />
+          <output name="3,22" label="|" />
           <output name="3,23" label="|" />
           <output name="3,24" label="|" />
         </outputs>
@@ -15377,20 +15377,20 @@
           <output name="6" label=". A4 ." />
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="12" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.8.xml">
-        <model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein (FW 1.8.0)">
+      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="16" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_noSUSI_v1.8.xml">
+        <model model="PIKO46505-18 XP5.1 V1.8 no LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" productID="PIKO46540-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 (FW 1.8.0)">
+        <model model="PIKO46540-18 BR55-TT V1.8" numOuts="4" numFns="68" productID="PIKO46540-18" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 55 TT Next18 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 (FW 1.8.0)">
+        <model model="PIKO56505-22 XP5.1 V1.8 no LC (SUSI)" numOuts="9" numFns="68" productID="PIKO56505-22" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX22 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -15401,7 +15401,7 @@
           <output name="8" label=". A6 ." />
           <output name="9" label=". A7 ." />
         </model>
-        <model model="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 (FW 1.8.0)">
+        <model model="PIKO56508-16 XP5.1 V1.8 no LC (SUSI)" numOuts="6" numFns="68" productID="PIKO56508-16" lowVersionID="8" comment="Piko SmartDecoder XP5.1 Sound allgemein PluX16 ohne LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -15475,26 +15475,26 @@
           <output name="4" label=". A2 ." />
         </model>
       </family>
-      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="12" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_v1.8.xml">
-        <model model="PIKO46505-18 XP5.1 V1.8 with LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein Next18 (FW 1.8.0)">
+      <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="16" comment="Decoders not sorted (necessarily) in numerical order" file="Piko_SmartDecoder_XP5.1_Sound_v1.8.xml">
+        <model model="PIKO46505-18 XP5.1 V1.8 with LC (SUSI)" numOuts="4" numFns="68" productID="PIKO46505-18" comment="Piko SmartDecoder XP5.1 Sound allgemein Next18 mit LC (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0)">
+        <model model="PIKO46550-18 BR83-TT V1.8" numOuts="4" numFns="68" productID="PIKO46550-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 83.10 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" productID="PIKO46551-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0)">
+        <model model="PIKO46551-18 BR93-TT V1.8" numOuts="4" numFns="68" productID="PIKO46551-18" comment="Piko SmartDecoder XP5.1 Sound Steam Loco BR 93 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
           <output name="4" label=". A2 ." />
         </model>
-        <model model="PIKO46548-18 BR150-TT V1.8" numOuts="4" numFns="68" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0)">
+        <model model="PIKO46548-18 BR150-TT V1.8" numOuts="4" numFns="68" productID="PIKO46548-18" comment="Piko SmartDecoder XP5.1 Sound E Loco BR 150 TT Next18 plug and RailCom(R) (Plus) (FW 1.8.0 - 1.16.0)">
           <output name="1" label="F0(f)" />
           <output name="2" label="F0(r)" />
           <output name="3" label=". A1 ." />
@@ -15562,6 +15562,13 @@
         <model model="HDL LocoRCD v2.0" productID="200" />
         <model model="HDL LocoRCD2 v2.10" productID="210" />
         <model model="HDL LocoRCD2 v2.11" productID="211" />
+        <model model="GCA50(a) LocoIO v1.06" productID="GCA50">
+          <!--GCA50 (classic PIC) or GCA50a (Arduino Nano) v1.00, supports same options as v1.48 -->
+        </model>
+        <model model="GCA51 2x RFID + 8x LocoIO v1.51" productID="GCA51">
+          <!-- GCA51 only allows config of ports 9-16 for input/output -->
+          <!-- GCA51 uses ports 1-2 for 0-2 RFID-RC522 cards, only as Block Inputs. Only config is address of ports 1-2 -->
+        </model>
         <model model="Original LocoIO" productID="135" />
       </family>
       <family name="LNSV2-using boards" mfg="Public-domain and DIY" file="Public_Domain_LNSV2_basic.xml">
