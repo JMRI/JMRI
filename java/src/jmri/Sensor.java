@@ -39,6 +39,11 @@ public interface Sensor extends DigitalIO {
     String PROPERTY_INACTIVE_TIMER = "InActiveTimer";
 
     /**
+     * String constant for the Global Timer property.
+     */
+    String PROPERTY_GLOBAL_TIMER = "GlobalTimer";
+
+    /**
      * String constant for the inverted property.
      */
     String PROPERTY_SENSOR_INVERTED = "inverted";

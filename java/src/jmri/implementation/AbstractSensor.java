@@ -95,7 +95,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
             sensorDebounceGoingActive = InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingActive();
             sensorDebounceGoingInActive = InstanceManager.sensorManagerInstance().getDefaultSensorDebounceGoingInActive();
         }
-        firePropertyChange("GlobalTimer", !boo, boo);
+        firePropertyChange(PROPERTY_GLOBAL_TIMER, !boo, boo);
     }
 
     @Override
