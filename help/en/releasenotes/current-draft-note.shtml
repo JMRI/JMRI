@@ -126,7 +126,24 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Improved how Event with Payload messages are displayed in the monitor.</li>
+                <li>Enabled the Abort button in the Update Firmware window.</li>
+                <li>Backup files are now written with dotted-hex event ID values,
+                    whether or not an event name is available.  This makes them more reliable
+                    and more portable.</li>
+                <li>Update the STL Editor to support "event names".
+                    <ul>
+                      <li>When available, event names will be displayed in the IQYZ tables.</li>
+                      <li>The load from backup process will handle event names in older CDI backups.
+                      If the event name is no longer in the name store, a temporary event id will
+                      be created.</li>
+                      <li>Existing event names can be entered in the event columns of the IQYZ tables.
+                      Creating new event names is NOT supported.</li>
+                    </ul>
+                </li>
+                <li>Correctly decode events-with-payload</li>
+                <li>First implementation of LCC Location Services which will decode analog-carrying 
+                    location services reports to drive volt and amp meters.
             </ul>
 
         <h4>Powerline</h4>

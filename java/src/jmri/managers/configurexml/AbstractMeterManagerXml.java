@@ -7,8 +7,6 @@ import jmri.Meter;
 import jmri.MeterManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provides the basic load and store functionality for configuring
@@ -46,22 +44,31 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
             }
             // store the meters
             for (Meter m : memList) {
-                String mName = m.getSystemName();
-                log.debug("system name is {}", mName);
-
-                Element elem = new Element("meter");
-                elem.addContent(new Element("systemName").addContent(mName));
-
-                // store common part
-                storeCommon(m, elem);
-
-                log.debug("store Meter {}", mName);
+                var elem = storeMeter(m);
                 meters.addContent(elem);
             }
         }
         return meters;
     }
 
+    /**
+     * Create an element representing a single Meter
+     * @param m The Meter being stored
+     * @return Element containing the Meter info
+     */
+    protected Element storeMeter(Meter m) {
+        String mName = m.getSystemName();
+        log.debug("system name is {}", mName);
+
+        Element elem = new Element("meter");
+        elem.addContent(new Element("systemName").addContent(mName));
+
+        // store common part
+        storeCommon(m, elem);
+        
+        return elem;
+    }
+    
     /**
      * Subclass provides implementation to create the correct top element,
      * including the type information. Default implementation is to use the
@@ -111,6 +118,11 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
 
             checkNameNormalization(sysName, userName, mm);
 
+            loadMeter(sysName, userName, el, mm);
+        }
+    }
+
+    protected void loadMeter(String sysName, String userName, Element el, MeterManager mm) {
             log.debug("get Meter: ({})({})", sysName, (userName == null ? "<null>" : userName));
             Meter m = mm.getBySystemName(sysName);
             if (m != null) {
@@ -119,8 +131,7 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
                 loadCommon(m, el);
             } else {
                 log.debug("Meter ({}) does not exists and cannot be created", sysName);
-            }
-        }
+            }    
     }
 
     @Override
@@ -128,6 +139,6 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
         return InstanceManager.getDefault(MeterManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMeterManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMeterManagerXml.class);
 
 }
