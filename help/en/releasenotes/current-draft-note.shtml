@@ -645,6 +645,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>There's a new "DarkLAF HC" dark-mode setting for the display.
+                To use it, select Settings then Display, then click the 
+                button for "DarkLAF HC". Save preferences and restart.  Note that this
+                puts a dark background with light text on all JMRI windows.
+                You may have to rework your panels for them to look good
+                in this mode.</li>
         </ul>
 
