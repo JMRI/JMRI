@@ -292,7 +292,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         probeAllButton.setText(Bundle.getMessage("ButtonProbing"));
         LocoNetMessage m = Lnsv1MessageContents.createBroadcastProbeAll();
         memo.getLnTrafficController().sendLocoNetMessage(m);
-        // wait a second for replies
+        // wait for replies
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {

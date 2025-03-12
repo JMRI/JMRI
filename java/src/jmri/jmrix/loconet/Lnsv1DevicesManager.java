@@ -14,6 +14,8 @@ import jmri.jmrix.loconet.lnsvf1.Lnsv1Devices;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.progdebugger.ProgDebugger;
+
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 import javax.annotation.concurrent.GuardedBy;
@@ -101,33 +103,48 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                     if (lnsv1Devices.addDevice(new Lnsv1Device(addrL, subAddr, sv, val, "", "", vrs))) {
                         log.debug("new Lnsv1Device added to table");
                         // Annotate the discovered device LNSV1 data based on address
-                        for (int i = 0; i < lnsv1Devices.size(); ++i) {
+                        for (int i = 0; i < lnsv1Devices.size(); ++i) { // find the added item
                             Lnsv1Device dev = lnsv1Devices.getDevice(i);
-                            if ((dev.getDestAddrHigh() == subAddr) && (dev.getDestAddrHigh() == subAddr)) {
+                            if ((dev.getDestAddrLow() == addrL) && (dev.getDestAddrHigh() == subAddr)) {
                                 // Try to find a roster entry which matches the device characteristics
                                 log.debug("Looking for adr {} in Roster", dev.getDestAddr());
-                                List<RosterEntry> l = Roster.getDefault().matchingList(Integer.toString(dev.getDestAddr()));
-                                log.debug("Lnsv1DeviceManager found {} matches in Roster", l.size());
-                                if (l.isEmpty()) {
-                                    log.debug("No corresponding roster entry found");
-                                } else if (l.size() == 1) {
-                                    log.debug("Matching roster entry found");
-                                    dev.setRosterEntry(l.get(0)); // link this device to the entry
-                                    String title = l.get(0).getDecoderModel() + " (" + l.get(0).getDecoderFamily() + ")";
-                                    // fileFromTitle() matches by model + " (" + family + ")"
-                                    DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(title);
-                                    if (decoderFile != null) {
-                                        dev.setDecoderFile(decoderFile); // link to decoderFile (to check programming mode from table)
-                                        log.debug("Attached a decoderfile to entry {}", i);
-                                    } else {
-                                        log.warn("Could not attach decoderfile {} to entry {}", l.get(0).getFileName(), i);
+
+                                // threadUtil off GUI for Roster reading decoderfiles cf. LncvDevicesManager
+                                ThreadingUtil.newThread(() -> {
+                                    List<RosterEntry> rl;
+                                    try {
+                                        rl = Roster.getDefault().getEntriesMatchingCriteria(
+                                                Integer.toString(dev.getDestAddr()), // composite DCC address
+                                                null, null, null);
+                                        log.debug("Lnsv1DeviceManager found {} matches in Roster", rl.size());
+                                        if (rl.isEmpty()) {
+                                            log.debug("No corresponding roster entry found");
+                                        } else if (rl.size() == 1) {
+                                            log.debug("Matching roster entry found");
+                                            dev.setRosterEntry(rl.get(0)); // link this device to the entry
+                                            String title = rl.get(0).getDecoderModel() + " (" + rl.get(0).getDecoderFamily() + ")";
+                                            // fileFromTitle() matches by model + " (" + family + ")"
+                                            DecoderFile decoderFile = InstanceManager.getDefault(DecoderIndexFile.class).fileFromTitle(title);
+                                            if (decoderFile != null) {
+                                                // TODO check for LNSV1 mode
+                                                dev.setDecoderFile(decoderFile); // link to decoderFile (to check programming mode from table)
+                                                log.debug("Attached a decoderfile");
+                                            } else {
+                                                log.warn("Could not attach decoderfile {} to entry", rl.get(0).getFileName());
+                                            }
+                                        } else { // matches > 1
+                                            JmriJOptionPane.showMessageDialog(null,
+                                                    Bundle.getMessage("WarnMultipleLnsv1ModsFound", rl.size(), addrL, subAddr),
+                                                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
+                                            log.info("Found multiple matching LNSV1 roster entries. " + "Cannot associate any one to this device.");
+                                        }
+
+                                    } catch (Exception e) {
+                                        log.error("Error creating Roster.matchingList: {}", e.getMessage());
                                     }
-                                } else {
-                                    JmriJOptionPane.showMessageDialog(null,
-                                            Bundle.getMessage("WarnMultipleLnsv1ModsFound", l.size(), addrL, subAddr),
-                                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
-                                    log.info("Found multiple matching LNSV1 roster entries. " + "Cannot associate any one to this device.");
-                                }
+                                }, "rosterMatchingList").start();
+                                // this will block until the thread completes, either by finishing or by being cancelled
+
                                 // notify listeners of pertinent change to device list
                                 firePropertyChange("DeviceListChanged", true, false);
                             }

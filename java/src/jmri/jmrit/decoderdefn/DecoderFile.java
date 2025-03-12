@@ -223,7 +223,7 @@ public class DecoderFile extends XmlFile {
      * Test for correct decoder version number
      *
      * @param i the version to match
-     * @return true if decoder version matches id
+     * @return true if decoder version matches i
      */
     public boolean isVersion(int i) {
         return versions[i];
@@ -232,7 +232,7 @@ public class DecoderFile extends XmlFile {
     /**
      * return array of versions
      *
-     * @return array of boolean where each element is true if version matches,
+     * @return array of boolean where each element is true if version matches
      */
     public boolean[] getVersions() {
         return Arrays.copyOf(versions, versions.length);

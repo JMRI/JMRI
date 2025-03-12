@@ -72,7 +72,11 @@ public class Lnsv1Device {
     }
     public void setRosterEntry(RosterEntry e) {
         rosterEntry = e;
-        setRosterName(e.getId()); // is a name (String)
+        if (e == null) {
+            setRosterName("");
+        } else {
+            setRosterName(e.getId()); // is a name (String)
+        }
     }
 
     // optional: remember last used CV

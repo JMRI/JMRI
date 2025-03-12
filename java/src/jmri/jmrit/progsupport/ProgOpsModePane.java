@@ -24,7 +24,7 @@ import jmri.implementation.AccessoryOpsModeProgrammerFacade;
 import jmri.jmrix.loconet.LnProgrammerManager;
 
 /**
- * Provide a JPanel to configure the ops programming (Adressed) mode.
+ * Provide a JPanel to configure the ops programming (Addressed) mode.
  * <p>
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.

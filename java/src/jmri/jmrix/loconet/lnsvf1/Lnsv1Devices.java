@@ -44,7 +44,7 @@ public class Lnsv1Devices {
     }
 
     /**
-     * Get index in deviceList of the first device matching the Device Address (only).
+     * Get index in deviceList of the first device matching (only) the Device Address.
      * Where a deviceToBeFound parameter is -1, that parameter is not compared.
      *
      * @param deviceToBeFound Device we try to find in known LNSV1 devices list

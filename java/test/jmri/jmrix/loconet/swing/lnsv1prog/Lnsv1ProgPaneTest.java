@@ -63,32 +63,24 @@ public class Lnsv1ProgPaneTest extends jmri.util.swing.JmriPanelTest {
     @Test
     @DisabledIfHeadless
     public void testPanel() {
-        Lnsv1DevicesManager lcdm = memo.getLnsv1DevicesManager();
+        Lnsv1DevicesManager lsv1dm = memo.getLnsv1DevicesManager();
         lnPanel.initComponents(memo); // set up stuff
         panel.initComponents();
         // test list
         Assertions.assertNull(lnPanel.getModule(0), "Get Lnsv1Module 0 from empty list");
 
-//        Thread dialog_thread1 = new Thread(() -> {
-//            JDialogOperator jfo = new JDialogOperator(Bundle.getMessage("WarningTitle") );
-//            new JButtonOperator(jfo, Bundle.getMessage("ButtonProceed")).doClick();
-//        });
-//        dialog_thread1.setName("BroadcastAll Dialog button Proceed clicked");
-//        dialog_thread1.start();
-//
-        ThreadingUtil.runOnGUI( () -> lnPanel.probeAllButtonActionPerformed());
-//
+        ThreadingUtil.runOnGUI( () -> lnPanel.probeAllButtonActionPerformed()); // no replies in a test
+
 //        JUnitUtil.waitFor(()-> !(dialog_thread1.isAlive()), "BroadcastAll Warning Dialog closed");
 //        Assertions.assertEquals("locked", lnPanel.getAddressEntry(), "AddressField locked");
-//
+
         // TODO Press Set All Addresses button after filling in low and high address fields
 
         lnPanel.setCvFields(2, 14);
         //Assertions.assertEquals("1", lnPanel.getAddressEntry(), "AddressField unlocked");
-        // TODO Press Read button
 
-        lcdm.message(new LocoNetMessage(new int[] {0xE5, 0x10, 0x51, 0x50, 0x01, 0x02, 0x02, 0x33, 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18}));
-        Assertions.assertEquals(1, lcdm.getDeviceCount(), "modules in tabel after probe");
+        lsv1dm.message(new LocoNetMessage(new int[] {0xE5, 0x10, 0x51, 0x50, 0x01, 0x02, 0x02, 0x33, 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18}));
+        Assertions.assertEquals(1, lsv1dm.getDeviceCount(), "modules in table after probe");
 //        Assertions.assertEquals(5033, lnPanel.getModule(0).getProductID(), "ProductID of Lnsv1Module at index 0 after adding");
 //        // add same module to monitor, adding it to table and filling in texts entry fields
 //        lnPanel.message(new LocoNetMessage(new int[]{0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
@@ -100,6 +92,7 @@ public class Lnsv1ProgPaneTest extends jmri.util.swing.JmriPanelTest {
 //        ThreadingUtil.runOnGUI( () -> lnPanel.modProgButtonActionPerformed());
 //        Assertions.assertEquals("locked", lnPanel.getAddressEntry(), "AddressField locked");
 //
+        // TODO Press Read button
 //        lnPanel.setCvFields(1, 100); // enter some values for read
 //        lnPanel.readButtonActionPerformed();
 //        // no feedback, just confirm no exception is thrown

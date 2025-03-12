@@ -163,8 +163,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                         return "";
                     }
                 case OPENPRGMRBUTTONCOLUMN:
-                    assert dev != null;
-                    if (!dev.getRosterName().isEmpty()) {
+                    if (dev != null && !dev.getRosterName().isEmpty()) {
                         if (dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE")) {
                             return Bundle.getMessage("ButtonProgram");
                         } else {

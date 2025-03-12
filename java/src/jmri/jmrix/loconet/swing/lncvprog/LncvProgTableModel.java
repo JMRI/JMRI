@@ -26,7 +26,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Table model for the programmed LNCV Modules table.
  * See Sv2f Programing tool
  *
- * @author Egbert Broerse Copyright (C) 2020
+ * @author Egbert Broerse Copyright (C) 2020, 2025
  */
 public class LncvProgTableModel extends AbstractTableModel implements PropertyChangeListener, ProgrammingTool {
 
@@ -137,7 +137,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                   return dev.getCvValue();
               case DEVICENAMECOLUMN:
                   assert dev != null;
-                  if (dev.getDeviceName().length() == 0) { // not yet filled in, look for a candidate
+                  if (dev.getDeviceName().isEmpty()) { // not yet filled in, look for a candidate
                       List<DecoderFile> l =
                           InstanceManager.getDefault(
                               DecoderIndexFile.class).
@@ -154,11 +154,12 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                               );
                       //log.debug("found {} possible decoder matches for LNCV device", l.size());
                       String lastModelName = "";
-                      if (l.size() > 0) {
+                      if (!l.isEmpty()) {
                           for (DecoderFile d : l) {
-                              // we do not check for LNCV programmingMode support since we do not expect replies from non-LNCV devices
-                              // (and there is currently no access to supported modes in the DecoderIndexFile)
-                              if (d.getModel().equals("")) {
+                              // we do not check for LNCV programmingMode support
+                              // we do not expect replies from non-LNCV devices
+                              // TODO check using new access to getProgrammingModes() in the DecoderIndexFile
+                              if (d.getModel().isEmpty()) {
                                   log.warn("Empty model(name) in decoderfile {}", d.getFileName());
                                   continue;
                               }
@@ -175,8 +176,8 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                   return dev.getRosterName();
               case OPENPRGMRBUTTONCOLUMN:
                   assert dev != null;
-                  if (dev.getDeviceName().length() != 0) {
-                      if ((dev.getRosterName() != null) && (dev.getRosterName().length() == 0)) {
+                  if (!dev.getDeviceName().isEmpty()) {
+                      if ((dev.getRosterName() != null) && (dev.getRosterName().isEmpty())) {
                           return Bundle.getMessage("ButtonCreateEntry");
                       }
                       return Bundle.getMessage("ButtonProgram");
@@ -209,7 +210,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
                 openProgrammer(r);
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonNoMatchInRoster")) == 0){
-                // need to rebuild decoderIndex, tooltip?
+                // suggest to rebuild decoderIndex
                 warnRecreate();
             }
         } else {
@@ -310,6 +311,9 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             re.setDccAddress(Integer.toString(dev.getDestAddr()));
             re.setDecoderModel(dev.getDecoderFile().getModel());
             re.setProductID(Integer.toString(dev.getProductID()));
+            // add some details that won't be picked up otherwise from definition
+            re.setDecoderFamily(dev.getDecoderFile().getFileName());
+            re.setProgrammingModes(dev.getDecoderFile().getProgrammingModes());
             re.setId(s);
             _roster.addEntry(re);
             dev.setRosterEntry(re);

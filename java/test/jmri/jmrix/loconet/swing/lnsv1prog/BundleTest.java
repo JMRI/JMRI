@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.swing.lnsv1prog;
 
-import jmri.jmrix.loconet.swing.lnsv1prog.Bundle;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Locale;
@@ -14,7 +14,7 @@ import java.util.Locale;
 public class BundleTest {
 
     @Test public void testGoodKeyMessage() {
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
+        Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
     @Test
@@ -23,8 +23,8 @@ public class BundleTest {
     }
 
     @Test public void testGoodKeyMessageArg() {
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
-        Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
+        Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
+        Assertions.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
     @Test
@@ -33,12 +33,12 @@ public class BundleTest {
     }
 
     @Test public void testLocaleMessage() {
-        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
+        Assertions.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
     }
 
     @Test public void testLocaleMessageArg() {
-        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
-        Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
+        Assertions.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        Assertions.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
     }
 
 }

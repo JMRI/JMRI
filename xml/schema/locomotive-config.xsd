@@ -136,6 +136,7 @@
     <xs:attribute name="manufacturerID" type="xs:string"/>
     <xs:attribute name="productID" type="xs:string"/>
     <xs:attribute name="developerID" type="xs:string"/>
+    <xs:attribute name="decoderModes" type="xs:string"/>
     <xs:attribute name="owner" type="xs:string"/>
     <xs:attribute name="model" type="xs:string"/>
     <xs:attribute name="comment" type="xs:string"/>
@@ -182,6 +183,7 @@
   <xs:complexType name="DecoderType">
     <xs:attribute name="family" type="xs:string" use="required"/>
     <xs:attribute name="model" type="xs:string" use="required"/>
+    <xs:attribute name="decoderModes" type="xs:string"/>
     <xs:attribute name="comment" type="xs:string"/>
     <xs:attribute name="maxFnNum" type="xs:int"/>
     <xs:attribute name="programmingmode" type="xs:int"/>

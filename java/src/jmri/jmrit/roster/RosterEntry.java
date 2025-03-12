@@ -81,8 +81,8 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public static final String DECODER_MANUFACTURERID = "manufacturerID"; // NOI18N
     public static final String DECODER_PRODUCTID = "productID"; // NOI18N
     public static final String PROGRAMMING = "programming"; // NOI18N
-    public static final String PROGRAMMINGMODE = "mode"; // NOI18N
     public static final String DECODER_FAMILY = "decoderfamily"; // NOI18N
+    public static final String DECODER_MODES = "decoderModes"; // NOI18N
     public static final String DECODER_COMMENT = "decodercomment"; // NOI18N
     public static final String DECODER_MAXFNNUM = "decodermaxFnNum"; // NOI18N
     public static final String DEFAULT_MAXFNNUM = "28"; // NOI18N
@@ -125,7 +125,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _developerID = "";
     protected String _manufacturerID = "";
     protected String _productID = "";
-    protected String _programmingMode = "";
+    protected String _programmingModes = "";
 
     /**
      * Get the highest valid Fn key number for this roster entry.
@@ -210,7 +210,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         _developerID = pEntry._developerID;
         _manufacturerID = pEntry._manufacturerID;
         _productID = pEntry._productID;
-        _programmingMode = pEntry._programmingMode;
+        _programmingModes = pEntry._programmingModes;
         _decoderComment = pEntry._decoderComment;
         _owner = pEntry._owner;
         _imageFilePath = pEntry._imageFilePath;
@@ -489,15 +489,23 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return _productID;
     }
 
-    public void setProgrammingMode(@CheckForNull String s) {
-        String old = _programmingMode;
+    /**
+     * Set programming modes as defined in a roster entry's decoder definition.
+     * @param s a comma separated string of predefined mode elements
+     */
+    public void setProgrammingModes(@CheckForNull String s) {
+        String old = _programmingModes;
         if (s == null) {s = "";}
-        _programmingMode = s;
-        firePropertyChange(PROGRAMMINGMODE, old, s);
+        _programmingModes = s;
+        firePropertyChange(DECODER_MODES, old, s);
     }
 
-    public String getProgrammingMode() {
-        return _programmingMode;
+    /**
+     * Get the modes as defined in a roster entry's decoder definition.
+     * @return a comma separated string of predefined mode elements
+     */
+    public String getProgrammingModes() {
+        return _programmingModes;
     }
 
     public void setDecoderFamily(String s) {
@@ -704,9 +712,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
         functionImages = Collections.synchronizedMap(new HashMap<>());
         functionLockables = Collections.synchronizedMap(new HashMap<>());
-        if (log.isDebugEnabled()) {
-            log.debug("ctor from element {}", e);
-        }
+        log.debug("ctor from element {}", e);
         Attribute a;
         if ((a = e.getAttribute("id")) != null) {
             _id = a.getValue();
@@ -792,6 +798,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             _productID = a.getValue();
         }
 
+        if ((a = e.getAttribute(DECODER_MODES)) != null) {
+            _programmingModes = a.getValue();
+        }
+
         Element e3;
         if ((e3 = e.getChild("dateUpdated")) != null) {
             this.setDateUpdated(e3.getText());
@@ -856,10 +866,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             }
             if ((a = d.getAttribute("maxFnNum")) != null) {
                 _maxFnNum = a.getValue();
-            }
-            Element e2;
-            if ((e2 = d.getChild("programming")) != null && (e2.getChild("mode") != null)) {
-                _programmingMode = e2.getChild("mode").getValue();
             }
         }
 
@@ -953,26 +959,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         }
         if (source.equalsIgnoreCase("RosterEntry")) {
             loadedOnce = true;
-        }
-    }
-
-    /**
-     * Loads modes from a JDOM element. Does not change values that are
-     * already present. Source is the decoder definition.
-     *
-     * @param pm     the XML element containing the programming modes
-     */
-    public void loadProgrammingModes(Element pm) {
-        if (pm != null) {
-            // load mode names
-            List<Element> l = pm.getChildren(RosterEntry.PROGRAMMINGMODE);
-            for (Element m : l) {
-                // load mode (expect only 1, use last returned mode)
-                String mode;
-                if ((mode = m.getText()) != null) {
-                    _programmingMode = mode;
-                }
-            }
         }
     }
 
@@ -1213,7 +1199,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
 
     @Override
     public String[] getAttributeList() {
-        return attributePairs.keySet().toArray(new String[attributePairs.size()]);
+        return attributePairs.keySet().toArray(new String[0]);
     }
 
     /**
@@ -1296,7 +1282,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         e.setAttribute(DECODER_DEVELOPERID, getDeveloperID());
         e.setAttribute(DECODER_MANUFACTURERID, getManufacturerID());
         e.setAttribute(DECODER_PRODUCTID, getProductID());
-        e.setAttribute(PROGRAMMINGMODE, getProgrammingMode());
+        e.setAttribute(DECODER_MODES, getProgrammingModes());
         e.setAttribute(RosterEntry.MAX_SPEED, (Integer.toString(getMaxSpeedPCT())));
         // file path are saved without default xml config path
         e.setAttribute("imageFilePath",
@@ -1413,7 +1399,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             .append(" ")
             .append(_productID)
             .append(" ")
-            .append(_programmingMode)
+            .append(_programmingModes)
             .append(" ")
             .append(_decoderComment)
             .append("]")
@@ -1553,7 +1539,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     }
 
     /**
-     * Ultra compact list view of roster entries. Shows text from fields as
+     * Ultra-compact list view of roster entries. Shows text from fields as
      * initially visible in the Roster frame table.
      * <p>
      * Header is created in
