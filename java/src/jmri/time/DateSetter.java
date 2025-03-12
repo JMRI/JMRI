@@ -1,7 +1,5 @@
 package jmri.time;
 
-import java.time.DayOfWeek;
-
 /**
  * Set the date of the time provider.
  *
@@ -11,10 +9,10 @@ public interface DateSetter {
 
     /**
      * Set the weekday of the time provider.
-     * @param dayOfWeek the day of week
+     * @param dayOfWeek the day of week. 1 = Monday, 7 = Sunday
      * @throws UnsupportedOperationException if the time couldn't be set
      */
-    void setWeekday(DayOfWeek dayOfWeek) throws UnsupportedOperationException;
+    void setWeekday(int dayOfWeek) throws UnsupportedOperationException;
 
     /**
      * Set the day the month of the time provider.

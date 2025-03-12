@@ -1,5 +1,9 @@
 package jmri.time.implementation;
 
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import jmri.time.TimeProvider;
 import jmri.time.MainTimeProviderHandler;
 
@@ -13,6 +17,7 @@ public class DefaultMainTimeProviderHandler implements MainTimeProviderHandler {
     private boolean _showPrimaryTimeProvider = true;
     private TimeProvider _primaryTimeProvider;
     private TimeProvider _secondaryTimeProvider;
+    private final List<PropertyChangeListener> _listeners = new ArrayList<>();
 
 
     /** {@inheritDoc} */
@@ -23,7 +28,7 @@ public class DefaultMainTimeProviderHandler implements MainTimeProviderHandler {
 
     /** {@inheritDoc} */
     @Override
-    public void selectPrimaryTimeProvider(boolean select) {
+    public void setUsePrimaryTimeProvider(boolean select) {
         this._showPrimaryTimeProvider = select;
     }
 
@@ -55,6 +60,21 @@ public class DefaultMainTimeProviderHandler implements MainTimeProviderHandler {
     @Override
     public TimeProvider getSecondaryTimeProvider() {
         return _secondaryTimeProvider;
+    }
+
+    @Override
+    public void addMinuteChangeListener(PropertyChangeListener l) {
+        _listeners.add(l);
+    }
+
+    @Override
+    public void removeMinuteChangeListener(PropertyChangeListener l) {
+        _listeners.remove(l);
+    }
+
+    @Override
+    public PropertyChangeListener[] getMinuteChangeListeners() {
+        return _listeners.toArray(PropertyChangeListener[]::new);
     }
 
 }

@@ -8,7 +8,6 @@ import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.audio.DefaultAudioSourceManager;
-import jmri.jmrit.simpleclock.SimpleTimebase;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
@@ -140,8 +139,9 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         }
 
         if (type == Timebase.class) {
-            Timebase timebase = new SimpleTimebase(memo);
-            InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerConfig(timebase, Manager.TIMEBASE));
+            Timebase timebase = new jmri.time.implementation.DefaultTimebase(memo);
+//            Timebase timebase = new SimpleTimebase(memo);
+//            InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerConfig(timebase, Manager.TIMEBASE));
             return timebase;
         }
 

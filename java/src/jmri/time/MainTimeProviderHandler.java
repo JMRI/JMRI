@@ -1,5 +1,9 @@
 package jmri.time;
 
+import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
+
 /**
  * Handle the main time provider in JMRI.
  *
@@ -20,11 +24,11 @@ public interface MainTimeProviderHandler {
     TimeProvider getCurrentTimeProvider();
 
     /**
-     * Select the primary or secondary time provider.
+     * Set whenether the primary or secondary time provider should be used.
      * @param select true to select the primary time provider, false to select the
      *               secondary time provider.
      */
-    void selectPrimaryTimeProvider(boolean select);
+    void setUsePrimaryTimeProvider(boolean select);
 
     /**
      * Get whenether the primary time provider is selected.
@@ -56,5 +60,35 @@ public interface MainTimeProviderHandler {
      * @return time provider the time provider
      */
     TimeProvider getSecondaryTimeProvider();
+
+    /**
+     * Request a callback when the minutes place of the time changes. This is
+     * the same as calling
+     * {@link #addPropertyChangeListener(String, PropertyChangeListener)} with
+     * the propertyName {@code minutes}.
+     *
+     * @param l the listener to receive the callback
+     */
+    void addMinuteChangeListener(@Nonnull PropertyChangeListener l);
+
+    /**
+     * Remove a request for callback when the minutes place of the time changes.
+     * This is the same as calling
+     * {@link #removePropertyChangeListener(String, PropertyChangeListener)}
+     * with the propertyName {@code minutes}.
+     *
+     * @param l the listener to receive the callback
+     */
+    void removeMinuteChangeListener(@Nonnull PropertyChangeListener l);
+
+    /**
+     * Get the list of minute change listeners. This is the same as calling
+     * {@link #getPropertyChangeListeners(String)} with the propertyName
+     * {@code minutes}.
+     *
+     * @return the list of listeners
+     */
+    @Nonnull
+    PropertyChangeListener[] getMinuteChangeListeners();
 
 }

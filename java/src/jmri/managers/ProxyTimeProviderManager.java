@@ -4,10 +4,12 @@ import jmri.time.TimeProvider;
 
 import javax.annotation.Nonnull;
 
-import jmri.*;
-import jmri.time.implementation.SystemDateTime;
-import jmri.time.TimeProviderManager;
+import jmri.InstanceManagerAutoInitialize;
+import jmri.Manager;
 import jmri.time.MainTimeProviderHandler;
+import jmri.time.TimeProviderManager;
+import jmri.time.implementation.InternalDateTime;
+import jmri.time.implementation.SystemDateTime;
 
 /**
  * Implementation of a TimeProviderManager that can serve as a proxy for multiple
@@ -20,11 +22,14 @@ public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
 
     @Override
     public void initialize() {
-        TimeProvider tp = new SystemDateTime(makeSystemName("SYSTEMCLOCK"));
-        register(tp);
+        TimeProvider internalTimeProvider = new InternalDateTime(makeSystemName("InternalTimeProvider"));
+        register(internalTimeProvider);
+        TimeProvider systemClock = new SystemDateTime(makeSystemName("SystemClock"));
+        register(systemClock);
         MainTimeProviderHandler mtph = getMainTimeProviderHandler();
-        mtph.setPrimaryTimeProvider(tp);
-        mtph.setSecondaryTimeProvider(tp);
+        mtph.setPrimaryTimeProvider(internalTimeProvider);
+        mtph.setSecondaryTimeProvider(systemClock);
+        mtph.setUsePrimaryTimeProvider(true);
     }
 
     @Override
