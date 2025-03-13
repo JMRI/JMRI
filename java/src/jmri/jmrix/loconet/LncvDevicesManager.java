@@ -125,7 +125,8 @@ public class LncvDevicesManager extends PropertyChangeSupport
                                             try {
                                                 rl = Roster.getDefault().getEntriesMatchingCriteria(
                                                         Integer.toString(dev.getDestAddr()), // composite DCC address
-                                                        null, null, Integer.toString(dev.getProductID()));
+                                                        null, null, Integer.toString(dev.getProductID()),
+                                                        null); // TODO filter on progMode LNCV only on new roster entries
                                                 log.debug("LncvDeviceManager found {} matches in Roster", rl.size());
                                                 if (rl.isEmpty()) {
                                                     log.debug("No corresponding RosterEntry found");

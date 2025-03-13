@@ -496,7 +496,7 @@ public class DecoderIndexFile extends XmlFile {
             try {
                 index.writeFile(DECODER_INDEX_FILE_NAME,
                             InstanceManager.getDefault(DecoderIndexFile.class), sbox, null, null);
-            } catch (java.io.IOException ex) {
+            } catch (Exception ex) {
                 log.error("Error writing new decoder index file: {}", ex.getMessage());
             }
             return;
@@ -737,10 +737,10 @@ public class DecoderIndexFile extends XmlFile {
      * @param files array of files to read for new index
      * @param pane optional JOptionPane to check for cancellation
      * @param pb optional JProgressBar to update during operations
-     * @throws java.io.IOException for errors writing the decoder index file
+     * @throws Exception for unexpected errors during writing the decoder index file
      */
     public void writeFile(String name, DecoderIndexFile oldIndex,
-                          String[] files, JOptionPane pane, JProgressBar pb) throws java.io.IOException {
+                          String[] files, JOptionPane pane, JProgressBar pb) throws Exception {
         log.debug("writeFile {}",name);
 
         // This is taken in large part from "Java and XML" page 368
@@ -886,9 +886,8 @@ public class DecoderIndexFile extends XmlFile {
         log.debug("Writing decoderIndex");
         try {
             writeXML(file, doc);
-        } catch (java.io.IOException ioe) {
-            log.error("IO error writing file: {}", file);
-            throw ioe;
+        } catch (Exception e) {
+            log.error("Error writing file: {}", file, e);
         }
 
         // force a read of the new file next time

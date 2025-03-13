@@ -147,8 +147,8 @@ public class RosterTest {
         List<RosterEntry> l;
 
         // 5 param (LNCV)
-        l = r.getEntriesMatchingCriteria( "3", null,null, "123");
-        Assertions.assertEquals(1, l.size(), "match 5 param");
+        l = r.getEntriesMatchingCriteria( "3", null,null, "123", null);
+        Assertions.assertEquals(1, l.size(), "match 6 param");
 
         // 8 param
         l = r.getEntriesMatchingCriteria("UP", null, null, "100",

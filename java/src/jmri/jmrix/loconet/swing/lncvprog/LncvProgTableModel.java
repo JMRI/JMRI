@@ -331,7 +331,11 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
         if (userReply == 0) { // array position 0
-            DecoderIndexFile.forceCreationOfNewIndex(false); // faster
+            try {
+                DecoderIndexFile.forceCreationOfNewIndex(false); // faster
+            } catch (Exception exq) {
+                log.error("exception updating decoderIndexFile", exq);
+            }
         }
     }
 

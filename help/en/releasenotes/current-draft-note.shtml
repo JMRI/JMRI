@@ -538,9 +538,11 @@
         </ul>
 
     <h3>Roster</h3>
-        <a id="Roster" name="Roster"></a>
+        <a id="Roster"></a>
         <ul>
-            <li></li>
+            <li>New Roster Entries hold the decoder's programming mode, if defined, to use as a filter similar to
+              e.g. ProductID.
+            </li>
         </ul>
 
     <h3>Routes</h3>

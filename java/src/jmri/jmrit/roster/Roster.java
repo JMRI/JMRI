@@ -582,7 +582,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Get a List of {@link RosterEntry} objects in Roster matching 4
+     * Get a List of {@link RosterEntry} objects in Roster matching 5
      * selectors.
      * The list will be empty if there are no matches.
      * <p>
@@ -592,18 +592,20 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param decoderModel  decoder model of entry or null for any model
      * @param decoderFamily decoder family of entry or null for any family
      * @param productID     decoder productID or null for any productID
+     * @param progMode      decoder programming mode
      * @return List of matching RosterEntries or an empty List
      */
     @Nonnull
     public List<RosterEntry> getEntriesMatchingCriteria(String dccAddress, String decoderModel,
-                                                        String decoderFamily, String productID) {
+                                                        String decoderFamily, String productID,
+                                                        String progMode) {
         return findMatchingEntries(
-                (RosterEntry r) -> checkEntry(r, dccAddress, decoderModel, decoderFamily, productID)
+                (RosterEntry r) -> checkEntry(r, dccAddress, decoderModel, decoderFamily, productID, progMode)
         );
     }
 
     /**
-     * Check if an entry is consistent with 9 specific properties.
+     * Check if an entry is consistent with up to 9 specific properties.
      * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
@@ -627,7 +629,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Check if an item from a list of Roster Entry items is consistent with 10 specific properties.
+     * Check if an item from a list of Roster Entry items is consistent with up
+     * to 10 specific properties.
      * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
@@ -654,7 +657,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Check if an entry is consistent with 12 specific (LNSV2/LNCV) properties.
+     * Check if an entry is consistent with up to 12 specific (LNSV2/LNCV) properties.
      * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
@@ -716,7 +719,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Check if an entry is consistent with 4 specific LNCV properties.
+     * Check if an entry is consistent with up to 5 specific LNCV properties.
      * <p>
      * A null String argument always matches. Strings are used for convenience
      * in GUI building.
@@ -726,11 +729,12 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @param decoderModel  decoder model of entry or null for any model
      * @param decoderFamily decoder family of entry or null for any family
      * @param productID     productId of entry or null for any productID
+     * @param progMode      programming mode
      * @return True if the entry matches
      */
     public boolean checkEntry(RosterEntry r, String dccAddress,
                               String decoderModel, String decoderFamily,
-                              String productID) {
+                              String productID, String progMode) {
         // used for LNCV and LNSV1
         if (productID != null && !productID.equals(r.getProductID())) {
             return false;
@@ -742,6 +746,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             return false;
         }
         if (decoderFamily != null && !decoderFamily.equals(r.getDecoderFamily())) {
+            return false;
+        }
+        if (progMode != null && !r.getProgrammingModes().contains(progMode)) {
             return false;
         }
         return true;

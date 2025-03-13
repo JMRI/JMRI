@@ -116,7 +116,8 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                                         // requires nonnull default for jmri.jmrit.roster.RosterConfigManager
                                         rl = Roster.getDefault().getEntriesMatchingCriteria(
                                                 Integer.toString(dev.getDestAddr()), // composite DCC address
-                                                null, null, null);
+                                                null, null, null,
+                                                null); // TODO filter on progMode LNSV1 only on new roster entries
                                         log.debug("Lnsv1DeviceManager found {} matches in Roster", rl.size());
                                         if (rl.isEmpty()) {
                                             log.debug("No corresponding roster entry found");
