@@ -345,7 +345,6 @@
             depend on what kind of computer you have, and not all of the following may be
             available:
             <ul>
-              <li>Nimbus &mdash; An alternate style</li>
 
               <li>Metal &mdash; the default Java style, usable on all computers</li>
 
@@ -357,6 +356,11 @@
 
               <li>Mac OS X &mdash; only available on MacOS, this makes the program look like a Macintosh
               application.</li>
+
+              <li>DarkLaf HC &mdash; a high-contrast dark mode (white on black) style
+              
+              <li>Nimbus &mdash; An alternate style, most use when using a screen reader.</li>
+
             </ul>
             In addition, this tab lets you set:
             <ul>

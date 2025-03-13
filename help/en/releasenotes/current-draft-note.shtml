@@ -131,7 +131,24 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Improved how Event with Payload messages are displayed in the monitor.</li>
+                <li>Enabled the Abort button in the Update Firmware window.</li>
+                <li>Backup files are now written with dotted-hex event ID values,
+                    whether or not an event name is available.  This makes them more reliable
+                    and more portable.</li>
+                <li>Update the STL Editor to support "event names".
+                    <ul>
+                      <li>When available, event names will be displayed in the IQYZ tables.</li>
+                      <li>The load from backup process will handle event names in older CDI backups.
+                      If the event name is no longer in the name store, a temporary event id will
+                      be created.</li>
+                      <li>Existing event names can be entered in the event columns of the IQYZ tables.
+                      Creating new event names is NOT supported.</li>
+                    </ul>
+                </li>
+                <li>Correctly decode events-with-payload</li>
+                <li>First implementation of LCC Location Services which will decode analog-carrying 
+                    location services reports to drive volt and amp meters.
             </ul>
 
         <h4>Powerline</h4>
@@ -457,7 +474,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Added a TurnoutCircleTransparency.py script to change the
+                color and transparency of Layout Editor turnout circles</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -534,7 +552,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added a TurnoutCircleTransparency.py script to change the
+                color and transparency of Layout Editor turnout circles</li>
         </ul>
 
     <h3>Signals</h3>
@@ -652,6 +671,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>There's a new "DarkLAF HC" dark-mode setting for the display.
+                To use it, select Settings then Display, then click the 
+                button for "DarkLAF HC". Save preferences and restart.  Note that this
+                puts a dark background with light text on all JMRI windows.
+                You may have to rework your panels for them to look good
+                in this mode.</li>
         </ul>
 
