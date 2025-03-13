@@ -702,7 +702,11 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
              statusText2.setText(Bundle.getMessage("FeedBackDiscoverFail"));
         } else {
             synchronized (this) {
-                statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess", lncvdm.getDeviceCount()));
+                if (lncvdm.getDeviceCount() == 1) {
+                    statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccessOne"));
+                } else {
+                    statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess", lncvdm.getDeviceCount()));
+                }
                 result.setText(reply);
             }
         }

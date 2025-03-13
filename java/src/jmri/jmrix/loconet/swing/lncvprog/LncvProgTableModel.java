@@ -55,7 +55,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
     public void initTable(javax.swing.JTable lncvModulesTable) {
        TableColumnModel assignmentColumnModel = lncvModulesTable.getColumnModel();
        TableColumn idColumn = assignmentColumnModel.getColumn(0);
-       idColumn.setMaxWidth(8);
+       idColumn.setMaxWidth(3);
     }
 
    @Override

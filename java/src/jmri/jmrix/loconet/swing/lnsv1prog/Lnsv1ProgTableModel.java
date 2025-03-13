@@ -55,7 +55,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
     public void initTable(javax.swing.JTable lnsv1ModulesTable) {
        TableColumnModel assignmentColumnModel = lnsv1ModulesTable.getColumnModel();
        TableColumn idColumn = assignmentColumnModel.getColumn(0);
-       idColumn.setMaxWidth(8);
+       idColumn.setMaxWidth(3);
     }
 
     @Override

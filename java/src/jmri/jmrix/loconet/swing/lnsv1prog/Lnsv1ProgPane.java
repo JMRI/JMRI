@@ -600,7 +600,11 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
              statusText2.setText(Bundle.getMessage("FeedBackDiscoverFail"));
         } else {
             synchronized (this) {
-                statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess", lnsv1dm.getDeviceCount()));
+                if (lnsv1dm.getDeviceCount() == 1) {
+                    statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccessOne"));
+                } else {
+                    statusText2.setText(Bundle.getMessage("FeedBackDiscoverSuccess", lnsv1dm.getDeviceCount()));
+                }
                 result.setText(reply);
             }
         }

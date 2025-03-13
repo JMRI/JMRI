@@ -886,8 +886,6 @@ public class DecoderIndexFile extends XmlFile {
         log.debug("Writing decoderIndex");
         try {
             writeXML(file, doc);
-        } catch (java.io.FileNotFoundException ex3) {
-            log.error("FileNotFound error writing file: {}. check UserFilesPath", file);
         } catch (java.io.IOException ioe) {
             log.error("IO error writing file: {}", file);
             throw ioe;
