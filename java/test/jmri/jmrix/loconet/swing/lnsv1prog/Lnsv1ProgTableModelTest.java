@@ -1,14 +1,10 @@
 package jmri.jmrix.loconet.swing.lnsv1prog;
 
-import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.loconet.Lnsv1DevicesManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 class Lnsv1ProgTableModelTest {
@@ -57,7 +53,7 @@ class Lnsv1ProgTableModelTest {
     void testGetSetValueAt() {
         Lnsv1DevicesManager lcdm = new Lnsv1DevicesManager(memo);
         memo.setLnsv1DevicesManager(lcdm);
-        jmri.InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
+        // in setup, produces error output if here: jmri.InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
         Assertions.assertEquals(0, lcdm.getDeviceCount(), "Lnsv1DeviceManager List empty");
         lcdm.message(new LocoNetMessage(new int[] {0xE5, 0x10, 0x51, 0x50, 0x01, 0x02, 0x02, 0x33, 0x02, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x18}));
         // should add 1 row to table

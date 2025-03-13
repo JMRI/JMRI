@@ -113,6 +113,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                                 ThreadingUtil.newThread(() -> {
                                     List<RosterEntry> rl;
                                     try {
+                                        // requires nonnull default for jmri.jmrit.roster.RosterConfigManager
                                         rl = Roster.getDefault().getEntriesMatchingCriteria(
                                                 Integer.toString(dev.getDestAddr()), // composite DCC address
                                                 null, null, null);

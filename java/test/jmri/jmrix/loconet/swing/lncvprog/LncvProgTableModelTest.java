@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.swing.lncvprog;
 
-import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.loconet.LncvDevicesManager;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -54,7 +53,7 @@ class LncvProgTableModelTest {
     void testGetSetValueAt() {
         LncvDevicesManager lcdm = new LncvDevicesManager(memo);
         memo.setLncvDevicesManager(lcdm);
-        jmri.InstanceManager.setDefault(jmri.jmrit.roster.RosterConfigManager.class, new RosterConfigManager());
+        // in setup, produces error output if here: jmri.InstanceManager.setDefault(jmri.jmrit.roster.RosterConfigManager.class, new RosterConfigManager());
         Assertions.assertEquals(0, lcdm.getDeviceCount(), "LncvDeviceManager List empty");
         lcdm.message(new LocoNetMessage(new int[] {0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
         // should add 1 row to table

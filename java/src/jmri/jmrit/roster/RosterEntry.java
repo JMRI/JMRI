@@ -1650,7 +1650,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     String newLine = "\n";
 
     /**
-     * Print the roster information.
+     * Print the roster entry information.
      * <p>
      * Updated to allow for multiline comment and decoder comment fields.
      * Separate write statements for text and line feeds to work around the
@@ -1747,14 +1747,14 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             // If there is a comment field, then wrap it using the new wrapCommment()
             // method and print it
             if (!(_comment.isEmpty())) {
-                //Because the text will fill the width if the roster entry has an icon
-                //then we need to add some blank lines to prevent the comment text going
-                //through the picture.
+                // Because the text will fill the width if the roster entry has an icon
+                // then we need to add some blank lines to prevent the comment text going
+                // through the picture.
                 for (int i = 0; i < (blanks - linesAdded); i++) {
                     w.write(newLine, 0, 1);
                 }
-                //As we have added the blank lines to pad out the comment we will
-                //reset the number of blanks to 0.
+                // As we have added the blank lines to pad out the comment we will
+                // reset the number of blanks to 0.
                 if (blanks != 0) {
                     blanks = 0;
                 }
@@ -1782,17 +1782,27 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                     linesAdded = writeWrappedComment(w, _decoderFamily, leftMargin + title, textSpace) + linesAdded;
                 }
             }
+            if (!(_programmingModes.isEmpty())) {
+                title = String.format("%-" + labelColumn + "s",
+                        (Bundle.getMessage("MakeLabel", Bundle.getMessage("FieldDecoderModes")))); // I18N Programming Mode(s):
+                if ((textSpaceWithIcon != 0) && (linesAdded < blanks)) {
+                    linesAdded
+                            = writeWrappedComment(w, _programmingModes, leftMargin + title, textSpaceWithIcon) + linesAdded;
+                } else {
+                    linesAdded = writeWrappedComment(w, _programmingModes, leftMargin + title, textSpace) + linesAdded;
+                }
+            }
 
-            //If there is a decoderComment field, need to wrap it
+            // If there is a decoderComment field, need to wrap it
             if (!(_decoderComment.isEmpty())) {
-                //Because the text will fill the width if the roster entry has an icon
-                //then we need to add some blank lines to prevent the comment text going
-                //through the picture.
+                // Because the text will fill the width if the roster entry has an icon
+                // then we need to add some blank lines to prevent the comment text going
+                // through the picture.
                 for (int i = 0; i < (blanks - linesAdded); i++) {
                     w.write(newLine, 0, 1);
                 }
-                //As we have added the blank lines to pad out the comment we will
-                //reset the number of blanks to 0.
+                // As we have added the blank lines to pad out the comment we will
+                // reset the number of blanks to 0.
                 if (blanks != 0) {
                     blanks = 0;
                 }
@@ -1812,9 +1822,9 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     private int writeWrappedComment(Writer w, String text, String title, int textSpace) {
         Vector<String> commentVector = wrapComment(text, textSpace);
 
-        //Now have a vector of text pieces and line feeds that will all
-        //fit in the allowed space. Print each piece, prefixing the first one
-        //with the label and indenting any remaining.
+        // Now have a vector of text pieces and line feeds that will all
+        // fit in the allowed space. Print each piece, prefixing the first one
+        // with the label and indenting any remaining.
         String s;
         int k = 0;
         try {

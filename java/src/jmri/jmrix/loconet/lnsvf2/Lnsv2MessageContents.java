@@ -671,7 +671,7 @@ public class Lnsv2MessageContents {
         return -1;
     }
     
-    public int getSVNum() {
+    public int getSvNum() {
         if ((sv_cmd != Sv2Command.SV2_DISCOVER_ALL.cmd) && 
                 (sv_cmd != Sv2Command.SV2_IDENTIFY_DEVICES_BY_TYPE.cmd) && 
                 (sv_cmd != Sv2Command.SV2_CHANGE_DEVICE_ADDRESS.cmd) && 

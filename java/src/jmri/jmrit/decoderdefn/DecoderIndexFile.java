@@ -741,9 +741,7 @@ public class DecoderIndexFile extends XmlFile {
      */
     public void writeFile(String name, DecoderIndexFile oldIndex,
                           String[] files, JOptionPane pane, JProgressBar pb) throws java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}",name);
-        }
+        log.debug("writeFile {}",name);
 
         // This is taken in large part from "Java and XML" page 368
         File file = new File(FileUtil.getUserFilesPath() + name);
@@ -838,7 +836,7 @@ public class DecoderIndexFile extends XmlFile {
                 family.setAttribute("file", fileName);
 
                 // drop the decoder implementation content
-                // comment is kept so it displays
+                // comment is kept, so it displays
                 // don't remove "outputs" due to use by ESU function map pane
                 // family.removeChildren("output");
                 // family.removeChildren("functionlabels");
@@ -886,7 +884,14 @@ public class DecoderIndexFile extends XmlFile {
         index.addContent(familyList);
 
         log.debug("Writing decoderIndex");
-        writeXML(file, doc);
+        try {
+            writeXML(file, doc);
+        } catch (java.io.FileNotFoundException ex3) {
+            log.error("FileNotFound error writing file: {}. check UserFilesPath", file);
+        } catch (java.io.IOException ioe) {
+            log.error("IO error writing file: {}", file);
+            throw ioe;
+        }
 
         // force a read of the new file next time
         resetInstance();

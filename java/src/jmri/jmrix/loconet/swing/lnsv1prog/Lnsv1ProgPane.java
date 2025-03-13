@@ -338,7 +338,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
                 subAddr = inDomain(subAddressField.getText(), 1,127); // goes in d5 as module high address
                 // check & warn for reserved LocoBuffer 0x50/0d80 address
                 if (addr == 0x50) {
-                    LocoBufferReservedAddress();
+                    locoBufferReservedAddress();
                     return;
                 }
                 setAllAddressButton.setEnabled(false);
@@ -397,7 +397,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
             subAddr = inDomain(subAddressField.getText(), 1,127); // goes in D5, used as module subaddress
             // check & warn for reserved LocoBuffer 0x50/0d80 address
             if (addr == 0x50) {
-                LocoBufferReservedAddress();
+                locoBufferReservedAddress();
                 return;
             }
             sv = inDomain(svField.getText(), 0,127); // decimal entry
@@ -424,7 +424,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
                 subAddr = inDomain(subAddressField.getText(), 1,0x7F); // goes in d5 as module high address
                 // check & warn for reserved LocoBuffer 0x50/0d80 address
                 if (addr == 0x50) {
-                    LocoBufferReservedAddress();
+                    locoBufferReservedAddress();
                     return;
                 }
                 sv = inDomain(svField.getText(), 1,0x7F); // decimal entry
@@ -474,7 +474,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     /**
      * Show dialog to warn that address 0x50 is reserved and invalid entry in LNSV1 pane
      */
-    private void LocoBufferReservedAddress() {
+    private void locoBufferReservedAddress() {
         Object[] dialogBoxButtonOptions = {
                 Bundle.getMessage("ButtonOK")};
         JmriJOptionPane.showOptionDialog(this.getParent(),
