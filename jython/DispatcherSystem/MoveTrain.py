@@ -387,9 +387,10 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             sound_flag = False
         return sound_flag
 
-    def call_dispatch(self, e, direction, train, mode="not_schedulinhg"):
+    def call_dispatch(self, e, direction, train, mode="not_scheduling"):
         global scheduling_margin_gbl, fast_clock_rate
-        print "__" + str(train) + " call dispatch"
+        if mode != "not_scheduling":
+            print "__" + str(train) + " call dispatch"
         global check_action_route_flag
         global check_route_flag
 
@@ -444,11 +445,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         result = False
         iter = 0
         while result == False:
-            print "--" + self.train_name + " calling doDispatch"
-            result = self.doDispatch(filename, "ROSTER", train)
+            # print "--" + self.train_name + " calling doDispatch"
+            result = self.doDispatch(filename, "ROSTER", train, mode)
             # if we failed to run the transit try again once before letting the operator have a go
             if result == False:
-                self.waitMsec(1000)  # wait 5 secs
+                self.waitMsec(1000)  # wait 1 sec
                 result = self.doDispatch(filename, "ROSTER", train)
                 if mode == "not_scheduling":
                     if iter > 5:
@@ -501,7 +502,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
         #    Dispatch (<filename.xml>, [USER | ROSTER | OPERATIONS >,<dccAddress, RosterEntryName or Operations>
 
-    def doDispatch(self, traininfoFileName, type, train_name):
+    def doDispatch(self, traininfoFileName, type, train_name, mode = "not_scheduling"):
 
         # print "doDispatch"
 
@@ -510,12 +511,19 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         train = trains[train_name]
         self.trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
         self.modify_trainInfo(train_name)  # sets the speed factor and other train dependent factors
+        transit_name = self.trainInfo.getTransitName()
         # print "traininfoFileName", traininfoFileName
         jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(self.trainInfo, traininfoFileName)
-        print "__" + train_name + " calling loadTrainFromTrainInfo"
+        # print "__" + train_name + " calling loadTrainFromTrainInfo"
+        # print "DF.dispatcherSystemSchedulingInOperation before", DF.dispatcherSystemSchedulingInOperation
+        DF.dispatcherSystemSchedulingInOperation = True  # to inhibit error message when train started but not in station
+        # print "DF.dispatcherSystemSchedulingInOperation", DF.dispatcherSystemSchedulingInOperation
+        if mode != "not_scheduling":
+            print "--" + self.train_name + " dispatching: transit name: " + transit_name
         result = DF.loadTrainFromTrainInfo(self.trainInfo, type, train_name)
-        print "loaded returning with code ", result
+        # print "loaded returning with code ", result
         if result == 0:
+            # print "--" + self.train_name + " called doDispatch; transit name: " + transit_name
             self.set_whether_to_stop_at_sensor(DF)
             train["allocating"] = False   # this flag is used when checking to see whether path for dispatch is clear
         if result == -1:
@@ -1828,6 +1836,10 @@ class createandshowGUI(TableModelListener):
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
         button_loadfromfile = JButton("Load From File", actionPerformed=self.loadfromfile_action)
         self.buttonPane.add(button_loadfromfile)
+        # self.buttonPane.add(Box.createHorizontalGlue())
+        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
+        button_deletefromfile = JButton("Delete Saved Files", actionPerformed=self.deletesavedfile_action)
+        self.buttonPane.add(button_deletefromfile)
         self.buttonPane.add(Box.createHorizontalGlue())
 
         contentPane = self.frame.getContentPane()
@@ -1960,6 +1972,7 @@ class createandshowGUI(TableModelListener):
 
         # append all blocks to put in dropdown
         for block in blocks_to_put_in_dropdown:
+            print "block", block
             self.model.data.append(["", block, "click ->", False, 10, 100])
 
         # delete rows with no blocks
@@ -1967,6 +1980,7 @@ class createandshowGUI(TableModelListener):
             if self.model.data[row][1] == None or self.model.data[row][1] == "":
                 if len(self.model.data)>1:
                     self.model.data.pop(row)
+        self.completeTablePanel()
 
     def remove_not_set_row(self):
         # print "data", self.model.data
@@ -1990,7 +2004,7 @@ class createandshowGUI(TableModelListener):
     def savetofile_action(self, event):
 
         #Tidy
-        self.model.remove_not_set_row()
+        self.remove_not_set_row()
         self.completeTablePanel()
 
         if self.model.getRowCount() == 0:
@@ -2095,6 +2109,37 @@ class createandshowGUI(TableModelListener):
                     self.model.data.pop(row)
             self.completeTablePanel1()
             self.completeTablePanel()
+
+    def deletesavedfile_action(self, event):
+
+        while True:
+            #Tidy
+            self.remove_not_set_row()
+            self.completeTablePanel()
+
+            if self.model.getRowCount() == 0:
+                return
+
+            dir = self.directory()
+            j = JFileChooser(dir);
+            j.setAcceptAllFileFilterUsed(False)
+            filter = FileNameExtensionFilter("text files txt", ["txt"])
+            j.addChoosableFileFilter(filter);
+            j.setDialogTitle("Delete not wanted files");
+
+            ret = j.showDialog(None, "Delete");
+            if ret == JFileChooser.APPROVE_OPTION:
+                file = j.getSelectedFile()
+                if file == "" or file == None:
+                    return
+                if file.exists():
+                    os.remove(file.getAbsolutePath())
+                    print("File " + file.getName() + " has been deleted successfully.")
+                else:
+                    print("The selected file does not exist.")
+            else:
+                print("File selection cancelled.")
+                return
 
     def cancel_action(self, event):
         title = ""

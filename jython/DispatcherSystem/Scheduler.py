@@ -1202,6 +1202,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         start_hour_gbl = self.start_hour
         end_hour_gbl = self.end_hour
         speed_not_operational_gbl = self.speed_not_operational
+        scheduling_margin_gbl = self.scheduling_margin
 
         # update the jlabel texts
 
@@ -2286,12 +2287,15 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
                     if self.scheduling_train:
                         self.wait_for_scheduled_time(self.route, station_index, accumulated_duration)
+                        print "__________________________Start__" + train_to_move + "___________________________________"
                         success = self.check_train_in_block_for_scheduling_margin_fast_minutes(start_block, train_to_move)
                         if success:
                             move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, station_comment, mode = "scheduling")
                             move_train.move_between_stations(station_from, station_to, train_to_move, self.graph, mode = "scheduling")
+                            print "__________________________End____" + train_to_move + "___________________________________"
                         else:
                             print "failed to move train - no train in block"
+                            print "__________________________End____" + train_to_move + "___________________________________"
                     else:
                         success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
                         if success:
@@ -2328,7 +2332,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0:  print "!     finished run_train"
 
     def check_train_in_block_for_scheduling_margin_fast_minutes(self, start_block, train_to_move):
-        print "__________________________Start_____________________________________"
+        # print "__________________________Start__" + train_to_move + "___________________________________"
         print "check_train_in_block_for_scheduling_margin_fast_minutes", start_block.getUserName(), train_to_move
         global fast_clock_rate
         if self.logLevel > 0: print "check_train_in_block_for_scheduling_margin_fast_minutes"
@@ -2702,21 +2706,7 @@ class ScheduleTrains(jmri.jmrit.automat.AbstractAutomaton):
 
     def check_train_ok_to_start(self, train, train_block_name):
 
-        # global trains_allocated
-        # global trains_allocated
-        # global trains_dispatched
-        #
-        # # check train in not in active trains
-        # DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        # java_active_trains_list = DF.getActiveTrainsList()
-        # java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
-        # active_train_names = [active_train.getTrainName() for active_train in java_active_trains_list]
-        #
-        # if train_name in active_train_names:
-        #     return False
-
-        # check scheduled train is same as train in block
-        # if self.blockOccupied(start_block):
+        # check the scheduled train is in the starting block
         if train_block_name == train.getDescription():
             # print "returning true"
             return True

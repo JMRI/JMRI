@@ -1,3 +1,5 @@
+from json.decoder import WHITESPACE
+
 from javax.swing import JTable, JScrollPane, JFrame, JPanel, JComboBox,  BorderFactory, DefaultCellEditor, JLabel, UIManager, SwingConstants, JFileChooser
 from javax.swing.table import  TableCellRenderer, DefaultTableCellRenderer
 from java.awt.event import MouseAdapter,MouseEvent, WindowListener, WindowEvent
@@ -80,11 +82,15 @@ class CreateAndShowGUI4(TableModelListener):
 
         button_savetofile = JButton("Save To File", actionPerformed = self.savetofile_action)
         self.buttonPane.add(button_savetofile)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
         button_loadfromfile = JButton("Load From File", actionPerformed = self.loadfromfile_action)
         self.buttonPane.add(button_loadfromfile)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
+
+        button_deletesavedfile = JButton("Delete Saved Files", actionPerformed = self.deletesavedfile_action)
+        self.buttonPane.add(button_deletesavedfile)
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         contentPane = self.frame.getContentPane()
 
@@ -165,7 +171,8 @@ class CreateAndShowGUI4(TableModelListener):
         columnModel.getColumn(route_col).setPreferredWidth(300);
         columnModel.getColumn(repeat_col).setPreferredWidth(210);
         columnModel.getColumn(dont_schedule_col).setPreferredWidth(150);
-        columnModel.getColumn(train_name_col).setPreferredWidth(200);
+        columnModel.getColumn(train_name_col).setMinWidth(0);  # train_name is unique identifier which can be hidden from user
+        columnModel.getColumn(train_name_col).setMaxWidth(0);  # train_name is unique identifier which can be hidden from user
         columnModel.getColumn(train_description_col).setPreferredWidth(300);
         columnModel.getColumn(edit_col).setPreferredWidth(100);
         columnModel.getColumn(delete_col).setPreferredWidth(100);
@@ -351,29 +358,43 @@ class CreateAndShowGUI4(TableModelListener):
             if result == JOptionPane.NO_OPTION:
                 return
 
-            # check the loaded contents
-            # 1) check that the trains are valid
-            # 2) ckeck that the blocks are occupied by valid trains
-            # if either of the above are not valic we blank the entries
-            # 3) Tidy
-
-            [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
-
-            # check the trains are valid
-
-            # trains_to_put_in_dropdown = [t for t in self.class_ResetButtonMaster.get_list_of_engines_to_move()]
-            # for row in reversed(range(len(self.model.data))):
-            #     if self.model.data[row][train_name_col] not in trains_to_put_in_dropdown:
-            #         self.model.data.pop(row)
-            #
-            # RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-            # routes = [str(route) for route in RouteManager.getRoutesByNameList()]
-            # for row in reversed(range(len(self.model.data))):
-            #     if self.model.data[row][route_col] not in routes:
-            #         self.model.data.pop(row)
-
         self.completeTablePanel()
         self.save()
+
+    def deletesavedfile_action(self, event):
+
+        while(True):
+
+            self.model.remove_not_set_row()
+            self.completeTablePanel()
+
+            if self.model.getRowCount() == 0:
+                return    self.model.remove_not_set_row()
+            self.completeTablePanel()
+
+            if self.model.getRowCount() == 0:
+                return
+
+            dir = self.directory()
+            j = JFileChooser(dir);
+            j.setAcceptAllFileFilterUsed(False)
+            filter = FileNameExtensionFilter("text files txt", ["txt"])
+            j.addChoosableFileFilter(filter);
+            j.setDialogTitle("Delete not wanted files");
+
+            ret = j.showDialog(None, "Delete");
+            if ret == JFileChooser.APPROVE_OPTION:
+                file = j.getSelectedFile()
+                if file == "" or file == None:
+                    return
+                if file.exists():
+                    os.remove(file.getAbsolutePath())
+                    print("File " + file.getName() + " has been deleted successfully.")
+                else:
+                    print("The selected file does not exist.")
+            else:
+                print("File selection cancelled.")
+                return
 
     def close_action(self, event):
         self.completeTablePanel()
