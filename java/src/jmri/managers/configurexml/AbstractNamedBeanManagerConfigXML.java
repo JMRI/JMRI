@@ -302,7 +302,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param t    The NamedBean being loaded
      * @param elem The existing Element
      */
-    void loadComment( @Nonnull NamedBean t, @Nonnull Element elem) {
+    void loadComment(NamedBean t, @Nonnull Element elem) {
         // load comment, if present
         String c = elem.getChildText(STR_COMMENT);
         if (c != null) {
