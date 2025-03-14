@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.lnsvf1.Lnsv1Device;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1Devices;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.progdebugger.ProgDebugger;
+//import jmri.progdebugger.ProgDebugger;
 
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriJOptionPane;

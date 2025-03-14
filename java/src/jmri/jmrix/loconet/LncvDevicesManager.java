@@ -18,7 +18,7 @@ import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevice;
 import jmri.jmrix.loconet.uhlenbrock.LncvDevices;
 import jmri.managers.DefaultProgrammerManager;
-import jmri.progdebugger.ProgDebugger;
+//import jmri.progdebugger.ProgDebugger;
 
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriJOptionPane;

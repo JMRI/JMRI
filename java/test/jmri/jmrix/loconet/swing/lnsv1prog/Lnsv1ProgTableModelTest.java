@@ -34,12 +34,12 @@ class Lnsv1ProgTableModelTest {
     @Test
     void testGetColumnClass() {
         Assertions.assertEquals(Integer.class, lptm.getColumnClass(Lnsv1ProgTableModel.VALUE_COLUMN), "VALUE_COLUMN class");
-        Assertions.assertEquals(javax.swing.JButton.class, lptm.getColumnClass(Lnsv1ProgTableModel.OPENPRGMRBUTTONCOLUMN), "OPENPRGMRBUTTONCOLUMN class");
+        Assertions.assertEquals(javax.swing.JButton.class, lptm.getColumnClass(Lnsv1ProgTableModel.OPENPRGMRBUTTON_COLUMN), "OPENPRGMRBUTTONCOLUMN class");
     }
 
     @Test
     void tastIsCellEditable() {
-        Assertions.assertTrue(lptm.isCellEditable(0, Lnsv1ProgTableModel.OPENPRGMRBUTTONCOLUMN), "OPENPRGMRBUTTONCOLUMN is editable");
+        Assertions.assertTrue(lptm.isCellEditable(0, Lnsv1ProgTableModel.OPENPRGMRBUTTON_COLUMN), "OPENPRGMRBUTTON_COLUMN is editable");
         Assertions.assertFalse(lptm.isCellEditable(0, Lnsv1ProgTableModel.VALUE_COLUMN), "VALUE_COLUMN is not editable");
     }
 
@@ -63,13 +63,13 @@ class Lnsv1ProgTableModelTest {
         Assertions.assertEquals("81/1", lptm.getValueAt(0, Lnsv1ProgTableModel.MODADDRSPLIT_COLUMN), "getValue in cell 0,MODADDRSPLIT_COLUMN");
         // Roster should be loaded for match
         Assertions.assertEquals(179, lptm.getValueAt(0, Lnsv1ProgTableModel.CV_COLUMN), "getValue in cell 0,CV_COLUMN");
-        Assertions.assertEquals(Bundle.getMessage("ButtonNoMatchInRoster"), lptm.getValueAt(0, Lnsv1ProgTableModel.OPENPRGMRBUTTONCOLUMN), "getValue in cell 0,OPENPRGMRBUTTONCOLUMN");
-        lptm.setValueAt(5,0, Lnsv1ProgTableModel.OPENPRGMRBUTTONCOLUMN); // click should see na action
+        Assertions.assertEquals(Bundle.getMessage("ButtonNoMatchInRoster"), lptm.getValueAt(0, Lnsv1ProgTableModel.OPENPRGMRBUTTON_COLUMN), "getValue in cell 0,OPENPRGMRBUTTONCOLUMN");
+        lptm.setValueAt(5,0, Lnsv1ProgTableModel.OPENPRGMRBUTTON_COLUMN); // click should see na action
 
         lcdm.message(new LocoNetMessage(new int[]{0xE5, 0x10, 0x04, 0x50, 0x01, 0x00, 0x02, 0x4A, 0x54, 0x00, 0x10, 0x02, 0x48, 0x00, 0x00, 0x05}));
         // should add row 2 to table, no match in roster
         Assertions.assertEquals(2, (int)lptm.getValueAt(1, Lnsv1ProgTableModel.COUNT_COLUMN), "getValue in cell 1,COUNT_COLUMN");
-        Assertions.assertEquals(Bundle.getMessage("ButtonNoMatchInRoster"), lptm.getValueAt(1, Lnsv1ProgTableModel.OPENPRGMRBUTTONCOLUMN), "getValue in cell 1,OPENPRGMRBUTTONCOLUMN");
+        Assertions.assertEquals(Bundle.getMessage("ButtonNoMatchInRoster"), lptm.getValueAt(1, Lnsv1ProgTableModel.OPENPRGMRBUTTON_COLUMN), "getValue in cell 1,OPENPRGMRBUTTONCOLUMN");
     }
 
 //    @Test
