@@ -35,9 +35,9 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
     public static final int MODADDR_COLUMN = 2;
     public static final int CV_COLUMN = 3;
     public static final int VALUE_COLUMN = 4;
-    public static final int DEVICENAMECOLUMN = 5;
-    public static final int ROSTERENTRYCOLUMN = 6;
-    public static final int OPENPRGMRBUTTONCOLUMN = 7;
+    public static final int DEVICENAME_COLUMN = 5;
+    public static final int ROSTERENTRY_COLUMN = 6;
+    public static final int OPENPRGMRBUTTON_COLUMN = 7;
     static public final int NUMCOLUMNS = 8;
     private final LncvProgPane parent;
     private final transient LocoNetSystemConnectionMemo memo;
@@ -69,11 +69,11 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                return Bundle.getMessage("HeadingCvLastRead");
            case VALUE_COLUMN:
                return Bundle.getMessage("HeadingValue");
-           case DEVICENAMECOLUMN:
+           case DEVICENAME_COLUMN:
                return Bundle.getMessage("HeadingDeviceModel");
-           case ROSTERENTRYCOLUMN:
+           case ROSTERENTRY_COLUMN:
                return Bundle.getMessage("HeadingDeviceId");
-           case OPENPRGMRBUTTONCOLUMN:
+           case OPENPRGMRBUTTON_COLUMN:
                return Bundle.getMessage("ButtonProgram");
            case COUNT_COLUMN:
            default:
@@ -90,10 +90,10 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
            case CV_COLUMN:
            case VALUE_COLUMN:
                return Integer.class;
-           case OPENPRGMRBUTTONCOLUMN:
+           case OPENPRGMRBUTTON_COLUMN:
                return javax.swing.JButton.class;
-           case DEVICENAMECOLUMN:
-           case ROSTERENTRYCOLUMN:
+           case DEVICENAME_COLUMN:
+           case ROSTERENTRY_COLUMN:
            default:
                return String.class;
        }
@@ -101,7 +101,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
 
    @Override
    public boolean isCellEditable(int r, int c) {
-       return (c == OPENPRGMRBUTTONCOLUMN);
+       return (c == OPENPRGMRBUTTON_COLUMN);
    }
 
    @Override
@@ -135,7 +135,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
               case VALUE_COLUMN:
                   assert dev != null;
                   return dev.getCvValue();
-              case DEVICENAMECOLUMN:
+              case DEVICENAME_COLUMN:
                   assert dev != null;
                   if (dev.getDeviceName().isEmpty()) { // not yet filled in, look for a candidate
                       List<DecoderFile> l =
@@ -171,10 +171,10 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                       return lastModelName;
                   }
                   return dev.getDeviceName();
-              case ROSTERENTRYCOLUMN:
+              case ROSTERENTRY_COLUMN:
                   assert dev != null;
                   return dev.getRosterName();
-              case OPENPRGMRBUTTONCOLUMN:
+              case OPENPRGMRBUTTON_COLUMN:
                   if (dev != null && !dev.getDeviceName().isEmpty()) {
                       if ((dev.getRosterName() != null) && (dev.getRosterName().isEmpty())) {
                           return Bundle.getMessage("ButtonCreateEntry");
@@ -202,7 +202,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             return;
         }
         LncvDevice dev = memo.getLncvDevicesManager().getDeviceList().getDevice(r);
-        if (c == OPENPRGMRBUTTONCOLUMN) {
+        if (c == OPENPRGMRBUTTON_COLUMN) {
             if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonCreateEntry")) == 0) {
                 createRosterEntry(dev);
                 if (dev.getRosterEntry() != null) {
@@ -312,18 +312,23 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 }
             }
 
-            RosterEntry re = new RosterEntry(dev.getDecoderFile().getFileName());
-            log.debug("=== DCC address on device: {}", dev.getDestAddr());
-            re.setDccAddress(Integer.toString(dev.getDestAddr()));
-            re.setDecoderModel(dev.getDecoderFile().getModel());
-            re.setProductID(Integer.toString(dev.getProductID()));
-            // add some details that won't be picked up otherwise from definition
-            re.setDecoderFamily(dev.getDecoderFile().getFileName());
-            re.setProgrammingModes(dev.getDecoderFile().getProgrammingModes());
-            re.setId(s);
+            RosterEntry re = getRosterEntry(dev, s);
             _roster.addEntry(re);
             dev.setRosterEntry(re);
         }
+    }
+
+    @Nonnull
+    private static RosterEntry getRosterEntry(LncvDevice dev, String s) {
+        RosterEntry re = new RosterEntry(dev.getDecoderFile().getFileName());
+        re.setDccAddress(Integer.toString(dev.getDestAddr()));
+        re.setDecoderModel(dev.getDecoderFile().getModel());
+        re.setProductID(Integer.toString(dev.getProductID()));
+        // add some details that won't be picked up otherwise from definition
+        re.setDecoderFamily(dev.getDecoderFile().getFileName());
+        re.setProgrammingModes(dev.getDecoderFile().getProgrammingModes());
+        re.setId(s);
+        return re;
     }
 
     private void warnRecreate(String address) {
@@ -343,20 +348,6 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 log.error("exception updating decoderIndexFile", exq);
             }
         }
-    }
-
-    /**
-     * Show dialog to instruct to add a roster entry supporting LNSV1 prog mode.
-     */
-    private void infoNoMatch(String address) {
-        //log.debug("address = {}", address);
-        Object[] dialogBoxButtonOptions = {
-                Bundle.getMessage("ButtonOK")};
-        JmriJOptionPane.showOptionDialog(parent,
-                Bundle.getMessage("DialogInfoNoRosterMatch", address), // not displaying addr?
-                Bundle.getMessage("TitleOpenRosterEntry"),
-                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE,
-                null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
     }
 
     /**

@@ -1496,7 +1496,6 @@ public class LocoNetMessageInterpret {
         if (!result.isEmpty()) {
             return result;
         }
-        log.debug("interpretSV0Message returned empty"); // EBR
 
         // check for a specific type - SV Programming messages format 2
         result = interpretSV2Message(l);

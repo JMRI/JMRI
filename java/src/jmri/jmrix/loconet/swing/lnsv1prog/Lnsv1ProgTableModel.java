@@ -34,10 +34,10 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
     public static final int VERSION_COLUMN = 3;
     public static final int CV_COLUMN = 4;
     public static final int VALUE_COLUMN = 5;
-    public static final int ROSTERENTRYCOLUMN = 6;
-    public static final int ROSTERSV1MODECOLUMN = 7;
-    public static final int ROSTERNAMECOLUMN = 8;
-    public static final int OPENPRGMRBUTTONCOLUMN = 9;
+    public static final int ROSTERENTRY_COLUMN = 6;
+    public static final int ROSTERSV1MODE_COLUMN = 7;
+    public static final int ROSTERNAME_COLUMN = 8;
+    public static final int OPENPRGMRBUTTON_COLUMN = 9;
     static public final int NUMCOLUMNS = 10;
     private final Lnsv1ProgPane parent;
     private final transient LocoNetSystemConnectionMemo memo;
@@ -71,13 +71,13 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                 return Bundle.getMessage("HeadingCvLastRead");
             case VALUE_COLUMN:
                 return Bundle.getMessage("HeadingValue");
-            case ROSTERENTRYCOLUMN:
+            case ROSTERENTRY_COLUMN:
                 return Bundle.getMessage("HeadingDeviceId");
-            case ROSTERNAMECOLUMN:
+            case ROSTERNAME_COLUMN:
                 return Bundle.getMessage("HeadingDeviceModel");
-            case ROSTERSV1MODECOLUMN:
+            case ROSTERSV1MODE_COLUMN:
                 return Bundle.getMessage("HeadingIsSv1");
-            case OPENPRGMRBUTTONCOLUMN:
+            case OPENPRGMRBUTTON_COLUMN:
                 return Bundle.getMessage("ButtonProgram");
             case COUNT_COLUMN:
             default:
@@ -94,13 +94,13 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
             case CV_COLUMN:
             case VALUE_COLUMN:
                 return Integer.class;
-            case OPENPRGMRBUTTONCOLUMN:
+            case OPENPRGMRBUTTON_COLUMN:
                 return javax.swing.JButton.class;
-            case ROSTERSV1MODECOLUMN:
+            case ROSTERSV1MODE_COLUMN:
                 return Boolean.class;
             case MODADDRSPLIT_COLUMN:
-            case ROSTERNAMECOLUMN:
-            case ROSTERENTRYCOLUMN:
+            case ROSTERNAME_COLUMN:
+            case ROSTERENTRY_COLUMN:
             default:
                 return String.class;
        }
@@ -108,7 +108,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
 
     @Override
     public boolean isCellEditable(int r, int c) {
-       return (c == OPENPRGMRBUTTONCOLUMN);
+       return (c == OPENPRGMRBUTTON_COLUMN);
    }
 
     @Override
@@ -145,24 +145,24 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                 case VALUE_COLUMN:
                     assert dev != null;
                     return dev.getCvValue();
-                case ROSTERENTRYCOLUMN:
+                case ROSTERENTRY_COLUMN:
                     assert dev != null;
                     return dev.getRosterEntry().getId();
-                case ROSTERSV1MODECOLUMN:
+                case ROSTERSV1MODE_COLUMN:
                     boolean isLnsv1 = false;
                     if (dev != null && dev.getDecoderFile() != null) {
                         isLnsv1 = dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE");
                         // can't access LnProgrammerManager.LOCONETSV1MODE constant
                     }
                     return isLnsv1;
-                case ROSTERNAMECOLUMN:
+                case ROSTERNAME_COLUMN:
                     assert dev != null;
                     if (dev.getRosterEntry() != null) {
                         return dev.getRosterEntry().getDecoderModel();
                     } else {
                         return "";
                     }
-                case OPENPRGMRBUTTONCOLUMN:
+                case OPENPRGMRBUTTON_COLUMN:
                     if (dev != null && !dev.getRosterName().isEmpty()) {
                         if (dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE")) {
                             return Bundle.getMessage("ButtonProgram");
@@ -186,7 +186,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
             // prevent update of a row that does not (yet) exist
             return;
         }
-        if (c == OPENPRGMRBUTTONCOLUMN) {
+        if (c == OPENPRGMRBUTTON_COLUMN) {
             if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
                 openProgrammer(r);
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonWrongMode")) == 0) {
