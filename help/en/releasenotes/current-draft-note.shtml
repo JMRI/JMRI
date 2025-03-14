@@ -142,8 +142,10 @@
                     </ul>
                 </li>
                 <li>Correctly decode events-with-payload</li>
-                <li>First implementation of LCC Location Services which will decode analog-carrying 
-                    location services reports to drive volt and amp meters.
+                <li>First implementation of LCC Location Services which will decode analog-carrying
+                    location services reports to drive volt and amp meters.</li>
+                <li>Update the STL Editor to support importing a <em>group_logic.csv</em> file
+                that has been modified by a spreadsheet program.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -668,7 +670,7 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>There's a new "DarkLAF HC" dark-mode setting for the display.
-                To use it, select Settings then Display, then click the 
+                To use it, select Settings then Display, then click the
                 button for "DarkLAF HC". Save preferences and restart.  Note that this
                 puts a dark background with light text on all JMRI windows.
                 You may have to rework your panels for them to look good
