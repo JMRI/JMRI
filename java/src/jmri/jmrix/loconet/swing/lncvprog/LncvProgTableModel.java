@@ -175,12 +175,15 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                   assert dev != null;
                   return dev.getRosterName();
               case OPENPRGMRBUTTONCOLUMN:
-                  assert dev != null;
-                  if (!dev.getDeviceName().isEmpty()) {
+                  if (dev != null && !dev.getDeviceName().isEmpty()) {
                       if ((dev.getRosterName() != null) && (dev.getRosterName().isEmpty())) {
                           return Bundle.getMessage("ButtonCreateEntry");
                       }
-                      return Bundle.getMessage("ButtonProgram");
+                      if (dev.getDecoderFile().isProgrammingMode("LOCONETLNCVMODE")) {
+                          return Bundle.getMessage("ButtonProgram");
+                      } else {
+                          return Bundle.getMessage("ButtonWrongMode");
+                      }
                   }
                   return Bundle.getMessage("ButtonNoMatchInRoster");
               default: // column 1
@@ -209,9 +212,11 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 }
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
                 openProgrammer(r);
+            } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonWrongMode")) == 0) {
+                infoNotForLncv(getValueAt(r, 1).toString()); // TODO once we check for LNCV progMode this can be removed
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonNoMatchInRoster")) == 0){
                 // suggest to rebuild decoderIndex
-                warnRecreate();
+                warnRecreate(getValueAt(r, 1).toString());
             }
         } else {
             // no change, so do not fire a property change event
@@ -308,6 +313,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
             }
 
             RosterEntry re = new RosterEntry(dev.getDecoderFile().getFileName());
+            log.debug("=== DCC address on device: {}", dev.getDestAddr());
             re.setDccAddress(Integer.toString(dev.getDestAddr()));
             re.setDecoderModel(dev.getDecoderFile().getModel());
             re.setProductID(Integer.toString(dev.getProductID()));
@@ -320,13 +326,13 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
         }
     }
 
-    private void warnRecreate() {
+    private void warnRecreate(String address) {
         // show dialog to inform and allow rebuilding index
         Object[] dialogBoxButtonOptions = {
                 Bundle.getMessage("ButtonRecreateIndex"),
                 Bundle.getMessage("ButtonCancel")};
         int userReply = JmriJOptionPane.showOptionDialog(parent,
-                Bundle.getMessage("DialogWarnRecreate"),
+                Bundle.getMessage("DialogWarnRecreate", address),
                 Bundle.getMessage("TitleOpenRosterEntry"),
                 JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
@@ -337,6 +343,33 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
                 log.error("exception updating decoderIndexFile", exq);
             }
         }
+    }
+
+    /**
+     * Show dialog to instruct to add a roster entry supporting LNSV1 prog mode.
+     */
+    private void infoNoMatch(String address) {
+        //log.debug("address = {}", address);
+        Object[] dialogBoxButtonOptions = {
+                Bundle.getMessage("ButtonOK")};
+        JmriJOptionPane.showOptionDialog(parent,
+                Bundle.getMessage("DialogInfoNoRosterMatch", address), // not displaying addr?
+                Bundle.getMessage("TitleOpenRosterEntry"),
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE,
+                null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
+    }
+
+    /**
+     * Show dialog to inform that address matched decoder doesn't support LNSV1 mode.
+     */
+    private void infoNotForLncv(String address) {
+        Object[] dialogBoxButtonOptions = {
+                Bundle.getMessage("ButtonOK")};
+        JmriJOptionPane.showOptionDialog(parent,
+                Bundle.getMessage("DialogInfoMatchNotX", address, "LNCV"),
+                Bundle.getMessage("TitleOpenRosterEntry"),
+                JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE,
+                null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);
     }
 
     /*

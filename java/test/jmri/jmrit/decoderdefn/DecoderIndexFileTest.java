@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
 /**
  * Tests for DecoderIndexFile class.
  *
- * @author Bob Jacobsen, Copyright (c) 2001, 2002
+ * @author Bob Jacobsen, Copyright (c) 2001, 2002, 2025
  */
 public class DecoderIndexFileTest {
 

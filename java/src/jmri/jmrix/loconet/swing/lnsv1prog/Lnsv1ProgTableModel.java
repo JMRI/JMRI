@@ -167,7 +167,7 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
                         if (dev.getDecoderFile().isProgrammingMode("LOCONETSV1MODE")) {
                             return Bundle.getMessage("ButtonProgram");
                         } else {
-                            return Bundle.getMessage("ButtonMatchNotLnsv1");
+                            return Bundle.getMessage("ButtonWrongMode");
                         }
                     }
                     return Bundle.getMessage("ButtonNoMatchInRoster");
@@ -189,8 +189,8 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
         if (c == OPENPRGMRBUTTONCOLUMN) {
             if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonProgram")) == 0) {
                 openProgrammer(r);
-            } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonMatchNotLnsv1")) == 0) {
-                infoNotForLnsv1();
+            } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonWrongMode")) == 0) {
+                infoNotForLnsv1(getValueAt(r, 1).toString()); // TODO once we check for LNSV1 progMode this can be removed
             } else if (((String) getValueAt(r, c)).compareTo(Bundle.getMessage("ButtonNoMatchInRoster")) == 0){
                 // no match, info add roster entry
                 infoNoMatch(getValueAt(r, 1).toString());
@@ -289,11 +289,11 @@ public class Lnsv1ProgTableModel extends AbstractTableModel implements PropertyC
     /**
      * Show dialog to inform that address matched decoder doesn't support LNSV1 mode.
      */
-    private void infoNotForLnsv1() {
+    private void infoNotForLnsv1(String address) {
         Object[] dialogBoxButtonOptions = {
                 Bundle.getMessage("ButtonOK")};
         JmriJOptionPane.showOptionDialog(parent,
-                Bundle.getMessage("DialogInfoMatchNotLnsv1"),
+                Bundle.getMessage("DialogInfoMatchNotX", address, "LNSV1"),
                 Bundle.getMessage("TitleOpenRosterEntry"),
                 JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE,
                 null, dialogBoxButtonOptions, dialogBoxButtonOptions[0]);

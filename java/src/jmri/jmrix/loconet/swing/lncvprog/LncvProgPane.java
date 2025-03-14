@@ -172,16 +172,12 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
         tablePanel.add(tableScrollPane, BorderLayout.CENTER);
 
-        // this does not fill the full width, why?
-//        JSplitPane holder = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-//                tablePanel, getMonitorPanel());
-//        holder.setMinimumSize(new Dimension(1000, 400));
-//        holder.setPreferredSize(new Dimension(1000, 400));
-//        holder.setDividerSize(8);
-//        holder.setOneTouchExpandable(true);
-//        add(holder, BorderLayout.LINE_START);
-        add(tablePanel);
-        add(getMonitorPanel());
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tablePanel, getMonitorPanel());
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        splitPane.setBorder(BorderFactory.createEmptyBorder());
+        add(splitPane);
+
         rawCheckBox.setSelected(pm.getSimplePreferenceState(rawDataCheck));
     }
 
@@ -213,7 +209,8 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     protected JPanel initButtonPanel() {
         // Set up buttons and entry fields
         JPanel panel4 = new JPanel();
-        panel4.setLayout(new FlowLayout());
+        panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
+        panel4.add(Box.createHorizontalGlue()); // this will expand/contract
 
         JPanel panel41 = new JPanel();
         panel41.setLayout(new BoxLayout(panel41, BoxLayout.PAGE_AXIS));
@@ -232,7 +229,8 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
 
         JPanel panel42 = new JPanel();
         panel42.setLayout(new BoxLayout(panel42, BoxLayout.PAGE_AXIS));
-        JPanel panel421 = new JPanel();
+
+        JPanel panel421 = new JPanel(); // default FlowLayout
         panel421.add(articleFieldLabel);
         // entry field (decimal)
         articleField.setToolTipText(Bundle.getMessage("TipModuleArticleField"));
@@ -245,6 +243,7 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         addressField.setText("1");
         panel422.add(addressField);
         panel42.add(panel422);
+
         panel42.add(directCheckBox);
         directCheckBox.addActionListener(e -> directActionPerformed());
         directCheckBox.setToolTipText(Bundle.getMessage("TipDirectMode"));
@@ -255,36 +254,43 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
         panel43.setBorder(panel43Border);
         panel43.setLayout(new BoxLayout(panel43, BoxLayout.LINE_AXIS));
 
-        JPanel panel431 = new JPanel();
+        JPanel panel431 = new JPanel(); // labels
         panel431.setLayout(new BoxLayout(panel431, BoxLayout.PAGE_AXIS));
-        JPanel panel4311 = new JPanel();
-        panel4311.add(cvFieldLabel);
-        // entry field (decimal) for CV number to read/write
+        cvFieldLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        cvFieldLabel.setMinimumSize(new Dimension(60, new JTextField("X").getHeight() + 5));
+        panel431.add(cvFieldLabel);
         //cvField.setToolTipText(Bundle.getMessage("TipModuleCvField"));
-        cvField.setText("0");
-        panel4311.add(cvField);
-        panel431.add(panel4311);
-
-        JPanel panel4312 = new JPanel();
-        panel4312.add(valueFieldLabel);
-        // entry field (decimal) for CV value
-        //valueField.setToolTipText(Bundle.getMessage("TipModuleValueField"));
-        valueField.setText("1");
-        panel4312.add(valueField);
-        panel431.add(panel4312);
+        valueFieldLabel.setMinimumSize(new Dimension(60, new JTextField("X").getHeight() + 5));
+        valueFieldLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        panel431.add(valueFieldLabel);
         panel43.add(panel431);
 
-        JPanel panel432 = new JPanel();
+        JPanel panel432 = new JPanel(); // entry fields
+        panel432.setMaximumSize(new Dimension(50, 50));
+        panel432.setPreferredSize(new Dimension(50, 50));
+        panel432.setMinimumSize(new Dimension(50, 50));
         panel432.setLayout(new BoxLayout(panel432, BoxLayout.PAGE_AXIS));
-        panel432.add(readButton);
+        cvField.setText("0");
+        panel432.add(cvField); // entry field (decimal) for CV value
+        //valueField.setToolTipText(Bundle.getMessage("TipModuleValueField"));
+        valueField.setText("1");
+        panel432.add(valueField); // entry field (decimal) for CV number to read/write
+        panel43.add(panel432);
+
+        JPanel panel433 = new JPanel(); // read/write buttons
+        panel433.setLayout(new BoxLayout(panel433, BoxLayout.PAGE_AXIS));
+        panel433.add(readButton);
         readButton.setEnabled(false);
         readButton.addActionListener(e -> readButtonActionPerformed());
 
-        panel432.add(writeButton);
+        panel433.add(writeButton);
         writeButton.setEnabled(false);
         writeButton.addActionListener(e -> writeButtonActionPerformed());
-        panel43.add(panel432);
+        panel43.add(panel433);
         panel4.add(panel43);
+
+        panel4.add(Box.createHorizontalGlue()); // this will expand/contract
+        panel4.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return panel4;
     }
@@ -295,17 +301,16 @@ public class LncvProgPane extends jmri.jmrix.loconet.swing.LnPanel implements Lo
     protected JPanel initStatusPanel() {
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
-        JPanel panel21 = new JPanel();
-        panel21.setLayout(new FlowLayout());
 
         statusText1.setText("   ");
         statusText1.setHorizontalAlignment(JLabel.CENTER);
-        panel21.add(statusText1);
-        panel2.add(panel21);
+        panel2.add(statusText1);
 
         statusText2.setText("   ");
         statusText2.setHorizontalAlignment(JLabel.CENTER);
         panel2.add(statusText2);
+
+        panel2.setAlignmentX(Component.CENTER_ALIGNMENT);
         return panel2;
     }
 

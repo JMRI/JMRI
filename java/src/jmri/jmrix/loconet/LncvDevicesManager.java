@@ -213,6 +213,17 @@ public class LncvDevicesManager extends PropertyChangeSupport
             return ProgrammingResult.FAIL_NO_MATCHING_ROSTER_ENTRY;
         }
 
+        // check if roster entry still present in Roster
+        RosterEntry re = Roster.getDefault().entryFromTitle(dev.getRosterName());
+        if (re == null) {
+            log.warn("Could not open LNSV1 Programmer because {} not found in Roster. Removed from device",
+                    dev.getRosterName());
+            dev.setRosterEntry(null);
+            jmri.util.ThreadingUtil.runOnLayoutEventually( ()-> firePropertyChange("DeviceListChanged", true, false));
+            return ProgrammingResult.FAIL_NO_MATCHING_ROSTER_ENTRY;
+        }
+        String name = re.getId();
+
         DefaultProgrammerManager pm = memo.getProgrammerManager();
         if (pm == null) {
             return ProgrammingResult.FAIL_NO_APPROPRIATE_PROGRAMMER;
@@ -233,19 +244,9 @@ public class LncvDevicesManager extends PropertyChangeSupport
                 return ProgrammingResult.FAIL_NO_LNCV_PROGRAMMER;
             }
         }
-        RosterEntry re = Roster.getDefault().entryFromTitle(dev.getRosterName());
-        if (re != null) {
-            String name = re.getId();
 
-            t.openPaneOpsProgFrame(re, name, "programmers/Comprehensive.xml", p); // NOI18N
-            return ProgrammingResult.SUCCESS_PROGRAMMER_OPENED;
-        } else {
-            log.warn("Could not open LNCV Programmer because {} not found in Roster. Removed from device",
-                    dev.getRosterName());
-            dev.setRosterEntry(null);
-            jmri.util.ThreadingUtil.runOnLayoutEventually( ()-> firePropertyChange("DeviceListChanged", true, false));
-            return ProgrammingResult.FAIL_NOT_IN_ROSTER;
-        }
+        t.openPaneOpsProgFrame(re, name, "programmers/Comprehensive.xml", p); // NOI18N
+        return ProgrammingResult.SUCCESS_PROGRAMMER_OPENED;
     }
 
     public enum ProgrammingResult {
@@ -256,8 +257,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
         FAIL_DESTINATION_ADDRESS_IS_ZERO,
         FAIL_MULTIPLE_DEVICES_SAME_DESTINATION_ADDRESS,
         FAIL_NO_ADDRESSED_PROGRAMMER,
-        FAIL_NO_LNCV_PROGRAMMER,
-        FAIL_NOT_IN_ROSTER
+        FAIL_NO_LNCV_PROGRAMMER
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LncvDevicesManager.class);

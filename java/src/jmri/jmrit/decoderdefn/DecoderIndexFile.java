@@ -3,6 +3,7 @@ package jmri.jmrit.decoderdefn;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,9 +51,8 @@ import org.slf4j.LoggerFactory;
  * nmra_mfg_list.xml file, but still written to decoderIndex.xml when
  * one is created.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2019
+ * @author Bob Jacobsen Copyright (C) 2001, 2019, 2025
  * @see jmri.jmrit.decoderdefn.DecoderIndexCreateAction
- *
  */
 public class DecoderIndexFile extends XmlFile {
 
@@ -355,10 +355,10 @@ public class DecoderIndexFile extends XmlFile {
      * updated; if it does, then forces the update.
      *
      * @return true is the index should be reloaded because it was updated
-     * @throws org.jdom2.JDOMException if unable to parse decoder index
-     * @throws java.io.IOException     if unable to read decoder index
+     * @throws JDOMException if unable to parse decoder index
+     * @throws IOException     if unable to read decoder index
      */
-    public static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
+    public static boolean updateIndexIfNeeded() throws JDOMException, IOException {
         switch (FileUtil.findFiles(defaultDecoderIndexFilename(), ".").size()) {
             case 0:
                 log.debug("creating decoder index");
@@ -496,7 +496,7 @@ public class DecoderIndexFile extends XmlFile {
             try {
                 index.writeFile(DECODER_INDEX_FILE_NAME,
                             InstanceManager.getDefault(DecoderIndexFile.class), sbox, null, null);
-            } catch (Exception ex) {
+            } catch (IOException ex) {
                 log.error("Error writing new decoder index file: {}", ex.getMessage());
             }
             return;
@@ -522,7 +522,7 @@ public class DecoderIndexFile extends XmlFile {
                 index.writeFile(DECODER_INDEX_FILE_NAME,
                             InstanceManager.getDefault(DecoderIndexFile.class), sbox, pane, pb);
             // catch all exceptions, so progress dialog will close
-            } catch (Exception e) {
+            } catch (IOException e) {
                 // TODO: show message in progress dialog?
                 log.error("Error writing new decoder index file: {}", e.getMessage());
             }
@@ -543,10 +543,10 @@ public class DecoderIndexFile extends XmlFile {
      * this does not clear any existing entries; reset the instance to do that.
      *
      * @param name the name of the decoder index file
-     * @throws org.jdom2.JDOMException if unable to parse to decoder index file
-     * @throws java.io.IOException     if unable to read decoder index file
+     * @throws JDOMException if unable to parse to decoder index file
+     * @throws IOException     if unable to read decoder index file
      */
-    void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
+    void readFile(String name) throws JDOMException, IOException {
         log.debug("readFile {}", name);
 
         // read file, find root
@@ -568,7 +568,7 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    void readMfgSection() throws org.jdom2.JDOMException, java.io.IOException {
+    void readMfgSection() throws JDOMException, IOException {
         // always reads the NMRA manufacturer file distributed with JMRI
         Element mfgList = rootFromName("nmra_mfg_list.xml");
 
@@ -737,10 +737,10 @@ public class DecoderIndexFile extends XmlFile {
      * @param files array of files to read for new index
      * @param pane optional JOptionPane to check for cancellation
      * @param pb optional JProgressBar to update during operations
-     * @throws Exception for unexpected errors during writing the decoder index file
+     * @throws IOException for errors writing the decoder index file
      */
     public void writeFile(String name, DecoderIndexFile oldIndex,
-                          String[] files, JOptionPane pane, JProgressBar pb) throws Exception {
+                          String[] files, JOptionPane pane, JProgressBar pb) throws IOException {
         log.debug("writeFile {}",name);
 
         // This is taken in large part from "Java and XML" page 368
@@ -867,15 +867,12 @@ public class DecoderIndexFile extends XmlFile {
 
                 // and store to output
                 familyList.addContent(family);
-            } catch (org.jdom2.JDOMException exj) {
+            } catch (JDOMException exj) {
                 log.error("could not parse {}: {}", fileName, exj.getMessage());
-            } catch (java.io.FileNotFoundException exj) {
+            } catch (FileNotFoundException exj) {
                 log.error("could not read {}: {}", fileName, exj.getMessage());
             } catch (IOException exj) {
                 log.error("other exception while dealing with {}: {}", fileName, exj.getMessage());
-            } catch (Exception exq) {
-                log.error("exception reading {}", fileName, exq);
-                throw exq;
             }
         }
 

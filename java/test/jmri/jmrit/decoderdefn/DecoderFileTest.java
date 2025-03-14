@@ -15,7 +15,7 @@ import org.junit.jupiter.api.*;
 /**
  * DecoderFileTest.java
  *
- * @author Bob Jacobsen, Copyright (C) 2001, 2002
+ * @author Bob Jacobsen, Copyright (C) 2001, 2002, 2025
  */
 public class DecoderFileTest {
 

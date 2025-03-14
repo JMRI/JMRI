@@ -198,6 +198,17 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
             return ProgrammingResult.FAIL_NO_MATCHING_ROSTER_ENTRY;
         }
 
+        // check if roster entry still present in Roster
+        RosterEntry re = Roster.getDefault().entryFromTitle(dev.getRosterName());
+        if (re == null) {
+            log.warn("Could not open LNSV1 Programmer because {} not found in Roster. Removed from device",
+                    dev.getRosterName());
+            dev.setRosterEntry(null);
+            jmri.util.ThreadingUtil.runOnLayoutEventually( ()-> firePropertyChange("DeviceListChanged", true, false));
+            return ProgrammingResult.FAIL_NO_MATCHING_ROSTER_ENTRY;
+        }
+        String name = re.getId();
+
         DefaultProgrammerManager pm = memo.getProgrammerManager();
         if (pm == null) {
             return ProgrammingResult.FAIL_NO_APPROPRIATE_PROGRAMMER;
@@ -218,8 +229,6 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                 return ProgrammingResult.FAIL_NO_LNSV1_PROGRAMMER;
             }
         }
-        RosterEntry re = Roster.getDefault().entryFromTitle(dev.getRosterName());
-        String name = re.getId();
 
         t.openPaneOpsProgFrame(re, name, "programmers/Comprehensive.xml", p); // NOI18N
         return ProgrammingResult.SUCCESS_PROGRAMMER_OPENED;

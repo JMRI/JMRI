@@ -52,7 +52,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     protected JLabel statusText2 = new JLabel();
     protected JLabel sepFieldLabel = new JLabel("/", JLabel.RIGHT);
     protected JLabel addressFieldLabel = new JLabel(Bundle.getMessage("LabelModuleAddress", JLabel.RIGHT));
-    protected JLabel cvFieldLabel = new JLabel(Bundle.getMessage("LabelSv"), JLabel.RIGHT);
+    protected JLabel svFieldLabel = new JLabel(Bundle.getMessage("LabelSv"), JLabel.RIGHT);
     protected JLabel valueFieldLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("HeadingValue")), JLabel.RIGHT);
     protected JTextArea result = new JTextArea(6,50);
     protected String reply = "";
@@ -152,10 +152,14 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         Border resultTitled = BorderFactory.createTitledBorder(resultBorder, Bundle.getMessage("Lnsv1TableTitle"));
         tablePanel.setBorder(resultTitled);
         tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
-        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
+        tablePanel.add(tableScrollPane);
 
-        add(tablePanel);
-        add(getMonitorPanel());
+        JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tablePanel, getMonitorPanel());
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        splitPane.setBorder(BorderFactory.createEmptyBorder());
+        add(splitPane);
+
         rawCheckBox.setSelected(pm.getSimplePreferenceState(rawDataCheck));
         decimalCheckBox.setSelected(pm.getSimplePreferenceState(decimalDataCheck));
 
@@ -164,7 +168,7 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     }
 
     /*
-     * Initialize the LNSVf1 Monitor panel.
+     * Initialize the LNSV1 Monitor panel.
      */
     protected JPanel getMonitorPanel() {
         JPanel panel3 = new JPanel();
@@ -198,7 +202,8 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     protected JPanel initButtonPanel() {
         // Set up buttons and entry fields
         JPanel panel4 = new JPanel();
-        panel4.setLayout(new FlowLayout());
+        panel4.setLayout(new BoxLayout(panel4, BoxLayout.X_AXIS));
+        panel4.add(Box.createHorizontalGlue()); // this will expand/contract
 
         JPanel panel41 = new JPanel();
         panel41.setLayout(new BoxLayout(panel41, BoxLayout.PAGE_AXIS));
@@ -216,49 +221,59 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         JPanel panel42 = new JPanel();
         panel42.setLayout(new BoxLayout(panel42, BoxLayout.PAGE_AXIS));
 
-        JPanel panel422 = new JPanel();
-        panel422.add(addressFieldLabel);
-        // entry field (decimal) for Module Low Address
+        JPanel panel421 = new JPanel(); // default FlowLayout
+        panel421.add(addressFieldLabel);
+        // entry field (decimal)
+        JPanel panel4211 = new JPanel(); // keep entry fields together
         addressField.setToolTipText(Bundle.getMessage("TipModuleAddrEntry"));
-        panel422.add(addressField);
-        panel422.add(sepFieldLabel); // holds the slash between base and subaddress
+        panel4211.add(addressField); // entry field (decimal) for Module Low Address
+        panel4211.add(sepFieldLabel); // holds the slash between base and subaddress
         subAddressField.setToolTipText(Bundle.getMessage("TipModuleSubaddrEntry"));
-        panel422.add(subAddressField);
-        panel42.add(panel422);
+        panel4211.add(subAddressField); // entry field (decimal) for Module Subaddress
+        panel421.add(panel4211);
+        panel42.add(panel421);
         panel4.add(panel42);
 
-        JPanel panel43 = new JPanel();
+        JPanel panel43 = new JPanel(); // CV num + value
         Border panel43Border = BorderFactory.createEtchedBorder();
         panel43.setBorder(panel43Border);
         panel43.setLayout(new BoxLayout(panel43, BoxLayout.LINE_AXIS));
 
-        JPanel panel431 = new JPanel();
+        JPanel panel431 = new JPanel(); // labels
         panel431.setLayout(new BoxLayout(panel431, BoxLayout.PAGE_AXIS));
-        JPanel panel4311 = new JPanel();
-        panel4311.add(cvFieldLabel);
-        // entry field (decimal) for SV number to read/write
-        panel4311.add(svField);
-        panel431.add(panel4311);
+        svFieldLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        svFieldLabel.setMinimumSize(new Dimension(60, new JTextField("X").getHeight() + 5));
+        panel431.add(svFieldLabel);
 
-        JPanel panel4312 = new JPanel();
-        panel4312.add(valueFieldLabel);
-        // entry field (decimal) for CV value
-        panel4312.add(valueField);
-        panel431.add(panel4312);
+        valueFieldLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        valueFieldLabel.setMinimumSize(new Dimension(60, new JTextField("X").getHeight() + 5));
+        panel431.add(valueFieldLabel);
         panel43.add(panel431);
 
-        JPanel panel432 = new JPanel();
+        JPanel panel432 = new JPanel(); // entry fields
+        panel432.setMaximumSize(new Dimension(50, 50));
+        panel432.setPreferredSize(new Dimension(50, 50));
+        panel432.setMinimumSize(new Dimension(50, 50));
         panel432.setLayout(new BoxLayout(panel432, BoxLayout.PAGE_AXIS));
-        panel432.add(readButton);
+        panel432.add(svField); // entry field (decimal) for SV number to read/write
+        panel432.add(valueField); // entry field (decimal) for CV value
+        panel43.add(panel432);
+
+        JPanel panel433 = new JPanel(); // read/write buttons
+        panel433.setLayout(new BoxLayout(panel433, BoxLayout.PAGE_AXIS));
+        panel433.add(readButton);
         readButton.setEnabled(true);
         readButton.addActionListener(e -> readButtonActionPerformed());
 
-        panel432.add(writeButton);
+        panel433.add(writeButton);
         writeButton.setEnabled(false); // disabled button, to write we point to Roster in button tooltip
         writeButton.addActionListener(e -> writeButtonActionPerformed());
         writeButton.setToolTipText(Bundle.getMessage("ButtonWriteInactiveTip"));
-        panel43.add(panel432);
+        panel43.add(panel433);
         panel4.add(panel43);
+
+        panel4.add(Box.createHorizontalGlue()); // this will expand/contract
+        panel4.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         return panel4;
     }
@@ -269,17 +284,16 @@ public class Lnsv1ProgPane extends jmri.jmrix.loconet.swing.LnPanel implements L
     protected JPanel initStatusPanel() {
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
-        JPanel panel21 = new JPanel();
-        panel21.setLayout(new FlowLayout());
 
         statusText1.setText("   ");
         statusText1.setHorizontalAlignment(JLabel.CENTER);
-        panel21.add(statusText1);
-        panel2.add(panel21);
+        panel2.add(statusText1);
 
         statusText2.setText("   ");
         statusText2.setHorizontalAlignment(JLabel.CENTER);
         panel2.add(statusText2);
+
+        panel2.setAlignmentX(Component.CENTER_ALIGNMENT);
         return panel2;
     }
 
