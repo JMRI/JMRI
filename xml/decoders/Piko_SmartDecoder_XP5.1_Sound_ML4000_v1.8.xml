@@ -12,334 +12,339 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<version author="Ulrich Gerlach" version="1" lastUpdated="2024-04-01"/>
-	<!-- Version 1 - For Piko SmartDecoder XP5.1 Sound FW 1.8.x with SUSI Light Controller on board -->
-	<!--             Supported decoder: PIKO56627-22 = PluX22 decoder KM ML4000 US #97442           -->
-	<decoder>
-		<family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
-			<model model="PIKO56627-22 KM ML4000-US V1.8" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX22" productID="PIKO56627-22" comment="Piko SmartDecoder XP5.1 Sound KM ML4000 (FW 1.8.0) US Version">
-				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
-				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
-				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
-				<size length="28.5" width="16" height="4" units="mm"/>
-				<functionlabels>
-					<functionlabel num="0" lockable="true">
-						<text>Headlights</text>
-						<text xml:lang="de">Spitzenlicht</text>
-					</functionlabel>
-					<functionlabel num="1" lockable="true">Bell</functionlabel>
-					<functionlabel num="2" lockable="true">Horn - Playable</functionlabel>
-					<functionlabel num="3" lockable="false">Short Horn</functionlabel>
-					<functionlabel num="4" lockable="false">Dynamic Brake Sound</functionlabel>
-					<functionlabel num="5" lockable="false">Manual Notch Up</functionlabel>
-					<functionlabel num="6" lockable="false">Manual Notch Down</functionlabel>
-					<functionlabel num="7" lockable="true">Headlight Dimmer</functionlabel>
-					<functionlabel num="8" lockable="false">Motor Sounds (multi steps)</functionlabel>
-					<functionlabel num="9" lockable="false">Indicators &amp; Markers Lights (multi steps)</functionlabel>
-					<functionlabel num="10" lockable="true">Dual White Gyralite</functionlabel>
-					<functionlabel num="11" lockable="true">Red Gyralite</functionlabel>
-					<functionlabel num="12" lockable="true"> </functionlabel>
-					<functionlabel num="13" lockable="true">Cab Interior Light</functionlabel>
-					<functionlabel num="14" lockable="true">Engine Room Light</functionlabel>
-					<functionlabel num="15" lockable="false">Lighting Double Traction (multi steps)</functionlabel>
-					<functionlabel num="16" lockable="false">Volume Stepper - 4 Steps</functionlabel>
-					<functionlabel num="17" lockable="true">Couple - Uncouple Sound</functionlabel>
-					<functionlabel num="18" lockable="true">Brake Squeal - Release</functionlabel>
-					<functionlabel num="19" lockable="true">Curve Squeal Sound</functionlabel>
-					<functionlabel num="20" lockable="true">Radiator Fan Sound</functionlabel>
-					<functionlabel num="21" lockable="false">Sander Valve Sound</functionlabel>
-					<functionlabel num="22" lockable="false">Cab Chatter #1</functionlabel>
-					<functionlabel num="23" lockable="false">Cab Chatter #2</functionlabel>
-					<functionlabel num="24" lockable="true">Air Compressor Sound</functionlabel>
-					<functionlabel num="25" lockable="true">Control Stand Light</functionlabel>
-					<functionlabel num="26" lockable="false">Grade Crossing Horn</functionlabel>
-					<functionlabel num="27" lockable="true"> </functionlabel>
-					<functionlabel num="28" lockable="true">Switching Mode - Half Speed</functionlabel>
-				</functionlabels>
-				<soundlabels>
-					<soundlabel num="1">Prime Movers</soundlabel>
-				</soundlabels>
-			</model>
-			<model model="PIKO56627-22 KM ML4000-EU V1.8" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX22" productID="PIKO56627-22" comment="Piko SmartDecoder XP5.1 Sound KM ML4000 (FW 1.8.0) EU Version">
-				<output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
-				<output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
-				<output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
-				<output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
-				<size length="28.5" width="16" height="4" units="mm"/>
-				<functionlabels>
-					<functionlabel num="0" lockable="true">
-						<text>Headlights</text>
-						<text xml:lang="de">Spitzenlicht</text>
-					</functionlabel>
-					<functionlabel num="1" lockable="true">
-						<text>Bell</text>
-						<text xml:lang="de">Glocke</text>
-					</functionlabel>
-					<functionlabel num="2" lockable="true">
-						<text>Horn - Playable</text>
-						<text xml:lang="de">Horn lang</text>
-						</functionlabel>
-					<functionlabel num="3" lockable="false">
-						<text>Short Horn</text>
-						<text xml:lang="de">Horn kurz</text>
-						</functionlabel>
-					<functionlabel num="4" lockable="false">
-						<text>Dynamic Brake Sound</text>
-						<text xml:lang="de">Dynamische Bremse</text>
-						</functionlabel>
-					<functionlabel num="5" lockable="true">
-						<text>Signal Light Green</text>
-						<text xml:lang="de">Signallicht grün</text>
-						</functionlabel>
-					<functionlabel num="6" lockable="true">
-						<text>Signal Light White</text>
-						<text xml:lang="de">Signallicht weiß</text>
-						</functionlabel>
-					<functionlabel num="7" lockable="true">
-						<text>Headlight Dimmer</text>
-						<text xml:lang="de">Abblendlicht</text>
-						</functionlabel>
-					<functionlabel num="8" lockable="true">
-						<text>Motor Sounds</text>
-						<text xml:lang="de">Motor Sound</text>
-						</functionlabel>
-					<functionlabel num="9" lockable="true">
-						<text>License Plate Illumination</text>
-						<text xml:lang="de">Nummernschildbeleuchtung</text>
-						</functionlabel>
-					<functionlabel num="10" lockable="true">
-						<text>Dual White Gyralite</text>
-						<text xml:lang="de">Gyralite weiß 2fach</text>
-						</functionlabel>
-					<functionlabel num="11" lockable="true">
-						<text>Red Gyralite</text>
-						<text xml:lang="de">Gyralite rot</text>
-						</functionlabel>
-					<functionlabel num="12" lockable="true">
-						<text>Signal Light Red</text>
-						<text xml:lang="de">Signallicht rot</text>
-						</functionlabel>
-					<functionlabel num="13" lockable="true">
-						<text>Cab Interior Light</text>
-						<text xml:lang="de">Führerstandsbeleuchtung</text>
-						</functionlabel>
-					<functionlabel num="14" lockable="true">
-						<text>Engine Room Light</text>
-						<text xml:lang="de">Maschinenraumbeleuchtung</text>
-						</functionlabel>
-					<functionlabel num="15" lockable="false">
-						<text>Lighting Double Traction (multi steps)</text>
-						<text xml:lang="de">Beleuchtung Doppeltraktion</text>
-						</functionlabel>
-					<functionlabel num="16" lockable="false"> </functionlabel>
-					<functionlabel num="17" lockable="true">
-						<text>Couple - Uncouple Sound</text>
-						<text xml:lang="de">Kuppeln</text>
-						</functionlabel>
-					<functionlabel num="18" lockable="true">
-						<text>Brake Squeal - Release</text>
-						<text xml:lang="de">Bremsenquietschen</text>
-						</functionlabel>
-					<functionlabel num="19" lockable="true">
-						<text>Curve Squeal Sound</text>
-						<text xml:lang="de">Kurvenquietschen</text>
-						</functionlabel>
-					<functionlabel num="20" lockable="true">
-						<text>Radiator Fan Sound</text>
-						<text xml:lang="de">Lüfter</text>
-						</functionlabel>
-					<functionlabel num="21" lockable="false">
-						<text>Sander Valve Sound</text>
-						<text xml:lang="de">Sanden</text>
-						</functionlabel>
-					<functionlabel num="22" lockable="false">
-						<text>Cab Chatter #1</text>
-						<text xml:lang="de">Funk 1</text>
-						</functionlabel>
-					<functionlabel num="23" lockable="false">
-						<text>Cab Chatter #2</text>
-						<text xml:lang="de">Funk 2</text>
-						</functionlabel>
-					<functionlabel num="24" lockable="true">
-						<text>Air Compressor Sound</text>
-						<text xml:lang="de">Kompressor</text>
-						</functionlabel>
-					<functionlabel num="25" lockable="true">
-						<text>Control Stand Light</text>
-						<text xml:lang="de">Führerpultbeleuchtung</text>
-						</functionlabel>
-					<functionlabel num="26" lockable="false">
-						<text>Grade Crossing Horn</text>
-						<text xml:lang="de">Bahnübergangshorn</text>
-						</functionlabel>
-					<functionlabel num="27" lockable="false">
-						<text>Volume Stepper - 4 Steps</text>
-						<text xml:lang="de">Lautstärkestufen</text>
-						</functionlabel>
-					<functionlabel num="28" lockable="true">
-						<text>Switching Mode - Half Speed</text>
-						<text xml:lang="de">Rangiergang</text>
-						</functionlabel>
-				</functionlabels>
-				<soundlabels>
-					<soundlabel num="1">Prime Movers</soundlabel>
-				</soundlabels>
-			</model>
-		</family>
-		<programming direct="yes" paged="no" register="no" ops="yes">
-			<capability>
-				<name>Indexed CV access</name>
-				<parameter name="PI">31</parameter>
-				<!-- for Banks -->
-				<parameter name="SI">32</parameter>
-				<!-- Not used, but need to be declared for cvFirst to be read -->
-				<parameter name="cvFirst">true</parameter>
-			</capability>
-		</programming>
-		<variables>
-			<!-- CVs 1, 17, 29 bit 5 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-			<!-- CVs 2 - 6 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv2-6_v5.1.xml"/>
-			<!-- CVs 7 - 8 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
-			<!-- CV 11 -->
-			<variable item="Time Digitalprotocol" CV="11" default="0">
-				<decVal/>
-				<label>Time without digital protocol</label>
-				<label xml:lang="de">Zeit ohne Digitalprotokoll</label>
-			</variable>
-			<!-- CV 12 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv12_v5.1.xml"/>
-			<!-- CVs 13 - 14 - Analog Mode Functions F0 - F12 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
-			<!-- CVs 15 - 16 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv15.16.xml"/>
-			<!-- CVs 17 - 18 - already in place with CV 1-->
-			<!-- CV 19 Consisting Information -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-			<!-- CVs 21 - 22 - Consisting Functions -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
-			<!-- CV 27 - ABC stop configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv27.xml"/>
-			<!-- CV 28 - RailCom configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv28.xml"/>
-			<!-- CV 29 - DCC configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
-			<!-- CV 30 - Fault memory -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv30error.xml"/>
-			<!-- CVs 31 - 32 - Banks are on CV 257.512_v5.1.xml include -->
-			<!-- CVs 33 - 46 - nrma function mapping: not necessary only extended function mapping -->
-			<!--<xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>-->
-			<!-- CV 47 - SUSI configuration, CVs 115 - 120 - SUSI Sendeoptionen 1 und 3 to SUSI -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv47.115-120_v5.1.xml"/>
-			<!-- CVs 48 - 52 - ABC special configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv48-52_v5.1.xml"/>
-			<!-- CV 53 - ABV Anfahrrampe -->
-			<variable item="Anfahrrampe CV53" CV="53" default="255">
-				<decVal max="255"/>
-				<label>Soft start and braking ramp (CV 53)</label>
-				<label xml:lang="de">Sanftanfahr- und Bremsrampe (CV 53)</label>
-				<tooltip>takes effect before the start-up delay or after braking delay (255 = Off)</tooltip>
-				<tooltip xml:lang="de">greift vor bzw. nach ABV (255 = Aus)</tooltip>
-			</variable>
-			<!-- CVs 54 - 56,62 Motor control -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv54-56_v5.1.xml"/>
-			<!-- CV 61 - Motorola -->
-			<variable item="Motorola Config" CV="61" default="0">
-				<decVal max="3"/>
-				<label>Motorola Config (CV 61)</label>
-				<label xml:lang="de">Motorola Konfiguration (CV 61)</label>
-				<tooltip>Number of additional Motorola addresses for F5 - F16</tooltip>
-				<tooltip xml:lang="de">Anzahl der zusätzlichen Motorolaadressen für F5 - F16</tooltip>
-			</variable>
-			<!-- CV 63 - Volume / Lautstärke -->
-			<variable item="Globale Lautstärke" CV="63" readOnly="yes" default="200">
-				<decVal max="255"/>
-				<label>Global volume for mfx control centers (CV 63)</label>
-				<label xml:lang="de">Globale Lautstärke für mfx-Zentralen (CV 63)</label>
-				<tooltip>Auxiliary CV = CV 257 on Bank 16</tooltip>
-				<tooltip xml:lang="de">Hilfs-CV = CV 257 von Bank 16</tooltip>
-			</variable>
-			<!-- CV 66 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
-			<!-- CV 95 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
-			<!-- CVs 67 - 94 -->
-			<xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
-			<variable item="Advanced Function Mapping" CV="96" default="6" readOnly="yes" include="PIKO SmartDecoder XP5.1 (version 1.8+)">
-				<enumVal>
-					<enumChoice choice="1" value="1">
-						<choice>Advanced Function Mapping off</choice>
-						<choice xml:lang="de">Erweitertes Funktionsmapping aus</choice>
-					</enumChoice>
-					<enumChoice choice="2" value="6">
-						<choice>Advanced Function Mapping on</choice>
-						<choice xml:lang="de">Erweitertes Funktionsmapping</choice>
-					</enumChoice>
-				</enumVal>
-				<label>Use Advanced Function Mapping</label>
-				<label xml:lang="de">Art des Funktionsmapping</label>
-				<label xml:lang="nl">Uitgebreide Functiemapping actief</label>
-				<label xml:lang="cs">Použití mapování pokročilých funkcí</label>
-				<tooltip>simple value=1 / extended value=6 (from V1.8)</tooltip>
-				<tooltip xml:lang="de">einfach Wert=1 / erweitert Wert=6 (ab V1.8)</tooltip>
-			</variable>
-			<!-- CVs 97 - 98 not necessary only extended function mapping -->
-			<!--<xi:include href="http://jmri.org/xml/decoders/piko/cv97.98_v5.1.xml"/>-->
-			<!-- CVs 101 - 104 - Analog mode control -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv101-104_v5.1.xml"/>
-			<!-- CVs 130 - 135 - Rangiertango -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv130-135_v5.1.xml"/>
-			<!-- CVs 140 - 145 - Constant braking distance -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv140-145_v5.1.xml"/>
-			<!-- CVs 150 - 153 - Alternate ABV -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv150-153_v5.1.xml"/>
-			<!-- CVs 154 - 157 - Function keys-->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv154-157_v5.1.xml"/>
-			<!-- CVs 160 - 163 - Piko steam configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv160-163_v5.1.xml"/>
-			<!-- CVs 170 - 179 - Light Effects -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv170-179_v5.1.xml"/>
-			<!-- CVs 180 - 183 - Automatisches Abschalten Funktionsausgänge -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv180-183_v5.1.xml"/>
-			<!-- CVs 202 - 222 - Servos configuration -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv202-222_v5.1.xml"/>
-			<!-- CVs 240 - 250 - Motor control / Motorregelung -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv240-250_v5.1.xml"/>
-			<!--extended function mapping Piko Smartdecoder (Sound) 5.1, includes CV 31-32 bank switches-->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank16_v5.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank17_v5.1.xml"/>
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank18_v5.1.xml"/>
-			<!-- Interner Lichtdecoder CV897 - 1024 -->
-			<xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_LC2_v5.1.xml"/>
-		</variables>
-		<xi:include href="http://jmri.org/xml/decoders/piko/cv8factReset_v5.1.xml"/>
-	</decoder>
-	<!-- special panes -->
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoRailcom.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoAccelDecel.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePiko2_v5.1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoMotor.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_LC2_v5.1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoSound_v5.1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoExtendedFmap_v5.1.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/piko/PanePikoConfigOutput_v5.1.xml"/>
+    <version author="Ulrich Gerlach" version="1" lastUpdated="2024-04-01"/>
+    <!-- Version 1 - For Piko SmartDecoder XP5.1 Sound FW 1.8.x with SUSI Light Controller on board -->
+    <!--             Supported decoder: PIKO56627-22 = PluX22 decoder KM ML4000 US #97442           -->
+    <version author="Ulrich Gerlach" version="5" lastUpdated="2025-03-13"/>
+    <!-- Version 5 - Add CVs and pane for decorder informationen, set highVersionID=16 -->
+    <decoder>
+        <family name="PIKO SmartDecoder XP5.1 (version 1.8+)" mfg="PIKO" lowVersionID="8" highVersionID="15" comment="Decoders not sorted (necessarily) in numerical order">
+            <model model="PIKO56627-22 KM ML4000-US V1.8" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX22" productID="PIKO56627-22" comment="Piko SmartDecoder XP5.1 Sound KM ML4000 (FW 1.8.0 - 1.16.0) US Version">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <size length="28.5" width="16" height="4" units="mm"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">
+                        <text>Headlights</text>
+                        <text xml:lang="de">Spitzenlicht</text>
+                    </functionlabel>
+                    <functionlabel num="1" lockable="true">Bell</functionlabel>
+                    <functionlabel num="2" lockable="true">Horn - Playable</functionlabel>
+                    <functionlabel num="3" lockable="false">Short Horn</functionlabel>
+                    <functionlabel num="4" lockable="false">Dynamic Brake Sound</functionlabel>
+                    <functionlabel num="5" lockable="false">Manual Notch Up</functionlabel>
+                    <functionlabel num="6" lockable="false">Manual Notch Down</functionlabel>
+                    <functionlabel num="7" lockable="true">Headlight Dimmer</functionlabel>
+                    <functionlabel num="8" lockable="false">Motor Sounds (multi steps)</functionlabel>
+                    <functionlabel num="9" lockable="false">Indicators &amp; Markers Lights (multi steps)</functionlabel>
+                    <functionlabel num="10" lockable="true">Dual White Gyralite</functionlabel>
+                    <functionlabel num="11" lockable="true">Red Gyralite</functionlabel>
+                    <functionlabel num="12" lockable="true"> </functionlabel>
+                    <functionlabel num="13" lockable="true">Cab Interior Light</functionlabel>
+                    <functionlabel num="14" lockable="true">Engine Room Light</functionlabel>
+                    <functionlabel num="15" lockable="false">Lighting Double Traction (multi steps)</functionlabel>
+                    <functionlabel num="16" lockable="false">Volume Stepper - 4 Steps</functionlabel>
+                    <functionlabel num="17" lockable="true">Couple - Uncouple Sound</functionlabel>
+                    <functionlabel num="18" lockable="true">Brake Squeal - Release</functionlabel>
+                    <functionlabel num="19" lockable="true">Curve Squeal Sound</functionlabel>
+                    <functionlabel num="20" lockable="true">Radiator Fan Sound</functionlabel>
+                    <functionlabel num="21" lockable="false">Sander Valve Sound</functionlabel>
+                    <functionlabel num="22" lockable="false">Cab Chatter #1</functionlabel>
+                    <functionlabel num="23" lockable="false">Cab Chatter #2</functionlabel>
+                    <functionlabel num="24" lockable="true">Air Compressor Sound</functionlabel>
+                    <functionlabel num="25" lockable="true">Control Stand Light</functionlabel>
+                    <functionlabel num="26" lockable="false">Grade Crossing Horn</functionlabel>
+                    <functionlabel num="27" lockable="true"> </functionlabel>
+                    <functionlabel num="28" lockable="true">Switching Mode - Half Speed</functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">Prime Movers</soundlabel>
+                </soundlabels>
+            </model>
+            <model model="PIKO56627-22 KM ML4000-EU V1.8" numOuts="9" numFns="68" maxMotorCurrent="1.2A" formFactor="H0" connector="PluX22" productID="PIKO56627-22" comment="Piko SmartDecoder XP5.1 Sound KM ML4000 (FW 1.8.0 - 1.16.0) EU Version">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <size length="28.5" width="16" height="4" units="mm"/>
+                <functionlabels>
+                    <functionlabel num="0" lockable="true">
+                        <text>Headlights</text>
+                        <text xml:lang="de">Spitzenlicht</text>
+                    </functionlabel>
+                    <functionlabel num="1" lockable="true">
+                        <text>Bell</text>
+                        <text xml:lang="de">Glocke</text>
+                    </functionlabel>
+                    <functionlabel num="2" lockable="true">
+                        <text>Horn - Playable</text>
+                        <text xml:lang="de">Horn lang</text>
+                        </functionlabel>
+                    <functionlabel num="3" lockable="false">
+                        <text>Short Horn</text>
+                        <text xml:lang="de">Horn kurz</text>
+                        </functionlabel>
+                    <functionlabel num="4" lockable="false">
+                        <text>Dynamic Brake Sound</text>
+                        <text xml:lang="de">Dynamische Bremse</text>
+                        </functionlabel>
+                    <functionlabel num="5" lockable="true">
+                        <text>Signal Light Green</text>
+                        <text xml:lang="de">Signallicht grün</text>
+                        </functionlabel>
+                    <functionlabel num="6" lockable="true">
+                        <text>Signal Light White</text>
+                        <text xml:lang="de">Signallicht weiß</text>
+                        </functionlabel>
+                    <functionlabel num="7" lockable="true">
+                        <text>Headlight Dimmer</text>
+                        <text xml:lang="de">Abblendlicht</text>
+                        </functionlabel>
+                    <functionlabel num="8" lockable="true">
+                        <text>Motor Sounds</text>
+                        <text xml:lang="de">Motor Sound</text>
+                        </functionlabel>
+                    <functionlabel num="9" lockable="true">
+                        <text>License Plate Illumination</text>
+                        <text xml:lang="de">Nummernschildbeleuchtung</text>
+                        </functionlabel>
+                    <functionlabel num="10" lockable="true">
+                        <text>Dual White Gyralite</text>
+                        <text xml:lang="de">Gyralite weiß 2fach</text>
+                        </functionlabel>
+                    <functionlabel num="11" lockable="true">
+                        <text>Red Gyralite</text>
+                        <text xml:lang="de">Gyralite rot</text>
+                        </functionlabel>
+                    <functionlabel num="12" lockable="true">
+                        <text>Signal Light Red</text>
+                        <text xml:lang="de">Signallicht rot</text>
+                        </functionlabel>
+                    <functionlabel num="13" lockable="true">
+                        <text>Cab Interior Light</text>
+                        <text xml:lang="de">Führerstandsbeleuchtung</text>
+                        </functionlabel>
+                    <functionlabel num="14" lockable="true">
+                        <text>Engine Room Light</text>
+                        <text xml:lang="de">Maschinenraumbeleuchtung</text>
+                        </functionlabel>
+                    <functionlabel num="15" lockable="false">
+                        <text>Lighting Double Traction (multi steps)</text>
+                        <text xml:lang="de">Beleuchtung Doppeltraktion</text>
+                        </functionlabel>
+                    <functionlabel num="16" lockable="false"> </functionlabel>
+                    <functionlabel num="17" lockable="true">
+                        <text>Couple - Uncouple Sound</text>
+                        <text xml:lang="de">Kuppeln</text>
+                        </functionlabel>
+                    <functionlabel num="18" lockable="true">
+                        <text>Brake Squeal - Release</text>
+                        <text xml:lang="de">Bremsenquietschen</text>
+                        </functionlabel>
+                    <functionlabel num="19" lockable="true">
+                        <text>Curve Squeal Sound</text>
+                        <text xml:lang="de">Kurvenquietschen</text>
+                        </functionlabel>
+                    <functionlabel num="20" lockable="true">
+                        <text>Radiator Fan Sound</text>
+                        <text xml:lang="de">Lüfter</text>
+                        </functionlabel>
+                    <functionlabel num="21" lockable="false">
+                        <text>Sander Valve Sound</text>
+                        <text xml:lang="de">Sanden</text>
+                        </functionlabel>
+                    <functionlabel num="22" lockable="false">
+                        <text>Cab Chatter #1</text>
+                        <text xml:lang="de">Funk 1</text>
+                        </functionlabel>
+                    <functionlabel num="23" lockable="false">
+                        <text>Cab Chatter #2</text>
+                        <text xml:lang="de">Funk 2</text>
+                        </functionlabel>
+                    <functionlabel num="24" lockable="true">
+                        <text>Air Compressor Sound</text>
+                        <text xml:lang="de">Kompressor</text>
+                        </functionlabel>
+                    <functionlabel num="25" lockable="true">
+                        <text>Control Stand Light</text>
+                        <text xml:lang="de">Führerpultbeleuchtung</text>
+                        </functionlabel>
+                    <functionlabel num="26" lockable="false">
+                        <text>Grade Crossing Horn</text>
+                        <text xml:lang="de">Bahnübergangshorn</text>
+                        </functionlabel>
+                    <functionlabel num="27" lockable="false">
+                        <text>Volume Stepper - 4 Steps</text>
+                        <text xml:lang="de">Lautstärkestufen</text>
+                        </functionlabel>
+                    <functionlabel num="28" lockable="true">
+                        <text>Switching Mode - Half Speed</text>
+                        <text xml:lang="de">Rangiergang</text>
+                        </functionlabel>
+                </functionlabels>
+                <soundlabels>
+                    <soundlabel num="1">Prime Movers</soundlabel>
+                </soundlabels>
+            </model>
+        </family>
+        <programming direct="yes" paged="no" register="no" ops="yes">
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter>
+                <!-- for Banks -->
+                <parameter name="SI">32</parameter>
+                <!-- Not used, but need to be declared for cvFirst to be read -->
+                <parameter name="cvFirst">true</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <!-- CVs 1, 17, 29 bit 5 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+            <!-- CVs 2 - 6 -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv2-6_v5.1.xml"/>
+            <!-- CVs 7 - 8 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+            <!-- CV 11 -->
+            <variable item="Time Digitalprotocol" CV="11" default="0">
+                <decVal/>
+                <label>Time without digital protocol</label>
+                <label xml:lang="de">Zeit ohne Digitalprotokoll</label>
+            </variable>
+            <!-- CV 12 -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv12_v5.1.xml"/>
+            <!-- CVs 13 - 14 - Analog Mode Functions F0 - F12 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+            <!-- CVs 15 - 16 -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv15.16.xml"/>
+            <!-- CVs 17 - 18 - already in place with CV 1-->
+            <!-- CV 19 Consisting Information -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+            <!-- CVs 21 - 22 - Consisting Functions -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
+            <!-- CV 27 - ABC stop configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv27.xml"/>
+            <!-- CV 28 - RailCom configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv28.xml"/>
+            <!-- CV 29 - DCC configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+            <!-- CV 30 - Fault memory -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv30error.xml"/>
+            <!-- CVs 31 - 32 - Banks are on CV 257.512_v5.1.xml include -->
+            <!-- CVs 33 - 46 - nrma function mapping: not necessary only extended function mapping -->
+            <!--<xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>-->
+            <!-- CV 47 - SUSI configuration, CVs 115 - 120 - SUSI Sendeoptionen 1 und 3 to SUSI -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv47.115-120_v5.1.xml"/>
+            <!-- CVs 48 - 52 - ABC special configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv48-52_v5.1.xml"/>
+            <!-- CV 53 - ABV Anfahrrampe -->
+            <variable item="Anfahrrampe CV53" CV="53" default="255">
+                <decVal max="255"/>
+                <label>Soft start and braking ramp (CV 53)</label>
+                <label xml:lang="de">Sanftanfahr- und Bremsrampe (CV 53)</label>
+                <tooltip>takes effect before the start-up delay or after braking delay (255 = Off)</tooltip>
+                <tooltip xml:lang="de">greift vor bzw. nach ABV (255 = Aus)</tooltip>
+            </variable>
+            <!-- CVs 54 - 56,62 Motor control -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv54-56_v5.1.xml"/>
+            <!-- CV 61 - Motorola -->
+            <variable item="Motorola Config" CV="61" default="0">
+                <decVal max="3"/>
+                <label>Motorola Config (CV 61)</label>
+                <label xml:lang="de">Motorola Konfiguration (CV 61)</label>
+                <tooltip>Number of additional Motorola addresses for F5 - F16</tooltip>
+                <tooltip xml:lang="de">Anzahl der zusätzlichen Motorolaadressen für F5 - F16</tooltip>
+            </variable>
+            <!-- CV 63 - Volume / Lautstärke -->
+            <variable item="Globale Lautstärke" CV="63" readOnly="yes" default="200">
+                <decVal max="255"/>
+                <label>Global volume for mfx control centers (CV 63)</label>
+                <label xml:lang="de">Globale Lautstärke für mfx-Zentralen (CV 63)</label>
+                <tooltip>Auxiliary CV = CV 257 on Bank 16</tooltip>
+                <tooltip xml:lang="de">Hilfs-CV = CV 257 von Bank 16</tooltip>
+            </variable>
+            <!-- CV 66 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
+            <!-- CV 95 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
+            <!-- CVs 67 - 94 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+            <variable item="Advanced Function Mapping" CV="96" default="6" readOnly="yes" include="PIKO SmartDecoder XP5.1 (version 1.8+)">
+                <enumVal>
+                    <enumChoice choice="1" value="1">
+                        <choice>Advanced Function Mapping off</choice>
+                        <choice xml:lang="de">Erweitertes Funktionsmapping aus</choice>
+                    </enumChoice>
+                    <enumChoice choice="2" value="6">
+                        <choice>Advanced Function Mapping on</choice>
+                        <choice xml:lang="de">Erweitertes Funktionsmapping</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Use Advanced Function Mapping</label>
+                <label xml:lang="de">Art des Funktionsmapping</label>
+                <label xml:lang="nl">Uitgebreide Functiemapping actief</label>
+                <label xml:lang="cs">Použití mapování pokročilých funkcí</label>
+                <tooltip>simple value=1 / extended value=6 (from V1.8)</tooltip>
+                <tooltip xml:lang="de">einfach Wert=1 / erweitert Wert=6 (ab V1.8)</tooltip>
+            </variable>
+            <!-- CVs 97 - 98 not necessary only extended function mapping -->
+            <!--<xi:include href="http://jmri.org/xml/decoders/piko/cv97.98_v5.1.xml"/>-->
+            <!-- CVs 101 - 104 - Analog mode control -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv101-104_v5.1.xml"/>
+            <!-- CVs 130 - 135 - Rangiertango -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv130-135_v5.1.xml"/>
+            <!-- CVs 140 - 145 - Constant braking distance -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv140-145_v5.1.xml"/>
+            <!-- CVs 150 - 153 - Alternate ABV -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv150-153_v5.1.xml"/>
+            <!-- CVs 154 - 157 - Function keys-->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv154-157_v5.1.xml"/>
+            <!-- CVs 160 - 163 - Piko steam configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv160-163_v5.1.xml"/>
+            <!-- CVs 170 - 179 - Light Effects -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv170-179_v5.1.xml"/>
+            <!-- CVs 180 - 183 - Automatisches Abschalten Funktionsausgänge -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv180-183_v5.1.xml"/>
+            <!-- CVs 202 - 222 - Servos configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv202-222_v5.1.xml"/>
+            <!-- CVs 240 - 250 - Motor control / Motorregelung -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv240-250_v5.1.xml"/>
+            <!--extended function mapping Piko Smartdecoder (Sound) 5.1, includes CV 31-32 bank switches-->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank16_v5.1.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank17_v5.1.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv257-512_bank18_v5.1.xml"/>
+            <!-- Interner Lichtdecoder CV897 - 1024 -->
+            <xi:include href="http://jmri.org/xml/decoders/piko/cv897-1024_LC2_v5.1.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/piko/decoderInfoCVs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/piko/projectInfoCVs.xml"/>
+        </variables>
+        <xi:include href="http://jmri.org/xml/decoders/piko/cv8factReset_v5.1.xml"/>
+    </decoder>
+    <!-- special panes -->
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoRailcom.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoAccelDecel.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePiko1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePiko2_v5.1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoMotor.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoLichtDecoder_LC2_v5.1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoSound_v5.1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoExtendedFmap_v5.1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoConfigOutput_v5.1.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/PanePikoInfo.xml"/>
 </decoder-config>
 
