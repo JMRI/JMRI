@@ -330,7 +330,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      * Supported message types:
      * <ul>
      *     <li>LN SV v1 {@link jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents}</li>
-     *     <li>LN SV v2 {@link Lnsv2MessageContents}</li>
+     *     <li>LN SV v2 {@link jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents}</li>
      *     <li>LNCV {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
      * </ul>
      * Listener is attached to jmri.jmrix.loconet.hexfile.HexFileFrame with GUI box to turn this option on/off

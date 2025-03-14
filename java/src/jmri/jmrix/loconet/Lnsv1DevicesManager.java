@@ -218,7 +218,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
             return ProgrammingResult.FAIL_NO_ADDRESSED_PROGRAMMER;
         }
 
-        if (p.getClass() != ProgDebugger.class) { // Debug
+        //if (p.getClass() != ProgDebugger.class) { // Debug in Simulator
             // ProgDebugger is used for LocoNet HexFile Sim; uncommenting above line allows testing of LNSV1 Tool
             if (!p.getSupportedModes().contains(LnProgrammerManager.LOCONETOPSBOARD)) {
                 return ProgrammingResult.FAIL_NO_LNSV1_PROGRAMMER;
@@ -228,7 +228,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
             if (!prgMode.equals(LnProgrammerManager.LOCONETSV1MODE)) {
                 return ProgrammingResult.FAIL_NO_LNSV1_PROGRAMMER;
             }
-        }
+        //}
 
         t.openPaneOpsProgFrame(re, name, "programmers/Comprehensive.xml", p); // NOI18N
         return ProgrammingResult.SUCCESS_PROGRAMMER_OPENED;
