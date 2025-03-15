@@ -21,6 +21,14 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <test>3</test>
     <modifier>plus</modifier>
   </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <timeProvider>
+      <systemName>IUInternalTimeProvider</systemName>
+    </timeProvider>
+    <timeProvider>
+      <systemName>IUSystemClock</systemName>
+    </timeProvider>
+  </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
@@ -92,14 +100,6 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
-  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
-    <timeProvider>
-      <systemName>IUInternalTimeProvider</systemName>
-    </timeProvider>
-    <timeProvider>
-      <systemName>IUSystemClock</systemName>
-    </timeProvider>
-  </timeProviders>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IH1</systemName>
@@ -199,7 +199,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <name>My logixng thread</name>
     </Thread>
     <Thread>
-      <id>55</id>
+      <id>54</id>
       <name>My other logixng thread</name>
     </Thread>
     <LogixNG enabled="no" inline="no">
@@ -572,7 +572,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <ConditionalNG enabled="no">
       <systemName>IQC:AUTO:0004</systemName>
       <userName>A fourth empty conditionalNG</userName>
-      <thread>55</thread>
+      <thread>54</thread>
       <Socket>
         <socketName>A</socketName>
       </Socket>
@@ -58380,9 +58380,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sat Mar 15 07:27:30 CET 2025</date>
+      <date>Sat Mar 15 17:21:47 CET 2025</date>
       <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/LogixNG_temp.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.11.3plus+daniel+2025-03-15T06:27:15Z+Rb58f456 on Sat Mar 15 07:27:30 CET 2025-->
+  <!--Written by JMRI version 5.11.3plus+daniel+2025-03-15T16:21:39Z+Rd18602e on Sat Mar 15 17:21:47 CET 2025-->
 </layout-config>
