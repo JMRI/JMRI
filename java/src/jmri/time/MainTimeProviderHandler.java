@@ -62,10 +62,7 @@ public interface MainTimeProviderHandler {
     TimeProvider getSecondaryTimeProvider();
 
     /**
-     * Request a callback when the minutes place of the time changes. This is
-     * the same as calling
-     * {@link #addPropertyChangeListener(String, PropertyChangeListener)} with
-     * the propertyName {@code minutes}.
+     * Request a callback when the minutes place of the time changes.
      *
      * @param l the listener to receive the callback
      */
@@ -73,18 +70,13 @@ public interface MainTimeProviderHandler {
 
     /**
      * Remove a request for callback when the minutes place of the time changes.
-     * This is the same as calling
-     * {@link #removePropertyChangeListener(String, PropertyChangeListener)}
-     * with the propertyName {@code minutes}.
      *
      * @param l the listener to receive the callback
      */
     void removeMinuteChangeListener(@Nonnull PropertyChangeListener l);
 
     /**
-     * Get the list of minute change listeners. This is the same as calling
-     * {@link #getPropertyChangeListeners(String)} with the propertyName
-     * {@code minutes}.
+     * Get the list of minute change listeners.
      *
      * @return the list of listeners
      */
