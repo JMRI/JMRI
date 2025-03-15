@@ -46,7 +46,6 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
 
     @Override
     public void setTime(Date d) {
-        System.out.format("AA setTime(Date): %s%n", d.toString());
         TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
                 .getCurrentTimeProvider();
         if (tp instanceof TimeSetter) {
