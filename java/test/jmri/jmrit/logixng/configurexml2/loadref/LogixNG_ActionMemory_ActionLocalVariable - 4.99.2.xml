@@ -7,6 +7,14 @@
     <test>1</test>
     <modifier>plus</modifier>
   </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <timeProvider>
+      <systemName>IUInternalTimeProvider</systemName>
+    </timeProvider>
+    <timeProvider>
+      <systemName>IUSystemClock</systemName>
+    </timeProvider>
+  </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
@@ -25,14 +33,6 @@
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
-  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
-    <timeProvider>
-      <systemName>IUInternalTimeProvider</systemName>
-    </timeProvider>
-    <timeProvider>
-      <systemName>IUSystemClock</systemName>
-    </timeProvider>
-  </timeProviders>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
       <systemName>IHTransitScaffold</systemName>
