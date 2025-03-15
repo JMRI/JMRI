@@ -13,8 +13,6 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.SystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation of a TurnoutManager.
@@ -77,8 +75,10 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
+    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName)
+            throws IllegalArgumentException {
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+            + ((userName == null) ? "null" : userName));  // NOI18N
         // add normalize? see AbstractSensor
         log.debug("newTurnout: {};{}", systemName, userName);
 
@@ -108,7 +108,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             if ((t.getUserName() == null) && (userName != null)) {
                 t.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found turnout via system name ({}) with non-null user name ({}). Turnout \"{} ({})\" cannot be used.",
+                log.warn("Found turnout via system name ({}) with non-null user name ({})."
+                    + " Turnout \"{} ({})\" cannot be used.",
                         systemName, t.getUserName(), systemName, userName);
             }
             return t;
@@ -221,7 +222,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * @throws IllegalArgumentException if unsuccessful
      */
     @Nonnull
-    abstract protected Turnout createNewTurnout(@Nonnull String systemName, String userName) throws IllegalArgumentException;
+    protected abstract Turnout createNewTurnout(@Nonnull String systemName, String userName)
+        throws IllegalArgumentException;
 
     /** {@inheritDoc} */
     @Override
@@ -267,13 +269,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                 try {
                     jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (IllegalArgumentException ex) {
-                    throw new JmriException("Value of requested turnout default closed speed is not valid. " + ex.getMessage());
+                    throw new JmriException("Value of requested turnout default closed speed is not valid. "
+                        + ex.getMessage());
                 }
             }
         }
         String oldSpeed = defaultClosedSpeed;
         defaultClosedSpeed = speed;
-        firePropertyChange("DefaultTurnoutClosedSpeedChange", oldSpeed, speed);
+        firePropertyChange(PROPERTY_DEFAULT_CLOSED_SPEED, oldSpeed, speed);
     }
 
     /** {@inheritDoc} */
@@ -297,13 +300,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
                 try {
                     jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(speed);
                 } catch (IllegalArgumentException ex) {
-                    throw new JmriException("Value of requested turnout default thrown speed is not valid. " + ex.getMessage());
+                    throw new JmriException("Value of requested turnout default thrown speed is not valid. "
+                        + ex.getMessage());
                 }
             }
         }
         String oldSpeed = defaultThrownSpeed;
         defaultThrownSpeed = speed;
-        firePropertyChange("DefaultTurnoutThrownSpeedChange", oldSpeed, speed);
+        firePropertyChange(PROPERTY_DEFAULT_THROWN_SPEED, oldSpeed, speed);
     }
 
     /** {@inheritDoc} */
@@ -376,6 +380,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractTurnoutManager.class);
 
 }
