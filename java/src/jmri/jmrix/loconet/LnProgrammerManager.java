@@ -70,7 +70,6 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      */
     public static final ProgrammingMode LOCONETLNCVMODE    = new ProgrammingMode("LOCONETLNCVMODE", Bundle.getMessage("LOCONETLNCVMODE"));
 
-
     /**
      * Programming via LocoNet messages for Digitrax DS*, PM*, BDL*, SE* boards
      */

@@ -124,23 +124,23 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         lnopsmodeprogrammer.writeCV("91",testVal,pl);
 
         // should have written and not returned
-        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
          // check echo of sent message has no effect
         LocoNetMessage m = lnis.outbound.get(0);
         lnopsmodeprogrammer.message(m);
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
         // Known-good message in reply
         m = new LocoNetMessage(new int[]{0xE5, 0x10, 0x53, 0x50, 0x01, 0x00, 0x01, 0x5B, 0x66, 0x7B, 0x00, 0x01, 0x00, 0x00, testVal, 0x36});
         lnopsmodeprogrammer.message(m);
 
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
-        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches written", testVal, pl.getRcvdValue());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(1, pl.getRcvdInvoked(), "Got programming reply");
+        Assertions.assertEquals(0, pl.getRcvdStatus(), "Reply status OK");
+        Assertions.assertEquals(testVal, pl.getRcvdValue(), "Reply value matches written");
 
      }
 
@@ -152,30 +152,30 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         lnopsmodeprogrammer.readCV("113.6",pl);
 
         // should have written and not returned
-        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
-        Assert.assertEquals("sent byte 0", 0xD0, lnis.outbound.get(0).getElement(0) & 0xFF);
-        Assert.assertEquals("sent byte 1", 0x62, lnis.outbound.get(0).getElement(1) & 0xFF);
-        Assert.assertEquals("sent byte 2", 0x03, lnis.outbound.get(0).getElement(2) & 0xFF);
-        Assert.assertEquals("sent byte 3", 113, lnis.outbound.get(0).getElement(3) & 0xFF);
-        Assert.assertEquals("sent byte 4", 0x0A, lnis.outbound.get(0).getElement(4) & 0xFF);
+        Assertions.assertEquals(0xD0, lnis.outbound.get(0).getElement(0) & 0xFF, "sent byte 0");
+        Assertions.assertEquals(0x62, lnis.outbound.get(0).getElement(1) & 0xFF, "sent byte 1");
+        Assertions.assertEquals(0x03, lnis.outbound.get(0).getElement(2) & 0xFF, "sent byte 2");
+        Assertions.assertEquals(113, lnis.outbound.get(0).getElement(3) & 0xFF, "sent byte 3");
+        Assertions.assertEquals(0x0A, lnis.outbound.get(0).getElement(4) & 0xFF, "sent byte 4");
 
         int testVal = 0;
 
         // check echo of sent message has no effect
         LocoNetMessage m = lnis.outbound.get(0);
         lnopsmodeprogrammer.message(m);
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
         // Known-good message in reply
         m = new LocoNetMessage(new int[]{0xB4, 0x50, 0x40, 0x00});
         lnopsmodeprogrammer.message(m);
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
-        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(1, pl.getRcvdInvoked(), "Got programming reply");
+        Assertions.assertEquals(0, pl.getRcvdStatus(), "Reply status OK");
+        Assertions.assertEquals(testVal, pl.getRcvdValue(), "Reply value matches");
 
      }
 
@@ -292,30 +292,30 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
-        lnopsmodeprogrammer.readCV("83",pl);
+        lnopsmodeprogrammer.readCV("83", pl);
 
         // should have written and not returned
-        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
-        Assert.assertEquals("sent byte 0", 0xE5, lnis.outbound.get(0).getElement(0) & 0xFF);
-        Assert.assertEquals("sent byte 2", 0x50, lnis.outbound.get(0).getElement(2) & 0xFF);
+        Assertions.assertEquals(0xE5, lnis.outbound.get(0).getElement(0) & 0xFF, "sent byte 0");
+        Assertions.assertEquals(0x50, lnis.outbound.get(0).getElement(2) & 0xFF, "sent byte 2");
 
         int testVal = 132;
 
         // check echo of sent message has no effect
         LocoNetMessage m = lnis.outbound.get(0);
         lnopsmodeprogrammer.message(m);
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
         // Known-good message in reply
         m = new LocoNetMessage(new int[]{0xE5, 0x10, 0x53, 0x50, 0x01, 0x00, 0x02, 0x5B, 0x66, 0x7B, 0x02, 0x01, 0x04, 0x00, 0x00, 0x48});
         lnopsmodeprogrammer.message(m);
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
-        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(1, pl.getRcvdInvoked(), "Got programming reply");
+        Assertions.assertEquals(0, pl.getRcvdStatus(), "Reply status OK");
+        Assertions.assertEquals(testVal, pl.getRcvdValue(), "Reply value matches");
      }
 
      @Test
@@ -324,11 +324,11 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         lnopsmodeprogrammer.readCV("83",pl);
 
         // should have written and not returned
-        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
-        Assert.assertEquals("sent byte 0", 0xE5, lnis.outbound.get(0).getElement(0) & 0xFF);
-        Assert.assertEquals("sent byte 2", 0x50, lnis.outbound.get(0).getElement(2) & 0xFF);
+        Assertions.assertEquals(0xE5, lnis.outbound.get(0).getElement(0) & 0xFF, "sent byte 0");
+        Assertions.assertEquals(0x50, lnis.outbound.get(0).getElement(2) & 0xFF, "sent byte 2");
 
         int testVal = 47; // 0x2F
 
@@ -337,10 +337,10 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             = new LocoNetMessage(new int[]{0xE5, 0x10, 0x53, 0x50, 0x01, 0x00, 0x02, 0x03, 0x66, 0x7B, 0x00, 0x01, 0x2F, 0x78, 0x10, 0x52});
         lnopsmodeprogrammer.message(m);
 
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
-        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(1, pl.getRcvdInvoked(), "Got programming reply");
+        Assertions.assertEquals(0, pl.getRcvdStatus(), "Reply status OK");
+        Assertions.assertEquals(testVal, pl.getRcvdValue(), "Reply value matches");
      }
 
      @Test
@@ -349,22 +349,22 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         lnopsmodeprogrammer.writeCV("22",33,pl);
 
         // should have written and not returned
-        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
         // check echo of sent message has no effect
         LocoNetMessage m = lnis.outbound.get(0);
         lnopsmodeprogrammer.message(m);
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
         // turn the message around as a reply
         m.setElement(3, m.getElement(3) | 0x40);
         lnopsmodeprogrammer.message(m);
 
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
-        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(1, pl.getRcvdInvoked(), "Got programming reply");
+        Assertions.assertEquals(0, pl.getRcvdStatus(), "Reply status OK");
      }
 
      @Test
@@ -373,27 +373,27 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         lnopsmodeprogrammer.readCV("22",pl);
 
         // should have written and not returned
-        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
         int testVal = 130;
 
         // check echo of sent message has no effect
         LocoNetMessage m = lnis.outbound.get(0);
         lnopsmodeprogrammer.message(m);
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(0, pl.getRcvdInvoked(), "No programming reply");
 
         // turn the message around as a reply
         m.setElement(3, m.getElement(3) | 0x40);
-        m.setElement(10, (m.getElement(10)&0x7E) | ((testVal & 0x80) != 0 ? 1 : 0));
+        m.setElement(10, m.getElement(10) & 0x7E | 1);
         m.setElement(11, testVal & 0x7F);
         lnopsmodeprogrammer.message(m);
 
-        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
-        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-        Assert.assertEquals("Reply value matches", 130, pl.getRcvdValue());
+        Assertions.assertEquals(1, lnis.outbound.size(), "still one message sent");
+        Assertions.assertEquals(1, pl.getRcvdInvoked(), "Got programming reply");
+        Assertions.assertEquals(0, pl.getRcvdStatus(), "Reply status OK");
+        Assertions.assertEquals(130, pl.getRcvdValue(), "Reply value matches");
      }
 
      @Test

@@ -24,16 +24,16 @@
 
       <p>With the DS54 at defaults these are the LocoNet&reg; msgs when either Switch A or Aux A goes
       positive causing the Turnout to "toggle" state:<br>
-      When Switch A (blue lead) goes high loconet msg [b2 8 70 35].<br>
-      When Aux A (orange lead) goes high loconet msg [b2 8 50 15]</p>
+      When Switch A (blue lead) goes high LocoNet msg [b2 8 70 35].<br>
+      When Aux A (orange lead) goes high LocoNet msg [b2 8 50 15]</p>
 
       <p>I then set "When Switch A input changes, send" ="Turnout feedback msg"<br>
-      When Switch A (blue lead) goes high loconet msg [b2 8 70 36]<br>
-      When Aux A (orange lead) goes high loconet msg [b2 8 50 15]</p>
+      When Switch A (blue lead) goes high LocoNet msg [b2 8 70 36]<br>
+      When Aux A (orange lead) goes high LocoNet msg [b2 8 50 15]</p>
 
       <p>I then set "When Aux A input changes, send"= "Turnout feedback message"<br>
-      When Switch A (blue lead) goes high loconet msg [b2 8 70 36]<br>
-      When Aux A (orange lead) goes high loconet msg [b2 8 50 16]</p>
+      When Switch A (blue lead) goes high LocoNet msg [b2 8 70 36]<br>
+      When Aux A (orange lead) goes high LocoNet msg [b2 8 50 16]</p>
 
       <p>Therefore, when the Switch and Aux inputs are set to send a turnout feedback message, the
       feedback mechanisms built into recent versions of JMRI can be used to track the turnout state
@@ -46,17 +46,20 @@
 
       <p>Configure the DS54 channel with:</p>
 
-      <pre>
+      <span class="wide">
+<code>
  Aux A input"='Active ON, trigger on change, Positive Level"
  Aux A task"="No Output change"
  When Aux A input changes, send"= "Exact turnout feedback message"
  Switch A input"='Active ON, trigger on change, Positive Level"
  Switch A task"="No Output change"
  Switch A input changes, send"= "Exact turnout feedback message"
-</pre>
+</code>
+      </span>
+
       <p>Configure Turnout LT9 (via the Turnout Table) to use "EXACT" feedback.</p>
 
-      <table border="1">
+      <table>
         <tr>
           <th>Commentary</th>
           <th>LocoNet messages</th>
@@ -114,7 +117,7 @@
 
       <h1>Programming the DS54</h1>
 
-      <p>The DS54 CV values can be programmed via JMRI using the JMRI programming tools using the
+      <p>The DS54 CV values can be programmed via JMRI using the DecoderPro programming tools using the
       "Service Mode" programming track. This requires a JMRI connection to a command station, and
       the DS54's track inputs must be connected to the programming track. As described in the DS54
       documentation, it is necessary to connect a 100 Ohm 2 Watt resistor between one of the
@@ -122,9 +125,9 @@
       It is also necessary to disconnect all other input signal sources.</p>
 
       <p>Once the connections described above have been made, place the programming jumper across
-      the programming jumper pins and open the JMRI "Service-Mode Programmer" tool. Navigate to the
-      "Digitrax" entry, and select DS54 as the decoder type, and press the "Open Programmer"
-      button. You may then read and write the CVs just like any mobile decoder.</p>
+      the programming jumper pins and open the JMRI Roster "Service-Mode Programmer" tool.<br>
+      Navigate to the "Digitrax" entry, and select DS54 as the decoder type, and press the
+      "Open Programmer" button. You may then read and write the CVs just like any mobile decoder.</p>
 
       <p>When ready to place the DS54 back in normal service, disconnect the programming track
       connections and programming resistor, and be sure to remove the programming jumper.</p>

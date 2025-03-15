@@ -177,6 +177,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
                         re = new RosterEntry();
                         re.setDecoderFamily(decoderFile.getFamily());
                         re.setDecoderModel(decoderFile.getModel());
+                        re.setProgrammingModes(decoderFile.getProgrammingModes());
                         re.setId(SymbolicProgBundle.getMessage("LabelNewDecoder")); // NOI18N
                         // note that we're leaving the filename null
                         // add the new roster entry to the in-memory roster
@@ -528,7 +529,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             @Override
             protected void doPrimary() {
                 longMode = false;
-                if (primaryAddr != null && !primaryAddr.getValueString().equals("")) {
+                if (primaryAddr != null && !primaryAddr.getValueString().isEmpty()) {
                     newAddr = primaryAddr.getValueString();
                 }
             }
@@ -536,7 +537,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             @Override
             protected void doExtended() {
                 // long address
-                if (!extendAddr.getValueString().equals("")) {
+                if (!extendAddr.getValueString().isEmpty()) {
                     longMode = true;
                     newAddr = extendAddr.getValueString();
                 }
@@ -560,7 +561,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
      *         other RosterEntry in the roster
      */
     boolean checkDuplicate() {
-        // check its not a duplicate
+        // check it's not a duplicate
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, rosterIdField.getText());
         boolean oops = false;
         for (RosterEntry rosterEntry : l) {
@@ -596,6 +597,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             re.setDeveloperID(decoderFile.getDeveloperID());
             re.setManufacturerID(decoderFile.getManufacturerID());
             re.setProductID(decoderFile.getProductID());
+            re.setProgrammingModes(decoderFile.getProgrammingModes());
             Roster.getDefault().addEntry(re);
         }
 
@@ -608,7 +610,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
         // create the RosterEntry to its file
         log.debug("setting DCC address {} {}", address, shortAddr);
         synchronized (this) {
-            re.setDccAddress("" + address);  // NOI18N
+            re.setDccAddress(address);  // NOI18N
             re.setLongAddress(!shortAddr);
             re.writeFile(cvModel, variableModel);
 

@@ -21,13 +21,13 @@ public class LocoIOData extends PropertyChangeSupport
     private int sv0;
     private int unitAddress;
     private int unitSubAddress;
-    private LnTrafficController tc;
+    private final LnTrafficController tc;
 
     /**
      * Define the number of rows in the table, which is also the number of
      * "channels" in a single LocoIO unit.
      */
-    private int _numRows = 16;
+    private final int _numRows = 16;
     /**
      * LocoBuffer always has address 0x01 0x50.
      */
@@ -354,13 +354,13 @@ public class LocoIOData extends PropertyChangeSupport
     private String dotme(int val) {
         int dit;
         int x = val;
-        StringBuffer ret = new StringBuffer();
+        StringBuilder ret = new StringBuilder();
         if (val == 0) {
             return "0"; // NOI18N
         }
         while (x != 0) {
             dit = x % 10;
-            ret.insert(0, Integer.toString(dit));
+            ret.insert(0, dit);
             x = x / 10;
             if (x != 0) {
                 ret.insert(0, ".");
@@ -716,7 +716,7 @@ public class LocoIOData extends PropertyChangeSupport
         log.debug("sendReadCommand(to {}/{} SV {}",
                 Integer.toHexString(locoIOAddress), Integer.toHexString(locoIOSubAddress), cv);
         tc.sendLocoNetMessage(
-                LocoIO.readCV(locoIOAddress, locoIOSubAddress, cv));
+                LocoIO.readSV(locoIOAddress, locoIOSubAddress, cv));
         startTimer();        // and set timeout on reply
     }
 
@@ -732,7 +732,7 @@ public class LocoIOData extends PropertyChangeSupport
         reading = false;
 
         tc.sendLocoNetMessage(
-                LocoIO.writeCV(locoIOAddress, locoIOSubAddress, cv, data));
+                LocoIO.writeSV(locoIOAddress, locoIOSubAddress, cv, data));
         startTimer();        // and set timeout on reply
     }
 

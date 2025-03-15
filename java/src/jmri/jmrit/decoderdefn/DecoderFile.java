@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.Nonnull;
 import javax.swing.JLabel;
@@ -37,7 +38,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Create a mechanism to manipulate a decoder definition.
+     * Create a mechanism to manipulate a decoder definition from up to 10 parameters.
      *
      * @param mfg manufacturer name
      * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
@@ -69,7 +70,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Create a mechanism to manipulate a decoder definition.
+     * Create a mechanism to manipulate a decoder definition from up to 12 parameters.
      *
      * @param mfg manufacturer name
      * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
@@ -103,7 +104,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Create a mechanism to manipulate a decoder definition.
+     * Create a mechanism to manipulate a decoder definition from up to 15 parameters.
      *
      * @param mfg manufacturer name
      * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
@@ -112,9 +113,9 @@ public class DecoderFile extends XmlFile {
      * @param highVersionID decoder version high byte, where applicable
      * @param family decoder family name, where applicable
      * @param filename filename of decoder XML definition
-     * @param developerID SV2 developerID number (8 bits)
-     * @param manufacturerID SV2 manufacturerID number (8 bits)
-     * @param productID (typically) SV2 product ID number (16 bits)
+     * @param developerID (typically LocoNet SV2) developerID number (8 bits)
+     * @param manufacturerID manufacturerID number (8 bits)
+     * @param productID product ID number (16 bits)
      * @param numFns decoder's number of available functions
      * @param numOuts decoder's number of available function outputs
      * @param decoder Element containing decoder XML definition
@@ -135,7 +136,7 @@ public class DecoderFile extends XmlFile {
         if (mfgID == null) {
             log.error("mfgID missing for decoder file {}", filename);
         }
-        if ((manufacturerID.length() > 0) && (manufacturerID.compareTo("-1") != 0)) {
+        if ((!manufacturerID.isEmpty()) && (manufacturerID.compareTo("-1") != 0)) {
             // prefer manufacturerID over mfgID
             _manufacturerID = manufacturerID;
         } else if ((mfgID != null) && (mfgID.compareTo("") != 0)) {
@@ -144,8 +145,42 @@ public class DecoderFile extends XmlFile {
         } else {
             _manufacturerID = "-1";
         }
-
         _productID = productID;
+    }
+
+    /**
+     * Create a mechanism to manipulate a decoder definition from up to 16 parameters.
+     *
+     * @param mfg manufacturer name
+     * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
+     * @param model decoder model designation
+     * @param lowVersionID decoder version low byte, where applicable
+     * @param highVersionID decoder version high byte, where applicable
+     * @param family decoder family name, where applicable
+     * @param filename filename of decoder XML definition
+     * @param developerID (typically LocoNet SV2) developerID number (8 bits)
+     * @param manufacturerID manufacturerID number (8 bits)
+     * @param productID product ID number (16 bits)
+     * @param numFns decoder's number of available functions
+     * @param numOuts decoder's number of available function outputs
+     * @param decoder Element containing decoder XML definition
+     * @param replacementModel name of decoder file (which replaces this one?)
+     * @param replacementFamily name of decoder family (which replaces this one?)
+     * @param programmingModes a comma-separated list of supported programming modes
+     */
+    public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
+                       String highVersionID, String family, String filename,
+                       String developerID, String manufacturerID, String productID,
+                       int numFns, int numOuts, Element decoder, String replacementModel,
+                       String replacementFamily, String programmingModes) {
+        this(mfg, mfgID, model, lowVersionID,
+                highVersionID, family, filename,
+                developerID, manufacturerID, productID,
+                numFns, numOuts, decoder, replacementModel,
+                replacementFamily);
+
+        log.debug("DecoderFile {} created with ProgModes: {}", model, programmingModes);
+        _programmingModes = Objects.requireNonNullElse(programmingModes, "");
     }
 
     // store acceptable version numbers
@@ -188,7 +223,7 @@ public class DecoderFile extends XmlFile {
      * Test for correct decoder version number
      *
      * @param i the version to match
-     * @return true if decoder version matches id
+     * @return true if decoder version matches i
      */
     public boolean isVersion(int i) {
         return versions[i];
@@ -197,8 +232,7 @@ public class DecoderFile extends XmlFile {
     /**
      * return array of versions
      *
-     * @return array of boolean where each element is true if version matches;
-     *         false otherwise
+     * @return array of boolean where each element is true if version matches
      */
     public boolean[] getVersions() {
         return Arrays.copyOf(versions, versions.length);
@@ -258,7 +292,7 @@ public class DecoderFile extends XmlFile {
     String _replacementFamily = null;
     String _developerID = null;
     String _manufacturerID = null;
-
+    String _programmingModes = null;
     int _numFns = -1;
     int _numOuts = -1;
     Element _element = null;
@@ -272,8 +306,8 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Get the SV2 "Developer ID" number.
-     *
+     * Get the (LocoNet SV2) "Developer ID" number.
+     * <p>
      * This value is assigned by the device
      * manufacturer and is an 8-bit number.
      * @return the developerID number
@@ -283,8 +317,8 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Get the SV2 "Manufacturer ID" number.
-     *
+     * Get the (LocoNet SV2/Uhlenbrock LNCV) "Manufacturer ID" number.
+     * <p>
      * This value typically matches the NMRA
      * manufacturer ID number and is an 8-bit number.
      *
@@ -336,7 +370,6 @@ public class DecoderFile extends XmlFile {
     }
 
     public enum Showable {
-
         YES, NO, MAYBE
     }
 
@@ -350,12 +383,12 @@ public class DecoderFile extends XmlFile {
 
     /**
      * Get the "Product ID" value.
-     *
-     * When applied to LocoNet devices programmed using the SV2 or the LNCV protocol,
+     * <p>
+     * When applied to LocoNet devices programmed using the LocoNet SV2 or the Uhlenbrock LNCV protocol,
      * this is a 16-bit value, and is used in identifying the decoder definition
      * file that matches an SV2 or LNCV device.
-     *
-     * Decoders which do not support LocoNet SV2 or LNCV programming may use the Product ID
+     * <p>
+     * Decoders which do not support SV2 or LNCV programming may use the Product ID
      * value for other purposes.
      *
      * @return the productID number
@@ -369,28 +402,48 @@ public class DecoderFile extends XmlFile {
         return _element;
     }
 
-    // static service methods - extract info from a given Element
-    public static String getMfgName(Element decoderElement) {
-        return decoderElement.getChild("family").getAttribute("mfg").getValue();
-    }
-
     ArrayList<LocoAddress.Protocol> protocols = null;
 
     public LocoAddress.Protocol[] getSupportedProtocols() {
         if (protocols == null) {
             setSupportedProtocols();
         }
-        return protocols.toArray(new LocoAddress.Protocol[protocols.size()]);
+        return protocols.toArray(new LocoAddress.Protocol[0]);
     }
 
     private void setSupportedProtocols() {
         protocols = new ArrayList<>();
         if (_element.getChild("protocols") != null) {
             List<Element> protocolList = _element.getChild("protocols").getChildren("protocol");
-            protocolList.forEach((e) -> {
-                protocols.add(LocoAddress.Protocol.getByShortName(e.getText()));
-            });
+            protocolList.forEach((e) -> protocols.add(LocoAddress.Protocol.getByShortName(e.getText())));
         }
+    }
+
+    /**
+     * Get all specified programming modes a decoder xml supports.
+     * This does not include the programming attributes (like ops=false).
+     *
+     * @return a comma separated string of modes as specified in the decoder xml
+     * or empty string when none are specified
+     */
+    public @Nonnull String getProgrammingModes() {
+        if (_programmingModes == null) {
+            _programmingModes = "";
+        }
+        return _programmingModes;
+    }
+
+    public boolean isProgrammingMode(String mode) {
+        return getProgrammingModes().contains(mode);
+    }
+
+    // static service methods - extract info from a given Element
+    public static String getMfgName(Element decoderElement) {
+        return decoderElement.getChild("family").getAttribute("mfg").getValue();
+    }
+
+    public static String getProgrammingModes(Element decoderElement) {
+        return decoderElement.getChild("programming").getChild("mode").getText();
     }
 
     boolean isProductIDok(Element e, String extraInclude, String extraExclude) {
@@ -453,7 +506,7 @@ public class DecoderFile extends XmlFile {
         if (test.contains("," + checkFor + ",")) {
             return true;
         } else if (checkFor != null) {
-            String testList[] = checkFor.split(",");
+            String[] testList = checkFor.split(",");
             if (testList.length > 1) {
                 for (String item : testList) {
                     if (test.contains("," + item + ",")) {
@@ -498,13 +551,13 @@ public class DecoderFile extends XmlFile {
         // load variables to table
         for (Element e : variablesElement.getChildren("variable")) {
             try {
-                // if its associated with an inconsistent number of functions,
+                // if it's associated with an inconsistent number of functions,
                 // skip creating it
                 if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
                         && getNumFunctions() < e.getAttribute("minFn").getIntValue()) {
                     continue;
                 }
-                // if its associated with an inconsistent number of outputs,
+                // if it's associated with an inconsistent number of outputs,
                 // skip creating it
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
                         && getNumOutputs() < Integer.parseInt(e.getAttribute("minOut").getValue())) {
@@ -524,13 +577,13 @@ public class DecoderFile extends XmlFile {
         // load constants to table
         for (Element e : variablesElement.getChildren("constant")) {
             try {
-                // if its associated with an inconsistent number of functions,
+                // if it's associated with an inconsistent number of functions,
                 // skip creating it
                 if (getNumFunctions() >= 0 && e.getAttribute("minFn") != null
                         && getNumFunctions() < e.getAttribute("minFn").getIntValue()) {
                     continue;
                 }
-                // if its associated with an inconsistent number of outputs,
+                // if it's associated with an inconsistent number of outputs,
                 // skip creating it
                 if (getNumOutputs() >= 0 && e.getAttribute("minOut") != null
                         && getNumOutputs() < e.getAttribute("minOut").getIntValue()) {

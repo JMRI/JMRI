@@ -14,7 +14,7 @@
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
-      <h1>Support: Digitrax SE74</h1>
+      <h1>Hardware Support: Digitrax SE74</h1>
 
       <table>
                   <tr><td>
@@ -135,7 +135,7 @@
         accessory decoder control message to influence _all_ of the heads on the
         mast.  That difference in hardware implementation and messaging usage
         means that configuring a JMRI Signal Mast using other hardware types will
-        be different than configuring a JMRI Signal Mast for the SE74-controlled
+        be different from configuring a JMRI Signal Mast for the SE74-controlled
         signal heads when the SE74 is configured for "Aspect"-mode signaling.
 
         <h3 id="se8csig">Signaling when the SE74 is in "SE8C-compatible" signaling mode</h3>
@@ -220,8 +220,7 @@
 
         <p>Within the JMRI Panel Pro application, open the Signal Heads" table
             (i.e. <strong>Tools&nbsp;&rArr;&nbsp;Tables&nbsp;&rArr;&nbsp;Signal&nbsp;Heads</strong>
-            ).  This table shows all of the
-        Signal Heads which have been defined.
+            ).  This table shows all the Signal Heads which have been defined.
 
         <p>To configure a new JMRI "Signal Head" object, it is necessary to "add"
         a signal head.  This is done by activating the "Add" button at the bottom
@@ -274,7 +273,7 @@
         </ul></li>
         <li>The JMRI "default" values for the aspect numbers are consistent with SE74
         aspect numbering and should not be modified.</li>
-        <li>Once you have updated all of the settings to reflect your needs for that head,
+        <li>Once you have updated all settings to reflect your needs for that head,
         activate the "Create" button.</li>
         <li>An additional head may be created by updating only those fields in the "Add
         New Signal Head" window which differ from the displayed data.  Typically this
@@ -301,18 +300,17 @@
             system, and that you have configured the SE74 for "SE8C Compatible" mode
             and that the SE74 has a base address which does not conflict with any of
             your other hardware.  With those assumptions met, you may start
-            configuring the JMRI "Signal Head"s.
+          configuring the JMRI "Signal Head"s.</p>
         <p>Within the JMRI Panel Pro application, open the Signal Heads" table (i.e.
             <strong>Tools&nbsp;&rArr;&nbsp;Tables&nbsp;&rArr;&nbsp;Signal&nbsp;Heads</strong>
-            ).  This table shows all of the "JMRI
-            Signal Heads" which are defined within JMRI.  A JMRI "Signal Head"
-            provides a mechanism for JMRI to interact directly with a single signal
-            head.
+            ).  This table shows all the "JMRI Signal Heads" which are defined within JMRI.
+            A JMRI "Signal Head" provides a mechanism for JMRI to interact directly with a
+          single signal head.</p>
         <p>Set up each individual signal head by "add"ing a signal head.  This is
             done using the "Add" button at the bottom of the Signal Heads table.
             This will open an "Add Signal Head" window, where the specific
-            information required to define a signal head may be entered.
-        <br>
+      information required to define a signal head may be entered.</p>
+
         <img src="images/Se74CompatabilityModeSignalAHead.png" alt="Example of configuring a JMRI Signal Head for a SE74 configured for SE8C-compatible signaling mode">
 
         <ul>
@@ -345,12 +343,12 @@
             <code>"Turnout 1" hardware address =  SE74 base address  + ( 2 * ( SE74 head number + 1 ))</code>
             <br>
             <code>"Turnout 2" hardware address =  SE74 base address  + ( 2 * ( SE74 head number + 1 )) + 1</code>
-            </li>
+                </ul></li>
 
-            <li>Once you have updated all of the settings to reflect your needs for that head,
+            <li>Once you have updated all the settings to reflect your needs for that head,
             activate the "Create" button.</li>
             <li>An additional head may be created by updating only those fields in the "Add
-            New Signal Head" window which differ from the displayed data.  Typically this
+            New Signal Head" window which differ from the displayed data. Typically, this
             means the "User Name" and "Hardware Address" fields will need to be changed.
             Activate the "Create" button to add a new signal head using the modified
             information.
@@ -413,7 +411,7 @@
         it would be appropriate to include some sort of "direction" in the user name,
         such as "E. Edsel WWD Mast", where "WWD" is an abbreviation for "WestWarD".
 
-        <p>The mast is comprised of the three signal heads - the three "SE8C-mode"
+        <p>The mast comprises the three signal heads - the three "SE8C-mode"
         SE74 signal heads defined above in the section on defining SE8C-mode SE74
         signal heads.  Note that if the mast were comprised instead of three "aspect-
         mode" SE74 signal heads, the mast definition would <em>not be any different</em>
@@ -471,7 +469,7 @@
         <p>In the example, the mast will always be "lit", because the "This mast
         may be Unlit" feature has not been enabled (has not been "check-marked").
         This choice makes sense for the type of signaling which is being implementing
-        for this mast.  Other masts might make us of the
+        for this mast.  Other masts might make use of the
         "Unlit" feature, perhaps for so-called "approach lighting".
 
         <p>Once the JMRI Signal Mast has been configured, any change to the signal
@@ -479,7 +477,7 @@
         to be changed to the individual head aspect(s) to match the mast's definition
         for that aspect.  Any such Signal Head aspect change(s) will be propagated,
         under the JMRI "Signal Head" object's direction, to the appropriate signaling
-        hardware (in this case, the SE74), so that the the hardware may update
+        hardware (in this case, the SE74), so that the hardware may update
         its outputs based on the control information which has been conveyed to it.
         <p>This means that you can test the JMRI configuration of your SE74 hardware
             using the following techniques.  (They also apply to other signaling
@@ -494,7 +492,7 @@
                 <li>Once you know that the JMRI Signal Head objects are properly
                     controlled by the JMRI Signal Mast "Appearance" setting, you can
                     then check that the JMRI Signal Mast "Appearance" setting has
-                    the appropriate affect on the SE74-controlled signal.  Change
+                    the appropriate effect on the SE74-controlled signal.  Change
                     the mast's "appearance" value and then check that the physical signal
                     changes to the appropriate "aspect".</li>
             </ul>
