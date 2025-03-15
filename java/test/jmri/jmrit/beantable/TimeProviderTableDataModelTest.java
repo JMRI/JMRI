@@ -46,10 +46,10 @@ public class TimeProviderTableDataModelTest extends AbstractBeanTableDataModelBa
     @Test
     @Override
     public void testGetRowCount(){
-        System.out.format("%n%n%ntestGetRowCount()%n");
-        assertEquals("0 Rows when model created",1, t.getRowCount());
+        // The rows are "IUInternalTimeProvider" and "IUSystemClock"
+        assertEquals("0 Rows when model created",2, t.getRowCount());
         createBean();   // No bean is created by this method
-        assertEquals("1 Row when NamedBean created",1, t.getRowCount());
+        assertEquals("1 Row when NamedBean created",2, t.getRowCount());
     }
 
     @Test
