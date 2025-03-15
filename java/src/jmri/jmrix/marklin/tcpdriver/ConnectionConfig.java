@@ -1,12 +1,12 @@
-package jmri.jmrix.marklin.networkdriver;
+package jmri.jmrix.marklin.tcpdriver;
 
 import javax.swing.JPanel;
 
 /**
  * Definition of objects to handle configuring an Marklin CS2 layout connection
- * via a NetworkDriverAdapter object.
+ * via a TcpDriverAdapter object.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2003
+ * @author Bob Jacobsen Copyright (C) 2001, 2003, 2025
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
@@ -38,7 +38,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "CS2 via UDP network";
+        return "CS2 via TCP network";
     } // NOI18N
 
     /**
@@ -51,7 +51,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     @Override
     protected void setInstance() {
         if (adapter == null) {
-            adapter = new NetworkDriverAdapter();
+            adapter = new TcpDriverAdapter();
         }
     }
 
