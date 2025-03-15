@@ -31,7 +31,7 @@ public abstract class AbstractTimeProviderManager extends AbstractManager<TimePr
     /** {@inheritDoc} */
     @Override
     public final int getXMLOrder() {
-        return Manager.CLOCKS;
+        return Manager.TIMEPROVIDERS;
     }
 
     /** {@inheritDoc} */

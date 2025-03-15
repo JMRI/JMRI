@@ -40,7 +40,7 @@ public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
     /** {@inheritDoc} */
     @Override
     public final int getXMLOrder() {
-        return Manager.CLOCKS;
+        return Manager.TIMEPROVIDERS;
     }
 
     /**
