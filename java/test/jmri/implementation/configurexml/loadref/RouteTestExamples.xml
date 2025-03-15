@@ -90,6 +90,14 @@
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <timeProvider>
+      <systemName>IUInternalTimeProvider</systemName>
+    </timeProvider>
+    <timeProvider>
+      <systemName>IUSystemClock</systemName>
+    </timeProvider>
+  </timeProviders>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
     <route userName="Simple">
       <systemName>IO:AUTO:0001</systemName>
@@ -120,7 +128,6 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Nov 13 16:37:54 CET 2018" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
       <type>app</type>
