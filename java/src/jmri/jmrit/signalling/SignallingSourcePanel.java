@@ -64,8 +64,8 @@ public class SignallingSourcePanel extends jmri.util.swing.JmriPanel implements 
             _signalMastList = sml.getDestinationList();
         }
 
-        InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(this);
-        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(SignallingSourcePanel.this);
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).addPropertyChangeListener(SignallingSourcePanel.this);
 
         setLayout(new BorderLayout());
 
