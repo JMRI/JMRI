@@ -566,7 +566,7 @@ public class Lnsv1MessageContents {
      * @param command  SV Programming Format 1 command number (for &lt;SV_CMD&gt;)
      * @param svNum  SV Programming Format 1 8-bit SV number
      * @param newVal (d4)  SV first 8-bit data value to write (for &lt;D4&gt;)
-     * @param version  Programming Format 1 8-bit firmware version number; 0 in request, >0 in replies
+     * @param version  Programming Format 1 8-bit firmware version number; 0 in request,{@literal >0} in replies
      * @param d6  second 8-bit data value (for &lt;D6&gt;)
      * @param d7  third 8-bit data value (for &lt;D7&gt;)
      * @param d8  fourth 8-bit data value (for &lt;D8&gt;)
@@ -610,7 +610,7 @@ public class Lnsv1MessageContents {
      * @param command  SV Programming Format 1 command number (for &lt;SV_CMD&gt;)
      * @param svNum  SV Programming Format 1 8-bit SV number
      * @param newVal (d4)  SV first 8-bit data value to write (for &lt;D4&gt;)
-     * @param version  Programming Format 1 8-bit firmware version number; 0 in request, >0 in replies
+     * @param version  Programming Format 1 8-bit firmware version number; 0 in request,{@literal >0} in replies
      * @param d6  second 8-bit data value (for &lt;D6&gt;)
      * @param d7  third 8-bit data value (for &lt;D7&gt;)
      * @param d8  fourth 8-bit data value (for &lt;D8&gt;)
