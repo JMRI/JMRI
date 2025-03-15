@@ -25,11 +25,11 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
         super(sysName);
     }
 
-//    private LocalDateTime convertToLocalDateTime(Date dateToConvert) {
-//        return Instant.ofEpochMilli(dateToConvert.getTime())
-//                .atZone(ZoneId.systemDefault())
-//                .toLocalDateTime();
-//    }
+    private LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+        return Instant.ofEpochMilli(dateToConvert.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
 
     private LocalTime convertToLocalTime(Date dateToConvert) {
         return Instant.ofEpochMilli(dateToConvert.getTime())
@@ -37,11 +37,38 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
                 .toLocalTime();
     }
 
+    private Date convertToDate(LocalDateTime dateToConvert) {
+        return java.util.Date
+                .from(dateToConvert.atZone(ZoneId.systemDefault())
+                        .toInstant());
+    }
+
+
     @Override
     public void setTime(Date d) {
+        System.out.format("AA setTime(Date): %s%n", d.toString());
         TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
                 .getCurrentTimeProvider();
         if (tp instanceof TimeSetter) {
+            if ((tp instanceof DateProvider) && (tp instanceof DateSetter)) {
+                DateProvider dp = (DateProvider)(TimeSetter)tp;
+                DateSetter ds = (DateSetter)(TimeSetter)tp;
+                if (ds.canSetDate()) {
+                    LocalDateTime date = convertToLocalDateTime(d);
+                    if (dp.hasYear()) {
+                        ds.setYear(date.getYear());
+                    }
+                    if (dp.hasMonth()) {
+                        ds.setMonth(date.getMonthValue());
+                    }
+                    if (dp.hasDayOfMonth()) {
+                        ds.setDayOfMonth(date.getDayOfMonth());
+                    }
+                    if (dp.hasWeekday()) {
+                        ds.setWeekday(date.getDayOfWeek().getValue());
+                    }
+                }
+            }
             TimeSetter ts = (TimeSetter)tp;
             if (ts.canSetTime()) {
                 ts.setTime(convertToLocalTime(d));
@@ -74,26 +101,14 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
 
     @Override
     public void userSetTime(Date d) {
-        TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
-                .getCurrentTimeProvider();
-        if (tp instanceof TimeSetter) {
-            TimeSetter ts = (TimeSetter)tp;
-            if (ts.canSetTime()) {
-                ts.setTime(convertToLocalTime(d));
-            } else {
-                throw new UnsupportedOperationException("The current TimeProvider can not start/stop time");
-            }
-        } else {
-            throw new UnsupportedOperationException("The current TimeProvider is not a TimeSetter: "
-                    + (tp != null ? tp.getClass().getName() : null));
-        }
+        setTime(d);
     }
 
     @Override
     public Date getTime() {
         TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
                 .getCurrentTimeProvider();
-        return java.sql.Time.valueOf(tp.getTime().toLocalTime());
+        return convertToDate(tp.getTime());
     }
 
     @Override
