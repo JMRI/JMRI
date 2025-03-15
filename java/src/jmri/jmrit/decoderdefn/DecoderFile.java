@@ -113,7 +113,7 @@ public class DecoderFile extends XmlFile {
      * @param highVersionID decoder version high byte, where applicable
      * @param family decoder family name, where applicable
      * @param filename filename of decoder XML definition
-     * @param developerID (typically SV2) developerID number (8 bits)
+     * @param developerID (typically LocoNet SV2) developerID number (8 bits)
      * @param manufacturerID manufacturerID number (8 bits)
      * @param productID product ID number (16 bits)
      * @param numFns decoder's number of available functions
@@ -158,7 +158,7 @@ public class DecoderFile extends XmlFile {
      * @param highVersionID decoder version high byte, where applicable
      * @param family decoder family name, where applicable
      * @param filename filename of decoder XML definition
-     * @param developerID (typically SV2) developerID number (8 bits)
+     * @param developerID (typically LocoNet SV2) developerID number (8 bits)
      * @param manufacturerID manufacturerID number (8 bits)
      * @param productID product ID number (16 bits)
      * @param numFns decoder's number of available functions
@@ -306,7 +306,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Get the SV2 "Developer ID" number.
+     * Get the (LocoNet SV2) "Developer ID" number.
      * <p>
      * This value is assigned by the device
      * manufacturer and is an 8-bit number.
@@ -317,7 +317,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Get the SV2 "Manufacturer ID" number.
+     * Get the (LocoNet SV2/Uhlenbrock LNCV) "Manufacturer ID" number.
      * <p>
      * This value typically matches the NMRA
      * manufacturer ID number and is an 8-bit number.
@@ -384,11 +384,11 @@ public class DecoderFile extends XmlFile {
     /**
      * Get the "Product ID" value.
      * <p>
-     * When applied to LocoNet devices programmed using the SV2 or the LNCV protocol,
+     * When applied to LocoNet devices programmed using the LocoNet SV2 or the Uhlenbrock LNCV protocol,
      * this is a 16-bit value, and is used in identifying the decoder definition
      * file that matches an SV2 or LNCV device.
      * <p>
-     * Decoders which do not support LocoNet SV2 or LNCV programming may use the Product ID
+     * Decoders which do not support SV2 or LNCV programming may use the Product ID
      * value for other purposes.
      *
      * @return the productID number

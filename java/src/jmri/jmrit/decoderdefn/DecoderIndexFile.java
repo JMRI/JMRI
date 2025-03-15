@@ -99,7 +99,7 @@ public class DecoderIndexFile extends XmlFile {
     /**
      * Get a List of decoders matching (only) the programming mode.
      *
-     * @param progMode  decoder programming mode
+     * @param progMode  decoder programming mode as defined in a decoder's programming element
      * @return a list, possibly empty, of matching decoders
      */
     @Nonnull
@@ -161,7 +161,7 @@ public class DecoderIndexFile extends XmlFile {
      * @param developerID      developer ID number
      * @param manufacturerID   manufacturerID number
      * @param productID        productID number
-     * @param progMode         programming mode
+     * @param progMode         programming mode as defined in a decoder's programming element
      * @return a list, possibly empty, of matching decoders
      */
     @Nonnull
@@ -253,7 +253,7 @@ public class DecoderIndexFile extends XmlFile {
      * @param developerID      developer ID number
      * @param manufacturerID   manufacturer ID number
      * @param productID        product ID number
-     * @param progMode         programming mode
+     * @param progMode         programming mode as defined in a decoder's programming element
      * @return true if entry at i matches the other parameters; false otherwise
      */
     public boolean checkEntry(int i, String mfgName, String family, String mfgID,
@@ -285,7 +285,7 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         if (developerID != null) {
-            // must have a developerID value that matches to consider this entry a match
+            // must have a (LocoNet SV2) developerID value that matches to consider this entry a match
             if (!developerID.equals(r.getDeveloperID())) {
                 // didn't match the getDeveloperID() value, so check the model developerID value
                 if (r.getModelElement().getAttribute("developerID") == null) {
@@ -321,7 +321,7 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         if (productID != null) {
-            // must have a productID value that matches to consider this entry a match
+            // must have a (LocoNet SV2 or the Uhlenbrock LNCV protocol) productID value that matches to consider this entry a match
             if (!productID.equals(r.getProductID())) {
                 // didn't match the getProductID() value, so check the model productID value
                 if (r.getModelElement().getAttribute("productID") == null) {
@@ -698,7 +698,7 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
-     * Is target string in comma-delimited string
+     * Check if target string is in a comma-delimited string
      * <p>
      * Example:
      *      findString = "47"
@@ -817,14 +817,14 @@ public class DecoderIndexFile extends XmlFile {
                 // get <family> element and add the file name
                 Element droot = d.rootFromName(DecoderFile.fileLocation + fileName);
                 Element family = droot.getChild("decoder").getChild("family").clone();
-
+                // get decoder element's child programming and copy the mode children
                 Element prog = droot.getChild("decoder").getChild("programming");
                 if (prog != null) {
                     List<Element> modes = prog.getChildren("mode");
                     if (modes != null) {
                         StringBuilder supportedModes = new StringBuilder();
-                        for (Element md : modes) {
-                            String modeName = md.getText();
+                        for (Element md : modes) { // typically only 1 mode element in a definition
+                            String modeName = md.getText(); // example: LOCONETLNCVMODE
                             if (supportedModes.length() > 0) supportedModes.append(",");
                             supportedModes.append(modeName);
                         }
