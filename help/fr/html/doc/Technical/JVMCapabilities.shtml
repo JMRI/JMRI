@@ -406,7 +406,7 @@
           <tr>
             <th>JMRI</th>
             <th>Java</th>
-            <th><a href="https://jmri.org/install/MacOSX.shtml#sysreq">OS X</a>
+            <th><a href="https://jmri.org/install/MacOSX.shtml#sysreq">macOS</a>
             </th>
             <th><a href="https://jmri.org/install/WindowsNew.shtml#sysreq">Windows</a>
             </th>

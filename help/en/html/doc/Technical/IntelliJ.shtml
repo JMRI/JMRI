@@ -18,8 +18,8 @@
 
       <p>IntelliJ IDEA Community Edition (available from <a href=
       "https://www.jetbrains.com/idea/">www.jetbrains.com/idea/</a>) makes a great platform for
-      working with JMRI and Java on OS X, Windows and *nix.<br>
-      Here we describe working with version 2021.x and up.</p>
+      working with JMRI and Java on macOS, Windows and *nix.<br>
+      Here we describe working with version 2023.x and up.</p>
 
       <ul class="snav">
         <!-- TOC -->
@@ -57,8 +57,8 @@
       of the IntelliJ IDEA download. For more information for getting the JMRI source, see <a href=
       "getgitcode.shtml">JMRI: Getting the Code</a>.</p>
 
-      <p>These instructions were first written and tested using IntelliJ IDEA 15 and 16 Community
-      Edition (free). The current version is 2022.1 and the Community Edition is still free. This
+      <p>These instructions were first written and tested using IntelliJ IDEA 16 Community
+      Edition (CE). The current version is 2024.3 and the Community Edition is still free. This
       page has been updated to reflect the 2022 version</p>
 
       <h2 id="install">Installing IntelliJ IDEA</h2>
@@ -81,70 +81,6 @@
 
       <p>After downloading and running the installer for your OS, configure the IntelliJ
       application as follows:<br></p>
-
-      <h3>Set vmoptions</h3>
-      <p>If you are running IntelliJ 2021 or later, you are good to go and can skip this item.<br>
-      If you are using IntelliJ 15 or 16, complete the next steps before continuing.</p>
-
-      <h4>On macOS</h4>
-
-      <ul>
-        <li>Open IntelliJ.
-        </li>
-
-        <li>From the Help menu, select
-          "Edit Custom
-          VM Options":<br>
-          <a href="images/IntelliJ/IjVMOptionsMenu.png"><img src=
-          "images/IntelliJ/IjVMOptionsMenu.png" alt=
-          "IntelliJ Edit vmoptions menu"></a>
-        </li>
-
-        <li>In the dialog, answer "Yes" to create a copy of the application's
-          <code>vmoptions</code> file:<br>
-          <a href="images/IntelliJ/IjVMOptionsDialog.png"><img src=
-          "images/IntelliJ/IjVMOptionsDialog.png" alt=
-          "IntelliJ Edit vmoptions dialog"></a>
-        </li>
-
-        <li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and
-        select Save All from the File menu:<br>
-          <a href="images/IntelliJ/IjVMOptions.png"><img src="images/IntelliJ/IjVMOptions.png"
-          alt="IntelliJ Edit vmoptions"></a>
-        </li>
-
-        <li>IntelliJ 2016 and up are now ready to use for development with JMRI. The
-        <code>vmoptions</code> file is stored in <code>&tilde;/Users/Preferences/IdeaIC2016.1/</code><br>
-          But in version 15, IntelliJ on OS X did not correctly name this file ( <a href=
-          "https://youtrack.jetbrains.com/issue/IDEA-150830#tab=Linked%20Issues">read
-          more</a>).<br>
-          To correct this, close IntelliJ 15 and in Finder go to the
-          <code>&tilde;/Library/Preferences/IdeaIC15/</code> folder.<br>
-          Rename the newly created file <code>idea64.vmoptions</code> to
-          <code>idea.vmoptions</code> (effectively removing the "64" part).
-        </li>
-      </ul>
-
-      <h4>On Windows and *nix</h4>
-
-      <ul>
-        <li>From the Help menu, select "Edit Custom VM Options".</li>
-
-        <li>Add the line "-Didea.native2ascii.lowercase=true" to the contents of this file and
-        select Save All from the File menu.<br>
-        It will be saved into a location relative to the program file. The name will be prefixed
-        with the IntelliJ version number. To find the file location, right-click the tab of the
-        page where you have added the line and select "Show in Explorer"</li>
-      </ul>
-
-      <p>If the IDEA_VM_OPTIONS environment variable is defined, or a *.vmoptions file exists, then
-      this file is used instead of the file located in the IntelliJ IDEA installation folder.</p>
-
-      <p>More info on setting these important vmoptions is available on the <a href=
-      "https://www.jetbrains.com/help/idea/tuning-the-ide.html">Idea website</a>.<br>
-      Note: If you have a hint how to set this at the Project level instead of tinkering with local
-      application settings, please tell <a href="https://groups.io/g/jmriusers">JMRI users</a> at
-      Groups.io.</p>
 
       <h3 id="IjPrefs">Set Preferences</h3>
 
@@ -892,8 +828,8 @@
       <p>If you see a message similar to this:<br>
       <a href="images/IntelliJ/IjAntErrorDialog.png"><img src="images/IntelliJ/IjAntErrorDialog.png"
       alt="IntelliJ Ant error"></a><br>
-      the SDK name as set in the Project Structure &gt; Project Settings &gt; SDK tab does not match any of the JDKs
-      installed. Fix it by choosing a different Java 11 JDK as described <a href="#setant">above</a>.
+      it means the SDK name as set in the Project Structure &gt; Project Settings &gt; SDK tab does not match any of
+      the JDKs installed. Fix it by choosing a different Java 11 JDK as described <a href="#setant">above</a>.
       </p>
 
       <h2 id="more">More Help</h2>

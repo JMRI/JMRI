@@ -26,7 +26,7 @@
 <p>Des instructions compl&#232;tes pour l'installation de JMRI sur diffrentes plateforme peuvent &#234;tre trouv&#233;es ici:</p>
 	<ul>
 	<li><a href="/install/WindowsNew.shtml">Windows</a></li>
-	<li><a href="/install/MacOSX.shtml">Mac OS X</a></li>
+	<li><a href="/install/MacOSX.shtml">macOS</a></li>
 	<li><a href="/install/Linux.shtml">Linux</a>
 	    <ul>
 	    <li><a href="/install/Raspbian.shtml">RasPi</a>
