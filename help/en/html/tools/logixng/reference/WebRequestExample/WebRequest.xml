@@ -16,6 +16,14 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
     <test>3</test>
     <modifier>plus</modifier>
   </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <timeProvider>
+      <systemName>IUInternalTimeProvider</systemName>
+    </timeProvider>
+    <timeProvider>
+      <systemName>IUSystemClock</systemName>
+    </timeProvider>
+  </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
@@ -67,14 +75,6 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
-  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
-    <timeProvider>
-      <systemName>IUInternalTimeProvider</systemName>
-    </timeProvider>
-    <timeProvider>
-      <systemName>IUSystemClock</systemName>
-    </timeProvider>
-  </timeProviders>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
@@ -571,9 +571,9 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Sat Mar 15 07:21:21 CET 2025</date>
+      <date>Sat Mar 15 21:45:21 CET 2025</date>
       <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/WebRequest_temp.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.11.3plus+daniel+2025-03-15T06:20:55Z+Rb58f456 on Sat Mar 15 07:21:21 CET 2025-->
+  <!--Written by JMRI version 5.11.3plus+daniel+2025-03-15T20:44:54Z+Rd7345df on Sat Mar 15 21:45:21 CET 2025-->
 </layout-config>
