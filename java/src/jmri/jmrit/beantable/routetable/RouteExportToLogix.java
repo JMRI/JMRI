@@ -3,10 +3,11 @@ package jmri.jmrit.beantable.routetable;
 import jmri.*;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 /**
  * Enable creation of a Logix from a Route.
@@ -35,7 +36,8 @@ public class RouteExportToLogix {
                 InstanceManager.getDefault(ConditionalManager.class));
     }
 
-    RouteExportToLogix(String systemName, RouteManager routeManager,LogixManager logixManager,ConditionalManager conditionalManager){
+    RouteExportToLogix(String systemName, RouteManager routeManager,
+            LogixManager logixManager,ConditionalManager conditionalManager){
         this.systemName = systemName;
         this.routeManager = routeManager;
         this.logixManager = logixManager;
@@ -69,11 +71,13 @@ public class RouteExportToLogix {
 
         String file = route.getOutputSoundName();
         if (file!=null && file.length() > 0) {
-            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, Conditional.Action.PLAY_SOUND, "", -1, FileUtil.getPortableFilename(file)));
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                Conditional.Action.PLAY_SOUND, "", -1, FileUtil.getPortableFilename(file)));
         }
         file = route.getOutputScriptName();
         if (file!=null && file.length() > 0) {
-            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, Conditional.Action.RUN_SCRIPT, "", -1, FileUtil.getPortableFilename(file)));
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                Conditional.Action.RUN_SCRIPT, "", -1, FileUtil.getPortableFilename(file)));
         }
 
         ///// Construct 'AND' clause from 'VETO' controls ////////
@@ -83,16 +87,24 @@ public class RouteExportToLogix {
 
         ///////////////// Make Trigger Conditionals //////////////////////
         int numConds = 1; // passed through all these, with new value returned each time
-        numConds = makeSensorConditional(route.getRouteSensor(0), route.getRouteSensorMode(0), numConds, false, actionList, vetoList, logix, logixSystemName, uName);
-        numConds = makeSensorConditional(route.getRouteSensor(1), route.getRouteSensorMode(1), numConds, false, actionList, vetoList, logix, logixSystemName, uName);
-        numConds = makeSensorConditional(route.getRouteSensor(2), route.getRouteSensorMode(2), numConds, false, actionList, vetoList, logix, logixSystemName, uName);
-        numConds = makeTurnoutConditional(route.getCtlTurnout(), route.getControlTurnoutState(), numConds, false, actionList, vetoList, logix, logixSystemName, uName);
+        numConds = makeSensorConditional(route.getRouteSensor(0),route.getRouteSensorMode(0),
+            numConds, false, actionList, vetoList, logix, logixSystemName, uName);
+        numConds = makeSensorConditional(route.getRouteSensor(1), route.getRouteSensorMode(1),
+            numConds, false, actionList, vetoList, logix, logixSystemName, uName);
+        numConds = makeSensorConditional(route.getRouteSensor(2), route.getRouteSensorMode(2),
+            numConds, false, actionList, vetoList, logix, logixSystemName, uName);
+        numConds = makeTurnoutConditional(route.getCtlTurnout(), route.getControlTurnoutState(),
+            numConds, false, actionList, vetoList, logix, logixSystemName, uName);
 
         ////// Construct actions for false from the 'any change' controls ////////////
-        numConds = makeSensorConditional(route.getRouteSensor(0), route.getRouteSensorMode(0), numConds, true, actionList, vetoList, logix, logixSystemName, uName);
-        numConds = makeSensorConditional(route.getRouteSensor(1), route.getRouteSensorMode(1), numConds, true, actionList, vetoList, logix, logixSystemName, uName);
-        numConds = makeSensorConditional(route.getRouteSensor(2), route.getRouteSensorMode(2), numConds, true, actionList, vetoList, logix, logixSystemName, uName);
-        numConds = makeTurnoutConditional(route.getCtlTurnout(), route.getControlTurnoutState(), numConds, true, actionList, vetoList, logix, logixSystemName, uName);
+        numConds = makeSensorConditional(route.getRouteSensor(0), route.getRouteSensorMode(0),
+            numConds, true, actionList, vetoList, logix, logixSystemName, uName);
+        numConds = makeSensorConditional(route.getRouteSensor(1), route.getRouteSensorMode(1),
+            numConds, true, actionList, vetoList, logix, logixSystemName, uName);
+        numConds = makeSensorConditional(route.getRouteSensor(2), route.getRouteSensorMode(2),
+            numConds, true, actionList, vetoList, logix, logixSystemName, uName);
+        numConds = makeTurnoutConditional(route.getCtlTurnout(), route.getControlTurnoutState(),
+            numConds, true, actionList, vetoList, logix, logixSystemName, uName);
         log.debug("Final number of conditionals: {}", numConds);
         addRouteAlignmentSensorToLogix(logixSystemName, route, uName, logix);
 
@@ -106,30 +118,39 @@ public class RouteExportToLogix {
         String cUserName;
         ArrayList<ConditionalAction> actionList;
         ///////////////// Set up Alignment Sensor, if there is one //////////////////////////
-        if (route.getTurnoutsAlgdSensor() != null) {
-            String sensorSystemName = route.getTurnoutsAlgdSensor().getDisplayName();
+        Sensor sens = route.getTurnoutsAlgdSensor();
+        if (sens != null) {
+            String sensorDisplayName = sens.getDisplayName();
             String cSystemName = logixSystemName + "1A"; // NOI18N
-            cUserName = route.getTurnoutsAlgdSensor().getDisplayName() + "A " + uName; // NOI18N
+            cUserName = sens.getDisplayName() + "A " + uName; // NOI18N
 
             ArrayList<ConditionalVariable> variableList = new ArrayList<>();
             for(int i=0;i<route.getNumOutputTurnouts();i++){
-                String name = route.getOutputTurnout(i).getDisplayName();
+                Turnout ot = route.getOutputTurnout(i);
+                if ( ot != null ) {
+                    String name = ot.getDisplayName();
 
-                // exclude toggled outputs
-                switch (route.getOutputTurnoutState(i)) {
-                    case Turnout.CLOSED:
-                        variableList.add(new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_CLOSED, name, true));
-                        break;
-                    case Turnout.THROWN:
-                        variableList.add(new ConditionalVariable(false, Conditional.Operator.AND, Conditional.Type.TURNOUT_THROWN, name, true));
-                        break;
-                    default:
-                        log.warn("Turnout {} was {}, neither CLOSED nor THROWN; not handled", name, route.getOutputTurnoutState(i)); // NOI18N
+                    // exclude toggled outputs
+                    switch (route.getOutputTurnoutState(i)) {
+                        case Turnout.CLOSED:
+                            variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
+                                Conditional.Type.TURNOUT_CLOSED, name, true));
+                            break;
+                        case Turnout.THROWN:
+                            variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
+                                Conditional.Type.TURNOUT_THROWN, name, true));
+                            break;
+                        default:
+                            log.warn("Turnout {} was {}, neither CLOSED nor THROWN; not handled",
+                                name, route.getOutputTurnoutState(i)); // NOI18N
+                    }
                 }
             }
             actionList = new ArrayList<>();
-            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE, Conditional.Action.SET_SENSOR, sensorSystemName, Sensor.ACTIVE, ""));
-            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE, Conditional.Action.SET_SENSOR, sensorSystemName, Sensor.INACTIVE, ""));
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                Conditional.Action.SET_SENSOR, sensorDisplayName, Sensor.ACTIVE, ""));
+            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
+                Conditional.Action.SET_SENSOR, sensorDisplayName, Sensor.INACTIVE, ""));
 
             Conditional c = conditionalManager.createNewConditional(cSystemName, cUserName);
             c.setStateVariables(variableList);
@@ -173,9 +194,11 @@ public class RouteExportToLogix {
     private void addRouteLockToLogix(String logixSystemName, Route route, String uName, Logix logix) {
         String cSystemName;
         String cUserName;
-        ArrayList<ConditionalAction> actionList;///////////////// Set lock turnout information if there is any //////////////////////////
-        if (route.getLockCtlTurnout()!=null) {
-            Turnout lockControlTurnout = route.getLockCtlTurnout();
+        ArrayList<ConditionalAction> actionList;
+        ///////////////// Set lock turnout information if there is any //////////////////////////
+        Turnout lockControlTurnout = route.getLockCtlTurnout();
+        if ( lockControlTurnout != null ) {
+            
 
             // verify name (logix doesn't use "provideXXX")
             cSystemName = logixSystemName + "1L"; // NOI18N
@@ -186,7 +209,8 @@ public class RouteExportToLogix {
             if (mode == Route.ONTHROWN) {
                 conditionalType = Conditional.Type.TURNOUT_THROWN;
             }
-            variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE, conditionalType, lockControlTurnout.getSystemName(), true));
+            variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE, conditionalType,
+                lockControlTurnout.getSystemName(), true));
 
             actionList = new ArrayList<>();
             int option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
@@ -196,14 +220,22 @@ public class RouteExportToLogix {
                 type = Route.TOGGLE;
             }
             for(int i=0;i<route.getNumOutputTurnouts();i++){
-                actionList.add(new DefaultConditionalAction(option, Conditional.Action.LOCK_TURNOUT, route.getOutputTurnout(i).getDisplayName(), type, ""));
+                Turnout ot = route.getOutputTurnout(i);
+                if ( ot != null ) {
+                    actionList.add(new DefaultConditionalAction(option, Conditional.Action.LOCK_TURNOUT,
+                        ot.getDisplayName(), type, ""));
+                }
             }
             if (mode != Route.ONCHANGE) {
                 // add non-toggle actions on
                 option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
                 type = Turnout.UNLOCKED;
                 for(int i=0;i<route.getNumOutputTurnouts();i++){
-                    actionList.add(new DefaultConditionalAction(option, Conditional.Action.LOCK_TURNOUT, route.getOutputTurnout(i).getDisplayName(), type, ""));
+                    Turnout ot = route.getOutputTurnout(i);
+                    if ( ot != null ) {
+                        actionList.add(new DefaultConditionalAction(option, Conditional.Action.LOCK_TURNOUT,
+                            ot.getDisplayName(), type, ""));
+                    }
                 }
             }
 
@@ -243,14 +275,20 @@ public class RouteExportToLogix {
         ArrayList<ConditionalAction> actionList = new ArrayList<>();
 
         for(int i=0;i<route.getNumOutputSensors();i++){
-            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.Action.SET_SENSOR, route.getOutputSensor(i).getDisplayName(),
+            Sensor sens = route.getOutputSensor(i);
+            if ( sens != null ) {
+                actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                    Conditional.Action.SET_SENSOR, sens.getDisplayName(),
                     route.getOutputSensorState(i), ""));
+            }
         }
         for(int i=0;i<route.getNumOutputTurnouts();i++){
-            actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.Action.SET_TURNOUT, route.getOutputTurnout(i).getDisplayName(),
+            Turnout to = route.getOutputTurnout(i);
+            if ( to != null ) {
+                actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
+                    Conditional.Action.SET_TURNOUT, to.getDisplayName(),
                     route.getOutputTurnoutState(i), ""));
+            }
         }
         log.debug("sensor actions {} turnout actions {} resulting Action List size {}",
                 route.getNumOutputSensors(),route.getNumOutputTurnouts(),actionList.size());
@@ -282,7 +320,11 @@ public class RouteExportToLogix {
      * @return number of conditionals after the creation
      * @throws IllegalArgumentException if "user input no good"
      */
-    private int makeSensorConditional(Sensor selectedSensor, int sensorMode, int numConds, boolean onChange, ArrayList<ConditionalAction> actionList, ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
+    private int makeSensorConditional(Sensor selectedSensor, int sensorMode, int numConds,
+            boolean onChange, ArrayList<ConditionalAction> actionList, ArrayList<ConditionalVariable> vetoList,
+            Logix logix, String prefix, String uName) {
+
+        int loop = numConds;
         ConditionalVariable cVar = makeCtrlSensorVar(selectedSensor, sensorMode, false, onChange);
         if (cVar != null) {
             ArrayList<ConditionalVariable> varList = new ArrayList<>();
@@ -290,8 +332,8 @@ public class RouteExportToLogix {
             for (ConditionalVariable conditionalVariable : vetoList) {
                 varList.add(cloneVariable(conditionalVariable));
             }
-            String cSystemName = prefix + numConds + "T";
-            String cUserName = selectedSensor.getDisplayName() + numConds + "C " + uName;
+            String cSystemName = prefix + loop + "T";
+            String cUserName = selectedSensor.getDisplayName() + loop + "C " + uName;
             Conditional c;
             try {
                 c = conditionalManager.createNewConditional(cSystemName, cUserName);
@@ -305,9 +347,9 @@ public class RouteExportToLogix {
             c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
-            numConds++;
+            loop++;
         }
-        return numConds;
+        return loop;
     }
 
     /**
@@ -325,8 +367,11 @@ public class RouteExportToLogix {
      * @return number of conditionals after the creation
      * @throws IllegalArgumentException if "user input no good"
      */
-    private int makeTurnoutConditional(Turnout turnout, int state, int numConds, boolean onChange, ArrayList<ConditionalAction> actionList,
-                                       ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
+    private int makeTurnoutConditional(Turnout turnout, int state, int numConds, boolean onChange,
+        ArrayList<ConditionalAction> actionList, ArrayList<ConditionalVariable> vetoList, Logix logix,
+            String prefix, String uName) {
+
+        int loop = numConds;
         ConditionalVariable cVar = makeCtrlTurnoutVar(turnout,state, false, onChange);
         if (cVar != null) {
             ArrayList<ConditionalVariable> varList = new ArrayList<>();
@@ -334,8 +379,8 @@ public class RouteExportToLogix {
             for (ConditionalVariable conditionalVariable : vetoList) {
                 varList.add(cloneVariable(conditionalVariable));
             }
-            String cSystemName = prefix + numConds + "T";
-            String cUserName = turnout.getDisplayName() + numConds + "C " + uName;
+            String cSystemName = prefix + loop + "T";
+            String cUserName = turnout.getDisplayName() + loop + "C " + uName;
             Conditional c;
             try {
                 c = conditionalManager.createNewConditional(cSystemName, cUserName);
@@ -349,12 +394,14 @@ public class RouteExportToLogix {
             c.setLogicType(Conditional.AntecedentOperator.ALL_AND, "");
             logix.addConditional(cSystemName, 0);
             c.calculate(true, null);
-            numConds++;
+            loop++;
         }
-        return numConds;
+        return loop;
     }
 
-    private ConditionalVariable makeCtrlTurnoutVar(Turnout turnout, int mode, boolean makeVeto, boolean onChange) {
+    @CheckForNull
+    private ConditionalVariable makeCtrlTurnoutVar(@CheckForNull Turnout turnout,
+            int mode, boolean makeVeto, boolean onChange) {
 
         if (turnout == null) {
             return null;
@@ -407,11 +454,11 @@ public class RouteExportToLogix {
     }
 
 
-    private ConditionalVariable cloneVariable(ConditionalVariable v) {
+    private ConditionalVariable cloneVariable(@Nonnull ConditionalVariable v) {
         return new ConditionalVariable(v.isNegated(), v.getOpern(), v.getType(), v.getName(), v.doTriggerActions());
     }
 
-    private ArrayList<ConditionalAction> cloneActionList(ArrayList<ConditionalAction> actionList, int option) {
+    private ArrayList<ConditionalAction> cloneActionList(@Nonnull ArrayList<ConditionalAction> actionList, int option) {
         ArrayList<ConditionalAction> list = new ArrayList<>();
         for (ConditionalAction action : actionList) {
             ConditionalAction clone = new DefaultConditionalAction();
@@ -425,7 +472,10 @@ public class RouteExportToLogix {
         return list;
     }
 
-    private ConditionalVariable makeCtrlSensorVar(Sensor selectedSensor, int mode, boolean makeVeto, boolean onChange) {
+    @CheckForNull
+    private ConditionalVariable makeCtrlSensorVar(@CheckForNull Sensor selectedSensor,
+            int mode, boolean makeVeto, boolean onChange) {
+
         if (selectedSensor == null) {
             return null;
         }
@@ -476,5 +526,5 @@ public class RouteExportToLogix {
         return new ConditionalVariable(negated, oper, type, devName, trigger);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RouteExportToLogix.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteExportToLogix.class);
 }
