@@ -1,14 +1,8 @@
 package jmri.jmrix.marklin.tcpdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
-import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.marklin.MarklinPortController;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.jmrix.marklin.MarklinTrafficController;
-import jmri.util.com.rbnb.UDPInputStream;
-import jmri.util.com.rbnb.UDPOutputStream;
 
 /**
  * Implements NetworkPortAdapter for the Marklin system network TCP connection.
@@ -54,6 +48,6 @@ public class TcpDriverAdapter extends MarklinPortController {
         return opened;
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcpDriverAdapter.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TcpDriverAdapter.class);
 
 }
