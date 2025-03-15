@@ -1916,6 +1916,14 @@
       <systemName>IMRATEFACTOR</systemName>
     </memory>
   </memories>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <timeProvider>
+      <systemName>IUInternalTimeProvider</systemName>
+    </timeProvider>
+    <timeProvider>
+      <systemName>IUSystemClock</systemName>
+    </timeProvider>
+  </timeProviders>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
     <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
       <systemName>IF$vsm:SZDC-2015-zakladni:entry($111)</systemName>
@@ -4135,7 +4143,6 @@
       <conditionalAction option="1" type="9" systemName="Roz-V3-Rad-Rele" data="4" delay="0" string="" />
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sun Mar 17 09:46:28 PDT 2019" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <entryexitpairs class="jmri.jmrit.entryexit.configurexml.EntryExitPairsXml">
     <cleardown>2</cleardown>
     <layoutPanel name="Dubová">
