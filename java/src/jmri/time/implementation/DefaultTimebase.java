@@ -34,8 +34,8 @@ public class DefaultTimebase extends AbstractTimebase {
     private boolean haveStartupFactor = false; // true if startup factor was ever set.
     // startupFactor at startup.
 
-    private Date startAtTime;
-    private Date setTimeValue;
+//    private Date startAtTime;
+//    private Date setTimeValue;
     private Date pauseTime; // null value indicates clock is running
     private Sensor clockSensor = null; // active when clock is running, inactive when stopped
     private Memory clockMemory = null; // contains current time on each tick
@@ -55,7 +55,7 @@ public class DefaultTimebase extends AbstractTimebase {
     private boolean notInitialized = true; // true before initialization received from start up
     private boolean showStopButton = false; // true indicates start up with start/stop button displayed
 
-    private java.text.SimpleDateFormat timeStorageFormat = null;
+//    private java.text.SimpleDateFormat timeStorageFormat = null;
 
     private javax.swing.Timer timer = null;
 
