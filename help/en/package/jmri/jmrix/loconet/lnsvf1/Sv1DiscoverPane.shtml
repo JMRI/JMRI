@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>JMRI: Discover LocoNet SV2 Devices</title>
+  <title>JMRI: Discover LocoNet SV1 Devices</title>
   <meta name="author" content="Egbert Broerse">
   <meta name="keywords" content="JMRI help send loconet svf1">
   <!--#include virtual="/help/en/parts/Style.shtml" -->

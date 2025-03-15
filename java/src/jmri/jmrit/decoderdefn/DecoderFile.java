@@ -38,7 +38,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Create a mechanism to manipulate a decoder definition.
+     * Create a mechanism to manipulate a decoder definition from up to 10 parameters.
      *
      * @param mfg manufacturer name
      * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
@@ -70,7 +70,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Create a mechanism to manipulate a decoder definition.
+     * Create a mechanism to manipulate a decoder definition from up to 12 parameters.
      *
      * @param mfg manufacturer name
      * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
@@ -104,7 +104,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Create a mechanism to manipulate a decoder definition.
+     * Create a mechanism to manipulate a decoder definition from up to 15 parameters.
      *
      * @param mfg manufacturer name
      * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
@@ -113,9 +113,9 @@ public class DecoderFile extends XmlFile {
      * @param highVersionID decoder version high byte, where applicable
      * @param family decoder family name, where applicable
      * @param filename filename of decoder XML definition
-     * @param developerID SV2 developerID number (8 bits)
-     * @param manufacturerID SV2 manufacturerID number (8 bits)
-     * @param productID (typically) SV2 product ID number (16 bits)
+     * @param developerID (typically SV2) developerID number (8 bits)
+     * @param manufacturerID manufacturerID number (8 bits)
+     * @param productID product ID number (16 bits)
      * @param numFns decoder's number of available functions
      * @param numOuts decoder's number of available function outputs
      * @param decoder Element containing decoder XML definition
@@ -149,7 +149,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * Create a mechanism to manipulate a decoder definition.
+     * Create a mechanism to manipulate a decoder definition from up to 16 parameters.
      *
      * @param mfg manufacturer name
      * @param mfgID manufacturer's NMRA manufacturer number, typically a "CV8" value
@@ -158,9 +158,9 @@ public class DecoderFile extends XmlFile {
      * @param highVersionID decoder version high byte, where applicable
      * @param family decoder family name, where applicable
      * @param filename filename of decoder XML definition
-     * @param developerID SV2 developerID number (8 bits)
-     * @param manufacturerID SV2 manufacturerID number (8 bits)
-     * @param productID (typically) SV2 product ID number (16 bits)
+     * @param developerID (typically SV2) developerID number (8 bits)
+     * @param manufacturerID manufacturerID number (8 bits)
+     * @param productID product ID number (16 bits)
      * @param numFns decoder's number of available functions
      * @param numOuts decoder's number of available function outputs
      * @param decoder Element containing decoder XML definition
