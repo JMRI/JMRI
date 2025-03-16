@@ -5,8 +5,6 @@ import java.time.*;
 
 import java.util.Date;
 
-import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.time.*;
@@ -203,7 +201,7 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
     }
 
     @Override
-    public void addPropertyChangeListener(@Nonnull String propertyName, PropertyChangeListener l) {
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().addPropertyChangeListener(propertyName, l);
     }
@@ -215,7 +213,7 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
     }
 
     @Override
-    public void removePropertyChangeListener(@Nonnull String propertyName, PropertyChangeListener l) {
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().removePropertyChangeListener(l);
     }
@@ -227,7 +225,7 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
     }
 
     @Override
-    public PropertyChangeListener[] getPropertyChangeListeners(@Nonnull String propertyName) {
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
         return InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().getPropertyChangeListeners(propertyName);
     }
