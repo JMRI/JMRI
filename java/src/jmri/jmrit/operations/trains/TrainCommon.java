@@ -611,6 +611,16 @@ public class TrainCommon {
         }
     }
 
+    protected void setCarPickupTime(Train train, RouteLocation rl, List<Car> carList) {
+        String expectedDepartureTime = train.getExpectedDepartureTime(rl);
+        for (Car car : carList) {
+            if (car.getRouteLocation() == rl) {
+                car.setPickupTime(expectedDepartureTime);
+            }
+        }
+
+    }
+
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
             justification = "Only when exception")
     public static String getTrainMessage(Train train, RouteLocation rl) {
@@ -2102,6 +2112,35 @@ public class TrainCommon {
             }
         }
         return null; // there was no date specified.
+    }
+
+    /*
+     * Converts String time HH:MM and HH:MM PM to minutes from midnight.
+     */
+    protected int convertStringTime(String time) {
+        int minutes = 0;
+        boolean hrFormat = false;
+        String[] splitTimePM = time.split(" ");
+        if (splitTimePM.length > 1) {
+            hrFormat = true;
+            if (splitTimePM[1].equals(Bundle.getMessage("PM"))) {
+                minutes = 12 * 60;
+            }
+        }
+        String[] splitTime = splitTimePM[0].split(":");
+        if (hrFormat && splitTime[1].equals("12")) {
+            splitTime[1] = "00";
+        }
+        if (splitTime.length > 2) {
+            minutes += 24 * 60 * Integer.parseInt(splitTime[0]);
+            minutes += 60 * Integer.parseInt(splitTime[1]);
+            minutes += Integer.parseInt(splitTime[2]);
+        } else {
+            minutes += 60 * Integer.parseInt(splitTime[0]);
+            minutes += Integer.parseInt(splitTime[1]);
+        }
+        log.debug("convert time {} to minutes {}", time, minutes);
+        return minutes;
     }
 
     /**

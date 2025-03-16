@@ -153,6 +153,8 @@ public class TrainManifest extends TrainCommon {
                     }
                 }
 
+                setCarPickupTime(train, rl, carList);
+
                 if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
                     pickupEngines(fileOut, engineList, rl, IS_MANIFEST);
                     // if switcher show loco drop at end of list

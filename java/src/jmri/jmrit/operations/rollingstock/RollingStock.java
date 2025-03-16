@@ -64,6 +64,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
     protected String _lastTrackId = LOCATION_UNKNOWN; // the rollingstock's last track id
     protected int _blocking = DEFAULT_BLOCKING_ORDER;
+    protected String _pickupTime = NONE;
 
     protected IdTag _tag = null;
     protected PropertyChangeListener _tagListener = null;
@@ -1253,6 +1254,19 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return _comment;
     }
 
+    public void setPickupTime(String time) {
+        String old = _pickupTime;
+        _pickupTime = time;
+        setDirtyAndFirePropertyChange("Pickup Time Changed", old, time); // NOI18N
+    }
+
+    public String getPickupTime() {
+        if (getTrain() != null) {
+            return _pickupTime;
+        }
+        return NONE;
+    }
+
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
         if (current == getRouteLocation()) {
             setLastDate(java.util.Calendar.getInstance().getTime());
@@ -1419,6 +1433,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if ((a = e.getAttribute(Xml.DATE)) != null) {
             setLastDate(a.getValue()); // uses the setLastDate(String) method.
         }
+        if ((a = e.getAttribute(Xml.PICKUP_TIME)) != null) {
+            _pickupTime = a.getValue();
+        }
         if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
             try {
                 _blocking = Integer.parseInt(a.getValue());
@@ -1509,6 +1526,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         if (isOutOfService()) {
             e.setAttribute(Xml.OUT_OF_SERVICE, isOutOfService() ? Xml.TRUE : Xml.FALSE);
+        }
+        if (!getPickupTime().equals(NONE)) {
+            e.setAttribute(Xml.PICKUP_TIME, getPickupTime());
         }
         if (getBlocking() != 0) {
             e.setAttribute(Xml.BLOCKING, Integer.toString(getBlocking()));
