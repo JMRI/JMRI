@@ -86,7 +86,9 @@ public class InternalDateTime extends AbstractTimeProvider
 
     @Override
     public void setTime(LocalTime time) throws UnsupportedOperationException {
+        LocalDateTime oldTime = this._time;
         _time = LocalDateTime.of(_time.toLocalDate(), time);
+        timeIsUpdated(oldTime);
     }
 
     @Override
@@ -96,22 +98,30 @@ public class InternalDateTime extends AbstractTimeProvider
 
     @Override
     public void setWeekday(int dayOfWeek) throws UnsupportedOperationException {
+        LocalDateTime oldTime = this._time;
         _time = _time.with(ChronoField.DAY_OF_WEEK, dayOfWeek);
+        timeIsUpdated(oldTime);
     }
 
     @Override
     public void setDayOfMonth(int day) throws UnsupportedOperationException {
+        LocalDateTime oldTime = this._time;
         _time = _time.withDayOfMonth(day);
+        timeIsUpdated(oldTime);
     }
 
     @Override
     public void setMonth(int month) throws UnsupportedOperationException {
+        LocalDateTime oldTime = this._time;
         _time = _time.withMonth(month);
+        timeIsUpdated(oldTime);
     }
 
     @Override
     public void setYear(int year) throws UnsupportedOperationException {
+        LocalDateTime oldTime = this._time;
         _time = _time.withYear(year);
+        timeIsUpdated(oldTime);
     }
 
     @Override

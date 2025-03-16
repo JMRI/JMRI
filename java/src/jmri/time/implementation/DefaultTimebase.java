@@ -367,19 +367,19 @@ public class DefaultTimebase extends AbstractTimebase {
     @Override
     public void addMinuteChangeListener(PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().addMinuteChangeListener(l);
+                .getMainTimeProviderHandler().addPropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, l);
     }
 
     @Override
     public void removeMinuteChangeListener(PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().removeMinuteChangeListener(l);
+                .getMainTimeProviderHandler().removePropertyChangeListener(TimeProvider.PROPERTY_CHANGE_MINUTES, l);
     }
 
     @Override
     public PropertyChangeListener[] getMinuteChangeListeners() {
         return InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().getMinuteChangeListeners();
+                .getMainTimeProviderHandler().getPropertyChangeListeners(TimeProvider.PROPERTY_CHANGE_MINUTES);
     }
 
     /**

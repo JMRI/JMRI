@@ -2,6 +2,7 @@ package jmri.time;
 
 import java.beans.PropertyChangeListener;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -62,25 +63,60 @@ public interface MainTimeProviderHandler {
     TimeProvider getSecondaryTimeProvider();
 
     /**
-     * Request a callback when the minutes place of the time changes.
+     * Request a call-back when a bound property changes. Bound properties are
+     * the known state, commanded state, user and system names.
      *
-     * @param l the listener to receive the callback
+     * @param listener    The listener. This may change in the future to be a
+     *                        subclass of NamedProprtyChangeListener that
+     *                        carries the name and listenerRef values internally
      */
-    void addMinuteChangeListener(@Nonnull PropertyChangeListener l);
+    void addPropertyChangeListener(@Nonnull PropertyChangeListener listener);
 
     /**
-     * Remove a request for callback when the minutes place of the time changes.
+     * Request a call-back when a bound property changes. Bound properties are
+     * the known state, commanded state, user and system names.
      *
-     * @param l the listener to receive the callback
+     * @param propertyName The name of the property to listen to
+     * @param listener     The listener. This may change in the future to be a
+     *                         subclass of NamedProprtyChangeListener that
+     *                         carries the name and listenerRef values
+     *                         internally
      */
-    void removeMinuteChangeListener(@Nonnull PropertyChangeListener l);
+    void addPropertyChangeListener(@Nonnull String propertyName, @Nonnull PropertyChangeListener listener);
 
     /**
-     * Get the list of minute change listeners.
+     * Remove the specified listener from this object.
      *
-     * @return the list of listeners
+     * @param listener The {@link java.beans.PropertyChangeListener} to remove.
+     */
+    void removePropertyChangeListener(@CheckForNull PropertyChangeListener listener);
+
+    /**
+     * Remove the specified listener of the specified property from this object.
+     *
+     * @param propertyName The name of the property to stop listening to.
+     * @param listener     The {@link java.beans.PropertyChangeListener} to
+     *                     remove.
+     */
+    void removePropertyChangeListener(@CheckForNull String propertyName,
+            @CheckForNull PropertyChangeListener listener);
+
+    /**
+     * Get all {@link java.beans.PropertyChangeListener}s currently listening.
+     *
+     * @return an array of PropertyChangeListeners
      */
     @Nonnull
-    PropertyChangeListener[] getMinuteChangeListeners();
+    PropertyChangeListener[] getPropertyChangeListeners();
+
+    /**
+     * Get all {@link java.beans.PropertyChangeListener}s currently listening to
+     * changes to the specified property.
+     *
+     * @param propertyName the name of the property of interest
+     * @return an array of PropertyChangeListeners
+     */
+    @Nonnull
+    PropertyChangeListener[] getPropertyChangeListeners(@CheckForNull String propertyName);
 
 }

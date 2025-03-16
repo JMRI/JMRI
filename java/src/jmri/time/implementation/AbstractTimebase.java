@@ -5,6 +5,8 @@ import java.time.*;
 
 import java.util.Date;
 
+import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.implementation.AbstractNamedBean;
 import jmri.time.*;
@@ -19,7 +21,6 @@ import jmri.time.*;
  * @author Daniel Bergqvist Copyright (C) 2025
  */
 public abstract class AbstractTimebase extends AbstractNamedBean implements Timebase {
-
 
     public AbstractTimebase(String sysName) {
         super(sysName);
@@ -196,21 +197,54 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
     }
 
     @Override
-    public void addMinuteChangeListener(PropertyChangeListener l) {
+    public void addPropertyChangeListener(@Nonnull PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().addMinuteChangeListener(l);
+                .getMainTimeProviderHandler().addPropertyChangeListener(l);
+    }
+
+    @Override
+    public void addPropertyChangeListener(@Nonnull String propertyName, @Nonnull PropertyChangeListener l) {
+        InstanceManager.getDefault(TimeProviderManager.class)
+                .getMainTimeProviderHandler().addPropertyChangeListener(propertyName, l);
+    }
+
+    @Override
+    public void removePropertyChangeListener(@Nonnull PropertyChangeListener l) {
+        InstanceManager.getDefault(TimeProviderManager.class)
+                .getMainTimeProviderHandler().removePropertyChangeListener(l);
+    }
+
+    @Override
+    public void removePropertyChangeListener(@Nonnull String propertyName, @Nonnull PropertyChangeListener l) {
+        InstanceManager.getDefault(TimeProviderManager.class)
+                .getMainTimeProviderHandler().removePropertyChangeListener(l);
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return InstanceManager.getDefault(TimeProviderManager.class)
+                .getMainTimeProviderHandler().getPropertyChangeListeners();
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(@Nonnull String propertyName) {
+        return InstanceManager.getDefault(TimeProviderManager.class)
+                .getMainTimeProviderHandler().getPropertyChangeListeners(propertyName);
+    }
+
+    @Override
+    public void addMinuteChangeListener(PropertyChangeListener l) {
+        addPropertyChangeListener(Timebase.PROPERTY_CHANGE_MINUTES, l);
     }
 
     @Override
     public void removeMinuteChangeListener(PropertyChangeListener l) {
-        InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().removeMinuteChangeListener(l);
+        removePropertyChangeListener(Timebase.PROPERTY_CHANGE_MINUTES, l);
     }
 
     @Override
     public PropertyChangeListener[] getMinuteChangeListeners() {
-        return InstanceManager.getDefault(TimeProviderManager.class)
-                .getMainTimeProviderHandler().getMinuteChangeListeners();
+        return getPropertyChangeListeners(Timebase.PROPERTY_CHANGE_MINUTES);
     }
 
 

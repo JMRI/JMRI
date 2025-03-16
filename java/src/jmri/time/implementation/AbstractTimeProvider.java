@@ -1,5 +1,7 @@
 package jmri.time.implementation;
 
+import java.time.*;
+
 import jmri.implementation.*;
 
 import javax.annotation.Nonnull;
@@ -39,6 +41,21 @@ public abstract class AbstractTimeProvider extends AbstractNamedBean implements 
     @Override
     public int getState() {
         return NamedBean.UNKNOWN;
+    }
+
+    protected void timeIsUpdated(LocalDateTime oldTime) {
+        LocalDateTime newTime = getTime();
+        long oldSeconds = oldTime.toEpochSecond(ZoneOffset.UTC);
+        long newSeconds = newTime.toEpochSecond(ZoneOffset.UTC);
+        if (newSeconds != oldSeconds) {
+            long oldMinutes = oldSeconds / 60;
+            long newMinutes = newSeconds / 60;
+            firePropertyChange(TimeProvider.PROPERTY_CHANGE_SECONDS, oldSeconds, newSeconds);
+            if (newMinutes != oldMinutes) {
+                firePropertyChange(TimeProvider.PROPERTY_CHANGE_MINUTES, oldMinutes, newMinutes);
+                firePropertyChange(TimeProvider.PROPERTY_CHANGE_DATETIME, oldTime, newTime);
+            }
+        }
     }
 
 
