@@ -1,8 +1,5 @@
 ###############################################################################
 #
-# class OptionDialog
-# Some Swing dialogs
-#
 # class NewTrainMaster *
 # Sets up a train in a section
 #
@@ -37,21 +34,11 @@
 ###############################################################################
 import java
 import jmri
-import re
-from javax.swing import JOptionPane
 import os
-import imp
 import copy
-import org
-import sys
-from java.awt import Dimension
-
-from javax.swing import JScrollPane, JOptionPane, JFrame, JLabel, JButton, JTextField, \
-    JFileChooser, JMenu, JMenuItem, JMenuBar,JComboBox,JDialog,JList, WindowConstants
-
 import sys
 
-# include the graphcs library
+# include the graphics library
 my_path_to_jars = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/jars/jgrapht.jar')
 sys.path.append(my_path_to_jars) # add the jar to your path
 from org.jgrapht.alg import DijkstraShortestPath
@@ -106,291 +93,10 @@ le = LabelledEdge
 g = StationGraph()
 
 #############################################################################################
-
-#class OptionDialog( java.lang.Runnable ) :
-class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
-    CLOSED_OPTION = False
+class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
     logLevel = 0
 
-    def List(self, title, list_items, preferred_size = "default"):
-        my_list = \
-            JList(list_items)
-        my_list.setSelectedIndex(0)
-        scrollPane = JScrollPane(my_list);
-        if preferred_size != "default":
-            scrollPane.setPreferredSize(preferred_size)     # preferred_size should be set to Dimension(300, 500) say
-        else:
-            no_rows_to_display = min(40, len(list_items))
-            my_list.setVisibleRowCount(no_rows_to_display)
-            dim = my_list.getPreferredScrollableViewportSize()
-            w = int(dim.getWidth())
-            h = int(dim.getHeight()) + 10  # to leave a bit of space at bottom. Height of row = approx 20
-            scrollPane.setPreferredSize(Dimension(w,h))
-        i = []
-        self.CLOSED_OPTION = False
-        options = ["OK"]
-        while len(i) == 0:
-            s = JOptionPane().showOptionDialog(None,
-            scrollPane,
-            title,
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.PLAIN_MESSAGE,
-            None,
-            options,
-            options[0])
-            if s == JOptionPane.CLOSED_OPTION:
-                self.CLOSED_OPTION = True
-                if self.logLevel > 1 : print "closed Option"
-                return
-            i = my_list.getSelectedIndices()
-        index = i[0]
-        return list_items[index]
-
-
-    #list and option buttons
-    def ListOptions(self, list_items, title, options, preferred_size = "default"):
-        my_list = JList(list_items)
-        if list_items != []:
-            my_list.setSelectedIndex(0)
-        scrollPane = JScrollPane(my_list);
-        if preferred_size != "default":
-            scrollPane.setPreferredSize(preferred_size)   # preferred_size should be set to Dimension(300, 500) say
-        else:
-            no_rows_to_display = min(40, len(list_items))
-            my_list.setVisibleRowCount(no_rows_to_display)
-            dim = my_list.getPreferredScrollableViewportSize()
-            w = int(dim.getWidth()) + 20
-            h = int(dim.getHeight()) + 20  # to leave a bit of space at bottom. Height of row = approx 20
-            scrollPane.setPreferredSize(Dimension(w,h))
-        self.CLOSED_OPTION = False
-        s = JOptionPane.showOptionDialog(None,
-            scrollPane,
-            title,
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.PLAIN_MESSAGE,
-            None,
-            options,
-            options[1])
-        if s == JOptionPane.CLOSED_OPTION:
-            self.CLOSED_OPTION = True
-            return [None,None]
-        if list_items == []:
-            return [None, options[s]]
-        index = my_list.getSelectedIndices()[0]
-        return [list_items[index], options[s]]
-
-        # call using
-        # list_items = ["list1","list2"]
-        # options = ["opt1", "opt2", "opt3"]
-        # title = "title"
-        # [list, option] = OptionDialog().ListOptions(list_items, title, options)
-        # print "option= " ,option, " list = ",list
-
-    def variable_combo_box(self, options, default, msg, title = None, type = JOptionPane.QUESTION_MESSAGE):
-
-
-        result = JOptionPane.showInputDialog(
-            None,                                   # parentComponent
-            msg,                                    # message text
-            title,                                  # title
-            type,                                   # messageType
-            None,                                   # icon
-            options,                                # selectionValues
-            default                                 # initialSelectionValue
-            )
-
-        return result
-
-    def displayMessageNonModal(self, msg, jButtonMsg = "OK"):
-        global customDialog
-        customDialog = JDialog(None, msg, False); # 'true' for modal
-        # customDialog.addWindowListener(WindowAdapter())
-        #     def windowClosing(self, e):
-        #         print("jdialog window closing event received")
-        #         # Add your custom closing logic herecustomDialog.addWindowListener(WindowAdapter():
-
-
-        # Add components to the customDialog
-        # customDialog.setSize(1200, 1200)
-        dimension = Dimension(400,150)
-        customDialog.setPreferredSize(dimension)
-
-
-        pane = customDialog.getContentPane();
-        pane.setLayout(None);
-        button = JButton(jButtonMsg, actionPerformed = self.click_action) ;
-
-        button.setBounds(10,10,300,60);
-        pane.add(button)
-        customDialog.setLocationRelativeTo(None);
-        # customDialog.setUndecorated(True)
-        customDialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
-        customDialog.pack();
-        customDialog.setVisible(True);
-
-    def click_action(self,e):
-        global customDialog
-        # global jdialog_closed
-        sensors.getSensor("Jdialog_closed").setKnownState(ACTIVE)
-        # print "&&&&&&&&&&&&&& jdialog_closed", jdialog_closed
-        customDialog.dispose()
-        return
-
-    def displayMessage(self, msg, title = ""):
-        self.CLOSED_OPTION = False
-        s = JOptionPane.showOptionDialog(None,
-                msg,
-                title,
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.PLAIN_MESSAGE,
-                None,
-                ["OK"],
-                None)
-        #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
-        if s == JOptionPane.CLOSED_OPTION:
-            self.CLOSED_OPTION = True
-            return
-        return s
-
-    def customQuestionMessage(self, msg, title, opt1, opt2, opt3):
-        self.CLOSED_OPTION = False
-        options = [opt1, opt2, opt3]
-        s = JOptionPane.showOptionDialog(None,
-        msg,
-        title,
-        JOptionPane.YES_NO_CANCEL_OPTION,
-        JOptionPane.QUESTION_MESSAGE,
-        None,
-        options,
-        options[2])
-        if s == JOptionPane.CLOSED_OPTION:
-            self.CLOSED_OPTION = True
-            return
-        return s
-
-    def customQuestionMessage3str(self, msg, title, opt1, opt2, opt3):
-        self.CLOSED_OPTION = False
-        options = [opt1, opt2, opt3]
-        s = JOptionPane.showOptionDialog(None,
-                                         msg,
-                                         title,
-                                         JOptionPane.YES_NO_CANCEL_OPTION,
-                                         JOptionPane.QUESTION_MESSAGE,
-                                         None,
-                                         options,
-                                         options[0])
-        if s == JOptionPane.CLOSED_OPTION:
-            self.CLOSED_OPTION = True
-            return
-        if s == JOptionPane.YES_OPTION:
-            s1 = opt1
-        elif s == JOptionPane.NO_OPTION:
-            s1 = opt2
-        else:
-            s1 = opt3
-        return s1
-
-    def customQuestionMessage4str(self, msg, title, opt1, opt2, opt3, opt4):
-        self.CLOSED_OPTION = False
-        options = [opt1, opt2, opt3, opt4]
-        s = JOptionPane.showOptionDialog(None,
-                                         msg,
-                                         title,
-                                         JOptionPane.DEFAULT_OPTION,
-                                         JOptionPane.QUESTION_MESSAGE,
-                                         None,
-                                         options,
-                                         options[0])
-        if s == JOptionPane.CLOSED_OPTION:
-            self.CLOSED_OPTION = True
-            return
-        if s == 0:
-            s1 = opt1
-        elif s == 1:
-            s1 = opt2
-        elif s == 2:
-            s1 = opt3
-        else:
-            s1 = opt4
-        return s1
-
-    def customQuestionMessage2(self, msg, title, opt1, opt2):
-        self.CLOSED_OPTION = False
-        options = [opt1, opt2]
-        s = JOptionPane.showOptionDialog(None,
-        msg,
-        title,
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE,
-        None,
-        options,
-        options[0])
-        if s == JOptionPane.CLOSED_OPTION:
-            self.CLOSED_OPTION = True
-            return
-        return s
-
-    def customQuestionMessage2str(self, msg, title, opt1, opt2):
-        self.CLOSED_OPTION = False
-        options = [opt1, opt2]
-        s = JOptionPane.showOptionDialog(None,
-        msg,
-        title,
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE,
-        None,
-        options,
-        options[1])
-        if s == JOptionPane.CLOSED_OPTION:
-            self.CLOSED_OPTION = True
-            return
-        if s == JOptionPane.YES_OPTION:
-            s1 = opt1
-        else:
-            s1 = opt2
-        return s1
-
-    def customMessage(self, msg, title, opt1):
-        self.CLOSED_OPTION = False
-        options = [opt1]
-        s = JOptionPane.showOptionDialog(None,
-        msg,
-        title,
-        JOptionPane.YES_OPTION,
-        JOptionPane.PLAIN_MESSAGE,
-        None,
-        options,
-        options[0])
-        if s == JOptionPane.CLOSED_OPTION:
-            self.CLOSED_OPTION = True
-            return
-        return s
-
-    def input(self,msg, title, default_value):
-        options = None
-        x = JOptionPane.showInputDialog( None, msg,title, JOptionPane.QUESTION_MESSAGE, None, options, default_value);
-        if x == None:
-            self.CLOSED_OPTION = True
-            return
-        return x
-
-class modifiableJComboBox:
-
-    def __init__(self, list, msg, default = ""):
-        jcb = JComboBox(list)
-        jcb.setMaximumRowCount(30);
-        jcb.setSelectedItem(default);
-        jcb.setEditable(True)
-        JOptionPane.showMessageDialog( None, jcb, msg, JOptionPane.QUESTION_MESSAGE)
-        self.ans = str(jcb.getSelectedItem())
-
-    def return_val(self):
-        return self.ans
-
-class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
-
     def init(self):
-        self.logLevel = 0
         if self.logLevel > 0: print 'Create Stop Thread'
 
     def setup(self):
@@ -432,7 +138,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             return
 
     def optionally_reset_all_trains(self):
-        global stored_simulate
+        global stored_simulate, glb_reset_all_trains
         opt1= "keep as is"
         opt2 = "reset all trains"
         res = OptionDialog().customQuestionMessage2str("reset positions of trains?", "", opt1, opt2)
@@ -449,11 +155,13 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.stop_all_threads()
             # print "self.stop_all_threads()"
             self.remove_all_trains_from_trains_allocated()
+            glb_reset_all_trains = True
         else:
             self.delete_active_transits()
             # print "self.delete_active_transits()"
             self.stop_all_threads()
             # print "self.stop_all_threads()"
+            glb_reset_all_trains = False
 
     def stop_via_table(self):
         createandshowGUI3(self)
@@ -659,7 +367,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
         stop_sensor =  sensors.getSensor("stopMasterSensor")
         modify_sensor =  sensors.getSensor("modifyMasterSensor")
         if self.logLevel > 0: print "start_sensor" , start_sensor
-        if self.logLevel > 0: print "stop_sensor" , stop_sensor
+        if self.logLevel > 0: print "stop_sesor" , stop_sensor
         if sensor_that_went_inactive in self.run_stop_sensors:
             if self.logLevel > 0: print "run stop sensor went inactive"
 
@@ -854,7 +562,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.modify_individual_station_wait_time(sensor_changed, button_sensor_name, button_station_name):
                 sensor_changed.setKnownState(INACTIVE)
             else:
-                #cancelled: reset all buttons so we check all of them
+                #reset all buttons so we check all of them
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif modify_station_direction_sensor.getKnownState() == ACTIVE:
             # sensor_changed_saved = sensor_changed
@@ -863,25 +572,32 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # so that the express routes are the shortest path allowed
                 ResetButtonMaster().regenerate_traininfo_files("Regenerated TrainInfo Files")
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
+                self.button_sensors_to_watch = copy.copy(self.button_sensors)
             else:
-                #cancelled: reset all buttons so we check all of them
+                #reset all buttons so we check all of them
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif modify_stop_sensors_sensor.getKnownState() == ACTIVE:
             if self.modify_stop_sensors1(sensor_changed, button_sensor_name, button_station_name):
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
             else:
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif inhibit_running_transit_if_block_occupied_sensor.getKnownState() == ACTIVE:
             if self.restrict_transit_operation(sensor_changed, button_sensor_name, button_station_name):
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
                 #ensure that we can press inhibit_running_transit_if_block_occupied_sensor
                 #self.rbm.switch_sensors_requiring_station_buttons(inhibit_running_transit_if_block_occupied_sensor, "sensor_off")
             else:
-                #cancelled: reset all buttons so we check all of them
+                #reset all buttons so we check all of them
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         else:
             title = "station button error"
@@ -1413,7 +1129,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         return True
 
     def modify_stop_sensors1(self, sensor_changed, button_sensor_name, button_station_name):
-        msg = "selected station " + button_station_name + ". \nSelect the next station to modify the stopping length?"
+        msg = "selected station " + button_station_name + ". \nSelect the next station to modify the stop sensor?"
         title = "Select next Station"
 
         opt1 = "Select next station"
