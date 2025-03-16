@@ -2,7 +2,6 @@ package jmri.time;
 
 import java.beans.PropertyChangeListener;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -70,7 +69,7 @@ public interface MainTimeProviderHandler {
      *                        subclass of NamedProprtyChangeListener that
      *                        carries the name and listenerRef values internally
      */
-    void addPropertyChangeListener(@Nonnull PropertyChangeListener listener);
+    void addPropertyChangeListener(PropertyChangeListener listener);
 
     /**
      * Request a call-back when a bound property changes. Bound properties are
@@ -82,14 +81,14 @@ public interface MainTimeProviderHandler {
      *                         carries the name and listenerRef values
      *                         internally
      */
-    void addPropertyChangeListener(@Nonnull String propertyName, @Nonnull PropertyChangeListener listener);
+    void addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
 
     /**
      * Remove the specified listener from this object.
      *
      * @param listener The {@link java.beans.PropertyChangeListener} to remove.
      */
-    void removePropertyChangeListener(@CheckForNull PropertyChangeListener listener);
+    void removePropertyChangeListener(PropertyChangeListener listener);
 
     /**
      * Remove the specified listener of the specified property from this object.
@@ -98,8 +97,8 @@ public interface MainTimeProviderHandler {
      * @param listener     The {@link java.beans.PropertyChangeListener} to
      *                     remove.
      */
-    void removePropertyChangeListener(@CheckForNull String propertyName,
-            @CheckForNull PropertyChangeListener listener);
+    void removePropertyChangeListener(String propertyName,
+            PropertyChangeListener listener);
 
     /**
      * Get all {@link java.beans.PropertyChangeListener}s currently listening.
@@ -117,6 +116,6 @@ public interface MainTimeProviderHandler {
      * @return an array of PropertyChangeListeners
      */
     @Nonnull
-    PropertyChangeListener[] getPropertyChangeListeners(@CheckForNull String propertyName);
+    PropertyChangeListener[] getPropertyChangeListeners(String propertyName);
 
 }
