@@ -197,25 +197,25 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
     }
 
     @Override
-    public void addPropertyChangeListener(@Nonnull PropertyChangeListener l) {
+    public void addPropertyChangeListener(PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().addPropertyChangeListener(l);
     }
 
     @Override
-    public void addPropertyChangeListener(@Nonnull String propertyName, @Nonnull PropertyChangeListener l) {
+    public void addPropertyChangeListener(@Nonnull String propertyName, PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().addPropertyChangeListener(propertyName, l);
     }
 
     @Override
-    public void removePropertyChangeListener(@Nonnull PropertyChangeListener l) {
+    public void removePropertyChangeListener(PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().removePropertyChangeListener(l);
     }
 
     @Override
-    public void removePropertyChangeListener(@Nonnull String propertyName, @Nonnull PropertyChangeListener l) {
+    public void removePropertyChangeListener(@Nonnull String propertyName, PropertyChangeListener l) {
         InstanceManager.getDefault(TimeProviderManager.class)
                 .getMainTimeProviderHandler().removePropertyChangeListener(l);
     }
