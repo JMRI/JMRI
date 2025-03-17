@@ -14,22 +14,22 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
 
     /**
-     * String constant for Property Change auto Signal Mast Generate Start.
+     * String constant for Property Change auto Signal mast generate start.
      */
     String PROPERTY_AUTO_SIGNALMAST_GENERATE_START = "autoSignalMastGenerateStart";
 
     /**
-     * String constant for Property Change auto Signal Mast Generate Complete.
+     * String constant for Property Change auto signal mast generate complete.
      */
     String PROPERTY_AUTO_SIGNALMAST_GENERATE_COMPLETE = "autoSignalMastGenerateComplete";
 
     /**
-     * String constant for Property Change
+     * String constant for property change auto generate update.
      */
     String PROPERTY_AUTO_GENERATE_UPDATE = "autoGenerateUpdate";
 
     /**
-     * String constant for Property Change
+     * String constant for property change auto generate complete.
      */
     String PROPERTY_AUTO_GENERATE_COMPLETE = "autoGenerateComplete";
 
