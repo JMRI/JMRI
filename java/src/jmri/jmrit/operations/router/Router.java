@@ -390,7 +390,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 _status.startsWith(Track.LENGTH) &&
                 car.getLocation() != clone.getDestination()) {
             addLine(_buildReport, SEVEN, Bundle.getMessage("RouterSpurFull",
-                    clone.getDestinationTrackName(), clone.getDestinationName()));
+                    clone.getDestinationName(), clone.getDestinationTrackName(), clone.getDestinationName()));
             Location dest = clone.getDestination();
             List<Track> yards = dest.getTracksByMoves(Track.YARD);
             log.debug("Found {} yard(s) at destination ({})", yards.size(), clone.getDestinationName());
@@ -403,11 +403,11 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         continue;
                     }
                     addLine(_buildReport, SEVEN, Bundle.getMessage("RouterSendCarToYard",
-                            car.toString(), track.getName(), dest.getName()));
+                            car.toString(), dest.getName(), track.getName(), dest.getName()));
                     return true; // car is going to a yard
                 } else {
                     addLine(_buildReport, SEVEN, Bundle.getMessage("RouterCanNotUseYard",
-                            track.getName(), status));
+                            track.getLocation().getName(), track.getName(), status));
                 }
             }
             addLine(_buildReport, SEVEN, Bundle.getMessage("RouterNoYardTracks",

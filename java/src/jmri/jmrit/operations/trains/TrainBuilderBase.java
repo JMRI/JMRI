@@ -38,6 +38,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected static final int DISPLAY_CAR_LIMIT_100 = 100;
 
     protected static final boolean USE_BUNIT = true;
+    protected static final String TIMING = "timing of trains";
 
     // build variables shared between local routines
     Date _startTime; // when the build report started
@@ -2325,6 +2326,10 @@ public class TrainBuilderBase extends TrainCommon {
                 tracks.add(testTrack); // car's final destination
                 break; // done with this destination
             }
+            // check for train timing
+            if (status.equals(Track.OKAY)) {
+                status = checkReserved(_train, rld, car, testTrack);
+            }
             // okay to drop car?
             if (!status.equals(Track.OKAY)) {
                 addLine(_buildReport, SEVEN,
@@ -2368,6 +2373,54 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         return rld;
+    }
+
+    /*
+     * Determines if rolling stock can be delivered to track when considering
+     * timing of car pulls by other trains.
+     */
+    protected String checkReserved(Train train, RouteLocation rld, Car car, Track destTrack) {
+        // car can be a kernel so get total length
+        int length = car.getTotalLength();
+        if (car.getKernel() != null) {
+            length = car.getKernel().getTotalLength();
+        }
+        log.debug("Car length: {}, available track space: {}, reserved: {}", length,
+                destTrack.getAvailableTrackSpace(), destTrack.getReserved());
+        if (length > destTrack.getAvailableTrackSpace() +
+                destTrack.getReserved()) {
+            String trainExpectedArrival = train.getExpectedArrivalTime(rld);
+            int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
+            int reservedReturned = 0;
+            // does this car already have this destination?
+            if (car.getDestinationTrack() == destTrack) {
+                reservedReturned = -car.getTotalLength();
+            }
+            // get a list of cars on this track
+            List<Car> cars = carManager.getList(destTrack);
+            for (Car kar : cars) {
+                if (kar.getTrain() != null && kar.getTrain() != train) {
+                    int carPullTime = convertStringTime(kar.getPickupTime());
+                    if (trainArrivalTimeMinutes < carPullTime) {
+                        addLine(_buildReport, SEVEN,
+                                Bundle.getMessage("buildCarTrainTiming", kar.toString(),
+                                        kar.getTrack().getTrackTypeName(), kar.getLocationName(),
+                                        kar.getTrackName(), kar.getTrainName(), kar.getPickupTime(),
+                                        _train.getName(), trainExpectedArrival));
+
+                        reservedReturned += kar.getTotalLength();
+                    }
+                }
+            }
+            if (length > destTrack.getAvailableTrackSpace() - reservedReturned) {
+                // TODO check for alternate track and send if available
+                _warnings++;
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildWarnTrainTiming", car.toString(), _train.getName()));
+                return TIMING;
+            }
+        }
+        return Track.OKAY;
     }
 
     /**

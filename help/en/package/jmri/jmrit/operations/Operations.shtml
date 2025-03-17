@@ -252,8 +252,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#TrackTools">Track Tools</a>
               <ul>
-
-
                 <li><a href="#LoadOptions">Load Options</a>
                   <ul>
                     <li><a href="#SpurOption">Hold cars with custom loads when spurs are
@@ -305,7 +303,20 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
 
-                <li><a href="#PrintLocation">Print or Preview</a></li>
+                <li><a href="#PrintLocation">Print or Preview</a>
+                  <ul>
+                    <li>Print Locations</li>
+
+                    <li>Print Schedules</li>
+
+                    <li>Print Comments</li>
+
+                    <li>Print Location Details</li>
+
+                    <li>Print Track Analysis</li>
+
+                    <li>Print Track Error Analysis</li>
+                  </ul></li>
               </ul></li>
           </ul></li>
 
@@ -3724,7 +3735,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       This tool provides several options with regards to printing or previewing your locations.
       <ul>
         <li>Print Locations
-          <p>Prints the information found in the Locations window.</p>
+          <p>Prints the information found in the Locations window, plus a summary of track space
+            available and used.</p>
         </li>
 
         <li>Print Schedules
@@ -3796,7 +3808,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       You can edit the number of times a car has been moved by the program and the car's wait count
       directly from the "Cars" window. Double click on the cell in the Cars window to change. The
       built and owner fields can be found in the <a href="#CarsEdit">Edit Car</a> window. The last
-      time moved is set by the program.
+      time moved is set when the program delivers a car to a track.
+
+      <h4>Pick up</h4>
+      The "Pick up" column shows if a car has been scheduled for a pick up using a
+      <a href="#Schedules">schedule</a> and <a href="#TrainSchedules">Train Schedules</a>. After a
+      car is assigned to a train by the program, the car's estimated pick up time can be viewed in
+      the "Pick up" column.
 
       <h4>Add, Find, Save Buttons</h4>
       There are three buttons located at the bottom of the Cars window. The <a href="#CarsEdit">Add</a>
@@ -5315,7 +5333,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <a href="#LocationDivision">railroad division</a> can also require a local move, for example a
       return to a yard track at the same location. So if you don't want your train to perform local
       moves when a car has a custom load, a local final destination, or railroad division, deselect
-      this option.
+      this option. You can also control which locations in a train's route are allowed to perform
+      local moves, see
+      <a href="#PullsAndSpots">Pick ups? Set outs? and Local moves?</a> for more information.
 
       <h5>Allow cars to travel from origin to terminal</h5>
       Normally the program allows cars to travel from the train's departure location (origin) to its

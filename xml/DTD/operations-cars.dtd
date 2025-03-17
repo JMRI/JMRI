@@ -91,6 +91,7 @@
 <!ATTLIST car nextPickupId			CDATA #IMPLIED>
 <!ATTLIST car divisionId			CDATA #IMPLIED>
 <!ATTLIST car routePath				CDATA #IMPLIED>
+<!ATTLIST car pickupTime			CDATA #IMPLIED>
 
 <!ELEMENT loads (defaults | load*)*>
 <!ELEMENT defaults EMPTY>
