@@ -12,25 +12,25 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>LocoNet LNCV Programming Pane</h1>
+      <h1>LocoNet > Manage LNCV Modules Pane</h1>
 
-      <p><span class="since">since 4.21.4</span>The "Configure LNCV Modules" tool lets you access
+      <p><span class="since">since 4.21.4</span>The "Manage LNCV Modules" tool lets you access
       and program connected LocoNet devices that respond to the (Uhlenbrock) LNCV LocoNet
       programming protocol.<br>
       Examples are the Uhlenbrock Switch Module 63410 and Digikeijs DR5033 booster. You find the
       tool in the LocoNet menu as long as a LocoNet connection is available.</p>
-      <img src="images/LNCVTool1.png" alt="Initial view of LNCV Programming Tool pane"> <img src=
-      "images/LNCVTool2.png" alt="LNCV Programming Tool pane with Article and Address filled in">
-      <p>As the tool is new, you might use it in combination with the "Show Raw Data" option in the
+      <img src="images/LNCVTool1.png" alt="Initial view of Manage LNCV Modules tool pane"> <img src=
+      "images/LNCVTool2.png" alt="Manage LNCV Modules tool pane with Article and Address filled in">
+      <p>You might use this tool in combination with the "Show Raw Data" option in the
       <a href="../../locomon/LocoMonFrame.shtml">LocoNet Monitor</a> to check for any additional
       responses rejected by the LNCV filters.</p>
 
       <p>Unless a programming session is running, LNCV modules will not respond to Write commands
-      (the Read and Write buttons in the tool are enabled during a session).</p>
+      (the Read and Write buttons in the tool are only enabled during a session).</p>
 
       <h2>Module LNCV Programming</h2>
 
-      <p>LNCV Programming requires 3 elements to address CV in an LNCV module on LocoNet:</p>
+      <p>LNCV Programming requires 3 elements to address CVs in an LNCV module on LocoNet:</p>
 
       <ol>
         <li>Article Number (aka type/class/productID)</li>
@@ -44,7 +44,7 @@
       example, the Digikeijs DigiBoost DR5033 has Article number 5033, which was registered with
       Uhlenbrock. The Uhlenbrock 63330 has Article number 6333, the Uhlenbrock 63410 has 6341
       (skip last zero).<br>
-      Enter the Article number eg. 5033 in the "Article" field before proceeding.<br>
+      Enter the Article number e.g. 5033 in the "Article" field before proceeding.<br>
       Next, enter the Module Address in the corresponding field.</p>
 
       <p>After opening a programming session, the "Open Module Programming" stays highlighted and
@@ -58,7 +58,7 @@
       address.</p>
 
       <p>For incidental programming, the tool allows reading and writing of individual CV
-      value.<br>
+      values.<br>
       To read, enter a CV number in the fields on the right of the tool pane and click [Read] to
       see the value in the Value field.<br>
       To write, enter a CV number plus the new value to set in the CV, and click [Write].</p>
@@ -68,11 +68,11 @@
 
       <p>When your Roster contains (exactly) one entry for a decoder of this article number and
       address, it will be listed in the table as the Roster Entry ID, as shown below.<br>
-      When you have a matching Roster Entry, the button in teh Program column will read
+      When you have a matching Roster Entry, the button in the Program column will read
       [Program] and will directly open the Roster Entry tabs.</p>
       <img src=
-      "../../../../../../html/hardware/loconet/images/LncvProgrammer/LncvProgrammerPane.png" alt=
-      "LNCV Programming Tool can't find a matching definition">
+      "images/LncvProgrammerPane.png" alt=
+      "Manage LNCV Modules tool can't find a matching definition">
 
       <p>When no match was found in your Roster but a matching definition was found in the JMRI
       Decoder Index, the button will read [Create Entry]. Click on it and enter an ID (name) for your new roster
@@ -123,6 +123,7 @@
       Uhlenbrock Track-Control items.</p>
 
       <h2>LNCV Decoder definitions</h2>
+
       With an LNCV Module Programming session (to a specific device) running, you can use the
       Roster entry programming panes for more advanced (and accessible) configuration. Easily
       switch to DecoderPro Roster either by clicking the [Program] button in the table or manually
@@ -137,7 +138,9 @@
       LnOpsProgrammer, elements 1. and 3. are combined into a single CV number as
       "part_1.part_3".<br>
       For example CV6 in the DR5033 is defined as:<br>
-      <code>&lt;variable CV="5033.6" readOnly="yes" item="Temperature"&gt;</code></p>
+      <span class="wide">
+      <code>&lt;variable CV="5033.6" readOnly="yes" item="Temperature"&gt;</code>
+      </span></p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>

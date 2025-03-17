@@ -45,6 +45,16 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         InstanceManager.memoryManagerInstance().addVetoableChangeListener(LayoutBlockManager.this);
     }
 
+    /**
+     * String constant for advanced routing enabled.
+     */
+    public static final String PROPERTY_ADVANCED_ROUTING_ENABLED = "advancedRoutingEnabled";
+
+    /**
+     * String constant for the topology property.
+     */
+    public static final String PROPERTY_TOPOLOGY = "topology";
+
     @Override
     public int getXMLOrder() {
         return jmri.Manager.LAYOUTBLOCKS;
@@ -2497,7 +2507,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (boo && initialized) {
             initializeLayoutBlockRouting();
         }
-        firePropertyChange("advancedRoutingEnabled", !enableAdvancedRouting, enableAdvancedRouting);
+        firePropertyChange(PROPERTY_ADVANCED_ROUTING_ENABLED, !enableAdvancedRouting, enableAdvancedRouting);
     }
 
     private void initializeLayoutBlockRouting() {
@@ -2521,7 +2531,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return lbct;
     }
 
-    LayoutBlockConnectivityTools lbct = new LayoutBlockConnectivityTools();
+    private final LayoutBlockConnectivityTools lbct = new LayoutBlockConnectivityTools();
 
     private long lastRoutingChange;
 
@@ -2532,7 +2542,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         setRoutingStabilised();
     }
 
-    boolean checking = false;
+    private boolean checking = false;
     boolean stabilised = false;
 
     private void setRoutingStabilised() {
@@ -2551,7 +2561,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
         Runnable r = () -> {
             try {
-                firePropertyChange("topology", true, false);
+                firePropertyChange(PROPERTY_TOPOLOGY, true, false);
                 long oldvalue = lastRoutingChange;
 
                 while (!stabilised) {
@@ -2561,7 +2571,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                         log.debug("routing table has now been stable for 2 seconds");
                         checking = false;
                         stabilised = true;
-                        ThreadingUtil.runOnLayoutEventually(() -> firePropertyChange("topology", false, true));
+                        ThreadingUtil.runOnLayoutEventually(() -> firePropertyChange(PROPERTY_TOPOLOGY, false, true));
 
                         if (namedStabilisedIndicator != null) {
                             ThreadingUtil.runOnLayoutEventually(() -> {
@@ -2588,8 +2598,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 Thread.currentThread().interrupt();
                 checking = false;
 
-                //} catch (jmri.JmriException ex) {
-                //log.debug("Error setting stability indicator sensor");
             }
         };
         thr = ThreadingUtil.newThread(r, "Routing stabilising timer");

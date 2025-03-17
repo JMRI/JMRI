@@ -224,6 +224,30 @@
         <pathelement location="${libdir}/batik-svggen-1.14.jar"/>
         <pathelement location="${libdir}/xml-apis-ext-1.3.04.jar"/>
         <pathelement location="${libdir}/xmlgraphics-commons-2.6.jar"/>
+
+        <!-- Alternate LaF's -->
+        <pathelement location="${libdir}/darklaf-compatibility-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-core-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-iconset-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-macos-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-native-utils-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-platform-base-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-platform-decorations-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-platform-preferences-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-property-loader-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-theme-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-theme-spec-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-utils-3.0.2.jar"/>
+
+        <pathelement location="${libdir}/swing-dsl-0.1.0.jar"/>
+        <pathelement location="${libdir}/swing-dsl-core-0.1.0.jar"/>
+        <pathelement location="${libdir}/swing-dsl-laf-support-0.1.0.jar"/>
+
+        <pathelement location="${libdir}/swing-extensions-laf-support-0.1.3.jar"/>
+        <pathelement location="${libdir}/swing-extensions-visual-padding-0.1.3.jar"/>
+
+        <pathelement location="${libdir}/jsvg-1.7.0.jar"/>
+
         <!-- //BiDiB client library -->
         <pathelement location="${libdir}/jbidibc-core-2.0.29.jar"/>
         <pathelement location="${libdir}/jbidibc-messages-2.0.29.jar"/>
@@ -246,6 +270,8 @@
         <pathelement location="${libdir}/jgoodies-common-1.8.1.jar"/>
         <pathelement location="${libdir}/jackson-datatype-jsr310-2.13.4.jar"/>
         <!-- //BiDiB -->
+        <pathelement location="${libdir}/reflections-0.10.2.jar"/>
+        <pathelement location="${libdir}/javassist-3.28.0-GA.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -305,7 +331,6 @@
         <pathelement location="${libdir}/byte-buddy-1.14.15.jar"/>
         <pathelement location="${libdir}/byte-buddy-agent-1.14.15.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
-        <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-3.3.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE125.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
@@ -1185,6 +1210,10 @@
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
             <jvmarg value="-Xmx640m"/>
+            <!-- This next is for DarkLAF -->
+            <jvmarg value="--add-exports"/>
+            <jvmarg value="java.desktop/sun.awt=ALL-UNNAMED"/>
+
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> --><!-- for JTune -->
@@ -2019,6 +2048,7 @@
             <arg value="-Dapple.awt.graphics.EnableQ2DX=true"/>
             <arg value="-Dlog4j.ignoreTCL=true/"/>
             <arg value="-Dfile.encoding=UTF-8"/>
+
             <arg value="-Djava.library.path.:${arch.lib.path}:${libdir}"/>
 
             <arg value="apps.PanelPro.PanelPro"/>

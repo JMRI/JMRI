@@ -59,6 +59,7 @@ public class Xml {
     static final String LAST_ROUTE_ID = "lastRouteId"; // NOI18N
     static final String DIVISION_ID_ERROR = "DivisionId"; // NOI18N
     static final String DIVISION_ID = "divisionId"; // NOI18N
+    static final String PICKUP_TIME = "pickupTime"; // NOI18N
 
     // Car.java
     static final String PASSENGER = "passenger"; // NOI18N

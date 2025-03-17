@@ -387,7 +387,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if ( "DefaultBlockSpeedChange".equals(e.getPropertyName()) ) { // NOI18N
+        if ( BlockManager.PROPERTY_DEFAULT_BLOCK_SPEED_CHANGE.equals(e.getPropertyName()) ) {
             updateSpeedList();
         } else {
             super.propertyChange(e);

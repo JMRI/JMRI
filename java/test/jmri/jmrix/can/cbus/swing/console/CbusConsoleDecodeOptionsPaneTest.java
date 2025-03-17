@@ -1,20 +1,22 @@
 package jmri.jmrix.can.cbus.swing.console;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import java.nio.file.Path;
+
+import javax.swing.JFrame;
 
 import jmri.jmrix.can.*;
 import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+
+import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Test simple functioning of CbusConsoleDecodeOptionsPane
@@ -22,75 +24,76 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2020
 */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusConsoleDecodeOptionsPaneTest  {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
-    public void testInitComponents() throws Exception{
+    public void testInitComponents() {
         // for now, just makes sure there isn't an exception.
         CbusConsoleDecodeOptionsPane t = new CbusConsoleDecodeOptionsPane(mainConsolePane);
         assertNotNull(t);
         t.dispose();
     }
-    
+
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCheckBoxPersistence() {
-    
+
         CbusConsoleDecodeOptionsPane t = new CbusConsoleDecodeOptionsPane(mainConsolePane);
-        JmriJFrame f = new JmriJFrame();
+        JFrame f = new JFrame(t.getClass().getName());
         f.add(t);
-        f.setTitle(t.getClass().getName());
-        f.pack();
-        f.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
         JFrameOperator jfo = new JFrameOperator( t.getClass().getName() );
-        
+
         assertEquals("101111000000",getAllCheckBoxStatus(jfo));
-        
+
         for (String checkBoxLabel : checkBoxLabels) {
             new JCheckBoxOperator(jfo, checkBoxLabel).setSelected(true);
         }
-        
+
         assertEquals("111111111111",getAllCheckBoxStatus(jfo));
-        
+
         t.dispose();
-        f.dispose();
-        
+        JUnitUtil.dispose(f);
+
         CbusConsoleDecodeOptionsPane tt = new CbusConsoleDecodeOptionsPane(mainConsolePane);
-        JmriJFrame ff = new JmriJFrame();
+        JFrame ff = new JFrame(tt.getClass().getName());
         ff.add(tt);
-        ff.setTitle(tt.getClass().getName());
-        ff.pack();
-        ff.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            ff.pack();
+            ff.setVisible(true);
+        });
         JFrameOperator jffo = new JFrameOperator( tt.getClass().getName() );
-        
+
         assertEquals("111111111111",getAllCheckBoxStatus(jffo));
-    
+
         for (int i=0; i<checkBoxLabels.length; i++ ){
             new JCheckBoxOperator(jffo,checkBoxLabels[i]).setSelected((i % 2 == 0));
         }
-        
-        // new org.netbeans.jemmy.QueueTool().waitEmpty();
-        // new JButtonOperator(jfo, "Not a Button").doClick();
+
         assertEquals("101010101010",getAllCheckBoxStatus(jffo));
         tt.dispose();
-        ff.dispose();
-        
+        JUnitUtil.dispose(ff);
+
         CbusConsoleDecodeOptionsPane ttt = new CbusConsoleDecodeOptionsPane(mainConsolePane);
-        JmriJFrame fff = new JmriJFrame();
+        JFrame fff = new JFrame(ttt.getClass().getName());
         fff.add(ttt);
-        fff.setTitle(ttt.getClass().getName());
-        fff.pack();
-        fff.setVisible(true);
+
+        ThreadingUtil.runOnGUI( () -> {
+            fff.pack();
+            fff.setVisible(true);
+        });
         JFrameOperator jfffo = new JFrameOperator( ttt.getClass().getName() );
-        
+
         assertEquals("101010101010",getAllCheckBoxStatus(jfffo));
 
         ttt.dispose();
-        fff.dispose();
-        
+        JUnitUtil.dispose(fff);
+
     }
-    
+
     private String getAllCheckBoxStatus( JFrameOperator jfo ){
         StringBuilder sb= new StringBuilder(checkBoxLabels.length);
         for (String checkBoxLabel : checkBoxLabels) {
@@ -98,7 +101,7 @@ public class CbusConsoleDecodeOptionsPaneTest  {
         }
         return sb.toString();
     }
-    
+
     /**
      * Local order of check boxes is used for test, not screen display order.
      */
@@ -116,10 +119,10 @@ public class CbusConsoleDecodeOptionsPaneTest  {
         Bundle.getMessage("showCanCheckBox"),
         Bundle.getMessage("RtrCheckbox")
     };
-    
+
     @TempDir 
     protected Path tempDir;
-    
+
     private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tc = null;
     private CbusConsolePane mainConsolePane = null;
@@ -150,7 +153,7 @@ public class CbusConsoleDecodeOptionsPaneTest  {
         mainConsolePane = null;
         tc = null;
         memo = null;
-        
+
         JUnitUtil.tearDown();
     }
 

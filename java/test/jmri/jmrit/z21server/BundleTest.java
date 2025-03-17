@@ -1,7 +1,7 @@
 package jmri.jmrit.z21server;
 
 import java.util.Locale;
-
+import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,40 +11,34 @@ import org.junit.jupiter.api.*;
  */
 public class BundleTest  {
 
-    @Test
-    public void testGoodKeys() {
-        Assertions.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));
-        Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
+    @Test public void testGoodKeyMessage() {
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
     @Test
-    public void testBadKey() {
-        var ex = Assertions.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
-        Assertions.assertNotNull(ex);
+    public void testBadKeyMessage() {
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
-    @Test
-    public void testGoodKeyMessageArg() {
-        Assertions.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
-        Assertions.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
+    @Test public void testGoodKeyMessageArg() {
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
+        Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
     @Test
     public void testBadKeyMessageArg() {
-        var ex = Assertions.assertThrows(java.util.MissingResourceException.class,
-            () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
-        Assertions.assertNotNull(ex);
+        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
-    @Test
-    public void testLocaleMessage() {
-        Assertions.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
+    @Test public void testLocaleMessage() {
+        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
+        Assert.assertEquals("Starte Z21 App Server", Bundle.getMessage(Locale.GERMANY, "MenuStartServer"));
     }
 
-    @Test
-    public void testLocaleMessageArg() {
-        Assertions.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
-        Assertions.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
+    @Test public void testLocaleMessageArg() {
+        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
     }
+
 
 }

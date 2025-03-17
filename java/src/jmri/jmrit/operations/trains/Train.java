@@ -716,7 +716,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return null;
         }
         // this will verify that the current location still exists
-        return getRoute().getLocationById(_current.getId());
+        return getRoute().getRouteLocationById(_current.getId());
     }
 
     /**
@@ -991,32 +991,30 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * Train will skip the RouteLocation
      *
-     * @param routelocationId RouteLocation Id
+     * @param rl RouteLocation
      */
-    public void addTrainSkipsLocation(String routelocationId) {
+    public void addTrainSkipsLocation(RouteLocation rl) {
         // insert at start of _skipLocationsList, sort later
-        if (!_skipLocationsList.contains(routelocationId)) {
-            _skipLocationsList.add(0, routelocationId);
-            log.debug("train does not stop at {}", routelocationId);
+        if (!_skipLocationsList.contains(rl.getId())) {
+            _skipLocationsList.add(0, rl.getId());
             setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() - 1,
                     _skipLocationsList.size());
         }
     }
 
-    public void deleteTrainSkipsLocation(String locationId) {
-        _skipLocationsList.remove(locationId);
-        log.debug("train will stop at {}", locationId);
+    public void deleteTrainSkipsLocation(RouteLocation rl) {
+        _skipLocationsList.remove(rl.getId());
         setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() + 1, _skipLocationsList.size());
     }
 
     /**
      * Determines if this train skips a location (doesn't service the location).
      *
-     * @param locationId The route location id.
+     * @param rl The route location.
      * @return true if the train will not service the location.
      */
-    public boolean isLocationSkipped(String locationId) {
-        return _skipLocationsList.contains(locationId);
+    public boolean isLocationSkipped(RouteLocation rl) {
+        return _skipLocationsList.contains(rl.getId());
     }
 
     List<String> _typeList = new ArrayList<>();
@@ -1792,7 +1790,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         List<RouteLocation> rLocations = route.getLocationsBySequenceList();
         for (RouteLocation rLoc : rLocations) {
             if (rLoc.getName().equals(car.getLocationName())) {
-                if (!rLoc.isPickUpAllowed() || rLoc.getMaxCarMoves() <= 0 || isLocationSkipped(rLoc.getId())) {
+                if (rLoc.getMaxCarMoves() <= 0 ||
+                        isLocationSkipped(rLoc) ||
+                        !rLoc.isPickUpAllowed() && !car.isLocalMove() ||
+                        !rLoc.isLocalMovesAllowed() && car.isLocalMove()) {
                     addLine(buildReport, Bundle.getMessage("trainCanNotServiceCarFrom",
                             getName(), car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId()));
                     continue;
@@ -1867,9 +1868,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         for (int k = rLocations.indexOf(rLoc); k < rLocations.size(); k++) {
             RouteLocation rldest = rLocations.get(k);
             if (rldest.getName().equals(car.getDestinationName()) &&
-                    rldest.isDropAllowed() &&
+                    (rldest.isDropAllowed() && !car.isLocalMove() ||
+                            rldest.isLocalMovesAllowed() && car.isLocalMove()) &&
                     rldest.getMaxCarMoves() > 0 &&
-                    !isLocationSkipped(rldest.getId()) &&
+                    !isLocationSkipped(rldest) &&
                     (!Setup.isCheckCarDestinationEnabled() ||
                             car.getTrack().isDestinationAccepted(car.getDestination()))) {
                 // found the car's destination
@@ -1944,12 +1946,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                                     car.getDestinationTrackName()));
                     return true; // done
                 }
-                // is this a local move allowed?
-                if (!isLocalMove(buildReport, car)) {
+                // is this local move allowed?
+                if (!isLocalMoveAllowed(buildReport, car, rLoc, rldest)) {
                     continue;
                 }
                 // Can cars travel from origin to terminal?
-                if (!isTravelOriginToTerminalOkay(buildReport, rLoc, rldest, car)) {
+                if (!isTravelOriginToTerminalAllowed(buildReport, rLoc, rldest, car)) {
                     continue;
                 }
                 // check to see if moves are available
@@ -2032,9 +2034,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return true;
     }
 
-    private boolean isLocalMove(PrintWriter buildReport, Car car) {
-        if (!isLocalSwitcher() &&
-                !isAllowLocalMovesEnabled() &&
+    private boolean isLocalMoveAllowed(PrintWriter buildReport, Car car, RouteLocation rLoc, RouteLocation rldest) {
+        if ((!isAllowLocalMovesEnabled() || !rLoc.isLocalMovesAllowed() || !rldest.isLocalMovesAllowed()) &&
+                !isLocalSwitcher() &&
                 !car.isCaboose() &&
                 !car.hasFred() &&
                 !car.isPassenger() &&
@@ -2049,7 +2051,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return true;
     }
 
-    private boolean isTravelOriginToTerminalOkay(PrintWriter buildReport, RouteLocation rLoc, RouteLocation rldest,
+    private boolean isTravelOriginToTerminalAllowed(PrintWriter buildReport, RouteLocation rLoc, RouteLocation rldest,
             Car car) {
         if (!isAllowThroughCarsEnabled() &&
                 TrainCommon.splitString(getTrainDepartsName())
@@ -4168,19 +4170,19 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         if (getRoute() != null) {
             if ((a = e.getAttribute(Xml.CURRENT)) != null) {
-                _current = getRoute().getLocationById(a.getValue());
+                _current = getRoute().getRouteLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG2_START)) != null) {
-                _leg2Start = getRoute().getLocationById(a.getValue());
+                _leg2Start = getRoute().getRouteLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG3_START)) != null) {
-                _leg3Start = getRoute().getLocationById(a.getValue());
+                _leg3Start = getRoute().getRouteLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG2_END)) != null) {
-                _end2Leg = getRoute().getLocationById(a.getValue());
+                _end2Leg = getRoute().getRouteLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.LEG3_END)) != null) {
-                _leg3End = getRoute().getLocationById(a.getValue());
+                _leg3End = getRoute().getRouteLocationById(a.getValue());
             }
             if ((a = e.getAttribute(Xml.DEPARTURE_TRACK)) != null) {
                 Location location = InstanceManager.getDefault(LocationManager.class)
@@ -4284,7 +4286,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 Element eSkips = new Element(Xml.SKIPS);
                 for (String id : locationIds) {
                     Element eLoc = new Element(Xml.LOCATION);
-                    RouteLocation rl = getRoute().getLocationById(id);
+                    RouteLocation rl = getRoute().getRouteLocationById(id);
                     if (rl != null) {
                         eLoc.setAttribute(Xml.NAME, rl.getName());
                         eLoc.setAttribute(Xml.ID, id);

@@ -181,6 +181,20 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertFalse(r.isMeterTypeVolt());
         Assert.assertTrue(r.isMeterTypeCurrent());
 
+        r = DCCppReply.parseDCCppReply("c CurrentMAIN 19701 C Milli 0 -31744 1 -31744"); //sometimes returns negatives
+        Assert.assertTrue(r.isMeterReply());
+        Assert.assertFalse(r.isCurrentReply());
+        Assert.assertFalse(r.isNamedCurrentReply());
+        Assert.assertEquals("CurrentMAIN", r.getMeterName());
+        Assert.assertEquals(19701.0,  r.getMeterValue(), 0.00001);
+        Assert.assertEquals(jmri.Meter.Unit.Milli, r.getMeterUnit());
+        Assert.assertEquals(0.0,      r.getMeterMinValue(),   0.00001);
+        Assert.assertEquals(-31744.0, r.getMeterMaxValue(),   0.00001);
+        Assert.assertEquals(1.0,      r.getMeterResolution(), 0.00001);
+        Assert.assertEquals(-31744.0, r.getMeterWarnValue(),  0.00001);
+        Assert.assertFalse(r.isMeterTypeVolt());
+        Assert.assertTrue(r.isMeterTypeCurrent());
+        
         r = DCCppReply.parseDCCppReply("c BadMeterType 0.3 X NoPrefix 0.0 5.0 0.01 5.0"); //bad meter type 'X' passed
         Assert.assertTrue( r.isMeterReply());
         Assert.assertFalse(r.isMeterTypeCurrent());
@@ -265,6 +279,22 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("DCC-EX",  r.getStationType());
         
         r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-5.4.4 / ESP32 / EXCSB1 G-c389fe9");
+        Assert.assertTrue(r.isStatusReply());
+        Assert.assertTrue(r.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX));
+        Assert.assertEquals("5.4.4",   r.getVersion());
+        Assert.assertEquals("c389fe9", r.getBuildString());
+        Assert.assertEquals("DCC-EX",  r.getStationType());
+        
+        r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-5.0.0 / UNO / IoTT WiThServer 1.0.4 / STANDARD_MOTOR_SHIELD G-3bddf4d");
+        Assert.assertTrue(r.isStatusReply());
+        Assert.assertTrue(r.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX));
+        Assert.assertEquals("5.0.0",   r.getVersion());
+        Assert.assertEquals("3bddf4d", r.getBuildString());
+        Assert.assertEquals("DCC-EX",  r.getStationType());
+        
+        r = DCCppReply.parseDCCppReply(
                 "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         Assert.assertTrue(r.isStatusReply());
         Assert.assertTrue(r.matches(DCCppConstants.STATUS_REPLY_REGEX));
@@ -301,6 +331,18 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("THROWN", r.getTOStateString());
         Assert.assertTrue(r.getTOIsThrown());
         Assert.assertFalse(r.getTOIsClosed());
+
+        //RosterID replies
+        r = DCCppReply.parseDCCppReply("jR 1 2 3 4");
+        Assert.assertTrue(r.isRosterIDsReply());
+        r = DCCppReply.parseDCCppReply("jR 123 \"desc\" \"fkeys go here\"");
+        Assert.assertTrue(r.isRosterIDReply());
+
+        //AutomationID replies
+        r = DCCppReply.parseDCCppReply("jA 4 3 2 1");
+        Assert.assertTrue(r.isAutomationIDsReply());
+        r = DCCppReply.parseDCCppReply("jA 456 R \"description\"");
+        Assert.assertTrue(r.isAutomationIDReply());
 
         //max Num Slots
         r = DCCppReply.parseDCCppReply("# 50");
@@ -369,6 +411,26 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertTrue(r.isTurnoutIDsReply());
         Assert.assertEquals(0, r.getTurnoutIDList().size());
         Assert.assertEquals("Monitor string", "Turnout IDs:[]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jR");
+        Assert.assertTrue(r.isRosterIDsReply());
+        Assert.assertEquals(0, r.getRosterIDList().size());
+        Assert.assertEquals("Monitor string", "RosterIDs:[]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jR 123 456 789");
+        Assert.assertTrue(r.isRosterIDsReply());
+        Assert.assertFalse(r.isRosterIDReply());
+        Assert.assertEquals(789, (int) r.getRosterIDList().get(2));
+        Assert.assertEquals(3, r.getRosterIDList().size());
+        Assert.assertEquals("Monitor string", "RosterIDs:[123, 456, 789]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jA");
+        Assert.assertTrue(r.isAutomationIDsReply());
+        Assert.assertEquals(0, r.getAutomationIDList().size());
+        Assert.assertEquals("Monitor string", "AutomationIDs:[]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jA 123 456 789");
+        Assert.assertTrue(r.isAutomationIDsReply());
+        Assert.assertFalse(r.isAutomationIDReply());
+        Assert.assertEquals(789, (int) r.getAutomationIDList().get(2));
+        Assert.assertEquals(3, r.getAutomationIDList().size());
+        Assert.assertEquals("Monitor string", "AutomationIDs:[123, 456, 789]", r.toMonitorString());
         r = DCCppReply.parseDCCppReply("jC 222 4"); //time and rate
         Assert.assertTrue(r.isClockReply());
         Assert.assertEquals(222, r.getClockMinutesInt());
@@ -383,6 +445,14 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertFalse(r.isTurnoutIDsReply());
         r = DCCppReply.parseDCCppReply("jT 123 X \"turnout description\"");
         Assert.assertFalse(r.isTurnoutIDReply());
+        r = DCCppReply.parseDCCppReply("jR 123 456 789 notint");        
+        Assert.assertFalse(r.isRosterIDsReply());
+        r = DCCppReply.parseDCCppReply("jR 123 noquotes \"\\F1\\F2\\F3\\\"");
+        Assert.assertFalse(r.isRosterIDReply());
+        r = DCCppReply.parseDCCppReply("jA 123 456 789 notint");        
+        Assert.assertFalse(r.isAutomationIDsReply());
+        r = DCCppReply.parseDCCppReply("jA 123 toolong \"gooddescription\"");
+        Assert.assertFalse(r.isAutomationIDReply());
         r = DCCppReply.parseDCCppReply("jC 222 4 xx"); //time and rate
         Assert.assertFalse(r.isClockReply());
         r = DCCppReply.parseDCCppReply("jC x222 4 xx"); //time and rate

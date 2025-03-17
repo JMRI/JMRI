@@ -40,6 +40,7 @@ JAR=/usr/bin/jar
 # -----------------------------------------
 function trapExitHandler {
     trap - 1 2 3 15
+    cp /tmp/php-temp-out-file.dmg /tmp/test.dmg
     umount "$tmpimage2" && echo "Unmounted tmpimage2"
     umount "$tmpindir" && echo "Unmounted tempindir"
     rm -rf "$INPUTIMAGEFILE" && echo "Deleted input image file"
@@ -206,28 +207,41 @@ fi
 # copy contents of the Mac OS X distribution to the newly mounted filesysten
 tar -C "$tmpindir" -cf - JMRI | $SUDO tar -C "$tmpoutdir" -xf -
 
+# unlock login keychain (if needed, which is when?)
+#security unlock-keychain -p password /Users/jake/Library/Keychains/login.keychain-db
+
 # display debug info for the keychain containing the certification
 #security list-keychains
 #security -v default-keychain
 #security -v login-keychain
 #security -v show-keychain-info "$KEYCHAIN_FILE"
+#security -v show-keychain-info /Users/jake/Library/Keychains/login.keychain-db
 #security -v find-certificate -c "$CERTIFICATE"  "$KEYCHAIN_FILE"
 
 # sign the app files in output
 signFile $tmpoutdir/JMRI/PanelPro.app
 signFile $tmpoutdir/JMRI/DecoderPro.app
 signFile $tmpoutdir/JMRI/SoundPro.app
+signFile $tmpoutdir/JMRI/LccPro.app
+
+# clear attributes in lib
+xattr -cr $tmpoutdir/JMRI/lib
 
 # sign the individual library files
 signFile $tmpoutdir/JMRI/lib/macosx/libgluegen-rt.jnilib
 signFile $tmpoutdir/JMRI/lib/macosx/libjinput-osx.jnilib
 signFile $tmpoutdir/JMRI/lib/macosx/libjoal.jnilib
+
+signFile $tmpoutdir/JMRI/lib/macosx/libgluegen_rt.dylib
+signFile $tmpoutdir/JMRI/lib/macosx/libjoal.dylib
 signFile $tmpoutdir/JMRI/lib/macosx/libopenal.1.15.1.dylib
 signFile $tmpoutdir/JMRI/lib/macosx/libopenal.1.dylib
 signFile $tmpoutdir/JMRI/lib/macosx/libopenal.dylib
 
 # sign libraries inside jar files
 signJarMember $tmpoutdir/JMRI/lib/libusb4java-1.3.0-darwin-x86-64.jar org/usb4java/darwin-x86-64/libusb4java.dylib
+signJarMember $tmpoutdir/JMRI/lib/libusb4java-1.3.0-darwin-aarch64.jar org/usb4java/darwin-aarch64/libusb4java.dylib
+signJarMember $tmpoutdir/JMRI/lib/libusb4java-1.3.0-darwin-aarch64.jar org/usb4java/darwin-x86-64/libusb4java.dylib
 signJarMember $tmpoutdir/JMRI/lib/bluecove-2.1.1-SNAPSHOT.jar libbluecove.jnilib
 
 signJarMember $tmpoutdir/JMRI/lib/jna-4.4.0.jar com/sun/jna/darwin/libjnidispatch.jnilib
@@ -235,8 +249,26 @@ signJarMember $tmpoutdir/JMRI/lib/jna-5.9.0.jar com/sun/jna/darwin-x86-64/libjni
 signJarMember $tmpoutdir/JMRI/lib/jna-5.9.0.jar com/sun/jna/darwin-aarch64/libjnidispatch.jnilib
 
 signJarMember $tmpoutdir/JMRI/lib/hid4java-0.5.0.jar darwin/libhidapi.dylib
+# signJarMember $tmpoutdir/JMRI/lib/selenium-server-standalone-3.6.0.jar com/sun/jna/darwin/libjnidispatch.jnilib # OMITTED DUE TO TOC ISSUE
 signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.2.jar META-INF/native/osx/libjansi.jnilib
 signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.2.jar jni/Darwin/libjffi-1.2.jnilib
+
+# added 2024-08-29
+signJarMember $tmpoutdir/JMRI/lib/jinput-2.0.9-natives-all.jar libjinput-osx.jnilib
+signJarMember $tmpoutdir/JMRI/lib/jna-5.13.0.jar com/sun/jna/darwin-aarch64/libjnidispatch.jnilib
+signJarMember $tmpoutdir/JMRI/lib/jna-5.13.0.jar com/sun/jna/darwin-x86-64/libjnidispatch.jnilib
+signJarMember $tmpoutdir/JMRI/lib/jSerialComm-2.10.4.jar OSX/x86/libjSerialComm.jnilib
+signJarMember $tmpoutdir/JMRI/lib/jSerialComm-2.10.4.jar OSX/aarch64/libjSerialComm.jnilib
+signJarMember $tmpoutdir/JMRI/lib/jSerialComm-2.10.4.jar OSX/x86_64/libjSerialComm.jnilib
+signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.2.jar jni/Darwin/libjffi-1.2.jnilib
+
+# added 2024-09-03
+signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.4.jar META-INF/native/osx/libjansi.jnilib
+signJarMember $tmpoutdir/JMRI/lib/jython-standalone-2.7.4.jar jni/Darwin/libjffi-1.2.jnilib
+
+# added 2025-03-09 for DarkLAF
+signJarMember $tmpoutdir/JMRI/lib/darklaf-macos-3.0.2.jar com/github/weisj/darklaf/platform/darklaf-macos/libdarklaf-macos-x86-64.dylib
+signJarMember $tmpoutdir/JMRI/lib/darklaf-macos-3.0.2.jar com/github/weisj/darklaf/platform/darklaf-macos/libdarklaf-macos-arm64.dylib
 
 # add an Applications icon
 $SUDO ln -s /Applications "$tmpoutdir"
@@ -266,8 +298,11 @@ fi
 signFile "$OUTPUT"
 
 # notarize distribution: start by uploading
-xcrun altool --notarize-app --verbose --primary-bundle-id "org.jmri" --username "$AC_USER" --password "$AC_PASSWORD" --file "$OUTPUT"
+# xcrun altool --notarize-app --primary-bundle-id "org.jmri" --username "$AC_USER" --password "$AC_PASSWORD" --file "$OUTPUT"
+xcrun notarytool submit /tmp/php-temp-out-file.dmg --apple-id "$AC_USER" --password "$AC_PASSWORD" --team-id V2UXGA8SJW --wait
+
 # stapling result will temporarily fail while the notatization is still happening at Apple
+# --wait in new (Nov 2022) notarytool operation above should make this redundant
 sleep 30
 retry 20 xcrun stapler staple "$OUTPUT"
 

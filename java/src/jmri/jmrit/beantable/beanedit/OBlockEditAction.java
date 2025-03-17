@@ -69,7 +69,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         JComboBoxUtil.setupComboBoxMaxRows(sensorComboBox);
         basic.addItem(new BeanEditItem(sensorComboBox, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
 
-        errorSensorComboBox = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance(), bean.getSensor(), DisplayOptions.DISPLAYNAME);
+        errorSensorComboBox = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance(), bean.getErrorSensor(), DisplayOptions.DISPLAYNAME);
         errorSensorComboBox.setAllowNull(true);
         JComboBoxUtil.setupComboBoxMaxRows(errorSensorComboBox);
         basic.addItem(new BeanEditItem(errorSensorComboBox, Bundle.getMessage("ErrorSensorCol"), Bundle.getMessage("BlockAssignErrorSensorText")));

@@ -24,7 +24,7 @@ import org.jdom2.Element;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018-2021
+ * @author Klaus Killinger Copyright (C) 2018-2021, 2025
  */
 class SteamSound extends EngineSound {
 
@@ -87,14 +87,6 @@ class SteamSound extends EngineSound {
         super(name);
     }
 
-    // Responds to throttle loco direction key (see EngineSound.java and EngineSoundEvent.java)
-    @Override
-    public void changeLocoDirection(int d) {
-        // If loco direction was changed we need to set topspeed of the loco to new value
-        // (this is necessary, when topspeed-forward and topspeed-reverse differs)
-        log.debug("loco direction: {}", d);
-    }
-
     @Override
     public void startEngine() {
         log.debug("Starting Engine");
@@ -104,10 +96,14 @@ class SteamSound extends EngineSound {
 
     @Override
     public void stopEngine() {
-        current_rpm_sound.sound.fadeOut();
+        getCurrSound().fadeOut();
         if (current_rpm_sound.use_chuff) {
             current_rpm_sound.stopChuff();
         }
+    }
+
+    private SoundBite getCurrSound() {
+        return current_rpm_sound.sound;
     }
 
     private RPMSound getRPMSound(int rpm) {
@@ -148,7 +144,7 @@ class SteamSound extends EngineSound {
                 // DO something to shut down
                 //t = 0.0f;
                 setActualSpeed(0.0f);
-                current_rpm_sound.sound.fadeOut();
+                getCurrSound().fadeOut();
                 if (current_rpm_sound.use_chuff) {
                     current_rpm_sound.stopChuff();
                 }
@@ -229,6 +225,7 @@ class SteamSound extends EngineSound {
         //int num_rpms;
         String fn, n;
         SoundBite sb;
+        boolean buffer_ok = true;
 
         super.setXml(e, vf);
 
@@ -274,24 +271,33 @@ class SteamSound extends EngineSound {
             int max_r = Integer.parseInt(el.getChildText("max-rpm"));
             log.debug("file #: {}, file name: {}", i, fn);
             sb = new SoundBite(vf, fn, name + "_Steam_n" + i, name + "_Steam_" + i);
-            sb.setLooped(true);
-            sb.setFadeTimes(100, 100);
-            sb.setReferenceDistance(setXMLReferenceDistance(el)); // Handle reference distance
-            sb.setGain(setXMLGain(el));
-            // Store in the list.
-            boolean chuff = false;
-            Element c;
-            if ((c = el.getChild("use-chuff-gen")) != null) {
-                log.debug("Use Chuff Generator: {}", c);
-                chuff = true;
-            }
+            if (sb.isInitialized()) {
+                sb.setLooped(true);
+                sb.setFadeTimes(100, 100);
+                sb.setReferenceDistance(setXMLReferenceDistance(el)); // Handle reference distance
+                sb.setGain(setXMLGain(el));
+                // Store in the list.
+                boolean chuff = false;
+                Element c;
+                if ((c = el.getChild("use-chuff-gen")) != null) {
+                    log.debug("Use Chuff Generator: {}", c);
+                    chuff = true;
+                }
 
-            rpm_sounds.add(new RPMSound(sb, min_r, max_r, chuff));
+                rpm_sounds.add(new RPMSound(sb, min_r, max_r, chuff));
+            } else {
+                buffer_ok = false;
+            }
             i++;
         }
 
-        // Check auto-start setting
-        autoStartCheck();
+        if (buffer_ok) {
+            setBuffersFreeState(true);
+            // Check auto-start setting
+            autoStartCheck();
+        } else {
+            setBuffersFreeState(false);
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SteamSound.class);

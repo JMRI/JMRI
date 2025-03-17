@@ -737,14 +737,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     /**
      * Set up NamedBeanComboBox
      *
-     * @param inComboBox     the NamedBeanComboBox to set up
+     * @param nbComboBox     the NamedBeanComboBox to set up
      * @param inValidateMode true to validate typed inputs; false otherwise
      * @param inEnable       boolean to enable / disable the NamedBeanComboBox
      * @param inEditable     boolean to make the NamedBeanComboBox editable
      */
-    public static void setupComboBox(@Nonnull NamedBeanComboBox<?> inComboBox, boolean inValidateMode, boolean inEnable, boolean inEditable) {
+    public static void setupComboBox(@Nonnull NamedBeanComboBox<?> nbComboBox,
+        boolean inValidateMode, boolean inEnable, boolean inEditable) {
         log.debug("LE setupComboBox called");
-        assert inComboBox != null;
+        NamedBeanComboBox<?> inComboBox = Objects.requireNonNull(nbComboBox);
 
         inComboBox.setEnabled(inEnable);
         inComboBox.setEditable(inEditable);
@@ -3504,13 +3505,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * logically have position; just the LayoutTrackView does, and multiple
      * LayoutTrackViews can refer to one specific LayoutTrack.
      *
-     * @param trk            the object (LayoutTrack subclass)
+     * @param track          the object (LayoutTrack subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
     @Nonnull
-    public Point2D getCoords(@Nonnull LayoutTrack trk, HitPointType connectionType) {
-        assert trk != null;
+    public Point2D getCoords(@Nonnull LayoutTrack track, HitPointType connectionType) {
+        LayoutTrack trk = Objects.requireNonNull(track);
 
         return getCoords(getLayoutTrackView(trk), connectionType);
     }
@@ -3519,13 +3520,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Get the coordinates for the connection type of the specified
      * LayoutTrackView or subtype.
      *
-     * @param trkv           the object (LayoutTrackView subclass)
+     * @param trkView        the object (LayoutTrackView subclass)
      * @param connectionType the type of connection
      * @return the coordinates for the connection type of the specified object
      */
     @Nonnull
-    public Point2D getCoords(@Nonnull LayoutTrackView trkv, HitPointType connectionType) {
-        assert trkv != null;
+    public Point2D getCoords(@Nonnull LayoutTrackView trkView, HitPointType connectionType) {
+        LayoutTrackView trkv = Objects.requireNonNull(trkView);
 
         return trkv.getCoordsForConnectionType(connectionType);
     }
@@ -3935,11 +3936,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Select the menu items to display for the Positionable's popup.
-     * @param p     the item containing or requiring the context menu
+     * @param pos   the item containing or requiring the context menu
      * @param event the event triggering the menu
      */
-    public void showPopUp(@Nonnull Positionable p, @Nonnull JmriMouseEvent event) {
-        assert p != null;
+    public void showPopUp(@Nonnull Positionable pos, @Nonnull JmriMouseEvent event) {
+        Positionable p = Objects.requireNonNull(pos);
 
         if (!((Component) p).isVisible()) {
             return; // component must be showing on the screen to determine its location
@@ -4589,8 +4590,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         redrawPanel();
     }
 
-    private void amendSelectionGroup(@Nonnull Positionable p) {
-        assert p != null;
+    private void amendSelectionGroup(@Nonnull Positionable pos) {
+        Positionable p = Objects.requireNonNull(pos);
 
         if (_positionableSelection.contains(p)) {
             _positionableSelection.remove(p);
@@ -4600,8 +4601,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         redrawPanel();
     }
 
-    public void amendSelectionGroup(@Nonnull LayoutTrack p) {
-        assert p != null;
+    public void amendSelectionGroup(@Nonnull LayoutTrack track) {
+        LayoutTrack p = Objects.requireNonNull(track);
 
         if (_layoutTrackSelection.contains(p)) {
             _layoutTrackSelection.remove(p);
@@ -4612,8 +4613,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         redrawPanel();
     }
 
-    public void amendSelectionGroup(@Nonnull LayoutShape ls) {
-        assert ls != null;
+    public void amendSelectionGroup(@Nonnull LayoutShape shape) {
+        LayoutShape ls = Objects.requireNonNull(shape);
 
         if (_layoutShapeSelection.contains(ls)) {
             _layoutShapeSelection.remove(ls);
@@ -5131,8 +5132,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     @Nonnull
-    public PositionablePoint addAnchor(@Nonnull Point2D p) {
-        assert p != null;
+    public PositionablePoint addAnchor(@Nonnull Point2D point) {
+        Point2D p = Objects.requireNonNull(point);
 
         // get unique name
         String name = finder.uniqueName("A", ++numAnchors);
@@ -8926,22 +8927,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
     }
 
-//    private void rename(String inFrom, String inTo) {
-//
-//    }
     @Override
     public void dispose() {
-        if (leToolBarPanel.sensorFrame != null) {
-            leToolBarPanel.sensorFrame.dispose();
-            leToolBarPanel.sensorFrame = null;
-        }
-        if (leToolBarPanel.signalFrame != null) {
-            leToolBarPanel.signalFrame.dispose();
-            leToolBarPanel.signalFrame = null;
-        }
-        if (leToolBarPanel.iconFrame != null) {
-            leToolBarPanel.iconFrame.dispose();
-            leToolBarPanel.iconFrame = null;
+        if (leToolBarPanel != null) {
+            leToolBarPanel.dispose();
         }
         super.dispose();
 

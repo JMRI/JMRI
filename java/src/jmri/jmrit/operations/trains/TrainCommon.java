@@ -37,10 +37,10 @@ public class TrainCommon {
     protected static final String NEW_LINE = "\n"; // NOI18N
     public static final String SPACE = " ";
     protected static final String BLANK_LINE = " ";
-    protected static final String HORIZONTAL_LINE_CHAR = "-";
+    protected static final char HORIZONTAL_LINE_CHAR = '-';
     protected static final String BUILD_REPORT_CHAR = "-";
     public static final String HYPHEN = "-";
-    protected static final String VERTICAL_LINE_CHAR = "|";
+    protected static final char VERTICAL_LINE_CHAR = '|';
     protected static final String TEXT_COLOR_START = "<FONT color=\"";
     protected static final String TEXT_COLOR_DONE = "\">";
     protected static final String TEXT_COLOR_END = "</FONT>";
@@ -609,6 +609,16 @@ public class TrainCommon {
                 }
             }
         }
+    }
+
+    protected void setCarPickupTime(Train train, RouteLocation rl, List<Car> carList) {
+        String expectedDepartureTime = train.getExpectedDepartureTime(rl);
+        for (Car car : carList) {
+            if (car.getRouteLocation() == rl) {
+                car.setPickupTime(expectedDepartureTime);
+            }
+        }
+
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_FORMAT_SHOULD_BE_CONST",
@@ -1474,18 +1484,23 @@ public class TrainCommon {
         }
         newLine(file);
         newLine(file, Setup.getMiaComment(), isManifest);
+        if (Setup.isPrintHeadersEnabled()) {
+            printHorizontalLine(file, isManifest);
+            newLine(file, SPACE + getHeader(Setup.getMissingCarMessageFormat(), false, false, false), isManifest);
+            printHorizontalLine(file, isManifest);
+        }
         for (Car car : cars) {
-            addSearchForCar(file, car);
+            addSearchForCar(file, car, isManifest);
         }
     }
 
-    private void addSearchForCar(PrintWriter file, Car car) {
+    private void addSearchForCar(PrintWriter file, Car car, boolean isManifest) {
         StringBuffer buf = new StringBuffer();
         String[] format = Setup.getMissingCarMessageFormat();
         for (String attribute : format) {
             buf.append(getCarAttribute(car, attribute, false, false));
         }
-        addLine(file, buf.toString());
+        newLine(file, buf.toString(), isManifest);
     }
 
     /*
@@ -1565,7 +1580,7 @@ public class TrainCommon {
             return padAndTruncateIfNeeded(car.getKernelName(),
                     InstanceManager.getDefault(KernelManager.class).getMaxNameLength());
         } else if (attribute.equals(Setup.KERNEL_SIZE)) {
-            if (car.getKernel() != null) {
+            if (car.isLead()) {
                 return padAndTruncateIfNeeded(Integer.toString(car.getKernel().getSize()), 2);
             } else {
                 return SPACE + SPACE; // assumes that kernel size is 99 or less
@@ -2001,7 +2016,7 @@ public class TrainCommon {
                 buf.append(attribute + SPACE);
             }
         }
-        return buf.toString().trim();
+        return buf.toString().stripTrailing();
     }
 
     protected void printTrackNameHeader(PrintWriter file, String trackName, boolean isManifest) {
@@ -2097,6 +2112,35 @@ public class TrainCommon {
             }
         }
         return null; // there was no date specified.
+    }
+
+    /*
+     * Converts String time HH:MM and HH:MM PM to minutes from midnight.
+     */
+    protected int convertStringTime(String time) {
+        int minutes = 0;
+        boolean hrFormat = false;
+        String[] splitTimePM = time.split(" ");
+        if (splitTimePM.length > 1) {
+            hrFormat = true;
+            if (splitTimePM[1].equals(Bundle.getMessage("PM"))) {
+                minutes = 12 * 60;
+            }
+        }
+        String[] splitTime = splitTimePM[0].split(":");
+        if (hrFormat && splitTime[1].equals("12")) {
+            splitTime[1] = "00";
+        }
+        if (splitTime.length > 2) {
+            minutes += 24 * 60 * Integer.parseInt(splitTime[0]);
+            minutes += 60 * Integer.parseInt(splitTime[1]);
+            minutes += Integer.parseInt(splitTime[2]);
+        } else {
+            minutes += 60 * Integer.parseInt(splitTime[0]);
+            minutes += Integer.parseInt(splitTime[1]);
+        }
+        log.debug("convert time {} to minutes {}", time, minutes);
+        return minutes;
     }
 
     /**

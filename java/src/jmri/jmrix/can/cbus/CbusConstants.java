@@ -9,6 +9,9 @@ package jmri.jmrix.can.cbus;
  */
 public final class CbusConstants {
 
+    // Class only supplies static methods
+    private CbusConstants(){}
+
     /**
      * Handle used by service mode programmer
      */
@@ -16,6 +19,25 @@ public final class CbusConstants {
 
     public static final int DEFAULT_STANDARD_ID = 0x7a;
     public static final int DEFAULT_EXTENDED_ID = 0x7a;
+
+    /**
+     * Get a String Array of valid CBUS CAN IDs for use with fixed IDs.
+     * CBUS dev guide 6b was 120-127, 6c is 100-127.
+     * @return list of CAN IDs from 100 to 127
+     */
+    public static String[] getValidFixedCanIds() {
+        final byte MAX = 28;
+        String[] result = new String[MAX];
+        for (int i = 0; i < MAX; i++) {
+            result[i] = String.valueOf(i + 100);
+        }
+        return result;
+    }
+
+    /**
+     * Get the Default JMRI CAN ID for new CBUS connections, 126, in String format.
+     */
+    public static final String DEFAULT_JMRI_CAN_ID_STRING = "126";
 
     /**
      * CBUS Manufacturer definitions
@@ -238,6 +260,17 @@ public final class CbusConstants {
     public static final int CBUS_BOOT_ENABLES = 0x07;
 
     /**
+     * Bootloader protocol
+     *
+     * These define options for the bootloader mode
+     */
+    public static final int CBUS_BOOT_MODE_WRT_UNLCK  = 0x01;   // Unlock write and erase
+    public static final int CBUS_BOOT_MODE_ERASE_ONLY = 0x02;   // Erase without write
+    public static final int CBUS_BOOT_MODE_AUTO_ERASE = 0x04;   // Enable auto erase before write
+    public static final int CBUS_BOOT_MODE_AUTO_INC   = 0x08;   // Enable auto inc the address
+    public static final int CBUS_BOOT_MODE_ACK        = 0x10;   // Acknowledge mode
+
+    /**
      * Programming modes
      */
     public static final int CBUS_PROG_DIRECT_BYTE = 0;
@@ -246,7 +279,7 @@ public final class CbusConstants {
     public static final int CBUS_PROG_REGISTER = 3;
     public static final int CBUS_PROG_ADDRESS = 4;
     public static final int CBUS_OPS_BYTE = 5;
-
+    
     /**
      * Error codes returned by CBUS_ERR
      */

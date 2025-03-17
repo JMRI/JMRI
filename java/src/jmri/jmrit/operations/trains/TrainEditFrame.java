@@ -387,6 +387,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         toolMenu.add(new PrintTrainAction(true, _train));
         toolMenu.add(new PrintTrainManifestAction(false, _train));
         toolMenu.add(new PrintTrainManifestAction(true, _train));
+        toolMenu.add(new PrintShowCarsInTrainRouteAction(false, _train));
+        toolMenu.add(new PrintShowCarsInTrainRouteAction(true, _train));
         toolMenu.add(new PrintTrainBuildReportAction(false, _train));
         toolMenu.add(new PrintTrainBuildReportAction(true, _train));
         toolMenu.add(new PrintSavedTrainManifestAction(false, _train));
@@ -743,21 +745,22 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             return;
         }
         String id = b.getName();
+        RouteLocation rl = _train.getRoute().getRouteLocationById(id);
         if (b.isSelected()) {
-            _train.deleteTrainSkipsLocation(id);
+            _train.deleteTrainSkipsLocation(rl);
         } else {
             // check to see if skipped location is staging
-            if (_train.getRoute().getLocationById(id).getLocation().isStaging()) {
+            if (_train.getRoute().getRouteLocationById(id).getLocation().isStaging()) {
                 int result = JmriJOptionPane.showConfirmDialog(this,
                         Bundle.getMessage("TrainRouteStaging",
-                                _train.getName(), _train.getRoute().getLocationById(id).getName()),
+                                _train.getName(), _train.getRoute().getRouteLocationById(id).getName()),
                         Bundle.getMessage("TrainRouteNotStaging"), JmriJOptionPane.OK_CANCEL_OPTION);
                 if (result != JmriJOptionPane.OK_OPTION ) {
                     b.setSelected(true);
                     return; // don't skip staging
                 }
             }
-            _train.addTrainSkipsLocation(id);
+            _train.addTrainSkipsLocation(rl);
         }
     }
 
@@ -932,8 +935,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                         services = true;
                     }
                     // check can drop and pick up, and moves > 0
-                    if (services && (rl.isDropAllowed() || rl.isPickUpAllowed()) && rl.getMaxCarMoves() > 0) {
-                        checkBox.setSelected(!_train.isLocationSkipped(rl.getId()));
+                    if (services &&
+                            (rl.isDropAllowed() || rl.isPickUpAllowed() || rl.isLocalMovesAllowed()) &&
+                            rl.getMaxCarMoves() > 0) {
+                        checkBox.setSelected(!_train.isLocationSkipped(rl));
                     } else {
                         checkBox.setEnabled(false);
                     }

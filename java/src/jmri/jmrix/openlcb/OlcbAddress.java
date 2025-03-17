@@ -81,8 +81,8 @@ public final class OlcbAddress {
         if (memo != null) { 
             nameStore = memo.get(OlcbEventNameStore.class);
         }
-        EventID eid;
-        if (nameStore != null && (eid = nameStore.getEventID(s)) != null) {
+         if (nameStore != null && nameStore.hasEventID(s)) {
+            EventID eid = nameStore.getEventID(s);
             // name form
             // load the event ID into the aFrame c.f. OlcbAddress(EventID) ctor
             byte[] contents = eid.getContents();
@@ -108,11 +108,10 @@ public final class OlcbAddress {
                 from = 0;
             }
 
-            int DD = (from-1) & 0x3;
-            int aaaaaa = (( (from-1) >> 2)+1 ) & 0x3F;
-            int AAA = ( (from) >> 8) & 0x7;
-            long event = 0x0101020000FF0000L | (AAA << 9) | (aaaaaa << 3) | (DD << 1);
-
+            if (from >= 2045) from = from-2045;
+            else from = from + 3;
+            long event = 0x0101020000FF0000L | (from<<1);
+            
             s = String.format("%016X;%016X", event, event+1);
             log.trace(" Turnout form converted to {}", s);
         } else if (s.startsWith("S")) {
