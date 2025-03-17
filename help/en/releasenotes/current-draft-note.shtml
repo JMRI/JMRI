@@ -86,7 +86,12 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Added a Configure LocoIO Modules tool, accessible from the LocoNet menu, that lists all
+                  connected LocoIO (LNSV1) boards and allows opening a matching programmer, akin to the LNCV pane.</li>
+                <li>DecoderPro OpsMode LNSV1 programming has been refactored to use the new Lnsv1MessageContents class
+                  instead of locoio.sendRead/.sendWrite it was still using.</li>
+                <li>The LocoIO pane that was deprecated since 4.12 has been removed. The LocoIO configuration
+                  documentation is retained under html LocoNet help.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -96,7 +101,7 @@
 
         <h4>Marklin CS2</h4>
             <ul>
-                <li></li>
+                <li>Added support for TCP (in addition to UDP) connections to the CS2.</li>
             </ul>
 
         <h4>MERG</h4>
@@ -448,7 +453,11 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+          <li>Added DecoderIndexFile access to a decoder definition's
+            &lt;programming&gt;&lt;mode&gt;, allowing a check of supported modes from a DecoderFile using
+            <code>getProgrammingModes()</code></li>
+          <li>DecoderPro OpsMode LNSV1 programming has been refactored to use the new Lnsv1MessageContents class
+            instead of locoio.sendRead/.sendWrite it was still using.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -536,9 +545,11 @@
         </ul>
 
     <h3>Roster</h3>
-        <a id="Roster" name="Roster"></a>
+        <a id="Roster"></a>
         <ul>
-            <li></li>
+            <li>New Roster Entries hold the decoder's programming mode, if defined, to use as a filter similar to
+              e.g. ProductID.
+            </li>
         </ul>
 
     <h3>Routes</h3>
