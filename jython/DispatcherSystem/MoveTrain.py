@@ -32,27 +32,48 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     global trains
     global time_last_train
 
-    def __init__(self, station_from_name, station_to_name, train_name, graph, stop_mode = None, mode = "not_scheduling"):
+    def __init__(self, station_from_name, station_to_name, train_name, graph, stop_mode = None, mode = "not_scheduling", route = None):
         self.logLevel = 0
         if self.logLevel > 0: print "station_from_name", station_from_name, "station_to_name",station_to_name, "train_name", train_name, "stop_mode", stop_mode
         self.station_from_name = station_from_name
         self.station_to_name = station_to_name
         self.train_name = train_name
         self.graph = graph
-        self.stop_mode = stop_mode
+        self.route = route
+        # if there is a stop sensor at the last station, get the stop mode at the last station if it has been set up
+        if self.route != None:
+            self.stop_mode = self.get_route_location_stop_mode(station_to_name)
+        else:
+            self.stop_mode = ""
         self.mode = mode
 
     def setup(self):
         return True
 
     def handle(self):
-        #move between stations in the thread
+        # move between stations in the thread
         if self.logLevel > 1: print"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
         if self.logLevel > 1: print "move between stations in the thread"
         if self.logLevel > 1: print"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 
         result = self.move_between_stations(self.station_from_name, self.station_to_name, self.train_name, self.graph, self.mode)
         return False
+
+    def get_route_location_stop_mode(self, station_to_name):
+        route_location = self.route.getLastLocationByName(station_to_name)
+        if self.logLevel > -1: print "get_stop_mode" , "route location", route_location
+        comment = route_location.getComment()
+        stop_mode = self.find_between(comment, "[stopMode-", "-stopMode]")
+        if self.logLevel > -1: print "routeLocation stop_mode", stop_mode
+        return stop_mode
+
+    def find_between(self, s, first, last):
+        try:
+            start = s.index(first) + len(first)
+            end = s.index(last, start)
+            return s[start:end]
+        except ValueError:
+            return ""
 
     def move_between_stations(self, station_from_name, station_to_name, train_name, graph, mode = "not_scheduling"):
         if self.logLevel > 0: print "move_between_stations"
@@ -642,15 +663,15 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 if self.logLevel > 0: print "before", self.trainInfo.getStopBySpeedProfile(), self.trainInfo.getUseSpeedProfile()
                 autoActiveTrain.set_useStopSensor(False)
             # overwrite with set values
-            if self.stop_mode == None:
-                if self.logLevel > 0: print "pass"
+            if self.stop_mode is None or self.stop_mode == "" or self.stop_mode == "Use Default":
+                if self.logLevel > -1: print "Use Defailt"
                 pass
             elif self.stop_mode == "Use Stop Sensor":
                 autoActiveTrain.set_useStopSensor(True)
-                if self.logLevel > 0: print "set stop sensor true"
-            elif self.stop_mode == "Stop using Speed Profile":
+                if self.logLevel > -1: print "set stop sensor True"
+            elif self.stop_mode == "Use Speed Profile":
                 autoActiveTrain.set_useStopSensor(False)
-                if self.logLevel > 0: print "set_useStopSensor false"
+                if self.logLevel > -1: print "set_useStopSensor False"
             else:
                 print "ERROR incorrect value for stop mode"
         else:

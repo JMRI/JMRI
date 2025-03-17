@@ -214,7 +214,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
                         instance_list = [instance for instance in instance_list if instance != thread]
 
     def determine_train_name(self,thread_name, thread):
-        print "thread", thread     # this is the RunRoute class object
+        # print "thread", thread     # this is the RunRoute class object
         route = thread
         train_name = route.train_name
         return train_name
@@ -664,6 +664,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 else:
                     transit_name = self.get_transit_name(prev_station, last_station)
                     if self.forward_stopping_sensor_exists(transit_name):
+                        routeLocation = route.getLastLocationByName(button_station_name)
+                        self.save_stop_mode("Use Default", routeLocation)       # set default option
                         s = self.od.customQuestionMessage4str(msg,title, opt1, opt2, opt3, opt4)
                     else:
                         s = self.od.customQuestionMessage3str(msg,title, opt1, opt2, opt3)
@@ -733,6 +735,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
         transit_name = trainInfo.getTransitName()
         return transit_name
+
     def forward_stopping_sensor_exists(self, transit_name):
         forward_stopping_sensor = self.forward_stopping_sensor(transit_name)
         if forward_stopping_sensor != None:
@@ -747,6 +750,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         section = transit_section.getSection()
         forward_stopping_sensor = section.getForwardStoppingSensor()
         return forward_stopping_sensor
+
     def wait_for_button(self, prev_sensor_changed):
         self.button_sensors_to_watch = copy.copy(self.button_sensors)
         if prev_sensor_changed in self.button_sensors_to_watch:
@@ -758,25 +762,49 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         button_sensor_name = sensor_changed.getUserName()
         button_station_name = self.get_block_name_from_button_sensor_name(button_sensor_name)
         return [button_station_name, sensor_changed]
+
     def get_stop_mode(self):
         title = "Set Stop mode"
 
         msg = "set Stop mode"
         opt1 = "Use Stop Sensor"
         opt2 = "Use Default"
-        opt3 = "Stop using Speed Profile"
+        opt3 = "Use Speed Profile"
         reply = self.od.customQuestionMessage3str(msg,title,opt1,opt2,opt3)
         return reply
 
     def save_stop_mode(self, stop_mode, location):
-        if stop_mode != "Use Default":
-            location.setComment(stop_mode)
+        # if stop_mode != "Use Default":
+        self.set_value_in_comment(location, stop_mode, "stopMode")
+
+    def set_value_in_comment(self, location, value, duration_string):
+        comment = location.getComment()    #Null
+        if comment == None:
+            comment = ""
+        delim_start = "[" + duration_string + "-"
+        delim_end = "-" + duration_string + "]"
+        comment = self.insert_between(comment, delim_start, delim_end, value)
+        location.setComment(comment)
+
+    def insert_between(self, string, delim1, delim2, value):
+        first, _, rest = string.partition(delim1)
+        _, _, rest = rest.partition(delim2)
+
+        # print "string", string, "first.strip()", first.strip(), "rest.strip()", rest.strip()
+        new_val = delim1 + str(value) + delim2
+        modified_text = new_val.join([first.strip(), rest.strip()])
+        # print "modified_text",modified_text
+
+        # print "given", string , "insert" , new_val, "result" , modified_text
+        return modified_text
 
     def action_directory_in_DispatcherSystem(self):
         path = jmri.util.FileUtil.getScriptsPath() + "DispatcherSystem" + java.io.File.separator + "actions"
+
         if not os.path.exists(path):
             os.makedirs(path)
         return path + java.io.File.separator
+
     def action_directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "pythonfiles"
         if not os.path.exists(path):
@@ -784,20 +812,30 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         return path + java.io.File.separator
 
     def add_actions(self, route, LocationManager, button_station_name, no_stations_chosen, selected_actions):
-        directory = self.action_directory_in_DispatcherSystem()
-        files = os.listdir(directory)
-        python_files = [f for f in files if f.endswith(".py")]
+        directory1 = self.action_directory_in_DispatcherSystem()
+        files = os.listdir(directory1)
+        # print "files in dispatcher system action directory", files
 
+        python_files = [f for f in files if f.endswith(".py")]
+        # print "directory1", directory1, "python_files", python_files
 
         directory = self.action_directory()
         files = os.listdir(directory)
         python_files2 = [f for f in files if f.endswith(".py")]
+        # print "directory", directory, "python_files2", python_files2
         python_files.extend(python_files2)
+        # print "directory", directory, "python_files", python_files
         # display the list to select the required python file
         if python_files == []:
-            msg =  "no python files in directory " + directory
-            self.od.displayMessage((msg))
-            return 'cancel'
+            lines =  ["No action files available\n" ,
+                    "You have not set the Jython script location correctly.\n",
+                    "It is pointing to:\n",
+                    directory1,
+                    "\n\nThere are some default files in the Jython Script area or you can write your own ",
+                     "and put them in your user area.\nSee the documentation."]
+            msg = "".join(lines)
+            self.od.displayMessage(msg)
+            return ["none selected yet"]
         else:
             select_action_file = True
             iteration = 1
@@ -1220,7 +1258,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
         # stopping_fraction = trainInfo_fwd.getStopBySpeedProfileAdjust()
 
-        #modify stopping fraction in traininfo
+        # set the stop sensor
         last_section = self.last_section_of_transit(trainInfo_fwd)
         # print "last section", last_section
         sensor_name = self.choose_stop_sensor(last_section)

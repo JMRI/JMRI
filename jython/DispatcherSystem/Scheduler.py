@@ -2105,6 +2105,9 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self, route, graph, station_from, station_to, no_repetitions, train_name, \
                  delay = 0, scheduling_train = False, set_departure_times = False, train = None):
 
+        print ("route" , route, "station_from", station_from, "station_to", station_to, \
+                       "no_repetitions", no_repetitions, "train_name", train_name)
+
         # station_from is set to the initial position of the train, not necessarily
         # the start position of the route
         # station_to is set only if returning to start position
@@ -2195,6 +2198,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             if self.delay > 0 and self.mycount == 0:  # only delay on the first iteration
                 self.waitMsec(self.delay)
             if int(self.mycount) <= int(self.no_repetitions):
+                print "repeating", "self.mycount", self.mycount, "self.no_repetitions", self.no_repetitions
                 if self.logLevel > 0: print "station_list in handle", self.station_list, "in handle", self.mycount
                 response = self.run_route(self.train_name)
 
@@ -2209,7 +2213,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                 self.mycount += 1     # 0 first time round
                 return True
             else:
-                if self.logLevel > 0: print "returning true", "train_name", self.train_name, "mycount", self.mycount, "reps" , self.no_repetitions
+                if self.logLevel > 0: print "returning false", "train_name", self.train_name, "mycount", self.mycount, "reps" , self.no_repetitions
                 return False
 
     def run_route(self, train_to_move):
@@ -2290,7 +2294,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                         print "__________________________Start__" + train_to_move + "___________________________________"
                         success = self.check_train_in_block_for_scheduling_margin_fast_minutes(start_block, train_to_move)
                         if success:
-                            move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, station_comment, mode = "scheduling")
+                            move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, mode = "scheduling", route = self.route)
                             move_train.move_between_stations(station_from, station_to, train_to_move, self.graph, mode = "scheduling")
                             print "__________________________End____" + train_to_move + "___________________________________"
                         else:
@@ -2299,7 +2303,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                     else:
                         success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
                         if success:
-                            move_train = MoveTrain(station_from, station_to, self.train_name, self.graph)
+                            move_train = MoveTrain(station_from, station_to, self.train_name, self.graph, route = self.route)
                             move_train.move_between_stations(station_from, station_to, self.train_name, self.graph)
                     # move_train = None
 
