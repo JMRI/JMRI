@@ -101,7 +101,7 @@
 
         <h4>Marklin CS2</h4>
             <ul>
-                <li></li>
+                <li>Added support for TCP (in addition to UDP) connections to the CS2.</li>
             </ul>
 
         <h4>MERG</h4>
