@@ -5,7 +5,7 @@
   <title>JMRI Hardware Support - Tools for LocoNet&reg; Devices</title>
   <meta name="Author" content="B. Milhaupt">
   <meta name="keywords" content=
-  "Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR91 UR92 Duplex DT402D DT402DCE DT402R Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project'">
+  "Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR91 UR92 Duplex DT402D DT402DCE DT402R Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project' LNCV LNSV1">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style>
@@ -33,9 +33,9 @@
       is <a href="Digitrax.shtml#Setup">connected to a LocoNet&reg;</a>-based DCC system, or to a
       <a href="StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
 
-      <p>In the table below, each tool name is a link to a tool-specific help page.</p>
+      <p>In the table below, each tool name is a link to its tool-specific help page.</p>
 
-      <table border="2">
+      <table class="wide">
         <tr class="ctr">
           <td><strong>Tool</strong>
           </td>
@@ -201,23 +201,6 @@
         </tr>
 
         <tr class="ctr">
-          <td>
-            <a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configure
-            LocoIO</a>
-          </td>
-          <td>
-          </td>
-          <td>
-          </td>
-          <td>&bull;</td>
-          <td>
-          </td>
-          <td>
-          </td>
-          <td>LocoIO, LocoServo, HDL LocoBooster, LocoRCD</td>
-        </tr>
-
-        <tr class="ctr">
           <td rowspan="2">
             <a href=
             "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configure
@@ -285,7 +268,7 @@
 
         <tr class="ctr">
           <td>
-          <a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Configure
+          <a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Manage
             LNCV Modules</a>
           </td>
           <td>&bull;</td>
@@ -299,7 +282,22 @@
           <td>
             Uhlenbrock and Digikeijs stationary modules
           </td>
+        </tr>
 
+        <tr class="ctr">
+          <td>
+            <a href="../../../package/jmri/jmrix/loconet/lnsvf1/Sv1DiscoverPane.shtml">Manage
+              LocoIO LNSV1 Modules</a>
+          </td>
+          <td>&bull;</td>
+          <td>
+          </td>
+          <td>&bull;</td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td><a href="LocoIO.shtml">LocoIO, LocoServo, HDL LocoBooster, LocoRCD, GCA50, GCA50a, GCA51</a></td>
         </tr>
 
         <tr class="ctr">
@@ -434,7 +432,7 @@
           </dt>
           <dd>
             Using this tool can have an effect on both the Duplex radio settings (if one or more
-            UR92 is present on LocoNet) <strong>and</strong> the some aspects of LNWI configuration
+            UR92 is present on LocoNet) <strong>and</strong> some aspects of LNWI configuration
             (if one or more LNWI is present on LocoNet). See the <a href=
             "../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#LNWISideEffects">
             Duplex Group Configuration Tool</a> help page discussion of its influence on the LNWI

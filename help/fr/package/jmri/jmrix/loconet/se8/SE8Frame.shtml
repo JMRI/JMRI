@@ -2,7 +2,7 @@
 <html lang="fr">
 <!-- Translated  by Blorec Herv&#233; le 2011-10-31-->
 <head>
-  <title>JMRI: Configure Digitrax SE8c</title>
+  <title>JMRI: Configure Digitrax SE8C</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure loconet DS64">
   <!--#include virtual="/help/fr/parts/Style.shtml" -->
@@ -13,15 +13,10 @@
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
-        <h1>Configurer Digitrax SE8c</h1>
-        <!--
-        <a href="../../../../../html/apps/LocoTools/images/DS64.jpg">
-        <img src ="../../../../../ html/apps/LocoTools/images/DS64.jpg "
-        align = "right" height = "271" width = "245" alt = "image du panneau"> </a>
-         -->
+        <h1>Configurer Digitrax SE8C</h1>
 
-      <p>L'outil de programmation JMRI SE8c vous permet de
-      configurer les options internes d'un SE8c directement
+      <p>L'outil de programmation JMRI SE8C vous permet de
+      configurer les options internes d'un SE8C directement
       &aacute; partir de votre ordinateur.</p>
 
       <p>Pour ouvrir cet outil &aacute; partir de la page de
@@ -29,20 +24,20 @@
       l'onglet LocoNet puis trouver l'outil sur la liste
       d&eacute;roulante.</p>
 
-      <p>Pour l'utiliser, vous mettez l'adresse d'une carte SE8c
-      dans le champ texte et cliquez sur "Lire SE8c". L'outil
+      <p>Pour l'utiliser, vous mettez l'adresse d'une carte SE8C
+      dans le champ texte et cliquez sur "Lire SE8C". L'outil
       relira l'&eacute;tat actuel des
       diff&eacute;rentes options et d&eacute;finira les
       cases &aacute; cocher pour correspondre aux valeurs
       actuelles.</p>
 
       <p>Vous pouvez alors, si vous le souhaitez, modifier les
-      cases et cliquez sur "Ecrire dans SE8c" pour rendre vos
+      cases et cliquez sur "Ecrire dans SE8C" pour rendre vos
       modifications permanentes.</p>
 
       <h3>Limitations</h3>
       <p>En raison de la fa&ccedil;on dont
-      fonctionne la carte SE8c, cet outil ne peut pas changer
+      fonctionne la carte SE8C, cet outil ne peut pas changer
       l'adresse de base de l'unit&eacute;.</p>
 
       <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
