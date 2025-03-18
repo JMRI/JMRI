@@ -351,6 +351,9 @@ public class Car extends RollingStock {
     }
 
     public String getPickupScheduleName() {
+        if (getTrain() != null) {
+            return getPickupTime();
+        }
         TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
                 .getScheduleById(getPickupScheduleId());
         if (sch != null) {
@@ -1055,7 +1058,6 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.LOAD_FROM_STAGING)) != null && a.getValue().equals(Xml.TRUE)) {
             setLoadGeneratedFromStaging(true);
         }
-
         if ((a = e.getAttribute(Xml.WAIT)) != null) {
             try {
                 _wait = Integer.parseInt(a.getValue());

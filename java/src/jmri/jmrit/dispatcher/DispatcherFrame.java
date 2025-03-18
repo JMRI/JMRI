@@ -97,8 +97,13 @@ import jmri.util.table.ButtonRenderer;
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceManagerAutoDefault {
 
+    public static boolean dispatcherSystemSchedulingInOperation = false;    // required for Dispatcher System
+                                // to inhibit error message if train being scheduled is not in required station
+
     public DispatcherFrame() {
         super(true, true); // remember size a position.
+
+
         editorManager = InstanceManager.getDefault(EditorManager.class);
         initializeOptions();
         openDispatcherWindow();
@@ -1455,7 +1460,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             return null;
         }
         if (_HasOccupancyDetection && (!(startBlock.getState() == Block.OCCUPIED))) {
-            if (showErrorMessages) {
+            if (showErrorMessages && !DispatcherFrame.dispatcherSystemSchedulingInOperation) {
                 JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
                         "Error6"), new Object[]{startBlock.getDisplayName()}), Bundle.getMessage("ErrorTitle"),
                         JmriJOptionPane.ERROR_MESSAGE);

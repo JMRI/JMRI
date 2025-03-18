@@ -38,7 +38,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
     @Override
     public String name() {
-        return "CS2 via network";
+        return "CS2 via UDP network";
     } // NOI18N
 
     /**

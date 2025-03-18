@@ -1950,6 +1950,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
     }
 
+    /**
+     * The group logic file contains 16 group rows and a variable number of logic rows for each group.
+     * The exported CSV file has one field for the group rows and 5 fields for the logic rows.
+     * If the CSV file has been modified by a spreadsheet, the group rows will now have 5 fields.
+     */
     private void importGroupLogic() {
         List<CSVRecord> records = getCsvRecords("group_logic.csv");
         if (records.isEmpty()) {
@@ -1967,7 +1972,11 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             List<String> values = new ArrayList<>();
             record.forEach(values::add);
 
-            if (values.size() == 1) {
+            if (values.size() == 1 || (values.size() == 5 &&
+                    values.get(1).isEmpty() &&
+                    values.get(2).isEmpty() &&
+                    values.get(3).isEmpty() &&
+                    values.get(4).isEmpty())) {
                 // Create Group
                 groupNumber++;
                 var groupRow = _groupList.get(groupNumber);

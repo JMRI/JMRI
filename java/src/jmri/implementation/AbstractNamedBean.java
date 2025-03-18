@@ -51,7 +51,9 @@ public abstract class AbstractNamedBean implements NamedBean {
      *                                               normalized
      * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
-    protected AbstractNamedBean(@Nonnull String sys, @CheckForNull String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+    protected AbstractNamedBean(@Nonnull String sys, @CheckForNull String user)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+
         if (Objects.isNull(sys)) {
             throw new NamedBean.BadSystemNameException();
         }
