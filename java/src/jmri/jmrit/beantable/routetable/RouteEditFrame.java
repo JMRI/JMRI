@@ -132,8 +132,6 @@ public class RouteEditFrame extends AbstractRouteAddEditFrame {
 
     /**
      * Respond to the Delete button.
-     *
-     * @param e the action event
      */
     private void deletePressed() {
         // route is already deactivated, just delete it

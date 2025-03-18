@@ -98,8 +98,6 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
 
     /**
      * Respond to the Create button.
-     *
-     * @param e the action event
      */
     private void createPressed() {
         if ( !_autoSystemName.isSelected() && !checkNewNamesOK() ) {
