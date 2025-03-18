@@ -88,7 +88,7 @@ public interface SignalMastLogic extends NamedBean {
     /**
      * String constant for length.
      */
-    String PROPERTY_LENGTH = Manager.PROPERTY_LENGTH;
+    String PROPERTY_LENGTH = "length";
 
     /**
      * Query if we are allowing the system to automatically generate a list of
