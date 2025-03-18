@@ -236,7 +236,7 @@ public class Source implements PropertyChangeListener {
 
     public boolean isRouteActive(PointDetails endpoint) {
         if (pointToDest.containsKey(endpoint)) {
-            return pointToDest.get(endpoint).isEnabled();
+            return pointToDest.get(endpoint).isActive();
         }
         return false;
     }
