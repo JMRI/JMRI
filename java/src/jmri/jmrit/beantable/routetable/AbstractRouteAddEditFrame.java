@@ -65,10 +65,10 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     // when it hasn't been configured yet
 
     // used in RouteTurnout
-    protected static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
+    static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateClosed");
     // used in RouteTurnout
-    protected static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
+    static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateThrown");
     private static String[] turnoutInputModes = new String[]{
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
