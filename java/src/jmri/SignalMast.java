@@ -55,16 +55,6 @@ public interface SignalMast extends Signal {
     String PROPERTY_ASPECT = "Aspect";
 
     /**
-     * Constant property for lit.
-     */
-    String PROPERTY_LIT = "Lit";
-
-    /**
-     * Constant property for held.
-     */
-    String PROPERTY_HELD = "Held";
-
-    /**
      * Constant property for permissive SML disabled.
      */
     String PROPERTY_PERMISSIVE_SML_DISABLED = "PermissiveSmlDisabled";
