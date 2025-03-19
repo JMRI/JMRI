@@ -65,7 +65,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      *         already exists, or if there is trouble creating a new Conditional
      */
     @Override
-    @CheckForNull
     public Conditional createNewConditional(String systemName, String userName) {
 
         // Check system name
@@ -278,7 +277,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * parent
      */
     @Override
-    @CheckForNull
     public List<String> getSystemNameListForLogix(Logix x) {
         if (x == null) {
             return null;
