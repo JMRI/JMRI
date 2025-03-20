@@ -2115,7 +2115,8 @@ public class TrainCommon {
     }
 
     /*
-     * Converts String time HH:MM and HH:MM PM to minutes from midnight.
+     * Converts String time DAYS:HH:MM and DAYS:HH:MM AM/PM to minutes from
+     * midnight.
      */
     protected int convertStringTime(String time) {
         int minutes = 0;
@@ -2128,14 +2129,20 @@ public class TrainCommon {
             }
         }
         String[] splitTime = splitTimePM[0].split(":");
-        if (hrFormat && splitTime[1].equals("12")) {
-            splitTime[1] = "00";
-        }
+
         if (splitTime.length > 2) {
+            // days:hrs:minutes
+            if (hrFormat && splitTime[1].equals("12")) {
+                splitTime[1] = "00";
+            }
             minutes += 24 * 60 * Integer.parseInt(splitTime[0]);
             minutes += 60 * Integer.parseInt(splitTime[1]);
             minutes += Integer.parseInt(splitTime[2]);
         } else {
+            // hrs:minutes
+            if (hrFormat && splitTime[0].equals("12")) {
+                splitTime[0] = "00";
+            }
             minutes += 60 * Integer.parseInt(splitTime[0]);
             minutes += Integer.parseInt(splitTime[1]);
         }
