@@ -420,7 +420,8 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>Added pane and CVs for "Zimo Scripting".</li>
+                <li>Added decoder types MS591N18 and MS540E24</li>
             </ul>
 
         <h4>Miscellaneous</h4>
