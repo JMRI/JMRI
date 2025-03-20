@@ -314,7 +314,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /**
      * Get's train's departure time in 12hr or 24hr format
      *
-     * @return train's departure time in the String format hh:mm or hh:mm(AM/PM)
+     * @return train's departure time in the String format hh:mm or hh:mm AM/PM
      */
     public String getFormatedDepartureTime() {
         // check to see if the route has a departure time
@@ -398,7 +398,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             return ALREADY_SERVICED;
         }
         if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
-            return routeLocation.getFormatedDepartureTime();
+            return parseTime(checkForDepartureTime(minutes, routeLocation));
         }
         // figure out the work at this location, note that there can be
         // consecutive locations with the same name
@@ -475,13 +475,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                     continue;
                 }
                 // is there a departure time from this location?
-                if (!rl.getDepartureTime().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
-                    String dt = rl.getDepartureTime();
-                    log.debug("Location {} departure time {}", rl.getName(), dt);
-                    String[] time = dt.split(":");
-                    minutes = 60 * Integer.parseInt(time[0]) + Integer.parseInt(time[1]);
-                    // log.debug("New minutes: "+minutes);
-                }
+                minutes = checkForDepartureTime(minutes, rl);
                 // add wait time
                 minutes += rl.getWait();
                 // add travel time if new location
@@ -501,8 +495,23 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return minutes;
     }
 
+    private int checkForDepartureTime(int minutes, RouteLocation rl) {
+        if (!rl.getDepartureTime().equals(RouteLocation.NONE) && !isTrainEnRoute()) {
+            String dt = rl.getDepartureTime();
+            log.debug("Location {} departure time {}", rl.getName(), dt);
+            String[] time = dt.split(":");
+            int departMinute = 60 * Integer.parseInt(time[0]) + Integer.parseInt(time[1]);
+            // cross into new day?
+            if (minutes > departMinute) {
+                departMinute += 60 * 24; // yes
+            }
+            minutes = departMinute;
+        }
+        return minutes;
+    }
+
     /**
-     * Returns time in hour:minute format
+     * Returns time in days:hours:minutes format
      *
      * @param minutes number of minutes from midnight
      * @return hour:minute (optionally AM:PM format)
