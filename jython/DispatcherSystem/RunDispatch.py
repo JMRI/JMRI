@@ -665,7 +665,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                     transit_name = self.get_transit_name(prev_station, last_station)
                     if self.forward_stopping_sensor_exists(transit_name):
                         routeLocation = route.getLastLocationByName(button_station_name)
-                        self.save_stop_mode("Use Default", routeLocation)       # set default option
+                        if stop_mode == None:
+                            self.save_stop_mode("Use Default", routeLocation)       # set default option
                         s = self.od.customQuestionMessage4str(msg,title, opt1, opt2, opt3, opt4)
                     else:
                         s = self.od.customQuestionMessage3str(msg,title, opt1, opt2, opt3)
