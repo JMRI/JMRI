@@ -151,6 +151,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
     public synchronized void propertyChange(PropertyChangeEvent evt) {
         if (Manager.PROPERTY_BEANS.equals(evt.getPropertyName())) {
             if (!(evt.getSource() instanceof TurnoutManager)) {
+                log.error("Non-TurnoutManager sent event : ", evt);
                 return;
             }
             TurnoutManager manager = (TurnoutManager)evt.getSource();
