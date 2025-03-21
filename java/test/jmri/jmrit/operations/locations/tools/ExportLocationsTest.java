@@ -1,11 +1,11 @@
 package jmri.jmrit.operations.locations.tools;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
 
 /**
  *
@@ -44,6 +44,4 @@ public class ExportLocationsTest extends OperationsTestCase {
         java.io.File file = new java.io.File(ExportLocations.defaultOperationsFilename());   
         Assert.assertTrue("Confirm file creation", file.exists());
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class);
 }

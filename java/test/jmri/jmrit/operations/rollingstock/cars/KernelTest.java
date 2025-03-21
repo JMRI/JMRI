@@ -1,8 +1,9 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  * Tests for the Operations RollingStock Cars Kernel class Last manually cross-checked
@@ -40,18 +41,25 @@ public class KernelTest extends OperationsTestCase {
 
         c1.setKernel(k1);
         Assert.assertEquals("Kernel Car 1 Length", 40 + Car.COUPLERS, k1.getTotalLength());
+        Assert.assertEquals("Kernel Length", 40 + Car.COUPLERS, c1.getTotalKernelLength());
+        Assert.assertEquals("Car 1 Length", 40 + Car.COUPLERS, c1.getTotalLength());
         Assert.assertEquals("Kernel Car 1 Weight Tons", 10, k1.getAdjustedWeightTons());
         Assert.assertTrue("Kernel Lead", k1.isLead(c1));
         Assert.assertTrue("Kernel Lead", c1.isLead());
 
         k1.add(c2);
         Assert.assertEquals("Kernel Car 2 Length", 40 + Car.COUPLERS + 60 + Car.COUPLERS, k1.getTotalLength());
+        Assert.assertEquals("Kernel Length", 40 + Car.COUPLERS + 60 + Car.COUPLERS, c1.getTotalKernelLength());
+        Assert.assertEquals("Car 1 Length", 40 + Car.COUPLERS, c1.getTotalLength());
         Assert.assertEquals("Kernel Car 2 Weight Tons", 30, k1.getAdjustedWeightTons());
         Assert.assertTrue("Kernel Lead", k1.isLead(c1));
         Assert.assertTrue("Kernel Lead", c1.isLead());
 
         k1.add(c3);
         Assert.assertEquals("Kernel Car 3 Length", 40 + Car.COUPLERS + 60 + Car.COUPLERS + 50 + Car.COUPLERS, k1.getTotalLength());
+        Assert.assertEquals("Kernel Length", 40 + Car.COUPLERS + 60 + Car.COUPLERS + 50 + Car.COUPLERS,
+                c1.getTotalKernelLength());
+        Assert.assertEquals("Car 1 Length", 40 + Car.COUPLERS, c1.getTotalLength());
         // car 3 is empty, so only 5 tons, 15/3
         Assert.assertEquals("Kernel Car 3 Weight Tons", 35, k1.getAdjustedWeightTons());
         Assert.assertTrue("Kernel Lead", k1.isLead(c1));

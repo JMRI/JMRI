@@ -717,6 +717,19 @@ public class Car extends RollingStock {
     }
 
     /**
+     * Returns the car length or the length of the car's kernel including
+     * couplers.
+     * 
+     * @return length of car or kernel
+     */
+    public int getTotalKernelLength() {
+        if (getKernel() != null) {
+            return getKernel().getTotalLength();
+        }
+        return getTotalLength();
+    }
+
+    /**
      * Used to determine if a car can be set out at a destination (location).
      * Track is optional. In addition to all of the tests that checkDestination
      * performs, spurs with schedules are also checked.
