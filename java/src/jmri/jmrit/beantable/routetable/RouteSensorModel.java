@@ -1,11 +1,8 @@
 package jmri.jmrit.beantable.routetable;
 
-import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.List;
 
+import jmri.InstanceManager;
 
 /**
  * Set up table for selecting Sensors and Sensor State.
@@ -25,7 +22,7 @@ class RouteSensorModel extends RouteOutputModel {
 
     RouteSensorModel(AbstractRouteAddEditFrame routeAddFrame) {
         this.routeAddFrame = routeAddFrame;
-        InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
+        InstanceManager.sensorManagerInstance().addPropertyChangeListener(RouteSensorModel.this);
     }
 
     @Override
@@ -84,6 +81,11 @@ class RouteSensorModel extends RouteOutputModel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RouteSensorModel.class);
+    @Override
+    protected void dispose() {
+        InstanceManager.sensorManagerInstance().removePropertyChangeListener(this);
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteSensorModel.class);
 
 }
