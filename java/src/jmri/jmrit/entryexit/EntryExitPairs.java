@@ -359,6 +359,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     /** {@inheritDoc} */
     @Override
     public void dispose() {
+        InstanceManager.getDefault(LayoutBlockManager.class).removePropertyChangeListener(propertyBlockManagerListener);
     }
 
     /**
@@ -1386,7 +1387,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         for (Entry<NamedBean, List<NamedBean>> entry : validPaths.entrySet()) {
             NamedBean key = entry.getKey();
             List<NamedBean> validDestMast = validPaths.get(key);
-            if (validDestMast.size() > 0) {
+            if (!validDestMast.isEmpty()) {
                 eep.addNXSourcePoint(key, editor);
                 for (int i = 0; i < validDestMast.size(); i++) {
                     if (!eep.isDestinationValid(key, validDestMast.get(i), editor)) {
@@ -1430,7 +1431,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
+        return Bundle.getMessage(plural ? "BeanNameEntryExits" : "BeanNameEntryExit");  // NOI18N
     }
 
     /**
@@ -1447,12 +1448,12 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     @Override
     @OverridingMethodsMustInvokeSuper
     public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean silenced) {
-        if (!"beans".equals(propertyName)) {
+        if (!Manager.PROPERTY_BEANS.equals(propertyName)) {
             throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
         }
         silencedProperties.put(propertyName, silenced);
-        if (propertyName.equals("beans") && !silenced) {
-            fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);
+        if (propertyName.equals(Manager.PROPERTY_BEANS) && !silenced) {
+            fireIndexedPropertyChange(Manager.PROPERTY_BEANS, getNamedBeanSet().size(), null, null);
         }
     }
 
