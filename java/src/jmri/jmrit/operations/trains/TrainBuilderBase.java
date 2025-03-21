@@ -1527,10 +1527,7 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected boolean checkTrainLength(Car car, RouteLocation rl, RouteLocation rld) {
         // car can be a kernel so get total length
-        int length = car.getTotalLength();
-        if (car.getKernel() != null) {
-            length = car.getKernel().getTotalLength();
-        }
+        int length = car.getTotalKernelLength();
         boolean carInTrain = false;
         for (RouteLocation rlt : _routeList) {
             if (rl == rlt) {
@@ -2402,10 +2399,7 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected String checkReserved(Train train, RouteLocation rld, Car car, Track destTrack, boolean printMsg) {
         // car can be a kernel so get total length
-        int length = car.getTotalLength();
-        if (car.getKernel() != null) {
-            length = car.getKernel().getTotalLength();
-        }
+        int length = car.getTotalKernelLength();
         log.debug("Car length: {}, available track space: {}, reserved: {}", length,
                 destTrack.getAvailableTrackSpace(), destTrack.getReserved());
         if (length > destTrack.getAvailableTrackSpace() +
