@@ -58,13 +58,16 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     private static final int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
             Route.VETOCLOSED, Route.VETOTHROWN};
 
-    static int ROW_HEIGHT;
+    private static int ROW_HEIGHT;
     // This group will get runtime updates to system-specific contents at
     // the start of buildModel() above.  This is done to prevent
     // invoking the TurnoutManager at class construction time,
     // when it hasn't been configured yet
+
+    // used in RouteTurnout
     static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateClosed");
+    // used in RouteTurnout
     static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateThrown");
     private static String[] turnoutInputModes = new String[]{
@@ -74,7 +77,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
     };
-    private static String[] turnoutFeedbackModes = new String[]{Bundle.getMessage("TurnoutFeedbackKnown"),
+    private static final String[] turnoutFeedbackModes = new String[]{Bundle.getMessage("TurnoutFeedbackKnown"),
                                                                 Bundle.getMessage("TurnoutFeedbackCommanded")};
 
     private static String[] lockTurnoutInputModes = new String[]{
@@ -101,18 +104,18 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
 
     protected final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
-    ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
-    ArrayList<RouteSensor> _sensorList;        // array of all Sensors
-    RouteTurnoutModel _routeTurnoutModel;
-    JScrollPane _routeTurnoutScrollPane;
-    RouteSensorModel _routeSensorModel;
-    JScrollPane _routeSensorScrollPane;
-    NamedBeanComboBox<Sensor> turnoutsAlignedSensor;
-    NamedBeanComboBox<Sensor> sensor1;
-    NamedBeanComboBox<Sensor> sensor2;
-    NamedBeanComboBox<Sensor> sensor3;
-    NamedBeanComboBox<Turnout> cTurnout;
-    NamedBeanComboBox<Turnout> cLockTurnout;
+    private ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
+    private ArrayList<RouteSensor> _sensorList;        // array of all Sensors
+    private RouteTurnoutModel _routeTurnoutModel;
+    private JScrollPane _routeTurnoutScrollPane;
+    private RouteSensorModel _routeSensorModel;
+    private JScrollPane _routeSensorScrollPane;
+    private NamedBeanComboBox<Sensor> turnoutsAlignedSensor;
+    private NamedBeanComboBox<Sensor> sensor1;
+    private NamedBeanComboBox<Sensor> sensor2;
+    private NamedBeanComboBox<Sensor> sensor3;
+    private NamedBeanComboBox<Turnout> cTurnout;
+    private NamedBeanComboBox<Turnout> cLockTurnout;
     Route curRoute = null;
     boolean editMode = false;
     protected ArrayList<RouteTurnout> _includedTurnoutList;
@@ -123,7 +126,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     private boolean showAll = true;   // false indicates show only included Turnouts
     private JFileChooser soundChooser = null;
     private ScriptFileChooser scriptChooser = null;
-    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
+    private boolean checkEnabled = InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     public AbstractRouteAddEditFrame(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
@@ -585,9 +588,11 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
 
     protected void showReminderMessage() {
         // Use the RouteTabelAction class to combine messages in Preferences -> Messages
-        if (checkEnabled) return;
+        if (checkEnabled) {
+            return;
+        }
         InstanceManager.getDefault(UserPreferencesManager.class).
-                showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
+                showInfoMessage(this, Bundle.getMessage("ReminderTitle"),  // NOI18N
                         Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
                         jmri.jmrit.beantable.RouteTableAction.class.getName(), "remindSaveRoute"); // NOI18N
     }
