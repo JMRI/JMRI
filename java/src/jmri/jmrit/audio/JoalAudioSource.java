@@ -1,6 +1,7 @@
 package jmri.jmrit.audio;
 
 import com.jogamp.openal.AL;
+import com.jogamp.openal.ALExt;
 import java.util.Queue;
 import javax.vecmath.Vector3f;
 
@@ -441,6 +442,37 @@ public class JoalAudioSource extends AbstractAudioSource {
         } else {
             _initialised = init();
         }
+    }
+
+    @Override
+    public int attachSourcesToEffects() {
+        if (!isAudioAlive()) {
+            return 0;
+        }
+
+        // Connect the source to the effect slot
+        al.alSource3i(_source[0], ALExt.AL_AUXILIARY_SEND_FILTER, 1, 0, 0);
+        if (JoalAudioFactory.checkALError()) {
+            log.warn("Failed to configure source send 1");
+            return 0;
+        }
+        return 1;  
+    }
+
+    @Override
+    public int detachSourcesToEffects() {
+        if (!isAudioAlive()) {
+            return 0;
+        }
+        // Disconnect the source
+        al.alSource3i(_source[0], ALExt.AL_AUXILIARY_SEND_FILTER, 0, 0, 0);
+
+        // Remove filter from source
+        if (JoalAudioFactory.checkALError()) {
+            log.warn("Failed to detach");
+            return 0;
+        }
+        return 1;
     }
 
     @Override

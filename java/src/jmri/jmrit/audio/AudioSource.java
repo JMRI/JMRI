@@ -822,6 +822,18 @@ public interface AudioSource extends Audio {
     void fadeOut();
 
     /**
+     * Method to attach sources to effects
+     * @return a number code
+     */
+    int attachSourcesToEffects();
+
+    /**
+     * Method to detach sources to effects
+     * @return a number code
+     */
+    int detachSourcesToEffects();
+
+    /**
      * Get debug info about this audio source.
      * AbstractAudioSource overrides this to get more debug info. It was
      * previously the method toString().

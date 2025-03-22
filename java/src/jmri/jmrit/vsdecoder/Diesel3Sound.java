@@ -794,6 +794,11 @@ class Diesel3Sound extends EngineSound {
 
         private void setPosition(PhysicalLocation p) {
             _sound.setPosition(p);
+            if (_parent.getTunnel()) {
+                _sound.attachSourcesToEffects();
+            } else {
+                _sound.detachSourcesToEffects();
+            }
         }
 
         private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(D3LoopThread.class);

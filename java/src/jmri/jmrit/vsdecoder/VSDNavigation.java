@@ -8,9 +8,6 @@ import jmri.util.MathUtil;
 
 import javax.annotation.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Navigation through a LayoutEditor panel to set the sound position.
  *
@@ -305,7 +302,8 @@ public class VSDNavigation {
                 d.setReturnLastTrack(d.getLayoutTrack());
             }
         }
-        d.savedSound.setTunnel(tsv.isTunnelSideRight() || tsv.isTunnelSideLeft() || tsv.isTunnelHasEntry() || tsv.isTunnelHasExit() ? true : false); // set the tunnel status
+        d.setTunnelState(tsv.isTunnelSideRight() || tsv.isTunnelSideLeft() || tsv.isTunnelHasEntry()
+                || tsv.isTunnelHasExit() ? true : false);
         return result;
     }
 
@@ -912,6 +910,6 @@ public class VSDNavigation {
         return result;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(VSDNavigation.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(VSDNavigation.class);
 
 }

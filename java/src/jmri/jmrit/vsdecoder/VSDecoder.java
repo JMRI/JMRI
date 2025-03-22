@@ -61,7 +61,6 @@ public class VSDecoder implements PropertyChangeListener {
     int topspeed_rev;
     int setup_index; // Can be set by a Route
     boolean is_muted;
-    VSDSound savedSound;
 
     double distanceOnTrack;
     float distanceMeter;
@@ -434,7 +433,7 @@ public class VSDecoder implements PropertyChangeListener {
         // Set (relative) volume for this location (in case we're in a tunnel)
         float tv = 0.01f * VSDecoderManager.instance().getMasterVolume() * getDecoderVolume();
         log.debug("current master volume: {}, decoder volume: {}", VSDecoderManager.instance().getMasterVolume(), getDecoderVolume());
-        if (savedSound.getTunnel()) {
+        if (this.getEngineSound().getTunnel()) {
             tv *= VSDSound.tunnel_volume;
             log.debug("VSD: In tunnel, volume: {}", tv);
         } else {
@@ -444,6 +443,13 @@ public class VSDecoder implements PropertyChangeListener {
             for (VSDSound vs : sound_list.values()) {
                 vs.setVolume(tv);
             }
+        }
+    }
+
+    // Forward tunnel state to the VSDSound of this VSDecoder's Engine Sound and all Configurable Sounds
+    void setTunnelState(boolean t) {
+        for (VSDSound vs : sound_list.values()) {
+            vs.setTunnel(t);
         }
     }
 
@@ -748,7 +754,6 @@ public class VSDecoder implements PropertyChangeListener {
             } else if (el.getAttributeValue("type").equals("diesel3")) {
                 // Handle a diesel3 Engine sound
                 Diesel3Sound es = new Diesel3Sound(prefix + el.getAttributeValue("name"));
-                savedSound = es;
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
                 topspeed = es.top_speed;
@@ -756,7 +761,6 @@ public class VSDecoder implements PropertyChangeListener {
             } else if (el.getAttributeValue("type").equals("steam")) {
                 // Handle a steam Engine sound
                 SteamSound es = new SteamSound(prefix + el.getAttributeValue("name"));
-                savedSound = es;
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
                 topspeed = es.top_speed;
@@ -764,7 +768,6 @@ public class VSDecoder implements PropertyChangeListener {
             } else if (el.getAttributeValue("type").equals("steam1")) {
                 // Handle a steam1 Engine sound
                 Steam1Sound es = new Steam1Sound(prefix + el.getAttributeValue("name"));
-                savedSound = es;
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
                 topspeed = es.top_speed;

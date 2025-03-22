@@ -108,7 +108,15 @@ abstract public class VSDSound {
         gain = g;
     }
 
-    public void setTunnel(boolean t) {
+    int attachSourcesToEffects() {
+        return 1;
+    }
+
+    int detachSourcesToEffects() {
+        return 1;
+    }
+
+    void setTunnel(boolean t) {
         is_tunnel = t;
     }
 
