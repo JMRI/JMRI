@@ -189,7 +189,7 @@
       We recommend Java 17 to move the user installations forward for eventual future
       migration, and because it's easier to install Java 17 on some OSs.</p>
       
-      <p>Java 21 in 2032 was the LTS release after Java 17.  We do not yet
+      <p>Java 21 in 2023 was the LTS release after Java 17.  We do not yet
       recommend it because of some not-fully-understood compatibility
       edge cases. It works for some people, but we're not yet certain
       that it will work for all.
