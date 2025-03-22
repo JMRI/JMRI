@@ -150,7 +150,9 @@
                 <li>First implementation of LCC Location Services which will decode analog-carrying
                     location services reports to drive volt and amp meters.</li>
                 <li>Update the STL Editor to support importing a <em>group_logic.csv</em> file
-                that has been modified by a spreadsheet program.</li>
+                    that has been modified by a spreadsheet program.</li>
+                <li>Improve how datagram data is represented in the Monitor</li>
+                <li>Add sensor events to the event-entry field popup menu</li>
             </ul>
 
         <h4>Powerline</h4>
