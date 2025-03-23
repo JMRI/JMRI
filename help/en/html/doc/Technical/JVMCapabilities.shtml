@@ -391,16 +391,6 @@
 
         <tr>
           <td>
-            Statements Before Super simplifies subclass object
-            creation, which makes particularly Swing subclassing
-            easier and more effective.
-          </td>
-          <td>22</td>
-          <td>22</td>
-        </tr>
-
-        <tr>
-          <td>
             More readable Javadoc comments using Markdown formatting
           </td>
           <td>23</td>
