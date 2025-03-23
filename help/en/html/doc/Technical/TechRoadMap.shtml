@@ -184,8 +184,11 @@
       requiring Java 11 and therefore being called JMRI 5.0.</p>
 
       <p>Java 17 in 2021 was the LTS release after Java 11.  
-      Starting with the JMRI 5.9.* development series, 
-      Java 11 is still supported but Java 17 is recommended.
+      Java 17's free support from Oracle runs through September 2026; after that,
+      there won't be security updates and bug fixes to Java 17.
+      
+      <p>Starting with the JMRI 5.9.* development series, 
+      Java 11 is still supported by JMRI but Java 17 is recommended.
       We recommend Java 17 to move the user installations forward for eventual future
       migration, and because it's easier to install Java 17 on some OSs.</p>
       
@@ -193,6 +196,9 @@
       recommend it because of some not-fully-understood compatibility
       edge cases. It works for some people, but we're not yet certain
       that it will work for all.
+      
+      <p>Following Java 21, the next Java LTS release is expected to be
+      Java 25 in September 2025.
       
       <p>For more information on compatibility, see the
       <a href="JVMCapabilities.shtml#compatibilty">compatibility discussion</a>.
