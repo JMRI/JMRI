@@ -171,17 +171,21 @@
       <p>The 4.1.* series of test releases in Fall 2015 started the requirement for Java 8. This
       continued through the following release series. Java 8 continued to be the requirement
       through the Fall of 2021.
+      
       <p>The next long-term-support (LTS) Java release after Java 8 is Java 11 from Fall of 2018. 
       Oracle has
       <a href=
       "https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">
-      aligned their Java and the OpenJDK from that point</a>.
+      aligned their Java and the OpenJDK from that point</a>
 
       <p>In Spring 2022 the Java version required by JMRI moved forward, making
       <a href="https://www.jmri.org/releasenotes/jmri4.27.1.shtml">JMRI 4.27.1</a> the last JMRI version
       running on Java 8.<br>
       Newer development releases 4.99.x culminated in the June 2022 production releases
       requiring Java 11 and therefore being called JMRI 5.0.</p>
+
+      <p>Java 11's free support by Oracle ended in
+      <a bref="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">September 2023</a>.
 
       <p>Java 17 in 2021 was the LTS release after Java 11.  
       Java 17's free support from Oracle runs through September 2026; after that,
@@ -190,7 +194,8 @@
       <p>Starting with the JMRI 5.9.* development series, 
       Java 11 is still supported by JMRI but Java 17 is recommended.
       We recommend Java 17 to move the user installations forward for eventual future
-      migration, and because it's easier to install Java 17 on some OSs.</p>
+      migration, because Java 17 is still getting security updates, 
+      and because it's easier to install Java 17 on some OSs.</p>
       
       <p>Java 21 in 2023 was the LTS release after Java 17.  We do not yet
       recommend it because of some not-fully-understood compatibility
