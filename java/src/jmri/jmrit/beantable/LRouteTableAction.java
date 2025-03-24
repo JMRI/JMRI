@@ -51,7 +51,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         if ((_logixManager == null) || (_conditionalManager == null)) {
             setEnabled(false);
         }
-        createModel();
+        _systemName.setName("hwAddressTextField"); // for GUI test
+        _userName.setName("userNameTextField"); // for GUI Test
     }
 
     public LRouteTableAction() {
@@ -73,7 +74,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         // overlay the delete column with the edit column
         public static final int ENABLECOL = VALUECOL;
         public static final int EDITCOL = DELETECOL;
-        protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");
 
         /**
          * Override to filter out the LRoutes from the rest of Logix.
@@ -107,7 +107,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 case EDITCOL:
                     return ""; // no heading on "Edit"
                 case ENABLECOL:
-                    return enabledString;
+                    return Bundle.getMessage("ColumnHeadEnabled");
                 default:
                     return super.getColumnName(col);
             }
@@ -204,7 +204,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
         @Override
         protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals(enabledString)) {
+            if (Logix.PROPERTY_ENABLED.equals(e.getPropertyName())) {
                 return true;
             } else {
                 return super.matchPropertyName(e);
@@ -291,19 +291,16 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
     private JTabbedPane _tabbedPane = null;
 
     private RouteInputModel _inputModel;
-    private JScrollPane _inputScrollPane;
     private JComboBox<String> _testStateCombo;
     private JRadioButton _inputAllButton;
     private boolean _showAllInput;
 
     private RouteOutputModel _outputModel;
-    private JScrollPane _outputScrollPane;
     private JComboBox<String> _setStateCombo;
     private JRadioButton _outputAllButton;
     private boolean _showAllOutput;
 
     private AlignmentModel _alignModel;
-    private JComboBox<String> _alignCombo;
     private JRadioButton _alignAllButton;
     private boolean _showAllAlign;
 
@@ -972,7 +969,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
             _outputModel = new RouteOutputModel();
             JTable routeOutputTable = new JTable(_outputModel);
-            _outputScrollPane = makeColumns(routeOutputTable, _setStateCombo, true);
+            JScrollPane _outputScrollPane = makeColumns(routeOutputTable, _setStateCombo, true);
             tab2.add(_outputScrollPane, BorderLayout.CENTER);
             tab2.setVisible(true);
             _tabbedPane.addTab(rbx.getString("ActionTab"), null, tab2, rbx.getString("ActionTabHint"));
@@ -1004,7 +1001,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             _inputModel = new RouteInputModel();
             JTable routeInputTable = new JTable(_inputModel);
             //ROW_HEIGHT = routeInputTable.getRowHeight();
-            _inputScrollPane = makeColumns(routeInputTable, _testStateCombo, true);
+            JScrollPane _inputScrollPane = makeColumns(routeInputTable, _testStateCombo, true);
             tab3.add(_inputScrollPane, BorderLayout.CENTER);
             tab3.setVisible(true);
             _tabbedPane.addTab(rbx.getString("TriggerTab"), null, tab3, rbx.getString("TriggerTabHint"));
@@ -1064,7 +1061,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             tab4.add(new JLabel(rbx.getString("PickAlign")));
             _alignModel = new AlignmentModel();
             JTable alignTable = new JTable(_alignModel);
-            _alignCombo = new JComboBox<>();
+            JComboBox<String> _alignCombo = new JComboBox<>();
             for (String state : ALIGNMENT_STATES) {
                 _alignCombo.addItem(state);
             }
@@ -1392,9 +1389,9 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         initializeIncludedInputList();
         initializeIncludedOutputList();
         initializeIncludedAlignList();
-        if (log.isDebugEnabled()) {
-            log.debug("updatePressed: _includedInputList.size()= {}, _includedOutputList.size()= {}, _includedAlignList.size()= {}", _includedInputList.size(), _includedOutputList.size(), _includedAlignList.size());
-        }
+        log.debug("updatePressed: _includedInputList.size()= {}, _includedOutputList.size()= {}, _includedAlignList.size()= {}",
+            _includedInputList.size(), _includedOutputList.size(), _includedAlignList.size());
+
         ////// Construct output actions for trigger conditionals ///////////
         ArrayList<ConditionalAction> actionList = new ArrayList<>();
         for (int i = 0; i < _includedOutputList.size(); i++) {
@@ -1491,9 +1488,11 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                             default:
                                 log.debug("updatePressed: Unknown state variable type {}", elt.getType());
                         }
-                        twoTriggerList.add(new ConditionalVariable(false, opern, Conditional.Type.getOperatorFromIntValue(type), name, true));
+                        twoTriggerList.add(new ConditionalVariable(false, opern,
+                            Conditional.Type.getOperatorFromIntValue(type), name, true));
                     } else {
-                        oneTriggerList.add(new ConditionalVariable(false, opern, Conditional.Type.getOperatorFromIntValue(type), name, true));
+                        oneTriggerList.add(new ConditionalVariable(false, opern,
+                            Conditional.Type.getOperatorFromIntValue(type), name, true));
                     }
                 }
             }
@@ -1507,9 +1506,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             oneTriggerList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                     Conditional.Type.NONE, getLogixInitializer(), true));
         }
-        if (log.isDebugEnabled()) {
-            log.debug("actionList.size()= {}, oneTriggerList.size()= {}, twoTriggerList.size()= {}, onChangeList.size()= {}, vetoList.size()= {}", actionList.size(), oneTriggerList.size(), twoTriggerList.size(), onChangeList.size(), vetoList.size());
-        }
+        log.debug("actionList.size()= {}, oneTriggerList.size()= {}, twoTriggerList.size()= {}, "
+                + "onChangeList.size()= {}, vetoList.size()= {}",
+            actionList.size(), oneTriggerList.size(), twoTriggerList.size(), onChangeList.size(), vetoList.size());
+
         logix.deActivateLogix();
 
         // remove old Conditionals for actions (ver 2.5.2 only -remove a bad idea)
@@ -1884,8 +1884,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         logix.addConditional(cSystemName, 0);
         log.debug("Conditional added: SysName= \"{}\"", cSystemName);
         c.calculate(true, null);
-        numConds++;
-        return numConds;
+        return numConds+1;
     }
 
     @Nonnull
@@ -2594,7 +2593,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
     }
 
-    private abstract class RouteInputElement extends RouteElement {
+    abstract class RouteInputElement extends RouteElement {
 
         RouteInputElement(String sysName, String userName, int type) {
             super(sysName, userName, type);
@@ -2828,7 +2827,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
     }
 
-    private abstract class RouteOutputElement extends RouteElement {
+    abstract class RouteOutputElement extends RouteElement {
 
         RouteOutputElement(String sysName, String userName, int type) {
             super(sysName, userName, type);
@@ -3005,7 +3004,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
     }
 
-    private class AlignElement extends RouteElement {
+    class AlignElement extends RouteElement {
 
         AlignElement(String sysName, String userName) {
             super(sysName, userName, SENSOR_TYPE);
