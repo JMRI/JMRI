@@ -376,8 +376,6 @@ public class SignalMastRepeaterPanel extends JmriPanel {
                     _signalMastRepeaterList.get(r).setDirection(SignalMastRepeater.SLAVETOMASTER);
                     break;
                 case SignalMastRepeater.SLAVETOMASTER:
-                    _signalMastRepeaterList.get(r).setDirection(SignalMastRepeater.BOTHWAY);
-                    break;
                 default:
                     _signalMastRepeaterList.get(r).setDirection(SignalMastRepeater.BOTHWAY);
                     break;
