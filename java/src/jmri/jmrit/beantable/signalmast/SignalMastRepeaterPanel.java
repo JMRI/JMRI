@@ -335,12 +335,11 @@ public class SignalMastRepeaterPanel extends JmriPanel {
 
         private String getValueAtDirectionCol(int r) {
             switch (_signalMastRepeaterList.get(r).getDirection()) {
-                case SignalMastRepeater.BOTHWAY:
-                    return "< >";
                 case SignalMastRepeater.MASTERTOSLAVE:
                     return " > ";
                 case SignalMastRepeater.SLAVETOMASTER:
                     return " < ";
+                case SignalMastRepeater.BOTHWAY:
                 default:
                     return "< >";
             }
