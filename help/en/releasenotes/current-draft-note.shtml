@@ -670,7 +670,9 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added the OpenAL EFX reverb effect to tunnel tracks.
+                Can be activated using "Advanced Location Following"
+                and a LayoutEditor panel with a TrackSegment decorated as Tunnel.</li>
         </ul>
 
    <h3>Z21 Server</h3>

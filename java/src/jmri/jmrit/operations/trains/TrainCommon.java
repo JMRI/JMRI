@@ -648,7 +648,9 @@ public class TrainCommon {
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkDepartureTime(),
                             new Object[]{routeLocationName,
-                                    rl.getFormatedDepartureTime(), train.getName(), train.getDescription(),
+                                    expectedArrivalTime.equals(Train.ALREADY_SERVICED)
+                                            ? rl.getFormatedDepartureTime() : train.getExpectedDepartureTime(rl),
+                                    train.getName(), train.getDescription(),
                                     rl.getLocation().getDivisionName()});
                 } else if (Setup.isUseDepartureTimeEnabled() &&
                         rl != train.getTrainTerminatesRouteLocation() &&

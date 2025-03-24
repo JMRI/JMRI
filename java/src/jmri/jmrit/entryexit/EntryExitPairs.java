@@ -45,9 +45,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     public LayoutBlockConnectivityTools.Metric routingMethod = LayoutBlockConnectivityTools.Metric.METRIC;
 
-    public final static int NXBUTTONSELECTED = 0x08;
-    public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
-    public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
+    public static final int NXBUTTONSELECTED = 0x08;
+    public static final int NXBUTTONACTIVE = Sensor.ACTIVE;
+    public static final int NXBUTTONINACTIVE = Sensor.INACTIVE;
     private final SystemConnectionMemo memo;
     private final Map<String, Boolean> silencedProperties = new HashMap<>();
 
@@ -79,31 +79,41 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * Constant value to represent that the entryExit will only set up the
      * turnouts between two different points.
      */
-    public final static int SETUPTURNOUTSONLY = 0x00;
+    public static final int SETUPTURNOUTSONLY = 0x00;
 
     /**
      * Constant value to represent that the entryExit will set up the turnouts
      * between two different points and configure the Signal Mast Logic to use
      * the correct blocks.
      */
-    public final static int SETUPSIGNALMASTLOGIC = 0x01;
+    public static final int SETUPSIGNALMASTLOGIC = 0x01;
 
     /**
      * Constant value to represent that the entryExit will do full interlocking.
      * It will set the turnouts and "reserve" the blocks.
      */
-    public final static int FULLINTERLOCK = 0x02;
+    public static final int FULLINTERLOCK = 0x02;
 
     boolean allocateToDispatcher = false;
     boolean absSignalMode = false;
 
-    public final static int PROMPTUSER = 0x00;
-    public final static int AUTOCLEAR = 0x01;
-    public final static int AUTOCANCEL = 0x02;
-    public final static int AUTOSTACK = 0x03;
+    public static final int PROMPTUSER = 0x00;
+    public static final int AUTOCLEAR = 0x01;
+    public static final int AUTOCANCEL = 0x02;
+    public static final int AUTOSTACK = 0x03;
 
-    public final static int OVERLAP_CANCEL = 0x01;
-    public final static int OVERLAP_STACK = 0x02;
+    public static final int OVERLAP_CANCEL = 0x01;
+    public static final int OVERLAP_STACK = 0x02;
+
+    /**
+     * String constant for auto generate complete.
+     */
+    public static final String PROPERTY_AUTO_GENERATE_COMPLETE = "autoGenerateComplete";
+
+    /**
+     * String constant for active.
+     */
+    public static final String PROPERTY_ACTIVE = "active";
 
     int routeClearOption = PROMPTUSER;
     int routeOverlapOption = PROMPTUSER;
@@ -188,7 +198,8 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         PointDetails point;
         point = providePoint(source, panel);
         if (point == null) {
-            log.error("Unable to find a location on the panel {} for item {}", panel.getLayoutName(), source.getDisplayName());  // NOI18N
+            log.error("Unable to find a location on the panel {} for item {}",
+                panel.getLayoutName(), source.getDisplayName());
         }
     }
 
@@ -348,6 +359,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     /** {@inheritDoc} */
     @Override
     public void dispose() {
+        InstanceManager.getDefault(LayoutBlockManager.class).removePropertyChangeListener(propertyBlockManagerListener);
     }
 
     /**
@@ -364,7 +376,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
             LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, null);
             List<LayoutBlock> protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectingBlocksByNamedBean(source, null);
 //             log.info("facing = {}, protecting = {}", facing, protecting);
-            if (facing == null && protecting.size() == 0) {
+            if (facing == null && protecting.isEmpty()) {
                 log.error("Unable to find facing and protecting blocks");  // NOI18N
                 return null;
             }
@@ -387,11 +399,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         for (Entry<PointDetails, Source> e : nxpair.entrySet()) {
             Object obj = (e.getKey()).getRefObject();
             LayoutEditor pan = (e.getKey()).getPanel();
-            if (pan == panel) {
-                if (!list.contains(obj)) {
-                    list.add(obj);
-                }
-            } // end while
+            if (pan == panel && !list.contains(obj)) {
+                list.add(obj);
+            }
         }
         return list;
     }
@@ -406,7 +416,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
             PointDetails key = e.getKey();
             LayoutEditor pan = key.getPanel();
             if (pan == panel) {
-                total = total + e.getValue().getNumberOfDestinations();
+                total += e.getValue().getNumberOfDestinations();
             } // end while
         }
 
@@ -462,11 +472,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     public void setMultiPointRoute(PointDetails requestpd, LayoutEditor panel) {
         for (PointDetails pd : pointDetails) {
-            if (pd != requestpd) {
-                if (pd.getNXState() == NXBUTTONSELECTED) {
-                    setMultiPointRoute(pd, requestpd);
-                    return;
-                }
+            if ( pd != requestpd && pd.getNXState() == NXBUTTONSELECTED ) {
+                setMultiPointRoute(pd, requestpd);
+                return;
             }
         }
     }
@@ -479,12 +487,15 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         }
         for (LayoutBlock pro : fromPd.getProtecting()) {
             try {
-                jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+                jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(
+                    jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
                 LayoutBlock toProt = null;
                 if (!toPd.getProtecting().isEmpty()) {
                     toProt = toPd.getProtecting().get(0);
                 }
-                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(), pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
+                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(
+                    fromPd.getFacing(), pro, toPd.getFacing(), toProt,
+                        LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
                 if (result) {
                     List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.Routing.NONE);
                     if (!blkList.isEmpty()) {
@@ -549,7 +560,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * Class to store NX sets consisting of a source point, a destination point,
      * a direction and a reference.
      */
-    static class SourceToDest {
+    private static class SourceToDest {
 
         Source s = null;
         DestinationPoints dp = null;
@@ -619,15 +630,17 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             ((DestinationPoints) e.getSource()).removePropertyChangeListener(this);
-            if (e.getPropertyName().equals("active")) {
+            if ( DestinationPoints.PROPERTY_ACTIVE.equals(e.getPropertyName())) {
                 processRoutesToSet();
-            } else if (e.getPropertyName().equals("stacked") || e.getPropertyName().equals("failed") || e.getPropertyName().equals("noChange")) {  // NOI18N
+            } else if ( DestinationPoints.PROPERTY_STACKED.equals(e.getPropertyName())
+                    || DestinationPoints.PROPERTY_FAILED.equals(e.getPropertyName())
+                    || DestinationPoints.PROPERTY_NO_CHANGE.equals(e.getPropertyName())) {
                 removeRemainingRoute();
             }
         }
     };
 
-    List<Object> destinationList = new ArrayList<>();
+    private List<Object> destinationList = new ArrayList<>();
 
     // Need to sort out the presentation of the name here rather than using the point ID.
     // This is used for the creation and display of information in the table.
@@ -684,7 +697,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        firePropertyChange("active", evt.getOldValue(), evt.getNewValue());
+        firePropertyChange(PROPERTY_ACTIVE, evt.getOldValue(), evt.getNewValue());
     }
 
 
@@ -731,7 +744,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
             nxpair.get(sourcePoint).addDestination(destPoint, id);
         }
 
-        firePropertyChange("length", null, null);  // NOI18N
+        firePropertyChange(PROPERTY_LENGTH, null, null);
     }
 
     public List<Object> getDestinationList(Object obj, LayoutEditor panel) {
@@ -935,7 +948,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
             PointDetails sourcePoint = getPointDetails(dp.src, dp.pnl);
             PointDetails destPoint = getPointDetails(dp.dest, dp.pnl);
             nxpair.get(sourcePoint).removeDestination(destPoint);
-            firePropertyChange("length", null, null);  // NOI18N
+            firePropertyChange(PROPERTY_LENGTH, null, null);
             if (nxpair.get(sourcePoint).getDestinationPoints().isEmpty()) {
                 nxpair.get(sourcePoint).removePropertyChangeListener(this);
                 nxpair.remove(sourcePoint);
@@ -953,7 +966,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * Class to store NX pair components.
      * @since 4.11.2
      */
-    class DeletePair {
+    private class DeletePair {
         NamedBean src = null;
         NamedBean dest = null;
         LayoutEditor pnl = null;
@@ -1374,7 +1387,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         for (Entry<NamedBean, List<NamedBean>> entry : validPaths.entrySet()) {
             NamedBean key = entry.getKey();
             List<NamedBean> validDestMast = validPaths.get(key);
-            if (validDestMast.size() > 0) {
+            if (!validDestMast.isEmpty()) {
                 eep.addNXSourcePoint(key, editor);
                 for (int i = 0; i < validDestMast.size(); i++) {
                     if (!eep.isDestinationValid(key, validDestMast.get(i), editor)) {
@@ -1385,14 +1398,13 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
             }
         }
 
-        firePropertyChange("autoGenerateComplete", null, null);  // NOI18N
+        firePropertyChange(PROPERTY_AUTO_GENERATE_COMPLETE, null, null);
     }
 
     protected PropertyChangeListener propertyBlockManagerListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("topology")) {  // NOI18N
-                //boolean newValue = new Boolean.parseBoolean(String.valueOf(e.getNewValue()));
+            if ( LayoutBlockManager.PROPERTY_TOPOLOGY.equals(e.getPropertyName())) {
                 boolean newValue = (Boolean) e.getNewValue();
                 if (newValue) {
                     if (runWhenStabilised) {
@@ -1419,7 +1431,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
+        return Bundle.getMessage(plural ? "BeanNameEntryExits" : "BeanNameEntryExit");  // NOI18N
     }
 
     /**
@@ -1436,12 +1448,12 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     @Override
     @OverridingMethodsMustInvokeSuper
     public void setPropertyChangesSilenced(@Nonnull String propertyName, boolean silenced) {
-        if (!"beans".equals(propertyName)) {
+        if (!Manager.PROPERTY_BEANS.equals(propertyName)) {
             throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
         }
         silencedProperties.put(propertyName, silenced);
-        if (propertyName.equals("beans") && !silenced) {
-            fireIndexedPropertyChange("beans", getNamedBeanSet().size(), null, null);
+        if (propertyName.equals(Manager.PROPERTY_BEANS) && !silenced) {
+            fireIndexedPropertyChange(Manager.PROPERTY_BEANS, getNamedBeanSet().size(), null, null);
         }
     }
 
