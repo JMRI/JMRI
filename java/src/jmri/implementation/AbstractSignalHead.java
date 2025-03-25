@@ -97,7 +97,9 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      * Restricting aspect.
      */
     @Override
-    public boolean isShowingRestricting() { return getAppearance() == FLASHRED || getAppearance() == LUNAR || getAppearance() == FLASHLUNAR; }
+    public boolean isShowingRestricting() {
+        return getAppearance() == FLASHRED || getAppearance() == LUNAR || getAppearance() == FLASHLUNAR;
+    }
 
     /**
      * Determine whether this signal shows an aspect or appearance
@@ -284,10 +286,11 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
      */
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
+        if (jmri.Manager.PROPERTY_CAN_DELETE.equals(evt.getPropertyName())) {
             if (isTurnoutUsed((Turnout) evt.getOldValue())) {
-                java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); // NOI18N
+                var e = new java.beans.PropertyChangeEvent(this, jmri.Manager.PROPERTY_DO_NOT_DELETE, null, null);
+                throw new java.beans.PropertyVetoException(
+                    Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); // NOI18N
             }
         }
     }

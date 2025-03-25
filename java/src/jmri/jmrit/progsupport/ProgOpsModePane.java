@@ -24,7 +24,7 @@ import jmri.implementation.AccessoryOpsModeProgrammerFacade;
 import jmri.jmrix.loconet.LnProgrammerManager;
 
 /**
- * Provide a JPanel to configure the ops programming (Adressed) mode.
+ * Provide a JPanel to configure the ops programming (Addressed) mode.
  * <p>
  * Note that you should call the dispose() method when you're really done, so
  * that a ProgModePane object can disconnect its listeners.
@@ -58,8 +58,8 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
     boolean oldOpsSigMode = false;
     boolean lnAttachedBoardMode = false;    // LOCONETOPSBOARD programming
     boolean oldLnAttachedBoardMode = false;
-    boolean lnSv2Mode = false;              // LOCONETSV2MODE programming
-    boolean oldLnSv2Mode = false;
+    boolean lnsv2Mode = false;              // LOCONETSV2MODE programming
+    boolean oldLnsv2Mode = false;
     boolean lncvMode = false;               // LOCONETLNCVMODE programming
     boolean oldLncvMode = false;
     boolean oldoffsetAddrCheckBox = false;
@@ -71,15 +71,15 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
      */
     @Override
     public Programmer getProgrammer() {
-        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={}, lnSv2Mode={}, oldLnSv2Mode={}, lncvMode={}, oldLncvMode={}, oldoffsetAddrCheckBox={})",
-                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode, lnSv2Mode, oldLnSv2Mode, lncvMode, oldLncvMode, oldoffsetAddrCheckBox);
+        log.debug("getProgrammer mLongAddrCheck.isSelected()={}, oldLongAddr={}, mAddrField.getValue()={}, oldAddrValue={}, opsAccyMode={}, oldOpsAccyMode={}, opsSigMode={}, oldOpsSigMode={}, lnsv2Mode={}, oldLnsv2Mode={}, lncvMode={}, oldLncvMode={}, oldoffsetAddrCheckBox={})",
+                longAddrButton.isSelected(), oldLongAddr, mAddrField.getValue(), oldAddrValue, opsAccyMode, oldOpsAccyMode, opsSigMode, oldOpsSigMode, lnsv2Mode, oldLnsv2Mode, lncvMode, oldLncvMode, oldoffsetAddrCheckBox);
         if (longAddrButton.isSelected() == oldLongAddr
                 && mAddrField.getValue().equals(oldAddrValue)
                 && offsetAddrCheckBox.isSelected() == oldoffsetAddrCheckBox
                 && opsAccyMode == oldOpsAccyMode
                 && opsSigMode == oldOpsSigMode
                 && lnAttachedBoardMode == oldLnAttachedBoardMode
-                && lnSv2Mode == oldLnSv2Mode
+                && lnsv2Mode == oldLnsv2Mode
                 && lncvMode == oldLncvMode) {
             log.debug("getProgrammer hasn't changed");
             // hasn't changed
@@ -97,7 +97,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
         oldOpsAccyMode = opsAccyMode;
         oldOpsSigMode = opsSigMode;
         oldLnAttachedBoardMode = lnAttachedBoardMode;
-        oldLnSv2Mode = lnSv2Mode;
+        oldLnsv2Mode = lnsv2Mode;
         oldLncvMode = lncvMode;
         oldoffsetAddrCheckBox = offsetAddrCheckBox.isSelected();
         setAddrParams();
@@ -311,20 +311,20 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                         opsAccyMode = true;
                         opsSigMode = false;
                         lnAttachedBoardMode = false;
-                        lnSv2Mode = false ;
+                        lnsv2Mode = false ;
                         lncvMode = false ;
                     } else if (mode == ProgrammingMode.OPSACCEXTBYTEMODE) {
                         log.debug("OPS SIG was selected in actionPerformed");
                         opsAccyMode = false;
                         opsSigMode = true;
                         lnAttachedBoardMode = false;
-                        lnSv2Mode = false ;
+                        lnsv2Mode = false ;
                         lncvMode = false ;
                     } else {
                         opsAccyMode = false;
                         opsSigMode = false;
                         lnAttachedBoardMode = (mode == LnProgrammerManager.LOCONETOPSBOARD);
-                        lnSv2Mode = (mode == LnProgrammerManager.LOCONETSV2MODE);
+                        lnsv2Mode = (mode == LnProgrammerManager.LOCONETSV2MODE);
                         lncvMode = (mode == LnProgrammerManager.LOCONETLNCVMODE);
                         getProgrammer().setMode(mode);
                     }
@@ -348,20 +348,20 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
                     opsAccyMode = true;
                     opsSigMode = false;
                     lnAttachedBoardMode = false;
-                    lnSv2Mode = false;
+                    lnsv2Mode = false;
                     lncvMode = false;
                 } else if (entry.getKey() == ProgrammingMode.OPSACCEXTBYTEMODE) {
                     log.debug("OPS SIG was selected in setProgrammerFromGui");
                     opsAccyMode = false;
                     opsSigMode = true;
                     lnAttachedBoardMode = false;
-                    lnSv2Mode = false;
+                    lnsv2Mode = false;
                     lncvMode = false;
                 } else {
                     opsAccyMode = false;
                     opsSigMode = false;
                     lnAttachedBoardMode = (entry.getKey() == LnProgrammerManager.LOCONETOPSBOARD);
-                    lnSv2Mode = (entry.getKey() == LnProgrammerManager.LOCONETSV2MODE);
+                    lnsv2Mode = (entry.getKey() == LnProgrammerManager.LOCONETSV2MODE);
                     lncvMode = (entry.getKey() == LnProgrammerManager.LOCONETLNCVMODE);
                     getProgrammer().setMode(entry.getKey());
                 }
@@ -447,7 +447,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
             addressLabel.setText(Bundle.getMessage("NodeLabel"));
             lowAddrLimit = 0;
             highAddrLimit = 16383;
-        } else if (lnSv2Mode) {
+        } else if (lnsv2Mode) {
             shortAddrButton.setVisible(false);
             longAddrButton.setVisible(false);
             offsetAddrCheckBox.setVisible(false);

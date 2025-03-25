@@ -28,6 +28,9 @@
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.4" lastUpdated="2024/05/02"/>
   <!-- v1.4,  added new decoder versions -->
 
+  <version author="Nigel Cliffe" version="1.5" lastUpdated="2025/03/14"/>
+  <!--  added Zimo Scripting variables, CV837, CV843, CV981-1019  new pane for Zimo Scripting,  added decoder MS591N18, and removed comments to enable MS540E4-->
+  
   <decoder>
     <family name="MS Sound (version 4+)" mfg="Zimo">
       <model model="MS440 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" connector="21MTC" numOuts="8" numFns="14" productID="4">
@@ -218,7 +221,7 @@
         <size length="14" width="10" height="2.6" units="mm"/>
       </model>
 
-<!-- not available yet (2024-05-02)
+
       <model model="MS540E24 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="0.8A" formFactor="HO" numOuts="12" numFns="14" productID="14">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -270,7 +273,7 @@
         </output>
         <size length="19" width="8.7" height="2.8" units="mm"/>
       </model>
--->
+
       <model model="MS560 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" numOuts="4" numFns="14" productID="10">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
@@ -382,6 +385,37 @@
         </output>
         <size length="15" width="9.5" height="3.3" units="mm"/>
       </model>
+      
+      
+      <model model="MS591N18 version 4+" lowVersionID="4" highVersionID="41" maxInputVolts="35V" maxMotorCurrent="0.7A, peak=1.5A" maxTotalCurrent="0.7A" formFactor="N" connector="Next18" numOuts="6" numFns="14" productID="15">
+        <output name="1" label="Front Light">
+          <label xml:lang="de">Lvor</label>
+          <label xml:lang="cs">Přední světla</label>
+        </output>
+        <output name="2" label="Rear Light">
+          <label xml:lang="de">Lrück</label>
+          <label xml:lang="cs">Zadní světla</label>
+        </output>
+        <output name="3" label="FO 1">
+          <label xml:lang="de">FA1</label>
+          <label xml:lang="cs">FV 1</label>
+        </output>
+        <output name="4" label="FO 2">
+          <label xml:lang="de">FA2</label>
+          <label xml:lang="cs">FV 2</label>
+        </output>
+        <output name="5" label="FO 3 (+5v)">
+          <label xml:lang="de">FA3 (+5v)</label>
+          <label xml:lang="cs">FV 3 (+5V)</label>
+        </output>
+        <output name="6" label="FO 4 (+5v)">
+          <label xml:lang="de">FA4 (+5v)</label>
+          <label xml:lang="cs">FV 4 (+5V)</label>
+        </output>
+        <size length="15" width="9.3" height="3.1" units="mm"/>
+      </model>
+
+      
 
       <model model="MS950 version 4+" lowVersionID="4" highVersionID="42" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="12" numFns="14" productID="9">
         <output name="1" label="Front Light">
@@ -648,6 +682,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603_MS_series.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699_MS_series.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV700-CV899_MS_series.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV980-CV1019_MS_series.xml"/>
 
     </variables>
     <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
@@ -678,6 +713,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-ElectricLoco.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-DieselLoco.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneRandomSounds.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneZimoScripting.xml"/>
   <!-- End sound-only panes -->
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneLoadCode.xml"/>
 </decoder-config>

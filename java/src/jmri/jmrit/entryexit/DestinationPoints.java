@@ -4,8 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -35,20 +33,40 @@ import jmri.util.ThreadingUtil;
 
 public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
+    /**
+     * String constant for active.
+     */
+    public static final String PROPERTY_ACTIVE = "active";
+
+    /**
+     * String constant for no change.
+     */
+    public static final String PROPERTY_NO_CHANGE = "noChange";
+
+    /**
+     * String constant for stacked.
+     */
+    public static final String PROPERTY_STACKED = "stacked";
+
+    /**
+     * String constant for failed.
+     */
+    public static final String PROPERTY_FAILED = "failed";
+
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameDestination");  // NOI18N
     }
 
     transient PointDetails point = null;
-    Boolean uniDirection = true;
+    private boolean uniDirection = true;
     int entryExitType = EntryExitPairs.SETUPTURNOUTSONLY;//SETUPSIGNALMASTLOGIC;
-    boolean enabled = true;
-    boolean activeEntryExit = false;
-    boolean activeEntryExitReversed = false;
-    List<LayoutBlock> routeDetails = new ArrayList<>();
-    LayoutBlock destination;
-    boolean disposed = false;
+    private boolean enabled = true;
+    private boolean activeEntryExit = false;
+    private boolean activeEntryExitReversed = false;
+    private List<LayoutBlock> routeDetails = new ArrayList<>();
+    private LayoutBlock destination;
+    private boolean disposed = false;
 
     transient EntryExitPairs manager = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class);
 
@@ -99,12 +117,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         this.point = point;
         setUserName(src.getPoint().getDisplayName() + " to " + this.point.getDisplayName());
 
-        propertyBlockListener = new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                blockStateUpdated(e);
-            }
-        };
+        propertyBlockListener = this::blockStateUpdated;
     }
 
     String getUniqueId() {
@@ -185,7 +198,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     protected void blockStateUpdated(PropertyChangeEvent e) {
         Block blk = (Block) e.getSource();
-        if (e.getPropertyName().equals("state")) {  // NOI18N
+        if ( Block.PROPERTY_STATE.equals(e.getPropertyName())) {
             if (log.isDebugEnabled()) {
                 log.debug("{}  We have a change of state on the block {}", getUserName(), blk.getDisplayName());  // NOI18N
             }
@@ -274,7 +287,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
         lastSeenActiveBlockObject = lBlock.getBlock().getValue();
 
-        if ((routeDetails == null) || (routeDetails.size() == 0)) {
+        if ((routeDetails == null) || (routeDetails.isEmpty())) {
             //At this point the route has cleared down/the last remaining block are now active.
             routeDetails = null;
             setRouteTo(false);
@@ -687,48 +700,32 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             cont.add(buttonsPanel, BorderLayout.SOUTH);
             cancelClearFrame.pack();
 
-            jButton_Clear.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelClearFrame.setVisible(false);
-                    threadAutoClearFrame.interrupt();
-                    cancelClearInterlock(EntryExitPairs.CLEARROUTE);
-                }
+            jButton_Clear.addActionListener( e -> {
+                cancelClearFrame.setVisible(false);
+                threadAutoClearFrame.interrupt();
+                cancelClearInterlock(EntryExitPairs.CLEARROUTE);
             });
-            jButton_Cancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelClearFrame.setVisible(false);
-                    threadAutoClearFrame.interrupt();
-                    cancelClearInterlock(EntryExitPairs.CANCELROUTE);
-                }
+            jButton_Cancel.addActionListener( e -> {
+                cancelClearFrame.setVisible(false);
+                threadAutoClearFrame.interrupt();
+                cancelClearInterlock(EntryExitPairs.CANCELROUTE);
             });
-            jButton_Stack.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelClearFrame.setVisible(false);
-                    threadAutoClearFrame.interrupt();
-                    cancelClearInterlock(EntryExitPairs.STACKROUTE);
-                }
+            jButton_Stack.addActionListener( e -> {
+                cancelClearFrame.setVisible(false);
+                threadAutoClearFrame.interrupt();
+                cancelClearInterlock(EntryExitPairs.STACKROUTE);
             });
-            jButton_Exit.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    cancelClearFrame.setVisible(false);
-                    threadAutoClearFrame.interrupt();
-                    cancelClearInterlock(EntryExitPairs.EXITROUTE);
-                    firePropertyChange("noChange", null, null);  // NOI18N
-                }
+            jButton_Exit.addActionListener( e -> {
+                cancelClearFrame.setVisible(false);
+                threadAutoClearFrame.interrupt();
+                cancelClearInterlock(EntryExitPairs.EXITROUTE);
+                firePropertyChange(PROPERTY_NO_CHANGE, null, null);
             });
             src.getPoint().getPanel().setGlassPane(manager.getGlassPane());
 
         }
         cancelClearFrame.setTitle(getUserName());
-        if (manager.isRouteStacked(this, false)) {
-            jButton_Stack.setEnabled(false);
-        } else {
-            jButton_Stack.setEnabled(true);
-        }
+        jButton_Stack.setEnabled(!(manager.isRouteStacked(this, false)));
 
         if (cancelClearFrame.isVisible()) {
             return;
@@ -1008,46 +1005,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 return;
             } else {
                 LayoutBlock startlBlock = src.getStart();
-                class BestPath {
-
-                    LayoutBlock srcProtecting = null;
-                    LayoutBlock srcStart = null;
-                    LayoutBlock destination = null;
-
-                    BestPath(LayoutBlock startPro, LayoutBlock sourceProtecting, LayoutBlock destinationBlock, List<LayoutBlock> blocks) {
-                        srcStart = startPro;
-                        srcProtecting = sourceProtecting;
-                        destination = destinationBlock;
-                        listOfBlocks = blocks;
-                    }
-
-                    LayoutBlock getStartBlock() {
-                        return srcStart;
-                    }
-
-                    LayoutBlock getProtectingBlock() {
-                        return srcProtecting;
-                    }
-
-                    LayoutBlock getDestinationBlock() {
-                        return destination;
-                    }
-
-                    List<LayoutBlock> listOfBlocks = new ArrayList<>(0);
-                    String errorMessage = "";
-
-                    List<LayoutBlock> getListOfBlocks() {
-                        return listOfBlocks;
-                    }
-
-                    void setErrorMessage(String msg) {
-                        errorMessage = msg;
-                    }
-
-                    String getErrorMessage() {
-                        return errorMessage;
-                    }
-                }
+                
                 List<BestPath> pathList = new ArrayList<>(2);
                 LayoutBlock protectLBlock;
                 LayoutBlock destinationLBlock;
@@ -1220,6 +1178,47 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
+    private static class BestPath {
+
+        LayoutBlock srcProtecting = null;
+        LayoutBlock srcStart = null;
+        LayoutBlock destination = null;
+
+        BestPath(LayoutBlock startPro, LayoutBlock sourceProtecting, LayoutBlock destinationBlock, List<LayoutBlock> blocks) {
+            srcStart = startPro;
+            srcProtecting = sourceProtecting;
+            destination = destinationBlock;
+            listOfBlocks = blocks;
+        }
+
+        LayoutBlock getStartBlock() {
+            return srcStart;
+        }
+
+        LayoutBlock getProtectingBlock() {
+            return srcProtecting;
+        }
+
+        LayoutBlock getDestinationBlock() {
+            return destination;
+        }
+
+        List<LayoutBlock> listOfBlocks = new ArrayList<>(0);
+        String errorMessage = "";
+
+        List<LayoutBlock> getListOfBlocks() {
+            return listOfBlocks;
+        }
+
+        void setErrorMessage(String msg) {
+            errorMessage = msg;
+        }
+
+        String getErrorMessage() {
+            return errorMessage;
+        }
+    }
+
     void handleNoCurrentRoute(boolean reverse, String message) {
         int opt = manager.getOverlapOption();
 
@@ -1243,9 +1242,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
         if (opt == EntryExitPairs.OVERLAP_STACK) {
             manager.stackNXRoute(this, reverse);
-            firePropertyChange("stacked", null, null);  // NOI18N
+            firePropertyChange(PROPERTY_STACKED, null, null);
         } else {
-            firePropertyChange("failed", null, null);  // NOI18N
+            firePropertyChange(PROPERTY_FAILED, null, null);
         }
 
         // Set memory value if requested
@@ -1320,7 +1319,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         activeEntryExit = boo;
         activeEntryExitReversed = reversed;
         src.setMenuEnabled(boo);
-        firePropertyChange("active", oldvalue, getState());  // NOI18N
+        firePropertyChange(PROPERTY_ACTIVE, oldvalue, getState());
     }
 
     @Override

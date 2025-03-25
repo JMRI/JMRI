@@ -18046,6 +18046,11 @@ public class TrainBuilderTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
+    /**
+     * Tests local moves. 4 cars on track Boston Spur 1. Boston Spur 1 full.
+     * Requires the 4 cars to be pulled before 4 other cars can be set out to
+     * Boston Spur 1.
+     */
     @Test
     public void testLocalMove() {
         Setup.setBuildAggressive(true);
@@ -19390,6 +19395,109 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+
+    @Test
+    public void testTrainTiming() {
+
+        // this test requires aggressive mode
+        Setup.setBuildAggressive(true);
+
+        Train train1 = tmanager.newTrain("TrainTiming1");
+        Train train2 = tmanager.newTrain("TrainTiming2");
+
+        // only need a three location route for this test
+        Route route = rmanager.newRoute("Route A-B-C");
+
+        A = lmanager.newLocation("A");
+        B = lmanager.newLocation("B");
+        C = lmanager.newLocation("C");
+        Track tA = A.addTrack("Spur A", Track.SPUR);
+        Track tB = B.addTrack("Spur B", Track.SPUR);
+        Track tC = C.addTrack("Spur C", Track.SPUR);
+
+        // only enough room for one car
+        tA.setLength(44);
+        tB.setLength(44);
+        tC.setLength(44);
+
+        rA = route.addLocation(A);
+        rB = route.addLocation(B);
+        rC = route.addLocation(C);
+
+        rA.setMaxCarMoves(1);
+        rB.setMaxCarMoves(1);
+        rC.setMaxCarMoves(1);
+
+        train1.setRoute(route);
+        train2.setRoute(route);
+
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Boxcar", "40", tA, 10);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Boxcar", "40", tB, 11);
+
+        // only allow train 1 to pull car off of Spur A
+        tA.setPickupOption(Track.TRAINS);
+        tA.addPickupId(train1.getId());
+
+        TrainBuilder tb = new TrainBuilder();
+        Assert.assertTrue(tb.build(train2));
+
+        // confirm c2 is scheduled for pick up
+        Assert.assertEquals("c1", null, c1.getDestinationTrack());
+        Assert.assertEquals("c2", tC, c2.getDestinationTrack());
+
+        // note both train depart at 00:00
+        Assert.assertTrue(tb.build(train1));
+        // should not pull c1, train 2 departs after train 1 arrives
+        Assert.assertEquals("c1", null, c1.getDestinationTrack());
+        Assert.assertEquals("c2", tC, c2.getDestinationTrack());
+
+        Assert.assertEquals("c2", "00:07", c2.getPickupTime());
+
+        // change departure time for train 1
+        // default travel time = 4 switch time = 3
+        // train 2 departs B at 00:07
+        // set departure time for train 1 to arrive B at 00:07
+        train1.setDepartureTime("00", "03");
+        Assert.assertTrue(tb.build(train1));
+
+        Assert.assertEquals("c1", tB, c1.getDestinationTrack());
+        Assert.assertEquals("c2", tC, c2.getDestinationTrack());
+
+        Assert.assertEquals("c1", "00:03", c1.getPickupTime());
+
+        // arrive one minute too early
+        train1.setDepartureTime("00", "02");
+        Assert.assertTrue(tb.build(train1));
+
+        Assert.assertEquals("c1", null, c1.getDestinationTrack());
+        Assert.assertEquals("c2", tC, c2.getDestinationTrack());
+
+        // now try with car having a final destination
+        train1.reset();
+        c1.setFinalDestination(B);
+
+        train1.setDepartureTime("00", "03");
+        Assert.assertTrue(tb.build(train1));
+
+        Assert.assertEquals("c1", tB, c1.getDestinationTrack());
+        Assert.assertEquals("c2", tC, c2.getDestinationTrack());
+
+        train1.reset();
+        c1.setFinalDestination(B);
+
+        // arrive one minute too early
+        train1.setDepartureTime("00", "02");
+        Assert.assertTrue(tb.build(train1));
+
+        Assert.assertEquals("c1", null, c1.getDestinationTrack());
+        Assert.assertEquals("c1", "", c1.getPickupTime());
+        Assert.assertEquals("c2", tC, c2.getDestinationTrack());
+
+        //TODO car with custom load, division
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
 
     private void setupCustomCarLoad() {
 

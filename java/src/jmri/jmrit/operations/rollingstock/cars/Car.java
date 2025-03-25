@@ -351,6 +351,9 @@ public class Car extends RollingStock {
     }
 
     public String getPickupScheduleName() {
+        if (getTrain() != null) {
+            return getPickupTime();
+        }
         TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
                 .getScheduleById(getPickupScheduleId());
         if (sch != null) {
@@ -714,6 +717,19 @@ public class Car extends RollingStock {
     }
 
     /**
+     * Returns the car length or the length of the car's kernel including
+     * couplers.
+     * 
+     * @return length of car or kernel
+     */
+    public int getTotalKernelLength() {
+        if (getKernel() != null) {
+            return getKernel().getTotalLength();
+        }
+        return getTotalLength();
+    }
+
+    /**
      * Used to determine if a car can be set out at a destination (location).
      * Track is optional. In addition to all of the tests that checkDestination
      * performs, spurs with schedules are also checked.
@@ -1055,7 +1071,6 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.LOAD_FROM_STAGING)) != null && a.getValue().equals(Xml.TRUE)) {
             setLoadGeneratedFromStaging(true);
         }
-
         if ((a = e.getAttribute(Xml.WAIT)) != null) {
             try {
                 _wait = Integer.parseInt(a.getValue());

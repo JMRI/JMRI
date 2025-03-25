@@ -226,6 +226,7 @@ public class XmlFile {
      *
      * @param file File to be created.
      * @param doc  Document to be written out. This should never be null.
+     * @throws IOException when an IO error occurs
      * @throws FileNotFoundException if file not found
      */
     public void writeXML(File file, Document doc) throws IOException, FileNotFoundException {

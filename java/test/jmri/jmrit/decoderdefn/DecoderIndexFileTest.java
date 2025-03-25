@@ -14,13 +14,13 @@ import org.junit.jupiter.api.*;
 /**
  * Tests for DecoderIndexFile class.
  *
- * @author Bob Jacobsen, Copyright (c) 2001, 2002
+ * @author Bob Jacobsen, Copyright (c) 2001, 2002, 2025
  */
 public class DecoderIndexFileTest {
 
     @Test
     public void testLoading() throws org.jdom2.JDOMException, java.io.IOException {
-        // setup the test object with guts
+        // set up the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
@@ -31,7 +31,7 @@ public class DecoderIndexFileTest {
 
     @Test
     public void testMfgSection() throws org.jdom2.JDOMException, java.io.IOException {
-        // setup the test object with guts
+        // set up the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
@@ -44,7 +44,7 @@ public class DecoderIndexFileTest {
 
     @Test
     public void testReadFamilySection() throws org.jdom2.JDOMException, java.io.IOException {
-        // setup the test object with guts
+        // set up the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
@@ -59,7 +59,7 @@ public class DecoderIndexFileTest {
 
     @Test
     public void testReadFamily1() throws org.jdom2.JDOMException, java.io.IOException {
-        // setup the test object with guts
+        // set up the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         di.readMfgSection();
@@ -76,7 +76,7 @@ public class DecoderIndexFileTest {
 
     @Test
     public void testReadFamily2() throws org.jdom2.JDOMException, java.io.IOException {
-        // setup the test object with guts
+        // set up the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         di.readMfgSection();
@@ -109,7 +109,7 @@ public class DecoderIndexFileTest {
 
     @Test
     public void testMatchingDecoderList() throws org.jdom2.JDOMException, java.io.IOException {
-        // setup the test object with guts
+        // set up the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
@@ -124,16 +124,18 @@ public class DecoderIndexFileTest {
         List<DecoderFile> l2 = di.matchingDecoderList(null, null, "129", null, null, null);
         Assertions.assertEquals(3, l2.size(), "Found with id 129 ");
         // search for the two from the NMRA family
-        List<DecoderFile> l4 = di.matchingDecoderList(null, "NMRA S&RP definitions", null, null, null, null);
-        Assertions.assertEquals(3, l4.size(), "Found from NMRA family ");
+        List<DecoderFile> l3 = di.matchingDecoderList(null, "NMRA S&RP definitions", null, null, null, null);
+        Assertions.assertEquals(3, l3.size(), "Found from NMRA family ");
         // search for the one with version ID 21
-        List<DecoderFile> l3 = di.matchingDecoderList(null, null, null, "21", null, null);
-        Assertions.assertEquals(1, l3.size(), "Found with version 21 ");
+        List<DecoderFile> l4 = di.matchingDecoderList(null, null, null, "21", null, null);
+        Assertions.assertEquals(1, l4.size(), "Found with version 21 ");
+        List<DecoderFile> l5 = di.matchingDecoderList("BMODE");
+        Assertions.assertEquals(3, l5.size(), "Found with mode BMODE ");
     }
 
     @Test
     public void testMatchingComboBox() throws org.jdom2.JDOMException, java.io.IOException {
-        // setup the test object with guts
+        // set up the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
@@ -157,7 +159,7 @@ public class DecoderIndexFileTest {
 
     @Test
     public void testMatchingVersionRange() throws org.jdom2.JDOMException, java.io.IOException {
-        // setup the test object with guts
+        // set up the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
@@ -222,6 +224,7 @@ public class DecoderIndexFileTest {
                                 .setAttribute("mfg", "Digitrax")
                                 .setAttribute("name", "FX2 family")
                                 .setAttribute("file", "DH142.xml")
+                                .setAttribute("modes", "AMODE,BMODE")
                                 .addContent(new Element("model")
                                         .setAttribute("model", "DH142")
                                         .setAttribute("numFns", "4")

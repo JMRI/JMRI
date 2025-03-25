@@ -44,6 +44,16 @@ import javax.annotation.CheckForNull;
 public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrementingManager {
 
     /**
+     * String constant for Property Change to Default Turnout Thrown Speed Change.
+     */
+    String PROPERTY_DEFAULT_THROWN_SPEED = "DefaultTurnoutThrownSpeedChange";
+
+    /**
+     * String constant for Property Change to Default Turnout Closed Speed Change.
+     */
+    String PROPERTY_DEFAULT_CLOSED_SPEED = "DefaultTurnoutClosedSpeedChange";
+
+    /**
      * Get the Turnout with the user name, then system name if needed; if that fails, create a
      * new Turnout.
      * If the name is a valid system name, it will be used for the new Turnout.

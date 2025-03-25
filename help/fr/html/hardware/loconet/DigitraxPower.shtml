@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!-- Translated  by Blorec Herv&#233; le 2011-09-22-->
+<head>
+  <title>Measurements on power leads of Digitrax components</title>
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
+
+<h1>Mesures de la puissance sur les fils des composants Digitrax</h1>
+
+J'ai voulu comprendre les raisons des recommandations de Digitrax à propos de la séparation des
+sources d'énergie pour les cartes PM4 et DS54. Cette page décrit quelques-unes des
+mesures sur mon réseau, et ce que je retiens d'elles.
+
+<h2>Conclusions</h2>
+
+Le DCS100 et PM4 semblent utiliser un redressement double alternance pour les alimentations, tandis que la DS54 utilise
+une alimentation redresseur simple alternance.
+Ces deux types nécessitent différents décalages entre la masse et le système de conducteur du transformateur, ce qui explique pourquoi ces trois types de composants ne peuvent pas partager les alimentations AC auxiliaires.
+
+<h2>Mesures Spécifiques</h2>
+
+Dans cette section, je décris les mesures menant à mes conclusions.
+
+<p>Les mesures suivantes ont été faites sur un réseau en exploitation. Il est alimenté
+par une seule centrale DCS100 (Chief), avec unités de puissance PM4 pour alimenter des sous-districts et des unités
+DS54 pour divers contrôles. L'alimentation de la voie était sur On, et le DCS100 était en mode «RUN», c'est-à-dire envoi de paquets sur les rails.
+A propos  1.2A  était tirée de la sortie de DCS100. Pendant les mesures,
+aucune commande LocoNet n'a été envoyés, ni de sections inversées n'ont été traversées.
+
+<p>Malheureusement, les photos prises par l'oscilloscope ne sont pas assez sensibles, donc elles montrent beaucoup de flou. Dans tous les tableaux, la référence de masse a été centrée et l'échelle verticale est 5V/division. La portée a été déclenchée en ligne.
+Seule une trace est montrée
+
+<h3>Mesures du Booster</h3>
+
+Normalement la mise à la masse de mon booster DCS100 est connectée à la masse CA,
+donc à la terre. Je l'ai temporairement déconnectée pour voir ce qui se passerait avec un réseau
+flottant. J'ai trouvé une tension d'environ 60Hz compensé 9V. Une résistance de 100K reliant la masse et la terre supprime cela, alors l'impédance de source est très grande. La photo a été faite avec une limite de bande passante 10MHz; les pointes visibles sont environ 6V sans limite de bande passante (500MHz portée).
+Le réseau non relié à la masse a probablement généré beaucoup de bruit RF....
+
+<p>
+<a href="images/DigitraxPower/DiscGround.jpg"><img src="images/DigitraxPower/DiscGround-thumb.jpg" width="100" height="75"></a>
+
+<p>
+Pour le reste des mesures, j'ai rebranché la terre DCS100 à la terre de l'alimentation
+. Le bruit et l'offset ont été inférieur à 20 mV.
+
+<p>
+En respectant le système de masse, les rail A et rail B alternent entre 12V et environ 0,8 :
+<br>
+<a href="images/DigitraxPower/RailA.jpg"><img src="images/DigitraxPower/RailA-thumb.jpg" width="100" height="75"></a>
+<a href="images/DigitraxPower/RailB.jpg"><img src="images/DigitraxPower/RailB-thumb.jpg" width="100" height="75"></a>
+<br>
+Il semble que la haute puissance d'alimentation interne de DCS100 soit seulement positive. Pour obtenir une meilleure compréhension
+de cela, j'ai regardé le courant des deux lignes du transformateur :
+<br>
+<a href="images/DigitraxPower/BoosterPower1.jpg"><img src="images/DigitraxPower/BoosterPower1-thumb.jpg" width="100" height="75"></a>
+<a href="images/DigitraxPower/BoosterPower2.jpg"><img src="images/DigitraxPower/BoosterPower2-thumb.jpg" width="100" height="75"></a>
+<br>
+Notez qu'ils sont tous deux positifs à tout moment, et n'est pas centré sur la masse. La tension la plus basse est
+      d'environ 1.3V-dessous
+de la masse. Ceci est caractéristique d'une alimentation redresseur double alternance avec un côté de la sortie à la terre.
+Le petit décalage est dû à la chute de tension dans la diode côté bas, tandis que le plat en haut sur la
+forme d'onde se produit par la charge  du condensateur de filtrage.
+<br>
+<img src="images/DigitraxPower/Fullwave.jpg">
+<h3>Mesures PM4</h3>
+Mon alimentation PM4  est un transformateur d'isolement.
+Je n'ai pas fait de mesures avec une alimentation auxiliaire cc.
+La LocoNet était connectée, offrant une mise à la terre commune.
+<p>
+les tensions sur les connexions électriques PM4 connexions électriques ressemblent à:
+<br>
+<a href="images/DigitraxPower/PM4Power1.jpg"><img src="images/DigitraxPower/PM4Power1-thumb.jpg" width="100" height="75"></a>
+<a href="images/DigitraxPower/PM4Power2.jpg"><img src="images/DigitraxPower/PM4Power2-thumb.jpg" width="100" height="75"></a>
+<br>
+Comme le booster, ceci est le signe d'une alimentation de puissance redressée simple alternance. Le profil de charge est
+très différent de ce qui est vu sur l'alimentation booster. Les formes d'ondes dégradées
+sont peut être du au transformateur Radio Shack 450mA de mon PM4, il semble clairement saturer. 
+
+<h3>Mesures DS54 </h3>
+Mon alimentation DS54  est un transformateur d'isolement.
+Je n'ai pas fait de mesures avec une alimentation auxiliaire cc.
+Le LocoNet était connecté, offrant une mise à la terre commune.
+<p>
+Les tensions sur le DS54 les connexions d'alimentation «noir» et «rouge» ressembleraient à ceci::
+<br>
+<a href="images/DigitraxPower/DS54PowerBlack.jpg"><img src="images/DigitraxPower/DS54PowerBlack-thumb.jpg" width="100" height="75"></a>
+<a href="images/DigitraxPower/DS54PowerRed.jpg"><img src="images/DigitraxPower/DS54PowerRed-thumb.jpg" width="100" height="75"></a>
+<br>
+Ceci est révélateur d'une alimentation de puissance simple alternance corrigée. Notez ce qui est différent
+de la PM4 et DCS100 
+<br>
+<img src="images/DigitraxPower/Halfwave.jpg">
+<br>
+Notez l'ondulation dans la terre (noir).
+Digitrax ne vous recommande <em> pas </em>
+ de connecter le fil de masse DS54 à un système de terre, Cet offset montre pourquoi
+c'est une bonne idée d'écouter cette recommandation. La masse dans le dessin schématique est le fil noir "terre" de la DS54,
+mais ce n'est <em>pas</em> le même que le système de masse (LocoNet)
+. . Ceci est révélateur d'une offre d'alimentation de simple alternance de puissance corrigée. Notez ce qui est différent
+de la PM4 et DCS100.
+. 
+<p>
+Don Crano a souligné que la DS54 est dérivant
+d'une terre locale à partir des connexions ferroviaires afin que le détecteur BD1 bloc courant
+puisse utiliser la connexion terre de la DS54.
+Les photos suivantes montrent
+que le décalage par rapport à la masse du système change légèrement le pouls d'étirement
+pour un fonctionnement analogue se déplace d'un extrême à l'autre. (Notez que
+ces photos sont à 1V/division, avec la masse du système au centre.
+<br>
+
+<table>
+<tr>
+<td width="120" height="120" ALIGN="CENTER"><a href="images/DigitraxPower/DS54ConnAna-99.jpg"><img src="images/DigitraxPower/DS54ConnAna-99-thumb.jpg" width="100" height="75">LocoNet connected, analog at -99</a></td>
+
+<td width="120" height="120" ALIGN="CENTER"><a href="images/DigitraxPower/DS54ConnAna0.jpg"><img src="images/DigitraxPower/DS54ConnAna0-thumb.jpg" width="100" height="75">LocoNet connected, analog at 0</a></td>
+
+<td width="120" height="120" ALIGN="CENTER"><a href="images/DigitraxPower/DS54ConnAna+99.jpg"><img src="images/DigitraxPower/DS54ConnAna+99-thumb.jpg" width="100" height="75">LocoNet connected, analog at +99</a></td>
+
+</tr>
+<tr>
+
+<td width="120" height="120" ALIGN="CENTER"><a href="images/DigitraxPower/DS54DiscAna+99.jpg"><img src="images/DigitraxPower/DS54DiscAna+99-thumb.jpg" width="100" height="75">LocoNet disconnected, analog at -99</a></td>
+
+<td width="120" height="120" ALIGN="CENTER"><a href="images/DigitraxPower/DS54DiscAna-99.jpg"><img src="images/DigitraxPower/DS54DiscAna-99-thumb.jpg" width="100" height="75">LocoNet disconnected, analog at 0</a></td>
+
+<td width="120" height="120" ALIGN="CENTER"><a href="images/DigitraxPower/DS54DiscAna0.jpg"><img src="images/DigitraxPower/DS54DiscAna0-thumb.jpg" width="100" height="75">LocoNet disconnected, analog at +99</a></td>
+</tr>
+</table>
+
+<p>Les gens sur la liste de diffusion Digitrax ont recommandé que toutes les unités DS54 sur un réseau doivent être
+câblés sur les rails et l'alimentation électrique commune avec la même polarité. (Les miens sont aussi.) Les décalages
+visibles ci-dessus montrent pourquoi vous avez besoin de faire cela ; si deux unités DS54
+ont été connectée de fa&ccedil;on opposée, elles seraient incapables de créer une référence de masse cohérente.</p>
+
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
+    </div>
+  </div>
+  <script src="/js/help.js"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.List;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -11,6 +12,26 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  * @author Kevin Dickerson Copyright (C) 2011
  */
 public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
+
+    /**
+     * String constant for Property Change auto Signal mast generate start.
+     */
+    String PROPERTY_AUTO_SIGNALMAST_GENERATE_START = "autoSignalMastGenerateStart";
+
+    /**
+     * String constant for Property Change auto signal mast generate complete.
+     */
+    String PROPERTY_AUTO_SIGNALMAST_GENERATE_COMPLETE = "autoSignalMastGenerateComplete";
+
+    /**
+     * String constant for property change auto generate update.
+     */
+    String PROPERTY_AUTO_GENERATE_UPDATE = "autoGenerateUpdate";
+
+    /**
+     * String constant for property change auto generate complete.
+     */
+    String PROPERTY_AUTO_GENERATE_COMPLETE = "autoGenerateComplete";
 
     /*void addDestinationMastToLogic(SignalMastLogic src, SignalMast destination);*/
     /**
@@ -22,7 +43,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @param oldMast Current Signal Mast
      * @param newMast Replacement (new) Signal Mast
      */
-    void replaceSignalMast(SignalMast oldMast, SignalMast newMast);
+    void replaceSignalMast(@Nonnull SignalMast oldMast, @Nonnull SignalMast newMast);
 
     /**
      * Discover all possible valid source + destination signal mast pairs on all
@@ -66,6 +87,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @param source The Source Signal Mast
      * @return The Signal Mast Logic for that mast
      */
+    @CheckForNull
     SignalMastLogic getSignalMastLogic(@Nonnull SignalMast source);
 
     /**
@@ -89,7 +111,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      * @return source The new SML instance
      */
     @Nonnull
-    SignalMastLogic newSignalMastLogic(SignalMast source) throws IllegalArgumentException;
+    SignalMastLogic newSignalMastLogic(@Nonnull SignalMast source) throws IllegalArgumentException;
 
     /**
      * Remove a destination Signal Mast and its settings from a Signal Mast
