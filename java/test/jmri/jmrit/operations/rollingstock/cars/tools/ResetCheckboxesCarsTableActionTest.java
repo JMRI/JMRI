@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableModel;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableModel;
 
 /**
  *

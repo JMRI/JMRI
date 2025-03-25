@@ -4,12 +4,12 @@ import java.util.Locale;
 
 import org.openide.util.lookup.ServiceProvider;
 
-import jmri.jmrit.operations.automation.AutomationsTableFrameAction;
-import jmri.jmrit.operations.locations.LocationsTableAction;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableAction;
-import jmri.jmrit.operations.rollingstock.engines.EnginesTableAction;
-import jmri.jmrit.operations.routes.RoutesTableAction;
-import jmri.jmrit.operations.setup.OperationsSettingsAction;
+import jmri.jmrit.operations.automation.gui.AutomationsTableFrameAction;
+import jmri.jmrit.operations.locations.gui.LocationsTableAction;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableAction;
+import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableAction;
+import jmri.jmrit.operations.routes.gui.RoutesTableAction;
+import jmri.jmrit.operations.setup.gui.OperationsSettingsAction;
 import jmri.jmrit.operations.trains.TrainsTableAction;
 import jmri.jmrit.operations.trains.schedules.TrainsScheduleAction;
 import jmri.util.startup.AbstractStartupActionFactory;

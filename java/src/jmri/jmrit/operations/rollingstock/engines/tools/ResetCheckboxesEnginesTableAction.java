@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.rollingstock.engines.EnginesTableModel;
+import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableModel;
 
 /**
  * Swing action to reset checkboxes in the engines window.
