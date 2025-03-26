@@ -66,7 +66,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         private static final Map<String, OBlockStatus> map = new HashMap<>();
         private static final Map<String, OBlockStatus> reverseMap = new HashMap<>();
 
-        private OBlockStatus(int status, String name, String descr) {
+        OBlockStatus(int status, String name, String descr) {
             this.status = status;
             this.name = name;
             this.descr = descr;
@@ -232,7 +232,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @param pName name of error sensor
      * @return true if successful
      */
-    public boolean setErrorSensor(String pName) {
+    public boolean setErrorSensor(@CheckForNull String pName) {
         NamedBeanHandle<Sensor> newErrSensorHdl = null;
         Sensor newErrSensor = null;
         if (pName != null && pName.trim().length() > 0) {
@@ -253,7 +253,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             if (_errNamedSensor.equals(newErrSensorHdl)) {
                 return true;
             } else {
-                getErrorSensor().removePropertyChangeListener(this);
+                _errNamedSensor.getBean().removePropertyChangeListener(this);
             }
         }
 
@@ -271,6 +271,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return true;
     }
 
+    @CheckForNull
     public Sensor getErrorSensor() {
         if (_errNamedSensor == null) {
             return null;
@@ -278,6 +279,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return _errNamedSensor.getBean();
     }
 
+    @CheckForNull
     public NamedBeanHandle<Sensor> getNamedErrorSensor() {
         return _errNamedSensor;
     }
@@ -309,6 +311,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @return If warrant exists and path==pathname, return warrant display
      *         name, else null.
      */
+    @CheckForNull
     protected String isPathSet(@Nonnull String path) {
         String msg = null;
         if (_warrant != null && path.equals(_pathName)) {
@@ -319,11 +322,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return msg;
     }
 
+    @CheckForNull
     public Warrant getWarrant() {
         return _warrant;
     }
 
-    public boolean isAllocatedTo(Warrant warrant) {
+    public boolean isAllocatedTo( @CheckForNull Warrant warrant) {
         if (warrant == null) {
             return false;
         }
@@ -415,6 +419,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return (getState() & OBlock.OCCUPIED) != 0;
     }
 
+    @CheckForNull
     public String occupiedBy() {
         Warrant w = _warrant;
         if (isOccupied()) {
