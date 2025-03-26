@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
 import jmri.util.swing.JmriJOptionPane;
 
 /**

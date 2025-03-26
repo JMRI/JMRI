@@ -1144,7 +1144,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
     }
 
-    protected void setCarRoadNames(String[] roads) {
+    public void setCarRoadNames(String[] roads) {
         setRoadNames(roads, _carRoadList);
     }
 
@@ -1324,7 +1324,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, old, option);
     }
 
-    protected void setLocoRoadNames(String[] roads) {
+    public void setLocoRoadNames(String[] roads) {
         setRoadNames(roads, _locoRoadList);
     }
 
@@ -1459,7 +1459,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     List<String> _loadList = new ArrayList<>();
 
-    protected void setLoadNames(String[] loads) {
+    public void setLoadNames(String[] loads) {
         if (loads.length > 0) {
             Arrays.sort(loads);
             for (String load : loads) {
@@ -1571,7 +1571,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
     List<String> _ownerList = new ArrayList<>();
 
-    protected void setOwnerNames(String[] owners) {
+    public void setOwnerNames(String[] owners) {
         if (owners.length > 0) {
             Arrays.sort(owners);
             for (String owner : owners) {
