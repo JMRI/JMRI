@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.gui;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.routes.gui.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.tools.*;
 import jmri.util.swing.JmriJOptionPane;
 

@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.setup.gui;
+package jmri.jmrit.operations.trains.gui;
 
 import java.util.Locale;
 
@@ -21,7 +21,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrit.operations.setup.Bundle {
+public class Bundle extends jmri.jmrit.operations.trains.Bundle {
 
     @CheckForNull
     private static final String name = null; // NOI18N

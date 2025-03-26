@@ -10,7 +10,7 @@ import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableAction;
 import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableAction;
 import jmri.jmrit.operations.routes.gui.RoutesTableAction;
 import jmri.jmrit.operations.setup.gui.OperationsSettingsAction;
-import jmri.jmrit.operations.trains.TrainsTableAction;
+import jmri.jmrit.operations.trains.gui.TrainsTableAction;
 import jmri.jmrit.operations.trains.schedules.TrainsScheduleAction;
 import jmri.util.startup.AbstractStartupActionFactory;
 import jmri.util.startup.StartupActionFactory;

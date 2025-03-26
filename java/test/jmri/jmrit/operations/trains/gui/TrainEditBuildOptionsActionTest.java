@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.gui;
 
 import java.awt.GraphicsEnvironment;
 
@@ -7,23 +7,24 @@ import org.junit.jupiter.api.*;
 import org.junit.Assume;
 
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.trains.Train;
 import jmri.util.JUnitUtil;
 
 /**
  * @author Paul Bender Copyright (C) 2017
  */
-public class TrainRoadOptionsActionTest extends OperationsTestCase {
+public class TrainEditBuildOptionsActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Train train1 = new Train("TESTTRAINID", "TESTTRAINNAME");
         TrainEditFrame tf = new TrainEditFrame(train1);
-        TrainRoadOptionsAction t = new TrainRoadOptionsAction(tf);
+        TrainEditBuildOptionsAction t = new TrainEditBuildOptionsAction(tf);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(tf);
     }
 
     // private final static Logger log =
-    // LoggerFactory.getLogger(TrainRoadOptionsActionTest.class);
+    // LoggerFactory.getLogger(TrainEditBuildOptionsActionTest.class);
 }

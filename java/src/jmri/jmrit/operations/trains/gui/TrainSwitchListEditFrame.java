@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.gui;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -17,6 +17,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.excel.SetupExcelProgramSwitchListFrameAction;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.util.swing.JmriJOptionPane;

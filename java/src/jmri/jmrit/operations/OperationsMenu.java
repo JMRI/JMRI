@@ -28,7 +28,7 @@ public class OperationsMenu extends JMenu {
         add(new jmri.jmrit.operations.rollingstock.cars.gui.CarsTableAction());
         add(new jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableAction());
         add(new jmri.jmrit.operations.routes.gui.RoutesTableAction());
-        add(new jmri.jmrit.operations.trains.TrainsTableAction());
+        add(new jmri.jmrit.operations.trains.gui.TrainsTableAction());
 
     }
 

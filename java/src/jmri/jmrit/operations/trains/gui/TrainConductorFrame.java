@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.gui;
 
 import java.awt.Dimension;
 
@@ -7,6 +7,7 @@ import javax.swing.JMenuBar;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.tools.*;
 
 /**

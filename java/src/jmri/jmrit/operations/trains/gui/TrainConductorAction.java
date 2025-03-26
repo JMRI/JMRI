@@ -1,9 +1,11 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.gui;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+
+import jmri.jmrit.operations.trains.Train;
 
 /**
  * Swing action to create and register a TrainConductor frame.

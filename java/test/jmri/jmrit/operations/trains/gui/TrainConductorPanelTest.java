@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.gui;
 
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;

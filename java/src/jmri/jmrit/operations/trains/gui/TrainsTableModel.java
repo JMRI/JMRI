@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.gui;
 
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -15,6 +15,7 @@ import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;

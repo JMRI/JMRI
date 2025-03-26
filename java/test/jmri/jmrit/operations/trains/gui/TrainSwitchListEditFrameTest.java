@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.gui;
 
 import java.awt.GraphicsEnvironment;
 import java.util.List;
@@ -13,11 +13,8 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainSwitchListEditFrame.TrainSwitchListCommentFrame;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.ThreadingUtil;
+import jmri.jmrit.operations.trains.gui.TrainSwitchListEditFrame.TrainSwitchListCommentFrame;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 /**

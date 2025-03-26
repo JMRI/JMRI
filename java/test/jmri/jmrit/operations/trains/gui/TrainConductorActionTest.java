@@ -1,9 +1,10 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.gui;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.trains.Train;
 
 /**
  * @author Paul Bender Copyright (C) 2017
