@@ -154,7 +154,7 @@ public class LncvDevicesManager extends PropertyChangeSupport
                                             } catch (Exception e) {
                                                 log.error("Error creating Roster.matchingList: {}", e.getMessage());
                                             }
-                                        }, "rosterMatchingList").start();
+                                        }, "rosterMatchingListLncvDM").start();
                                         // this will block until the thread completes, either by finishing or by being cancelled
 
 

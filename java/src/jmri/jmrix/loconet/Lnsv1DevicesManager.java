@@ -144,7 +144,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                                     } catch (Exception e) {
                                         log.error("Error creating Roster.matchingList: {}", e.getMessage());
                                     }
-                                }, "rosterMatchingList").start();
+                                }, "rosterMatchingListLnsv1DM").start();
                                 // this will block until the thread completes, either by finishing or by being cancelled
 
                                 // notify listeners of pertinent change to device list
