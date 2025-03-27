@@ -4,12 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -17,6 +17,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.dispatcher.TrainInfoFile;
