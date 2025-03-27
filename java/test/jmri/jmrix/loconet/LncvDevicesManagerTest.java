@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 class LncvDevicesManagerTest {
 
-    LocoNetSystemConnectionMemo memo;
+    private LocoNetSystemConnectionMemo memo;
 
     @Test
     public void testCTor() {
@@ -44,6 +44,7 @@ class LncvDevicesManagerTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         jmri.InstanceManager.setDefault(jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class, memo);
+        JUnitUtil.initRosterConfigManager();
     }
 
     @AfterEach
