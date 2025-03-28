@@ -31,8 +31,8 @@ class LncvDevicesManagerTest {
         LncvDevicesManager lcdm = new LncvDevicesManager(memo);
         Assertions.assertEquals(0, lcdm.getDeviceCount(), "LncvDeviceManager List empty");
         lcdm.message(new LocoNetMessage(new int[] {0xE5, 0x0F, 0x05, 0x49, 0x4B, 0x1F, 0x11, 0x29, 0x13, 0x00, 0x00, 0x08, 0x00, 0x00, 0x4D}));
-        Assertions.assertEquals(1, lcdm.getDeviceCount(), "LncvDeviceManager List added 1");
         JUnitUtil.waitThreadTerminated(LncvDevicesManager.ROSTER_THREAD_NAME+memo.getSystemPrefix());
+        Assertions.assertEquals(1, lcdm.getDeviceCount(), "LncvDeviceManager List added 1");
         lcdm.dispose();
     }
 
