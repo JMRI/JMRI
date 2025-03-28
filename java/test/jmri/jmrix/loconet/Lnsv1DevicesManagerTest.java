@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrit.roster.RosterConfigManager;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,6 @@ class Lnsv1DevicesManagerTest {
     @Test
     void testGetDeviceCount() {
         Lnsv1DevicesManager lsvm = new Lnsv1DevicesManager(memo);
-        jmri.InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
         Assertions.assertEquals(0, lsvm.getDeviceCount(), "Lnsv1DeviceManager List empty");
         lsvm.message(new LocoNetMessage(new int[] {0xE5, 0x10, 0x04, 0x50, 0x01, 0x06, 0x02, 0x13, 0x16, 0x7B, 0x00, 0x02, 0x00, 0x00, 0x00, 0x27}));
         Assertions.assertEquals(1, lsvm.getDeviceCount(), "Lnsv1DeviceManager List added 1");
