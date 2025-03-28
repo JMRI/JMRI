@@ -442,6 +442,8 @@ public class SCWarrant extends Warrant {
             // not necessary: It is done in the main loop in SCTrainRunner.run:  allocateBlocksAndSetTurnouts(getCurrentOrderIndex()+1)
             // update our present location
             incrementCurrentOrderIndex();
+            block.setValue(_trainName);
+            block.setState(block.getState() | OBlock.RUNNING);
             // fire property change (entered new block)
             firePropertyChange("blockChange", getBlockAt(getCurrentOrderIndex() - 1), getBlockAt(getCurrentOrderIndex()));
             // now let the main loop adjust speed.
