@@ -9,9 +9,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -19,14 +17,14 @@ import org.netbeans.jemmy.operators.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SignallingSourcePanelTest {
 
     @Test
     public void testCTor() {
-        jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+
         SignallingSourcePanel t = new SignallingSourcePanel(new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)"));
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @Test
@@ -35,7 +33,8 @@ public class SignallingSourcePanelTest {
         InstanceManager.getDefault(LayoutBlockManager.class).enableAdvancedRouting(false);
 
         SignallingSourcePanel t = new SignallingSourcePanel(new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($1)"));
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
+        t.initComponents();
         javax.swing.JFrame f = new javax.swing.JFrame("testEnableBlockRoutingDialogDisplays");
         f.getContentPane().add(t);
         f.pack();
@@ -58,7 +57,7 @@ public class SignallingSourcePanelTest {
         JUnitUtil.waitFor( () -> !discoverDialogThread.isAlive(), "Discover dialog finished");
         JUnitUtil.waitFor( () -> !noLayoutEditorDialogThread.isAlive(), "No LE dialog finished");
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 
