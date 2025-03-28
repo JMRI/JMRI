@@ -44,12 +44,13 @@ import java.util.List;
  */
 
 public class Lnsv1DevicesManager extends PropertyChangeSupport
-        implements LocoNetListener {
+        implements LocoNetListener, jmri.Disposable {
     private final LocoNetSystemConnectionMemo memo;
     @GuardedBy("this")
     private final Lnsv1Devices lnsv1Devices;
+    static final String ROSTER_THREAD_NAME = "rosterMatchingListLnsv1DM";
 
-    public Lnsv1DevicesManager(LocoNetSystemConnectionMemo memo) {
+    public Lnsv1DevicesManager(@javax.annotation.Nonnull LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
         if (memo.getLnTrafficController() != null) {
             memo.getLnTrafficController().addLocoNetListener(~0, this);
@@ -144,7 +145,7 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
                                     } catch (Exception e) {
                                         log.error("Error creating Roster.matchingList: {}", e.getMessage());
                                     }
-                                }, "rosterMatchingListLnsv1DM").start();
+                                }, ROSTER_THREAD_NAME + memo.getSystemPrefix()).start();
                                 // this will block until the thread completes, either by finishing or by being cancelled
 
                                 // notify listeners of pertinent change to device list
@@ -232,6 +233,13 @@ public class Lnsv1DevicesManager extends PropertyChangeSupport
 
         t.openPaneOpsProgFrame(re, name, "programmers/Comprehensive.xml", p); // NOI18N
         return ProgrammingResult.SUCCESS_PROGRAMMER_OPENED;
+    }
+
+    @Override
+    public void dispose(){
+        if (memo.getLnTrafficController() != null) {
+            memo.getLnTrafficController().removeLocoNetListener(~0, this);
+        }
     }
 
     public enum ProgrammingResult {
