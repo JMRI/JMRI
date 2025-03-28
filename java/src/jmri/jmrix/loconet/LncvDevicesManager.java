@@ -50,6 +50,8 @@ public class LncvDevicesManager extends PropertyChangeSupport
     private final LocoNetSystemConnectionMemo memo;
     @GuardedBy("this")
     private final LncvDevices lncvDevices;
+
+    // constant for thread name, with memo prefix appended.
     static final String ROSTER_THREAD_NAME = "rosterMatchingListLncvDM";
 
     public LncvDevicesManager(@javax.annotation.Nonnull LocoNetSystemConnectionMemo memo) {
