@@ -2,8 +2,11 @@ package jmri.implementation;
 
 import jmri.*;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test the DefaultLogixTest implementation class
@@ -22,12 +25,12 @@ public class DefaultLogixTest extends NamedBeanTest {
 
     @Test
     public void testDefaultLogixCtorDouble() {
-        Assertions.assertNotNull( new DefaultLogix("IX 1", "IX 1 user name") );
+        assertNotNull( new DefaultLogix("IX 1", "IX 1 user name") );
     }
 
     @Test
     public void testDefaultLogixCtorSingle() {
-        Assertions.assertNotNull( new DefaultLogix("IX 2") );
+        assertNotNull( new DefaultLogix("IX 2") );
     }
 
     @Test
@@ -36,22 +39,22 @@ public class DefaultLogixTest extends NamedBeanTest {
 
         Logix ix2 = new DefaultLogix("IX 4");
 
-        Assert.assertTrue("object not equals", !ix1.equals(ix2));
-        Assert.assertTrue("object not equals reverse", !ix2.equals(ix1));
+        assertFalse( ix1.equals(ix2), "object not equals");
+        assertFalse( ix2.equals(ix1), "object not equals reverse");
 
-        Assert.assertTrue("hash not equals", ix1.hashCode() != ix2.hashCode());
+        assertNotEquals( ix1.hashCode(), ix2.hashCode(), "hash not equals");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+    public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
 }
