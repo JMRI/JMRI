@@ -24,8 +24,6 @@ from org.python.core.util import StringUtil
 from threading import Thread
 from collections import Counter
 
-
-
 CreateSchedulerPanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/SchedulerPanel.py')
 execfile(CreateSchedulerPanel)
 
@@ -224,7 +222,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
                         run_local_timetable_gbl = True
                         # print "run_timetable_gbl set", run_timetable_gbl
-                        self.ensure_conditions_for_timetable_to_show_are_met():
+                        self.ensure_conditions_for_timetable_to_show_are_met()
 
                 elif reply == opt3:
 
@@ -277,8 +275,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             # set time to midnight
             if self.logLevel > 0: print "set minute time listener"
-            self.setup_minute_time_listener_to_schedule_trains()
-            # timebase.setRun(False)
+
+            global minute_time_listener_setup
+            if "minute_time_listener_setup" not in globals():
+                minute_time_listener_setup = False
+            if minute_time_listener_setup == False:
+                self.setup_minute_time_listener_to_schedule_trains()    # only do this first time setup
             self.train_scheduler_setup = True
 
             self.scheduler_master_sensor.setKnownState(INACTIVE)
@@ -628,7 +630,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             scheduling_margin_gbl, scheduling_in_operation_gbl
         if self.frame == None:
             # print "frame is None"
-            self.frame = jmri.util.JmriJFrame('Schedule Trains Hourly');
+            self.frame = jmri.util.JmriJFrame('Schedule Trains');
 
             panel = JPanel()
             panel.setLayout(BoxLayout(panel, BoxLayout.Y_AXIS))
@@ -722,10 +724,16 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowStage3Separator_3 = JLabel("")
 
             rowStage3Separator.add(Box.createVerticalGlue())
-            rowStage3Separator.add(Box.createRigidArea(Dimension(30, 0)))
+            rowStage3Separator.add(Box.createRigidArea(Dimension(20, 0)))
             rowStage3Separator.add(rowStage3Separator_1)
-            rowStage3Separator.add(Box.createRigidArea(Dimension(30, 0)))
+            rowStage3Separator.add(Box.createRigidArea(Dimension(20, 0)))
             rowStage3Separator.add(rowStage3Separator_3)
+
+            rowStage4Separator = JPanel()
+            rowStage4Separator.setLayout(BoxLayout(rowStage4Separator, BoxLayout.X_AXIS))
+            rowStage4Separator_1 = JLabel("*******************************************************************")
+            rowStage4Separator_1.add(Box.createHorizontalGlue());
+            rowStage4Separator_1.setAlignmentX(rowStage4Separator_1.LEFT_ALIGNMENT)
 
             # buttons
 
@@ -785,7 +793,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowEStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
             rowEStage1Button_1.add(Box.createHorizontalGlue());
             rowEStage1Button_1.setAlignmentX(rowEStage1Button_1.LEFT_ALIGNMENT)
-            # print "scheduling_in_operation_gbl 7", scheduling_in_operation_gbl
+
             stringToDisplay = "scheduling in operation: " + str(scheduling_in_operation_gbl)
             rowFStage1Button_1 = JLabel(stringToDisplay)
             rowFStage1Button_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
@@ -795,8 +803,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowStage1Button_1 = JButton("Initialisation", actionPerformed = self.CheckHourlyParameters_action)
 
             stage1Button = rowStage1Button_1
-
-
 
             rowStage2Button = JPanel()
             rowStage2Button.setLayout(BoxLayout(rowStage2Button, BoxLayout.X_AXIS))
@@ -828,14 +834,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowStage4Button_4 = JButton("Stop/Start", actionPerformed = self.StopStartClock_action)
             stage4Button = rowStage4Button_4
 
-
             rowStage1Button.add(Box.createVerticalGlue())
             rowStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
             rowStage1Button.add(rowStage1Button_1)
             rowStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
             rowStage1Button.add(rowrowStage1Button_1)
-            # rowStage1Button.add(Box.createVerticalGlue())
-            # rowStage1Button.add(rowAStage1Button_1)
 
             rowAStage1Button.add(Box.createVerticalGlue())
             rowAStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
@@ -860,11 +863,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowFStage1Button.add(Box.createVerticalGlue())
             rowFStage1Button.add(Box.createRigidArea(Dimension(120, 0)))
             rowFStage1Button.add(rowFStage1Button_1)
-
-            # rowDStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
-            # rowStage1Button.add(rowDStage1Button_1)
-
-
 
             rowStage2Button.add(Box.createVerticalGlue())
             rowStage2Button.add(Box.createRigidArea(Dimension(20, 0)))
@@ -912,7 +910,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         self.frame.pack()
         self.frame.setVisible(True)
-        self.frame.setSize(430, 300)
+        self.frame.setSize(430, 350)
         self.frame.setLocation(10,10)
 
     def leftJustify(self, panel):
@@ -1037,7 +1035,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def stop_schedule_trains_master(self):
         global instanceList
-        #stop all thresds even if there are duplications
+        #stop all threads even if there are duplications
 
         summary = jmri.jmrit.automat.AutomatSummary.instance()
         automatsList = java.util.concurrent.CopyOnWriteArrayList()
@@ -1189,26 +1187,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         scheduling_in_operation_gbl = False
 
-        # # speed of running clock in non-operational times
-        # title = "scheduling_in_operation"
-        # msg = "input speedup of running clock in non-operational times x100 say (max 100)"
-        # default_value = self.scheduling_in_operation
-        # repeat = True
-        # while repeat == True:
-        #     reply = OptionDialog().input(msg, title, default_value)
-        #     reply = reply.replace("x", "")
-        #     if reply == "False" or reply == "True":
-        #         # OptionDialog().displayMessage("correct format")
-        #         repeat = False
-        #     else:
-        #         repeat = True
-        #         OptionDialog().displayMessage("wrong format must be integer")
-        # if int(reply) >100:
-        #     self.scheduling_in_operation = 100
-        # else:
-        #     self.scheduling_in_operation = bool(reply)
-        # if self.logLevel > 0: print "scheduling_in_operation", self.scheduling_in_operation
-
         items = [str(item) for item in [self.start_hour,self.end_hour, fast_clock_rate, \
                                         self.speed_not_operational, \
                                         self.scheduling_margin, scheduling_in_operation_gbl]]
@@ -1336,6 +1314,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
             scheduling_margin_gbl, scheduling_in_operation_gbl
         global schedule_trains_hourly
+        global minute_time_listener_setup
 
         if self.logLevel > 0: print "Setting up Time Scheduler"
         timebase = jmri.InstanceManager.getDefault(jmri.Timebase)
@@ -1344,6 +1323,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "******************************************set timebase hour"
 
         self.set_default_scheduling_values()
+
         self.set_timebase_start_hour(int(start_hour_gbl)-1, 45)
         self.set_timebase_start_hour(12, 0)
         #
@@ -1360,6 +1340,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         if False != timebase.getRun():
             self.swap_timebase_state_run_stop()
 
+        minute_time_listener_setup = True
         self.init = True
 
     def set_timebase_start_hour(self, hour, minute):

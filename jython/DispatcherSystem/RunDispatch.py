@@ -101,15 +101,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def setup(self):
         self.stop_master_sensor = sensors.getSensor("stopMasterSensor")
-        # if self.stop_master_sensor is None:
-        #     return False
-        # self.stop_master_sensor.setKnownState(INACTIVE)
-
         self.modify_master_sensor = sensors.getSensor("modifyMasterSensor")
-        # if self.modify_master_sensor is None:
-        #     return False
-        # self.modify_master_sensor.setKnownState(INACTIVE)
-
         self.start_scheduler = sensors.getSensor("startSchedulerSensor")
         self.start_scheduler.setKnownState(INACTIVE)
         return True
@@ -128,7 +120,6 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         if sensor_that_went_active == modify_sensor:
             self.stop_via_table()
-            # modify_sensor.setKnownState(INACTIVE)
             modify_sensor.setKnownState(INACTIVE)
             return True
         elif sensor_that_went_active == stop_sensor:
@@ -159,11 +150,18 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         else:
             self.delete_active_transits()
             # print "self.delete_active_transits()"
-            self.stop_all_threads()
-            # print "self.stop_all_threads()"
-            glb_reset_all_trains = False
+        self.stop_all_threads()
+        # print "self.stop_all_threads()"
+        glb_reset_all_trains = False
 
     def stop_via_table(self):
+        global CreateAndShowGUI3_frame
+        # delete any previous frames
+        if "CreateAndShowGUI3_frame" in globals():
+            CreateAndShowGUI3_frame.setVisible(False)
+        else:
+            # print "not in globals"
+            pass
         createandshowGUI3(self)
 
     def remove_timebase_listener(self):
@@ -807,7 +805,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         return path + java.io.File.separator
 
     def action_directory(self):
-        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "pythonfiles"
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "actions"
         if not os.path.exists(path):
             os.makedirs(path)
         return path + java.io.File.separator
@@ -815,17 +813,17 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def add_actions(self, route, LocationManager, button_station_name, no_stations_chosen, selected_actions):
         directory1 = self.action_directory_in_DispatcherSystem()
         files = os.listdir(directory1)
-        # print "files in dispatcher system action directory", files
+        print "files in dispatcher system action directory", files
 
         python_files = [f for f in files if f.endswith(".py")]
-        # print "directory1", directory1, "python_files", python_files
+        print "directory1", directory1, "python_files", python_files
 
         directory = self.action_directory()
         files = os.listdir(directory)
         python_files2 = [f for f in files if f.endswith(".py")]
-        # print "directory", directory, "python_files2", python_files2
+        print "directory", directory, "python_files2", python_files2
         python_files.extend(python_files2)
-        # print "directory", directory, "python_files", python_files
+        print "directory", directory, "python_files", python_files
         # display the list to select the required python file
         if python_files == []:
             lines =  ["No action files available\n" ,
@@ -1693,7 +1691,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def getLastBlockInAllowedDirection(self, e, first_station_block):
         path_name =  e.getItem("path_name")
-        if self.logLevel > -1: print "path_name", path_name
+        if self.logLevel > 0: print "path_name", path_name
         # get last occurence in path in case path goes through turntable and return
         index = path_name[::-1].index(first_station_block)
         position_of_station_block = len(path_name) - 1 #- index - 1

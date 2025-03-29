@@ -61,10 +61,10 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_route_location_stop_mode(self, station_to_name):
         route_location = self.route.getLastLocationByName(station_to_name)
-        if self.logLevel > -1: print "get_stop_mode" , "route location", route_location
+        if self.logLevel > 0: print "get_stop_mode" , "route location", route_location
         comment = route_location.getComment()
         stop_mode = self.find_between(comment, "[stopMode-", "-stopMode]")
-        if self.logLevel > -1: print "routeLocation stop_mode", stop_mode
+        if self.logLevel > 0: print "routeLocation stop_mode", stop_mode
         return stop_mode
 
     def find_between(self, s, first, last):
@@ -208,6 +208,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             # print "move_between_stations g"
             while result == False:
                 # move_between_stations
+                train["direction"] = transit_direction
                 result = self.move(e, transit_direction, transit_instruction,  train_name, mode)
                 # result is True (success) or False (failure)
                 if self.logLevel > 0: print "returned from self.move, result = ", result
@@ -227,17 +228,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     else:
                         # if we are scheduling we have tried a few times within self.move
                         result = True  # break from loop
-
-
-                    #     print "try 3 times then break", train_name, try, iter
-                    #     if iter> 2:
-                    #         result = True
                 iter +=1
-            # print "move_between_stations h"
-            #store the current edge for next move
+            # store the current edge for next move
             train["edge"] = e
             train["penultimate_block_name"] = e.getItem("penultimate_block_name")
-            train["direction"] = transit_direction
+            
             count_path +=1
 
         if self.logLevel > 1: print "transit finished, removing train from dispatch list"
@@ -589,7 +584,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         engineNumber = new_train_name
         engine = EngineManager.newRS(engineRoad, engineNumber)
         #get the current speed factor of the engine
-        default = "100"  # prcentage
+        default = "100"  # percentage
         comment = engine.getComment()
         split_comment = []
         if "speed factor" in comment:
@@ -616,7 +611,6 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
         # setMaxTrainLength  (in scale metres)
         [engine,current_length] = self.get_train_length(train_name)  #get the engine name
-        # print "in modify_trainInfo1a length = ", current_length
         self.trainInfo.setMaxTrainLengthScaleMeters(float(current_length))
 
         # setSpeedFactor
@@ -664,14 +658,14 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 autoActiveTrain.set_useStopSensor(False)
             # overwrite with set values
             if self.stop_mode is None or self.stop_mode == "" or self.stop_mode == "Use Default":
-                if self.logLevel > -1: print "Use Defailt"
+                if self.logLevel > 0: print "Use Defailt"
                 pass
             elif self.stop_mode == "Use Stop Sensor":
                 autoActiveTrain.set_useStopSensor(True)
-                if self.logLevel > -1: print "set stop sensor True"
+                if self.logLevel > 0: print "set stop sensor True"
             elif self.stop_mode == "Use Speed Profile":
                 autoActiveTrain.set_useStopSensor(False)
-                if self.logLevel > -1: print "set_useStopSensor False"
+                if self.logLevel > 0: print "set_useStopSensor False"
             else:
                 print "ERROR incorrect value for stop mode"
         else:
@@ -940,6 +934,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
     def init(self):
         self.logLevel = 0
         if self.logLevel > 0: print 'Create Stop Thread'
+        self.od = OptionDialog()
 
     def setup(self):
         global trains_allocated
@@ -1061,16 +1056,29 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.hideGui()
             createandshowGUI(self, action)
         elif action == "check/swap train direction":
-            trains_to_choose = self.get_allocated_trains()
-            if trains_to_choose == []:
-                s = OptionDialog().displayMessage("no allocated trains to select")
-            else:
-                msg = "Select the required train"
-                new_train_name = self.od.List(msg, trains_to_choose)
-                train_block = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == new_train_name][0]
-                if train_block is not None:
-                    self.check_train_direction(new_train_name, train_block)
+            self.check_swap_train_direction()
         return True
+
+    def check_swap_train_direction(self):
+        trains_to_choose = self.get_allocated_trains()
+        print "trains_to_choose", trains_to_choose
+        if trains_to_choose == []:
+            s = OptionDialog().displayMessage("no allocated trains to select")
+        else:
+            msg = "Select the required train"
+            new_train_name = self.od.List(msg, trains_to_choose)
+            self.swap_train_direction1(new_train_name)
+
+    def swap_train_direction1(self, train_name):
+        train_block_array = \
+            [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == train_name]
+        if train_block_array == []:
+            OptionDialog().displayMessage(train_name + " is not allocated")
+            return
+        train_block = \
+            [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == train_name][0]
+        if train_block is not None:
+            self.check_train_direction(train_name, train_block)
 
     def hideGui(self):
         global CreateAndShowGUI_frame
@@ -1175,7 +1183,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         engineNumber = new_train_name
         engine = EngineManager.newRS(engineRoad, engineNumber)
         #get the current speed factor of the engine
-        default = "100"  # prcentage
+        default = "10"  # percentage
         comment = engine.getComment()
         split_comment = []
         if "speed factor" in comment:
@@ -1425,20 +1433,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         # 3) set direction so can check direction of transit
 
-        # penultimate_block_name = edge.getItem("penultimate_block_name")
-        # penultimate_layout_block = LayoutBlockManager.getLayoutBlock(penultimate_block_name)
-        # saved_state = penultimate_layout_block.getUseExtraColor()
-        # if not in_siding:
-        #     # highlight the penultimate block
-        #     penultimate_layout_block.setUseExtraColor(True)
-        # train_direction = self.set_train_direction(station_block_name, in_siding)
-        #check the condition set in set_train_direction
-
         train["direction"] = train_direction
-        #penultimate_layout_block.setUseExtraColor(saved_state)
-        # print "edge" , edge
-        # print "penultimate_block_name", edge.getItem("penultimate_block_name")
-        # print "train_direction", train_direction
 
         # 4) add to allocated train list
         if str(train_name) not in trains_allocated:
@@ -1452,84 +1447,6 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         engine.setComment(speed_factor_str)
 
         train["allocating"] = False
-
-    def add_to_train_list_and_set_new_train_location2(self, train_name, station_block_name):
-
-        # 1)
-        # trains is a dictionary, with keys of the train_name
-        # each value is itself a dictionary with 3 items
-        # edge
-        # penultimate_block_name
-        # direction
-        global train
-        global trains_allocated
-        if train_name not in trains:
-            trains[train_name] = {}
-            train = trains[train_name]
-            train["train_name"] = train_name
-        else:
-            #train_name = self.get_train_name()
-            # print("set_train_in_block")
-            self.set_train_in_block(station_block_name, train_name)
-
-        # print("calling highlight_penultimate_block")
-        [edge, train_direction, result]  = self.highlight_penultimate_block(station_block_name)
-        if edge == "Error" :
-            print "error"
-            return
-
-        # print edge, train_direction, result
-
-        #check the condition set in set_train_direction
-        train["direction"] = train_direction
-        train["edge"] = edge
-        train["penultimate_block_name"] = edge.getItem("penultimate_block_name")
-
-        # 4) add to allocated train list
-        if str(train_name) not in trains_allocated:
-            trains_allocated.append(str(train_name))
-
-    def add_to_train_list_and_set_new_train_location1(self, train_name, station_block_name):
-
-        #     self.allocate_train(train_name)
-        #     [edge, train_direction, result]  = self.highlight_penultimate_block(station_block_name)
-        #     self.register_train(edge, train_direction)
-        #
-        #
-        # def allocate_train(self, train_name):
-
-        # 1)
-        # trains is a dictionary, with keys of the train_name
-        # each value is itself a dictionary with 3 items
-        # edge
-        # penultimate_block_name
-        # direction
-        global train
-        global trains_allocated
-        # print ("in add_to_train_list_and_set_new_train_location")
-        if train_name not in trains:
-            # print("train_name", train_name)
-            # print("trains", trains)
-            # print("train_name not in trains")
-            trains[train_name] = {}
-            train = trains[train_name]
-            train["train_name"] = train_name
-        else:
-            #train_name = self.get_train_name()
-            # print("set_train_in_block")
-            self.set_train_in_block(station_block_name, train_name)
-
-        # # print("calling highlight_penultimate_block")
-        # [edge, train_direction, result]  = self.highlight_penultimate_block(station_block_name)
-        #
-        # #check the condition set in set_train_direction
-        # train["direction"] = train_direction
-        # train["edge"] = edge
-        # train["penultimate_block_name"] = edge.getItem("penultimate_block_name")
-
-        # 4) add to allocated train list
-        if str(train_name) not in trains_allocated:
-            trains_allocated.append(str(train_name))
 
     def highlight_penultimate_block(self, station_block_name):
         # print("highlight_penultimate_block")
@@ -1993,7 +1910,7 @@ class createandshowGUI(TableModelListener):
 
         # append all blocks to put in dropdown
         for block in blocks_to_put_in_dropdown:
-            print "block", block
+            # print "block", block
             self.model.data.append(["", block, "click ->", False, 10, 100])
 
         # delete rows with no blocks
@@ -2202,10 +2119,19 @@ class createandshowGUI(TableModelListener):
                                                 train_direction, train_length, train_speed_factor)
                 self.super.set_blockcontents(block_name, train_name)
                 [engine,current_length] = NewTrainMaster().get_train_length(train_name)
-                engine.setLength(train_length)
-                [engine, current_speed_factor] = self.super.get_train_speed_factor(train_name)
-                current_speed_factor_str = "speed factor " + current_speed_factor
-                engine.setComment(current_speed_factor_str)
+                # engine.setLength(train_length)
+                # # [engine, current_speed_factor] = self.super.get_train_speed_factor(train_name)
+                # # current_speed_factor_str = "speed factor " + current_speed_factor
+                # engine.setComment(train_speed_factor)
+                # global trains
+
+                # if train_name not in trains:
+                #     trains[train_name] = {}
+                #     train = trains[train_name]
+                #     train["train_name"] = train_name
+                #     train["direction"] = train_direction
+                # else:
+                #     train["direction"] = train_direction
                 self.model.data.pop(row)
         # print "end save action"
         self.completeTablePanel()

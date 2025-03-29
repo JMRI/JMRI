@@ -7,6 +7,6 @@ class Delay(jmri.jmrit.automat.AbstractAutomaton):
     def my_delay(self):
         self.waitMsec(10000)
         
-paul =  Delay() 
+delay =  Delay() 
 
-paul.my_delay()
+delay.my_delay()
