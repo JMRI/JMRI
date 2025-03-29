@@ -742,7 +742,7 @@ class ComboBoxCellRenderer4 (TableCellRenderer):
 
 class MyTableModel4 (DefaultTableModel):
 
-    columnNames = ["Time", "Route", "Repeat", "Don't Schedule", "Train Name", "Train Description", "Edit_Row", "Delete Row"]
+    columnNames = ["Time", "Route", "Repeat", " Don't Schedule", "Train Name", "Train Description", "Edit_Row", "Delete Row"]
 
     def __init__(self):
         # l1 = ["", "", False, "stop at end of route", 10, False, False]

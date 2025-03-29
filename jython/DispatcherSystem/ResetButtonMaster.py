@@ -1204,9 +1204,6 @@ class createandshowGUI2(TableModelListener):
 
         return
 
-
-
-
     def buttonPanel(self):
         row1_1_button = JButton("Add Row", actionPerformed = self.add_row_action)
         row1_2_button = JButton("Save", actionPerformed = self.save_action)
@@ -1221,8 +1218,6 @@ class createandshowGUI2(TableModelListener):
         row1.add(row1_2_button)
 
         layout = BorderLayout()
-        # layout.setHgap(10);
-        # layout.setVgap(10);
 
         jPanel = JPanel()
         jPanel.setLayout(layout);

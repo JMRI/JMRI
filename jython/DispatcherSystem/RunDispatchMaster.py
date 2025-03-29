@@ -103,7 +103,7 @@ class RunDispatcherMaster():
         #set default values of buttons
         sensors.getSensor("Express").setKnownState(INACTIVE)
         sensors.getSensor("simulateSensor").setKnownState(INACTIVE)
-        sensors.getSensor("setDispatchSensor").setKnownState(INACTIVE)
+        sensors.getSensor("setDispatchSensor").setKnownState(ACTIVE)
         sensors.getSensor("stopMasterSensor").setKnownState(INACTIVE)
         sensors.getSensor("modifyMasterSensor").setKnownState(INACTIVE)
         sensors.getSensor("checkRouteSensor").setKnownState(INACTIVE)
