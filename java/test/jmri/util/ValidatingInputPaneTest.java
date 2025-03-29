@@ -5,16 +5,19 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
 
 import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
 import java.util.concurrent.Callable;
+
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
-import org.junit.jupiter.api.Test;
+
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -121,7 +124,7 @@ public class ValidatingInputPaneTest {
      */
     private <T> void testInGUI(Callable<T> check) throws Exception {
         // terminate tests which require GUI
-        assumeFalse(GraphicsEnvironment.isHeadless());
+        assertFalse(GraphicsEnvironment.isHeadless());
 
         // display the panel
         JWindow dlg = new JWindow();
@@ -149,6 +152,7 @@ public class ValidatingInputPaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testValidationHappensWhenAfterDisplayed() throws Exception {
         setupLargeValidator();
 
@@ -162,6 +166,7 @@ public class ValidatingInputPaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testTextChangeValidatesFalse() throws Exception {
         setupLargeValidator();
 
@@ -182,6 +187,7 @@ public class ValidatingInputPaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testClearAllNoError() throws Exception {
         setupLargeValidator();
         intValidator.setText("6");
@@ -204,6 +210,7 @@ public class ValidatingInputPaneTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testControlBecomesDisabled() throws Exception {
         setupLargeValidator(true);
         intValidator.setText("4");
@@ -214,4 +221,15 @@ public class ValidatingInputPaneTest {
            return null;
         });
     }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

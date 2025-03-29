@@ -316,7 +316,7 @@ public class DefaultConditional extends AbstractNamedBean
      * @return error message string if not well formed
      */
     @Override
-    public String validateAntecedent(String ant, List<ConditionalVariable> variableList) {
+    public String validateAntecedent(@Nonnull String ant, List<ConditionalVariable> variableList) {
         char[] ch = ant.toCharArray();
         int n = 0;
         for (int j = 0; j < ch.length; j++) {
@@ -385,11 +385,11 @@ public class DefaultConditional extends AbstractNamedBean
         s = s.toUpperCase();
 
         BitSet argsUsed = new BitSet(_variableList.size());
-        DataPair dp = null;
+        DataPair dp;
         boolean leftArg = false;
         boolean rightArg = false;
         int oper = OPERATOR_NONE;
-        int k = -1;
+        int k;
         int i = 0;      // index of String s
         //int numArgs = 0;
         if (s.charAt(i) == '(') {
@@ -804,7 +804,7 @@ public class DefaultConditional extends AbstractNamedBean
         }
     }
 
-    private String getDeviceName(ConditionalAction action) {
+    private String getDeviceName(@Nonnull ConditionalAction action) {
         String devName = action.getDeviceName();
         if (devName != null && devName.length() > 0 && devName.charAt(0) == '@') {
             String memName = devName.substring(1);
@@ -818,7 +818,7 @@ public class DefaultConditional extends AbstractNamedBean
         return devName;
     }
 
-    private String getActionString(ConditionalAction action) {
+    private String getActionString(@Nonnull ConditionalAction action) {
         String devAction = action.getActionString();
         if (devAction != null && devAction.length() > 0 && devAction.charAt(0) == '@') {
             String memName = devAction.substring(1);
@@ -847,9 +847,9 @@ public class DefaultConditional extends AbstractNamedBean
      * @return the integral value of the action or -1 if the action references a
      *         Memory that does not contain an integral value
      */
-    int getIntegerValue(ConditionalAction action) {
+    int getIntegerValue( @Nonnull ConditionalAction action) {
         String sNumber = action.getActionString();
-        int time = 0;
+        int time;
         try {
             time = Integer.parseInt(sNumber);
         } catch (NumberFormatException e) {
@@ -858,13 +858,18 @@ public class DefaultConditional extends AbstractNamedBean
             }
             Memory mem = getMemory(sNumber);
             if (mem == null) {
-                log.error("invalid memory name for action time variable - {}, for Action \"{}\", in Conditional \"{}\" ({})", sNumber, action.getTypeString(), getUserName(), getSystemName());  // NOI18N
+                log.error("invalid memory name for action time variable - {}, for Action \"{}\", "
+                    + "in Conditional \"{}\" ({})",
+                    sNumber, action.getTypeString(), getUserName(), getSystemName());
                 return -1;
             }
             try {
                 time = Integer.parseInt((String) mem.getValue());
             } catch (NumberFormatException ex) {
-                log.error("invalid action number variable from memory, \"{}\" ({}), value = {}, for Action \"{}\", in Conditional \"{}\" ({})", getUserName(), mem.getSystemName(), mem.getValue(), action.getTypeString(), getUserName(), getSystemName());  // NOI18N
+                log.error("invalid action number variable from memory, \"{}\" ({}), "
+                    + "value = {}, for Action \"{}\", in Conditional \"{}\" ({})",
+                    getUserName(), mem.getSystemName(), mem.getValue(),
+                    action.getTypeString(), getUserName(), getSystemName());
                 return -1;
             }
         }
@@ -880,9 +885,9 @@ public class DefaultConditional extends AbstractNamedBean
      * @return the number of milliseconds represented by action of -1 if action
      *         references a Memory without a numeric value
      */
-    int getMillisecondValue(ConditionalAction action) {
+    int getMillisecondValue(@Nonnull ConditionalAction action) {
         String sNumber = action.getActionString();
-        float time = 0;
+        float time;
         try {
             time = Float.parseFloat(sNumber);
         } catch (NumberFormatException e) {
@@ -891,7 +896,9 @@ public class DefaultConditional extends AbstractNamedBean
             }
             Memory mem = getMemory(sNumber);
             if (mem == null) {
-                log.error("invalid memory name for action time variable - {}, for Action \"{}\", in Conditional \"{}\" ({})", sNumber, action.getTypeString(), getUserName(), getSystemName());  // NOI18N
+                log.error("invalid memory name for action time variable - {}, "
+                    + "for Action \"{}\", in Conditional \"{}\" ({})",
+                    sNumber, action.getTypeString(), getUserName(), getSystemName());
                 return -1;
             }
             try {
@@ -900,7 +907,10 @@ public class DefaultConditional extends AbstractNamedBean
                 time = -1;
             }
             if (time <= 0) {
-                log.error("invalid Millisecond value from memory, \"{}\" ({}), value = {}, for Action \"{}\", in Conditional \"{}\" ({})", getUserName(), mem.getSystemName(), mem.getValue(), action.getTypeString(), getUserName(), getSystemName());  // NOI18N
+                log.error("invalid Millisecond value from memory, \"{}\" ({}), "
+                    + "value = {}, for Action \"{}\", in Conditional \"{}\" ({})",
+                    getUserName(), mem.getSystemName(), mem.getValue(),
+                    action.getTypeString(), getUserName(), getSystemName());
             }
         }
         return (int) (time * 1000);
@@ -958,7 +968,8 @@ public class DefaultConditional extends AbstractNamedBean
                         // check if same turnout by a different name
                         Turnout tn = InstanceManager.turnoutManagerInstance().getTurnout(devName);
                         if (tn == null) {
-                            log.error("{} Unknown turnout *{} in cancelTurnoutTimer.", getDisplayName(), action.getDeviceName());  // NOI18N
+                            log.error("{} Unknown turnout *{} in cancelTurnoutTimer.",
+                                getDisplayName(), action.getDeviceName());
                         } else if (sname.equals(tn.getSystemName())
                                 || sname.equals(tn.getUserName())) {
                             // same turnout, cancel timer
@@ -992,7 +1003,7 @@ public class DefaultConditional extends AbstractNamedBean
         if (_currentState != state) {
             int oldState = _currentState;
             _currentState = state;
-            firePropertyChange("KnownState", oldState, _currentState);  // NOI18N
+            firePropertyChange(NamedBean.PROPERTY_KNOWN_STATE, oldState, _currentState);
         }
     }
 
@@ -1012,7 +1023,7 @@ public class DefaultConditional extends AbstractNamedBean
      */
     class TimeSensor implements java.awt.event.ActionListener {
 
-        public TimeSensor(int index) {
+        TimeSensor(int index) {
             mIndex = index;
         }
 
@@ -1088,5 +1099,5 @@ public class DefaultConditional extends AbstractNamedBean
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditional.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditional.class);
 }

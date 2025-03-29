@@ -944,7 +944,7 @@ public interface Conditional extends NamedBean {
      * @param variableList list of variables
      * @return true if well formed; false otherwise
      */
-    public String validateAntecedent(String ant, List<ConditionalVariable> variableList);
+    public String validateAntecedent(@Nonnull String ant, List<ConditionalVariable> variableList);
 
     /**
      * Stop a sensor timer if one is actively delaying setting of the specified
