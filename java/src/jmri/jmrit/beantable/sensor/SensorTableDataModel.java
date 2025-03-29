@@ -37,14 +37,14 @@ import jmri.util.swing.JmriJOptionPane;
  */
 public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
 
-    static public final int INVERTCOL = BeanTableDataModel.NUMCOLUMN;
-    static public final int EDITCOL = INVERTCOL + 1;
-    static public final int USEGLOBALDELAY = EDITCOL + 1;
-    static public final int ACTIVEDELAY = USEGLOBALDELAY + 1;
-    static public final int INACTIVEDELAY = ACTIVEDELAY + 1;
-    static public final int PULLUPCOL = INACTIVEDELAY + 1;
-    static public final int FORGETCOL = PULLUPCOL + 1;
-    static public final int QUERYCOL = FORGETCOL + 1;
+    public static final int INVERTCOL = BeanTableDataModel.NUMCOLUMN;
+    public static final int EDITCOL = INVERTCOL + 1;
+    public static final int USEGLOBALDELAY = EDITCOL + 1;
+    public static final int ACTIVEDELAY = USEGLOBALDELAY + 1;
+    public static final int INACTIVEDELAY = ACTIVEDELAY + 1;
+    public static final int PULLUPCOL = INACTIVEDELAY + 1;
+    public static final int FORGETCOL = PULLUPCOL + 1;
+    public static final int QUERYCOL = FORGETCOL + 1;
 
     private Manager<Sensor> senManager = null;
     protected boolean _graphicState = false; // icon state col updated from prefs
@@ -415,10 +415,10 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     @Override
     protected boolean matchPropertyName(PropertyChangeEvent e) {
         switch (e.getPropertyName()) {
-            case "inverted":
-            case "GlobalTimer":
-            case "ActiveTimer":
-            case "InActiveTimer":
+            case Sensor.PROPERTY_SENSOR_INVERTED:
+            case Sensor.PROPERTY_GLOBAL_TIMER:
+            case Sensor.PROPERTY_ACTIVE_TIMER:
+            case Sensor.PROPERTY_INACTIVE_TIMER:
                 return true;
             default:
                 return super.matchPropertyName(e);

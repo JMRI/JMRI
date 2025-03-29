@@ -66,6 +66,11 @@ public interface SignalHead extends Signal {
     int HELD = 0x100;
 
     /**
+     * String constant for the appearance property.
+     */
+    String PROPERTY_APPEARANCE = "Appearance";
+
+    /**
      * Get the Signal Head Appearance.
      * Changes in this value can be listened to using the
      * {@literal Appearance} property.

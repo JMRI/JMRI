@@ -1683,6 +1683,20 @@ public class WarrantFrame extends WarrantRoute {
             }
         }
 
+        if (_saveWarrant != null) {
+            _warrant = _saveWarrant;
+            if ((_saveWarrant instanceof SCWarrant && !_isSCWarrant.isSelected()) ||
+                    (!(_saveWarrant instanceof SCWarrant) && _isSCWarrant.isSelected())) {
+                // _saveWarrant already registered, but is not the correct class.
+                InstanceManager.getDefault(WarrantManager.class).deregister(_saveWarrant);
+                _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(
+                        _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+            }
+        } else {
+            _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(
+                    _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+        }
+
         if (_isSCWarrant.isSelected()) {
             ((SCWarrant) _warrant).setForward(_runForward.isSelected());
             ((SCWarrant) _warrant).setTimeToPlatform((long) _TTPtextField.getValue());

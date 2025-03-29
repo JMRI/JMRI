@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.Map.Entry;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -12,9 +13,6 @@ import jmri.implementation.DefaultSignalMastLogic;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a SignalMastLogicManager.
@@ -49,7 +47,11 @@ public class DefaultSignalMastLogicManager
 
     private static final SignalSpeedMap _speedMap = InstanceManager.getDefault(SignalSpeedMap.class);
 
-    public final static SignalSpeedMap getSpeedMap() {
+    private static final String PROPERTY_INTERMEDIATE_SIGNAL = "intermediateSignal";
+
+    private static final String PROPERTY_INTERMEDIATE_SECTION = "intermediateSection";
+
+    public static final SignalSpeedMap getSpeedMap() {
         return _speedMap;
     }
 
@@ -57,6 +59,7 @@ public class DefaultSignalMastLogicManager
      * {@inheritDoc}
      */
     @Override
+    @CheckForNull
     public SignalMastLogic getSignalMastLogic(SignalMast source) {
         for (SignalMastLogic signalMastLogic : _beans) {
             if (signalMastLogic.getSourceMast() == source) {
@@ -72,7 +75,7 @@ public class DefaultSignalMastLogicManager
      */
     @Nonnull
     @Override
-    public SignalMastLogic newSignalMastLogic(SignalMast source) throws IllegalArgumentException {
+    public SignalMastLogic newSignalMastLogic(@Nonnull SignalMast source) throws IllegalArgumentException {
         for (SignalMastLogic signalMastLogic : _beans) {
             if (signalMastLogic.getSourceMast() == source) {
                 return signalMastLogic;
@@ -80,16 +83,16 @@ public class DefaultSignalMastLogicManager
         }
         SignalMastLogic logic = new DefaultSignalMastLogic(source);
         _beans.add(logic);
-        firePropertyChange("length", null, _beans.size());
+        firePropertyChange(PROPERTY_LENGTH, null, _beans.size());
         return logic;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void replaceSignalMast(SignalMast oldMast, SignalMast newMast) {
-        if (oldMast == null || newMast == null) {
-            return;
-        }
+    public void replaceSignalMast(@Nonnull SignalMast oldMast, @Nonnull SignalMast newMast) {
+        Objects.requireNonNull(oldMast);
+        Objects.requireNonNull(newMast);
+
         for (SignalMastLogic source : _beans) {
             if (source.getSourceMast() == oldMast) {
                 source.replaceSourceMast(oldMast, newMast);
@@ -101,10 +104,10 @@ public class DefaultSignalMastLogicManager
 
     /** {@inheritDoc} */
     @Override
-    public void swapSignalMasts(SignalMast mastA, SignalMast mastB) {
-        if (mastA == null || mastB == null) {
-            return;
-        }
+    public void swapSignalMasts(@Nonnull SignalMast mastA, @Nonnull SignalMast mastB) {
+        Objects.requireNonNull(mastA);
+        Objects.requireNonNull(mastB);
+
         List<SignalMastLogic> mastALogicList = getLogicsByDestination(mastA);
         SignalMastLogic mastALogicSource = getSignalMastLogic(mastA);
 
@@ -130,7 +133,7 @@ public class DefaultSignalMastLogicManager
     /** {@inheritDoc} */
     @Nonnull
     @Override
-    public List<SignalMastLogic> getLogicsByDestination(SignalMast destination) {
+    public List<SignalMastLogic> getLogicsByDestination(@Nonnull SignalMast destination) {
         List<SignalMastLogic> list = new ArrayList<>();
         for (SignalMastLogic source : _beans) {
             if (source.isDestinationValid(destination)) {
@@ -151,19 +154,18 @@ public class DefaultSignalMastLogicManager
     @Override
     public boolean isSignalMastUsed(@Nonnull SignalMast mast) {
         SignalMastLogic sml = getSignalMastLogic(mast);
-        if (sml != null) {
+        if ( sml != null
             /* Although we might have it registered as a source, it may not have
              any valid destination, so therefore it can be returned as not in use. */
-            if (!sml.getDestinationList().isEmpty()) {
+            && !sml.getDestinationList().isEmpty()) {
                 return true;
-            }
         }
         return !getLogicsByDestination(mast).isEmpty();
     }
 
     /** {@inheritDoc} */
     @Override
-    public void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest) {
+    public void removeSignalMastLogic(@Nonnull SignalMastLogic sml, @Nonnull SignalMast dest) {
         if (sml.removeDestination(dest)) {
             removeSignalMastLogic(sml);
         }
@@ -171,23 +173,19 @@ public class DefaultSignalMastLogicManager
 
     /** {@inheritDoc} */
     @Override
-    public void removeSignalMastLogic(SignalMastLogic sml) {
-        if (sml == null) {
-            return;
-        }
+    public void removeSignalMastLogic(@Nonnull SignalMastLogic sml) {
+        Objects.requireNonNull(sml);
         //Need to provide a method to delete and dispose.
         sml.dispose();
 
         _beans.remove(sml);
-        firePropertyChange("length", null, _beans.size());
+        firePropertyChange(PROPERTY_LENGTH, null, _beans.size());
     }
 
     /** {@inheritDoc} */
     @Override
-    public void removeSignalMast(SignalMast mast) {
-        if (mast == null) {
-            return;
-        }
+    public void removeSignalMast(@Nonnull SignalMast mast) {
+        Objects.requireNonNull(mast);
         for (SignalMastLogic source : _beans) {
             if (source.isDestinationValid(mast)) {
                 source.removeDestination(mast);
@@ -206,7 +204,7 @@ public class DefaultSignalMastLogicManager
      * @param mast The Signal Mast for which LE info is to be disabled
      */
     @Override
-    public void disableLayoutEditorUse(SignalMast mast) {
+    public void disableLayoutEditorUse(@Nonnull SignalMast mast) {
         SignalMastLogic source = getSignalMastLogic(mast);
         if (source != null) {
             source.disableLayoutEditorUse();
@@ -253,11 +251,10 @@ public class DefaultSignalMastLogicManager
         signalLogicDelay = l;
     }
 
-    protected PropertyChangeListener propertyBlockManagerListener = new PropertyChangeListener() {
+    private final PropertyChangeListener propertyBlockManagerListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("topology")) {
-                //boolean newValue = new Boolean.parseBoolean(String.valueOf(e.getNewValue()));
+            if ( LayoutBlockManager.PROPERTY_TOPOLOGY.equals(e.getPropertyName())) {
                 boolean newValue = (Boolean) e.getNewValue();
                 if (newValue) {
                     for (SignalMastLogic signalMastLogic : _beans) {
@@ -275,7 +272,7 @@ public class DefaultSignalMastLogicManager
         }
     };
 
-    boolean runWhenStablised = false;
+    private boolean runWhenStablised = false;
 
     /**
      * Discover valid destination Signal Masts for a given source Signal Mast on a
@@ -285,8 +282,8 @@ public class DefaultSignalMastLogicManager
      * @param layout Layout Editor panel to check.
      */
     @Override
-    public void discoverSignallingDest(SignalMast source, LayoutEditor layout) throws JmriException {
-        firePropertyChange("autoSignalMastGenerateStart", null, source.getDisplayName());
+    public void discoverSignallingDest(@Nonnull SignalMast source, @Nonnull LayoutEditor layout) throws JmriException {
+        firePropertyChange(PROPERTY_AUTO_SIGNALMAST_GENERATE_START, null, source.getDisplayName());
 
         HashMap<SignalMast, List<NamedBean>> validPaths = new HashMap<>();
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -297,14 +294,11 @@ public class DefaultSignalMastLogicManager
         if (!lbm.routingStablised()) {
             throw new JmriException("routing not stabilised");
         }
-        try {
-            validPaths.put(source, lbm.getLayoutBlockConnectivityTools().discoverPairDest(source, layout, SignalMast.class, LayoutBlockConnectivityTools.Routing.MASTTOMAST));
-        }
-        catch (JmriException e) {
-            throw e;
-        }
 
-        validPaths.entrySet().forEach((entry) -> {
+        validPaths.put(source, lbm.getLayoutBlockConnectivityTools()
+            .discoverPairDest(source, layout, SignalMast.class, LayoutBlockConnectivityTools.Routing.MASTTOMAST));
+
+        validPaths.entrySet().forEach( entry -> {
             SignalMast key = entry.getKey();
             SignalMastLogic sml = getSignalMastLogic(key);
             if (sml == null) {
@@ -320,19 +314,21 @@ public class DefaultSignalMastLogicManager
                         sml.useLayoutEditor(true, (SignalMast) sm);
                     } catch (JmriException e) {
                         //log.debug("We shouldn't get an exception here");
-                        log.error("Exception found when adding pair {}  to destination {}/\n{}", source.getDisplayName(), sm.getDisplayName(), e.toString());
+                        log.error("Exception found when adding pair {}  to destination {}/\n{}",
+                            source.getDisplayName(), sm.getDisplayName(), e.toString());
                         //throw e;
                     }
                 }
             }
-            if (sml.getDestinationList().size() == 1 && sml.getAutoTurnouts(sml.getDestinationList().get(0)).isEmpty()) {
-                key.setProperty("intermediateSignal", true);
+            if (sml.getDestinationList().size() == 1
+                    && sml.getAutoTurnouts(sml.getDestinationList().get(0)).isEmpty()) {
+                key.setProperty(PROPERTY_INTERMEDIATE_SIGNAL, true);
             } else {
-                key.removeProperty("intermediateSignal");
+                key.removeProperty(PROPERTY_INTERMEDIATE_SIGNAL);
             }
         });
         initialise();
-        firePropertyChange("autoSignalMastGenerateComplete", null, source.getDisplayName());
+        firePropertyChange(PROPERTY_AUTO_SIGNALMAST_GENERATE_COMPLETE, null, source.getDisplayName());
     }
 
     /**
@@ -350,11 +346,12 @@ public class DefaultSignalMastLogicManager
             runWhenStablised = true;
             return;
         }
-        HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
-        firePropertyChange("autoGenerateUpdate", null, ("Found " + validPaths.size() + " masts as sources for logic"));
-        InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach((nb) -> {
-            nb.removeProperty("intermediateSignal");
-        });
+        HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools()
+            .discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+        firePropertyChange(PROPERTY_AUTO_GENERATE_UPDATE, null,
+            ("Found " + validPaths.size() + " masts as sources for logic"));
+        InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach(nb ->
+            nb.removeProperty(PROPERTY_INTERMEDIATE_SIGNAL));
         for (Entry<NamedBean, List<NamedBean>> e : validPaths.entrySet()) {
             SignalMast key = (SignalMast) e.getKey();
             SignalMastLogic sml = getSignalMastLogic(key);
@@ -375,12 +372,13 @@ public class DefaultSignalMastLogicManager
                     }
                 }
             }
-            if (sml.getDestinationList().size() == 1 && sml.getAutoTurnouts(sml.getDestinationList().get(0)).isEmpty()) {
-                key.setProperty("intermediateSignal", true);
+            if (sml.getDestinationList().size() == 1
+                    && sml.getAutoTurnouts(sml.getDestinationList().get(0)).isEmpty()) {
+                key.setProperty(PROPERTY_INTERMEDIATE_SIGNAL, true);
             }
         }
         initialise();
-        firePropertyChange("autoGenerateComplete", null, null);
+        firePropertyChange(PROPERTY_AUTO_GENERATE_COMPLETE, null, null);
     }
 
     /**
@@ -389,19 +387,17 @@ public class DefaultSignalMastLogicManager
      */
     public void generateSection() {
         SectionManager sm = InstanceManager.getDefault(SectionManager.class);
-        sm.getNamedBeanSet().stream().map((nb) -> {
+        sm.getNamedBeanSet().stream().map( nb -> {
             if (nb.getSectionType() == Section.SIGNALMASTLOGIC) {
-                nb.removeProperty("intermediateSection");
+                nb.removeProperty(PROPERTY_INTERMEDIATE_SECTION);
             }
             return nb;
-        }).forEachOrdered((nb) -> {
-            nb.removeProperty("forwardMast");
-        });
+        }).forEachOrdered( nb -> nb.removeProperty("forwardMast"));
         for (SignalMastLogic sml : getSignalMastLogicList()) {
             LayoutBlock faceLBlock = sml.getFacingBlock();
             if (faceLBlock != null) {
                 boolean sourceIntermediate = false;
-                Object intermSigProp = sml.getSourceMast().getProperty("intermediateSignal");
+                Object intermSigProp = sml.getSourceMast().getProperty(PROPERTY_INTERMEDIATE_SIGNAL);
                 if (intermSigProp != null) {
                     sourceIntermediate = ((Boolean) intermSigProp);
                 }
@@ -439,15 +435,13 @@ public class DefaultSignalMastLogicManager
                         sml.setAssociatedSection(sec, destMast);
                         sec.setProperty("forwardMast", destMast.getDisplayName());
                         boolean destIntermediate = false;
-                        Object destMastImSigProp = destMast.getProperty("intermediateSignal");
+                        Object destMastImSigProp = destMast.getProperty(PROPERTY_INTERMEDIATE_SIGNAL);
                         if ( destMastImSigProp != null) {
                             destIntermediate = ((Boolean) destMastImSigProp);
                         }
-                        if (sourceIntermediate || destIntermediate) {
-                            sec.setProperty("intermediateSection", true);
-                        } else {
-                            sec.setProperty("intermediateSection", false);
-                        }
+
+                        sec.setProperty(PROPERTY_INTERMEDIATE_SECTION, sourceIntermediate || destIntermediate);
+
                         //Not 100% sure about this for now so will comment out
                         //sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
                     }
@@ -503,5 +497,5 @@ public class DefaultSignalMastLogicManager
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);
 }

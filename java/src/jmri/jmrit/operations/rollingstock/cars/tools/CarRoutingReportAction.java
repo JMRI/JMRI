@@ -8,6 +8,7 @@ import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarSetFrame;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainPrintUtilities;
