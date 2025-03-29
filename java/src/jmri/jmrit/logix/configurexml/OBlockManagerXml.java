@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 
+import javax.annotation.Nonnull;
+
 import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -73,14 +75,16 @@ public class OBlockManagerXml // extends XmlFile
                 elem.setAttribute("length", "" + block.getLengthMm());
                 elem.setAttribute("units", block.isMetric() ? "true" : "false");
                 elem.setAttribute("curve", "" + block.getCurvature());
-                if (block.getNamedSensor() != null) {
+                var namedSensor = block.getNamedSensor();
+                if (namedSensor != null) {
                     Element se = new Element("sensor");
-                    se.setAttribute("systemName", block.getNamedSensor().getName());
+                    se.setAttribute("systemName", namedSensor.getName());
                     elem.addContent(se);
                 }
-                if (block.getNamedErrorSensor() != null) {
+                var errorSensor = block.getNamedErrorSensor();
+                if ( errorSensor != null) {
                     Element se = new Element("errorSensor");
-                    se.setAttribute("systemName", block.getNamedErrorSensor().getName());
+                    se.setAttribute("systemName", errorSensor.getName());
                     elem.addContent(se);
                 }
                 var reporter = block.getReporter();
@@ -110,7 +114,7 @@ public class OBlockManagerXml // extends XmlFile
         return blocks;
     }
 
-    static private Element storePortal(Portal portal) {
+    private static Element storePortal(@Nonnull Portal portal) {
         Element elem = new Element("portal");
         elem.setAttribute("portalName", portal.getName());
         OBlock block = portal.getFromBlock();
@@ -162,14 +166,16 @@ public class OBlockManagerXml // extends XmlFile
      * Key is sufficient to mark the Portal's knowledge of the path. Full path
      * info will get loaded from the HashMap.
      */
-    static private Element storePathKey(OPath path) {
+    @Nonnull
+    private static Element storePathKey( @Nonnull OPath path) {
         Element elem = new Element("path");
         elem.setAttribute("pathName", path.getName());
         elem.setAttribute("blockName", "" + path.getBlock().getSystemName());
         return elem;
     }
 
-    static private Element storePath(OPath path) {
+    @Nonnull
+    private static Element storePath( @Nonnull OPath path) {
         Element elem = new Element("path");
         elem.setAttribute("pathName", path.getName());
         elem.setAttribute("blockName", "" + path.getBlock().getSystemName());
@@ -221,6 +227,7 @@ public class OBlockManagerXml // extends XmlFile
         return block;
     }
 
+    @Nonnull
     private OPath getPath(OBlock block, String name) {
         String key = block.getSystemName() + name;
         OPath path = _pathMap.get(key);
@@ -251,7 +258,7 @@ public class OBlockManagerXml // extends XmlFile
         log.error("load called. Invalid method.");
     }
 
-    private void loadBlock(Element elem) {
+    private void loadBlock(@Nonnull Element elem) {
         if (elem.getAttribute("systemName") == null) {
             log.error("unexpected null for block systemName elem = {}", elem);
             return;
@@ -284,7 +291,7 @@ public class OBlockManagerXml // extends XmlFile
         if (sensors.size() > 1) {
             log.error("More than one sensor present: {}", sensors.size());
         }
-        if (sensors.size() > 0) {
+        if (!sensors.isEmpty()) {
             // sensor
             String name = sensors.get(0).getAttribute("systemName").getValue();
             block.setSensor(name);
