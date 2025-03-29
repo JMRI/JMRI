@@ -52,6 +52,66 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     public static final String EStop = Bundle.getMessage("EStop");
     public static final String Normal ="Normal";    // Cannot determine which SignalSystem(s) and their name(s) for "Clear"
 
+    /**
+     * String constant for property warrant start.
+     */
+    public static final String PROPERTY_WARRANT_START = "WarrantStart";
+
+    /**
+     * String constant for property stop warrant.
+     */
+    public static final String PROPERTY_STOP_WARRANT = "StopWarrant";
+
+    /**
+     * String constant for property throttle fail.
+     */
+    public static final String PROPERTY_THROTTLE_FAIL = "throttleFail";
+
+    /**
+     * String constant for property abort learn.
+     */
+    public static final String PROPERTY_ABORT_LEARN = "abortLearn";
+
+    /**
+     * String constant for property control change.
+     */
+    public static final String PROPERTY_CONTROL_CHANGE = "controlChange";
+
+    /**
+     * String constant for property control failed.
+     */
+    public static final String PROPERTY_CONTROL_FAILED = "controlFailed";
+
+    /**
+     * String constant for property ready to run.
+     */
+    public static final String PROPERTY_READY_TO_RUN = "ReadyToRun";
+
+    /**
+     * String constant for property cannot run.
+     */
+    public static final String PROPERTY_CANNOT_RUN = "cannotRun";
+
+    /**
+     * String constant for property block change.
+     */
+    public static final String PROPERTY_BLOCK_CHANGE = "blockChange";
+
+    /**
+     * String constant for property signal overrun.
+     */
+    public static final String PROPERTY_SIGNAL_OVERRUN = "SignalOverrun";
+
+    /**
+     * String constant for property warrant overrun.
+     */
+    public static final String PROPERTY_WARRANT_OVERRUN = "WarrantOverrun";
+
+    /**
+     * String constant for property warrant start.
+     */
+    public static final String PROPERTY_OCCUPY_OVERRUN = "OccupyOverrun";
+
     // permanent members.
     private List<BlockOrder> _orders;
     private BlockOrder _viaOrder;
@@ -92,7 +152,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     private boolean _waitForWarrant;
     private String _curSignalAspect;   // speed type to restore when flags are cleared;
     protected String _message; // last message returned from an action
-    private ThrottleManager tm;
+    private final ThrottleManager tm;
 
     // Running modes
     public static final int MODE_NONE = 0;
@@ -894,7 +954,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 bundleKey = "warrantEnd";
             }
         }
-        fireRunStatus("StopWarrant", blockName, bundleKey);
+        fireRunStatus(PROPERTY_STOP_WARRANT, blockName, bundleKey);
     }
 
     /**
@@ -1015,7 +1075,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         if (msg != null) {
-            fireRunStatus("throttleFail", null, msg);
+            fireRunStatus(PROPERTY_THROTTLE_FAIL, null, msg);
             abortWarrant(msg);
             return msg;
         }
@@ -1026,7 +1086,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     public void notifyThrottleFound(DccThrottle throttle) {
         if (throttle == null) {
             _message = Bundle.getMessage("noThrottle", getDisplayName());
-            fireRunStatus("throttleFail", null, _message);
+            fireRunStatus(PROPERTY_THROTTLE_FAIL, null, _message);
             abortWarrant(_message);
             return;
         }
@@ -1043,7 +1103,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
         _message = Bundle.getMessage("noThrottle",
                 (reason + " " + (address != null ? address.getNumber() : getDisplayName())));
-        fireRunStatus("throttleFail", null, reason);
+        fireRunStatus(PROPERTY_THROTTLE_FAIL, null, reason);
         abortWarrant(_message);
     }
 
@@ -1104,7 +1164,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 case ABORT:
                     if (_runMode == Warrant.MODE_LEARN) {
                         // let WarrantFrame do the abort. (WarrantFrame listens for "abortLearn")
-                        fireRunStatus("abortLearn", -MODE_LEARN, _idxCurrentOrder);
+                        fireRunStatus(PROPERTY_ABORT_LEARN, -MODE_LEARN, _idxCurrentOrder);
                     } else {
                         stopWarrant(true, true);
                     }
@@ -1242,14 +1302,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
         if (ret) {
-            fireRunStatus("controlChange", runState, idx);
+            fireRunStatus(PROPERTY_CONTROL_CHANGE, runState, idx);
         } else {
             if (_trace || log.isDebugEnabled()) {
                 log.info(Bundle.getMessage("controlFailed",
                         getTrainName(), _message,
                         Bundle.getMessage(Warrant.CNTRL_CMDS[idx])));
             }
-            fireRunStatus("controlFailed", _message, idx);
+            fireRunStatus(PROPERTY_CONTROL_FAILED, _message, idx);
         }
         return ret;
     }
@@ -1393,7 +1453,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         OBlock b = bo.getBlock();
         b.setValue(_trainName);
         b.setState(b.getState() | OBlock.RUNNING);
-        firePropertyChange("WarrantStart", Integer.valueOf(MODE_NONE), Integer.valueOf(_runMode));
+        firePropertyChange(PROPERTY_WARRANT_START, MODE_NONE, _runMode);
     }
 
     private void runWarrant(DccThrottle throttle) {
@@ -1415,7 +1475,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (_delayStart || _haltStart) {
                 _engineer.setHalt(true);    // throttle already at 0
                 // user must explicitly start train (resume) in a dark block
-                fireRunStatus("ReadyToRun", -1, 0);   // ready to start msg
+                fireRunStatus(PROPERTY_READY_TO_RUN, -1, 0);   // ready to start msg
             }
             _delayStart = false;
             _engineer.start();
@@ -1690,7 +1750,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         if (_runMode == MODE_RUN && _engineer == null) {
                             _message = acquireThrottle();
                         } else if (_runMode == MODE_MANUAL) {
-                            fireRunStatus("ReadyToRun", -1, 0);   // ready to start msg
+                            fireRunStatus(PROPERTY_READY_TO_RUN, -1, 0);   // ready to start msg
                             _delayStart = false;
                         }
                         block._entryTime = System.currentTimeMillis();
@@ -2022,7 +2082,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if (_trace || log.isDebugEnabled()) {
                 log.info(Bundle.getMessage("trainWaiting", getTrainName(), _message, blockName));
             }
-            fireRunStatus("cannotRun", blockName, _message);
+            fireRunStatus(PROPERTY_CANNOT_RUN, blockName, _message);
         }
         return returnOK;
     }
@@ -3180,13 +3240,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
         String bundleKey = null;
         if (_waitForWarrant) {
-            bundleKey ="WarrantOverrun";
+            bundleKey = PROPERTY_WARRANT_OVERRUN;
             Warrant w = curBlock.getWarrant();
             if (w != null) {
                 name = w.getDisplayName();
             }
         } else if (_waitForBlock){
-            bundleKey ="OccupyOverrun";
+            bundleKey = PROPERTY_OCCUPY_OVERRUN;
             name = (String)curBlock.getValue();
         }
         if (name == null) {
