@@ -10,8 +10,6 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SignalMast implemented via one SignalHead object.
@@ -93,7 +91,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         }
     }
 
-    private void configureHeads(String parts[], int start) {
+    private void configureHeads(String[] parts, int start) {
         heads = new ArrayList<>();
         for (int i = start; i < parts.length; i++) {
             String name = parts[i];
@@ -223,12 +221,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             // If a delay is required we will fire this off into a seperate thread and let it get on with it.
             final HashMap<SignalHead, Integer> thrDelayedSet = delayedSet;
             final int thrDelay = delay;
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    setDelayedAppearances(thrDelayedSet, thrDelay);
-                }
-            };
+            Runnable r = () -> setDelayedAppearances(thrDelayedSet, thrDelay);
             Thread thr = jmri.util.ThreadingUtil.newThread(r);
             thr.setName(getDisplayName() + " delayed set appearance");
             thr.setDaemon(true);
@@ -301,18 +294,18 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
-        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
-            if (nb instanceof SignalHead) {
-                for (NamedBeanHandle<SignalHead> bean : getHeadsUsed()) {
-                    if (bean.getBean().equals(nb)) {
-                        java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                        throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseSignalHeadSignalMastVeto", getDisplayName()), e);
-                    }
+        if (jmri.Manager.PROPERTY_CAN_DELETE.equals(evt.getPropertyName()) && nb instanceof SignalHead) {
+            for (NamedBeanHandle<SignalHead> bean : getHeadsUsed()) {
+                if (bean.getBean().equals(nb)) {
+                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(
+                        this, jmri.Manager.PROPERTY_DO_NOT_DELETE, null, null);
+                    throw new java.beans.PropertyVetoException(
+                        Bundle.getMessage("InUseSignalHeadSignalMastVeto", getDisplayName()), e);
                 }
             }
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalHeadSignalMast.class);
 
 }
