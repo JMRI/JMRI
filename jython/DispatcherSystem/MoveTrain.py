@@ -583,7 +583,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         engineRoad = "Set by Dispatcher System"
         engineNumber = new_train_name
         engine = EngineManager.newRS(engineRoad, engineNumber)
-        #get the current speed factor of the engine
+        # get the current speed factor of the engine
         default = "100"  # percentage
         comment = engine.getComment()
         split_comment = []
@@ -1182,8 +1182,8 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         engineRoad = "Set by Dispatcher System"
         engineNumber = new_train_name
         engine = EngineManager.newRS(engineRoad, engineNumber)
-        #get the current speed factor of the engine
-        default = "10"  # percentage
+        # get the current speed factor of the engine
+        default = "100"  # percentage
         comment = engine.getComment()
         split_comment = []
         if "speed factor" in comment:
