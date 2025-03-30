@@ -789,7 +789,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     def addControlIconsAndLabels(self):
         if (not self.version_number_changed()) and self.dispatcher_system_panel_exists():
-            if self.logLevel > -1: print "not adding control Icons and labels"
+            if self.logLevel > 0: print "not adding control Icons and labels"
             return
 
         # Create the Dispatcher System control panel
