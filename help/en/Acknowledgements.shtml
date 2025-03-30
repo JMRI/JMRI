@@ -411,6 +411,9 @@
         System</a> tools for working with Dispatcher.
         </li>
 
+        <li>Dieter Flunkert, who contributed a decoder definition for the 
+            Decoderwerk LokComander.
+            
         <li>Dan Foltz created the Manifest Creator and Switch List Creator for operations</li>
 
         <li>Marco Forcone, who sacrificed two turnouts motors to the cause of debugging XPressNet
