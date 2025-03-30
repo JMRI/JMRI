@@ -1709,6 +1709,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             contentPane.add(but);
         }
         if (editActionMode) {
+
             // initialize window for the action being edited
             addEditActionFrame.setTitle(rbx.getString("TitleEditAction"));
             updateActionButton.setVisible(true);
@@ -1720,6 +1721,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             // spinners are set in setWhat()
             tWhatString2 = curTSA.getStringWhat2();
             tWhatString = curTSA.getStringWhat();
+            tWhatData1 = curTSA.getDataWhat1();
+            tWhat = curTSA.getWhatCode();
+            tWhen = curTSA.getWhenCode();
+            tWhenData =  curTSA.getDataWhen();
+            tWhatData2 = curTSA.getDataWhat2();
             whatStringField.setText(tWhatString);
             onButton.setSelected(true);
             if ("Off".equals(curTSA.getStringWhat())) {
@@ -2688,7 +2694,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             case TransitSectionAction.FORCEALLOCATEPASSSAFESECTION:
                 return rbx.getString("ForcePassNextSafe");
             case TransitSectionAction.LOADTRAININFO:
-                switch (tWhatData2) {
+                switch (tsa.getDataWhat2()) {
                     case TransitSectionAction.LOCOADDRESSTYPEROSTER:
                         return java.text.MessageFormat.format(rbx.getString("LoadTrainInfoRosterFull"),
                                 new Object[]{tsa.getStringWhat(),tsa.getStringWhat2()});
