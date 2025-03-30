@@ -677,19 +677,14 @@ class MyTableModel6 (DefaultTableModel):
                 self.data.pop(row)
 
     def add_row(self):
-        # TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
-        # train_list = TrainManager.getTrainsByTimeList()
-        [route_col, edit_col, delete_col] = [0, 1, 2]
-        # for row in reversed(range(len(self.data))):
 
-        # indices = [int(train.getName().split("Train",1)[1]) for train in train_list if train.getName().startswith("Train")]
-        indices = [int(self.data[row][train_name_col].split("Train",1)[1]) for row in reversed(range(len(self.data)))
-                   if self.data[row][train_name_col].startswith("Train")]
-        if indices == []:
-            index = 1
-        else:
-            index = max(indices) + 1
-        train_name = "Train" + str(index)
+        # indices = [int(self.data[row][train_name_col].split("Train",1)[1]) for row in reversed(range(len(self.data)))
+        #            if self.data[row][train_name_col].startswith("Train")]
+        # if indices == []:
+        #     index = 1
+        # else:
+        #     index = max(indices) + 1
+        train_name = "Please Assign"
         self.data.append(["00:00", "", "Once", False, train_name, False])
         # print self.data
         # print "added"

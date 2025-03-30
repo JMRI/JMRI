@@ -52,7 +52,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         String previousLocationName = null;
         boolean hasWork;
         for (JsonNode location : locations) {
-            RouteLocation routeLocation = train.getRoute().getLocationById(location.path(JSON.NAME).textValue());
+            RouteLocation routeLocation = train.getRoute().getRouteLocationById(location.path(JSON.NAME).textValue());
             log.debug("Processing {} ({})", routeLocation.getName(), location.path(JSON.NAME).textValue());
             String routeLocationName = location.path(JSON.USERNAME).textValue();
             builder.append(String.format(locale, strings.getProperty("LocationStart"), routeLocation.getId())); // NOI18N

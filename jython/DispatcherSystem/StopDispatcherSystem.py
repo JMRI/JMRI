@@ -327,9 +327,9 @@ class MyModelListener3(TableModelListener):
         global trains
         # train = [trains[t_name] for t_name in trains if t_name == train_name]
         train = trains[train_name]
-        print "train", train
+        # print "train", train
         direction_of_train = train["direction"]
-        print "direction_of_train", direction_of_train
+        # print "direction_of_train", direction_of_train
         if direction_of_train == "forward":
             direction_of_train = "reverse"
         else:

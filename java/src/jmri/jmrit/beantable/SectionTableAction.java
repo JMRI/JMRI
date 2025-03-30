@@ -844,6 +844,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         if (blockBox == null) {
             blockBox = new NamedBeanComboBox<>(InstanceManager.getDefault(BlockManager.class));
         }
+        blockBox.setSelectedItem(null);
         if (blockList.isEmpty()) {
             // No blocks selected, all blocks are eligible
             blockBox.setExcludedItems(new HashSet<>());

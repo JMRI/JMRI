@@ -6,8 +6,6 @@ import javax.swing.JComponent;
 import jmri.Throttle;
 import jmri.jmrit.vsdecoder.swing.DieselPane;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handles sound events for all types.
@@ -40,16 +38,8 @@ public class EngineSoundEvent extends SoundEvent {
      // for creating the button listeners.
      */
 
-    public EngineSoundEvent() {
-        this(null, null);
-    }
-
     public EngineSoundEvent(String n) {
-        this(n, n);
-    }
-
-    public EngineSoundEvent(String n, String bl) {
-        super(n, bl);
+        super(n);
         engine_pane = null;
     }
 
@@ -169,11 +159,12 @@ public class EngineSoundEvent extends SoundEvent {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="BC_UNCONFIRMED_CAST", justification="DieselPane extends EnginePane")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="BC_UNCONFIRMED_CAST",
+            justification="DieselPane extends EnginePane")
     private void setDecoderVolume() {
         // Get decoder volume and pass it to the spinner
         int dv = Math.round(this.getParent().getDecoderVolume() * 100f);
-        ((DieselPane) engine_pane).volume_slider.setValue(dv);
+        ((DieselPane) engine_pane).getVolumeSlider().setValue(dv);
     }
 
     @Override
@@ -237,6 +228,6 @@ public class EngineSoundEvent extends SoundEvent {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(EngineSoundEvent.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EngineSoundEvent.class);
 
 }

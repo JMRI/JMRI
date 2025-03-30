@@ -15,6 +15,7 @@ import jmri.jmrit.Sound;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.entryexit.DestinationPoints;
+import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.script.JmriScriptEngineManager;
@@ -52,7 +53,9 @@ public class DefaultConditionalExecute {
     }
 
     void delayedTurnout(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull TimeTurnout timeTurnout, boolean reset, String devName) {
-        if (reset) action.stopTimer();
+        if (reset) {
+            action.stopTimer();
+        }
         if (!action.isTimerActive()) {
             // Create a timer if one does not exist
             Timer timer = action.getTimer();
@@ -76,7 +79,7 @@ public class DefaultConditionalExecute {
     }
 
     void cancelTurnoutTimers(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
-        ConditionalManager cmg = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
+        ConditionalManager cmg = InstanceManager.getDefault(ConditionalManager.class);
         java.util.Iterator<Conditional> iter = cmg.getNamedBeanSet().iterator();
         while (iter.hasNext()) {
             String sname = iter.next().getSystemName();
@@ -191,7 +194,9 @@ public class DefaultConditionalExecute {
     }
 
     void delayedSensor(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull TimeSensor timeSensor, int delay, boolean reset, String devName) {
-        if (reset) action.stopTimer();
+        if (reset) {
+            action.stopTimer();
+        }
         if (!action.isTimerActive()) {
             // Create a timer if one does not exist
             Timer timer = action.getTimer();
@@ -214,7 +219,7 @@ public class DefaultConditionalExecute {
     }
 
     void cancelSensorTimers(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
-        ConditionalManager cm = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
+        ConditionalManager cm = InstanceManager.getDefault(ConditionalManager.class);
         java.util.Iterator<Conditional> itr = cm.getNamedBeanSet().iterator();
         while (itr.hasNext()) {
             String sname = itr.next().getSystemName();
@@ -309,7 +314,7 @@ public class DefaultConditionalExecute {
     }
 
     void enableLogix(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
-        Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
+        Logix x = InstanceManager.getDefault(LogixManager.class).getLogix(devName);
         if (x == null) {
             errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -319,7 +324,7 @@ public class DefaultConditionalExecute {
     }
 
     void disableLogix(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
-        Logix x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
+        Logix x = InstanceManager.getDefault(LogixManager.class).getLogix(devName);
         if (x == null) {
             errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -355,26 +360,26 @@ public class DefaultConditionalExecute {
 
     @SuppressWarnings({"deprecation"})  // date.setHours, date.setMinutes, date.setSeconds
     void setFastClockTime(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount) {
-        Date date = InstanceManager.getDefault(jmri.Timebase.class).getTime();
+        Date date = InstanceManager.getDefault(Timebase.class).getTime();
         date.setHours(action.getActionData() / 60);
         date.setMinutes(action.getActionData() - ((action.getActionData() / 60) * 60));
         date.setSeconds(0);
-        InstanceManager.getDefault(jmri.Timebase.class).userSetTime(date);
+        InstanceManager.getDefault(Timebase.class).userSetTime(date);
         increaseCounter(actionCount);
     }
 
     void startFastClock(@Nonnull Reference<Integer> actionCount) {
-        InstanceManager.getDefault(jmri.Timebase.class).setRun(true);
+        InstanceManager.getDefault(Timebase.class).setRun(true);
         increaseCounter(actionCount);
     }
 
     void stopFastClock(@Nonnull Reference<Integer> actionCount) {
-        InstanceManager.getDefault(jmri.Timebase.class).setRun(false);
+        InstanceManager.getDefault(Timebase.class).setRun(false);
         increaseCounter(actionCount);
     }
 
     void controlAudio(@Nonnull ConditionalAction action, String devName) {
-        Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).getAudio(devName);
+        Audio audio = InstanceManager.getDefault(AudioManager.class).getAudio(devName);
         if (audio == null) {
             return;
         }
@@ -694,7 +699,7 @@ public class DefaultConditionalExecute {
     }
 
     void setNXPairEnabled(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
-        DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+        DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean(devName);
         if (dp == null) {
             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -704,7 +709,7 @@ public class DefaultConditionalExecute {
     }
 
     void setNXPairDisabled(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
-        DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+        DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean(devName);
         if (dp == null) {
             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -714,11 +719,11 @@ public class DefaultConditionalExecute {
     }
 
     void setNXPairSegment(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
-        DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+        DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean(devName);
         if (dp == null) {
             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
         } else {
-            jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).
+            InstanceManager.getDefault(EntryExitPairs.class).
                     setSingleSegmentRoute(devName);
             increaseCounter(actionCount);
         }
@@ -730,5 +735,5 @@ public class DefaultConditionalExecute {
         actionCount.set(value != null ? value+1 : 0);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalExecute.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalExecute.class);
 }

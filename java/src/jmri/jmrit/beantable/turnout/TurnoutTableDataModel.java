@@ -32,21 +32,21 @@ import jmri.util.swing.*;
  */
 public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
 
-    static public final int INVERTCOL = BeanTableDataModel.NUMCOLUMN;
-    static public final int LOCKCOL = INVERTCOL + 1;
-    static public final int EDITCOL = LOCKCOL + 1;
-    static public final int KNOWNCOL = EDITCOL + 1;
-    static public final int MODECOL = KNOWNCOL + 1;
-    static public final int SENSOR1COL = MODECOL + 1;
-    static public final int SENSOR2COL = SENSOR1COL + 1;
-    static public final int OPSONOFFCOL = SENSOR2COL + 1;
-    static public final int OPSEDITCOL = OPSONOFFCOL + 1;
-    static public final int LOCKOPRCOL = OPSEDITCOL + 1;
-    static public final int LOCKDECCOL = LOCKOPRCOL + 1;
-    static public final int STRAIGHTCOL = LOCKDECCOL + 1;
-    static public final int DIVERGCOL = STRAIGHTCOL + 1;
-    static public final int FORGETCOL = DIVERGCOL + 1;
-    static public final int QUERYCOL = FORGETCOL + 1;
+    public static final int INVERTCOL = BeanTableDataModel.NUMCOLUMN;
+    public static final int LOCKCOL = INVERTCOL + 1;
+    public static final int EDITCOL = LOCKCOL + 1;
+    public static final int KNOWNCOL = EDITCOL + 1;
+    public static final int MODECOL = KNOWNCOL + 1;
+    public static final int SENSOR1COL = MODECOL + 1;
+    public static final int SENSOR2COL = SENSOR1COL + 1;
+    public static final int OPSONOFFCOL = SENSOR2COL + 1;
+    public static final int OPSEDITCOL = OPSONOFFCOL + 1;
+    public static final int LOCKOPRCOL = OPSEDITCOL + 1;
+    public static final int LOCKDECCOL = LOCKOPRCOL + 1;
+    public static final int STRAIGHTCOL = LOCKDECCOL + 1;
+    public static final int DIVERGCOL = STRAIGHTCOL + 1;
+    public static final int FORGETCOL = DIVERGCOL + 1;
+    public static final int QUERYCOL = FORGETCOL + 1;
 
     private boolean _graphicState;
     private TurnoutManager turnoutManager;
@@ -625,16 +625,17 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
     @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
         switch (e.getPropertyName()) {
-            case "locked":
-            case "inverted":
-            case "feedbackchange": // feedback type setting change, NOT Turnout feedback status
-            case "TurnoutDivergingSpeedChange":
-            case "TurnoutStraightSpeedChange":
-            case "turnoutFeedbackFirstSensorChange":
-            case "turnoutFeedbackSecondSensorChange":
-            case "decoderNameChange":
-            case "TurnoutOperationState":
-            case "KnownState":
+            case Turnout.PROPERTY_LOCKED:
+            case Turnout.PROPERTY_INVERTED:
+            case Turnout.PROPERTY_FEEDBACK_MODE: // feedback type setting change, NOT Turnout feedback status
+            case Turnout.PROPERTY_TURNOUT_DIVERGING_SPEED:
+            case Turnout.PROPERTY_TURNOUT_STRAIGHT_SPEED:
+            case Turnout.PROPERTY_TURNOUT_FEEDBACK_FIRST_SENSOR:
+            case Turnout.PROPERTY_TURNOUT_FEEDBACK_SECOND_SENSOR:
+            case Turnout.PROPERTY_DECODER_NAME:
+            case Turnout.PROPERTY_TURNOUT_OPERATION_STATE:
+            case Turnout.PROPERTY_KNOWN_STATE:
+            case Turnout.PROPERTY_COMMANDED_STATE:
                 return true;
             default:
                 return super.matchPropertyName(e);
@@ -644,10 +645,10 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         switch (e.getPropertyName()) {
-            case "DefaultTurnoutClosedSpeedChange":
+            case TurnoutManager.PROPERTY_DEFAULT_CLOSED_SPEED:
                 updateClosedList();
                 break;
-            case "DefaultTurnoutThrownSpeedChange":
+            case TurnoutManager.PROPERTY_DEFAULT_THROWN_SPEED:
                 updateThrownList();
                 break;
             default:
@@ -987,6 +988,6 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
 
     protected static java.util.concurrent.atomic.AtomicBoolean editingOps = new java.util.concurrent.atomic.AtomicBoolean(false);
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutTableDataModel.class);
 
 }

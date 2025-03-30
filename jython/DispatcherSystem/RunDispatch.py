@@ -562,7 +562,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             if self.modify_individual_station_wait_time(sensor_changed, button_sensor_name, button_station_name):
                 sensor_changed.setKnownState(INACTIVE)
             else:
-                #cancelled: reset all buttons so we check all of them
+                #reset all buttons so we check all of them
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif modify_station_direction_sensor.getKnownState() == ACTIVE:
             # sensor_changed_saved = sensor_changed
@@ -571,25 +572,32 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # so that the express routes are the shortest path allowed
                 ResetButtonMaster().regenerate_traininfo_files("Regenerated TrainInfo Files")
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
+                self.button_sensors_to_watch = copy.copy(self.button_sensors)
             else:
-                #cancelled: reset all buttons so we check all of them
+                #reset all buttons so we check all of them
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif modify_stop_sensors_sensor.getKnownState() == ACTIVE:
             if self.modify_stop_sensors1(sensor_changed, button_sensor_name, button_station_name):
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
             else:
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         elif inhibit_running_transit_if_block_occupied_sensor.getKnownState() == ACTIVE:
             if self.restrict_transit_operation(sensor_changed, button_sensor_name, button_station_name):
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
                 #ensure that we can press inhibit_running_transit_if_block_occupied_sensor
                 #self.rbm.switch_sensors_requiring_station_buttons(inhibit_running_transit_if_block_occupied_sensor, "sensor_off")
             else:
-                #cancelled: reset all buttons so we check all of them
+                #reset all buttons so we check all of them
                 sensor_changed.setKnownState(INACTIVE)
+                self.reset_selection_buttons()
                 self.button_sensors_to_watch = copy.copy(self.button_sensors)
         else:
             title = "station button error"

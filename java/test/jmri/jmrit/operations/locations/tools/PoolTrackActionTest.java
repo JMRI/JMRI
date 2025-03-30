@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.gui.YardEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 

@@ -15,6 +15,8 @@ import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
+import jmri.jmrit.operations.setup.backup.AutoBackup;
+import jmri.jmrit.operations.setup.backup.AutoSave;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.ColorUtil;
@@ -271,6 +273,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean switchListRouteComment = true; // when true, switch list have route location comments
     private boolean trackSummary = true; // when true, print switch list track summary
     private boolean groupCarMoves = false; // when true, car moves are grouped together
+    private boolean locoLast = false; // when true, loco set outs printed last
 
     private boolean switchListRealTime = true; // when true switch list only show work for built trains
     private boolean switchListAllTrains = true; // when true show all trains that visit the location
@@ -850,6 +853,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static boolean isGroupCarMovesEnabled() {
         return getDefault().groupCarMoves;
+    }
+
+    public static void setPrintLocoLast(boolean b) {
+        getDefault().locoLast = b;
+    }
+
+    public static boolean isPrintLocoLastEnabled() {
+        return getDefault().locoLast;
     }
 
     public static void setSwitchListRealTime(boolean b) {
@@ -2035,6 +2046,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.PRINT_CABOOSE_LOAD, isPrintCabooseLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_PASSENGER_LOAD, isPrintPassengerLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.GROUP_MOVES, isGroupCarMovesEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_LOCO_LAST, isPrintLocoLastEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
         // new format June 2014
@@ -2689,6 +2701,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String enable = a.getValue();
                 log.debug("manifest group car moves: {}", enable);
                 setGroupCarMoves(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_LOCO_LAST)) != null) {
+                String enable = a.getValue();
+                log.debug("manifest print loco last: {}", enable);
+                setPrintLocoLast(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.HAZARDOUS_MSG)) != null) {
                 String message = a.getValue();

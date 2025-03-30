@@ -6,8 +6,6 @@ import java.beans.PropertyChangeListener;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Drive a single signal head via one "Turnout" object.
@@ -112,7 +110,8 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
             } else if ((mAppearance == mOnAppearance) || (mAppearance == (mOnAppearance * 2))) {
                 setTurnoutState(Turnout.THROWN);
             } else {
-                log.warn("Unexpected new appearance: {}", mAppearance);
+                log.warn("Unexpected: Single Output Red / Green SignalHeads cannot display new appearance: {}",
+                    describeState(mAppearance));
             }
         }
     }
@@ -292,6 +291,6 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead implements Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHead.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SingleTurnoutSignalHead.class);
 
 }

@@ -76,6 +76,7 @@
 
     <xs:simpleType name="LogixNG_NamedBeanType">
       <xs:restriction base="xs:token">
+         <xs:enumeration value="Audio"/>
          <xs:enumeration value="Block"/>
          <xs:enumeration value="GlobalVariable"/>
          <xs:enumeration value="EntryExit"/>

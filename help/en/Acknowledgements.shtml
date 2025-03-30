@@ -770,9 +770,10 @@
 
         <li>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder</li>
 
-        <li>Eckart Meyer, <!-- emey05 -->
-         who updated the aspect controls in the DB HV 1969 signals
-         and provided the BiDiB implementation.</li>
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aemey05">Eckart Meyer</a>, <!-- emey05 -->
+         who provided the BiDiB implementation,
+         updated the aspect controls in the DB HV 1969 signals
+         and provided enhanced Z21 server support.</li>
 
         <li>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.</li>
 
@@ -911,6 +912,8 @@
         <li>Simon Reader, who improved the throttle, added a check for completed status to Routes,
         and added the "invert" option to LocoNet Turnouts.</li>
 
+        <li>Michael Richardson, who sorted out some formats for the LocoNet Monitor.</li>
+        
         <li>Mark Riddoch, who provided the Reporter implementation for CBus to enable the use of
         CBus attached RFID readers.</li>
 
@@ -1159,6 +1162,9 @@
         "https://mgbrr.org/files/tips/lessons-learned-on-hares-wabbits-v1.pdf">description of how to
         program Hare and Wabbit controllers</a> using JMRI.
         </li>
+
+        <li>Iain White, <!-- ch4lkst3r -->
+        who fixed a problem with roster group deletion.</li>
 
         <li>Rich White II, who provided the images for our small Nixie tube clock</li>
 

@@ -102,9 +102,18 @@
       Then, either enter the desired number of bytes and click Read, 
       or the data to write and push Write.</p>
 
-      <p>Finally, the "Open CDI Config Tool" button will open a configuration window
+      <p>Finally, there are some high-level operations:
+      <ul>
+      <li>The "Restart" button will restart (reboot) the selected
+      node.</li>
+      <li>The "Open CDI Config Tool" button will open a configuration window
       for the node selected above. The button is only enabled if that node
-      has indicated that it does have CDI information.</p>
+      has indicated that it does have CDI information.</li>
+      <li>The "Force CDI Reload" button will close any 
+      configuration windows for the selected node, and then
+      force a reload of the configuration description information (CDI) the
+      next time the node's configuration window is opened.</li>
+      </ul>
       
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

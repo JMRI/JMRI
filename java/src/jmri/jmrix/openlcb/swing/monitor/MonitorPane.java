@@ -231,6 +231,22 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
                             formatted = prefix + ": Traction Control Reply unknown";
                             break;
                     }
+                } else if (((header & 0x0FFF8000) == 0x09F10000) && (content.length > 0)) {
+                    // EWP sections
+                    switch (header & 0x7000) {
+                        case 0x6000:
+                            formatted = prefix + ": Events with Payload 1st frame";
+                            break;
+                        case 0x5000:
+                            formatted = prefix + ": Events with Payload middle frame";
+                            break;
+                        case 0x4000:
+                            formatted = prefix + ": Events with Payload last frame";
+                            break;
+                        default:
+                            formatted = prefix + ": Events with Payload unknown";
+                            break;
+                    }
                 } else {
                     formatted = prefix + ": Unknown message " + raw;
                 }

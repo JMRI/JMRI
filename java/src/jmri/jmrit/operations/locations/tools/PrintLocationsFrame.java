@@ -38,7 +38,9 @@ public class PrintLocationsFrame extends OperationsFrame {
     static final String FORM_FEED = "\f"; // NOI18N
     static final String TAB = "\t"; // NOI18N
     static final int TAB_LENGTH = 10;
+    static final String SPACES_2 = "  ";
     static final String SPACES_3 = "   ";
+    static final String SPACES_4 = "    ";
 
     static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 
@@ -426,28 +428,28 @@ public class PrintLocationsFrame extends OperationsFrame {
                         !track.getCommentBoth().equals(Track.NONE) ||
                         !track.getCommentPickup().equals(Track.NONE) ||
                         !track.getCommentSetout().equals(Track.NONE)) {
-                    s = SPACES_3 + track.getName() + NEW_LINE;
+                    s = SPACES_2 + track.getName() + NEW_LINE;
                     writer.write(s);
                     if (!track.getComment().equals(Track.NONE)) {
-                        s = SPACES_3 + SPACES_3 + track.getComment() + NEW_LINE;
+                        s = SPACES_4 + track.getComment() + NEW_LINE;
                         writer.write(s);
                     }
                     if (!track.getCommentBoth().equals(Track.NONE)) {
-                        s = SPACES_3 + SPACES_3 + Bundle.getMessage("CommentBoth") + ":" + NEW_LINE;
+                        s = SPACES_3 + Bundle.getMessage("CommentBoth") + ":" + NEW_LINE;
                         writer.write(s);
-                        s = SPACES_3 + SPACES_3 + track.getCommentBoth() + NEW_LINE;
+                        s = SPACES_4 + track.getCommentBoth() + NEW_LINE;
                         writer.write(s);
                     }
                     if (!track.getCommentPickup().equals(Track.NONE)) {
-                        s = SPACES_3 + SPACES_3 + Bundle.getMessage("CommentPickup") + ":" + NEW_LINE;
+                        s = SPACES_3 + Bundle.getMessage("CommentPickup") + ":" + NEW_LINE;
                         writer.write(s);
-                        s = SPACES_3 + SPACES_3 + track.getCommentPickup() + NEW_LINE;
+                        s = SPACES_4 + track.getCommentPickup() + NEW_LINE;
                         writer.write(s);
                     }
                     if (!track.getCommentSetout().equals(Track.NONE)) {
-                        s = SPACES_3 + SPACES_3 + Bundle.getMessage("CommentSetout") + ":" + NEW_LINE;
+                        s = SPACES_3 + Bundle.getMessage("CommentSetout") + ":" + NEW_LINE;
                         writer.write(s);
-                        s = SPACES_3 + SPACES_3 + track.getCommentSetout() + NEW_LINE;
+                        s = SPACES_4 + track.getCommentSetout() + NEW_LINE;
                         writer.write(s);
                     }
                 }

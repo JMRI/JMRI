@@ -210,7 +210,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             #reset self.sensors_requiring_use_of_station_buttons to full list
             self.get_sensors_requiring_use_of_station_buttons()
             # allow the button to be pressed again    ##### inhibit the same sensor being pressed again
-            self.sensor_active_sensors_requiring_use_of_station_buttons_old = None
+            # self.sensor_active_sensors_requiring_use_of_station_buttons_old = None
 
             self.get_sensors_requiring_use_of_station_buttons()
 
@@ -284,7 +284,6 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 self.modify_all_stopping_distances()
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
             else:    #opt2
-                print "123456"
                 stopping_sensor_choice = "setIndividualStoppingSensors"
                 msg = "Specify the transit whose stopping distance we will change\n\n" + \
                       "Press transit start station button\nthen the transit end station button\n" + \
@@ -325,7 +324,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 return
             elif s == opt1:
                 #stopping_sensor_choice = "setAllStoppingSensors"
-                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
                 self.modify_all_station_wait_times()
             else:  #opt2
                 #stopping_sensor_choice = "setIndividualWaitTimes"
@@ -347,7 +346,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                 list_items1 = self.dm.read_list()
                 list_items = [ "from " + l[1] + " to " + l[0] for l in list_items1]
             except:
-                pass
+                list_items = []
             if list_items == []:
                 list_items = ["no inhibited directions"]
             opt1 = "Reset direction restrictions"
@@ -380,10 +379,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                     self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                 else:
                     self.set_block_direction()    # display list of blocks etc.
-
-                    #self.regenerate_traininfo_files("Regenerated TrainInfo Files")
-
-                    self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+                    self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
 
         elif sensor_changed == sensors.getSensor("setStopSensor"):
             #optionbox
@@ -425,29 +421,8 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                         if self.od.CLOSED_OPTION == True or option == "Cancel": #check of optionbox was closed prematurely
                             self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                             return
-
-
-
-                # if self.od.CLOSED_OPTION == True: #check of optionbox was closed prematurely
-                #     self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
-                #     return
-                # if option == option1:
-                #     if list != "no stop sensors set up":
-                #         [section_text, stopping_sensor_text] = list
-                #         section_name = section_text.split(" ")[1]
-                #         stopping_sensor_name = stopping_sensor_text.split(" ")[1]
-                #         sections.getSection(section_name).setForwardStoppingSensorName(None)
-                #         self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
-                #
-                #     else:
-                #         self.od.displayMessage("no stop sensors set up, cannot delete stop sensor")
-                #     return
-            # elif option == option2:
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                 return
-                #
-                # self.od.displayMessage("Not implemented")
-                # # self.reset_direction_restrictions(sensor_changed)
             elif s == opt2:
                 #stopping_sensor_choice = "Set At particular station
                 msg = "To specify a stop sensor at a station you first need to specify the direction you will be travelling to the station\n" + \
@@ -498,6 +473,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                     pass
             else:  # Cancel
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
+
         elif sensor_changed == sensors.getSensor("DummyControlSensor"):
             #used to reset the buttons
             pass
@@ -1426,13 +1402,12 @@ class createandshowGUI2(TableModelListener):
 
             msg = "Deleting invalid rows"
             result = OptionDialog().displayMessage(msg)
-            if result == JOptionPane.NO_OPTION:
-                return
+
 
             # check the loaded contents
             # 1) check that the trains are valid
-            # 2) ckeck that the blocks are occupied by valid trains
-            # if either of the above are not valic we blank the entries
+            # 2) check that the blocks are occupied by valid trains
+            # if either of the above are not valid we blank the entries
             # 3) Tidy
 
             [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]

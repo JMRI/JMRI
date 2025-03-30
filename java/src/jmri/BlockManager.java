@@ -70,6 +70,11 @@ public class BlockManager extends AbstractManager<Block>
         InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
 
+    /**
+     * String constant for property Default Block Speed Change
+     */
+    public static final String PROPERTY_DEFAULT_BLOCK_SPEED_CHANGE = "DefaultBlockSpeedChange";
+
     @Override
     @CheckReturnValue
     public int getXMLOrder() {
@@ -234,7 +239,7 @@ public class BlockManager extends AbstractManager<Block>
         }
         String oldSpeed = defaultSpeed;
         defaultSpeed = speed;
-        firePropertyChange("DefaultBlockSpeedChange", oldSpeed, speed);
+        firePropertyChange(PROPERTY_DEFAULT_BLOCK_SPEED_CHANGE, oldSpeed, speed);
     }
 
     @CheckReturnValue

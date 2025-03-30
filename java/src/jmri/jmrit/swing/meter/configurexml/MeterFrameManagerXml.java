@@ -32,10 +32,18 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         Element meterFrames = new Element("meterFrames");
         setStoreElementClass(meterFrames);
         
-        for (MeterFrame frame : MeterFrameManager.getInstance().getMeterFrames()) {
-            meterFrames.addContent(storeMeterFrame(frame));
+        var frames = MeterFrameManager.getInstance().getMeterFrames();
+        if (frames.isEmpty()) return null;
+        
+        boolean empty = true;
+        for (MeterFrame frame : frames) {
+            var meterElement = storeMeterFrame(frame);
+            if (meterElement == null) continue;
+            empty = false;
+            meterFrames.addContent(meterElement);
         }
         
+        if (empty) return null;
         return meterFrames;
     }
     
@@ -48,7 +56,7 @@ public class MeterFrameManagerXml extends jmri.configurexml.AbstractXmlAdapter {
         
         e2 = new Element("meter");
         if (frame.getMeter() == null) {
-            return e; // apparently user did not assign a real world meter; do not save
+            return null; // apparently user did not assign a real world meter; do not save
         }
         e2.addContent(frame.getMeter().getSystemName()); // this should be a NamedBeanHandle
         e.addContent(e2);

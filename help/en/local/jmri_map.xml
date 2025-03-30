@@ -375,6 +375,7 @@
 <mapID target="package.jmri.jmrit.webThrottle.webThrottle" url="package/jmri/jmrit/webThrottle/webThrottle.shtml"/>
 <mapID target="package.jmri.jmrit.whereused.WhereUsed" url="package/jmri/jmrit/whereused/WhereUsed.shtml"/>
 <mapID target="package.jmri.jmrit.withrottle.UserInterface" url="package/jmri/jmrit/withrottle/UserInterface.shtml"/>
+<mapID target="package.jmri.jmrit.z21server.z21server" url="package/jmri/jmrit/z21server/z21server.shtml"/>
 <mapID target="package.jmri.jmrix.acela.acelamon.AcelaMonFrame" url="package/jmri/jmrix/acela/acelamon/AcelaMonFrame.shtml"/>
 <mapID target="package.jmri.jmrix.acela.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml"/>
 <mapID target="package.jmri.jmrix.acela.packetgen.AcelaPacketGenFrame" url="package/jmri/jmrix/acela/packetgen/AcelaPacketGenFrame.shtml"/>

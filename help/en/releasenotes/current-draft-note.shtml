@@ -81,16 +81,17 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>Correct behavior of the ONESENSOR and TWOSENSOR turnout feedback mode. 
-                    The turnout's KnownState is set after turnout feedback is received. 
-                    In Layout Editor - Entry Exit - Full Interlocking - Signal mast sets the aspect Clear 
-                    only after all turnouts are correctly positioned.</li>
                 <li></li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Added a Configure LocoIO Modules tool, accessible from the LocoNet menu, that lists all
+                  connected LocoIO (LNSV1) boards and allows opening a matching programmer, akin to the LNCV pane.</li>
+                <li>DecoderPro OpsMode LNSV1 programming has been refactored to use the new Lnsv1MessageContents class
+                  instead of locoio.sendRead/.sendWrite it was still using.</li>
+                <li>The LocoIO pane that was deprecated since 4.12 has been removed. The LocoIO configuration
+                  documentation is retained under html LocoNet help.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -100,7 +101,7 @@
 
         <h4>Marklin CS2</h4>
             <ul>
-                <li></li>
+                <li>Added support for TCP (in addition to UDP) connections to the CS2.</li>
             </ul>
 
         <h4>MERG</h4>
@@ -130,7 +131,28 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Improved how Event with Payload messages are displayed in the monitor.</li>
+                <li>Enabled the Abort button in the Update Firmware window.</li>
+                <li>Backup files are now written with dotted-hex event ID values,
+                    whether or not an event name is available.  This makes them more reliable
+                    and more portable.</li>
+                <li>Update the STL Editor to support "event names".
+                    <ul>
+                      <li>When available, event names will be displayed in the IQYZ tables.</li>
+                      <li>The load from backup process will handle event names in older CDI backups.
+                      If the event name is no longer in the name store, a temporary event id will
+                      be created.</li>
+                      <li>Existing event names can be entered in the event columns of the IQYZ tables.
+                      Creating new event names is NOT supported.</li>
+                    </ul>
+                </li>
+                <li>Correctly decode events-with-payload</li>
+                <li>First implementation of LCC Location Services which will decode analog-carrying
+                    location services reports to drive volt and amp meters.</li>
+                <li>Update the STL Editor to support importing a <em>group_logic.csv</em> file
+                    that has been modified by a spreadsheet program.</li>
+                <li>Improve how datagram data is represented in the Monitor</li>
+                <li>Add sensor events to the event-entry field popup menu</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -154,6 +176,11 @@
             </ul>
 
         <h4>SPROG</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>SRCP</h4>
             <ul>
                 <li></li>
             </ul>
@@ -190,8 +217,9 @@
 
         <h4>AE Model</h4>
             <ul>
-                <li>Added AEModels.xml to add support for AE Model decoders</li>
+                <li></li>
             </ul>
+
         <h4>Arnold</h4>
             <ul>
                 <li></li>
@@ -219,7 +247,7 @@
 
         <h4>DCC Concepts</h4>
             <ul>
-                <li>DCC_Concepts_Zen_ABC.xml to add definitions for DCC Concepts Zen Blue/Black V12 </li>
+                <li></li>
             </ul>
 
         <h4>Digikeijs (Digirails)</h4>
@@ -244,11 +272,12 @@
 
         <h4>Hattoms</h4>
             <ul>
-                <li>Added Hattons-Neo.xml to add Hattons Neo decoders</li>
+                <li></li>
             </ul>
+
         <h4>Hornby</h4>
             <ul>
-                <li>Added HornbyTXS.xml to add Hornby HM7000 sound decoder definitions and updated HornbyTTS.xml to address error for Hall Class Sound definition</li>
+                <li></li>
             </ul>
 
         <h4>Kuehn</h4>
@@ -306,12 +335,22 @@
                 <li></li>
             </ul>
 
+        <h4>Piko</h4>
+            <ul>
+                <li>Add Decoder and Project CVs</li>
+            </ul>
+
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
             </ul>
 
         <h4>QSI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Rampino Elektronic</h4>
             <ul>
                 <li></li>
             </ul>
@@ -383,7 +422,8 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Updated Zimo_MS_small_v4.xml and Zimo_MN_small_v4.xml </li>
+                <li>Added pane and CVs for "Zimo Scripting".</li>
+                <li>Added decoder types MS591N18 and MS540E24</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -416,7 +456,11 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+          <li>Added DecoderIndexFile access to a decoder definition's
+            &lt;programming&gt;&lt;mode&gt;, allowing a check of supported modes from a DecoderFile using
+            <code>getProgrammingModes()</code></li>
+          <li>DecoderPro OpsMode LNSV1 programming has been refactored to use the new Lnsv1MessageContents class
+            instead of locoio.sendRead/.sendWrite it was still using.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -440,10 +484,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
-        </ul>
-        <ul>
-            <li>Added "Highlight cursor position" option to enable drawing of a square around finger/mouse press/drag area. Useful for touchscreens.
+            <li>Added a TurnoutCircleTransparency.py script to change the
+                color and transparency of Layout Editor turnout circles</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -478,9 +520,8 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, you can now select locomotive pick up and set out text colors.</li>
-            <li>Added track move count to "Export Locations".</li>
-            <li>Improved "Train logger" to include the number of cars in train, the number of pick ups and set outs, train length and weight.</li>
+            <li>New feature, when building a train, the program now warns for set out 
+            and pick up conflicts between trains when using aggressive mode.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -508,9 +549,11 @@
         </ul>
 
     <h3>Roster</h3>
-        <a id="Roster" name="Roster"></a>
+        <a id="Roster"></a>
         <ul>
-            <li></li>
+            <li>New Roster Entries hold the decoder's programming mode, if defined, to use as a filter similar to
+              e.g. ProductID.
+            </li>
         </ul>
 
     <h3>Routes</h3>
@@ -522,7 +565,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Added a TurnoutCircleTransparency.py script to change the
+                color and transparency of Layout Editor turnout circles</li>
         </ul>
 
     <h3>Signals</h3>
@@ -592,13 +636,16 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that was putting the wrong information in
+                a Turnout's comment when a SignalHead was created using that Turnout.</li>
         </ul>
 
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>SCWarrants brought back to life with a few fixes. 
+			    One of them being that it is once again possible to create SCWarrants. 
+				Another one that train tracking is now working.</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -628,7 +675,9 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>Added the OpenAL EFX reverb effect to tunnel tracks.
+                Can be activated using "Advanced Location Following"
+                and a LayoutEditor panel with a TrackSegment decorated as Tunnel.</li>
         </ul>
 
    <h3>Z21 Server</h3>
@@ -640,6 +689,11 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>There's a new "DarkLAF HC" dark-mode setting for the display.
+                To use it, select Settings then Display, then click the
+                button for "DarkLAF HC". Save preferences and restart.  Note that this
+                puts a dark background with light text on all JMRI windows.
+                You may have to rework your panels for them to look good
+                in this mode.</li>
         </ul>
 

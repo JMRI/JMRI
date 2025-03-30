@@ -1,6 +1,6 @@
 import jmri
 from javax.swing import JOptionPane, JFrame, JLabel, JButton, JTextField, JFileChooser, JMenu, JMenuItem, JMenuBar,JComboBox,JDialog,JList
-from javax.swing import JOptionPane, WindowConstants
+from javax.swing import JOptionPane, WindowConstants, JScrollPane
 
 #
 # class OptionDialog
@@ -12,10 +12,9 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
     logLevel = 0
 
     def List(self, title, list_items, preferred_size = "default"):
-        my_list = \
-            JList(list_items)
+        my_list = JList(list_items)
         my_list.setSelectedIndex(0)
-        scrollPane = JScrollPane(my_list);
+        scrollPane = JScrollPane(my_list)
         if preferred_size != "default":
             scrollPane.setPreferredSize(preferred_size)     # preferred_size should be set to Dimension(300, 500) say
         else:

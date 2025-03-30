@@ -87,6 +87,9 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             int curConsist = tc.csm.getConsistHeadAddr(); // load the start address of the NCE consist memory
             byte[] consistData = new byte[CONSIST_LNTH]; // NCE Consist data
             String line;
+            int consistMemMim = tc.csm.getConsistHeadAddr();
+            int consistMemMax = consistMemMim + 0x100 + 0x100 + tc.csm.getConsistMidSize();
+            int consistMemAddr;
 
             while (true) {
                 line = in.readLine();
@@ -107,6 +110,27 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                 // check for end of consist terminator
                 if (consistLine[0].equalsIgnoreCase(":0000")) {
                     fileValid = true; // success!
+                    break;
+                }
+                
+                // check for consistLine our of range
+                consistMemAddr = Integer.parseUnsignedInt(consistLine[0].replace(":", ""), 16);
+                if (consistMemAddr < consistMemMim) {
+                    log.warn("consist mem file out of range, ending restore, got: {} mimimum: {} ",
+                            Integer.toHexString(consistMemAddr), Integer.toHexString(consistMemMim));
+                    fileValid = true;
+                    break;
+                }
+                if (consistMemAddr >= consistMemMax ) {
+                    log.warn("consist mem file out of range, ending restore, got: {} maximum: {} ",
+                            Integer.toHexString(consistMemAddr), Integer.toHexString(consistMemMax));
+                    fileValid = true;
+                    break;
+                }
+                if (consistMemAddr != curConsist) {
+                    log.warn("consist mem file out of range, ending restore, got: {} expected: {} ",
+                            Integer.toHexString(consistMemAddr), Integer.toHexString(curConsist));
+                    fileValid = true;
                     break;
                 }
 
@@ -180,6 +204,48 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             // this is the end of the try-with-resources that opens in.
         }
     }
+//
+//    // USB set cab memory pointer
+//    private void setUsbCabMemoryPointer(int cab, int offset) {
+//        log.debug("Macro base address: {}, offset: {}", Integer.toHexString(cab), offset);
+//        replyLen = NceMessage.REPLY_1; // Expect 1 byte response
+//        waiting++;
+//        byte[] bl = NceBinaryCommand.usbMemoryPointer(cab, offset);
+//        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+//        tc.sendNceMessage(m, this);
+//    }
+//
+//    // USB Read N bytes of NCE cab memory
+//    private void readUsbMemoryN(int num) {
+//        switch (num) {
+//            case 1:
+//                replyLen = NceMessage.REPLY_1; // Expect 1 byte response
+//                break;
+//            case 2:
+//                replyLen = NceMessage.REPLY_2; // Expect 2 byte response
+//                break;
+//            case 4:
+//                replyLen = NceMessage.REPLY_4; // Expect 4 byte response
+//                break;
+//            default:
+//                log.error("Invalid usb read byte count");
+//                return;
+//        }
+//        waiting++;
+//        byte[] bl = NceBinaryCommand.usbMemoryRead((byte) num);
+//        NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
+//        tc.sendNceMessage(m, this);
+//    }
+//
+//    // USB Write 1 byte of NCE memory
+//    private void writeUsbMemory1(byte value) {
+//        log.debug("Write byte: {}", String.format("%2X", value));
+//        replyLen = NceMessage.REPLY_1; // Expect 1 byte response
+//        waiting++;
+//        byte[] bl = NceBinaryCommand.usbMemoryWrite1(value);
+//        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+//        tc.sendNceMessage(m, this);
+//    }
 
     // writes 16 bytes of NCE consist memory
     private NceMessage writeNceConsistMemory(int curConsist, byte[] b) {

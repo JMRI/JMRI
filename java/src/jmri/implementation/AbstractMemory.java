@@ -34,15 +34,16 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
 
     /**
      * Provide a general method for updating the report.
+     * {@inheritDoc}
      */
     @Override
     public void setValue(Object v) {
         Object old = _current;
         _current = v;
         // notify
-        firePropertyChange("value", old, _current);
+        firePropertyChange(PROPERTY_VALUE, old, _current);
     }
-    
+
     /**
      * {@inheritDoc} 
      * 

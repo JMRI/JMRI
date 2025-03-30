@@ -244,6 +244,7 @@ public class RouteManager extends PropertyChangeSupport implements InstanceManag
         Location loc = InstanceManager.getDefault(LocationManager.class).getLocationByName(rl.getName());
         RouteLocation rlNew = newRoute.addLocation(loc);
         // now copy the route location objects we want
+        rlNew.setLocalMovesAllowed(rl.isLocalMovesAllowed());
         rlNew.setMaxCarMoves(rl.getMaxCarMoves());
         rlNew.setRandomControl(rl.getRandomControl());
         rlNew.setWait(rl.getWait());

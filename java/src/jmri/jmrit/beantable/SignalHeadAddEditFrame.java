@@ -962,7 +962,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
         switch (className) {
             case "jmri.implementation.QuadOutputSignalHead": {
                 var headType = ((QuadOutputSignalHead) signalHeadBeingEdited).getGreen();
-                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameLabel.getText() + ":Green", 
+                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameField.getText() + ":Green", 
                     (headType==null ? null : headType.getBean()), centrePanBorder1.getTitle());
 
                 if (t1 == null) {
@@ -972,7 +972,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((QuadOutputSignalHead) signalHeadBeingEdited).getYellow();
-                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameLabel.getText() + ":Yellow", 
+                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameField.getText() + ":Yellow", 
                     (headType==null ? null : headType.getBean()), centrePanBorder2.getTitle());
                 if (t2 == null) {
                     return;
@@ -981,7 +981,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((QuadOutputSignalHead) signalHeadBeingEdited).getRed();
-                Turnout t3 = updateTurnoutFromPanel(turnoutSelect3, "SignalHead:" + systemNameLabel.getText() + ":Red",
+                Turnout t3 = updateTurnoutFromPanel(turnoutSelect3, "SignalHead:" + systemNameField.getText() + ":Red",
                     (headType==null ? null : headType.getBean()), centrePanBorder3.getTitle());
                 if (t3 == null) {
                     return;
@@ -990,7 +990,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((QuadOutputSignalHead) signalHeadBeingEdited).getLunar();
-                Turnout t4 = updateTurnoutFromPanel(turnoutSelect4, "SignalHead:" + systemNameLabel.getText() + ":Lunar", 
+                Turnout t4 = updateTurnoutFromPanel(turnoutSelect4, "SignalHead:" + systemNameField.getText() + ":Lunar", 
                     (headType==null ? null : headType.getBean()), centrePanBorder4.getTitle());
                 if (t4 == null) {
                     return;
@@ -1002,7 +1002,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             case "jmri.implementation.TripleTurnoutSignalHead": {
                 
                 var headType = ((TripleTurnoutSignalHead) signalHeadBeingEdited).getGreen();
-                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameLabel.getText() + ":Green", 
+                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameField.getText() + ":Green", 
                     (headType==null ? null : headType.getBean()), centrePanBorder1.getTitle());
                 if (t1 == null) {
                     return;
@@ -1011,7 +1011,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((TripleTurnoutSignalHead) signalHeadBeingEdited).getYellow();
-                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameLabel.getText() + ":Yellow", 
+                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameField.getText() + ":Yellow", 
                     (headType==null ? null : headType.getBean()), centrePanBorder2.getTitle());
                 if (t2 == null) {
                     return;
@@ -1020,7 +1020,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((TripleTurnoutSignalHead) signalHeadBeingEdited).getRed();
-                Turnout t3 = updateTurnoutFromPanel(turnoutSelect3, "SignalHead:" + systemNameLabel.getText() + ":Red", 
+                Turnout t3 = updateTurnoutFromPanel(turnoutSelect3, "SignalHead:" + systemNameField.getText() + ":Red", 
                     (headType==null ? null : headType.getBean()), centrePanBorder3.getTitle());
                 if (t3 == null) {
                     return;
@@ -1032,7 +1032,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             case "jmri.implementation.TripleOutputSignalHead": {
 
                 var headType = ((TripleOutputSignalHead) signalHeadBeingEdited).getGreen();
-                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameLabel.getText() + ":Green", 
+                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameField.getText() + ":Green", 
                     (headType==null ? null : headType.getBean()), centrePanBorder1.getTitle());
                 if (t1 == null) {
                     return;
@@ -1041,7 +1041,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((TripleOutputSignalHead) signalHeadBeingEdited).getBlue();
-                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameLabel.getText() + ":Blue", 
+                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameField.getText() + ":Blue", 
                     (headType==null ? null : headType.getBean()), centrePanBorder2.getTitle());
                 if (t2 == null) {
                     return;
@@ -1050,7 +1050,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((TripleOutputSignalHead) signalHeadBeingEdited).getRed();
-                Turnout t3 = updateTurnoutFromPanel(turnoutSelect3, "SignalHead:" + systemNameLabel.getText() + ":Red", 
+                Turnout t3 = updateTurnoutFromPanel(turnoutSelect3, "SignalHead:" + systemNameField.getText() + ":Red", 
                     (headType==null ? null : headType.getBean()), centrePanBorder3.getTitle());
                 if (t3 == null) {
                     return;
@@ -1061,10 +1061,10 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             }
             case "jmri.implementation.DoubleTurnoutSignalHead": {
                 var headType = ((DoubleTurnoutSignalHead) signalHeadBeingEdited).getGreen();
-                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameLabel.getText() + ":Green", 
+                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameField.getText() + ":Green", 
                     (headType==null ? null : headType.getBean()), centrePanBorder1.getTitle());
                 headType = ((DoubleTurnoutSignalHead) signalHeadBeingEdited).getRed();
-                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameLabel.getText() + ":Red", 
+                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameField.getText() + ":Red", 
                     (headType==null ? null : headType.getBean()), centrePanBorder2.getTitle());
                 if (t1 == null) {
                     return;
@@ -1080,7 +1080,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             }
             case "jmri.implementation.SingleTurnoutSignalHead": {
                 var headType = ((SingleTurnoutSignalHead) signalHeadBeingEdited).getOutput();
-                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameLabel.getText() + ":" + signalStateBox2.getSelectedItem() + ":" + signalStateBox3.getSelectedItem(),
+                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameField.getText() + ":" + signalStateBox2.getSelectedItem() + ":" + signalStateBox3.getSelectedItem(),
                     (headType==null ? null : headType.getBean()), centrePanBorder1.getTitle());
                 if (t1 == null) {
                     noTurnoutMessage(centrePanBorder1.getTitle(), turnoutSelect1.getDisplayName());
@@ -1093,7 +1093,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
             }
             case "jmri.implementation.LsDecSignalHead": {
                 var headType = ((LsDecSignalHead) signalHeadBeingEdited).getGreen();
-                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameLabel.getText() + ":Green", 
+                Turnout t1 = updateTurnoutFromPanel(turnoutSelect1, "SignalHead:" + systemNameField.getText() + ":Green", 
                     (headType==null ? null : headType.getBean()), centrePanBorder1.getTitle());
                 if (t1 == null) {
                     return;
@@ -1103,7 +1103,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((LsDecSignalHead) signalHeadBeingEdited).getYellow();
-                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameLabel.getText() + ":Yellow", 
+                Turnout t2 = updateTurnoutFromPanel(turnoutSelect2, "SignalHead:" + systemNameField.getText() + ":Yellow", 
                     (headType==null ? null : headType.getBean()), centrePanBorder2.getTitle());
                 if (t2 == null) {
                     return;
@@ -1113,7 +1113,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((LsDecSignalHead) signalHeadBeingEdited).getRed();
-                Turnout t3 = updateTurnoutFromPanel(turnoutSelect3, "SignalHead:" + systemNameLabel.getText() + ":Red", 
+                Turnout t3 = updateTurnoutFromPanel(turnoutSelect3, "SignalHead:" + systemNameField.getText() + ":Red", 
                     (headType==null ? null : headType.getBean()), centrePanBorder3.getTitle());
                 if (t3 == null) {
                     return;
@@ -1123,7 +1123,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((LsDecSignalHead) signalHeadBeingEdited).getFlashGreen();
-                Turnout t4 = updateTurnoutFromPanel(turnoutSelect4, "SignalHead:" + systemNameLabel.getText() + ":FlashGreen", 
+                Turnout t4 = updateTurnoutFromPanel(turnoutSelect4, "SignalHead:" + systemNameField.getText() + ":FlashGreen", 
                     (headType==null ? null : headType.getBean()), centrePanBorder4.getTitle());
                 if (t4 == null) {
                     return;
@@ -1133,7 +1133,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((LsDecSignalHead) signalHeadBeingEdited).getFlashYellow();
-                Turnout t5 = updateTurnoutFromPanel(turnoutSelect5, "SignalHead:" + systemNameLabel.getText() + ":FlashYellow", 
+                Turnout t5 = updateTurnoutFromPanel(turnoutSelect5, "SignalHead:" + systemNameField.getText() + ":FlashYellow", 
                     (headType==null ? null : headType.getBean()), centrePanBorder5.getTitle());
                 if (t5 == null) {
                     return;
@@ -1143,7 +1143,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((LsDecSignalHead) signalHeadBeingEdited).getFlashRed();
-                Turnout t6 = updateTurnoutFromPanel(turnoutSelect6, "SignalHead:" + systemNameLabel.getText() + ":FlashRed", 
+                Turnout t6 = updateTurnoutFromPanel(turnoutSelect6, "SignalHead:" + systemNameField.getText() + ":FlashRed", 
                     (headType==null ? null : headType.getBean()), centrePanBorder6.getTitle());
                 if (t6 == null) {
                     return;
@@ -1153,7 +1153,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                 }
 
                 headType = ((LsDecSignalHead) signalHeadBeingEdited).getDark();
-                Turnout t7 = updateTurnoutFromPanel(turnoutSelect7, "SignalHead:" + systemNameLabel.getText() + ":Dark", 
+                Turnout t7 = updateTurnoutFromPanel(turnoutSelect7, "SignalHead:" + systemNameField.getText() + ":Dark", 
                     (headType==null ? null : headType.getBean()), centrePanBorder7.getTitle());
                 if (t7 == null) {
                     return;
@@ -1178,7 +1178,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                     case 4:
                         var input3 = ((MergSD2SignalHead) signalHeadBeingEdited).getInput3();
                         Turnout t3 = updateTurnoutFromPanel(turnoutSelect5, (Bundle.getMessage("OutputComment", 
-                            Bundle.getMessage("BeanNameSignalHead"), systemNameLabel.getText(), 
+                            Bundle.getMessage("BeanNameSignalHead"), systemNameField.getText(), 
                             Bundle.getMessage("InputNum", "3"))), (input3==null ? null : input3.getBean()), 
                                 centrePanBorder5.getTitle());
                         if (t3 == null) {
@@ -1190,7 +1190,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                     case 3:
                         var input2 = ((MergSD2SignalHead) signalHeadBeingEdited).getInput2();
                         Turnout t2 = updateTurnoutFromPanel(turnoutSelect4, (Bundle.getMessage("OutputComment", 
-                            Bundle.getMessage("BeanNameSignalHead"), systemNameLabel.getText(), 
+                            Bundle.getMessage("BeanNameSignalHead"), systemNameField.getText(), 
                             Bundle.getMessage("InputNum", "2"))), (input2==null ? null : input2.getBean()), 
                                 centrePanBorder4.getTitle());
                         if (t2 == null) {
@@ -1202,7 +1202,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
                     case 2:
                         var input1 = ((MergSD2SignalHead) signalHeadBeingEdited).getInput1();
                         Turnout t1 = updateTurnoutFromPanel(turnoutSelect3, (Bundle.getMessage("OutputComment", 
-                            Bundle.getMessage("BeanNameSignalHead"), systemNameLabel.getText(), 
+                            Bundle.getMessage("BeanNameSignalHead"), systemNameField.getText(), 
                             Bundle.getMessage("InputNum", "1"))), (input1==null ? null : input1.getBean()), 
                                 centrePanBorder3.getTitle());
                         if (t1 == null) {

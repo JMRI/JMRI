@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarSetFrame;
 
 /**
  * Swing action to create and register a CarsSetFrame object.

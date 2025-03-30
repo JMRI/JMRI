@@ -150,7 +150,7 @@ etc.
         "images/input_tab.png" alt="stl input tab"></a>
       </div>
 
-      <p>The event id format is validated for the IQYZ tables.</p>
+      <p>The event id format is validated for the IQYZ tables.  Note: Dialog removed as of JMRI 5.11.4</p>
 
       <div style="margin-left: 2em">
         <a href="images/event_format_error.png"><img src=
@@ -215,6 +215,46 @@ etc.
         <a href="images/transmitters_tab.png"><img src=
         "images/transmitters_tab.png" alt="stl transmitters tab"></a>
       </div>
+
+      <h3>Event Names<span class="since">since 5.11.4</span></h3>
+
+      <dl>
+        <dt>The True and False columns for the Input (I) and Output (Q) tables and the Event ID column
+        for the Receiver (Y) and Transmitter (Z) tables</dt>
+        <dd>
+          <p>When an event name is available, the name will displayed instead of the event id.</p>
+
+          <p>When updating an event column row, the event id or the event name can be used if one
+          is available.  If an event id is entered and it has an event name, the event name will be
+          displayed.  A dialog is displayed when an invalid event id or a bad event name is entered.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/invalid_table_event.png"><img src=
+            "images/invalid_table_event.png" alt="stl invalid table event"></a>
+          </div>
+
+          <p class="noted"> The STL Editor does not support assigning a name to an event.  Other
+          LCC tools provide this capability.</p>
+
+        <dt>Loading a CDI backup file</dt>
+        <dd>
+          <p>Older CDI backup files can have an event name instead of an event id.  The load process
+          will use the event name to find the current event id.  If the event name no longer exists
+          in the "name store", a temporary event id will be created.  The format of the event id
+          is <strong>00.00.00.00.00.AA.BB.CC</strong>.  AA will be hex value of the table type. These
+          are IQYZ.  The BB and CC hex values will the table group and items.  The I and Q tables have
+          16 (0-15) groups and 8 (0-7) items per group.  The Y and Z tables have 16 (0-15) rows and
+          a single item that is always zero.  A dialog will be displayed when a temporary event id
+          is created.</p>
+
+          <div style="margin-left: 2em">
+            <a href="images/invalid_load_event.png"><img src=
+            "images/invalid_load_event.png" alt="stl invalid load event"></a>
+          </div>
+
+        </dd>
+      </dl>
+
 
       <h3>Tool Bar Buttons</h3>
 

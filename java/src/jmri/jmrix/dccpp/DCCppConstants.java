@@ -170,7 +170,7 @@ public final class DCCppConstants {
     public static final String DIAG_REPLY_REGEX        =   "^\\*\\s*([\\S\\s]*)\\*$"; //matches anything between leading and trailing asterisks, left-trimmed
     public static final String CURRENT_REPLY_REGEX =       "\\s*a\\s*(\\d+).*";
     public static final String CURRENT_REPLY_NAMED_REGEX = "\\s*a\\s*(\\w*?[a-zA-Z])\\s*(\\d+).*";
-    public static final String METER_REPLY_REGEX = " *c *(.+) +([-]*[\\d\\.]+) +([A-Z]) +(\\w+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+) +([\\d\\.]+).*";
+    public static final String METER_REPLY_REGEX = " *c *(.+) +([-]*[\\d\\.]+) +([A-Z]) +(\\w+) +([\\d\\.]+) +([-]*[\\d\\.]+) +([\\d\\.]+) +([-]*[\\d\\.]+).*";
 
     public static final String TRACK_POWER_REPLY_REGEX =       "\\s*p\\s*([0,1])\\s*";
     public static final String TRACK_POWER_REPLY_NAMED_REGEX = "\\s*p\\s*(\\d+)\\s+(\\w+).*";
@@ -253,13 +253,23 @@ public final class DCCppConstants {
 
     //Referred to as Throttle commands for some reason
     public static final char THROTTLE_COMMANDS         = 'J'; // First char of Jx two-letter commands
-    public static final char THROTTLE_COMMANDS_REPLY   = 'j'; // First char of Jx two-letter responses
-    public static final String TURNOUT_IDS             = "J T"; //Request turnout IDs
+    public static final char THROTTLE_COMMANDS_REPLY   = 'j'; // First char of jx two-letter responses
+    public static final String TURNOUT_IDS             = "J T"; //Request turnout ID list
     public static final String TURNOUT_IDS_REGEX       = "^J\\s*T$"; // <J T> or <JT>
     public static final String TURNOUT_ID_REGEX        = "^J\\s*T\\s*(\\d+)$"; // <J T 123>
     public static final String TURNOUT_IDS_REPLY_REGEX = "^j\\s*T\\s*((?:\\s*\\d+)*)$"; // <j T 123 456 789>
     public static final String TURNOUT_ID_REPLY_REGEX  = "^j\\s*T\\s+(\\d+)\\s([C|T])\\s\\\"(.*)\\\""; // <jT 123 C "description">   
     public static final String TURNOUT_IMPL_REGEX      = "^T\\s+(\\d+)\\s+X$"; // <T 123 X> Note: may be dropped from DCC-EX
+    public static final String ROSTER_IDS             = "J R"; //Request Roster ID list
+    public static final String ROSTER_IDS_REGEX       = "^J\\s*R$"; // <J R> or <JR>
+    public static final String ROSTER_ID_REGEX        = "^J\\s*R\\s*(\\d+)$"; // <J R 123>
+    public static final String ROSTER_IDS_REPLY_REGEX = "^j\\s*R\\s*((?:\\s*\\d+)*)$"; // <j R 123 456 789>
+    public static final String ROSTER_ID_REPLY_REGEX  = "^j\\s*R\\s+(\\d+)\\s\\\"(.*)\\\"\\s\\\"(.*)\\\""; // <jR 123 "description" "functionkeystring">   
+    public static final String AUTOMATION_IDS             = "J A"; //Request Automation ID list
+    public static final String AUTOMATION_IDS_REGEX       = "^J\\s*A$"; // <J A> or <JA>
+    public static final String AUTOMATION_ID_REGEX        = "^J\\s*A\\s*(\\d+)$"; // <J A 123>
+    public static final String AUTOMATION_IDS_REPLY_REGEX = "^j\\s*A\\s*((?:\\s*\\d+)*)$"; // <j A 123 456 789>
+    public static final String AUTOMATION_ID_REPLY_REGEX  = "^j\\s*A\\s+(\\d+)\\s([A|R])\\s\\\"(.*)\\\""; // <jA 123 R "description">   
     public static final String CLOCK_REQUEST_TIME      = "J C"; //<J C> Request current time from DCC-EX
     public static final String CLOCK_REQUEST_TIME_REGEX= "^J\\s*C$"; // <J C> or <JC>
     public static final String CLOCK_SET_REGEX         = "^J\\s*C\\s+(\\d+)\\s*(\\d*)$"; // <J C 123 4> or <j C 124> outgoing set to 123min past midnight, rate 4

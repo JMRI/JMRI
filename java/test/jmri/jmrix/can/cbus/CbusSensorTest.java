@@ -107,7 +107,7 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Test
-    public void testNullEvent() throws Exception {
+    public void testNullEvent() {
         Exception ex = Assertions.assertThrows(NullPointerException.class, () -> { t = new CbusSensor("M",null,tcis); });
         Assertions.assertNotNull(ex);
     }

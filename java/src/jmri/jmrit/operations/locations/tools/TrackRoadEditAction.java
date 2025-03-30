@@ -2,7 +2,8 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.jmrit.operations.locations.TrackEditFrame;
+
+import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 
 /**
  * Action to create the TrackRoadEditFrame.

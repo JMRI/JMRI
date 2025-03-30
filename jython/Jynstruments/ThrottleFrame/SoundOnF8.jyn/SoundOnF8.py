@@ -32,7 +32,8 @@ class SoundOnF8(Jynstrument, PropertyChangeListener, AddressListener, MouseListe
 
     def quit(self):   # very important to clean up everything to make sure GC will collect us
         self.cleanThrottle()
-        self.getContext().getAddressPanel().removeAddressListener(self)
+        if (( self.getContext() != None) and ( self.getContext().getAddressPanel() != None)) :
+            self.getContext().getAddressPanel().removeAddressListener(self)
 
 #Inner workings:
     def updateThrottle(self):    # update throttle informations when a new one is detected

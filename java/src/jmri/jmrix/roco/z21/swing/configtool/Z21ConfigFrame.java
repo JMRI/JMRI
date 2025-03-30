@@ -56,6 +56,8 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
     private JCheckBox locoNetOccupancyMessagesCheckBox;
     private JCheckBox railComAutomaticCheckBox;
     private JCheckBox canDetectorCheckBox;
+    private JCheckBox canBoosterCheckBox;
+    private JCheckBox fastClockCheckBox;
 
     public Z21ConfigFrame(jmri.jmrix.roco.z21.Z21SystemConnectionMemo memo) {
         super(Bundle.getMessage("Z21ConfigToolMenuItem"));
@@ -134,49 +136,81 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BroadcastFlagsTitle")));
         panel.setLayout(new GridLayout(0, 1));
 
+        JPanel xNetPanel = new JPanel();
+        xNetPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("XNetFlagsTitle")));
+        xNetPanel.setLayout(new GridLayout(0, 2));
+
         xPressNetMessagesCheckBox = new JCheckBox(Bundle.getMessage("XpressNetMessagesFlagLabel"), cs.getXPressNetMessagesFlag());
         xPressNetMessagesCheckBox.setToolTipText(Bundle.getMessage("XpressNetMessagesFlagToolTip"));
-        panel.add(xPressNetMessagesCheckBox);
-
-        rmBusMessagesCheckBox = new JCheckBox(Bundle.getMessage("RMBusMessagesFlagLabel"), cs.getRMBusMessagesFlag());
-        rmBusMessagesCheckBox.setToolTipText(Bundle.getMessage("RMBusMessagesFlagToolTip"));
-        panel.add(rmBusMessagesCheckBox);
-
-        systemStatusMessagesCheckBox = new JCheckBox(Bundle.getMessage("SystemStatusMessagesFlagLabel"), cs.getSystemStatusMessagesFlag());
-        systemStatusMessagesCheckBox.setToolTipText(Bundle.getMessage("RMBusMessagesFlagToolTip"));
-        panel.add(systemStatusMessagesCheckBox);
+        xNetPanel.add(xPressNetMessagesCheckBox);
 
         xPressNetLocomotiveMessagesCheckBox = new JCheckBox(Bundle.getMessage("XpressNetLocomotiveMessagesFlagLabel"), cs.getXPressNetLocomotiveMessagesFlag());
         xPressNetLocomotiveMessagesCheckBox.setToolTipText(Bundle.getMessage("XpressNetLocomotiveMessagesFlagToolTip"));
-        panel.add(xPressNetLocomotiveMessagesCheckBox);
+        xNetPanel.add(xPressNetLocomotiveMessagesCheckBox);
 
-        railComMessagesCheckBox = new JCheckBox(Bundle.getMessage("RailComMessagesFlagLabel"), cs.getRailComMessagesFlag());
-        railComMessagesCheckBox.setToolTipText(Bundle.getMessage("RailComMessagesFlagToolTip"));
-        panel.add(railComMessagesCheckBox);
+        panel.add(xNetPanel);
 
-        railComAutomaticCheckBox = new JCheckBox(Bundle.getMessage("RailComAutomaticFlagLabel"), cs.getRailComAutomaticFlag());
-        railComMessagesCheckBox.setToolTipText(Bundle.getMessage("RailComAutomaticFlagToolTip"));
-        panel.add(railComAutomaticCheckBox);
+        JPanel locoNetPanel = new JPanel();
+        locoNetPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocoNetFlagsTitle")));
+        locoNetPanel.setLayout(new GridLayout(0, 2));
 
         locoNetMessagesCheckBox = new JCheckBox(Bundle.getMessage("LocoNetMessagesFlagLabel"), cs.getLocoNetMessagesFlag());
         locoNetMessagesCheckBox.setToolTipText(Bundle.getMessage("LocoNetMessagesFlagToolTip"));
-        panel.add(locoNetMessagesCheckBox);
+        locoNetPanel.add(locoNetMessagesCheckBox);
 
         locoNetLocomotiveMessagesCheckBox = new JCheckBox(Bundle.getMessage("LocoNetLocomotiveMessagesFlagLabel"), cs.getLocoNetLocomotiveMessagesFlag());
         locoNetLocomotiveMessagesCheckBox.setToolTipText(Bundle.getMessage("LocoNetLocomotiveMessagesFlagToolTip"));
-        panel.add(locoNetLocomotiveMessagesCheckBox);
+        locoNetPanel.add(locoNetLocomotiveMessagesCheckBox);
 
         locoNetTurnoutMessagesCheckBox = new JCheckBox(Bundle.getMessage("LocoNetTurnoutMessagesFlagLabel"), cs.getLocoNetTurnoutMessagesFlag());
         locoNetTurnoutMessagesCheckBox.setToolTipText(Bundle.getMessage("LocoNetTurnoutMessagesFlagToolTip"));
-        panel.add(locoNetTurnoutMessagesCheckBox);
+        locoNetPanel.add(locoNetTurnoutMessagesCheckBox);
 
         locoNetOccupancyMessagesCheckBox = new JCheckBox(Bundle.getMessage("LocoNetOccupancyMessagesFlagLabel"), cs.getLocoNetOccupancyMessagesFlag());
         locoNetOccupancyMessagesCheckBox.setToolTipText(Bundle.getMessage("LocoNetOccupancyMessagesFlagToolTip"));
-        panel.add(locoNetOccupancyMessagesCheckBox);
+        locoNetPanel.add(locoNetOccupancyMessagesCheckBox);
+
+        panel.add(locoNetPanel);
+
+        JPanel canPanel = new JPanel();
+        canPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("canFlagsTitle")));
+        canPanel.setLayout(new GridLayout(0, 2));
 
         canDetectorCheckBox = new JCheckBox(Bundle.getMessage("canDetectorFlagLabel"), cs.getCanDetectorFlag());
         canDetectorCheckBox.setToolTipText(Bundle.getMessage("canDetectorFlagToolTip"));
-        panel.add(canDetectorCheckBox);
+        canPanel.add(canDetectorCheckBox);
+
+        canBoosterCheckBox = new JCheckBox(Bundle.getMessage("canBoosterFlagLabel"), cs.getCanBoosterFlag());
+        canBoosterCheckBox.setToolTipText(Bundle.getMessage("canBoosterFlagToolTip"));
+        canPanel.add(canBoosterCheckBox);
+
+        panel.add(canPanel);
+
+        JPanel systemPanel = new JPanel();
+        systemPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SystemFlagsTitle")));
+        systemPanel.setLayout(new GridLayout(0, 2));
+
+        rmBusMessagesCheckBox = new JCheckBox(Bundle.getMessage("RMBusMessagesFlagLabel"), cs.getRMBusMessagesFlag());
+        rmBusMessagesCheckBox.setToolTipText(Bundle.getMessage("RMBusMessagesFlagToolTip"));
+        systemPanel.add(rmBusMessagesCheckBox);
+
+        systemStatusMessagesCheckBox = new JCheckBox(Bundle.getMessage("SystemStatusMessagesFlagLabel"), cs.getSystemStatusMessagesFlag());
+        systemStatusMessagesCheckBox.setToolTipText(Bundle.getMessage("SystemStatusMessagesFlagToolTip"));
+        systemPanel.add(systemStatusMessagesCheckBox);
+
+        railComMessagesCheckBox = new JCheckBox(Bundle.getMessage("RailComMessagesFlagLabel"), cs.getRailComMessagesFlag());
+        railComMessagesCheckBox.setToolTipText(Bundle.getMessage("RailComMessagesFlagToolTip"));
+        systemPanel.add(railComMessagesCheckBox);
+
+        railComAutomaticCheckBox = new JCheckBox(Bundle.getMessage("RailComAutomaticFlagLabel"), cs.getRailComAutomaticFlag());
+        railComMessagesCheckBox.setToolTipText(Bundle.getMessage("RailComAutomaticFlagToolTip"));
+        systemPanel.add(railComAutomaticCheckBox);
+
+        fastClockCheckBox = new JCheckBox(Bundle.getMessage("FastClockFlagLabel"), cs.getFastClockFlag());
+        fastClockCheckBox.setToolTipText(Bundle.getMessage("FastClockFlagToolTip"));
+        systemPanel.add(fastClockCheckBox);
+
+        panel.add(systemPanel);
 
         setSystemInfoButton = new JToggleButton(Bundle.getMessage("SetSystemInfoButtonLabel"));
         setSystemInfoButton.setToolTipText(Bundle.getMessage("SetSystemInfoButtonToolTip"));
@@ -217,6 +251,8 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
         cs.setLocoNetTurnoutMessagesFlag(locoNetTurnoutMessagesCheckBox.isSelected());
         cs.setLocoNetOccupancyMessagesFlag(locoNetOccupancyMessagesCheckBox.isSelected());
         cs.setCanDetectorFlag(canDetectorCheckBox.isSelected());
+        cs.setCanBoosterFlag(canBoosterCheckBox.isSelected());
+        cs.setFastClockFlag(fastClockCheckBox.isSelected());
 
         // send the flags to the command station.
         tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()), this);

@@ -113,11 +113,22 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
         getContentPane().add(textStatus);
 
         if (_train != null) {
-            setTitle(Bundle.getMessage("TitleShowCarsInTrain") + " (" + _train.getName() + ")");
+            setTitle(Bundle.getMessage("TitleShowCarsInTrain", _train.getName()));
 
             // listen for train changes
             _train.addPropertyChangeListener(this);
         }
+
+        // build menu
+        JMenuBar menuBar = new JMenuBar();
+        if (train != null) {
+            JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+            toolMenu.add(new PrintShowCarsInTrainAction(false, train));
+            toolMenu.add(new PrintShowCarsInTrainAction(true, train));
+            menuBar.add(toolMenu);
+        }
+        setJMenuBar(menuBar);
+        addHelpMenu("package.jmri.jmrit.operations.Operations_ShowCarsInTrain", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight500));
         update();
