@@ -2,7 +2,8 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import jmri.jmrit.operations.locations.LocationEditFrame;
+
+import jmri.jmrit.operations.locations.gui.LocationEditFrame;
 
 /**
  * Action to change all of tracks at a location to the same type of track. Track

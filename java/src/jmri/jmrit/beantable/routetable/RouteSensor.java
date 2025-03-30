@@ -2,8 +2,6 @@ package jmri.jmrit.beantable.routetable;
 
 import jmri.Route;
 import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Route Table RouteSensor Elements.
@@ -54,5 +52,5 @@ class RouteSensor extends RouteElement {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(RouteSensor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteSensor.class);
 }

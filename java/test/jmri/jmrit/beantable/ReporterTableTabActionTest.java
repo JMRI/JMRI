@@ -1,7 +1,6 @@
 package jmri.jmrit.beantable;
 
 import jmri.InstanceManager;
-
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.jmrix.internal.InternalReporterManager;
@@ -12,7 +11,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -43,7 +42,7 @@ public class ReporterTableTabActionTest extends AbstractTableTabActionBase {
     }
 
     @Test
-    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testMultiSystemTabs(){
 
         JUnitUtil.resetInstanceManager();
@@ -112,14 +111,14 @@ public class ReporterTableTabActionTest extends AbstractTableTabActionBase {
         controltbl = new JTableOperator(jfo, 0);
         Assert.assertEquals("India tab 5 Reporters",5, controltbl.getRowCount());
 
-        jfo.requestClose();
+        JUnitUtil.dispose(sf);
         jfo.waitClosed();
 
     }
 
     private static class TabbedReporterTableFrame extends ListedTableFrame<Reporter> {
         
-        public TabbedReporterTableFrame(){
+        TabbedReporterTableFrame(){
             super();
             tabbedTableItemListArrayArray.clear(); // reset static BeanTable list
         }

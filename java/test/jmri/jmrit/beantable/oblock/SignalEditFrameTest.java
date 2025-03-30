@@ -6,14 +6,13 @@ import jmri.jmrit.logix.Portal;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Egbert Broerse Copyright (C) 2020
  */
-@DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SignalEditFrameTest {
 
     @Test
@@ -38,6 +37,7 @@ public class SignalEditFrameTest {
         SignalTableModel.SignalRow sr = new SignalTableModel.SignalRow(m, b1, p1, b2, 0.0f, false);
 
         SignalEditFrame sef = new SignalEditFrame("Edit mast1", m, sr, model);
+        sef.initComponents();
         Assertions.assertNotNull(sef, "Mast SEF exists");
         JUnitUtil.dispose(sef);
     }

@@ -112,7 +112,7 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
             case USERNAMECOL:
                 // Directly changing the username should only be possible if the username was previously null or ""
                 // check to see if user name already exists
-                if (value.equals("")) {
+                if ("".equals(value)) {
                     value = null;
                 } else {
                     Route nB = getByUserName((String) value);
@@ -120,7 +120,8 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
                         log.error("User Name is not unique {}", value);
                         String msg;
                         msg = Bundle.getMessage("WarningUserName", ("" + value));
-                        JmriJOptionPane.showMessageDialog(null, msg, Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                        JmriJOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"), JmriJOptionPane.ERROR_MESSAGE);
                         return;
                     }
                 }
@@ -175,8 +176,8 @@ public class RouteTableDataModel extends BeanTableDataModel<Route> {
     @Override
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
         switch (e.getPropertyName()) {
-            case "Enabled": // NOI18N
-            case "Locked": // NOI18N
+            case Route.PROPERTY_ENABLED:
+            case Route.PROPERTY_ROUTE_LOCKED:
                 return true;
             default:
                 return super.matchPropertyName(e);

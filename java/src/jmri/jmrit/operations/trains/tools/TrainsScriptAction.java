@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.trains.TrainsTableFrame;
+import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
 
 /**
  * Swing action to create and register a TrainsScriptFrame.

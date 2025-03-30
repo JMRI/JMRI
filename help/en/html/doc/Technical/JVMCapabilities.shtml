@@ -337,8 +337,17 @@
 
         <tr>
           <td>
+            Java 19 is the last version to support 32-bit computer
+            architectures.
+          </td>
+          <td>19</td>
+          <td>19</td>
+        </tr>
+
+        <tr>
+          <td>
             Various elements of the Thread and Locale APIs are marked for deletion,
-            resulting in about 50 compilation warnings.
+            resulting in compilation warnings.
           </td>
           <td>20</td>
           <td>20</td>
@@ -367,6 +376,34 @@
           </td>
           <td>21</td>
           <td>21</td>
+        </tr>
+
+        <tr>
+          <td>
+            Scoped Values and Structured Concurrency allows 
+            smaller units of work, which in turn would make
+            JMRI more responsive.
+          </td>
+          <td>22</td>
+          <td>22</td>
+        </tr>
+
+        <tr>
+          <td>
+            Statements Before Super simplifies subclass object
+            creation, which makes particularly Swing subclassing
+            easier and more effective.
+          </td>
+          <td>22</td>
+          <td>22</td>
+        </tr>
+
+        <tr>
+          <td>
+            More readable Javadoc comments using Markdown formatting
+          </td>
+          <td>23</td>
+          <td>23</td>
         </tr>
 
       </table>
@@ -467,7 +504,39 @@
         </li>
 
         <li>
-          <a href="https://openjdk.java.net/projects/jdk/17/">Java 17 (Sept 2021)</a>
+          <a href="https://openjdk.java.net/projects/jdk/17/">Java 17 LTS (Sept 2021)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/18/">Java 18 (March 2022)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/19/">Java 19 (Sept 2022)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/20/">Java 20 (March 2023)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/21/">Java 21 LTS (Sept 2023)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/22/">Java 22 (March 2024)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/23/">Java 23 (Sept 2024)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/24/">Java 24 (March 2025)</a>
+        </li>
+
+        <li>
+          <a href="https://openjdk.java.net/projects/jdk/25/">Java 25 LTS (Sept 2025)</a>
         </li>
 
       </ul>
@@ -479,8 +548,10 @@
       of the developers use dual-purpose machines that are required to meet various security and
       update standards. For those, Java 8 has increasing become a liability.
 
-      <p>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit). <a href=
-      "https://adoptium.net">Adoptium (formerly AdoptOpenJDK)</a> provides 32 bit x86 versions up to Java 19. As of 2024, they continue to provide 64-bit JREs and JDKs.
+      <p>Java 11 JDK from Oracle only runs on 64-bit Windows versions (no 32-bit). 
+      <a href="https://adoptium.net">Adoptium (formerly AdoptOpenJDK)</a> provides 
+      32 bit x86 versions up to Java 19. 
+      As of 2024, they continue to provide 64-bit JREs and JDKs.
       Light red indicates unable to run Java 8 or later; darker red means able to
       run Java 8, but not Java 11.</p>
 

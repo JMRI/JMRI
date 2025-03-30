@@ -30,7 +30,7 @@
 
       <p>To do this manually at the file level, there will be a file called "roster.xml", and a
       directory called "roster". You need to move the "roster.xml" file, the "roster" directory,
-      and all it's contents. Read more about the <a href="../../setup/Files.shtml">JMRI
+      and all its contents. Read more about the <a href="../../setup/Files.shtml">JMRI
       Configuration Files</a>.</p>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
