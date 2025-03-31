@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.11.4plus+jake+20250330T2056Z+R101f5432f98 on Sun Mar 30 16:56:13 EDT 2025-->
-  <decoderIndex version="633">
+  <!--Written by JMRI version 5.11.4plus+jake+20250331T1027Z+R5297faed912 on Mon Mar 31 06:27:22 EDT 2025-->
+  <decoderIndex version="635">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -38,6 +38,7 @@
       <manufacturer mfg="DCC-Gaspar-Electronic" mfgID="124" />
       <manufacturer mfg="DCCconcepts" mfgID="36" />
       <manufacturer mfg="Dapol Limited" mfgID="154" />
+      <manufacturer mfg="Decoderwerk" mfgID="1004" />
       <manufacturer mfg="Desktop Station" mfgID="140" />
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
       <manufacturer mfg="Digi-CZ" mfgID="152" />
