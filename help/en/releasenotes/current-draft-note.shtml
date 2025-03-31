@@ -647,7 +647,7 @@
 	        <ul>
                     <li>It is once again possible to create SCWarrants.</li>
 		    <li>Train tracking is now working.</li>
-		    <li>Opening the edit dialog for an SCWarrant now whows the correct warrant type.</li>
+		    <li>Opening the edit dialog for an SCWarrant now shows the correct warrant type.</li>
 		</ul>
             </li>
         </ul>
