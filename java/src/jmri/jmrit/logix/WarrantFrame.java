@@ -106,6 +106,12 @@ public class WarrantFrame extends WarrantRoute {
         _warrant = new Warrant(w.getSystemName(), w.getUserName());
         setup(_saveWarrant, false);
         init();
+        if ( _saveWarrant instanceof SCWarrant) {
+            _isSCWarrant.setSelected(true);
+            _showRoute.setSelected(true);
+            showCommands(false);
+            //setPanelEnabled(buttonPanel, false);
+        }
     }
 
     /**

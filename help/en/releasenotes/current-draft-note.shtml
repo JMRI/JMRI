@@ -643,9 +643,13 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>SCWarrants brought back to life with a few fixes. 
-			    One of them being that it is once again possible to create SCWarrants. 
-				Another one that train tracking is now working.</li>
+             <li>SCWarrants brought back to life with a few fixes:  
+	        <ul>
+                    <li>It is once again possible to create SCWarrants.</li>
+		    <li>Train tracking is now working.</li>
+		    <li>Opening the edit dialog for an SCWarrant now shows the correct warrant type.</li>
+		</ul>
+            </li>
         </ul>
 
    <h3>Web Access</h3>
