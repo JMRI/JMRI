@@ -1709,7 +1709,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             contentPane.add(but);
         }
         if (editActionMode) {
-
             // initialize window for the action being edited
             addEditActionFrame.setTitle(rbx.getString("TitleEditAction"));
             updateActionButton.setVisible(true);
