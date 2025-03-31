@@ -95,14 +95,14 @@
         <p>Additional information can be found in the JavaDocs for specific types of classes, for
         example:</p>
 
-        <p><a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html" target=
-        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html</a><br>
-        <a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html" target=
-        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html</a><br>
-        <a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html" target=
-        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html</a><br>
-        <a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html" target=
-        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html</a>
+        <p><a href="https://www.jmri.org/JavaDoc/doc/jmri/SensorManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/jmri/SensorManager.html</a><br>
+        <a href="https://www.jmri.org/JavaDoc/doc/jmri/TurnoutManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/jmri/TurnoutManager.html</a><br>
+        <a href="https://www.jmri.org/JavaDoc/doc/jmri/LightManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/jmri/LightManager.html</a><br>
+        <a href="https://www.jmri.org/JavaDoc/doc/jmri/BlockManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/jmri/BlockManager.html</a>
         </p>
 
         <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a>
