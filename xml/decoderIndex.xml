@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.11.4plus+jake+20250331T1027Z+R5297faed912 on Mon Mar 31 06:27:22 EDT 2025-->
-  <decoderIndex version="635">
+  <!--Written by JMRI version 5.11.4plus+jake+20250331T1051Z+R6a624e9293e on Mon Mar 31 06:51:04 EDT 2025-->
+  <decoderIndex version="639">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
-    <mfgList nmraListDate="2021-03-06" updated="2023-01-25" lastadd="169">
+    <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AE Electronic Ltd" mfgID="169" />
@@ -180,6 +180,7 @@
       <manufacturer mfg="Wm. K. Walthers, Inc" mfgID="150" />
       <manufacturer mfg="ZTC" mfgID="132" />
       <manufacturer mfg="Zimo" mfgID="145" />
+      <manufacturer mfg="bogobit" mfgID="171" />
       <manufacturer mfg="csikos-muhely" mfgID="120" />
       <manufacturer mfg="drM" mfgID="164" />
     </mfgList>
