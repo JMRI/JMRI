@@ -30,7 +30,7 @@ import org.jdom2.Element;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2017-2021, 2023
+ * @author Klaus Killinger Copyright (C) 2017-2021, 2023, 2025
  */
 class Steam1Sound extends EngineSound {
 
@@ -406,10 +406,14 @@ class Steam1Sound extends EngineSound {
                 // variable sound clips in length. Twelve helper buffers should
                 // serve well for that purpose.
                 for (int j = 0; j < 12; j++) {
-                    AudioBuffer bh = S1Notch.getBufferHelper(name + "_BUFFERHELPER_" + j, name + "_BUFFERHELPER_" + j);
-                    if (bh != null) {
-                        log.debug("buffer helper created: {}, name: {}", bh, bh.getSystemName());
-                        sb.addHelper(bh);
+                    if (checkForFreeBuffer()) {
+                        AudioBuffer bh = S1Notch.getBufferHelper(name + "_BUFFERHELPER_" + j, name + "_BUFFERHELPER_" + j);
+                        if (bh != null) {
+                            log.debug("buffer helper created: {}, name: {}", bh, bh.getSystemName());
+                            sb.addHelper(bh);
+                        } else {
+                            buffer_ok = false;
+                        }
                     } else {
                         buffer_ok = false;
                     }
@@ -435,14 +439,18 @@ class Steam1Sound extends EngineSound {
             fn = el.getChild("sound-file").getValue();
             log.debug("idle sound: {}", fn);
             idle_sound = new SoundBite(vf, fn, _soundName + "_IDLE", _soundName + "_Idle");
-            idle_sound.setGain(setXMLGain(el)); // Handle gain
-            log.debug("idle sound gain: {}", idle_sound.getGain());
-            idle_sound.setLooped(true);
-            idle_sound.setFadeTimes(500, 500);
-            idle_sound.setReferenceDistance(setXMLReferenceDistance(el)); // Handle reference distance
-            log.debug("idle-sound reference distance: {}", idle_sound.getReferenceDistance());
-            trigger_sounds.put("idle", idle_sound);
-            log.debug("trigger idle sound: {}", trigger_sounds.get("idle"));
+            if (idle_sound.isInitialized()) {
+                idle_sound.setGain(setXMLGain(el)); // Handle gain
+                log.debug("idle sound gain: {}", idle_sound.getGain());
+                idle_sound.setLooped(true);
+                idle_sound.setFadeTimes(500, 500);
+                idle_sound.setReferenceDistance(setXMLReferenceDistance(el)); // Handle reference distance
+                log.debug("idle-sound reference distance: {}", idle_sound.getReferenceDistance());
+                trigger_sounds.put("idle", idle_sound);
+                log.debug("trigger idle sound: {}", trigger_sounds.get("idle"));
+            } else {
+                buffer_ok = false;
+            }
         }
 
         // Get the boiling sound
@@ -450,11 +458,15 @@ class Steam1Sound extends EngineSound {
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
             boiling_sound = new SoundBite(vf, fn, name + "_BOILING", name + "_Boiling");
-            boiling_sound.setGain(setXMLGain(el)); // Handle gain
-            boiling_sound.setLooped(true);
-            boiling_sound.setFadeTimes(500, 500);
-            boiling_sound.setReferenceDistance(setXMLReferenceDistance(el));
-            trigger_sounds.put("boiling", boiling_sound);
+            if (boiling_sound.isInitialized()) {
+                boiling_sound.setGain(setXMLGain(el)); // Handle gain
+                boiling_sound.setLooped(true);
+                boiling_sound.setFadeTimes(500, 500);
+                boiling_sound.setReferenceDistance(setXMLReferenceDistance(el));
+                trigger_sounds.put("boiling", boiling_sound);
+            } else {
+                buffer_ok = false;
+            }
         }
 
         // Get the brake sound
@@ -462,11 +474,15 @@ class Steam1Sound extends EngineSound {
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
             brake_sound = new SoundBite(vf, fn, _soundName + "_BRAKE", _soundName + "_Brake");
-            brake_sound.setGain(setXMLGain(el));
-            brake_sound.setLooped(false);
-            brake_sound.setFadeTimes(500, 500);
-            brake_sound.setReferenceDistance(setXMLReferenceDistance(el));
-            trigger_sounds.put("brake", brake_sound);
+            if (brake_sound.isInitialized()) {
+                brake_sound.setGain(setXMLGain(el));
+                brake_sound.setLooped(false);
+                brake_sound.setFadeTimes(500, 500);
+                brake_sound.setReferenceDistance(setXMLReferenceDistance(el));
+                trigger_sounds.put("brake", brake_sound);
+            } else {
+                buffer_ok = false;
+            }
         }
 
         // Get the pre-arrival sound
@@ -474,21 +490,25 @@ class Steam1Sound extends EngineSound {
         if (el != null) {
             fn = el.getChild("sound-file").getValue();
             pre_arrival_sound = new SoundBite(vf, fn, _soundName + "_PRE-ARRIVAL", _soundName + "_Pre-arrival");
-            pre_arrival_sound.setGain(setXMLGain(el));
-            pre_arrival_sound.setLooped(false);
-            pre_arrival_sound.setFadeTimes(500, 500);
-            pre_arrival_sound.setReferenceDistance(setXMLReferenceDistance(el));
-            trigger_sounds.put("pre_arrival", pre_arrival_sound);
+            if (pre_arrival_sound.isInitialized()) {
+                pre_arrival_sound.setGain(setXMLGain(el));
+                pre_arrival_sound.setLooped(false);
+                pre_arrival_sound.setFadeTimes(500, 500);
+                pre_arrival_sound.setReferenceDistance(setXMLReferenceDistance(el));
+                trigger_sounds.put("pre_arrival", pre_arrival_sound);
+            } else {
+                buffer_ok = false;
+            }
         }
 
         if (buffer_ok) {
+            setBuffersFreeState(true);
             // Kick-start the loop thread
             this.startThread();
-
             // Check auto-start setting
             autoStartCheck();
         } else {
-            log.warn("Engine cannot be started due to buffer issues");
+            setBuffersFreeState(false);
         }
     }
 
@@ -587,7 +607,7 @@ class Steam1Sound extends EngineSound {
             bufs_helper.add(b);
         }
 
-        static private AudioBuffer getBufferHelper(String sname, String uname) {
+        private static AudioBuffer getBufferHelper(String sname, String uname) {
             AudioBuffer bf = null;
             jmri.AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
             try {
@@ -601,7 +621,7 @@ class Steam1Sound extends EngineSound {
             return bf;
         }
 
-        static private java.io.InputStream getWavStream(VSDFile vf, String filename) {
+        private static java.io.InputStream getWavStream(VSDFile vf, String filename) {
             java.io.InputStream ins = vf.getInputStream(filename);
             if (ins != null) {
                 return ins;
@@ -610,7 +630,7 @@ class Steam1Sound extends EngineSound {
                 return null;
             }
         }
-        
+
         @SuppressWarnings("hiding")     // Field has same name as a field in the super class
         private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(S1Notch.class);
 
@@ -689,6 +709,7 @@ class Steam1Sound extends EngineSound {
             dynamic_volume = 1.0f;
             max_volume = 1.0f / _parent.engine_gain;
             _sound = new SoundBite(s); // Soundsource for queueing
+            _sound.isInitialized();
             _sound.setGain(_parent.engine_gain); // All chuff sounds will have this gain
             count_pre_arrival = 1;
             queue_limit = 2;
@@ -1372,11 +1393,22 @@ class Steam1Sound extends EngineSound {
 
         private void setPosition(PhysicalLocation p) {
             _sound.setPosition(p);
+            if (_parent.getTunnel()) {
+                _sound.attachSourcesToEffects();
+            } else {
+                _sound.detachSourcesToEffects();
+            }
+
             for (SoundBite ts : _parent.trigger_sounds.values()) {
                 ts.setPosition(p);
+                if (_parent.getTunnel()) {
+                    ts.attachSourcesToEffects();
+                } else {
+                    ts.detachSourcesToEffects();
+                }
             }
         }
-        
+
         @SuppressWarnings("hiding")     // Field has same name as a field in the super class
         private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(S1LoopThread.class);
 

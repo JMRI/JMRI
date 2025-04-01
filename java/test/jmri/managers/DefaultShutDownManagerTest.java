@@ -273,6 +273,7 @@ public class DefaultShutDownManagerTest {
     @Test
     public void testMoreThanEightTasks() {
         concurrentRuns = new ConcurrentHashMap<>(41);
+        dsdm.tasksTimeOutMilliSec *= 2;
         for ( int i=0; i<30; i++ ){
             dsdm.register(new CallTrueShutDownTask("testMoreThanEightTasks"+i));
         }

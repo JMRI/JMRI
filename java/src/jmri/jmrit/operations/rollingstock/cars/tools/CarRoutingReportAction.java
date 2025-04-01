@@ -8,6 +8,7 @@ import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarSetFrame;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainPrintUtilities;
@@ -71,7 +72,7 @@ public class CarRoutingReportAction extends AbstractAction {
             TrainUtilities.openDesktop(file);
         } else {
             TrainPrintUtilities.printReport(file, Bundle.getMessage("RoutingReportCar", car.toString()), _isPreview,
-                    Car.NONE, false, Car.NONE, Car.NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true);
+                    Car.NONE, false, Car.NONE, Car.NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true, null);
         }
     }
 

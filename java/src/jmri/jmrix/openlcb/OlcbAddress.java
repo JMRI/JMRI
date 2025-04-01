@@ -6,12 +6,12 @@ import java.util.regex.Pattern;
 import javax.annotation.CheckReturnValue;
 
 import jmri.NamedBean.BadSystemNameException;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.openlcb.EventID;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 
@@ -21,24 +21,24 @@ import javax.annotation.Nonnull;
  * OpenLCB event messages have header information, plus an EventID in the data
  * part. JMRI maps these into address strings.
  * <p>
- * Forms:
+ * String forms:
  * <dl>
+ * <dt>Special case for DCC Turnout addressing:  Tnnn where nnn is a decimal number
+ *
  * <dt>Full hex string preceeded by "x"<dd>Needs to be pairs of digits: 0123,
  * not 123
+  *
  * <dt>Full 8 byte ID as pairs separated by "."
  * </dl>
+ * <p>
  * Note: the {@link #check()} routine does a full, expensive
  * validity check of the name.  All other operations
  * assume correctness, diagnose some invalid-format strings, but
  * may appear to successfully handle other invalid forms.
  *
- * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018
+ * @author Bob Jacobsen Copyright (C) 2008, 2010, 2018, 2024
  */
-public class OlcbAddress {
-
-    // groups
-    static final int GROUP_FULL_HEX = 1; // xhhhhhh
-    static final int GROUP_DOT_HEX = 3; // dotted hex form
+public final class OlcbAddress {
 
     static final String singleAddressPattern = "([xX](\\p{XDigit}\\p{XDigit}){1,8})|((\\p{XDigit}?\\p{XDigit}.){7}\\p{XDigit}?\\p{XDigit})";
 
@@ -49,12 +49,10 @@ public class OlcbAddress {
         return hCode;
     }
 
-    String aString;
-    int[] aFrame = null;
-    boolean match = false;
-
-    static final int NODEFACTOR = 100000;
-
+    private String aString;         // String value of the address
+    private int[] aFrame = null;    // int[8] of event ID; if null, aString might be two addresses
+    private boolean match = false;  // true if address properly parsed; false (may) mean two-part address
+    private boolean fromName = false; // true if this originate as an event name
     /**
      * Construct from OlcbEvent.
      *
@@ -72,13 +70,37 @@ public class OlcbAddress {
 
     /**
      * Construct from string without leading system or type letters
-     * @param s hex coded string of address
+     * @param input hex coded string of address
      */
-    public OlcbAddress(String s) {
+    public OlcbAddress(String input, final CanSystemConnectionMemo memo) {
         // This is done manually, rather than via regular expressions, for performance reasons.
 
-        // check for leading T, if so convert to numeric form
+        String s = input.strip();
+        
+        OlcbEventNameStore nameStore = null;
+        if (memo != null) { 
+            nameStore = memo.get(OlcbEventNameStore.class);
+        }
+         if (nameStore != null && nameStore.hasEventID(s)) {
+            EventID eid = nameStore.getEventID(s);
+            // name form
+            // load the event ID into the aFrame c.f. OlcbAddress(EventID) ctor
+            byte[] contents = eid.getContents();
+            aFrame = new int[contents.length];
+            int i = 0;
+            for (byte b : contents) {
+                aFrame[i++] = b;
+            }
+            match = true;
+            fromName = true;
+            // leave aString as original argument
+            aString = s;
+            return;
+        }
+        
+        // check for special addressing forms
         if (s.startsWith("T")) {
+            // leading T, so convert to numeric form from turnout number
             int from;
             try {
                 from = Integer.parseInt(s.substring(1));
@@ -86,32 +108,58 @@ public class OlcbAddress {
                 from = 0;
             }
 
-            int DD = (from-1) & 0x3;
-            int aaaaaa = (( (from-1) >> 2)+1 ) & 0x3F;
-            int AAA = ( (from) >> 8) & 0x7;
-            long event = 0x0101020000FF0000L | (AAA << 9) | (aaaaaa << 3) | (DD << 1);
-
+            if (from >= 2045) from = from-2045;
+            else from = from + 3;
+            long event = 0x0101020000FF0000L | (from<<1);
+            
             s = String.format("%016X;%016X", event, event+1);
-            log.debug(" converted to {}", s);
+            log.trace(" Turnout form converted to {}", s);
+        } else if (s.startsWith("S")) {
+            // leading S, so convert to numeric form from sensor number
+            int from;
+            try {
+                from = Integer.parseInt(s.substring(1));
+            } catch (NumberFormatException e) {
+                from = 0;
+            }
+
+            from = 0xFFF & (from - 1); // 1 based name to 0 based network, 12 bit value
+            
+            long event1 = 0x0101020000FB0000L | from; // active/on
+            long event2 = 0x0101020000FA0000L | from; // inactive/off
+ 
+            s = String.format("%016X;%016X", event1, event2);
+            log.trace(" Sensor form converted to {}", s);
         }
 
         aString = s;
 
         // numeric address string format
         if (aString.contains(";")) {
-            // multi-part address; leave match false and aFrame null
-        } else if (aString.contains(".")) {
+            // multi-part address; leave match false and aFrame null; only aString has content
+            // will later be split up and parsed with #split() call
+            return;
+        }
+        
+        // check for name vs numeric address formats
+        
+        if (aString.contains(".")) {
             // dotted form, 7 dots
             String[] terms = s.split("\\.");
             if (terms.length != 8) {
                 log.debug("unexpected number of terms: {}, address is {}", terms.length, s);
             }
             int[] tFrame = new int[terms.length];
+            int i = -1;
             try {
-                for (int i = 0; i < terms.length; i++) {
-                    tFrame[i] = Integer.parseInt(terms[i], 16);
+                for (i = 0; i < terms.length; i++) {
+                    tFrame[i] = Integer.parseInt(terms[i].strip(), 16);
                 }
-            } catch (NumberFormatException ex) { return; } // leaving the string unparsed
+            } catch (NumberFormatException ex) {
+                // leaving the string unparsed
+                log.debug("failed to parse EventID \"{}\" at {} due to {}; might be a partial value", s, i, terms[i].strip());
+                return; 
+            } 
             aFrame = tFrame;
             match = true;
         } else {
@@ -126,7 +174,10 @@ public class OlcbAddress {
                     String two = aString.substring(2 * i, 2 * i + 2);
                     tFrame[i] = Integer.parseInt(two, 16);
                 }
-            } catch (NumberFormatException ex) { return; }  // leaving the string unparsed
+            } catch (NumberFormatException ex) { 
+                log.debug("failed to parse EventID \"{}\"; might be a partial value", s);
+                return;
+            }  // leaving the string unparsed
             aFrame = tFrame;
             match = true;
         }
@@ -140,10 +191,15 @@ public class OlcbAddress {
         if (r == null) {
             return false;
         }
-        if (!(r.getClass().equals(this.getClass()))) {
+        if (!(r.getClass().equals(this.getClass()))) { // final class simplifies this
             return false;
         }
         OlcbAddress opp = (OlcbAddress) r;
+        if (this.aFrame == null || opp.aFrame == null) {
+            // one or the other has just a string, e.g A;B form.
+            // compare strings
+            return this.aString.equals(opp.aString);
+        }
         if (opp.aFrame.length != this.aFrame.length) {
             return false;
         }
@@ -159,7 +215,7 @@ public class OlcbAddress {
     public int hashCode() {
         int ret = 0;
         for (int value : this.aFrame) {
-            ret += value;
+            ret += value*8; // don't want to overflow int, do want to spread out
         }
         return ret;
     }
@@ -168,11 +224,11 @@ public class OlcbAddress {
         // if neither matched, just do a lexical sort
         if (!match && !opp.match) return aString.compareTo(opp.aString);
 
-        // match sorts before non-matched
+        // match (single address) sorts before non-matched (double address)
         if (match && !opp.match) return -1;
         if (!match && opp.match) return +1;
 
-        // usual case: comparing on content
+        // both matched, usual case: comparing on content
         for (int i = 0; i < Math.min(aFrame.length, opp.aFrame.length); i++) {
             if (aFrame[i] != opp.aFrame[i]) return Integer.signum(aFrame[i] - opp.aFrame[i]);
         }
@@ -240,9 +296,9 @@ public class OlcbAddress {
      */
      @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
         justification = "Documented API, no resources to improve")
-    public OlcbAddress[] split() {
+    public OlcbAddress[] split(final CanSystemConnectionMemo memo) {
         // reject strings ending in ";"
-        if (aString.endsWith(";")) {
+        if (aString == null || aString.endsWith(";")) {
             return null;
         }
 
@@ -260,7 +316,7 @@ public class OlcbAddress {
             // too expensive to do full regex check here, as this is used a lot in e.g. sorts
             // if (!getMatcher().reset(pStrings[i]).matches()) return null;
 
-            retval[i] = new OlcbAddress(pStrings[i]);
+            retval[i] = new OlcbAddress(pStrings[i], memo);
             if (!retval[i].match) {
                 return null;
             }
@@ -268,8 +324,8 @@ public class OlcbAddress {
         return retval;
     }
 
-    public boolean checkSplit() {
-        return (split() != null);
+    public boolean checkSplit( final CanSystemConnectionMemo memo) {
+        return (split(memo) != null);
     }
 
     int[] elements() {
@@ -277,10 +333,16 @@ public class OlcbAddress {
     }
 
     @Override
+    /**
+     * @return The string that was used to create this address
+     */
     public String toString() {
         return aString;
     }
 
+    /**
+     * @return The canonical form of 0x1122334455667788
+     */
     public String toCanonicalString() {
         String retval = "x";
         for (int value : aFrame) {
@@ -295,6 +357,7 @@ public class OlcbAddress {
      */
     public String toDottedString() {
         String retval = "";
+        if (aFrame == null) return retval;
         for (int value : aFrame) {
             if (!retval.isEmpty())
                 retval += ".";
@@ -303,12 +366,21 @@ public class OlcbAddress {
         return retval;
     }
 
+    /**
+     * @return null if no valid address was parsed earlier, e.g. there was a ; in the data
+     */
     public EventID toEventID() {
+        if (aFrame == null) return null;
         byte[] b = new byte[8];
         for (int i = 0; i < Math.min(8, aFrame.length); ++i) b[i] = (byte)aFrame[i];
         return new EventID(b);
     }
 
+    /**
+     * Was this parsed from a name (e.g. not explicit ID, not pair)
+     * @return true if constructed from an event name
+     */
+    public boolean isFromName() { return fromName; }
     /**
      * Validates Strings for OpenLCB format.
      * @param name   the system name to validate.
@@ -319,12 +391,12 @@ public class OlcbAddress {
      */
     @Nonnull
     public static String validateSystemNameFormat(@Nonnull String name, @Nonnull java.util.Locale locale,
-        @Nonnull String prefix) throws BadSystemNameException {
+        @Nonnull String prefix, final CanSystemConnectionMemo memo) throws BadSystemNameException {
         String oAddr = name.substring(prefix.length());
-        OlcbAddress a = new OlcbAddress(oAddr);
-        OlcbAddress[] v = a.split();
+        OlcbAddress a = new OlcbAddress(oAddr, memo);
+        OlcbAddress[] v = a.split(memo);
         if (v == null) {
-            throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb address");
+            throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " does not convert to a valid Olcb address");
         }
         switch (v.length) {
             case 1:
@@ -346,10 +418,10 @@ public class OlcbAddress {
      */
     @Nonnull
     public static String validateSystemNameFormat2Part(@Nonnull String name, @Nonnull java.util.Locale locale,
-        @Nonnull String prefix) throws BadSystemNameException {
+        @Nonnull String prefix, final CanSystemConnectionMemo memo) throws BadSystemNameException {
         String oAddr = name.substring(prefix.length());
-        OlcbAddress a = new OlcbAddress(oAddr);
-        OlcbAddress[] v = a.split();
+        OlcbAddress a = new OlcbAddress(oAddr, memo);
+        OlcbAddress[] v = a.split(memo);
         if (v == null) {
             throw new BadSystemNameException(locale,"InvalidSystemNameCustom","Did not find usable system name: " + name + " to a valid Olcb address");
         }
@@ -369,11 +441,11 @@ public class OlcbAddress {
      * @return true if suffixes match, else false.
      */
     @CheckReturnValue
-    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2) {
+    public static int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, final CanSystemConnectionMemo memo) {
 
         // extract addresses
-        OlcbAddress[] array1 = new OlcbAddress(suffix1).split();
-        OlcbAddress[] array2 = new OlcbAddress(suffix2).split();
+        OlcbAddress[] array1 = new OlcbAddress(suffix1, memo).split(memo);
+        OlcbAddress[] array2 = new OlcbAddress(suffix2, memo).split(memo);
 
         // compare on content
         for (int i = 0; i < Math.min(array1.length, array2.length); i++) {
@@ -384,7 +456,7 @@ public class OlcbAddress {
         return Integer.signum(array1.length - array2.length);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbAddress.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbAddress.class);
 
 }
 

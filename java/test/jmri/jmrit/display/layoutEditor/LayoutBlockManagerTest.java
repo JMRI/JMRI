@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,8 @@ public class LayoutBlockManagerTest {
     @Test
     public void testCtor() {
         LayoutBlockManager b = new LayoutBlockManager();
-        Assert.assertNotNull("exists", b);
+        Assertions.assertNotNull( b, "exists");
+        b.dispose();
     }
 
     // from here down is testing infrastructure

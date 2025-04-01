@@ -114,7 +114,11 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.11.0
 - JMRI uses this for file selectors
 
-
+##### darklaf-*, jsvg-*, swing-dsl-*, swing-extensions-*
+ - from Maven Central, with version in file name
+ - These provide the DarkLaf look&feel package
+ - https://github.com/weisJ/darklaf
+ 
 ##### jhall.jar
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
@@ -137,8 +141,9 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
- - 0.8.1 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.1/openlcb-0.8.1.jar
- - including PR #274 and 275 as of 2024-10-24
+ - 0.8.5 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.5/openlcb-0.8.5.jar
+    with merged PR #287, #288, #289
+    with PR #290
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -368,7 +373,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### javacc.jar
 - version 7.0.3
 
-##### javassist-3.20.0-GA.jar
+##### javassist-3.28.0-GA.jar
 - initially used to mock an XBee Connection for testing.
 
 ##### javax.servlet-api-3.1.0.jar
@@ -401,8 +406,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 2.6
 - batik related
 
-##### BiDiB protocol implementation: jbidibc-*-2.0.18.jar, bidibwizard-*-2.0.18.jar
-- version 2.0.18
+##### BiDiB protocol implementation: jbidibc-*-2.0.29.jar, bidibwizard-*-2.0.30.jar
+- version 2.0.29 / 2.0.30
 - bidibwizard*.jar supports the BiDiB connection simulation
 
 ##### commons-collections4-4.4.jar
@@ -428,6 +433,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### jgoodies-common-1.8.1.jar
 - version 1.8.1
 - used by jbidibc/bidibwizard
+
+##### reflections-0.10.2.jar
+- used for runtime intraspection of classes.
 
 ## For unit tests & development work only:
 

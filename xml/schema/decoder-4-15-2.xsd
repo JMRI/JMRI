@@ -632,6 +632,7 @@
     <xs:attribute name="highVersionID" type="xs:int" />
     <xs:attribute name="type" type="xs:string" />
     <xs:attribute name="comment" type="xs:string" />
+    <xs:attribute name="modes" type="xs:string" />
 
     <xs:attribute name="uid" type="xs:string" default="">
       <xs:annotation><xs:documentation>Globally unique ID used by DCCwiki; JMRI does not check for nor maintain uniqueness</xs:documentation></xs:annotation>

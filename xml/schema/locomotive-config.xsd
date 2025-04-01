@@ -49,126 +49,127 @@
     </xs:complexType>
   </xs:element>
 
-    <xs:complexType name="LocomotiveType">
-      <xs:sequence>
-        <xs:element name="dateUpdated" minOccurs="0" maxOccurs="1">
-            <xs:annotation>
-                <xs:documentation>
-                  This is an unchecked, unparsed field intended to hold a system-local date.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:element>
+  <xs:complexType name="LocomotiveType">
+    <xs:sequence>
+      <xs:element name="dateUpdated" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+              <xs:documentation>
+                This is an unchecked, unparsed field intended to hold a system-local date.
+              </xs:documentation>
+          </xs:annotation>
+      </xs:element>
 
-        <xs:element name="decoder" type="DecoderType" minOccurs="1" maxOccurs="1" />
+      <xs:element name="decoder" type="DecoderType" minOccurs="1" maxOccurs="1" />
 
-        <xs:element name="locoaddress" type="LocoAddressType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="locoaddress" type="LocoAddressType" minOccurs="0" maxOccurs="1" />
 
-        <xs:element name="functionlabels" type="FunctionLabelType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="functionlabels" type="FunctionLabelType" minOccurs="0" maxOccurs="1" />
 
-        <xs:element name="soundlabels" type="SoundLabelType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="soundlabels" type="SoundLabelType" minOccurs="0" maxOccurs="1" />
 
-        <xs:element name="attributepairs" type="AttributePairsType" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="attributepairs" type="AttributePairsType" minOccurs="0" maxOccurs="unbounded" />
 
-        <xs:element name="speedprofile" type="SpeedProfileType" minOccurs="0" maxOccurs="1" />
+      <xs:element name="speedprofile" type="SpeedProfileType" minOccurs="0" maxOccurs="1" />
 
-        <xs:element name="values" minOccurs="0" maxOccurs="1">
-          <xs:complexType>
-            <xs:sequence>
-            <xs:element name="decoderDef" minOccurs="0" maxOccurs="1">
-                <xs:complexType>
-                <xs:sequence>
-                <xs:element name="varValue" minOccurs="0" maxOccurs="unbounded">
-                  <xs:complexType>
-                    <xs:attribute name="item" type="xs:string" use="required"/>
-                    <xs:attribute name="value" type="xs:string" use="required"/> <!--String as all the speed table values are written in one string-->
-                  </xs:complexType>
-                </xs:element>
-                </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="CVvalue" minOccurs="0" maxOccurs="unbounded">
-              <xs:complexType>
-                <xs:attribute name="name" type="xs:integer" use="required"/>
-                <xs:attribute name="value" use="required">
-                  <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                      <xs:minInclusive value="0"/>
-                      <xs:maxInclusive value="255"/>
-                    </xs:restriction>
-                  </xs:simpleType>
-                </xs:attribute>
-              </xs:complexType>
-            </xs:element>
-            <xs:element name="indexedCVvalue" minOccurs="0" maxOccurs="unbounded">
-              <xs:complexType>
-                <xs:attribute name="name" type="xs:decimal" use="required"/>
-                <xs:attribute name="piCv" type="xs:integer" use="required"/>
-                <xs:attribute name="piVal" type="xs:integer" use="required"/>
-                <xs:attribute name="siCv" type="xs:integer" use="required"/>
-                <xs:attribute name="siVal" type="xs:integer" use="required"/>
-                <xs:attribute name="iCv" type="xs:integer" use="required"/>
-                <xs:attribute name="value" use="required">
-                  <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                      <xs:minInclusive value="0"/>
-                      <xs:maxInclusive value="255"/>
-                    </xs:restriction>
-                  </xs:simpleType>
-                </xs:attribute>
-              </xs:complexType>
-            </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-
-        <xs:attribute name="id" type="xs:string" use="required"/>
-        <xs:attribute name="dccAddress" type="xs:string"/> <!-- deprecated -->
-        <xs:attribute name="fileName" type="xs:string"/>
-        <xs:attribute name="imageFilePath" type="xs:string"/>
-        <xs:attribute name="iconFilePath" type="xs:string"/>
-        <xs:attribute name="URL" type="xs:string"/>
-        <xs:attribute name="IsShuntingOn" type="xs:string"/>
-        <xs:attribute name="groupName" type="xs:string"/>
-        <xs:attribute name="roadName" type="xs:string"/>
-        <xs:attribute name="roadNumber" type="xs:string"/>
-        <xs:attribute name="mfg" type="xs:string"/>
-        <xs:attribute name="manufacturerID" type="xs:string"/>
-        <xs:attribute name="productID" type="xs:string"/>
-        <xs:attribute name="developerID" type="xs:string"/>
-        <xs:attribute name="owner" type="xs:string"/>
-        <xs:attribute name="model" type="xs:string"/>
-        <xs:attribute name="comment" type="xs:string"/>
-        <xs:attribute name="maxSpeed" type="xs:float">
-        <xs:annotation><xs:documentation>
-            maximum speed as a fraction from 0 to 1.0
-        </xs:documentation></xs:annotation>
-        </xs:attribute>
-
-    </xs:complexType>
-
-    <xs:complexType name="LocoAddressType"><xs:sequence>
-      <xs:element name="dcclocoaddress" minOccurs="1" maxOccurs="1">
+      <xs:element name="values" minOccurs="0" maxOccurs="1">
         <xs:complexType>
-          <xs:attribute name="number" type="xs:integer" use="required"/>
-          <xs:attribute name="longaddress" type="yesNoType" use="required"/>
+          <xs:sequence>
+          <xs:element name="decoderDef" minOccurs="0" maxOccurs="1">
+              <xs:complexType>
+              <xs:sequence>
+              <xs:element name="varValue" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="item" type="xs:string" use="required"/>
+                  <xs:attribute name="value" type="xs:string" use="required"/> <!--String as all the speed table values are written in one string-->
+                </xs:complexType>
+              </xs:element>
+              </xs:sequence>
+              </xs:complexType>
+          </xs:element>
+          <xs:element name="CVvalue" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+              <xs:attribute name="name" type="xs:integer" use="required"/>
+              <xs:attribute name="value" use="required">
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="0"/>
+                    <xs:maxInclusive value="255"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="indexedCVvalue" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+              <xs:attribute name="name" type="xs:decimal" use="required"/>
+              <xs:attribute name="piCv" type="xs:integer" use="required"/>
+              <xs:attribute name="piVal" type="xs:integer" use="required"/>
+              <xs:attribute name="siCv" type="xs:integer" use="required"/>
+              <xs:attribute name="siVal" type="xs:integer" use="required"/>
+              <xs:attribute name="iCv" type="xs:integer" use="required"/>
+              <xs:attribute name="value" use="required">
+                <xs:simpleType>
+                  <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="0"/>
+                    <xs:maxInclusive value="255"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="number" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="protocol" minOccurs="0" maxOccurs="1">
-          <xs:simpleType>
-            <xs:restriction base="xs:token" >
-              <xs:enumeration value="dcc"/>
-              <xs:enumeration value="dcc_long"/>
-              <xs:enumeration value="dcc_short"/>
-              <xs:enumeration value="selectrix"/>
-              <xs:enumeration value="motorola"/>
-              <xs:enumeration value="mfx"/>
-              <xs:enumeration value="m4"/>
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-    </xs:sequence></xs:complexType>
+    </xs:sequence>
+
+    <xs:attribute name="id" type="xs:string" use="required"/>
+    <xs:attribute name="dccAddress" type="xs:string"/> <!-- deprecated -->
+    <xs:attribute name="fileName" type="xs:string"/>
+    <xs:attribute name="imageFilePath" type="xs:string"/>
+    <xs:attribute name="iconFilePath" type="xs:string"/>
+    <xs:attribute name="URL" type="xs:string"/>
+    <xs:attribute name="IsShuntingOn" type="xs:string"/>
+    <xs:attribute name="groupName" type="xs:string"/>
+    <xs:attribute name="roadName" type="xs:string"/>
+    <xs:attribute name="roadNumber" type="xs:string"/>
+    <xs:attribute name="mfg" type="xs:string"/>
+    <xs:attribute name="manufacturerID" type="xs:string"/>
+    <xs:attribute name="productID" type="xs:string"/>
+    <xs:attribute name="developerID" type="xs:string"/>
+    <xs:attribute name="decoderModes" type="xs:string"/>
+    <xs:attribute name="owner" type="xs:string"/>
+    <xs:attribute name="model" type="xs:string"/>
+    <xs:attribute name="comment" type="xs:string"/>
+    <xs:attribute name="maxSpeed" type="xs:float">
+    <xs:annotation><xs:documentation>
+        maximum speed as a fraction from 0 to 1.0
+    </xs:documentation></xs:annotation>
+    </xs:attribute>
+
+  </xs:complexType>
+
+  <xs:complexType name="LocoAddressType"><xs:sequence>
+    <xs:element name="dcclocoaddress" minOccurs="1" maxOccurs="1">
+      <xs:complexType>
+        <xs:attribute name="number" type="xs:integer" use="required"/>
+        <xs:attribute name="longaddress" type="yesNoType" use="required"/>
+      </xs:complexType>
+    </xs:element>
+    <xs:element name="number" minOccurs="0" maxOccurs="1"/>
+    <xs:element name="protocol" minOccurs="0" maxOccurs="1">
+        <xs:simpleType>
+          <xs:restriction base="xs:token" >
+            <xs:enumeration value="dcc"/>
+            <xs:enumeration value="dcc_long"/>
+            <xs:enumeration value="dcc_short"/>
+            <xs:enumeration value="selectrix"/>
+            <xs:enumeration value="motorola"/>
+            <xs:enumeration value="mfx"/>
+            <xs:enumeration value="m4"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+  </xs:sequence></xs:complexType>
 
   <xs:complexType name="AttributePairsType"><xs:sequence>
       <xs:element name="keyvaluepair" minOccurs="0" maxOccurs="unbounded">
@@ -182,8 +183,10 @@
   <xs:complexType name="DecoderType">
     <xs:attribute name="family" type="xs:string" use="required"/>
     <xs:attribute name="model" type="xs:string" use="required"/>
+    <xs:attribute name="decoderModes" type="xs:string"/>
     <xs:attribute name="comment" type="xs:string"/>
     <xs:attribute name="maxFnNum" type="xs:int"/>
+    <xs:attribute name="programmingmode" type="xs:int"/>
   </xs:complexType>
 
 

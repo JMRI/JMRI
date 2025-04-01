@@ -3,8 +3,6 @@ package jmri.jmrit.tracker;
 import jmri.Block;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tracks train into memory object
@@ -24,20 +22,16 @@ public class MemoryTracker {
         // make sure Memory objects exist & remember it
         Memory m = jmri.InstanceManager.memoryManagerInstance()
                 .provideMemory(namePrefix + block.getSystemName());
-        namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(namePrefix + block.getSystemName(), m);
+        namedMemory = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)
+            .getNamedBeanHandle(namePrefix + block.getSystemName(), m);
         // set listener in the block
-        block.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                handleChange();
-            }
-        });
+        block.addPropertyChangeListener( e -> handleChange());
 
         // first update
         handleChange();
     }
 
-    void handleChange() {
+    private void handleChange() {
         if (log.isDebugEnabled() && (block.getValue() != null)) {
             log.debug("set value {} in block {}", block.getValue(), block.getSystemName());
         }
@@ -48,9 +42,8 @@ public class MemoryTracker {
         namedMemory.getBean().setValue(o);
     }
 
-    NamedBeanHandle<Memory> namedMemory;
-    //Memory m;
-    Block block;
+    private final NamedBeanHandle<Memory> namedMemory;
+    private final Block block;
 
-    private final static Logger log = LoggerFactory.getLogger(MemoryTracker.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MemoryTracker.class);
 }

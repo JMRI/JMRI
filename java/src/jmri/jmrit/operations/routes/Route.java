@@ -291,7 +291,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
      *
      * @return route location
      */
-    public RouteLocation getLocationById(String id) {
+    public RouteLocation getRouteLocationById(String id) {
         return _routeHashTable.get(id);
     }
 
@@ -596,10 +596,11 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(),
                     e.getNewValue());
         }
-        // forward drops, pick ups, train direction, max moves, and max length as a list
+        // forward drops, pick ups, local moves, train direction, max moves, and max length as a list
         // change
         if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(RouteLocation.LOCAL_MOVES_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(RouteLocation.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(RouteLocation.MAX_MOVES_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(RouteLocation.MAX_LENGTH_CHANGED_PROPERTY)) {

@@ -166,7 +166,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                     train.getRoute().addPropertyChangeListener(this);
                     if (rl.isPickUpAllowed() &&
                             rl.getMaxCarMoves() > 0 &&
-                            !train.isLocationSkipped(rl.getId()) &&
+                            !train.isLocationSkipped(rl) &&
                             typeAccepted &&
                             (train.isLocalSwitcher() ||
                                     (rl.getTrainDirection() & _location.getTrainDirections()) != 0) &&
@@ -178,7 +178,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
                     }
                     if (rl.isDropAllowed() &&
                             rl.getMaxCarMoves() > 0 &&
-                            !train.isLocationSkipped(rl.getId()) &&
+                            !train.isLocationSkipped(rl) &&
                             typeAccepted &&
                             (train.isLocalSwitcher() ||
                                     (rl.getTrainDirection() & _location.getTrainDirections()) != 0) &&

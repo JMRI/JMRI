@@ -70,7 +70,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
              */
             @Override
             void extras() {
-                
+
                 addBottomButtons(this, dataTable);
             }
         };
@@ -114,11 +114,6 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         log.debug("columns updated {}",colsVisible);
     }
 
-    public BeanTableDataModel<E> getTableDataModel() {
-        createModel();
-        return m;
-    }
-
     public void setFrame(@Nonnull BeanTableFrame<E> frame) {
         f = frame;
     }
@@ -127,6 +122,22 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         return f;
     }
 
+    /**
+     * Get the relevant data model for the current table.
+     * <p> This is overridden in the tabbed-table classes
+     * to return their own local data model.
+     * <p> Unlike {@link #getTableDataModel()}, this therefore
+     * doesn't attempt to (re)-create the model.
+     */
+    public BeanTableDataModel<E> getDataModel() {
+        return m;
+    }
+   
+    final public BeanTableDataModel<E> getTableDataModel() {
+        createModel();
+        return m;
+    }
+ 
     /**
      * Allow subclasses to add to the frame without having to actually subclass
      * the BeanTableDataFrame.
@@ -244,6 +255,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         options.put(0x02, Bundle.getMessage("DeleteAlways"));
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(),
                 "deleteInUse", Bundle.getMessage("DeleteItemInUse"), options, 0x00);
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "remindSaveReLoad", Bundle.getMessage("HideMoveUserReminder"));
     }
 
     protected abstract String getClassName();
@@ -286,7 +298,9 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      */
     protected void configureManagerComboBox(ManagerComboBox<E> comboBox, Manager<E> manager,
             Class<? extends Manager<E>> managerClass) {
+        log.trace("configureManagerComboBox called with manager {}", manager);
         Manager<E> defaultManager = InstanceManager.getDefault(managerClass);
+        log.trace("default manager is {}", defaultManager);
         // populate comboBox
         if (defaultManager instanceof ProxyManager) {
             comboBox.setManagers(defaultManager);
@@ -302,6 +316,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
                 SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
                         .getSystemConnectionMemoForUserName(userPref);
                 if (memo!=null) {
+                    log.trace("managerClass is {}, memo is {}", managerClass, memo);
                     comboBox.setSelectedItem(memo.get(managerClass));
                 } else {
                     ProxyManager<E> proxy = (ProxyManager<E>) manager;
@@ -492,7 +507,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
          */
         @Override
         public void columnMarginChanged(ChangeEvent e) {}
-        
+
         protected void dispose() {
             if (dataTable !=null ) {
                 dataTable.getColumnModel().removeColumnModelListener(this);
@@ -506,8 +521,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         }
 
     }
-    
-    
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractTableAction.class);
 
 }

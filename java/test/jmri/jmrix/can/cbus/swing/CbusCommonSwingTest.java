@@ -1,14 +1,16 @@
 package jmri.jmrix.can.cbus.swing;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import javax.swing.JTextField;
+
 import jmri.jmrix.can.cbus.CbusEventDataElements.EvState;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Test simple functioning of CbusCommonSwing
@@ -22,45 +24,45 @@ public class CbusCommonSwingTest  {
 
     @Test
     public void testJTextFieldFromCbusEvState(){
-    
+
         JTextField t = new JTextField();
-    
+
         CbusCommonSwing.setCellFromCbusEventEnum(EvState.ON, t);
-        assertThat(t.getText()).isEqualTo(Bundle.getMessage("CbusEventOn"));
-        
+        assertEquals( Bundle.getMessage("CbusEventOn"), t.getText());
+
         CbusCommonSwing.setCellFromCbusEventEnum(EvState.OFF, t);
-        assertThat(t.getText()).isEqualTo(Bundle.getMessage("CbusEventOff"));
-        
+        assertEquals( Bundle.getMessage("CbusEventOff"), t.getText());
+
         CbusCommonSwing.setCellFromCbusEventEnum(EvState.UNKNOWN, t);
-        assertThat(t.getText()).isEmpty();
-        
+        assertTrue( t.getText().isEmpty());
+
         CbusCommonSwing.setCellFromCbusEventEnum(EvState.REQUEST, t);
-        assertThat(t.getText()).isEqualTo(Bundle.getMessage("CbusEventRequest"));
-        
+        assertEquals( Bundle.getMessage("CbusEventRequest"), t.getText());
+
     }
-    
+
     @Test
     public void testJTextFieldFromCbusNodeBackupState(){
-    
+
         JTextField t = new JTextField();
-    
+
         CbusCommonSwing.setCellFromBackupEnum(BackupType.COMPLETE, t);
-        assertThat(t.getText()).isEqualTo(Bundle.getMessage("BackupComplete"));
-        
+        assertEquals( Bundle.getMessage("BackupComplete"), t.getText());
+
         CbusCommonSwing.setCellFromBackupEnum(BackupType.COMPLETEDWITHERROR, t);
-        assertThat(t.getText()).isEqualTo(Bundle.getMessage("BackupCompleteError"));
-        
+        assertEquals( Bundle.getMessage("BackupCompleteError"), t.getText());
+
         CbusCommonSwing.setCellFromBackupEnum(BackupType.INCOMPLETE, t);
-        assertThat(t.getText()).isEqualTo(Bundle.getMessage("BackupIncomplete"));
-        
+        assertEquals( Bundle.getMessage("BackupIncomplete"), t.getText());
+
         CbusCommonSwing.setCellFromBackupEnum(BackupType.NOTONNETWORK, t);
-        assertThat(t.getText()).isEqualTo(Bundle.getMessage("BackupNotOnNetwork"));
-        
+        assertEquals( Bundle.getMessage("BackupNotOnNetwork"), t.getText());
+
         CbusCommonSwing.setCellFromBackupEnum(BackupType.OUTSTANDING, t);
-        assertThat(t.getText()).isEqualTo(Bundle.getMessage("BackupOutstanding"));
-        
+        assertEquals( Bundle.getMessage("BackupOutstanding"), t.getText());
+
         CbusCommonSwing.setCellFromBackupEnum(BackupType.SLIM, t);
-        assertThat(t.getText()).isEqualTo(Bundle.getMessage("NodeInSlim"));
+        assertEquals( Bundle.getMessage("NodeInSlim"), t.getText());
     }
 
     @BeforeEach

@@ -1,12 +1,16 @@
 package jmri.jmrix.lenz.swing.mon;
 
-import jmri.jmrix.lenz.XNetListener;
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.Message;
+import jmri.jmrix.lenz.*;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Panel displaying (and logging) XpressNet messages derived from XNetMonFrame.
@@ -20,6 +24,9 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     protected XNetTrafficController tc = null;
     protected XNetSystemConnectionMemo memo = null;
 
+    private List<XPressNetMessageFormatter> formatterList;
+
+
     @Override
     public String getTitle() {
         return (Bundle.getMessage("MenuItemXNetCommandMonitor"));
@@ -32,6 +39,20 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
             tc = memo.getXNetTrafficController();
             // connect to the TrafficController
             tc.addXNetListener(~0, this);
+            try {
+                formatterList = new ArrayList<>();
+
+                Reflections reflections = new Reflections("jmri.jmrix.lenz.messageformatters");
+                Set<Class<? extends XPressNetMessageFormatter>> f = reflections.getSubTypesOf(XPressNetMessageFormatter.class);
+                for(Class<?> c : f){
+                    log.debug("Found formatter: {}", f.getClass().getName());
+                    Constructor<?> ctor = c.getConstructor();
+                    formatterList.add((XPressNetMessageFormatter) ctor.newInstance());
+                }
+            } catch (NoSuchMethodException | SecurityException | InstantiationException |
+                     IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                log.error("Error instantiating formatter", e);
+            }
         }
     }
 
@@ -48,6 +69,22 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
         tc.removeXNetListener(~0, this);
         // and unwind swing
         super.dispose();
+    }
+
+    @Override
+    public void logMessage(String messagePrefix, String rawPrefix, Message message){
+        // display the raw data if requested
+        StringBuilder raw = new StringBuilder(rawPrefix);
+        if (rawCheckBox.isSelected()) {
+            raw.append(message.toString());
+        }
+
+        // display the decoded data
+        String text = formatterList.stream()
+                .filter(f -> f.handlesMessage(message))
+                .findFirst().map(f -> f.formatMessage(message))
+                .orElse(message.toString());
+        nextLine(messagePrefix + " " + text + "\n", raw.toString());
     }
 
     @Override
@@ -84,5 +121,4 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     }
 
     private static final Logger log = LoggerFactory.getLogger(XNetMonPane.class);
-
 }

@@ -23,12 +23,12 @@ public class OperationsMenu extends JMenu {
 
         setText(Bundle.getMessage("MenuOperations"));
 
-        add(new jmri.jmrit.operations.setup.OperationsSettingsAction());
-        add(new jmri.jmrit.operations.locations.LocationsTableAction());
-        add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction());
-        add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction());
-        add(new jmri.jmrit.operations.routes.RoutesTableAction());
-        add(new jmri.jmrit.operations.trains.TrainsTableAction());
+        add(new jmri.jmrit.operations.setup.gui.OperationsSettingsAction());
+        add(new jmri.jmrit.operations.locations.gui.LocationsTableAction());
+        add(new jmri.jmrit.operations.rollingstock.cars.gui.CarsTableAction());
+        add(new jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableAction());
+        add(new jmri.jmrit.operations.routes.gui.RoutesTableAction());
+        add(new jmri.jmrit.operations.trains.gui.TrainsTableAction());
 
     }
 

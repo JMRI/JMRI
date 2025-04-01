@@ -74,8 +74,7 @@ public class ErrorHandlingDialog_MultiLine {
         abortButton.addActionListener((ActionEvent e) -> {
             abortPressed(null);
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-//        abortButton.setToolTipText("CancelLogixButtonHint");      // NOI18N
+//        abortButton.setToolTipText(Bundle.getMessage("LogixNG_AbortButtonHint"));      // NOI18N
 
         // Continue
         JButton continueButton = new JButton(Bundle.getMessage("ErrorHandlingDialog_Continue"));    // NOI18N
@@ -83,8 +82,7 @@ public class ErrorHandlingDialog_MultiLine {
         continueButton.addActionListener((ActionEvent e) -> {
             continuePressed(null);
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-//        continueButton.setToolTipText("CancelLogixButtonHint");      // NOI18N
+//        continueButton.setToolTipText("LogixNG_ContinueButtonHint");      // NOI18N
 
         _errorDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

@@ -626,7 +626,35 @@ public class BlockTest {
         Assert.assertEquals("new value", Boolean.FALSE, listen.getNewValue(1));
         
     }
-    
+
+    @Test
+    public void testSetIsGhostPropertyChange() throws JmriException {
+
+        Block b = new Block("BlockSystemName");
+        Listen listen = new Listen();
+
+        Assert.assertFalse("block not a ghost to start", b.getIsGhost());
+        b.addPropertyChangeListener(listen);
+
+        b.setIsGhost(true);
+        Assert.assertEquals("1 property change",1, listen.getNumPropChanges());
+        Assert.assertTrue("block permissive set", b.getIsGhost());
+        Assert.assertEquals("prop ev name",Block.GHOST_CHANGE, listen.getPropertyName(0));
+        Assert.assertEquals("old value", Boolean.FALSE, listen.getOldValue(0));
+        Assert.assertEquals("new value", Boolean.TRUE, listen.getNewValue(0));
+
+        b.setIsGhost(true);
+        Assert.assertEquals("list size still 1",1, listen.getNumPropChanges());
+
+        b.setIsGhost(false);
+        Assert.assertEquals("+1 property change",2, listen.getNumPropChanges());
+        Assert.assertFalse("block not permissive when set", b.getIsGhost());
+        Assert.assertEquals("prop ev name", Block.GHOST_CHANGE, listen.getPropertyName(1));
+        Assert.assertEquals("old value", Boolean.TRUE, listen.getOldValue(1));
+        Assert.assertEquals("new value", Boolean.FALSE, listen.getNewValue(1));
+
+    }
+
     @Test
     public void testSetSpeedPropertyChange() throws JmriException {
         
@@ -718,7 +746,19 @@ public class BlockTest {
         Assert.assertEquals("new value", 20.0f, (float)listen.getNewValue(1),0.01);
         
     }
-    
+
+    @Test
+    public void testDescribeState() {
+        Block t = new Block("testDescribeState");
+        Assertions.assertEquals("Unknown", t.describeState(Block.UNKNOWN));
+        Assertions.assertEquals("Inconsistent", t.describeState(Block.INCONSISTENT));
+        Assertions.assertEquals("Occupied", t.describeState(Block.OCCUPIED));
+        Assertions.assertEquals("UnOccupied", t.describeState(Block.UNOCCUPIED));
+        Assertions.assertEquals("Undetected", t.describeState(Block.UNDETECTED));
+        Assertions.assertEquals("Unexpected value: 777", t.describeState(777));
+        t.dispose();
+    }
+
     /**
      * Class to log Property Changes.
      */

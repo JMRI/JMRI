@@ -531,15 +531,27 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testMonitorStringThrottleCommandsMsg() {
         msg = new DCCppMessage("J T");
-        Assert.assertEquals("Monitor string", "Request Turnout ID list", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request TurnoutID list", msg.toMonitorString());
         msg = DCCppMessage.makeTurnoutIDsMsg();
-        Assert.assertEquals("Monitor string", "Request Turnout ID list", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request TurnoutID list", msg.toMonitorString());
         msg = new DCCppMessage("J T 145");
-        Assert.assertEquals("Monitor string", "Request details for Turnout 145", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request details for TurnoutID 145", msg.toMonitorString());
         msg = DCCppMessage.makeTurnoutIDMsg(145);
-        Assert.assertEquals("Monitor string", "Request details for Turnout 145", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request details for TurnoutID 145", msg.toMonitorString());
         msg = new DCCppMessage("T 145 X");
-        Assert.assertEquals("Monitor string", "Request implementation for Turnout 145", msg.toMonitorString());
+        Assert.assertEquals("Monitor string", "Request implementation for TurnoutID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeRosterIDsMsg();
+        Assert.assertEquals("Monitor string", "Request RosterID list", msg.toMonitorString());
+        msg = new DCCppMessage("J R 145");
+        Assert.assertEquals("Monitor string", "Request details for RosterID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeRosterIDMsg(145);
+        Assert.assertEquals("Monitor string", "Request details for RosterID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeAutomationIDsMsg();
+        Assert.assertEquals("Monitor string", "Request AutomationID list", msg.toMonitorString());
+        msg = new DCCppMessage("J A 145");
+        Assert.assertEquals("Monitor string", "Request details for AutomationID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeAutomationIDMsg(145);
+        Assert.assertEquals("Monitor string", "Request details for AutomationID 145", msg.toMonitorString());
         msg = new DCCppMessage("J C");
         Assert.assertEquals("Monitor string", "Request clock update from CS", msg.toMonitorString());
         msg = DCCppMessage.makeClockRequestTimeMsg();

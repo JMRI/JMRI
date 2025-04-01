@@ -150,6 +150,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setTurnoutManager(
                 getTurnoutManager());
 
+        InstanceManager.setStringIOManager(
+                getStringIOManager());
+
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
@@ -158,6 +161,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         InstanceManager.setLightManager(
                 getLightManager()
+        );
+
+        InstanceManager.setMeterManager(
+                getMeterManager()
         );
 
         InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
@@ -209,7 +216,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     NodeID nodeID;
     LoaderClient loaderClient;
     OlcbClockControl clockControl;
-
+    OlcbEventNameStore olcbEventNameStore = new OlcbEventNameStore();
+    
     OlcbInterface getInterface() {
         return olcbCanInterface.getInterface();
     }
@@ -243,6 +251,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return true;
         }
         if (type.equals(jmri.LightManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.MeterManager.class)) {
+            return true;
+        }
+        if (type.equals(jmri.StringIOManager.class)) {
             return true;
         }
         if (type.equals(jmri.GlobalProgrammerManager.class)) {
@@ -284,6 +298,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(ClockControl.class)) {
             return clockControl != null;
         }
+        if (type.equals(OlcbEventNameStore.class)) {
+            return true;
+        }
         return false; // nothing, by default
     }
 
@@ -304,6 +321,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
+        }
+        if (T.equals(jmri.MeterManager.class)) {
+            return (T) getMeterManager();
+        }
+        if (T.equals(jmri.StringIOManager.class)) {
+            return (T) getStringIOManager();
         }
         if (T.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
@@ -349,6 +372,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(ClockControl.class)) {
             return (T) clockControl;
+        }
+        if (T.equals(OlcbEventNameStore.class)) {
+            return (T) olcbEventNameStore;
         }
         return null; // nothing, by default
     }
@@ -401,6 +427,42 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return sensorManager;
     }
 
+    protected OlcbLightManager lightManager;
+
+    public OlcbLightManager getLightManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (lightManager == null) {
+            lightManager = new OlcbLightManager(adapterMemo);
+        }
+        return lightManager;
+    }
+
+    protected OlcbMeterManager meterManager;
+
+    public OlcbMeterManager getMeterManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (meterManager == null) {
+            meterManager = new OlcbMeterManager(adapterMemo);
+        }
+        return meterManager;
+    }
+
+    protected OlcbStringIOManager stringIOManager;
+
+    public OlcbStringIOManager getStringIOManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (stringIOManager == null) {
+            stringIOManager = new OlcbStringIOManager(adapterMemo);
+        }
+        return stringIOManager;
+    }
+
     protected OlcbReporterManager reporterManager;
 
     public OlcbReporterManager getReporterManager() {
@@ -447,18 +509,6 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
     }
 
-    protected OlcbLightManager lightManager;
-
-    public OlcbLightManager getLightManager() {
-        if (adapterMemo.getDisabled()) {
-            return null;
-        }
-        if (lightManager == null) {
-            lightManager = new OlcbLightManager(adapterMemo);
-        }
-        return lightManager;
-    }
-
     class SimpleNodeIdentInfoHandler extends MessageDecoder {
         /**
          * Helper function to add a string value to the sequence of bytes to send for SNIP
@@ -485,7 +535,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
             l.add((byte)4); // version byte
             addStringPart("JMRI", l, 40);  // mfg field; 40 char limit in Standard, not counting final null
-            addStringPart("PanelPro", l, 40);  // model
+            addStringPart(jmri.Application.getApplicationName(), l, 40);  // model
             String name = ProfileManager.getDefault().getActiveProfileName();
             if (name != null) {
                 addStringPart(name, l, 20); // hardware version

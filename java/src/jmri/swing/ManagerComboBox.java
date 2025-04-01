@@ -77,7 +77,12 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
     public void setManagers(@Nonnull Manager<B> manager) {
         if (manager instanceof ProxyManager) {
             ProxyManager<B> proxy = (ProxyManager<B>) manager;
+            for (var item : proxy.getDisplayOrderManagerList()) {
+                log.trace("adding {} to manager combobox", item);
+            }
+            log.trace("Setting {} selected", proxy.getDefaultManager());
             setManagers(proxy.getDisplayOrderManagerList(), proxy.getDefaultManager());
+            log.trace("{} is selected", this.getSelectedItem());
         } else {
             List<Manager<B>> list = new ArrayList<>();
             list.add(manager);
@@ -112,4 +117,5 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
         }
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerComboBox.class);
 }

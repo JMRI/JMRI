@@ -27,7 +27,7 @@ import org.bidib.jbidibc.core.node.CommandStationNode;
  *
  * @see jmri.Programmer
  * @author Paul Bender Copyright (C) 2003-2010
- * @author Eckart Meyer Copyright (C) 2019-2020
+ * @author Eckart Meyer Copyright (C) 2019-2025
  */
 public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements AddressedProgrammer {
 
@@ -302,7 +302,9 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                notifyProgListenerEnd(progListener,value,jmri.ProgListener.OK);
             }
         }
-        tc.removeMessageListener(messageListener);        
+        else {
+            tc.removeMessageListener(messageListener);
+        }
     }
     
     private void createOpsModeProgrammerListener() {
@@ -321,15 +323,14 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                         log.warn("readPom was not acknowledged on node addr: {}, loco addr: {}", addressData.getAddress(), addressData.getAddress());
                         stopTimer();
                         progState = NOTPROGRAMMING;
-                        tc.removeMessageListener(messageListener);        
-                        //notifyProgListenerEnd(progListener, 0, ProgListener.NoAck);
+                        //tc.removeMessageListener(messageListener); //now in our notifyProgListenerEnd
                         notifyProgListenerEnd(progListener, 0, PomAcknowledge.NOT_ACKNOWLEDGED);
                     }
                     else if (progState == WRITEREQUEST) {
                         log.debug("writePom finished - value: {}", value);
                         stopTimer();
                         progState = NOTPROGRAMMING;
-                        tc.removeMessageListener(messageListener);        
+                        //tc.removeMessageListener(messageListener); //now in our notifyProgListenerEnd
                         notifyProgListenerEnd(progListener, value, PomAcknowledge.ACKNOWLEDGED);
                     }
                 }
@@ -345,11 +346,10 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                     if (mAddress ==  decoderAddress.getAddress()  &&  cv == cvNumber) {
                         stopTimer();
                         progState = NOTPROGRAMMING;
-                        tc.removeMessageListener(messageListener);        
+                        //tc.removeMessageListener(messageListener); //now in our notifyProgListenerEnd   
                         log.info("OPS PROGRAMMER BM_CV was signalled, node addr: {}, decoderAddress: {} {}, CV: {}, value: {}",
                                 address, decoderAddress.getAddress(), decoderAddress.getType(), cvNumber, dat);
                         value = dat;
-                        //notifyProgListenerEnd(progListener, value, jmri.ProgListener.OK);
                         notifyProgListenerEnd(progListener, value, PomAcknowledge.ACKNOWLEDGED);
                     }
                 }
@@ -369,11 +369,10 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                     if (mAddress ==  decoderAddress.getAddress()  &&  cv == cvNumber) {
                         stopTimer();
                         progState = NOTPROGRAMMING;
-                        tc.removeMessageListener(messageListener);        
+                        //tc.removeMessageListener(messageListener); //now in our notifyProgListenerEnd
                         log.info("OPS PROGRAMMER BM_XCOM was signalled, node addr: {}, decoderAddress: {} {}, CV: {}, values: {}",
                                 address, decoderAddress.getAddress(), decoderAddress.getType(), cvNumber, data);
                         value = data[0]; //????
-                        //notifyProgListenerEnd(progListener, value, jmri.ProgListener.OK);
                         notifyProgListenerEnd(progListener, value, PomAcknowledge.ACKNOWLEDGED);
                     }
                 }

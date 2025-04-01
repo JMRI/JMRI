@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: CBUS&reg; Console Tool</title>
+  <title>JMRI: CBUS&reg; Command Station Monitor</title>
   <meta name="author" content="Steve Young">
   <meta name="keywords" content="JMRI CBUS Command station throttle session monitor cancmd">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
@@ -23,8 +23,6 @@
 
       <p>Track Power Button - On / Off / Unknown</p>
 
-      <p>Signal data Button - On / Off - Experimental</p>
-
       <p>Session Columns Dropdown - Choose which columns to display in table</p>
 
       <h2>Main Table - Train List</h2>
@@ -38,14 +36,14 @@
 
       <h3>Train Session columns :</h3>
       <img src=
-      "../../../../../../../html/hardware/can/cbus/images/swing/command-station/cs-session-626x179.png"
-      width="626" height="179" alt="CBUS Command Station Monitor Session Columns">
+      "../../../../../../../html/hardware/can/cbus/images/swing/command-station/cbus-command-station-sessions-774x213.png"
+      width="774" height="213" alt="CBUS Command Station Monitor Session Columns">
       <ul>
         <li>Session Number as determined by command station</li>
 
         <li>Loco address ID</li>
 
-        <li>E-Stop Button - Stops individual loco</li>
+        <li>E-Stop Button - Stops individual loco, only available if session is active.</li>
 
         <li>Long Address true / false flag</li>
 
@@ -60,6 +58,11 @@
         <li>Consist ID</li>
 
         <li>Flags</li>
+        
+        <li>Release - Releases any JMRI Throttles for the session, only available when JMRI has active Throttles for this session.</li>
+
+        <li>Throttle - Launches a new JMRI Throttle for the session address.</li>
+
       </ul>
 
       <h3 id="opc">Supported Operation Codes</h3>

@@ -3,9 +3,6 @@ package jmri.jmrix.marklin;
 import jmri.JmriException;
 import jmri.managers.AbstractPowerManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * PowerManager implementation for controlling layout power.
  *
@@ -13,13 +10,13 @@ import org.slf4j.LoggerFactory;
  */
 public class MarklinPowerManager extends AbstractPowerManager<MarklinSystemConnectionMemo> implements MarklinListener {
 
-    MarklinTrafficController tc;
+    private MarklinTrafficController tc;
 
     public MarklinPowerManager(MarklinTrafficController etc) {
         super(etc.adaptermemo);
         // connect to the TrafficManager
         tc = etc;
-        tc.addMarklinListener(this);
+        tc.addMarklinListener(MarklinPowerManager.this);
 
     }
 
@@ -58,7 +55,8 @@ public class MarklinPowerManager extends AbstractPowerManager<MarklinSystemConne
     public void reply(MarklinReply m) {
         int old = power;
         // power message?
-        if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() == MarklinConstants.SYSCOMMANDSTART && m.getAddress() == 0x0000) {
+        if (m.getPriority() == MarklinConstants.PRIO_1
+            && m.getCommand() == MarklinConstants.SYSCOMMANDSTART && m.getAddress() == 0x0000) {
             switch (m.getElement(9)) {
                 case MarklinConstants.CMDGOSYS:
                     power = ON;
@@ -79,6 +77,6 @@ public class MarklinPowerManager extends AbstractPowerManager<MarklinSystemConne
         // messages are ignored
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MarklinPowerManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinPowerManager.class);
 
 }

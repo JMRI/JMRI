@@ -25,7 +25,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2024"/>
+    <property name="jmri.copyright.year" value="1997-2025"/>
 
     <property environment="env"/>
 
@@ -224,16 +224,41 @@
         <pathelement location="${libdir}/batik-svggen-1.14.jar"/>
         <pathelement location="${libdir}/xml-apis-ext-1.3.04.jar"/>
         <pathelement location="${libdir}/xmlgraphics-commons-2.6.jar"/>
+
+        <!-- Alternate LaF's -->
+        <pathelement location="${libdir}/darklaf-compatibility-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-core-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-iconset-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-macos-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-native-utils-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-platform-base-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-platform-decorations-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-platform-preferences-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-property-loader-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-theme-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-theme-spec-3.0.2.jar"/>
+        <pathelement location="${libdir}/darklaf-utils-3.0.2.jar"/>
+
+        <pathelement location="${libdir}/swing-dsl-0.1.0.jar"/>
+        <pathelement location="${libdir}/swing-dsl-core-0.1.0.jar"/>
+        <pathelement location="${libdir}/swing-dsl-laf-support-0.1.0.jar"/>
+
+        <pathelement location="${libdir}/swing-extensions-laf-support-0.1.3.jar"/>
+        <pathelement location="${libdir}/swing-extensions-visual-padding-0.1.3.jar"/>
+
+        <pathelement location="${libdir}/jsvg-1.7.0.jar"/>
+
         <!-- //BiDiB client library -->
-        <pathelement location="${libdir}/jbidibc-core-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-messages-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-jserialcomm-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-serial-2.0.18.jar"/>
-        <pathelement location="${libdir}/jbidibc-simulation-2.0.18.jar"/>
-        <pathelement location="${libdir}/bidibwizard-common-2.0.18.jar"/>
-        <pathelement location="${libdir}/bidibwizard-model-2.0.18.jar"/>
-        <pathelement location="${libdir}/bidibwizard-simulation-2.0.18.jar"/>
+        <pathelement location="${libdir}/jbidibc-core-2.0.29.jar"/>
+        <pathelement location="${libdir}/jbidibc-messages-2.0.29.jar"/>
+        <pathelement location="${libdir}/jbidibc-netbidib-2.0.29.jar"/>
+        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.29.jar"/>
+        <pathelement location="${libdir}/jbidibc-jserialcomm-2.0.29.jar"/>
+        <pathelement location="${libdir}/jbidibc-serial-2.0.29.jar"/>
+        <pathelement location="${libdir}/jbidibc-simulation-2.0.29.jar"/>
+        <pathelement location="${libdir}/bidibwizard-common-2.0.30.jar"/>
+        <pathelement location="${libdir}/bidibwizard-model-2.0.30.jar"/>
+        <pathelement location="${libdir}/bidibwizard-simulation-2.0.30.jar"/>
         <!-- BiDiB dependencies -->
         <pathelement location="${libdir}/commons-collections4-4.4.jar"/>
         <pathelement location="${libdir}/eventbus-1.4.jar"/>
@@ -243,7 +268,10 @@
         <pathelement location="${libdir}/jaxb-impl-2.3.2.jar"/>
         <pathelement location="${libdir}/jgoodies-binding-2.13.0.jar"/>
         <pathelement location="${libdir}/jgoodies-common-1.8.1.jar"/>
+        <pathelement location="${libdir}/jackson-datatype-jsr310-2.13.4.jar"/>
         <!-- //BiDiB -->
+        <pathelement location="${libdir}/reflections-0.10.2.jar"/>
+        <pathelement location="${libdir}/javassist-3.28.0-GA.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -303,7 +331,6 @@
         <pathelement location="${libdir}/byte-buddy-1.14.15.jar"/>
         <pathelement location="${libdir}/byte-buddy-agent-1.14.15.jar"/>
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
-        <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-3.3.jar"/>
         <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE125.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
@@ -1183,6 +1210,10 @@
             <sysproperty key="purejavacomm.loglevel" value="${purejavacomm.loglevel}"/>
             <jvmarg value="-Xms256m"/>
             <jvmarg value="-Xmx640m"/>
+            <!-- This next is for DarkLAF -->
+            <jvmarg value="--add-exports"/>
+            <jvmarg value="java.desktop/sun.awt=ALL-UNNAMED"/>
+
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
             <!-- <jvmarg value="-Xloggc:memory.vgc"/> --><!-- for JTune -->
@@ -1241,6 +1272,15 @@
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.DecoderPro.DecoderPro"/>
             <param name="antargline" value="DecoderProConfig2.xml"/>
+        </antcall>
+    </target>
+
+    <target name="lccpro"
+            description="build and run LccPro app"
+            depends="debug, copyfiles">
+        <antcall target="-run-jmri-application">
+            <param name="application.classname" value="apps.gui3.lccpro.LccPro"/>
+            <param name="antargline" value="LccProConfig.xml"/>
         </antcall>
     </target>
 
@@ -2008,6 +2048,7 @@
             <arg value="-Dapple.awt.graphics.EnableQ2DX=true"/>
             <arg value="-Dlog4j.ignoreTCL=true/"/>
             <arg value="-Dfile.encoding=UTF-8"/>
+
             <arg value="-Djava.library.path.:${arch.lib.path}:${libdir}"/>
 
             <arg value="apps.PanelPro.PanelPro"/>
@@ -2070,7 +2111,7 @@
             </doctitle>
             <bottom><![CDATA[Made from JMRI version ${release.version-string}
                     <br><i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
-                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
+                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro, LccPro and associated logos are our trademarks.</i>
                        <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
@@ -2177,7 +2218,7 @@
             </doctitle>
             <bottom><![CDATA[Made from JMRI version ${release.version-string}
                     <br><i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
-                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro and associated logos are our trademarks.</i>
+                    <br>JMRI&reg;, DecoderPro&reg;, PanelPro, SignalPro, SoundPro, DispatcherPro, TrainPro, LccPro and associated logos are our trademarks.</i>
                        <br><a href="https://www.jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                 ]]>
             </bottom>
@@ -2611,7 +2652,7 @@
                      excludes="help/en/manual/**,web/app/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
-                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/"/>
+                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,LccPro.app/"/>
             <fileset dir="scripts"
                      includes="default_lcf.xml,COPYING"/>
             <fileset dir="."
@@ -2638,6 +2679,7 @@
                 <include name="JMRI Demo.app/Contents/MacOS/StartJMRI"/>
                 <include name="PanelPro.app/Contents/MacOS/StartJMRI"/>
                 <include name="SoundPro.app/Contents/MacOS/StartJMRI"/>
+                <include name="LccPro.app/Contents/MacOS/StartJMRI"/>
             </fileset>
         </chmod>
         <mkdir dir="${dist.release}"/>
@@ -2717,6 +2759,7 @@
                 <exclude name="JMRI/DecoderPro"/>
                 <exclude name="JMRI/PanelPro"/>
                 <exclude name="JMRI/SoundPro"/>
+                <exclude name="JMRI/LccPro"/>
                 <exclude name="JMRI/InstallTest"/>
                 <exclude name="JMRI/JmriFaceless"/>
                 <exclude name="JMRI/CreateJmriApps.sh"/>
@@ -2725,6 +2768,7 @@
                 <include name="JMRI/DecoderPro"/>
                 <include name="JMRI/PanelPro"/>
                 <include name="JMRI/SoundPro"/>
+                <include name="JMRI/LccPro"/>
                 <include name="JMRI/InstallTest"/>
                 <include name="JMRI/JmriFaceless"/>
                 <include name="JMRI/CreateJmriApps.sh"/>
@@ -2798,6 +2842,7 @@
         <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
         <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <make-startup-script script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
+        <make-startup-script script.name="LccPro"        script.class="apps.gui3.lccpro.LccPro"/>
         <make-startup-script script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
         <make-startup-script script.name="JmriFaceless"   script.class="apps.JmriFaceless"/>
     </target>
@@ -2807,6 +2852,7 @@
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <create-macosx-application-directory script.name="SoundPro"      script.class="apps.SoundPro.SoundPro"/>
+        <create-macosx-application-directory script.name="LccPro"        script.class="apps.gui3.lccpro.LccPro"/>
         <create-macosx-application-directory script.name="InstallTest"   script.class="apps.InstallTest.InstallTest"/>
     </target>
 

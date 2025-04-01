@@ -187,7 +187,7 @@ public final class LnConstants {
      * Encode consisting status as a string
      *
      * @param s  consist status bits
-     * @return string contaning a description of the consisting state
+     * @return string containing a description of the consisting state
      */
     public final static String CONSIST_STAT(int s) {
         return ((s & CONSIST_MASK) == CONSIST_MID) ? "Mid Consist" // NOI18N
@@ -512,6 +512,8 @@ public final class LnConstants {
                 return "PM74";
             case RE_IPL_DIGITRAX_HOST_SE74:
                 return "SE74";
+            case RE_IPL_DIGITRAX_HOST_BDL716:
+                return "BDL716";
             default: return "<unknown>"; // NOI18N
         }
     }
@@ -599,6 +601,7 @@ public final class LnConstants {
     public final static int RE_IPL_DIGITRAX_HOST_DS74 = 0x74;
     public final static int RE_IPL_DIGITRAX_HOST_DS78V = 0x7C;
     public final static int RE_IPL_DIGITRAX_HOST_LNWI = 0x63;
+    public final static int RE_IPL_DIGITRAX_HOST_BDL716 = 0x43;
     public final static int RE_IPL_DIGITRAX_HOST_ALL = 0x00;
     public final static int RE_IPL_DIGITRAX_SLAVE_RF24 = 0x18;
     public final static int RE_IPL_DIGITRAX_SLAVE_ALL = 0x00;

@@ -7,8 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -28,18 +30,27 @@ import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
+import jmri.JmriException;
 import jmri.Scale;
 import jmri.ScaleManager;
 import jmri.Section;
+import jmri.SectionManager;
 import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Timebase;
 import jmri.Transit;
 import jmri.TransitManager;
 import jmri.TransitSection;
+import jmri.Turnout;
+import jmri.NamedBean.DisplayOptions;
+import jmri.Transit.TransitType;
 import jmri.jmrit.dispatcher.TaskAllocateRelease.TaskAction;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.display.EditorManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.jmrit.display.layoutEditor.LayoutDoubleXOver;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -86,8 +97,13 @@ import jmri.util.table.ButtonRenderer;
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceManagerAutoDefault {
 
+    public static boolean dispatcherSystemSchedulingInOperation = false;    // required for Dispatcher System
+                                // to inhibit error message if train being scheduled is not in required station
+
     public DispatcherFrame() {
         super(true, true); // remember size a position.
+
+
         editorManager = InstanceManager.getDefault(EditorManager.class);
         initializeOptions();
         openDispatcherWindow();
@@ -149,6 +165,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void dispose( ) {
+        super.dispose();
+        if (autoAllocate != null) {
+            autoAllocate.setAbort();
         }
     }
 
@@ -218,7 +242,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     /**
      * Loads a train into the Dispatcher
-     *
+     * returns an integer. Messages written to log.
      * @param info  a completed TrainInfo class.
      * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
      * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
@@ -226,14 +250,35 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @return 0 good, -1 failure
      */
     public int loadTrainFromTrainInfo(TrainInfo info, String overRideType, String overRideValue) {
+        try {
+            loadTrainFromTrainInfoThrowsException( info, overRideType, overRideValue);
+            return 0;
+        } catch (IllegalArgumentException ex) {
+            return -1;
+        }
+    }
+
+    /**
+     * Loads a train into the Dispatcher
+     * throws IllegalArgumentException on errors
+     * @param info  a completed TrainInfo class.
+     * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
+     * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
+     *            trainName.
+     * @throws IllegalArgumentException validation errors.
+     */
+    public void loadTrainFromTrainInfoThrowsException(TrainInfo info, String overRideType, String overRideValue)
+                throws IllegalArgumentException {
 
         log.debug("loading train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
                 info.getStartBlockName(), info.getDestinationBlockName());
         // create a new Active Train
 
-        //set updefaults from traininfo
-        int tSource = ActiveTrain.ROSTER;
-        if (info.getTrainFromTrains()) {
+        //set up defaults from traininfo
+        int tSource = 0;
+        if (info.getTrainFromRoster()) {
+            tSource = ActiveTrain.ROSTER;
+        } else if (info.getTrainFromTrains()) {
             tSource = ActiveTrain.OPERATIONS;
         } else if (info.getTrainFromUser()) {
             tSource = ActiveTrain.USER;
@@ -268,11 +313,27 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             default:
                 /* just leave as in traininfo */
         }
+        if (info.getDynamicTransit()) {
+            // attempt to build transit
+            Transit tmpTransit = createTemporaryTransit(InstanceManager.getDefault(jmri.BlockManager.class).getBlock(info.getStartBlockName()),
+                    InstanceManager.getDefault(jmri.BlockManager.class).getBlock(info.getDestinationBlockName()),
+                    InstanceManager.getDefault(jmri.BlockManager.class).getBlock(info.getViaBlockName()));
+            if (tmpTransit == null ) {
+                throw new IllegalArgumentException(Bundle.getMessage("Error51"));
+            }
+            info.setTransitName(tmpTransit.getDisplayName());
+            info.setTransitId(tmpTransit.getDisplayName());
+            info.setDestinationBlockSeq(tmpTransit.getMaxSequence());
+        }
+        if (tSource == 0) {
+            log.warn("Invalid Trains From [{}]",
+                    tSource);
+            throw new IllegalArgumentException(Bundle.getMessage("Error21"));
+        }
         if (!isTrainFree(trainNameToUse)) {
             log.warn("TrainName [{}] already in use",
                     trainNameToUse);
-            return -1;
-            
+            throw new IllegalArgumentException(Bundle.getMessage("Error24",trainNameToUse));
         }
         ActiveTrain at = createActiveTrain(info.getTransitId(), trainNameToUse, tSource,
                 info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(),
@@ -288,7 +349,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 } else {
                     log.warn("Roster Entry '{}' not found, could not create ActiveTrain '{}'",
                             trainNameToUse, info.getTrainName());
-                    return -1;
+                    throw new IllegalArgumentException(Bundle.getMessage("Error40",rosterIDToUse));
                 }
             }
             at.setTrainDetection(info.getTrainDetection());
@@ -318,37 +379,124 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 AutoActiveTrain aat = new AutoActiveTrain(at);
                 aat.setSpeedFactor(info.getSpeedFactor());
                 aat.setMaxSpeed(info.getMaxSpeed());
+                aat.setMinReliableOperatingSpeed(info.getMinReliableOperatingSpeed());
                 aat.setRampRate(AutoActiveTrain.getRampRateFromName(info.getRampRate()));
                 aat.setRunInReverse(info.getRunInReverse());
                 aat.setSoundDecoder(info.getSoundDecoder());
-                aat.setMaxTrainLength(info.getMaxTrainLength());
+                aat.setMaxTrainLength(info.getMaxTrainLengthScaleMeters(),getScale().getScaleFactor());
                 aat.setStopBySpeedProfile(info.getStopBySpeedProfile());
                 aat.setStopBySpeedProfileAdjust(info.getStopBySpeedProfileAdjust());
                 aat.setUseSpeedProfile(info.getUseSpeedProfile());
                 getAutoTrainsFrame().addAutoActiveTrain(aat);
                 if (!aat.initialize()) {
                     log.error("ERROR initializing autorunning for train {}", at.getTrainName());
-                    JmriJOptionPane.showMessageDialog(dispatcherFrame, Bundle.getMessage(
-                            "Error27", at.getTrainName()), Bundle.getMessage("MessageTitle"),
-                            JmriJOptionPane.INFORMATION_MESSAGE);
-                    return -1;
+                    throw new IllegalArgumentException(Bundle.getMessage("Error27",at.getTrainName()));
                 }
             }
+            // we can go no further without attaching this.
+            at.setDispatcher(this);
             allocateNewActiveTrain(at);
             newTrainDone(at);
 
         } else {
             log.warn("failed to create Active Train '{}'", info.getTrainName());
-            return -1;
+            throw new IllegalArgumentException(Bundle.getMessage("Error48",info.getTrainName()));
         }
-        return 0;
+    }
+
+    /**
+     * Get a list of {@link jmri.jmrit.display.layoutEditor.LayoutBlock} that represent a route
+     * @param start First Block
+     * @param dest Last Block
+     * @param via Next Block
+     * @return null if a route cannot be found, else the list.
+     */
+    protected List<LayoutBlock> getAdHocRoute(Block start, Block dest, Block via) {
+        LayoutBlockManager lBM = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        LayoutBlock lbStart = lBM.getByUserName(start.getDisplayName(DisplayOptions.USERNAME));
+        LayoutBlock lbEnd = lBM.getByUserName(dest.getDisplayName(DisplayOptions.USERNAME));
+        LayoutBlock lbVia =  lBM.getByUserName(via.getDisplayName(DisplayOptions.USERNAME));
+        List<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+        try {
+            boolean result = lBM.getLayoutBlockConnectivityTools().checkValidDest(
+                    lbStart, lbVia, lbEnd, blocks, LayoutBlockConnectivityTools.Routing.NONE);
+            if (!result) {
+                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error51"),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            }
+            blocks = lBM.getLayoutBlockConnectivityTools().getLayoutBlocks(
+                    lbStart, lbEnd, lbVia, false, LayoutBlockConnectivityTools.Routing.NONE);
+        } catch (JmriException JEx) {
+            log.error("Finding route {}",JEx.getMessage());
+            return null;
+        }
+        return blocks;
+    }
+
+    /**
+     * Converts a list of {@link jmri.jmrit.display.layoutEditor.LayoutBlock} that represent a route to a transit.
+     * @param start First Block
+     * @param dest Last Block
+     * @param via Next Block
+     * @return null if the transit is valid. Else an AdHoc transit
+     */
+    protected Transit createTemporaryTransit(Block start, Block dest, Block via) {
+        List<LayoutBlock> blocks =  getAdHocRoute( start,  dest,  via);
+        if (blocks == null) {
+            return null;
+        }
+        SectionManager sm = jmri.InstanceManager.getDefault(SectionManager.class);
+        Transit tempTransit = null;
+        int wNo = 0;
+        String baseTransitName = "-" + start.getDisplayName() + "-" + dest.getDisplayName();
+        while (tempTransit == null && wNo < 99) {
+            wNo++;
+            try {
+                tempTransit = transitManager.createNewTransit("#" + Integer.toString(wNo) + baseTransitName);
+            } catch (Exception ex) {
+                log.trace("Transit [{}} already used, try next.", "#" + Integer.toString(wNo) + baseTransitName);
+            }
+        }
+        if (tempTransit == null) {
+            log.error("Limit of Dynamic Transits for [{}] has been exceeded!", baseTransitName);
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DynamicTransitsExceeded",baseTransitName),
+                    Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return null;
+        }
+        tempTransit.setTransitType(TransitType.DYNAMICADHOC);
+        int seq = 1;
+        TransitSection prevTs = null;
+        TransitSection curTs = null;
+        for (LayoutBlock lB : blocks) {
+            Block b = lB.getBlock();
+            Section currentSection = sm.createNewSection(tempTransit.getUserName() + Integer.toString(seq) + "-" + b.getDisplayName());
+            currentSection.setSectionType(Section.DYNAMICADHOC);
+            currentSection.addBlock(b);
+            if (curTs == null) {
+                //first block shove it in.
+                curTs = new TransitSection(currentSection, seq, Section.FORWARD);
+            } else {
+                prevTs = curTs;
+                EntryPoint fEp = new EntryPoint(prevTs.getSection().getBlockBySequenceNumber(0),b,"up");
+                fEp.setTypeReverse();
+                prevTs.getSection().addToReverseList(fEp);
+                EntryPoint rEp = new EntryPoint(b,prevTs.getSection().getBlockBySequenceNumber(0),"down");
+                rEp.setTypeForward();
+                currentSection.addToForwardList(rEp);
+                curTs = new TransitSection(currentSection, seq, Section.FORWARD);
+            }
+            curTs.setTemporary(true);
+            tempTransit.addTransitSection(curTs);
+            seq++;
+        }
+        return tempTransit;
     }
 
     protected enum TrainsFrom {
         TRAINSFROMROSTER,
         TRAINSFROMOPS,
         TRAINSFROMUSER,
-        TRAINSFROMSETLATER;
+        TRAINSFROMSETLATER
     }
 
     // Dispatcher options (saved to disk if user requests, and restored if present)
@@ -366,6 +514,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _AutoRelease = false;
     private boolean _AutoTurnouts = false;
     private boolean _TrustKnownTurnouts = false;
+    private boolean _useTurnoutConnectionDelay = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
     private boolean _RosterEntryInBlock = false;
@@ -837,6 +986,21 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return true;
     }
 
+    /**
+     * Check DCC not already in use
+     * @param addr DCC address.
+     * @return true / false
+     */
+    public boolean isAddressFree(int addr) {
+        for (int j = 0; j < activeTrainsList.size(); j++) {
+            ActiveTrain at = activeTrainsList.get(j);
+            if (addr == Integer.parseInt(at.getDccAddress())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void handleATSelectionChanged(ActionEvent e) {
         atSelectedIndex = atSelectBox.getSelectedIndex();
         initializeExtraComboBox();
@@ -1156,7 +1320,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         allocateNextRequestedForTrain(at);
     }
 
-    // allocate the next section for an ActiveTrain 
+    // allocate the next section for an ActiveTrain
     protected void allocateNextRequestedForTrain(ActiveTrain at) {
         // set up an Allocation Request
         Section next = at.getNextSectionToAllocate();
@@ -1296,7 +1460,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             return null;
         }
         if (_HasOccupancyDetection && (!(startBlock.getState() == Block.OCCUPIED))) {
-            if (showErrorMessages) {
+            if (showErrorMessages && !DispatcherFrame.dispatcherSystemSchedulingInOperation) {
                 JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
                         "Error6"), new Object[]{startBlock.getDisplayName()}), Bundle.getMessage("ErrorTitle"),
                         JmriJOptionPane.ERROR_MESSAGE);
@@ -1593,6 +1757,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 aat.dispose();
             }
             removeHeldMast(null, at);
+
             at.terminate();
             if (runNextTrain && !at.getNextTrain().isEmpty() && !at.getNextTrain().equals("None")) {
                 log.debug("Loading Next Train[{}]", at.getNextTrain());
@@ -1757,7 +1922,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      *           section, of if an extra section is being allocated
      * @return the allocated section or null if not successful
      */
-    public AllocatedSection allocateSection(AllocationRequest ar, Section ns) {
+    public AllocatedSection allocateSection(@Nonnull AllocationRequest ar, Section ns) {
         log.trace("{}: Checking Section [{}]", ar.getActiveTrain().getTrainName(), (ns != null ? ns.getDisplayName(USERSYS) : "auto"));
         AllocatedSection as = null;
         Section nextSection = null;
@@ -2144,11 +2309,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (_AutoTurnouts || at.getAutoRun()) {
             // automatically set the turnouts for this section before allocation
             turnoutsOK = autoTurnouts.setTurnoutsInSection(s, sSeqNum, nextSection,
-                    at, _TrustKnownTurnouts, prevSection);
+                    at, _TrustKnownTurnouts, prevSection, _useTurnoutConnectionDelay);
         } else {
             // check that turnouts are correctly set before allowing allocation to proceed
             turnoutsOK = autoTurnouts.checkTurnoutsInSection(s, sSeqNum, nextSection,
-                    at, prevSection);
+                    at, prevSection, _useTurnoutConnectionDelay);
         }
         if (turnoutsOK == null) {
             if (_AutoAllocate) {
@@ -2241,6 +2406,26 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return _levelXingList;
     }
 
+    /*
+     * returns a list of XOvers  (0 to n) in a list of blocks
+     */
+    private List<LayoutTurnout> containedXOver( Section s ) {
+        List<LayoutTurnout> _XOverList = new ArrayList<>();
+        LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        for (var panel : editorManager.getAll(LayoutEditor.class)) {
+            for (Block blk: s.getBlockList()) {
+                LayoutBlock lb = lbm.getLayoutBlock(blk);
+                List<LayoutTurnout> turnoutsInBlock = panel.getConnectivityUtil().getAllTurnoutsThisBlock(lb);
+                for (LayoutTurnout lt: turnoutsInBlock) {
+                    if (lt.isTurnoutTypeXover() && !_XOverList.contains(lt)) {
+                        _XOverList.add(lt);
+                    }
+                }
+            }
+        }
+        return _XOverList;
+    }
+
     /**
      * Checks for a block in allocated section, except one
      * @param b - The Block
@@ -2262,6 +2447,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
      */
     protected Section checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar) {
+        ActiveTrain at = null;
+        if (ar != null) {
+            at = ar.getActiveTrain();
+        }
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 List<Block> blas = as.getSection().getBlockList();
@@ -2314,6 +2503,41 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             bls.add(bBD);
                         }
                     }
+                    for (LayoutTurnout lx : containedXOver(s)) {
+                        if (lx instanceof LayoutDoubleXOver) {
+                            HashSet<Block> bhs = new HashSet<Block>(4);
+                            /* quickest way to count number of unique blocks */
+                            bhs.add(lx.getLayoutBlock().getBlock());
+                            bhs.add(lx.getLayoutBlockB().getBlock());
+                            bhs.add(lx.getLayoutBlockC().getBlock());
+                            bhs.add(lx.getLayoutBlockD().getBlock());
+                            if (bhs.size() == 4) {
+                                for (Block b : bhs) {
+                                    if ( checkBlockInAnyAllocatedSection(b, at)
+                                            || b.getState() == Block.OCCUPIED) {
+                                        // the die is cast and switch can not be changed.
+                                        // Check diagonal. If we are going continuing or divergeing
+                                        // we need to check the diagonal.
+                                        if (lx.getTurnout().getKnownState() != Turnout.CLOSED) {
+                                            if (bls.contains(lx.getLayoutBlock().getBlock()) ||
+                                                    bls.contains(lx.getLayoutBlockC().getBlock())) {
+                                                bls.add(lx.getLayoutBlockB().getBlock());
+                                                bls.add(lx.getLayoutBlockD().getBlock());
+                                            } else {
+                                                bls.add(lx.getLayoutBlock().getBlock());
+                                                bls.add(lx.getLayoutBlockC().getBlock());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+ /*                     If further processing needed for other crossover types it goes here.
+                        } else if (lx instanceof LayoutRHXOver) {
+                        } else if (lx instanceof LayoutLHXOver) {
+                        } else {
+*/
+                        }
+                    }
                 }
 
                 for (Block b : bls) {
@@ -2330,7 +2554,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                     return as.getSection();
                                 }
                             }
-                        } else if (as.getActiveTrain().getTrainDetection() != TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+                        } else if (at != as.getActiveTrain() && as.getActiveTrain().getTrainDetection() != TrainDetection.TRAINDETECTION_WHOLETRAIN) {
                             return as.getSection();
                         }
                         if (as.getSection().getOccupancy() == Block.OCCUPIED) {
@@ -2371,6 +2595,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
         return null;
+    }
+
+    // check if block is being used by anyone else but us
+    private boolean checkBlockInAnyAllocatedSection(Block b, ActiveTrain at) {
+        for (AllocatedSection as : allocatedSections) {
+            if (as.getActiveTrain() != at && as.getSection().getBlockList().contains(b)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // automatically make a choice of next section
@@ -2793,6 +3027,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setTrustKnownTurnouts(boolean set) {
         _TrustKnownTurnouts = set;
+    }
+
+    protected boolean getUseTurnoutConnectionDelay() {
+        return _useTurnoutConnectionDelay;
+    }
+
+    protected void setUseTurnoutConnectionDelay(boolean set) {
+        _useTurnoutConnectionDelay = set;
     }
 
     protected int getMinThrottleInterval() {

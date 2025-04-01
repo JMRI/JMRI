@@ -100,6 +100,7 @@ public class HtmlTrainCommon extends TrainCommon {
 
     protected String pickUpCar(Car car, int count, String[] format) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupTextColor() + ";\">");
         builder.append(Setup.getPickupCarPrefix()).append(" ");
         // count the number of utility cars
         if (count != 0) {
@@ -121,8 +122,10 @@ public class HtmlTrainCommon extends TrainCommon {
     protected String dropCar(Car car, int count, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
         if (!isLocal) {
+            builder.append("<span style=\"color: " + Setup.getDropTextColor() + ";\">");
             builder.append(Setup.getDropCarPrefix()).append(" ");
         } else {
+            builder.append("<span style=\"color: " + Setup.getLocalTextColor() + ";\">");
             builder.append(Setup.getLocalPrefix()).append(" ");
         }
         // count the number of utility cars
@@ -170,6 +173,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String dropEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getDropEngineTextColor() + ";\">");
         builder.append(Setup.getDropEnginePrefix()).append(" ");
         for (String attribute : Setup.getDropEngineMessageFormat()) {
             builder.append(
@@ -193,6 +197,7 @@ public class HtmlTrainCommon extends TrainCommon {
     @Override
     public String pickupEngine(Engine engine) {
         StringBuilder builder = new StringBuilder();
+        builder.append("<span style=\"color: " + Setup.getPickupEngineTextColor() + ";\">");
         builder.append(Setup.getPickupEnginePrefix()).append(" ");
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
             builder.append(
@@ -207,6 +212,8 @@ public class HtmlTrainCommon extends TrainCommon {
         if (attribute.equals(Setup.LOAD)) {
             return (car.isCaboose() || car.isPassenger()) ? ""
                     : StringEscapeUtils.escapeHtml4(car.getLoadName().split(TrainCommon.HYPHEN)[0]); // NOI18N
+        } else if (attribute.equals(Setup.LOAD_TYPE)) {
+            return car.getLoadType();
         } else if (attribute.equals(Setup.HAZARDOUS)) {
             return car.isHazardous() ? Setup.getHazardousMsg() : ""; // NOI18N
         } else if (attribute.equals(Setup.DROP_COMMENT)) {
@@ -215,6 +222,12 @@ public class HtmlTrainCommon extends TrainCommon {
             return car.getPickupComment();
         } else if (attribute.equals(Setup.KERNEL)) {
             return car.getKernelName();
+        } else if (attribute.equals(Setup.KERNEL_SIZE)) {
+            if (car.getKernel() != null) {
+                return Integer.toString(car.getKernel().getSize());
+            } else {
+                return "";
+            }
         } else if (attribute.equals(Setup.RWE)) {
             if (!car.getReturnWhenEmptyDestinationName().isEmpty()) {
                 return String.format(locale, strings.getProperty("RWELocationAndTrack"), StringEscapeUtils
@@ -232,9 +245,11 @@ public class HtmlTrainCommon extends TrainCommon {
             if (!car.getFinalDestinationName().isEmpty()) {
                 return String.format(locale, strings.getProperty("FinalDestinationLocationAndTrack"), StringEscapeUtils
                         .escapeHtml4(car.getSplitFinalDestinationName()), StringEscapeUtils
-                        .escapeHtml4(car.getSplitFinalDestinationTrackName()));
+                                .escapeHtml4(car.getSplitFinalDestinationTrackName()));
             }
             return "";
+        } else if (attribute.equals(Setup.DIVISION)) {
+            return car.getDivisionName();
         }
         return getRollingStockAttribute(car, attribute, isPickup, isLocal);
     }

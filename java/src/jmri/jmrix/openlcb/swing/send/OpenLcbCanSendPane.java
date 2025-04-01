@@ -64,7 +64,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     final JTextField srcAliasField = new JTextField(4);
     NodeSelector nodeSelector;
-    final JFormattedTextField sendEventField = EventIdTextField.getEventIdTextField();// NOI18N
+    final JFormattedTextField sendEventField = new EventIdTextField();// NOI18N
     final JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");  // NOI18N
     final JTextField configNumberField = new JTextField("40");                        // NOI18N
     final JTextField configAddressField = new JTextField("000000");                   // NOI18N
@@ -215,6 +215,11 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         b = new JButton("Send PIP Request");
         b.addActionListener(this::sendRequestPip);
         pane2.add(b);
+        b = new JButton("Send SNIP Request");
+        b.addActionListener(this::sendRequestSnip);
+        pane2.add(b);
+
+        add(new JSeparator());
 
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
@@ -235,6 +240,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
         add(pane2);
+        
         pane2.add(new JLabel("Send OpenLCB memory request with address: "));
         pane2.add(configAddressField);
         pane2.add(new JLabel("Address Space: "));
@@ -260,11 +266,24 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         writeDataField.setText("00 00");   // NOI18N
         pane2.add(writeDataField);
 
+        pane2 = new JPanel();
+        pane2.setLayout(new WrapLayout());
+        add(pane2);
+
+        var restartButton = new JButton("Restart");
+        pane2.add(restartButton);
+        restartButton.addActionListener(this::restartNode);
+        
         cdiButton = new JButton("Open CDI Config Tool");
-        add(cdiButton);
+        pane2.add(cdiButton);
         cdiButton.addActionListener(e -> openCdiPane());
         cdiButton.setToolTipText("If this button is disabled, please select another node.");
         setCdiButton(); // get initial state
+
+        var clearCacheButton = new JButton("Clear CDI Cache");
+        pane2.add(clearCacheButton);
+        clearCacheButton.addActionListener(this::clearCache);
+        clearCacheButton.setToolTipText("Closes any open configuration windows and forces a CDI reload");
 
         // listen for mimic store changes to set CDI button
         store.addPropertyChangeListener(e -> {
@@ -333,7 +352,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " Send Can Frame");
+            return (memo.getUserName() + " Send CAN Frames and OpenLCB Messages");
         }
         return "Send CAN Frames and OpenLCB Messages";
     }
@@ -407,6 +426,11 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         connection.put(m, null);
     }
 
+    public void sendRequestSnip(java.awt.event.ActionEvent e) {
+        Message m = new SimpleNodeIdentInfoRequestMessage(srcNodeID, destNodeID());
+        connection.put(m, null);
+    }
+
     public void sendEventPerformed(java.awt.event.ActionEvent e) {
         Message m = new ProducerConsumerEventReportMessage(srcNodeID, eventID());
         connection.put(m, null);
@@ -452,6 +476,16 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         connection.put(m, null);
     }
 
+    public void restartNode(java.awt.event.ActionEvent e) {
+        Message m = new DatagramMessage(srcNodeID, destNodeID(),
+                new byte[] {0x20, (byte) 0xA9});
+        connection.put(m, null);        
+    }
+    
+    public void clearCache(java.awt.event.ActionEvent e) {
+        jmri.jmrix.openlcb.swing.DropCdiCache.drop(destNodeID(), memo.get(OlcbInterface.class));
+    }
+    
     public void readPerformed(java.awt.event.ActionEvent e) {
         int space = addrSpace.getMemorySpace();
         long addr = Integer.parseInt(configAddressField.getText(), 16);

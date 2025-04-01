@@ -1,15 +1,16 @@
 package jmri;
 
-import com.tngtech.archunit.lang.*;
-import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 import java.io.File;
 
-import jmri.util.FileUtil;
-
 import org.junit.jupiter.api.*;
+
+import com.tngtech.archunit.junit.*;
+import com.tngtech.archunit.lang.ArchRule;
+
+import jmri.util.FileUtil;
 
 /**
  * Check the architecture of the JMRI library
@@ -59,7 +60,7 @@ public class ArchitectureTest {
 
                                 .doNotHaveFullyQualifiedName("apps.SystemConsole$PopupListener").and()
                                 .doNotHaveFullyQualifiedName("apps.startup.StartupActionsPreferencesPanel$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.BeanTableDataModel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.BeanTableJTable").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.ListedTableFrame$ActionJList").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.RowComboBoxPanel").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.RowComboBoxPanel$1").and()
@@ -69,7 +70,6 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.oblock.TableFrames").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.sensor.SensorTableDataModel$ImageIconRenderer$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableDataModel$ImageIconRenderer$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableJTable").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor$2").and()
                                 .doNotHaveFullyQualifiedName("mri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel$1").and()
@@ -82,9 +82,9 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logix.WarrantRoute$RouteLocation").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.ConditionalNGDebugger$PopupMenu$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.TreeEditor$5").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$2").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$3").and()
+            .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.gui.LocationEditFrame$1").and()
+            .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.gui.LocationEditFrame$2").and()
+            .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.gui.LocationEditFrame$3").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterGroupsPanel$MouseAdapter").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterTable$RosterCellEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.symbolicprog.CombinedLocoSelTreePane$1").and()

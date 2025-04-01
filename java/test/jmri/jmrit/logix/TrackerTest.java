@@ -29,38 +29,32 @@ public class TrackerTest {
 
     @Test
     public void testCTor() {
+
+        var es = new EditorScaffold();
         Tracker t = new Tracker(new OBlock("OB1", "Test"), "Test",
-                new LocoIcon(new EditorScaffold()),
+                new LocoIcon(es),
                 InstanceManager.getDefault(TrackerTableAction.class));
         assertNotNull(t,"exists");
 
-        // JFrameOperator requestClose just hides the Tracker Table, not disposing of it.
-        Boolean retVal = ThreadingUtil.runOnGUIwithReturn(() -> {
-            JmriJFrame.getFrame(Bundle.getMessage("TrackerTable")).dispose();
-            return true;
-        });
-        assertTrue(retVal);
-
+        JUnitUtil.dispose(es);
+        JUnitUtil.dispose(JmriJFrame.getFrame(Bundle.getMessage("TrackerTable")));
     }
 
     @Test
     public void testTrack() {
+        var es = new EditorScaffold();
         TrackerTableAction trackTable = InstanceManager.getDefault(TrackerTableAction.class);
         OBlock blk1 = new OBlock("OB1", "blk1");
         blk1.setState(OBlock.OCCUPIED);
         Tracker t = new Tracker(blk1, "Test",
-                new LocoIcon(new EditorScaffold()),
+                new LocoIcon(es),
                 trackTable);
         assertNotNull(t,"exists");
         List<OBlock> occupied = t.getBlocksOccupied();
         assertEquals(1, occupied.size(), "Number Blocks Occupied");
 
-        // JFrameOperator requestClose just hides the Tracker Table, not disposing of it.
-        Boolean retVal = ThreadingUtil.runOnGUIwithReturn(() -> {
-            JmriJFrame.getFrame(Bundle.getMessage("TrackerTable")).dispose();
-            return true;
-        });
-        assertTrue(retVal);
+        JUnitUtil.dispose(es);
+        JUnitUtil.dispose(JmriJFrame.getFrame(Bundle.getMessage("TrackerTable")));
     }
 
     @Test

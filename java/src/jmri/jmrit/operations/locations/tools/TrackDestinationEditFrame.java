@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.router.Router;
@@ -338,7 +339,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             if (!track.isTypeNameAccepted(type)) {
                                 continue;
                             }
-                            if (track.isLoadNameAccepted(load)) {
+                            if (track.isLoadNameAndCarTypeAccepted(load, type)) {
                                 continue checkLoads;
                             }
                         }

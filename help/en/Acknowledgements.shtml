@@ -67,6 +67,9 @@
 
         <li>Kevin Appleby, who provided a script to do serial transfers from the Light table</li>
 
+        <li>Daniel Applebaum, <!-- danapple -->
+        who provided an update to better handle device symlinks.</li>
+
         <li>Chris Atkins helped improve the <a href=
         "https://www.jmri.org/help/en/html/tools/scripting/Python.shtml#newJython">instructions for using
         a separate jython install</a>
@@ -371,8 +374,8 @@
         <li>Michael Dunn, who provided a decoder definition for the MRC 1645 decoder</li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aatanisoft+">Mike Dunston</a>, <!-- atanisoft -->
-           who provided <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aatanisoft+">several
-          updates</a> for the DCC++ code <a id="E"></a>
+        who provided <a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aatanisoft+">several
+        updates</a> for the DCC++ code <a id="E"></a>
         </li>
 
         <li>Frederik Elestedt, <!--elestedt -->
@@ -384,11 +387,13 @@
         <li>Wayne Eric, who provided the MRC AD370 decoder definition</li>
 
         <li>Max Ettinger, who made JMRI work with the QSI Quantum Programmer on Windows and wrote
-        <a href="https://www.jmri.org/install/qsidriver/">great instructions</a>. <a id="F"></a>
+        <a href="https://www.jmri.org/install/qsidriver/">great instructions</a>.
         </li>
 
         <li>Jim Exler, <!-- jimexler -->
-         who fixed a Digitrax CV definition.</li>
+        who fixed a Digitrax CV definition and worked on the Soundtraxx definitions.
+        <a id="F"></a>
+        </li>
 
         <li>Dave Falkenburg created the original DecoderPro application (and found the perfect name
         for it!) He created our Mac Classic and Mac OS X icons and worked on the PanelPro logo. He
@@ -402,14 +407,17 @@
         <li>Don Fiehmann provided MRC decoders for testing</li>
 
         <li>Bill Fitch, <!-- bill-fitch14; note it's his JMRI-1 repo -->
-           who created the <a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher
-          System</a> tools for working with Dispatcher.
+        who created the <a href="html/apps/DispatcherSystem/DispatcherSystem.shtml">Dispatcher
+        System</a> tools for working with Dispatcher.
         </li>
+
+        <li>Dieter Flunkert, who contributed a decoder definition for the 
+            Decoderwerk LokCommander.
+            
+        <li>Dan Foltz created the Manifest Creator and Switch List Creator for operations</li>
 
         <li>Marco Forcone, who sacrificed two turnouts motors to the cause of debugging XPressNet
         Turnout support</li>
-
-        <li>Dan Foltz created the Manifest Creator and Switch List Creator for operations</li>
 
         <li>John Forsythe, who helped with the timing needs of TCS decoders</li>
 
@@ -417,9 +425,12 @@
         who created the Italian translation</li>
 
         <li>Marc Fournier, <!-- Marcfour  MarcFoum-->
-         who improved the TCS decoder definition, did the detail work to update the Soundtraxx
+        who improved the TCS decoder definition, did the detail work to update the Soundtraxx
         manufacturer name, and fixed some Soundtraxx variable names.</li>
 
+        <li>Pete Fowler,  <!--  CdreKidd -->
+        who improved the Hornby product ID and contributed HN7000 decoder definitions.</li>
+        
         <li>Paul Fraker, who wrote the documentation for the Throttles and provided MRC decoder
         definitions</li>
 
@@ -524,6 +535,8 @@
         <li>Rob Heikens, who created ESU decoder definitions and programmer pages</li>
 
         <li>Freek Heite, who located some important XpressNet info</li>
+
+        <li>Robert Heller, who added "Close" to the Windows menu</li>
 
         <li>Austin Hendrix, <!-- trainman419 -->
         who improved how the throttle handles speed steps and improved the quality of the code and
@@ -760,9 +773,10 @@
 
         <li>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder</li>
 
-        <li>Eckart Meyer, <!-- emey05 -->
-         who updated the aspect controls in the DB HV 1969 signals
-         and provided the BiDiB implementation.</li>
+        <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aemey05">Eckart Meyer</a>, <!-- emey05 -->
+         who provided the BiDiB implementation,
+         updated the aspect controls in the DB HV 1969 signals
+         and provided enhanced Z21 server support.</li>
 
         <li>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.</li>
 
@@ -880,8 +894,12 @@
         <li>Oscar A. Pruitt, who provided the implementation to support RFID readers using the
         EM-18 protocol</li>
 
-        <li>Gerry Pruss, who provided information on connecting to the QSI Programmer <a id=
-        "Q"></a> <a id="R"></a>
+        <li>John Purcell, <!-- purcelljGHR -->
+            who provided the basic enhanced signal system definition. 
+        </li>
+        
+        <li>Gerry Pruss, who provided information on connecting to the QSI Programmer 
+        <a id="Q"></a> <a id="R"></a>
         </li>
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Abalazsracz+">Balazs Racz</a>, <!-- balazsracz -->
@@ -897,6 +915,8 @@
         <li>Simon Reader, who improved the throttle, added a check for completed status to Routes,
         and added the "invert" option to LocoNet Turnouts.</li>
 
+        <li>Michael Richardson, who sorted out some formats for the LocoNet Monitor.</li>
+        
         <li>Mark Riddoch, who provided the Reporter implementation for CBus to enable the use of
         CBus attached RFID readers.</li>
 
@@ -1145,6 +1165,9 @@
         "https://mgbrr.org/files/tips/lessons-learned-on-hares-wabbits-v1.pdf">description of how to
         program Hare and Wabbit controllers</a> using JMRI.
         </li>
+
+        <li>Iain White, <!-- ch4lkst3r -->
+        who fixed a problem with roster group deletion.</li>
 
         <li>Rich White II, who provided the images for our small Nixie tube clock</li>
 

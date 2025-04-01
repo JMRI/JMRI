@@ -876,6 +876,11 @@
             </li>
              
             <li>
+                <a href="package/apps/gui3/lccpro/LccPro.shtml">LccPro </a>
+                <ul></ul>
+            </li>
+             
+            <li>
                 <a href="html/tools/signaling/ldt/output.shtml">LDT Signals </a>
                 <ul></ul>
             </li>
@@ -1949,6 +1954,23 @@
             </li>
              
             <li>
+                <a href="html/tools/StringIOs.shtml">StringIO </a>
+                <ul>
+                      
+                    <li>
+                        <a href="package/jmri/jmrit/beantable/StringIOAddEdit.shtml">Add/Edit a StringIO </a>
+                        <ul></ul>
+                    </li>
+                      
+                    <li>
+                        <a href="package/jmri/jmrit/beantable/StringIOTable.shtml">StringIO Table </a>
+                        <ul></ul>
+                    </li>
+                     
+                </ul>
+            </li>
+             
+            <li>
                 <a href="html/apps/DecoderPro/index.shtml#decoderlisting">Supported Decoders </a>
                 <ul></ul>
             </li>
@@ -2019,6 +2041,12 @@
                       
                     <li>
                         <a href="package/jmri/jmrit/withrottle/UserInterface.shtml">Android Phone as Throttle </a>
+                        <ul></ul>
+                    </li>
+                      
+  
+                    <li>
+                        <a href="package/jmri/jmrit/z21server/z21server.shtml">Z21 Throttle (Z21 App and WlanMaus) </a>
                         <ul></ul>
                     </li>
                       

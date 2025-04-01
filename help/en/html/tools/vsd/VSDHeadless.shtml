@@ -44,7 +44,7 @@
           how to do this configuration.<br>
           Alternatively or additionally you can activate the VSD Preference option "Auto Start
           Engine". Though, I recommend to use the "engine-startstop" option.<br>
-          The number of VSDecoders is limited to 4.</p>
+          The number of VSDecoders is limited to 8.</p>
         </li>
 
         <li>Create a Roster Entry for every one of the VSDecoders
@@ -80,7 +80,7 @@
 
             <li>Click the "OK" button</li>
           </ol>
-          Repeat the above steps for every one of the VSDecoders (up to 4).
+          Repeat the above steps for every one of the VSDecoders (up to 8).
           <p>It's recommended to check the path and the profile name and (as may be the case) label
           the function key for Start/Stop.<br>
           To do this navigate to <strong>Roster &rArr; Roster &rArr; select a Roster entry &rArr;

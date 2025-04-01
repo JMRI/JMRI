@@ -20,9 +20,10 @@ public class StringFactory implements StringExpressionFactory {
                 Set.of(
                         new AbstractMap.SimpleEntry<>(Category.ITEM, StringExpressionConstant.class),
                         new AbstractMap.SimpleEntry<>(Category.ITEM, StringExpressionMemory.class),
+                        new AbstractMap.SimpleEntry<>(Category.ITEM, StringExpressionStringIO.class),
                         new AbstractMap.SimpleEntry<>(Category.COMMON, StringFormula.class)
                 );
-        
+
         return stringExpressionClasses;
     }
 

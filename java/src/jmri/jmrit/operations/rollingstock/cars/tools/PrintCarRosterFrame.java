@@ -14,6 +14,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
@@ -218,17 +219,17 @@ public class PrintCarRosterFrame extends OperationsFrame {
     int numberCharPerLine;
 
     private void printCars() {
-        boolean landscape = false;
+        boolean isLandscape = false;
         if (manifestOrientationComboBox.getSelectedItem() != null &&
                 manifestOrientationComboBox.getSelectedItem().equals(Setup.LANDSCAPE)) {
-            landscape = true;
+            isLandscape = true;
         }
 
         int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
         try (HardcopyWriter writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleCarRoster"), fontSize, .5,
-                .5, .5, .5, _isPreview, "", landscape, true, null)) {
+                .5, .5, .5, _isPreview, "", isLandscape, true, null, null)) {
 
             numberCharPerLine = writer.getCharactersPerLine();
 

@@ -2,13 +2,12 @@ package jmri.util.davidflanagan;
 
 import java.awt.*;
 import java.awt.JobAttributes.DefaultSelectionType;
+import java.awt.JobAttributes.SidesType;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.Vector;
+import java.util.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -80,36 +79,41 @@ public class HardcopyWriter extends Writer {
 
     // constructor modified to add print preview parameter
     public HardcopyWriter(Frame frame, String jobname, int fontsize, double leftmargin, double rightmargin,
-            double topmargin, double bottommargin, boolean preview) throws HardcopyWriter.PrintCanceledException {
-        hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin, topmargin, bottommargin, preview);
+            double topmargin, double bottommargin, boolean isPreview) throws HardcopyWriter.PrintCanceledException {
+        hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin, topmargin, bottommargin, isPreview);
     }
 
-    // constructor modified to add default printer name and page orientation
+    // constructor modified to add default printer name, page orientation, print header, print duplex, and page size
     public HardcopyWriter(Frame frame, String jobname, int fontsize, double leftmargin, double rightmargin,
-            double topmargin, double bottommargin, boolean preview, String printerName, boolean landscape,
-            boolean printHeader, Dimension pagesize) throws HardcopyWriter.PrintCanceledException {
+            double topmargin, double bottommargin, boolean isPreview, String printerName, boolean isLandscape,
+            boolean isPrintHeader, SidesType sidesType, Dimension pagesize)
+            throws HardcopyWriter.PrintCanceledException {
 
         // print header?
-        this.printHeader = printHeader;
+        this.printHeader = isPrintHeader;
 
         // set default print name
         jobAttributes.setPrinter(printerName);
-        if (landscape) {
+
+        if (sidesType != null) {
+            jobAttributes.setSides(sidesType);
+        }
+        if (isLandscape) {
             pageAttributes.setOrientationRequested(PageAttributes.OrientationRequestedType.LANDSCAPE);
-            if (preview) {
+            if (isPreview) {
                 this.pagesize = new Dimension(792, 612);
             }
-        } else if (preview && pagesize != null) {
+        } else if (isPreview && pagesize != null) {
             this.pagesize = pagesize;
         }
 
-        hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin, topmargin, bottommargin, preview);
+        hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin, topmargin, bottommargin, isPreview);
     }
 
     private void hardcopyWriter(Frame frame, String jobname, int fontsize, double leftmargin, double rightmargin,
-            double topmargin, double bottommargin, boolean preview) throws HardcopyWriter.PrintCanceledException {
+            double topmargin, double bottommargin, boolean isPreview) throws HardcopyWriter.PrintCanceledException {
 
-        isPreview = preview;
+        this.isPreview = isPreview;
         this.frame = frame;
 
         // set default to color

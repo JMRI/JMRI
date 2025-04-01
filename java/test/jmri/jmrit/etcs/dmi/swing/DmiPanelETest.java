@@ -11,7 +11,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -19,7 +18,7 @@ import org.netbeans.jemmy.operators.*;
  * Tests for DmiPanelE.
  * @author Steve Young Copyright (C) 2024
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class DmiPanelETest {
     
     private boolean ackTriggered = false;
@@ -105,7 +104,7 @@ public class DmiPanelETest {
         Assertions.assertTrue(downOper.isEnabled());
         Assertions.assertFalse(upOper.isEnabled());
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 

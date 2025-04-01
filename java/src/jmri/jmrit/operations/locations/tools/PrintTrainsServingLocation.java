@@ -81,7 +81,7 @@ public class PrintTrainsServingLocation {
                     boolean setout = false;
                     if (rl.isPickUpAllowed() &&
                             rl.getMaxCarMoves() > 0 &&
-                            !train.isLocationSkipped(rl.getId()) &&
+                            !train.isLocationSkipped(rl) &&
                             (train.isLocalSwitcher() ||
                                     (rl.getTrainDirection() & _location.getTrainDirections()) != 0) &&
                             (train.isLocalSwitcher() ||
@@ -92,7 +92,7 @@ public class PrintTrainsServingLocation {
                     }
                     if (rl.isDropAllowed() &&
                             rl.getMaxCarMoves() > 0 &&
-                            !train.isLocationSkipped(rl.getId()) &&
+                            !train.isLocationSkipped(rl) &&
                             (train.isLocalSwitcher() ||
                                     (rl.getTrainDirection() & _location.getTrainDirections()) != 0) &&
                             (train.isLocalSwitcher() ||

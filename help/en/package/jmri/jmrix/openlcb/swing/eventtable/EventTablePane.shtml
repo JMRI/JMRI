@@ -14,11 +14,11 @@
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
     <h1>OpenLCB Event Table Frame</h1>
-      <a href="Event_Table.png">
       This provides a table view of the Events, Producers and Consumers
       in your OpenLCB network.
       <p>
-        <img src="Event_Table.png" width="1237" height="425""/></a>
+      <a href="Event_Table.png">
+        <img src="Event_Table.png" width="1037" height="461""/></a>
      <p>
       The primary purpose of the Event Table is three fold:
     <ul>
@@ -56,15 +56,34 @@
     It is envisioned that the user re-export this reference documentation regularly
     as the network evolves rather than try to maintain the resulting document independently.
     </ul>
-      <p>
+      <p><a name="table"/>
       You can resize and sort the columns using the header row.
       <p>
+      The Event ID field usually shows a single Event ID.
+      If a node has declared that it produces or consumes
+      a range of event IDs, the range will be shown as its
+      lowest and highest included Event IDs.
+      <p>
+      The Event Name column will show an event name that you've given 
+      to this event ID.
+      If you haven't given the event ID a name, and if there is  
+      a well-known standard meaning defined for that event, that will be displayed.
+      <p>
+      You can enter names for events in the 2nd column.  Click on the cell
+      to open it for editing. Hit return when done.  These will be
+      saved automatically and loaded when you next start JMRI.
+
+      <p><a name="toolbar"/>
+      At the bottom of the window, there's a tear-off button bar
+      that contains a number of useful controls:
+      <ul>
+      <li>
       Pressing the "Update from Network" button will load the table from the network.
       This might take a couple seconds.  You should press it again
       after changes like adding nodes, changing their configuration, etc.
-      The table cannot detect those changes automatically.
+      The table cannot always detect those changes automatically.
       <p>
-      If node names (4th and 6th columns) don't show up immediately, press
+      If node names (4th and 6th columns) don't show up after a short time, press
       "Update from Network" a second time.
       <p>
       If you have a configuration window open on one or more events and
@@ -77,35 +96,66 @@
       Note that the "Update from Network" button does a "Verify Events" operation
       on the network.  Some nodes consider this to be a start-of-day, power-up
       operation and might change the status of their outputs due to that.
-      <p>
-      You can enter names for events in the 2nd column.  Click on the cell
-      to open it for editing. Hit return when done.  These will be
-      saved automatically and loaded when you next start JMRI.
-      <p>
+      <li>If you've defined
+      <a href="../../../../../apps/gui3/lccpro/LccPro.shtml#nodegroups">Node Groups</a>
+      in the 
+      <a href="../../../../../apps/gui3/lccpro/LccPro.shtml">LccPro</a>
+      window, there will be a selection box that lets you display events
+      from "(All)" nodes or just the ones in a specific group.  This 
+      can be helpful if e.g. you're only interested in events from some
+      small part of the layout's network.
+      
+      <li>
       Checking the "Require label" box will display only events with labels.
       This lets you ignore events that you haven't labeled as interesting.
-      <p>
+      <li>
       Checking the "Require both producer(s) and consumer(s)" box will
       display only those events that have both at least one producer
       and at least one consumer.  These are the events that actually do something
       on your LCC network.
-      <p>
+      <li>
       Checking the "Popcorn mode" will highlight the producer for every event that
       JMRI sees being produced.
       Since the window scrolls to show the event, this can result in the screen
       jumping around when it's enabled.
       If there's a lot of traffic, this can slow your
       computer down significantly, so only enable it when you want to use it.
+      <li>
+      As you type in the "Find Event" box, the table will try to locate an
+      event that starts with what you've typed.  The first (top most) match will
+      be highlighted. If need be, the table will scroll to make that visible.
       <p>
-      Entering an event ID in the find box and clicking "Find" will highlight every
-      occurrence of that event.  The window will scroll to show the first one if needed.
-      <p>
+      If you don't find a specific event ID in the table, the "Add" 
+      button will add it to the table.  You can then give it a name in the usual way. 
+      <li>
+      As you type in the "Find Name" box, the table will try to locate
+      an event, producer or consumer node name or also-known-as alias that starts with 
+      what you've typed.  Upper vs lower case is ignored.  The first
+      (left most then top most) match will be highlighted.  If need be, the table will 
+      scroll to make that visible.
+      <li>
       Pressing the "Names from Sensors" will fill in the event name column with the
-      user names from the corresponding JMRI Sensors.  Pressing the "Names from Turnouts"
-      button will fill in the event name column with the user names from the 
+      names from the corresponding JMRI Sensors.  Pressing the "Names from Turnouts"
+      button will fill in the event name column with the names from the 
       corresponding JMRI Turnouts.  Note that only empty entries will be filled;
-      this does not overwrite any existing names.
-
+      this does not overwrite any existing names you've already defined.
+      </ul>
+      
+    <p><a name="menu"/>
+        The File menu contains two items:
+        <ul>
+            <li>Save to CSV: This exports all columns of the current contents of the table
+                to a comma-separated variable (CSV) file.  
+                <p>The file will contain column
+                headers in its first row, followed by a row for every Event ID in the table,
+                including ones that are not currently visible.
+            <li>Read from CSV: Reads in Event IDs and event names from a CSV file,
+                then if each Event ID doesn't already have a name, assign the name from 
+                the file.  
+                <p>The file should have a numeric Event ID such as 00.01.02.03.04.05.06.07
+                in the 1st column and the desired name in the second column.
+                A header row, if present, is ignored. Extra columns are ignored.
+        </ul>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>

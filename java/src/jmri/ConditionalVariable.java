@@ -2,13 +2,16 @@ package jmri;
 
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.text.MessageFormat;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 import jmri.Conditional.Operator;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The variable used in the antecedent (the 'if' part) of the Conditional.
@@ -56,7 +59,7 @@ public class ConditionalVariable {
     private String _guiName = "";       // Contains the user name of the referenced conditional
     private NamedBeanHandle<?> _namedBean = null;
     //private NamedBeanHandle<Sensor> _namedSensorBean = null;
-    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    protected NamedBeanHandleManager nbhm = InstanceManager.getDefault(NamedBeanHandleManager.class);
     // Name clarification: Formerly was named '_triggersCalculation' because it controlled whether
     // a listener was installed for this device and thus trigger calculation of the Conditional.
     // Now named '_triggersActions' because listeners are always installed for activated Logix
@@ -79,7 +82,8 @@ public class ConditionalVariable {
      * @param name the device name
      * @param trigger true if actions should be performed if triggered
      */
-    public ConditionalVariable(boolean not, Operator opern, Conditional.Type type, String name, boolean trigger) {
+    public ConditionalVariable(boolean not, @Nonnull Operator opern, @Nonnull Conditional.Type type,
+            String name, boolean trigger) {
         _not = not;
         // setOpern does some checks of opern
         _opern = opern;
@@ -123,7 +127,7 @@ public class ConditionalVariable {
                     }
                     break;
                 case SIGNALHEAD:
-                    SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
+                    SignalHead s = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(_name);
                     if (s == null) {
                         log.error("invalid signalhead name= \"{}\" in state variable", _name);
                         return;
@@ -132,14 +136,14 @@ public class ConditionalVariable {
                     break;
                 case SIGNALMAST:
                     try {
-                        SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(_name);
+                        SignalMast sm = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, sm);
                     } catch (IllegalArgumentException e) {
                         log.error("invalid signalmast name= \"{}\" in state variable", _name);
                     }
                     break;
                 case ENTRYEXIT:
-                    NamedBean nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(_name);
+                    NamedBean nb = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(_name);
                     if (nb == null) {
                         log.error("invalid entry exit name= \"{}\" in state variable", _name);
                         return;
@@ -147,7 +151,7 @@ public class ConditionalVariable {
                     _namedBean = nbhm.getNamedBeanHandle(_name, nb);
                     break;
                 case CONDITIONAL:
-                    Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
+                    Conditional c = InstanceManager.getDefault(ConditionalManager.class).getConditional(_name);
                     if (c == null) {
                         log.error("invalid conditional; name= \"{}\" in state variable", _name);
                         return;
@@ -191,19 +195,21 @@ public class ConditionalVariable {
         _not = not;
     }
 
+    @Nonnull
     public Operator getOpern() {
         return _opern;
     }
 
-    public final void setOpern(Operator opern) {
+    public final void setOpern(@Nonnull Operator opern) {
         _opern = opern;
     }
 
+    @Nonnull
     public Conditional.Type getType() {
         return _type;
     }
 
-    public void setType(Conditional.Type type) {
+    public void setType(@Nonnull Conditional.Type type) {
         _type = type;
     }
 
@@ -242,13 +248,13 @@ public class ConditionalVariable {
                     bean = InstanceManager.memoryManagerInstance().provideMemory(_name);
                     break;
                 case SIGNALMAST:
-                    bean = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(_name);
+                    bean = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast(_name);
                     break;
                 case SIGNALHEAD:
-                    bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
+                    bean = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(_name);
                     break;
                 case CONDITIONAL:
-                    bean = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
+                    bean = InstanceManager.getDefault(ConditionalManager.class).getConditional(_name);
                     break;
                 case WARRANT:
                     bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
@@ -257,7 +263,7 @@ public class ConditionalVariable {
                     bean = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(_name);
                     break;
                 case ENTRYEXIT:
-                    bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(_name);
+                    bean = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(_name);
                     break;
                 default:
                     log.error("Type {} not set for {}", itemType, _name);
@@ -276,10 +282,12 @@ public class ConditionalVariable {
         }
     }
 
+    @CheckForNull
     public NamedBeanHandle<?> getNamedBean() {
         return _namedBean;
     }
 
+    @CheckForNull
     public NamedBean getBean() {
         if (_namedBean != null) {
             return _namedBean.getBean();
@@ -299,9 +307,9 @@ public class ConditionalVariable {
         return _dataString;
     }
 
-    public void setDataString(String data) {
+    public void setDataString(@CheckForNull String data) {
         _dataString = data;
-        if (data != null && !data.equals("")
+        if (data != null && !data.isEmpty()
                 && _type.getItemType() == Conditional.ItemType.MEMORY) {
             NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
             if (bean != null) {
@@ -312,6 +320,7 @@ public class ConditionalVariable {
 
     private NamedBeanHandle<?> _namedBeanData = null;
 
+    @CheckForNull
     public NamedBean getNamedBeanData() {
         if (_namedBeanData != null) {
             return _namedBeanData.getBean();
@@ -319,18 +328,39 @@ public class ConditionalVariable {
         return null;
     }
 
+    /**
+     * Get Data 1.
+     * Used for Fast Clock Start time,
+     * and value for Memory expression type, e.g. LESS_THAN or GREATER_THAN
+     * @return value for Data 1.
+     */
     public int getNum1() {
         return _num1;
     }
 
+    /**
+     * Set Data 1.
+     * Used for Fast Clock Start time and Memoey expression operator value.
+     * @param num the value.
+     */
     public void setNum1(int num) {
         _num1 = num;
     }
 
+    /**
+     * Get Data 2.
+     * Used for Fast Clock Finish time.
+     * @return value for Data 2.
+     */
     public int getNum2() {
         return _num2;
     }
 
+    /**
+     * Set Data 2.
+     * Used for Fast Clock Finish time.
+     * @param num the value.
+     */
     public void setNum2(int num) {
         _num2 = num;
     }
@@ -376,11 +406,7 @@ public class ConditionalVariable {
     }
 
     public void setState(boolean state) {
-        if (state) {
-            _state = Conditional.TRUE;
-        } else {
-            _state = Conditional.FALSE;
-        }
+        _state = state ? Conditional.TRUE : Conditional.FALSE;
     }
 
     public String getTestTypeString() {
@@ -392,6 +418,7 @@ public class ConditionalVariable {
      *
      * @return translated string (from jmri.NamedBeanBundle.properties)
      */
+    @Nonnull
     public String getOpernString() {
         switch (_opern) {
             case AND:
@@ -418,7 +445,6 @@ public class ConditionalVariable {
         log.debug("evaluate: \"{}\" type= {} itemType= {}", getName(), _type, itemType);
         switch (itemType) {
             case SENSOR:
-                //Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(getName());
                 Sensor sn = (Sensor) getBean();
                 if (sn == null) {
                     log.error("invalid sensor name= \"{}\" in state variable", getName());
@@ -558,9 +584,9 @@ public class ConditionalVariable {
                 result = compare(value1, value2, caseInsensitive);
                 break;
             case CONDITIONAL:
-                Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(getName());
+                Conditional c = InstanceManager.getDefault(ConditionalManager.class).getBySystemName(getName());
                 if (c == null) {
-                    c = InstanceManager.getDefault(jmri.ConditionalManager.class).getByUserName(getName());
+                    c = InstanceManager.getDefault(ConditionalManager.class).getByUserName(getName());
                     if (c == null) {
                         log.error("invalid conditional name= \"{}\" in state variable", getName());
                         return false;
@@ -593,14 +619,14 @@ public class ConditionalVariable {
                         break;
                     case TRAIN_RUNNING:
                         // not in either RUN or LEARN state
-                        result = !(w.getRunMode() == Warrant.MODE_NONE);
+                        result = (w.getRunMode() != Warrant.MODE_NONE);
                         break;
                     default:
                         result = false;
                 }
                 break;
             case CLOCK:
-                Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
+                Timebase fastClock = InstanceManager.getDefault(Timebase.class);
                 Date currentTime = fastClock.getTime();
                 int currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
                 int beginTime = fixMidnight(_num1);
@@ -624,6 +650,10 @@ public class ConditionalVariable {
                 break;
             case ENTRYEXIT:
                 NamedBean e = getBean();
+                if ( e == null ) {
+                    log.error("invalid EntryExit name= \"{}\" in state variable", getName());
+                    return false;
+                }
                 if (_type == Conditional.Type.ENTRYEXIT_ACTIVE) {
                     result = e.getState() == 0x02;
                 } else {
@@ -637,12 +667,8 @@ public class ConditionalVariable {
         if (_not) {
             result = !result;
         }
-        if (result) {
-            setState(Conditional.TRUE);
-        } else {
-            setState(Conditional.FALSE);
-        }
-        return (result);
+        setState( result );
+        return result;
     }
 
     /**
@@ -659,7 +685,7 @@ public class ConditionalVariable {
      *                        false otherwise
      * @return true if values compare per getNum1(); false otherwise
      */
-    boolean compare(String value1, String value2, boolean caseInsensitive) {
+    boolean compare(@CheckForNull String value1, @CheckForNull String value2, boolean caseInsensitive) {
         if (value1 == null) {
             return value2 == null;
         } else {
@@ -748,7 +774,7 @@ public class ConditionalVariable {
 
     public static int fixMidnight(int time) {
         if (time > 24 * 60) {
-            time -= 24 * 60;
+            return time - ( 24 * 60 );
         }
         return time;
     }
@@ -759,7 +785,8 @@ public class ConditionalVariable {
      * @param t the type
      * @return the localized description
      */
-    public static String getItemTypeString(Conditional.ItemType t) {
+    @Nonnull
+    public static String getItemTypeString( @Nonnull Conditional.ItemType t) {
         switch (t) {
             case SENSOR:
                 return Bundle.getMessage("BeanNameSensor"); // NOI18N
@@ -788,6 +815,7 @@ public class ConditionalVariable {
         }
     }
 
+    @Nonnull
     public static String getCompareOperationString(int index) {
         switch (index) {
             case LESS_THAN:
@@ -808,6 +836,7 @@ public class ConditionalVariable {
         return ""; // NOI18N
     }
 
+    @Nonnull
     public static String getCompareSymbols(int index) {
         switch (index) {
             case LESS_THAN:
@@ -834,7 +863,8 @@ public class ConditionalVariable {
      * @return the conditional action type or -1 if if string does not
      * correspond to an action Data as defined in ConditionalAction
      */
-    public static Conditional.Type stringToVariableTest(String str) {
+    @Nonnull
+    public static Conditional.Type stringToVariableTest(@Nonnull String str) {
         if (str.equals(Bundle.getMessage("SignalHeadStateRed"))) { // NOI18N
             return Conditional.Type.SIGNAL_HEAD_RED;
         } else if (str.equals(Bundle.getMessage("SignalHeadStateYellow"))) { // NOI18N
@@ -867,60 +897,62 @@ public class ConditionalVariable {
         Conditional.ItemType itemType = _type.getItemType();
         switch (itemType) {
             case SENSOR:
-                return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("BeanNameSensor"), getName(), type});
+                return MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                    Bundle.getMessage("BeanNameSensor"), getName(), type );
             case TURNOUT:
-                return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("BeanNameTurnout"), getName(), type});
+                return MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                    Bundle.getMessage("BeanNameTurnout"), getName(), type);
             case LIGHT:
-                return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("BeanNameLight"), getName(), type});
+                return MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                    Bundle.getMessage("BeanNameLight"), getName(), type );
             case SIGNALHEAD:
                 if ((_type == Conditional.Type.SIGNAL_HEAD_LIT)
                         || (_type == Conditional.Type.SIGNAL_HEAD_HELD)) {
-                    return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                            new Object[]{Bundle.getMessage("BeanNameSignalHead"), getName(), type});
+                    return MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                        Bundle.getMessage("BeanNameSignalHead"), getName(), type );
                 } else {
-                    return java.text.MessageFormat.format(rbx.getString("SignalHeadStateDescrpt"),
-                            new Object[]{Bundle.getMessage("BeanNameSignalHead"), getName(), type});
+                    return MessageFormat.format(rbx.getString("SignalHeadStateDescrpt"),
+                        Bundle.getMessage("BeanNameSignalHead"), getName(), type );
                 }
             case SIGNALMAST:
                 if ((_type == Conditional.Type.SIGNAL_MAST_LIT)
                         || (_type == Conditional.Type.SIGNAL_MAST_HELD)) {
-                    return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                            new Object[]{Bundle.getMessage("BeanNameSignalMast"), getName(), type}); // NOI18N
+                    return MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                        Bundle.getMessage("BeanNameSignalMast"), getName(), type );
                 } else {
-                    return java.text.MessageFormat.format(rbx.getString("SignalMastStateDescrpt"),
-                            new Object[]{Bundle.getMessage("BeanNameSignalMast"), getName(), _dataString}); // NOI18N
+                    return MessageFormat.format(rbx.getString("SignalMastStateDescrpt"),
+                        Bundle.getMessage("BeanNameSignalMast"), getName(), _dataString );
                 }
             case MEMORY:
                 if ((_type == Conditional.Type.MEMORY_EQUALS)
                         || (_type == Conditional.Type.MEMORY_EQUALS_INSENSITIVE)) {
-                    return java.text.MessageFormat.format(rbx.getString("MemoryValueDescrpt"),
-                            new Object[]{Bundle.getMessage("BeanNameMemory"), getName(), // NOI18N
-                                getCompareSymbols(_num1), _dataString});
+                    return MessageFormat.format(rbx.getString("MemoryValueDescrpt"),
+                        Bundle.getMessage("BeanNameMemory"), getName(),
+                        getCompareSymbols(_num1), _dataString);
                 } else {
-                    return java.text.MessageFormat.format(rbx.getString("MemoryCompareDescrpt"),
-                            new Object[]{Bundle.getMessage("BeanNameMemory"), getName(), // NOI18N
-                                getCompareSymbols(_num1), _dataString});
+                    return MessageFormat.format(rbx.getString("MemoryCompareDescrpt"),
+                        Bundle.getMessage("BeanNameMemory"), getName(),
+                        getCompareSymbols(_num1), _dataString);
                 }
             case CONDITIONAL:
-                return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("BeanNameConditional"), getGuiName(), type}); // NOI18N
+                return MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                    Bundle.getMessage("BeanNameConditional"), getGuiName(), type );
             case WARRANT:
-                return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("WarrantRoute"), getName(), type});
+                return MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                    rbx.getString("WarrantRoute"), getName(), type );
             case CLOCK:
-                return java.text.MessageFormat.format(rbx.getString("FastClockDescrpt"),
-                        new Object[]{Bundle.getMessage("FastClock"),
-                            LogixTableAction.formatTime(_num1 / 60, _num1 - ((_num1 / 60) * 60)),
-                            LogixTableAction.formatTime(_num2 / 60, _num2 - ((_num2 / 60) * 60))});
+                return MessageFormat.format(rbx.getString("FastClockDescrpt"),
+                    Bundle.getMessage("FastClock"),
+                    LogixTableAction.formatTime(_num1 / 60, _num1 - ((_num1 / 60) * 60)),
+                    LogixTableAction.formatTime(_num2 / 60, _num2 - ((_num2 / 60) * 60)));
             case OBLOCK:
-                return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{rbx.getString("OBlockStatus"), getName(), _dataString});
+                return MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                    rbx.getString("OBlockStatus"), getName(), _dataString );
             case ENTRYEXIT:
-                return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("BeanNameEntryExit"), getBean().getUserName(), type}); // NOI18N
+                NamedBean nb = getBean();
+                return MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                    Bundle.getMessage("BeanNameEntryExit"),
+                    nb == null ? "<NULL>" : nb.getUserName(), type);
             case NONE:
                 return getName() + " type " + type;
             default:
@@ -930,5 +962,5 @@ public class ConditionalVariable {
         return super.toString();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ConditionalVariable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ConditionalVariable.class);
 }

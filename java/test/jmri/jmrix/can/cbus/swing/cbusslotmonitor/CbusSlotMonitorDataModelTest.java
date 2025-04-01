@@ -15,7 +15,7 @@ import org.junit.jupiter.api.*;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusSlotMonitorDataModelTest {
- 
+
     private jmri.jmrix.can.TrafficControllerScaffold tcis = null;
     private jmri.jmrix.can.CanSystemConnectionMemo memo = null;
     private CbusSlotMonitorDataModel t = null;
@@ -24,12 +24,12 @@ public class CbusSlotMonitorDataModelTest {
     public void testCtor() {
         Assert.assertNotNull("exists", t);
     }
-    
+
     @Test
     public void testAddToTable() {
-        
-        Assert.assertEquals("column count",CbusSlotMonitorDataModel.MAX_COLUMN,t.getColumnCount());
-        
+
+        Assertions.assertEquals(CbusSlotMonitorDataModel.MAX_COLUMN,t.getColumnCount());
+
         Assert.assertTrue(t.getRowCount()==0);
         t.reply(new CanReply( new int[]{0x05},0x12 ));
         t.message(new CanMessage( new int[]{0x05},0x12 ));
@@ -168,8 +168,8 @@ public class CbusSlotMonitorDataModelTest {
     public void testColumns() {
         
         Assert.assertNotNull("exists", t.tablefeedback() );
-        Assert.assertTrue( t.getColumnCount()== 10 );
-        
+        Assertions.assertEquals( 12, t.getColumnCount() );
+
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
           
@@ -521,9 +521,9 @@ public class CbusSlotMonitorDataModelTest {
         r.setElement(3, 7); // error byte 3 Invalid request
         t.reply(r);
         Assert.assertTrue(t.tablefeedback().getText().contains("Invalid request for address 777"));
-    
+
     }
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

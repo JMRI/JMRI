@@ -13,12 +13,12 @@ import org.junit.jupiter.api.*;
 public class NotchTransitionTest {
 
     private NotchTransition uut = null;
-    private String filename = "java/test/jmri/jmrit/vsdecoder/test.wav";
+    private final static String FILENAME = "java/test/jmri/jmrit/vsdecoder/test.wav";
 
     @Test
     public void testCreateFull() {
         Assert.assertEquals("sound name", "uname", uut.getName());
-        Assert.assertEquals("file name", filename, uut.getFileName());
+        Assert.assertEquals("file name", FILENAME, uut.getFileName());
         Assert.assertEquals("system name", "sysname", uut.getSystemName());
         Assert.assertEquals("user name", "uname", uut.getUserName());
         Assert.assertTrue("initialized", uut.isInitialized());
@@ -29,14 +29,12 @@ public class NotchTransitionTest {
     public void TestSetGet() {
         uut.setName("new name");
         Assert.assertEquals("set name", "new name", uut.getName());
-        uut.setLooped(true);
-        Assert.assertTrue("set looped", uut.isLooped());
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        uut = new NotchTransition(null, filename, "sysname", "uname"); // BOUND_MODE
+        uut = new NotchTransition(null, FILENAME, "sysname", "uname"); // BOUND_MODE
     }
 
     @AfterEach

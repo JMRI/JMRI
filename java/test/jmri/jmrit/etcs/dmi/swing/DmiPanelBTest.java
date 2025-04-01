@@ -7,14 +7,14 @@ import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for DmiPanelB.
  * @author Steve Young Copyright (C) 2024
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class DmiPanelBTest {
 
     @Test
@@ -99,7 +99,7 @@ public class DmiPanelBTest {
 
         verifyAck(jfo, p, TrackCondition.tractionChange15000(0, true));
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
     }
 

@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
-import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
 
 /**
  * Starts the ImportCars thread

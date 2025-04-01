@@ -1,8 +1,5 @@
 import java
 import jmri
-import sys
-import re
-import threading
 
 ###########################################################################
 # Progress Bar
@@ -32,7 +29,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
         #self.displayMessage(msg)
         msg = "All Sections, Transits and TrainInfo Files produced.\n\n"
-        msg = msg + 'The JMRI tables and panels have been updated to support the Dispatcher System\nA store is recommended.'
+        msg = msg + 'The JMRI tables and panels have been updated to support the Dispatcher System\nA store and restart is recommended.'
         self.displayMessage(msg)
         #self.store_panel(filename)
 

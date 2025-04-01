@@ -14,7 +14,7 @@
 
 <!ELEMENT operations-config (operations | manifestHeaderTextStrings | manifestTextStrings | switchListTextStrings | control)*>
 
-<!ELEMENT operations (railRoad | setup | settings | panel | fontName | fontSize | manifestColors
+<!ELEMENT operations (railRoad | setup | settings | panel | fontName | fontSize | printDuplex | manifestColors
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
  | missingCarFormat | tab | manifest | columnFormat | manifestFormat | vsd | reporters | switchList
@@ -27,6 +27,7 @@
 <!ELEMENT panel EMPTY>
 <!ELEMENT fontName EMPTY>
 <!ELEMENT fontSize EMPTY>
+<!ELEMENT printDuplex EMPTY>
 <!ELEMENT pickupEngFormat EMPTY>
 <!ELEMENT dropEngFormat EMPTY>
 <!ELEMENT pickupCarFormat EMPTY>
@@ -109,6 +110,7 @@
 
 <!ATTLIST fontName name				CDATA #IMPLIED> 
 <!ATTLIST fontSize size				CDATA #IMPLIED>  
+<!ATTLIST printDuplex name			CDATA #IMPLIED> 
 <!ATTLIST pickupEngFormat prefix	CDATA #IMPLIED>
 <!ATTLIST dropEngFormat prefix		CDATA #IMPLIED>
 <!ATTLIST pickupCarFormat prefix	CDATA #IMPLIED>
@@ -129,6 +131,8 @@
 <!ATTLIST missingCarFormat prefix	CDATA #IMPLIED>
 <!ATTLIST missingCarFormat setting	CDATA #IMPLIED>
 
+<!ATTLIST manifestColors dropEngineColor	CDATA #IMPLIED> 
+<!ATTLIST manifestColors pickupEngineColor	CDATA #IMPLIED>  
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
 <!ATTLIST manifestColors localColor	CDATA #IMPLIED>
@@ -192,6 +196,7 @@
 <!ATTLIST manifest printCabooseLoad		(true | false ) "false"> 
 <!ATTLIST manifest printPassengerLoad	(true | false ) "false"> 
 <!ATTLIST manifest groupCarMoves		(true | false ) "false"> 
+<!ATTLIST manifest printLocoLast		(true | false ) "false"> 
 <!ATTLIST manifest hazardousMsg			CDATA #IMPLIED> 
 
 <!ATTLIST columnFormat twoColumns		(true | false ) "false">

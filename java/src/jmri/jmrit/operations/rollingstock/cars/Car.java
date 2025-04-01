@@ -351,6 +351,9 @@ public class Car extends RollingStock {
     }
 
     public String getPickupScheduleName() {
+        if (getTrain() != null) {
+            return getPickupTime();
+        }
         TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
                 .getScheduleById(getPickupScheduleId());
         if (sch != null) {
@@ -433,12 +436,26 @@ public class Car extends RollingStock {
         return _previousFinalDestination;
     }
 
+    public String getPreviousFinalDestinationName() {
+        if (getPreviousFinalDestination() != null) {
+            return getPreviousFinalDestination().getName();
+        }
+        return NONE;
+    }
+
     public void setPreviousFinalDestinationTrack(Track track) {
         _previousFinalDestTrack = track;
     }
 
     public Track getPreviousFinalDestinationTrack() {
         return _previousFinalDestTrack;
+    }
+
+    public String getPreviousFinalDestinationTrackName() {
+        if (getPreviousFinalDestinationTrack() != null) {
+            return getPreviousFinalDestinationTrack().getName();
+        }
+        return NONE;
     }
 
     public void setPreviousScheduleId(String id) {
@@ -585,8 +602,7 @@ public class Car extends RollingStock {
 
     /**
      * Used to determine if car is performing a local move. A local move is when
-     * a car is moved to a different track at the same location. Car has to be
-     * assigned to a train.
+     * a car is moved to a different track at the same location.
      * 
      * @return true if local move
      */
@@ -683,7 +699,7 @@ public class Car extends RollingStock {
 
     /**
      * Updates all cars in a kernel. After the update, the cars will all have
-     * the same final destination, load, and next load.
+     * the same final destination, load, and route path.
      */
     public void updateKernel() {
         if (isLead()) {
@@ -692,11 +708,25 @@ public class Car extends RollingStock {
                 car.setFinalDestination(getFinalDestination());
                 car.setFinalDestinationTrack(getFinalDestinationTrack());
                 car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+                car.setRoutePath(getRoutePath());
                 if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), getLoadName())) {
                     car.setLoadName(getLoadName());
                 }
             }
         }
+    }
+
+    /**
+     * Returns the car length or the length of the car's kernel including
+     * couplers.
+     * 
+     * @return length of car or kernel
+     */
+    public int getTotalKernelLength() {
+        if (getKernel() != null) {
+            return getKernel().getTotalLength();
+        }
+        return getTotalLength();
     }
 
     /**
@@ -1041,7 +1071,6 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.LOAD_FROM_STAGING)) != null && a.getValue().equals(Xml.TRUE)) {
             setLoadGeneratedFromStaging(true);
         }
-
         if ((a = e.getAttribute(Xml.WAIT)) != null) {
             try {
                 _wait = Integer.parseInt(a.getValue());
