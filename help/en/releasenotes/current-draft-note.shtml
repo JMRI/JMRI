@@ -471,7 +471,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix TSA edit bugs, when over riding from roster update internal dcc address.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

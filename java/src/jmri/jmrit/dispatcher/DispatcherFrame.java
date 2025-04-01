@@ -306,6 +306,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             case OVERRIDETYPE_ROSTER:
                 tSource = ActiveTrain.ROSTER;
                 rosterIDToUse = overRideValue;
+                RosterEntry re = Roster.getDefault().getEntryForId(rosterIDToUse);
+                if (re != null) {
+                    dccAddressToUse = re.getDccAddress();
+                }
                 if (trainNameToUse.isEmpty()) {
                     trainNameToUse = overRideValue;
                 }
