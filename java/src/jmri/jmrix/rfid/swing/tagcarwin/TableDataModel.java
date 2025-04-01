@@ -4,7 +4,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarEditFrame;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarEditFrame;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;

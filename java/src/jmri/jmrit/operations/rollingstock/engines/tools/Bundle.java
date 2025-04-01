@@ -1,10 +1,10 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.CheckForNull;
-import javax.annotation.ParametersAreNonnullByDefault;
+
+import javax.annotation.*;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 @ParametersAreNonnullByDefault
 @CheckReturnValue
@@ -21,10 +21,10 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
  */
-public class Bundle extends jmri.jmrit.operations.rollingstock.Bundle {
+public class Bundle extends jmri.jmrit.operations.rollingstock.engines.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle"; // NOI18N
+    private static final String name = null; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

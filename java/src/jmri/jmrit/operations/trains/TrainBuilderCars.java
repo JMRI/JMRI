@@ -1552,17 +1552,24 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             checkTrainCanDrop(car, car.getDestinationTrack())) {
                         String status = car.checkDestination(car.getDestination(), car.getDestinationTrack());
                         if (status.equals(Track.OKAY) &&
-                                (status = checkReserved(_train, rld, car, car.getDestinationTrack()))
+                                (status = checkReserved(_train, rld, car, car.getDestinationTrack(), true))
                                         .equals(Track.OKAY)) {
                             addCarToTrain(car, rl, rld, car.getDestinationTrack());
                             return true;
-                        } else {
-                            addLine(_buildReport, SEVEN,
-                                    Bundle.getMessage("buildCanNotDropCarBecause", car.toString(),
-                                            car.getDestinationTrack().getTrackTypeName(),
-                                            car.getDestinationTrack().getLocation().getName(),
-                                            car.getDestinationTrackName(), status));
                         }
+                        if (status.equals(TIMING) && checkForAlternate(car, car.getDestinationTrack())) {
+                            // send car to alternate track) {
+                            car.setFinalDestination(car.getDestination());
+                            car.setFinalDestinationTrack(car.getDestinationTrack());
+                            addCarToTrain(car, rl, rld, car.getDestinationTrack().getAlternateTrack());
+                            return true;
+                        }
+                        addLine(_buildReport, SEVEN,
+                                Bundle.getMessage("buildCanNotDropCarBecause", car.toString(),
+                                        car.getDestinationTrack().getTrackTypeName(),
+                                        car.getDestinationTrack().getLocation().getName(),
+                                        car.getDestinationTrackName(), status));
+
                     }
                 } else {
                     // code check

@@ -13,7 +13,7 @@
     <div id="mainContent" class="no-sidebar">
       <h1>Configure LocoIO (LNSV1) Devices Tool</h1>
 
-      <p><span class="since">since 5.12.3</span>The "Configure LocoIO (LNSV1) Modules" tool lets you access
+      <p><span class="since">since 5.11.5</span>The "Configure LocoIO (LNSV1) Modules" tool lets you access
       and program connected LocoNet devices that respond to the LNSV version 1 LocoNet
       programming protocol.<br>
       Examples are the classic Jabour, HDL and GCA LocoIO boards. You find the

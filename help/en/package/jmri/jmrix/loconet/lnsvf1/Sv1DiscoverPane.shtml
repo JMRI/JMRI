@@ -13,8 +13,8 @@
     <div id="mainContent" class="no-sidebar">
       <h1>Discover LocoNet SV1 Devices</h1>
 
-      <p>The "Manage LocoIO (LNSV1) Devices" tool lets you list all connected LocoNet devices that
-      respond to the LocoNet SV version 1 protocol.<br>
+      <p><span class="since">since 5.11.5</span>The "Manage LocoIO (LNSV1) Devices" tool lets
+      you list all connected LocoNet devices that respond to the LocoNet SV version 1 protocol.<br>
       You find the tool in the LocoNet menu as long as a LocoNet connection is available.</p>
 
       <p>As the tool is still under development, we advise to use it in combination with the "Show

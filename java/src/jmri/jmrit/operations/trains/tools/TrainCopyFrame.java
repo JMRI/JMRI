@@ -9,6 +9,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.gui.TrainEditFrame;
 import jmri.util.swing.JmriJOptionPane;
 
 /**

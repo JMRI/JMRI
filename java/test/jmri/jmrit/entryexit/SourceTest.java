@@ -1,118 +1,114 @@
 package jmri.jmrit.entryexit;
 
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.Sensor;
-import jmri.SensorManager;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
-import org.junit.jupiter.api.BeforeAll;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Dave Sand Copyright (C) 2018
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SourceTest {
 
-    static EntryExitTestTools tools;
-    static HashMap<String, LayoutEditor> panels = new HashMap<>();
+    private static EntryExitTestTools tools;
+    private static HashMap<String, LayoutEditor> panels = new HashMap<>();
 
-    static LayoutBlockManager lbm;
-    static EntryExitPairs eep;
-    static SensorManager sm;
+    private static LayoutBlockManager lbm;
+    private static EntryExitPairs eep;
+    private static SensorManager sm;
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutBlock facing = lbm.getLayoutBlock("B-Beta-East");  // NOI18N
-        LayoutBlock protect1 = lbm.getLayoutBlock("B-BE");  // NOI18N
-        LayoutBlock protect2 = lbm.getLayoutBlock("B-Beta-Main");  // NOI18N
+
+        LayoutBlock facing = lbm.getLayoutBlock("B-Beta-East");
+        LayoutBlock protect1 = lbm.getLayoutBlock("B-BE");
+        LayoutBlock protect2 = lbm.getLayoutBlock("B-Beta-Main");
         List<LayoutBlock> blockList = new ArrayList<>();
         blockList.add(protect1);
         blockList.add(protect2);
         PointDetails pd = new PointDetails(facing, blockList);
-        Assert.assertNotNull("PointDetails create failed", pd);  // NOI18N
-        Sensor nxSensor = InstanceManager.getDefault(SensorManager.class).provideSensor("NX-BE");  // NOI18N
-        pd.setPanel(panels.get("Beta"));  // NOI18N
+        assertNotNull( pd, "PointDetails create failed");
+        Sensor nxSensor = InstanceManager.getDefault(SensorManager.class).provideSensor("NX-BE");
+        pd.setPanel(panels.get("Beta"));
         pd.setSensor(nxSensor);
         pd.setRefObject(nxSensor);
         Source src = new Source(pd);
-        Assert.assertNotNull("Source CTor", src);  // NOI18N
+        assertNotNull( src, "Source CTor");
     }
 
     @Test
     public void testDestinationPoints() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // Get a source object
-        Source src = tools.getSourceInstance(sm.getSensor("NX-AW"), panels.get("Alpha"), eep);  // NOI18N
-        Assert.assertNotNull("Source fetch failed", src);  // NOI18N
+        Source src = tools.getSourceInstance(sm.getSensor("NX-AW"), panels.get("Alpha"), eep);
+        assertNotNull( src, "Source fetch failed");
         // Get a destination point
-        PointDetails destPt = tools.getPoint(sm.getSensor("NX-AE-Main"), panels.get("Alpha"), eep);  // NOI18N
-        Assert.assertNotNull("Destination fetch failed", destPt);  // NOI18N
-        Sensor destSensor = sm.getSensor("NX-AE-Main");  // NOI18N
-        Assert.assertNotNull("Destination sensor", destSensor);  // NOI18N
+        PointDetails destPt = tools.getPoint(sm.getSensor("NX-AE-Main"), panels.get("Alpha"), eep);
+        assertNotNull( destPt, "Destination fetch failed");
+        Sensor destSensor = sm.getSensor("NX-AE-Main");
+        assertNotNull( destSensor, "Destination sensor");
 
         // Disable pair, delete, add, enable
-        src.setEnabled(destSensor, panels.get("Alpha"), false);  // NOI18N
-        boolean chkDisabled = src.isEnabled(destSensor, panels.get("Alpha"));  // NOI18N
-        Assert.assertFalse("check disabled", chkDisabled);  // NOI18N
+        src.setEnabled(destSensor, panels.get("Alpha"), false);
+        boolean chkDisabled = src.isEnabled(destSensor, panels.get("Alpha"));
+        assertFalse( chkDisabled, "check disabled");
         src.removeDestination(destPt);
         ArrayList<PointDetails> dp1 = src.getDestinationPoints();
-        Assert.assertEquals("one left", 1, dp1.size());  // NOI18N
+        assertEquals( 1, dp1.size(), "one left");
         src.addDestination(destPt, null);
         ArrayList<PointDetails> dp2 = src.getDestinationPoints();
-        Assert.assertEquals("now two", 2, dp2.size());  // NOI18N
-        src.setEnabled(destSensor, panels.get("Alpha"), true);  // NOI18N
-        boolean chkEnabled = src.isEnabled(destSensor, panels.get("Alpha"));  // NOI18N
-        Assert.assertTrue("check enabled", chkEnabled);  // NOI18N
+        assertEquals( 2, dp2.size(), "now two");
+        src.setEnabled(destSensor, panels.get("Alpha"), true);
+        boolean chkEnabled = src.isEnabled(destSensor, panels.get("Alpha"));
+        assertTrue( chkEnabled, "check enabled");
         boolean chkActive = src.isRouteActive(destPt);
-        Assert.assertFalse("check active", chkActive);  // NOI18N
+        assertFalse( chkActive, "check active");
         boolean chkdest = src.isDestinationValid(destPt);
-        Assert.assertTrue("check destination valid", chkdest);  // NOI18N
-        String uuid = src.getUniqueId(destSensor, panels.get("Alpha"));  // NOI18N
-        Assert.assertTrue("check uuid", uuid.startsWith("IN:"));  // NOI18N
+        assertTrue( chkdest, "check destination valid");
+        String uuid = src.getUniqueId(destSensor, panels.get("Alpha"));
+        assertNotNull(uuid);
+        assertTrue( uuid.startsWith("IN:"), "check uuid");
     }
 
     @Test
     public void testSourceMethods() {
         // Get a source object
-        Source src = tools.getSourceInstance(sm.getSensor("NX-AE"), panels.get("Alpha"), eep);  // NOI18N
-        Assert.assertNotNull("Source fetch failed", src);  // NOI18N
+        Source src = tools.getSourceInstance(sm.getSensor("NX-AE"), panels.get("Alpha"), eep);
+        assertNotNull( src, "Source fetch failed");
 
         PointDetails pdx = src.getPoint();
-        Assert.assertNotNull("getPoint", pdx);  // NOI18N
+        assertNotNull( pdx, "getPoint");
         LayoutBlock lbx = src.getStart();
-        Assert.assertNotNull("getStart", lbx);  // NOI18N
+        assertNotNull( lbx, "getStart");
         List<LayoutBlock> lbprot = src.getSourceProtecting();
-        Assert.assertEquals("getSourceProtecting", 1, lbprot.size());  // NOI18N
+        assertEquals( 1, lbprot.size(), "getSourceProtecting");
         NamedBean srcsig = src.getSourceSignal();
-        Assert.assertNull("getSourceSignal", srcsig);  // NOI18N
+        assertNull( srcsig, "getSourceSignal");
         Object srcobj = src.getSourceObject();
-        Assert.assertNotNull("getSourceObject", srcobj);  // NOI18N
+        assertNotNull(srcobj, "getSourceObject");
     }
 
     @BeforeAll
-    static public void setUp() throws Exception {
+    static public void setUp() throws JmriException {
         JUnitUtil.setUp();
 
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
 
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();
-        Assert.assertEquals("Get LE panels", 2, panels.size());  // NOI18N
+        assertEquals( 2, panels.size(), "Get LE panels");
         eep = jmri.InstanceManager.getDefault(EntryExitPairs.class);
         lbm = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
         sm = InstanceManager.getDefault(SensorManager.class);
