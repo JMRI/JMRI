@@ -375,6 +375,8 @@
 
   <indexitem text="LocoBuffer-USB " target="html.hardware.loconet.LocoBufferUSB"/>
 
+  <indexitem text="LocoBuffer-NG " target="html.hardware.loconet.LocoBufferUSB"/>
+
   <indexitem text="LocoIO " target="html.hardware.loconet.LocoIO"/>
 
   <indexitem text="LocoNet Addressing " target="html.hardware.loconet.Addressing"/>
