@@ -821,7 +821,7 @@ public class RosterSpeedProfile {
             }
         }
 
-        float endspd = 0;
+        float endspd = minReliableOperatingSpeed;
         if (calculatingStep != 0.0 && desiredSpeedStep > 0) { // current speed
             if (_throttle.getIsForward()) {
                 endspd = getForwardSpeed(desiredSpeedStep);

@@ -1061,7 +1061,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def check_swap_train_direction(self):
         trains_to_choose = self.get_allocated_trains()
-        print "trains_to_choose", trains_to_choose
+        # print "trains_to_choose", trains_to_choose
         if trains_to_choose == []:
             s = OptionDialog().displayMessage("no allocated trains to select")
         else:

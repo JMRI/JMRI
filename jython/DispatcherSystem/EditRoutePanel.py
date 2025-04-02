@@ -79,27 +79,19 @@ class CreateAndShowGUI5(TableModelListener):
         height = min(height, 800)
         self.scrollPane.setPreferredSize(Dimension(1000, height))
 
-        try:
-            [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7]
-            routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
-                                        for routelocation in self.route.getLocationsBySequenceList() \
-                                        if ".py" not in routelocation.getName()]
-            # print "routelocations_rows_list", routelocations_rows_list
-
-            stop_sensor_present_list = [row1 for row1 in routelocations_rows_list
-                                        if row1 > self.model.find_row_first_location()
-                                        if self.model.stop_sensor_present(row1,
-                                                      self.model.getValueAt(self.model.find_row_prev_location(row1), locations_col),
-                                                      self.model.getValueAt(row1, locations_col)) == True]
-            # print "stop_sensor_present_list", stop_sensor_present_list
-            columnModel = self.table.getColumnModel();
-            if stop_sensor_present_list == []:
-                columnModel.getColumn(stop_sensor_col).setMaxWidth(0)
-                columnModel.getColumn(stop_sensor_col).setMinWidth(0)
-        except Exception as e:
-            # Print the error message
-            print("An error occurred: ", e)
-
+        [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7]
+        routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
+                                    for routelocation in self.route.getLocationsBySequenceList() \
+                                    if ".py" not in routelocation.getName()]
+        stop_sensor_present_list = [row1 for row1 in routelocations_rows_list
+                                    if row1 > self.model.find_row_first_location()
+                                    if self.model.stop_sensor_present(row1,
+                                                                self.model.getValueAt(self.model.find_row_prev_location(row1), locations_col),
+                                                                self.model.getValueAt(row1, locations_col)) == True]
+        columnModel = self.table.getColumnModel()
+        if stop_sensor_present_list == []:
+            columnModel.getColumn(stop_sensor_col).setMaxWidth(0)
+            columnModel.getColumn(stop_sensor_col).setMinWidth(0)
 
         self.topPanel.add(self.scrollPane)
 
@@ -585,16 +577,8 @@ class MyModelListener5(TableModelListener):
                     except:
                         pass
                     self.update_departure_time_col(row)
-            elif column == delete_col:
-                routelocation = class_CreateAndShowGUI5.route.getRouteLocationBySequenceNumber(row+1)
-                # print "***********************disposing routelocation", routelocation.getName()
-                class_CreateAndShowGUI5.route.deleteLocation(routelocation)
-                #delete the route row
-                # LocationManager.deregister(location)
-
-                self.delete_row(row)
-                class_CreateAndShowGUI5.completeTablePanel()
-                pass
+            # elif column == delete_col:
+                # done below so can delete actions
             elif column == journey_time_col or column == wait_time_col:
                 if row != self.model.find_row_first_location():
                     my_duration = self.calc_duration_sec_from_journey_time_and_wait_time(row)
@@ -603,6 +587,16 @@ class MyModelListener5(TableModelListener):
 
             elif column == stop_sensor_col:
                 self.save_value_to_operations(row, stop_sensor_col)
+
+        # done here so can delete actions
+        # routelocations_rows_list1 = [routelocation.getSequenceNumber()-1 \
+        #                             for routelocation in self.model.route.getLocationsBySequenceList()]
+        # if row in routelocations_rows_list1:
+        if column == delete_col:
+            routelocation = class_CreateAndShowGUI5.route.getRouteLocationBySequenceNumber(row+1)
+            class_CreateAndShowGUI5.route.deleteLocation(routelocation)
+            self.delete_row(row)
+            class_CreateAndShowGUI5.completeTablePanel()
 
         class_CreateAndShowGUI5.save()    # save everything when the table is changed
 
@@ -993,7 +987,7 @@ class MyTableModel5 (DefaultTableModel):
             start = s.index(first) + len(first)
             end = s.index(last, start)
             return s[start:end]
-        except ValueError:
+        except Exception as e:
             return ""
 
     def getColumnCount(self) :
@@ -1049,10 +1043,10 @@ class MyTableModel5 (DefaultTableModel):
         # (and we wanted to determine this to see whether we could modify the stop sensor column cell)
         # so we are going to determine whether we have set the use of a stop sensor in the past
         # print "ssp row", row
-        if row == 0:
+        if row <= 0:
             return False
         # print "prev_station", prev_station, "last_station", last_station
-        if last_station == 0:
+        if prev_station == last_station:
             return False
         DM = DispatchMaster()
         transit_name = DM.get_transit_name(prev_station, last_station)
@@ -1060,9 +1054,6 @@ class MyTableModel5 (DefaultTableModel):
         # if self.getValueAt(row, col) != "":
             return True
         return False
-
-
-
 
     # only include if data can change.
     def setValueAt(self, value, row, col) :
