@@ -425,7 +425,7 @@ public class SCWarrant extends Warrant {
         _message = null;
         if (_runMode != MODE_NONE) {
             _message = getRunModeMessage();
-            log.error("{} called setRunMode when mode= {}. {}", getDisplayName(), MODES[_runMode],  _message);
+            log.debug("setRunMode called, but SCWarrant is already running");
             return _message;
         }
         if (mode == MODE_RUN) {
