@@ -884,6 +884,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <p>
+        Once a car has been assigned to a train, it isn't available to other trains until the car is
+        set out by either using the train <a href="#TrainMove">Move</a> or <a href="#TerminateTrain">Terminate</a>
+        buttons. You also have the option of <a href="#BuildingMultipleTrainsSession">Building
+          Multiple Trains for a Session</a>.
+      </p>
+
+      <p>
         The OperationsPro&trade; default mode for building trains is to pick up and set out cars to
         empty tracks. If you want to perform car swaps, pull cars from a track and replacing them
         with new ones, you need to change the <a href="#BuildOptions">Build Options</a> to
@@ -4613,8 +4620,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       "Location", this allows you to quickly verify your locomotive locations before or after an
       operations session.
 
-      <h4 id="SetEngines">Set Locomotives (Modify Multiple Locos)</h4>
+      <h4>Show Checkboxes</h4>
+      You can if wanted, add or remove a checkbox for each locomotive in your roster by selecting
+      "Show Checkboxes" from the "Locomotives" Tools menu. The checkboxes are useful when performing
+      an audit using a PC or other electronic device. There's also a "Reset Checkboxes" tool to
+      return all checkboxes to their unselected state.
 
+      <h4 id="SetEngines">Set Locomotives (Modify Multiple Locos)</h4>
       If you want to change the status, location, consist, destinations or train assignment for a
       group of locomotives use the "Set Locomotives" tool found under "Tools" in the <a
         href="#Locomotives">Locomotives</a> window. The tool works the same way as the <a
@@ -6726,7 +6738,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h3 id="TrainMove">Moving Trains</h3>
-
       After providing your crew with a printed Manifest or location switch list, you must keep the
       program database synchronized with the actual movement of trains on your layout. This is done
       by the train "Move" buttons located on the right side of the <a href="#Trains">Trains</a>
@@ -6738,6 +6749,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       closer to its terminal location. When the train arrives at the last location in the route, the
       last press of the "Move" button will terminate the train. Once a train is terminated, you can
       build it again.
+
+      <p>After a car has been set out by the program along a train's route, they are immediately
+        available for another train's build.</p>
 
       <h3 id="TerminateTrain">Terminate Train</h3>
       When you terminate a train, you are asking the program to move the train from its current

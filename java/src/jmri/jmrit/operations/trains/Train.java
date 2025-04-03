@@ -503,7 +503,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             int departMinute = 60 * Integer.parseInt(time[0]) + Integer.parseInt(time[1]);
             // cross into new day?
             if (minutes > departMinute) {
-                departMinute += 60 * 24; // yes
+                // yes
+                int days = 1 + minutes / (60 * 24);
+                departMinute += days * 60 * 24;
             }
             minutes = departMinute;
         }
