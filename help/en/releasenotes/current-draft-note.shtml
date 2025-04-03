@@ -648,13 +648,13 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-             <li>SCWarrants brought back to life with a few fixes:  
+            <li>SCWarrants brought back to life with a few fixes:  
 	        <ul>
-                    <li>It is once again possible to create SCWarrants.</li>
-		    <li>Train tracking is now working.</li>
-		    <li>Opening the edit dialog for an SCWarrant now shows the correct warrant type.</li>
-		</ul>
-            </li>
+                <li>It is once again possible to create SCWarrants.</li>
+		        <li>Train tracking is now working.</li>
+		        <li>Opening the edit dialog for an SCWarrant now shows the correct warrant type.</li>
+				<li>Starting an SCWarrants with an un-occupied starting block once agin works as it should, i.e. it is delyed until the starting block become occupied.</li>
+		    </ul>
         </ul>
 
    <h3>Web Access</h3>
