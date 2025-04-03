@@ -198,7 +198,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
             CopyTableModel model = (CopyTableModel) table.getModel();
             if (log.isDebugEnabled()) {
                 log.debug("getTableCellEditorComponent: row= {}, column= {} selected = {} isComboTable= {}",
-                        row, column, isSelected, model._isComboTable);
+                        row, column, isSelected, model.isComboTable());
             }
             Conditional.ItemType itemType;
             String name;
@@ -211,7 +211,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                 itemType = variable.getType().getItemType();
                 name = variable.getName();
             }
-            if (model._isComboTable) {
+            if (model.isComboTable()) {
                 SortedSet<NamedBean> namedBeans = (SortedSet<NamedBean>)getItemNamedBeamns(itemType);
                 JComboBox<String> comboBox = (JComboBox<String>)getComponent();
                 comboBox.removeAllItems();
@@ -376,7 +376,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
     private abstract class CopyTableModel extends AbstractTableModel{
         
         boolean _isActionTable;
-        boolean _isComboTable;
+        private final boolean _isComboTable;
 
         CopyTableModel(boolean isAction, boolean isCombo) {
             _isActionTable = isAction;
@@ -407,7 +407,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         public Class<?> getColumnClass(int c) {
             switch (c) {
                 case NAME_COLUMN:
-                    if (_isComboTable) {
+                    if (isComboTable()) {
                         return JComboBox.class;
                     } else {
                         return JTextField.class;
@@ -444,20 +444,6 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                     break;
             }
             return "";
-        }
-
-        public int getPreferredWidth(int col) {
-            switch (col) {
-                case ROWNUM_COLUMN:
-                    return 10;
-                case NAME_COLUMN:
-                    return 200;
-                case DESCRIPTION_COLUMN:
-                    return 600;
-                default:
-                    break;
-            }
-            return 10;
         }
 
         @Override
@@ -513,7 +499,7 @@ public class ConditionalCopyFrame extends ConditionalFrame {
         public Class<?> getColumnClass(int c) {
             switch (c) {
                 case NAME_COLUMN:
-                    if (_isComboTable) {
+                    if (isComboTable()) {
                         return JComboBox.class;
                     } else {
                         return JTextField.class;
@@ -552,18 +538,6 @@ public class ConditionalCopyFrame extends ConditionalFrame {
                     break;
             }
             return "";
-        }
-
-        public int getPreferredWidth(int col) {
-            switch (col) {
-                case NAME_COLUMN:
-                    return 200;
-                case DESCRIPTION_COLUMN:
-                    return 600;
-                default:
-                    break;
-            }
-            return 10;
         }
 
         @Override
