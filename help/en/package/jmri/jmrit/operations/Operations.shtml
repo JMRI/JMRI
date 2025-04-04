@@ -5318,13 +5318,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         the cars to ride the train, disable set outs at the departure route location.
       </p>
 
-      <p>Note that when this option is enabled, the program may have difficulties swapping cars
-        from staging and the layout as the program must assume that all cars in staging could return
-        to staging. When this option is disabled (recommended), the program can ignore the cars in
-        staging and can send cars from the layout to staging without regard to the cars sitting
-        there since the expectation is that all cars in staging will be sent to the layout. The
-        recommendation is to leave this option disabled unless you need your train to carry cars
-        from and to the same staging location.</p>
+      <p>Note that when the "Allow cars to return to staging" option is enabled, the program may
+        have difficulties swapping cars from staging and the layout as the program must assume that
+        all cars in staging could return to staging. When this option is disabled (recommended), the
+        program can ignore the cars in staging and can send cars from the layout to staging without
+        regard to the cars sitting there since the expectation is that all cars in staging will be
+        sent to the layout. The recommendation is to leave this option disabled unless you need your
+        train to carry cars from and to the same staging location.</p>
 
       <p>
         There are several <a href="#StagingOptions">Staging Options</a> available with regards to
