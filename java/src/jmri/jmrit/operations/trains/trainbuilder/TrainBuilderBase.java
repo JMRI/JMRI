@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +15,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.swing.JmriJOptionPane;
@@ -2304,12 +2305,16 @@ public class TrainBuilderBase extends TrainCommon {
             }
             // check to see if alternate track is available if track full
             if (status.startsWith(Track.LENGTH)) {
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildCanNotDropCarBecause", car.toString(), testTrack.getTrackTypeName(),
+                                testTrack.getLocation().getName(), testTrack.getName(), status));
                 if (checkForAlternate(car, testTrack)) {
                     // send car to alternate track
                     tracks.add(testTrack.getAlternateTrack());
                     tracks.add(testTrack); // car's final destination
                     break; // done with this destination
                 }
+                continue;
             }
             // check for train timing
             if (status.equals(Track.OKAY)) {

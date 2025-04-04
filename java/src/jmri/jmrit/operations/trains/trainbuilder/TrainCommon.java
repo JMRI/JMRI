@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.awt.*;
 import java.io.PrintWriter;
@@ -23,6 +23,7 @@ import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.ColorUtil;
 
 /**
@@ -36,7 +37,7 @@ public class TrainCommon {
     protected static final String TAB = "    "; // NOI18N
     protected static final String NEW_LINE = "\n"; // NOI18N
     public static final String SPACE = " ";
-    protected static final String BLANK_LINE = " ";
+    public static final String BLANK_LINE = " ";
     protected static final char HORIZONTAL_LINE_CHAR = '-';
     protected static final String BUILD_REPORT_CHAR = "-";
     public static final String HYPHEN = "-";
@@ -56,9 +57,9 @@ public class TrainCommon {
     // when true, two column table is sorted by track names
     public static final boolean IS_TWO_COLUMN_TRACK = true;
 
-    CarManager carManager = InstanceManager.getDefault(CarManager.class);
-    EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
-    LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
+    protected CarManager carManager = InstanceManager.getDefault(CarManager.class);
+    protected EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+    protected LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     // for switch lists
     protected boolean _pickupCars; // true when there are pickups
@@ -1313,7 +1314,7 @@ public class TrainCommon {
      * @param level  print level
      * @param string string to write
      */
-    protected static void addLine(PrintWriter file, String level, String string) {
+    public static void addLine(PrintWriter file, String level, String string) {
         log.debug("addLine: {}", string);
         if (file != null) {
             String[] lines = string.split(NEW_LINE);

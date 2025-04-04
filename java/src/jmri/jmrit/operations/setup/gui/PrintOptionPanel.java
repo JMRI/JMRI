@@ -10,8 +10,8 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.*;
-import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.FileUtil;
 import jmri.util.swing.FontComboUtil;
 import jmri.util.swing.JmriJOptionPane;

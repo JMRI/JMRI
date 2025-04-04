@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.csv;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
