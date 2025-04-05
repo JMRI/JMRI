@@ -38,7 +38,7 @@ public class ExecuteProgramSwing extends AbstractDigitalActionSwing {
         JPanel _parametersPanel;
         if (action != null) {
             _programPanel = _selectProgramSwing.createPanel(action.getSelectProgram());
-            _parametersPanel = _selectParametersSwing.createPanel(action.getSelectProgram());
+            _parametersPanel = _selectParametersSwing.createPanel(action.getSelectParameters());
         } else {
             _programPanel = _selectProgramSwing.createPanel(null);
             _parametersPanel = _selectParametersSwing.createPanel(null);

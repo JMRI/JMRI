@@ -40,7 +40,6 @@ public class ExecuteProgram extends AbstractDigitalAction
         ExecuteProgram copy = new ExecuteProgram(sysName, userName);
         copy.setComment(getComment());
         _selectProgram.copy(copy._selectProgram);
-        _selectProgram.copy(copy._selectProgram);
         _selectParameters.copy(copy._selectParameters);
         copy.setResultLocalVariable(_resultLocalVariable);
         return manager.registerAction(copy);
