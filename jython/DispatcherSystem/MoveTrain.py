@@ -627,7 +627,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         self.trainInfo.setSpeedFactor(float(speedFactor))
 
         # setMinReliableOperatingSpeed
-        percentage = 10.0
+        percentage = 10.5
         self.trainInfo.setMinReliableOperatingSpeed(percentage/100)
 
         if self.logLevel > 0: print "self.forward_stopping_sensor_exists(self.trainInfo)",self.forward_stopping_sensor_exists(self.trainInfo)
