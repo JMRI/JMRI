@@ -116,7 +116,7 @@ public class ExecuteProgram extends AbstractDigitalAction
     @Override
     public String getLongDescription(Locale locale) {
         String program = _selectProgram.getDescription(locale);
-        String parameters = _selectProgram.getDescription(locale);
+        String parameters = _selectParameters.getDescription(locale);
 
         return Bundle.getMessage(locale, "ExecuteProgram_Long", program, parameters);
     }
