@@ -22,7 +22,7 @@ import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationAction;
 import jmri.jmrit.operations.routes.tools.ShowRoutesServingLocationFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JmriJOptionPane;
 

@@ -24,6 +24,7 @@ import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriJOptionPane;

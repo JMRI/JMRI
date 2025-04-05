@@ -22,7 +22,10 @@ import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.csv.TrainCsvManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.jmrit.operations.trains.trainbuilder.TrainBuilder;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
@@ -694,7 +697,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @param location The current RouteLocation.
      */
-    protected void setCurrentLocation(RouteLocation location) {
+    public void setCurrentLocation(RouteLocation location) {
         RouteLocation old = _current;
         _current = location;
         if ((old != null && !old.equals(location)) || (old == null && location != null)) {
@@ -1035,7 +1038,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @return The type names for cars and or engines
      */
-    protected String[] getTypeNames() {
+    public String[] getTypeNames() {
         return _typeList.toArray(new String[0]);
     }
 
@@ -3052,7 +3055,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
     }
 
-    protected void setBuilt(boolean built) {
+    public void setBuilt(boolean built) {
         boolean old = _built;
         _built = built;
         if (old != built) {
@@ -3238,7 +3241,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return true;
     }
 
-    protected void setBuildFailed(boolean status) {
+    public void setBuildFailed(boolean status) {
         boolean old = _buildFailed;
         _buildFailed = status;
         if (old != status) {
@@ -3256,7 +3259,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _buildFailed;
     }
 
-    protected void setBuildFailedMessage(String message) {
+    public void setBuildFailedMessage(String message) {
         String old = _buildFailedMessage;
         _buildFailedMessage = message;
         if (!old.equals(message)) {
@@ -3560,7 +3563,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /*
      * The train icon is moved to route location (rl) for this train
      */
-    protected void moveTrainIcon(RouteLocation rl) {
+    public void moveTrainIcon(RouteLocation rl) {
         // create train icon if at departure, if program has been restarted, or removed
         if (rl == getTrainDepartsRouteLocation() || _trainIcon == null || !_trainIcon.isActive()) {
             createTrainIcon(rl);

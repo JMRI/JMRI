@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.csv;
 
 import java.io.*;
 
@@ -13,6 +13,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 import jmri.util.JUnitOperationsUtil;
 
 /**

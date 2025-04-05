@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsPanel;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Represents an attribute a rolling stock can have. Some attributes are length,

@@ -14,6 +14,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Conductor Panel. Shows work for a train one location at a time.

@@ -18,6 +18,7 @@ import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
