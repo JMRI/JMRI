@@ -396,12 +396,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public String getExpectedDepartureTime(RouteLocation routeLocation) {
+        return getExpectedDepartureTime(routeLocation, false);
+    }
+
+    public String getExpectedDepartureTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
         if (minutes == -1) {
             return ALREADY_SERVICED;
         }
         if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
-            return parseTime(checkForDepartureTime(minutes, routeLocation));
+            return parseTime(checkForDepartureTime(minutes, routeLocation), isSortFormat);
         }
         // figure out the work at this location, note that there can be
         // consecutive locations with the same name
@@ -422,7 +426,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             }
         }
         log.debug("Expected departure time {} for train ({}) at ({})", minutes, getName(), routeLocation.getName());
-        return parseTime(minutes);
+        return parseTime(minutes, isSortFormat);
     }
 
     public int getWorkTimeAtLocation(RouteLocation routeLocation) {
@@ -522,6 +526,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return hour:minute (optionally AM:PM format)
      */
     private String parseTime(int minutes) {
+        return parseTime(minutes, false);
+    }
+
+    private String parseTime(int minutes, boolean isSortFormat) {
         int hours = 0;
         int days = 0;
 
@@ -532,6 +540,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
 
         String d = "";
+        if (isSortFormat) {
+            d = "0:";
+        }
         if (hours >= 24) {
             int nd = hours / 24;
             hours = hours - nd * 24;
@@ -541,7 +552,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
         // AM_PM field
         String am_pm = "";
-        if (Setup.is12hrFormatEnabled()) {
+        if (Setup.is12hrFormatEnabled() && !isSortFormat) {
             am_pm = " " + Bundle.getMessage("AM");
             if (hours >= 12) {
                 hours = hours - 12;

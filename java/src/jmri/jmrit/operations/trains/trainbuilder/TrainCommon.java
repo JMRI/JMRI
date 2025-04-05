@@ -613,7 +613,7 @@ public class TrainCommon {
     }
 
     protected void setCarPickupTime(Train train, RouteLocation rl, List<Car> carList) {
-        String expectedDepartureTime = train.getExpectedDepartureTime(rl);
+        String expectedDepartureTime = train.getExpectedDepartureTime(rl, true);
         for (Car car : carList) {
             if (car.getRouteLocation() == rl) {
                 car.setPickupTime(expectedDepartureTime);

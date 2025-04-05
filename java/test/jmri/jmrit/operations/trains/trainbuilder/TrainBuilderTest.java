@@ -19452,7 +19452,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("c1", null, c1.getDestinationTrack());
         Assert.assertEquals("c2", tC, c2.getDestinationTrack());
 
-        Assert.assertEquals("c2", "00:07", c2.getPickupTime());
+        Assert.assertEquals("c2", "0:00:07", c2.getPickupTime());
 
         // change departure time for train 1
         // default travel time = 4 switch time = 3
@@ -19464,7 +19464,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("c1", tB, c1.getDestinationTrack());
         Assert.assertEquals("c2", tC, c2.getDestinationTrack());
 
-        Assert.assertEquals("c1", "00:03", c1.getPickupTime());
+        Assert.assertEquals("c1", "0:00:03", c1.getPickupTime());
 
         // arrive one minute too early
         train1.setDepartureTime("00", "02");

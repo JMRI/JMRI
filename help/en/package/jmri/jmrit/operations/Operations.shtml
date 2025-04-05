@@ -3821,7 +3821,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       The "Pick up" column shows if a car has been scheduled for a pick up using a
       <a href="#Schedules">schedule</a> and <a href="#TrainSchedules">Train Schedules</a>. After a
       car is assigned to a train by the program, the car's estimated pick up time can be viewed in
-      the "Pick up" column.
+      the "Pick up" column. The format for pick up time is day:hour:minute.
 
       <h4>Add, Find, Save Buttons</h4>
       There are three buttons located at the bottom of the Cars window. The <a href="#CarsEdit">Add</a>

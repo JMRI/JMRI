@@ -117,7 +117,7 @@ public class CarManager extends RollingStockManager<Car>
     }
 
     public List<Car> getByPickupList() {
-        return getByList(getByIdList(), BY_PICKUP);
+        return getByList(getByDestinationList(), BY_PICKUP);
     }
 
     // The special sort options for cars
