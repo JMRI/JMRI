@@ -472,11 +472,9 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
             if panel.getTitle() == 'Dispatcher System':
                 if self.version_number_changed():
-                    print "removing panel, version number changed"
+                    # print "removing panel, version number changed"
                     self.editorManager.remove(panel)
                     panel.dispose()
-                    # msg = "should have removed panel"
-                    # Query().displayMessage(msg,"")
                 # Skip the Dispatcher System control panel if it exists
                 continue
 

@@ -256,6 +256,8 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         block_list[self.start_position].getSensor().setState(INACTIVE)
         # print "waiting for sensor to change"
         self.wait_for_sensor_to_change(block_list[self.start_position].getSensor(), INACTIVE)
+        # print "waited making block unoccupied"
+        # print "self.start_position", self.start_position, "self.end_position", self.end_position
         # print "blocklist", [[str(block.getUserName()), block.getSensor().getState()] for block in self.block_list]
         if self.logLevel > 0: print "sensor set inactive", block_list[self.start_position].getSensor().getUserName()
         if self.logLevel > 0: print "Success", "Set block ", self.start_position, "inactive"
@@ -281,6 +283,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
         if self.end_position == len(block_list)-1:
             # Stop if at end block
             if self.logLevel > 0: print "finished", "end position" , self.end_position, "len(block_list)-1", len(block_list)-1
+            # print "self.start_position", self.start_position, "self.end_position", self.end_position
             ret = "Finished"
         else:
 
@@ -297,10 +300,12 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             # would prefer to check if active train running, but can't because the throttle sometimes stops.
             if (self.signal_ahead_clear() or not at_last_block_in_section):
                 self.end_position +=1
-                if self.logLevel > 0: print "end pos incremented", self.end_position
+                if self.logLevel > -1: print "end pos incremented", self.end_position
                 # print "setting block ", block_list[self.end_position].getUserName() , "active"
                 block_list[self.end_position].getSensor().setState(ACTIVE)
                 self.wait_for_sensor_to_change(block_list[self.end_position].getSensor(), ACTIVE)
+                # print "waited making block occupied"
+                # print "self.start_position", self.start_position, "self.end_position", self.end_position
                 # print "blocklist", [[block.getUserName(), block.getSensor().getState()]  for block in self.block_list]
                 if self.logLevel > 0: print "Success", "Set block ", self.end_position
                 ret = "Success"

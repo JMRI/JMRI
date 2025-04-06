@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.csv;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -19,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Builds a comma separated value (csv) switch list for a location on the

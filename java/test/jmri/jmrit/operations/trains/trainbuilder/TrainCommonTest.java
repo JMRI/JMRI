@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.awt.Color;
 import java.util.List;

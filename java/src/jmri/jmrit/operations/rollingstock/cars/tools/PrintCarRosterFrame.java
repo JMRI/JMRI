@@ -17,7 +17,7 @@ import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**

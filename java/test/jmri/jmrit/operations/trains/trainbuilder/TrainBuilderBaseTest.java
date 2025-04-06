@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.trainbuilder;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;

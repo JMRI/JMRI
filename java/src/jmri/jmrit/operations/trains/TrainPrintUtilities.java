@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**

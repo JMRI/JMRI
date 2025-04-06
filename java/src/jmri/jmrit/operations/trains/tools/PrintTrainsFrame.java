@@ -20,6 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
 import jmri.jmrit.operations.trains.gui.TrainsTableModel;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**

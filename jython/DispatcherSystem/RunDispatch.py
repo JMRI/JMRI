@@ -691,6 +691,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
             elif s == opt3:
                 selected_actions = self.add_actions(route,LocationManager, button_station_name, no_stations_chosen, selected_actions)
                 complete = False
+                i -= 1
             elif s == opt4:
                 stop_mode = self.get_stop_mode()
                 routeLocation = route.getLastLocationByName(button_station_name)
@@ -799,7 +800,6 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def action_directory_in_DispatcherSystem(self):
         path = jmri.util.FileUtil.getScriptsPath() + "DispatcherSystem" + java.io.File.separator + "actions"
-
         if not os.path.exists(path):
             os.makedirs(path)
         return path + java.io.File.separator
@@ -813,17 +813,17 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def add_actions(self, route, LocationManager, button_station_name, no_stations_chosen, selected_actions):
         directory1 = self.action_directory_in_DispatcherSystem()
         files = os.listdir(directory1)
-        print "files in dispatcher system action directory", files
+        # print "files in dispatcher system action directory", files
 
         python_files = [f for f in files if f.endswith(".py")]
-        print "directory1", directory1, "python_files", python_files
+        # print "directory1", directory1, "python_files", python_files
 
         directory = self.action_directory()
         files = os.listdir(directory)
         python_files2 = [f for f in files if f.endswith(".py")]
-        print "directory", directory, "python_files2", python_files2
+        # print "directory", directory, "python_files2", python_files2
         python_files.extend(python_files2)
-        print "directory", directory, "python_files", python_files
+        # print "directory", directory, "python_files", python_files
         # display the list to select the required python file
         if python_files == []:
             lines =  ["No action files available\n" ,

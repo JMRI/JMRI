@@ -22,7 +22,10 @@ import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.csv.TrainCsvManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
+import jmri.jmrit.operations.trains.trainbuilder.TrainBuilder;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
@@ -393,12 +396,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     }
 
     public String getExpectedDepartureTime(RouteLocation routeLocation) {
+        return getExpectedDepartureTime(routeLocation, false);
+    }
+
+    public String getExpectedDepartureTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
         if (minutes == -1) {
             return ALREADY_SERVICED;
         }
         if (!routeLocation.getDepartureTime().equals(RouteLocation.NONE)) {
-            return parseTime(checkForDepartureTime(minutes, routeLocation));
+            return parseTime(checkForDepartureTime(minutes, routeLocation), isSortFormat);
         }
         // figure out the work at this location, note that there can be
         // consecutive locations with the same name
@@ -419,7 +426,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             }
         }
         log.debug("Expected departure time {} for train ({}) at ({})", minutes, getName(), routeLocation.getName());
-        return parseTime(minutes);
+        return parseTime(minutes, isSortFormat);
     }
 
     public int getWorkTimeAtLocation(RouteLocation routeLocation) {
@@ -519,6 +526,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      * @return hour:minute (optionally AM:PM format)
      */
     private String parseTime(int minutes) {
+        return parseTime(minutes, false);
+    }
+
+    private String parseTime(int minutes, boolean isSortFormat) {
         int hours = 0;
         int days = 0;
 
@@ -529,6 +540,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
 
         String d = "";
+        if (isSortFormat) {
+            d = "0:";
+        }
         if (hours >= 24) {
             int nd = hours / 24;
             hours = hours - nd * 24;
@@ -538,7 +552,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
         // AM_PM field
         String am_pm = "";
-        if (Setup.is12hrFormatEnabled()) {
+        if (Setup.is12hrFormatEnabled() && !isSortFormat) {
             am_pm = " " + Bundle.getMessage("AM");
             if (hours >= 12) {
                 hours = hours - 12;
@@ -694,7 +708,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @param location The current RouteLocation.
      */
-    protected void setCurrentLocation(RouteLocation location) {
+    public void setCurrentLocation(RouteLocation location) {
         RouteLocation old = _current;
         _current = location;
         if ((old != null && !old.equals(location)) || (old == null && location != null)) {
@@ -1035,7 +1049,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *
      * @return The type names for cars and or engines
      */
-    protected String[] getTypeNames() {
+    public String[] getTypeNames() {
         return _typeList.toArray(new String[0]);
     }
 
@@ -3052,7 +3066,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
     }
 
-    protected void setBuilt(boolean built) {
+    public void setBuilt(boolean built) {
         boolean old = _built;
         _built = built;
         if (old != built) {
@@ -3238,7 +3252,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return true;
     }
 
-    protected void setBuildFailed(boolean status) {
+    public void setBuildFailed(boolean status) {
         boolean old = _buildFailed;
         _buildFailed = status;
         if (old != status) {
@@ -3256,7 +3270,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _buildFailed;
     }
 
-    protected void setBuildFailedMessage(String message) {
+    public void setBuildFailedMessage(String message) {
         String old = _buildFailedMessage;
         _buildFailedMessage = message;
         if (!old.equals(message)) {
@@ -3560,7 +3574,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     /*
      * The train icon is moved to route location (rl) for this train
      */
-    protected void moveTrainIcon(RouteLocation rl) {
+    public void moveTrainIcon(RouteLocation rl) {
         // create train icon if at departure, if program has been restarted, or removed
         if (rl == getTrainDepartsRouteLocation() || _trainIcon == null || !_trainIcon.isActive()) {
             createTrainIcon(rl);
