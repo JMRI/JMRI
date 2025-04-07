@@ -637,13 +637,13 @@ public final class JSON {
 
     /* Permission System JSON API */
     /**
-     * {@value #USER_LOGIN}
+     * {@value #SESSION_LOGIN}
      *
      * @since 5.11
      */
     public static final String SESSION_LOGIN = "sessionLogin";
     /**
-     * {@value #SESSION_LOGIN}
+     * {@value #SESSION_LOGOUT}
      *
      * @since 5.11
      */

@@ -87,7 +87,7 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
         String username = data.path("username").asText();
         if (request.method.equals(JSON.POST)) {
             log.debug("Processing login {} from socket service", username);
-            JsonNode resultNode = this.connection.sendMessage(this.service.doPost(type, username, data, request), request.id);
+            this.connection.sendMessage(this.service.doPost(type, username, data, request), request.id);
         }
 //        this.connection.sendMessage(this.service.doGet(type, name, data, request), request.id);
     }
@@ -111,7 +111,7 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
     private void onSessionLogoutMessage(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
         if (request.method.equals(JSON.POST)) {
             // JMRI developers assess the risk of logging the token further down the stack as low
-            JsonNode resultNode = this.connection.sendMessage(this.service.doPost(type, data.path(JSON.USERNAME).asText(), data, request), request.id);
+            this.connection.sendMessage(this.service.doPost(type, data.path(JSON.USERNAME).asText(), data, request), request.id);
         }
     }
 
