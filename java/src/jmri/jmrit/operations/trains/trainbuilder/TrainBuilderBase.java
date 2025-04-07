@@ -2409,7 +2409,7 @@ public class TrainBuilderBase extends TrainCommon {
                 destTrack.getAvailableTrackSpace(), destTrack.getReserved());
         if (length > destTrack.getAvailableTrackSpace() +
                 destTrack.getReserved()) {
-            String trainExpectedArrival = train.getExpectedArrivalTime(rld);
+            String trainExpectedArrival = train.getExpectedArrivalTime(rld, true);
             int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
             int reservedReturned = 0;
             // does this car already have this destination?
