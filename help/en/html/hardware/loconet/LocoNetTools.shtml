@@ -5,7 +5,7 @@
   <title>JMRI Hardware Support - Tools for LocoNet&reg; Devices</title>
   <meta name="Author" content="B. Milhaupt">
   <meta name="keywords" content=
-  "Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR91 UR92 Duplex DT402D DT402DCE DT402R Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project' LNCV LNSV1">
+  "Digitrax LocoNet BDL16 BDL162 BDL168 PM4 PM42 SE8C DS64 DS54 DT400 DT402 DCS100 DB150 JMRI UR90 UR90X UR91 UR92 Duplex DT402D DT402DCE DT402R Simplex Infrared Monitor Slot FastClock Firmware 'Sound Project' LNCV LNSV1">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style>
@@ -243,7 +243,7 @@
           </td>
           <td>
           </td>
-          <td>UR90, UR91(Infrared & Simplex), UR92(Infrared), UR92CE(Infrared)</td>
+          <td>UR90, UR90X, UR91(Infrared & Simplex), UR92(Infrared), UR92CE(Infrared), UR93</td>
         </tr>
 
         <tr class="ctr">
@@ -261,7 +261,7 @@
           <td>
           </td>
           <td>
-            UR92(Duplex), UR92CE(Duplex), some aspects of LNWI<br>
+            UR92(Duplex), UR92CE(Duplex), some aspects of LNWI, UR93<br>
             (See <a href="#TableNote5">Note 5</a>)
           </td>
         </tr>
