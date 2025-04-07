@@ -1672,7 +1672,9 @@ public class LocoNetMessageInterpretTest {
                 case 74:
                     s = "Digitrax PM74 host";
                     break;
-
+                case 0x5A:
+                    s = "Digitrax UR90X host";
+                    break;
                 default:
                     s = "Digitrax (unknown host device type "+i+")";
                     break;
