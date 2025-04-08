@@ -66,20 +66,15 @@ class CreateAndShowGUI5(TableModelListener):
         self.frame.setLocation(x, y)
 
         contentPane = self.frame.getContentPane()
-        print "C1"
         # contentPane.removeAll()
         contentPane.add(self.topPanel, BorderLayout.CENTER)
         contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
-        print "C2"
         self.populate_action(None)
         self.cancel = False
-        print "A1"
         self.completeTablePanel()
-        print "A2"
 
         if hidden == False:
             self.show_frame()
-        print "A3"
 
     def show_frame(self):
         self.frame.setVisible(True)
@@ -106,29 +101,10 @@ class CreateAndShowGUI5(TableModelListener):
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
-        print "c1"
         # if ".py" not in self.model.getValueAt(row1, locations_col)
-        print "routelocations_rows_list", routelocations_rows_list
         test_list = [self.model.getValueAt(self.model.find_row_prev_location(row1), locations_col) for row1 in routelocations_rows_list
                      if row1 > self.model.find_row_first_location()]
-        print "test_list", test_list
         stop_sensor_present_list = []
-        # # print "start of test ***************************"
-        # for row1 in routelocations_rows_list:
-        #     print "row start" , row1
-        #     if row1 > self.model.find_row_first_location():
-        #         prev_row = self.model.find_row_prev_location(row1)
-        #         print "**** prev_row", prev_row
-        #         prev_val = self.model.getValueAt(prev_row, locations_col)
-        #         print "**** prev_val", prev_val
-        #         curr_val = self.model.getValueAt(row1, locations_col)
-        #         print "**** curr_val", curr_val
-        #         print "**** stop_sensor_present", self.model.stop_sensor_present(row1, prev_val, curr_val), "xxxx"
-        #         if self.model.stop_sensor_present(row1, prev_val, curr_val) == True:
-        #             stop_sensor_present_list.append(row1)
-        #     print "row end", row1
-        # print "stop_sensor_present_list", stop_sensor_present_list
-        # print "end of test"
 
         stop_sensor_present_list = [row1 for row1 in routelocations_rows_list
                                     if row1 > self.model.find_row_first_location()
@@ -142,9 +118,7 @@ class CreateAndShowGUI5(TableModelListener):
             columnModel.getColumn(stop_sensor_col).setMaxWidth(0)
             columnModel.getColumn(stop_sensor_col).setMinWidth(0)
 
-        print "c5"
         self.topPanel.add(self.scrollPane)
-        print "c4"
         self.frame.pack();
         self.frame.setVisible(True)
         return
@@ -234,7 +208,6 @@ class CreateAndShowGUI5(TableModelListener):
             # Define an action listener to capture changes
             combo_box.addActionListener(self.ComboBoxListener(combo_box, self.model, row, column, self.class_CreateAndShowGUI5))
 
-            print "** value selected ++", value
             combo_box.setSelectedItem(value)  # Set the current value in the jTable
             self.model.setValueAt(value, row, column)  # Set the value in the model
 
@@ -254,20 +227,14 @@ class CreateAndShowGUI5(TableModelListener):
                 self.class_CreateAndShowGUI5 = class_CreateAndShowGUI5
 
             def actionPerformed(self, event):
-                print("Updated value:", self.combo_box.getSelectedItem())
-
 
                 # get location to add
                 location_name = str(self.combo_box.getSelectedItem())
-                print "location_name", location_name
                 LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
                 location = LocationManager.newLocation(location_name)
-                print "location_name2", location.getName()
                 # get location to remove
                 routeLocation = self.class_CreateAndShowGUI5.route.getRouteLocationBySequenceNumber(self.row+1)
-                print "routelocation to remove", routeLocation.getName()
                 self.class_CreateAndShowGUI5.route.deleteLocation(routeLocation)
-                print "deleted location"
                 self.class_CreateAndShowGUI5.route.addLocation(location, self.row+1)
 
 
@@ -403,9 +370,7 @@ class CreateAndShowGUI5(TableModelListener):
 
         items_to_put_in_dropdown = self.get_station_list()
         self.model.populate(items_to_put_in_dropdown)
-        print "B1"
         self.completeTablePanel()
-        print "B2"
 
     def close_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
@@ -630,8 +595,6 @@ class MyModelListener5(TableModelListener):
     def tableChanged(self, e):
         self.i +=1
 
-        print "table changed"
-
         global trains_allocated
         row = e.getFirstRow()
         column = e.getColumn()
@@ -681,13 +644,10 @@ class MyModelListener5(TableModelListener):
 
                 # b) touch the durations later
                 next_row = self.model.find_row_next_location(row)
-                # print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&row", row, "next_row", next_row
                 if next_row == None:  #if we are not at end of list
                     try:
-                        # print "# b) touch the next duration","next_row", next_row
                         value = self.model.getValueAt(next_row, duration_col)
                         self.model.setValueAt(value, next_row, duration_col)
-                        # print "touched"
                     except:
                         pass
                     self.update_departure_time_col(row)
@@ -696,7 +656,6 @@ class MyModelListener5(TableModelListener):
             elif column == journey_time_col or column == wait_time_col:
                 if row != self.model.find_row_first_location():
                     my_duration = self.calc_duration_sec_from_journey_time_and_wait_time(row)
-                    # print "duration", my_duration
                     self.model.setValueAt(my_duration, row, duration_sec_col)
 
             elif column == stop_sensor_col:
@@ -780,9 +739,7 @@ class MyModelListener5(TableModelListener):
         # calculate duration from current and previous departure times
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
         current_departure_time = self.model.getValueAt(row, departure_time_col)
-        print "b1"
         prev_row = self.model.find_row_prev_location(row)
-        print "b2"
         if prev_row == None:
             return
         previous_departure_time = self.model.getValueAt(prev_row, departure_time_col)
@@ -796,9 +753,7 @@ class MyModelListener5(TableModelListener):
         # calculate departure time from duration and prev departure time
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
         current_duration = self.model.getValueAt(row, duration_col)
-        print "a1"
         prev_row = self.model.find_row_prev_location(row)
-        print "a2"
         if prev_row == None:
             return
         previous_departure_time = self.model.getValueAt(prev_row, departure_time_col)
@@ -839,15 +794,8 @@ class MyModelListener5(TableModelListener):
             [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
             current_journey_time = int(self.model.getValueAt(row, journey_time_col))    # secs
             current_wait_time = int(self.model.getValueAt(row, wait_time_col))          # secs
-            # print "current_journey_time", current_journey_time, "current_wait_time", current_wait_time
-
-            # # convert to fast_minutes
-            # current_journey_time = (current_journey_time * int(str(fast_clock_rate))) / 60.0  # fast minutes
-            # current_wait_time = (current_wait_time * int(str(fast_clock_rate)))/ 60.0     # fast minutes
-            # print "current_journey_time", current_journey_time, "current_wait_time", current_wait_time
 
             current_duration_sec = current_journey_time + current_wait_time
-            # print "current_duration_sec", current_duration_sec
             # round up to the next multiple of current_duration_sec
             secs_in_fast_minute = int(1.0 / float(str(fast_clock_rate)) * 60.0)
             current_duration_sec1 = (current_duration_sec // secs_in_fast_minute) * secs_in_fast_minute
@@ -933,14 +881,12 @@ class MyTableModel5 (DefaultTableModel):
     def add_loc_at(self, row_index):
         location = [str(loc) for loc in self.get_locations_list() if ".py" not in loc][0]
         row_data = [location, "0", "0", "0","0", "00:00", False, False, False, "-"]
-        print "row_index", row_index
         self.data.insert(row_index+1, row_data)
         return location
 
     def add_action_at(self, row_index):
         action = [str(loc) for loc in self.get_locations_list() if ".py" in loc][0]
         row_data = ["bell.py", "0", "0", "0","0", "00:00", False, False, False, "-"]
-        print "row_index", row_index
         self.data.insert(row_index+1, row_data)
         return action
 
@@ -1023,7 +969,6 @@ class MyTableModel5 (DefaultTableModel):
         i = 0
         for [location, comment] in items_to_put_in_dropdown:
             if ".py" not in location:    # omit actions
-                # print "xxxx setting duration_sec_col", i, duration_sec_array[i]
                 self.setValueAt(duration_sec_array[i], i, duration_sec_col)
             i += 1
 
@@ -1034,194 +979,59 @@ class MyTableModel5 (DefaultTableModel):
         if scheduled_start is not None:
             self.setValueAt(scheduled_start, row, departure_time_col)
 
-        # self.setValueAt(None, row, duration_col)
-
-        # delete rows with no trains
-        # for row in reversed(range(len(self.data))):
-        #     if self.data[row][time_col] == None or self.data[row][dont_schedule_col] == "":
-        #         self.data.pop(row)
-
-
     def get_route_location_stop_mode(self, station_to_name):
         route_location = self.route.getLastLocationByName(station_to_name)
         comment = route_location.getComment()
         stop_mode = self.find_between(comment, "[stopMode-", "-stopMode]")
         return stop_mode
 
-    # def find_row_first_location(self):
-    #     # print "find_row_first_location"
-    #     # get the row (sequenceNo) of the first location that is not an action (a python file  xx.py)
-    #     routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
-    #                                           for routelocation in self.route.getLocationsBySequenceList() \
-    #                                           if ".py" not in routelocation.getName()]
-    #
-    #     # print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
-    #     current_val = [[routelocation, sequenceNo] \
-    #                    for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
-    #                    if 1 == sequenceNo][0]
-    #     # print "current_val", current_val
-    #
-    #     current_index = routelocationsSequenceNumber_list.index(current_val)
-    #     # print "current_index", current_index
-    #     # print "routelocations_list", routelocations_list, "index", index
-    #     try:
-    #         [routelocation, row] = routelocationsSequenceNumber_list[current_index]
-    #         # row = routelocationsSequenceNumber_list[currentIndex + 1]
-    #     except:
-    #         row = None
-    #     # print "row", row
-    #     return row - 1    # row number starts from 0
-    #
-    #     # return 0
-    #
-    # def find_row_next_location(self, row):
-    #     # get the row (sequenceNo) of the first location that is not an action (a python file  xx.py)
-    #     #
-    #     # the sequencenumber is the row
-    #
-    #     routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
-    #                                           for routelocation in self.route.getLocationsBySequenceList() \
-    #                                           if ".py" not in routelocation.getName()]
-    #
-    #     # print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
-    #     current_val = [[routelocation, sequenceNo] \
-    #                    for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
-    #                    if row == sequenceNo-1][0]
-    #     # print "current_val", current_val
-    #
-    #     current_index = routelocationsSequenceNumber_list.index(current_val)
-    #     # print "current_index", current_index
-    #     # print "routelocations_list", routelocations_list, "index", index
-    #     try:
-    #         [routelocation, row] = routelocationsSequenceNumber_list[current_index + 1]
-    #     except:
-    #         return row   # next location will be current location  if at end of list
-    #     # print "row", row
-    #     return row - 1  # row number starts from 0
-    #
-    #
-    #
-    #
-    # def find_row_prev_location(self, row):
-    #     # get the row (sequenceNo) of the first location that is not an action (a python file  xx.py)
-    #     routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
-    #                                           for routelocation in self.route.getLocationsBySequenceList() \
-    #                                           if ".py" not in routelocation.getName()]
-    #
-    #     # print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
-    #     current_val = [[routelocation, sequenceNo] \
-    #                    for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
-    #                    if row == sequenceNo-1][0]
-    #     # print "current_val", current_val
-    #
-    #     current_index = routelocationsSequenceNumber_list.index(current_val)
-    #     # print "current_index", current_index
-    #     # print "routelocations_list", routelocations_list, "index", index
-    #     try:
-    #         [routelocation, row] = routelocationsSequenceNumber_list[current_index - 1]
-    #         # row = routelocationsSequenceNumber_list[currentIndex - 1]
-    #     except:
-    #         row = None
-    #     # print "row", row
-    #     return row - 1     # row number starts from 0
-    #
-    # def find_row_first_location(self):
-    #     print
-    #     print "find_row_first_location"
-    #     # routelocationsSequenceNumber_list_all = [ [routelocation, routelocation.getSequenceNumber()] \
-    #     #                                       for routelocation in self.route.getLocationsBySequenceList()]
-    #     # get the row (sequenceNo) of the first location that is not an action (a python file  xx.py)
-    #     routelocationsSequenceNumber_list_locs = [ [routelocation, routelocation.getSequenceNumber()] \
-    #             for routelocation in self.route.getLocationsBySequenceList() \
-    #                     if ".py" not in routelocation.getName()]
-    #     #
-    #     # print "routelocationsSequenceNumber_list_all", routelocationsSequenceNumber_list_all
-    #
-    #     print "routelocationsSequenceNumber_list_locs", routelocationsSequenceNumber_list_locs
-    #     # current_val = [[routelocation, sequenceNo] \
-    #     #                  for [routelocation, sequenceNo] in routelocationsSequenceNumber_list_locs \
-    #     #                  if 1 == sequenceNo][0]
-    #     first_loc_sequence_no = routelocationsSequenceNumber_list_locs[0][1]
-    #     print "first_loc_sequence_no", first_loc_sequence_no
-    #
-    #     # current_index = routelocationsSequenceNumber_list.index(current_val)
-    #     # print "current_index", current_index
-    #
-    #     # [routelocation, sequence_no] = routelocationsSequenceNumber_list_all[first_loc_sequence_no -1]
-    #     # print "item found ", [routelocation, sequence_no]
-    #         # row = routelocationsSequenceNumber_list[currentIndex + 1]
-    #     # except:
-    #     #     row = None
-    #     row = first_loc_sequence_no - 1
-    #     print "routelocation", routelocation, "first_loc_sequence_no", first_loc_sequence_no, "row", row
-    #     return row    # row number starts from 0
-
     def find_row_first_location(self):
-        print "find_row_first_location"
         routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
                                                    for routelocation in self.route.getLocationsBySequenceList() \
                                                    if ".py" not in routelocation.getName()]
         first_loc_sequence_no = routelocationsSequenceNumber_list[0][1]
         route_location = routelocationsSequenceNumber_list[0][0]
-        print "first_loc_sequence_no", first_loc_sequence_no
 
         row = first_loc_sequence_no - 1
         return row    # row number starts from 0
 
     def find_row_next_location(self, row):
-        print "find_row_next_location"
         # given the row (rows start at 0, sequencenos start at 1) of a location that is not an action (a python file  xx.py)
         # find the next row of a location that is not an action
 
         routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
                                               for routelocation in self.route.getLocationsBySequenceList() \
                                               if ".py" not in routelocation.getName()]
-        print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
 
         current_val = [[routelocation, sequenceNo] \
                        for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
                        if row == sequenceNo - 1][0]
-        print "current_val", current_val
 
         current_index = routelocationsSequenceNumber_list.index(current_val) # starts at 0
-        print "current_index", current_index
-        print "len(routelocationsSequenceNumber_list)", len(routelocationsSequenceNumber_list)
         # try:
         if len(routelocationsSequenceNumber_list) > current_index + 1:       # len starts at 1
             [routelocation, sequenceNo] = routelocationsSequenceNumber_list[current_index + 1]
         else:
-            print "can't find next location"
             [routelocation, sequenceNo] = routelocationsSequenceNumber_list[current_index]
-        print "next location found", [routelocation, sequenceNo]
         row1 = sequenceNo - 1
-        print "sequenceNo", sequenceNo, "row1", row1
         if row == row1:
             return None
         return row1  # row number starts from 0
 
     def find_row_prev_location(self, row):
-        print "find_row_prev_location"
         # get the row (sequenceNo) of the first location that is not an action (a python file  xx.py)
         routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
                                               for routelocation in self.route.getLocationsBySequenceList() \
                                               if ".py" not in routelocation.getName()]
-        # print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
         current_val = [[routelocation, sequenceNo] \
                        for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
                        if row == sequenceNo - 1][0]
-        # print "current_val", current_val
         current_index = routelocationsSequenceNumber_list.index(current_val) # starts at 0
-        # print "current_index", current_index
-        # print "len(routelocationsSequenceNumber_list)", len(routelocationsSequenceNumber_list)
         if current_index > 0:  #index starts at 0
-            print "should be able to find current index"
             [routelocation, sequenceNo] = routelocationsSequenceNumber_list[current_index - 1]
         else:
-            print "can't find prev location"
             [routelocation, sequenceNo] = routelocationsSequenceNumber_list[current_index]
         row1 = sequenceNo - 1
-        # print "sequenceNo", sequenceNo, "row1", row1
-        print "[routelocation, sequenceNo]", [routelocation, sequenceNo]
         if row == row1:
             return None
         return row1  # row number starts from 0
@@ -1257,14 +1067,12 @@ class MyTableModel5 (DefaultTableModel):
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
-        # print "routelocations_rows_list", routelocations_rows_list
         if row not in routelocations_rows_list:
             if col == duration_sec_col or col == duration_col or col == departure_time_col or col == wait_time_col or col == journey_time_col:
                 return False
         if row == self.find_row_first_location():
             if col == duration_sec_col or col == duration_col or col == departure_time_col or col == wait_time_col or col == journey_time_col:
                 return False
-        print "d1"
         stop_sensor_present_list = [row1 for row1 in routelocations_rows_list
                                         if row1 > self.find_row_first_location()
                     if self.stop_sensor_present(row1,
@@ -1281,10 +1089,8 @@ class MyTableModel5 (DefaultTableModel):
         # (and we wanted to determine this to see whether we could modify the stop sensor column cell)
         # so we are going to determine whether we have set the use of a stop sensor in the past
         # the
-        print "ssp row", row
         if row <= 0:
             return False
-        print "prev_station" , prev_station, "last_station", last_station
         if prev_station is None:
             return False
         if last_station is None:
@@ -1294,7 +1100,6 @@ class MyTableModel5 (DefaultTableModel):
         DM = DispatchMaster()
         transit_name = DM.get_transit_name(prev_station, last_station)
         if DM.forward_stopping_sensor_exists(transit_name):
-            print "returning True"
             return True
         return False
 
