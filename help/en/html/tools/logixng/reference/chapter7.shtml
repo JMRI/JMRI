@@ -224,6 +224,12 @@
       parent actions, the <strong>Listen on beans</strong> action will not listen on its named
       beans.</p>
 
+      <p class="noted"><strong>Entry Exit</strong> items are listed but they cannot be used. The
+      <strong>Listen on Beans</strong> definition is loaded before the panels and any Entry Exit
+      definitions.  An alternative is to use <strong>Listen on Beans - Table</strong>. The table
+      loading occurs after the layout data xml file has finished loading.  See <strong>Create beans
+      from table</strong> at <a href="chapter11.shtml#TableActions">Chapter 11 - Table Actions</a></p>
+
       <hr>
 
       <p><a href="chapter8.shtml">Chapter 8 - Local Variables</a>
