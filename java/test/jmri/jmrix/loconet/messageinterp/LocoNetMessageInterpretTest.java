@@ -1681,6 +1681,17 @@ public class LocoNetMessageInterpretTest {
                 "IPL Identity report.\n\tHost: "+s+", S/N=0, S/W Version=0.0\n\tSlave: None.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
          }
+
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x43, 0x43, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        for (int i = 0; i < 256; ++i) {
+            l.setElement(10, (i& 127));
+            l.setElement(9,(i > 127)?1:0);
+            s = Integer.toString(i / 8)+"."+Integer.toString(i & 7);
+            Assert.assertEquals("IPL HOST IPL Ver Test "+i,
+                "IPL Identity report.\n\tHost: Digitrax BDL716 host, S/N=0, S/W Version=0.0\n\tIPL Ver. "+s+".\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+         }
+
     }
 
     @Test

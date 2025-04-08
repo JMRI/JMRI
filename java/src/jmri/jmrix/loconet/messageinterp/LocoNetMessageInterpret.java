@@ -77,11 +77,11 @@ public class LocoNetMessageInterpret {
      * string contains a message indicating that the message is not decoded followed
      * by the individual bytes of the message (in hexadecimal).
      * <p>
-     * Note that many message types are "poorly defined" here, with many 
-     * "reverse-engineered" messages, and many that do not define actual bits.  This 
+     * Note that many message types are "poorly defined" here, with many
+     * "reverse-engineered" messages, and many that do not define actual bits.  This
      * means that this code can give interpretations that may not actually "decode"
-     * an actual message. 
-     * 
+     * an actual message.
+     *
      * @param l Message to parse
      * @param turnoutPrefix "System Name" + prefix which designates the connection's
      *          Turnouts, such as "LT"
@@ -1339,7 +1339,8 @@ public class LocoNetMessageInterpret {
 
         String slaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
         String slaveInfo;
-        if (l.getElement(6) != 0) {
+
+        if ((l.getElement(6) != 0) && (l.getElement(5) != l.getElement(6))) {
             String slaveVer = (((l.getElement(10) & 0x78) >> 3) + ((l.getElement(9) & 1) << 4)) + "." + ((l.getElement(10) & 0x7));
             int slaveSnInt
                     = ((l.getElement(15) + (((l.getElement(14) & 0x1) == 1) ? 128 : 0)))
@@ -1349,6 +1350,10 @@ public class LocoNetMessageInterpret {
             slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_DETAILS", slaveType,
                     Integer.toHexString(slaveSnInt).toUpperCase(),
                     slaveVer);
+        } else if ((l.getElement(6) != 0) && (l.getElement(5) == l.getElement(6))) {
+            int iplVer =l.getElement(10) + ((l.getElement(9) & 1)<<7);
+            slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_IPL",
+                    Integer.toString(iplVer>>3) + "." + Integer.toString(iplVer & 7));
         } else {
             slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_NO_SLAVE");
         }
@@ -1990,7 +1995,7 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_LONG_ACK_WRONG_THROTTLE_ID",
                         Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(l.getElement(2))));
-                
+
             case LnConstants.OPC_ALM_READ:
                 if (l.getElement(2) == 0) {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_SLOT_NOT_SUPPORTED",
@@ -4909,7 +4914,7 @@ public class LocoNetMessageInterpret {
         if ((dest >= 0x79) && (dest <= 0x7f)) {
             return "";
         }
-        
+
         if ((l.getElement(1) & 0x78) != 0x38) {
             // Ignore if message is not one from a DCS240 (or newer) command
             // station's "Expanded" slot messaging.   The message is probably
