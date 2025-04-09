@@ -1134,7 +1134,7 @@ class createandshowGUI2(TableModelListener):
 
         self.initialise_model(class_ResetButtonMaster)
         self.frame = JFrame("Allocate Routes")
-        self.frame.setSize(600, 600);
+        # self.frame.setSize(600, 600);
 
         self.completeTablePanel()
         # print "about to populate"
@@ -1149,7 +1149,7 @@ class createandshowGUI2(TableModelListener):
         self.self_table()
 
         scrollPane = JScrollPane(self.table);
-        scrollPane.setSize(600,600);
+        # scrollPane.setSize(600,600);
 
         self.topPanel.add(scrollPane);
 
@@ -1199,6 +1199,7 @@ class createandshowGUI2(TableModelListener):
         contentPane.add(self.topPanel, BorderLayout.CENTER)
         contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
 
+        self.tidy()
         self.frame.pack();
         self.frame.setVisible(True)
 
@@ -1311,6 +1312,18 @@ class createandshowGUI2(TableModelListener):
     def tidy_action(self,e):
         self.model.remove_not_set_row()
         self.completeTablePanel()
+
+    def tidy_action(self,e):
+        self.tidy()
+        self.completeTablePanel()
+
+    def tidy(self):
+        # self.model.remove_not_set_row()    # can't do this as removes all entries with no routes
+        size_of_one_row = 30
+        height = 130
+        for row in reversed(range(len(self.model.data))):
+            height += size_of_one_row
+        self.frame.setPreferredSize(Dimension(800, height))
 
     def savetofile_action(self, event):
 
