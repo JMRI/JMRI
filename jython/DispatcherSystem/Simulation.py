@@ -300,7 +300,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             # would prefer to check if active train running, but can't because the throttle sometimes stops.
             if (self.signal_ahead_clear() or not at_last_block_in_section):
                 self.end_position +=1
-                if self.logLevel > -1: print "end pos incremented", self.end_position
+                if self.logLevel > 0: print "end pos incremented", self.end_position
                 # print "setting block ", block_list[self.end_position].getUserName() , "active"
                 block_list[self.end_position].getSensor().setState(ACTIVE)
                 self.wait_for_sensor_to_change(block_list[self.end_position].getSensor(), ACTIVE)

@@ -2233,9 +2233,9 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                             station_comment = None
                             accumulated_duration = 0
 
-                        if self.logLevel > -1: print "station", station, "station_comment", station_comment, \
+                        if self.logLevel > 0: print "station", station, "station_comment", station_comment, \
                             "station_index", station_index, "prev_station_index", prev_station_index
-                        if self.logLevel > -1: print "accumulated_duration", accumulated_duration
+                        if self.logLevel > 0: print "accumulated_duration", accumulated_duration
 
                     if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to
 
