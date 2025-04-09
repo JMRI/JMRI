@@ -3,8 +3,6 @@ package jmri.jmrix.powerline.insteon2412s;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a serial reply packet. Note that it's _only_ the
@@ -33,8 +31,8 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         int len = getNumDataElements();
         StringBuilder text = new StringBuilder();
         if ((getElement(0) & 0xFF) != Constants.HEAD_STX) {
-            text.append("INVALID HEADER: " + String.format("0x%1X", getElement(0) & 0xFF));
-            text.append(" len: " + len);
+            text.append("INVALID HEADER: ").append(String.format("0x%1X", getElement(0) & 0xFF));
+            text.append(" len: ").append(len);
         } else {
             switch (getElement(1) & 0xFF) {
                 case Constants.FUNCTION_REQ_STD:
@@ -72,9 +70,11 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                                 break;
                         }
                         text.append(" message,");
-                        text.append(String.format(" %d hops left", (getElement(5) & Constants.FLAG_MASK_HOPSLEFT >> Constants.FLAG_SHIFT_HOPSLEFT)));
+                        text.append(String.format(" %d hops left",
+                            (getElement(5) & Constants.FLAG_MASK_HOPSLEFT >> Constants.FLAG_SHIFT_HOPSLEFT)));
                         text.append(String.format(" , %d max hops", (getElement(5) & Constants.FLAG_MASK_MAXHOPS)));
-                        text.append(" addr " + String.format("%1$X.%2$X.%3$X", (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
+                        text.append(" addr ").append(String.format("%1$X.%2$X.%3$X",
+                            (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
                         switch (getElement(6) & 0xFF) {
                             case Constants.CMD_LIGHT_ON_FAST:
                                 text.append(" ON FAST ");
@@ -97,14 +97,14 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                                 text.append((getElement(7) & 0xFF) / 256.0);
                                 break;
                             default:
-                                text.append(" Unknown cmd: " + StringUtil.twoHexFromInt(getElement(6) & 0xFF));
+                                text.append(" Unknown cmd: ").append(StringUtil.twoHexFromInt(getElement(6) & 0xFF));
                                 break;
                         }
                         if ((getElement(8) & 0xFF) == Constants.REPLY_NAK) {
                             text.append(" NAK - command not processed");
                         }
                     } else {
-                        text.append(" !! Length wrong: " + len);
+                        text.append(" !! Length wrong: ").append(len);
                     }
                     break;
                 case Constants.POLL_REQ_BUTTON:
@@ -143,15 +143,14 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                     }
                     break;
                 default: {
-                    text.append(" Unknown command: " + StringUtil.twoHexFromInt(getElement(1) & 0xFF));
-                    text.append(" len: " + len);
+                    text.append(" Unknown command: ").append(StringUtil.twoHexFromInt(getElement(1) & 0xFF));
+                    text.append(" len: ").append(len);
                 }
             }
         }
         return text + "\n";
     }
-    private final static Logger log = LoggerFactory.getLogger(SpecificReply.class); // NOI18N
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpecificReply.class);
 
 }
-
-
