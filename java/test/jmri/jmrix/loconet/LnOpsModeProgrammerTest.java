@@ -945,10 +945,12 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             } catch (InterruptedException e) {
             }
 
+            // send the reply from the device
             m = getLnLongAckFromVal(0x5A);
             lnis.sendTestMessage(m); // (Device sends the message on LocoNet)
 
             log.debug("   testcase device opc_long_ack reply and data was sent.");
+            JUnitUtil.waitFor(250); // 250 (mSec) from the delay in
 
             log.debug("   testcase: after send, pl.getRcvdInvoked() is {}  for j = {}, num= {}.",
                     Integer.toString(pl.getRcvdInvoked()), j, num);
