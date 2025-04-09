@@ -229,7 +229,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     @Override
     public void setup() {
         for (NamedBeanReference ref : getReferences()) {
-            if (ref.getType().name().equals("EntryExit")) {
+            if (ref.getType() == NamedBeanType.EntryExit) {
                 // The EntryExit objects were not available during file loading.
                 if (ref.getName() != null && !ref.getName().isEmpty()) {
                     var nxBean = ref.getType().getManager().getNamedBean(ref.getName());

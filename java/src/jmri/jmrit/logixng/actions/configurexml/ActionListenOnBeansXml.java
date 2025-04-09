@@ -40,7 +40,7 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
         Element parameters = new Element("References");
         for (NamedBeanReference ref : p.getReferences()) {
             Element elementParameter = new Element("Reference");
-            if (ref.getType().name().equals(("EntryExit"))) {
+            if (ref.getType() == NamedBeanType.EntryExit) {
                 // Use the system name when storing an EntryExit object.
                 var nxName = ref.getHandle().getBean().getSystemName();
                 elementParameter.addContent(new Element("name").addContent(nxName));
