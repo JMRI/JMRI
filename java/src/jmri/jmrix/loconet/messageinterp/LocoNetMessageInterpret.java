@@ -1133,8 +1133,8 @@ public class LocoNetMessageInterpret {
                     //
                     // Information reverse-engineered by B. Milhaupt and used with permission
 
-                    device = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
-                    String slave = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+                    device = getDeviceNameFromIPLInfo(((l.getElement(4) & 1) << 7) + l.getElement(5));
+                    String slave = getSlaveNameFromIPLInfo( l.getElement(6) + ((l.getElement(4) & 2) << 6));
                     return Bundle.getMessage("LN_MSG_IPL_DISCOVER_SPECIFIC_DEVICES",
                             device, slave);
                 }
@@ -1326,7 +1326,7 @@ public class LocoNetMessageInterpret {
         // devices do not generate this report.
         //
         // Information reverse-engineered by B. Milhaupt and used with permission
-        String hostType = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
+        String hostType = getDeviceNameFromIPLInfo(((l.getElement(4) & 1) << 7) + l.getElement(5));
 
         String hostVer = ((l.getElement(8) & 0x78) >> 3) + "." + ((l.getElement(8) & 0x7));
 
@@ -1337,7 +1337,7 @@ public class LocoNetMessageInterpret {
         String hostInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_HOST_DETAILS",
                 hostType, hostSN, hostVer);
 
-        String slaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+        String slaveType = getSlaveNameFromIPLInfo( l.getElement(6) + ((l.getElement(4) & 2) << 6));
         String slaveInfo;
 
         if ((l.getElement(6) != 0) && (l.getElement(5) != l.getElement(6))) {
@@ -4792,11 +4792,7 @@ public class LocoNetMessageInterpret {
         }
     }
 
-    public static String getDeviceNameFromIPLInfo(int manuf, int type) {
-        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
-            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
-                    manuf, type);
-        }
+    public static String getDeviceNameFromIPLInfo(int type) {
         switch (type) {
             case LnConstants.RE_IPL_DIGITRAX_HOST_ALL:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_ALLDEVICES");
@@ -4862,11 +4858,7 @@ public class LocoNetMessageInterpret {
         }
     }
 
-    public static String getSlaveNameFromIPLInfo(int manuf, int slaveNum) {
-        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
-            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
-                    manuf, slaveNum);
-        }
+    public static String getSlaveNameFromIPLInfo(int slaveNum) {
         switch (slaveNum) {
             case LnConstants.RE_IPL_DIGITRAX_SLAVE_ALL:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_ALLDEVICES");
