@@ -8,14 +8,11 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrix.ConnectionConfig;
-import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.loconet.hexfile.HexFileFrame;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
 import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 
-import org.python.jline.internal.Log;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
