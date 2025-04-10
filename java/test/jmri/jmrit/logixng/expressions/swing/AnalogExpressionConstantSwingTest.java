@@ -20,6 +20,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  * Tests for AnalogExpressionConstantSwing.
  * @author Steve Young Copyright (C) 2025
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class AnalogExpressionConstantSwingTest {
 
     @Test
