@@ -57,14 +57,14 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
 
     private boolean bd7OpSwModeAccess;
     private boolean enabledDelayedNotify;
-    private boolean LnTrafficListenerIsRegistered;
+    private boolean lnTrafficListenerIsRegistered;
 
     public LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo,
             int pAddress, boolean pLongAddr) {
         this.memo = memo;
         mAddress = pAddress;
         mLongAddr = pLongAddr;
-        LnTrafficListenerIsRegistered = false;
+        lnTrafficListenerIsRegistered = false;
         expectCsB4();
     }
 
@@ -86,10 +86,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         bd7OpSwModeAccess = false;
         enabledDelayedNotify = false;
 
-        if (LnTrafficListenerIsRegistered == false) {
+        if (lnTrafficListenerIsRegistered == false) {
             // register to listen
             memo.getLnTrafficController().addLocoNetListener(~0, this);
-            LnTrafficListenerIsRegistered =true;
+            lnTrafficListenerIsRegistered =true;
         }
 
         // Check mode
@@ -271,10 +271,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         bd7OpSwModeAccess = false;
         enabledDelayedNotify = false;
 
-        if (LnTrafficListenerIsRegistered == false) {
+        if (lnTrafficListenerIsRegistered == false) {
             // register to listen
             memo.getLnTrafficController().addLocoNetListener(~0, this);
-            LnTrafficListenerIsRegistered =true;
+            lnTrafficListenerIsRegistered =true;
         }
 
         // Check mode
@@ -449,10 +449,10 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
 
         enabledDelayedNotify = false;
 
-        if (LnTrafficListenerIsRegistered == false) {
+        if (lnTrafficListenerIsRegistered == false) {
             // register to listen
             memo.getLnTrafficController().addLocoNetListener(~0, this);
-            LnTrafficListenerIsRegistered =true;
+            lnTrafficListenerIsRegistered =true;
         }
 
         p = null;
