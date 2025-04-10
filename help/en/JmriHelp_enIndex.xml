@@ -227,6 +227,8 @@
 
   <indexitem text="UR90 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
+  <indexitem text="UR90X " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+
   <indexitem text="UR91 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
   <indexitem text="UR92 " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
