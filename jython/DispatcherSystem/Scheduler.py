@@ -485,7 +485,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if "CreateAndShowGUI5_glb" in globals():
                     if CreateAndShowGUI5_glb != None:
                         CreateAndShowGUI5_glb.frame.dispose()
-                CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed)
+                CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
                 title = "Run Train"
                 msg = "Last time to cancel"
                 opt1 = "Cancel"
@@ -562,10 +562,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 journey_time_row_displayed = True
                 # print "a"
                 if "CreateAndShowGUI5_glb" not in globals():
-                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed)
+                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
                 else:
                     CreateAndShowGUI5_glb.frame.dispose()
-                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed)
+                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
                     # print "c", CreateAndShowGUI5_glb
             # print "%%%%%type%%%%%%%%%", type(CreateAndShowGUI5_glb)
             # CreateAndShowGUI5_glb.frame.setVisible(True)
@@ -2233,9 +2233,9 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                             station_comment = None
                             accumulated_duration = 0
 
-                        if self.logLevel > -1: print "station", station, "station_comment", station_comment, \
+                        if self.logLevel > 0: print "station", station, "station_comment", station_comment, \
                             "station_index", station_index, "prev_station_index", prev_station_index
-                        if self.logLevel > -1: print "accumulated_duration", accumulated_duration
+                        if self.logLevel > 0: print "accumulated_duration", accumulated_duration
 
                     if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to
 
