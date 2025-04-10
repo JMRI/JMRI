@@ -3,8 +3,6 @@ package jmri.jmrix.powerline.insteon2412s;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Contains the data payload of a serial packet.
@@ -60,8 +58,8 @@ public class SpecificMessage extends SerialMessage {
         int len = getNumDataElements();
         StringBuilder text = new StringBuilder();
         if ((getElement(0) & 0xFF) != Constants.HEAD_STX) {
-            text.append("INVALID HEADER: " + String.format("0x%1X", getElement(0) & 0xFF));
-            text.append(" len: " + len);
+            text.append("INVALID HEADER: ").append(String.format("0x%1X", getElement(0) & 0xFF));
+            text.append(" len: ").append(len);
         } else {
             switch (getElement(1) & 0xFF) {
                 case Constants.FUNCTION_REQ_STD:
@@ -99,9 +97,11 @@ public class SpecificMessage extends SerialMessage {
                                 break;
                         }
                         text.append(" message,");
-                        text.append(String.format(" %d hops left", (getElement(5) & Constants.FLAG_MASK_HOPSLEFT >> Constants.FLAG_SHIFT_HOPSLEFT)));
+                        text.append(String.format(" %d hops left",
+                            (getElement(5) & Constants.FLAG_MASK_HOPSLEFT >> Constants.FLAG_SHIFT_HOPSLEFT)));
                         text.append(String.format(" , %d max hops", (getElement(5) & Constants.FLAG_MASK_MAXHOPS)));
-                        text.append(" addr " + String.format("%1$X.%2$X.%3$X", (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
+                        text.append(" addr ").append(String.format("%1$X.%2$X.%3$X",
+                            (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
                         switch (getElement(6) & 0xFF) {
                             case Constants.CMD_LIGHT_ON_RAMP:
                                 text.append(" ON RAMP ");
@@ -124,11 +124,11 @@ public class SpecificMessage extends SerialMessage {
                                 text.append((getElement(7) & 0xFF) / 256.0);
                                 break;
                             default:
-                                text.append(" Unknown cmd: " + StringUtil.twoHexFromInt(getElement(6) & 0xFF));
+                                text.append(" Unknown cmd: ").append(StringUtil.twoHexFromInt(getElement(6) & 0xFF));
                                 break;
                         }
                     } else {
-                        text.append(" !! Length wrong: " + len);
+                        text.append(" !! Length wrong: ").append(len);
                     }
                     break;
                 // i wrote this then figured the POLL are replies
@@ -165,8 +165,8 @@ public class SpecificMessage extends SerialMessage {
 //                    }
 //              break;
                 default: {
-                    text.append(" Unknown command: " + StringUtil.twoHexFromInt(getElement(1) & 0xFF));
-                    text.append(" len: " + len);
+                    text.append(" Unknown command: ").append(StringUtil.twoHexFromInt(getElement(1) & 0xFF));
+                    text.append(" len: ").append(len);
                 }
             }
         }
@@ -200,7 +200,7 @@ public class SpecificMessage extends SerialMessage {
 //    public boolean isXmt()  { return getElement(1)==17;}
 //    public int getAddr() { return getElement(0); }
     // static methods to return a formatted message
-    static public SerialMessage getPoll(int addr) {
+    public static SerialMessage getPoll(int addr) {
         // Powerline implementation does not currently poll
         return null;
     }
@@ -212,7 +212,7 @@ public class SpecificMessage extends SerialMessage {
      *
      * @return message   formated message
      */
-    static public SpecificMessage getX10Address(int housecode, int devicecode) {
+    public static SpecificMessage getX10Address(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(4);
         m.setInterlocked(false);
         m.setElement(0, Constants.HEAD_STX);
@@ -231,7 +231,7 @@ public class SpecificMessage extends SerialMessage {
      *
      * @return message   formated message
      */
-    static public SpecificMessage getX10AddressDim(int housecode, int devicecode, int dimcode) {
+    public static SpecificMessage getX10AddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(4);
         m.setInterlocked(false);
         m.setElement(0, Constants.HEAD_STX);
@@ -246,7 +246,7 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getX10FunctionDim(int housecode, int function, int dimcode) {
+    public static SpecificMessage getX10FunctionDim(int housecode, int function, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
         m.setInterlocked(true);
         if (dimcode > 0) {
@@ -258,7 +258,7 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getX10Function(int housecode, int function) {
+    public static SpecificMessage getX10Function(int housecode, int function) {
         SpecificMessage m = new SpecificMessage(4);
 //        m.setInterlocked(true);
         m.setInterlocked(false);
@@ -269,7 +269,7 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getInsteonAddress(int idhighbyte, int idmiddlebyte, int idlowbyte) {
+    public static SpecificMessage getInsteonAddress(int idhighbyte, int idmiddlebyte, int idlowbyte) {
         SpecificMessage m = new SpecificMessage(8);
 //        m.setInterlocked(true);
         m.setInterlocked(false);
@@ -284,7 +284,8 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getInsteonFunction(int idhighbyte, int idmiddlebyte, int idlowbyte, int function, int flag, int cmd1, int cmd2) {
+    public static SpecificMessage getInsteonFunction(int idhighbyte, int idmiddlebyte, int idlowbyte,
+            int function, int flag, int cmd1, int cmd2) {
         SpecificMessage m = new SpecificMessage(8);
 //        m.setInterlocked(true);
         m.setInterlocked(false);
@@ -300,6 +301,6 @@ public class SpecificMessage extends SerialMessage {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SpecificMessage.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SpecificMessage.class);
 
 }
