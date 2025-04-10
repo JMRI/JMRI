@@ -1,5 +1,7 @@
 package jmri.jmrix.bachrus.speedmatcher.speedStepScale;
 
+import java.util.Locale;
+
 import jmri.jmrix.bachrus.speedmatcher.SpeedMatcher.SpeedTableStep;
 import static jmri.jmrix.bachrus.speedmatcher.speedStepScale.SpeedStepScaleSpeedMatcher.getSpeedForSpeedTableStep;
 
@@ -40,11 +42,11 @@ public class SpeedTableStepSpeed {
     }
 
     /**
-     * Converts this SpeedTableStepSpeed to a string
+     * Converts this SpeedTableStepSpeed to an I18N string.
      * @return a single decimal string of this SpeedTableStepSpeed's speed
      */
     @Override
     public String toString() {
-        return String.format("%.1f", this.speed);
+        return String.format(Locale.getDefault(), "%.1f", this.speed);
     }
 }
