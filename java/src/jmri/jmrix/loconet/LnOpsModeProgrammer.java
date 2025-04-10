@@ -564,7 +564,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
 
             // LACK with 0x6D or 0x6E in byte 1; assume it's to us
             if (doingWrite) {
-                    if (((m.getElement(1) == 0x6D) || (m.getElement(1) == 0x6E)) && 
+                    if (((m.getElement(1) == 0x6D) || (m.getElement(1) == 0x6E)) &&
                             (m.getElement(2) == 0x55 || m.getElement(2) == 0x5A)) {
                         code = ProgListener.OK;
                         val = (boardOpSwWriteVal ? 1 : 0);
@@ -959,7 +959,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     public void dispose() {
         if (bdOpSwAccessTimer != null) {
             bdOpSwAccessTimer.stop();
-            
+
         }
         if (bd7GenAccyOpSwAccessTimer != null) {
             bd7GenAccyOpSwAccessTimer.stop();
@@ -970,7 +970,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         if (sv2AccessTimer != null) {
             sv2AccessTimer.stop();
         }
-        
+
         memo.getLnTrafficController().removeLocoNetListener(~0, this);
     }
 
