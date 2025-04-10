@@ -15,6 +15,8 @@ import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
 import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 
+import org.python.jline.internal.Log;
+
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
  * SlotManager object.
@@ -51,6 +53,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     private javax.swing.Timer bdOpSwAccessTimer = null;
     private javax.swing.Timer sv2AccessTimer = null;
     private javax.swing.Timer lncvAccessTimer = null;
+    private javax.swing.Timer bd7GenAccyOpSwAccessTimer = null;
     private boolean firstReply;
 
     private boolean csIsPresent;
@@ -69,27 +72,9 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     }
 
     private void expectCsB4() {
-        csIsPresent = true; // assumption...
-
-        if (memo.getSlotManager().getCommandStationType() ==
-                LnCommandStationType.COMMAND_STATION_STANDALONE) {
-            csIsPresent = false;
-            return;
-        }
-        ConnectionConfig[] connection = {null, null, null, null};
-        int i = 0;
-        for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-            if (!conn.getDisabled()) {
-                connection[i] = conn;
-            }
-            break;
-        }
-
-        if ((csIsPresent) && (connection[0] != null)) {
-            if (connection[0].name().equalsIgnoreCase("LocoNet Simulator")) {
-                csIsPresent = false;
-            }
-        }
+        // Assume getCommandStationType() is correctly defined for this connection...
+        csIsPresent = memo.getSlotManager().getCommandStationType() !=
+                LnCommandStationType.COMMAND_STATION_STANDALONE;
     }
 
     /**
@@ -163,8 +148,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             /*
              * Normal CV format for Digitrax 7th-gen Accy devices
              */
-            if (bdOpSwAccessTimer == null) {
-                initializeBdOpsAccessTimer();
+            if (bd7GenAccyOpSwAccessTimer == null) {
+                initialize7GenBdOpsAccessTimer();
             }
             p = pL;
             bd7OpSwModeAccess = true;
@@ -213,7 +198,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             log.debug("  Message {}", m);
             firstReply = true;
             memo.getLnTrafficController().sendLocoNetMessage(m);
-            bdOpSwAccessTimer.restart();
+            bd7GenAccyOpSwAccessTimer.restart();
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             // LocoIO family
@@ -348,8 +333,8 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
              */
             bd7OpSwModeAccess = true;
 
-            if (bdOpSwAccessTimer == null) {
-                initializeBdOpsAccessTimer();
+            if (bd7GenAccyOpSwAccessTimer == null) {
+                initialize7GenBdOpsAccessTimer();
             }
             p = pL;
             doingWrite = false;
@@ -393,7 +378,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             log.debug("  Message {}", m);
             firstReply = true;
             memo.getLnTrafficController().sendLocoNetMessage(m);
-            bdOpSwAccessTimer.restart();
+            bd7GenAccyOpSwAccessTimer.restart();
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             // LocoIO family
             p = pL;
@@ -573,21 +558,28 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
             }
 
             // got a message that is LONG_ACK reply to a 7th-gen BdOpsSw access
-            bdOpSwAccessTimer.stop();    // kill the timeout timer
+            bd7GenAccyOpSwAccessTimer.stop();    // kill the timeout timer
             int code;
             int val;
 
-            // LACK with 0x6E in byte 1; assume it's to us
-            if (doingWrite
-                    && m.getElement(1) == 0x6D
-                    && (m.getElement(2) == 0x55 || m.getElement(2) == 0x5A)) {
-                code = ProgListener.OK;
-                val = (boardOpSwWriteVal ? 1 : 0);
+            // LACK with 0x6D or 0x6E in byte 1; assume it's to us
+            if (doingWrite) {
+                    if (((m.getElement(1) == 0x6D) || (m.getElement(1) == 0x6E)) && 
+                            (m.getElement(2) == 0x55 || m.getElement(2) == 0x5A)) {
+                        code = ProgListener.OK;
+                        val = (boardOpSwWriteVal ? 1 : 0);
+                    }
+                    else {
+                        log.warn("Write of 7th-gen Accessory Decoder returned "
+                                + "odd results: {}, {}.  Ignoring.",
+                                m.getElement(1),  m.getElement(2));
+                        return;
+                    }
             } else {
                 code = ProgListener.OK;
                 val = m.getElement(2) + ((m.getElement(1) & 1) << 7);
             }
-            scheduleReplyAfterPossibleRepeats(val, code);
+            scheduleReplyAfter7GAccyPossibleRepeats(val, code);
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             // see if reply to LNSV1 or LNSV2 request
@@ -704,19 +696,23 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         }
     }
 
-    private void scheduleReplyAfterPossibleRepeats(int val, int code) {
+    private void scheduleReplyAfter7GAccyPossibleRepeats(int val, int code) {
         if ((p != null) && (bd7OpSwModeAccess == true) && (enabledDelayedNotify == false)) {
             enabledDelayedNotify = true;
+            log.debug("   Accepted 7GAccy result. Initiated 7GA timer.");
             jmri.util.TimerUtil.scheduleOnLayoutThread(new java.util.TimerTask() {
                 @Override
                 public void run() {
-                    log.debug("Passing result from 7g Accy Ops access.");
+                    log.debug("Passing result from 7g Accy Ops access: value={}, code={}, p={}.",
+                            val, code, p);
                     ProgListener tempProgListener = p;
                     p = null;
                     notifyProgListenerEnd(tempProgListener, val, code);
                 }
-            }, 250);  // Some Digitrax devices send multiple responses, so wait a
+            }, 200);  // Some Digitrax devices send multiple responses, so wait a
                       // while more before completing the programming attempt
+        } else {
+            log.debug("   Ignoring 'extra' 7GAccy result.");
         }
     }
 
@@ -923,6 +919,18 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
         }
     }
 
+    void initialize7GenBdOpsAccessTimer() {
+        if (bd7GenAccyOpSwAccessTimer == null) {
+            bd7GenAccyOpSwAccessTimer = new javax.swing.Timer(150, (ActionEvent e) -> {
+                ProgListener temp = p;
+                p = null;
+                notifyProgListenerEnd(temp, 0, ProgListener.FailedTimeout);
+            });
+        bd7GenAccyOpSwAccessTimer.setInitialDelay(150);
+        bd7GenAccyOpSwAccessTimer.setRepeats(false);
+        }
+    }
+
     void initializeSV2AccessTimer() {
        if (sv2AccessTimer == null) {
             sv2AccessTimer = new javax.swing.Timer(1000, (ActionEvent e) -> {
@@ -949,6 +957,20 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
 
     @Override
     public void dispose() {
+        if (bdOpSwAccessTimer != null) {
+            bdOpSwAccessTimer.stop();
+            
+        }
+        if (bd7GenAccyOpSwAccessTimer != null) {
+            bd7GenAccyOpSwAccessTimer.stop();
+        }
+        if (lncvAccessTimer != null) {
+            lncvAccessTimer.stop();
+        }
+        if (sv2AccessTimer != null) {
+            sv2AccessTimer.stop();
+        }
+        
         memo.getLnTrafficController().removeLocoNetListener(~0, this);
     }
 
