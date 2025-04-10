@@ -92,6 +92,8 @@
                   instead of locoio.sendRead/.sendWrite it was still using.</li>
                 <li>The LocoIO pane that was deprecated since 4.12 has been removed. The LocoIO configuration
                   documentation is retained under html LocoNet help.</li>
+                <li>Added the Digitrax UR90X to the LocoNet Monitor tool and
+                JMRI's Help.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -705,4 +707,3 @@
                 You may have to rework your panels for them to look good
                 in this mode.</li>
         </ul>
-

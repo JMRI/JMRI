@@ -615,6 +615,11 @@
                     </li>
                       
                     <li>
+                        <a href="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">UR90X </a>
+                        <ul></ul>
+                    </li>
+                      
+                    <li>
                         <a href="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">UR91 </a>
                         <ul></ul>
                     </li>
@@ -972,7 +977,12 @@
                     </li>
                       
                     <li>
-                        <a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">LNCV Programmer </a>
+                        <a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Manage LNCV Modules </a>
+                        <ul></ul>
+                    </li>
+                      
+                    <li>
+                        <a href="package/jmri/jmrix/loconet/swing/lnsv1prog/Lnsv1ProgPane.shtml">Manage LNSV1 Modules </a>
                         <ul></ul>
                     </li>
                       
@@ -992,7 +1002,12 @@
                     </li>
                       
                     <li>
-                        <a href="package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO </a>
+                        <a href="html/hardware/loconet/LocoBufferUSB.shtml">LocoBuffer-NG </a>
+                        <ul></ul>
+                    </li>
+                      
+                    <li>
+                        <a href="html/hardware/loconet/LocoIO.shtml">LocoIO </a>
                         <ul></ul>
                     </li>
                       

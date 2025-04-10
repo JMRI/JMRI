@@ -1672,7 +1672,9 @@ public class LocoNetMessageInterpretTest {
                 case 74:
                     s = "Digitrax PM74 host";
                     break;
-
+                case 0x5A:
+                    s = "Digitrax UR90X host";
+                    break;
                 default:
                     s = "Digitrax (unknown host device type "+i+")";
                     break;
@@ -3738,6 +3740,48 @@ public class LocoNetMessageInterpretTest {
         Assert.assertEquals(" Tetherless Query/Reply test 20",
                 "Unable to parse LocoNet message. contents: DF 01 00 00 7F 60\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD7, 0x14, 0x00, 0x00, 0x00, 0x3F});
+        Assert.assertEquals(" Tetherless Query/Reply test 21",
+                "UR90X Responding with LocoNet ID 0.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD7, 0x14, 0x00, 0x01, 0x00, 0x3F});
+        Assert.assertEquals(" Tetherless Query/Reply test 22",
+                "UR90X Responding with LocoNet ID 1.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD7, 0x14, 0x00, 0x02, 0x00, 0x3F});
+        Assert.assertEquals(" Tetherless Query/Reply test 23",
+                "UR90X Responding with LocoNet ID 2.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD7, 0x14, 0x00, 0x03, 0x00, 0x3F});
+        Assert.assertEquals(" Tetherless Query/Reply test 24",
+                "UR90X Responding with LocoNet ID 3.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD7, 0x14, 0x00, 0x04, 0x00, 0x3F});
+        Assert.assertEquals(" Tetherless Query/Reply test 25",
+                "UR90X Responding with LocoNet ID 4.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD7, 0x14, 0x00, 0x05, 0x00, 0x3F});
+        Assert.assertEquals(" Tetherless Query/Reply test 26",
+                "UR90X Responding with LocoNet ID 5.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD7, 0x14, 0x00, 0x06, 0x00, 0x3F});
+        Assert.assertEquals(" Tetherless Query/Reply test 27",
+                "UR90X Responding with LocoNet ID 6.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+        l = new LocoNetMessage(new int[] {0xD7, 0x14, 0x00, 0x07, 0x00, 0x3F});
+        Assert.assertEquals(" Tetherless Query/Reply test 28",
+                "UR90X Responding with LocoNet ID 7.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
+
 
     }
 
