@@ -141,7 +141,8 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
     private void log1Message(BidibMessageInterface message, String line) {
         Node node = tc.getNodeByAddr(message.getAddr());
         if (node != null) {
-            output += String.format(" %010X (%s)", node.getUniqueId() & 0xffffffffffL, node.getStoredString(StringData.INDEX_USERNAME)) + ": ";
+            output += String.format(" %010X (%s)", node.getUniqueId() & 0xffffffffffL,
+                node.getStoredString(StringData.INDEX_USERNAME)) + ": ";
         }
         else {
             output += NodeUtils.formatAddress(message.getAddr()) + ": ";
