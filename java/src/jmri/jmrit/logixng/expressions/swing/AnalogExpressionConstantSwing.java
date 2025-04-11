@@ -48,7 +48,8 @@ public class AnalogExpressionConstantSwing extends AbstractAnalogExpressionSwing
         }
 
         try {
-            log.debug("validated number {}", IntlUtilities.doubleValue(_constant.getText()));
+            Double d = IntlUtilities.doubleValue(_constant.getText());
+            log.debug("validated number {} passes try / catch", d);
             return true;
         } catch (ParseException e) {
             errorMessages.add(Bundle.getMessage("AnalogExpressionConstant_NotANumber", _constant.getText()));
