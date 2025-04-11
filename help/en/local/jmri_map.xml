@@ -425,7 +425,6 @@
 <mapID target="package.jmri.jmrix.loconet.soundloader.LoaderFrame" url="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane" url="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane" url="package/jmri/jmrix/loconet/swing/lnsv1prog/Lnsv1ProgPane.shtml"/>
-<mapID target="package.jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane." url="package/jmri/jmrix/loconet/swing/lnsv1prog/Lnsv1ProgPane/.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame" url="package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.usb_dcs240.swing.Dcs240UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs240/swing/Dcs240UsbModeSelect.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.usb_dcs52.swing.Dcs52UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs52/swing/Dcs52UsbModeSelect.shtml"/>
