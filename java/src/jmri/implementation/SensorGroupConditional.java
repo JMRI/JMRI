@@ -5,13 +5,11 @@ import jmri.ConditionalAction;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Conditional.java
  *
- * A Conditional type to provide runtime support for Densor Groups.
+ * A Conditional type to provide runtime support for Sensor Groups.
  * <p>
  * This file is part of JMRI.
  * <p>
@@ -43,7 +41,7 @@ public class SensorGroupConditional extends DefaultConditional {
         }
         String listener = evtSensor.getSystemName();
         log.debug("SGConditional \"{}\" ({}) has event from \"{}\"", getUserName(), getSystemName(), listener);
-        if (Sensor.INACTIVE == ((Integer) evt.getNewValue()).intValue()) {
+        if (Sensor.INACTIVE == ((Integer) evt.getNewValue())) {
             return currentState;
         }
         for (int i = 0; i < _actionList.size(); i++) {
@@ -53,20 +51,20 @@ public class SensorGroupConditional extends DefaultConditional {
                 log.error("invalid sensor name in action - {}", action.getDeviceName());
                 return currentState;
             }
-            if (sn != evtSensor) { // don't change who triggered the action
-                // find the old one and reset it
-                if (sn.getState() != action.getActionData()) {
-                    try {
-                        sn.setKnownState(action.getActionData());
-                    } catch (JmriException e) {
-                        log.warn("Exception setting sensor {} in action", action.getDeviceName());
-                    }
+            if (sn != evtSensor // don't change who triggered the action
+                    // find the old one and reset it
+                    && sn.getState() != action.getActionData()) {
+                try {
+                    sn.setKnownState(action.getActionData());
+                } catch (JmriException e) {
+                    log.warn("Exception setting sensor {} in action", action.getDeviceName());
                 }
             }
         }
-        log.debug("SGConditional \"{}\" ({}), state= {}has set the group actions for {}", getUserName(), getSystemName(), currentState, listener);
+        log.debug("SGConditional \"{}\" ({}), state= {}has set the group actions for {}",
+            getUserName(), getSystemName(), currentState, listener);
         return currentState;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorGroupConditional.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorGroupConditional.class);
 }
