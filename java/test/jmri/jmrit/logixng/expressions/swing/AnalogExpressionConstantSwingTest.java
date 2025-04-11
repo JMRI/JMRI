@@ -24,12 +24,11 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
 public class AnalogExpressionConstantSwingTest {
 
     @Test
-    void testDecimalEn() {
+    void testDecimalEnglish() {
         AnalogExpressionConstantSwing t = new AnalogExpressionConstantSwing();
         Assertions.assertNotNull(t);
 
         JPanel buttonPanel = new JPanel();
-
         ArrayList<String> list = new ArrayList<>();
 
         AnalogExpressionConstant aec = new AnalogExpressionConstant("IQAE915",null);
@@ -68,12 +67,11 @@ public class AnalogExpressionConstantSwingTest {
     }
 
     @Test
-    void testDecimalIt() {
+    void testDecimalItalian() {
         AnalogExpressionConstantSwing t = new AnalogExpressionConstantSwing();
         assertNotNull(t);
 
         JPanel buttonPanel = new JPanel();
-
         ArrayList<String> list = new ArrayList<>();
 
         AnalogExpressionConstant aec = new AnalogExpressionConstant("IQAE444",null);
