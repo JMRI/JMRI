@@ -303,6 +303,8 @@
 
         <li><strong>T</strong> Turnout - actually a general purpose output on the layout</li>
 
+        <li><strong>U</strong> Clock. The German word for clock is Uhr.</li>
+
         <li><strong>V</strong> Analog value - An item that can have an integer value or a floating
         value. For example a current meter. The letter V is for Variable.</li>
 
