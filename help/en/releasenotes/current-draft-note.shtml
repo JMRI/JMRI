@@ -93,7 +93,11 @@
                 <li>The LocoIO pane that was deprecated since 4.12 has been removed. The LocoIO configuration
                   documentation is retained under html LocoNet help.</li>
                 <li>Added the Digitrax UR90X to the LocoNet Monitor tool and
-                JMRI's Help.</li>
+                    JMRI's Help.</li>
+                <li>Added the BDL716 as a "decoder" in the JMRI Roster.  Added 
+                    LocoNet Monitor support of some BDL716-related messages.</li>
+                <li>Improved the CV configuration mechanism for Digitrax 
+                    7th-generation Accessory devices.</li>
             </ul>
 
         <h4>Maple</h4>
