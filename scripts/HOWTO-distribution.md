@@ -94,7 +94,7 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.11.5 5.11.6 5.11.6
+  ./scripts/update-HOWTO.sh 5.11.5 5.11.6 5.11.7
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
@@ -298,7 +298,7 @@ This section describes in detail the process for creating the release note for a
 ```
         cp help/en/releasenotes/jmri5.11-master.shtml help/en/releasenotes/current-draft-note.shtml
         cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
-        git commit -m"start for 5.11.5 release note" help/en/releasenotes/*.shtml
+        git commit -m"start for 5.11.6 release note" help/en/releasenotes/*.shtml
         git push github
         git pull
 ```
@@ -325,14 +325,16 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.11.3-SNAPSHOT/5.11.5-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.11.4-SNAPSHOT/5.11.5-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=3/release.build=4/g release.properties
+        sed -i.bak s/release.build=4/release.build=5/g release.properties
 ```
  - Check that both those edits left 5.11.5 defined in the two files
+ 
+ - Commit them back
  
 ```
         git commit -m"5.11.5 until next release" release.properties pom.xml
