@@ -527,11 +527,14 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, when building a train, the program now warns for set out 
-            and pick up conflicts between trains when using aggressive mode.</li>
+          <li>New feature, when building a train, the program now warns for set out and pick up
+            conflicts between trains when using aggressive mode.</li>
+          <li>Program file locations were changed in this release. Start up actions involving
+            operations windows from previous releases no longer work. You'll need to remove them and add
+            them back if needed.</li>
         </ul>
 
-   <h3>Panel Editor</h3>
+<h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>
