@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.11.4plus+jake+20250331T1051Z+R6a624e9293e on Mon Mar 31 06:51:04 EDT 2025-->
-  <decoderIndex version="639">
+  <!--Written by JMRI version 5.11.4plus+jake+20250411T1404Z+R06bd5349bd3 on Fri Apr 11 10:04:34 EDT 2025-->
+  <decoderIndex version="641">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -2765,6 +2765,9 @@
         <model model="BDL16" />
         <model model="BDL162" />
         <model model="BDL168" />
+      </family>
+      <family name="Series 7 Boards" mfg="Digitrax" modes="LOCONETBD7OPSWMODE" file="Digitrax_BDL716.xml">
+        <model model="BDL716" />
       </family>
       <family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111" file="Digitrax_Basic.xml">
         <model model="DH083" numOuts="5" numFns="3" />
@@ -19200,6 +19203,7 @@
       </family>
       <family name="Tsunami2 Diesel OEM Genesis" mfg="SoundTraxx (Throttle-Up)" lowVersionID="71" file="SoundTraxx_Tsu2_Diesel_OEM_Genesis.xml">
         <model model="TSU-21PNEM8 RS-3 1" numOuts="8" numFns="30" productID="6451" comment="Model 21T1500.001" />
+        <model model="TSU-21PNEM8 RS-3 2" numOuts="8" numFns="30" productID="6452" comment="Model 21T1500.002" />
         <model model="TSU-GN2208 DDA40X 1" numOuts="8" numFns="30" productID="6377" comment="Model 8T0208.001" />
         <model model="TSU-GN2208 DDA40X 2" numOuts="8" numFns="30" productID="6378" comment="Model 8T0208.002" />
         <model model="TSU-GN2208 DDA40X 3" numOuts="8" numFns="30" productID="6379" comment="Model 8T0208.003" />
@@ -19217,12 +19221,14 @@
         <model model="TSU-GN2208 F7 15" numOuts="8" numFns="30" productID="6320" comment="Model 8T0102.015" />
         <model model="TSU-GN2208 F7 16" numOuts="8" numFns="30" productID="6365" comment="Model 8T0103.016" />
         <model model="TSU-GN2208 F7 17" numOuts="8" numFns="30" productID="6366" comment="Model 8T0103.017" />
+        <model model="TSU-GN2208 F7/GP7 7" numOuts="8" numFns="30" productID="6319" comment="Model 8T0102.007" />
         <model model="TSU-GN2208 F7/GP7 10" numOuts="8" numFns="30" productID="6331" comment="Model 8T0103.010" />
         <model model="TSU-GN2208 F7/GP9 9" numOuts="8" numFns="30" productID="6328" comment="Model 8T0103.009" />
         <model model="TSU-GN2208 FP7" numOuts="8" numFns="30" productID="6330" comment="Model 8T0102.024" />
         <model model="TSU-GN2200 GP7" numOuts="6" numFns="30" productID="6146" comment="Model T0102.001B" />
         <model model="TSU-GN2208 GP7" numOuts="8" numFns="30" productID="6292" comment="Model 8T0103.008" />
         <model model="TSU-GN2208 GP7 13" numOuts="8" numFns="30" productID="6333" comment="Model 8T0103.013" />
+        <model model="TSU-GN2208 GP7 15" numOuts="8" numFns="30" productID="6320" comment="Model 8T0103.015" />
         <model model="TSU-GN2208 GP7 19" numOuts="8" numFns="30" productID="6351" comment="Model 8T0103.019" />
         <model model="TSU-GN2208 GP7 20" numOuts="8" numFns="30" productID="6357" comment="Model 8T0103.020" />
         <model model="TSU-GN2208 GP7 20a" numOuts="8" numFns="30" productID="6336" comment="Model 8T0102.020" />
@@ -19286,6 +19292,11 @@
         <model model="TSU-GN2208 GP38-2 24" numOuts="8" numFns="30" productID="6374" comment="Model 8T0203.024" />
         <model model="TSU-GN2208 GP38-2 25" numOuts="8" numFns="30" productID="6435" comment="Model 8T0203.025" />
         <model model="TSU-GN2208 GP38-2 26" numOuts="8" numFns="30" productID="6436" comment="Model 8T0203.026" />
+        <model model="TSU-GN2208 GP38-2 29" numOuts="8" numFns="30" productID="6471" comment="Model 8T0203.029" />
+        <model model="TSU-GN2208 GP38-2 30" numOuts="8" numFns="30" productID="6472" comment="Model 8T0203.030" />
+        <model model="TSU-GN2208 GP38-2 31" numOuts="8" numFns="30" productID="6473" comment="Model 8T0203.031" />
+        <model model="TSU-GN2208 GP38-2 32" numOuts="8" numFns="30" productID="6474" comment="Model 8T0203.032" />
+        <model model="TSU-GN2208 GP38-2 34" numOuts="8" numFns="30" productID="6476" comment="Model 8T0203.034" />
         <model model="TSU-GN2200 GP38-2 w/ beacon/strobe" numOuts="6" numFns="30" productID="6153" comment="Model T0203.003B" />
         <model model="TSU-GN2200 GP38-2 w/DB" numOuts="6" numFns="30" productID="6216" comment="Model T0203.002B" />
         <model model="TSU-GN2200 GP38-2 w/DB2" numOuts="6" numFns="30" productID="6218" comment="Model T0203.005B" />
@@ -19314,6 +19325,11 @@
         <model model="TSU-GN2208 GP40-2 11" numOuts="8" numFns="30" productID="6337" comment="Model 8T0204.011" />
         <model model="TSU-GN2208 GP40-2 12" numOuts="8" numFns="30" productID="6338" comment="Model 8T0204.012" />
         <model model="TSU-GN2208 GP40-2 13" numOuts="8" numFns="30" productID="6408" comment="Model 8T0204.013" />
+        <model model="TSU-GN2208 GP40-2 19" numOuts="8" numFns="30" productID="6487" comment="Model 8T0204.019" />
+        <model model="TSU-GN2208 GP40-2 20" numOuts="8" numFns="30" productID="6488" comment="Model 8T0204.020" />
+        <model model="TSU-GN2208 GP40-2 21" numOuts="8" numFns="30" productID="6489" comment="Model 8T0204.021" />
+        <model model="TSU-GN2208 GP40-2 22" numOuts="8" numFns="30" productID="6490" comment="Model 8T0204.022" />
+        <model model="TSU-GN2208 GP40-2 23" numOuts="8" numFns="30" productID="6491" comment="Model 8T0204.023" />
         <model model="TSU-GN2200 GP40-2 w/DB" numOuts="6" numFns="30" productID="6225" comment="Model T0204.006B" />
         <model model="TSU-GN2200 GP40-2 w/DB,beacon" numOuts="6" numFns="30" productID="6224" comment="Model T0204.005B" />
         <model model="TSU-GN2200 GP40-2 w/DB,strobe" numOuts="6" numFns="30" productID="6223" comment="Model T0204.004B" />
@@ -19322,6 +19338,7 @@
         <model model="TSU-GN2208 GP40-2 w/gyra2" numOuts="8" numFns="30" productID="6303" comment="Model 8T0205.010" />
         <model model="TSU-GN2208 GP40-2 w/strato" numOuts="8" numFns="30" productID="6302" comment="Model 8T0204.010" />
         <model model="TSU-GN2208 GP40-2 w/strato2" numOuts="8" numFns="30" productID="6324" comment="Model 8T0206.006" />
+        <model model="TSU-GN2208 GP40-2L 24" numOuts="8" numFns="30" productID="6492" comment="Model 8T0204.024" />
         <model model="TSU-GN2200 GP40-2L/W w/ditch" numOuts="6" numFns="30" productID="6161" comment="Model T0204.002B" />
         <model model="TSU-GN2200 GP40-2L/W w/gyra" numOuts="6" numFns="30" productID="6162" comment="Model T0204.003B" />
         <model model="TSU-GN2200 GP40-2L/W w/mars" numOuts="6" numFns="30" productID="6160" comment="Model T0204.001B" />
@@ -19381,6 +19398,9 @@
         <model model="TSU-GN2208 SD60M 11" numOuts="8" numFns="30" productID="6438" comment="Model 8T0302.011" />
         <model model="TSU-GN2208 SD60M 12" numOuts="8" numFns="30" productID="6439" comment="Model 8T0302.012" />
         <model model="TSU-GN2200 SD70ACe" numOuts="6" numFns="30" productID="6167" comment="Model T0303.001B" />
+        <model model="TSU-GN2208 SD70ACe 5" numOuts="8" numFns="30" productID="6467" comment="Model 8T0303.005" />
+        <model model="TSU-GN2208 SD70ACe 6" numOuts="8" numFns="30" productID="6468" comment="Model 8T0303.006" />
+        <model model="TSU-GN2208 SD70ACe 7" numOuts="8" numFns="30" productID="6469" comment="Model 8T0303.007" />
         <model model="TSU-GN2200 SD70ACe w/LED" numOuts="6" numFns="30" productID="6212" comment="Model T0303.001" />
         <model model="TSU-GN2208 SD70ACe w/LED 2" numOuts="8" numFns="30" productID="6248" comment="Model 8T0303.001" />
         <model model="TSU-GN2208 SD70ACe w/LED" numOuts="8" numFns="30" productID="6283" comment="Model 8T0303.003" />
@@ -19397,6 +19417,7 @@
         <model model="TSU-GN2208 SD70 10" numOuts="8" numFns="30" productID="6353" comment="Model 8T0301.010" />
         <model model="TSU-GN2200 SD70M/75M" numOuts="6" numFns="30" productID="6154" comment="Model T0301.001B" />
         <model model="TSU-GN2200 SD70M w/ditch" numOuts="6" numFns="30" productID="6155" comment="Model T0301.002B" />
+        <model model="TSU-GN2208 SD75I 7" numOuts="8" numFns="30" productID="6276" comment="Model 8T0301.007" />
         <model model="TSU-GN2208 SD75M" numOuts="8" numFns="30" productID="6274" comment="Model 8T0301.005" />
         <model model="TSU-GN2208 SD80MAC" numOuts="8" numFns="30" productID="6311" comment="Model 8T0304.002" />
         <model model="TSU-GN2208 SD80MAC 1" numOuts="8" numFns="30" productID="6310" comment="Model 8T0304.001" />
@@ -19424,8 +19445,11 @@
         <model model="TSU-GN2208 ES44DC w/ditch" numOuts="8" numFns="30" productID="6298" comment="Model 8T1004.003" />
         <model model="TSU-GN2208 P42" numOuts="8" numFns="30" productID="6364" comment="Model 8T1005.001" />
         <model model="TSU-GN2208 P42 2" numOuts="8" numFns="30" productID="6285" comment="Model 8T1005.002" />
+        <model model="TSU-GN2208 P42 3" numOuts="8" numFns="30" productID="6286" comment="Model 8T1005.003" />
+        <model model="TSU-GN2208 P42 4" numOuts="8" numFns="30" productID="6455" comment="Model 8T1005.004" />
         <model model="TSU-GN2208 U50 1" numOuts="8" numFns="30" productID="6456" comment="Model 8T1003.001" />
         <model model="TSU-GN2208 U50 2" numOuts="8" numFns="30" productID="6457" comment="Model 8T1003.002" />
+        <model model="TSU-GN2208 Gas Turbine 2" numOuts="8" numFns="30" productID="6397" comment="Model 8TGT.002" />
         <output name="3" label="  FX3  " />
         <output name="4" label="  FX4  " />
         <output name="5" label="Airhorn| ">
