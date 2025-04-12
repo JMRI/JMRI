@@ -471,7 +471,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Improved some GUI layouts by adding scroll bars</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
