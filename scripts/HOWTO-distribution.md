@@ -464,6 +464,8 @@ Note that the purpose of this check is to make sure that the _files_ were built 
 
 - *Wait for some replies about all three platforms before proceeding*
 
+- Send a thank you note to the people who tested the files
+
 ================================================================================
 ## Further Changes to Contents Before Release
 
