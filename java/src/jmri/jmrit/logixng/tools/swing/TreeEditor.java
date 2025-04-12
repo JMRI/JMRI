@@ -714,7 +714,12 @@ public class TreeEditor extends TreeViewer {
                 false);
 //        frame.addHelpMenu(
 //                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
-        Container contentPanel = dialog.getContentPane();
+
+//        Container contentPanel = dialog.getContentPane();
+
+        JPanel contentPanel = new JPanel();
+        var scrollPane = new javax.swing.JScrollPane(contentPanel);
+        dialog.getContentPane().add(scrollPane);
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         JPanel p;
@@ -777,7 +782,7 @@ public class TreeEditor extends TreeViewer {
 
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
-        panel5.setLayout(new FlowLayout());
+        panel5.setLayout(new jmri.util.swing.WrapLayout());
 
         Base object = null;
 
