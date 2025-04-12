@@ -394,6 +394,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     // replace load name for all car types
     private void replaceAllLoads(String oldLoad, String newLoad) {
         for (String type : carTypes.getNames()) {
+            // need to delete when changing default load names
+            if (carLoads.containsName(type, newLoad)) {
+                carLoads.deleteName(type, newLoad);
+            }
             carLoads.addName(type, newLoad);
             replaceLoad(type, oldLoad, newLoad);
             carLoads.deleteName(type, oldLoad);
