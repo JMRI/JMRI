@@ -53,6 +53,10 @@ public class TransitScaffold {
         final MyDestinationPoints myBeanEntryExit;
 
         public MyEntryExitPairs() {
+            log.warn("Create MyEntryExitPairs");
+            log.warn("Create MyEntryExitPairs: {}", hashCode());
+            System.out.format("Create MyEntryExitPairs: %d%n", hashCode());
+//            new Exception("DanielDaniel").printStackTrace();
             InstanceManager.getDefault(SignalHeadManager.class)
                     .register(new VirtualSignalHead("IHTransitScaffold"));
             point = new MyPointDetails();
@@ -62,6 +66,8 @@ public class TransitScaffold {
             dp2 = new MyDestinationPoints(new MyPointDetails(), "DP2", src);
             dp2.setUserName("Destination point 2");
             myBeanEntryExit = new MyDestinationPoints(new MyPointDetails(), "MyBeanEntryExit", src);
+            myBeanEntryExit.setUserName("Destination point MyBean");
+            log.warn("Create MyEntryExitPairs done");
         }
 
         @Override
@@ -72,6 +78,8 @@ public class TransitScaffold {
                 case "DP2":
                     return dp2;
                 case "MyBeanEntryExit":
+                    return myBeanEntryExit;
+                case "Destination point MyBean":
                     return myBeanEntryExit;
                 default:
                     throw new IllegalArgumentException("Unknown system name: "+systemName);
@@ -91,4 +99,5 @@ public class TransitScaffold {
         }
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitScaffold.class);
 }

@@ -6,13 +6,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.stream.Stream;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.SystemConnectionMemo;
+import jmri.*;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.TransitScaffold;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;

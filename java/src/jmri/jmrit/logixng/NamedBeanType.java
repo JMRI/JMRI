@@ -317,9 +317,15 @@ public enum NamedBeanType {
     // managers in this enum.
     public static void reset() {
         for (NamedBeanType type : NamedBeanType.values()) {
-            type._manager = type._getManager.getManager();
+            Manager<? extends NamedBean> mgr = type._getManager.getManager();
+            if (type == EntryExit) {
+                System.out.format("Reset manager: %s, Old: %d, new: %d%n", type.name(), type._manager.hashCode(), mgr.hashCode());
+                log.warn("Reset manager: {}, Old: {}, new: {}", type.name(), type._manager.hashCode(), mgr.hashCode());
+            }
+            type._manager = mgr;
         }
     }
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NamedBeanType.class);
 
     private interface GetManager {
 

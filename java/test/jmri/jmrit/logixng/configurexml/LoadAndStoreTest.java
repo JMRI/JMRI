@@ -90,6 +90,8 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         InstanceManager.setDefault(MqttSystemConnectionMemo.class, mqttMemo);
 
         TransitScaffold.initTransits();
+//        JUnitUtil.initLogixNGManager(false);
+        jmri.jmrit.logixng.NamedBeanType.reset();
     }
 
     @AfterEach
