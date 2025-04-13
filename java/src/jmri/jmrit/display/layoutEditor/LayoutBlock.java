@@ -4310,6 +4310,57 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 pathActive = allset;
             }
         }
+
+        // We keep a track of what is paths are active, only so that we can easily mark
+        // which routes are also potentially valid
+        private List<ThroughPaths> activePaths;
+
+        private void updateActiveThroughPaths(ThroughPaths tp, boolean active) {
+            updateRouteLog.debug("We have been notified that a through path has changed state");
+
+            if (activePaths == null) {
+                activePaths = new ArrayList<>();
+            }
+
+            if (active) {
+                activePaths.add(tp);
+                setRoutesValid(tp.getSourceBlock(), active);
+                setRoutesValid(tp.getDestinationBlock(), active);
+            } else {
+                // We need to check if either our source or des is in use by another path.
+                activePaths.remove(tp);
+                boolean sourceInUse = false;
+                boolean destinationInUse = false;
+
+                List<ThroughPaths> copyOfPaths = activePaths;
+                for (ThroughPaths activePath : copyOfPaths) {
+                    Block testSour = activePath.getSourceBlock();
+                    Block testDest = activePath.getDestinationBlock();
+                    if ((testSour == tp.getSourceBlock()) || (testDest == tp.getSourceBlock())) {
+                        sourceInUse = true;
+                    }
+                    if ((testSour == tp.getDestinationBlock()) || (testDest == tp.getDestinationBlock())) {
+                        destinationInUse = true;
+                    }
+                }
+
+                if (!sourceInUse) {
+                    setRoutesValid(tp.getSourceBlock(), active);
+                }
+
+                if (!destinationInUse) {
+                    setRoutesValid(tp.getDestinationBlock(), active);
+                }
+            }
+
+            for (int i = 0; i < throughPaths.size(); i++) {
+                // This is processed simply for the throughpath table.
+                if (tp == throughPaths.get(i)) {
+                    firePropertyChange(PROPERTY_PATH, null, i);
+                }
+            }
+        }
+
     }
 
     @Nonnull
@@ -4365,55 +4416,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             setRoutesValid(t.getDestinationBlock(), t.isPathActive());
             setRoutesValid(t.getSourceBlock(), t.isPathActive());
             firePropertyChange(PROPERTY_PATH, null, i);
-        }
-    }
-
-    // We keep a track of what is paths are active, only so that we can easily mark
-    // which routes are also potentially valid
-    private List<ThroughPaths> activePaths;
-
-    void updateActiveThroughPaths(ThroughPaths tp, boolean active) {
-        updateRouteLog.debug("We have been notified that a through path has changed state");
-
-        if (activePaths == null) {
-            activePaths = new ArrayList<>();
-        }
-
-        if (active) {
-            activePaths.add(tp);
-            setRoutesValid(tp.getSourceBlock(), active);
-            setRoutesValid(tp.getDestinationBlock(), active);
-        } else {
-            // We need to check if either our source or des is in use by another path.
-            activePaths.remove(tp);
-            boolean sourceInUse = false;
-            boolean destinationInUse = false;
-
-            for (ThroughPaths activePath : activePaths) {
-                Block testSour = activePath.getSourceBlock();
-                Block testDest = activePath.getDestinationBlock();
-                if ((testSour == tp.getSourceBlock()) || (testDest == tp.getSourceBlock())) {
-                    sourceInUse = true;
-                }
-                if ((testSour == tp.getDestinationBlock()) || (testDest == tp.getDestinationBlock())) {
-                    destinationInUse = true;
-                }
-            }
-
-            if (!sourceInUse) {
-                setRoutesValid(tp.getSourceBlock(), active);
-            }
-
-            if (!destinationInUse) {
-                setRoutesValid(tp.getDestinationBlock(), active);
-            }
-        }
-
-        for (int i = 0; i < throughPaths.size(); i++) {
-            // This is processed simply for the throughpath table.
-            if (tp == throughPaths.get(i)) {
-                firePropertyChange(PROPERTY_PATH, null, i);
-            }
         }
     }
 

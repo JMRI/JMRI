@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.util.*;
 
@@ -15,6 +15,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Contains methods for cars when building a train.
@@ -1528,6 +1529,11 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             car.setFinalDestinationTrack(tracks.get(1));
                             tracks.get(1).bumpMoves();
                         }
+                        addLine(_buildReport, FIVE,
+                                Bundle.getMessage("buildCarCanDropMoves", car.toString(),
+                                        tracks.get(0).getTrackTypeName(),
+                                        tracks.get(0).getLocation().getName(), tracks.get(0).getName(),
+                                        rld.getCarMoves(), rld.getMaxCarMoves()));
                         addCarToTrain(car, rl, rld, tracks.get(0));
                         return true;
                     }

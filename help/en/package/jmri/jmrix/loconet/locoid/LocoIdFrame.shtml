@@ -17,9 +17,9 @@
 
       <h2>What is LocoNet ID?</h2>
 
-      <p>The "LocoNet ID" is a number which is used by throttles and UR90, UR91, UR92, and UR92CE
+      <p>The "LocoNet ID" is a number which is used by throttles and UR90, UR90X, UR91, UR92, and UR92CE
       devices when a throttle is operating in a tetherless mode using infrared or simplex radio
-      communications. When receiving infrared signals, the UR90, UR91, UR92 will only pay attention
+      communications. When receiving infrared signals, the UR90, UR90X, UR91, UR92 and UR92CE will only pay attention
       to throttles which are using the same LocoNet ID number. When receiving simplex radio
       signals, the UR91 will only pay attention to throttles which are using the same LocoNet ID
       number.</p>
@@ -59,8 +59,8 @@
 
       <h2>See Also</h2>
 
-      <p>For more information on the UR90 and its infrared tetherless operation, see the
-      appropriate UR90 link at the <a href="http://digitrax.com/menu_wireless.php">Digitrax
+      <p>For more information on the UR90 or UR90X and its infrared tetherless operation, see the
+      appropriate UR90 or UR90X link at the <a href="http://digitrax.com/menu_wireless.php">Digitrax
       "Wireless" page</a>.</p>
 
       <p>For more information on the UR91 and its infrared and "Simplex" radio tetherless
@@ -70,6 +70,8 @@
       <p>For more information on the UR92 and its infrared and "Duplex" radio tetherless operation,
       see the appropriate link at the <a href="http://digitrax.com/menu_wireless.php">Digitrax
       "Wireless" page</a>.</p>
+
+      <p>The UR93 does not support infrared.</p>
 
       <p>See also page 98 of the Digitrax <a href=
       "http://www.digitrax.com/ftp/superchief.pdf">Super Chief manual</a>(PDF).</p>

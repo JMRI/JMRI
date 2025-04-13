@@ -20,6 +20,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;

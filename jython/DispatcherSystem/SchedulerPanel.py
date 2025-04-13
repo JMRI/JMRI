@@ -389,7 +389,7 @@ class CreateAndShowGUI4(TableModelListener):
                     return
                 if file.exists():
                     os.remove(file.getAbsolutePath())
-                    print("File " + file.getName() + " has been deleted successfully.")
+                    # print("File " + file.getName() + " has been deleted successfully.")
                 else:
                     print("The selected file does not exist.")
             else:
@@ -402,7 +402,7 @@ class CreateAndShowGUI4(TableModelListener):
         # Open and close the Operations Panel to force save of any extra trains
         if self.find_frame_by_title("Trains") is None:
             # print "did not find frame Trains so creating it"
-            a = jmri.jmrit.operations.trains.TrainsTableAction()
+            a = jmri.jmrit.operations.trains.gui.TrainsTableAction()
             a.actionPerformed(None)
         # now close
         f = self.find_frame_by_title("Trains")
@@ -519,9 +519,9 @@ class CreateAndShowGUI4(TableModelListener):
     def save(self):
         [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
         # print "save_action"
-        print "self.model.data", self.model.data
+        # print "self.model.data", self.model.data
         self.clear_everything()
-        print "self.model.data after", self.model.data
+        # print "self.model.data after", self.model.data
         # print "apply action"
         for row in reversed(range(len(self.model.data))):
             # print "save row", row
@@ -545,7 +545,7 @@ class CreateAndShowGUI4(TableModelListener):
             self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
 
     def save_schedule(self, row, time_name, route_name, repeat_name, dont_schedule_name, train_name, train_description):
-        print "save_schedule: train", train_name
+        # print "save_schedule: train", train_name
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train = TrainManager.newTrain(train_name)
 
@@ -655,11 +655,8 @@ class CreateAndShowGUI4(TableModelListener):
                 #y = [item.replace('"','') for item in y]
                 if self.logLevel > 0: print "y" , y
                 n_list.append(y)
-                print "z"
 
         return n_list
-        # except:
-        #     return ["",""]
 
 class MyModelListener4(TableModelListener):
 
@@ -721,10 +718,7 @@ class MyModelListener4(TableModelListener):
     def show_time_picker(self):
         # Show a simple JOptionPane input dialog for time selection
         selected_time = JOptionPane.showInputDialog(None, "Select a time (HH:mm):")
-        # if selected_time:
-        #     print("Selected time:", selected_time)
         return selected_time
-
 
 class ComboBoxCellRenderer4 (TableCellRenderer):
 
@@ -764,7 +758,7 @@ class MyTableModel4 (DefaultTableModel):
             # indices = [int(train.getName().split("Train",1)[1]) for train in train_list if train.getName().startswith("Train")]
             indices = [int(self.data[row][train_name_col].split("Train",1)[1]) for row in reversed(range(len(self.data)))
                        if self.data[row][train_name_col].startswith("Train")]
-            print "indices", indices
+            # print "indices", indices
         if indices == []:
             index = 1
         else:

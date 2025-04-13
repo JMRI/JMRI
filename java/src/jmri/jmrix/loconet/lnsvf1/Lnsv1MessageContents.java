@@ -377,13 +377,15 @@ public class Lnsv1MessageContents {
         return returnString + "\n"; // NOI18N
     }
 
+    private static final String HEX_FORMAT = "0x%02X";
+
     /**
      * Format byte for decimal + (optional) hex display
      *
      */
     public static String toHexStr(int value) {
         if (value > 9) {
-            return value + " (" + String.format("0x%02X", value) + ")";
+            return value + " (" + String.format(HEX_FORMAT, value) + ")";
         } else {
             return String.valueOf(value);
         }
@@ -397,16 +399,16 @@ public class Lnsv1MessageContents {
         String res = String.valueOf(low);
         if (high == 0) {
             if (low > 9) {
-                res += " (" + String.format("0x%02X", low) + ")";
+                res += " (" + String.format(HEX_FORMAT, low) + ")";
             }
             return res;
         }
         res += "/" + high;
         if (low > 9 || high > 9) {
             res += " (";
-            res += (low > 9 ? String.format("0x%02X", low) : low);
+            res += (low > 9 ? String.format(HEX_FORMAT, low) : low);
             res += "/";
-            res += (high > 9 ? String.format("0x%02X", high) : high);
+            res += (high > 9 ? String.format(HEX_FORMAT, high) : high);
             res += ")";
         }
         return res;

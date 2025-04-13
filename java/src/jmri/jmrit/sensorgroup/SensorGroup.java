@@ -1,13 +1,12 @@
 package jmri.jmrit.sensorgroup;
 
 import java.util.ArrayList;
+
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.implementation.DefaultRoute;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Object for representing, creating and editing sensor groups.
@@ -25,11 +24,11 @@ public class SensorGroup {
      */
     //private SensorGroup() {
     //}
-    private final static String namePrefix = "SENSOR GROUP:";  // should be upper case
-    private final static String nameDivider = ":";
+    private static final String NAME_PREFIX = "SENSOR GROUP:";  // should be upper case
+    private static final String NAME_DIVIDER = ":";
 
-    String name;
-    ArrayList<String> sensorList;
+    private final String name;
+    private final ArrayList<String> sensorList;
 
     /**
      * Create one, looking up an existing one if present
@@ -40,9 +39,9 @@ public class SensorGroup {
         // find suitable 
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
         String group = name;
-        String prefix = (namePrefix + group + nameDivider);
+        String prefix = (NAME_PREFIX + group + NAME_DIVIDER);
 
-        sensorList = new ArrayList<String>();
+        sensorList = new ArrayList<>();
         for (Route route : rm.getNamedBeanSet()) {
             String routeName = route.getSystemName();
             if (routeName.startsWith(prefix)) {
@@ -59,7 +58,7 @@ public class SensorGroup {
         String group = name;
 
         // remove the old routes
-        String prefix = (namePrefix + group + nameDivider);
+        String prefix = (NAME_PREFIX + group + NAME_DIVIDER);
 
         for (Route r : rm.getNamedBeanSet()) {
             String routeName = r.getSystemName();
@@ -73,7 +72,7 @@ public class SensorGroup {
         // add the new routes
         for (int i = 0; i < sensorList.size(); i++) {
             String sensor = sensorList.get(i);
-            String routeName = namePrefix + group + nameDivider + sensor;
+            String routeName = NAME_PREFIX + group + NAME_DIVIDER + sensor;
             Route r = new DefaultRoute(routeName);
             // add the control sensor
             r.addSensorToRoute(sensor, Route.ONACTIVE);
@@ -92,6 +91,6 @@ public class SensorGroup {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SensorGroup.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SensorGroup.class);
 
 }

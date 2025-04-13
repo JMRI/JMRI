@@ -262,19 +262,16 @@ class MyModelListener3(TableModelListener):
         column = e.getColumn()
         model = e.getSource()
         columnName = model.getColumnName(column)
-        print "a"
         data = model.getValueAt(row, column)
         tablemodel = self.class_createandshowGUI3.model
 
         if column == direction_change_col:
-            print "b"
             train_name = str(model.getValueAt(row, setup_train_col))
             self.swap_direction_of_train(train_name)        # swap throttle direction
             self.swap_direction(train_name)                 # swap active train direction
             self.class_createandshowGUI3.populate_action(None)
 
         if column == del_setup_train_col:
-            print "c"
             train_name = str(model.getValueAt(row, setup_train_col))
             if self.logLevel > 0: print "trains_allocated", trains_allocated
             if self.logLevel > 0: print "train_name", train_name
@@ -289,7 +286,6 @@ class MyModelListener3(TableModelListener):
             self.class_createandshowGUI3.populate_action(None)
 
         elif column == del_transit_col:
-            print "d"
             transit = str(model.getValueAt(row, transit_col))
             train_name = [active_train.getTrainName() for active_train in self.java_active_trains_list \
                        if active_train.getTransit().getUserName() == transit]
@@ -306,7 +302,6 @@ class MyModelListener3(TableModelListener):
             # model.fireTableDataChanged()
 
         elif column == del_route_col:
-            print "e"
             transit = str(model.getValueAt(row, transit_col))
             train_name = [active_train.getTrainName() for active_train in self.java_active_trains_list \
                           if active_train.getTransit().getUserName() == transit]

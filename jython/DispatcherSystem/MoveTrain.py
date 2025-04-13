@@ -627,7 +627,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         self.trainInfo.setSpeedFactor(float(speedFactor))
 
         # setMinReliableOperatingSpeed
-        percentage = 10.0
+        percentage = 10.5
         self.trainInfo.setMinReliableOperatingSpeed(percentage/100)
 
         if self.logLevel > 0: print "self.forward_stopping_sensor_exists(self.trainInfo)",self.forward_stopping_sensor_exists(self.trainInfo)
@@ -1061,7 +1061,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def check_swap_train_direction(self):
         trains_to_choose = self.get_allocated_trains()
-        print "trains_to_choose", trains_to_choose
+        # print "trains_to_choose", trains_to_choose
         if trains_to_choose == []:
             s = OptionDialog().displayMessage("no allocated trains to select")
         else:

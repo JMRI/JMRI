@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.csv;
 
 import java.io.*;
 
@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 
 /**

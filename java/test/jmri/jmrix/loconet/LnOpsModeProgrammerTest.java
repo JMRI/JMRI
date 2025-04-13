@@ -15,7 +15,6 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
     LocoNetSystemConnectionMemo memo;
     ProgListenerScaffold pl;
     LnOpsModeProgrammer lnopsmodeprogrammer;
-
     @Override
     @Test
     public void testGetCanWriteAddress() {
@@ -687,9 +686,6 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
     }
 
-    /*
-    This is the targeted test.  The one that fails...
-    */
     @Test
     public void testOps7genAccyWritesAccesses() throws ProgrammerException {
         // disallow transponding
@@ -727,8 +723,11 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, address, true);
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBD7OPSWMODE);
 
+        log.debug("checkSome7thGenAccyReads start; address = {}", address);
+
         LocoNetMessage m;
         for (i = 0; i <8; ++ i) {
+            log.debug("checkSome7thGenAccyReads iteration {}", i);
 
             lnis.clearReceivedMessages();
             Assert.assertEquals("Zero messages sent", 0, lnis.outbound.size());
@@ -819,9 +818,8 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             m = getLnLongAckFromVal(num);
             lnis.sendTestMessage(m); // (Device sends the message on LocoNet)
 
-            log.debug("   testcase device opc_long_ack reply and data was sent.");
-
-            log.debug("   testcase: after send, pl.getRcvdInvoked() is {}  for j = {}, num= {}.",
+            log.debug("   checkSome7thGenAccyReads: testcase device opc_long_ack reply and data was sent;"
+                    + " after send, pl.getRcvdInvoked() is {}  for j = {}, num= {}.",
                     Integer.toString(pl.getRcvdInvoked()), j, num);
             JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"getRcvdInvoked not set (#2)");
             Assert.assertEquals("saw 1 message sent", 1, lnis.outbound.size());
@@ -834,8 +832,9 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             } catch (InterruptedException e) {
             }
 
-            log.debug("!!!!!! end of test loop !!!!!!");
+            log.debug("!! checkSome7thGenAccyReads: end of test !!");
         }
+        log.debug("!!!!!! checkSome7thGenAccyReads: end of test loop !!!!!!");
      }
 
     private void checkSome7thGenAccyWrites(int address)  throws ProgrammerException {
@@ -844,13 +843,14 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         int i;
         lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, address, true);
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBD7OPSWMODE);
+        log.debug("checkSome7thGenAccyWrites start, address = {}", address);
 
         LocoNetMessage m;
         for (i = 0; i <8; ++ i) {
-
+            num = 1 << i;
+            log.debug("checkSome7thGenAccyWrites iteration {}, num = {}", i, num);
             lnis.clearReceivedMessages();
             Assert.assertEquals("Zero messages sent", 0, lnis.outbound.size());
-            num = 1 << i;
             pl = new ProgListenerScaffold();
             Assert.assertEquals("no programmingListener reply (yet)",
                     0, pl.getRcvdInvoked());
@@ -902,7 +902,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             // check echo of sent message has no effect
             log.debug("   testcase got access request message from JMRI's LocoNet transmit");
             m = lnis.outbound.get(0);
-            log.debug("   testcase copies access request to IN as an echo");
+            log.debug("   checkSome7thGenAccyWrites: testcase copies access request to IN as an echo");
             lnis.sendTestMessage(m);  // (LocoNet echo of transmitted message!)
             log.debug("   testcase has echoed CV access request");
 
@@ -921,7 +921,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             // receive a LACK "accepted" from "command station"
             m = new LocoNetMessage(new int[]{0xB4, 0x6d, 0x7f, 0x64});
 
-            log.debug("   testcase is sending c.s.'s 'long_ack' as {}", m.toString());
+            log.debug("   checkSome7thGenAccyWrites: testcase is sending c.s.'s 'long_ack' as {}", m.toString());
             lnis.sendTestMessage(m);  // (Command station default response)
 
             Assert.assertEquals("saw 1 message sent", 1, lnis.outbound.size());
@@ -936,7 +936,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
             // Now "receive" the reply from the 7th-gen Accy device
 
-            log.debug("   testcase device opc_long_ack reply being sent: "+m.toString()+
+            log.debug("   checkSome7thGenAccyWrites testcase device opc_long_ack reply being sent: "+m.toString()+
                     "; j = "+Integer.toString(j)+" before sent.");
 
             // wait a while for the device to reply
@@ -945,26 +945,29 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
             } catch (InterruptedException e) {
             }
 
+            // send the reply from the device
             m = getLnLongAckFromVal(0x5A);
             lnis.sendTestMessage(m); // (Device sends the message on LocoNet)
 
-            log.debug("   testcase device opc_long_ack reply and data was sent.");
-
+            log.debug("   testcase device opc_long_ack reply was sent.");
             log.debug("   testcase: after send, pl.getRcvdInvoked() is {}  for j = {}, num= {}.",
                     Integer.toString(pl.getRcvdInvoked()), j, num);
             JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"getRcvdInvoked not set (#2)");
             Assert.assertEquals("saw 1 message sent", 1, lnis.outbound.size());
             Assert.assertEquals("Still Reply status OK", 0, pl.getRcvdStatus());
-            Assert.assertEquals("Expected result of 0x5A", 0x5A, pl.getRcvdValue());
-            log.debug("Got readCV result of {} at {}.",pl.getRcvdValue(), java.time.LocalTime.now());
+            // figure result  expectationres
+            int result = ((num & 1)==1)?0:1;
+            log.debug("checkSome7thGenAccyWrites write value was {}, result expected is {}", num, result);
 
+            Assert.assertEquals("checkSome7thGenAccyWrites Expected result of "+Integer.toString(result), result, pl.getRcvdValue());
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
             }
 
-            log.debug("!!!!!! end of test loop !!!!!!");
+            log.debug("!! checkSome7thGenAccyWrites: end of test loop !!");
         }
+        log.debug("end of checkSome7thGenAccyWrites");
      }
 
     private LocoNetMessage getLnLongAckFromVal(int val) {

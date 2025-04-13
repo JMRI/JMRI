@@ -1839,12 +1839,12 @@
                             </li>
                                
                             <li>
-                                <a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">LNCV Programmer </a>
+                                <a href="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Manage LNCV Modules </a>
                                 <ul></ul>
                             </li>
                                
                             <li>
-                                <a href="package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO Configuration Tool </a>
+                                <a href="package/jmri/jmrix/loconet/swing/lnsv1prog/Lnsv1ProgPane.shtml">Manage LocoIO Modules </a>
                                 <ul></ul>
                             </li>
                                

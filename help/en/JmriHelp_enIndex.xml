@@ -227,6 +227,8 @@
 
   <indexitem text="UR90 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
+  <indexitem text="UR90X " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+
   <indexitem text="UR91 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
   <indexitem text="UR92 " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
@@ -374,6 +376,8 @@
   <indexitem text="LocoBuffer-II " target="html.hardware.loconet.LocoBufferII"/>
 
   <indexitem text="LocoBuffer-USB " target="html.hardware.loconet.LocoBufferUSB"/>
+
+  <indexitem text="LocoBuffer-NG " target="html.hardware.loconet.LocoBufferUSB"/>
 
   <indexitem text="LocoIO " target="html.hardware.loconet.LocoIO"/>
 

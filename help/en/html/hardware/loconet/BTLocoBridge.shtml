@@ -16,8 +16,8 @@
     <div id="mainContent">
       <h1>Hardware Support: Connecting through a Bluetooth LocoBridge Adapter</h1>
 
-      <img src="http://www.mollehem.se/images/stories/virtuemart/product/bt_rensad2.png" alt=
-      "LocoAdapter picture" class="floatRight" height="205" width="166"> The <a href=
+      <img src="images/Bt_lnbridge_rensad2.png" alt=
+      "LocoBridge Adapter picture" class="floatRight"> The <a href=
       "http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">LocoBridge</a>
       allows you to connect remotely through Bluetooth to the adapter, which then connects to a
       LocoNet to control your layout.

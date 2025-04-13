@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.trains;
+package jmri.jmrit.operations.trains.csv;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +16,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.*;
 
 /**
  * Builds a train's manifest using Comma Separated Values (csv).

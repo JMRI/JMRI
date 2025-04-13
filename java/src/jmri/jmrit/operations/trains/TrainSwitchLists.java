@@ -20,6 +20,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.FileUtil;
 
 /**

@@ -485,7 +485,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if "CreateAndShowGUI5_glb" in globals():
                     if CreateAndShowGUI5_glb != None:
                         CreateAndShowGUI5_glb.frame.dispose()
-                CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed)
+                CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
                 title = "Run Train"
                 msg = "Last time to cancel"
                 opt1 = "Cancel"
@@ -562,10 +562,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 journey_time_row_displayed = True
                 # print "a"
                 if "CreateAndShowGUI5_glb" not in globals():
-                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed)
+                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
                 else:
                     CreateAndShowGUI5_glb.frame.dispose()
-                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed)
+                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
                     # print "c", CreateAndShowGUI5_glb
             # print "%%%%%type%%%%%%%%%", type(CreateAndShowGUI5_glb)
             # CreateAndShowGUI5_glb.frame.setVisible(True)
@@ -1769,6 +1769,7 @@ class Trigger_Timetable:
             return ""
         except IndexError:
             print "index error find_between", "first", first, "last", last
+
     def get_timetable(self, hour, minutes1):
 
         global schedule_trains_hourly
@@ -2011,7 +2012,6 @@ class Trigger_Timetable:
             # print "published mqtt message"
         except:
             print "failure mqtt message"
-            pass
 
     def send_clock_message(self, hour, minutes, event):
 
@@ -2203,65 +2203,48 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         prev_station_index = 0
         for station_index, station in enumerate(self.station_list):
             if self.logLevel > 0: print "self.scheduling_train", self.scheduling_train
-            # find the accumulated durations
-            if self.scheduling_train or self.set_departure_times:
-                durations = [MyTableModel5().find_between(comment, "[duration_sec-", "-duration_sec]")
-                             for comment in self.station_comment_list]
-                # print "durations 4", durations
-                accumulated_durations = []
-                total = 0
-                for n in durations:
-                    try:
-                        total += int(n)
-                    except:
-                        pass
-                    accumulated_durations.append(total)
-                station_comment = self.station_comment_list[prev_station_index]
-                accumulated_duration = accumulated_durations[prev_station_index]
-            if self.logLevel > 0: print "station", station, "station_comment", station_comment, \
-                "station_index", station_index, "prev_station_index", prev_station_index
-            if self.logLevel > 0: print "accumulated_duration", accumulated_duration
 
             # do action if one has been requested
             if self.station_is_action(station):  #if the station_name is a python_file
-                # some of the python files take an argument of the dispatch
-                # make this the default for simplic
-                # [next_station, next_station_index] = self.get_next_item_in_list(station,self.station_list)
                 action = station
                 self.execute_action(action)     # execute the python file
             else:
+                # print "running at station", "station_from", station_from
                 station_to = station  # both now strings
                 if station_from != None:    # first time round station_from is not set up
+                    # find the accumulated durations
+                    if self.scheduling_train or self.set_departure_times:
+                        durations = [MyTableModel5().find_between(comment, "[duration_sec-", "-duration_sec]")
+                                     for comment in self.station_comment_list]
+                        # print "durations 4", durations
+                        accumulated_durations = []
+                        total = 0
+                        for n in durations:
+                            try:
+                                total += int(n)
+                            except:
+                                pass
+                            accumulated_durations.append(total)
+                        if station_index != self.find_row_first_location(self.route):
+                            previous_station_index = self.find_row_prev_location(station_index, self.route)
+                            station_comment = self.station_comment_list[previous_station_index]  # do not use prev_station_index as it includes actions
+                            accumulated_duration = accumulated_durations[previous_station_index]
+                        else:
+                            station_comment = None
+                            accumulated_duration = 0
+
+                        if self.logLevel > 0: print "station", station, "station_comment", station_comment, \
+                            "station_index", station_index, "prev_station_index", prev_station_index
+                        if self.logLevel > 0: print "accumulated_duration", accumulated_duration
+
                     if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to
+
                     self.station_from_name = station_from
                     self.station_to_name = station_to
                     start_block = blocks.getBlock(station_from)
+
                     if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
-                    #train_to_move = start_block.getValue()
-                    #self.train_name = train_to_move
-                    # self.train_name = self.train_name_in
-                    # train_to_move = self.train_name_in
-                    # train_to_move = self.train_name
                     if self.logLevel > 0: print "calling move_between_stations","station_from",station_from,"station_to",station_to,"train_to_move",train_to_move
-
-                    # if self.train_name == None:
-                    #     msg = "2No train in block for scheduled train starting from " + station_from
-                    #     title = "Scheduling Error"
-                    #     opt1 = "Not scheduling train"
-                    #     if self.train_name == None:
-                    #         if self.logLevel > 0: print "2No train in block for scheduled train starting from " + station_from
-                    #         OptionDialog().customMessage(msg, title, opt1)
-                    #         start_block = blocks.getBlock(station_from)
-                    #         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
-                    #         layoutBlock = LayoutBlockManager.getLayoutBlock(start_block)
-                    #         if layoutBlock.getOccupancySensor().getKnownState() == INACTIVE:
-                    #             layoutBlock.getOccupancySensor().setKnownState(ACTIVE)
-                    #             self.waitMsec(2000)
-                    #         if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
-                    #         self.train_name = start_block.getValue()
-                    #         if self.train_name == None:
-                    #             return
-
                     if self.set_departure_times:
                         # print "setting previous time"
                         previous_time = int(round(time.time()))  # in secs
@@ -2311,6 +2294,45 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             self.waitMsec(4000)
 
         if self.logLevel > 0:  print "!     finished run_train"
+
+    def find_row_first_location(self, route):
+        # print "find_row_first_location"
+        # get the row (sequenceNo) of the first location that is not an action (a python file  xx.py)
+        routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
+                                              for routelocation in route.getLocationsBySequenceList() \
+                                              if ".py" not in routelocation.getName()]
+
+        # print "routelocationsSequenceNumber_list", routelocationsSequenceNumber_list
+        current_val = [[routelocation, sequenceNo] \
+                       for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
+                       if 1 == sequenceNo][0]
+        # print "current_val", current_val
+
+        current_index = routelocationsSequenceNumber_list.index(current_val)
+        # print "current_index", current_index
+        # print "routelocations_list", routelocations_list, "index", index
+        try:
+            [routelocation, row] = routelocationsSequenceNumber_list[current_index]
+            # row = routelocationsSequenceNumber_list[currentIndex + 1]
+        except:
+            row = None
+        # print "row", row
+        return row - 1    # row number starts from 0
+
+    def find_row_prev_location(self, row, route):
+        # get the row (sequenceNo) of the first location that is not an action (a python file  xx.py)
+        routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
+                                              for routelocation in route.getLocationsBySequenceList() \
+                                              if ".py" not in routelocation.getName()]
+        current_val_list = [[routelocation, sequenceNo] \
+                       for [routelocation, sequenceNo] in routelocationsSequenceNumber_list \
+                       if row == sequenceNo-1]
+
+        current_val = current_val_list[0]
+        current_index = routelocationsSequenceNumber_list.index(current_val)
+        [routelocation, row] = routelocationsSequenceNumber_list[current_index - 1]
+
+        return row - 1     # row number starts from 1
 
     def check_train_in_block_for_scheduling_margin_fast_minutes(self, start_block, train_to_move):
         # print "__________________________Start__" + train_to_move + "___________________________________"
@@ -2581,7 +2603,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         return path + java.io.File.separator
 
     def action_directory(self):
-        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "pythonfiles"
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "actions"
         if not os.path.exists(path):
             os.makedirs(path)
         return path + java.io.File.separator
@@ -2694,5 +2716,3 @@ class ScheduleTrains(jmri.jmrit.automat.AbstractAutomaton):
         else:
             # print "returning false", "train_block_name", train_block_name, "train.getDescription()", train.getDescription()
             return False
-
-

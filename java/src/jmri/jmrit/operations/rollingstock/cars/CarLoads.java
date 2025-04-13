@@ -13,8 +13,8 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
-import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Represents the loads that cars can have.
