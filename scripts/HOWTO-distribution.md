@@ -94,7 +94,7 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.11.5 5.11.6 5.11.6
+  ./scripts/update-HOWTO.sh 5.11.5 5.11.6 5.11.7
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
@@ -298,7 +298,7 @@ This section describes in detail the process for creating the release note for a
 ```
         cp help/en/releasenotes/jmri5.11-master.shtml help/en/releasenotes/current-draft-note.shtml
         cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
-        git commit -m"start for 5.11.5 release note" help/en/releasenotes/*.shtml
+        git commit -m"start for 5.11.6 release note" help/en/releasenotes/*.shtml
         git push github
         git pull
 ```
@@ -325,14 +325,16 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.11.3-SNAPSHOT/5.11.5-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.11.4-SNAPSHOT/5.11.5-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=3/release.build=4/g release.properties
+        sed -i.bak s/release.build=4/release.build=5/g release.properties
 ```
  - Check that both those edits left 5.11.5 defined in the two files
+ 
+ - Commit them back
  
 ```
         git commit -m"5.11.5 until next release" release.properties pom.xml
@@ -462,6 +464,8 @@ Note that the purpose of this check is to make sure that the _files_ were built 
 
 - *Wait for some replies about all three platforms before proceeding*
 
+- Send a thank you note to the people who tested the files
+
 ================================================================================
 ## Further Changes to Contents Before Release
 
@@ -566,9 +570,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.11.5+R87a9dadc80.dmg](https://github.com/JMRI/JMRI/releases/download/v5.11.5/JMRI.5.11.5+R87a9dadc80.dmg) | 9b63db9c5797732a9a6b19419eb6a3f41ede1191e8767364e553f5ce7c4c90d2
-[JMRI.5.11.5+R87a9dadc80.exe](https://github.com/JMRI/JMRI/releases/download/v5.11.5/JMRI.5.11.5+R87a9dadc80.exe) | 31b7e339dcdc075eb0a3c6b96e0738dc7095989e6f7293329f682cb264e1fd04
-[JMRI.5.11.5+R87a9dadc80.tgz](https://github.com/JMRI/JMRI/releases/download/v5.11.5/JMRI.5.11.5+R87a9dadc80.tgz) | 9989a2643d6635b102bd806570166ad5fadd00a00251dd486e7045f6ffacd19c
+[JMRI.5.11.5+R6be2a2b4e8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.11.5/JMRI.5.11.5+R6be2a2b4e8.dmg) | 9a887eaf0bc9772960904e954f6935f97a4b4250dab21e05f0a0110313859990
+[JMRI.5.11.5+R6be2a2b4e8.exe](https://github.com/JMRI/JMRI/releases/download/v5.11.5/JMRI.5.11.5+R6be2a2b4e8.exe) | f7b1c9f0bc1df80d1137dc967c3ab0fe5fcd25603f2ad22fff8564453d50bd85
+[JMRI.5.11.5+R6be2a2b4e8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.11.5/JMRI.5.11.5+R6be2a2b4e8.tgz) | 44a65609240ab8d1308a0a7b842df7bb9cf9e18152aec19b4c3de5c21782d242
 
 ```
 
