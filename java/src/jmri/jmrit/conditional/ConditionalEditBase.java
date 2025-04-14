@@ -710,6 +710,8 @@ public class ConditionalEditBase {
                     Container nextItem = (Container) compItem;
                     Component[] nextList = nextItem.getComponents();
                     findPickListTabPane(nextList, nextLevel);
+                } else {
+                    log.error("compItem {} is not a JTabbedPane, nor Container", compItem);
                 }
             }
         }
