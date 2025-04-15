@@ -1585,9 +1585,8 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.KERNEL_SIZE)) {
             if (car.isLead()) {
                 return padAndTruncateIfNeeded(Integer.toString(car.getKernel().getSize()), 2);
-            } else {
-                return SPACE + SPACE; // assumes that kernel size is 99 or less
             }
+            return SPACE + SPACE; // assumes that kernel size is 99 or less
         } else if (attribute.equals(Setup.RWE)) {
             if (!car.getReturnWhenEmptyDestinationName().equals(Car.NONE)) {
                 // format RWE destination and track name
@@ -1630,6 +1629,11 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.DIVISION)) {
             return padAndTruncateIfNeeded(car.getDivisionName(),
                     InstanceManager.getDefault(DivisionManager.class).getMaxDivisionNameLength());
+        } else if (attribute.equals(Setup.BLOCKING_ORDER)) {
+            if (car.isPassenger()) {
+                return padAndTruncateIfNeeded(Integer.toString(car.getBlocking()), 3);
+            }
+            return SPACE + SPACE + SPACE; // assumes that blocking order is +/- 99
         } else if (attribute.equals(Setup.COMMENT)) {
             return padAndTruncateIfNeeded(car.getComment(), carManager.getMaxCommentLength());
         }
@@ -2009,6 +2013,8 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.DIVISION)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Division(),
                         InstanceManager.getDefault(DivisionManager.class).getMaxDivisionNameLength()) + SPACE);
+            } else if (attribute.equals(Setup.BLOCKING_ORDER)) {
+                buf.append("    "); // assume blocking order +/- 99
             } else if (attribute.equals(Setup.TAB)) {
                 buf.append(createTabIfNeeded(Setup.getTab1Length()));
             } else if (attribute.equals(Setup.TAB2)) {
