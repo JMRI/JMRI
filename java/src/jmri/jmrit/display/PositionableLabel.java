@@ -253,8 +253,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     public void showEmptyHidden() {
-        boolean visible;
-        visible = !(_emptyHidden && (_unRotatedText == null || (_unRotatedText.trim().isEmpty())));
+        boolean visible = !(_emptyHidden && (_unRotatedText == null || (_unRotatedText.trim().isEmpty())));
         setVisible(visible);
     }
 
