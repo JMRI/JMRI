@@ -847,42 +847,40 @@ public class TrainBuilderBase extends TrainCommon {
             // note that for trains departing staging the engine and car roads,
             // types, owners, and built date were already checked.
 
-            // non-lead cars in a kernel are not checked
-            if (car.getKernel() == null || car.isLead()) {
-                if (!car.isCaboose() && !_train.isCarRoadNameAccepted(car.getRoadName()) ||
-                        car.isCaboose() && !_train.isCabooseRoadNameAccepted(car.getRoadName())) {
-                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongRoad", car.toString(),
-                            car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getTypeExtensions(),
-                            car.getRoadName()));
-                    _carList.remove(car);
-                    i--;
-                    continue;
+            if (!car.isCaboose() && !_train.isCarRoadNameAccepted(car.getRoadName()) ||
+                    car.isCaboose() && !_train.isCabooseRoadNameAccepted(car.getRoadName())) {
+                addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongRoad", car.toString(),
+                        car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getTypeExtensions(),
+                        car.getRoadName()));
+                _carList.remove(car);
+                i--;
+                continue;
+            }
+            if (!_train.isTypeNameAccepted(car.getTypeName())) {
+                // only show lead cars when excluding car type
+                if (showCar && (car.getKernel() == null || car.isLead())) {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongType", car.toString(),
+                            car.getLocationName(), car.getTrackName(), car.getTypeName()));
                 }
-                if (!_train.isTypeNameAccepted(car.getTypeName())) {
-                    if (showCar) {
-                        addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongType", car.toString(),
-                                car.getLocationName(), car.getTrackName(), car.getTypeName()));
-                    }
-                    _carList.remove(car);
-                    i--;
-                    continue;
-                }
-                if (!_train.isOwnerNameAccepted(car.getOwnerName())) {
-                    addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildExcludeCarOwnerAtLoc", car.toString(), car.getOwnerName(),
-                                    car.getLocationName(), car.getTrackName()));
-                    _carList.remove(car);
-                    i--;
-                    continue;
-                }
-                if (!_train.isBuiltDateAccepted(car.getBuilt())) {
-                    addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildExcludeCarBuiltAtLoc", car.toString(), car.getBuilt(),
-                                    car.getLocationName(), car.getTrackName()));
-                    _carList.remove(car);
-                    i--;
-                    continue;
-                }
+                _carList.remove(car);
+                i--;
+                continue;
+            }
+            if (!_train.isOwnerNameAccepted(car.getOwnerName())) {
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildExcludeCarOwnerAtLoc", car.toString(), car.getOwnerName(),
+                                car.getLocationName(), car.getTrackName()));
+                _carList.remove(car);
+                i--;
+                continue;
+            }
+            if (!_train.isBuiltDateAccepted(car.getBuilt())) {
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildExcludeCarBuiltAtLoc", car.toString(), car.getBuilt(),
+                                car.getLocationName(), car.getTrackName()));
+                _carList.remove(car);
+                i--;
+                continue;
             }
 
             // all cars in staging must be accepted, so don't exclude if in
