@@ -1085,6 +1085,13 @@ public class TrainBuilderBase extends TrainCommon {
                                 Bundle.getMessage("buildOnlyFirstXXXCars", carCount, rl.getName()));
                     }
                 }
+                // report car in kernel but lead has been removed
+                if (car.getKernel() != null && !_carList.contains(car.getKernel().getLead())) {
+                    addLine(_buildReport, SEVEN,
+                            Bundle.getMessage("buildCarPartOfKernel", car.toString(), car.getKernelName(),
+                                    car.getKernel().getSize(), car.getKernel().getTotalLength(),
+                                    Setup.getLengthUnit().toLowerCase()));
+                }
                 // use only the lead car in a kernel for building trains
                 if (car.getKernel() != null) {
                     checkKernel(car); // kernel needs lead car and all cars on
