@@ -52,8 +52,6 @@ import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide the individual panes for the TabbedPaneProgrammer.
@@ -2673,12 +2671,13 @@ public class PaneProgPane extends javax.swing.JPanel
             final int TABLE_COLS = 3;
 
             // index over CVs
-            if (cvList.size() > 0) {
+            if (!cvList.isEmpty()) {
 //            Check how many Cvs there are to print
                 int cvCount = cvList.size();
                 w.setFontStyle(Font.BOLD); //set font to Bold
                 // print a simple heading with I18N
-                s = String.format("%1$21s", Bundle.getMessage("Value")) + String.format("%1$28s", Bundle.getMessage("Value")) +
+                s = String.format("%1$21s", Bundle.getMessage("Value"))
+                    + String.format("%1$28s", Bundle.getMessage("Value")) +
                         String.format("%1$28s", Bundle.getMessage("Value"));
                 w.write(s, 0, s.length());
                 w.writeBorders();
@@ -2717,7 +2716,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     //convert and pad numbers as needed
                     String numString = String.format("%12s", cv.number());
                     StringBuilder valueString = new StringBuilder(Integer.toString(value));
-                    String valueStringHex = Integer.toHexString(value).toUpperCase();
+                    String valueStringHex = Integer.toHexString(value).toUpperCase(Locale.ENGLISH);
                     if (value < 16) {
                         valueStringHex = "0" + valueStringHex;
                     }
@@ -2812,6 +2811,6 @@ public class PaneProgPane extends javax.swing.JPanel
         return l;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaneProgPane.class);
 
 }
