@@ -448,7 +448,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Fixed editing and rendering issues with Block Contents Icons.  No longer need to have a value in the block to edit the Icon.  Rotated blocks render correctly.  Empty Hidden now works on initial load and after editing the panel</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>

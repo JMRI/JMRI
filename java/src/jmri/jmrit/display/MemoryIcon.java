@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
@@ -368,9 +369,9 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
                 if (val instanceof String) {
                     String str = (String) val;
                     _icon = false;
-                    _text = true;
+                    setIcon(null);
                     setText(str);
-                    updateIcon(null);
+                    _text = true;
                     if (log.isDebugEnabled()) {
                         log.debug("String str= \"{}\" str.trim().length()= {}", str, str.trim().length());
                         log.debug("  maxWidth()= {}, maxHeight()= {}", maxWidth(), maxHeight());
@@ -410,8 +411,8 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
                             getNameString(), val, val.getClass().getName());
                     _icon = false;
                     _text = true;
-                    setText(val.toString());
                     setIcon(null);
+                    setText(val.toString());
                 }
             } else {
                 // map exists, use it
@@ -493,6 +494,7 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
                     break;
             }
             setSize(maxWidth(), maxHeight());
+            setPreferredSize(new Dimension(maxWidth(), maxHeight()));
         } else {
             super.updateSize();
             if (_icon && _namedIcon != null) {
