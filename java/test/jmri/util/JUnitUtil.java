@@ -1015,8 +1015,11 @@ public class JUnitUtil {
         }
         InstanceManager.setDefault(StringExpressionManager.class, m9);
 
+        log.warn("Reset NamedBeanType");
+        jmri.jmrit.logixng.NamedBeanType a = jmri.jmrit.logixng.NamedBeanType.Audio;
         jmri.jmrit.logixng.NamedBeanType.reset();
-        jmri.jmrit.logixng.actions.CommonManager.reset();
+        log.warn("Reset NamedBeanType done");
+//        jmri.jmrit.logixng.actions.CommonManager.reset();
 
         if (activate) m1.activateAllLogixNGs(false, false);
     }
