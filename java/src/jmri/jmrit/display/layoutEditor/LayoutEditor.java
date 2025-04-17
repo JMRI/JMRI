@@ -3176,6 +3176,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (lo != null) {
                 delayedPopupTrigger = true;
             }
+            SignalMastIcon sigMastIcon = checkSignalMastIconPopUps(dLoc);
+            if ( sigMastIcon != null ) {
+                delayedPopupTrigger = true;
+            }
         }
 
         if (!event.isPopupTrigger()) {
@@ -3388,6 +3392,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         for (int i = signalMastList.size() - 1; i >= 0; i--) {
             SignalMastIcon s = signalMastList.get(i);
             Rectangle2D r = s.getBounds();
+            log.info("checking if click at {} within bounds of SigMast Icon at {}", loc, r);
             if (r.contains(loc)) {
                 result = s;
                 break;
@@ -3547,6 +3552,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
+        
+        log.info("mouseReleased, editable {}", isEditable());
 
         if (isEditable()) {
             leToolBarPanel.setLocationText(dLoc);
@@ -3685,7 +3692,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 redrawPanel();
             }
             createSelectionGroups();
-        } else if ((selectedObject != null) && (selectedHitPointType == HitPointType.TURNOUT_CENTER)
+        } // ends editable
+        else if ((selectedObject != null) && (selectedHitPointType == HitPointType.TURNOUT_CENTER)
                 && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             // controlling turnout out of edit mode
@@ -3722,12 +3730,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             LayoutTurntable t = (LayoutTurntable) selectedObject;
             t.setPosition(selectedHitPointType.turntableTrackIndex());
         } else if ((event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging)) {
-            // requesting marker popup out of edit mode
+            log.info("requesting popup out of edit mode");
             LocoIcon lo = checkMarkerPopUps(dLoc);
             if (lo != null) {
+                log.info("configuring popup for Loco Icon Marker popup");
                 showPopUp(lo, event);
             } else {
                 if (findLayoutTracksHitPoint(dLoc)) {
+                    log.info("found a LayoutTrack HitPoint");
                     // show popup menu
                     switch (foundHitPointType) {
                         case TURNOUT_CENTER: {
@@ -3754,10 +3764,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
                 AnalogClock2Display c = checkClockPopUps(dLoc);
                 if (c != null) {
+                    log.info("found Clock Popup");
                     showPopUp(c, event);
                 } else {
+                    log.info("checking for SignalMast Icon at {}", dLoc);
                     SignalMastIcon sm = checkSignalMastIconPopUps(dLoc);
                     if (sm != null) {
+                        log.info("SignalMast found from checkSignalMastIconPopUps");
                         showPopUp(sm, event);
                     } else {
                         PositionableLabel im = checkLabelImagePopUps(dLoc);
@@ -3942,6 +3955,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void showPopUp(@Nonnull Positionable pos, @Nonnull JmriMouseEvent event) {
         Positionable p = Objects.requireNonNull(pos);
 
+
+        log.info("showPopUp for {}", p.getNamedBean());
+
         if (!((Component) p).isVisible()) {
             return; // component must be showing on the screen to determine its location
         }
@@ -4076,6 +4092,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                 if (lo != null) {
                     showPopUp(lo, event);
+                } else {
+                    SignalMastIcon smi = checkSignalMastIconPopUps(dLoc);
+                    if ( smi != null ) {
+                        showPopUp(smi, event);
+                    }
                 }
             }
         }
