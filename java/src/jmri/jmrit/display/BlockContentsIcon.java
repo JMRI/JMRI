@@ -247,6 +247,9 @@ public class BlockContentsIcon extends MemoryIcon {
             re = null;
         }
         Object key = getBlock().getValue();
+        if (key == null) {
+            key = " ";
+        }
         displayState(key);
     }
 
