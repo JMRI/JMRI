@@ -195,7 +195,7 @@ public class ActiveTrain implements PropertyChangeProvider {
     public static final String PROPERTY_SIGNAL = "signal";
 
     /**
-     * String property constant for section allocated..
+     * String property constant for section allocated.
      */
     public static final String PROPERTY_SECTION_ALLOCATED = "sectionallocated";
 
