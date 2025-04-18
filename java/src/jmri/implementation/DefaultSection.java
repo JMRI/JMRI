@@ -551,8 +551,6 @@ public class DefaultSection extends AbstractNamedBean implements Section {
 
     /**
      * Handle change in occupancy of a Block in the Section.
-     *
-     * @param e event with change
      */
     private void handleBlockChange() {
         int o = UNOCCUPIED;
