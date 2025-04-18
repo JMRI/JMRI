@@ -243,8 +243,8 @@ public class DefaultConditional extends AbstractNamedBean
                     result = dp.result;
                 } catch (NumberFormatException | IndexOutOfBoundsException | JmriException e) {
                     result = false;
-                    log.error("{} parseCalculation error antecedent= {}, ex= ",
-                        getDisplayName(), _antecedent, e);
+                    log.error("{} parseCalculation error antecedent= {}, ex= {}",
+                        getDisplayName(), _antecedent, e.toString(), e);
                 }
                 break;
             default:
