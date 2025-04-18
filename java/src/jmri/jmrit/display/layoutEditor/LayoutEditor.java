@@ -11,6 +11,7 @@ import java.beans.PropertyVetoException;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -481,7 +482,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (!componentList.contains(layoutEditorComponent)) {
                 try {
                     _targetPanel.remove(layoutEditorComponent);
-                    _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
+                    _targetPanel.add(layoutEditorComponent, 3);
                     _targetPanel.moveToFront(layoutEditorComponent);
                 } catch (Exception e) {
                     log.warn("paintTargetPanelBefore: ", e);
@@ -2222,10 +2223,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             adjustScrollBars();         // and adjust the scrollbars ourselves
             // adjustClip();
 
-            leToolBarPanel.zoomLabel.setText(String.format("x%1$,.2f", newZoom));
+            leToolBarPanel.zoomLabel.setText(String.format(Locale.getDefault(), "x%1$,.2f", newZoom));
 
             // save the window specific saved zoom user preference
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor));
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent( prefsMgr ->
+                prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor));
         }
         return getPaintScale();
     }
@@ -5281,15 +5283,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     public void addLayoutSlip(LayoutTurnout.TurnoutType type) {
         // get the rotation entry
-        double rot = 0.0;
+        double rot;
         String s = leToolBarPanel.rotationComboBox.getEditor().getItem().toString().trim();
 
         if (s.isEmpty()) {
             rot = 0.0;
         } else {
             try {
-                rot = Double.parseDouble(s);
-            } catch (NumberFormatException e) {
+                rot = IntlUtilities.doubleValue(s);
+            } catch (ParseException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
                         + e, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
 
@@ -5392,15 +5394,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     public void addLayoutTurnout(LayoutTurnout.TurnoutType type) {
         // get the rotation entry
-        double rot = 0.0;
+        double rot;
         String s = leToolBarPanel.rotationComboBox.getEditor().getItem().toString().trim();
 
         if (s.isEmpty()) {
             rot = 0.0;
         } else {
             try {
-                rot = Double.parseDouble(s);
-            } catch (NumberFormatException e) {
+                rot = IntlUtilities.doubleValue(s);
+            } catch (ParseException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
                         + e, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
 
