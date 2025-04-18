@@ -159,6 +159,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      * @return the found section of null if no matching Section found
      */
     @Override
+    @CheckForNull
     public Section getSection(String name) {
         Section y = getByUserName(name);
         if (y != null) {
