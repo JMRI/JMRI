@@ -101,6 +101,11 @@ public interface Section extends NamedBean {
     int UNOCCUPIED = Block.UNOCCUPIED;
 
     /**
+     * String constant for the property occupancy.
+     */
+    String PROPERTY_OCCUPANCY = "occupancy";
+
+    /**
      * Provide generic access to internal state.
      * <p>
      * This generally shouldn't be used by Java code; use the class-specific
@@ -124,6 +129,7 @@ public interface Section extends NamedBean {
 
     String getForwardBlockingSensorName();
 
+    @CheckForNull
     Sensor getForwardBlockingSensor();
 
     Sensor setForwardBlockingSensorName(String forwardSensor);
@@ -136,8 +142,10 @@ public interface Section extends NamedBean {
 
     void delayedSetReverseBlockingSensorName(String reverseSensor);
 
+    @CheckForNull
     Sensor getReverseBlockingSensor();
 
+    @CheckForNull
     Block getLastBlock();
 
     String getForwardStoppingSensorName();
@@ -252,10 +260,13 @@ public interface Section extends NamedBean {
 
     void removeEntryPoint(EntryPoint ep);
 
+    @Nonnull
     List<EntryPoint> getForwardEntryPointList();
 
+    @Nonnull
     List<EntryPoint> getReverseEntryPointList();
 
+    @Nonnull
     List<EntryPoint> getEntryPointList();
 
     boolean isForwardEntryPoint(EntryPoint ep);
