@@ -788,7 +788,7 @@ public class DefaultConditionalAction implements ConditionalAction {
      * Get the Action Data String in I18N form.
      * @param t the Condition.Action, must be null.
      * @param data the constant for the action command type.
-     * @return
+     * @return the action / data string.
      */
     @Nonnull
     public static String getActionDataString(@Nonnull Conditional.Action t, int data) {
