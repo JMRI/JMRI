@@ -238,9 +238,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
         // need to show entire table
         f.setSize(new Dimension(1200, Control.panelHeight400));
 
-        // confirm that wait time is displayed
-        //        Assert.assertFalse(f.showDepartTime.isSelected());
-
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
 
@@ -267,9 +264,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         // need to show entire table
         f.setSize(new Dimension(1200, Control.panelHeight400));
-
-        // confirm that wait time is displayed
-        //        Assert.assertFalse(f.showDepartTime.isSelected());
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
@@ -298,9 +292,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         // need to show entire table
         f.setSize(new Dimension(1200, Control.panelHeight400));
-
-        // confirm that wait time is displayed
-        //        Assert.assertTrue(f.showTravel.isSelected());
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
@@ -336,9 +327,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
         // need to show entire table
         f.setSize(new Dimension(1200, Control.panelHeight400));
 
-        // confirm that wait time is displayed
-        //        Assert.assertFalse(f.showDepartTime.isSelected());
-
         // confirm default wait value
         Assert.assertEquals("Wait", 0, rl.getWait());
         Assert.assertEquals("Time", 4, Setup.getTravelTime());
@@ -370,9 +358,6 @@ public class RouteEditFrameTest extends OperationsTestCase {
 
         // need to show entire table
         f.setSize(new Dimension(1200, Control.panelHeight400));
-
-        // confirm that departure time is displayed
-        //        Assert.assertTrue(f.showDepartTime.isSelected());
 
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo);
