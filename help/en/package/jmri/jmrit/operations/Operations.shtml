@@ -411,7 +411,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#RouteMoves">Moves</a></li>
                 <li><a href="#RandomMoves">Random Moves</a></li>
                 <li><a href="#PullsAndSpots">Pick ups? Set outs? and Local moves?</a></li>
-                <li><a href="#RouteSwitchTime">Travel and Departure Times</a></li>
+                <li><a href="#RouteSwitchTime">Departure and Travel Times</a></li>
 
                 <li><a href="#RouteMaxTrainLength">Maximum Train Length</a></li>
 
@@ -1907,12 +1907,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </p>
 
       <h2 id="PrintOptions">Manifest Print Options</h2>
-      You can modify the how OperationsPro&trade; prints the train <a href="#PrintingManifests">Manifests</a>
-      and the location switch lists. From the "Operations&rArr;Settings&rArr;Tools" menu select
-      "Manifest Print Options" to open the window. Press the "Save" button located at the bottom of
-      the window to enable your changes. The "Save" button will also cause the program to update the
-      Manifests for all trains that are built. This allows you to modify your Manifests without
-      having to rebuild your trains.
+      You can modify the how OperationsPro&trade; prints the train
+      <a href="#PrintingManifests">Manifests</a> and the location switch lists. From the
+      "Operations&rArr;Settings&rArr;Tools" menu select "Manifest Print Options" to open the window.
+      Press the "Save" button located at the bottom of the window to enable your changes. The "Save"
+      button will also cause the program to update the Manifests for all trains that are built. This
+      allows you to modify your Manifests without having to rebuild your trains. All of the text in
+      the Manifest and switch list can be changed to your liking, see
+      <a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a> below.
       <p>
         <img src="images/PrintOptions.png" alt="">
       </p>
@@ -2151,6 +2153,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       text box with the same message. Edit the text box to change the default message to your liking
       and press "Save" to complete your change. You can always return the text to the original
       settings by pressing the "Reset" button followed by "Save".
+      
+       <p>
+        <img src="images/EditManifestText.png" alt="">
+      </p>
+      
       <p>Some of the text messages allow substitutions using the format "{number}". The program
         provides a tool tip when hovering over the text box which shows the available substitutions
         for that particular message.</p>
@@ -4872,18 +4879,23 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         </tr>
       </table>
 
-      <h4 id="RouteSwitchTime">Travel and Departure Times</h4>
+      <h4 id="RouteSwitchTime">Departure Time</h4>
 
-      <p>
-        The "Switch Time" and "Travel Time" found on the <a href="#Settings">Settings</a> page
+      You can optionally enter the train's departure time from each location in the route. Note that
+      when the first location of a route has a departure time that it disables the ability to adjust
+      the
+      <a href="#TrainDepartureTime">Train's Departure Time</a>.
+
+      <p>Also note that when entering departure times you need to consider the travel time from the
+        previous location. If you enter a departure time that is before the calculated arrival time,
+        the program will assume that the departure time is the next day.</p>
+
+      <h4>Travel Time</h4>
+
+      The "Switch Time" and "Travel Time" found on the <a href="#Settings">Settings</a> page
         determines the time it takes for your train to service a location and travel to the next. If
         you want to adjust the train's travel time, enter the number of minutes desired in the
-        "Travel" cell. Another choice is to specify the train's departure time from a location by
-        selecting the "Departure Time" radio button in the lower right hand corner of the <a
-          href="#AddRoute">Edit Route</a> window. Note that when the first location of a route has a
-        departure time that it disables the ability to adjust the <a href="#TrainDepartureTime">Train's
-          Departure Time</a>.
-      </p>
+        "Travel" cell.
 
       <h4 id="RouteMaxTrainLength">Maximum Train Length</h4>
 

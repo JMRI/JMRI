@@ -161,7 +161,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
 
         basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("OBlockPropertiesText")));
         lengthSpinner.setModel(
-                            new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
+            new SpinnerNumberModel(0f, 0f, 1000f, 0.01f));
         lengthSpinner.setEditor(new JSpinner.NumberEditor(lengthSpinner, "###0.00"));
         lengthSpinner.setPreferredSize(new JTextField(8).getPreferredSize());
         lengthSpinner.setValue(0f); // reset from possible previous use
