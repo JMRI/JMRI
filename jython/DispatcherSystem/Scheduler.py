@@ -420,7 +420,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     def set_departure_trains(self):
         # allow running of scheduled routes to set journey times and wait times,
         # which allow durations and departure times to be set up
-
+        # print "set departure trains"
         global wait_time_gbl
         global scheduled
         global scheduling_margin_gbl
@@ -454,7 +454,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         elif reply == opt2:
             title = "Select Route to Record Journey Times"
             list_items_no_trains = self.get_scheduled_routes("no_train")
+            # print "list_items_no_trains", list_items_no_trains
             list_items_with_trains = self.get_scheduled_routes("with_train")
+            # print "list_items_with_trains", list_items_with_trains
             if list_items_no_trains == []:
                 OptionDialog().displayMessage("Can only record journey times for scheduled trains.\nThere are no scheduled trains")
                 return
@@ -478,6 +480,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 # print "cancelling"
                 return
             elif option == "Run Route":
+                # print "Run Route"
                 train = [trn for [rte, trn] in list_items_with_trains if rte == route_name][0]
                 set_departure_times = True
                 param_scheduled_start = "00:00"
@@ -600,9 +603,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
         if option == "with_train":
-            my_list = [[train.getRoute().getName(), train] for train in train_list]
+            my_list = [[train.getRoute().getName() if train is not None else "" , train] for train in train_list]
         else:
-            my_list = [train.getRoute().getName() for train in train_list]
+            my_list = [train.getRoute().getName() if train is not None else "" for train in train_list]
         return sorted(my_list)
 
     def start_and_end_time_scheduling(self):
@@ -2237,7 +2240,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                             "station_index", station_index, "prev_station_index", prev_station_index
                         if self.logLevel > 0: print "accumulated_duration", accumulated_duration
 
-                    if self.logLevel > 0:  print "!     moving from", station_from, "to", station_to
+                    if self.logLevel > 0:  print self.route.getName(), "!     moving from", station_from, "to", station_to
 
                     self.station_from_name = station_from
                     self.station_to_name = station_to
@@ -2618,7 +2621,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                                 "should be in directories:\n" + \
                                 self.action_directory_in_DispatcherSystem() + " or\n" + \
                                 self.action_directory())
-        if self.logLevel > 0: print "file", file
+        if self.logLevel > 0: print self.route.getName()," executing file", file
         exec(open(file).read())     # execute the file
 
     def displayMessage(self, msg, title = ""):

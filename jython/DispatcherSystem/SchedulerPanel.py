@@ -281,7 +281,9 @@ class CreateAndShowGUI4(TableModelListener):
         j.addChoosableFileFilter(filter);
         j.setDialogTitle("Select a .txt file");
 
-        # j.setControlButtonsAreShown(True)
+        # Automatically select the first file in the directory
+        files = j.getCurrentDirectory().listFiles()
+        j.setSelectedFile(files[0])
 
         ret = j.showSaveDialog(None)
         if (ret == JFileChooser.APPROVE_OPTION) :
@@ -324,7 +326,12 @@ class CreateAndShowGUI4(TableModelListener):
         filter = FileNameExtensionFilter("text files txt", ["txt"])
         j.setDialogTitle("Select a .txt file");
         j.addChoosableFileFilter(filter);
-        ret = j.showOpenDialog(None);
+
+        # Automatically select the first file in the directory
+        files = j.getCurrentDirectory().listFiles()
+        j.setSelectedFile(files[0])
+
+        ret = j.showOpenDialog(None)
         if (ret == JFileChooser.APPROVE_OPTION) :
             file = j.getSelectedFile()
             if self.logLevel > 0: print "about to read list", file
@@ -689,10 +696,14 @@ class MyModelListener4(TableModelListener):
                 # print "starting edit"
                 route_data = str(self.model.getValueAt(row, route_col))
                 scheduled_start = self.model.getValueAt(row, time_col)
-                if "CreateAndShowGUI5_glb" in globals():
-                    if CreateAndShowGUI5_glb != None:
-                        CreateAndShowGUI5_glb.frame.dispose()
-                CreateAndShowGUI5_glb = CreateAndShowGUI5(self, route_data, scheduled_start)
+
+                if route_data == "" or route_data is None or route_data == "None":
+                    OptionDialog().displayMessage("Cannot display route as route name has not been specified")
+                else:
+                    if "CreateAndShowGUI5_glb" in globals():
+                        if CreateAndShowGUI5_glb != None:
+                            CreateAndShowGUI5_glb.frame.dispose()
+                    CreateAndShowGUI5_glb = CreateAndShowGUI5(self, route_data, scheduled_start)
                 # print "e"
                 self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:

@@ -12,11 +12,13 @@ from org.apache.commons.io import FilenameUtils
 from java.io import File
 from java.awt import Toolkit
 from java.awt.event import ActionListener
+import time
 
 class CreateAndShowGUI5(TableModelListener):
 
     def __init__(self, class_ResetButtonMaster, route_name, param_scheduled_start, \
                  journey_time_row_displayed = False, add_row_columns_displayed = False, hidden = False):
+
         global scheduled_start
         global add_row_columns_displayed_gbl
 
@@ -32,7 +34,7 @@ class CreateAndShowGUI5(TableModelListener):
         self.class_ResetButtonMaster = class_ResetButtonMaster
         #Create and set up the window.
 
-        self.frame = JFrame("Train Route: " + route_name + "  Actions at station listed after station")
+        self.frame = JFrame("Train Route: " + route_name + "  Actions listed after station take place after arrive at that station, before train moves from that station")
         self.frame.setSize(1000, 600)
 
         # setup self.table
@@ -42,7 +44,7 @@ class CreateAndShowGUI5(TableModelListener):
         self.class_ResetButtonMaster = class_ResetButtonMaster
 
         self.table = JTable(self.model)
-        self.table.setPreferredScrollableViewportSize(Dimension(700, 300));
+        self.table.setPreferredScrollableViewportSize(Dimension(600, 300));
 
         self.table.setFillsViewportHeight(True);
         self.table.setRowHeight(30);
@@ -51,6 +53,7 @@ class CreateAndShowGUI5(TableModelListener):
         self.set_button_pane()
 
         self.scrollPane = JScrollPane(self.table)
+        self.scrollPane.setSize(Dimension(600, 500))
 
         self.topPanel= JPanel();
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
@@ -88,16 +91,21 @@ class CreateAndShowGUI5(TableModelListener):
         # set the widths of the columns of self.table
         self.columnModel = self.setup_column_widths_and_comboboxes()
 
+        # Get the size of the JFrame
+        size = self.scrollPane.getSize();
+        original_height = size.height
+        # print "original_height", original_height
         # set height of scrollPane
         size_of_one_row = 30
         height = 50
         for row in reversed(range(len(self.model.data))):
             height += size_of_one_row
-        height = min(height, 800)
-        self.scrollPane.setPreferredSize(Dimension(1000, height))
+        height = min(height, original_height)
+        self.scrollPane.setPreferredSize(Dimension(600, height))
 
         # set whether stop sensor column is displayed
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+        if self.route is None : print "************ self.route is None C **********************"
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
@@ -141,22 +149,24 @@ class CreateAndShowGUI5(TableModelListener):
         button_show_wait = JButton("Toggle Journey/Wait Times", actionPerformed = self.show_wait_action)
         self.buttonPane.add(button_show_wait)
         self.buttonPane.add(Box.createHorizontalGlue())
-        if self.journey_time_row_displayed == False:
+        # if self.journey_time_row_displayed == False:
 
-            if "fast_clock_rate" not in globals():
-                fast_clock_rate = 10
-            if fast_clock_rate is not None:
-                secs_in_fast_minute = int(1.0 / float(str(fast_clock_rate)) * 60.0)
-                label_info = JLabel("Calculates to the precision of 1 fast minute. " + str(secs_in_fast_minute) + " seconds = 1 fast minute")
-            else:
-                label_info = JLabel("Displays to the precision of 1 fast minute. Several seconds = 1 fast minute")
-            self.buttonPane.add(label_info)
-            self.buttonPane.add(Box.createHorizontalGlue())
         if self.journey_time_row_displayed == True:
-
             button_wait_time = JButton("Set Wait Times", actionPerformed = self.change_wait_time_action)
             self.buttonPane.add(button_wait_time)
             self.buttonPane.add(Box.createHorizontalGlue())
+
+
+        if "fast_clock_rate" not in globals():
+            fast_clock_rate = 10
+        if fast_clock_rate is not None:
+            secs_in_fast_minute = int(1.0 / float(str(fast_clock_rate)) * 60.0)
+            label_info = JLabel("Calculates to the precision of 1 fast minute. " + str(secs_in_fast_minute) + " seconds = 1 fast minute")
+        else:
+            label_info = JLabel("Displays to the precision of 1 fast minute. Several seconds = 1 fast minute")
+        self.buttonPane.add(label_info)
+        self.buttonPane.add(Box.createHorizontalGlue())
+
 
     class CustomRenderer(TableCellRenderer):
         global add_row_columns_displayed_gbl
@@ -192,6 +202,7 @@ class CreateAndShowGUI5(TableModelListener):
             super(DefaultCellEditor, self).__init__(JComboBox())
             self.all_locations = all_locations
             self.all_actions = all_actions
+            # print "self.all_actions", self.all_actions
             self.model = model
             self.class_CreateAndShowGUI5 = class_CreateAndShowGUI5
 
@@ -233,9 +244,12 @@ class CreateAndShowGUI5(TableModelListener):
                 LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
                 location = LocationManager.newLocation(location_name)
                 # get location to remove
-                routeLocation = self.class_CreateAndShowGUI5.route.getRouteLocationBySequenceNumber(self.row+1)
-                self.class_CreateAndShowGUI5.route.deleteLocation(routeLocation)
-                self.class_CreateAndShowGUI5.route.addLocation(location, self.row+1)
+                if self.class_CreateAndShowGUI5.route is None:
+                    OptionDialog().displayMessage("route has not been set up")
+                else:
+                    routeLocation = self.class_CreateAndShowGUI5.route.getRouteLocationBySequenceNumber(self.row+1)
+                    self.class_CreateAndShowGUI5.route.deleteLocation(routeLocation)
+                    self.class_CreateAndShowGUI5.route.addLocation(location, self.row+1)
 
 
     def setup_column_widths_and_comboboxes(self):
@@ -273,26 +287,21 @@ class CreateAndShowGUI5(TableModelListener):
         # setup Editor and Renderer for comboboxes
 
         self.locations_col = self.table.getColumnModel().getColumn(locations_col)
-        self.combobox_location = JComboBox()
-        self.combobox_action = JComboBox()
 
         all_locations = [str(loc) for loc in self.get_locations_list() if not ".py" in loc]
-        for location in all_locations:
-            self.combobox_location.addItem(location)
-
         all_actions = [loc for loc in self.get_locations_list() if ".py" in loc]
-        for action in all_actions:
-            self.combobox_action.addItem(action)
 
+        my_all_actions = self.all_actions()
+        
         self.renderer_locations = ComboBoxCellRenderer()
         self.renderer_actions = ComboBoxCellRenderer()
 
         if self.add_row_columns_displayed:
-            self.locations_col.setCellEditor(self.CustomEditor(all_locations, all_actions, self.model, self))
+            self.locations_col.setCellEditor(self.CustomEditor(all_locations, my_all_actions, self.model, self))
         else:
             self.locations_col.setCellEditor(DefaultCellEditor(JTextField()))
         if self.add_row_columns_displayed:
-            self.locations_col.setCellRenderer(self.CustomRenderer(all_locations, all_actions))
+            self.locations_col.setCellRenderer(self.CustomRenderer(all_locations, my_all_actions))
         else:
             self.locations_col.setCellRenderer(DefaultTableCellRenderer())
 
@@ -306,15 +315,15 @@ class CreateAndShowGUI5(TableModelListener):
         return my_list
 
     def all_actions(self):
-        directory1 = CreateAndShowGUI7().action_directory_in_DispatcherSystem()
+        directory1 = DispatchMaster().action_directory_in_DispatcherSystem()
         files = os.listdir(directory1)
 
         python_files = [f for f in files if f.endswith(".py")]
-
-        directory = CreateAndShowGUI7().action_directory()
+        # print "python_files", python_files
+        directory = DispatchMaster().action_directory()
         files = os.listdir(directory)
         python_files2 = [f for f in files if f.endswith(".py")]
-
+        # print "python_files2", python_files2
         python_files.extend(python_files2)
         return python_files
 
@@ -362,9 +371,13 @@ class CreateAndShowGUI5(TableModelListener):
 
     def get_station_list(self):
         RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-        locations_list = self.route.getLocationsBySequenceList()
-        my_list = [[location.getName(), location.getComment()] for location in locations_list]
-        return my_list
+        if self.route is None :
+            OptionDialog().displayMessage("route has not been filled in")
+            return []
+        else:
+            locations_list = self.route.getLocationsBySequenceList()
+            my_list = [[location.getName(), location.getComment()] for location in locations_list]
+            return my_list
 
     def populate_action(self, event):
 
@@ -393,6 +406,12 @@ class CreateAndShowGUI5(TableModelListener):
             columnModel.getColumn(journey_time_col).setMinWidth(100)
             columnModel.getColumn(wait_time_col).setMaxWidth(400)
             columnModel.getColumn(wait_time_col).setMinWidth(100)
+
+        self.set_button_pane()
+        contentPane = self.frame.getContentPane()
+        contentPane.removeAll()
+        contentPane.add(self.topPanel, BorderLayout.CENTER)
+        contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
         self.completeTablePanel()
 
     def new_delay(self, old_val):
@@ -432,7 +451,9 @@ class CreateAndShowGUI5(TableModelListener):
 
     def change_wait_time_action(self, event):
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+        if self.route is None : print "************ self.route is None A **********************"
         routeLocationList = self.route.getLocationsBySequenceList()
+
         routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
                                               for routelocation in self.route.getLocationsBySequenceList() \
                                               if ".py" not in routelocation.getName()]
@@ -497,6 +518,7 @@ class CreateAndShowGUI5(TableModelListener):
 
     def save_location_row(self, row, locations_name, journey_time_name, wait_time_name, duration_sec_name, \
                       departure_time_name, add_loc_name, add_action_name, delete_name, stop_sensor_name):
+        if self.route is None : print "************ self.route is None K **********************"
         routeLocationList = self.route.getLocationsBySequenceList()
         routeLocation = routeLocationList[row]
 
@@ -605,7 +627,7 @@ class MyModelListener5(TableModelListener):
         class_ResetButtonMaster = self.class_ResetButtonMaster
         tablemodel = class_CreateAndShowGUI5.model
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
-
+        if self.model.route is None : print "************ self.model.route is None J **********************"
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.model.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
@@ -667,12 +689,14 @@ class MyModelListener5(TableModelListener):
             class_CreateAndShowGUI5.route.deleteLocation(routelocation)
             self.delete_row(row)
             class_CreateAndShowGUI5.completeTablePanel()
+            time.sleep(0.2)
+
         elif column == add_loc_col:
             #reset check box
             listener = self
             self.model.removeTableModelListener(listener)
             self.model.setValueAt(False, row, column)
-            self.model.addTableModelListener(listener)
+
 
             # add the station after the selected row
             location_string = self.model.add_loc_at(row)
@@ -680,10 +704,11 @@ class MyModelListener5(TableModelListener):
             location = LocationManager.newLocation(location_string)
             routeLocation = class_CreateAndShowGUI5.route.addLocation(location, row+2)
 
-            self.class_CreateAndShowGUI5.set_value_in_comment(routeLocation, "0", "duration_sec")
-            self.class_CreateAndShowGUI5.set_value_in_comment(routeLocation, "-", "stopMode")
-
+            # self.class_CreateAndShowGUI5.set_value_in_comment(routeLocation, "0", "duration_sec")
+            # self.class_CreateAndShowGUI5.set_value_in_comment(routeLocation, "-", "stopMode")
             class_CreateAndShowGUI5.completeTablePanel()
+            time.sleep(0.2)
+            self.model.addTableModelListener(listener)
             return
 
         elif column == add_action_col:
@@ -691,15 +716,15 @@ class MyModelListener5(TableModelListener):
             listener = self
             self.model.removeTableModelListener(listener)
             self.model.setValueAt(False, row, column)
-            self.model.addTableModelListener(listener)
 
             # add the action after the selected row
             location_string = self.model.add_action_at(row)
             LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
             location = LocationManager.newLocation(location_string)
             class_CreateAndShowGUI5.route.addLocation(location, row+2)
-
             class_CreateAndShowGUI5.completeTablePanel()
+            time.sleep(0.2)
+            self.model.addTableModelListener(listener)
             return
 
         # elif column == locations_col:
@@ -710,6 +735,7 @@ class MyModelListener5(TableModelListener):
     def save_value_to_operations(self, row, col):
         value = self.model.getValueAt(row, col)
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+        if self.model.route is None : print "************ self.model.route is None I **********************"
         routeLocationList = self.model.route.getLocationsBySequenceList()
         routeLocation = routeLocationList[row]
 
@@ -723,6 +749,7 @@ class MyModelListener5(TableModelListener):
 
     def update_departure_time_col(self, current_row):
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+        if self.model.route is None : print "************ self.model.route is None H **********************"
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.model.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
@@ -885,8 +912,8 @@ class MyTableModel5 (DefaultTableModel):
         return location
 
     def add_action_at(self, row_index):
-        action = [str(loc) for loc in self.get_locations_list() if ".py" in loc][0]
-        row_data = ["bell.py", "0", "0", "0","0", "00:00", False, False, False, "-"]
+        action = self.all_actions()[0]
+        row_data = [action, "", "", "","", "", False, False, False, "-"]
         self.data.insert(row_index+1, row_data)
         return action
 
@@ -898,14 +925,14 @@ class MyTableModel5 (DefaultTableModel):
         return my_list
 
     def all_actions(self):
-        directory1 = CreateAndShowGUI7().action_directory_in_DispatcherSystem()
+        directory1 = DispatchMaster().action_directory_in_DispatcherSystem()
         files = os.listdir(directory1)
         # print "files in dispatcher system action directory", files
 
         python_files = [f for f in files if f.endswith(".py")]
         # print "directory1", directory1, "python_files", python_files
 
-        directory = CreateAndShowGUI7().action_directory()
+        directory = DispatchMaster().action_directory()
         files = os.listdir(directory)
         python_files2 = [f for f in files if f.endswith(".py")]
         # print "directory", directory, "python_files2", python_files2
@@ -914,6 +941,7 @@ class MyTableModel5 (DefaultTableModel):
 
 
     def populate(self, items_to_put_in_dropdown):
+        # print "populate"
         global scheduled_start
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
@@ -931,16 +959,19 @@ class MyTableModel5 (DefaultTableModel):
 
                 # get default wait time
                 memory = memories.getMemory("IM:" + "DS_wait_time")
-                if memory is None or memory.getValue() == "":
+                # print "memory value" , memory.getValue()
+                if memory is None or memory.getValue() == "" or memory.getValue() is None:
                     memory = memories.provideMemory("IM:" + "DS_wait_time")
                     memory.setValue(3)
                 default = memory.getValue()
 
                 wait_time = self.find_between(comment, "[wait_time-", "-wait_time]")
+                # print "wait_time", wait_time
                 if i == 0:
-                    if wait_time == "": wait_time = ""
+                    if wait_time == "" or wait_time is "None" : wait_time = ""
                 else:
-                    if wait_time == "": wait_time = str(default)
+                    if wait_time == "" or "None" in wait_time : wait_time = str(default)
+                    # print "set to default"
 
                 duration_sec = str(self.find_between(comment, "[duration_sec-", "-duration_sec]"))
 
@@ -986,6 +1017,7 @@ class MyTableModel5 (DefaultTableModel):
         return stop_mode
 
     def find_row_first_location(self):
+        if self.route is None : print "************ self.route is None G **********************"
         routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
                                                    for routelocation in self.route.getLocationsBySequenceList() \
                                                    if ".py" not in routelocation.getName()]
@@ -998,7 +1030,7 @@ class MyTableModel5 (DefaultTableModel):
     def find_row_next_location(self, row):
         # given the row (rows start at 0, sequencenos start at 1) of a location that is not an action (a python file  xx.py)
         # find the next row of a location that is not an action
-
+        if self.route is None : print "************ self.route is None F **********************"
         routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
                                               for routelocation in self.route.getLocationsBySequenceList() \
                                               if ".py" not in routelocation.getName()]
@@ -1020,6 +1052,7 @@ class MyTableModel5 (DefaultTableModel):
 
     def find_row_prev_location(self, row):
         # get the row (sequenceNo) of the first location that is not an action (a python file  xx.py)
+        if self.route is None : print "************ self.route is None E **********************"
         routelocationsSequenceNumber_list = [ [routelocation, routelocation.getSequenceNumber()] \
                                               for routelocation in self.route.getLocationsBySequenceList() \
                                               if ".py" not in routelocation.getName()]
@@ -1064,6 +1097,7 @@ class MyTableModel5 (DefaultTableModel):
     def isCellEditable(self, row, col) :
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
         # do not allow editing of duration in action cols
+        if self.route is None : print "************ self.route is None D **********************"
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
@@ -1084,6 +1118,7 @@ class MyTableModel5 (DefaultTableModel):
         return True
 
     def stop_sensor_present(self, row, prev_station, last_station):
+        global g
         # it is too difficult to determine whether a stop sensor is present
         # (maybe later: would have to determine the last section of the last transit joining the previous and current locations)
         # (and we wanted to determine this to see whether we could modify the stop sensor column cell)
@@ -1092,15 +1127,27 @@ class MyTableModel5 (DefaultTableModel):
         if row <= 0:
             return False
         if prev_station is None:
+            # print "prev_station is None"
             return False
         if last_station is None:
+            # print "last_station is None"
             return False
         if prev_station == last_station:
+            # print "prev_station == last_station"
             return False
         DM = DispatchMaster()
-        transit_name = DM.get_transit_name(prev_station, last_station)
+        if g.g_express.containsVertex(prev_station) and g.g_express.containsVertex(last_station):
+            transit_name = DM.get_transit_name(prev_station, last_station)
+        else:
+            OptionDialog().displayMessage("You have an old route with a station that does not exist. \n Delete the old station!!\n\n" +\
+                                          "Either " + prev_station + " or " + last_station + "\n\n" + \
+                                          "You may have to close this panel repeatedly if there are several instances of old stations \n" + \
+                                          "in the route")
+            return False
         if DM.forward_stopping_sensor_exists(transit_name):
             return True
+
+
         return False
 
     # only include if data can change.
