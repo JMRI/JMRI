@@ -292,7 +292,7 @@ class CreateAndShowGUI5(TableModelListener):
         all_actions = [loc for loc in self.get_locations_list() if ".py" in loc]
 
         my_all_actions = self.all_actions()
-        
+
         self.renderer_locations = ComboBoxCellRenderer()
         self.renderer_actions = ComboBoxCellRenderer()
 
