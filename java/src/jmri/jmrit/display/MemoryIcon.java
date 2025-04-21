@@ -390,9 +390,10 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
                     setText(null);
                 } else if (val instanceof Number) {
                     _icon = false;
-                    _text = true;
-                    setText(val.toString());
                     setIcon(null);
+                    setText(val.toString());
+                    _text = true;
+                    _editor.setAttributes(getPopupUtility(), this);
                 } else if (val instanceof jmri.IdTag){
                     // most IdTags are Reportable objects, so
                     // this needs to be before Reportable
@@ -432,9 +433,10 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
         } else {
             log.debug("object null");
             _icon = true;
-            _text = false;
             setIcon(defaultIcon);
             setText(null);
+            _text = false;
+            _editor.setAttributes(getPopupUtility(), this);
         }
         updateSize();
     }
