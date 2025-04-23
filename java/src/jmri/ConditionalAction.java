@@ -86,7 +86,7 @@ public interface ConditionalAction {
     /**
      * Set the Action String.
      * Any String float values ( delayed Sensor ) should use a . decimal separator.
-     * @param actionString
+     * @param actionString the action String.
      */
     void setActionString(String actionString);
 
@@ -94,7 +94,7 @@ public interface ConditionalAction {
 
     /**
      * Set the Action Option.
-     * @param option
+     * @param option the action option number.
      */
     void setOption(int option);
 
