@@ -277,6 +277,11 @@ class CreateAndShowGUI6(TableModelListener):
         filter = FileNameExtensionFilter("text files txt", ["txt"])
         j.setDialogTitle("Select a .txt file");
         j.addChoosableFileFilter(filter);
+
+        # Automatically select the first file in the directory
+        files = j.getCurrentDirectory().listFiles()
+        j.setSelectedFile(files[0])
+
         ret = j.showOpenDialog(None);
         if (ret == JFileChooser.APPROVE_OPTION) :
             file = j.getSelectedFile()
@@ -592,6 +597,7 @@ class MyModelListener6(TableModelListener):
         self.cancel = False
         self.logLevel = 0
         self.i = 0
+
     def tableChanged(self, e) :
         global CreateAndShowGUI5_glb
         # print "INDES", self.i

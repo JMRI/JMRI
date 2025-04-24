@@ -1387,6 +1387,11 @@ class createandshowGUI2(TableModelListener):
         filter = FileNameExtensionFilter("text files txt", ["txt"])
         j.setDialogTitle("Select a .txt file");
         j.addChoosableFileFilter(filter);
+
+        # Automatically select the first file in the directory
+        files = j.getCurrentDirectory().listFiles()
+        j.setSelectedFile(files[0])
+
         ret = j.showOpenDialog(None);
         if (ret == JFileChooser.APPROVE_OPTION) :
             file = j.getSelectedFile()
@@ -1438,6 +1443,7 @@ class createandshowGUI2(TableModelListener):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
 
     def delay_action(self, event):
+        # print "delay"
         [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
         for row in reversed(range(len(self.model.data))):
             old_delay = int(self.model.data[0][delay_col])
@@ -1507,6 +1513,7 @@ class createandshowGUI2(TableModelListener):
             route_name = str(self.model.data[row][route_col])
             delay_val = str(self.model.data[row][delay_col])
             if train_name != "" and route_name != "" and delay_val != "":
+                # print "running route", route_name
                 self.run_route_2(row, self.model, self, self.class_ResetButtonMaster)
             else:
                 msg = "not running route, train, route or delay is not set"
@@ -1637,11 +1644,12 @@ class MyModelListener1(TableModelListener):
         class_ResetButtonMaster = self.class_ResetButtonMaster
         tablemodel = class_createandshowGUI2.model
         [train_col, route_col, run_route_col, task_col, delay_col, repetition_col] = [0, 1, 2, 3, 4, 5]
-        if column == 0:     #trains
+        if column == train_col:     #trains
             pass
-        elif column == 1:       # sections
+        elif column == route_col:       # sections
             pass
         elif column == run_route_col:
+            # print "running route"
             class_createandshowGUI2.run_route_2(row, model, class_createandshowGUI2, class_ResetButtonMaster)
 
 class ComboBoxCellRenderer1 (TableCellRenderer):
@@ -1653,9 +1661,9 @@ class ComboBoxCellRenderer1 (TableCellRenderer):
     def createPanel(self, s):
         p = JPanel(BorderLayout())
         p.add(JLabel(str(s), JLabel.LEFT), BorderLayout.WEST)
-        icon = UIManager.getIcon("Table.descendingSortIcon");
-        p.add(JLabel(icon, JLabel.RIGHT), BorderLayout.EAST);
-        p.setBorder(BorderFactory.createLineBorder(Color.blue));
+        icon = UIManager.getIcon("Table.descendingSortIcon")
+        p.add(JLabel(icon, JLabel.RIGHT), BorderLayout.EAST)
+        p.setBorder(BorderFactory.createLineBorder(Color.blue))
         return p
 
 class MyTableModel1 (DefaultTableModel):
