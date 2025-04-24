@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.annotation.Nonnull;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -354,6 +355,7 @@ public final class SystemConsole {
      * @param which the stream, either STD_OUT or STD_ERR
      * @return the new OutputStream
      */
+    @Nonnull
     private OutputStream outStream(final int which) {
         return new OutputStream() {
             @Override
