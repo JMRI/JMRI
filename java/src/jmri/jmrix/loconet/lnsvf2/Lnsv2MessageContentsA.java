@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
  * @author B. Milhaupt Copyright (C) 2015
  */
-public class Lnsv2MessageContents {
+public class Lnsv2MessageContentsA {
     private int src;
     private int sv_cmd;
     private int dst_l;
@@ -115,7 +115,7 @@ public class Lnsv2MessageContents {
      * @throws IllegalArgumentException if the LocoNet message is not a valid, supported 
      *      SV Programming Format 2 message
      */
-    public Lnsv2MessageContents(LocoNetMessage m)
+    public Lnsv2MessageContentsA(LocoNetMessage m)
             throws java.lang.IllegalArgumentException {
 
         log.debug("interpreting a LocoNet message - may be an SV2 message");  // NOI18N
@@ -303,7 +303,7 @@ public class Lnsv2MessageContents {
     @Override
     public String toString() {
         Locale l = Locale.getDefault();
-        return Lnsv2MessageContents.this.toString(l);
+        return Lnsv2MessageContentsA.this.toString(l);
     }
     
     /**
@@ -952,6 +952,6 @@ public class Lnsv2MessageContents {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Lnsv2MessageContents.class);
+    private final static Logger log = LoggerFactory.getLogger(Lnsv2MessageContentsA.class);
     
 }

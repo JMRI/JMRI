@@ -2,7 +2,8 @@ package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents;
+import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContentsA;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
 
 /**
  * Supporting class for Uhlenbrock LocoNet LNCV Programming and Direct Format messaging.
- * Structure adapted from {@link Lnsv2MessageContents}
+ * Structure adapted from {@link Lnsv2MessageContentsA}
  * 
  * Some of the message formats used in this class are Copyright Uhlenbrock.de
  * and used with permission as part of the JMRI project. That permission does
