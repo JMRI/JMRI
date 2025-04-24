@@ -7,7 +7,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
-import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContentsA;
+import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 
 import org.slf4j.Logger;
@@ -331,7 +331,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
      * Supported message types:
      * <ul>
      *     <li>LN SV v1 {@link jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents}</li>
-     *     <li>LN SV v2 {@link jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContentsA}</li>
+     *     <li>LN SV v2 {@link jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents}</li>
      *     <li>LNCV {@link jmri.jmrix.loconet.uhlenbrock.LncvMessageContents} ReadReply</li>
      * </ul>
      * Listener is attached to jmri.jmrix.loconet.hexfile.HexFileFrame with GUI box to turn this option on/off
@@ -403,10 +403,10 @@ public class LnHexFilePort extends LnPortController implements Runnable {
             } else {
                 log.debug("generate ignored LNSV1 msg [{}]", m); // no sim if not from LocoBuffer
             }
-        } else if (Lnsv2MessageContentsA.isSupportedSv2Message(m)) {
+        } else if (Lnsv2MessageContents.isSupportedSv2Message(m)) {
             // LOCONET_SV2 simulation
             //log.debug("generating reply for SV2 message");
-            Lnsv2MessageContentsA c = new Lnsv2MessageContentsA(m);
+            Lnsv2MessageContents c = new Lnsv2MessageContents(m);
             if (c.getDestAddr() == -1) { // Sv2 QueryAll, reply (content includes no address)
                 log.debug("generate LNSV2 query reply message");
                 int dest = 1; // keep it simple, don't fetch src from m
@@ -415,7 +415,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                 int dev = 1;
                 int type = 3055;
                 int serial = 111;
-                reply = Lnsv2MessageContentsA.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
+                reply = Lnsv2MessageContents.createSv2DeviceDiscoveryReply(myId, dest, mf, dev, type, serial);
             }
         } else if (LncvMessageContents.isSupportedLncvMessage(m)) {
             // Uhlenbrock LOCONET_LNCV simulation

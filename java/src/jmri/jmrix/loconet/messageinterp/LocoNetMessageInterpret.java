@@ -15,7 +15,7 @@ import jmri.TurnoutManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
-import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContentsA;
+import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.util.StringUtil;
 
@@ -1588,10 +1588,10 @@ public class LocoNetMessageInterpret {
     private static String interpretSV2Message(LocoNetMessage l) {
         // (New Designs)
         String svReply = "";
-        Lnsv2MessageContentsA sv2mc = null;
+        Lnsv2MessageContents sv2mc = null;
         try {
             // assume the message is an SV2 message
-            sv2mc = new Lnsv2MessageContentsA(l);
+            sv2mc = new Lnsv2MessageContents(l);
         } catch (IllegalArgumentException e) {
             // message is not an SV2 message.  Ignore the exception.
         }

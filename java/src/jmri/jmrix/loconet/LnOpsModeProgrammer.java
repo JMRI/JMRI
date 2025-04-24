@@ -10,7 +10,7 @@ import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrix.loconet.hexfile.HexFileFrame;
 import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
-import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContentsA;
+import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 
 
@@ -722,7 +722,7 @@ public class LnOpsModeProgrammer extends PropertyChangeSupport implements Addres
     }
 
     /** Fill in an SV2 format LocoNet message from parameters provided.
-     * Compare to SV2 message handler in {@link Lnsv2MessageContentsA#createSv2Message(int, int, int, int, int, int, int, int)}
+     * Compare to SV2 message handler in {@link Lnsv2MessageContents#createSv2Message(int, int, int, int, int, int, int, int)}
      *
      * @param m         Base LocoNet message to fill
      * @param mAddress  Destination board address
