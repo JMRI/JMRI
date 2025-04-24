@@ -572,7 +572,7 @@ public final class SystemConsole {
     }
 
     public Scheme[] getSchemes() {
-        return this.schemes.toArray(Scheme[]::new);
+        return this.schemes.toArray(@Nonnull Scheme[]::new);
     }
 
     /**
