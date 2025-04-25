@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.annotation.Nonnull;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -355,7 +354,6 @@ public final class SystemConsole {
      * @param which the stream, either STD_OUT or STD_ERR
      * @return the new OutputStream
      */
-    @Nonnull
     private OutputStream outStream(final int which) {
         return new OutputStream() {
             @Override
@@ -572,7 +570,11 @@ public final class SystemConsole {
     }
 
     public Scheme[] getSchemes() {
-        return this.schemes.toArray(@Nonnull Scheme[]::new);
+        return this.schemes.toArray(new Scheme[this.schemes.size()]);
+        // return this.schemes.toArray(Scheme[]::new);
+        // It should be possible to use the line above, however causes eclipse compilation error
+        // Annotation type 'org.eclipse.jdt.annotation.NonNull' cannot be found on the build path,
+        // which is implicitly needed for null analysis.
     }
 
     /**
