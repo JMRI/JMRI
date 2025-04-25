@@ -729,7 +729,12 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def get_transit_name(self, station_from_name, station_to_name):
         StateVertex_start = station_from_name
         StateVertex_end = station_to_name
-        paths = DijkstraShortestPath.findPathBetween(g.g_express, StateVertex_start, StateVertex_end)
+
+        if g.g_express.containsVertex(StateVertex_start) and g.g_express.containsVertex(StateVertex_end):
+            paths = DijkstraShortestPath.findPathBetween(g.g_express, StateVertex_start, StateVertex_end)
+        else:
+            OptionDialog().displayMessage("You have an old route with a station that does not exist. \n Delete it!!")
+            return None
         e = paths[paths.size()-1]
         traininfoFileName = self.get_filename(e, "fwd")
         trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
