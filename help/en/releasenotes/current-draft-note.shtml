@@ -126,7 +126,14 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>There's a new storage method for event names.
+                    Previously, these were stored in the IdTag table, which
+                    be confusing.
+                    Starting with this release, they're separately stored
+                    in an eventnames/eventNames.xml file within the profile
+                    directory.
+                    Names that were previously stored in the IdTag table
+                    will be automatically migrated to this new method.</li>
             </ul>
 
         <h4>Powerline</h4>
