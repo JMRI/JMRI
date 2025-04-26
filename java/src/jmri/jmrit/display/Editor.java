@@ -3056,6 +3056,13 @@ abstract public class Editor extends JmriJFrameWithPermissions
         }
         InstanceManager.getDefault(EditorManager.class).remove(this);
         setVisible(false);
+        for (Positionable _content : _contents) {
+            if (_content.getLogixNG() != null) {
+                LogixNG logixNG = _content.getLogixNG();
+                deleteLogixNG_Internal(logixNG);
+                logixNG.dispose();
+            }
+        }
         _contents.clear();
         _idContents.clear();
         for (var list : _classContents.values()) {
