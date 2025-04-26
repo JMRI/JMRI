@@ -130,8 +130,8 @@
                     Previously, these were stored in the IdTag table, which
                     be confusing.
                     Starting with this release, they're separately stored
-                    in an eventnames/eventNames.xml file within the profile
-                    directory.
+                    in an eventnames/eventNames.xml file within the user files
+                    location.
                     Names that were previously stored in the IdTag table
                     will be automatically migrated to this new method.</li>
             </ul>

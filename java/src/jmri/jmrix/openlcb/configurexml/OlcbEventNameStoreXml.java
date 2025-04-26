@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.HashSet;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -47,7 +48,9 @@ public final class OlcbEventNameStoreXml extends XmlFile {
         
         var tagSet = tagmgr.getNamedBeanSet();
         
-        for (var tag : tagSet) {
+        var localSet = new HashSet<>(tagSet); // avoid concurrent modifications
+        
+        for (var tag : localSet) {
             log.debug("  Process tag {}", tag);
             if (tag.getSystemName().startsWith(OlcbConstants.tagPrefix)) {
                 var eid = tag.getSystemName().substring(OlcbConstants.tagPrefix.length());
