@@ -12,6 +12,18 @@
     .ctr {
         text-align: center;
     }
+
+    table {
+        border: 3px solid;
+    }
+
+    th {
+        border: 1px solid;
+    }
+
+    td {
+        border: 1px solid;
+    }
   </style>
 </head>
 <body>
@@ -205,7 +217,7 @@
       "RailSync" signal, LocoNet Data signal termination, and fast clock master. The table below
       shows some LocoNet devices and their requirements.</p>
 
-      <table class="wide" border="2">
+      <table class="wide">
         <tr>
           <th colspan="5">Command Stations and Boosters</th>
         </tr>
