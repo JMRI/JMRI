@@ -3056,11 +3056,24 @@ abstract public class Editor extends JmriJFrameWithPermissions
         }
         InstanceManager.getDefault(EditorManager.class).remove(this);
         setVisible(false);
+        ArrayList<LogixNG> logixNGArrayList = new ArrayList<>();
         for (Positionable _content : _contents) {
             if (_content.getLogixNG() != null) {
                 LogixNG logixNG = _content.getLogixNG();
+                logixNGArrayList.add(logixNG);
+            }
+        }
+        if (!logixNGArrayList.isEmpty()) {
+            LogixNGDeleteDialog logixNGDeleteDialog = new LogixNGDeleteDialog(this, logixNGArrayList);
+            logixNGDeleteDialog.setVisible(true);
+            List<LogixNG> selectedItems = logixNGDeleteDialog.getSelectedItems();
+            for (LogixNG logixNG : selectedItems) {
                 deleteLogixNG_Internal(logixNG);
-                logixNG.dispose();
+                logixNGArrayList.remove(logixNG);
+            }
+            for (LogixNG logixNG : logixNGArrayList) {
+                logixNG.setInline(false);
+                logixNG.setEnabled(!logixNGDeleteDialog.isDisableLogixNG());
             }
         }
         _contents.clear();
