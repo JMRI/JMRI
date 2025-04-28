@@ -583,11 +583,9 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
         defaults.setAttribute(Xml.LOAD, getDefaultLoadName());
         values.addContent(defaults);
         // store loads based on car types
-        Enumeration<String> en = listCarLoads.keys();
-        while (en.hasMoreElements()) {
-            String carType = en.nextElement();
-            // check to see if car type still exists
-            if (!InstanceManager.getDefault(CarTypes.class).containsName(carType)) {
+        String[] carTypeNames = InstanceManager.getDefault(CarTypes.class).getNames();
+        for (String carType : carTypeNames) {
+            if (!listCarLoads.containsKey(carType)) {
                 continue;
             }
             List<CarLoad> loads = getSortedList(carType);
