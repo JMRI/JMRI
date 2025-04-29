@@ -3033,7 +3033,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
             }
         }
         if (!logixNGArrayList.isEmpty()) {
-            LogixNGDeleteDialog logixNGDeleteDialog = new LogixNGDeleteDialog(this, logixNGArrayList);
+            LogixNGDeleteDialog logixNGDeleteDialog = new LogixNGDeleteDialog(this, getTitle(), logixNGArrayList);
             logixNGDeleteDialog.setVisible(true);
             List<LogixNG> selectedItems = logixNGDeleteDialog.getSelectedItems();
             for (LogixNG logixNG : selectedItems) {

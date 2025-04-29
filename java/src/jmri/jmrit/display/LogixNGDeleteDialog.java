@@ -15,6 +15,7 @@ import java.util.List;
 
 public class LogixNGDeleteDialog extends JDialog {
 
+    private JLabel label;
     private JList<CheckableItem> itemList;
     private DefaultListModel<CheckableItem> listModel;
     private JCheckBox selectAllCheckBox;
@@ -23,15 +24,16 @@ public class LogixNGDeleteDialog extends JDialog {
     private List<CheckableItem> selectedItems;
     private boolean isSelectAllChecked = false; // Track the state of the "Select All" checkbox
 
-    public LogixNGDeleteDialog(Frame owner, List<LogixNG> items) {
+    public LogixNGDeleteDialog(Frame owner, String panelName, List<LogixNG> items) {
         super(owner, Bundle.getMessage("LogixNGDeleteDialog_Title"), true); // true for modal dialog
-        initComponents(items);
+        initComponents(panelName, items);
         layoutComponents();
         addEventHandlers();
         selectedItems = new ArrayList<>();
     }
 
-    private void initComponents(List<LogixNG> items) {
+    private void initComponents(String panelName, List<LogixNG> items) {
+        label = new JLabel(Bundle.getMessage("LogixNGDeleteDialog_PanelText", panelName));
         listModel = new DefaultListModel<>();
         for (LogixNG item : items) {
             listModel.addElement(new CheckableItem(item));
@@ -52,11 +54,13 @@ public class LogixNGDeleteDialog extends JDialog {
         contentPanel.setLayout(new BorderLayout());
 
         // Header panel for the "Select All" checkbox
-        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-        headerPanel.add(selectAllCheckBox);
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.add(label, BorderLayout.NORTH);
+        headerPanel.add(itemList, BorderLayout.CENTER);
+        headerPanel.add(selectAllCheckBox, BorderLayout.SOUTH);
         contentPanel.add(headerPanel, BorderLayout.NORTH);
 
-        //scrollpane for the list
+        //scroll pane for the list
         JScrollPane scrollPane = new JScrollPane(itemList);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
 
