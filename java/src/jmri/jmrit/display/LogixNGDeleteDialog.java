@@ -20,12 +20,11 @@ public class LogixNGDeleteDialog extends JDialog {
     private JCheckBox selectAllCheckBox;
     private JCheckBox disableCheckBox;
     private JButton okButton;
-    private JButton cancelButton;
     private List<CheckableItem> selectedItems;
     private boolean isSelectAllChecked = false; // Track the state of the "Select All" checkbox
 
     public LogixNGDeleteDialog(Frame owner, List<LogixNG> items) {
-        super(owner, "Disposition Inline Logix NGs", true); // true for modal dialog
+        super(owner, Bundle.getMessage("LogixNGDeleteDialog_Title"), true); // true for modal dialog
         initComponents(items);
         layoutComponents();
         addEventHandlers();
@@ -38,18 +37,14 @@ public class LogixNGDeleteDialog extends JDialog {
             listModel.addElement(new CheckableItem(item));
         }
         itemList = new JList<>(listModel);
-        itemList.setCellRenderer(new CheckboxListCellRenderer()); // Use custom renderer
-        itemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Or MULTIPLE_INTERVAL_SELECTION as needed
+        itemList.setCellRenderer(new CheckboxListCellRenderer());
+        itemList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        selectAllCheckBox = new JCheckBox("<html>Selected Logix NGs will be deleted<br/>Others converted to normal Logix NGs</html>");
-        selectAllCheckBox.setFocusable(false); // Remove focus rectangle
+        selectAllCheckBox = new JCheckBox(Bundle.getMessage("LogixNGDeleteDialog_SelectCheckBox"));
+        disableCheckBox = new JCheckBox(Bundle.getMessage("LogixNGDeleteDialog_DisableCheckBox"));
 
-        disableCheckBox = new JCheckBox("Disable converted Logix NGs");
-        disableCheckBox.setFocusable(false); // Remove focus rectangle
-
-        okButton = new JButton("OK");
-        cancelButton = new JButton("Cancel");
-        getRootPane().setDefaultButton(okButton); // Make Enter key activate OK button
+        okButton = new JButton(Bundle.getMessage("ButtonOK"));
+        getRootPane().setDefaultButton(okButton);
     }
 
     private void layoutComponents() {
@@ -68,7 +63,6 @@ public class LogixNGDeleteDialog extends JDialog {
         // Button panel for OK and Cancel buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(okButton);
-        buttonPanel.add(cancelButton);
 
         JPanel southPanel = new JPanel(new BorderLayout());
         southPanel.add(disableCheckBox, BorderLayout.NORTH);
@@ -120,14 +114,6 @@ public class LogixNGDeleteDialog extends JDialog {
                         selectedItems.add(item);
                     }
                 }
-                setVisible(false); // Close the dialog
-            }
-        });
-
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectedItems.clear();
                 setVisible(false); // Close the dialog
             }
         });

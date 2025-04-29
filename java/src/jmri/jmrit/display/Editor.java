@@ -3021,41 +3021,10 @@ abstract public class Editor extends JmriJFrameWithPermissions
     }
 
     /**
-     * Ask user if panel should be deleted. The caller should dispose the panel
-     * to delete it.
-     *
-     * @return true if panel should be deleted.
+     * Ask user the user to decide what to do with LogixNGs, whether to delete them
+     * or convert them to normal LogixNGs.  Then respond to user's choice.
      */
-    public boolean deletePanel() {
-        log.debug("deletePanel");
-        // verify deletion
-        int selectedValue = JmriJOptionPane.showOptionDialog(_targetPanel,
-                Bundle.getMessage("QuestionA") + "\n" + Bundle.getMessage("QuestionA2",
-                    Bundle.getMessage("FileMenuItemStore")),
-                Bundle.getMessage("DeleteVerifyTitle"), JmriJOptionPane.DEFAULT_OPTION,
-                JmriJOptionPane.QUESTION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonCancel")},
-                Bundle.getMessage("ButtonCancel"));
-        // return without deleting if "Cancel" or Cancel Dialog response
-        return (selectedValue == 0 ); // array position 0 = Yes, Delete.
-    }
-
-    /**
-     * Dispose of the editor.
-     */
-    @Override
-    public void dispose() {
-        for (JFrameItem frame : _iconEditorFrame.values()) {
-            frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-            frame.dispose();
-        }
-        // delete panel - deregister the panel for saving
-        ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class);
-        if (cm != null) {
-            cm.deregister(this);
-        }
-        InstanceManager.getDefault(EditorManager.class).remove(this);
-        setVisible(false);
+    private void dispositionLogixNGs() {
         ArrayList<LogixNG> logixNGArrayList = new ArrayList<>();
         for (Positionable _content : _contents) {
             if (_content.getLogixNG() != null) {
@@ -3076,6 +3045,47 @@ abstract public class Editor extends JmriJFrameWithPermissions
                 logixNG.setEnabled(!logixNGDeleteDialog.isDisableLogixNG());
             }
         }
+    }
+
+    /**
+     * Ask user if panel should be deleted. The caller should dispose the panel
+     * to delete it.
+     *
+     * @return true if panel should be deleted.
+     */
+    public boolean deletePanel() {
+        log.debug("deletePanel");
+        // verify deletion
+        int selectedValue = JmriJOptionPane.showOptionDialog(_targetPanel,
+                Bundle.getMessage("QuestionA") + "\n" + Bundle.getMessage("QuestionA2",
+                    Bundle.getMessage("FileMenuItemStore")),
+                Bundle.getMessage("DeleteVerifyTitle"), JmriJOptionPane.DEFAULT_OPTION,
+                JmriJOptionPane.QUESTION_MESSAGE, null,
+                new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonCancel")},
+                Bundle.getMessage("ButtonCancel"));
+        // return without deleting if "Cancel" or Cancel Dialog response
+        if (selectedValue == 0) {
+            dispositionLogixNGs();
+        }
+        return (selectedValue == 0 ); // array position 0 = Yes, Delete.
+    }
+
+    /**
+     * Dispose of the editor.
+     */
+    @Override
+    public void dispose() {
+        for (JFrameItem frame : _iconEditorFrame.values()) {
+            frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            frame.dispose();
+        }
+        // delete panel - deregister the panel for saving
+        ConfigureManager cm = InstanceManager.getNullableDefault(ConfigureManager.class);
+        if (cm != null) {
+            cm.deregister(this);
+        }
+        InstanceManager.getDefault(EditorManager.class).remove(this);
+        setVisible(false);
         _contents.clear();
         _idContents.clear();
         for (var list : _classContents.values()) {
