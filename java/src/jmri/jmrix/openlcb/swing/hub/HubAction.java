@@ -27,11 +27,14 @@ public class HubAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
     static {        
         var memos = jmri.InstanceManager.getList(CanSystemConnectionMemo.class);
         for (CanSystemConnectionMemo check : memos) {
-            String name = check.getUserName();
-            if (name.equals("LCC") || name.equals("OpenLCB")) {
+            if (check.provides(org.openlcb.OlcbInterface.class)) {
                 memo = check;
-                break;
+                break;  // we're taking the first one
             }
+        }
+        // if not found above
+        if (memo == null) {
+            memo = jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class);
         }
     }
     

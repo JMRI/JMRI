@@ -18,11 +18,15 @@ public class CbusHubAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
     static {        
         var memos = jmri.InstanceManager.getList(CanSystemConnectionMemo.class);
         for (CanSystemConnectionMemo check : memos) {
-            String name = check.getUserName();
-            if (name.equals("MERG")) {
+            if (check.provides(jmri.jmrix.can.cbus.CbusPreferences.class)) {
                 memo = check;
                 break;
             }
         }
+        // if not found above
+        if (memo == null) {
+            memo = jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class);
+        }
+        System.err.println("memo "+memo.getUserName());
     }
 }
