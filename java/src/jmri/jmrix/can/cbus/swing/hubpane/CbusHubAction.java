@@ -27,6 +27,5 @@ public class CbusHubAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
         if (memo == null) {
             memo = jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class);
         }
-        System.err.println("memo "+memo.getUserName());
     }
 }
