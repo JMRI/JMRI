@@ -11,4 +11,18 @@ public class CbusHubAction extends jmri.jmrix.can.swing.CanNamedPaneAction {
             jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
     }
 
+    // we have to locate the (only) CBUS CanSystemConnectionMemo
+    // before we can call the super constructors.
+    private static CanSystemConnectionMemo memo;
+    
+    static {        
+        var memos = jmri.InstanceManager.getList(CanSystemConnectionMemo.class);
+        for (CanSystemConnectionMemo check : memos) {
+            String name = check.getUserName();
+            if (name.equals("MERG")) {
+                memo = check;
+                break;
+            }
+        }
+    }
 }
