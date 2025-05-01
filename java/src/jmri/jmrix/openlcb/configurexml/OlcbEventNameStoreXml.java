@@ -43,6 +43,12 @@ public final class OlcbEventNameStoreXml extends XmlFile {
      * to the dedicated local store.
      */
     private void migrateFromIdTagStore() {
+        // check for whether migration is already done
+        File file = findFile(getDefaultEventNameFileName());
+        if (file != null) {
+           return;
+        }
+
         IdTagManager tagmgr = InstanceManager.getDefault(IdTagManager.class); 
         log.debug("*** Starting event name migration");
         
