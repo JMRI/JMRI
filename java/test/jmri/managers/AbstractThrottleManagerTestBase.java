@@ -39,7 +39,7 @@ public abstract class AbstractThrottleManagerTestBase {
 
         private DccThrottle foundThrottle = null;
         private String failedReason;
-        private int flagGotStealRequest = -1;
+        public int flagGotStealRequest = -1;
 
         @Override
         public void notifyThrottleFound(DccThrottle t){
