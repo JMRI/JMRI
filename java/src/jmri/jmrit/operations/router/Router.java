@@ -734,13 +734,11 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
         Car testCar = clone(car); // reload
         // build the "next" and "other" location/tracks
-        if (!useStaging) {
+        if (_nextLocationTracks.isEmpty() && _otherLocationTracks.isEmpty()) {
             loadInterchangeAndYards(car, testCar);
-        } else {
-            if (_nextLocationTracks.isEmpty() && _otherLocationTracks.isEmpty()) {
-                loadInterchangeAndYards(car, testCar);
-            }
-            // add staging if requested
+        }
+        // add staging if requested
+        if (useStaging) {
             loadStaging(car, testCar);
         }
 
