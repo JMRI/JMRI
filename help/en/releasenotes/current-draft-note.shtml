@@ -485,6 +485,10 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>New feature, passenger car blocking order for Manifests and switch lists</li>
+            <li>Added car's division name to CSV Manifests and switch lists</li>
+            <li>Fixed a bug when routing through staging and no last hop C/I track was available</li>
+            <li>Improved the route edit window by always showing both departure time and travel time</li>
+            <li>Fixed exception error when replacing a car's load using the "All" cars feature</li>
         </ul>
 
    <h3>Panel Editor</h3>
