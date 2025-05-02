@@ -1750,7 +1750,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         length, load, color, location name, track name, destination name, destination track name,
         owner name, kernel name, car comment, pick up comment, set out comment, C, F, H, IDTag, RWE
         location name, RWE track name, U, utility car count, final destination name, final
-        destination track name, load type, RWL location name, RWL track name, route path.</p>
+        destination track name, load type, RWL location name, RWL track name, route path, division
+        name.</p>
 
       <p>Where C = Caboose, F = FRED, H = Hazardous, and U = Utility.</p>
 
