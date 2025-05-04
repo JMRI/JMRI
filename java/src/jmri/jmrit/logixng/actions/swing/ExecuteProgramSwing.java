@@ -9,6 +9,7 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ExecuteProgram;
+import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringListSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
 
 /**
@@ -19,7 +20,7 @@ import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
 public class ExecuteProgramSwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectStringSwing _selectProgramSwing;
-    private LogixNG_SelectStringSwing _selectParametersSwing;
+    private LogixNG_SelectStringListSwing _selectParametersSwing;
 
     private JTextField _resultLocalVariableTextField;
 
@@ -29,7 +30,7 @@ public class ExecuteProgramSwing extends AbstractDigitalActionSwing {
         ExecuteProgram action = (ExecuteProgram)object;
 
         _selectProgramSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
-        _selectParametersSwing = new LogixNG_SelectStringSwing(getJDialog(), this);
+        _selectParametersSwing = new LogixNG_SelectStringListSwing();
 
         panel = new JPanel();
         panel.setLayout(new java.awt.GridBagLayout());

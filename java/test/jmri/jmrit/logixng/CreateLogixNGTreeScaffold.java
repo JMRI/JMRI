@@ -3302,7 +3302,9 @@ public class CreateLogixNGTreeScaffold {
         executeProgram = new ExecuteProgram(digitalActionManager.getAutoSystemName(), null);
         executeProgram.setComment("A comment");
         executeProgram.getSelectProgram().setValue("myprogram");
-        executeProgram.getSelectParameters().setValue("param1, param2");
+        executeProgram.getSelectParameters().getList().add("param1");
+        executeProgram.getSelectParameters().getList().add("param2");
+        executeProgram.getSelectParameters().getList().add("param3");
         executeProgram.setResultLocalVariable("myResultVariable");
         maleSocket = digitalActionManager.registerAction(executeProgram);
         actionManySocket.getChild(indexAction++).connect(maleSocket);

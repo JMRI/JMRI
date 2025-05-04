@@ -3,7 +3,9 @@ package jmri.jmrit.logixng.actions.configurexml;
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ExecuteProgram;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringListXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
 
 import org.jdom2.Element;
@@ -35,10 +37,24 @@ public class ExecuteProgramXml extends jmri.managers.configurexml.AbstractNamedB
 
         storeCommon(p, element);
 
+        Element e2 = new Element("Socket");
+        e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
+        MaleSocket socket = p.getSocket().getConnectedSocket();
+        String socketSystemName;
+        if (socket != null) {
+            socketSystemName = socket.getSystemName();
+        } else {
+            socketSystemName = p.getSocketSystemName();
+        }
+        if (socketSystemName != null) {
+            e2.addContent(new Element("systemName").addContent(socketSystemName));
+        }
+        element.addContent(e2);
+
         var selectProgramXml = new LogixNG_SelectStringXml();
         element.addContent(selectProgramXml.store(p.getSelectProgram(), "program"));
 
-        var selectParametersXml = new LogixNG_SelectStringXml();
+        var selectParametersXml = new LogixNG_SelectStringListXml();
         element.addContent(selectParametersXml.store(p.getSelectParameters(), "parameters"));
 
         element.addContent(new Element("resultVariable").addContent(p.getResultLocalVariable()));
@@ -52,12 +68,23 @@ public class ExecuteProgramXml extends jmri.managers.configurexml.AbstractNamedB
         String uname = getUserName(shared);
         ExecuteProgram h = new ExecuteProgram(sys, uname);
 
+        Element socketNameElement = shared.getChild("Socket").getChild("socketName");
+        String socketName = socketNameElement.getTextTrim();
+        Element socketSystemNameElement = shared.getChild("Socket").getChild("systemName");
+        String socketSystemName = null;
+        if (socketSystemNameElement != null) {
+            socketSystemName = socketSystemNameElement.getTextTrim();
+        }
+
+        h.getChild(0).setName(socketName);
+        h.setSocketSystemName(socketSystemName);
+
         loadCommon(h, shared);
 
         var selectProgramXml = new LogixNG_SelectStringXml();
         selectProgramXml.load(shared.getChild("program"), h.getSelectProgram());
 
-        var selectParametersXml = new LogixNG_SelectStringXml();
+        var selectParametersXml = new LogixNG_SelectStringListXml();
         selectParametersXml.load(shared.getChild("parameters"), h.getSelectParameters());
 
         Element elem = shared.getChild("resultVariable");

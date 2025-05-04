@@ -41,8 +41,17 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
+              <xs:element name="Socket" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="socketName" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="systemName" type="systemNameType" minOccurs="0" maxOccurs="1"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
               <xs:element name="program" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
-              <xs:element name="parameters" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="parameters" type="LogixNG_SelectStringListType" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="resultVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
