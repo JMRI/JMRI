@@ -405,8 +405,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def call_dispatch(self, e, direction, train, mode="not_scheduling"):
         global scheduling_margin_gbl, fast_clock_rate
-        if mode != "not_scheduling":
-            print "__" + str(train) + " call dispatch"
+        # if mode != "not_scheduling":
+        #     print "__" + str(train) + " call dispatch"
         global check_action_route_flag
         global check_route_flag
 
@@ -430,7 +430,6 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             check_route_flag = False
         if self.logLevel > 0: print "check_route_flag", check_route_flag
-        # print "call_dispatch b"
         # initialise globals to False if not set
         if 'check_action_route_flag' not in globals():
             check_action_route_flag = False
@@ -439,20 +438,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if check_route_flag == True or check_action_route_flag == True:  # can ask for route to be checked globally or in action
             # print "call_dispatch b1"
             i = 0
+            # print "checking route is clear"
             self.wait_route_is_clear(filename, from_name, train)
-            # print "call_dispatch b2"
-            #self.do_not_start_trains_simultaneously()
-            # self.set_route_allocated(filename, from_name)  # can't wait for dispatcher to do this
-                                        # else other routes will be allocated simultaneously
-                # i += 1
-                # if i == 1:
-                #     if self.train_name == "shunter": print "     ",
-                #     if self.logLevel > 0: print "waiting for route", filename, "to be clear"
-                # self.waitMsec(2000)
-        # mark as allocating
-        # print "call_dispatch c"
         t = trains[self.train_name]   #train is train_name
-        # print "call_dispatch a  $$$$$"
         t["allocating"] = True
 
         if self.logLevel > 0 and self.train_name == "shunter": print "     ",
@@ -1988,7 +1976,7 @@ class createandshowGUI(TableModelListener):
     def loadfromfile_action(self, event):
         # load the file
         dir = self.directory()
-        j = JFileChooser(dir);
+        j = JFileChooser(dir)
         j.setAcceptAllFileFilterUsed(False)
         filter = FileNameExtensionFilter("text files txt", ["txt"])
         j.setDialogTitle("Select a .txt file")
@@ -1998,7 +1986,7 @@ class createandshowGUI(TableModelListener):
         files = j.getCurrentDirectory().listFiles()
         j.setSelectedFile(files[0])
 
-        ret = j.showOpenDialog(None);
+        ret = j.showOpenDialog(None)
         if (ret == JFileChooser.APPROVE_OPTION):
             file = j.getSelectedFile()
             if self.logLevel > 0: print "about to read list", file
@@ -2063,6 +2051,7 @@ class createandshowGUI(TableModelListener):
             j.setAcceptAllFileFilterUsed(False)
             filter = FileNameExtensionFilter("text files txt", ["txt"])
             j.addChoosableFileFilter(filter);
+
             j.setDialogTitle("Delete not wanted files");
 
             ret = j.showDialog(None, "Delete");
@@ -2072,7 +2061,7 @@ class createandshowGUI(TableModelListener):
                     return
                 if file.exists():
                     os.remove(file.getAbsolutePath())
-                    print("File " + file.getName() + " has been deleted successfully.")
+                    # print("File " + file.getName() + " has been deleted successfully.")
                 else:
                     print("The selected file does not exist.")
             else:

@@ -211,7 +211,7 @@ public class OperationsBackupTest {
         // Could roll up into setup() if not used elsewhere.
         if (operationsRoot.exists()) {
             for (File f : operationsRoot.listFiles()) {
-                if (f.isFile()) {
+                if (f.isFile() && f.exists()) {
                     assertTrue(f.delete());
                 }
             }

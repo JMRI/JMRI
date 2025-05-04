@@ -363,7 +363,7 @@ public class StringUtil {
         }
         return 0;
     }
-    
+
     /**
      * Create a hex byte[] of Unicode character values from a String containing full text (non hex) values.
      * <p>
@@ -389,7 +389,7 @@ public class StringUtil {
         }
         return b;
     }
-    
+
     /**
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
@@ -433,7 +433,7 @@ public class StringUtil {
     @CheckReturnValue
     @CheckForNull
     public static String parenQuote(@CheckForNull String in) {
-        if (in == null || in.equals("")) {
+        if (in == null || in.isEmpty()) {
             return in;
         }
         StringBuilder result = new StringBuilder();
@@ -471,7 +471,7 @@ public class StringUtil {
     @CheckReturnValue
     @CheckForNull
     static String parenUnQuote(@CheckForNull String in) {
-        if (in == null || in.equals("")) {
+        if (in == null || in.isEmpty()) {
             return in;
         }
         StringBuilder result = new StringBuilder();
@@ -494,7 +494,7 @@ public class StringUtil {
     @Nonnull
     public static java.util.List<String> splitParens(@CheckForNull String in) {
         java.util.ArrayList<String> result = new java.util.ArrayList<>();
-        if (in == null || in.equals("")) {
+        if (in == null || in.isEmpty()) {
             return result;
         }
         int level = 0;
@@ -607,7 +607,7 @@ public class StringUtil {
      * @return trimmed string, left aligned by padding to the right
      */
     @CheckReturnValue
-    public static String padString (String value, int length) {
+    public static String padString (@Nonnull String value, int length) {
         if (length > 1) {
             return String.format("%-" + length + "s", value.substring(0, Math.min(value.length(), length - 1)));
         } else {

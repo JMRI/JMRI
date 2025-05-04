@@ -23,7 +23,8 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
@@ -169,6 +170,7 @@ public class JsonUtil {
             data.set(JsonOperations.RETURN_WHEN_LOADED, null);
         }
         data.put(JsonOperations.DIVISION, car.getDivisionName());
+        data.put(JsonOperations.BLOCKING_ORDER, car.isPassenger() ? Integer.toString(car.getBlocking()) : "");
         data.put(JSON.STATUS, car.getStatus().replace("<", "&lt;").replace(">", "&gt;"));
         return data;
     }

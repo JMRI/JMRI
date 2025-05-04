@@ -384,6 +384,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
      *         format)
      */
     public String getExpectedArrivalTime(RouteLocation routeLocation) {
+        return getExpectedArrivalTime(routeLocation, false);
+    }
+
+    public String getExpectedArrivalTime(RouteLocation routeLocation, boolean isSortFormat) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
         if (minutes == -1) {
             return ALREADY_SERVICED;
@@ -392,7 +396,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                 minutes);
         // TODO use fast clock to get current time vs departure time
         // for now use relative
-        return parseTime(minutes);
+        return parseTime(minutes, isSortFormat);
     }
 
     public String getExpectedDepartureTime(RouteLocation routeLocation) {

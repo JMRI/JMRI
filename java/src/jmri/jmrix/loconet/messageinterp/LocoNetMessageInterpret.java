@@ -77,11 +77,11 @@ public class LocoNetMessageInterpret {
      * string contains a message indicating that the message is not decoded followed
      * by the individual bytes of the message (in hexadecimal).
      * <p>
-     * Note that many message types are "poorly defined" here, with many 
-     * "reverse-engineered" messages, and many that do not define actual bits.  This 
+     * Note that many message types are "poorly defined" here, with many
+     * "reverse-engineered" messages, and many that do not define actual bits.  This
      * means that this code can give interpretations that may not actually "decode"
-     * an actual message. 
-     * 
+     * an actual message.
+     *
      * @param l Message to parse
      * @param turnoutPrefix "System Name" + prefix which designates the connection's
      *          Turnouts, such as "LT"
@@ -1133,8 +1133,8 @@ public class LocoNetMessageInterpret {
                     //
                     // Information reverse-engineered by B. Milhaupt and used with permission
 
-                    device = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
-                    String slave = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+                    device = getDeviceNameFromIPLInfo(((l.getElement(4) & 1) << 7) + l.getElement(5));
+                    String slave = getSlaveNameFromIPLInfo( l.getElement(6) + ((l.getElement(4) & 2) << 6));
                     return Bundle.getMessage("LN_MSG_IPL_DISCOVER_SPECIFIC_DEVICES",
                             device, slave);
                 }
@@ -1326,7 +1326,7 @@ public class LocoNetMessageInterpret {
         // devices do not generate this report.
         //
         // Information reverse-engineered by B. Milhaupt and used with permission
-        String hostType = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
+        String hostType = getDeviceNameFromIPLInfo(((l.getElement(4) & 1) << 7) + l.getElement(5));
 
         String hostVer = ((l.getElement(8) & 0x78) >> 3) + "." + ((l.getElement(8) & 0x7));
 
@@ -1337,9 +1337,10 @@ public class LocoNetMessageInterpret {
         String hostInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_HOST_DETAILS",
                 hostType, hostSN, hostVer);
 
-        String slaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+        String slaveType = getSlaveNameFromIPLInfo( l.getElement(6) + ((l.getElement(4) & 2) << 6));
         String slaveInfo;
-        if (l.getElement(6) != 0) {
+
+        if ((l.getElement(6) != 0) && (l.getElement(5) != l.getElement(6))) {
             String slaveVer = (((l.getElement(10) & 0x78) >> 3) + ((l.getElement(9) & 1) << 4)) + "." + ((l.getElement(10) & 0x7));
             int slaveSnInt
                     = ((l.getElement(15) + (((l.getElement(14) & 0x1) == 1) ? 128 : 0)))
@@ -1349,6 +1350,10 @@ public class LocoNetMessageInterpret {
             slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_DETAILS", slaveType,
                     Integer.toHexString(slaveSnInt).toUpperCase(),
                     slaveVer);
+        } else if ((l.getElement(6) != 0) && (l.getElement(5) == l.getElement(6))) {
+            int iplVer =l.getElement(10) + ((l.getElement(9) & 1)<<7);
+            slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_IPL",
+                    Integer.toString(iplVer>>3) + "." + Integer.toString(iplVer & 7));
         } else {
             slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_NO_SLAVE");
         }
@@ -1990,7 +1995,7 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_LONG_ACK_WRONG_THROTTLE_ID",
                         Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(l.getElement(2))));
-                
+
             case LnConstants.OPC_ALM_READ:
                 if (l.getElement(2) == 0) {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_SLOT_NOT_SUPPORTED",
@@ -3813,6 +3818,10 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR93",
                         l.getElement(3) & 0x07);
             }
+            case 0x14: {
+                return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR90X",
+                        l.getElement(3) & 0x07);
+            }
            default: {
                 return "";
             }
@@ -4787,11 +4796,7 @@ public class LocoNetMessageInterpret {
         }
     }
 
-    public static String getDeviceNameFromIPLInfo(int manuf, int type) {
-        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
-            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
-                    manuf, type);
-        }
+    public static String getDeviceNameFromIPLInfo(int type) {
         switch (type) {
             case LnConstants.RE_IPL_DIGITRAX_HOST_ALL:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_ALLDEVICES");
@@ -4851,17 +4856,14 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_SE74");
             case LnConstants.RE_IPL_DIGITRAX_HOST_BDL716:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_BDL716");
-
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UR90X:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR90X");
             default:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UNKNOWN", type);
         }
     }
 
-    public static String getSlaveNameFromIPLInfo(int manuf, int slaveNum) {
-        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
-            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
-                    manuf, slaveNum);
-        }
+    public static String getSlaveNameFromIPLInfo(int slaveNum) {
         switch (slaveNum) {
             case LnConstants.RE_IPL_DIGITRAX_SLAVE_ALL:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_ALLDEVICES");
@@ -4909,7 +4911,7 @@ public class LocoNetMessageInterpret {
         if ((dest >= 0x79) && (dest <= 0x7f)) {
             return "";
         }
-        
+
         if ((l.getElement(1) & 0x78) != 0x38) {
             // Ignore if message is not one from a DCS240 (or newer) command
             // station's "Expanded" slot messaging.   The message is probably

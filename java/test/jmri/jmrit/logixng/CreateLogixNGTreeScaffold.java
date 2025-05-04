@@ -6251,6 +6251,7 @@ public class CreateLogixNGTreeScaffold {
         InstanceManager.store(_mqttMemo, SystemConnectionMemo.class);
 
         TransitScaffold.initTransits();
+        NamedBeanType.reset();
 
 //        JUnitUtil.initLogixNGManager();
 

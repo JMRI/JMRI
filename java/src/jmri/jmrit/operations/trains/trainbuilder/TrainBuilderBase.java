@@ -847,42 +847,40 @@ public class TrainBuilderBase extends TrainCommon {
             // note that for trains departing staging the engine and car roads,
             // types, owners, and built date were already checked.
 
-            // non-lead cars in a kernel are not checked
-            if (car.getKernel() == null || car.isLead()) {
-                if (!car.isCaboose() && !_train.isCarRoadNameAccepted(car.getRoadName()) ||
-                        car.isCaboose() && !_train.isCabooseRoadNameAccepted(car.getRoadName())) {
-                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongRoad", car.toString(),
-                            car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getTypeExtensions(),
-                            car.getRoadName()));
-                    _carList.remove(car);
-                    i--;
-                    continue;
+            if (!car.isCaboose() && !_train.isCarRoadNameAccepted(car.getRoadName()) ||
+                    car.isCaboose() && !_train.isCabooseRoadNameAccepted(car.getRoadName())) {
+                addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongRoad", car.toString(),
+                        car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getTypeExtensions(),
+                        car.getRoadName()));
+                _carList.remove(car);
+                i--;
+                continue;
+            }
+            if (!_train.isTypeNameAccepted(car.getTypeName())) {
+                // only show lead cars when excluding car type
+                if (showCar && (car.getKernel() == null || car.isLead())) {
+                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongType", car.toString(),
+                            car.getLocationName(), car.getTrackName(), car.getTypeName()));
                 }
-                if (!_train.isTypeNameAccepted(car.getTypeName())) {
-                    if (showCar) {
-                        addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongType", car.toString(),
-                                car.getLocationName(), car.getTrackName(), car.getTypeName()));
-                    }
-                    _carList.remove(car);
-                    i--;
-                    continue;
-                }
-                if (!_train.isOwnerNameAccepted(car.getOwnerName())) {
-                    addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildExcludeCarOwnerAtLoc", car.toString(), car.getOwnerName(),
-                                    car.getLocationName(), car.getTrackName()));
-                    _carList.remove(car);
-                    i--;
-                    continue;
-                }
-                if (!_train.isBuiltDateAccepted(car.getBuilt())) {
-                    addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildExcludeCarBuiltAtLoc", car.toString(), car.getBuilt(),
-                                    car.getLocationName(), car.getTrackName()));
-                    _carList.remove(car);
-                    i--;
-                    continue;
-                }
+                _carList.remove(car);
+                i--;
+                continue;
+            }
+            if (!_train.isOwnerNameAccepted(car.getOwnerName())) {
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildExcludeCarOwnerAtLoc", car.toString(), car.getOwnerName(),
+                                car.getLocationName(), car.getTrackName()));
+                _carList.remove(car);
+                i--;
+                continue;
+            }
+            if (!_train.isBuiltDateAccepted(car.getBuilt())) {
+                addLine(_buildReport, SEVEN,
+                        Bundle.getMessage("buildExcludeCarBuiltAtLoc", car.toString(), car.getBuilt(),
+                                car.getLocationName(), car.getTrackName()));
+                _carList.remove(car);
+                i--;
+                continue;
             }
 
             // all cars in staging must be accepted, so don't exclude if in
@@ -1086,6 +1084,13 @@ public class TrainBuilderBase extends TrainCommon {
                         addLine(_buildReport, SEVEN,
                                 Bundle.getMessage("buildOnlyFirstXXXCars", carCount, rl.getName()));
                     }
+                }
+                // report car in kernel but lead has been removed
+                if (car.getKernel() != null && !_carList.contains(car.getKernel().getLead())) {
+                    addLine(_buildReport, SEVEN,
+                            Bundle.getMessage("buildCarPartOfKernel", car.toString(), car.getKernelName(),
+                                    car.getKernel().getSize(), car.getKernel().getTotalLength(),
+                                    Setup.getLengthUnit().toLowerCase()));
                 }
                 // use only the lead car in a kernel for building trains
                 if (car.getKernel() != null) {
@@ -2409,7 +2414,7 @@ public class TrainBuilderBase extends TrainCommon {
                 destTrack.getAvailableTrackSpace(), destTrack.getReserved());
         if (length > destTrack.getAvailableTrackSpace() +
                 destTrack.getReserved()) {
-            String trainExpectedArrival = train.getExpectedArrivalTime(rld);
+            String trainExpectedArrival = train.getExpectedArrivalTime(rld, true);
             int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
             int reservedReturned = 0;
             // does this car already have this destination?

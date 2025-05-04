@@ -250,6 +250,11 @@ public class HtmlTrainCommon extends TrainCommon {
             return "";
         } else if (attribute.equals(Setup.DIVISION)) {
             return car.getDivisionName();
+        } else if (attribute.equals(Setup.BLOCKING_ORDER)) {
+            if (car.isPassenger()) {
+                return Integer.toString(car.getBlocking());
+            }
+            return "";
         }
         return getRollingStockAttribute(car, attribute, isPickup, isLocal);
     }

@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -954,7 +956,7 @@ public interface Conditional extends NamedBean {
      *
      * @param arrayList the actions
      */
-    void setAction(List<ConditionalAction> arrayList);
+    void setAction(@Nonnull List<ConditionalAction> arrayList);
 
     /**
      * Make deep clone of actions.
@@ -972,7 +974,7 @@ public interface Conditional extends NamedBean {
      *
      * @param arrayList the list of variables
      */
-    void setStateVariables(List<ConditionalVariable> arrayList);
+    void setStateVariables(@Nonnull List<ConditionalVariable> arrayList);
 
     /**
      * Make deep clone of variables.
@@ -994,13 +996,15 @@ public interface Conditional extends NamedBean {
     int calculate(boolean enabled, PropertyChangeEvent evt);
 
     /**
-     * Check that an antecedent is well formed. If not, returns an error
-     * message. Otherwise returns null.
+     * Check that an antecedent is well formed.
+     * If not, returns an error message.
+     * Otherwise returns null.
      *
      * @param ant          the expression
      * @param variableList list of variables
      * @return true if well formed; false otherwise
      */
+    @CheckForNull
     String validateAntecedent(@Nonnull String ant, List<ConditionalVariable> variableList);
 
     /**

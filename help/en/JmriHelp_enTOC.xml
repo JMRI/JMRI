@@ -686,7 +686,7 @@
 
    <tocitem text="Manage LNCV Modules " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
 
-   <tocitem text="Manage LocoIO Modules " target="package.jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane."/>
+   <tocitem text="Manage LocoIO Modules " target="package.jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane"/>
 
    <tocitem text="LocoNet Addresses " target="html.hardware.loconet.Addressing"/>
 

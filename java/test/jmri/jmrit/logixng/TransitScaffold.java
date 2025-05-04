@@ -62,6 +62,7 @@ public class TransitScaffold {
             dp2 = new MyDestinationPoints(new MyPointDetails(), "DP2", src);
             dp2.setUserName("Destination point 2");
             myBeanEntryExit = new MyDestinationPoints(new MyPointDetails(), "MyBeanEntryExit", src);
+            myBeanEntryExit.setUserName("Destination point MyBean");
         }
 
         @Override
@@ -85,6 +86,8 @@ public class TransitScaffold {
                     return dp1;
                 case "Destination point 2":
                     return dp2;
+                case "Destination point MyBean":
+                    return myBeanEntryExit;
                 default:
                     return getBySystemName(name);
             }

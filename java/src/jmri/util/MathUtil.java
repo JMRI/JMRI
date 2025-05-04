@@ -867,14 +867,14 @@ public final class MathUtil {
     }
 
     /**
-     * rectangle2DToString return a string to represent a rectangle
+     * Return an I18N string to represent a rectangle.
      *
      * @param r the rectangle2D
      * @return the string
      */
     @Nonnull
     public static String rectangle2DToString(@Nonnull Rectangle2D r) {
-        return String.format("{%.2f, %.2f, %.2f, %.2f}",
+        return String.format(Locale.getDefault(), "{%.2f, %.2f, %.2f, %.2f}",
                 r.getMinX(), r.getMinY(), r.getWidth(), r.getHeight());
     }
 
@@ -924,14 +924,14 @@ public final class MathUtil {
     }
 
     /**
-     * dimensionToString return a string to represent a Dimension
+     * An I18N string to represent a Dimension.
      *
      * @param d the Dimension
      * @return the string
      */
     @Nonnull
     public static String dimensionToString(@Nonnull Dimension d) {
-        return String.format("{%.2f, %.2f}", d.getWidth(), d.getHeight());
+        return String.format(Locale.getDefault(), "{%.2f, %.2f}", d.getWidth(), d.getHeight());
     }
 
     /**
@@ -1446,13 +1446,17 @@ public final class MathUtil {
     public static boolean isPointInPolygon(Point2D pointT, List<Point2D> points) {
         boolean result = false;
 
-        Double pointT_x = pointT.getX(), pointT_y = pointT.getY();
+        Double pointT_x = pointT.getX();
+        Double pointT_y = pointT.getY();
 
         int n = points.size();
         for (int i = 0, j = n - 1; i < n; j = i++) {
-            Point2D pointI = points.get(i), pointJ = points.get(j);
-            Double pointI_x = pointI.getX(), pointI_y = pointI.getY();
-            Double pointJ_x = pointJ.getX(), pointJ_y = pointJ.getY();
+            Point2D pointI = points.get(i);
+            Point2D pointJ = points.get(j);
+            Double pointI_x = pointI.getX();
+            Double pointI_y = pointI.getY();
+            Double pointJ_x = pointJ.getX();
+            Double pointJ_y = pointJ.getY();
 
             if ((pointI_y > pointT_y) != (pointJ_y > pointT_y)
                     && (pointT_x < (pointJ_x - pointI_x) * (pointT_y - pointI_y) / (pointJ_y - pointI_y) + pointI_x)) {

@@ -86,12 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Added a Configure LocoIO Modules tool, accessible from the LocoNet menu, that lists all
-                  connected LocoIO (LNSV1) boards and allows opening a matching programmer, akin to the LNCV pane.</li>
-                <li>DecoderPro OpsMode LNSV1 programming has been refactored to use the new Lnsv1MessageContents class
-                  instead of locoio.sendRead/.sendWrite it was still using.</li>
-                <li>The LocoIO pane that was deprecated since 4.12 has been removed. The LocoIO configuration
-                  documentation is retained under html LocoNet help.</li>
+                <li>Updated several Digitrax help pages to include
+                recently introduced products, fix typos.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -101,7 +97,7 @@
 
         <h4>Marklin CS2</h4>
             <ul>
-                <li>Added support for TCP (in addition to UDP) connections to the CS2.</li>
+                <li></li>
             </ul>
 
         <h4>MERG</h4>
@@ -131,28 +127,14 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Improved how Event with Payload messages are displayed in the monitor.</li>
-                <li>Enabled the Abort button in the Update Firmware window.</li>
-                <li>Backup files are now written with dotted-hex event ID values,
-                    whether or not an event name is available.  This makes them more reliable
-                    and more portable.</li>
-                <li>Update the STL Editor to support "event names".
-                    <ul>
-                      <li>When available, event names will be displayed in the IQYZ tables.</li>
-                      <li>The load from backup process will handle event names in older CDI backups.
-                      If the event name is no longer in the name store, a temporary event id will
-                      be created.</li>
-                      <li>Existing event names can be entered in the event columns of the IQYZ tables.
-                      Creating new event names is NOT supported.</li>
-                    </ul>
-                </li>
-                <li>Correctly decode events-with-payload</li>
-                <li>First implementation of LCC Location Services which will decode analog-carrying
-                    location services reports to drive volt and amp meters.</li>
-                <li>Update the STL Editor to support importing a <em>group_logic.csv</em> file
-                    that has been modified by a spreadsheet program.</li>
-                <li>Improve how datagram data is represented in the Monitor</li>
-                <li>Add sensor events to the event-entry field popup menu</li>
+                <li>There's a new storage method for event names.
+                    Previously, these were stored in the IdTag table, which might
+                    be confusing.
+                    Starting with this release, they're separately stored
+                    in an eventnames/eventNames.xml file within the user files
+                    location.
+                    Names that were previously stored in the IdTag table
+                    will be automatically migrated to this new method.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -250,11 +232,6 @@
                 <li></li>
             </ul>
 
-        <h4>Decoderwerk</h4>
-            <ul>
-                <li>New decoder definition for the Decoderwerk LokCommander 7090x
-            </ul>
-            
         <h4>Digikeijs (Digirails)</h4>
             <ul>
                 <li></li>
@@ -340,11 +317,6 @@
                 <li></li>
             </ul>
 
-        <h4>Piko</h4>
-            <ul>
-                <li>Add Decoder and Project CVs</li>
-            </ul>
-
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -427,8 +399,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>Added pane and CVs for "Zimo Scripting".</li>
-                <li>Added decoder types MS591N18 and MS540E24</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -461,17 +432,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-          <li>Added DecoderIndexFile access to a decoder definition's
-            &lt;programming&gt;&lt;mode&gt;, allowing a check of supported modes from a DecoderFile using
-            <code>getProgrammingModes()</code></li>
-          <li>DecoderPro OpsMode LNSV1 programming has been refactored to use the new Lnsv1MessageContents class
-            instead of locoio.sendRead/.sendWrite it was still using.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Fix TSA edit bugs, when over riding from roster update internal dcc address.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -489,8 +456,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Added a TurnoutCircleTransparency.py script to change the
-                color and transparency of Layout Editor turnout circles</li>
+            <li>Fixed editing and rendering issues with Block Contents Icons.  No longer need to have a value in the block to edit the Icon.  Rotated blocks render correctly.  Empty Hidden now works on initial load and after editing the panel</li>
+            <li>Fixed deleting of Inline LogixNG's when Layout Panels are deleted</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -517,6 +484,7 @@
               It lets you execute a program with some parameters. The
               result can be put in a local variable if desired.</li>
           <li></li>
+          <li>Improved some GUI layouts by adding scroll bars</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -528,14 +496,17 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, when building a train, the program now warns for set out 
-            and pick up conflicts between trains when using aggressive mode.</li>
+            <li>New feature, passenger car blocking order for Manifests and switch lists</li>
+            <li>Added car's division name to CSV Manifests and switch lists</li>
+            <li>Fixed a bug when routing through staging and no last hop C/I track was available</li>
+            <li>Improved the route edit window by always showing both departure time and travel time</li>
+            <li>Fixed exception error when replacing a car's load using the "All" cars feature</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+          <li>Fixed deleting of Inline LogixNG's when Panels are deleted</li>
         </ul>
 
     <h3>Permissions</h3>
@@ -557,11 +528,9 @@
         </ul>
 
     <h3>Roster</h3>
-        <a id="Roster"></a>
+        <a id="Roster" name="Roster"></a>
         <ul>
-            <li>New Roster Entries hold the decoder's programming mode, if defined, to use as a filter similar to
-              e.g. ProductID.
-            </li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -573,8 +542,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Added a TurnoutCircleTransparency.py script to change the
-                color and transparency of Layout Editor turnout circles</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -644,20 +612,13 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>Fixed a bug that was putting the wrong information in
-                a Turnout's comment when a SignalHead was created using that Turnout.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>SCWarrants brought back to life with a few fixes:  
-	        <ul>
-                <li>It is once again possible to create SCWarrants.</li>
-		        <li>Train tracking is now working.</li>
-		        <li>Opening the edit dialog for an SCWarrant now shows the correct warrant type.</li>
-				<li>Starting an SCWarrants with an un-occupied starting block once agin works as it should, i.e. it is delyed until the starting block become occupied.</li>
-		    </ul>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -687,9 +648,7 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>Added the OpenAL EFX reverb effect to tunnel tracks.
-                Can be activated using "Advanced Location Following"
-                and a LayoutEditor panel with a TrackSegment decorated as Tunnel.</li>
+            <li></li>
         </ul>
 
    <h3>Z21 Server</h3>
@@ -701,11 +660,5 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>There's a new "DarkLAF HC" dark-mode setting for the display.
-                To use it, select Settings then Display, then click the
-                button for "DarkLAF HC". Save preferences and restart.  Note that this
-                puts a dark background with light text on all JMRI windows.
-                You may have to rework your panels for them to look good
-                in this mode.</li>
+            <li></li>
         </ul>
-
