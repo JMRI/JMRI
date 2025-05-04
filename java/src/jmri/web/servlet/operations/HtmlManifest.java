@@ -18,8 +18,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.JsonManifest;
-import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
@@ -491,6 +490,10 @@ public class HtmlManifest extends HtmlTrainCommon {
             return this.getFormattedLocation(rollingStock.path(JsonOperations.FINAL_DESTINATION), ShowLocation.location, "FinalDestination"); // NOI18N
         } else if (attribute.equals(JsonOperations.FINAL_DEST_TRACK)) {
             return this.getFormattedLocation(rollingStock.path(JsonOperations.FINAL_DESTINATION), ShowLocation.both, "FinalDestination"); // NOI18N
+        } else if (attribute.equals(JsonOperations.LAST_TRAIN)) {
+            return TrainManifestHeaderText.getStringHeader_Last_Train() +
+                    SPACE +
+                    getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
         }
         return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
