@@ -46,7 +46,7 @@ public class ExecuteProgram extends AbstractDigitalAction
     }
 
     @Override
-    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException {
+    public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws ParserException, JmriException {
         DigitalActionManager manager = InstanceManager.getDefault(DigitalActionManager.class);
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
@@ -56,10 +56,12 @@ public class ExecuteProgram extends AbstractDigitalAction
         _selectProgram.copy(copy._selectProgram);
         _selectParameters.copy(copy._selectParameters);
         copy.setOutputLocalVariable(_outputLocalVariable);
+        copy.setErrorLocalVariable(_errorLocalVariable);
+        copy.setExitCodeLocalVariable(_exitCodeLocalVariable);
         copy.setLaunchThread(_launchThread);
         copy.setCallChildOnEveryOutput(_callChildOnEveryOutput);
         copy.setJoinOutput(_joinOutput);
-        return manager.registerAction(copy);
+        return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
     public LogixNG_SelectString getSelectProgram() {
