@@ -27,6 +27,7 @@ public class LogixNG_SelectStringListSwing {
 
     private JTabbedPane _tabbedPane;
     private JTable _dataTable;
+    private StringListTableModel _dataTableModel;
     private JPanel _panelDirect;
     private JPanel _panelLocalVariable;
     private JPanel _panelFormula;
@@ -55,11 +56,26 @@ public class LogixNG_SelectStringListSwing {
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
 
         _dataTable = new JTable();
+        if (selectStr != null) {
+            _dataTableModel = new StringListTableModel(selectStr.getList());
+        } else {
+            _dataTableModel = new StringListTableModel(null);
+        }
+        _dataTable.setModel(_dataTableModel);
+        _dataTable.getColumnModel().getColumn(0).setMinWidth(200);
+        _dataTable.getColumnModel().getColumn(1).setMinWidth(
+                new JButton(Bundle.getMessage("ButtonMoveUp")).getPreferredSize().width);
+        _dataTable.getColumnModel().getColumn(2).setMinWidth(
+                new JButton(Bundle.getMessage("ButtonMoveDown")).getPreferredSize().width);
+        _dataTable.getColumnModel().getColumn(3).setMinWidth(
+                new JButton(Bundle.getMessage("ButtonDelete")).getPreferredSize().width);
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         _dataTable.setDefaultRenderer(JButton.class, buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         _dataTable.setDefaultEditor(JButton.class, buttonEditor);
         JScrollPane scrollPane = new JScrollPane(_dataTable);
+//        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         _panelDirect.add(scrollPane);
 
         _localVariableTextField = new JTextField();
@@ -167,7 +183,9 @@ public class LogixNG_SelectStringListSwing {
 
 
         public StringListTableModel(List<String> data) {
-            this._data.addAll(data);
+            if (data != null) {
+                this._data.addAll(data);
+            }
         }
 
         /** {@inheritDoc} */
@@ -263,14 +281,12 @@ public class LogixNG_SelectStringListSwing {
             switch (columnIndex) {
                 case COLUMN_DATA:
                     return _data.get(rowIndex);
-/*
                 case COLUMN_MOVE_UP:
-                    return _variables.get(rowIndex).getInitialValueType();
+                    return Bundle.getMessage("ButtonMoveUp");
                 case COLUMN_MOVE_DOWN:
-                    return _variables.get(rowIndex).getInitialValueData();
+                    return Bundle.getMessage("ButtonMoveDown");
                 case COLUMN_REMOVE:
-                    return Menu.Select;
-*/
+                    return Bundle.getMessage("ButtonDelete");
                 default:
                     throw new IllegalArgumentException("Invalid column");
             }

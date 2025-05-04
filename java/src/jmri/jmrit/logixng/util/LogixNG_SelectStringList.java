@@ -115,12 +115,12 @@ public class LogixNG_SelectStringList implements VetoableChangeListener {
 
             if (val instanceof String[]) {
                 return Arrays.asList( (String[])val );
-            } else if (val instanceof List) {
+            } else if (val instanceof List<? extends Object>) {
                 List<String> resultList = new ArrayList<>();
                 for (Object o : (List<? extends Object>)val) {
                     resultList.add(TypeConversionUtil.convertToString(o, false));
                 }
-                return (List<String>)resultList;
+                return resultList;
             } else {
                 throw new JmriException("value is not an array of String or a List of String. Class name: "
                         + (val != null ? val.getClass().getName() : null));
