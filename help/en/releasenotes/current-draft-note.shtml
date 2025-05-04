@@ -511,13 +511,10 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-<<<<<<< HEAD
             <li>The ability to set signal mast aspects in <em>view</em> mode is controlled by
             the <strong>Disabled</strong> setting for the signal mast icon.  When enabled, changing
             the aspect by clicking or selecting from the aspect list is blocked.</li>
-=======
-          <li>Fixed deleting of Inline LogixNG's when Panels are deleted</li>
->>>>>>> master
+            <li>Fixed deleting of Inline LogixNG's when Panels are deleted</li>
         </ul>
 
     <h3>Permissions</h3>
