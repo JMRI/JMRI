@@ -483,8 +483,8 @@
           <li>The action <strong>Execute program</strong> has been added.
               It lets you execute a program with some parameters. The
               result can be put in a local variable if desired.</li>
-          <li></li>
           <li>Improved some GUI layouts by adding scroll bars</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
