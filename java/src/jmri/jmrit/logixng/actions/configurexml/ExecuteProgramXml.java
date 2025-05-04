@@ -57,7 +57,13 @@ public class ExecuteProgramXml extends jmri.managers.configurexml.AbstractNamedB
         var selectParametersXml = new LogixNG_SelectStringListXml();
         element.addContent(selectParametersXml.store(p.getSelectParameters(), "parameters"));
 
-        element.addContent(new Element("resultVariable").addContent(p.getResultLocalVariable()));
+        element.addContent(new Element("outputVariable").addContent(p.getOutputLocalVariable()));
+        element.addContent(new Element("errorVariable").addContent(p.getErrorLocalVariable()));
+        element.addContent(new Element("exitCodeVariable").addContent(p.getExitCodeLocalVariable()));
+
+        element.addContent(new Element("launchThread").addContent(p.getLaunchThread() ? "yes" : "no"));
+        element.addContent(new Element("callChildOnEveryOutput").addContent(p.getCallChildOnEveryOutput() ? "yes" : "no"));
+        element.addContent(new Element("joinOutput").addContent(p.getJoinOutput() ? "yes" : "no"));
 
         return element;
     }
@@ -87,8 +93,23 @@ public class ExecuteProgramXml extends jmri.managers.configurexml.AbstractNamedB
         var selectParametersXml = new LogixNG_SelectStringListXml();
         selectParametersXml.load(shared.getChild("parameters"), h.getSelectParameters());
 
-        Element elem = shared.getChild("resultVariable");
-        if (elem != null) h.setResultLocalVariable(elem.getTextTrim());
+        Element elem = shared.getChild("outputVariable");
+        if (elem != null) h.setOutputLocalVariable(elem.getTextTrim());
+
+        elem = shared.getChild("errorVariable");
+        if (elem != null) h.setErrorLocalVariable(elem.getTextTrim());
+
+        elem = shared.getChild("exitCodeVariable");
+        if (elem != null) h.setExitCodeLocalVariable(elem.getTextTrim());
+
+        elem = shared.getChild("launchThread");
+        if (elem != null) h.setLaunchThread("yes".equals(elem.getTextTrim()));
+
+        elem = shared.getChild("callChildOnEveryOutput");
+        if (elem != null) h.setCallChildOnEveryOutput("yes".equals(elem.getTextTrim()));
+
+        elem = shared.getChild("joinOutput");
+        if (elem != null) h.setJoinOutput("yes".equals(elem.getTextTrim()));
 
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;

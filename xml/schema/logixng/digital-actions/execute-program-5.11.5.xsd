@@ -53,7 +53,13 @@
               <xs:element name="program" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
               <xs:element name="parameters" type="LogixNG_SelectStringListType" minOccurs="0" maxOccurs="1" />
 
-              <xs:element name="resultVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="outputVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="errorVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="exitCodeVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              
+              <xs:element name="launchThread" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="callChildOnEveryOutput" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="joinOutput" type="yesNoType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

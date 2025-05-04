@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.actions;
 import java.beans.*;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 import javax.annotation.Nonnull;
 
@@ -29,9 +30,12 @@ public class ExecuteProgram extends AbstractDigitalAction
     private final LogixNG_SelectStringList _selectParameters =
             new LogixNG_SelectStringList();
 
-    private String _resultLocalVariable = "";
+    private String _outputLocalVariable = "";
+    private String _errorLocalVariable = "";
+    private String _exitCodeLocalVariable = "";
     private boolean _launchThread = false;
     private boolean _callChildOnEveryOutput = false;
+    private boolean _joinOutput = true;
 
 
     public ExecuteProgram(String sys, String user)
@@ -51,9 +55,10 @@ public class ExecuteProgram extends AbstractDigitalAction
         copy.setComment(getComment());
         _selectProgram.copy(copy._selectProgram);
         _selectParameters.copy(copy._selectParameters);
-        copy.setResultLocalVariable(_resultLocalVariable);
+        copy.setOutputLocalVariable(_outputLocalVariable);
         copy.setLaunchThread(_launchThread);
         copy.setCallChildOnEveryOutput(_callChildOnEveryOutput);
+        copy.setJoinOutput(_joinOutput);
         return manager.registerAction(copy);
     }
 
@@ -65,13 +70,31 @@ public class ExecuteProgram extends AbstractDigitalAction
         return _selectParameters;
     }
 
-    public void setResultLocalVariable(@Nonnull String localVariable) {
+    public void setOutputLocalVariable(@Nonnull String localVariable) {
         assertListenersAreNotRegistered(log, "setResultLocalVariable");
-        _resultLocalVariable = localVariable;
+        _outputLocalVariable = localVariable;
     }
 
-    public String getResultLocalVariable() {
-        return _resultLocalVariable;
+    public String getOutputLocalVariable() {
+        return _outputLocalVariable;
+    }
+
+    public void setErrorLocalVariable(@Nonnull String localVariable) {
+        assertListenersAreNotRegistered(log, "setErrorLocalVariable");
+        _errorLocalVariable = localVariable;
+    }
+
+    public String getErrorLocalVariable() {
+        return _errorLocalVariable;
+    }
+
+    public void setExitCodeLocalVariable(@Nonnull String localVariable) {
+        assertListenersAreNotRegistered(log, "setExitCodeLocalVariable");
+        _exitCodeLocalVariable = localVariable;
+    }
+
+    public String getExitCodeLocalVariable() {
+        return _exitCodeLocalVariable;
     }
 
     public void setLaunchThread(boolean launchThread) {
@@ -90,18 +113,32 @@ public class ExecuteProgram extends AbstractDigitalAction
         return _callChildOnEveryOutput;
     }
 
+    public void setJoinOutput(boolean joinOutput) {
+        this._joinOutput = joinOutput;
+    }
+
+    public boolean getJoinOutput() {
+        return _joinOutput;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.OTHER;
     }
 
-    private void executeChild(ConditionalNG conditionalNG, SymbolTable symbolTable, String result) {
+    private void executeChild(ConditionalNG conditionalNG, SymbolTable symbolTable, Object output, Object error, Integer exitCode) {
         synchronized(this) {
             if (_socket.isConnected()) {
                 DefaultSymbolTable tempSymbolTable = new DefaultSymbolTable(symbolTable);
-                if (_resultLocalVariable != null && !_resultLocalVariable.isBlank()) {
-                    tempSymbolTable.setValue(_resultLocalVariable, result);
+                if (_outputLocalVariable != null && !_outputLocalVariable.isBlank()) {
+                    tempSymbolTable.setValue(_outputLocalVariable, output);
+                }
+                if (_errorLocalVariable != null && !_errorLocalVariable.isBlank()) {
+                    tempSymbolTable.setValue(_errorLocalVariable, error);
+                }
+                if (_exitCodeLocalVariable != null && !_exitCodeLocalVariable.isBlank()) {
+                    tempSymbolTable.setValue(_exitCodeLocalVariable, exitCode);
                 }
                 InternalFemaleSocket internalSocket = new InternalFemaleSocket();
                 internalSocket.conditionalNG = conditionalNG;
@@ -111,9 +148,40 @@ public class ExecuteProgram extends AbstractDigitalAction
         }
     }
 
+    private Object getOutput(List<String> data) {
+        if (_joinOutput) {
+            return String.join("\n", data);
+        } else {
+            return data;
+        }
+    }
+
     /** {@inheritDoc} */
     @Override
     public void execute() throws JmriException {
+
+/*
+        Note!!!!
+
+        This does NOT work!!! Ensure the user cannot select this!!!
+        _launchThread == false && _callChildOnEveryOutput == true
+
+
+
+        Note:
+        Every part of the parameter list must be on its own line.
+        For example: find /home/daniel/Dokument/GitHub/JMRI/java -iname *.java
+
+        Should be:
+
+        Program: find
+
+        Parameters:
+            /home/daniel/Dokument/GitHub/JMRI/java
+            -iname
+            *.java
+*/
+
 
         final ConditionalNG conditionalNG;
         final DefaultSymbolTable newSymbolTable;
@@ -147,29 +215,13 @@ public class ExecuteProgram extends AbstractDigitalAction
             throw new JmriException(e);
         }
 
-        Runnable r = () -> {
-            List<String> result = new ArrayList<>();
+        Runnable readAllOnce = () -> {
+            List<String> output = new ArrayList<>();
             try {
                 try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getInputStream())))  {
                     String line;
                     while ((line = buffer.readLine()) != null) {
-                        if (_callChildOnEveryOutput) {
-                            executeChild(conditionalNG, newSymbolTable, String.join("\n", result));
-                        } else {
-                            result.add(line);
-                        }
-                        log.error(line);
-                    }
-                }
-                try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getErrorStream())))  {
-                    String line;
-                    while ((line = buffer.readLine()) != null) {
-                        if (_callChildOnEveryOutput) {
-                            executeChild(conditionalNG, newSymbolTable, String.join("\n", result));
-                        } else {
-                            result.add(line);
-                        }
-                        log.error(line);
+                        output.add(line);
                     }
                 }
             } catch (IOException e) {
@@ -177,18 +229,83 @@ public class ExecuteProgram extends AbstractDigitalAction
                 return;
             }
 
+            List<String> error = new ArrayList<>();
+            try {
+                try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getErrorStream())))  {
+                    String line;
+                    while ((line = buffer.readLine()) != null) {
+                        error.add(line);
+                    }
+                }
+            } catch (IOException e) {
+                log.warn(e.getMessage(), e);
+                return;
+            }
+
+            try {
+                var completableFuture = process.onExit();
+                completableFuture.get();
+            } catch (ExecutionException e) {
+                log.error("Unexpected failure", e);
+                return;
+            } catch (InterruptedException e) {
+                log.error("Task interrupted", e);
+                return;
+            }
+
             if (!_callChildOnEveryOutput) {
-                executeChild(conditionalNG, newSymbolTable, String.join("\n", result));
+                executeChild(conditionalNG, newSymbolTable, getOutput(output), getOutput(error), process.exitValue());
             }
         };
 
-        if (_launchThread) {
-            ThreadingUtil.newThread(r).start();
-        } else {
-            r.run();
-        }
+        Runnable readInput = () -> {
+            try {
+                try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getInputStream())))  {
+                    String line;
+                    while ((line = buffer.readLine()) != null) {
+                        executeChild(conditionalNG, newSymbolTable, line, null, null);
+                    }
+                }
+            } catch (IOException e) {
+                log.warn(e.getMessage(), e);
+            }
+        };
 
-        log.error("Exit value: {}", process.exitValue());
+        Runnable readError = () -> {
+            try {
+                try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getErrorStream())))  {
+                    String line;
+                    while ((line = buffer.readLine()) != null) {
+                        executeChild(conditionalNG, newSymbolTable, null, line, null);
+                    }
+                }
+            } catch (IOException e) {
+                log.warn(e.getMessage(), e);
+            }
+        };
+
+        Runnable onExit = () -> {
+            try {
+                var completableFuture = process.onExit();
+                completableFuture.get();
+                executeChild(conditionalNG, newSymbolTable, null, null, process.exitValue());
+            } catch (ExecutionException e) {
+                log.error("Unexpected failure", e);
+            } catch (InterruptedException e) {
+                log.error("Task interrupted", e);
+            }
+        };
+
+        if (_callChildOnEveryOutput) {
+            ThreadingUtil.newThread(readInput).start();
+            ThreadingUtil.newThread(readError).start();
+            ThreadingUtil.newThread(onExit).start();
+        } else if (_launchThread) {
+            ThreadingUtil.newThread(readAllOnce).start();
+        } else {
+            // Run and wait for the process to complete
+            readAllOnce.run();
+        }
     }
 
     @Override

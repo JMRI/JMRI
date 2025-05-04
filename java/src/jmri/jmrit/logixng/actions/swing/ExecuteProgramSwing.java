@@ -22,7 +22,13 @@ public class ExecuteProgramSwing extends AbstractDigitalActionSwing {
     private LogixNG_SelectStringSwing _selectProgramSwing;
     private LogixNG_SelectStringListSwing _selectParametersSwing;
 
-    private JTextField _resultLocalVariableTextField;
+    private JTextField _outputLocalVariableTextField;
+    private JTextField _errorLocalVariableTextField;
+    private JTextField _exitCodeLocalVariableTextField;
+
+    private JCheckBox _launchThreadCheckBox;
+    private JCheckBox _callChildOnEveryOutputCheckBox;
+    private JCheckBox _joinOutputCheckBox;
 
 
     @Override
@@ -45,10 +51,21 @@ public class ExecuteProgramSwing extends AbstractDigitalActionSwing {
             _parametersPanel = _selectParametersSwing.createPanel(null);
         }
 
-        _resultLocalVariableTextField = new JTextField(30);
+        _outputLocalVariableTextField = new JTextField(30);
+        _errorLocalVariableTextField = new JTextField(30);
+        _exitCodeLocalVariableTextField = new JTextField(30);
+
+        _launchThreadCheckBox = new JCheckBox(Bundle.getMessage("ExecuteProgramSwing_LaunchThread"));
+        _callChildOnEveryOutputCheckBox = new JCheckBox(Bundle.getMessage("ExecuteProgramSwing_CallChildOnEveryOutput"));
+        _joinOutputCheckBox = new JCheckBox(Bundle.getMessage("ExecuteProgramSwing_JoinOutput"));
 
         if (action != null) {
-            _resultLocalVariableTextField.setText(action.getResultLocalVariable());
+            _outputLocalVariableTextField.setText(action.getOutputLocalVariable());
+            _errorLocalVariableTextField.setText(action.getErrorLocalVariable());
+            _exitCodeLocalVariableTextField.setText(action.getExitCodeLocalVariable());
+            _launchThreadCheckBox.setSelected(action.getLaunchThread());
+            _callChildOnEveryOutputCheckBox.setSelected(action.getCallChildOnEveryOutput());
+            _joinOutputCheckBox.setSelected(action.getJoinOutput());
         }
 
         java.awt.GridBagConstraints constraints = new java.awt.GridBagConstraints();
@@ -61,7 +78,11 @@ public class ExecuteProgramSwing extends AbstractDigitalActionSwing {
         constraints.gridy = 1;
         panel.add(new JLabel(Bundle.getMessage("ExecuteProgramSwing_Parameters")), constraints);
         constraints.gridy = 2;
-        panel.add(new JLabel(Bundle.getMessage("ExecuteProgramSwing_ResultLocalVariable")), constraints);
+        panel.add(new JLabel(Bundle.getMessage("ExecuteProgramSwing_OutputLocalVariable")), constraints);
+        constraints.gridy = 3;
+        panel.add(new JLabel(Bundle.getMessage("ExecuteProgramSwing_ErrorLocalVariable")), constraints);
+        constraints.gridy = 4;
+        panel.add(new JLabel(Bundle.getMessage("ExecuteProgramSwing_ExitCodeLocalVariable")), constraints);
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.anchor = java.awt.GridBagConstraints.WEST;
@@ -69,7 +90,17 @@ public class ExecuteProgramSwing extends AbstractDigitalActionSwing {
         constraints.gridy = 1;
         panel.add(_parametersPanel, constraints);
         constraints.gridy = 2;
-        panel.add(_resultLocalVariableTextField, constraints);
+        panel.add(_outputLocalVariableTextField, constraints);
+        constraints.gridy = 3;
+        panel.add(_errorLocalVariableTextField, constraints);
+        constraints.gridy = 4;
+        panel.add(_exitCodeLocalVariableTextField, constraints);
+        constraints.gridy = 5;
+        panel.add(_launchThreadCheckBox, constraints);
+        constraints.gridy = 6;
+        panel.add(_callChildOnEveryOutputCheckBox, constraints);
+        constraints.gridy = 7;
+        panel.add(_joinOutputCheckBox, constraints);
     }
 
     /** {@inheritDoc} */
@@ -103,7 +134,13 @@ public class ExecuteProgramSwing extends AbstractDigitalActionSwing {
         _selectProgramSwing.updateObject(action.getSelectProgram());
         _selectParametersSwing.updateObject(action.getSelectParameters());
 
-        action.setResultLocalVariable(_resultLocalVariableTextField.getText());
+        action.setOutputLocalVariable(_outputLocalVariableTextField.getText());
+        action.setErrorLocalVariable(_errorLocalVariableTextField.getText());
+        action.setExitCodeLocalVariable(_exitCodeLocalVariableTextField.getText());
+
+        action.setLaunchThread(_launchThreadCheckBox.isSelected());
+        action.setCallChildOnEveryOutput(_callChildOnEveryOutputCheckBox.isSelected());
+        action.setJoinOutput(_joinOutputCheckBox.isSelected());
     }
 
     /** {@inheritDoc} */
