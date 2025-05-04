@@ -123,7 +123,8 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             modify_sensor.setKnownState(INACTIVE)
             return True
         elif sensor_that_went_active == stop_sensor:
-            self.remove_timebase_listener()
+            self.stop_timebase_and_remove_timebase_listener()
+
             self.optionally_reset_all_trains()
             stop_sensor.setKnownState(INACTIVE)
             return
@@ -164,15 +165,18 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             pass
         createandshowGUI3(self)
 
-    def remove_timebase_listener(self):
+    def stop_timebase_and_remove_timebase_listener(self):
         global timebase
         global tListener
         self.new_train_sensor = sensors.getSensor("startDispatcherSensor")
         self.new_train_sensor.setKnownState(INACTIVE)
         try:
             #stop the scheduler timebase listener
+            # print "stopping timebase", timebase, "tlistener", tListener, "started? before", timebase.getRun()
             if self.logLevel > 0: print "removing listener"
             timebase.removeMinuteChangeListener(tListener)
+            timebase.setRun(False)
+            # print "stopping timebase", timebase, "tlistener", tListener, "started? after", timebase.getRun()
             return False
         except NameError:
             if self.logLevel > 0: print "Name error"

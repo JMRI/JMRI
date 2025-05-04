@@ -127,7 +127,14 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>There's a new storage method for event names.
+                    Previously, these were stored in the IdTag table, which might
+                    be confusing.
+                    Starting with this release, they're separately stored
+                    in an eventnames/eventNames.xml file within the user files
+                    location.
+                    Names that were previously stored in the IdTag table
+                    will be automatically migrated to this new method.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -458,6 +465,8 @@
             the <strong>Disabled</strong> setting for the signal mast icon.  When enabled, changing
             the aspect by clicking or selecting from the aspect list is blocked.</li>
             <li>The right click menu for <strong>Markers</strong> when using Linux has been fixed.</li>
+            <li>Fixed editing and rendering issues with Block Contents Icons.  No longer need to have a value in the block to edit the Icon.  Rotated blocks render correctly.  Empty Hidden now works on initial load and after editing the panel</li>
+            <li>Fixed deleting of Inline LogixNG's when Layout Panels are deleted</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -493,14 +502,22 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>New feature, passenger car blocking order for Manifests and switch lists</li>
+            <li>Added car's division name to CSV Manifests and switch lists</li>
+            <li>Fixed a bug when routing through staging and no last hop C/I track was available</li>
+            <li>Improved the route edit window by always showing both departure time and travel time</li>
+            <li>Fixed exception error when replacing a car's load using the "All" cars feature</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
+<<<<<<< HEAD
             <li>The ability to set signal mast aspects in <em>view</em> mode is controlled by
             the <strong>Disabled</strong> setting for the signal mast icon.  When enabled, changing
             the aspect by clicking or selecting from the aspect list is blocked.</li>
+=======
+          <li>Fixed deleting of Inline LogixNG's when Panels are deleted</li>
+>>>>>>> master
         </ul>
 
     <h3>Permissions</h3>

@@ -932,7 +932,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "closing panel"
         comp = event.getSource()
         win = SwingUtilities.getWindowAncestor(comp);
-        win.dispose();
+        win.dispose()
+
     def SetTime_action(self, event):
         global fast_clock_running_at_operational_speed
         global timebase
@@ -986,6 +987,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def swap_timebase_state_run_stop(self):
         global timebase
+        global tListener
         global fast_clock_rate
         global rowrowStage4Button_4
         if timebase.getRun() == True:
@@ -993,8 +995,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             timebase.setRun(False)
             # print "fast_clock_rate", fast_clock_rate
         else:
-            timebase.addMinuteChangeListener(tListener)
             timebase.setRun(True)
+            if tListener is None:
+                tListener = TimeListener()
+            timebase.addMinuteChangeListener(tListener)
         if "rowrowStage4Button_4" in globals():
             if timebase.getRun():
                 state = "Started"
@@ -1469,6 +1473,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                 if self.logLevel > 0: print "minutes", int(minutes), "int(minutes) % 10", int(minutes) % 10, "minutes", minutes
                 # print "e"
                 minutes_old2 = minutes
+                # print "set fast clock rate"
                 self.set_fast_clock_rate()      # sets global fast_clock_at_operational_speed
             self.process_operations_trains(event)    # scheduled trains
 
@@ -1519,10 +1524,10 @@ class TimeListener(java.beans.PropertyChangeListener):
 
             # if schedule_trains_hourly:
             if True:
-                pass
                 hour = int(timebase.getTime().getHours())
                 minutes = int(timebase.getTime().getMinutes())
                 rate = timebase.userGetRate()
+
 
                 if self.logLevel > 0: print "set_fast_clock_rate:", "schedule_trains_hourly", schedule_trains_hourly
                 fast_clock_during_non_operational_times = speed_not_operational_gbl
