@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.util.swing;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,6 @@ import javax.swing.table.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectStringList;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.util.swing.JComboBoxUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -108,9 +105,6 @@ public class LogixNG_SelectStringListSwing {
                 case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + selectStrList.getAddressing().name());
             }
-//DANIEL            if (selectStr.getValue() != null) {
-//DANIEL                _valueTextField.setText(selectStr.getValue());
-//DANIEL            }
             _localVariableTextField.setText(selectStrList.getLocalVariable());
             _formulaTextField.setText(selectStrList.getFormula());
         }
@@ -122,14 +116,6 @@ public class LogixNG_SelectStringListSwing {
     public boolean validate(
             @Nonnull LogixNG_SelectStringList selectStrList,
             @Nonnull List<String> errorMessages) {
-        try {
-            if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-//DANIEL                selectStr.setValue(_valueTextField.getText());
-            }
-        } catch (IllegalArgumentException e) {
-            errorMessages.add(e.getMessage());
-            return false;
-        }
 
         try {
             selectStrList.setFormula(_formulaTextField.getText());
@@ -137,8 +123,10 @@ public class LogixNG_SelectStringListSwing {
                 selectStrList.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectStrList.setAddressing(NamedBeanAddressing.LocalVariable);
+                selectStrList.setLocalVariable(_localVariableTextField.getText());
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
                 selectStrList.setAddressing(NamedBeanAddressing.Formula);
+                selectStrList.setFormula(_formulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPane has unknown selection");
             }
@@ -308,14 +296,7 @@ public class LogixNG_SelectStringListSwing {
                     throw new IllegalArgumentException("Invalid column");
             }
         }
-/*
-        public void setColumnForMenu(JTable table) {
-            JComboBox<Menu> comboBox = new JComboBox<>();
-            table.setRowHeight(comboBox.getPreferredSize().height);
-            table.getColumnModel().getColumn(COLUMN_REMOVE)
-                    .setPreferredWidth((comboBox.getPreferredSize().width) + 4);
-        }
-*/
+
         public void add(ActionEvent evt) {
             int row = _data.size();
             _data.add("");
@@ -326,161 +307,7 @@ public class LogixNG_SelectStringListSwing {
             return _data;
         }
 
-
-        public static class TypeCellRenderer extends DefaultTableCellRenderer {
-
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                    boolean isSelected, boolean hasFocus, int row, int column) {
-
-                if (value == null) value = SymbolTable.InitialValueType.None;
-
-                if (! (value instanceof SymbolTable.InitialValueType)) {
-                    throw new IllegalArgumentException("value is not an InitialValueType: " + value.getClass().getName());
-                }
-                setText(((SymbolTable.InitialValueType) value).toString());
-                return this;
-            }
-        }
-
-
-        public static class TypeCellEditor extends AbstractCellEditor
-                implements TableCellEditor, ActionListener {
-
-            private SymbolTable.InitialValueType _type;
-
-            @Override
-            public Object getCellEditorValue() {
-                return this._type;
-            }
-
-            @Override
-            public Component getTableCellEditorComponent(JTable table, Object value,
-                    boolean isSelected, int row, int column) {
-
-                if (value == null) value = SymbolTable.InitialValueType.None;
-
-                if (! (value instanceof SymbolTable.InitialValueType)) {
-                    throw new IllegalArgumentException("value is not an InitialValueType: " + value.getClass().getName());
-                }
-
-                JComboBox<SymbolTable.InitialValueType> typeComboBox = new JComboBox<>();
-
-                for (SymbolTable.InitialValueType type : SymbolTable.InitialValueType.values()) {
-                    typeComboBox.addItem(type);
-                }
-                JComboBoxUtil.setupComboBoxMaxRows(typeComboBox);
-
-                typeComboBox.setSelectedItem(value);
-                typeComboBox.addActionListener(this);
-
-                return typeComboBox;
-            }
-
-            @Override
-            @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<InitialValueType>
-            public void actionPerformed(ActionEvent event) {
-                if (! (event.getSource() instanceof JComboBox)) {
-                    throw new IllegalArgumentException("value is not an InitialValueType: " + event.getSource().getClass().getName());
-                }
-                JComboBox<SymbolTable.InitialValueType> typeComboBox =
-                        (JComboBox<SymbolTable.InitialValueType>) event.getSource();
-                _type = typeComboBox.getItemAt(typeComboBox.getSelectedIndex());
-            }
-
-        }
-
-/*
-        public static class MenuCellEditor extends AbstractCellEditor
-                implements TableCellEditor, ActionListener {
-
-            JTable _table;
-            StringListTableModel _tableModel;
-
-            public MenuCellEditor(JTable table, StringListTableModel tableModel) {
-                _table = table;
-                _tableModel = tableModel;
-            }
-
-            @Override
-            public Object getCellEditorValue() {
-                return Menu.Select;
-            }
-
-            @Override
-            public Component getTableCellEditorComponent(JTable table, Object value,
-                    boolean isSelected, int row, int column) {
-
-                if (value == null) value = Menu.Select;
-
-                if (! (value instanceof Menu)) {
-                    throw new IllegalArgumentException("value is not an Menu: " + value.getClass().getName());
-                }
-
-                JComboBox<Menu> menuComboBox = new JComboBox<>();
-
-                for (Menu menu : Menu.values()) {
-                    if ((menu == Menu.MoveUp) && (row == 0)) continue;
-                    if ((menu == Menu.MoveDown) && (row+1 == _tableModel._variables.size())) continue;
-                    menuComboBox.addItem(menu);
-                }
-                JComboBoxUtil.setupComboBoxMaxRows(menuComboBox);
-
-                menuComboBox.setSelectedItem(value);
-                menuComboBox.addActionListener(this);
-
-                return menuComboBox;
-            }
-
-            @Override
-            @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<Menu>
-            public void actionPerformed(ActionEvent event) {
-                if (! (event.getSource() instanceof JComboBox)) {
-                    throw new IllegalArgumentException("value is not an InitialValueType: " + event.getSource().getClass().getName());
-                }
-                JComboBox<Menu> menuComboBox =
-                        (JComboBox<Menu>) event.getSource();
-                int row = _table.getSelectedRow();
-                Menu menu = menuComboBox.getItemAt(menuComboBox.getSelectedIndex());
-
-                switch (menu) {
-                    case Delete:
-                        delete(row);
-                        break;
-                    case MoveUp:
-                        if ((row) > 0) moveUp(row);
-                        break;
-                    case MoveDown:
-                        if ((row+1) < _tableModel._variables.size()) moveUp(row+1);
-                        break;
-                    default:
-                        // Do nothing
-                }
-                // Remove focus from combo box
-                if (_tableModel._variables.size() > 0) _table.editCellAt(row, COLUMN_DATA);
-            }
-
-            private void delete(int row) {
-                _tableModel._variables.remove(row);
-                _tableModel.fireTableRowsDeleted(row, row);
-            }
-
-            private void moveUp(int row) {
-                SymbolTable.VariableData temp = _tableModel._variables.get(row-1);
-                _tableModel._variables.set(row-1, _tableModel._variables.get(row));
-                _tableModel._variables.set(row, temp);
-                _tableModel.fireTableRowsUpdated(row-1, row);
-            }
-
-        }
-*/
     }
-
-
-
-
-
-
 
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNG_SelectStringListSwing.class);
