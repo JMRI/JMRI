@@ -33,9 +33,10 @@ public class LogixNG_SelectStringListSwing {
     private JPanel _panelFormula;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
+    private JButton _addButton;
 
 
-    public JPanel createPanel(@CheckForNull LogixNG_SelectStringList selectStr) {
+    public JPanel createPanel(@CheckForNull LogixNG_SelectStringList selectStrList) {
 
         JPanel panel = new JPanel();
 
@@ -43,8 +44,8 @@ public class LogixNG_SelectStringListSwing {
         _panelDirect = new javax.swing.JPanel();
         _panelLocalVariable = new javax.swing.JPanel();
         _panelFormula = new javax.swing.JPanel();
-        if (selectStr != null) {
-            if (selectStr.isOnlyDirectAddressingAllowed()) {
+        if (selectStrList != null) {
+            if (selectStrList.isOnlyDirectAddressingAllowed()) {
                 _tabbedPane.setEnabled(false);
                 _panelLocalVariable.setEnabled(false);
                 _panelFormula.setEnabled(false);
@@ -55,28 +56,41 @@ public class LogixNG_SelectStringListSwing {
         _tabbedPane.addTab(NamedBeanAddressing.LocalVariable.toString(), _panelLocalVariable);
         _tabbedPane.addTab(NamedBeanAddressing.Formula.toString(), _panelFormula);
 
-        _dataTable = new JTable();
-        if (selectStr != null) {
-            _dataTableModel = new StringListTableModel(selectStr.getList());
+        _dataTable = new JTable() {
+            //workaround for  https://bugs.openjdk.org/browse/JDK-4127936
+            @Override
+            public boolean getScrollableTracksViewportWidth() {
+                return getRowCount() == 0 ? super.getScrollableTracksViewportWidth()
+                        : getPreferredSize().width < getParent().getWidth();
+            }
+        };
+
+        if (selectStrList != null) {
+            _dataTableModel = new StringListTableModel(selectStrList.getList());
         } else {
             _dataTableModel = new StringListTableModel(null);
         }
         _dataTable.setModel(_dataTableModel);
-        _dataTable.getColumnModel().getColumn(0).setMinWidth(200);
-        _dataTable.getColumnModel().getColumn(1).setMinWidth(
+        _dataTable.getColumnModel().getColumn(0).setPreferredWidth(200);
+        _dataTable.getColumnModel().getColumn(1).setPreferredWidth(
                 new JButton(Bundle.getMessage("ButtonMoveUp")).getPreferredSize().width);
-        _dataTable.getColumnModel().getColumn(2).setMinWidth(
+        _dataTable.getColumnModel().getColumn(2).setPreferredWidth(
                 new JButton(Bundle.getMessage("ButtonMoveDown")).getPreferredSize().width);
-        _dataTable.getColumnModel().getColumn(3).setMinWidth(
+        _dataTable.getColumnModel().getColumn(3).setPreferredWidth(
                 new JButton(Bundle.getMessage("ButtonDelete")).getPreferredSize().width);
         ButtonRenderer buttonRenderer = new ButtonRenderer();
         _dataTable.setDefaultRenderer(JButton.class, buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         _dataTable.setDefaultEditor(JButton.class, buttonEditor);
         JScrollPane scrollPane = new JScrollPane(_dataTable);
-//        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        _panelDirect.add(scrollPane);
+        scrollPane.setPreferredSize(new java.awt.Dimension(600,200));
+        JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.Y_AXIS));
+        tablePanel.add(scrollPane);
+        _addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+        _addButton.addActionListener(_dataTableModel::add);
+        tablePanel.add(_addButton);
+        _panelDirect.add(tablePanel);
 
         _localVariableTextField = new JTextField();
         _localVariableTextField.setColumns(30);
@@ -87,18 +101,18 @@ public class LogixNG_SelectStringListSwing {
         _panelFormula.add(_formulaTextField);
 
 
-        if (selectStr != null) {
-            switch (selectStr.getAddressing()) {
+        if (selectStrList != null) {
+            switch (selectStrList.getAddressing()) {
                 case Direct: _tabbedPane.setSelectedComponent(_panelDirect); break;
                 case LocalVariable: _tabbedPane.setSelectedComponent(_panelLocalVariable); break;
                 case Formula: _tabbedPane.setSelectedComponent(_panelFormula); break;
-                default: throw new IllegalArgumentException("invalid _addressing state: " + selectStr.getAddressing().name());
+                default: throw new IllegalArgumentException("invalid _addressing state: " + selectStrList.getAddressing().name());
             }
 //DANIEL            if (selectStr.getValue() != null) {
 //DANIEL                _valueTextField.setText(selectStr.getValue());
 //DANIEL            }
-            _localVariableTextField.setText(selectStr.getLocalVariable());
-            _formulaTextField.setText(selectStr.getFormula());
+            _localVariableTextField.setText(selectStrList.getLocalVariable());
+            _formulaTextField.setText(selectStrList.getFormula());
         }
 
         panel.add(_tabbedPane);
@@ -106,7 +120,7 @@ public class LogixNG_SelectStringListSwing {
     }
 
     public boolean validate(
-            @Nonnull LogixNG_SelectStringList selectStr,
+            @Nonnull LogixNG_SelectStringList selectStrList,
             @Nonnull List<String> errorMessages) {
         try {
             if (_tabbedPane.getSelectedComponent() == _panelDirect) {
@@ -118,13 +132,13 @@ public class LogixNG_SelectStringListSwing {
         }
 
         try {
-            selectStr.setFormula(_formulaTextField.getText());
+            selectStrList.setFormula(_formulaTextField.getText());
             if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-                selectStr.setAddressing(NamedBeanAddressing.Direct);
+                selectStrList.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
-                selectStr.setAddressing(NamedBeanAddressing.LocalVariable);
+                selectStrList.setAddressing(NamedBeanAddressing.LocalVariable);
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
-                selectStr.setAddressing(NamedBeanAddressing.Formula);
+                selectStrList.setAddressing(NamedBeanAddressing.Formula);
             } else {
                 throw new IllegalArgumentException("_tabbedPane has unknown selection");
             }
@@ -143,21 +157,23 @@ public class LogixNG_SelectStringListSwing {
         _formulaTextField.setEnabled(value);
     }
 
-    public void updateObject(@Nonnull LogixNG_SelectStringList selectStr) {
+    public void updateObject(@Nonnull LogixNG_SelectStringList selectStrList) {
 
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-//DANIEL            selectStr.setValue(_valueTextField.getText());
+            List<String> list = selectStrList.getList();
+            list.clear();
+            list.addAll(_dataTableModel.getData());
         }
 
         try {
             if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-                selectStr.setAddressing(NamedBeanAddressing.Direct);
+                selectStrList.setAddressing(NamedBeanAddressing.Direct);
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
-                selectStr.setAddressing(NamedBeanAddressing.LocalVariable);
-                selectStr.setLocalVariable(_localVariableTextField.getText());
+                selectStrList.setAddressing(NamedBeanAddressing.LocalVariable);
+                selectStrList.setLocalVariable(_localVariableTextField.getText());
             } else if (_tabbedPane.getSelectedComponent() == _panelFormula) {
-                selectStr.setAddressing(NamedBeanAddressing.Formula);
-                selectStr.setFormula(_formulaTextField.getText());
+                selectStrList.setAddressing(NamedBeanAddressing.Formula);
+                selectStrList.setFormula(_formulaTextField.getText());
             } else {
                 throw new IllegalArgumentException("_tabbedPaneEnum has unknown selection");
             }
@@ -241,36 +257,37 @@ public class LogixNG_SelectStringListSwing {
         /** {@inheritDoc} */
         @Override
         public void setValueAt(Object value, int rowIndex, int columnIndex) {
-            if (columnIndex != COLUMN_DATA) return;
-
-            if (value != null) {
-                _data.set(rowIndex, value.toString());
-            } else {
-                _data.set(rowIndex, "");
-            }
-
-/*
             switch (columnIndex) {
                 case COLUMN_DATA:
-                    variable._name = (String) value;
+                    if (value != null) {
+                        _data.set(rowIndex, value.toString());
+                    } else {
+                        _data.set(rowIndex, "");
+                    }
                     break;
                 case COLUMN_MOVE_UP:
-                    if (value != null) {
-                        variable._initialValueType = (SymbolTable.InitialValueType) value;
-                    } else {
-                        variable._initialValueType = SymbolTable.InitialValueType.None;
+                    if (rowIndex > 0) {
+                        String s = _data.get(rowIndex-1);
+                        _data.set(rowIndex-1, _data.get(rowIndex));
+                        _data.set(rowIndex, s);
+                        fireTableRowsUpdated(rowIndex-1, rowIndex);
                     }
                     break;
                 case COLUMN_MOVE_DOWN:
-                    variable._initialValueData = (String) value;
+                    if (rowIndex < _data.size()-1) {
+                        String s = _data.get(rowIndex+1);
+                        _data.set(rowIndex+1, _data.get(rowIndex));
+                        _data.set(rowIndex, s);
+                        fireTableRowsUpdated(rowIndex, rowIndex+1);
+                    }
                     break;
                 case COLUMN_REMOVE:
-                    // Do nothing
+                    _data.remove(rowIndex);
+                    fireTableRowsDeleted(rowIndex, rowIndex);
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid column");
             }
-*/
         }
 
         /** {@inheritDoc} */
@@ -299,7 +316,7 @@ public class LogixNG_SelectStringListSwing {
                     .setPreferredWidth((comboBox.getPreferredSize().width) + 4);
         }
 */
-        public void add() {
+        public void add(ActionEvent evt) {
             int row = _data.size();
             _data.add("");
             fireTableRowsInserted(row, row);
