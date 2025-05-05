@@ -40,6 +40,8 @@ public class Xml {
     static final String RFID = "rfid"; // NOI18N
     static final String TRAIN = "train"; // NOI18N
     static final String TRAIN_ID = "trainId"; // NOI18N
+    static final String LAST_TRAIN = "lastTrain"; // NOI18N
+    static final String LAST_TRAIN_ID = "lastTrainId"; // NOI18N
     static final String OUT_OF_SERVICE = "outOfService"; // NOI18N
     static final String DESTINATION = "destination"; // NOI18N
     static final String DES_TRACK = "desTrack"; // NOI18N
