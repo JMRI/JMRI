@@ -498,6 +498,7 @@
             <li>Improved the route edit window by always showing both departure time and travel time</li>
             <li>Fixed exception error when replacing a car's load using the "All" cars feature</li>
             <li>New feature, ability to show the last train that transported a car</li>
+            <li>Improvements to car export, added the car's route path, previous location, track, and train</li>
         </ul>
 
    <h3>Panel Editor</h3>
