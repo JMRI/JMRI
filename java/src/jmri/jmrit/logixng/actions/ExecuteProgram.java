@@ -227,7 +227,7 @@ public class ExecuteProgram extends AbstractDigitalAction
                     }
                 }
             } catch (IOException e) {
-                log.warn(e.getMessage(), e);
+                log.warn("IOException during reading of output", e);
                 return;
             }
 
@@ -240,7 +240,7 @@ public class ExecuteProgram extends AbstractDigitalAction
                     }
                 }
             } catch (IOException e) {
-                log.warn(e.getMessage(), e);
+                log.warn("IOException during reading of error", e);
                 return;
             }
 
@@ -260,7 +260,7 @@ public class ExecuteProgram extends AbstractDigitalAction
             }
         };
 
-        Runnable readInput = () -> {
+        Runnable readOutput = () -> {
             try {
                 try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getInputStream())))  {
                     String line;
@@ -269,7 +269,7 @@ public class ExecuteProgram extends AbstractDigitalAction
                     }
                 }
             } catch (IOException e) {
-                log.warn(e.getMessage(), e);
+                log.warn("IOException during reading of output", e);
             }
         };
 
@@ -282,7 +282,7 @@ public class ExecuteProgram extends AbstractDigitalAction
                     }
                 }
             } catch (IOException e) {
-                log.warn(e.getMessage(), e);
+                log.warn("IOException during reading of error", e);
             }
         };
 
@@ -299,7 +299,7 @@ public class ExecuteProgram extends AbstractDigitalAction
         };
 
         if (_callChildOnEveryOutput) {
-            ThreadingUtil.newThread(readInput).start();
+            ThreadingUtil.newThread(readOutput).start();
             ThreadingUtil.newThread(readError).start();
             ThreadingUtil.newThread(onExit).start();
         } else if (_launchThread) {
