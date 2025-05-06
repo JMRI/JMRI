@@ -234,11 +234,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     if option == "Cancel" or self.od.CLOSED_OPTION == True:
                         self.timetable_sensor.setKnownState(INACTIVE)
                     else:
-                        station_name_list_gbl = result[0]
-                        if len(station_name_list_gbl) == 1:
-                            group_location_mqtt_gbl = station_name_list_gbl[0]   # the first and only station  station1
+                        station_name_list_mqtt_gbl = result[0]
+                        if len(station_name_list_mqtt_gbl) == 1:
+                            group_location_mqtt_gbl = station_name_list_mqtt_gbl[0]   # the first and only station  station1
                         else:
-                            group_location_mqtt_gbl = self.get_group_station_name(station_name_list_gbl)
+                            group_location_mqtt_gbl = self.get_group_station_name(station_name_list_mqtt_gbl)
                         # print "group_location_mqtt_gbl", group_location_mqtt_gbl
                         # get emblem
                         title = "Display Train Operator Emblem?"
@@ -2266,7 +2266,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                             move_train.move_between_stations(station_from, station_to, train_to_move, self.graph, mode = "scheduling")
                             print "__________________________End____" + train_to_move + "___________________________________"
                         else:
-                            print "failed to move train - no train in block"
+                            print "failed to move train - no train in block - have waited for scheduling margin"
                             print "__________________________End____" + train_to_move + "___________________________________"
                     else:
                         success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
@@ -2343,6 +2343,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         return row - 1     # row number starts from 1
 
     def check_train_in_block_for_scheduling_margin_fast_minutes(self, start_block, train_to_move):
+        global scheduling_margin_gbl
         # print "__________________________Start__" + train_to_move + "___________________________________"
         # print "check_train_in_block_for_scheduling_margin_fast_minutes", start_block.getUserName(), train_to_move
         global fast_clock_rate
@@ -2351,11 +2352,11 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         for j in range(int(scheduling_margin_gbl)):    # try to schedule train for scheduling_margin_gbl fast minutes
             train_in_block = self.blockOccupied(start_block)
             if train_in_block:
-                # print "--" + str(train_to_move) + " train in start block"
+                # print "--" + str(train_to_move) + " train in start block" + str(start_block.getUserName())
                 return True
             else:
                 # print (str(train_to_move) + " not in start_block: " + str(start_block.getUserName()) \
-                #        + " time waited: " + str(j) + " fast minutes")
+                #         + " time waited: " + str(j) + " fast minutes")
                 fast_minute = 1000*60/int(str(fast_clock_rate))
                 self.waitMsec(fast_minute)
         return False
@@ -2414,6 +2415,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
     def wait_for_scheduled_time(self, route, row, accumulated_durations):
         global fast_clock_rate
         global timebase
+        global scheduling_margin_gbl
 
         # print "wait_for_scheduled_time", route, row, accumulated_durations
         if 'timebase' not in globals():
