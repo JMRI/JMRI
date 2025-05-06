@@ -640,10 +640,10 @@
         <a id="server" name="server"></a>
         <ul>
             <li>Added a new "web/idtags_examples" directory with an example
-                of  as icons, which move to different places on the webpage depending on their most recent report. 
-                The example shows cars being switched in a simple yard, 
-                the principles shown could be used to show locomotives or train movements.
-                See the icluded PDF file for more information.</li>
+                of icons which move to different places on the webpage depending on their most recent report. 
+                The example shows cars being switched in a simple yard. 
+                The principles shown could be used to show locomotives or train movements.
+                See the included PDF file for more information.</li>
         </ul>
 
     <h3>Where Used</h3>
