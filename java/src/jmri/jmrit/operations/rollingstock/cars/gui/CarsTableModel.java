@@ -50,7 +50,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
     private static final int RWE_DESTINATION_COLUMN = 15;
     private static final int RWL_DESTINATION_COLUMN = 16;
     private static final int ROUTE_COLUMN = 17;
-    private static final int PREVIOUS_LOCATION_COLUMN = 18;
+    private static final int LAST_LOCATION_COLUMN = 18;
     private static final int DIVISION_COLUMN = 19;
     private static final int TRAIN_COLUMN = 20;
     private static final int LAST_TRAIN_COLUMN = 21;
@@ -177,7 +177,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), sort == SORTBY_RFID);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), sort == SORTBY_WAIT);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), sort == SORTBY_PICKUP);
-            tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), sort == SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_LOCATION_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), sort != SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), sort == SORTBY_LAST);
@@ -493,7 +493,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_LOCATION_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), false);
@@ -502,6 +502,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), true);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), true);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), true);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), carManager.isThereDivisions());
     }
@@ -555,7 +556,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 return Bundle.getMessage("RWLLoad");
             case ROUTE_COLUMN:
                 return Bundle.getMessage("Route");
-            case PREVIOUS_LOCATION_COLUMN:
+            case LAST_LOCATION_COLUMN:
                 return Bundle.getMessage("LastLocation");
             case DIVISION_COLUMN:
                 return Bundle.getMessage("HomeDivision");
@@ -704,7 +705,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 return car.getRoutePath();
             case DIVISION_COLUMN:
                 return car.getDivisionName();
-            case PREVIOUS_LOCATION_COLUMN: {
+            case LAST_LOCATION_COLUMN: {
                 String s = "";
                 if (!car.getLastLocationName().equals(Car.NONE)) {
                     s = car.getLastLocationName() + " (" + car.getLastTrackName() + ")";
