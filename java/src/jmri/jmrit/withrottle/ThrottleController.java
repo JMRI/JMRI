@@ -567,15 +567,15 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      *
      * @param rawSpeed Value sent from mobile device, range 0 - 126
      */
-    synchronized protected void setSpeed(int rawSpeed) {
+    protected synchronized void setSpeed(int rawSpeed) {
 
-        float newSpeed = (rawSpeed * speedMultiplier);
+        float spd = (rawSpeed * speedMultiplier);
 
-        log.debug("raw: {}, NewSpd: {}", rawSpeed, newSpeed);
-        while(lastSentSpeed.offer(Float.valueOf(newSpeed))==false){
+        log.debug("raw: {}, NewSpd: {}", rawSpeed, spd);
+        while(lastSentSpeed.offer(spd)==false){
               log.debug("failed attempting to add speed to queue");
         }
-        throttle.setSpeedSetting(newSpeed);
+        throttle.setSpeedSetting(spd);
     }
 
     protected void setDirection(boolean isForward) {

@@ -1,5 +1,12 @@
 package jmri.jmrit.beantable.oblock;
 
+import java.awt.*;
+import java.util.Objects;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.*;
+
 import jmri.*;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
@@ -7,16 +14,6 @@ import jmri.jmrit.logix.PortalManager;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.Objects;
 
 /**
  * Defines a GUI for editing OBlock - Signal objects in the tabbed Table interface.
@@ -28,44 +25,46 @@ import java.util.Objects;
  */
 public class SignalEditFrame extends JmriJFrame {
 
-    JPanel main = new JPanel();
+    private final JPanel main = new JPanel();
 
-    SignalTableModel model;
-    NamedBean signal;
-    PortalManager pm;
-    OBlockManager obm;
+    private final SignalTableModel model;
+    private NamedBean signal;
+    private final PortalManager pm;
+    private final OBlockManager obm;
     private final SignalEditFrame frame = this;
     private Portal _portal;
-    SignalTableModel.SignalRow _sr;
-    //private final Object lock = new Object();
+    private SignalTableModel.SignalRow _sr;
 
     // UI components for Add/Edit Signal (head or mast)
-    JLabel portalLabel = new JLabel(Bundle.getMessage("AtPortalLabel"), JLabel.TRAILING);
+    private final JLabel portalLabel = new JLabel(Bundle.getMessage("AtPortalLabel"), SwingConstants.TRAILING);
 
-    JLabel signalMastLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalMast")));
-    JLabel signalHeadLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalHead")));
-    JLabel fromBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")));
-    JLabel fromBlock = new JLabel();
-    JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ToBlockName")));
-    JLabel toBlock = new JLabel();
-    JLabel mastName = new JLabel();
-    JLabel headName = new JLabel();
-    String[] p0 = {""};
+    private final JLabel signalMastLabel = new JLabel(
+        Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalMast")));
+    private final JLabel signalHeadLabel = new JLabel(
+        Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameSignalHead")));
+    private final JLabel fromBlockLabel = new JLabel(
+        Bundle.getMessage("MakeLabel", Bundle.getMessage("FromBlockName")));
+    private final JLabel fromBlock = new JLabel();
+    private final JLabel toBlockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("ToBlockName")));
+    private final JLabel toBlock = new JLabel();
+    private final JLabel mastName = new JLabel();
+    private final JLabel headName = new JLabel();
+    private final String[] p0 = {""};
     private final JComboBox<String> portalComboBox = new JComboBox<>(p0);
-    private final NamedBeanComboBox<SignalMast> sigMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class),
-            null, NamedBean.DisplayOptions.DISPLAYNAME);
-    private final NamedBeanComboBox<SignalHead> sigHeadComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalHeadManager.class),
-            null, NamedBean.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalMast> sigMastComboBox = new NamedBeanComboBox<>(
+        InstanceManager.getDefault(SignalMastManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
+    private final NamedBeanComboBox<SignalHead> sigHeadComboBox = new NamedBeanComboBox<>(
+        InstanceManager.getDefault(SignalHeadManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 //    private final NamedBeanComboBox<OBlock> fromBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class),
 //            null, NamedBean.DisplayOptions.DISPLAYNAME);
 //    private final NamedBeanComboBox<OBlock> toBlockComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(OBlockManager.class),
 //            null, NamedBean.DisplayOptions.DISPLAYNAME);
     private final JButton flipButton = new JButton(Bundle.getMessage("ButtonFlipBlocks"));
     // the following 3 items copied from beanedit, place in separate static method?
-    JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
-    JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
-    JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
-    JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1",
+    private final JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
+    private final JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
+    private final JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
+    private final JLabel statusBar = new JLabel(Bundle.getMessage("AddXStatusInitial1",
             (Bundle.getMessage("BeanNameSignalMast") + "/" + Bundle.getMessage("BeanNameSignalHead")),
             Bundle.getMessage("ButtonOK")));
 
@@ -96,10 +95,14 @@ public class SignalEditFrame extends JmriJFrame {
         } else {
             resetFrame();
         }
+    }
+
+    @Override
+    public void initComponents() {
         addCloseListener(this);
     }
 
-    public void layoutFrame() {
+    public final void layoutFrame() {
         frame.addHelpMenu("package.jmri.jmrit.beantable.OBlockTable", true);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.PAGE_AXIS));
         frame.setSize(300, 200);
@@ -191,7 +194,7 @@ public class SignalEditFrame extends JmriJFrame {
         p1 = new JPanel();
         p1.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Offset"))));
         lengthSpinner.setModel(
-                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-2000f), Float.valueOf(2000f), Float.valueOf(0.01f)));
+            new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-2000f), Float.valueOf(2000f), Float.valueOf(0.01f)));
         lengthSpinner.setEditor(new JSpinner.NumberEditor(lengthSpinner, "###0.00"));
         lengthSpinner.setPreferredSize(new JTextField(8).getPreferredSize());
         lengthSpinner.setValue(0f); // reset from possible previous use
@@ -229,28 +232,26 @@ public class SignalEditFrame extends JmriJFrame {
 
         p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.LINE_AXIS));
-        JButton cancel;
-        p2.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener((ActionEvent e) -> closeFrame());
-        JButton ok;
-        p2.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
-        ok.addActionListener(this::applyPressed);
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
+        p2.add(cancel);
+        cancel.addActionListener(e -> closeFrame());
+        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
+        p2.add(ok);
+        ok.addActionListener( e -> applyPressed());
         p.add(p2);
 
-        //main.add(p);
         frame.getContentPane().add(p);
 
         frame.setEscapeKeyClosesWindow(true);
         frame.getRootPane().setDefaultButton(ok);
 
-        //frame.add(scroll);
         frame.pack();
     }
 
     /**
      * Reset the Edit Signal frame with default values.
      */
-    public void resetFrame() {
+    public final void resetFrame() {
         if (sigMastComboBox.getItemCount() > 0) {
             sigMastComboBox.setSelectedIndex(0);
         }
@@ -283,10 +284,8 @@ public class SignalEditFrame extends JmriJFrame {
      *
      * @param sr existing SignalRow to copy the attributes from
      */
-    public void populateFrame(SignalTableModel.SignalRow sr) {
-        if (sr == null) {
-            throw new IllegalArgumentException("Null Signal object");
-        }
+    public final void populateFrame(@Nonnull SignalTableModel.SignalRow sr) {
+        Objects.requireNonNull(sr, "Null Signal object");
         status(Bundle.getMessage("AddXStatusInitial3", sr.getSignal().getDisplayName(),
                 Bundle.getMessage("ButtonOK")), false);
         fromBlock.setText(sr.getFromBlock().getDisplayName());
@@ -315,7 +314,7 @@ public class SignalEditFrame extends JmriJFrame {
         _newSignal = false;
     }
 
-    private void applyPressed(ActionEvent e) {
+    private void applyPressed() {
         if (_newSignal) { // can't change an existing mast, easy to delete and recreate
             if (sigMastComboBox.getSelectedIndex() > 0) {
                 signal = sigMastComboBox.getSelectedItem();
@@ -348,14 +347,16 @@ public class SignalEditFrame extends JmriJFrame {
             length = (float) lengthSpinner.getValue()*25.4f;
         }
 
-        if (_portal.setProtectSignal(signal, length, obm.getOBlock(toBlock.getText()))) {
-            if ((fromBlock.getText() == null) && (toBlock.getText() != null)) { // could be read from old panels?
-                _portal.setFromBlock(_portal.getOpposingBlock(obm.getOBlock(Objects.requireNonNull(toBlock.getText()))), true);
-            }
+        String toBlockName = toBlock.getText();
+        var toOBlock = ( toBlockName == null ? null : obm.getOBlock(toBlockName) );
+
+        if (_portal.setProtectSignal(signal, length, toOBlock)
+                && (fromBlock.getText() == null) && (toOBlock != null)) { // could be read from old panels?
+            _portal.setFromBlock( _portal.getOpposingBlock(toOBlock), true);
         }
         // update Metric choice in ProtectedBlock
-        if (toBlock.getText() != null) {
-            Objects.requireNonNull(obm.getOBlock(toBlock.getText())).setMetricUnits(cm.isSelected());
+        if (toOBlock != null) {
+            toOBlock.setMetricUnits(cm.isSelected());
         }
         // Notify changes
         model.fireTableDataChanged();
@@ -404,6 +405,6 @@ public class SignalEditFrame extends JmriJFrame {
         });
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SignalEditFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalEditFrame.class);
 
 }

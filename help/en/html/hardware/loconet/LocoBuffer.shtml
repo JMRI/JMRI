@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Hardware Support - LocoBuffer to LocoNet&reg;</title>
   <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+  "Digitrax LocoNet LocoBuffer java model railroad JMRI install windows">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
@@ -19,13 +18,17 @@
 
       <p>John Jabour designed the LocoBuffer as a reliable way of connecting a computer to a
       LocoNet&reg;. He's no longer making them, but <a href=
-      "https://locohdl.synology.me/">Hans deLoof</a> has taken over for people who
-      want to build their own.</p>
+      "https://locohdl.synology.me/">Hans DeLoof</a> took over and sells LocoBuffer kits (Windows
+      only).</p>
 
-      <p>The <a href="LocoBufferII.shtml">LocoBuffer II</a> is currently the most reliable
-      commercially-available way to connect a computer to a LocoNet. It is produced by Dick
-      Bronson's <a href="http://www.rr-cirkits.com">RR-CirKits</a> company, based in part on the
-      original LocoBuffer design.</p>
+      <p>A reliable successor was the <a href="LocoBufferII.shtml">LocoBuffer II</a>, based in part on the
+      original LocoBuffer design. As it required a USB-to-serial adapter with dedicated drivers on computers without a
+      serial port, the <a href="LocoBufferUSB.shtml">LocoBuffer-USB</a> was developed (both are no longer
+      in production).</p>
+
+      <p>Currently, the most reliable commercially-available way to connect a computer to a LocoNet is the
+      <a href="LocoBufferUSB.shtml">LocoBuffer-NG</a>, also produced by Dick Bronson's <a
+      href="http://www.rr-cirkits.com">RR-CirKits</a> company.</p>
 
       <h2>Recommended setup</h2>
 

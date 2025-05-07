@@ -81,14 +81,14 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
 
     /**
      * Format used for {@link #getDisplayName(DisplayOptions)} when displaying
-     * the user name and system name without quoation marks around the user
+     * the user name and system name without quotation marks around the user
      * name.
      */
     final static String DISPLAY_NAME_FORMAT = "%s (%s)";
 
     /**
      * Format used for {@link #getDisplayName(DisplayOptions)} when displaying
-     * the user name and system name with quoation marks around the user name.
+     * the user name and system name with quotation marks around the user name.
      */
     final static String QUOTED_NAME_FORMAT = "\"%s\" (%s)";
 
@@ -96,6 +96,26 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
      * Property of changed state.
      */
     final static String PROPERTY_STATE = "state";
+
+    /**
+     * Property of known state.
+     */
+    String PROPERTY_KNOWN_STATE = "KnownState";
+
+    /**
+     * Property of Enabled state ( Light / Logix / LogixNG / Route / SML ).
+     */
+    String PROPERTY_ENABLED = "Enabled";
+
+    /**
+     * Property of Comment updated.
+     */
+    String PROPERTY_COMMENT = "Comment";
+
+    /**
+     * Property of User Name.
+     */
+    String PROPERTY_USERNAME = "UserName";
 
     /**
      * User's identification for the item. Bound parameter so manager(s) can
@@ -191,19 +211,21 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
     /**
      * Get a recommended text for a tooltip when displaying 
      * the NamedBean, e.g. in a list or table.
-     *
      * By default, this is the comment from the NamedBean, on the theory
-     * that the system name and/or user name are being displayed directly. 
+     * that the system name and/or user name are being displayed directly.
      * Specific system implementations may override that.
+     * @return empty String if no recommendation.
      */
     @CheckReturnValue
     @Nonnull
     default String getRecommendedToolTip() {
         String retval = getComment();
-        if (retval == null) return "";
+        if (retval == null) {
+            return "";
+        }
         return retval;
     }
-     
+
     /**
      * Request a call-back when a bound property changes. Bound properties are
      * the known state, commanded state, user and system names.
@@ -463,8 +485,9 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
         int p2len = Manager.getSystemPrefixLength(o2);
 
         int comp = ac.compare(o1.substring(0, p1len), o2.substring(0, p2len));
-        if (comp != 0)
+        if (comp != 0) {
             return comp;
+        }
 
         char c1 = o1.charAt(p1len);
         char c2 = o2.charAt(p2len);

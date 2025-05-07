@@ -17,7 +17,9 @@ import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
@@ -63,7 +65,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected int _moves = 0;
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
     protected String _lastTrackId = LOCATION_UNKNOWN; // the rollingstock's last track id
+    protected Train _lastTrain = null; // the last train moving this rs
     protected int _blocking = DEFAULT_BLOCKING_ORDER;
+    protected String _pickupTime = NONE;
 
     protected IdTag _tag = null;
     protected PropertyChangeListener _tagListener = null;
@@ -809,6 +813,36 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     }
 
     /**
+     * Sets the last train that serviced this rolling stock.
+     *
+     * @param train The last Train.
+     */
+    public void setLastTrain(Train train) {
+        Train old = _lastTrain;
+        _lastTrain = train;
+        if (old != train) {
+            if (old != null) {
+                old.removePropertyChangeListener(this);
+            }
+            if (train != null) {
+                train.addPropertyChangeListener(this);
+            }
+            setDirtyAndFirePropertyChange(TRAIN_CHANGED_PROPERTY, old, train);
+        }
+    }
+
+    public Train getLastTrain() {
+        return _lastTrain;
+    }
+
+    public String getLastTrainName() {
+        if (getLastTrain() != null) {
+            return getLastTrain().getName();
+        }
+        return NONE;
+    }
+
+    /**
      * Sets the location where the rolling stock will be picked up by the train.
      *
      * @param routeLocation the pick up location for this rolling stock.
@@ -1253,6 +1287,19 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return _comment;
     }
 
+    public void setPickupTime(String time) {
+        String old = _pickupTime;
+        _pickupTime = time;
+        setDirtyAndFirePropertyChange("Pickup Time Changed", old, time); // NOI18N
+    }
+
+    public String getPickupTime() {
+        if (getTrain() != null) {
+            return _pickupTime;
+        }
+        return NONE;
+    }
+
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
         if (current == getRouteLocation()) {
             setLastDate(java.util.Calendar.getInstance().getTime());
@@ -1265,6 +1312,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 }
                 setLocation(getDestination(), getDestinationTrack(), RollingStock.FORCE); // force RS to destination
                 setDestination(null, null); // this also clears the route locations
+                setLastTrain(getTrain()); // save the last train moving this rs
                 setTrain(null); // this must come after setDestination (route id is set)
                 setMoves(getMoves() + 1); // bump count
             } else {
@@ -1392,6 +1440,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 _routeDestination = getTrain().getRoute().getRouteLocationById(a.getValue());
             }
         }
+        if ((a = e.getAttribute(Xml.LAST_TRAIN_ID)) != null) {
+            setLastTrain(InstanceManager.getDefault(TrainManager.class).getTrainById(a.getValue()));
+        }
         if ((a = e.getAttribute(Xml.LAST_ROUTE_ID)) != null) {
             _routeId = a.getValue();
         }
@@ -1418,6 +1469,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         if ((a = e.getAttribute(Xml.DATE)) != null) {
             setLastDate(a.getValue()); // uses the setLastDate(String) method.
+        }
+        if ((a = e.getAttribute(Xml.PICKUP_TIME)) != null) {
+            _pickupTime = a.getValue();
         }
         if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
             try {
@@ -1495,6 +1549,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             e.setAttribute(Xml.TRAIN, getTrainName());
             e.setAttribute(Xml.TRAIN_ID, getTrain().getId());
         }
+        if (!getLastTrainName().equals(NONE)) {
+            e.setAttribute(Xml.LAST_TRAIN, getLastTrainName());
+            e.setAttribute(Xml.LAST_TRAIN_ID, getLastTrain().getId());
+        }
         if (!getOwnerName().equals(NONE)) {
             e.setAttribute(Xml.OWNER, getOwnerName());
         }
@@ -1509,6 +1567,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         if (isOutOfService()) {
             e.setAttribute(Xml.OUT_OF_SERVICE, isOutOfService() ? Xml.TRUE : Xml.FALSE);
+        }
+        if (!getPickupTime().equals(NONE)) {
+            e.setAttribute(Xml.PICKUP_TIME, getPickupTime());
         }
         if (getBlocking() != 0) {
             e.setAttribute(Xml.BLOCKING, Integer.toString(getBlocking()));

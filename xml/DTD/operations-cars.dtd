@@ -74,6 +74,8 @@
 <!ATTLIST car loadFromStaging		(true | false ) "false">
 <!ATTLIST car train					CDATA #IMPLIED>  
 <!ATTLIST car trainId				CDATA #IMPLIED>
+<!ATTLIST car lastTrain				CDATA #IMPLIED>  
+<!ATTLIST car lastTrainId			CDATA #IMPLIED>
 <!ATTLIST car owner					CDATA #IMPLIED>  
 <!ATTLIST car moves					CDATA #IMPLIED>                    
 <!ATTLIST car comment				CDATA #IMPLIED>
@@ -91,6 +93,7 @@
 <!ATTLIST car nextPickupId			CDATA #IMPLIED>
 <!ATTLIST car divisionId			CDATA #IMPLIED>
 <!ATTLIST car routePath				CDATA #IMPLIED>
+<!ATTLIST car pickupTime			CDATA #IMPLIED>
 
 <!ELEMENT loads (defaults | load*)*>
 <!ELEMENT defaults EMPTY>

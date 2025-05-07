@@ -2,9 +2,6 @@ package jmri.managers;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import sun.misc.Signal;
-import sun.misc.SignalHandler;
-
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowEvent;
@@ -91,33 +88,10 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         // register a Signal handlers that do shutdown
         try {
             if (SystemType.isMacOSX() || SystemType.isLinux()) {
-                SignalHandler handler = new SignalHandler () {
-                    @Override
-                    public void handle(Signal sig) {
-                        shutdown();
-                    }
-                };
-                Signal.handle(new Signal("TERM"), handler);
-                Signal.handle(new Signal("INT"), handler);
-
-                handler = new SignalHandler () {
-                    @Override
-                    public void handle(Signal sig) {
-                        restart();
-                    }
-                };
-                Signal.handle(new Signal("HUP"), handler);
+                sun.misc.Signal.handle(new sun.misc.Signal("INT"), sig -> shutdown());
+                sun.misc.Signal.handle(new sun.misc.Signal("HUP"), sig -> restart());
             }
-
-            else if (SystemType.isWindows()) {
-                SignalHandler handler = new SignalHandler () {
-                    @Override
-                    public void handle(Signal sig) {
-                        shutdown();
-                    }
-                };
-                Signal.handle(new Signal("TERM"), handler);
-            }
+            sun.misc.Signal.handle(new sun.misc.Signal("TERM"), sig -> shutdown());
 
         } catch (NullPointerException e) {
             log.warn("Failed to add signal handler due to missing signal definition");
@@ -369,7 +343,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
         List<Future<?>> complete = new ArrayList<>();
         long timeoutEnd = System.currentTimeMillis() + tasksTimeOutMilliSec;
 
-        sDrunnables.forEach((runnable) -> complete.add(executor.submit(runnable)));
+        sDrunnables.forEach( runnable -> complete.add(executor.submit(runnable)));
 
         executor.shutdown(); // no more tasks allowed from here, starts the threads.
 
@@ -378,7 +352,7 @@ public class DefaultShutDownManager extends Bean implements ShutDownManager {
             long remainingTime = timeoutEnd - System.currentTimeMillis(); // Calculate remaining time
 
             if (remainingTime <= 0) {
-                log.error("Timeout reached before all tasks were completed");
+                log.error("Timeout reached before all tasks were completed {} {}", threadName, future);
                 break;
             }
 

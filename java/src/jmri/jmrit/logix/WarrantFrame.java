@@ -106,6 +106,12 @@ public class WarrantFrame extends WarrantRoute {
         _warrant = new Warrant(w.getSystemName(), w.getUserName());
         setup(_saveWarrant, false);
         init();
+        if ( _saveWarrant instanceof SCWarrant) {
+            _isSCWarrant.setSelected(true);
+            _showRoute.setSelected(true);
+            showCommands(false);
+            //setPanelEnabled(buttonPanel, false);
+        }
     }
 
     /**
@@ -1681,6 +1687,20 @@ public class WarrantFrame extends WarrantRoute {
                 }
                 return false;
             }
+        }
+
+        if (_saveWarrant != null) {
+            _warrant = _saveWarrant;
+            if ((_saveWarrant instanceof SCWarrant && !_isSCWarrant.isSelected()) ||
+                    (!(_saveWarrant instanceof SCWarrant) && _isSCWarrant.isSelected())) {
+                // _saveWarrant already registered, but is not the correct class.
+                InstanceManager.getDefault(WarrantManager.class).deregister(_saveWarrant);
+                _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(
+                        _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
+            }
+        } else {
+            _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(
+                    _sysNameBox.getText(), _userNameBox.getText(), _isSCWarrant.isSelected(), (long)_TTPtextField.getValue());
         }
 
         if (_isSCWarrant.isSelected()) {

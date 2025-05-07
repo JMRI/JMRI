@@ -16,7 +16,7 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Exports the car roster into a comma delimited file (CSV).
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2011, 2016, 2024
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2016, 2024, 2025
  */
 public class ExportCars extends XmlFile {
 
@@ -110,7 +110,11 @@ public class ExportCars extends XmlFile {
                     Bundle.getMessage("Track"),
                     Bundle.getMessage("SchId"),
                     Bundle.getMessage("RFID_Tag"),
-                    Bundle.getMessage("Route"));
+                    Bundle.getMessage("RoutePath"),
+                    Bundle.getMessage("LastLocation"),
+                    LOCATION_TRACK_SEPARATOR,
+                    Bundle.getMessage("Track"),
+                    Bundle.getMessage("LastTrain"));
 
             // store car attributes
             for (Car car : _carList) {
@@ -153,7 +157,11 @@ public class ExportCars extends XmlFile {
                         car.getFinalDestinationTrackName(),
                         car.getScheduleItemId(),
                         car.getRfid(),
-                        car.getRoutePath());
+                        car.getRoutePath(),
+                        car.getLastLocationName(),
+                        LOCATION_TRACK_SEPARATOR,
+                        car.getLastTrackName(),
+                        car.getLastTrainName());
             }
             fileOut.flush();
             fileOut.close();

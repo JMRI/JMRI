@@ -86,7 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Updated several Digitrax help pages to include
+                recently introduced products, fix typos.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -126,7 +127,14 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>There's a new storage method for event names.
+                    Previously, these were stored in the IdTag table, which might
+                    be confusing.
+                    Starting with this release, they're separately stored
+                    in an eventnames/eventNames.xml file within the user files
+                    location.
+                    Names that were previously stored in the IdTag table
+                    will be automatically migrated to this new method.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -402,7 +410,9 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>The ability to set signal mast aspects in <em>view</em> mode is controlled by
+            the <strong>Disabled</strong> setting for the signal mast icon.  When enabled, changing
+            the aspect by clicking or selecting from the aspect list is blocked.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -448,7 +458,15 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Fixed editing and rendering issues with Block Contents Icons.  No longer need to have
+            a value in the block to edit the Icon.  Rotated blocks render correctly.  Empty Hidden
+            now works on initial load and after editing the panel</li>
+            <li>The ability to set signal mast aspects in <em>view</em> mode is controlled by
+            the <strong>Disabled</strong> setting for the signal mast icon.  When enabled, changing
+            the aspect by clicking or selecting from the aspect list is blocked.</li>
+            <li>The right click menu for <strong>Markers</strong> when using Linux has been fixed.</li>
+            <li>Fixed editing and rendering issues with Block Contents Icons.  No longer need to have a value in the block to edit the Icon.  Rotated blocks render correctly.  Empty Hidden now works on initial load and after editing the panel</li>
+            <li>Fixed deleting of Inline LogixNG's when Layout Panels are deleted</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -471,7 +489,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>Improved some GUI layouts by adding scroll bars</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -483,13 +501,22 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature, passenger car blocking order for Manifests and switch lists</li>
+            <li>Added car's division name to CSV Manifests and switch lists</li>
+            <li>Fixed a bug when routing through staging and no last hop C/I track was available</li>
+            <li>Improved the route edit window by always showing both departure time and travel time</li>
+            <li>Fixed exception error when replacing a car's load using the "All" cars feature</li>
+            <li>New feature, ability to show the last train that transported a car</li>
+            <li>Improvements to car export, added the car's route path, previous location, track, and train</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>The ability to set signal mast aspects in <em>view</em> mode is controlled by
+            the <strong>Disabled</strong> setting for the signal mast icon.  When enabled, changing
+            the aspect by clicking or selecting from the aspect list is blocked.</li>
+            <li>Fixed deleting of Inline LogixNG's when Panels are deleted</li>
         </ul>
 
     <h3>Permissions</h3>
@@ -613,7 +640,11 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Added a new "web/idtags_examples" directory with an example
+                of icons which move to different places on the webpage depending on their most recent report. 
+                The example shows cars being switched in a simple yard. 
+                The principles shown could be used to show locomotives or train movements.
+                See the included PDF file for more information.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -645,4 +676,3 @@
         <ul>
             <li></li>
         </ul>
-

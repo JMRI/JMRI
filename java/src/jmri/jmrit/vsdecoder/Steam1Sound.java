@@ -1393,8 +1393,19 @@ class Steam1Sound extends EngineSound {
 
         private void setPosition(PhysicalLocation p) {
             _sound.setPosition(p);
+            if (_parent.getTunnel()) {
+                _sound.attachSourcesToEffects();
+            } else {
+                _sound.detachSourcesToEffects();
+            }
+
             for (SoundBite ts : _parent.trigger_sounds.values()) {
                 ts.setPosition(p);
+                if (_parent.getTunnel()) {
+                    ts.attachSourcesToEffects();
+                } else {
+                    ts.detachSourcesToEffects();
+                }
             }
         }
 

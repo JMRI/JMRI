@@ -12,64 +12,64 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>2022</year>
-		<holder>JMRI</holder>
-	</copyright>
-	<authorgroup xmlns="http://docbook.org/ns/docbook">
-		<author>
-			<personname>
-				<firstname>Ulrich</firstname>
-				<surname>Gerlach</surname>
-			</personname>
-		</author>
-	</authorgroup>
-	<revhistory xmlns="http://docbook.org/ns/docbook">
-		<revision>
-			<revnumber>1</revnumber>
-			<date>2022-11-11</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
-		</revision>
-		<revision>
-			<revnumber>2</revnumber>
-			<date>2023-10-20</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add decoder</revremark>
-		</revision>
-		<revision>
-			<revnumber>3</revnumber>
-			<date>2024-04-01</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add Decoder ML4000</revremark>
-		</revision>
-	</revhistory>
-	<variable item="RailCom channel 1 (Broadcast)" CV="28" default="1" mask="XXXXXXXV">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>RailCom channel 1 (Broadcast)</label>
-		<label xml:lang="it">RailCom canale 1 (Broadcast)</label>
-		<label xml:lang="cs">RailCom kanál 1 (Vysílání)</label>
-		<label xml:lang="de">RailCom Kanal 1 (Broadcast)</label>
-		<label xml:lang="nl">RailCom Kanaal 1 (Broadcast)</label>
-	</variable>
-	<variable item="RailCom channel 2 (Data)" CV="28" default="1" mask="XXXXXXVX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>RailCom channel 2 (Data)</label>
-		<label xml:lang="it">RailCom canale 2 (Dati)</label>
-		<label xml:lang="cs">RailCom kanál 2 (Data)</label>
-		<label xml:lang="de">RailCom Kanal 2 (Daten)</label>
-		<label xml:lang="nl">RailCom Kanaal 1 (Data)</label>
-	</variable>
-	<variable item="RailCom channel 1 auto" CV="28" default="1" mask="XXXXXVXX" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>RailCom auto</label>
-	</variable>
-	<variable item="RailCom Broadcast" CV="28" default="1" mask="XXXVXXXX" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>RailCom Broadcast Adresse</label>
-	</variable>
-	<variable item="RailCom Plus" CV="28" default="1" mask="VXXXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>RailCom Plus®</label>
-	</variable>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2022</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Ulrich</firstname>
+                <surname>Gerlach</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2022-11-11</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-10-20</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add decoder</revremark>
+        </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2024-04-01</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add Decoder ML4000</revremark>
+        </revision>
+    </revhistory>
+    <variable item="RailCom channel 1 (Broadcast)" CV="28" default="1" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom channel 1 (Broadcast)</label>
+        <label xml:lang="it">RailCom canale 1 (Broadcast)</label>
+        <label xml:lang="cs">RailCom kanál 1 (Vysílání)</label>
+        <label xml:lang="de">RailCom Kanal 1 (Broadcast)</label>
+        <label xml:lang="nl">RailCom Kanaal 1 (Broadcast)</label>
+    </variable>
+    <variable item="RailCom channel 2 (Data)" CV="28" default="1" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom channel 2 (Data)</label>
+        <label xml:lang="it">RailCom canale 2 (Dati)</label>
+        <label xml:lang="cs">RailCom kanál 2 (Data)</label>
+        <label xml:lang="de">RailCom Kanal 2 (Daten)</label>
+        <label xml:lang="nl">RailCom Kanaal 2 (Data)</label>
+    </variable>
+    <variable item="RailCom channel 1 auto" CV="28" default="1" mask="XXXXXVXX" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom auto</label>
+    </variable>
+    <variable item="RailCom Broadcast" CV="28" default="1" mask="XXXVXXXX" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom Broadcast Adresse</label>
+    </variable>
+    <variable item="RailCom Plus" CV="28" default="1" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>RailCom Plus®</label>
+    </variable>
 </variables>

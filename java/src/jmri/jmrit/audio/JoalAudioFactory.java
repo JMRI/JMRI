@@ -1,6 +1,7 @@
 package jmri.jmrit.audio;
 
 import com.jogamp.openal.AL;
+import com.jogamp.openal.ALExt;
 import com.jogamp.openal.ALC;
 import com.jogamp.openal.ALCdevice;
 import com.jogamp.openal.ALConstants;
@@ -13,8 +14,6 @@ import java.util.TreeSet;
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is the JOAL audio system specific AudioFactory.
@@ -86,9 +85,16 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
     private static ALC alc;
 
+    private static ALExt alext;
+
     private static ALCdevice alcDevice;
 
-    //private static ALCcontext alcContext;
+    // New Effects Objects
+    // holds id's of effect slots
+    static int[] uiEffectSlots = new int[1];
+    // holds id's of effects
+    static int[] uiEffect = new int[1];
+
     private static boolean initialised = false;
 
     private JoalAudioListener activeAudioListener;
@@ -283,6 +289,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
         // Check context
         alc = ALFactory.getALC();
+        alext = ALFactory.getALExt();
         alcDevice = alc.alcGetContextsDevice(alc.alcGetCurrentContext());
         if (!checkALCError(alcDevice)) {
             int[] size = new int[1];
@@ -315,12 +322,52 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                             log.debug("Attribute {}: {}", i, attributes[i]);
                     }
                 }
+                if (alc.alcIsExtensionPresent(alcDevice, "ALC_EXT_EFX")) {
+                    loadEffect();
+                } else {
+                    log.warn("Extension EFX not present");
+                }
             }
         }
 
         super.init();
         initialised = true;
         return true;
+    }
+
+    static int loadEffect() {
+        al.alGetError(); // Clear error state
+        // Try to create 1 effect slot
+        alext.alGenAuxiliaryEffectSlots(1, uiEffectSlots, 0);
+        if (al.alGetError() != AL.AL_NO_ERROR) {
+            return AL.AL_FALSE;
+        }
+        log.debug("Generated 1 effect slot {}", uiEffectSlots[0]);
+
+        // Try to create 1 effect
+        alext.alGenEffects(1, uiEffect, 0);
+        if (al.alGetError() != AL.AL_NO_ERROR) {
+            return AL.AL_FALSE;
+        }
+        log.debug("Generated 1 effect");
+
+        // Set Effect Type to Reverb 
+        if (alext.alIsEffect(uiEffect[0])) {
+            alext.alEffecti(uiEffect[0], ALExt.AL_EFFECT_TYPE, ALExt.AL_EFFECT_REVERB);
+            if (al.alGetError() != AL.AL_NO_ERROR) {
+                log.warn("ReverbEffect not supported");
+                return AL.AL_FALSE;
+            }
+        }
+
+        // Load effect into effect slot
+        alext.alAuxiliaryEffectSloti(uiEffectSlots[0], ALExt.AL_EFFECTSLOT_EFFECT, uiEffect[0]);
+        if (al.alGetError() != AL.AL_NO_ERROR) {
+            log.warn("Could not load effect into effect slot");
+            return AL.AL_FALSE;
+        }
+        log.debug("Successfully loaded effect into effect slot");
+        return AL.AL_TRUE;
     }
 
     @Override
@@ -375,6 +422,11 @@ public class JoalAudioFactory extends AbstractAudioFactory {
             // Includes cleanup
             listener.dispose();
         }
+
+        // delete and free resources for Auxiliary Effect Slot
+        alext.alDeleteAuxiliaryEffectSlots(1, uiEffectSlots, 0);
+        // delete and free resources for Effect Object
+        alext.alDeleteEffects(1, uiEffect, 0);
 
         // Finally, shutdown OpenAL and close the output device
         log.debug("Shutting down OpenAL, initialised: {}", initialised);
@@ -544,6 +596,6 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(JoalAudioFactory.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JoalAudioFactory.class);
 
 }

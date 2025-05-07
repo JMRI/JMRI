@@ -48,7 +48,8 @@
       <h3 id="Roster">Roster tab</h3>
 
       <p>A roster is a database of all locomotives that your installation of DecoderPro has
-      programmed. It includes the information seen in the screen below:</p>
+      programmed. Some stationary decoders can also be added to this database.<br>
+      It includes the information seen in the screen below:</p>
 
       <p><img src="RosterTab.png" alt="DecoderPro Roster Tab">
       </p>

@@ -2,6 +2,9 @@ package jmri.implementation;
 
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
+
+import javax.annotation.CheckForNull;
+
 import jmri.Audio;
 import jmri.Conditional;
 import jmri.ConditionalAction;
@@ -20,8 +23,6 @@ import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The consequent of the antecedent of the conditional proposition. The data for
@@ -50,7 +51,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     private Sound _sound = null;
 
     static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");
-    protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    protected jmri.NamedBeanHandleManager nbhm = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     public DefaultConditionalAction() {
     }
@@ -127,7 +128,8 @@ public class DefaultConditionalAction implements ConditionalAction {
      * If this is an indirect reference, return the Memory bean.
      *
      */
-    private Memory getIndirectBean(String devName) {
+    @CheckForNull
+    private Memory getIndirectBean(@CheckForNull String devName) {
         if (devName != null && devName.length() > 0 && devName.charAt(0) == '@') {
             String memName = devName.substring(1);
             Memory m = InstanceManager.memoryManagerInstance().getMemory(memName);
@@ -146,8 +148,11 @@ public class DefaultConditionalAction implements ConditionalAction {
      * Return the device bean that will do the action.
      *
      */
-    private NamedBean getActionBean(String devName) {
-        if (devName == null) return null;
+    @CheckForNull
+    private NamedBean getActionBean(@CheckForNull String devName) {
+        if (devName == null) {
+            return null;
+        }
         NamedBean bean = null;
         try {
             switch (_type.getItemType()) {
@@ -217,7 +222,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case ENTRYEXIT:
                     try {
-                        bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
+                        bean = InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
                         log.error("invalid NX name= \"{}\" in conditional action", devName);
@@ -225,7 +230,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case LOGIX:
                     try {
-                        bean = jmri.InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
+                        bean = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
                     } catch (IllegalArgumentException e) {
                         bean = null;
                         log.error("invalid Logix name= \"{}\" in conditional action", devName);
@@ -1002,6 +1007,6 @@ public class DefaultConditionalAction implements ConditionalAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultConditionalAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalAction.class);
 
 }

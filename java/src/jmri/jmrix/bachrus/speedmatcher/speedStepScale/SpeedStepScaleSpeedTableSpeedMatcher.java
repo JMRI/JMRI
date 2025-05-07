@@ -1,5 +1,7 @@
 package jmri.jmrix.bachrus.speedmatcher.speedStepScale;
 
+import java.util.Locale;
+
 import jmri.DccThrottle;
 import jmri.jmrix.bachrus.Speed;
 
@@ -99,7 +101,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
 
         speedMatcherState = SpeedMatcherState.WAIT_FOR_THROTTLE;
 
-        actualMaxSpeedField.setText(String.format("___"));
+        actualMaxSpeedField.setText("___");
 
         if (!initializeAndStartSpeedMatcher(e -> speedMatchTimeout())) {
             cleanUpSpeedMatcher();
@@ -259,7 +261,9 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                 } else {
                     measuredMaxSpeedKPH = currentSpeedKPH;
 
-                    String statusMessage = String.format("Measured maximum speed = %.1f KPH (%.1f MPH)", measuredMaxSpeedKPH, Speed.kphToMph(measuredMaxSpeedKPH));
+                    String statusMessage = String.format(Locale.getDefault(),
+                        "Measured maximum speed = %.1f KPH (%.1f MPH)",
+                            measuredMaxSpeedKPH, Speed.kphToMph(measuredMaxSpeedKPH));
                     logger.info(statusMessage);
                     
                     float speedMatchMaxSpeed;
@@ -275,7 +279,7 @@ public class SpeedStepScaleSpeedTableSpeedMatcher extends SpeedStepScaleSpeedMat
                         speedMatchMaxSpeedKPH = speedUnit == Speed.Unit.MPH ? Speed.mphToKph(speedMatchMaxSpeed): speedMatchMaxSpeed;
                     }
                     
-                    actualMaxSpeedField.setText(String.format("%.1f", speedMatchMaxSpeed));
+                    actualMaxSpeedField.setText(String.format(Locale.getDefault(), "%.1f", speedMatchMaxSpeed));
                     
                     initNextSpeedMatcherState(SpeedMatcherState.FORWARD_SPEED_MATCH_STEP28, 30);
                 }

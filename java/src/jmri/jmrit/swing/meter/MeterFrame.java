@@ -167,6 +167,8 @@ public class MeterFrame extends JmriJFrame {
 
         meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
         meter.enable();
+        
+        this.setTitle(m.getDisplayName());
 
         if (frameIsInitialized) {
             // Initially we want to scale the icons to fit the previously saved window size
@@ -546,6 +548,10 @@ public class MeterFrame extends JmriJFrame {
             return;
         }
 
+        // we want to keep the title updated to the displayname 
+        // so we do it on updates
+        setTitle(meter.getDisplayName());
+        
         double meterValue = meter.getKnownAnalogValue() * selectedUnit.multiply;
 
         switch (meter.getUnit()) {

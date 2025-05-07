@@ -50,6 +50,26 @@ import javax.annotation.Nonnull;
 public interface SignalMast extends Signal {
 
     /**
+     * Constant property for aspect.
+     */
+    String PROPERTY_ASPECT = "Aspect";
+
+    /**
+     * Constant property for permissive SML disabled.
+     */
+    String PROPERTY_PERMISSIVE_SML_DISABLED = "PermissiveSmlDisabled";
+
+    /**
+     * Constant property for aspect disabled.
+     */
+    String PROPERTY_ASPECT_DISABLED = "aspectDisabled";
+
+    /**
+     * Constant for property aspect enabled.
+     */
+    String PROPERTY_ASPECT_ENABLED = "aspectEnabled";
+
+    /**
      * Set aspect to a valid name in the current signal system definition.
      *
      * @param aspect the new aspect shown
