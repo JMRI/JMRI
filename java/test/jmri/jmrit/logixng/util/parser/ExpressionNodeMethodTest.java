@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.util.parser;
 
+import java.awt.geom.Point2D;
 import java.io.*;
 import java.util.*;
 
@@ -9,9 +10,9 @@ import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNG;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test ExpressionNodeMethod.
@@ -56,19 +57,35 @@ public class ExpressionNodeMethodTest {
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testMethodWithBooleanParameter() throws JmriException {
         var editor = new jmri.jmrit.display.layoutEditor.LayoutEditor("My layout");
-        var trackSegment = new TrackSegment("Id", "A", HitPointType.TRACK, "B", HitPointType.TRACK, false, editor);
+
+        // code retained for any future debug
+        // jmri.util.ThreadingUtil.runOnGUI( () -> editor.setVisible(true));
+        // jmri.jmrit.display.EditorFrameOperator efo = new jmri.jmrit.display.EditorFrameOperator("My layout");
+        // Assertions.assertNotNull(efo);
+
+        PositionablePoint p1 = new PositionablePoint("A", PositionablePoint.PointType.ANCHOR, editor);
+        PositionablePointView p1v = new PositionablePointView(p1, new Point2D.Double(210.0, 220.0), editor);
+        editor.addLayoutTrack(p1, p1v);
+
+        PositionablePoint p2 = new PositionablePoint("B", PositionablePoint.PointType.ANCHOR, editor);
+        PositionablePointView p2v = new PositionablePointView(p2, new Point2D.Double(220.0, 233.0), editor);
+        editor.addLayoutTrack(p2, p2v);
+
+        var trackSegment = new TrackSegment("Id", p1, HitPointType.POS_POINT, p2, HitPointType.POS_POINT, false, editor);
         var trackSegmentView = new TrackSegmentView(trackSegment, editor);
         editor.addLayoutTrack(trackSegment, trackSegmentView);
+
         var segments = editor.getTrackSegmentViews();
         var segment = segments.get(0);
         segment.setHidden(false);
         Assertions.assertFalse(segment.isHidden());
         testCall(segment, "setHidden", null, new Object[]{true});
         Assertions.assertTrue(segment.isHidden());
-        editor.dispose();
+
+        JUnitUtil.dispose(editor);
     }
 
     /**
@@ -239,7 +256,6 @@ public class ExpressionNodeMethodTest {
     @AfterEach
     public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
-        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 
