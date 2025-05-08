@@ -137,8 +137,7 @@ public class JUnitUtil {
      * <p>
      * Set from the jmri.util.JUnitUtil.printSetUpTearDownNames environment variable.
      */
-    static boolean printSetUpTearDownNames = true;
-           // Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set true
+    static boolean printSetUpTearDownNames = Boolean.getBoolean("jmri.util.JUnitUtil.printSetUpTearDownNames"); // false unless set true
 
     /**
      * When true, checks that calls to setUp and tearDown properly alterante, printing an
@@ -161,6 +160,7 @@ public class JUnitUtil {
      * <p>
      * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
      */
+//    static boolean checkRemnantThreads =    true;
     static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
 
     /**
@@ -168,6 +168,7 @@ public class JUnitUtil {
      * <p>
      * Set from the jmri.util.JUnitUtil.failRemnantThreads environment variable.
      */
+//    static boolean failRemnantThreads =  true;
     static boolean failRemnantThreads =  Boolean.getBoolean("jmri.util.JUnitUtil.failRemnantThreads"); // false unless set true
 
     /**
