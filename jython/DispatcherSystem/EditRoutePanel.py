@@ -998,18 +998,22 @@ class MyTableModel5 (DefaultTableModel):
             i += 1
             self.data.append([location, journey_time, wait_time, duration_sec, duration, departure_time, False,  False, False, stop_at_stop_sensor])
 
+        # update the first location which is a station with the time of the schedule start
+        [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+        row = self.find_row_first_location()
+        if scheduled_start is not None:
+            self.setValueAt(scheduled_start, row, departure_time_col)
+
+        # do the following after updating the first location so the departure times are calculated correctly
         i = 0
         for [location, comment] in items_to_put_in_dropdown:
             if ".py" not in location:    # omit actions
                 self.setValueAt(duration_sec_array[i], i, duration_sec_col)
             i += 1
 
-        # now update the first location which is a station with the time of the schedule start
 
-        [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
-        row = self.find_row_first_location()
-        if scheduled_start is not None:
-            self.setValueAt(scheduled_start, row, departure_time_col)
+
+
 
     def get_route_location_stop_mode(self, station_to_name):
         route_location = self.route.getLastLocationByName(station_to_name)
