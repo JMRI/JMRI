@@ -94,7 +94,7 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.11.6 5.11.7 5.11.7
+  ./scripts/update-HOWTO.sh 5.11.6 5.11.7 5.11.8
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
@@ -325,12 +325,12 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.11.4-SNAPSHOT/5.11.6-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.11.5-SNAPSHOT/5.11.6-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=4/release.build=5/g release.properties
+        sed -i.bak s/release.build=5/release.build=6/g release.properties
 ```
  - Check that both those edits left 5.11.6 defined in the two files
  
@@ -408,7 +408,7 @@ If you're developing any additional (post-5.11.6) changes that you want in the J
 
 - Click "New Item"
 
-- Click "Copy Existing Item". Fill out the new 5.11.6 release name at the top. Enter the 5.11.6 most recent release at the bottom.  Click "OK"
+- Click "Copy Existing Item". Fill out the new 5.11.5 release name at the top. Enter the 5.11.6 most recent release at the bottom.  Click "OK"
 
 - Update
 
@@ -570,9 +570,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.11.6+R6be2a2b4e8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.11.6/JMRI.5.11.6+R6be2a2b4e8.dmg) | 9a887eaf0bc9772960904e954f6935f97a4b4250dab21e05f0a0110313859990
-[JMRI.5.11.6+R6be2a2b4e8.exe](https://github.com/JMRI/JMRI/releases/download/v5.11.6/JMRI.5.11.6+R6be2a2b4e8.exe) | f7b1c9f0bc1df80d1137dc967c3ab0fe5fcd25603f2ad22fff8564453d50bd85
-[JMRI.5.11.6+R6be2a2b4e8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.11.6/JMRI.5.11.6+R6be2a2b4e8.tgz) | 44a65609240ab8d1308a0a7b842df7bb9cf9e18152aec19b4c3de5c21782d242
+[JMRI.5.11.6+R1b48891fa4.dmg](https://github.com/JMRI/JMRI/releases/download/v5.11.6/JMRI.5.11.6+R1b48891fa4.dmg) | e2029ab492bdec3b05909c6bb1362746ee1679bbc8f7bb660e97ec643d108c48
+[JMRI.5.11.6+R1b48891fa4.exe](https://github.com/JMRI/JMRI/releases/download/v5.11.6/JMRI.5.11.6+R1b48891fa4.exe) | 1fec1d5f555ba91ec66775e97640b0a0b68dae210562f9b539fa01223aab42f2
+[JMRI.5.11.6+R1b48891fa4.tgz](https://github.com/JMRI/JMRI/releases/download/v5.11.6/JMRI.5.11.6+R1b48891fa4.tgz) | 4a498adeb2fd613393627163f09b3b668ff537217bc227d48bf643d3c44feebe
 
 ```
 
