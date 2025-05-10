@@ -6,9 +6,9 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
- * Defines the category LocoNet
+ * Defines the category Cbus
  *
- * @author Daniel Bergqvist Copyright 2020
+ * @author Daniel Bergqvist Copyright 2025
  */
 public final class CategoryCbus extends Category {
 

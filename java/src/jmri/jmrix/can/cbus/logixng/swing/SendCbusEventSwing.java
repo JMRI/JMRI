@@ -19,8 +19,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 /**
  * Configures an SendCbusEvent object with a Swing JPanel.
  *
- * @author Daniel Bergqvist Copyright 2021
- * @author Dave Sand Copyright 2021
+ * @author Daniel Bergqvist Copyright 2025
  */
 public class SendCbusEventSwing extends AbstractDigitalActionSwing {
 

@@ -16,8 +16,7 @@ import org.jdom2.Element;
  * Handle XML configuration for SendCbusEvent objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
- * @author Daniel Bergqvist Copyright (C) 2021
- * @author Dave Sand Copyright (C) 2021
+ * @author Daniel Bergqvist Copyright (C) 2025
  */
 public class SendCbusEventXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

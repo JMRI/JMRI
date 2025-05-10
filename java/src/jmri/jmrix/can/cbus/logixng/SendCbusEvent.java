@@ -16,9 +16,9 @@ import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.util.ThreadingUtil;
 
 /**
- * This action sets the state of a light.
+ * This action sends a Cbus event.
  *
- * @author Daniel Bergqvist Copyright 2018
+ * @author Daniel Bergqvist Copyright 2025
  */
 public class SendCbusEvent extends AbstractDigitalAction
         implements PropertyChangeListener {
