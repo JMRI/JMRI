@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.text.DefaultFormatter;
 
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -24,6 +23,7 @@ import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.CbusSend;
 import jmri.util.TimerUtil;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.JSpinnerUtil;
 
 public class CbusAllocateNodeNumber implements CanListener {
 
@@ -144,10 +144,9 @@ public class CbusAllocateNodeNumber implements CanListener {
 
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(rqnnSpinner, "#");
         rqnnSpinner.setEditor(editor);
+        JSpinnerUtil.setCommitsOnValidEdit(rqnnSpinner, true);
 
         JFormattedTextField rqfield = (JFormattedTextField) editor.getComponent(0);
-        DefaultFormatter rqformatter = (DefaultFormatter) rqfield.getFormatter();
-        rqformatter.setCommitsOnValidEdit(true);
         rqfield.setBackground(Color.white);
         rqnnSpinner.addChangeListener((ChangeEvent e) -> {
             int newval = (Integer) rqnnSpinner.getValue();

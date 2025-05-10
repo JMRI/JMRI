@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import jmri.Light;
 import jmri.VariableLight;
+import jmri.util.swing.JSpinnerUtil;
 
 /**
  * Panel to display Light Intensity options.
@@ -53,6 +54,7 @@ public class LightIntensityPane extends JPanel {
         minIntensity.setEditor(new JSpinner.NumberEditor(minIntensity, "##0 %"));
         minIntensity.setToolTipText(Bundle.getMessage("LightMinIntensityHint"));
         minIntensity.setValue(0.0d); // reset JSpinner1
+        JSpinnerUtil.setCommitsOnValidEdit(minIntensity, true);
         minPan.add(minIntensity);
         minPan.add(new JLabel("   "));
         mainPanel.add(minPan);
@@ -64,6 +66,7 @@ public class LightIntensityPane extends JPanel {
         maxIntensity.setEditor(new JSpinner.NumberEditor(maxIntensity, "##0 %"));
         maxIntensity.setToolTipText(Bundle.getMessage("LightMaxIntensityHint"));
         maxIntensity.setValue(1.0d); // reset JSpinner2
+        JSpinnerUtil.setCommitsOnValidEdit(maxIntensity, true);
         maxPan.add(maxIntensity);
         maxPan.add(new JLabel("   "));
         mainPanel.add(maxPan);
@@ -76,6 +79,7 @@ public class LightIntensityPane extends JPanel {
         transitionTime.setPreferredSize(new JTextField(8).getPreferredSize());
         transitionTime.setToolTipText(Bundle.getMessage("LightTransitionTimeHint"));
         transitionTime.setValue(0.0); // reset from possible previous use
+        JSpinnerUtil.setCommitsOnValidEdit(transitionTime, true);
         transitionPan.add(transitionTime);
         transitionPan.add(new JLabel(" "));
         mainPanel.add(transitionPan);
@@ -111,7 +115,7 @@ public class LightIntensityPane extends JPanel {
      * @param light The Light to edit details for.
      */
     public void setLightFromPane(VariableLight light){
-    
+
         if ((Double) minIntensity.getValue() >= (Double) maxIntensity.getValue()) {
             log.error("minInt value entered: {}", minIntensity.getValue());
             // do not set intensity
