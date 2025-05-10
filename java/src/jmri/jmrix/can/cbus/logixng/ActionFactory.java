@@ -12,7 +12,7 @@ import jmri.jmrit.logixng.DigitalActionBean;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * The factory for LogixNG LocoNet classes.
+ * The factory for LogixNG Cbus classes.
  */
 @ServiceProvider(service = DigitalActionFactory.class)
 public class ActionFactory implements DigitalActionFactory {
