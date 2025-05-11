@@ -180,7 +180,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
         } catch (ParserException e) {
             errorMessages.add("Cannot parse formula: " + e.getMessage());
         }
-        return true;
+        return errorMessages.isEmpty();
     }
 
     /** {@inheritDoc} */

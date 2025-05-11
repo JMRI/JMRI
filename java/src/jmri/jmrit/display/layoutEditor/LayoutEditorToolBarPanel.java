@@ -836,6 +836,14 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
             iconFrame.dispose();
             iconFrame = null;
         }
+        if (logixngFrame != null) {
+            logixngFrame.dispose();
+            logixngFrame = null;
+        }
+        if (audioFrame != null) {
+            audioFrame.dispose();
+            audioFrame = null;
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolBarPanel.class);

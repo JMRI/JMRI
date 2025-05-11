@@ -49,7 +49,7 @@ class CreateAndShowGUI7(TableModelListener):
         contentPane.removeAll()
         contentPane.add(self.topPanel, BorderLayout.CENTER)
         contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
-        self.frame.pack();
+        self.frame.pack()
         self.frame.setVisible(True)
 
         return
@@ -95,12 +95,8 @@ class CreateAndShowGUI7(TableModelListener):
         return my_list
 
     def populate_action(self, event):
-        # print "populating"
-        items_to_put_in_dropdown = [ loc for loc in self.get_locations_list() if not ".py" in loc[0] ]
-        print items_to_put_in_dropdown
-        # print "items_to_put_in_dropdown", items_to_put_in_dropdown
+        items_to_put_in_dropdown = self.get_station_list()
         self.model.populate(items_to_put_in_dropdown)
-        # print "populated"
         self.tidy_action(None)
         self.completeTablePanel()
         pass
@@ -171,6 +167,30 @@ class CreateAndShowGUI7(TableModelListener):
             memory = memories.provideMemory(tag)
             memory.setValue(location_value)
 
+    def get_station_list(self):
+        # only display the locations that are in the routes, as these are the ones that can be displayed in the timetable
+        # the locations can get out of synch if we have deleted a station
+        TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
+        train_list = TrainManager.getTrainsByTimeList()
+        my_scheduled_route_list = [train.getRoute() for train in train_list]
+        if None in my_scheduled_route_list:
+            OptionDialog().displayMessage("check scheduled routes are entered correctly\ncannot proceed with timetable")
+            return []
+        else:
+            RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
+            station_list = []
+
+            for route in my_scheduled_route_list:
+                route_locations_list = route.getLocationsBySequenceList()
+                station_list1 = [str(route_location.getName()) for route_location in route_locations_list \
+                                 if ".py" not in route_location.getName()]
+                for x in station_list1:
+                    if x not in station_list:
+                        station_list.append(x)
+                station_list.sort()
+            if self.logLevel > 0: print "station list", station_list
+            return station_list
+
 class MyModelListener7(TableModelListener):
 
     # def __init__(self, class_CreateAndShowGUI6, class_SchedulerPanel):
@@ -228,7 +248,7 @@ class MyTableModel7 (DefaultTableModel):
         b = False
         for row in reversed(range(len(self.data))):
             # print "row", row
-            if self.data[row][1] == "":
+            if self.data[row][0] == "":
                 self.data.pop(row)
 
     def populate(self, items_to_put_in_dropdown):
@@ -239,12 +259,11 @@ class MyTableModel7 (DefaultTableModel):
         # self.data = []
         # append all trains to put in dropdown
         [station_col, platform_col, station_group_col] = [0, 1, 2]
-        for [location_name] in items_to_put_in_dropdown:
+        for location_name in items_to_put_in_dropdown:
             LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
             location = LocationManager.getLocationByName(location_name)
             platform = self.get_location_platform(location)
             station_group = self.get_location_station_group(location)
-            # self.data.append([location_name, " ", " "])
             self.data.append([location_name, platform, station_group])
         # print "populated"
 
