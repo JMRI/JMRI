@@ -13,6 +13,18 @@
     .ctr {
         text-align: center;
     }
+
+    table {
+        border-width: 5px;
+    }
+
+    th {
+        border: 1px solid;
+    }
+
+    td {
+        border: 1px solid;
+    }
   </style>
 </head>
 <body>
@@ -77,7 +89,10 @@
         </ul>
       </div>
 
-      <h1 id="ConnectingDCS240">Connecting JMRI to a Digitrax DCS240&lt;</h1>
+      <h1 id="ConnectingDCS240">Connecting JMRI to a Digitrax DCS240</h1>
+
+      <p>Note that the DCS240+ is quite similar to the DCS240, and probably can be used in JMRI
+      as if it is equivalent to a DCS240.)
 
       <p>JMRI may be connected to the Digitrax DCS240 in any of a wide variety of ways. Since the
       DCS240 has a built-in USB interface, it is possible to simply plug a USB cable into the
@@ -107,7 +122,7 @@
 
       <p>The table below summarizes these possibilities.</p>
 
-      <table border="3">
+      <table>
         <tr>
           <th rowspan="2">Connection Type</th>
           <th rowspan="2">Usage</th>
@@ -402,7 +417,7 @@
       width="300">
       </p>
 
-      <p>JMRI may connect to the LocoNet via a LocoNet interface other than the DCS24 USB
+      <p>JMRI may connect to the LocoNet via a LocoNet interface other than the DCS240 USB
       connector. When connected in this fashion, <a href="Digitrax.shtml#ConnectingAdapter">these
       general instructions</a>, or, where available, the JMRI documentation associated with the
       LocoNet interface which is being used.</p>
@@ -417,6 +432,10 @@
       device.
       <p>You don't need to install a separate driver when using current versions of Mac OS X or
       Linux.</p>
+
+      <p>If you choose to use JMRI with some other interface than the DCS240's integrated USB
+      connector, the driver requirements for the DCS240 do not apply for JMRI purposes, but
+      other driver requirements <em>may</em> apply</p>
 
       <h1 id="SeeAlso">See Also</h1>
 

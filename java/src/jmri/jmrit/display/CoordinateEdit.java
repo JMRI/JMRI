@@ -594,10 +594,10 @@ public class CoordinateEdit extends JmriJFrame {
         textX.setText(MessageFormat.format(Bundle.getMessage("Scale"), oldD * 100));
         textX.setVisible(true);
 
-        SpinnerNumberModel model = new SpinnerNumberModel(100.0, 10.0, 5000.0, 1.0);
+        SpinnerNumberModel model = new SpinnerNumberModel(100.0d, 10.0d, 5000.0d, 1.0d);
         spinX = new JSpinner(model);
         log.debug("scale%= {}", (int) Math.round(oldD * 100));
-        spinX.setValue((int) Math.round(oldD * 100));
+        spinX.setValue((double) Math.round(oldD * 100));
         spinX.setToolTipText(Bundle.getMessage("enterScale"));
         spinX.setMaximumSize(new Dimension(
                 spinX.getMaximumSize().width, spinX.getPreferredSize().height));

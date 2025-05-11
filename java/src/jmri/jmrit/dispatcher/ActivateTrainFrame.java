@@ -54,10 +54,10 @@ import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * Displays the Activate New Train dialog and processes information entered
+ * Displays the Activate New Train Frame and processes information entered
  * there.
  * <p>
- * This module works with Dispatcher, which initiates the display of the dialog.
+ * This module works with Dispatcher, which initiates the display of this Frame.
  * Dispatcher also creates the ActiveTrain.
  * <p>
  * This file is part of JMRI.
@@ -149,7 +149,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JLabel delayReverseReStartLabel = new JLabel(Bundle.getMessage("DelayRestart"));
     private final JLabel delayReverseReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
     private final JCheckBox delayReverseResetSensorBox = new JCheckBox(Bundle.getMessage("ResetRestartSensor"));
-    private final NamedBeanComboBox<Sensor> delayReverseReStartSensor = new NamedBeanComboBox<>(jmri.InstanceManager.sensorManagerInstance());
+    private final NamedBeanComboBox<Sensor> delayReverseReStartSensor = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
     private final JSpinner delayReverseMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
     private final JLabel delayReverseMinLabel = new JLabel(Bundle.getMessage("RestartTimed"));
 
@@ -159,8 +159,8 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JLabel delayReStartSensorLabel = new JLabel(Bundle.getMessage("RestartSensor"));
     private final JCheckBox resetRestartSensorBox = new JCheckBox(Bundle.getMessage("ResetRestartSensor"));
     private final JComboBox<String> delayedReStartBox = new JComboBox<>(delayedStartString);
-    private final NamedBeanComboBox<Sensor> delaySensor = new NamedBeanComboBox<>(jmri.InstanceManager.sensorManagerInstance());
-    private final NamedBeanComboBox<Sensor> delayReStartSensor = new NamedBeanComboBox<>(jmri.InstanceManager.sensorManagerInstance());
+    private final NamedBeanComboBox<Sensor> delaySensor = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
+    private final NamedBeanComboBox<Sensor> delayReStartSensor = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance());
 
     private final JSpinner departureHrSpinner = new JSpinner(new SpinnerNumberModel(8, 0, 23, 1));
     private final JSpinner departureMinSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 59, 1));
@@ -632,6 +632,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             nextTrain.setSelectedItem(saveEntry);
         }
     }
+
     private void setTrainsFromOptions(TrainsFrom transFrom) {
         switch (transFrom) {
             case TRAINSFROMROSTER:
@@ -727,7 +728,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         initiateFrame.pack();
     }
 
-      private void handleTrainSelectionChanged() {
+    private void handleTrainSelectionChanged() {
         if (!trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMOPS")) {
             return;
         }
@@ -1047,7 +1048,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         trainSelectBox.removeAllItems();
         trainSelectBox.addItem("Select Train");
         // initialize free trains from operations
-        List<Train> trains = jmri.InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByNameList();
         if (trains.size() > 0) {
             for (int i = 0; i < trains.size(); i++) {
                 Train t = trains.get(i);
@@ -1157,6 +1158,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
     }
 
+    /**
+     * Show the Frame.
+     * @param re currently unused.
+     */
     public void showActivateFrame(RosterEntry re) {
         showActivateFrame();
     }
@@ -1727,18 +1732,18 @@ public class ActivateTrainFrame extends JmriJFrame {
         initializeScaleLengthBox();
         pa1.setLayout(new FlowLayout());
         pa1.add(speedFactorLabel);
-        speedFactorSpinner.setModel(new SpinnerNumberModel(1.0f, 0.1f, 2.0f, 0.01f));
+        speedFactorSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(2.0f), Float.valueOf(0.01f)));
         speedFactorSpinner.setEditor(new JSpinner.NumberEditor(speedFactorSpinner, "# %"));
         pa1.add(speedFactorSpinner);
         speedFactorSpinner.setToolTipText(Bundle.getMessage("SpeedFactorHint"));
         pa1.add(new JLabel("   "));
         pa1.add(maxSpeedLabel);
-        maxSpeedSpinner.setModel(new SpinnerNumberModel(1.0f, 0.1f, 1.0f, 0.01f));
+        maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         pa1.add(maxSpeedSpinner);
         maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint"));
         pa1.add(minReliableOperatingSpeedLabel);
-        minReliableOperatingSpeedSpinner.setModel(new SpinnerNumberModel(0.0f, 0.0f, 1.0f, 0.01f));
+        minReliableOperatingSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.01f)));
         minReliableOperatingSpeedSpinner.setEditor(new JSpinner.NumberEditor(minReliableOperatingSpeedSpinner, "# %"));
         pa1.add(minReliableOperatingSpeedSpinner);
         minReliableOperatingSpeedSpinner.setToolTipText(Bundle.getMessage("MinReliableOperatingSpeedHint"));
@@ -1756,7 +1761,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa2a.add(stopBySpeedProfileCheckBox);
         stopBySpeedProfileCheckBox.setToolTipText(Bundle.getMessage("UseSpeedProfileHint")); // reuse identical hint for Stop
         pa2a.add(stopBySpeedProfileAdjustLabel);
-        stopBySpeedProfileAdjustSpinner.setModel(new SpinnerNumberModel( 1.0f, 0.1f, 5.0f, 0.01f));
+        stopBySpeedProfileAdjustSpinner.setModel(new SpinnerNumberModel( Float.valueOf(1.0f), Float.valueOf(0.1f), Float.valueOf(5.0f), Float.valueOf(0.01f)));
         stopBySpeedProfileAdjustSpinner.setEditor(new JSpinner.NumberEditor(stopBySpeedProfileAdjustSpinner, "# %"));
         pa2a.add(stopBySpeedProfileAdjustSpinner);
         stopBySpeedProfileAdjustSpinner.setToolTipText(Bundle.getMessage("StopBySpeedProfileAdjustHint"));
@@ -1768,7 +1773,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa3.add(runInReverseBox);
         runInReverseBox.setToolTipText(Bundle.getMessage("RunInReverseBoxHint"));
         initiatePane.add(pa3);
-        maxTrainLengthSpinner.setModel(new SpinnerNumberModel(18.0f, 0.0f, 10000.0f, 0.5f));
+        maxTrainLengthSpinner.setModel(new SpinnerNumberModel(Float.valueOf(18.0f), Float.valueOf(0.0f), Float.valueOf(10000.0f), Float.valueOf(0.5f)));
         maxTrainLengthSpinner.setEditor(new JSpinner.NumberEditor(maxTrainLengthSpinner, "###0.0"));
         maxTrainLengthSpinner.setToolTipText(Bundle.getMessage("MaxTrainLengthHint")); // won't be updated while Dispatcher is open
         maxTrainLengthSpinner.addChangeListener( e -> handlemaxTrainLengthChangeUnitsLength());
@@ -1975,7 +1980,7 @@ public class ActivateTrainFrame extends JmriJFrame {
      * Layout block stuff
      */
     private ArrayList<LayoutBlock> getOccupiedBlockList() {
-        LayoutBlockManager lBM = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        LayoutBlockManager lBM = InstanceManager.getDefault(LayoutBlockManager.class);
         ArrayList<LayoutBlock> lBlocks = new ArrayList<>();
         for (LayoutBlock lB : lBM.getNamedBeanSet()) {
             if (lB.getBlock().getState() == Block.OCCUPIED) {
@@ -2002,7 +2007,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         viaBlockBox.removeActionListener(viaBlockBoxListener);
         viaBlockBox.removeAllItems();
         viaBlockBoxList.clear();
-        LayoutBlockManager lBM = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        LayoutBlockManager lBM = InstanceManager.getDefault(LayoutBlockManager.class);
         if (startingBlockBox.getSelectedItem() != null) {
             LayoutBlock lBSrc;
             if (startingBlockBox.getSelectedIndex() >= 0) {
@@ -2025,7 +2030,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     private void initializeDestinationBlockDynamicCombo() {
         destinationBlockBox.removeAllItems();
         destinationBlockBoxList.clear();
-        LayoutBlockManager lBM = jmri.InstanceManager.getDefault(LayoutBlockManager.class);
+        LayoutBlockManager lBM = InstanceManager.getDefault(LayoutBlockManager.class);
         if (startingBlockBox.getSelectedItem() != null) {
             LayoutBlock lBSrc;
             if (startingBlockBox.getSelectedIndex() >= 0

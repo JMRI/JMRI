@@ -1455,7 +1455,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             return null;
         }
         if (isInAllocatedSection(startBlock)) {
-            if (showErrorMessages) {
+            if (showErrorMessages && !DispatcherFrame.dispatcherSystemSchedulingInOperation) {
                 JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
                         "Error5"), new Object[]{startBlock.getDisplayName()}), Bundle.getMessage("ErrorTitle"),
                         JmriJOptionPane.ERROR_MESSAGE);

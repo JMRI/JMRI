@@ -33,34 +33,37 @@ import jmri.util.swing.JmriJOptionPane;
  * @author Pete Cressman (C) 2010
  * @author Egbert Broerse (C) 2020
  */
-public class PortalTableModel extends AbstractTableModel implements PropertyChangeListener {
+public class PortalTableModel extends AbstractTableModel implements PropertyChangeListener, jmri.Disposable {
 
     public static final int FROM_BLOCK_COLUMN = 0;
     public final int NAME_COLUMN = 1; // not static to fetch from _tabbed OBlockTablePanel
     public static final int TO_BLOCK_COLUMN = 2;
-    static public final int DELETE_COL = 3;
-    static public final int EDIT_COL = 4;
+    public static final int DELETE_COL = 3;
+    public static final int EDIT_COL = 4;
     public static final int NUMCOLS = 4;
     // reports + 1 for EDIT column if _tabbed
 
-    PortalManager _manager;
+    private final PortalManager _manager;
     private final String[] tempRow = new String[NUMCOLS];
     private final boolean _tabbed; // set from prefs (restart required)
-    TableFrames _parent;
+    private final TableFrames _parent;
 
     public PortalTableModel(@Nonnull TableFrames parent) {
         super();
         _parent = parent;
         _tabbed = InstanceManager.getDefault(GuiLafPreferencesManager.class).isOblockEditTabbed();
         _manager = InstanceManager.getDefault(PortalManager.class);
-        _manager.addPropertyChangeListener(this);
         if (!_tabbed) {
             // specific stuff for _desktop
             initTempRow();
         }
     }
 
-    void initTempRow() {
+    public void initListeners() {
+        _manager.addPropertyChangeListener(this);
+    }
+
+    private void initTempRow() {
         for (int i = 0; i < NUMCOLS; i++) {
             tempRow[i] = null;
         }
@@ -145,17 +148,17 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                     tempRow[col] = str.trim();
                 }
             }
-            OBlockManager OBlockMgr = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+            OBlockManager oBlockMgr = InstanceManager.getDefault(OBlockManager.class);
             OBlock fromBlock = null;
             OBlock toBlock = null;
             if (tempRow[FROM_BLOCK_COLUMN] != null) {
-                fromBlock = OBlockMgr.getOBlock(tempRow[FROM_BLOCK_COLUMN]);
+                fromBlock = oBlockMgr.getOBlock(tempRow[FROM_BLOCK_COLUMN]);
                 if (fromBlock == null) {
                     msg = Bundle.getMessage("NoSuchBlock", tempRow[FROM_BLOCK_COLUMN]);
                 }
             }
             if (msg == null && tempRow[TO_BLOCK_COLUMN] != null) {
-                toBlock = OBlockMgr.getOBlock(tempRow[TO_BLOCK_COLUMN]);
+                toBlock = oBlockMgr.getOBlock(tempRow[TO_BLOCK_COLUMN]);
                 if (toBlock == null) {
                     msg = Bundle.getMessage("NoSuchBlock", tempRow[TO_BLOCK_COLUMN]);
                 }
@@ -188,13 +191,14 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
 
         Portal portal = _manager.getPortal(row);
         if (portal == null) {
-            log.error("Portal null, getValueAt row= {}, col= {}, portalListSize= {}", row, col, _manager.getPortalCount());
+            log.error("Portal null, getValueAt row= {}, col= {}, portalListSize= {}",
+                row, col, _manager.getPortalCount());
             return;
         }
 
         switch (col) { // existing Portals in table
             case FROM_BLOCK_COLUMN:
-                OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock((String) value);
+                OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock((String) value);
                 if (block == null) {
                     msg = Bundle.getMessage("NoSuchBlock", value);
                     break;
@@ -204,7 +208,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
                     break;
                 }
                 if (!portal.setFromBlock(block, false)) {
-                    int val = _parent.verifyWarning(Bundle.getMessage("BlockPathsConflict", value, portal.getFromBlockName()));
+                    int val = _parent.verifyWarning(
+                        Bundle.getMessage("BlockPathsConflict", value, portal.getFromBlockName()));
                     if (val == 2) {
                         break;
                     }
@@ -266,7 +271,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
     private void editPortal(Portal portal) {
         if (_tabbed) {
             // open PortalEditFrame
-            PortalEditFrame portalFrame = new PortalEditFrame(Bundle.getMessage("TitleEditPortal", portal.getName()), portal, this);
+            PortalEditFrame portalFrame = new PortalEditFrame(
+                Bundle.getMessage("TitleEditPortal", portal.getName()), portal, this);
             portalFrame.setVisible(true);
         }
     }
@@ -335,6 +341,11 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         return (_parent.verifyWarning(message));
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PortalTableModel.class);
+    @Override
+    public void dispose() {
+        _manager.removePropertyChangeListener(this);
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PortalTableModel.class);
 
 }
