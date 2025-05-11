@@ -1,7 +1,11 @@
 package jmri.jmrix.openlcb;
 
-import jmri.IdTagManager;
+import java.util.HashMap;
+import java.util.Map;
+
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
+import jmri.jmrix.openlcb.configurexml.OlcbEventNameStoreXml;
 
 import org.openlcb.EventID;
 import org.openlcb.EventNameStore;
@@ -14,18 +18,22 @@ import org.openlcb.EventNameStore;
 public final class OlcbEventNameStore implements EventNameStore {
 
     public OlcbEventNameStore() {
+
+        readDetails();
+        
+        initShutdownTask();
     }
 
-    final IdTagManager tagmgr = InstanceManager.getDefault(IdTagManager.class); // only one of these
-    
+    private Map<String, EventID> nameToId = new HashMap<String, EventID>();
+    private Map<EventID, String> idToName = new HashMap<EventID, String>();
+    public boolean dirty = false;
+            
     /**
      * @param eventID The EventID being searched for
      * @return The name associated with that EventID or the event ID in dotted hex
      */
     public String getEventName(EventID eventID) {
-        var tag = tagmgr.getBySystemName(OlcbConstants.tagPrefix+eventID.toShortString());
-        if (tag == null) return eventID.toShortString();
-        var name = tag.getUserName();
+        var name = idToName.get(eventID);
         if (name == null || name.isEmpty()) return eventID.toShortString();
         return name;
     }
@@ -35,9 +43,7 @@ public final class OlcbEventNameStore implements EventNameStore {
      * @return true if there is an associated name
      */
     public boolean hasEventName(EventID eventID) {
-        var tag = tagmgr.getBySystemName(OlcbConstants.tagPrefix + eventID.toShortString());
-        if (tag == null) return false;
-        var name = tag.getUserName();
+        var name = idToName.get(eventID);
         if (name == null || name.isEmpty()) return false;
         return true;
     }
@@ -47,11 +53,9 @@ public final class OlcbEventNameStore implements EventNameStore {
      * @return The EventID associated with that name or an event ID constructed from the input
      */
     public EventID getEventID(String name) {
-        var tag = tagmgr.getByUserName(name);
-        if (tag == null) return new EventID(name);
-        
-        var eid = tag.getSystemName().substring(OlcbConstants.tagPrefix.length());
-        return new EventID(eid);
+        var eid = nameToId.get(name);
+        if (eid == null) return new EventID(name);
+        return eid;    
     }
         
     /**
@@ -59,11 +63,9 @@ public final class OlcbEventNameStore implements EventNameStore {
      * @return true if an EventID is associated with that name
      */
     public boolean hasEventID(String name) {
-        var tag = tagmgr.getByUserName(name);
-        if (tag == null) return false;
-        
-        var eid = tag.getSystemName().substring(OlcbConstants.tagPrefix.length());
-        return eid != null;
+        var eid = nameToId.get(name);
+        if (eid == null) return false;
+        return true;    
     }
         
     /**
@@ -72,21 +74,55 @@ public final class OlcbEventNameStore implements EventNameStore {
      * @param name  associated name
      */
     public void addMatch(EventID eventID, String name) {
-        tagmgr.provideIdTag(OlcbConstants.tagPrefix+eventID.toShortString())
-            .setUserName(name);
+        nameToId.put(name, eventID);
+        idToName.put(eventID, name);
+        log.trace("setting dirty true");
+        dirty = true;
     }
     
+    /**
+     * Get all the EventIDs available
+     * @return Set of all available EventIDs
+     */
     public java.util.Set<EventID> getMatches() {
-        var set = new java.util.HashSet<EventID>();
-        for (var tag: tagmgr.getNamedBeanSet()) {
-            if (tag.getSystemName().startsWith(OlcbConstants.tagPrefix)) {
-                var eid = tag.getSystemName().substring(OlcbConstants.tagPrefix.length());
-                set.add(new EventID(eid));
-            }
-        }
-        return set;
-        
+        return idToName.keySet();        
     }
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbEventNameStore.class);
+
+    public void readDetails() {
+        log.debug("reading Event Name Details");
+        new OlcbEventNameStoreXml(this,"EventNames.xml").load();  // NOI18N
+        log.debug("...done reading Event Name details");
+    }
+
+    private Runnable shutDownTask = null;
+
+    protected void initShutdownTask(){
+        // Create shutdown task to save
+        log.debug("Register ShutDown task");
+        if (this.shutDownTask == null) {
+            this.shutDownTask = () -> {
+                // Save event name details prior to exit, if necessary
+                log.debug("Start writing event name details...");
+                try {
+                    writeEventNameDetails();
+                } catch (java.io.IOException ioe) {
+                    log.error("Exception writing event name", ioe);
+                }
+            };
+            InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
+        }
+    }
+
+    public void writeEventNameDetails() throws java.io.IOException {
+        log.debug("storing event name map {}", dirty);
+        if (this.dirty) {
+            new OlcbEventNameStoreXml(this,"EventNames.xml").store();  // NOI18N
+            this.dirty = false;
+            log.debug("...done writing event name details");
+        }
+    }
+
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbEventNameStore.class);
 
 }

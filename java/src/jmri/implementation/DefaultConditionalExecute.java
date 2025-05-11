@@ -34,7 +34,8 @@ public class DefaultConditionalExecute {
         this.conditional = conditional;
     }
 
-    void setTurnout(@Nonnull ConditionalAction action, Turnout t, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setTurnout(@Nonnull ConditionalAction action, Turnout t,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (t == null) {
             errorList.add("invalid turnout name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -52,7 +53,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void delayedTurnout(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull TimeTurnout timeTurnout, boolean reset, String devName) {
+    void delayedTurnout(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount,
+            @Nonnull TimeTurnout timeTurnout, boolean reset, String devName) {
         if (reset) {
             action.stopTimer();
         }
@@ -78,7 +80,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void cancelTurnoutTimers(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
+    void cancelTurnoutTimers(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount,
+            @Nonnull List<String> errorList, String devName) {
         ConditionalManager cmg = InstanceManager.getDefault(ConditionalManager.class);
         java.util.Iterator<Conditional> iter = cmg.getNamedBeanSet().iterator();
         while (iter.hasNext()) {
@@ -96,7 +99,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void lockTurnout(@Nonnull ConditionalAction action, Turnout tl, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void lockTurnout(@Nonnull ConditionalAction action, Turnout tl, @Nonnull Reference<Integer> actionCount,
+            @Nonnull List<String> errorList) {
         if (tl == null) {
             errorList.add("invalid turnout name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -117,7 +121,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setSignalAppearance(@Nonnull ConditionalAction action, SignalHead h, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setSignalAppearance(@Nonnull ConditionalAction action, SignalHead h,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (h == null) {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -126,7 +131,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setSignalHeld(@Nonnull ConditionalAction action, SignalHead h, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setSignalHeld(@Nonnull ConditionalAction action, SignalHead h,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (h == null) {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -135,7 +141,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void clearSignalHeld(@Nonnull ConditionalAction action, SignalHead h, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void clearSignalHeld(@Nonnull ConditionalAction action, SignalHead h,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (h == null) {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -144,7 +151,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setSignalDark(@Nonnull ConditionalAction action, SignalHead h, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setSignalDark(@Nonnull ConditionalAction action, SignalHead h,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (h == null) {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -153,7 +161,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setSignalLit(@Nonnull ConditionalAction action, SignalHead h, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setSignalLit(@Nonnull ConditionalAction action, SignalHead h,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (h == null) {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -162,7 +171,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void triggerRoute(@Nonnull ConditionalAction action, Route r, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void triggerRoute(@Nonnull ConditionalAction action, Route r,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (r == null) {
             errorList.add("invalid Route name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -171,7 +181,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setSensor(@Nonnull ConditionalAction action, Sensor sn, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
+    void setSensor(@Nonnull ConditionalAction action, Sensor sn,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
         if (sn == null) {
             errorList.add("invalid Sensor name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -193,7 +204,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void delayedSensor(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull TimeSensor timeSensor, int delay, boolean reset, String devName) {
+    void delayedSensor(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount,
+            @Nonnull TimeSensor timeSensor, int delay, boolean reset, String devName) {
         if (reset) {
             action.stopTimer();
         }
@@ -218,7 +230,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void cancelSensorTimers(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
+    void cancelSensorTimers(@Nonnull ConditionalAction action,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
         ConditionalManager cm = InstanceManager.getDefault(ConditionalManager.class);
         java.util.Iterator<Conditional> itr = cm.getNamedBeanSet().iterator();
         while (itr.hasNext()) {
@@ -235,7 +248,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setLight(@Nonnull ConditionalAction action, Light lgt, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setLight(@Nonnull ConditionalAction action, Light lgt,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (lgt == null) {
             errorList.add("invalid light name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -253,7 +267,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setLightIntensity(@Nonnull ConditionalAction action, Light lgt, int intensity, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setLightIntensity(@Nonnull ConditionalAction action, Light lgt, int intensity,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (lgt == null) {
             errorList.add("invalid light name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -273,7 +288,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setLightTransitionTime(@Nonnull ConditionalAction action, Light lgt, int time, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setLightTransitionTime(@Nonnull ConditionalAction action, Light lgt, int time,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (lgt == null) {
             errorList.add("invalid light name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -291,7 +307,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setMemory(@Nonnull ConditionalAction action, Memory m, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setMemory(@Nonnull ConditionalAction action, Memory m,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (m == null) {
             errorList.add("invalid memory name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -300,7 +317,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void copyMemory(@Nonnull ConditionalAction action, Memory mFrom, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void copyMemory(@Nonnull ConditionalAction action, Memory mFrom, Memory mTo,
+            String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (mFrom == null) {
             errorList.add("invalid memory name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -313,7 +331,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void enableLogix(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
+    void enableLogix(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount,
+            @Nonnull List<String> errorList, String devName) {
         Logix x = InstanceManager.getDefault(LogixManager.class).getLogix(devName);
         if (x == null) {
             errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
@@ -323,7 +342,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void disableLogix(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
+    void disableLogix(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount,
+            @Nonnull List<String> errorList, String devName) {
         Logix x = InstanceManager.getDefault(LogixManager.class).getLogix(devName);
         if (x == null) {
             errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
@@ -333,9 +353,10 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void playSound(@Nonnull ConditionalAction action, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void playSound(@Nonnull ConditionalAction action, String actionStr,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         String path = actionStr;
-        if (!path.equals("")) {
+        if (!path.isEmpty()) {
             Sound sound = action.getSound();
             if (sound == null) {
                 try {
@@ -351,8 +372,9 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void runScript(@Nonnull ConditionalAction action, String actionStr, @Nonnull Reference<Integer> actionCount) {
-        if (!(actionStr.equals(""))) {
+    void runScript(@Nonnull ConditionalAction action, @Nonnull String actionStr,
+            @Nonnull Reference<Integer> actionCount) {
+        if (!(actionStr.isEmpty())) {
             JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(actionStr)));
             increaseCounter(actionCount);
         }
@@ -437,7 +459,8 @@ public class DefaultConditionalExecute {
             ScriptOutput.writeScript(actionStr);
             // and execute
 
-            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.JYTHON);
+            javax.script.ScriptEngine se =  JmriScriptEngineManager.getDefault()
+                .getEngine(JmriScriptEngineManager.JYTHON);
             if (se!=null) {
                 try {
                     JmriScriptEngineManager.getDefault().eval(actionStr, se);
@@ -451,7 +474,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void allocateWarrantRoute(@Nonnull ConditionalAction action, Warrant w, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void allocateWarrantRoute(@Nonnull ConditionalAction action, Warrant w,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -463,7 +487,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void deallocateWarrantRoute(@Nonnull ConditionalAction action, Warrant w, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void deallocateWarrantRoute(@Nonnull ConditionalAction action, Warrant w,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -472,7 +497,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setRouteTurnouts(@Nonnull ConditionalAction action, Warrant w, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setRouteTurnouts(@Nonnull ConditionalAction action, Warrant w,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -484,7 +510,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setTrainId(@Nonnull ConditionalAction action, Warrant w, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setTrainId(@Nonnull ConditionalAction action, Warrant w, String actionStr,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -497,7 +524,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setTrainName(@Nonnull ConditionalAction action, Warrant w, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setTrainName(@Nonnull ConditionalAction action, Warrant w, String actionStr,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -506,7 +534,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void getTrainLocation(@Nonnull ConditionalAction action, Warrant w, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void getTrainLocation(@Nonnull ConditionalAction action, Warrant w, Memory mTo, String actionStr,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -519,7 +548,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void autoRunWarrant(@Nonnull ConditionalAction action, Warrant w, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void autoRunWarrant(@Nonnull ConditionalAction action, Warrant w,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -533,7 +563,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void manualRunWarrant(@Nonnull ConditionalAction action, Warrant w, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void manualRunWarrant(@Nonnull ConditionalAction action, Warrant w,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -552,7 +583,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void controlTrain(@Nonnull ConditionalAction action, Warrant w, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
+    void controlTrain(@Nonnull ConditionalAction action, Warrant w,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
         if (w == null) {
             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -563,7 +595,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setSignalMastAspect(@Nonnull ConditionalAction action, SignalMast f, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setSignalMastAspect(@Nonnull ConditionalAction action, SignalMast f,
+            String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (f == null) {
             errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -572,7 +605,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setSignalMastHeld(@Nonnull ConditionalAction action, SignalMast f, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setSignalMastHeld(@Nonnull ConditionalAction action, SignalMast f,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (f == null) {
             errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -581,7 +615,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void clearSignalMastHeld(@Nonnull ConditionalAction action, SignalMast f, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void clearSignalMastHeld(@Nonnull ConditionalAction action, SignalMast f,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (f == null) {
             errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -590,7 +625,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setSignalMastDark(@Nonnull ConditionalAction action, SignalMast f, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setSignalMastDark(@Nonnull ConditionalAction action, SignalMast f,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (f == null) {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -599,7 +635,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setSignalMastLit(@Nonnull ConditionalAction action, SignalMast f, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setSignalMastLit(@Nonnull ConditionalAction action, SignalMast f,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (f == null) {
             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -608,7 +645,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setBlockValue(@Nonnull ConditionalAction action, OBlock b, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setBlockValue(@Nonnull ConditionalAction action, OBlock b, String actionStr,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (b == null) {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -617,7 +655,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setBlockError(@Nonnull ConditionalAction action, OBlock b, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setBlockError(@Nonnull ConditionalAction action, OBlock b,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (b == null) {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -634,7 +673,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void deallocateBlock(@Nonnull ConditionalAction action, OBlock b, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void deallocateBlock(@Nonnull ConditionalAction action, OBlock b,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (b == null) {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -643,7 +683,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setBlockOutOfService(@Nonnull ConditionalAction action, OBlock b, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setBlockOutOfService(@Nonnull ConditionalAction action, OBlock b,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (b == null) {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -652,7 +693,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setBlockInService(@Nonnull ConditionalAction action, OBlock b, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void setBlockInService(@Nonnull ConditionalAction action, OBlock b,
+            @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (b == null) {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -661,7 +703,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void getBlockTrainName(@Nonnull ConditionalAction action, OBlock b, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void getBlockTrainName(@Nonnull ConditionalAction action, OBlock b,
+            Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (b == null) {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -678,7 +721,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void getBlockWarrant(@Nonnull ConditionalAction action, OBlock b, Memory mTo, String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
+    void getBlockWarrant(@Nonnull ConditionalAction action, OBlock b, Memory mTo,
+            String actionStr, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList) {
         if (b == null) {
             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
         } else {
@@ -698,7 +742,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setNXPairEnabled(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
+    void setNXPairEnabled(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount,
+            @Nonnull List<String> errorList, String devName) {
         DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean(devName);
         if (dp == null) {
             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
@@ -708,7 +753,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setNXPairDisabled(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
+    void setNXPairDisabled(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount,
+            @Nonnull List<String> errorList, String devName) {
         DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean(devName);
         if (dp == null) {
             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
@@ -718,7 +764,8 @@ public class DefaultConditionalExecute {
         }
     }
 
-    void setNXPairSegment(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount, @Nonnull List<String> errorList, String devName) {
+    void setNXPairSegment(@Nonnull ConditionalAction action, @Nonnull Reference<Integer> actionCount,
+            @Nonnull List<String> errorList, String devName) {
         DestinationPoints dp = InstanceManager.getDefault(EntryExitPairs.class).getNamedBean(devName);
         if (dp == null) {
             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N

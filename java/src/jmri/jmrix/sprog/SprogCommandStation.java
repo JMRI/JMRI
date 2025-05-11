@@ -344,12 +344,16 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean f3, boolean f3Momentary,
             boolean f4, boolean f4Momentary) {
         SprogSlot s = this.findF0to4Packet(address);
-        s.f0to4packet(address.getNumber(), address.isLongAddress(), f0, f0Momentary,
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f0to4packet(address.getNumber(), address.isLongAddress(), f0, f0Momentary,
                 f1, f1Momentary,
                 f2, f2Momentary,
                 f3, f3Momentary,
                 f4, f4Momentary);
-        notifySlotListeners(s);
+            notifySlotListeners(s);
+        }
     }
 
     public void function5Through8Packet(DccLocoAddress address,
@@ -358,8 +362,12 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean f7, boolean f7Momentary,
             boolean f8, boolean f8Momentary) {
         SprogSlot s = this.findF5to8Packet(address);
-        s.f5to8packet(address.getNumber(), address.isLongAddress(), f5, f5Momentary, f6, f6Momentary, f7, f7Momentary, f8, f8Momentary);
-        notifySlotListeners(s);
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f5to8packet(address.getNumber(), address.isLongAddress(), f5, f5Momentary, f6, f6Momentary, f7, f7Momentary, f8, f8Momentary);
+            notifySlotListeners(s);
+        }
     }
 
     public void function9Through12Packet(DccLocoAddress address,
@@ -368,8 +376,12 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean f11, boolean f11Momentary,
             boolean f12, boolean f12Momentary) {
         SprogSlot s = this.findF9to12Packet(address);
-        s.f9to12packet(address.getNumber(), address.isLongAddress(), f9, f9Momentary, f10, f10Momentary, f11, f11Momentary, f12, f12Momentary);
-        notifySlotListeners(s);
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f9to12packet(address.getNumber(), address.isLongAddress(), f9, f9Momentary, f10, f10Momentary, f11, f11Momentary, f12, f12Momentary);
+            notifySlotListeners(s);
+        }
     }
 
     public void function13Through20Packet(DccLocoAddress address,
@@ -382,10 +394,14 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean f19, boolean f19Momentary,
             boolean f20, boolean f20Momentary) {
         SprogSlot s = this.findF13to20Packet(address);
-        s.f13to20packet(address.getNumber(), address.isLongAddress(),
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f13to20packet(address.getNumber(), address.isLongAddress(),
                 f13, f13Momentary, f14, f14Momentary, f15, f15Momentary, f16, f16Momentary,
                 f17, f17Momentary, f18, f18Momentary, f19, f19Momentary, f20, f20Momentary);
-        notifySlotListeners(s);
+            notifySlotListeners(s);
+        }
     }
 
     public void function21Through28Packet(DccLocoAddress address,
@@ -398,10 +414,14 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean f27, boolean f27Momentary,
             boolean f28, boolean f28Momentary) {
         SprogSlot s = this.findF21to28Packet(address);
-        s.f21to28packet(address.getNumber(), address.isLongAddress(),
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f21to28packet(address.getNumber(), address.isLongAddress(),
                 f21, f21Momentary, f22, f22Momentary, f23, f23Momentary, f24, f24Momentary,
                 f25, f25Momentary, f26, f26Momentary, f27, f27Momentary, f28, f28Momentary);
-        notifySlotListeners(s);
+            notifySlotListeners(s);
+        }
     }
 
     public void function29Through36Packet(DccLocoAddress address,
@@ -414,10 +434,14 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean g, boolean gm,
             boolean h, boolean hm) {
         SprogSlot s = this.findF29to36Packet(address);
-        s.f29to36packet(address.getNumber(), address.isLongAddress(),
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f29to36packet(address.getNumber(), address.isLongAddress(),
                 a, am, b, bm, c, cm, d, dm,
                 e, em, f, fm, g, gm, h, hm);
-        notifySlotListeners(s);
+            notifySlotListeners(s);
+        }
     }
 
     public void function37Through44Packet(DccLocoAddress address,
@@ -430,10 +454,14 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean g, boolean gm,
             boolean h, boolean hm) {
         SprogSlot s = this.findF37to44Packet(address);
-        s.f37to44packet(address.getNumber(), address.isLongAddress(),
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f37to44packet(address.getNumber(), address.isLongAddress(),
                 a, am, b, bm, c, cm, d, dm,
                 e, em, f, fm, g, gm, h, hm);
-        notifySlotListeners(s);
+            notifySlotListeners(s);
+        }
     }
 
     public void function45Through52Packet(DccLocoAddress address,
@@ -446,10 +474,14 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean g, boolean gm,
             boolean h, boolean hm) {
         SprogSlot s = this.findF45to52Packet(address);
-        s.f45to52packet(address.getNumber(), address.isLongAddress(),
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f45to52packet(address.getNumber(), address.isLongAddress(),
                 a, am, b, bm, c, cm, d, dm,
                 e, em, f, fm, g, gm, h, hm);
-        notifySlotListeners(s);
+            notifySlotListeners(s);
+        }
     }
 
     public void function53Through60Packet(DccLocoAddress address,
@@ -462,10 +494,14 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean g, boolean gm,
             boolean h, boolean hm) {
         SprogSlot s = this.findF53to60Packet(address);
-        s.f53to60packet(address.getNumber(), address.isLongAddress(),
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f53to60packet(address.getNumber(), address.isLongAddress(),
                 a, am, b, bm, c, cm, d, dm,
                 e, em, f, fm, g, gm, h, hm);
-        notifySlotListeners(s);
+            notifySlotListeners(s);
+        }
     }
 
     public void function61Through68Packet(DccLocoAddress address,
@@ -478,10 +514,14 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             boolean g, boolean gm,
             boolean h, boolean hm) {
         SprogSlot s = this.findF61to68Packet(address);
-        s.f61to68packet(address.getNumber(), address.isLongAddress(),
+        if(s==null){
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
+        }else{
+            s.f61to68packet(address.getNumber(), address.isLongAddress(),
                 a, am, b, bm, c, cm, d, dm,
                 e, em, f, fm, g, gm, h, hm);
-        notifySlotListeners(s);
+            notifySlotListeners(s);
+        }
     }
 
     /**
@@ -506,6 +546,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             notifySlotListeners(s);
             log.debug("Registering new speed");
             sendNow.add(s);
+        } else {
+            log.warn("Insufficient Sprogslots available, command not sent - increase number of Sprogslots in preferences");
         }
     }
 

@@ -37,9 +37,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     private static final int PICKUP_COLUMN = RANDOM_CONTROL_COLUMN + 1;
     private static final int DROP_COLUMN = PICKUP_COLUMN + 1;
     private static final int LOCAL_COLUMN = DROP_COLUMN + 1;
-    private static final int TRAVEL_COLUMN = LOCAL_COLUMN + 1;
-    private static final int TIME_COLUMN = TRAVEL_COLUMN + 1;
-    private static final int MAXLENGTH_COLUMN = TIME_COLUMN + 1;
+    private static final int TIME_COLUMN = LOCAL_COLUMN + 1;
+    private static final int TRAVEL_COLUMN = TIME_COLUMN + 1;
+    private static final int MAXLENGTH_COLUMN = TRAVEL_COLUMN + 1;
     private static final int GRADE = MAXLENGTH_COLUMN + 1;
     private static final int TRAINICONX = GRADE + 1;
     private static final int TRAINICONY = TRAINICONX + 1;
@@ -57,12 +57,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     public RouteEditTableModel() {
         super();
-    }
-
-    public void setWait(boolean showWait) {
-        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAVEL_COLUMN), showWait);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), !showWait);
     }
 
     private void updateList() {
@@ -132,8 +126,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         // does not use a table sorter
         table.setRowSorter(null);
 
-        // turn off columns
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), false);
+        // turn on column that on earlier versions was off
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), true);
 
         updateList();
     }

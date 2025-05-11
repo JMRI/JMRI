@@ -201,6 +201,10 @@
         "weightTons": {
             "type": "string",
             "description": "Weight of car in tons"
+        },
+        "last train": {
+            "type": "string",
+            "description": "Last train to carry car"
         }
     },
     "additionalProperties": false,
