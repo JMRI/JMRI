@@ -109,9 +109,7 @@ class CreateAndShowGUI5(TableModelListener):
         routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
                                     for routelocation in self.route.getLocationsBySequenceList() \
                                     if ".py" not in routelocation.getName()]
-        # if ".py" not in self.model.getValueAt(row1, locations_col)
-        test_list = [self.model.getValueAt(self.model.find_row_prev_location(row1), locations_col) for row1 in routelocations_rows_list
-                     if row1 > self.model.find_row_first_location()]
+
         stop_sensor_present_list = []
 
         stop_sensor_present_list = [row1 for row1 in routelocations_rows_list
@@ -685,11 +683,14 @@ class MyModelListener5(TableModelListener):
 
         # done here so can deal with action rows
         if column == delete_col:
+            listener = self
+            self.model.removeTableModelListener(listener)
             routelocation = class_CreateAndShowGUI5.route.getRouteLocationBySequenceNumber(row+1)
             class_CreateAndShowGUI5.route.deleteLocation(routelocation)
             self.delete_row(row)
             class_CreateAndShowGUI5.completeTablePanel()
             time.sleep(0.2)
+            self.model.addTableModelListener(listener)
 
         elif column == add_loc_col:
             #reset check box
@@ -997,18 +998,22 @@ class MyTableModel5 (DefaultTableModel):
             i += 1
             self.data.append([location, journey_time, wait_time, duration_sec, duration, departure_time, False,  False, False, stop_at_stop_sensor])
 
+        # update the first location which is a station with the time of the schedule start
+        [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+        row = self.find_row_first_location()
+        if scheduled_start is not None:
+            self.setValueAt(scheduled_start, row, departure_time_col)
+
+        # do the following after updating the first location so the departure times are calculated correctly
         i = 0
         for [location, comment] in items_to_put_in_dropdown:
             if ".py" not in location:    # omit actions
                 self.setValueAt(duration_sec_array[i], i, duration_sec_col)
             i += 1
 
-        # now update the first location which is a station with the time of the schedule start
 
-        [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
-        row = self.find_row_first_location()
-        if scheduled_start is not None:
-            self.setValueAt(scheduled_start, row, departure_time_col)
+
+
 
     def get_route_location_stop_mode(self, station_to_name):
         route_location = self.route.getLastLocationByName(station_to_name)

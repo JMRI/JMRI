@@ -910,8 +910,9 @@ public class AbstractAutomaton implements Runnable {
     BlockingQueue<PropertyChangeEvent> waitChangeQueue = new LinkedBlockingQueue<PropertyChangeEvent>();
 
     /**
-     * Wait forever for one of a list of NamedBeans (sensors, signal heads
-     * and/or turnouts) to change, or for a specific time to pass.
+     * Remembers the current state of a set of NamedBeans
+     * so that a later looping call to waitChange(..) on that same
+     * list won't miss any intervening changes.
      *
      * @param mInputs Array of NamedBeans to watch
      */
@@ -926,7 +927,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Wait forever for one of a list of NamedBeans (sensors, signal heads
-     * and/or turnouts) to change, or for a specific time to pass.
+     * and/or turnouts) to change.
      *
      * @param mInputs Array of NamedBeans to watch
      */

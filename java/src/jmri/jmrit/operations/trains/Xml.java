@@ -220,5 +220,5 @@ public class Xml {
     static final String DROP_COMMENT = "setOut_msg"; // NOI18N
     static final String PICKUP_COMMENT = "pickUp_msg"; // NOI18N
     static final String HAZARDOUS = "hazardous"; // NOI18N
-
+    static final String LAST_TRAIN = "last_train"; // NOI18N
 }

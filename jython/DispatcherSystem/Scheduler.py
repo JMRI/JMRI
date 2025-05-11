@@ -234,11 +234,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     if option == "Cancel" or self.od.CLOSED_OPTION == True:
                         self.timetable_sensor.setKnownState(INACTIVE)
                     else:
-                        station_name_list_gbl = result[0]
-                        if len(station_name_list_gbl) == 1:
-                            group_location_mqtt_gbl = station_name_list_gbl[0]   # the first and only station  station1
+                        station_name_list_mqtt_gbl = result[0]
+                        if len(station_name_list_mqtt_gbl) == 1:
+                            group_location_mqtt_gbl = station_name_list_mqtt_gbl[0]   # the first and only station  station1
                         else:
-                            group_location_mqtt_gbl = self.get_group_station_name(station_name_list_gbl)
+                            group_location_mqtt_gbl = self.get_group_station_name(station_name_list_mqtt_gbl)
                         # print "group_location_mqtt_gbl", group_location_mqtt_gbl
                         # get emblem
                         title = "Display Train Operator Emblem?"
@@ -932,7 +932,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "closing panel"
         comp = event.getSource()
         win = SwingUtilities.getWindowAncestor(comp);
-        win.dispose();
+        win.dispose()
+
     def SetTime_action(self, event):
         global fast_clock_running_at_operational_speed
         global timebase
@@ -986,6 +987,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def swap_timebase_state_run_stop(self):
         global timebase
+        global tListener
         global fast_clock_rate
         global rowrowStage4Button_4
         if timebase.getRun() == True:
@@ -993,8 +995,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             timebase.setRun(False)
             # print "fast_clock_rate", fast_clock_rate
         else:
-            timebase.addMinuteChangeListener(tListener)
             timebase.setRun(True)
+            if tListener is None:
+                tListener = TimeListener()
+            timebase.addMinuteChangeListener(tListener)
         if "rowrowStage4Button_4" in globals():
             if timebase.getRun():
                 state = "Started"
@@ -1469,6 +1473,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                 if self.logLevel > 0: print "minutes", int(minutes), "int(minutes) % 10", int(minutes) % 10, "minutes", minutes
                 # print "e"
                 minutes_old2 = minutes
+                # print "set fast clock rate"
                 self.set_fast_clock_rate()      # sets global fast_clock_at_operational_speed
             self.process_operations_trains(event)    # scheduled trains
 
@@ -1519,10 +1524,10 @@ class TimeListener(java.beans.PropertyChangeListener):
 
             # if schedule_trains_hourly:
             if True:
-                pass
                 hour = int(timebase.getTime().getHours())
                 minutes = int(timebase.getTime().getMinutes())
                 rate = timebase.userGetRate()
+
 
                 if self.logLevel > 0: print "set_fast_clock_rate:", "schedule_trains_hourly", schedule_trains_hourly
                 fast_clock_during_non_operational_times = speed_not_operational_gbl
@@ -2261,7 +2266,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                             move_train.move_between_stations(station_from, station_to, train_to_move, self.graph, mode = "scheduling")
                             print "__________________________End____" + train_to_move + "___________________________________"
                         else:
-                            print "failed to move train - no train in block"
+                            print "failed to move train - no train in block - have waited for scheduling margin"
                             print "__________________________End____" + train_to_move + "___________________________________"
                     else:
                         success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
@@ -2338,6 +2343,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         return row - 1     # row number starts from 1
 
     def check_train_in_block_for_scheduling_margin_fast_minutes(self, start_block, train_to_move):
+        global scheduling_margin_gbl
         # print "__________________________Start__" + train_to_move + "___________________________________"
         # print "check_train_in_block_for_scheduling_margin_fast_minutes", start_block.getUserName(), train_to_move
         global fast_clock_rate
@@ -2346,11 +2352,11 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         for j in range(int(scheduling_margin_gbl)):    # try to schedule train for scheduling_margin_gbl fast minutes
             train_in_block = self.blockOccupied(start_block)
             if train_in_block:
-                # print "--" + str(train_to_move) + " train in start block"
+                # print "--" + str(train_to_move) + " train in start block" + str(start_block.getUserName())
                 return True
             else:
                 # print (str(train_to_move) + " not in start_block: " + str(start_block.getUserName()) \
-                #        + " time waited: " + str(j) + " fast minutes")
+                #         + " time waited: " + str(j) + " fast minutes")
                 fast_minute = 1000*60/int(str(fast_clock_rate))
                 self.waitMsec(fast_minute)
         return False
@@ -2409,6 +2415,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
     def wait_for_scheduled_time(self, route, row, accumulated_durations):
         global fast_clock_rate
         global timebase
+        global scheduling_margin_gbl
 
         # print "wait_for_scheduled_time", route, row, accumulated_durations
         if 'timebase' not in globals():

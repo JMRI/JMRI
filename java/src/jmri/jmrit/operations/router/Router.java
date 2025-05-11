@@ -13,7 +13,8 @@ import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
@@ -733,27 +734,12 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
         Car testCar = clone(car); // reload
         // build the "next" and "other" location/tracks
-        List<Track> tracks;
-        if (!useStaging) {
-            // start with interchanges
-            tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.INTERCHANGE);
-            loadTracksAndTrains(car, testCar, tracks);
-            // next load yards if enabled
-            if (Setup.isCarRoutingViaYardsEnabled()) {
-                tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.YARD);
-                loadTracksAndTrains(car, testCar, tracks);
-            }
-        } else {
-            // add staging if requested
-            List<Track> stagingTracks =
-                    InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
-            tracks = new ArrayList<Track>();
-            for (Track staging : stagingTracks) {
-                if (!staging.isModifyLoadsEnabled()) {
-                    tracks.add(staging);
-                }
-            }
-            loadTracksAndTrains(car, testCar, tracks);
+        if (_nextLocationTracks.isEmpty() && _otherLocationTracks.isEmpty()) {
+            loadInterchangeAndYards(car, testCar);
+        }
+        // add staging if requested
+        if (useStaging) {
+            loadStaging(car, testCar);
         }
 
         if (_nextLocationTracks.isEmpty()) {
@@ -812,6 +798,31 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                             car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
         }
         return foundRoute;
+    }
+
+    private void loadInterchangeAndYards(Car car, Car testCar) {
+        List<Track> tracks;
+        // start with interchanges
+        tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.INTERCHANGE);
+        loadTracksAndTrains(car, testCar, tracks);
+        // next load yards if enabled
+        if (Setup.isCarRoutingViaYardsEnabled()) {
+            tracks = InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.YARD);
+            loadTracksAndTrains(car, testCar, tracks);
+        }
+    }
+
+    private void loadStaging(Car car, Car testCar) {
+        // add staging if requested
+        List<Track> stagingTracks =
+                InstanceManager.getDefault(LocationManager.class).getTracksByMoves(Track.STAGING);
+        List<Track> tracks = new ArrayList<Track>();
+        for (Track staging : stagingTracks) {
+            if (!staging.isModifyLoadsEnabled()) {
+                tracks.add(staging);
+            }
+        }
+        loadTracksAndTrains(car, testCar, tracks);
     }
 
     private boolean routeUsing3Trains(Car car) {
