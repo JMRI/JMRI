@@ -18,8 +18,7 @@ import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.ParserException;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficControllerScaffold;
+import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.logixng.SendMergCbusEvent;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
@@ -6261,6 +6260,7 @@ public class CreateLogixNGTreeScaffold {
         _cbusMemo = new CanSystemConnectionMemo();
         _cbusTrafficController = new TrafficControllerScaffold();
         _cbusMemo.setTrafficController(_cbusTrafficController);
+        _cbusMemo.setProtocol(ConfigurationManager.MERGCBUS);
         _cbusMemo.configureManagers();
 
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
