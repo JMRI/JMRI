@@ -52,6 +52,9 @@
 
               <xs:element name="program" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
               <xs:element name="parameters" type="LogixNG_SelectStringListType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="environment" type="LogixNG_SelectStringListType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="workingDirectory" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
+              <xs:element name="charset" type="LogixNG_SelectCharsetType" minOccurs="0" maxOccurs="1" />
 
               <xs:element name="outputVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="errorVariable" type="xs:string" minOccurs="0" maxOccurs="1"/>

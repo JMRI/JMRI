@@ -5,8 +5,7 @@ import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ExecuteProgram;
-import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringListXml;
-import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectStringXml;
+import jmri.jmrit.logixng.util.configurexml.*;
 
 import org.jdom2.Element;
 
@@ -51,17 +50,21 @@ public class ExecuteProgramXml extends jmri.managers.configurexml.AbstractNamedB
         }
         element.addContent(e2);
 
-        var selectProgramXml = new LogixNG_SelectStringXml();
-        element.addContent(selectProgramXml.store(p.getSelectProgram(), "program"));
+        var selectStringXml = new LogixNG_SelectStringXml();
+        var selectStringListXml = new LogixNG_SelectStringListXml();
+        var selectCharsetXml = new LogixNG_SelectCharsetXml();
 
-        var selectParametersXml = new LogixNG_SelectStringListXml();
-        element.addContent(selectParametersXml.store(p.getSelectParameters(), "parameters"));
+        element.addContent(selectStringXml.store(p.getSelectProgram(), "program"));
+        element.addContent(selectStringListXml.store(p.getSelectParameters(), "parameters"));
+        element.addContent(selectStringListXml.store(p.getSelectEnvironment(), "environment"));
+        element.addContent(selectStringXml.store(p.getSelectWorkingDirectory(), "workingDirectory"));
+        element.addContent(selectCharsetXml.store(p.getSelectCharset(), "charset"));
 
         element.addContent(new Element("outputVariable").addContent(p.getOutputLocalVariable()));
         element.addContent(new Element("errorVariable").addContent(p.getErrorLocalVariable()));
         element.addContent(new Element("exitCodeVariable").addContent(p.getExitCodeLocalVariable()));
 
-        element.addContent(new Element("launchThread").addContent(p.getLaunchThread() ? "yes" : "no"));
+//        element.addContent(new Element("launchThread").addContent(p.getLaunchThread() ? "yes" : "no"));
         element.addContent(new Element("callChildOnEveryOutput").addContent(p.getCallChildOnEveryOutput() ? "yes" : "no"));
         element.addContent(new Element("joinOutput").addContent(p.getJoinOutput() ? "yes" : "no"));
 
@@ -87,11 +90,15 @@ public class ExecuteProgramXml extends jmri.managers.configurexml.AbstractNamedB
 
         loadCommon(h, shared);
 
-        var selectProgramXml = new LogixNG_SelectStringXml();
-        selectProgramXml.load(shared.getChild("program"), h.getSelectProgram());
+        var selectStringXml = new LogixNG_SelectStringXml();
+        var selectStringListXml = new LogixNG_SelectStringListXml();
+        var selectCharsetXml = new LogixNG_SelectCharsetXml();
 
-        var selectParametersXml = new LogixNG_SelectStringListXml();
-        selectParametersXml.load(shared.getChild("parameters"), h.getSelectParameters());
+        selectStringXml.load(shared.getChild("program"), h.getSelectProgram());
+        selectStringListXml.load(shared.getChild("parameters"), h.getSelectParameters());
+        selectStringListXml.load(shared.getChild("environment"), h.getSelectEnvironment());
+        selectStringXml.load(shared.getChild("workingDirectory"), h.getSelectWorkingDirectory());
+        selectCharsetXml.load(shared.getChild("charset"), h.getSelectCharset());
 
         Element elem = shared.getChild("outputVariable");
         if (elem != null) h.setOutputLocalVariable(elem.getTextTrim());
@@ -103,7 +110,7 @@ public class ExecuteProgramXml extends jmri.managers.configurexml.AbstractNamedB
         if (elem != null) h.setExitCodeLocalVariable(elem.getTextTrim());
 
         elem = shared.getChild("launchThread");
-        if (elem != null) h.setLaunchThread("yes".equals(elem.getTextTrim()));
+//        if (elem != null) h.setLaunchThread("yes".equals(elem.getTextTrim()));
 
         elem = shared.getChild("callChildOnEveryOutput");
         if (elem != null) h.setCallChildOnEveryOutput("yes".equals(elem.getTextTrim()));

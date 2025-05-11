@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.beans.*;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -29,11 +30,17 @@ public class ExecuteProgram extends AbstractDigitalAction
             new LogixNG_SelectString(this, this);
     private final LogixNG_SelectStringList _selectParameters =
             new LogixNG_SelectStringList();
+    private final LogixNG_SelectStringList _selectEnvironment =
+            new LogixNG_SelectStringList();
+    private final LogixNG_SelectString _selectWorkingDirectory =
+            new LogixNG_SelectString(this, "", this);
+    private final LogixNG_SelectCharset _selectCharset =
+            new LogixNG_SelectCharset(this, this);
 
     private String _outputLocalVariable = "";
     private String _errorLocalVariable = "";
     private String _exitCodeLocalVariable = "";
-    private boolean _launchThread = false;
+    private WaitOrLaunchThread _waitOrLaunchThread = WaitOrLaunchThread.Wait;
     private boolean _callChildOnEveryOutput = false;
     private boolean _joinOutput = true;
 
@@ -55,10 +62,13 @@ public class ExecuteProgram extends AbstractDigitalAction
         copy.setComment(getComment());
         _selectProgram.copy(copy._selectProgram);
         _selectParameters.copy(copy._selectParameters);
+        _selectEnvironment.copy(copy._selectEnvironment);
+        _selectWorkingDirectory.copy(copy._selectWorkingDirectory);
+        _selectCharset.copy(copy._selectCharset);
         copy.setOutputLocalVariable(_outputLocalVariable);
         copy.setErrorLocalVariable(_errorLocalVariable);
         copy.setExitCodeLocalVariable(_exitCodeLocalVariable);
-        copy.setLaunchThread(_launchThread);
+        copy.setWaitOrLaunchThread(_waitOrLaunchThread);
         copy.setCallChildOnEveryOutput(_callChildOnEveryOutput);
         copy.setJoinOutput(_joinOutput);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
@@ -70,6 +80,18 @@ public class ExecuteProgram extends AbstractDigitalAction
 
     public LogixNG_SelectStringList getSelectParameters() {
         return _selectParameters;
+    }
+
+    public LogixNG_SelectStringList getSelectEnvironment() {
+        return _selectEnvironment;
+    }
+
+    public LogixNG_SelectString getSelectWorkingDirectory() {
+        return _selectWorkingDirectory;
+    }
+
+    public LogixNG_SelectCharset getSelectCharset() {
+        return _selectCharset;
     }
 
     public void setOutputLocalVariable(@Nonnull String localVariable) {
@@ -99,12 +121,12 @@ public class ExecuteProgram extends AbstractDigitalAction
         return _exitCodeLocalVariable;
     }
 
-    public void setLaunchThread(boolean launchThread) {
-        this._launchThread = launchThread;
+    public void setWaitOrLaunchThread(WaitOrLaunchThread waitOrLaunchThread) {
+        this._waitOrLaunchThread = waitOrLaunchThread;
     }
 
-    public boolean getLaunchThread() {
-        return _launchThread;
+    public WaitOrLaunchThread getWaitOrLaunchThread() {
+        return _waitOrLaunchThread;
     }
 
     public void setCallChildOnEveryOutput(boolean callChildOnEveryOutput) {
@@ -163,13 +185,6 @@ public class ExecuteProgram extends AbstractDigitalAction
     public void execute() throws JmriException {
 
 /*
-        Note!!!!
-
-        This does NOT work!!! Ensure the user cannot select this!!!
-        _launchThread == false && _callChildOnEveryOutput == true
-
-
-
         Note:
         Every part of the parameter list must be on its own line.
         For example: find /home/daniel/Dokument/GitHub/JMRI/java -iname *.java
@@ -195,6 +210,16 @@ public class ExecuteProgram extends AbstractDigitalAction
 
         String program = _selectProgram.evaluateValue(conditionalNG);
         List<String> parameters = _selectParameters.evaluateValue(conditionalNG);
+        List<String> environment = _selectEnvironment.evaluateValue(conditionalNG);
+        String workingDirectory = _selectWorkingDirectory.evaluateValue(conditionalNG);
+        Charset charset = _selectCharset.evaluateCharset(conditionalNG);
+
+        File workingDirectoryFile;
+        if (!workingDirectory.isBlank()) {
+            workingDirectoryFile = new File(workingDirectory);
+        } else {
+            workingDirectoryFile = null;
+        }
 
         List<String> programAndParameters = new ArrayList<>();
         programAndParameters.add(program);
@@ -212,7 +237,10 @@ public class ExecuteProgram extends AbstractDigitalAction
             }
 
 //            process = Runtime.getRuntime().exec(new String[]{program,parameters});
-            process = Runtime.getRuntime().exec(programAndParameters.toArray(String[]::new));
+            process = Runtime.getRuntime().exec(
+                    programAndParameters.toArray(String[]::new),
+                    environment.toArray(String[]::new),
+                    workingDirectoryFile);
         } catch (IOException e) {
             throw new JmriException(e);
         }
@@ -220,7 +248,7 @@ public class ExecuteProgram extends AbstractDigitalAction
         Runnable readAllOnce = () -> {
             List<String> output = new ArrayList<>();
             try {
-                try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getInputStream())))  {
+                try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getInputStream(), charset)))  {
                     String line;
                     while ((line = buffer.readLine()) != null) {
                         output.add(line);
@@ -233,7 +261,7 @@ public class ExecuteProgram extends AbstractDigitalAction
 
             List<String> error = new ArrayList<>();
             try {
-                try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getErrorStream())))  {
+                try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getErrorStream(), charset)))  {
                     String line;
                     while ((line = buffer.readLine()) != null) {
                         error.add(line);
@@ -255,9 +283,7 @@ public class ExecuteProgram extends AbstractDigitalAction
                 return;
             }
 
-            if (!_callChildOnEveryOutput) {
-                executeChild(conditionalNG, newSymbolTable, getOutput(output), getOutput(error), process.exitValue());
-            }
+            executeChild(conditionalNG, newSymbolTable, getOutput(output), getOutput(error), process.exitValue());
         };
 
         Runnable readOutput = () -> {
@@ -298,15 +324,22 @@ public class ExecuteProgram extends AbstractDigitalAction
             }
         };
 
-        if (_callChildOnEveryOutput) {
-            ThreadingUtil.newThread(readOutput).start();
-            ThreadingUtil.newThread(readError).start();
-            ThreadingUtil.newThread(onExit).start();
-        } else if (_launchThread) {
-            ThreadingUtil.newThread(readAllOnce).start();
-        } else {
-            // Run and wait for the process to complete
-            readAllOnce.run();
+        switch (_waitOrLaunchThread) {
+            case LaunchThread:
+                if (_callChildOnEveryOutput) {
+                    ThreadingUtil.newThread(readOutput).start();
+                    ThreadingUtil.newThread(readError).start();
+                    ThreadingUtil.newThread(onExit).start();
+                } else {
+                    ThreadingUtil.newThread(readAllOnce).start();
+                }
+                break;
+            case Wait:
+                // Run and wait for the process to complete
+                readAllOnce.run();
+                break;
+            default:
+                throw new IllegalArgumentException("invalid _waitOrLaunchThread state: " + _waitOrLaunchThread.name());
         }
     }
 
@@ -429,6 +462,25 @@ public class ExecuteProgram extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
+    }
+
+
+    public enum WaitOrLaunchThread {
+
+        Wait(Bundle.getMessage("ExecuteProgram_WaitOrLaunchThread_Wait")),
+        LaunchThread(Bundle.getMessage("ExecuteProgram_WaitOrLaunchThread_LaunchThread"));
+
+        private final String _text;
+
+        private WaitOrLaunchThread(String text) {
+            this._text = text;
+        }
+
+
+        @Override
+        public String toString() {
+            return _text;
+        }
     }
 
 
