@@ -8,7 +8,8 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectEnumXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectIntegerXml;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.logixng.SendCbusEvent;
+import jmri.jmrix.can.cbus.logixng.CategoryMergCbus;
+import jmri.jmrix.can.cbus.logixng.SendMergCbusEvent;
 
 import org.jdom2.Element;
 
@@ -18,9 +19,9 @@ import org.jdom2.Element;
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
  * @author Daniel Bergqvist Copyright (C) 2025
  */
-public class SendCbusEventXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
+public class SendMergCbusEventXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
-    public SendCbusEventXml() {
+    public SendMergCbusEventXml() {
     }
 
     /**
@@ -31,12 +32,12 @@ public class SendCbusEventXml extends jmri.managers.configurexml.AbstractNamedBe
      */
     @Override
     public Element store(Object o) {
-        SendCbusEvent p = (SendCbusEvent) o;
+        SendMergCbusEvent p = (SendMergCbusEvent) o;
 
-        var selectEnumXml = new LogixNG_SelectEnumXml<SendCbusEvent.CbusEventType>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<SendMergCbusEvent.CbusEventType>();
         var selectIntegerXml = new LogixNG_SelectIntegerXml();
 
-        Element element = new Element("SendCbusEvent");
+        Element element = new Element("SendMergCbusEvent");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
@@ -58,9 +59,9 @@ public class SendCbusEventXml extends jmri.managers.configurexml.AbstractNamedBe
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        SendCbusEvent h = new SendCbusEvent(sys, uname, null);
+        SendMergCbusEvent h = new SendMergCbusEvent(sys, uname, null);
 
-        var selectEnumXml = new LogixNG_SelectEnumXml<SendCbusEvent.CbusEventType>();
+        var selectEnumXml = new LogixNG_SelectEnumXml<SendMergCbusEvent.CbusEventType>();
         var selectRateXml = new LogixNG_SelectIntegerXml();
 
         loadCommon(h, shared);
@@ -68,8 +69,7 @@ public class SendCbusEventXml extends jmri.managers.configurexml.AbstractNamedBe
         Element systemConnection = shared.getChild("systemConnection");
         if (systemConnection != null) {
             String systemConnectionName = systemConnection.getTextTrim();
-            List<CanSystemConnectionMemo> systemConnections =
-                    jmri.InstanceManager.getList(CanSystemConnectionMemo.class);
+            List<CanSystemConnectionMemo> systemConnections = CategoryMergCbus.getMergConnections();
 
             for (CanSystemConnectionMemo memo : systemConnections) {
                 if (memo.getSystemPrefix().equals(systemConnectionName)) {

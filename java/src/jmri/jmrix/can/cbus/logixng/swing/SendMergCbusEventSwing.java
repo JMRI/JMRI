@@ -10,18 +10,19 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
-import jmri.jmrix.can.cbus.logixng.SendCbusEvent;
-import jmri.jmrix.can.cbus.logixng.SendCbusEvent.CbusEventType;
+import jmri.jmrix.can.cbus.logixng.SendMergCbusEvent;
+import jmri.jmrix.can.cbus.logixng.SendMergCbusEvent.CbusEventType;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectIntegerSwing;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.logixng.CategoryMergCbus;
 
 /**
  * Configures an SendCbusEvent object with a Swing JPanel.
  *
  * @author Daniel Bergqvist Copyright 2025
  */
-public class SendCbusEventSwing extends AbstractDigitalActionSwing {
+public class SendMergCbusEventSwing extends AbstractDigitalActionSwing {
 
     private LogixNG_SelectIntegerSwing _selectNodeNumberSwing;
     private LogixNG_SelectIntegerSwing _selectEventNumberSwing;
@@ -29,19 +30,19 @@ public class SendCbusEventSwing extends AbstractDigitalActionSwing {
     private JComboBox<CbusConnection> _cbusConnection;
 
 
-    public SendCbusEventSwing() {
+    public SendMergCbusEventSwing() {
     }
 
-    public SendCbusEventSwing(JDialog dialog) {
+    public SendMergCbusEventSwing(JDialog dialog) {
         super.setJDialog(dialog);
     }
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
-        SendCbusEvent action = (SendCbusEvent) object;
+        SendMergCbusEvent action = (SendMergCbusEvent) object;
         if (action == null) {
             // Create a temporary action
-            action = new SendCbusEvent("IQDA1", null, null);
+            action = new SendMergCbusEvent("IQDA1", null, null);
         }
 
         _selectNodeNumberSwing = new LogixNG_SelectIntegerSwing(getJDialog(), this);
@@ -59,8 +60,7 @@ public class SendCbusEventSwing extends AbstractDigitalActionSwing {
 
 
         _cbusConnection = new JComboBox<>();
-        List<CanSystemConnectionMemo> systemConnections =
-                jmri.InstanceManager.getList(CanSystemConnectionMemo.class);
+        List<CanSystemConnectionMemo> systemConnections = CategoryMergCbus.getMergConnections();
         for (CanSystemConnectionMemo connection : systemConnections) {
             CbusConnection c = new CbusConnection(connection);
             _cbusConnection.addItem(c);
@@ -99,7 +99,7 @@ public class SendCbusEventSwing extends AbstractDigitalActionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         // Create a temporary action to test formula
-        SendCbusEvent action = new SendCbusEvent("IQDA1", null, null);
+        SendMergCbusEvent action = new SendMergCbusEvent("IQDA1", null, null);
 
         _selectNodeNumberSwing.validate(action.getSelectNodeNumber(), errorMessages);
         _selectEventNumberSwing.validate(action.getSelectEventNumber(), errorMessages);
@@ -117,7 +117,7 @@ public class SendCbusEventSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        SendCbusEvent action = new SendCbusEvent(systemName, userName, null);
+        SendMergCbusEvent action = new SendMergCbusEvent(systemName, userName, null);
         updateObject(action);
         return InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
     }
@@ -125,10 +125,10 @@ public class SendCbusEventSwing extends AbstractDigitalActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        if (! (object instanceof SendCbusEvent)) {
+        if (! (object instanceof SendMergCbusEvent)) {
             throw new IllegalArgumentException("object must be an SendCbusEvent but is a: "+object.getClass().getName());
         }
-        SendCbusEvent action = (SendCbusEvent) object;
+        SendMergCbusEvent action = (SendMergCbusEvent) object;
 
         _selectNodeNumberSwing.updateObject(action.getSelectNodeNumber());
         _selectEventNumberSwing.updateObject(action.getSelectEventNumber());

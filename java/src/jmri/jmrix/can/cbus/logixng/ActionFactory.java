@@ -19,7 +19,7 @@ public class ActionFactory implements DigitalActionFactory {
 
     @Override
     public void init() {
-        CategoryCbus.registerCategory();
+        CategoryMergCbus.registerCategory();
     }
 
     @Override
@@ -27,8 +27,8 @@ public class ActionFactory implements DigitalActionFactory {
         Set<Map.Entry<Category, Class<? extends DigitalActionBean>>> actionClasses = new HashSet<>();
 
         // We don't want to add these classes if we don't have a CBUS connection
-        if (CategoryCbus.hasCbus()) {
-            actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryCbus.CBUS, SendCbusEvent.class));
+        if (CategoryMergCbus.hasCbus()) {
+            actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryMergCbus.CBUS, SendMergCbusEvent.class));
         }
 
         return actionClasses;

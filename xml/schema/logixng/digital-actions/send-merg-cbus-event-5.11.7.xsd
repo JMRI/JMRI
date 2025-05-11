@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_SendCbusEventType">
+    <xs:complexType name="LogixNG_DigitalAction_SendMergCbusEventType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a SendCbusEventXml class.
+          Define the XML stucture for storing the contents of a SendMergCbusEventXml class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.SendCbusEventXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.SendMergCbusEventXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
 

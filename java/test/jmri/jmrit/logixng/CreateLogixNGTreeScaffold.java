@@ -20,7 +20,7 @@ import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
-import jmri.jmrix.can.cbus.logixng.SendCbusEvent;
+import jmri.jmrix.can.cbus.logixng.SendMergCbusEvent;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.script.ScriptEngineSelector;
@@ -2893,32 +2893,32 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        jmri.jmrix.can.cbus.logixng.SendCbusEvent sendCbusEvent =
-                new jmri.jmrix.can.cbus.logixng.SendCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
+        jmri.jmrix.can.cbus.logixng.SendMergCbusEvent sendCbusEvent =
+                new jmri.jmrix.can.cbus.logixng.SendMergCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
         maleSocket = digitalActionManager.registerAction(sendCbusEvent);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        sendCbusEvent = new jmri.jmrix.can.cbus.logixng.SendCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
+        sendCbusEvent = new jmri.jmrix.can.cbus.logixng.SendMergCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
         sendCbusEvent.getSelectNodeNumber().setValue(10);
         sendCbusEvent.getSelectEventNumber().setValue(20);
-        sendCbusEvent.getSelectEventType().setEnum(SendCbusEvent.CbusEventType.On);
+        sendCbusEvent.getSelectEventType().setEnum(SendMergCbusEvent.CbusEventType.On);
         maleSocket = digitalActionManager.registerAction(sendCbusEvent);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        sendCbusEvent = new jmri.jmrix.can.cbus.logixng.SendCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
+        sendCbusEvent = new jmri.jmrix.can.cbus.logixng.SendMergCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
         sendCbusEvent.getSelectNodeNumber().setValue(3);
         sendCbusEvent.getSelectEventNumber().setValue(30);
-        sendCbusEvent.getSelectEventType().setEnum(SendCbusEvent.CbusEventType.Off);
+        sendCbusEvent.getSelectEventType().setEnum(SendMergCbusEvent.CbusEventType.Off);
         maleSocket = digitalActionManager.registerAction(sendCbusEvent);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
-        sendCbusEvent = new jmri.jmrix.can.cbus.logixng.SendCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
+        sendCbusEvent = new jmri.jmrix.can.cbus.logixng.SendMergCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
         sendCbusEvent.getSelectNodeNumber().setValue(10);
         sendCbusEvent.getSelectEventNumber().setValue(20);
-        sendCbusEvent.getSelectEventType().setEnum(SendCbusEvent.CbusEventType.Request);
+        sendCbusEvent.getSelectEventType().setEnum(SendMergCbusEvent.CbusEventType.Request);
         maleSocket = digitalActionManager.registerAction(sendCbusEvent);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);

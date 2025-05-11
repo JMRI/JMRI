@@ -20,7 +20,7 @@ import jmri.util.ThreadingUtil;
  *
  * @author Daniel Bergqvist Copyright 2025
  */
-public class SendCbusEvent extends AbstractDigitalAction
+public class SendMergCbusEvent extends AbstractDigitalAction
         implements PropertyChangeListener {
 
     private final LogixNG_SelectInteger _selectNodeNumber =
@@ -37,7 +37,7 @@ public class SendCbusEvent extends AbstractDigitalAction
     private CanSystemConnectionMemo _memo;
 
 
-    public SendCbusEvent(String sys, String user, CanSystemConnectionMemo memo)
+    public SendMergCbusEvent(String sys, String user, CanSystemConnectionMemo memo)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
         _memo = memo;
@@ -49,7 +49,7 @@ public class SendCbusEvent extends AbstractDigitalAction
         String sysName = systemNames.get(getSystemName());
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
-        SendCbusEvent copy = new SendCbusEvent(sysName, userName, _memo);
+        SendMergCbusEvent copy = new SendMergCbusEvent(sysName, userName, _memo);
         copy.setComment(getComment());
         _selectNodeNumber.copy(copy._selectNodeNumber);
         _selectEventNumber.copy(copy._selectEventNumber);
@@ -82,7 +82,7 @@ public class SendCbusEvent extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return CategoryCbus.CBUS;
+        return CategoryMergCbus.CBUS;
     }
 
     /** {@inheritDoc} */
@@ -180,6 +180,6 @@ public class SendCbusEvent extends AbstractDigitalAction
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SendCbusEvent.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SendMergCbusEvent.class);
 
 }
