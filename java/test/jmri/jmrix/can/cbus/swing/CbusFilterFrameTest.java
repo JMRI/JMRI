@@ -7,10 +7,12 @@ import java.util.ArrayList;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusFilterType;
 import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+// import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -126,13 +128,16 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
       //  assertEquals("Filter ( 1 / 1 ) ",
        //     new JToggleButtonOperator(jfo,4).getText(),"text says pass");
 
-        // JUnitUtil.dispose(jfo.getWindow());
-        // jfo.waitClosed();
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
 
         // frame.dispose();
         
         
     }
+
+    private TrafficControllerScaffold tc;
+    private CanSystemConnectionMemo memo;
 
     @TempDir
     protected File tempDir;
@@ -146,7 +151,11 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         } catch ( IOException ex ) {
             Assertions.fail("Could not init new Null Profile", ex);
         }
+        memo = new CanSystemConnectionMemo();
+        tc = new TrafficControllerScaffold();
+        memo.setTrafficController(tc);
         _testConsole = new FtTestConsole();
+        _testConsole.initComponents(memo, false);
         frame = new CbusFilterFrame(_testConsole,null);
     }
 
@@ -161,6 +170,7 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         
 
         if( _testConsole !=null ){
+
             _testConsole.dispose();
         }
 
@@ -169,6 +179,9 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         }
         frame = null;
         JUnitUtil.resetWindows(true,true);
+
+        tc.terminateThreads();
+        memo.dispose();
 
         JUnitUtil.tearDown();
 
