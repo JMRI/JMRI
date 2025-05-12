@@ -185,9 +185,7 @@
             <xs:element name="ProgramOnMain"     type="LogixNG_DigitalAction_ProgramOnMainType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Return"            type="LogixNG_DigitalAction_ReturnType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="RunOnce"           type="LogixNG_DigitalAction_RunOnceType" minOccurs="0" maxOccurs="unbounded" />
-            <!-- Temporary fix. Remove "SendCbusEvent" after 5.11.8 -->
-            <xs:element name="SendCbusEvent"     type="LogixNG_DigitalAction_SendMergCbusEventType" minOccurs="0" maxOccurs="unbounded" />
-            <xs:element name="SendMergCbusEvent"     type="LogixNG_DigitalAction_SendMergCbusEventType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="SendMergCbusEvent" type="LogixNG_DigitalAction_SendMergCbusEventType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Sequence"          type="LogixNG_DigitalAction_SequenceType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ShowDialog"        type="LogixNG_DigitalAction_ShowDialogType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ShutdownComputer"  type="LogixNG_DigitalAction_ShutdownComputerType" minOccurs="0" maxOccurs="unbounded" />
