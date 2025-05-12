@@ -22,6 +22,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Represents a location (track) on the layout Can be a spur, yard, staging, or
@@ -578,12 +579,8 @@ public class Track extends PropertyChangeSupport {
      * @return true if space available.
      */
     public boolean isSpaceAvailable(Car car) {
-        int carLength = car.getTotalLength();
-        if (car.getKernel() != null) {
-            carLength = car.getKernel().getTotalLength();
-        }
+        int carLength = car.getTotalKernelLength();
         int trackLength = getLength();
-
         // is the car or kernel too long for the track?
         if (trackLength < carLength && getPool() == null) {
             return false;
@@ -1453,7 +1450,7 @@ public class Track extends PropertyChangeSupport {
                         if (rLoc.getName().equals(getLocation().getName()) &&
                                 rLoc.isPickUpAllowed() &&
                                 rLoc.getMaxCarMoves() > 0 &&
-                                !train.isLocationSkipped(rLoc.getId()) &&
+                                !train.isLocationSkipped(rLoc) &&
                                 ((getTrainDirections() & rLoc.getTrainDirection()) != 0 || train.isLocalSwitcher()) &&
                                 ((getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 ||
                                         train.isLocalSwitcher())) {

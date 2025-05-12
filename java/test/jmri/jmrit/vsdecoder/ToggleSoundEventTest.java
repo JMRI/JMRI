@@ -13,7 +13,7 @@ public class ToggleSoundEventTest {
 
     @Test
     public void testCTor() {
-        ToggleSoundEvent t = new ToggleSoundEvent();
+        ToggleSoundEvent t = new ToggleSoundEvent("test");
         Assert.assertNotNull("exists",t);
     }
 

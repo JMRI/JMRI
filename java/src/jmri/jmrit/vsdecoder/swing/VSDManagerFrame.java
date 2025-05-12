@@ -168,11 +168,13 @@ public class VSDManagerFrame extends JmriJFrame {
         this.pack();
         this.setVisible(true);
 
-        if (is_viewing) {
-            this.runViewing();
-        } else if (is_auto_loading) {
-            this.runAutoLoad();
-        }
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            if (is_viewing) {
+                this.runViewing();
+            } else if (is_auto_loading) {
+                this.runAutoLoad();
+            }
+        });
     }
 
     private void runViewing() {
@@ -325,7 +327,7 @@ public class VSDManagerFrame extends JmriJFrame {
     private void getStartBlock(VSDecoder vsd) {
         jmri.Block start_block = null;
         for (jmri.Block blk : jmri.InstanceManager.getDefault(jmri.BlockManager.class).getNamedBeanSet()) {
-            if (VSDecoderManager.instance().possibleStartBlocks.containsKey(blk)) {
+            if (VSDecoderManager.instance().checkForPossibleStartblock(blk)) {
                 int locoAddress = VSDecoderManager.instance().getLocoAddr(blk);
                 if (locoAddress == vsd.getAddress().getNumber()) {
                     log.debug("found start block: {}, loco address: {}", blk, locoAddress);

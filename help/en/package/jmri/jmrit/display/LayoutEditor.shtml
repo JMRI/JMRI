@@ -586,7 +586,8 @@
 
         <li><strong>Allow Layout Control</strong> - When this item is checked, clicking on active
         turnout items in the track diagram or on active icon items, such as sensor icons, and
-        signal icons, will toggle the state of the represented item.</li>
+        signal icons, will toggle the state of the represented item.  If the track item or icon has
+        been <strong>Disabled</strong>, the attempted changes will not occur.</li>
 
         <li><strong>Use Direct Turnout Control</strong> - If enabled and edit mode is not active,
         then the left mouse button sets a turnout closed and the right mouse button sets the
@@ -599,7 +600,7 @@
 
         <li><strong>Toggle Track labels in Edit mode</strong> - If this item is selected, the
         panel is displayed with the internal names for track items such as anchor points,
-        track sengments, turnouts, etc.</li>
+        track segments, turnouts, etc.</li>
 
         <li><strong>Highlight Cursor Position</strong> <span class="since">since 5.11.3</span>
         - If this item is selected, the cursor will have a colored box drawn around the mouse

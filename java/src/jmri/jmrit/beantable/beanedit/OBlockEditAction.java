@@ -51,7 +51,6 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         super.initPanels();
         sensor();
         paths();
-        reporterDetails();
         physicalDetails();
     }
 
@@ -67,7 +66,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         sensorComboBox = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance(), bean.getSensor(), DisplayOptions.DISPLAYNAME);
         sensorComboBox.setAllowNull(true);
         JComboBoxUtil.setupComboBoxMaxRows(sensorComboBox);
-        basic.addItem(new BeanEditItem(sensorComboBox, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
+        basic.addItem(new BeanEditItem(sensorComboBox, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("OBlockAssignSensorText")));
 
         errorSensorComboBox = new NamedBeanComboBox<>(InstanceManager.sensorManagerInstance(), bean.getErrorSensor(), DisplayOptions.DISPLAYNAME);
         errorSensorComboBox.setAllowNull(true);
@@ -136,42 +135,7 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         return paths;
     }
 
-    BeanItemPanel reporterDetails() {
-        BeanItemPanel reporter = new BeanItemPanel();
-        reporter.setName(Bundle.getMessage("BeanNameReporter"));
-
-        reporterComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(ReporterManager.class), bean.getReporter(), DisplayOptions.DISPLAYNAME);
-        reporterComboBox.setAllowNull(true);
-        JComboBoxUtil.setupComboBoxMaxRows(reporterComboBox);
-
-        reporter.addItem(new BeanEditItem(reporterComboBox, Bundle.getMessage("BeanNameReporter"), Bundle.getMessage("BlockReporterText")));
-
-        reporterComboBox.addActionListener(e -> useCurrent.setEnabled(reporterComboBox.getSelectedItem() != null));
-
-        reporter.addItem(new BeanEditItem(useCurrent, Bundle.getMessage("BlockReporterCurrent"), Bundle.getMessage("BlockUseCurrentText")));
-
-        reporter.setResetItem(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                reporterComboBox.setSelectedItem(bean.getReporter());
-                useCurrent.setSelected(bean.isReportingCurrent());
-                useCurrent.setEnabled(bean.getReporter()!=null);
-            }
-        });
-
-        reporter.setSaveItem(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                bean.setReporter(reporterComboBox.getSelectedItem());
-                bean.setReportingCurrent(useCurrent.isSelected());
-            }
-        });
-        bei.add(reporter);
-        if (InstanceManager.getNullableDefault(ReporterManager.class) == null) {
-            setEnabled(false);
-        }
-        return reporter;
-    }
+//    BeanItemPanel reporterDetails() { not used for OBlocks/not valid XML
 
     JSpinner lengthSpinner = new JSpinner(); // 2 digit decimal format field, initialized later as instance
     private final BlockCurvatureJComboBox curvatureField = new BlockCurvatureJComboBox();
@@ -195,13 +159,13 @@ public class OBlockEditAction extends BeanEditAction<OBlock> {
         BeanItemPanel basic = new BeanItemPanel();
         basic.setName(Bundle.getMessage("BlockPhysicalProperties"));
 
-        basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("BlockPropertiesText")));
+        basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("OBlockPropertiesText")));
         lengthSpinner.setModel(
-                            new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
+            new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f), Float.valueOf(1000f), Float.valueOf(0.01f)));
         lengthSpinner.setEditor(new JSpinner.NumberEditor(lengthSpinner, "###0.00"));
         lengthSpinner.setPreferredSize(new JTextField(8).getPreferredSize());
         lengthSpinner.setValue(0f); // reset from possible previous use
-        basic.addItem(new BeanEditItem(lengthSpinner, Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("BlockLengthText")));
+        basic.addItem(new BeanEditItem(lengthSpinner, Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("OBlockLengthText")));
 
         ButtonGroup rg = new ButtonGroup();
         rg.add(inch);

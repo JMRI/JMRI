@@ -94,6 +94,7 @@
 <mapID target="html.hardware.loconet.LocoBuffer" url="html/hardware/loconet/LocoBuffer.shtml"/>
 <mapID target="html.hardware.loconet.LocoBufferII" url="html/hardware/loconet/LocoBufferII.shtml"/>
 <mapID target="html.hardware.loconet.LocoBufferUSB" url="html/hardware/loconet/LocoBufferUSB.shtml"/>
+<mapID target="html.hardware.loconet.LocoIO" url="html/hardware/loconet/LocoIO.shtml"/>
 <mapID target="html.hardware.loconet.LocoNetTools" url="html/hardware/loconet/LocoNetTools.shtml"/>
 <mapID target="html.hardware.loconet.PR2" url="html/hardware/loconet/PR2.shtml"/>
 <mapID target="html.hardware.loconet.PR3" url="html/hardware/loconet/PR3.shtml"/>
@@ -413,7 +414,6 @@
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.locogen.LocoGenFrame" url="package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.locoid.LocoIdFrame" url="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml"/>
-<mapID target="package.jmri.jmrix.loconet.locoio.LocoIOFrame" url="package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.locomon.LocoMonFrame" url="package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame" url="package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.pm4.PM4Frame" url="package/jmri/jmrix/loconet/pm4/PM4Frame.shtml"/>
@@ -424,6 +424,7 @@
 <mapID target="package.jmri.jmrix.loconet.soundloader.EditorFrame" url="package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.soundloader.LoaderFrame" url="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane" url="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml"/>
+<mapID target="package.jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane" url="package/jmri/jmrix/loconet/swing/lnsv1prog/Lnsv1ProgPane.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame" url="package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.usb_dcs240.swing.Dcs240UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs240/swing/Dcs240UsbModeSelect.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.usb_dcs52.swing.Dcs52UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs52/swing/Dcs52UsbModeSelect.shtml"/>

@@ -709,6 +709,7 @@ class Steam1Sound extends EngineSound {
             dynamic_volume = 1.0f;
             max_volume = 1.0f / _parent.engine_gain;
             _sound = new SoundBite(s); // Soundsource for queueing
+            _sound.isInitialized();
             _sound.setGain(_parent.engine_gain); // All chuff sounds will have this gain
             count_pre_arrival = 1;
             queue_limit = 2;
@@ -1392,8 +1393,19 @@ class Steam1Sound extends EngineSound {
 
         private void setPosition(PhysicalLocation p) {
             _sound.setPosition(p);
+            if (_parent.getTunnel()) {
+                _sound.attachSourcesToEffects();
+            } else {
+                _sound.detachSourcesToEffects();
+            }
+
             for (SoundBite ts : _parent.trigger_sounds.values()) {
                 ts.setPosition(p);
+                if (_parent.getTunnel()) {
+                    ts.attachSourcesToEffects();
+                } else {
+                    ts.detachSourcesToEffects();
+                }
             }
         }
 

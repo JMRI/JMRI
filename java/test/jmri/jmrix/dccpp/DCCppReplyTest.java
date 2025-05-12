@@ -279,6 +279,22 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("DCC-EX",  r.getStationType());
         
         r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-5.4.4 / ESP32 / EXCSB1 G-c389fe9");
+        Assert.assertTrue(r.isStatusReply());
+        Assert.assertTrue(r.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX));
+        Assert.assertEquals("5.4.4",   r.getVersion());
+        Assert.assertEquals("c389fe9", r.getBuildString());
+        Assert.assertEquals("DCC-EX",  r.getStationType());
+        
+        r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-5.0.0 / UNO / IoTT WiThServer 1.0.4 / STANDARD_MOTOR_SHIELD G-3bddf4d");
+        Assert.assertTrue(r.isStatusReply());
+        Assert.assertTrue(r.matches(DCCppConstants.STATUS_REPLY_DCCEX_REGEX));
+        Assert.assertEquals("5.0.0",   r.getVersion());
+        Assert.assertEquals("3bddf4d", r.getBuildString());
+        Assert.assertEquals("DCC-EX",  r.getStationType());
+        
+        r = DCCppReply.parseDCCppReply(
                 "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         Assert.assertTrue(r.isStatusReply());
         Assert.assertTrue(r.matches(DCCppConstants.STATUS_REPLY_REGEX));

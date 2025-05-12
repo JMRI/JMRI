@@ -41,7 +41,7 @@ class Diesel3Sound extends EngineSound {
     private Integer idle_notch;
     private int first_notch;
     int top_speed;
-    final int number_helper_buffers = 5; // in the loop-player is a limit of 2, but the unqueue takes some time too
+    final static int number_helper_buffers = 5; // in the loop-player is a limit of 2, but the unqueue takes some time too
 
     // Common variables
     private int current_notch = 1; // default
@@ -574,6 +574,7 @@ class Diesel3Sound extends EngineSound {
             _parent = d;
             _notch = n;
             _sound = new SoundBite(s);
+            _sound.isInitialized();
             _sound.setGain(_parent.engine_gain);
             _throttle = 0.0f;
             rpm_dirfn = 0.0f;
@@ -777,7 +778,7 @@ class Diesel3Sound extends EngineSound {
         private int incHelperIndex() {
             helper_index++;
             // Correct for wrap.
-            if (helper_index >= _parent.number_helper_buffers) {
+            if (helper_index >= Diesel3Sound.number_helper_buffers) {
                 helper_index = 0;
             }
             return helper_index;
@@ -793,6 +794,11 @@ class Diesel3Sound extends EngineSound {
 
         private void setPosition(PhysicalLocation p) {
             _sound.setPosition(p);
+            if (_parent.getTunnel()) {
+                _sound.attachSourcesToEffects();
+            } else {
+                _sound.detachSourcesToEffects();
+            }
         }
 
         private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(D3LoopThread.class);

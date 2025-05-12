@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.automation;
 
 import java.beans.PropertyChangeEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -213,7 +211,7 @@ public class Automation extends PropertyChangeSupport implements java.beans.Prop
         resetAutomationItems(getCurrentAutomationItem());
     }
 
-    protected void resetAutomationItems(AutomationItem item) {
+    public void resetAutomationItems(AutomationItem item) {
         boolean found = false;
         for (AutomationItem automationItem : getItemsBySequenceList()) {
             if (!found && automationItem != item) {

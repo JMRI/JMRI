@@ -31,13 +31,13 @@ class SteamSound extends EngineSound {
     // Inner class for handling steam RPM sounds
     class RPMSound {
 
-        public SoundBite sound;
-        public int min_rpm;
-        public int max_rpm;
-        public boolean use_chuff;
+        private SoundBite sound;
+        private int min_rpm;
+        private int max_rpm;
+        private boolean use_chuff;
         private javax.swing.Timer t;
 
-        public RPMSound(SoundBite sb, int min_r, int max_r, boolean chuff) {
+        private RPMSound(SoundBite sb, int min_r, int max_r, boolean chuff) {
             sound = sb;
             min_rpm = min_r;
             max_rpm = max_r;
@@ -57,19 +57,19 @@ class SteamSound extends EngineSound {
             sound.play();
         }
 
-        public void setRPM(int rpm) {
+        private void setRPM(int rpm) {
             if (use_chuff) {
                 t.setDelay(calcChuffInterval(rpm));
             }
         }
 
-        public void startChuff() {
+        private void startChuff() {
             if (!t.isRunning()) {
                 t.start();
             }
         }
 
-        public void stopChuff() {
+        private void stopChuff() {
             if (t.isRunning()) {
                 t.stop();
             }
@@ -77,22 +77,14 @@ class SteamSound extends EngineSound {
     }
 
     // Engine Sounds
-    ArrayList<RPMSound> rpm_sounds;
+    private ArrayList<RPMSound> rpm_sounds;
     int top_speed;
     private int driver_diameter;
     private int num_cylinders;
-    RPMSound current_rpm_sound;
+    private RPMSound current_rpm_sound;
 
     public SteamSound(String name) {
         super(name);
-    }
-
-    // Responds to throttle loco direction key (see EngineSound.java and EngineSoundEvent.java)
-    @Override
-    public void changeLocoDirection(int d) {
-        // If loco direction was changed we need to set topspeed of the loco to new value
-        // (this is necessary, when topspeed-forward and topspeed-reverse differs)
-        log.debug("loco direction: {}", d);
     }
 
     @Override
@@ -104,10 +96,14 @@ class SteamSound extends EngineSound {
 
     @Override
     public void stopEngine() {
-        current_rpm_sound.sound.fadeOut();
+        getCurrSound().fadeOut();
         if (current_rpm_sound.use_chuff) {
             current_rpm_sound.stopChuff();
         }
+    }
+
+    private SoundBite getCurrSound() {
+        return current_rpm_sound.sound;
     }
 
     private RPMSound getRPMSound(int rpm) {
@@ -148,7 +144,7 @@ class SteamSound extends EngineSound {
                 // DO something to shut down
                 //t = 0.0f;
                 setActualSpeed(0.0f);
-                current_rpm_sound.sound.fadeOut();
+                getCurrSound().fadeOut();
                 if (current_rpm_sound.use_chuff) {
                     current_rpm_sound.stopChuff();
                 }
@@ -214,6 +210,11 @@ class SteamSound extends EngineSound {
     public void setPosition(PhysicalLocation p) {
         for (RPMSound rps : rpm_sounds) {
             rps.sound.setPosition(p);
+            if (this.getTunnel()) {
+                rps.sound.attachSourcesToEffects();
+            } else {
+                rps.sound.detachSourcesToEffects();
+            }
         }
     }
 

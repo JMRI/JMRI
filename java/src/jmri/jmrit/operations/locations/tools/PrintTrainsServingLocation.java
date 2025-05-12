@@ -13,6 +13,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -81,7 +82,7 @@ public class PrintTrainsServingLocation {
                     boolean setout = false;
                     if (rl.isPickUpAllowed() &&
                             rl.getMaxCarMoves() > 0 &&
-                            !train.isLocationSkipped(rl.getId()) &&
+                            !train.isLocationSkipped(rl) &&
                             (train.isLocalSwitcher() ||
                                     (rl.getTrainDirection() & _location.getTrainDirections()) != 0) &&
                             (train.isLocalSwitcher() ||
@@ -92,7 +93,7 @@ public class PrintTrainsServingLocation {
                     }
                     if (rl.isDropAllowed() &&
                             rl.getMaxCarMoves() > 0 &&
-                            !train.isLocationSkipped(rl.getId()) &&
+                            !train.isLocationSkipped(rl) &&
                             (train.isLocalSwitcher() ||
                                     (rl.getTrainDirection() & _location.getTrainDirections()) != 0) &&
                             (train.isLocalSwitcher() ||

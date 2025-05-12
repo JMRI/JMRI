@@ -41,6 +41,56 @@ public interface SignalMastLogic extends NamedBean {
     int STORENONE = 4;
 
     /**
+     * String constant for sensors.
+     */
+    String PROPERTY_SENSORS = "sensors";
+
+    /**
+     * String constant for turnouts.
+     */
+    String PROPERTY_TURNOUTS = "turnouts";
+
+    /**
+     * String constant for auto turnouts.
+     */
+    String PROPERTY_AUTO_TURNOUTS = "autoturnouts";
+
+    /**
+     * String constant for blocks.
+     */
+    String PROPERTY_BLOCKS = "blocks";
+
+    /**
+     * String constant for auto blocks.
+     */
+    String PROPERTY_AUTO_BLOCKS = "autoblocks";
+
+    /**
+     * String constant for masts.
+     */
+    String PROPERTY_MASTS = "masts";
+
+    /**
+     * String constant for auto masts.
+     */
+    String PROPERTY_AUTO_MASTS = "automasts";
+
+    /**
+     * String constant for updated source.
+     */
+    String PROPERTY_UPDATED_SOURCE = "updatedSource";
+
+    /**
+     * String constant for updated destination.
+     */
+    String PROPERTY_UPDATED_DESTINATION = "updatedDestination";
+
+    /**
+     * String constant for length.
+     */
+    String PROPERTY_LENGTH = "length";
+
+    /**
      * Query if we are allowing the system to automatically generate a list of
      * conflicting Signal Mast that have a direct effect on our logic.
      *

@@ -188,6 +188,9 @@ public class SCWarrant extends Warrant {
         } else if (_runMode != MODE_RUN) {
             return ("Idle");
         } else {
+            if (getBlockOrderAt(getCurrentOrderIndex()) == null) {
+                return ("Uninitialized");
+            }
             String block = getBlockOrderAt(getCurrentOrderIndex()).getBlock().getDisplayName();
             String signal = "no signal";
             String aspect = "none";
@@ -219,7 +222,6 @@ public class SCWarrant extends Warrant {
      * This is "the main loop" for running a Signal Controlled Warrant
      ******************************************************************************************************/
     protected void runSignalControlledTrain () {
-        waitForStartblockToGetOccupied();
         allocateBlocksAndSetTurnouts(0);
         setTrainDirection();
         SCTrainRunner thread = new SCTrainRunner(this);
@@ -412,6 +414,32 @@ public class SCWarrant extends Warrant {
         }
     }
 
+    @Override
+    public String setRunMode(int mode, DccLocoAddress address,
+            LearnThrottleFrame student,
+            List<ThrottleSetting> commands, boolean runBlind) {
+        if (log.isDebugEnabled()) {
+            log.debug("{}: SCWarrant::setRunMode({}) ({}) called with _runMode= {}.",
+                  getDisplayName(), mode, MODES[mode], MODES[_runMode]);
+        }
+        _message = null;
+        if (_runMode != MODE_NONE) {
+            _message = getRunModeMessage();
+            log.debug("setRunMode called, but SCWarrant is already running");
+            return _message;
+        }
+        if (mode == MODE_RUN) {
+            // set mode before setStoppingBlock and callback to notifyThrottleFound are called
+            _runMode = mode;
+        } else {
+            deAllocate();
+            return _message;
+        }
+        getBlockAt(0)._entryTime = System.currentTimeMillis();
+        _message = acquireThrottle();
+        return _message;
+    } // end setRunMode
+
     /**
      * Block in the route going active.
      * Make sure to allocate the rest of the route, update our present location and then tell
@@ -420,18 +448,22 @@ public class SCWarrant extends Warrant {
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="NotifyAll call triggers recomputation")
     protected void goingActive(OBlock block) {
-        int activeIdx = getIndexOfBlockAfter(block, getCurrentOrderIndex());
-        log.debug("{} **Block \"{}\" goingActive. activeIdx= {}"
-                    + ", getCurrentOrderIndex()= {}"
-                    + " - warrant= {} _runMode = {} _throttle==null: {}",_trainName,block.getDisplayName(),activeIdx,getCurrentOrderIndex(),getDisplayName(),_runMode,(_throttle==null));
+        log.debug("{} **Block \"{}\" goingActive. "
+                    + " - warrant= {} _runMode = {} _throttle==null: {}",_trainName,block.getDisplayName(),getDisplayName(),_runMode,(_throttle==null));
         if (_runMode != MODE_RUN) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
+            log.debug("_runMode != MODE_RUN - ignored");
             return;
         }
         if (_throttle == null || _throttle.getSpeedSetting() == SPEED_STOP) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
+            log.debug("Train is not running - ignored");
             return;
         }
+        int activeIdx = getIndexOfBlockAfter(block, getCurrentOrderIndex());
+        log.debug("{} **Block \"{}\" goingActive. activeIdx= {}"
+                    + ", getCurrentOrderIndex()= {}"
+                    + " - warrant= {} _runMode = {} _throttle==null: {}",_trainName,block.getDisplayName(),activeIdx,getCurrentOrderIndex(),getDisplayName(),_runMode,(_throttle==null));
         if (activeIdx <= 0) {
             // The block going active is not part of our route ahead
             log.debug("{} Block going active is not part of this trains route forward",_trainName);
@@ -442,6 +474,8 @@ public class SCWarrant extends Warrant {
             // not necessary: It is done in the main loop in SCTrainRunner.run:  allocateBlocksAndSetTurnouts(getCurrentOrderIndex()+1)
             // update our present location
             incrementCurrentOrderIndex();
+            block.setValue(_trainName);
+            block.setState(block.getState() | OBlock.RUNNING);
             // fire property change (entered new block)
             firePropertyChange("blockChange", getBlockAt(getCurrentOrderIndex() - 1), getBlockAt(getCurrentOrderIndex()));
             // now let the main loop adjust speed.
@@ -654,6 +688,8 @@ public class SCWarrant extends Warrant {
         @Override
         public void run() {
             synchronized(_warrant) {
+
+                waitForStartblockToGetOccupied();
 
                 // Make sure the entire route is allocated before attemting to start the train
                 if (!_allowShallowAllocation) {

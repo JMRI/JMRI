@@ -23,7 +23,9 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.consist.JsonConsist;
@@ -141,6 +143,7 @@ public class JsonUtil {
         data.put(JsonOperations.KERNEL, car.getKernelName());
         data.put(JsonOperations.UTILITY, car.isUtility());
         data.put(JsonOperations.IS_LOCAL, car.isLocalMove());
+        data.put(JsonOperations.LAST_TRAIN, car.getLastTrainName());
         if (car.getFinalDestinationTrack() != null) {
             data.set(JsonOperations.FINAL_DESTINATION, this.getRSLocationAndTrack(car.getFinalDestinationTrack(), null, locale));
         } else if (car.getFinalDestination() != null) {
@@ -168,6 +171,7 @@ public class JsonUtil {
             data.set(JsonOperations.RETURN_WHEN_LOADED, null);
         }
         data.put(JsonOperations.DIVISION, car.getDivisionName());
+        data.put(JsonOperations.BLOCKING_ORDER, car.isPassenger() ? Integer.toString(car.getBlocking()) : "");
         data.put(JSON.STATUS, car.getStatus().replace("<", "&lt;").replace(">", "&gt;"));
         return data;
     }

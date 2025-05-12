@@ -21,42 +21,26 @@ class CreateAndShowGUI6(TableModelListener):
         self.frame = JFrame("Routes")
         self.frame.setSize(600, 600);
 
-        self.completeTablePanel()
+        self.completeTablePanel1()
         # print "about to populate"
         self.populate_action(None)
         self.cancel = False
         self.toggle = True
 
-    def completeTablePanel(self):
+    def completeTablePanel1(self):
 
         self.topPanel= JPanel();
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
 
-        scrollPane = JScrollPane(self.table);
-        scrollPane.setSize(600,600);
+        self.scrollPane = JScrollPane(self.table);
+        self.scrollPane.setPreferredSize(Dimension(600,600));
 
-        self.topPanel.add(scrollPane);
+        self.topPanel.add(self.scrollPane);
 
         self.buttonPane = JPanel();
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
-
-        # button_add = JButton("Add", actionPerformed = self.add_row_action)
-        # self.buttonPane.add(button_add);
-        # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
-
-        # button_populate = JButton("Populate", actionPerformed = self.populate_action)
-        # self.buttonPane.add(button_populate);
-        # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
-
-        # button_tidy = JButton("Tidy", actionPerformed = self.tidy_action)
-        # self.buttonPane.add(button_tidy);
-        # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
-        #
-        # button_apply = JButton("Save", actionPerformed = self.save_action)
-        # self.buttonPane.add(button_apply)
-        # self.buttonPane.add(Box.createHorizontalGlue());
 
         button_close = JButton("Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
@@ -66,21 +50,9 @@ class CreateAndShowGUI6(TableModelListener):
         self.buttonPane.add(button_task)
         self.buttonPane.add(Box.createHorizontalGlue());
         #
-        # button_task = JButton("Delay", actionPerformed = self.delay_action)
-        # self.buttonPane.add(button_task)
-        # self.buttonPane.add(Box.createHorizontalGlue());
-
         button_repetitions = JButton("Delete All Rows", actionPerformed = self.delete_all_action)
         self.buttonPane.add(button_repetitions)
         self.buttonPane.add(Box.createHorizontalGlue());
-
-        # button_savetofile = JButton("Save To File", actionPerformed = self.savetofile_action)
-        # self.buttonPane.add(button_savetofile)
-        # self.buttonPane.add(Box.createHorizontalGlue());
-        #
-        # button_loadfromfile = JButton("Load From File", actionPerformed = self.loadfromfile_action)
-        # self.buttonPane.add(button_loadfromfile)
-        # self.buttonPane.add(Box.createHorizontalGlue());
 
         contentPane = self.frame.getContentPane()
 
@@ -93,7 +65,24 @@ class CreateAndShowGUI6(TableModelListener):
 
         return
 
+    def completeTablePanel(self):
+        contentPane = self.frame.getContentPane()
 
+        contentPane.removeAll()
+        contentPane.add(self.topPanel, BorderLayout.CENTER)
+        contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
+        size_of_one_row = 30
+        height = 50
+        for row in reversed(range(len(self.model.data))):
+            height += size_of_one_row
+            # print "height" , height
+        # print "height" , height
+        height = min(height, 800)
+        self.scrollPane.setPreferredSize(Dimension(600, height))
+
+        self.frame.pack();
+        self.frame.setVisible(True)
+        return
 
 
     def buttonPanel(self):
@@ -288,6 +277,11 @@ class CreateAndShowGUI6(TableModelListener):
         filter = FileNameExtensionFilter("text files txt", ["txt"])
         j.setDialogTitle("Select a .txt file");
         j.addChoosableFileFilter(filter);
+
+        # Automatically select the first file in the directory
+        files = j.getCurrentDirectory().listFiles()
+        j.setSelectedFile(files[0])
+
         ret = j.showOpenDialog(None);
         if (ret == JFileChooser.APPROVE_OPTION) :
             file = j.getSelectedFile()
@@ -603,6 +597,7 @@ class MyModelListener6(TableModelListener):
         self.cancel = False
         self.logLevel = 0
         self.i = 0
+
     def tableChanged(self, e) :
         global CreateAndShowGUI5_glb
         # print "INDES", self.i
@@ -688,19 +683,14 @@ class MyTableModel6 (DefaultTableModel):
                 self.data.pop(row)
 
     def add_row(self):
-        # TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
-        # train_list = TrainManager.getTrainsByTimeList()
-        [route_col, edit_col, delete_col] = [0, 1, 2]
-        # for row in reversed(range(len(self.data))):
 
-        # indices = [int(train.getName().split("Train",1)[1]) for train in train_list if train.getName().startswith("Train")]
-        indices = [int(self.data[row][train_name_col].split("Train",1)[1]) for row in reversed(range(len(self.data)))
-                   if self.data[row][train_name_col].startswith("Train")]
-        if indices == []:
-            index = 1
-        else:
-            index = max(indices) + 1
-        train_name = "Train" + str(index)
+        # indices = [int(self.data[row][train_name_col].split("Train",1)[1]) for row in reversed(range(len(self.data)))
+        #            if self.data[row][train_name_col].startswith("Train")]
+        # if indices == []:
+        #     index = 1
+        # else:
+        #     index = max(indices) + 1
+        train_name = "Please Assign"
         self.data.append(["00:00", "", "Once", False, train_name, False])
         # print self.data
         # print "added"

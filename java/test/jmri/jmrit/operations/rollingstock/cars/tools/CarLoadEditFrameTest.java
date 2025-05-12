@@ -9,10 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -56,6 +55,32 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
 
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertFalse("exists", cl.containsName("Boxcar", "A" + CarLoad.SPLIT_CHAR + "B"));
+
+        JUnitUtil.dispose(f);
+    }
+
+    /**
+     * Test load name contains the hyphen char. Should be rejected.
+     */
+    @Test
+    public void testCarLoadEditFrameAddButtonException3() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        CarLoadEditFrame f = new CarLoadEditFrame();
+        f.initComponents("Boxcar", "");
+        f.addTextBox.setText(TrainCommon.HYPHEN);
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.addButton);
+
+        // error dialog window should appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("canNotAdd", Bundle.getMessage("load")),
+                Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+
+        // hyphen and another character should work
+        f.addTextBox.setText(TrainCommon.HYPHEN + "A");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+        Assert.assertTrue("exists", cl.containsName("Boxcar", TrainCommon.HYPHEN + "A"));
 
         JUnitUtil.dispose(f);
     }
@@ -171,6 +196,37 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
     }
 
     /**
+     * Replace default "E" name with "L" exception
+     */
+    @Test
+    public void testCarLoadEditFrameReplaceButtonDefaultEmptyException() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+        Assert.assertEquals("default empty name", "E", cl.getDefaultEmptyName());
+        Assert.assertEquals("default load name", "L", cl.getDefaultLoadName());
+
+        CarLoadEditFrame f = new CarLoadEditFrame();
+        f.initComponents("Boxcar", "E");
+        f.addTextBox.setText("L");
+
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
+        // dialog window should appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        // 2nd window should appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("canNotReplace", Bundle.getMessage("Load")),
+                Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+
+        Assert.assertTrue("exists", cl.containsName("Boxcar", "E"));
+        Assert.assertTrue("exists", cl.containsName("Boxcar", "L"));
+
+        Assert.assertEquals("default empty name", "E", cl.getDefaultEmptyName());
+
+        JUnitUtil.dispose(f);
+    }
+
+    /**
      * Replace default "L" name
      */
     @Test
@@ -192,7 +248,38 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("exists", cl.containsName("Boxcar", "L"));
         Assert.assertTrue("exists", cl.containsName("Boxcar", "Replace L"));
 
-        Assert.assertEquals("default empty name", "Replace L", cl.getDefaultLoadName());
+        Assert.assertEquals("default load name", "Replace L", cl.getDefaultLoadName());
+
+        JUnitUtil.dispose(f);
+    }
+
+    /**
+     * Replace default "L" name with "E" exception
+     */
+    @Test
+    public void testCarLoadEditFrameReplaceButtonDefaultLoadException() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+        Assert.assertEquals("default empty name", "E", cl.getDefaultEmptyName());
+        Assert.assertEquals("default load name", "L", cl.getDefaultLoadName());
+
+        CarLoadEditFrame f = new CarLoadEditFrame();
+        f.initComponents("Boxcar", "L");
+        f.addTextBox.setText("E");
+
+        JemmyUtil.enterClickAndLeaveThreadSafe(f.replaceButton);
+        // dialog window should appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        // 2nd window should appear
+        JemmyUtil.pressDialogButton(Bundle.getMessage("canNotReplace", Bundle.getMessage("Load")),
+                Bundle.getMessage("ButtonOK"));
+        JemmyUtil.waitFor(f);
+
+        Assert.assertTrue("exists", cl.containsName("Boxcar", "L"));
+        Assert.assertTrue("exists", cl.containsName("Boxcar", "E"));
+
+        Assert.assertEquals("default load name", "L", cl.getDefaultLoadName());
 
         JUnitUtil.dispose(f);
     }

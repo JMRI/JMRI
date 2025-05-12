@@ -1060,6 +1060,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
 //            ed.pack();
             ed.setVisible(true);
             dispose();
+            InstanceManager.getDefault(EditorManager.class).add(ed);
             return ed;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException cnfe) {
             log.error("changeView exception {}", cnfe.toString());
@@ -3020,6 +3021,33 @@ abstract public class Editor extends JmriJFrameWithPermissions
     }
 
     /**
+     * Ask user the user to decide what to do with LogixNGs, whether to delete them
+     * or convert them to normal LogixNGs.  Then respond to user's choice.
+     */
+    private void dispositionLogixNGs() {
+        ArrayList<LogixNG> logixNGArrayList = new ArrayList<>();
+        for (Positionable _content : _contents) {
+            if (_content.getLogixNG() != null) {
+                LogixNG logixNG = _content.getLogixNG();
+                logixNGArrayList.add(logixNG);
+            }
+        }
+        if (!logixNGArrayList.isEmpty()) {
+            LogixNGDeleteDialog logixNGDeleteDialog = new LogixNGDeleteDialog(this, getTitle(), logixNGArrayList);
+            logixNGDeleteDialog.setVisible(true);
+            List<LogixNG> selectedItems = logixNGDeleteDialog.getSelectedItems();
+            for (LogixNG logixNG : selectedItems) {
+                deleteLogixNG_Internal(logixNG);
+                logixNGArrayList.remove(logixNG);
+            }
+            for (LogixNG logixNG : logixNGArrayList) {
+                logixNG.setInline(false);
+                logixNG.setEnabled(!logixNGDeleteDialog.isDisableLogixNG());
+            }
+        }
+    }
+
+    /**
      * Ask user if panel should be deleted. The caller should dispose the panel
      * to delete it.
      *
@@ -3036,6 +3064,9 @@ abstract public class Editor extends JmriJFrameWithPermissions
                 new Object[]{Bundle.getMessage("ButtonYesDelete"), Bundle.getMessage("ButtonCancel")},
                 Bundle.getMessage("ButtonCancel"));
         // return without deleting if "Cancel" or Cancel Dialog response
+        if (selectedValue == 0) {
+            dispositionLogixNGs();
+        }
         return (selectedValue == 0 ); // array position 0 = Yes, Delete.
     }
 

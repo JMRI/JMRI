@@ -71,11 +71,12 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
     }
 
-    ComponentFactory cf = null;
+    ComponentFactory cf;
     private LnTrafficController lt;
     protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
     private LncvDevicesManager lncvdm = null;
+    private Lnsv1DevicesManager lnsv1dm = null;
     private LnMessageManager lnm = null;
     private Ln7gAccyRoutesManager ln7gAcRtm;
 
@@ -128,6 +129,10 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
         this.lncvdm = lncvdm;
     }
 
+    public void setLnsv1DevicesManager(Lnsv1DevicesManager lnsv1dm) {
+        this.lnsv1dm = lnsv1dm;
+    }
+
     protected boolean mTurnoutNoRetry = false;
     protected boolean mTurnoutExtraSpace = false;
     protected boolean mInterrogateAtStart = true;
@@ -142,7 +147,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
-     *                                  transopnding reports
+     *                                  transponding reports
      * @param mInterrogate       Send interrogate messages at start up
      * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1
      */
@@ -266,6 +271,7 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             LnCommandStationType cmdstation = getSlotManager().getCommandStationType();
             log.debug("getThrottleManager constructs for {}", cmdstation.getName());
             throttleManager = cmdstation.getThrottleManager(this);
+            assert throttleManager != null;
             log.debug("result was type {}", throttleManager.getClass());
             store(throttleManager,ThrottleManager.class);
         }
@@ -309,6 +315,17 @@ public class LocoNetSystemConnectionMemo extends DefaultSystemConnectionMemo imp
             return null;
         }
         return (LnLightManager) classObjectMap.computeIfAbsent(LightManager.class, (Class<?> c) -> new LnLightManager(this));
+    }
+
+    public Lnsv1DevicesManager getLnsv1DevicesManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (lnsv1dm == null) {
+            setLnsv1DevicesManager(new Lnsv1DevicesManager(this));
+            log.debug("Auto create of Lnsv1DevicesManager for initial configuration");
+        }
+        return lnsv1dm;
     }
 
     public LncvDevicesManager getLncvDevicesManager() {
