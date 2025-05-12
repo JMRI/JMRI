@@ -572,6 +572,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         boolean toolBarIsVertical = (toolBarSide.equals(ToolBarSide.eRIGHT) || toolBarSide.equals(ToolBarSide.eLEFT));
+        if ( leToolBarPanel != null ) {
+            leToolBarPanel.dispose();
+        }
         if (toolBarIsVertical) {
             leToolBarPanel = new LayoutEditorVerticalToolBarPanel(this);
             editToolBarScrollPane = new JScrollPane(leToolBarPanel);
