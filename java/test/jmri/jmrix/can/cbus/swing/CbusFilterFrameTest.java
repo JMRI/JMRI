@@ -121,13 +121,13 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         mEvent.setElement(4, 0x01); // Event < 123
         assertTrue(cff.filter(mEvent));
 
-        JUnitUtil.dispose(jfo.getWindow());
+        // JUnitUtil.dispose(jfo.getWindow());
 
       //  assertEquals("Filter ( 1 / 1 ) ",
        //     new JToggleButtonOperator(jfo,4).getText(),"text says pass");
 
-        JUnitUtil.dispose(jfo.getWindow());
-        jfo.waitClosed();
+        // JUnitUtil.dispose(jfo.getWindow());
+        // jfo.waitClosed();
 
         // frame.dispose();
         
