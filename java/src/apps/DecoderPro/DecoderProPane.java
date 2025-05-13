@@ -1,13 +1,14 @@
 package apps.DecoderPro;
 
 import apps.Apps;
+
+import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -44,13 +45,12 @@ public class DecoderProPane extends apps.AppsLaunchPane {
 
     @Override
     protected String line1() {
-        return MessageFormat.format(Bundle.getMessage("DecoderProVersionCredit"),
-                new Object[]{jmri.Version.name()});
+        return Bundle.getMessage("DecoderProVersionCredit", jmri.Version.name());
     }
 
     @Override
     protected String line2() {
-        return "http://jmri.org/DecoderPro ";
+        return "https://jmri.org/DecoderPro";
     }
 
     @Override
@@ -60,8 +60,10 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         j.add(super.statusPanel());
 
         // Buttons
-        Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
-        Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
+        Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(
+            Bundle.getMessage("DpButtonUseProgrammingTrack"));
+        Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(
+            Bundle.getMessage("DpButtonProgramOnMainTrack"));
         Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,7 +73,7 @@ public class DecoderProPane extends apps.AppsLaunchPane {
 
         JButton b1 = new JButton(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         b1.addActionListener(serviceprog);
-        b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        b1.setAlignmentX(Component.CENTER_ALIGNMENT);
         j.add(b1);
         if (jmri.InstanceManager.getNullableDefault(jmri.GlobalProgrammerManager.class) == null
                 || !jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager.class).isGlobalProgrammerAvailable()) {
@@ -80,7 +82,7 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         }
         JButton m1 = new JButton(Bundle.getMessage("DpButtonProgramOnMainTrack"));
         m1.addActionListener(opsprog);
-        m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        m1.setAlignmentX(Component.CENTER_ALIGNMENT);
         j.add(m1);
         if (jmri.InstanceManager.getNullableDefault(jmri.AddressedProgrammerManager.class) == null
                 || !jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).isAddressedModePossible()) {
@@ -92,11 +94,11 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         p3.setLayout(new java.awt.FlowLayout());
         JButton h1 = new JButton(Bundle.getMessage("ButtonHelp"));
         jmri.util.HelpUtil.addHelpToComponent(h1, "html.apps.DecoderPro.index");
-        h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        h1.setAlignmentX(Component.CENTER_ALIGNMENT);
         p3.add(h1);
         JButton q1 = new JButton(Bundle.getMessage("ButtonQuit"));
         q1.addActionListener(quit);
-        q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        q1.setAlignmentX(Component.CENTER_ALIGNMENT);
         p3.add(q1);
         j.add(p3);
 
