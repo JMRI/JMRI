@@ -2,7 +2,9 @@ package jmri.jmrix.can.cbus.swing;
 
 
 import java.io.*;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.ArrayList;
 
 import jmri.jmrix.can.CanMessage;
@@ -128,8 +130,8 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
       //  assertEquals("Filter ( 1 / 1 ) ",
        //     new JToggleButtonOperator(jfo,4).getText(),"text says pass");
 
-        JUnitUtil.dispose(jfo.getWindow());
-        jfo.waitClosed();
+        // JUnitUtil.dispose(jfo.getWindow());
+        // jfo.waitClosed();
 
         // frame.dispose();
         
@@ -159,18 +161,15 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
         frame = new CbusFilterFrame(_testConsole,null);
     }
 
-    static int loop = 1;
-
     @AfterEach
     @Override
     public void tearDown() {
 
-        JFrameOperator jfo = new JFrameOperator(frame);
-        jfo.waitClosed();
+        // JFrameOperator jfo = new JFrameOperator(frame);
+        // jfo.waitClosed();
         
 
         if( _testConsole !=null ){
-
             _testConsole.dispose();
         }
 
@@ -178,7 +177,7 @@ public class CbusFilterFrameTest extends jmri.util.JmriJFrameTestBase {
            JUnitUtil.dispose(frame);
         }
         frame = null;
-        JUnitUtil.resetWindows(true,true);
+        // JUnitUtil.resetWindows(true,true);
 
         tc.terminateThreads();
         memo.dispose();
