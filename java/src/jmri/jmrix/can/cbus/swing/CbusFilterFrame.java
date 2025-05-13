@@ -79,8 +79,8 @@ public class CbusFilterFrame extends JmriJFrame {
 
     @Override
     public void dispose() {
-        ftp.dispose();
         super.dispose();
+        ftp.dispose();
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusFilterFrame.class);
