@@ -261,7 +261,7 @@ public class CbusFilterTreePane extends JPanel {
                 public void run() {
 
                     if ( disposed ) {
-                        this.cancel();
+                        return;
                     }
 
                     iteration++;
@@ -277,10 +277,10 @@ public class CbusFilterTreePane extends JPanel {
                             CbusFilterJCheckBoxTree.this.repaint();
                         }
                     }
-
+                    TimerUtil.scheduleOnGUIThread(task, refreshPeriod);
                 }
             };
-            TimerUtil.scheduleOnGUIThread(task, refreshPeriod, refreshPeriod);
+            TimerUtil.scheduleOnGUIThread(task, refreshPeriod);
         }
 
     }
