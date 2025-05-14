@@ -116,6 +116,7 @@ public class CbusFilterTreePaneTest {
             _testConsole.dispose();
         }
         if ( frame != null ) {
+            frame.setDefaultCloseOperation(CbusFilterFrame.DISPOSE_ON_CLOSE);
             JUnitUtil.dispose(frame);
             frame = null;
         }
