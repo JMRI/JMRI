@@ -240,10 +240,13 @@ public class CbusFilterTreePane extends JPanel {
 
         void dispose() {
             if ( task != null ) {
-                task.cancel();
+//                task.cancel();
+                disposed = true;
                 task = null;
             }
         }
+
+        private boolean disposed;
 
         private TimerTask task;
         private long iteration;
@@ -256,6 +259,10 @@ public class CbusFilterTreePane extends JPanel {
             task = new TimerTask() {
                 @Override
                 public void run() {
+
+                    if ( disposed ) {
+                        this.cancel();
+                    }
 
                     iteration++;
                     if ( iteration % 10 == 0 ) {
