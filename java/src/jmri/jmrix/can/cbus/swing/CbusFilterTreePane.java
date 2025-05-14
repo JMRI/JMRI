@@ -223,7 +223,7 @@ public class CbusFilterTreePane extends JPanel {
         CbusFilterJCheckBoxTree() {
             super();
             setCellRenderer(new CbusFilterTreeCellRenderer());
-            startRefreshTimer();
+            // startRefreshTimer();
         }
 
         @Override
@@ -252,7 +252,7 @@ public class CbusFilterTreePane extends JPanel {
         private long iteration;
         private long numFrames = 0;
 
-        private void startRefreshTimer() {
+        void startRefreshTimer() {
 
             int refreshPeriod = 300;
 
