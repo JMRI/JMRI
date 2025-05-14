@@ -19,6 +19,7 @@ import jmri.util.TimerUtil;
 import jmri.util.swing.JCheckBoxTree;
 import jmri.util.swing.JCheckBoxTreeCellRenderer;
 import jmri.util.swing.JmriMouseEvent;
+import jmri.util.swing.JSpinnerUtil;
 
 import static jmri.jmrix.can.cbus.CbusFilterType.*;
 
@@ -64,7 +65,7 @@ public class CbusFilterTreePane extends JPanel {
         fPaneScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         fPaneScroll.setVisible(true);
 
-        this.add(BorderLayout.CENTER, fPaneScroll);
+        // add(BorderLayout.CENTER, fPaneScroll);
         this.add(BorderLayout.SOUTH, getBottomPanel());
 
         cbt.addPropertyChangeListener( event -> {
@@ -167,6 +168,7 @@ public class CbusFilterTreePane extends JPanel {
             spinner = new JSpinner(s);
             JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner, "#");
             spinner.setEditor(editor);
+
 
             JFormattedTextField field = (JFormattedTextField) editor.getComponent(0);
             DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
