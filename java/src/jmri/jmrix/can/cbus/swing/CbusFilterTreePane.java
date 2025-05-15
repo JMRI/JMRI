@@ -223,8 +223,8 @@ public class CbusFilterTreePane extends JPanel {
 
         CbusFilterJCheckBoxTree() {
             super();
-            // setCellRenderer(new CbusFilterTreeCellRenderer());
-            // startRefreshTimer();
+            setCellRenderer(new CbusFilterTreeCellRenderer());
+            startRefreshTimer();
         }
 
         @Override
@@ -303,6 +303,8 @@ public class CbusFilterTreePane extends JPanel {
 
             CbusFilterType filterType = CbusFilterType.getFilterByName(node.getUserObject().toString());
 
+            /**
+
             JPanel toRet = new JPanel();
             toRet.setOpaque(false);
             toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
@@ -335,6 +337,10 @@ public class CbusFilterTreePane extends JPanel {
 
 
             return toRet;
+            *
+            *
+            */
+            return withCheckBox;
         }
 
         private void addMinMaxText( CbusFilterType filterType, @Nonnull JPanel toRet ) {
