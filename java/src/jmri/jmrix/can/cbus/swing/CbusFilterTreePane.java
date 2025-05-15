@@ -309,12 +309,14 @@ public class CbusFilterTreePane extends JPanel {
             toRet.add(withCheckBox);
             addMinMaxText(filterType,toRet);
 
+            /**
+
             int nodeNum = filter.getNodeNumber(node);
             if ( nodeNum > 0 ) {
                 toRet.add(new JLabel( SPACE + new CbusNameService(memo).getNodeName( nodeNum ) ));
             }
 
-            /**
+            
 
             var label = filter.getNumberFilteredLabel(node);
             if ( label != null ) {
