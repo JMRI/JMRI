@@ -303,44 +303,42 @@ public class CbusFilterTreePane extends JPanel {
 
             CbusFilterType filterType = CbusFilterType.getFilterByName(node.getUserObject().toString());
 
-            /**
+            this.removeAll();
 
-            JPanel toRet = new JPanel();
-            toRet.setOpaque(false);
-            toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
-            toRet.add(withCheckBox);
-            addMinMaxText(filterType,toRet);
+            // JPanel toRet = new JPanel();
+            // toRet.setOpaque(false);
+            this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+            this.add(withCheckBox);
+            addMinMaxText(filterType,this);
 
             int nodeNum = filter.getNodeNumber(node);
             if ( nodeNum > 0 ) {
-                toRet.add(new JLabel( SPACE + new CbusNameService(memo).getNodeName( nodeNum ) ));
+                this.add(new JLabel( SPACE + new CbusNameService(memo).getNodeName( nodeNum ) ));
             }
 
             var label = filter.getNumberFilteredLabel(node);
             if ( label != null ) {
-                toRet.add(new JLabel(" "));
-                toRet.add( label );
+                this.add(new JLabel(" "));
+                this.add( label );
             }
 
             if ( node.isRoot() ) {
 
                 label = new JLabel( SPACE + (filter.getPassedReply()+filter.getPassedMessage()) + SPACE);
                 label.setForeground( GREEN );
-                toRet.add(spaceLabel);
-                toRet.add(label);
-                toRet.add(spaceLabel);
+                add(spaceLabel);
+                add(label);
+                add(spaceLabel);
                 label = new JLabel( SPACE + (filter.getFilteredReply()+filter.getFilteredMessage()) + SPACE);
                 label.setForeground( AMBER );
-                toRet.add(label);
-                toRet.add(spaceLabel);
+                add(label);
+                add(spaceLabel);
             }
 
 
-            return toRet;
-            *
-            *
-            */
-            return withCheckBox;
+            return this;
+            
+            // return withCheckBox;
         }
 
         private void addMinMaxText( CbusFilterType filterType, @Nonnull JPanel toRet ) {
