@@ -68,13 +68,15 @@ public class CbusFilterTreePane extends JPanel {
         // add(BorderLayout.CENTER, fPaneScroll);
         this.add(BorderLayout.SOUTH, getBottomPanel());
 
-        cbt.addPropertyChangeListener( event -> {
-            if ( JCheckBoxTree.PROPERTY_CHANGE_CHECKBOX_STATUS.equals(event.getPropertyName()) ) {
-                checkBoxesChanged();
-            }
-        });
+        cbt.addPropertyChangeListener( pcl);
 
     }
+
+    private java.beans.PropertyChangeListener pcl = (event) ->  {
+        if ( JCheckBoxTree.PROPERTY_CHANGE_CHECKBOX_STATUS.equals(event.getPropertyName()) ) {
+            checkBoxesChanged();
+        }
+    };
 
     /**
      * Filter a CanReply or CanMessage.
@@ -150,6 +152,7 @@ public class CbusFilterTreePane extends JPanel {
     }
 
     public void dispose() {
+        cbt.removePropertyChangeListener(pcl);
         cbt.dispose();
     }
 
