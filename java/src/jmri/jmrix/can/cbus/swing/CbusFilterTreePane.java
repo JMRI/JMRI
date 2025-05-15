@@ -314,11 +314,14 @@ public class CbusFilterTreePane extends JPanel {
                 toRet.add(new JLabel( SPACE + new CbusNameService(memo).getNodeName( nodeNum ) ));
             }
 
+            /**
+
             var label = filter.getNumberFilteredLabel(node);
             if ( label != null ) {
                 toRet.add(new JLabel(" "));
                 toRet.add( label );
             }
+
 
             if ( node.isRoot() ) {
 
@@ -333,6 +336,7 @@ public class CbusFilterTreePane extends JPanel {
                 toRet.add(spaceLabel);
             }
 
+        */
 
             return toRet;
             
