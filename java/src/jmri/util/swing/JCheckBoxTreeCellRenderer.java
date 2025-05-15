@@ -12,16 +12,19 @@ import javax.swing.tree.TreePath;
  * JCheckBoxTreeCellRenderer implements a TreeCellRenderer for JCheckBoxTree
  * @author Steve Young Copyright (C) 2025
  */
-public class JCheckBoxTreeCellRenderer extends JPanel implements TreeCellRenderer {
+public class JCheckBoxTreeCellRenderer implements TreeCellRenderer {
 
     private final TriStateJCheckBox checkBox;
 
+    private final JPanel panel;
+
     public JCheckBoxTreeCellRenderer() {
         super();
-        this.setLayout(new BorderLayout());
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
         checkBox = new TriStateJCheckBox();
-        add(checkBox, BorderLayout.CENTER);
-        setOpaque(false);
+        panel.add(checkBox, BorderLayout.CENTER);
+        panel.setOpaque(false);
     }
 
     @Override
@@ -30,7 +33,7 @@ public class JCheckBoxTreeCellRenderer extends JPanel implements TreeCellRendere
 
         javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode) value;
         if (!(tree instanceof JCheckBoxTree)) {
-            return this;
+            return panel;
         }
         JCheckBoxTree jcbt = (JCheckBoxTree) tree;
         TreePath tp = new TreePath(node.getPath());
@@ -41,7 +44,7 @@ public class JCheckBoxTreeCellRenderer extends JPanel implements TreeCellRendere
         } 
         Object obj = node.getUserObject();
         checkBox.setText(obj == null ? null : obj.toString());
-        return this;
+        return panel;
     }
 
 }
