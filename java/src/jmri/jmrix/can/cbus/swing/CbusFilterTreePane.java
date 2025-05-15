@@ -301,11 +301,18 @@ public class CbusFilterTreePane extends JPanel {
             Component withCheckBox =  super.getTreeCellRendererComponent(
                 tree, value, selected, expanded, leaf, row, hasFocus);
 
+
+
             CbusFilterType filterType = CbusFilterType.getFilterByName(node.getUserObject().toString());
+
+            System.out.println("filterType " + filterType );
 
             JPanel toRet = new JPanel();
             toRet.setOpaque(false);
             toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
+
+            System.out.println("withCB " + withCheckBox );
+            
             toRet.add(withCheckBox);
 
             /**
