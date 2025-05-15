@@ -307,6 +307,8 @@ public class CbusFilterTreePane extends JPanel {
             toRet.setOpaque(false);
             toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
             toRet.add(withCheckBox);
+
+            /**
             addMinMaxText(filterType,toRet);
 
             /**
