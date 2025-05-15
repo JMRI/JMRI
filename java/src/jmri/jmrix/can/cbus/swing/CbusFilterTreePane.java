@@ -223,7 +223,7 @@ public class CbusFilterTreePane extends JPanel {
 
         CbusFilterJCheckBoxTree() {
             super();
-            setCellRenderer(new CbusFilterTreeCellRenderer());
+            // setCellRenderer(new CbusFilterTreeCellRenderer());
             // startRefreshTimer();
         }
 
