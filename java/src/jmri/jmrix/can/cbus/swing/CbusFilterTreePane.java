@@ -9,7 +9,6 @@ import java.util.TimerTask;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.text.DefaultFormatter;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
@@ -171,11 +170,8 @@ public class CbusFilterTreePane extends JPanel {
             spinner = new JSpinner(s);
             JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spinner, "#");
             spinner.setEditor(editor);
+            JSpinnerUtil.setCommitsOnValidEdit(spinner, true);
 
-
-            JFormattedTextField field = (JFormattedTextField) editor.getComponent(0);
-            DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
-            formatter.setCommitsOnValidEdit(true);
             spinner.addChangeListener((ChangeEvent e) -> {
                 filter.setMinMax(fType, (Integer) spinner.getValue() );
                 setModelFromMinMax(fType, (Integer) spinner.getValue() );
@@ -228,7 +224,7 @@ public class CbusFilterTreePane extends JPanel {
         CbusFilterJCheckBoxTree() {
             super();
             setCellRenderer(new CbusFilterTreeCellRenderer());
-            startRefreshTimer();
+            // startRefreshTimer();
         }
 
         @Override
