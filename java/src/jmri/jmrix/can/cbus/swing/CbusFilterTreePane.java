@@ -65,7 +65,7 @@ public class CbusFilterTreePane extends JPanel {
         fPaneScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         fPaneScroll.setVisible(true);
 
-        // add(BorderLayout.CENTER, fPaneScroll);
+        add(BorderLayout.CENTER, fPaneScroll);
         this.add(BorderLayout.SOUTH, getBottomPanel());
 
         cbt.addPropertyChangeListener( pcl);
