@@ -2408,43 +2408,46 @@ public class TrainBuilderBase extends TrainCommon {
      * timing of car pulls by other trains.
      */
     protected String checkReserved(Train train, RouteLocation rld, Car car, Track destTrack, boolean printMsg) {
-        // car can be a kernel so get total length
-        int length = car.getTotalKernelLength();
-        log.debug("Car length: {}, available track space: {}, reserved: {}", length,
-                destTrack.getAvailableTrackSpace(), destTrack.getReserved());
-        if (length > destTrack.getAvailableTrackSpace() +
-                destTrack.getReserved()) {
-            String trainExpectedArrival = train.getExpectedArrivalTime(rld, true);
-            int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
-            int reservedReturned = 0;
-            // does this car already have this destination?
-            if (car.getDestinationTrack() == destTrack) {
-                reservedReturned = -car.getTotalLength();
-            }
-            // get a list of cars on this track
-            List<Car> cars = carManager.getList(destTrack);
-            for (Car kar : cars) {
-                if (kar.getTrain() != null && kar.getTrain() != train) {
-                    int carPullTime = convertStringTime(kar.getPickupTime());
-                    if (trainArrivalTimeMinutes < carPullTime) {
-                        // don't print if checking redirect to alternate
-                        if (printMsg) {
-                            addLine(_buildReport, SEVEN,
-                                    Bundle.getMessage("buildCarTrainTiming", kar.toString(),
-                                            kar.getTrack().getTrackTypeName(), kar.getLocationName(),
-                                            kar.getTrackName(), kar.getTrainName(), kar.getPickupTime(),
-                                            _train.getName(), trainExpectedArrival));
+        // car returning to same track?
+        if (car.getTrack() != destTrack) {
+            // car can be a kernel so get total length
+            int length = car.getTotalKernelLength();
+            log.debug("Car length: {}, available track space: {}, reserved: {}", length,
+                    destTrack.getAvailableTrackSpace(), destTrack.getReserved());
+            if (length > destTrack.getAvailableTrackSpace() +
+                    destTrack.getReserved()) {
+                String trainExpectedArrival = train.getExpectedArrivalTime(rld, true);
+                int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
+                int reservedReturned = 0;
+                // does this car already have this destination?
+                if (car.getDestinationTrack() == destTrack) {
+                    reservedReturned = -car.getTotalKernelLength();
+                }
+                // get a list of cars on this track
+                List<Car> cars = carManager.getList(destTrack);
+                for (Car kar : cars) {
+                    if (kar.getTrain() != null && kar.getTrain() != train) {
+                        int carPullTime = convertStringTime(kar.getPickupTime());
+                        if (trainArrivalTimeMinutes < carPullTime) {
+                            // don't print if checking redirect to alternate
+                            if (printMsg) {
+                                addLine(_buildReport, SEVEN,
+                                        Bundle.getMessage("buildCarTrainTiming", kar.toString(),
+                                                kar.getTrack().getTrackTypeName(), kar.getLocationName(),
+                                                kar.getTrackName(), kar.getTrainName(), kar.getPickupTime(),
+                                                _train.getName(), trainExpectedArrival));
+                            }
+                            reservedReturned += kar.getTotalLength();
                         }
-                        reservedReturned += kar.getTotalLength();
                     }
                 }
-            }
-            if (length > destTrack.getAvailableTrackSpace() - reservedReturned) {
-                if (printMsg) {
-                    addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildWarnTrainTiming", car.toString(), _train.getName()));
+                if (length > destTrack.getAvailableTrackSpace() - reservedReturned) {
+                    if (printMsg) {
+                        addLine(_buildReport, SEVEN,
+                                Bundle.getMessage("buildWarnTrainTiming", car.toString(), _train.getName()));
+                    }
+                    return TIMING;
                 }
-                return TIMING;
             }
         }
         return Track.OKAY;

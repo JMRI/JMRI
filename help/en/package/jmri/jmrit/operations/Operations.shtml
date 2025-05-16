@@ -4984,15 +4984,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="PassengerTrainRoute">Passenger Train Route</h3>
       Normally passenger trains run on a schedule based on departure times. If you want your
       Manifests to show the departure times for your train, create a route in which you specify the
-      departure time at each location. In the lower right hand corner of the
-      <a href="#EditRoute">Edit Route</a> window, select "Departure Time" in the Display box. Now
-      select the departure time for each location in the train's route. The Manifest statement "No
-      work at xxx" isn't appropriate for a passenger train. To eliminate this statement, simply add
-      a comment to each location in the train's route. Use the
+      departure time at each location. The Manifest statement "No work at xxx" isn't appropriate for
+      a passenger train. To eliminate this statement, simply add a comment to each location in the
+      train's route. Use the
       <a href="#EditRoute">Edit Route</a> window, and for each location, you can add a comment or
-      edit an existing one. Also see the text option "{0}, {1}" in 
-      <a href="#ManifestPrintOptionsTools">Edit Manifest Text</a> to change the format of
-      the no work message that also has a route location comment.
+      edit an existing one. Also see the text option "{0}, {1}" in
+      <a href="#ManifestPrintOptionsTools">Edit Manifest Text</a> to change the format of the no
+      work message that also has a route location comment.
 
       <h3 id="DepartingStagingRoute">Departing Staging Route</h3>
       The program gives you several route options with regards to trains that depart from staging.
