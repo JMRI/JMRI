@@ -334,7 +334,7 @@ public class CbusFilterTreePane extends JPanel {
 
             CbusFilterType filterType = CbusFilterType.getFilterByName(node.getUserObject().toString());
 
-            System.out.println("filterType " + filterType );
+            // System.out.println("filterType " + filterType );
 
             // JPanel toRet = panel;
             toRet.setOpaque(false);
@@ -344,7 +344,7 @@ public class CbusFilterTreePane extends JPanel {
 
             
 
-            toRet.add(checkBox);
+           // toRet.add(checkBox);
 
             
             addMinMaxText(filterType,toRet);
