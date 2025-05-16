@@ -86,8 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Updated several Digitrax help pages to include
-                recently introduced products, fix typos.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -127,14 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>There's a new storage method for event names.
-                    Previously, these were stored in the IdTag table, which might
-                    be confusing.
-                    Starting with this release, they're separately stored
-                    in an eventnames/eventNames.xml file within the user files
-                    location.
-                    Names that were previously stored in the IdTag table
-                    will be automatically migrated to this new method.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -456,8 +448,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Fixed editing and rendering issues with Block Contents Icons.  No longer need to have a value in the block to edit the Icon.  Rotated blocks render correctly.  Empty Hidden now works on initial load and after editing the panel</li>
-            <li>Fixed deleting of Inline LogixNG's when Layout Panels are deleted</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -484,6 +475,9 @@
           <li>The action <strong>Execute program</strong> has been added.
               It lets you execute a program with some parameters. The
               result can be put in a local variable if desired.</li>
+          <li>The LogixNG action <strong>Send MERG CBUS event</strong> has
+              been added. It's available in the category <strong>Merg Cbus</strong>
+              if there is a Merg Cbus connection.</li>
           <li></li>
         </ul>
 
@@ -496,17 +490,13 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, passenger car blocking order for Manifests and switch lists</li>
-            <li>Added car's division name to CSV Manifests and switch lists</li>
-            <li>Fixed a bug when routing through staging and no last hop C/I track was available</li>
-            <li>Improved the route edit window by always showing both departure time and travel time</li>
-            <li>Fixed exception error when replacing a car's load using the "All" cars feature</li>
+            <li>The train icon now shows the number of local moves in the train's route</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-          <li>Fixed deleting of Inline LogixNG's when Panels are deleted</li>
+            <li></li>
         </ul>
 
     <h3>Permissions</h3>
@@ -660,5 +650,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The PlantUML library we use for various documentation images
+                has been updated to the current 1.2025.2 version.</li>
         </ul>
+

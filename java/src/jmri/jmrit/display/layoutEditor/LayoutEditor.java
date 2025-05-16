@@ -572,6 +572,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         boolean toolBarIsVertical = (toolBarSide.equals(ToolBarSide.eRIGHT) || toolBarSide.equals(ToolBarSide.eLEFT));
+        if ( leToolBarPanel != null ) {
+            leToolBarPanel.dispose();
+        }
         if (toolBarIsVertical) {
             leToolBarPanel = new LayoutEditorVerticalToolBarPanel(this);
             editToolBarScrollPane = new JScrollPane(leToolBarPanel);
@@ -3164,20 +3167,51 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             checkControls(true);
+
+
+
         } else if ((event.isMetaDown() || event.isAltDown())
                 && !event.isShiftDown() && !event.isControlDown()) {
-            // not in edit mode - check if moving a marker if there are any
+            // Windows and Linux have meta down on right button press. This prevents isPopTrigger
+            // reaching the next else-if.
+
+            // not in edit mode - check if moving a marker if there are any.  This applies to Windows, Linux and macOS.
             selectedObject = checkMarkerPopUps(dLoc);
             if (selectedObject != null) {
                 selectedHitPointType = HitPointType.MARKER;
                 startDelta = MathUtil.subtract(((LocoIcon) selectedObject).getLocation(), dLoc);
+                log.debug("mousePressed: ++ MAC/Windows/Linux marker move request");
+                if (SystemType.isLinux()) {
+                    // Prepare for a marker popup if the marker move does not occur before mouseReleased.
+                    // This is only needed for Linux.  Windows handles this in mouseClicked.
+                    delayedPopupTrigger = true;
+                    log.debug("mousePressed: ++ Linux marker popup delay");
+                }
             }
+
+            // not in edit mode - check if a signal mast popup menu is being requested using Windows or Linux.
+            var sm = checkSignalMastIconPopUps(dLoc);
+            if (sm != null) {
+                delayedPopupTrigger = true;
+                log.debug("mousePressed: ++ Window/Linux mast popup delay");
+             }
+
         } else if (event.isPopupTrigger() && !event.isShiftDown()) {
-            // not in edit mode - check if a marker popup menu is being requested
-            LocoIcon lo = checkMarkerPopUps(dLoc);
+
+            // not in edit mode - check if a marker popup menu is being requested using macOS.
+            var lo = checkMarkerPopUps(dLoc);
             if (lo != null) {
                 delayedPopupTrigger = true;
+                log.debug("mousePressed: ++ MAC marker popup delay");
             }
+
+            // not in edit mode - check if a signal mast popup menu is being requested using macOS.
+            var sm = checkSignalMastIconPopUps(dLoc);
+            if (sm != null) {
+                delayedPopupTrigger = true;
+                log.debug("mousePressed: ++ MAC mast popup delay");
+             }
+
         }
 
         if (!event.isPopupTrigger()) {
