@@ -291,15 +291,15 @@ public class CbusFilterTreePane extends JPanel {
     
     private class CbusFilterTreeCellRenderer implements TreeCellRenderer {
 
-        private final TriStateJCheckBox checkBox;
+        // private TriStateJCheckBox checkBox;
 
-       // final JPanel panel;
+        // private JPanel toRet;
         // final JCheckBoxTreeCellRenderer jcbtcr;
 
         private CbusFilterTreeCellRenderer() {
           //  panel = new JPanel();
          //   panel.setLayout(new BorderLayout());
-            checkBox = new TriStateJCheckBox();
+          //  checkBox = new TriStateJCheckBox();
           //  panel.add(checkBox, BorderLayout.CENTER);
          //   panel.setOpaque(false);
             // jcbtcr = new JCheckBoxTreeCellRenderer();
@@ -313,6 +313,8 @@ public class CbusFilterTreePane extends JPanel {
 
             
             JPanel toRet = new JPanel();
+
+            TriStateJCheckBox checkBox = new TriStateJCheckBox();
 
            // javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode) value;
             if (!(tree instanceof JCheckBoxTree)) {
