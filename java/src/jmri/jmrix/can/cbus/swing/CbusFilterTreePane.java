@@ -9,18 +9,17 @@ import java.util.TimerTask;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
 import jmri.util.TimerUtil;
 import jmri.util.swing.JCheckBoxTree;
-import jmri.util.swing.JCheckBoxTreeCellRenderer;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JSpinnerUtil;
 
 import static jmri.jmrix.can.cbus.CbusFilterType.*;
+import jmri.util.swing.*;
 
 /**
  * CbusFilterTreePane contains a JCheckBoxTree customised to display and
@@ -290,7 +289,21 @@ public class CbusFilterTreePane extends JPanel {
     private static final Color GREEN = new Color(2,48,48);
     private static final Color AMBER = new Color(139,128,0);
     
-    private class CbusFilterTreeCellRenderer extends JCheckBoxTreeCellRenderer {
+    private class CbusFilterTreeCellRenderer implements TreeCellRenderer {
+
+        private final TriStateJCheckBox checkBox;
+
+       // final JPanel panel;
+        // final JCheckBoxTreeCellRenderer jcbtcr;
+
+        private CbusFilterTreeCellRenderer() {
+          //  panel = new JPanel();
+         //   panel.setLayout(new BorderLayout());
+            checkBox = new TriStateJCheckBox();
+          //  panel.add(checkBox, BorderLayout.CENTER);
+         //   panel.setOpaque(false);
+            // jcbtcr = new JCheckBoxTreeCellRenderer();
+        }
 
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -298,8 +311,24 @@ public class CbusFilterTreePane extends JPanel {
                 boolean hasFocus) {
             javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode)value;
 
-            Component withCheckBox =  super.getTreeCellRendererComponent(
-                tree, value, selected, expanded, leaf, row, hasFocus);
+            
+            JPanel toRet = new JPanel();
+
+           // javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode) value;
+            if (!(tree instanceof JCheckBoxTree)) {
+                return toRet;
+            }
+            JCheckBoxTree jcbt = (JCheckBoxTree) tree;
+            TreePath tp = new TreePath(node.getPath());
+            if (jcbt.isSelectedPartially(tp)) {
+                checkBox.setState(TriStateJCheckBox.State.PARTIAL);
+            } else {
+                checkBox.setSelected(jcbt.isSelected(tp));
+            }
+            Object obj = node.getUserObject();
+            checkBox.setText(obj == null ? null : obj.toString());
+
+
 
 
 
@@ -307,18 +336,20 @@ public class CbusFilterTreePane extends JPanel {
 
             System.out.println("filterType " + filterType );
 
-            JPanel toRet = new JPanel();
+            // JPanel toRet = panel;
             toRet.setOpaque(false);
             toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
 
-            System.out.println("withCB " + withCheckBox );
-            
-            toRet.add(withCheckBox);
+           // System.out.println("withCB " + withCheckBox );
 
-            /**
+            
+
+            toRet.add(checkBox);
+
+            
             addMinMaxText(filterType,toRet);
 
-            /**
+            
 
             int nodeNum = filter.getNodeNumber(node);
             if ( nodeNum > 0 ) {
@@ -347,11 +378,9 @@ public class CbusFilterTreePane extends JPanel {
                 toRet.add(spaceLabel);
             }
 
-        */
 
             return toRet;
             
-            // return withCheckBox;
         }
 
         private void addMinMaxText( CbusFilterType filterType, @Nonnull JPanel toRet ) {
