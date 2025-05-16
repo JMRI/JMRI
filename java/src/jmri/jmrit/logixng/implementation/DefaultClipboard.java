@@ -7,13 +7,13 @@ import jmri.jmrit.logixng.*;
 
 /**
  * Default implementation of the clipboard
- * 
+ *
  * @author Daniel Bergqvist (C) 2020
  */
 public class DefaultClipboard extends AbstractBase implements Clipboard {
 
     private ClipboardMany _clipboardItems = new ClipboardMany("", null);
-    
+
     private final FemaleAnySocket _femaleSocket = new DefaultFemaleAnySocket(this, new FemaleSocketListener() {
         @Override
         public void connected(FemaleSocket socket) {
@@ -25,14 +25,14 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             // Do nothing
         }
     }, "A");
-    
-    
+
+
     public DefaultClipboard() {
         super("IQClipboard");
-        
+
         // Listeners should never be enabled for the clipboard
         _femaleSocket.setEnableListeners(false);
-        
+
         try {
             _femaleSocket.connect(new MaleRootSocket(null));
         } catch (SocketAlreadyConnectedException ex) {
@@ -44,7 +44,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         }
         _clipboardItems.setParent(_femaleSocket.getConnectedSocket());
     }
-    
+
     @Override
     public boolean isEmpty() {
         return _clipboardItems.getChildCount() == 0;
@@ -60,7 +60,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             throw new RuntimeException("Cannot add socket", ex);
         }
     }
-    
+
     @Override
     public MaleSocket fetchTopItem() {
         if (!isEmpty()) {
@@ -71,7 +71,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             return null;
         }
     }
-    
+
     @Override
     public MaleSocket getTopItem() {
         if (!isEmpty()) {
@@ -106,12 +106,12 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
     public void setup() {
         _clipboardItems.setup();
     }
-    
+
     public boolean replaceClipboardItems(ClipboardMany clipboardItems, List<String> errors) {
         _clipboardItems = clipboardItems;
-        
+
         _femaleSocket.disconnect();
-        
+
         try {
             _femaleSocket.connect(new MaleRootSocket(null));
         } catch (SocketAlreadyConnectedException ex) {
@@ -185,7 +185,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
 
     @Override
     public int getChildCount() {
-        throw new UnsupportedOperationException("Not supported");
+        return 0;
     }
 
     @Override
@@ -193,13 +193,13 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         throw new UnsupportedOperationException("Not supported");
     }
 
-    
+
     private class MaleRootSocket extends AbstractMaleSocket {
 
         public MaleRootSocket(BaseManager<? extends NamedBean> manager) {
             super(manager, _clipboardItems);
         }
-        
+
         @Override
         protected void registerListenersForThisClass() {
             throw new UnsupportedOperationException("Not supported");
@@ -256,5 +256,5 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
         }
 
     }
-    
+
 }
