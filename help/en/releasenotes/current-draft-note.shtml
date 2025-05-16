@@ -471,7 +471,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Improved some GUI layouts by adding scroll bars</li>
           <li>The action <strong>Execute program</strong> has been added.
               It lets you execute a program with some parameters. The
               result can be put in a local variable if desired.</li>
