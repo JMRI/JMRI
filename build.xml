@@ -248,6 +248,8 @@
 
         <pathelement location="${libdir}/jsvg-1.7.0.jar"/>
 
+        <pathelement location="${libdir}/swingx-core-1.6.5-1.jar"/>
+
         <!-- //BiDiB client library -->
         <pathelement location="${libdir}/jbidibc-core-2.0.29.jar"/>
         <pathelement location="${libdir}/jbidibc-messages-2.0.29.jar"/>
