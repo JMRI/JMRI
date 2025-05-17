@@ -101,6 +101,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             addTable("jmri.jmrit.beantable.AudioTableAction", Bundle.getMessage("MenuItemAudioTable"), false);
             addTable("jmri.jmrit.beantable.IdTagTableTabAction", Bundle.getMessage("MenuItemIdTagTable"), false);
             addTable("jmri.jmrit.beantable.RailComTableAction", Bundle.getMessage("MenuItemRailComTable"), true);
+            addTable("jmri.jmrit.beantable.TimeProviderTableAction", Bundle.getMessage("MenuItemTimeProviderTable"), true);
             ListedTableFrame.setInit(true);
         }
     }
@@ -236,8 +237,8 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
         fileMenu.add(newItem);
         newItem.addActionListener((ActionEvent e) -> actionList.openNewTableWindow(list.getSelectedIndex()));
 
-        // do not display Store All Table Content in IdTag Table 
-        if (!( item.getAAClass() instanceof IdTagTableAction || 
+        // do not display Store All Table Content in IdTag Table
+        if (!( item.getAAClass() instanceof IdTagTableAction ||
             item.getAAClass() instanceof IdTagTableTabAction ) ) {
             fileMenu.add(new jmri.configurexml.StoreMenu());
         }
