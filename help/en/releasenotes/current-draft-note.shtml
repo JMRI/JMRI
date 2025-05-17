@@ -648,5 +648,6 @@
         <ul>
             <li>The PlantUML library we use for various documentation images
                 has been updated to the current 1.2025.2 version.</li>
+            <li>Fixed a bug there Dark Mode would fail due to a missing library.</li>
         </ul>
 
