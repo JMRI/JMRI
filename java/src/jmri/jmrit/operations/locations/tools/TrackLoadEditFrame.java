@@ -56,7 +56,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox shipLoadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox holdCars = new JCheckBox(Bundle.getMessage("HoldCarsWithCustomLoads"));
-    JCheckBox disableloadChange = new JCheckBox(Bundle.getMessage("DisableLoadChange"));
+    JCheckBox disableLoadChange = new JCheckBox(Bundle.getMessage("DisableLoadChange"));
+    JCheckBox quickLoadChange = new JCheckBox(Bundle.getMessage("QuickLoadChange"));
 
     // radio buttons
     JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
@@ -196,10 +197,12 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         pOptions.setLayout(new GridBagLayout());
         pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
         pOptions.setMaximumSize(new Dimension(2000, 400));
-        addItem(pOptions, holdCars, 0, 0);
-        addItem(pOptions, disableloadChange, 1, 0);
+        addItemLeft(pOptions, disableLoadChange, 0, 0);
+        addItemLeft(pOptions, quickLoadChange, 0, 1);
+        addItemLeft(pOptions, holdCars, 0, 2);
+        disableLoadChange.setToolTipText(Bundle.getMessage("DisableLoadChangeTip"));
+        quickLoadChange.setToolTipText(Bundle.getMessage("QuickLoadChangeTip"));
         holdCars.setToolTipText(Bundle.getMessage("HoldCarsWithCustomLoadsTip"));
-        disableloadChange.setToolTipText(Bundle.getMessage("DisableLoadChangeTip"));
         
         // row 12
         JPanel panelButtons = new JPanel();
@@ -254,7 +257,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             pOptions.setVisible(_track.isSpur());
             holdCars.setEnabled(_track.getSchedule() != null && _track.getAlternateTrack() != null);
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
-            disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
+            disableLoadChange.setSelected(_track.isDisableLoadChangeEnabled());
+            quickLoadChange.setSelected(_track.isQuickLoadChangeEnabled());
             updateButtons(true);
         } else {
             updateButtons(false);
@@ -331,7 +335,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     protected void save() {
         checkForErrors();
         _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
-        _track.setDisableLoadChangeEnabled(disableloadChange.isSelected());
+        _track.setDisableLoadChangeEnabled(disableLoadChange.isSelected());
+        _track.setQuickLoadChangeEnabled(quickLoadChange.isSelected());
         // save the last state of the "Use car type and load" checkbox
         loadAndType = loadAndTypeCheckBox.isSelected();
         shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();
@@ -558,7 +563,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
                 holdCars.setEnabled(_track.getSchedule() != null && _track.getAlternateTrack() != null);
             }
             if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
-                disableloadChange.setSelected(_track.isDisableLoadChangeEnabled());
+                disableLoadChange.setSelected(_track.isDisableLoadChangeEnabled());
             }
         }
     }

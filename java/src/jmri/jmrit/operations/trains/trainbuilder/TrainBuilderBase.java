@@ -1388,7 +1388,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
         addLine(_buildReport, THREE,
                 Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName()));
-        car.setDestination(track.getLocation(), track);
+        car.setDestination(track.getLocation(), track, Car.FORCE);
         int length = car.getTotalLength();
         int weightTons = car.getAdjustedWeightTons();
         // car could be part of a kernel
@@ -1406,7 +1406,7 @@ public class TrainBuilderBase extends TrainCommon {
                     kCar.setTrain(_train);
                     kCar.setRouteLocation(rl);
                     kCar.setRouteDestination(rld);
-                    kCar.setDestination(track.getLocation(), track, true); // force destination
+                    kCar.setDestination(track.getLocation(), track, Car.FORCE); // force destination
                     // save final destination and track values in case of train reset
                     kCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
                     kCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
@@ -2843,14 +2843,14 @@ public class TrainBuilderBase extends TrainCommon {
                                         car.getFinalDestinationTrackName(), k.toString(),
                                         car.getDestinationTrackName()));
                         // force car to track
-                        k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
+                        k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), Car.FORCE);
                     }
                 }
                 addLine(_buildReport, FIVE,
                         Bundle.getMessage("buildRedirectFromAlternate", car.getFinalDestinationName(),
                                 car.getFinalDestinationTrackName(),
                                 car.toString(), car.getDestinationTrackName()));
-                car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
+                car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), Car.FORCE);
                 redirected = true;
             }
         }
@@ -3062,8 +3062,7 @@ public class TrainBuilderBase extends TrainCommon {
                     cEngine.setTrain(_train);
                     cEngine.setRouteLocation(rl);
                     cEngine.setRouteDestination(rld);
-                    cEngine.setDestination(track.getLocation(), track, true); // force
-                                                                              // destination
+                    cEngine.setDestination(track.getLocation(), track, RollingStock.FORCE); // force
                 }
             }
         }

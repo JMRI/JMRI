@@ -254,9 +254,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               <ul>
                 <li><a href="#LoadOptions">Load Options</a>
                   <ul>
+                    <li><a href="#DisableLoadChange">Disable Load Change</a></li>
+                    <li><a href="#QuickLoadChange">Quick Load Change (Turn)</a></li>
                     <li><a href="#SpurOption">Hold cars with custom loads when spurs are
                         full</a></li>
-                    <li><a href="#DisableLoadChange">Disable Load Change</a></li>
                   </ul></li>
 
                 <li><a href="#RoadOptions">Road Options</a></li>
@@ -2606,8 +2607,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         You can control which loads a spur can receive and <a href="#DisableLoadChange"> disable
-          the load change</a> for a spur. See <a href="#LoadOptions">Load Options</a> for more
-        information.
+          the load change</a> for a spur. There's also an option to spot and pull a car using a turn.
+        See <a href="#LoadOptions">Load Options</a> for more information.
       </p>
 
       <p>
@@ -3437,6 +3438,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Other than the default car loads of "E" and "L", you'll need <a href="#Schedules">Schedules</a>
         for your spurs to create demand for cars with custom loads.
       </p>
+      
+      <h5 id="DisableLoadChange">Spur Option (Disable Load Change)</h5>
+      If you don't want a car's load to change when delivered to a spur, select the checkbox. Useful
+      for Repair In Place (RIP) tracks.
+
+      <h5 id="QuickLoadChange">Spur Option (Quick Load Change)</h5>
+      If you want to drop and pull the same car using a
+      <a href="#TrainTurnRoute">train turn</a>, select this option. On the outbound leg of the
+      train's route, OperationsPro will drop off the car to the spur. On the inbound leg of the
+      train's route the car will be pulled and eventually dropped off by the train to the car's
+      destination and track.
 
       <h5 id="SpurOption">Spur Option (Hold cars with custom loads when spurs are full)</h5>
       In the "Edit Track Load Options" window spurs have the additional option "Hold cars with
@@ -3457,10 +3469,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         feature described above by selecting the <a href="#SendCustomToStaging">Send cars with
           custom load to staging</a> option for a train.
       </p>
-
-      <h5 id="DisableLoadChange">Spur Option (Disable Load Change)</h5>
-      If you don't want a car's load to change when delivered to a spur, select the checkbox. Useful
-      for Repair In Place (RIP) tracks.
 
       <h4 id="RoadOptions">Road Options</h4>
       You can also restrict which roads a track can service. Under "Tools" in the menu, Select "Road

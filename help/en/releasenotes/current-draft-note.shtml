@@ -486,7 +486,8 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>The train icon now shows the number of local moves in the train's route</li>
+            <li>The train icon now shows the number of local moves in the train's route.</li>
+            <li>New feature, a turn can now drop and pull the same car on a turn.
         </ul>
 
    <h3>Panel Editor</h3>

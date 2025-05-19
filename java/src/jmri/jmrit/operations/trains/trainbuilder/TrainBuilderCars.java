@@ -6,16 +6,18 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
+import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.BuildFailedException;
+import jmri.jmrit.operations.trains.Train;
 
 /**
  * Contains methods for cars when building a train.
@@ -1534,6 +1536,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                         tracks.get(0).getTrackTypeName(),
                                         tracks.get(0).getLocation().getName(), tracks.get(0).getName(),
                                         rld.getCarMoves(), rld.getMaxCarMoves()));
+                        car = checkQuickTurn(car, rl, rld, tracks.get(0));
                         addCarToTrain(car, rl, rld, tracks.get(0));
                         return true;
                     }
@@ -1560,7 +1563,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         if (status.equals(Track.OKAY) &&
                                 (status = checkReserved(_train, rld, car, car.getDestinationTrack(), true))
                                         .equals(Track.OKAY)) {
-                            addCarToTrain(car, rl, rld, car.getDestinationTrack());
+                            Track destTrack = car.getDestinationTrack();
+                            car = checkQuickTurn(car, rl, rld, destTrack);
+                            addCarToTrain(car, rl, rld, destTrack);
                             return true;
                         }
                         if (status.equals(TIMING) && checkForAlternate(car, car.getDestinationTrack())) {
@@ -1872,6 +1877,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                 car.getTrackName()));
                 rldSave = rl; // make local move
             } else if (trackSave.isSpur()) {
+                car = checkQuickTurn(car, rl, rldSave, trackSave);
                 car.setScheduleItemId(trackSave.getScheduleItemId());
                 trackSave.bumpSchedule();
                 log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),
@@ -1892,6 +1898,57 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         addLine(_buildReport, FIVE, Bundle.getMessage("buildNoDestForCar", car.toString()));
         addLine(_buildReport, FIVE, BLANK_LINE);
         return false; // no build errors, but car not given destination
+    }
+
+    static int cloneNumber = 0;
+
+    /**
+     * Checks to see if spur/industry is requesting a quick turn, which means
+     * that on the outbound side of the turn a car or set of cars in a kernel
+     * are set out, and on the return side of the turn the same cars are pulled.
+     * Since it isn't possible for a car to be pulled and set out twice, this
+     * code creates a second "clone" car to create the requested Manifest.
+     * 
+     * @param car   the car possibly needing a quick turn
+     * @param rl    the car's current route location
+     * @param rld   the car's destination route location
+     * @param track the destination track
+     * @return the car if not a quick turn, or a clone if quick turn
+     */
+    private Car checkQuickTurn(Car car, RouteLocation rl, RouteLocation rld, Track track) {
+        if (!track.isQuickLoadChangeEnabled()) {
+            return car;
+        }
+        // quick turn enabled, create clones
+        Car cloneCar = car.copy();
+        cloneCar.setNumber(car.getNumber() + Car.CLONE + ++cloneNumber);
+        cloneCar.setClone(true);
+        cloneCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
+        carManager.register(cloneCar);
+        if (car.getKernel() != null) {
+            String kernelName = car.getKernelName() + Car.CLONE + cloneNumber;
+            Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
+            cloneCar.setKernel(kernel);
+            for (Car kar : car.getKernel().getCars()) {
+                if (kar != car) {
+                    Car nCar = kar.copy();
+                    nCar.setNumber(kar.getNumber() + Car.CLONE + cloneNumber);
+                    nCar.setClone(true);
+                    nCar.setKernel(kernel);
+                    carManager.register(nCar);
+                    nCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
+                    // move car to new location for later pick up
+                    kar.setLocation(track.getLocation(), track, RollingStock.FORCE);
+                }
+            }
+        }
+        // move car to new location for later pick up
+        car.setLocation(track.getLocation(), track, RollingStock.FORCE);
+        car.setDestination(null, null);
+        car.loadNext(track); // update load
+        car.updateKernel();
+        car.setCloneOrder(cloneNumber); // for reset
+        return cloneCar; // return clone
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainBuilderCars.class);
