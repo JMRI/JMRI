@@ -222,7 +222,8 @@ public class CbusFilterTreePane extends JPanel {
 
         CbusFilterJCheckBoxTree() {
             super();
-            setCellRenderer(new CbusFilterTreeCellRenderer());
+            // setCellRenderer(new CbusFilterTreeCellRenderer());
+            setCellRenderer( new JCheckBoxTreeCellRenderer());
             startRefreshTimer();
         }
 
@@ -334,10 +335,7 @@ public class CbusFilterTreePane extends JPanel {
 
 
 
-            CbusFilterType filterType = CbusFilterType.getFilterByName(node.getUserObject().toString());
-
-
-
+            // CbusFilterType filterType = CbusFilterType.getFilterByName(node.getUserObject().toString());
             // System.out.println("filterType " + filterType );
 
             // JPanel toRet = panel;
@@ -357,23 +355,33 @@ public class CbusFilterTreePane extends JPanel {
             System.out.println("filter is " + filter);
 
 
+            this.addNodeAndLabelText(node, filter, toRet);
+
+
+            addRootText(node, toRet);
+
+            return toRet;            
+        }
+
+        private void addNodeAndLabelText(javax.swing.tree.DefaultMutableTreeNode node, CbusFilter filter, @Nonnull JPanel toRet){
             int nodeNum = filter.getNodeNumber(node);
             if ( nodeNum > 0 ) {
                 toRet.add(new JLabel( SPACE + new CbusNameService(memo).getNodeName( nodeNum ) ));
             }
 
-            
+
 
             var label = filter.getNumberFilteredLabel(node);
             if ( label != null ) {
                 toRet.add(new JLabel(" "));
                 toRet.add( label );
             }
+        }
 
-
+        private void addRootText(javax.swing.tree.DefaultMutableTreeNode node, @Nonnull JPanel toRet){
             if ( node.isRoot() ) {
 
-                label = new JLabel( SPACE + (filter.getPassedReply()+filter.getPassedMessage()) + SPACE);
+                JLabel label = new JLabel( SPACE + (filter.getPassedReply()+filter.getPassedMessage()) + SPACE);
                 label.setForeground( GREEN );
                 toRet.add(spaceLabel);
                 toRet.add(label);
@@ -383,10 +391,6 @@ public class CbusFilterTreePane extends JPanel {
                 toRet.add(label);
                 toRet.add(spaceLabel);
             }
-
-
-            return toRet;
-            
         }
 
         private void addMinMaxText( CbusFilterType filterType, @Nonnull JPanel toRet ) {
