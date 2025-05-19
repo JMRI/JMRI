@@ -222,8 +222,8 @@ public class CbusFilterTreePane extends JPanel {
 
         CbusFilterJCheckBoxTree() {
             super();
-            // setCellRenderer(new CbusFilterTreeCellRenderer());
-            setCellRenderer( new JCheckBoxTreeCellRenderer());
+            setCellRenderer(new CbusFilterTreeCellRenderer());
+          //  setCellRenderer( new JCheckBoxTreeCellRenderer());
             startRefreshTimer();
         }
 
@@ -290,21 +290,21 @@ public class CbusFilterTreePane extends JPanel {
     private static final Color GREEN = new Color(2,48,48);
     private static final Color AMBER = new Color(139,128,0);
     
-    private class CbusFilterTreeCellRenderer implements TreeCellRenderer {
+    private class CbusFilterTreeCellRenderer extends JCheckBoxTreeCellRenderer {
 
         // private TriStateJCheckBox checkBox;
 
         // private JPanel toRet;
         // final JCheckBoxTreeCellRenderer jcbtcr;
 
-        private CbusFilterTreeCellRenderer() {
+      //  private CbusFilterTreeCellRenderer() {
           //  panel = new JPanel();
          //   panel.setLayout(new BorderLayout());
           //  checkBox = new TriStateJCheckBox();
           //  panel.add(checkBox, BorderLayout.CENTER);
          //   panel.setOpaque(false);
             // jcbtcr = new JCheckBoxTreeCellRenderer();
-        }
+      //  }
 
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -312,24 +312,28 @@ public class CbusFilterTreePane extends JPanel {
                 boolean hasFocus) {
             javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode)value;
 
-            
-            JPanel toRet = new JPanel();
 
-            TriStateJCheckBox checkBox = new TriStateJCheckBox();
+            Component sPanel = super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+
+
+            
+         //   JPanel toRet = new JPanel();
+
+         //   TriStateJCheckBox checkBox = new TriStateJCheckBox();
 
            // javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode) value;
-            if (!(tree instanceof JCheckBoxTree)) {
-                return toRet;
-            }
-            JCheckBoxTree jcbt = (JCheckBoxTree) tree;
-            TreePath tp = new TreePath(node.getPath());
-            if (jcbt.isSelectedPartially(tp)) {
-                checkBox.setState(TriStateJCheckBox.State.PARTIAL);
-            } else {
-                checkBox.setSelected(jcbt.isSelected(tp));
-            }
-            Object obj = node.getUserObject();
-            checkBox.setText(obj == null ? null : obj.toString());
+       //     if (!(tree instanceof JCheckBoxTree)) {
+       //         return toRet;
+        //    }
+        //    JCheckBoxTree jcbt = (JCheckBoxTree) tree;
+         //   TreePath tp = new TreePath(node.getPath());
+         //   if (jcbt.isSelectedPartially(tp)) {
+         //       checkBox.setState(TriStateJCheckBox.State.PARTIAL);
+         //   } else {
+         //       checkBox.setSelected(jcbt.isSelected(tp));
+         //   }
+         //   Object obj = node.getUserObject();
+         //   checkBox.setText(obj == null ? null : obj.toString());
 
 
 
@@ -339,8 +343,8 @@ public class CbusFilterTreePane extends JPanel {
             // System.out.println("filterType " + filterType );
 
             // JPanel toRet = panel;
-            toRet.setOpaque(false);
-            toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
+         //   toRet.setOpaque(false);
+          //  toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
 
            // System.out.println("withCB " + withCheckBox );
 
@@ -352,15 +356,15 @@ public class CbusFilterTreePane extends JPanel {
             // addMinMaxText(filterType,toRet);
 
 
-            System.out.println("filter is " + filter);
+      //      System.out.println("filter is " + filter);
 
 
-            this.addNodeAndLabelText(node, filter, toRet);
+         //   this.addNodeAndLabelText(node, filter, this);
 
 
-            addRootText(node, toRet);
+        //    addRootText(node, toRet);
 
-            return toRet;            
+            return sPanel;
         }
 
         private void addNodeAndLabelText(javax.swing.tree.DefaultMutableTreeNode node, CbusFilter filter, @Nonnull JPanel toRet){
