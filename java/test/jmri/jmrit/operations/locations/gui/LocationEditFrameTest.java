@@ -737,6 +737,17 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
         Assert.assertEquals("Column exists", -1, tbl.findColumn(Bundle.getMessage("DisableLoadChange")));
 
+        // test quick load change
+        track.setQuickLoadChangeEnabled(true);
+        Assert.assertEquals("Confirm number of columns", 19, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("QuickLoadChange")));
+        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("QuickLoadChange")));
+        Assert.assertFalse("quick load change", track.isQuickLoadChangeEnabled());
+
+        // column should disappear
+        Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", -1, tbl.findColumn(Bundle.getMessage("QuickLoadChange")));
+
         // test track directions
         track.setTrainDirections(Track.EAST);
         Assert.assertEquals("Confirm number of columns", 19, tbl.getColumnCount());

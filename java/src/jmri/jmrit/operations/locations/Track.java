@@ -2135,7 +2135,7 @@ public class Track extends PropertyChangeSupport {
     }
 
     public void setQuickLoadChangeEnabled(boolean enable) {
-        boolean old = isDisableLoadChangeEnabled();
+        boolean old = isQuickLoadChangeEnabled();
         if (enable) {
             _loadOptions = _loadOptions | QUICK_LOAD_CHANGE;
         } else {
@@ -2145,7 +2145,7 @@ public class Track extends PropertyChangeSupport {
     }
 
     public boolean isQuickLoadChangeEnabled() {
-        return (0 != (_loadOptions & QUICK_LOAD_CHANGE));
+        return isSpur() && (0 != (_loadOptions & QUICK_LOAD_CHANGE));
     }
 
     public void setBlockCarsEnabled(boolean enable) {

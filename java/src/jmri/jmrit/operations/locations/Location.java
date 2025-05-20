@@ -1320,6 +1320,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         return false;
     }
     
+    public boolean hasQuickLoadChange() {
+        for (Track track : getTracksList()) {
+            if (track.isQuickLoadChangeEnabled()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasTracksWithRestrictedTrainDirections() {
         int trainDirections = getTrainDirections() & Setup.getTrainDirection();
         for (Track track : getTracksList()) {

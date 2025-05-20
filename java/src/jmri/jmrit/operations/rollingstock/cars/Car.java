@@ -1035,10 +1035,6 @@ public class Car extends RollingStock {
 
     @Override
     public void reset() {
-        // destroy clone
-        if (isClone()) {
-            destroyClone();
-        }
         setScheduleItemId(getPreviousScheduleId()); // revert to previous
         setNextLoadName(NONE);
         setFinalDestination(getPreviousFinalDestination());
@@ -1048,28 +1044,33 @@ public class Car extends RollingStock {
             setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
         }
         super.reset();
+        destroyClone();
     }
 
     /*
      * This routine destroys the clone and restores the cloned car to its
      * original location and load. Note there can be multiple clones for a car.
-     * Only the first clone has the right info.
+     * Only the first clone created has the right info. A clone has creation
+     * order number appended to the road number.
      */
     private void destroyClone() {
-        // move cloned car back to original location
-        CarManager carManager = InstanceManager.getDefault(CarManager.class);
-        String regex = "-\\(Clone\\)";
-        String[] number = getNumber().split(regex);
-        Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
-        int cloneNumber = Integer.parseInt(number[1]);
-        if (cloneNumber <= car.getCloneOrder()) {
-            car.setLocation(getLocation(), getTrack());
-            car.setLoadName(getLoadName());
-            car.setCloneOrder(cloneNumber);
+        if (isClone()) {
+            // move cloned car back to original location
+            CarManager carManager = InstanceManager.getDefault(CarManager.class);
+            // see Car.CLONE parentheses are special chars.
+            String regex = "-\\(Clone\\)";
+            String[] number = getNumber().split(regex);
+            Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
+            int cloneCreationNumber = Integer.parseInt(number[1]);
+            if (cloneCreationNumber <= car.getCloneOrder()) {
+                car.setLocation(getLocation(), getTrack());
+                car.setLoadName(getLoadName());
+                car.setCloneOrder(cloneCreationNumber);
+                car.reset();
+            }
+            InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
+            carManager.deregister(this);
         }
-        InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
-        carManager.deregister(this);
-        return;
     }
 
     @Override
