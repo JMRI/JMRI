@@ -310,6 +310,7 @@ public class CbusFilterTreePane extends JPanel {
         
         @Override
         public JPanel getPanelExtras(javax.swing.tree.DefaultMutableTreeNode node) {
+            // System.out.println("print extras for node " + node);
             toRet.removeAll();
             toRet.setOpaque(false);
             toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
@@ -380,7 +381,7 @@ public class CbusFilterTreePane extends JPanel {
       //      System.out.println("filter is " + filter);
 
 
-         //   this.addNodeAndLabelText(node, filter, this);
+            addNodeAndLabelText(node, filter, sPanel);
 
 
         //    addRootText(node, toRet);
