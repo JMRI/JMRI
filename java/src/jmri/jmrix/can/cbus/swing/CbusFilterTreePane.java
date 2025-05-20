@@ -318,8 +318,8 @@ public class CbusFilterTreePane extends JPanel {
             JPanel sPanel = (JPanel)comp;
 
             
-            JPanel toRet = new JPanel();
-            toRet.add(comp);
+        //    JPanel toRet = new JPanel();
+        //    toRet.add(comp);
 
          //   TriStateJCheckBox checkBox = new TriStateJCheckBox();
 
@@ -355,7 +355,7 @@ public class CbusFilterTreePane extends JPanel {
            // toRet.add(checkBox);
 
             
-            addMinMaxText(filterType,toRet);
+            addMinMaxText(filterType,sPanel);
 
 
       //      System.out.println("filter is " + filter);
@@ -366,7 +366,7 @@ public class CbusFilterTreePane extends JPanel {
 
         //    addRootText(node, toRet);
 
-            return toRet;
+            return sPanel;
         }
 
         private void addNodeAndLabelText(javax.swing.tree.DefaultMutableTreeNode node, CbusFilter filter, @Nonnull JPanel toRet){
