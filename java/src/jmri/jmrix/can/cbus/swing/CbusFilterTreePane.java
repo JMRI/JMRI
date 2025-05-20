@@ -317,6 +317,8 @@ public class CbusFilterTreePane extends JPanel {
 
             JPanel sPanel = (JPanel)comp;
 
+            sPanel.removeAll();
+
             
         //    JPanel toRet = new JPanel();
         //    toRet.add(comp);
