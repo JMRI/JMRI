@@ -3,8 +3,8 @@ package jmri.util.swing;
 import java.awt.BorderLayout;
 import java.awt.Component;
 
-import javax.swing.JPanel;
-import javax.swing.JTree;
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 
@@ -21,9 +21,10 @@ public class JCheckBoxTreeCellRenderer implements TreeCellRenderer {
     public JCheckBoxTreeCellRenderer() {
         super();
         panel = new JPanel();
-        panel.setLayout(new BorderLayout());
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        // panel.setLayout(new BorderLayout());
         checkBox = new TriStateJCheckBox();
-        panel.add(checkBox, BorderLayout.CENTER);
+        // panel.add(checkBox);
         panel.setOpaque(false);
     }
 
@@ -32,9 +33,9 @@ public class JCheckBoxTreeCellRenderer implements TreeCellRenderer {
         boolean expanded, boolean leaf, int row, boolean hasFocus) {
 
         panel.removeAll();
-        panel.add(checkBox, BorderLayout.WEST);
+        panel.add(checkBox);
 
-        javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode) value;
+        DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
         if (!(tree instanceof JCheckBoxTree)) {
             return panel;
         }
@@ -49,12 +50,12 @@ public class JCheckBoxTreeCellRenderer implements TreeCellRenderer {
         checkBox.setText(obj == null ? null : obj.toString());
         JPanel withExtras = getPanelExtras(node);
         if ( withExtras != null ) {
-            panel.add( withExtras, BorderLayout.EAST);
+            panel.add( withExtras);
         }
         return panel;
     }
 
-    public JPanel getPanelExtras(javax.swing.tree.DefaultMutableTreeNode value) {
+    public JPanel getPanelExtras(DefaultMutableTreeNode value) {
         return null;
     }
 
