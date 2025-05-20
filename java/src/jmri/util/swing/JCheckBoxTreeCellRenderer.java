@@ -32,6 +32,7 @@ public class JCheckBoxTreeCellRenderer implements TreeCellRenderer {
         boolean expanded, boolean leaf, int row, boolean hasFocus) {
 
         panel.removeAll();
+        panel.add(checkBox, BorderLayout.WEST);
 
         javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode) value;
         if (!(tree instanceof JCheckBoxTree)) {
@@ -46,7 +47,10 @@ public class JCheckBoxTreeCellRenderer implements TreeCellRenderer {
         } 
         Object obj = node.getUserObject();
         checkBox.setText(obj == null ? null : obj.toString());
-        panel.add(getPanelExtras(node), BorderLayout.EAST);
+        JPanel withExtras = getPanelExtras(node);
+        if ( withExtras != null ) {
+            panel.add( withExtras, BorderLayout.EAST);
+        }
         return panel;
     }
 
