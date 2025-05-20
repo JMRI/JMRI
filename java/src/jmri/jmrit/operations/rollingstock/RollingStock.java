@@ -537,7 +537,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *         acceptable, or "length" if the rolling stock length didn't fit.
      */
     public String setDestination(Location destination, Track track) {
-        return setDestination(destination, track, false);
+        return setDestination(destination, track, !RollingStock.FORCE);
     }
 
     /**
@@ -1405,7 +1405,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if ((a = e.getAttribute(Xml.SEC_DESTINATION_ID)) != null && destination != null) {
             track = destination.getTrackById(a.getValue());
         }
-        setDestination(destination, track, true); // force destination
+        setDestination(destination, track, RollingStock.FORCE); // force destination
 
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
