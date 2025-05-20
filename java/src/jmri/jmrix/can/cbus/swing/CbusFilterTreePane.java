@@ -306,8 +306,25 @@ public class CbusFilterTreePane extends JPanel {
             // jcbtcr = new JCheckBoxTreeCellRenderer();
       //  }
 
+        private final JPanel toRet = new JPanel();
+        
         @Override
-        public Component getTreeCellRendererComponent(JTree tree, Object value,
+        public JPanel getPanelExtras(javax.swing.tree.DefaultMutableTreeNode node) {
+            toRet.removeAll();
+            toRet.setOpaque(false);
+            toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
+            if ( node == null ) {
+                return toRet;
+            }
+
+            CbusFilterType filterType = CbusFilterType.getFilterByName(node.getUserObject().toString());
+            addMinMaxText(filterType,toRet);
+            return toRet;
+
+        }
+
+        // @Override
+        public Component getTreehhCellRendererComponent(JTree tree, Object value,
                 boolean selected, boolean expanded, boolean leaf, int row,
                 boolean hasFocus) {
             javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode)value;
