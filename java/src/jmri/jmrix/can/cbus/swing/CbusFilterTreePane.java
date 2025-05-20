@@ -15,11 +15,11 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.*;
 import jmri.util.TimerUtil;
 import jmri.util.swing.JCheckBoxTree;
+import jmri.util.swing.JCheckBoxTreeCellRenderer;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JSpinnerUtil;
 
 import static jmri.jmrix.can.cbus.CbusFilterType.*;
-import jmri.util.swing.*;
 
 /**
  * CbusFilterTreePane contains a JCheckBoxTree customised to display and
@@ -70,7 +70,7 @@ public class CbusFilterTreePane extends JPanel {
 
     }
 
-    private java.beans.PropertyChangeListener pcl = (event) ->  {
+    private final transient java.beans.PropertyChangeListener pcl = event ->  {
         if ( JCheckBoxTree.PROPERTY_CHANGE_CHECKBOX_STATUS.equals(event.getPropertyName()) ) {
             checkBoxesChanged();
         }
@@ -223,7 +223,6 @@ public class CbusFilterTreePane extends JPanel {
         CbusFilterJCheckBoxTree() {
             super();
             setCellRenderer(new CbusFilterTreeCellRenderer());
-          //  setCellRenderer( new JCheckBoxTreeCellRenderer());
             startRefreshTimer();
         }
 
@@ -241,7 +240,6 @@ public class CbusFilterTreePane extends JPanel {
 
         void dispose() {
             if ( task != null ) {
-//                task.cancel();
                 disposed = true;
                 task = null;
             }
@@ -289,31 +287,21 @@ public class CbusFilterTreePane extends JPanel {
     private static JLabel spaceLabel =  new JLabel(SPACE);
     private static final Color GREEN = new Color(2,48,48);
     private static final Color AMBER = new Color(139,128,0);
-    
+
     private class CbusFilterTreeCellRenderer extends JCheckBoxTreeCellRenderer {
 
-        // private TriStateJCheckBox checkBox;
-
-        // private JPanel toRet;
-        // final JCheckBoxTreeCellRenderer jcbtcr;
-
-      //  private CbusFilterTreeCellRenderer() {
-          //  panel = new JPanel();
-         //   panel.setLayout(new BorderLayout());
-          //  checkBox = new TriStateJCheckBox();
-          //  panel.add(checkBox, BorderLayout.CENTER);
-         //   panel.setOpaque(false);
-            // jcbtcr = new JCheckBoxTreeCellRenderer();
-      //  }
-
-        private final JPanel toRet = new JPanel();
-        
-        @Override
-        public JPanel getPanelExtras(javax.swing.tree.DefaultMutableTreeNode node) {
-            // System.out.println("print extras for node " + node);
-            toRet.removeAll();
+        private CbusFilterTreeCellRenderer() {
+            toRet = new JPanel();
             toRet.setOpaque(false);
             toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
+        }
+
+        private final JPanel toRet;
+
+        @Override
+        public JPanel getPanelExtras( DefaultMutableTreeNode node) {
+
+            toRet.removeAll();
             if ( node == null ) {
                 return toRet;
             }
@@ -323,82 +311,13 @@ public class CbusFilterTreePane extends JPanel {
             addNodeAndLabelText(node, filter, toRet);
             addRootText(node, toRet);
             return toRet;
-
         }
 
-        // @Override
-        public Component getTreehhCellRendererComponent(JTree tree, Object value,
-                boolean selected, boolean expanded, boolean leaf, int row,
-                boolean hasFocus) {
-            javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode)value;
-
-
-            Component comp = super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
-
-            JPanel sPanel = (JPanel)comp;
-
-            sPanel.removeAll();
-
-            
-        //    JPanel toRet = new JPanel();
-        //    toRet.add(comp);
-
-         //   TriStateJCheckBox checkBox = new TriStateJCheckBox();
-
-           // javax.swing.tree.DefaultMutableTreeNode node = (javax.swing.tree.DefaultMutableTreeNode) value;
-       //     if (!(tree instanceof JCheckBoxTree)) {
-       //         return toRet;
-        //    }
-        //    JCheckBoxTree jcbt = (JCheckBoxTree) tree;
-         //   TreePath tp = new TreePath(node.getPath());
-         //   if (jcbt.isSelectedPartially(tp)) {
-         //       checkBox.setState(TriStateJCheckBox.State.PARTIAL);
-         //   } else {
-         //       checkBox.setSelected(jcbt.isSelected(tp));
-         //   }
-         //   Object obj = node.getUserObject();
-         //   checkBox.setText(obj == null ? null : obj.toString());
-
-
-
-
-
-            CbusFilterType filterType = CbusFilterType.getFilterByName(node.getUserObject().toString());
-            // System.out.println("filterType " + filterType );
-
-            // JPanel toRet = panel;
-         //   toRet.setOpaque(false);
-          //  toRet.setLayout(new BoxLayout(toRet, BoxLayout.X_AXIS));
-
-           // System.out.println("withCB " + withCheckBox );
-
-            
-
-           // toRet.add(checkBox);
-
-            
-            addMinMaxText(filterType,sPanel);
-
-
-      //      System.out.println("filter is " + filter);
-
-
-            addNodeAndLabelText(node, filter, sPanel);
-
-
-        //    addRootText(node, toRet);
-
-            return sPanel;
-        }
-
-        private void addNodeAndLabelText(javax.swing.tree.DefaultMutableTreeNode node, CbusFilter filter, @Nonnull JPanel toRet){
+        private void addNodeAndLabelText( DefaultMutableTreeNode node, CbusFilter filter, @Nonnull JPanel toRet){
             int nodeNum = filter.getNodeNumber(node);
             if ( nodeNum > 0 ) {
                 toRet.add(new JLabel( SPACE + new CbusNameService(memo).getNodeName( nodeNum ) ));
             }
-
-
-
             var label = filter.getNumberFilteredLabel(node);
             if ( label != null ) {
                 toRet.add(new JLabel(" "));
@@ -406,7 +325,7 @@ public class CbusFilterTreePane extends JPanel {
             }
         }
 
-        private void addRootText(javax.swing.tree.DefaultMutableTreeNode node, @Nonnull JPanel toRet){
+        private void addRootText( DefaultMutableTreeNode node, @Nonnull JPanel toRet){
             if ( node.isRoot() ) {
 
                 JLabel label = new JLabel( SPACE + (filter.getPassedReply()+filter.getPassedMessage()) + SPACE);
