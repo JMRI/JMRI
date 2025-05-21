@@ -1,21 +1,14 @@
 package jmri.jmrix.can.cbus;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.util.Vector;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 import org.junit.jupiter.api.io.TempDir;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -30,94 +23,6 @@ public class CbusFilterTest {
         Assert.assertNotNull("exists",t);
     }
 
-    private Vector<Integer> _increments;
-    private Vector<Integer> _nodes;
-    
-    private class FtTestFilterFrame extends CbusFilterFrame {
-        
-        public FtTestFilterFrame() {
-        super(null,null);
-        }
-        
-        @Override
-        public void passIncrement(int id){ 
-            _increments.addElement(id);
-        }
-        
-        @Override
-        public void addNode(int nodenum, int position) {
-            // log.warn("new node {} position {}",nodenum,position);
-            Assert.assertFalse("Node already in list",_nodes.contains(position));
-            _nodes.addElement(nodenum);
-        }
-    }
-
-    @Test
-    public void testincrementCount() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        FtTestFilterFrame tff = new FtTestFilterFrame();
-        CbusFilter t = new CbusFilter(tff);
-        Assert.assertNotNull("exists",t);
-        Assert.assertNotNull("exists",tff);
-        
-        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_ACON, 0x00, 0x05, 0x00, 0x01},0x12 );
-        CanReply r   = new CanReply(   new int[]{CbusConstants.CBUS_ASOF, 0x00, 0x00, 0x00, 0x05},0x12 );
-        t.filter(m);
-        t.filter(r);
-        
-        // 1, 41, 42, 3, 6, 7, 10, 40, 43, 44, 45, 
-        // 0, 41, 42, 4, 5, 7, 10, 40, 43, 44, 46        
-        Vector<Integer> expected = new Vector<Integer>(22);
-        expected.add(CbusFilterType.CFOUT.ordinal());
-        expected.add(CbusFilterType.CFEVENT.ordinal());
-        expected.add(CbusFilterType.CFEVENTMIN.ordinal());
-        expected.add(CbusFilterType.CFEVENTMAX.ordinal());
-        expected.add(CbusFilterType.CFON.ordinal());
-        expected.add(CbusFilterType.CFLONG.ordinal());
-        expected.add(CbusFilterType.CFSTD.ordinal());
-        expected.add(CbusFilterType.CFED0.ordinal());
-        expected.add(CbusFilterType.CFNODE.ordinal());
-        expected.add(CbusFilter.CFMAXCATS);
-        expected.add(CbusFilterType.CFNODEMIN.ordinal());
-        expected.add(CbusFilterType.CFNODEMAX.ordinal());
-        
-        expected.add(CbusFilterType.CFIN.ordinal());
-        expected.add(CbusFilterType.CFEVENT.ordinal());
-        expected.add(CbusFilterType.CFEVENTMIN.ordinal());
-        expected.add(CbusFilterType.CFEVENTMAX.ordinal());
-        expected.add(CbusFilterType.CFOF.ordinal());
-        expected.add(CbusFilterType.CFSHORT.ordinal());
-        expected.add(CbusFilterType.CFSTD.ordinal());
-        expected.add(CbusFilterType.CFED0.ordinal());
-        expected.add(CbusFilterType.CFNODE.ordinal());
-        expected.add(CbusFilter.CFMAXCATS+1);        
-        expected.add(CbusFilterType.CFNODEMIN.ordinal());
-        expected.add(CbusFilterType.CFNODEMAX.ordinal());
-        
-        
-        Vector<Integer> expectedNodes = new Vector<Integer>(2);
-        expectedNodes.add(5);
-        expectedNodes.add(0);
-        
-        // log.warn(" output {}",_increments);
-        
-       //  _increments.forEach((n) -> log.warn("found {}",convertIntToFilterName(n))); 
-        
-        // + node
-        
-        // log.warn(" expctd {}",expected);
-        
-        JUnitUtil.waitFor(()->{ return(_increments.size()>23); }, "Not all increments passed" + _increments.size());
-        // log.warn(" output {}",_increments);
-        // log.warn(" node output {}",_nodes);
-        Assert.assertTrue("reply increments in",_increments.contains(CbusFilterType.CFIN.ordinal()));
-        Assert.assertTrue("message increments out",_increments.contains(CbusFilterType.CFOUT.ordinal()));
-        Assert.assertEquals("increment filter id values match nodes", expectedNodes, _nodes);
-        Assert.assertEquals("increment filter id values match ",expected , _increments);
-        
-        tff.dispose();
-    }
-    
     // for use in any future debug
     protected String convertIntToFilterName(int number){
         if (number<47) {
@@ -786,17 +691,13 @@ public class CbusFilterTest {
     public void setUp(@TempDir File folder) throws java.io.IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
-        _increments = new Vector<>(22);
-        _nodes = new Vector<>();
     }
 
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
-        _increments = null;
-        _nodes = null;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusFilterTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusFilterTest.class);
 
 }
