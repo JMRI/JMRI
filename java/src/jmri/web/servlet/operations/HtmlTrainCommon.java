@@ -250,6 +250,11 @@ public class HtmlTrainCommon extends TrainCommon {
             return "";
         } else if (attribute.equals(Setup.DIVISION)) {
             return car.getDivisionName();
+        } else if (attribute.equals(Setup.BLOCKING_ORDER)) {
+            if (car.isPassenger()) {
+                return Integer.toString(car.getBlocking());
+            }
+            return "";
         }
         return getRollingStockAttribute(car, attribute, isPickup, isLocal);
     }
@@ -309,6 +314,9 @@ public class HtmlTrainCommon extends TrainCommon {
             return StringEscapeUtils.escapeHtml4(rs.getOwnerName());
         } else if (attribute.equals(Setup.COMMENT)) {
             return StringEscapeUtils.escapeHtml4(rs.getComment());
+        } else if (attribute.equals(Setup.LAST_TRAIN)) {
+            return String.format(locale, strings.getProperty("LastTrain"),
+                    StringEscapeUtils.escapeHtml4(rs.getLastTrainName()));
         } else if (attribute.equals(Setup.BLANK) || attribute.equals(Setup.NO_NUMBER)
                 || attribute.equals(Setup.NO_ROAD) || attribute.equals(Setup.NO_COLOR)
                 || attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK)

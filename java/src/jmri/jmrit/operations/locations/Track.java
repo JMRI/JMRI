@@ -19,7 +19,8 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
@@ -118,8 +119,9 @@ public class Track extends PropertyChangeSupport {
     private static final int EMPTY_GENERIC_LOADS = 16;
     private static final int GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK = 32;
 
-    // load option for spur
+    // load options for spur
     private static final int DISABLE_LOAD_CHANGE = 64;
+    private static final int QUICK_LOAD_CHANGE = 128;
 
     // block options
     protected int _blockOptions = 0;
@@ -2130,6 +2132,20 @@ public class Track extends PropertyChangeSupport {
 
     public boolean isDisableLoadChangeEnabled() {
         return (0 != (_loadOptions & DISABLE_LOAD_CHANGE));
+    }
+
+    public void setQuickLoadChangeEnabled(boolean enable) {
+        boolean old = isDisableLoadChangeEnabled();
+        if (enable) {
+            _loadOptions = _loadOptions | QUICK_LOAD_CHANGE;
+        } else {
+            _loadOptions = _loadOptions & 0xFFFF - QUICK_LOAD_CHANGE;
+        }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
+    }
+
+    public boolean isQuickLoadChangeEnabled() {
+        return (0 != (_loadOptions & QUICK_LOAD_CHANGE));
     }
 
     public void setBlockCarsEnabled(boolean enable) {

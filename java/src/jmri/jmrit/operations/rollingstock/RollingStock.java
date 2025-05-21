@@ -17,7 +17,8 @@ import jmri.jmrit.operations.locations.divisions.DivisionManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
@@ -64,6 +65,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected int _moves = 0;
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
     protected String _lastTrackId = LOCATION_UNKNOWN; // the rollingstock's last track id
+    protected Train _lastTrain = null; // the last train moving this rs
     protected int _blocking = DEFAULT_BLOCKING_ORDER;
     protected String _pickupTime = NONE;
 
@@ -535,7 +537,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *         acceptable, or "length" if the rolling stock length didn't fit.
      */
     public String setDestination(Location destination, Track track) {
-        return setDestination(destination, track, false);
+        return setDestination(destination, track, !RollingStock.FORCE);
     }
 
     /**
@@ -806,6 +808,36 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     public String getTrainName() {
         if (getTrain() != null) {
             return getTrain().getName();
+        }
+        return NONE;
+    }
+
+    /**
+     * Sets the last train that serviced this rolling stock.
+     *
+     * @param train The last Train.
+     */
+    public void setLastTrain(Train train) {
+        Train old = _lastTrain;
+        _lastTrain = train;
+        if (old != train) {
+            if (old != null) {
+                old.removePropertyChangeListener(this);
+            }
+            if (train != null) {
+                train.addPropertyChangeListener(this);
+            }
+            setDirtyAndFirePropertyChange(TRAIN_CHANGED_PROPERTY, old, train);
+        }
+    }
+
+    public Train getLastTrain() {
+        return _lastTrain;
+    }
+
+    public String getLastTrainName() {
+        if (getLastTrain() != null) {
+            return getLastTrain().getName();
         }
         return NONE;
     }
@@ -1280,6 +1312,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                 }
                 setLocation(getDestination(), getDestinationTrack(), RollingStock.FORCE); // force RS to destination
                 setDestination(null, null); // this also clears the route locations
+                setLastTrain(getTrain()); // save the last train moving this rs
                 setTrain(null); // this must come after setDestination (route id is set)
                 setMoves(getMoves() + 1); // bump count
             } else {
@@ -1372,7 +1405,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if ((a = e.getAttribute(Xml.SEC_DESTINATION_ID)) != null && destination != null) {
             track = destination.getTrackById(a.getValue());
         }
-        setDestination(destination, track, true); // force destination
+        setDestination(destination, track, RollingStock.FORCE); // force destination
 
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
@@ -1406,6 +1439,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             if ((a = e.getAttribute(Xml.ROUTE_DESTINATION_ID)) != null) {
                 _routeDestination = getTrain().getRoute().getRouteLocationById(a.getValue());
             }
+        }
+        if ((a = e.getAttribute(Xml.LAST_TRAIN_ID)) != null) {
+            setLastTrain(InstanceManager.getDefault(TrainManager.class).getTrainById(a.getValue()));
         }
         if ((a = e.getAttribute(Xml.LAST_ROUTE_ID)) != null) {
             _routeId = a.getValue();
@@ -1512,6 +1548,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if (!getTrainName().equals(NONE)) {
             e.setAttribute(Xml.TRAIN, getTrainName());
             e.setAttribute(Xml.TRAIN_ID, getTrain().getId());
+        }
+        if (!getLastTrainName().equals(NONE)) {
+            e.setAttribute(Xml.LAST_TRAIN, getLastTrainName());
+            e.setAttribute(Xml.LAST_TRAIN_ID, getLastTrain().getId());
         }
         if (!getOwnerName().equals(NONE)) {
             e.setAttribute(Xml.OWNER, getOwnerName());

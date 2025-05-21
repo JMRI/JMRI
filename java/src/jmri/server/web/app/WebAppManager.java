@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.beans.PropertyChangeEvent;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.StringJoiner;
+
 import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -37,10 +38,9 @@ import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import jmri.web.server.WebServer;
 import jmri.web.server.WebServerPreferences;
+
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manager for the Angular JMRI Web Application.
@@ -54,7 +54,6 @@ public class WebAppManager extends AbstractPreferencesManager {
     private final Map<WatchKey, Path> watchPaths = new HashMap<>();
     private final HashMap<Profile, List<WebManifest>> manifests = new HashMap<>();
     private Thread lifeCycleListener = null;
-    private final static Logger log = LoggerFactory.getLogger(WebAppManager.class);
 
     public WebAppManager() {
     }
@@ -62,15 +61,12 @@ public class WebAppManager extends AbstractPreferencesManager {
     @Override
     public void initialize(Profile profile) throws InitializationException {
         WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
-        preferences.addPropertyChangeListener(WebServerPreferences.ALLOW_REMOTE_CONFIG, (PropertyChangeEvent evt) -> {
-            this.savePreferences(profile);
-        });
-        preferences.addPropertyChangeListener(WebServerPreferences.RAILROAD_NAME, (PropertyChangeEvent evt) -> {
-            this.savePreferences(profile);
-        });
-        preferences.addPropertyChangeListener(WebServerPreferences.READONLY_POWER, (PropertyChangeEvent evt) -> {
-            this.savePreferences(profile);
-        });
+        preferences.addPropertyChangeListener(WebServerPreferences.ALLOW_REMOTE_CONFIG, evt ->
+            this.savePreferences(profile));
+        preferences.addPropertyChangeListener(WebServerPreferences.RAILROAD_NAME, evt ->
+            this.savePreferences(profile));
+        preferences.addPropertyChangeListener(WebServerPreferences.READONLY_POWER, evt ->
+            this.savePreferences(profile));
         WebServer.getDefault().addLifeCycleListener(new LifeCycle.Listener() {
             @Override
             public void lifeCycleStarting(LifeCycle lc) {
@@ -116,9 +112,8 @@ public class WebAppManager extends AbstractPreferencesManager {
             this.manifests.put(profile, new ArrayList<>());
         }
         if (this.manifests.get(profile).isEmpty()) {
-            ServiceLoader.load(WebManifest.class).forEach((manifest) -> {
-                this.manifests.get(profile).add(manifest);
-            });
+            ServiceLoader.load(WebManifest.class).forEach( manifest ->
+                this.manifests.get(profile).add(manifest));
         }
         return this.manifests.get(profile);
     }
@@ -126,28 +121,27 @@ public class WebAppManager extends AbstractPreferencesManager {
     public String getScriptTags(Profile profile) {
         StringBuilder tags = new StringBuilder();
         List<String> scripts = new ArrayList<>();
-        this.getManifests(profile).forEach((manifest) -> {
-            manifest.getScripts().stream().filter((script) -> (!scripts.contains(script))).forEachOrdered((script) -> {
-                scripts.add(script);
-            });
-        });
-        scripts.forEach((script) -> {
-            tags.append("<script src=\"").append(script).append("\"></script>\n");
-        });
+        this.getManifests(profile).forEach( manifest ->
+            manifest.getScripts().stream().filter( script -> (!scripts.contains(script))).forEachOrdered( script ->
+                scripts.add(script)
+            )
+        );
+        scripts.forEach( script ->
+            tags.append("<script src=\"").append(script).append("\"></script>\n"));
         return tags.toString();
     }
 
     public String getStyleTags(Profile profile) {
         StringBuilder tags = new StringBuilder();
         List<String> styles = new ArrayList<>();
-        this.getManifests(profile).forEach((manifest) -> {
-            manifest.getStyles().stream().filter((style) -> (!styles.contains(style))).forEachOrdered((style) -> {
-                styles.add(style);
-            });
-        });
-        styles.forEach((style) -> {
-            tags.append("<link rel=\"stylesheet\" href=\"").append(style).append("\" type=\"text/css\">\n");
-        });
+        this.getManifests(profile).forEach( manifest ->
+            manifest.getStyles().stream().filter( style -> (!styles.contains(style))).forEachOrdered( style ->
+                styles.add(style)
+            )
+        );
+        styles.forEach( style ->
+            tags.append("<link rel=\"stylesheet\" href=\"").append(style).append("\" type=\"text/css\">\n")
+        );
         return tags.toString();
     }
 
@@ -155,15 +149,13 @@ public class WebAppManager extends AbstractPreferencesManager {
         ObjectMapper mapper = new ObjectMapper();
         ArrayNode navigation = mapper.createArrayNode();
         List<WebMenuItem> items = new ArrayList<>();
-        this.getManifests(profile).forEach((WebManifest manifest) -> {
-            manifest.getNavigationMenuItems().stream().filter((WebMenuItem item)
+        this.getManifests(profile).forEach( manifest ->
+            manifest.getNavigationMenuItems().stream().filter( item
                     -> !item.getPath().startsWith("help") // NOI18N
                     && !item.getPath().startsWith("user") // NOI18N
                     && !items.contains(item))
-                    .forEachOrdered((item) -> {
-                        items.add(item);
-                    });
-        });
+                    .forEachOrdered( item -> items.add(item))
+        );
         items.sort((WebMenuItem o1, WebMenuItem o2) -> o1.getPath().compareToIgnoreCase(o2.getPath()));
         // TODO: get order correct
         for (int i = 0; i < items.size(); i++) {
@@ -203,17 +195,15 @@ public class WebAppManager extends AbstractPreferencesManager {
     private String getMenuItems(String menu, Profile profile, Locale locale) {
         StringBuilder navigation = new StringBuilder();
         List<WebMenuItem> items = new ArrayList<>();
-        this.getManifests(profile).forEach((WebManifest manifest) -> {
-            manifest.getNavigationMenuItems().stream().filter((WebMenuItem item)
+        this.getManifests(profile).forEach( manifest ->
+            manifest.getNavigationMenuItems().stream().filter( item
                     -> item.getPath().startsWith(menu)
                     && !items.contains(item))
-                    .forEachOrdered((item) -> {
-                        items.add(item);
-                    });
-        });
+                    .forEachOrdered( item -> items.add(item))
+        );
         items.sort((WebMenuItem o1, WebMenuItem o2) -> o1.getPath().compareToIgnoreCase(o2.getPath()));
         // TODO: get order correct
-        items.forEach((item) -> {
+        items.forEach( item -> {
             // TODO: add children
             // TODO: add badges
             // TODO: handle separator before
@@ -224,7 +214,8 @@ public class WebAppManager extends AbstractPreferencesManager {
                 title = String.format("<span data-translate>%s</span>", title.substring(10));
             }
             if (href != null && href.startsWith("ng-click:")) { // NOI18N
-                navigation.append(String.format("<li><a ng-click=\"%s\">%s</a></li>", href.substring(href.indexOf(":") + 1, href.length()), title)); // NOI18N
+                navigation.append(String.format("<li><a ng-click=\"%s\">%s</a></li>",
+                    href.substring(href.indexOf(":") + 1, href.length()), title));
             } else {
                 navigation.append(String.format("<li><a href=\"%s\">%s</a></li>", href, title)); // NOI18N
             }
@@ -247,29 +238,27 @@ public class WebAppManager extends AbstractPreferencesManager {
     public String getAngularDependencies(Profile profile, Locale locale) {
         StringJoiner dependencies = new StringJoiner("',\n  '", "\n  '", "'"); // NOI18N
         List<String> items = new ArrayList<>();
-        this.getManifests(profile).forEach((WebManifest manifest) -> {
-            manifest.getAngularDependencies().stream().filter((dependency)
-                    -> (!items.contains(dependency))).forEachOrdered((dependency) -> {
-                items.add(dependency);
-            });
-        });
-        items.forEach((String dependency) -> {
-            dependencies.add(dependency);
-        });
+        this.getManifests(profile).forEach( manifest ->
+            manifest.getAngularDependencies().stream().filter( dependency
+                    -> (!items.contains(dependency))).forEachOrdered( dependency ->
+                items.add(dependency)
+            )
+        );
+        items.forEach( dependency -> dependencies.add(dependency));
         return dependencies.toString();
     }
 
     public String getAngularRoutes(Profile profile, Locale locale) {
         StringJoiner routes = new StringJoiner("\n", "\n", ""); // NOI18N
         Set<AngularRoute> items = new HashSet<>();
-        this.getManifests(profile).forEach((WebManifest manifest) -> {
-            items.addAll(manifest.getAngularRoutes());
-        });
-        items.forEach((route) -> {
+        this.getManifests(profile).forEach( manifest -> items.addAll(manifest.getAngularRoutes()));
+        items.forEach( route -> {
             if (route.getRedirection() != null) {
-                routes.add(String.format("      .when('%s', { redirectTo: '%s' })", route.getWhen(), route.getRedirection())); // NOI18N
+                routes.add(String.format("      .when('%s', { redirectTo: '%s' })",
+                    route.getWhen(), route.getRedirection())); // NOI18N
             } else if (route.getTemplate() != null && route.getController() != null) {
-                routes.add(String.format("      .when('%s', { templateUrl: '%s', controller: '%s' })", route.getWhen(), route.getTemplate(), route.getController())); // NOI18N
+                routes.add(String.format("      .when('%s', { templateUrl: '%s', controller: '%s' })",
+                    route.getWhen(), route.getTemplate(), route.getController())); // NOI18N
             }
         });
         return routes.toString();
@@ -278,10 +267,8 @@ public class WebAppManager extends AbstractPreferencesManager {
     public String getAngularSources(Profile profile, Locale locale) {
         StringJoiner sources = new StringJoiner("\n", "\n\n", "\n"); // NOI18N
         List<URL> urls = new ArrayList<>();
-        this.getManifests(profile).forEach((WebManifest manifest) -> {
-            urls.addAll(manifest.getAngularSources());
-        });
-        urls.forEach((URL source) -> {
+        this.getManifests(profile).forEach( manifest -> urls.addAll(manifest.getAngularSources()));
+        urls.forEach( source -> {
             try {
                 sources.add(FileUtil.readURL(source));
             } catch (IOException ex) {
@@ -293,9 +280,7 @@ public class WebAppManager extends AbstractPreferencesManager {
 
     public Set<URI> getPreloadedTranslations(Profile profile, Locale locale) {
         Set<URI> urls = new HashSet<>();
-        this.getManifests(profile).forEach((WebManifest manifest) -> {
-            urls.addAll(manifest.getPreloadedTranslations(locale));
-        });
+        this.getManifests(profile).forEach( manifest -> urls.addAll(manifest.getPreloadedTranslations(locale)));
         return urls;
     }
 
@@ -312,7 +297,7 @@ public class WebAppManager extends AbstractPreferencesManager {
     private void lifeCycleStarted(LifeCycle lc, Profile profile) {
         // register watcher to watch web/app directories everywhere
         if (this.watcher.get(profile) != null) {
-            FileUtil.findFiles("web", ".").stream().filter((file) -> (file.isDirectory())).forEachOrdered((file) -> {
+            FileUtil.findFiles("web", ".").stream().filter( file -> (file.isDirectory())).forEachOrdered( file -> {
                 try {
                     Path path = file.toPath();
                     WebAppManager.this.watchPaths.put(path.register(this.watcher.get(profile),
@@ -332,9 +317,8 @@ public class WebAppManager extends AbstractPreferencesManager {
                             return;
                         }
 
-                        key.pollEvents().stream().filter((event) -> (event.kind() != OVERFLOW)).forEachOrdered((event) -> {
-                            WebAppManager.this.savePreferences(profile);
-                        });
+                        key.pollEvents().stream().filter( event -> (event.kind() != OVERFLOW))
+                            .forEachOrdered( event -> WebAppManager.this.savePreferences(profile));
                         if (!key.reset()) {
                             WebAppManager.this.watcher.remove(profile);
                         }
@@ -362,4 +346,7 @@ public class WebAppManager extends AbstractPreferencesManager {
         // stop watching web/app directories
         this.watcher.remove(profile);
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebAppManager.class);
+
 }

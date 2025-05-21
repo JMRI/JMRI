@@ -11,6 +11,7 @@ import java.beans.PropertyVetoException;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
+import java.text.ParseException;
 import java.util.List;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -481,7 +482,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (!componentList.contains(layoutEditorComponent)) {
                 try {
                     _targetPanel.remove(layoutEditorComponent);
-                    _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
+                    _targetPanel.add(layoutEditorComponent, 3);
                     _targetPanel.moveToFront(layoutEditorComponent);
                 } catch (Exception e) {
                     log.warn("paintTargetPanelBefore: ", e);
@@ -571,6 +572,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         boolean toolBarIsVertical = (toolBarSide.equals(ToolBarSide.eRIGHT) || toolBarSide.equals(ToolBarSide.eLEFT));
+        if ( leToolBarPanel != null ) {
+            leToolBarPanel.dispose();
+        }
         if (toolBarIsVertical) {
             leToolBarPanel = new LayoutEditorVerticalToolBarPanel(this);
             editToolBarScrollPane = new JScrollPane(leToolBarPanel);
@@ -2222,10 +2226,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             adjustScrollBars();         // and adjust the scrollbars ourselves
             // adjustClip();
 
-            leToolBarPanel.zoomLabel.setText(String.format("x%1$,.2f", newZoom));
+            leToolBarPanel.zoomLabel.setText(String.format(Locale.getDefault(), "x%1$,.2f", newZoom));
 
             // save the window specific saved zoom user preference
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor));
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent( prefsMgr ->
+                prefsMgr.setProperty(getWindowFrameRef(), "zoom", zoomFactor));
         }
         return getPaintScale();
     }
@@ -3162,20 +3167,51 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             checkControls(true);
+
+
+
         } else if ((event.isMetaDown() || event.isAltDown())
                 && !event.isShiftDown() && !event.isControlDown()) {
-            // not in edit mode - check if moving a marker if there are any
+            // Windows and Linux have meta down on right button press. This prevents isPopTrigger
+            // reaching the next else-if.
+
+            // not in edit mode - check if moving a marker if there are any.  This applies to Windows, Linux and macOS.
             selectedObject = checkMarkerPopUps(dLoc);
             if (selectedObject != null) {
                 selectedHitPointType = HitPointType.MARKER;
                 startDelta = MathUtil.subtract(((LocoIcon) selectedObject).getLocation(), dLoc);
+                log.debug("mousePressed: ++ MAC/Windows/Linux marker move request");
+                if (SystemType.isLinux()) {
+                    // Prepare for a marker popup if the marker move does not occur before mouseReleased.
+                    // This is only needed for Linux.  Windows handles this in mouseClicked.
+                    delayedPopupTrigger = true;
+                    log.debug("mousePressed: ++ Linux marker popup delay");
+                }
             }
+
+            // not in edit mode - check if a signal mast popup menu is being requested using Windows or Linux.
+            var sm = checkSignalMastIconPopUps(dLoc);
+            if (sm != null) {
+                delayedPopupTrigger = true;
+                log.debug("mousePressed: ++ Window/Linux mast popup delay");
+             }
+
         } else if (event.isPopupTrigger() && !event.isShiftDown()) {
-            // not in edit mode - check if a marker popup menu is being requested
-            LocoIcon lo = checkMarkerPopUps(dLoc);
+
+            // not in edit mode - check if a marker popup menu is being requested using macOS.
+            var lo = checkMarkerPopUps(dLoc);
             if (lo != null) {
                 delayedPopupTrigger = true;
+                log.debug("mousePressed: ++ MAC marker popup delay");
             }
+
+            // not in edit mode - check if a signal mast popup menu is being requested using macOS.
+            var sm = checkSignalMastIconPopUps(dLoc);
+            if (sm != null) {
+                delayedPopupTrigger = true;
+                log.debug("mousePressed: ++ MAC mast popup delay");
+             }
+
         }
 
         if (!event.isPopupTrigger()) {
@@ -5281,15 +5317,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     public void addLayoutSlip(LayoutTurnout.TurnoutType type) {
         // get the rotation entry
-        double rot = 0.0;
+        double rot;
         String s = leToolBarPanel.rotationComboBox.getEditor().getItem().toString().trim();
 
         if (s.isEmpty()) {
             rot = 0.0;
         } else {
             try {
-                rot = Double.parseDouble(s);
-            } catch (NumberFormatException e) {
+                rot = IntlUtilities.doubleValue(s);
+            } catch (ParseException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
                         + e, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
 
@@ -5392,15 +5428,15 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     public void addLayoutTurnout(LayoutTurnout.TurnoutType type) {
         // get the rotation entry
-        double rot = 0.0;
+        double rot;
         String s = leToolBarPanel.rotationComboBox.getEditor().getItem().toString().trim();
 
         if (s.isEmpty()) {
             rot = 0.0;
         } else {
             try {
-                rot = Double.parseDouble(s);
-            } catch (NumberFormatException e) {
+                rot = IntlUtilities.doubleValue(s);
+            } catch (ParseException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("Error3") + " "
                         + e, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
 

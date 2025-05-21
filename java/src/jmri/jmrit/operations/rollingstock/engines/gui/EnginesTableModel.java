@@ -45,16 +45,17 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     private static final int DESTINATION_COLUMN = 12;
     private static final int PREVIOUS_LOCATION_COLUMN = 13;
     private static final int TRAIN_COLUMN = 14;
-    private static final int MOVES_COLUMN = 15;
-    private static final int BUILT_COLUMN = 16;
-    private static final int OWNER_COLUMN = 17;
-    private static final int VALUE_COLUMN = 18;
-    private static final int RFID_COLUMN = 19;
-    private static final int LAST_COLUMN = 20;
-    private static final int DCC_ADDRESS_COLUMN = 21;
-    private static final int COMMENT_COLUMN = 22;
-    private static final int SET_COLUMN = 23;
-    private static final int EDIT_COLUMN = 24;
+    private static final int LAST_TRAIN_COLUMN = 15;
+    private static final int MOVES_COLUMN = 16;
+    private static final int BUILT_COLUMN = 17;
+    private static final int OWNER_COLUMN = 18;
+    private static final int VALUE_COLUMN = 19;
+    private static final int RFID_COLUMN = 20;
+    private static final int LAST_COLUMN = 21;
+    private static final int DCC_ADDRESS_COLUMN = 22;
+    private static final int COMMENT_COLUMN = 23;
+    private static final int SET_COLUMN = 24;
+    private static final int EDIT_COLUMN = 25;
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
@@ -109,6 +110,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), sort == SORTBY_RFID);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), sort == SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), sort != SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DCC_ADDRESS_COLUMN), sort == SORTBY_DCC_ADDRESS);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), sort == SORTBY_COMMENT);
         }
@@ -312,7 +315,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     // Default engines frame table column widths, starts with Number column and ends with Edit
     private final int[] _enginesTableColumnWidths =
-            {60, 60, 60, 65, 50, 65, 65, 35, 75, 190, 190, 190, 140, 190, 65, 50, 50, 50, 50, 100, 130, 50, 100, 65,
+            {60, 60, 60, 65, 50, 65, 65, 35, 75, 190, 190, 190, 140, 190, 65, 90, 50, 50, 50, 50, 100, 130, 50, 100, 65,
                     70};
 
     void initTable() {
@@ -345,6 +348,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DCC_ADDRESS_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), false);
 
@@ -395,6 +399,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return Bundle.getMessage("LastLocation");
             case TRAIN_COLUMN:
                 return Bundle.getMessage("Train");
+            case LAST_TRAIN_COLUMN:
+                return Bundle.getMessage("LastTrain");
             case MOVES_COLUMN:
                 return Bundle.getMessage("Moves");
             case BUILT_COLUMN:
@@ -522,6 +528,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 }
                 return engine.getTrainName();
             }
+            case LAST_TRAIN_COLUMN:
+                return engine.getLastTrainName();
             case MOVES_COLUMN:
                 return engine.getMoves();
             case BUILT_COLUMN:

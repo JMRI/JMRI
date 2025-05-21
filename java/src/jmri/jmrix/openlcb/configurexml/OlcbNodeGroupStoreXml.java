@@ -123,7 +123,7 @@ public class OlcbNodeGroupStoreXml extends XmlFile {
     private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException, IllegalArgumentException {
         // Check file exists
         if (findFile(fileName) == null) {
-            log.warn("{} file could not be found", fileName);
+            log.debug("{} file could not be found", fileName); // normal condition
             return;
         }
 

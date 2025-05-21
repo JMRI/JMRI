@@ -1,6 +1,7 @@
 package apps.gui3.tabbedpreferences;
 
 import java.awt.event.WindowEvent;
+
 import javax.swing.WindowConstants;
 
 import jmri.InstanceManager;
@@ -34,6 +35,7 @@ public class TabbedPreferencesFrame extends JmriJFrame {
         add(getTabbedPreferences());
         addHelpMenu("package.apps.TabbedPreferences", true); // NOI18N
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        pack();
     }
 
     public void gotoPreferenceItem(String item, String sub) {

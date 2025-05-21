@@ -115,7 +115,7 @@
                  tickCar = tickCarHTML ;  
                 // jmri.log("should mark for drop: " + name);
               }
-              var tds = "<td>" + data.name + "</td><td>" + data.carType + "</td><td>" + where + "</td><td>" + when + "</td><td>" //build cells
+              var tds = "<td>" + data.name + "</td><td>" + data.type + "</td><td>" + where + "</td><td>" + when + "</td><td>" //build cells
                 + data.destination.userName + "</td><td>" + data.destination.track.userName + "</td><td>"
                 + tickCar +"</td>";
               var tr = "<tr data-name='" + data.name + "'>" + tds + "</tr>"; //build row with key
@@ -125,7 +125,7 @@
             if (pickupCars.includes(name)) {
               // jmri.log("inside pickupCars updater:   " + name );
               tickCar = tickCarHTML ;
-              var pu_tds = "<td>" + data.name + "</td><td>" + data.carType + "</td><td>" + where + "</td><td>" //build cells
+              var pu_tds = "<td>" + data.name + "</td><td>" + data.type + "</td><td>" + where + "</td><td>" //build cells
               + when + "</td><td>" + data.destination.userName + "</td><td>"
               + data.destination.track.userName + "</td><td>"  + data.location.userName + "</td><td>"
               + data.location.track.userName +"</td><td>" + tickCar +"</td>";
@@ -138,7 +138,7 @@
             if (localCars.includes(name)) {
               // jmri.log("inside pickupCars updater:   " + name );
               tickCar = tickCarHTML ;
-              var local_tds = "<td>" + data.name + "</td><td>" + data.carType + "</td><td>" + where + "</td><td>" //build cells
+              var local_tds = "<td>" + data.name + "</td><td>" + data.type + "</td><td>" + where + "</td><td>" //build cells
               + when + "</td><td>" + data.destination.userName + "</td><td>"
               + data.destination.track.userName + "</td><td>"  + data.location.userName + "</td><td>"
               + data.location.track.userName +"</td><td>" + tickCar +"</td>";

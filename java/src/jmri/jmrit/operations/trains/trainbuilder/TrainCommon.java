@@ -30,7 +30,7 @@ import jmri.util.ColorUtil;
  * Common routines for trains
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011, 2012, 2013,
- *         2021
+ *         2021, 2025
  */
 public class TrainCommon {
 
@@ -1585,9 +1585,8 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.KERNEL_SIZE)) {
             if (car.isLead()) {
                 return padAndTruncateIfNeeded(Integer.toString(car.getKernel().getSize()), 2);
-            } else {
-                return SPACE + SPACE; // assumes that kernel size is 99 or less
             }
+            return SPACE + SPACE; // assumes that kernel size is 99 or less
         } else if (attribute.equals(Setup.RWE)) {
             if (!car.getReturnWhenEmptyDestinationName().equals(Car.NONE)) {
                 // format RWE destination and track name
@@ -1630,6 +1629,11 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.DIVISION)) {
             return padAndTruncateIfNeeded(car.getDivisionName(),
                     InstanceManager.getDefault(DivisionManager.class).getMaxDivisionNameLength());
+        } else if (attribute.equals(Setup.BLOCKING_ORDER)) {
+            if (car.isPassenger()) {
+                return padAndTruncateIfNeeded(Integer.toString(car.getBlocking()), 3);
+            }
+            return SPACE + SPACE + SPACE; // assumes that blocking order is +/- 99
         } else if (attribute.equals(Setup.COMMENT)) {
             return padAndTruncateIfNeeded(car.getComment(), carManager.getMaxCommentLength());
         }
@@ -1716,7 +1720,13 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.OWNER)) {
                 return padAndTruncateIfNeeded(rs.getOwnerName(),
                         InstanceManager.getDefault(CarOwners.class).getMaxNameLength());
-            } // the three utility attributes that don't get printed but need to
+            } else if (attribute.equals(Setup.LAST_TRAIN)) {
+                String lastTrainName = padAndTruncateIfNeeded(rs.getLastTrainName(),
+                        InstanceManager.getDefault(TrainManager.class).getMaxTrainNameLength());
+                return Setup.isPrintHeadersEnabled() ? lastTrainName
+                        : TrainManifestHeaderText.getStringHeader_Last_Train() + SPACE + lastTrainName;
+            }
+            // the three utility attributes that don't get printed but need to
               // be tabbed out
             else if (attribute.equals(Setup.NO_NUMBER)) {
                 return padAndTruncateIfNeeded("",
@@ -2009,6 +2019,11 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.DIVISION)) {
                 buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Division(),
                         InstanceManager.getDefault(DivisionManager.class).getMaxDivisionNameLength()) + SPACE);
+            } else if (attribute.equals(Setup.BLOCKING_ORDER)) {
+                buf.append("    "); // assume blocking order +/- 99
+            } else if (attribute.equals(Setup.LAST_TRAIN)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Last_Train(),
+                        InstanceManager.getDefault(TrainManager.class).getMaxTrainNameLength()) + SPACE);
             } else if (attribute.equals(Setup.TAB)) {
                 buf.append(createTabIfNeeded(Setup.getTab1Length()));
             } else if (attribute.equals(Setup.TAB2)) {

@@ -123,7 +123,8 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             modify_sensor.setKnownState(INACTIVE)
             return True
         elif sensor_that_went_active == stop_sensor:
-            self.remove_timebase_listener()
+            self.stop_timebase_and_remove_timebase_listener()
+
             self.optionally_reset_all_trains()
             stop_sensor.setKnownState(INACTIVE)
             return
@@ -164,15 +165,18 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             pass
         createandshowGUI3(self)
 
-    def remove_timebase_listener(self):
+    def stop_timebase_and_remove_timebase_listener(self):
         global timebase
         global tListener
         self.new_train_sensor = sensors.getSensor("startDispatcherSensor")
         self.new_train_sensor.setKnownState(INACTIVE)
         try:
             #stop the scheduler timebase listener
+            # print "stopping timebase", timebase, "tlistener", tListener, "started? before", timebase.getRun()
             if self.logLevel > 0: print "removing listener"
             timebase.removeMinuteChangeListener(tListener)
+            timebase.setRun(False)
+            # print "stopping timebase", timebase, "tlistener", tListener, "started? after", timebase.getRun()
             return False
         except NameError:
             if self.logLevel > 0: print "Name error"
@@ -729,7 +733,12 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def get_transit_name(self, station_from_name, station_to_name):
         StateVertex_start = station_from_name
         StateVertex_end = station_to_name
-        paths = DijkstraShortestPath.findPathBetween(g.g_express, StateVertex_start, StateVertex_end)
+
+        if g.g_express.containsVertex(StateVertex_start) and g.g_express.containsVertex(StateVertex_end):
+            paths = DijkstraShortestPath.findPathBetween(g.g_express, StateVertex_start, StateVertex_end)
+        else:
+            OptionDialog().displayMessage("You have an old route with a station that does not exist. \n Delete it!!")
+            return None
         e = paths[paths.size()-1]
         traininfoFileName = self.get_filename(e, "fwd")
         trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)

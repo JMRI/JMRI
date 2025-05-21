@@ -1555,8 +1555,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             whenDataSpinnerInt.setToolTipText(rbx.getString("HintDelayData"));
             whenDataSpinnerInt.addChangeListener((ChangeEvent e) -> {
                 if (mSecButton.isSelected()) {
-                    float f = (int)whenDataSpinnerInt.getValue();
-                    whenDataSpinnerFloat.setValue(Float.valueOf(f/1000.0f));
+                    float fl = (int)whenDataSpinnerInt.getValue();
+                    whenDataSpinnerFloat.setValue(fl/1000.0f);
                 }
             });
             panelDelay.add(whenDataSpinnerFloat);

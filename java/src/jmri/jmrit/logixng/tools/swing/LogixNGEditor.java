@@ -79,7 +79,7 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     }
 
     // ------------ LogixNG Variables ------------
-    JmriJFrame _editLogixNGFrame = null;
+    private JmriJFrame _editLogixNGFrame = null;
     JTextField editUserName = new JTextField(20);
     JLabel status = new JLabel(" ");
 
@@ -102,8 +102,8 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
     ArrayList<String> _selectConditionalNGList = new ArrayList<>();
 
     // ------------ Edit ConditionalNG Variables ------------
-    boolean _inEditConditionalNGMode = false;
-    JmriJFrame _editConditionalNGFrame = null;
+    private boolean _inEditConditionalNGMode = false;
+    private JmriJFrame _editConditionalNGFrame = null;
     JRadioButton _triggerOnChangeButton;
 
     // ------------ Methods for Edit LogixNG Pane ------------
@@ -736,12 +736,13 @@ public final class LogixNGEditor implements AbstractLogixNGEditor<LogixNG> {
      */
     private boolean checkEditConditionalNG() {
         if (_inEditConditionalNGMode) {
+            // set window visible first so that Dialog appears on top of window
+            _editConditionalNGFrame.setVisible(true);
             // Already editing a ConditionalNG, ask for completion of that edit
             JmriJOptionPane.showMessageDialog(_editConditionalNGFrame,
                     Bundle.getMessage("Error_ConditionalNGInEditMode", _curConditionalNG.getSystemName()), // NOI18N
                     Bundle.getMessage("ErrorTitle"), // NOI18N
                     JmriJOptionPane.ERROR_MESSAGE);
-            _editConditionalNGFrame.setVisible(true);
             return true;
         }
         return false;

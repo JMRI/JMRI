@@ -80,28 +80,6 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "Moving from " + station_from_name + " to " + station_to_name
         i = 0
         if self.logLevel > 0: print "checking train in start block"
-        # if mode != "scheduling":
-        #     while self.check_train_in_start_block(train_name, station_from_name) == False:
-        #         if i > 2: # allow some time to recover
-        #             title = ""
-        #             msg = "Cannot run train, train not in start block\n" + \
-        #                   train_name + " should be in block " + station_from_name + \
-        #                   "\nmove it there manually and it might recover"
-        #             opt1 = "have moved train, try again"
-        #             opt2 = "cancel moving train"
-        #             reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
-        #             if reply == opt1:
-        #                 pass
-        #             else:  #opt2
-        #                 return
-        #         self.waitMsec(5000)
-        #         i += 1
-        # else:
-        #     #scheduling
-        #     # want to wait for the scheduling margin before cancelling the schedule
-        #
-        #     # assume for now we are cancelling immediately
-        #     return False
 
         # print "move_between_stations a"
         if self.logLevel > 0: print "train is in start block"
@@ -405,8 +383,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def call_dispatch(self, e, direction, train, mode="not_scheduling"):
         global scheduling_margin_gbl, fast_clock_rate
-        if mode != "not_scheduling":
-            print "__" + str(train) + " call dispatch"
+        # if mode != "not_scheduling":
+        #     print "__" + str(train) + " call dispatch"
         global check_action_route_flag
         global check_route_flag
 
@@ -430,7 +408,6 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             check_route_flag = False
         if self.logLevel > 0: print "check_route_flag", check_route_flag
-        # print "call_dispatch b"
         # initialise globals to False if not set
         if 'check_action_route_flag' not in globals():
             check_action_route_flag = False
@@ -438,21 +415,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         # wait for blocks to be clear before allocating (if required)
         if check_route_flag == True or check_action_route_flag == True:  # can ask for route to be checked globally or in action
             # print "call_dispatch b1"
-            i = 0
+            # print "checking route is clear", from_name
             self.wait_route_is_clear(filename, from_name, train)
-            # print "call_dispatch b2"
-            #self.do_not_start_trains_simultaneously()
-            # self.set_route_allocated(filename, from_name)  # can't wait for dispatcher to do this
-                                        # else other routes will be allocated simultaneously
-                # i += 1
-                # if i == 1:
-                #     if self.train_name == "shunter": print "     ",
-                #     if self.logLevel > 0: print "waiting for route", filename, "to be clear"
-                # self.waitMsec(2000)
-        # mark as allocating
-        # print "call_dispatch c"
         t = trains[self.train_name]   #train is train_name
-        # print "call_dispatch a  $$$$$"
         t["allocating"] = True
 
         if self.logLevel > 0 and self.train_name == "shunter": print "     ",
@@ -881,19 +846,20 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 break
         if self.logLevel > 0: print "route_is_occupied", route_is_occupied; print
 
-        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-        java_active_trains_list = DF.getActiveTrainsList()
-        java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
-        active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
-        if self.logLevel > 0: print "active_train_names_list", active_train_names_list
-        for train_name in active_train_names_list:
-            # print "trains", trains
-            # print "train_name", train_name
-            train = trains[train_name]
-            if train["allocating"] == True:
-                route_is_occupied = True   # only allow one dispatch to be set up at a time else this routine does not work
-                # we don't want to check that the route is clear, and then have an allocation take place immediately after
-        # print "route_is_occupied state is:", route_is_occupied
+        # DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        # java_active_trains_list = DF.getActiveTrainsList()
+        # java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
+        # active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
+        # if self.logLevel > 0: print "active_train_names_list", active_train_names_list
+        # for train_name in active_train_names_list:
+        #     # print "trains", trains
+        #     # print "train_name", train_name
+        #     train = trains[train_name]
+        #     if train["allocating"] == True:
+        #         route_is_occupied = True   # only allow one dispatch to be set up at a time else this routine does not work
+        #         # we don't want to check that the route is clear, and then have an allocation take place immediately after
+        
+        print "route_is_occupied state is:", route_is_occupied
         return route_is_occupied
         
     def set_route_allocated(self, traininfoFileName, startBlockName):
@@ -1988,7 +1954,7 @@ class createandshowGUI(TableModelListener):
     def loadfromfile_action(self, event):
         # load the file
         dir = self.directory()
-        j = JFileChooser(dir);
+        j = JFileChooser(dir)
         j.setAcceptAllFileFilterUsed(False)
         filter = FileNameExtensionFilter("text files txt", ["txt"])
         j.setDialogTitle("Select a .txt file")
@@ -1998,7 +1964,7 @@ class createandshowGUI(TableModelListener):
         files = j.getCurrentDirectory().listFiles()
         j.setSelectedFile(files[0])
 
-        ret = j.showOpenDialog(None);
+        ret = j.showOpenDialog(None)
         if (ret == JFileChooser.APPROVE_OPTION):
             file = j.getSelectedFile()
             if self.logLevel > 0: print "about to read list", file
@@ -2063,6 +2029,7 @@ class createandshowGUI(TableModelListener):
             j.setAcceptAllFileFilterUsed(False)
             filter = FileNameExtensionFilter("text files txt", ["txt"])
             j.addChoosableFileFilter(filter);
+
             j.setDialogTitle("Delete not wanted files");
 
             ret = j.showDialog(None, "Delete");
@@ -2072,7 +2039,7 @@ class createandshowGUI(TableModelListener):
                     return
                 if file.exists():
                     os.remove(file.getAbsolutePath())
-                    print("File " + file.getName() + " has been deleted successfully.")
+                    # print("File " + file.getName() + " has been deleted successfully.")
                 else:
                     print("The selected file does not exist.")
             else:

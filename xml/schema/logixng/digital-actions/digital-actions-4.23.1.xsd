@@ -89,6 +89,7 @@
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/program-on-main-5.7.3.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/return-5.1.3.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/run-once-5.3.1.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/send-merg-cbus-event-5.11.7.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/sequence-4.23.1.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/show-dialog-4.25.7.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/digital-actions/shutdown-computer-4.23.1.xsd"/>
@@ -184,6 +185,7 @@
             <xs:element name="ProgramOnMain"     type="LogixNG_DigitalAction_ProgramOnMainType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Return"            type="LogixNG_DigitalAction_ReturnType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="RunOnce"           type="LogixNG_DigitalAction_RunOnceType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="SendMergCbusEvent" type="LogixNG_DigitalAction_SendMergCbusEventType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="Sequence"          type="LogixNG_DigitalAction_SequenceType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ShowDialog"        type="LogixNG_DigitalAction_ShowDialogType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="ShutdownComputer"  type="LogixNG_DigitalAction_ShutdownComputerType" minOccurs="0" maxOccurs="unbounded" />

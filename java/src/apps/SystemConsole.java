@@ -37,9 +37,6 @@ import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TextAreaFIFO;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Class to direct standard output and standard error to a ( JTextArea ) TextAreaFIFO .
  * This allows for easier clipboard operations etc.
@@ -114,7 +111,7 @@ public final class SystemConsole {
 
     private int fontStyle = Font.PLAIN;
 
-    private final String fontFamily = "Monospaced";  // NOI18N
+    private static final String FONT_FAMILY = "Monospaced";
 
     public static final int WRAP_STYLE_NONE = 0x00;
     public static final int WRAP_STYLE_LINE = 0x01;
@@ -122,15 +119,10 @@ public final class SystemConsole {
 
     private int wrapStyle = WRAP_STYLE_WORD;
 
-    private UserPreferencesManager pref;
-
-    private JCheckBox autoScroll;
-    private JCheckBox alwaysOnTop;
-
     private final String alwaysScrollCheck = this.getClass().getName() + ".alwaysScroll"; // NOI18N
     private final String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop";   // NOI18N
 
-    final public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via a script
+    public int MAX_CONSOLE_LINES = 5000;  // public, not static so can be modified via a script
 
     /**
      * Initialise the system console ensuring both System.out and System.err
@@ -151,7 +143,7 @@ public final class SystemConsole {
         // Setup the console text area
         console.setRows(20);
         console.setColumns(120);
-        console.setFont(new Font(fontFamily, fontStyle, fontSize));
+        console.setFont(new Font(FONT_FAMILY, fontStyle, fontSize));
         console.setEditable(false);
         setScheme(scheme);
         setWrapStyle(wrapStyle);
@@ -186,8 +178,11 @@ public final class SystemConsole {
                     // Use invokeAndWait method as we don't want to
                     // return until the frame layout is completed
                     SwingUtilities.invokeAndWait(this::createFrame);
-                } catch (InterruptedException | InvocationTargetException ex) {
-                    log.error("Exception creating system console frame", ex);
+                } catch (InvocationTargetException ex) {
+                    log.error("Invocation Exception creating system console frame", ex);
+                } catch (InterruptedException ex) {
+                    log.error("Interrupt Exception creating system console frame", ex);
+                    Thread.currentThread().interrupt();
                 }
             }
             log.debug("Frame created");
@@ -203,7 +198,7 @@ public final class SystemConsole {
         // Use a JmriJFrame to ensure that we fit on the screen
         frame = new JmriJFrame(Bundle.getMessage("TitleConsole"));
 
-        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        UserPreferencesManager pref = jmri.InstanceManager.getDefault(UserPreferencesManager.class);
 
         // Add Help menu (Windows menu automaitically added)
         frame.addHelpMenu("package.apps.SystemConsole", true); // NOI18N
@@ -220,15 +215,13 @@ public final class SystemConsole {
 
         // Add button to clear display
         JButton clear = new JButton(Bundle.getMessage("ButtonClear"));
-        clear.addActionListener((ActionEvent event) -> {
-            console.setText("");
-        });
+        clear.addActionListener( e -> console.setText(""));
         clear.setToolTipText(Bundle.getMessage("ButtonClearTip"));
         p.add(clear);
 
         // Add button to allow copy to clipboard
         JButton copy = new JButton(Bundle.getMessage("ButtonCopyClip"));
-        copy.addActionListener((ActionEvent event) -> {
+        copy.addActionListener( e -> {
             StringSelection text = new StringSelection(console.getText());
             clipboard.setContents(text, text);
         });
@@ -236,7 +229,7 @@ public final class SystemConsole {
 
         // Add button to allow console window to be closed
         JButton close = new JButton(Bundle.getMessage("ButtonClose"));
-        close.addActionListener((ActionEvent event) -> {
+        close.addActionListener( e -> {
             frame.setVisible(false);
             console.dispose();
             frame.dispose();
@@ -244,15 +237,13 @@ public final class SystemConsole {
         p.add(close);
 
         JButton stackTrace = new JButton(Bundle.getMessage("ButtonStackTrace"));
-        stackTrace.addActionListener((ActionEvent event) -> {
-            performStackTrace();
-        });
+        stackTrace.addActionListener( e -> performStackTrace());
         p.add(stackTrace);
 
         // Add checkbox to enable/disable auto-scrolling
         // Use the inverted SimplePreferenceState to default as enabled
-        p.add(autoScroll = new JCheckBox(Bundle.getMessage("CheckBoxAutoScroll"),
-                !pref.getSimplePreferenceState(alwaysScrollCheck)));
+        JCheckBox autoScroll = new JCheckBox(Bundle.getMessage("CheckBoxAutoScroll"));
+        p.add( autoScroll, !pref.getSimplePreferenceState(alwaysScrollCheck));
         console.setAutoScroll(autoScroll.isSelected());
         autoScroll.addActionListener((ActionEvent event) -> {
             console.setAutoScroll(autoScroll.isSelected());
@@ -260,8 +251,8 @@ public final class SystemConsole {
         });
 
         // Add checkbox to enable/disable always on top
-        p.add(alwaysOnTop = new JCheckBox(Bundle.getMessage("CheckBoxOnTop"),
-                pref.getSimplePreferenceState(alwaysOnTopCheck)));
+        JCheckBox alwaysOnTop = new JCheckBox(Bundle.getMessage("CheckBoxOnTop"));
+        p.add( alwaysOnTop, pref.getSimplePreferenceState(alwaysOnTopCheck));
         alwaysOnTop.setVisible(true);
         alwaysOnTop.setToolTipText(Bundle.getMessage("ToolTipOnTop"));
         alwaysOnTop.addActionListener((ActionEvent event) -> {
@@ -295,9 +286,7 @@ public final class SystemConsole {
         schemeGroup = new ButtonGroup();
         for (final Scheme s : schemes) {
             rbMenuItem = new JRadioButtonMenuItem(s.description);
-            rbMenuItem.addActionListener((ActionEvent event) -> {
-                setScheme(schemes.indexOf(s));
-            });
+            rbMenuItem.addActionListener( e -> setScheme(schemes.indexOf(s)));
             rbMenuItem.setSelected(getScheme() == schemes.indexOf(s));
             schemeMenu.add(rbMenuItem);
             schemeGroup.add(rbMenuItem);
@@ -308,25 +297,19 @@ public final class SystemConsole {
         wrapMenu = new JMenu(rbc.getString("ConsoleWrapStyleMenu"));
         wrapGroup = new ButtonGroup();
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleNone"));
-        rbMenuItem.addActionListener((ActionEvent event) -> {
-            setWrapStyle(WRAP_STYLE_NONE);
-        });
+        rbMenuItem.addActionListener( e -> setWrapStyle(WRAP_STYLE_NONE));
         rbMenuItem.setSelected(getWrapStyle() == WRAP_STYLE_NONE);
         wrapMenu.add(rbMenuItem);
         wrapGroup.add(rbMenuItem);
 
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleLine"));
-        rbMenuItem.addActionListener((ActionEvent event) -> {
-            setWrapStyle(WRAP_STYLE_LINE);
-        });
+        rbMenuItem.addActionListener( e -> setWrapStyle(WRAP_STYLE_LINE));
         rbMenuItem.setSelected(getWrapStyle() == WRAP_STYLE_LINE);
         wrapMenu.add(rbMenuItem);
         wrapGroup.add(rbMenuItem);
 
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleWord"));
-        rbMenuItem.addActionListener((ActionEvent event) -> {
-            setWrapStyle(WRAP_STYLE_WORD);
-        });
+        rbMenuItem.addActionListener( e -> setWrapStyle(WRAP_STYLE_WORD));
         rbMenuItem.setSelected(getWrapStyle() == WRAP_STYLE_WORD);
         wrapMenu.add(rbMenuItem);
         wrapGroup.add(rbMenuItem);
@@ -442,7 +425,7 @@ public final class SystemConsole {
      * @param size point size of font between 6 and 24 point
      */
     public void setFontSize(int size) {
-        updateFont(fontFamily, fontStyle, (fontSize = size < 6 ? 6 : size > 24 ? 24 : size));
+        updateFont(FONT_FAMILY, fontStyle, (fontSize = size < 6 ? 6 : size > 24 ? 24 : size));
     }
 
     /**
@@ -468,7 +451,7 @@ public final class SystemConsole {
         } else {
             fontStyle = Font.PLAIN;
         }
-        updateFont(fontFamily, fontStyle, fontSize);
+        updateFont(FONT_FAMILY, fontStyle, fontSize);
     }
 
     /**
@@ -510,14 +493,12 @@ public final class SystemConsole {
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeOrangeOnDarkGray"), Color.ORANGE, Color.DARK_GRAY));
     }
 
-    private Map<Thread, StackTraceElement[]> traces;
-
     @SuppressWarnings("deprecation")    // The method getId() from the type Thread is deprecated since version 19
                                         // The replacement Thread.threadId() isn't available before version 19
     private void performStackTrace() {
         System.out.println("----------- Begin Stack Trace -----------"); //NO18N
         System.out.println("-----------------------------------------"); //NO18N
-        traces = new HashMap<>(Thread.getAllStackTraces());
+        Map<Thread, StackTraceElement[]> traces = new HashMap<>(Thread.getAllStackTraces());
         for (Thread thread : traces.keySet()) {
             System.out.println("[" + thread.getId() + "] " + thread.getName());
             for (StackTraceElement el : thread.getStackTrace()) {
@@ -590,6 +571,10 @@ public final class SystemConsole {
 
     public Scheme[] getSchemes() {
         return this.schemes.toArray(new Scheme[this.schemes.size()]);
+        // return this.schemes.toArray(Scheme[]::new);
+        // It should be possible to use the line above, however causes eclipse compilation error
+        // Annotation type 'org.eclipse.jdt.annotation.NonNull' cannot be found on the build path,
+        // which is implicitly needed for null analysis.
     }
 
     /**
@@ -631,6 +616,6 @@ public final class SystemConsole {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SystemConsole.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemConsole.class);
 
 }
