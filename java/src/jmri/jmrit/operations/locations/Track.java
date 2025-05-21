@@ -2134,8 +2134,8 @@ public class Track extends PropertyChangeSupport {
         return (0 != (_loadOptions & DISABLE_LOAD_CHANGE));
     }
 
-    public void setQuickLoadChangeEnabled(boolean enable) {
-        boolean old = isQuickLoadChangeEnabled();
+    public void setQuickLoadServiceEnabled(boolean enable) {
+        boolean old = isQuickLoadServiceEnabled();
         if (enable) {
             _loadOptions = _loadOptions | QUICK_LOAD_CHANGE;
         } else {
@@ -2144,7 +2144,7 @@ public class Track extends PropertyChangeSupport {
         setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
-    public boolean isQuickLoadChangeEnabled() {
+    public boolean isQuickLoadServiceEnabled() {
         return isSpur() && (0 != (_loadOptions & QUICK_LOAD_CHANGE));
     }
 
