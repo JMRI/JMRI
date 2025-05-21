@@ -554,6 +554,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         if (_track != null) {
             if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
                 updateButtons(true);
+                disableLoadChange.setSelected(_track.isDisableLoadChangeEnabled());
+                quickLoadChange.setSelected(_track.isQuickLoadChangeEnabled());
             }
             if (e.getPropertyName().equals(Track.HOLD_CARS_CHANGED_PROPERTY)) {
                 holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
@@ -561,9 +563,6 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             if (e.getPropertyName().equals(Track.ALTERNATE_TRACK_CHANGED_PROPERTY) ||
                     e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
                 holdCars.setEnabled(_track.getSchedule() != null && _track.getAlternateTrack() != null);
-            }
-            if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
-                disableLoadChange.setSelected(_track.isDisableLoadChangeEnabled());
             }
         }
     }

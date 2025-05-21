@@ -1900,14 +1900,17 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         return false; // no build errors, but car not given destination
     }
 
-    static int cloneNumber = 0;
+    static int cloneCreationOrder = 0;
 
     /**
      * Checks to see if spur/industry is requesting a quick turn, which means
      * that on the outbound side of the turn a car or set of cars in a kernel
      * are set out, and on the return side of the turn the same cars are pulled.
      * Since it isn't possible for a car to be pulled and set out twice, this
-     * code creates a second "clone" car to create the requested Manifest.
+     * code creates a second "clone" car to create the requested Manifest. A car
+     * could have multiple clones, therefore each clone has a creation order
+     * number. The first clone is used to restore a car's location and load in
+     * the case of reset.
      * 
      * @param car   the car possibly needing a quick turn
      * @param rl    the car's current route location
@@ -1921,24 +1924,25 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
         // quick turn enabled, create clones
         Car cloneCar = car.copy();
-        cloneCar.setNumber(car.getNumber() + Car.CLONE + ++cloneNumber);
+        cloneCar.setNumber(car.getNumber() + Car.CLONE + ++cloneCreationOrder);
         cloneCar.setClone(true);
         cloneCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
         carManager.register(cloneCar);
         if (car.getKernel() != null) {
-            String kernelName = car.getKernelName() + Car.CLONE + cloneNumber;
+            String kernelName = car.getKernelName() + Car.CLONE + cloneCreationOrder;
             Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
             cloneCar.setKernel(kernel);
             for (Car kar : car.getKernel().getCars()) {
                 if (kar != car) {
                     Car nCar = kar.copy();
-                    nCar.setNumber(kar.getNumber() + Car.CLONE + cloneNumber);
+                    nCar.setNumber(kar.getNumber() + Car.CLONE + cloneCreationOrder);
                     nCar.setClone(true);
                     nCar.setKernel(kernel);
                     carManager.register(nCar);
                     nCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
                     // move car to new location for later pick up
                     kar.setLocation(track.getLocation(), track, RollingStock.FORCE);
+                    kar.setCloneOrder(cloneCreationOrder); // for reset
                 }
             }
         }
@@ -1947,7 +1951,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         car.setDestination(null, null);
         car.loadNext(track); // update load
         car.updateKernel();
-        car.setCloneOrder(cloneNumber); // for reset
+        car.setCloneOrder(cloneCreationOrder); // for reset
         return cloneCar; // return clone
     }
 
