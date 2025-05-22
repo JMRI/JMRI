@@ -341,7 +341,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         global scheduling_in_operation_gbl
         global timebase
         global start_hour_gbl, end_hour_gbl
-        # if "timebase" not in globals():
+        if "timebase" not in globals():
+            timebase = jmri.InstanceManager.getDefault(jmri.Timebase)
+
         if "start_hour_gbl" not in globals():
             start_hour_gbl = None
         if start_hour_gbl == None:     # checl if Start Scheduler has been run
@@ -1880,7 +1882,7 @@ class Trigger_Timetable:
                                     via = ["Terminates Here"]
                                 via = str(via).replace('[','').replace(']','').replace("'", "")
 
-                                comment = location.getComment()
+                                comment = route_location.getComment()
                                 if i == 0:
                                     station_departure_time = train_route_start_time
                                     time_to_station = 0
@@ -1889,9 +1891,9 @@ class Trigger_Timetable:
                                     if str(duration_sec) == "":
                                         duration_sec = 0
 
-                                    if self.logLevel > 2: print location, "duration_sec", duration_sec
+                                    if self.logLevel > 2: print route_location, "duration_sec", duration_sec
                                     duration = float((float(duration_sec) * int(str(fast_clock_rate))) / 60.0)
-                                    if self.logLevel > 2: print location, "duration", duration
+                                    if self.logLevel > 2: print route_location, "duration", duration
 
                                     time_to_station = int(duration)
                                     if self.logLevel > 2: print "time_to_station", time_to_station
@@ -1901,7 +1903,7 @@ class Trigger_Timetable:
                                 if self.logLevel > 2:
                                     print train_name, "previous_departure_time", previous_departure_time
                                 station_departure_time = self.add_times(station_departure_time, time_to_station)
-                                if self.logLevel > 2: print train_name, location, "station_departure_time", station_departure_time
+                                if self.logLevel > 2: print train_name, route_location, "station_departure_time", station_departure_time
 
 
                                 # if the wait_time and journey_time have been set we can set the arrival time
@@ -1912,14 +1914,20 @@ class Trigger_Timetable:
                                 # convert journey time to fast minutes
                                 journey_time_fast_mins = ((float(str(journey_time)) * int(str(fast_clock_rate))) / 60.0)
                                 if wait_time != "" and journey_time != "":
-                                    if self.logLevel > 2: print train_name, location, "journey_time", journey_time
-                                    if self.logLevel > 2: print train_name, location, "journey_time_fast_mins", journey_time_fast_mins
-                                    station_arrival_time = self.add_times(previous_departure_time, journey_time_fast_mins)
+                                    if i == -1:
+                                        station_arrival_time = station_departure_time
+                                    else:
+                                        if self.logLevel > -1: print train_name, route_location, "journey_time", journey_time
+                                        if self.logLevel > -1: print train_name, route_location, "journey_time_fast_mins", journey_time_fast_mins
+                                        print "previous_departure_time", previous_departure_time
+                                        station_arrival_time = self.add_times(previous_departure_time, journey_time_fast_mins)
                                 else:
                                     if i == 0:
                                         station_arrival_time = ""
                                     else:
                                         station_arrival_time = station_departure_time
+
+                                print "i" , i, "station_arrival_time", station_arrival_time, "station_departure_time", station_departure_time
 
                                 [h, m] = station_departure_time.split(":")
                                 station_departure_time_in_mins = int(m) + int(h) * 60
@@ -2281,7 +2289,8 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                         if self.logLevel > 0: print "storing departure times"
                         current_time = int(round(time.time()))  # in secs
                         journey_time_in_secs = current_time - previous_time
-                        if self.logLevel > 0: print "before store"
+                        print "previous_time", previous_time, "current_time", current_time
+                        if self.logLevel > -1: print "before store", "journey_time_in_secs", journey_time_in_secs
                         self.store_journey_time(self.route, station_index, str(journey_time_in_secs))
                         if self.logLevel > 0: print "after store"
 
@@ -2383,13 +2392,16 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         # move_train.move_between_stations(station_from, station_to, train_to_move, self.graph)
         return True
 
-    def store_journey_time(self, route, row, value):
+    def store_journey_time(self, route, row, journey_time):
         global CreateAndShowGUI5_glb
         routeLocationList = route.getLocationsBySequenceList()
         routeLocation = routeLocationList[row]
-        # print "routeLocation", routeLocation, "row", row, "value", value, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5"
+        print "routeLocation", routeLocation, "row", row, "value", journey_time, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5"
         # OptionDialog().displayMessageNonModal("about to set_value_in_comment", "OK")
-        self.set_value_in_comment(routeLocation, value, "journey_time")
+        self.set_value_in_comment(routeLocation, journey_time, "journey_time")
+        wait_time = self.get_value_in_comment(routeLocation, "wait_time")
+        duration_sec = int(journey_time) + int(wait_time)
+        self.set_value_in_comment(routeLocation, duration_sec, "duration_sec")
         # OptionDialog().displayMessageNonModal("about to populate_action", "OK")
         CreateAndShowGUI5_glb.populate_action(None)
         # OptionDialog().displayMessageNonModal("about to update_journey_time_action", "OK")
@@ -2411,6 +2423,24 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         comment = CreateAndShowGUI5_glb.insert_between(comment, delim_start, delim_end, value)
         routeLocation.setComment(comment)
+
+    def get_value_in_comment(self, routeLocation, duration_string):
+
+        delim_start = "[" + duration_string + "-"
+        delim_end = "-" + duration_string + "]"
+
+        comment = routeLocation.getComment()
+        value = self.find_between(comment, "[" + duration_string + "-", "-" + duration_string + "]")
+
+        return value
+
+    def find_between(self, s, first, last):
+        try:
+            start = s.index(first) + len(first)
+            end = s.index(last, start)
+            return s[start:end]
+        except ValueError:
+            return ""
 
     def wait_for_scheduled_time(self, route, row, accumulated_durations):
         global fast_clock_rate
