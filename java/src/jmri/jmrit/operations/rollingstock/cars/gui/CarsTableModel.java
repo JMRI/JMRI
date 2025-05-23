@@ -610,6 +610,10 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
 
     @Override
     public boolean isCellEditable(int row, int col) {
+        Car car = carList.get(row);
+        if (car.isClone()) {
+            return false;
+        }
         switch (col) {
             case SELECT_COLUMN:
             case SET_COLUMN:

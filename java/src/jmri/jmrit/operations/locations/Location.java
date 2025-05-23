@@ -1320,9 +1320,9 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         return false;
     }
     
-    public boolean hasQuickLoadChange() {
+    public boolean hasQuickLoadService() {
         for (Track track : getTracksList()) {
-            if (track.isQuickLoadChangeEnabled()) {
+            if (track.isQuickLoadServiceEnabled()) {
                 return true;
             }
         }

@@ -255,7 +255,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#LoadOptions">Load Options</a>
                   <ul>
                     <li><a href="#DisableLoadChange">Disable Load Change</a></li>
-                    <li><a href="#QuickLoadChange">Quick Load Change (Turn)</a></li>
+                    <li><a href="#QuickLoadService">Quick Load Service (Turn)</a></li>
                     <li><a href="#SpurOption">Hold cars with custom loads when spurs are
                         full</a></li>
                   </ul></li>
@@ -3443,12 +3443,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       If you don't want a car's load to change when delivered to a spur, select the checkbox. Useful
       for Repair In Place (RIP) tracks.
 
-      <h5 id="QuickLoadChange">Spur Option (Quick Load Change)</h5>
+      <h5 id="QuickLoadService">Spur Option (Quick Load Service)</h5>
       If you want to drop and pull the same car using a
       <a href="#TrainTurnRoute">train turn</a>, select this option. On the outbound leg of the
       train's route, OperationsPro will drop off the car to the spur. On the inbound leg of the
       train's route the car will be pulled and eventually dropped off by the train to the car's
       destination and track.
+
+      <p>The quick load service feature allows the "turn" or another train to also pull the car.
+        For the first legs of a train's route carrying the car, the program will create a "clone"
+        car. The clone cars are used to create the train Manifests with a "car" having multiple set
+        outs and pulls. The last leg has the actual car. You need to be careful in the order you
+        reset trains if you allow two or more trains to carry the same car. Always reset the last
+        train built, and work you way backwards reseting in the reverse order you built your trains.</p>
 
       <h5 id="SpurOption">Spur Option (Hold cars with custom loads when spurs are full)</h5>
       In the "Edit Track Load Options" window spurs have the additional option "Hold cars with
@@ -3463,6 +3470,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       option "Hold cars with custom loads when spurs are full" isn't selected for all of the
       spur/schedules demanding the car's custom load, the program will attempt to move the car to
       another location, which can be staging.
+      
+      <p>This option is enabled when there's a schedule and an alternate track for this spur.</p>
 
       <p>
         You can have the program ignore the "Hold cars with custom loads when spurs are full"

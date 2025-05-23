@@ -1877,8 +1877,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                 car.getTrackName()));
                 rldSave = rl; // make local move
             } else if (trackSave.isSpur()) {
-                car = checkQuickTurn(car, rl, rldSave, trackSave);
                 car.setScheduleItemId(trackSave.getScheduleItemId());
+                car = checkQuickTurn(car, rl, rldSave, trackSave);
                 trackSave.bumpSchedule();
                 log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),
                         trackSave.getName(), car.getScheduleItemId());
@@ -1919,7 +1919,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * @return the car if not a quick turn, or a clone if quick turn
      */
     private Car checkQuickTurn(Car car, RouteLocation rl, RouteLocation rld, Track track) {
-        if (!track.isQuickLoadChangeEnabled()) {
+        if (!track.isQuickLoadServiceEnabled()) {
             return car;
         }
         // quick turn enabled, create clones
@@ -1927,6 +1927,10 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         cloneCar.setNumber(car.getNumber() + Car.CLONE + ++cloneCreationOrder);
         cloneCar.setClone(true);
         cloneCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
+        // for reset
+        cloneCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
+        cloneCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
+        cloneCar.setPreviousScheduleId(car.getScheduleItemId());
         carManager.register(cloneCar);
         if (car.getKernel() != null) {
             String kernelName = car.getKernelName() + Car.CLONE + cloneCreationOrder;
@@ -1940,6 +1944,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     nCar.setKernel(kernel);
                     carManager.register(nCar);
                     nCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
+                    // for reset
+                    nCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
+                    nCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
                     // move car to new location for later pick up
                     kar.setLocation(track.getLocation(), track, RollingStock.FORCE);
                     kar.setCloneOrder(cloneCreationOrder); // for reset

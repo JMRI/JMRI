@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
  * Represents a car on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014,
- *         2015, 2023
+ *         2015, 2023, 2025
  */
 public class Car extends RollingStock {
 
@@ -1063,10 +1063,12 @@ public class Car extends RollingStock {
             Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
             int cloneCreationNumber = Integer.parseInt(number[1]);
             if (cloneCreationNumber <= car.getCloneOrder()) {
-                car.setLocation(getLocation(), getTrack());
+                car.setLocation(getLocation(), getTrack(), Car.FORCE);
                 car.setLoadName(getLoadName());
                 car.setCloneOrder(cloneCreationNumber);
-                car.reset();
+                car.setFinalDestination(getPreviousFinalDestination());
+                car.setFinalDestinationTrack(getPreviousFinalDestinationTrack());
+                car.setScheduleItemId(getPreviousScheduleId());
             }
             InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
             carManager.deregister(this);

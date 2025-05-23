@@ -52,7 +52,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
     protected static final int DEFAULT_LOAD_COLUMN = 13;
     protected static final int CUSTOM_LOAD_COLUMN = 14;
     protected static final int DISABLE_LOAD_CHANGE_COLUMN = 15;
-    protected static final int QUICK_LOAD_CHANGE_COLUMN = 16;
+    protected static final int QUICK_LOAD_SERVICE_COLUMN = 16;
     protected static final int SHIP_COLUMN = 17;
     protected static final int RESTRICTION_COLUMN = 18;
     protected static final int DESTINATION_COLUMN = 19;
@@ -127,7 +127,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         tcm.getColumn(DEFAULT_LOAD_COLUMN).setPreferredWidth(60);
         tcm.getColumn(CUSTOM_LOAD_COLUMN).setPreferredWidth(90);
         tcm.getColumn(DISABLE_LOAD_CHANGE_COLUMN).setPreferredWidth(50);
-        tcm.getColumn(QUICK_LOAD_CHANGE_COLUMN).setPreferredWidth(50);
+        tcm.getColumn(QUICK_LOAD_SERVICE_COLUMN).setPreferredWidth(50);
         tcm.getColumn(SHIP_COLUMN).setPreferredWidth(50);
         tcm.getColumn(ROAD_COLUMN).setPreferredWidth(50);
         tcm.getColumn(DESTINATION_COLUMN).setPreferredWidth(50);
@@ -167,8 +167,8 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         tcm.setColumnVisible(tcm.getColumnByModelIndex(CUSTOM_LOAD_COLUMN), _trackType.equals(Track.STAGING));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DISABLE_LOAD_CHANGE_COLUMN),
                 _location.hasDisableLoadChange() && _trackType.equals(Track.SPUR));
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(QUICK_LOAD_CHANGE_COLUMN),
-                _location.hasQuickLoadChange() && _trackType.equals(Track.SPUR));
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(QUICK_LOAD_SERVICE_COLUMN),
+                _location.hasQuickLoadService() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), _location.hasRoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions() &&
@@ -266,8 +266,8 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                 return Bundle.getMessage("LoadCustomAbv");
             case DISABLE_LOAD_CHANGE_COLUMN:
                 return Bundle.getMessage("DisableLoadChange");
-            case QUICK_LOAD_CHANGE_COLUMN:
-                return Bundle.getMessage("QuickLoadChange");
+            case QUICK_LOAD_SERVICE_COLUMN:
+                return Bundle.getMessage("QuickLoadService");
             case SHIP_COLUMN:
                 return Bundle.getMessage("Ship");
             case ROAD_COLUMN:
@@ -332,7 +332,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
             case EDIT_COLUMN:
                 return JButton.class;
             case DISABLE_LOAD_CHANGE_COLUMN:
-            case QUICK_LOAD_CHANGE_COLUMN:
+            case QUICK_LOAD_SERVICE_COLUMN:
             case ROUTED_COLUMN:
             case HOLD_COLUMN:
                 return Boolean.class;
@@ -346,7 +346,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         switch (col) {
             case MOVES_COLUMN:
             case DISABLE_LOAD_CHANGE_COLUMN:
-            case QUICK_LOAD_CHANGE_COLUMN:
+            case QUICK_LOAD_SERVICE_COLUMN:
             case ROUTED_COLUMN:
             case COMMENT_COLUMN:
             case EDIT_COLUMN:
@@ -406,8 +406,8 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                 return getCustomLoadString(track);
             case DISABLE_LOAD_CHANGE_COLUMN:
                 return track.isDisableLoadChangeEnabled();
-            case QUICK_LOAD_CHANGE_COLUMN:
-                return track.isQuickLoadChangeEnabled();
+            case QUICK_LOAD_SERVICE_COLUMN:
+                return track.isQuickLoadServiceEnabled();
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,
                         track.getShipLoadOption().equals(Track.ALL_LOADS),
@@ -560,8 +560,8 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
             case DISABLE_LOAD_CHANGE_COLUMN:
                 setDisableLoadChange(row, value);
                 break;
-            case QUICK_LOAD_CHANGE_COLUMN:
-                setQuickLoadChange(row, value);
+            case QUICK_LOAD_SERVICE_COLUMN:
+                setQuickLoadService(row, value);
                 break;
             case ROUTED_COLUMN:
                 setRouted(row, value);
@@ -592,9 +592,9 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         track.setDisableLoadChangeEnabled(((Boolean) value).booleanValue());
     }
 
-    private void setQuickLoadChange(int row, Object value) {
+    private void setQuickLoadService(int row, Object value) {
         Track track = _tracksList.get(row);
-        track.setQuickLoadChangeEnabled(((Boolean) value).booleanValue());
+        track.setQuickLoadServiceEnabled(((Boolean) value).booleanValue());
     }
 
     private void setRouted(int row, Object value) {
