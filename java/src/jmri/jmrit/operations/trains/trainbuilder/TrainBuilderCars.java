@@ -1919,7 +1919,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * @return the car if not a quick turn, or a clone if quick turn
      */
     private Car checkQuickService(Car car, RouteLocation rl, RouteLocation rld, Track track) {
-        if (!track.isQuickLoadServiceEnabled()) {
+        if (!track.isQuickServiceEnabled()) {
             return car;
         }
         addLine(_buildReport, FIVE,
