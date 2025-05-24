@@ -1,26 +1,25 @@
 # Script to initialize:
 #
-#   ALL known physical DCC turnouts to the CLOSED state
+#   ALL known physical turnouts from UNKNOWN to the CLOSED state
+#       ignoring turnouts that have already been set to either THROWN or CLOSED
 #       and
-#   ALL known physical DCC sensors to the INACTIVE state
+#   ALL known physical sensors from UNKNOWN to the INACTIVE state
+#       ignoring sensors that have already been set to either ACTIVE or INACTIVE
 
-    ## Modified 2025-05-12 to ignore LCC Turnout and LCC Sensor equipment
 
 #      (
-#          Neither the Internal or the LCC defined Turnouts or defined Sensors are DIRECTLY touched
-#            BUT indirect responses from actions that trigger 
+#          The Internal Turnouts & Sensors are NOT DIRECTLY touched
+#            BUT responses from actions that trigger 
 #                a Route or a Logix or a LogixNG
 #                conditional can cause indirect responses
-#                to some skipped sensors and/or turnouts.
-#                   For turnouts displayed in a Layout Editor Panel,
-#                   the "Also Thrown" option can indirectly impact a skipped turnout.
+#                to some internal sensors and/or turnouts
 #       )
 #
-#   In this case "known" means turnouts and sensors that are on the layout
+#   In this case "known" means turnouts and sensors that are physically on the layout
 #   and also are described in one or more Panel files that have been loaded into the running
 #   JMRI program, usually the PanelPro flavor.
 #
-#######    The layout must be turned on and the Panel files loaded 
+#######    The layout must be turned on and the Panel loaded 
 #######         before activating this script!!!!
 #
 #######    WE HAVE LEARNED THE HARD WAY, THAT PANEL FILES THAT ACTIVATE Turnouts
@@ -35,9 +34,9 @@
 # Original script, circa 2014, was loosely based on several example scripts supplied in the distribution folder
 #   program:jython
 # by various authors.  Update suggestions are from Dave Sand, Bob Jacobsen, and others.
-# Most recent update conforms with PanelPro version 5.11.6+R1b48891fa4
+# Most recent update conforms with PanelPro version 5.3.6
 
-# Modified: Cliff Anderson, 2025
+# Modified: Cliff Anderson, Dave Sand, 2025
 # Author: Cliff Anderson, Copyright 2023
 # Part of the JMRI distribution
 
@@ -79,12 +78,13 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
 
 ########    END OF InitializeTurnoutsSensors.handle()
 
-    # initialization of each physical DCC Turnout in order of appearance on the system list
-    # Close ALL known physical DCC layout turnouts but ignore the JMRI internal and LCC turnouts
+    # initialization of each physical Turnout in order of appearance on the system list
+    # Close ALL known physical layout turnouts but ignore the JMRI internal ones
     def closeTurnouts(self) :
 
-        skippingCounter = 0
+        internalCounter = 0
         physicalCounter = 0
+        skippingCounter = 0
         self.log.info( "Loop through all known turnouts" )
         for turnout in turnouts.getNamedBeanSet() :
 
@@ -97,38 +97,58 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
             #    .format(turnoutSystemName, turnoutUserName) 
             #    )
 
-    ## Modified 2025-05-12 to ignore LCC Turnouts  CA
-            if turnoutSystemName[0:1] == "I" or turnoutSystemName[0:1] == "M" :
-                #do nothing for internal or for LCC turnouts
+            turnoutState = turnout.getState()
+            if turnoutSystemName[0:1] == "I" :
+                #do nothing for internal turnouts
                 self.log.debug(
-                    'SKIPPING Turnout: "{0}"'.format(turnoutSystemName)
+                    'SKIPPING internal Turnout: "{0}"'.format(turnoutSystemName)
                     )
-                skippingCounter += 1
+                internalCounter += 1
 
-            else:
+            elif ( turnoutState != CLOSED and turnoutState != THROWN ) :
                 self.log.debug(
-                    'Closing physical DCC Turnout: "{0}"'.format(turnoutSystemName)
+                    'Closing physical Turnout: "{0}"'.format(turnoutSystemName)
                     )
                 turnout.setState( CLOSED )
                 self.waitMsec(125)  # stall for Command Station action
                 physicalCounter += 1
 
+            else:
+                self.log.debug(
+                    'Skipping physical {0} Turnout: "{1}"\
+                    '.format(self.turnoutStateName(turnoutState), turnoutSystemName)
+                    )
+                skippingCounter += 1
+
         # Tell the log how many turnouts we found, for sanity checking
-        self.log.info ( "Skipped Turnout Count = {0}".format( skippingCounter ) )
-        self.log.info ( "Physical DCC Turnout Count = {0}".format( physicalCounter ) )
+        self.log.info ( "Internal Turnout Count = {0}".format( internalCounter ) )
+        self.log.info ( "Initialized Physical Turnout Count = {0}".format( physicalCounter ) )
+        self.log.info ( "Skipped Physical Turnout Count = {0}".format( skippingCounter ) )
         return
 
 ########    END OF InitializeTurnoutsSensors.closeTurnouts()
 
-    # initialization of each physical DCC Sensor in order of appearance on the system list
-    # Deactivate ALL known physical DCC layout sensors 
-    # but ignore the JMRI internal sensors and the LCC sensors
+    # Function to convert state values to names
+    def turnoutStateName(self, state):
+        if (state == CLOSED):
+            return "CLOSED"
+        if (state == THROWN):
+            return "THROWN"
+        if (state == INCONSISTENT):
+            return "INCONSISTENT"
+        # Anything else is UNKNOWN
+        return "UNKNOWN"
+
+
+    # initialization of each physical Sensor in order of appearance on the system list
+    # Deactivate ALL known physical layout sensors but ignore the JMRI internal ones
     def deacivateSensors(self) :
 
         self.log.info( "Loop through all known sensors" )
 
-        skippingCounter = 0
+        internalCounter = 0
         physicalCounter = 0
+        skippingCounter = 0
         for sensor in sensors.getNamedBeanSet() :
 
             sensorSystemName = sensor.getSystemName()
@@ -140,31 +160,51 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
             #    .format(sensorSystemName,sensorUserName)
             #    )
 
-    ## Modified 2025-05-12 to ignore LCC Sensors  CA
-            if sensorSystemName[0:1] == "I"  or sensorSystemName[0:1] == "M" :
-                #do nothing for internal or LCC sensors
+            sensorState = sensor.getState()
+            if sensorSystemName[0:1] == "I" :
+                #do nothing for internal sensors
                 if (sensorSystemName == "ISCLOCKRUNNING") :
                     pass    # Do not even count special internal Sensor
                 else :
                     self.log.debug(
-                        'SKIPPING Sensor: "{0}"'.format(sensorSystemName)
+                        'SKIPPING internal Sensor: "{0}"'.format(sensorSystemName)
                         )
-                    skippingCounter += 1
+                    internalCounter += 1
 
-            else:
+            elif ( sensorState != ACTIVE and sensorState != INACTIVE ) :
                 self.log.debug(
-                    'Deactivating physical DCC Sensor: "{0}"'.format(sensorSystemName)
+                    'Deactivating physical Sensor: "{0}"'.format(sensorSystemName)
                     )
                 sensor.setState( INACTIVE )
                 self.waitMsec(125)  # stall for Command Station action
                 physicalCounter += 1
 
+            else:
+                self.log.debug(
+                    'Skipping physical {0} Sensor: "{1}"\
+                    '.format(self.sensorStateName(sensorState),sensorSystemName)
+                    )
+                skippingCounter += 1
+
         # Tell the log how many sensors we found, for sanity checking
-        self.log.info ( "Skipped Sensor Count = {0}".format( skippingCounter ) )
-        self.log.info ( "Physical DCC Sensor Count = {0}".format( physicalCounter ) )
+        self.log.info ( "Internal Sensor Count = {0}".format( internalCounter ) )
+        self.log.info ( "Initialized Physical Sensor Count = {0}".format( physicalCounter ) )
+        self.log.info ( "Skipped Physical Sensor Count = {0}".format( skippingCounter ) )
         return
 
 ########    END OF InitializeTurnoutsSensors.deacivateSensors()
+
+    # Define routine to map status numbers to text
+    def sensorStateName(self, state) :
+        if (state == ACTIVE) :
+            return "ACTIVE"
+        if (state == INACTIVE) :
+            return "INACTIVE"
+        if (state == INCONSISTENT) :
+            return "INCONSISTENT"
+        if (state == UNKNOWN) :
+            return "UNKNOWN"
+        return "(invalid)"
 
 ###############################
 ########    END OF class InitializeTurnoutsSensors
