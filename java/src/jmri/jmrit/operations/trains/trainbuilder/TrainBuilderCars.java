@@ -1536,7 +1536,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                         tracks.get(0).getTrackTypeName(),
                                         tracks.get(0).getLocation().getName(), tracks.get(0).getName(),
                                         rld.getCarMoves(), rld.getMaxCarMoves()));
-                        car = checkQuickTurn(car, rl, rld, tracks.get(0));
+                        car = checkQuickService(car, rl, rld, tracks.get(0));
                         addCarToTrain(car, rl, rld, tracks.get(0));
                         return true;
                     }
@@ -1564,7 +1564,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                 (status = checkReserved(_train, rld, car, car.getDestinationTrack(), true))
                                         .equals(Track.OKAY)) {
                             Track destTrack = car.getDestinationTrack();
-                            car = checkQuickTurn(car, rl, rld, destTrack);
+                            car = checkQuickService(car, rl, rld, destTrack);
                             addCarToTrain(car, rl, rld, destTrack);
                             return true;
                         }
@@ -1878,7 +1878,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 rldSave = rl; // make local move
             } else if (trackSave.isSpur()) {
                 car.setScheduleItemId(trackSave.getScheduleItemId());
-                car = checkQuickTurn(car, rl, rldSave, trackSave);
+                car = checkQuickService(car, rl, rldSave, trackSave);
                 trackSave.bumpSchedule();
                 log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),
                         trackSave.getName(), car.getScheduleItemId());
@@ -1918,10 +1918,13 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * @param track the destination track
      * @return the car if not a quick turn, or a clone if quick turn
      */
-    private Car checkQuickTurn(Car car, RouteLocation rl, RouteLocation rld, Track track) {
-        if (!track.isQuickLoadServiceEnabled()) {
+    private Car checkQuickService(Car car, RouteLocation rl, RouteLocation rld, Track track) {
+        if (!track.isQuickServiceEnabled()) {
             return car;
         }
+        addLine(_buildReport, FIVE,
+                Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
+                track.getLocation().getName(), track.getName()));
         // quick turn enabled, create clones
         Car cloneCar = car.copy();
         cloneCar.setNumber(car.getNumber() + Car.CLONE + ++cloneCreationOrder);
@@ -1949,16 +1952,26 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     nCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
                     // move car to new location for later pick up
                     kar.setLocation(track.getLocation(), track, RollingStock.FORCE);
+                    kar.setLastTrain(_train);
                     kar.setCloneOrder(cloneCreationOrder); // for reset
                 }
             }
         }
         // move car to new location for later pick up
         car.setLocation(track.getLocation(), track, RollingStock.FORCE);
-        car.setDestination(null, null);
-        car.loadNext(track); // update load
-        car.updateKernel();
+        car.setLastTrain(_train);
         car.setCloneOrder(cloneCreationOrder); // for reset
+        car.setDestination(null, null);
+        track.scheduleNext(car); // apply schedule to car
+        car.loadNext(track); // update load, wait count
+        if (car.getWait() > 0) {
+            _carList.remove(car); // available for next train
+            addLine(_buildReport, FIVE, Bundle.getMessage("buildExcludeCarWait", car.toString(),
+                    car.getTypeName(), car.getLocationName(), car.getTrackName(), car.getWait()));
+            car.setWait(car.getWait() - 1);
+            car.updateLoad(track);
+        }
+        car.updateKernel();
         return cloneCar; // return clone
     }
 

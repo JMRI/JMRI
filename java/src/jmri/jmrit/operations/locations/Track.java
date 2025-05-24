@@ -121,7 +121,7 @@ public class Track extends PropertyChangeSupport {
 
     // load options for spur
     private static final int DISABLE_LOAD_CHANGE = 64;
-    private static final int QUICK_LOAD_CHANGE = 128;
+    private static final int QUICK_SERVICE = 128;
 
     // block options
     protected int _blockOptions = 0;
@@ -2134,18 +2134,18 @@ public class Track extends PropertyChangeSupport {
         return (0 != (_loadOptions & DISABLE_LOAD_CHANGE));
     }
 
-    public void setQuickLoadServiceEnabled(boolean enable) {
-        boolean old = isQuickLoadServiceEnabled();
+    public void setQuickServiceEnabled(boolean enable) {
+        boolean old = isQuickServiceEnabled();
         if (enable) {
-            _loadOptions = _loadOptions | QUICK_LOAD_CHANGE;
+            _loadOptions = _loadOptions | QUICK_SERVICE;
         } else {
-            _loadOptions = _loadOptions & 0xFFFF - QUICK_LOAD_CHANGE;
+            _loadOptions = _loadOptions & 0xFFFF - QUICK_SERVICE;
         }
         setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
     }
 
-    public boolean isQuickLoadServiceEnabled() {
-        return isSpur() && (0 != (_loadOptions & QUICK_LOAD_CHANGE));
+    public boolean isQuickServiceEnabled() {
+        return isSpur() && (0 != (_loadOptions & QUICK_SERVICE));
     }
 
     public void setBlockCarsEnabled(boolean enable) {

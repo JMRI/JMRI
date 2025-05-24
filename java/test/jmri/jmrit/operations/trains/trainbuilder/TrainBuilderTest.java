@@ -19524,7 +19524,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location boston = route.getRouteLocationBySequenceNumber(2).getLocation();
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
-        bostonSpur1.setQuickLoadServiceEnabled(true);
+        bostonSpur1.setQuickServiceEnabled(true);
         bostonSpur1.setLength(300); // room for all 6 cars
 
         // get rid of the other tracks at Boston
@@ -19707,7 +19707,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Location boston = route.getRouteLocationBySequenceNumber(2).getLocation();
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
-        bostonSpur1.setQuickLoadServiceEnabled(true);
+        bostonSpur1.setQuickServiceEnabled(true);
         bostonSpur1.setLength(300); // room for all 6 cars
 
         // get rid of the other tracks at Boston

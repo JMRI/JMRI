@@ -104,6 +104,9 @@ public class Car extends RollingStock {
         car.setCaboose(isCaboose());
         car.setFred(hasFred());
         car.setPassenger(isPassenger());
+        car.setBlocking(getBlocking());
+        car.setLastTrain(getLastTrain());
+        car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
         car.loaded = true;
         return car;
     }
@@ -733,6 +736,7 @@ public class Car extends RollingStock {
                 car.setFinalDestinationTrack(getFinalDestinationTrack());
                 car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
                 car.setRoutePath(getRoutePath());
+                car.setWait(getWait());
                 if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), getLoadName())) {
                     car.setLoadName(getLoadName());
                 }
@@ -1065,10 +1069,14 @@ public class Car extends RollingStock {
             if (cloneCreationNumber <= car.getCloneOrder()) {
                 car.setLocation(getLocation(), getTrack(), Car.FORCE);
                 car.setLoadName(getLoadName());
+                car.setLastTrain(getLastTrain());
                 car.setCloneOrder(cloneCreationNumber);
                 car.setFinalDestination(getPreviousFinalDestination());
                 car.setFinalDestinationTrack(getPreviousFinalDestinationTrack());
+                car.setPreviousFinalDestination(getPreviousFinalDestination());
+                car.setPreviousFinalDestinationTrack(getPreviousFinalDestinationTrack());
                 car.setScheduleItemId(getPreviousScheduleId());
+                car.setWait(0);
             }
             InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
             carManager.deregister(this);

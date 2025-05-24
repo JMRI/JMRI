@@ -1322,7 +1322,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
     
     public boolean hasQuickLoadService() {
         for (Track track : getTracksList()) {
-            if (track.isQuickLoadServiceEnabled()) {
+            if (track.isQuickServiceEnabled()) {
                 return true;
             }
         }

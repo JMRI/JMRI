@@ -258,7 +258,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             holdCars.setEnabled(_track.getSchedule() != null && _track.getAlternateTrack() != null);
             holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
             disableLoadChange.setSelected(_track.isDisableLoadChangeEnabled());
-            quickLoadService.setSelected(_track.isQuickLoadServiceEnabled());
+            quickLoadService.setSelected(_track.isQuickServiceEnabled());
             updateButtons(true);
         } else {
             updateButtons(false);
@@ -336,7 +336,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         checkForErrors();
         _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
         _track.setDisableLoadChangeEnabled(disableLoadChange.isSelected());
-        _track.setQuickLoadServiceEnabled(quickLoadService.isSelected());
+        _track.setQuickServiceEnabled(quickLoadService.isSelected());
         // save the last state of the "Use car type and load" checkbox
         loadAndType = loadAndTypeCheckBox.isSelected();
         shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();
@@ -555,7 +555,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             if (e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY)) {
                 updateButtons(true);
                 disableLoadChange.setSelected(_track.isDisableLoadChangeEnabled());
-                quickLoadService.setSelected(_track.isQuickLoadServiceEnabled());
+                quickLoadService.setSelected(_track.isQuickServiceEnabled());
             }
             if (e.getPropertyName().equals(Track.HOLD_CARS_CHANGED_PROPERTY)) {
                 holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
