@@ -1925,7 +1925,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         addLine(_buildReport, FIVE,
                 Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                 track.getLocation().getName(), track.getName()));
-        // quick turn enabled, create clones
+        // quick service enabled, create clones
         Car cloneCar = car.copy();
         cloneCar.setNumber(car.getNumber() + Car.CLONE + ++cloneCreationOrder);
         cloneCar.setClone(true);
