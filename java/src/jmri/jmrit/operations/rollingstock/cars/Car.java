@@ -107,6 +107,7 @@ public class Car extends RollingStock {
         car.setBlocking(getBlocking());
         car.setLastTrain(getLastTrain());
         car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+        car.setDivision(getDivision());
         car.loaded = true;
         return car;
     }
