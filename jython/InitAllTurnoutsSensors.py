@@ -1,14 +1,15 @@
 # Script to initialize:
 #
-#   ALL known physical turnouts to the CLOSED state
+#   ALL known physical turnouts from UNKNOWN to the CLOSED state
+#       ignoring turnouts that have already been set to either THROWN or CLOSED
 #       and
-#   ALL known physical sensors to the INACTIVE state
+#   ALL known physical sensors from UNKNOWN to the INACTIVE state
+#       ignoring sensors that have already been set to either ACTIVE or INACTIVE
 
-#       NOT TESTED WITH LCC Turnout or Sensor equipment
 
 #      (
 #          The Internal Turnouts & Sensors are NOT DIRECTLY touched
-#            BUT indirect responses from actions that trigger 
+#            BUT responses from actions that trigger 
 #                a Route or a Logix or a LogixNG
 #                conditional can cause indirect responses
 #                to some internal sensors and/or turnouts
@@ -35,6 +36,7 @@
 # by various authors.  Update suggestions are from Dave Sand, Bob Jacobsen, and others.
 # Most recent update conforms with PanelPro version 5.3.6
 
+# Modified: Cliff Anderson, Dave Sand, 2025
 # Author: Cliff Anderson, Copyright 2023
 # Part of the JMRI distribution
 
@@ -82,6 +84,7 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
 
         internalCounter = 0
         physicalCounter = 0
+        skippingCounter = 0
         self.log.info( "Loop through all known turnouts" )
         for turnout in turnouts.getNamedBeanSet() :
 
@@ -94,6 +97,7 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
             #    .format(turnoutSystemName, turnoutUserName) 
             #    )
 
+            turnoutState = turnout.getState()
             if turnoutSystemName[0:1] == "I" :
                 #do nothing for internal turnouts
                 self.log.debug(
@@ -101,7 +105,7 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
                     )
                 internalCounter += 1
 
-            else:
+            elif ( turnoutState != CLOSED and turnoutState != THROWN ) :
                 self.log.debug(
                     'Closing physical Turnout: "{0}"'.format(turnoutSystemName)
                     )
@@ -109,12 +113,32 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
                 self.waitMsec(125)  # stall for Command Station action
                 physicalCounter += 1
 
+            else:
+                self.log.debug(
+                    'Skipping physical {0} Turnout: "{1}"\
+                    '.format(self.turnoutStateName(turnoutState), turnoutSystemName)
+                    )
+                skippingCounter += 1
+
         # Tell the log how many turnouts we found, for sanity checking
         self.log.info ( "Internal Turnout Count = {0}".format( internalCounter ) )
-        self.log.info ( "Physical Turnout Count = {0}".format( physicalCounter ) )
+        self.log.info ( "Initialized Physical Turnout Count = {0}".format( physicalCounter ) )
+        self.log.info ( "Skipped Physical Turnout Count = {0}".format( skippingCounter ) )
         return
 
 ########    END OF InitializeTurnoutsSensors.closeTurnouts()
+
+    # Function to convert state values to names
+    def turnoutStateName(self, state):
+        if (state == CLOSED):
+            return "CLOSED"
+        if (state == THROWN):
+            return "THROWN"
+        if (state == INCONSISTENT):
+            return "INCONSISTENT"
+        # Anything else is UNKNOWN
+        return "UNKNOWN"
+
 
     # initialization of each physical Sensor in order of appearance on the system list
     # Deactivate ALL known physical layout sensors but ignore the JMRI internal ones
@@ -124,6 +148,7 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
 
         internalCounter = 0
         physicalCounter = 0
+        skippingCounter = 0
         for sensor in sensors.getNamedBeanSet() :
 
             sensorSystemName = sensor.getSystemName()
@@ -135,6 +160,7 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
             #    .format(sensorSystemName,sensorUserName)
             #    )
 
+            sensorState = sensor.getState()
             if sensorSystemName[0:1] == "I" :
                 #do nothing for internal sensors
                 if (sensorSystemName == "ISCLOCKRUNNING") :
@@ -145,7 +171,7 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
                         )
                     internalCounter += 1
 
-            else:
+            elif ( sensorState != ACTIVE and sensorState != INACTIVE ) :
                 self.log.debug(
                     'Deactivating physical Sensor: "{0}"'.format(sensorSystemName)
                     )
@@ -153,12 +179,32 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
                 self.waitMsec(125)  # stall for Command Station action
                 physicalCounter += 1
 
+            else:
+                self.log.debug(
+                    'Skipping physical {0} Sensor: "{1}"\
+                    '.format(self.sensorStateName(sensorState),sensorSystemName)
+                    )
+                skippingCounter += 1
+
         # Tell the log how many sensors we found, for sanity checking
         self.log.info ( "Internal Sensor Count = {0}".format( internalCounter ) )
-        self.log.info ( "Physical Sensor Count = {0}".format( physicalCounter ) )
+        self.log.info ( "Initialized Physical Sensor Count = {0}".format( physicalCounter ) )
+        self.log.info ( "Skipped Physical Sensor Count = {0}".format( skippingCounter ) )
         return
 
 ########    END OF InitializeTurnoutsSensors.deacivateSensors()
+
+    # Define routine to map status numbers to text
+    def sensorStateName(self, state) :
+        if (state == ACTIVE) :
+            return "ACTIVE"
+        if (state == INACTIVE) :
+            return "INACTIVE"
+        if (state == INCONSISTENT) :
+            return "INCONSISTENT"
+        if (state == UNKNOWN) :
+            return "UNKNOWN"
+        return "(invalid)"
 
 ###############################
 ########    END OF class InitializeTurnoutsSensors
