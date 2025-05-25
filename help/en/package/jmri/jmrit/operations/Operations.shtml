@@ -3462,7 +3462,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>When using this feature, you need to be careful in the order you reset trains if you
         allow two or more trains to carry the same car. Always reset the last train built, and work
-        your way backwards reseting in the reverse order you built your trains. The other issue is
+        your way backwards resetting in the reverse order you built your trains. The other issue is
         that you have to worry about the timing between the train's carrying the same car. The
         program ignores the train's departure times when assigning cars, and only uses the order
         built to create the Manifests.</p>
