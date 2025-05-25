@@ -111,6 +111,8 @@ public class LinkedWarrantTest {
             return m.equals(Bundle.getMessage("warrantComplete", warrant.getTrainName(), warrant.getDisplayName(), block.getDisplayName()));
         }, "LoopDeLoop finished third leg");
 
+        warrant.dispose();
+
         JFrameOperator jfo = new JFrameOperator(WarrantTableFrame.getDefault());
         jfo.requestClose();
         jfo.waitClosed();
