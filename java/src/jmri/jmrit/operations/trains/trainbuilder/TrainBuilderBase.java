@@ -1425,8 +1425,9 @@ public class TrainBuilderBase extends TrainCommon {
         _completedMoves++; // bump number of car pick up moves for the location
         _reqNumOfMoves--; // decrement number of moves left for the location
 
-        _carList.remove(car);
-        _carIndex--; // removed car from list, so backup pointer
+        if (_carList.remove(car)) {
+            _carIndex--; // removed car from list, so backup pointer
+        }
 
         rl.setCarMoves(rl.getCarMoves() + 1);
         if (rl != rld) {
@@ -1458,11 +1459,10 @@ public class TrainBuilderBase extends TrainCommon {
                 inTrain = true;
             }
             if (rld == routeLocation) {
-                break;
+                break; // done
             }
             if (inTrain) {
-                routeLocation.setTrainLength(routeLocation.getTrainLength() + length); // includes
-                                                                                       // couplers
+                routeLocation.setTrainLength(routeLocation.getTrainLength() + length);
                 routeLocation.setTrainWeight(routeLocation.getTrainWeight() + weightTons);
             }
         }
@@ -2789,73 +2789,7 @@ public class TrainBuilderBase extends TrainCommon {
         return false;
     }
 
-    /**
-     * Checks to see if cars that are already in the train can be redirected
-     * from the alternate track to the spur that really wants the car. Fixes the
-     * issue of having cars placed at the alternate when the spur's cars get
-     * pulled by this train, but cars were sent to the alternate because the
-     * spur was full at the time it was tested.
-     *
-     * @return true if one or more cars were redirected
-     * @throws BuildFailedException if coding issue
-     */
-    protected boolean redirectCarsFromAlternateTrack() throws BuildFailedException {
-        // code check, should be aggressive
-        if (!Setup.isBuildAggressive()) {
-            throw new BuildFailedException("ERROR coding issue, should be using aggressive mode");
-        }
-        boolean redirected = false;
-        List<Car> cars = carManager.getByTrainList(_train);
-        for (Car car : cars) {
-            // does the car have a final destination and the destination is this
-            // one?
-            if (car.getFinalDestination() == null ||
-                    car.getFinalDestinationTrack() == null ||
-                    !car.getFinalDestinationName().equals(car.getDestinationName())) {
-                continue;
-            }
-            Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
-            if (alternate == null || car.getDestinationTrack() != alternate) {
-                continue;
-            }
-            // is the car in a kernel?
-            if (car.getKernel() != null && !car.isLead()) {
-                continue;
-            }
-            log.debug("Car ({}) alternate track ({}) has final destination track ({}) location ({})", car.toString(),
-                    car.getDestinationTrackName(), car.getFinalDestinationTrackName(), car.getDestinationName()); // NOI18N
-            if ((alternate.isYard() || alternate.isInterchange()) &&
-                    car.checkDestination(car.getFinalDestination(), car.getFinalDestinationTrack())
-                            .equals(Track.OKAY) &&
-                    checkReserved(_train, car.getRouteDestination(), car, car.getFinalDestinationTrack(), false)
-                            .equals(Track.OKAY) &&
-                    checkDropTrainDirection(car, car.getRouteDestination(), car.getFinalDestinationTrack()) &&
-                    checkTrainCanDrop(car, car.getFinalDestinationTrack())) {
-                log.debug("Car ({}) alternate track ({}) can be redirected to final destination track ({})",
-                        car.toString(), car.getDestinationTrackName(), car.getFinalDestinationTrackName());
-                if (car.getKernel() != null) {
-                    for (Car k : car.getKernel().getCars()) {
-                        if (k.isLead()) {
-                            continue;
-                        }
-                        addLine(_buildReport, FIVE,
-                                Bundle.getMessage("buildRedirectFromAlternate", car.getFinalDestinationName(),
-                                        car.getFinalDestinationTrackName(), k.toString(),
-                                        car.getDestinationTrackName()));
-                        // force car to track
-                        k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), Car.FORCE);
-                    }
-                }
-                addLine(_buildReport, FIVE,
-                        Bundle.getMessage("buildRedirectFromAlternate", car.getFinalDestinationName(),
-                                car.getFinalDestinationTrackName(),
-                                car.toString(), car.getDestinationTrackName()));
-                car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), Car.FORCE);
-                redirected = true;
-            }
-        }
-        return redirected;
-    }
+
 
     /**
      * report any cars left at route location

@@ -1536,7 +1536,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                         tracks.get(0).getTrackTypeName(),
                                         tracks.get(0).getLocation().getName(), tracks.get(0).getName(),
                                         rld.getCarMoves(), rld.getMaxCarMoves()));
-                        car = checkQuickService(car, rl, rld, tracks.get(0));
+                        car = checkQuickService(car, tracks.get(0));
                         addCarToTrain(car, rl, rld, tracks.get(0));
                         return true;
                     }
@@ -1564,7 +1564,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                 (status = checkReserved(_train, rld, car, car.getDestinationTrack(), true))
                                         .equals(Track.OKAY)) {
                             Track destTrack = car.getDestinationTrack();
-                            car = checkQuickService(car, rl, rld, destTrack);
+                            car = checkQuickService(car, destTrack);
                             addCarToTrain(car, rl, rld, destTrack);
                             return true;
                         }
@@ -1878,7 +1878,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 rldSave = rl; // make local move
             } else if (trackSave.isSpur()) {
                 car.setScheduleItemId(trackSave.getScheduleItemId());
-                car = checkQuickService(car, rl, rldSave, trackSave);
+                car = checkQuickService(car, trackSave);
                 trackSave.bumpSchedule();
                 log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),
                         trackSave.getName(), car.getScheduleItemId());
@@ -1913,19 +1913,17 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * the case of reset.
      * 
      * @param car   the car possibly needing a quick turn
-     * @param rl    the car's current route location
-     * @param rld   the car's destination route location
      * @param track the destination track
      * @return the car if not a quick turn, or a clone if quick turn
      */
-    private Car checkQuickService(Car car, RouteLocation rl, RouteLocation rld, Track track) {
+    private Car checkQuickService(Car car, Track track) {
         if (!track.isQuickServiceEnabled()) {
             return car;
         }
         addLine(_buildReport, FIVE,
                 Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                 track.getLocation().getName(), track.getName()));
-        // quick turn enabled, create clones
+        // quick service enabled, create clones
         Car cloneCar = car.copy();
         cloneCar.setNumber(car.getNumber() + Car.CLONE + ++cloneCreationOrder);
         cloneCar.setClone(true);
@@ -1973,6 +1971,100 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
         car.updateKernel();
         return cloneCar; // return clone
+    }
+
+    /**
+     * Checks to see if cars that are already in the train can be redirected
+     * from the alternate track to the spur that really wants the car. Fixes the
+     * issue of having cars placed at the alternate when the spur's cars get
+     * pulled by this train, but cars were sent to the alternate because the
+     * spur was full at the time it was tested.
+     *
+     * @return true if one or more cars were redirected
+     * @throws BuildFailedException if coding issue
+     */
+    protected boolean redirectCarsFromAlternateTrack() throws BuildFailedException {
+        // code check, should be aggressive
+        if (!Setup.isBuildAggressive()) {
+            throw new BuildFailedException("ERROR coding issue, should be using aggressive mode");
+        }
+        boolean redirected = false;
+        List<Car> cars = carManager.getByTrainList(_train);
+        for (Car car : cars) {
+            // does the car have a final destination and the destination is this
+            // one?
+            if (car.getFinalDestination() == null ||
+                    car.getFinalDestinationTrack() == null ||
+                    !car.getFinalDestinationName().equals(car.getDestinationName())) {
+                continue;
+            }
+            Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
+            if (alternate == null || car.getDestinationTrack() != alternate) {
+                continue;
+            }
+            // is the car in a kernel?
+            if (car.getKernel() != null && !car.isLead()) {
+                continue;
+            }
+            log.debug("Car ({}) alternate track ({}) has final destination track ({}) location ({})", car.toString(),
+                    car.getDestinationTrackName(), car.getFinalDestinationTrackName(), car.getDestinationName()); // NOI18N
+            if ((alternate.isYard() || alternate.isInterchange()) &&
+                    car.checkDestination(car.getFinalDestination(), car.getFinalDestinationTrack())
+                            .equals(Track.OKAY) &&
+                    checkReserved(_train, car.getRouteDestination(), car, car.getFinalDestinationTrack(), false)
+                            .equals(Track.OKAY) &&
+                    checkDropTrainDirection(car, car.getRouteDestination(), car.getFinalDestinationTrack()) &&
+                    checkTrainCanDrop(car, car.getFinalDestinationTrack())) {
+                log.debug("Car ({}) alternate track ({}) can be redirected to final destination track ({})",
+                        car.toString(), car.getDestinationTrackName(), car.getFinalDestinationTrackName());
+                if (car.getKernel() != null) {
+                    for (Car k : car.getKernel().getCars()) {
+                        if (k.isLead()) {
+                            continue;
+                        }
+                        addLine(_buildReport, FIVE,
+                                Bundle.getMessage("buildRedirectFromAlternate", car.getFinalDestinationName(),
+                                        car.getFinalDestinationTrackName(), k.toString(),
+                                        car.getDestinationTrackName()));
+                        // force car to track
+                        k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), Car.FORCE);
+                    }
+                }
+                addLine(_buildReport, FIVE,
+                        Bundle.getMessage("buildRedirectFromAlternate", car.getFinalDestinationName(),
+                                car.getFinalDestinationTrackName(),
+                                car.toString(), car.getDestinationTrackName()));
+                car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), Car.FORCE);
+                // check for quick service
+                checkQuickServiceRedirected(car);
+                redirected = true;
+            }
+        }
+        return redirected;
+    }
+
+    /*
+     * Checks to see if the redirected car is going to a track with quick
+     * service. The car in this case has already been assigned to the train.
+     * This routine will create clones if needed, and allow the car to be
+     * reassigned to the same train. Only lead car in a kernel is allowed.
+     */
+    private void checkQuickServiceRedirected(Car car) {
+        if (car.getDestinationTrack().isQuickServiceEnabled()) {
+            RouteLocation rl = car.getRouteLocation();
+            RouteLocation rld = car.getRouteDestination();
+            Track track = car.getDestinationTrack();
+            // remove cars from train
+            if (car.getKernel() != null) {
+                for (Car kar : car.getKernel().getCars())
+                    kar.reset();
+            } else {
+                car.reset();
+            }
+            _carList.add(0, car);
+            car = checkQuickService(car, track);
+            addCarToTrain(car, rl, rld, track);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainBuilderCars.class);

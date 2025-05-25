@@ -3450,12 +3450,22 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       train's route the car will be pulled and eventually dropped off by the train to the car's
       destination and track.
 
-      <p>The quick load service feature allows the "turn" or another train to also pull the car.
-        For the first legs of a train's route carrying the car, the program will create a "clone"
-        car. The clone cars are used to create the train Manifests with a "car" having multiple set
-        outs and pulls. The last leg has the actual car. You need to be careful in the order you
-        reset trains if you allow two or more trains to carry the same car. Always reset the last
-        train built, and work you way backwards reseting in the reverse order you built your trains.</p>
+      <p>
+        The quick load service feature allows the "turn" or another train to also pull the car. For
+        the first legs of a train's route carrying the car, the program will create a "clone" car.
+        The clone cars are used to create the train Manifests with a "car" having multiple set outs
+        and pulls. The last leg has the actual car. If you don't want the train delivering the car
+        to immediate pull the car, set the wait value in the optional <a href="#Schedules">schedule</a>
+        to 1. This will allow the next train built's Manifest to show pulling the car before the car is
+        actually delivered.
+      </p>
+
+      <p>When using this feature, you need to be careful in the order you reset trains if you
+        allow two or more trains to carry the same car. Always reset the last train built, and work
+        your way backwards resetting in the reverse order you built your trains. The other issue is
+        that you have to worry about the timing between the train's carrying the same car. The
+        program ignores the train's departure times when assigning cars, and only uses the order
+        built to create the Manifests.</p>
 
       <h5 id="SpurOption">Spur Option (Hold cars with custom loads when spurs are full)</h5>
       In the "Edit Track Load Options" window spurs have the additional option "Hold cars with
@@ -4997,6 +5007,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         and switch lists. Also when you enter a location twice in a row in the route with a change
         in direction, the location's switch list will add a note that the train's departure
         direction has changed.</p>
+
+      <p>
+        There's also an option to set out and pull the same car on a turn. See <a
+          href="#QuickLoadService">Quick Load Service.</a>
+      </p>
 
       <h3 id="PassengerTrainRoute">Passenger Train Route</h3>
       Normally passenger trains run on a schedule based on departure times. If you want your
