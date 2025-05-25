@@ -399,8 +399,9 @@ public class LinkedWarrantTest {
 
         JUnitUtil.waitFor(() -> {
             String m =  ww.getRunningMessage();
-            return m.endsWith("Cmd #8.");
-        }, "Evers starts to move at 8th command but was: " + ww.getRunningMessage());
+            // Evers is already running so we check for both cmd#8 and cmd#9 in case it's fast
+            return m.endsWith("Cmd #8.")||m.endsWith("Cmd #9.");
+        }, "Evers starts to move at 8th or 9th command but was: " + ww.getRunningMessage());
 
         String[] route2 = {"OB7", "OB3", "OB2", "OB1"};
         OBlock block1 = _OBlockMgr.getOBlock("OB1");
