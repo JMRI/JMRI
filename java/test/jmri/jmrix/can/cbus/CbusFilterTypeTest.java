@@ -28,7 +28,7 @@ public class CbusFilterTypeTest {
         
         // tip chosen at random, testing text retrieval mechanism, not the text
         Assert.assertEquals(
-    "<html>FCLK : Fast Clock : Used to implement a fast clock for the layout.<br><html>", 
+    "<html>FCLK : Fast Clock : Used to implement a fast clock for the layout.<br></html>",
             CbusFilterType.CFCLOCK.getToolTip()
         );
     }
@@ -36,7 +36,7 @@ public class CbusFilterTypeTest {
     @Test
     public void testGetCategory() {
         Assert.assertEquals("CFIN cat null",null,CbusFilterType.CFIN.getCategory());
-        Assert.assertEquals("CFIN cat null",CbusFilterType.CFNODE,CbusFilterType.CFNODES.getCategory());    
+        Assert.assertEquals("CFIN cat null",CbusFilterType.CFNODE,CbusFilterType.CFNODEMIN.getCategory());
     }
     
     @BeforeEach
