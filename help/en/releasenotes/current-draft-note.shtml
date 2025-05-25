@@ -530,12 +530,12 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>The script <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
-                has been added.
+                has been added.<br />
                 <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
                 sets "Unknown" hardware states to default values for sensors
                 (Inactive) and turnouts (Closed). This prevents overriding
-                known states. The existing script
-                <strong>InitAllTurnoutsSensors.py</strong>
+                known states.<br />
+                The existing script <strong>InitAllTurnoutsSensors.py</strong>
                 would override sensor Active and turnout Thrown states.</li>
             <li></li>
         </ul>
