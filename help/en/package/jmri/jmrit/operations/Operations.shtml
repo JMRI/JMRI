@@ -66,52 +66,35 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <ul>
         <li><a href="#newUserAdvice">New User Advice</a></li>
-
         <li><a href="#Display">Display and Help</a></li>
-
         <li><a href="#MultipleLayouts">Multiple Layout Support</a></li>
-
         <li><a href="#OperationFiles">Operation Files</a></li>
-
         <li><a href="#demo">Operations Demo Files</a></li>
-
         <li><a href="#QuickStartHelp">Quick Start Help</a></li>
-
         <li><a href="#TroubleShooting">Trouble Shooting and Diagnostic Tools</a></li>
 
         <li><a href="#Settings">Settings</a>
           <ul>
             <li><a href="#PanelOptionsTrainIcons">Panel Options (Train Icons)</a></li>
-
             <li><a href="#Backup">Backup</a></li>
-
             <li><a href="#Restore">Restore</a></li>
-
             <li><a href="#SettingsTools">Settings Tools</a>
               <ul>
                 <li><a href="#SettingsOptions">Options</a>
                   <ul>
                     <li><a href="#BuildOptions">Build Options (Normal or Aggressive)</a></li>
-
                     <li><a href="#AllowLocalCarMovements">Switcher Service Options (Local
                         Car Movement with Default Loads)</a></li>
                     <li><a href="#StagingOptions">Staging Options</a></li>
-
                     <li><a href="#CarRouting">Car Routing Options</a></li>
-
                     <li><a href="#LoggingOptions">Logging Options</a></li>
-
                     <li><a href="#ManifestOptions">Custom Manifests and Switch lists</a></li>
-
                     <li><a href="#Options">Options</a>
                       <ul>
                         <li><a href="#SaveTrainManifests">Save Train Manifests, Build
                             Reports, and Switch Lists</a></li>
-
                         <li><a href="#EnableValueFields">Enable Value Fields</a></li>
-
                         <li><a href="#EnableIdentificationTagFields">Enable RFID Fields</a></li>
-
                         <li><a href="#EnableVirtualSoundDecoder">Enable physical locations
                             for Virtual Sound Decoder</a></li>
                       </ul></li>
@@ -120,30 +103,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#PrintOptions">Manifest Print Options</a>
                   <ul>
                     <li><a href="#PrintOrientation">Orientation and Paper Size</a></li>
-                    
                     <li><a href="#PrintSides">Print on One or Two Sides</a></li>
-
                     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
-
                     <li><a href="#AddLogo">Add Logo</a></li>
-
                     <li><a href="#MisplacedCarsComment">Misplaced Cars Comment</a></li>
-
                     <li><a href="#HazardousComment">Hazardous Comment</a></li>
-
                     <li><a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a></li>
                   </ul></li>
 
                 <li><a href="#BuildReportDetails">Build Report Options</a></li>
-
                 <li><a href="#BackupDirectory">Backup to Directory</a></li>
-
                 <li><a href="#RestoreDirectory">Restore from Directory</a></li>
-
                 <li><a href="#demo">Load Demo Files</a></li>
-
                 <li><a href="#ResetDatabase">Reset Database</a></li>
-
                 <li><a href="#ManageAutoBackups">Manage Auto Backups</a></li>
               </ul></li>
           </ul></li>
@@ -151,51 +123,33 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <li><a href="#Locations">Locations</a>
           <ul>
             <li><a href="#AddLocation">Add or Edit Location</a></li>
-
             <li><a href="#LocationServiceDirection">Train Direction Serviced</a></li>
-
             <li><a href="#LocationDivision">Railroad Divisions</a></li>
-
             <li><a href="#LocationRollingStock">Rolling Stock Serviced</a></li>
-
             <li><a href="#Yardmaster">Yardmaster</a></li>
-
             <li><a href="#LocationTools">Location Tools</a>
               <ul>
                 <li><a href="#CopyLocation">Copy Location</a></li>
-
                 <li><a href="#CopyTrack">Copy Track</a></li>
-
                 <li><a href="#ChangeTrackTypeLocation">Change Track Type</a></li>
-
                 <li><a href="#TrackBlockingOrder">Track Blocking Order</a></li>
-
                 <li><a href="#ShowTrackMoves">Show Track Moves</a></li>
-
                 <li><a href="#EditCarType">Edit Car Type</a></li>
-
                 <li><a href="#ModifyLocationByCarType">Modify Location by Car Type</a></li>
-
                 <li><a href="#ModifyLocationByCarLoad">Modify Location by Car Load</a></li>
-
                 <li><a href="#ShowCars">Show Cars</a></li>
-
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this
                     Location</a></li>
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
-
                 <li><a href="#PrintLocation">Print or Preview</a></li>
               </ul></li>
 
             <li><a href="#Yards">Yards</a>
               <ul>
                 <li><a href="#TrackServiceDirection">Train Direction Serviced</a></li>
-
                 <li><a href="#RollingStockServiced">Rolling Stock Serviced</a></li>
-
                 <li><a href="#RoadAndLoadOptions">Road and Load Options</a></li>
-
                 <li><a href="#PickUpCarOrder">Pick Up Car Order</a></li>
               </ul></li>
 
@@ -203,50 +157,49 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               <ul>
                 <li><a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain
                     Trains or Routes</a></li>
-
                 <li><a href="#Schedules">Schedules</a></li>
-
                 <li><a href="#ScheduleMode">Schedule Mode (Sequential or Match)</a></li>
-
                 <li><a href="#ScheduleExample">Schedule Example</a></li>
-
                 <li><a href="#SchedulesAndLoads">Purposely Moving Cars Using Schedules and
                     Loads</a></li>
-
                 <li><a href="#ControllingCarsToSpur">Controlling Cars to the Spur /
                     Industry</a></li>
-
                 <li><a href="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and
                     Load</a></li>
                 <li><a href="#ShowStagingAndSchedulesByCarTypeAndLoad">Show Staging and
                     Schedules by Car Type and Load</a></li>
-
                 <li><a href="#AlternateTrack">Alternate Track or "Off Spot"</a></li>
+                <li><a href="#LoadOptions">Load Options</a>
+                  <ul>
+                    <li><a href="#DisableLoadChange">Disable Load Change</a></li>
+                    <li><a href="#QuickLoadService">Quick Load Service (Turn)</a></li>
+                    <li><a href="#SpurOption">Hold cars with custom loads when spurs are
+                        full</a></li>
+                  </ul></li>
               </ul></li>
 
             <li><a href="#Interchange">Classification/Interchange Tracks</a>
               <ul>
+                <li><a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain
+                    Trains or Routes</a></li>
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
-
                 <li><a href="#CreateClassificationYard">How to Create a Classification Yard</a>
                 </li>
-
                 <li><a href="#ExchangeBetweenFreightAndLocal">How to Exchange Cars Between
                     Through Freight and Local Switcher</a></li>
               </ul></li>
 
             <li><a href="#Staging">Staging Tracks</a>
               <ul>
+                <li><a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain
+                    Trains or Routes</a></li>
+                <li><a href="#TrackDestinations">Track Destinations</a></li>
                 <li><a href="#StagingMultipleTrains">Staging Multiple Trains per Physical
                     Track</a></li>
                 <li><a href="#StagingAndCarLoads">Staging and Car loads</a></li>
-
                 <li><a href="#BlockingCarsFromStaging">Blocking Cars from Staging</a></li>
-
                 <li><a href="#LoopingTrainsThroughStaging">Looping Trains through Staging</a></li>
-
                 <li><a href="#OffLayoutStorage">Off Layout Storage / Staging</a></li>
-
                 <li><a href="#ArrivalDepartureTracks">Arrival and Departure Tracks</a></li>
               </ul></li>
 
@@ -261,23 +214,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                   </ul></li>
 
                 <li><a href="#RoadOptions">Road Options</a></li>
-
                 <li><a href="#Pools">Track Pools</a></li>
-
                 <li><a href="#AlternateTrack">Alternate Track or "Off Spot"</a></li>
-
                 <li><a href="#PlannedPickUps">Planned Pick Ups</a></li>
-
                 <li><a href="#TrackWorkComments">Manifest Comments</a></li>
-
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
-
                 <li><a href="#ChangeTrackType">Change Track Type</a></li>
-
                 <li><a href="#CopyTrack">Copy Track</a></li>
-
                 <li><a href="#ShowCars">Show Cars</a></li>
-
                 <li><a href="#ShowTrainsServicingThisTrack">Show Trains Servicing this
                     track</a></li>
               </ul></li>
@@ -285,37 +229,26 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
             <li><a href="#LocationsTools">Locations Tools</a>
               <ul>
                 <li><a href="#CopyLocation">Copy Location</a></li>
-
                 <li><a href="#CopyTrack">Copy Track</a></li>
-
                 <li><a href="#LocationSchedules">Schedules</a></li>
-
                 <li><a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car
                     Type</a></li>
-
                 <li><a href="#ModifyLocationsByCarLoad">Modify Locations and Tracks by Car
                     Load</a></li>
                 <li><a href="#ExportLocations">Export Locations</a></li>
                 <li><a href="#ImportLocations">Import Locations</a></li>
-
                 <li><a href="#ShowCarsLocations">Show Cars</a></li>
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing
                     Location and Track</a></li>
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
-
                 <li><a href="#PrintLocation">Print or Preview</a>
                   <ul>
                     <li>Print Locations</li>
-
                     <li>Print Schedules</li>
-
                     <li>Print Comments</li>
-
                     <li>Print Location Details</li>
-
                     <li>Print Track Analysis</li>
-
                     <li>Print Track Error Analysis</li>
                   </ul></li>
               </ul></li>
@@ -324,24 +257,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <li><a href="#Cars">Cars</a>
           <ul>
             <li><a href="#ImportingCars">Importing Cars from a File</a></li>
-
             <li><a href="#CarsEdit">Adding Cars to your Roster</a></li>
-
             <li><a href="#CabooseFredHazardous">Passenger, Caboose, Car with FRED, Utility,
                 and Hazardous Options</a></li>
-
             <li><a href="#CarLoad">Car Loads</a></li>
-
             <li><a href="#Kernel">Kernel (Group of Cars)</a></li>
-
             <li><a href="#EditCarAttributes">Edit Car Attribute Names (Road, Type, Length,
                 Color, Kernel, Owner)</a>
               <ul>
                 <li><a href="#DeleteUnusedAttributes">Delete Unused Attribute Names</a></li>
               </ul></li>
-
             <li><a href="#EditCarLoads">Edit Car Loads (Custom Load)</a></li>
-
             <li><a href="#CarsSet">Set Car</a>
               <ul>
                 <li><a href="#SetCarRemove">Remove car from train</a></li>
@@ -366,11 +292,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ShowCheckboxes">Reset Checkboxes</a></li>
                 <li><a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car
                     Type</a></li>
-
                 <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
-
                 <li>Print or Preview Car Loads</li>
-
                 <li><a href="#SetCars">Set Cars (Modify Multiple Cars)</a></li>
               </ul></li>
           </ul></li>
@@ -378,13 +301,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <li><a href="#Locomotives">Locomotives</a>
           <ul>
             <li><a href="#ImportLocomotives">Import Locomotives</a></li>
-
             <li><a href="#LocomotivesAdd">Adding Locomotives to your Roster</a>
               <ul>
                 <li><a href="#LocomotiveHP">Locomotive HP and Tractive Effort</a></li>
                 <li><a href="#LocomotiveModels">Locomotive Models</a></li>
                 <li><a href="#LocomotiveConsists">Locomotive Consists</a></li>
               </ul></li>
+            <li><a href="#LocomotivesSet">Set Locomotive</a></li>
             <li><a href="#LocomotiveTools">Locomotives Tools</a>
               <ul>
                 <li><a href="#LocomotiveRoster">Locomotive Roster</a>
@@ -399,13 +322,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#SetEngines">Set Locomotives (Modify Multiple Locos)</a></li>
                 <li><a href="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</a></li>
               </ul>
-            <li><a href="#LocomotivesSet">Set Locomotive</a></li>
           </ul></li>
 
         <li><a href="#Routes">Train Routes</a>
           <ul>
             <li><a href="#AddRoute">Add Route</a></li>
-
             <li><a href="#EditRoute">Edit Route</a>
               <ul>
                 <li><a href="#TrainDirection">Train Direction</a></li>
@@ -413,45 +334,30 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#RandomMoves">Random Moves</a></li>
                 <li><a href="#PullsAndSpots">Pick ups? Set outs? and Local moves?</a></li>
                 <li><a href="#RouteSwitchTime">Departure and Travel Times</a></li>
-
                 <li><a href="#RouteMaxTrainLength">Maximum Train Length</a></li>
-
                 <li><a href="#RouteGrade">Grade</a></li>
-
                 <li><a href="RouteIconCoordinates">Train Icon Coordinates</a></li>
               </ul></li>
 
             <li><a href="#TrainTurnRoute">Train Turn Route</a></li>
-
             <li><a href="#PassengerTrainRoute">Passenger Train Route</a></li>
-
             <li><a href="#DepartingStagingRoute">Departing Staging Route</a></li>
-
             <li><a href="#RouteFeatures">Route Features</a></li>
-
             <li><a href="#RouteTools">Edit Route Tools</a>
               <ul>
                 <li><a href="#RouteBlockingOrder">Blocking Order</a></li>
-
                 <li><a href="#CopyRoute">Copy Route</a></li>
-
                 <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
-
                 <li>Print or Preview</li>
               </ul></li>
             <li><a href="#RouteTools">Routes Tools</a>
               <ul>
                 <li><a href="#CopyRoute">Copy Route</a></li>
-
                 <li><a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a></li>
-
                 <li><a href="#ExportRoutes">Export Routes</a></li>
-                
                 <li><a href="#ImportRoutes">Import Routes</a></li>
-
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
-
                 <li>Print or Preview</li>
               </ul>
           </ul></li>
@@ -466,7 +372,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#OptionalLastCar">Optional last car in train requirements
                     (Caboose or FRED)</a></li>
               </ul></li>
-
             <li><a href="#TrainReset">Reset Train</a></li>
 
             <li><a href="#EditTrainTools">Edit Train Tools</a>
@@ -489,15 +394,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                   </ul></li>
 
                 <li><a href="#TrainLoadOptions">Train Load Options</a></li>
-
                 <li><a href="#TrainRoadOptions">Train Road Options</a></li>
-
                 <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
-
                 <li><a href="#CopyTrain">Copy Train</a></li>
-
                 <li><a href="#EditTrainScripts">Scripts</a></li>
-
                 <li><a href="#TrainConductor">Train Conductor</a>
                   <ul>
                     <li><a href="#ShowCarsInTrain">Show Cars in Train</a></li>
@@ -505,14 +405,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
                 <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
                     (Diagnostic Tool)</a></li>
-
                 <li>Print or Preview</li>
                 <li>Print or Preview Manifest</li>
                 <li>Print or Preview Build Report</li>
-
                 <li><a href="#PrintSavedTrainManifests">Print or Preview Saved Train
                     Manifests</a></li>
-
                 <li><a href="#PrintSavedTrainBuildReports">Print or Preview Saved Build
                     Report</a></li>
               </ul></li>
@@ -520,33 +417,19 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
             <li><a href="#TrainsTools">Trains Tools</a>
               <ul>
                 <li><a href="#SettingsOptions">Options</a></li>
-
                 <li><a href="#PrintOptions">Manifest Print Options</a></li>
-
                 <li><a href="#BuildReportDetails">Build Report Options</a></li>
-
                 <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
-
                 <li><a href="#ChangeTrainDepartureTimes">Change Train Departure Times</a></li>
-
                 <li><a href="#TrainSchedules">Train Schedules</a></li>
-
                 <li><a href="#TrainsTableColors">Train Row Color</a></li>
-
                 <li><a href="#TrainsCopyTrain">Copy Train</a></li>
-
                 <li><a href="#TrainScripts">Train Scripts</a></li>
-
                 <li><a href="#Automation">Automation</a></li>
-
                 <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
-
                 <li><a href="#ExportTrains">Export to File</a></li>
-
                 <li><a href="#ExportTimetable">Export Timetable Data</a></li>
-
                 <li><a href="#ExportTrainLineups">Export Train Lineups</a></li>
-
                 <li><a href="#TrainShowCarTypesServiced">Show Car Types Serviced
                     (Diagnostic Tool)</a></li>
                 <li>Print or Preview</li>
@@ -555,38 +438,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               </ul></li>
 
             <li><a href="#SwitcherService">Switcher Service (Local)</a></li>
-
             <li><a href="#BuildingTrains">Building Trains</a></li>
-
             <li><a href="#TrainStatus">Train Status</a></li>
-
             <li><a href="#BuildReports">Build Reports</a></li>
-
             <li><a href="#TroubleShootingBuildingTrains">Problems Building Trains How to
                 Fix</a></li>
-
             <li><a href="#ReadingBuildReport">Reading the Build Report</a></li>
-
             <li><a href="#BuildReport">Build Report Details (How Trains are Built)</a></li>
-
             <li><a href="#PrintingManifests">Printing Manifests</a></li>
-
             <li><a href="#SwitchList">Switch Lists</a></li>
-
             <li><a href="#CustomSwitchLists">Custom Switch Lists</a></li>
-
             <li><a href="#TrainMove">Moving Trains</a></li>
-
             <li><a href="#TerminateTrain">Terminate Train</a></li>
-
             <li><a href="#SaveBuilds">Save Builds</a></li>
-
             <li><a href="#BuildingMultipleTrainsSession">Building Multiple Trains for a
                 Session</a></li>
           </ul></li>
 
         <li><a href="#OperationWindows">Operation Windows</a></li>
-
         <li><a href="#OperationsWebAccess">Operations Web Access</a></li>
       </ul>
 
@@ -4627,6 +4496,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       "OperationsEngineRoster.xml". You can find this file in JMRI&rArr; "profile name" &rArr;
       operations. A backup file "OperationsEngineRoster.xml.bak" with the last settings for all of
       your locomotives is also created each time the "Save" button is pressed.
+      
+      <h3 id="LocomotivesSet">Set Locomotive</h3>
+      After creating a locomotive, you can set the locomotive's location, consist, and optionally
+      the locomotive's destination and train. Normally the locomotive's destination and assigned
+      train are generated by the program, but you can use these fields to force a locomotive to a
+      specific location using the selected train.
+      
+      <p>The "Out of Service" checkbox when selected instructs the program to ignore the locomotive
+        when building new trains.</p>
 
       <h3 id="LocomotiveTools">Locomotives Tools</h3>
       The locomotives window "Tools" menu allows you to perform some useful functions to your
@@ -4706,12 +4584,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <code>nce_xxx</code>
       where xxx is the consist number. To synchronize your Consists, select "Synchronize with NCE
       Consists" under the "Tools" from the "Locomotives" menu.
-
-      <h3 id="LocomotivesSet">Set Locomotive</h3>
-      After creating a locomotive, you can set the locomotive's location, consist, and optionally
-      the locomotive's destination and train. Normally the locomotive's destination and assigned
-      train are generated by the program, but you can use these fields to force a locomotive to a
-      specific location using the selected train.
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
