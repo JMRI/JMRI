@@ -22,8 +22,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.*;
-import jmri.util.JmriJFrame;
-import jmri.util.StringUtil;
+import jmri.jmrix.can.cbus.swing.nodeconfig.Bundle;
+import jmri.util.*;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.w3c.dom.Document;
@@ -111,14 +111,14 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
 
         this.add(infoPane);
 
-        pack();
+        ThreadingUtil.runOnGUI( this::pack);
         this.setResizable(true);
 
         validate();
         repaint();
 
         setTitle(getTitle());
-        setVisible(true);
+        ThreadingUtil.runOnGUI( () -> setVisible(true));
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
