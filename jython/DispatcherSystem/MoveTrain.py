@@ -415,10 +415,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             # print "call_dispatch b1"
             # print "checking route is clear", from_name
             self.wait_route_is_clear(filename, from_name, train)
-        t = trains[self.train_name]   #train is train_name
+        t = trains[train]   #train is train_name
         t["allocating"] = True
 
-        if self.logLevel > 0 and self.train_name == "shunter": print "     ",
         if self.logLevel > 0: print self.train_name, "route", filename, "is clear"
         # run dispatch
         result = False
@@ -450,7 +449,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                         print "waited", iter+1, "secs, could not schedule train and gave up"
                         return result
                     else:
-                        print "waited", iter+1, "secs but could not schedule train"
+                        print "waited", iter+1, "secs but could not schedule train", train
             iter += 1
 
         #return result
@@ -498,7 +497,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         DF.dispatcherSystemSchedulingInOperation = True  # to inhibit error message when train started but not in station
         # print "DF.dispatcherSystemSchedulingInOperation", DF.dispatcherSystemSchedulingInOperation
         if mode != "not_scheduling":
-            print "--" + self.train_name + " dispatching: transit name: " + transit_name
+            print "__________________________Start__" + self.train_name + "__transit: " + transit_name
         result = DF.loadTrainFromTrainInfo(self.trainInfo, type, train_name)
         # print "loaded returning with code ", result
         if result == 0:

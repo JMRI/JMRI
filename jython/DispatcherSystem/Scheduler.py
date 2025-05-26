@@ -1602,8 +1602,8 @@ class TimeListener(java.beans.PropertyChangeListener):
         if self.logLevel > 0: print "A4"
 
         # schedule the train taking account of the repeat command
-        trains_to_start = []
-        if self.logLevel > 0: print "trains_to_start", trains_to_start, "train_list", train_list, "trains_to_be_scheduled", trains_to_be_scheduled
+        # trains_to_start = []
+        if self.logLevel > 0: print "train_list", train_list, "trains_to_be_scheduled", trains_to_be_scheduled
         for train in train_list:
             comment = train.getComment()
             repeat_command = self.find_between(comment, "[repeat-", "-repeat]")
@@ -1615,22 +1615,22 @@ class TimeListener(java.beans.PropertyChangeListener):
             if repeat_command == "Once":
                 if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
                         "skip" not in train.getDescription():   # if skip in description of scheduled Train do not run the train
-                    if train not in trains_to_start:
-                        trains_to_start.append(train)
+                    if train not in trains_to_be_scheduled:
+                        trains_to_be_scheduled.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every 20 mins":
                 if max % 20 == 0:
                     min += 1; mid += 1; max += 1      # ensure mid lies between min amd max (ensure we don't have 59 < 0 <= 0)
                 if (min % 20 < (mid % 20) <= max % 20):
-                    if train not in trains_to_start:
-                        trains_to_start.append(train)
+                    if train not in trains_to_be_scheduled:
+                        trains_to_be_scheduled.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every 30 mins":
                 if max % 30 == 0:
                     min += 1; mid += 1; max += 1
                 if (min % 30 < (mid % 30) <= max % 30):
-                    if train not in trains_to_start:
-                        trains_to_start.append(train)
+                    if train not in trains_to_be_scheduled:
+                        trains_to_be_scheduled.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every Hour":
                 if self.logLevel > 0: print "min", min, "max", max, "mid", mid
@@ -1638,8 +1638,8 @@ class TimeListener(java.beans.PropertyChangeListener):
                     min += 1; mid += 1; max += 1
                     if self.logLevel > 0: print "min", min, "max", max, "mid", mid
                 if (min < (mid % 60) <= max):
-                    if train not in trains_to_start:
-                        trains_to_start.append(train)
+                    if train not in trains_to_be_scheduled:
+                        trains_to_be_scheduled.append(train)
                         scheduled[train] = False
             elif repeat_command == "Repeat every 2 Hours":
                 if max == 0:
@@ -1651,27 +1651,27 @@ class TimeListener(java.beans.PropertyChangeListener):
                     min1 += 1; mid1 += 1; max1 += 1
                 if (min < (mid % 60) <= max) and \
                         ((min1 % 2) <  (mid1 % 2) <= (max1 % 2)):
-                    if train not in trains_to_start:
-                        trains_to_start.append(train)
+                    if train not in trains_to_be_scheduled:
+                        trains_to_be_scheduled.append(train)
                         scheduled[train] = False
             else:
                 if self.logLevel > 0: print "incorrect repeat command", repeat_command
                 # assume set to once
                 if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
                         "skip" not in train.getDescription():   # if skip in description of scheduled Train do not run the train
-                    if train not in trains_to_start:
-                        trains_to_start.append(train)
+                    if train not in trains_to_be_scheduled:
+                        trains_to_be_scheduled.append(train)
                         scheduled[train] = False
-            if self.logLevel > 0: print "trains_to_start", trains_to_start
+            if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
 
-        for train in trains_to_start:
-            # print "x"
-            if train not in trains_to_be_scheduled:
-                trains_to_be_scheduled.append(train)
-            scheduled[train] = False
-        if self.logLevel > 0: print "Time listener: trains_to_be_scheduled", trains_to_be_scheduled, "trains_to_start", trains_to_start
+        # for train in trains_to_start:
+        #     # print "x"
+        #     if train not in trains_to_be_scheduled:
+        #         trains_to_be_scheduled.append(train)
+        #     scheduled[train] = False
+        if self.logLevel > 0: print "Time listener: trains_to_be_scheduled", trains_to_be_scheduled
         if self.logLevel > 0: print "scheduled", scheduled
-        if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled, "trains_to_start", trains_to_start
+        if self.logLevel > 0: print "trains_to_be_scheduled", trains_to_be_scheduled
 
     def speed_not_operational_gbl__is_defined(self):
         global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, scheduling_margin_gbl, scheduling_in_operation_gbl
@@ -2260,7 +2260,8 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
                     if self.scheduling_train:
                         self.wait_for_scheduled_time(self.route, station_index, accumulated_duration)
-                        print "__________________________Start__" + train_to_move + "___________________________________"
+                        # done when we know the transit name
+                        # print "__________________________Start__" + train_to_move + "___________________________________"
                         success = self.check_train_in_block_for_scheduling_margin_fast_minutes(start_block, train_to_move)
                         if success:
                             move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, mode = "scheduling", route = self.route)
