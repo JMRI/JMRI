@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
@@ -111,7 +112,7 @@ public class PrintRoutes {
                     padAndTruncate(rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"), 6) +
                     (rl.isLocalMovesAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no")) +
                     TAB +
-                    rl.getWait() +
+                    (rl.getWait() + Setup.getTravelTime()) +
                     TAB +
                     rl.getMaxTrainLength() +
                     TAB +
