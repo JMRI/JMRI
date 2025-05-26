@@ -22,7 +22,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.*;
-import jmri.jmrix.can.cbus.swing.nodeconfig.Bundle;
 import jmri.util.*;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -489,6 +488,6 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeRestoreFcuFrame.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeRestoreFcuFrame.class);
 
 }
