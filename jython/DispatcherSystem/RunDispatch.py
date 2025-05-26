@@ -148,7 +148,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "self.stop_all_threads()"
             self.remove_all_trains_from_trains_allocated()
             glb_reset_all_trains = True
-            print "set glb_reset_all_trains", glb_reset_all_trains
+            # print "set glb_reset_all_trains", glb_reset_all_trains
         else:
             self.delete_active_transits()
             # print "self.delete_active_transits()"

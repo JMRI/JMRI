@@ -122,6 +122,6 @@ class RunDispatcherMaster(jmri.jmrit.automat.AbstractAutomaton ):
 
         self.waitMsec(2000)   #wait for panel to load, it may have train values
         if glb_reset_all_trains == True:
-            print "removing train values"
+            # print "removing train values"
             StopMaster().remove_train_values()
             # StopMaster().remove_all_trains_from_trains_allocated()

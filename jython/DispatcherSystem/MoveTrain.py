@@ -76,6 +76,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             return ""
 
     def move_between_stations(self, station_from_name, station_to_name, train_name, graph, mode = "not_scheduling"):
+        global trains
         if self.logLevel > 0: print "move_between_stations"
         if self.logLevel > 0: print "Moving from " + station_from_name + " to " + station_to_name
         i = 0
@@ -857,7 +858,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         #         route_is_occupied = True   # only allow one dispatch to be set up at a time else this routine does not work
         #         # we don't want to check that the route is clear, and then have an allocation take place immediately after
         
-        print "route_is_occupied state is:", route_is_occupied
+        # print "route_is_occupied state is:", route_is_occupied
         return route_is_occupied
         
     def set_route_allocated(self, traininfoFileName, startBlockName):
@@ -1407,7 +1408,7 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         # 3) set direction so can check direction of transit
 
         train["direction"] = train_direction
-        print train_name, 'train["direction"]',train["direction"]
+        # print train_name, 'train["direction"]',train["direction"]
 
 
         # 4) add to allocated train list

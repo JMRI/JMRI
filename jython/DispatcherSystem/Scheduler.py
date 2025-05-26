@@ -605,9 +605,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
         if option == "with_train":
-            my_list = [[train.getRoute().getName() if train is not None else "" , train] for train in train_list]
+            my_list = [[train.getRoute().getName() if train is not None else "" , train] for train in train_list if train.getRoute() is not None]
         else:
-            my_list = [train.getRoute().getName() if train is not None else "" for train in train_list]
+            my_list = [train.getRoute().getName() if train is not None else "" for train in train_list if train.getRoute() is not None]
         return sorted(my_list)
 
     def start_and_end_time_scheduling(self):
@@ -1603,7 +1603,7 @@ class TimeListener(java.beans.PropertyChangeListener):
 
         # schedule the train taking account of the repeat command
         trains_to_start = []
-        if self.logLevel > 0: print "trains_to_start", trains_to_start, "train_list", train_list
+        if self.logLevel > 0: print "trains_to_start", trains_to_start, "train_list", train_list, "trains_to_be_scheduled", trains_to_be_scheduled
         for train in train_list:
             comment = train.getComment()
             repeat_command = self.find_between(comment, "[repeat-", "-repeat]")
@@ -1611,11 +1611,6 @@ class TimeListener(java.beans.PropertyChangeListener):
             max = int(minutes)
             min = (int(minutes) - 1)
             mid = int(train.getDepartTimeMinutes())
-            # print "a"
-            # else:
-            #     max = minutes + 5               # add arbitrary value to test values to avoid texting with 59 and 0
-            #     min = (minutes - 1) + 5
-            #     mid = int(train.getDepartTimeMinutes()) + 5
 
             if repeat_command == "Once":
                 if self.prev_time < int(train.getDepartTimeMinutes()) <= self.curr_time and \
@@ -1667,9 +1662,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                     if train not in trains_to_start:
                         trains_to_start.append(train)
                         scheduled[train] = False
-
             if self.logLevel > 0: print "trains_to_start", trains_to_start
-        # print "scheduled[train]", scheduled
 
         for train in trains_to_start:
             # print "x"
@@ -1704,9 +1697,10 @@ class TimeListener(java.beans.PropertyChangeListener):
 class Trigger_Timetable:
     def __init__(self, minutes):
         global timetable_triggered_gbl
+        global print_count
+        timetable_triggered_gbl = True
         if minutes == None: return
         self.run(minutes)
-        timetable_triggered_gbl = True
 
     def run(self, minutes):
         t1 = Thread(target=self.send_timetable_and_clock_via_mqtt, args=(minutes,))
@@ -1716,7 +1710,7 @@ class Trigger_Timetable:
     def send_timetable_and_clock_via_mqtt(self, minutes):
         global station_name_list_gbl, group_location_gbl, run_local_timetable_gbl
         self.logLevel = 0
-        global timebase
+        global timebase, print_count
         # print "****************start send_timetable_and_clock_via_mqtt"
         hour = int(timebase.getTime().getHours())
         time = str(hour).zfill(2) + ":" + str(minutes).zfill(2)
@@ -1727,7 +1721,9 @@ class Trigger_Timetable:
         try:
             self.send_clock_message(hour, minutes, event)
         except:
-            print "clock message not sent"
+            if "print_count" not in globals(): print_count = 0
+            if print_count < 1: print "clock message not sent"
+            print_count += 1
 
         if "station_name_list_gbl" not in globals():
             station_name_list_gbl = ""
@@ -1917,17 +1913,15 @@ class Trigger_Timetable:
                                     if i == -1:
                                         station_arrival_time = station_departure_time
                                     else:
-                                        if self.logLevel > -1: print train_name, route_location, "journey_time", journey_time
-                                        if self.logLevel > -1: print train_name, route_location, "journey_time_fast_mins", journey_time_fast_mins
-                                        print "previous_departure_time", previous_departure_time
+                                        if self.logLevel > 0: print train_name, route_location, "journey_time", journey_time
+                                        if self.logLevel > 0: print train_name, route_location, "journey_time_fast_mins", journey_time_fast_mins
+                                        # print "previous_departure_time", previous_departure_time
                                         station_arrival_time = self.add_times(previous_departure_time, journey_time_fast_mins)
                                 else:
                                     if i == 0:
                                         station_arrival_time = ""
                                     else:
                                         station_arrival_time = station_departure_time
-
-                                print "i" , i, "station_arrival_time", station_arrival_time, "station_departure_time", station_departure_time
 
                                 [h, m] = station_departure_time.split(":")
                                 station_departure_time_in_mins = int(m) + int(h) * 60
@@ -2012,9 +2006,7 @@ class Trigger_Timetable:
         self.send_mqtt_message(msg)
 
     def send_mqtt_message(self, msg):
-        # print
-        # print
-        # print "sending mqtt message"
+        global print_count
         try:
             # Find the MqttAdapter
             mqttAdapter = jmri.InstanceManager.getDefault( jmri.jmrix.mqtt.MqttSystemConnectionMemo ).getMqttAdapter()
@@ -2022,12 +2014,12 @@ class Trigger_Timetable:
             topic = "jmri/timetable"
             payload = msg
             # print "about to send"
-
-            # send
             mqttAdapter.publish(topic, payload)
             # print "published mqtt message"
         except:
-            print "failure mqtt message"
+            if "print_count" not in globals(): print_count = 0
+            if print_count < 1: print "failure mqtt message"
+            print_count += 1
 
     def send_clock_message(self, hour, minutes, event):
 
@@ -2099,7 +2091,8 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                  delay = 0, scheduling_train = False, set_departure_times = False, train = None):
 
         # print ("route" , route, "station_from", station_from, "station_to", station_to, \
-        #                "no_repetitions", no_repetitions, "train_name", train_name)
+        #                "no_repetitions", no_repetitions, "train_name", train_name, \
+        #                "scheduling_train", scheduling_train)
 
         # station_from is set to the initial position of the train, not necessarily
         # the start position of the route
@@ -2290,7 +2283,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                         current_time = int(round(time.time()))  # in secs
                         journey_time_in_secs = current_time - previous_time
                         print "previous_time", previous_time, "current_time", current_time
-                        if self.logLevel > -1: print "before store", "journey_time_in_secs", journey_time_in_secs
+                        if self.logLevel > 0: print "before store", "journey_time_in_secs", journey_time_in_secs
                         self.store_journey_time(self.route, station_index, str(journey_time_in_secs))
                         if self.logLevel > 0: print "after store"
 
@@ -2446,8 +2439,6 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         global fast_clock_rate
         global timebase
         global scheduling_margin_gbl
-
-        # print "wait_for_scheduled_time", route, row, accumulated_durations
         if 'timebase' not in globals():
             timebase = jmri.InstanceManager.getDefault(jmri.Timebase)
 
@@ -2497,12 +2488,16 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         accumulated_durations_fast_mins = (accumulated_durations / 60.0) * int(str(fast_clock_rate)) # convert to fast min
         if self.logLevel > 0: print "accumulated_durations_fast_mins", accumulated_durations_fast_mins
         station_start_time = self.add_minutes_to_time(train_start_time, accumulated_durations_fast_mins)
+        [station_start_hours, station_start_mins] = station_start_time.split(":")
 
         if self.logLevel > 0: print "station_start_time", station_start_time
         if self.logLevel > 0: print "current_time", current_time, "station_start_time", station_start_time
-        minutes_to_wait_array = [self.subtract_times(current_time, station_start_time) for cm in current_minutes_mod_array]
+        minutes_to_wait_array = [self.subtract_minutes(cm, station_start_mins) for cm in current_minutes_mod_array]
+        if self.logLevel > 0: print "minutes_to_wait_array", minutes_to_wait_array
         minutes_to_wait = min(minutes_to_wait_array)
+        if self.logLevel > 0: print "minutes_to_wait", minutes_to_wait
         minutes_late = max([m-60 for m in minutes_to_wait_array]) # get the minutes late
+        if self.logLevel > 0: print "minutes_late", minutes_late
         abs_minutes_late = abs(minutes_late)
         index = minutes_to_wait_array.index(minutes_to_wait)
         if abs_minutes_late < int(scheduling_margin_gbl):
@@ -2561,6 +2556,13 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "dep_hours", dep_hours, "dep_mins", dep_mins, "station_mins", station_mins
         # print "current_time", current_time, "mins", mins
         wait_time = station_mins - current_mins
+        if self.logLevel > 0: print "wait_time", wait_time
+        wait_time = wait_time % 60
+        if self.logLevel > 0: print "wait_time", wait_time
+        return wait_time
+
+    def subtract_minutes(self, min1, min2):
+        wait_time = int(min1) - int(min2)
         if self.logLevel > 0: print "wait_time", wait_time
         wait_time = wait_time % 60
         if self.logLevel > 0: print "wait_time", wait_time
