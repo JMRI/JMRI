@@ -16,9 +16,6 @@ import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;
 import jmri.util.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Table data model for display of CBUS Nodes
  *
@@ -340,5 +337,5 @@ public class CbusNodeTableDataModel extends CbusBasicNodeTableFetch
         
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeTableDataModel.class);
 }
