@@ -974,11 +974,14 @@ public class AutoActiveTrain implements ThrottleListener {
     }
     
     private void checkForGhost() {
-        if ( !(getTargetSpeed() == 0.0f || isStopping())
+        if ( _autoEngineer == null || !(getTargetSpeed() == 0.0f || isStopping())
                 && _nextBlock != null
                 && _currentBlock != null
                 && _nextBlock.getSensor() != null
                 && _nextBlock.getIsGhost()) {
+            if ( _autoEngineer == null) {
+                log.warn("checkForGhost: _autoengineer null");
+            }
             if ( _currentBlock.getIsGhost()) {
                 log.error("Stopping due to two consecutive no sensor blocks [{}], [{}]",
                         _currentBlock.getDisplayName(), _nextBlock.getDisplayName());
