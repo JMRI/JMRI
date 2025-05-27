@@ -116,7 +116,7 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
             else:
                 self.log.debug(
                     'Skipping physical {0} Turnout: "{1}"\
-                    '.format(self.turnoutStateName(turnoutState), turnoutSystemName)
+                    '.format(turnout.describeState(turnoutState), turnoutSystemName)
                     )
                 skippingCounter += 1
 
@@ -127,17 +127,6 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
         return
 
 ########    END OF InitializeTurnoutsSensors.closeTurnouts()
-
-    # Function to convert state values to names
-    def turnoutStateName(self, state):
-        if (state == CLOSED):
-            return "CLOSED"
-        if (state == THROWN):
-            return "THROWN"
-        if (state == INCONSISTENT):
-            return "INCONSISTENT"
-        # Anything else is UNKNOWN
-        return "UNKNOWN"
 
 
     # initialization of each physical Sensor in order of appearance on the system list
@@ -182,7 +171,7 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
             else:
                 self.log.debug(
                     'Skipping physical {0} Sensor: "{1}"\
-                    '.format(self.sensorStateName(sensorState),sensorSystemName)
+                    '.format(sensor.describeState(sensorState),sensorSystemName)
                     )
                 skippingCounter += 1
 
@@ -193,18 +182,6 @@ class InitializeTurnoutsSensors(jmri.jmrit.automat.AbstractAutomaton):
         return
 
 ########    END OF InitializeTurnoutsSensors.deacivateSensors()
-
-    # Define routine to map status numbers to text
-    def sensorStateName(self, state) :
-        if (state == ACTIVE) :
-            return "ACTIVE"
-        if (state == INACTIVE) :
-            return "INACTIVE"
-        if (state == INCONSISTENT) :
-            return "INCONSISTENT"
-        if (state == UNKNOWN) :
-            return "UNKNOWN"
-        return "(invalid)"
 
 ###############################
 ########    END OF class InitializeTurnoutsSensors
