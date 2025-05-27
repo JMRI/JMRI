@@ -140,11 +140,10 @@ public class CbusBasicNodeTableOperations extends CbusBasicNodeTable {
      * @return the number of nodes using the CAN ID.
      */
     public int getNumberNodesWithCanId(int canId){
-        int count = 0;
+        int count = ( canId == _memo.getTrafficController().getCanid() ? 1 : 0);
         final var list = _mainArray;
         for (CbusNode node : list) {
-            if ( node.getNodeCanId() == canId
-                    || canId == _memo.getTrafficController().getCanid() ) {
+            if ( node.getNodeCanId() == canId ) {
                 count++;
             }
         }
