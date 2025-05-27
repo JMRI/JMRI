@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Contains methods for cars when building a train.
  * 
- * @author Daniel Boudreau Copyright (C) 2022
+ * @author Daniel Boudreau Copyright (C) 2022, 2025
  */
 public class TrainBuilderCars extends TrainBuilderEngines {
 
@@ -527,6 +527,11 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     continue; // keep going and see if there are other cars with
                               // issues outs of staging
                 }
+            }
+
+            // check for quick service track timing
+            if (!checkCarDepartingQuickServiceTrack(car, rl)) {
+                continue;
             }
             // If car been given a home division follow division rules for car
             // movement.
@@ -2065,6 +2070,49 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             car = checkQuickService(car, track);
             addCarToTrain(car, rl, rld, track);
         }
+    }
+
+    /*
+     * Checks to see if car is departing a quick service track and is allowed to
+     * be pulled by this train. This train must arrive after the car's clone is
+     * set out by another train.
+     */
+    private boolean checkCarDepartingQuickServiceTrack(Car car, RouteLocation rl) {
+        if (car.getTrack().isQuickServiceEnabled() && car.getLastTrain() != _train) {
+            // determine when the clone is going to be delivered
+            Car clone = getClone(car);
+            if (clone != null) {
+                String trainExpectedArrival = _train.getExpectedArrivalTime(rl, true);
+                int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
+                int cloneSetoutTimeMinutes = convertStringTime(clone.getSetoutTime());
+                if (cloneSetoutTimeMinutes > trainArrivalTimeMinutes) {
+                    addLine(_buildReport, FIVE, Bundle.getMessage("buildCarDeliveryTiming", car.toString(),
+                            clone.getSetoutTime(), car.getTrack().getTrackTypeName(), car.getLocationName(),
+                            car.getTrackName(), clone.getTrainName(), _train.getName(), trainExpectedArrival));
+                    addLine(_buildReport, FIVE, BLANK_LINE);
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /*
+     * Return null if there isn't a clone car. Returns the car's last clone car
+     * if there's one.
+     */
+    private Car getClone(Car car) {
+        for (Car kar : carManager.getList()) {
+            if (kar.isClone() &&
+                    kar.getDestinationTrack() == car.getTrack() &&
+                    kar.getRoadName().equals(car.getRoadName())) {
+                String[] number = kar.getNumber().split(Car.CLONE_REGEX);
+                if (car.getNumber().equals(number[0])) {
+                    return kar;
+                }
+            }
+        }
+        return null; // no clone for this car
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainBuilderCars.class);
