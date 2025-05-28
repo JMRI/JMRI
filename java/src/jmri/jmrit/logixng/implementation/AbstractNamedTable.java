@@ -224,7 +224,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         } else if (csvType == CsvType.COMMA) {
             format = CSVFormat.RFC4180;
         } else if (csvType == CsvType.SEMICOLON) {
-            format = CSVFormat.RFC4180.withDelimiter(';');
+            format = CSVFormat.Builder.create(CSVFormat.RFC4180).setDelimiter(';').build();
         } else {
             buffered.close();
             throw new IOException("Unrecognized CSV Format");
@@ -233,7 +233,6 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         rdr.close();
         return returnList;
     }
-
 
     /**
      * {@inheritDoc}
