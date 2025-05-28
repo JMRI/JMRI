@@ -223,6 +223,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
             format = CSVFormat.TDF;
         } else if (csvType == CsvType.COMMA) {
             format = CSVFormat.RFC4180;
+        } else if (csvType == CsvType.SEMICOLON) {
+            format = CSVFormat.RFC4180.withDelimiter(';');
         } else {
             buffered.close();
             throw new IOException("Unrecognized CSV Format");
@@ -320,19 +322,19 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractNamedTable.class);
 
-/*    
+/*
     protected void insertColumn(int col) {
         _internalTable.insertColumn(col);
     }
-    
+
     protected void deleteColumn(int col) {
         _internalTable.deleteColumn(col);
     }
-    
+
     protected void insertRow(int row) {
         _internalTable.insertRow(row);
     }
-    
+
     protected void deleteRow(int row) {
         _internalTable.deleteRow(row);
     }
