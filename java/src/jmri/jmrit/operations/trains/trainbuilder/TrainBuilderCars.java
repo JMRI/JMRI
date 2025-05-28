@@ -2105,11 +2105,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         for (Car kar : carManager.getList()) {
             if (kar.isClone() &&
                     kar.getDestinationTrack() == car.getTrack() &&
-                    kar.getRoadName().equals(car.getRoadName())) {
-                String[] number = kar.getNumber().split(Car.CLONE_REGEX);
-                if (car.getNumber().equals(number[0])) {
-                    return kar;
-                }
+                    kar.getRoadName().equals(car.getRoadName()) &&
+                    kar.getNumber().split(Car.CLONE_REGEX)[0].equals(car.getNumber())) {
+                return kar;
             }
         }
         return null; // no clone for this car
