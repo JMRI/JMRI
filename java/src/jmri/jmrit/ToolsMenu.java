@@ -1,7 +1,9 @@
 package jmri.jmrit;
 
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
@@ -160,6 +162,8 @@ public class ToolsMenu extends JMenu {
         // more complex multi-window tools
         add(new jmri.jmrit.operations.OperationsMenu());
         add(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemDispatcher")));
+        String file = jmri.util.FileUtil.getExternalFilename("program:jython/DispatcherSystem/DispatcherSystem.py");
+        add(new jmri.jmrit.jython.RunJythonScript(Bundle.getMessage("MenuItemDispatcherSystem"), new File(file)));
         add(new jmri.jmrit.timetable.swing.TimeTableAction(Bundle.getMessage("MenuItemTimeTable")));
         add(new jmri.jmrit.whereused.WhereUsedAction(Bundle.getMessage("MenuItemWhereUsed")));
         // CTC menu item with submenus
