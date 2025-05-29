@@ -1,11 +1,5 @@
 package jmri.jmrix.openlcb;
 
-import java.util.TimerTask;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.managers.AbstractPowerManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -27,7 +21,6 @@ public final class OlcbPowerManager extends AbstractPowerManager<CanSystemConnec
     OlcbAddress addrOff = new OlcbAddress(new EventID("01.00.00.00.00.00.FF.FF"));
 
     private final OlcbInterface iface;
-    private final CanSystemConnectionMemo memo;
 
     VersionedValueListener<Boolean> powerListener;
     BitProducerConsumer pc;
@@ -38,12 +31,7 @@ public final class OlcbPowerManager extends AbstractPowerManager<CanSystemConnec
 
     public OlcbPowerManager(CanSystemConnectionMemo memo) {
         super(memo);
-        this.memo = memo;
-        if (memo != null) { // greatly simplify testing
-            this.iface = memo.get(OlcbInterface.class);
-        } else {
-            this.iface = null;
-        }
+        this.iface = memo.get(OlcbInterface.class);
 
         int flags = PC_DEFAULT_FLAGS;
         log.debug("Power Manager Flags: default {} overridden {} listen bit {}", PC_DEFAULT_FLAGS, flags,
