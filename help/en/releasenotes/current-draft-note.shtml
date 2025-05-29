@@ -476,7 +476,7 @@
               if there is a Merg Cbus connection.</li>
           <li>The semicolon has been added as field delimiter for CSV files used to create
           LogixNG Tables.</li>
-          <li>Where Used support has been added to the Digital Formula action and expression.  This
+          <li>Where Used support has been added to the Formula actions and expressions.  This
           is a text based search using the item's system and user names.  False positive matches are
           possible.</li>
         </ul>
