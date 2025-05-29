@@ -431,6 +431,16 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals(789, (int) r.getAutomationIDList().get(2));
         Assert.assertEquals(3, r.getAutomationIDList().size());
         Assert.assertEquals("Monitor string", "AutomationIDs:[123, 456, 789]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jG 123 456 789");
+        Assert.assertTrue(r.isCurrentMaxesReply());
+        Assert.assertEquals(789, (int) r.getCurrentMaxesList().get(2));
+        Assert.assertEquals(3, r.getCurrentMaxesList().size());
+        Assert.assertEquals("Monitor string", "CurrentMaxes:[123, 456, 789]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jI 123 456 789");
+        Assert.assertTrue(r.isCurrentValuesReply());
+        Assert.assertEquals(789, (int) r.getCurrentValuesList().get(2));
+        Assert.assertEquals(3, r.getCurrentValuesList().size());
+        Assert.assertEquals("Monitor string", "CurrentValues:[123, 456, 789]", r.toMonitorString());
         r = DCCppReply.parseDCCppReply("jC 222 4"); //time and rate
         Assert.assertTrue(r.isClockReply());
         Assert.assertEquals(222, r.getClockMinutesInt());
