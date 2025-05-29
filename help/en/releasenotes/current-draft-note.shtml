@@ -474,7 +474,8 @@
           <li>The LogixNG action <strong>Send MERG CBUS event</strong> has
               been added. It's available in the category <strong>Merg Cbus</strong>
               if there is a Merg Cbus connection.</li>
-          <li></li>
+          <li>The semicolon has been added as field delimiter for CSV files used to create
+          LogixNG Tables.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -548,7 +549,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The aspect mapping in the Italian FS-1987 
+                <li>The aspect mapping in the Italian FS-1987
                     signal system has been updated.</li>
             </ul>
 

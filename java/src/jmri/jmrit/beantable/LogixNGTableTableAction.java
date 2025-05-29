@@ -48,6 +48,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
     ButtonGroup _csvGroup = new ButtonGroup();
     JRadioButton _csvTabbed = new JRadioButton(Table.CsvType.TABBED.toString());
     JRadioButton _csvComma = new JRadioButton(Table.CsvType.COMMA.toString());
+    JRadioButton _csvSemicolon = new JRadioButton(Table.CsvType.SEMICOLON.toString());
 
     JLabel _csvLabel = new JLabel(Bundle.getMessage("LogixNG_CsvType") + ":");
     /**
@@ -122,7 +123,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
                 return InstanceManager.getDefault(NamedTableManager.class)
                         .newCSVTable(systemName, userName, fileName, Table.CsvType.TABBED);
             } else if (_csvComma.isSelected()) {
-                return InstanceManager.getDefault(NamedTableManager.class).newCSVTable(systemName, userName, fileName, Table.CsvType.COMMA);
+                return InstanceManager.getDefault(NamedTableManager.class)
+                        .newCSVTable(systemName, userName, fileName, Table.CsvType.COMMA);
+            } else if (_csvSemicolon.isSelected()) {
+                return InstanceManager.getDefault(NamedTableManager.class)
+                        .newCSVTable(systemName, userName, fileName, Table.CsvType.SEMICOLON);
             }
         } else if (_typeInternalTable.isSelected()) {
             // Open table editor
@@ -275,9 +280,11 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
         csvPanel.setLayout(new FlowLayout());
         _csvGroup.add(_csvTabbed);
         _csvGroup.add(_csvComma);
+        _csvGroup.add(_csvSemicolon);
         _csvTabbed.setSelected(true);
         csvPanel.add(_csvTabbed);
         csvPanel.add(_csvComma);
+        csvPanel.add(_csvSemicolon);
         c.gridx = 1;
         p.add(csvPanel,c);
         c.gridx = 0;
