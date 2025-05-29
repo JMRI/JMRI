@@ -275,7 +275,7 @@ public final class DCCppConstants {
     public static final String CURRENT_MAXES_REPLY_REGEX  = "^j\\s*G\\s*((?:\\s*\\d+)*)$"; // <j A 123 456 789>
     public static final String CURRENT_VALUES             = "J I"; //Request list of current values (always mA)
     public static final String CURRENT_VALUES_REGEX       = "^J\\s*I$"; // <J I> or <JI>
-    public static final String CURRENT_VALUES_REPLY_REGEX = "^j\\s*I\\s*((?:\\s*\\d+)*)$"; // <j I 123 456 789>
+    public static final String CURRENT_VALUES_REPLY_REGEX = "^j\\s*I\\s*((?:\\s*[-]?\\d+)*)$"; // <j I 123 456 789> or <jI -1 123>
     public static final String CLOCK_REQUEST_TIME      = "J C"; //<J C> Request current time from DCC-EX
     public static final String CLOCK_REQUEST_TIME_REGEX= "^J\\s*C$"; // <J C> or <JC>
     public static final String CLOCK_SET_REGEX         = "^J\\s*C\\s+(\\d+)\\s*(\\d*)$"; // <J C 123 4> or <j C 124> outgoing set to 123min past midnight, rate 4

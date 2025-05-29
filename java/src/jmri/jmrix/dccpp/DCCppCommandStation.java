@@ -172,6 +172,19 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
+     * Does this command station support the latest Current commands <JG>, <JI>, etc.?
+     * @return true if supported, false if not
+     */
+    public boolean isCurrentListSupported() {
+        boolean ret = false;
+        try {
+            ret = (jmri.Version.compareCanonicalVersions(version, "4.2.20") >= 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
+    /**
      * Can this command station handle the Read with a starting value ('V'erify)
      * @return true if yes or false if no
      */
