@@ -59,14 +59,14 @@ import jmri.util.table.ToggleButtonRenderer;
  * @author Egbert Broerse (C) 2019
  * @author Egbert Broerse (C) 2020
  */
-public class TableFrames implements InternalFrameListener {
+public class TableFrames implements InternalFrameListener, Disposable {
 
     public static final int ROW_HEIGHT = (new JButton("X").getPreferredSize().height)*9/10;
     public static final int STRUT_SIZE = 10;
     protected static final String SET_CLOSED = jmri.InstanceManager.turnoutManagerInstance().getClosedText();
     protected static final String SET_THROWN = jmri.InstanceManager.turnoutManagerInstance().getThrownText();
     private static String oblockPrefix;
-    private final static String portalPrefix = "IP";
+    private static final String PORTAL_PREFIX = "IP";
     private String _title;
 
     private JTable _oBlockTable;
@@ -82,8 +82,7 @@ public class TableFrames implements InternalFrameListener {
     private boolean pathEdit = false;
 
     private JmriJFrame desktopframe;
-    private JDesktopPane _desktop;
-    private final int maxHeight = 600;
+    private static final int MAX_HEIGHT = 600;
     private JInternalFrame _blockTableFrame;
     private JInternalFrame _portalTableFrame;
     private JInternalFrame _blockPortalXRefFrame;
@@ -93,9 +92,6 @@ public class TableFrames implements InternalFrameListener {
     private JMenuItem _showWarnItem;
     private JMenu tablesMenu;
     private JMenuItem openBlock;
-    private JMenuItem openPortal;
-    private JMenuItem openXRef;
-    private JMenuItem openSignal;
     private JMenuItem _setUnits;
 
     private final HashMap<String, BlockPathFrame> _blockPathMap = new HashMap<>();
@@ -115,6 +111,7 @@ public class TableFrames implements InternalFrameListener {
         // create the tables
         _oBlockModel = new OBlockTableModel(this);
         _portalModel = new PortalTableModel(this);
+        _portalModel.initListeners();
         _blockPortalXRefModel = new BlockPortalTableModel(_oBlockModel);
         _signalModel = new SignalTableModel(this);
         _signalModel.init();
@@ -278,25 +275,25 @@ public class TableFrames implements InternalFrameListener {
 
     // for desktop style interface, ignored for _tabbed
     private void createDesktop() {
-        _desktop = new JDesktopPane();
-        _desktop.putClientProperty("JDesktopPane.dragMode", "outline"); // slower or faster?
+        JDesktopPane desktop = new JDesktopPane();
+        desktop.putClientProperty("JDesktopPane.dragMode", "outline"); // slower or faster?
         int deskWidth = _blockTableFrame.getWidth();
         int deskHeight = _blockTableFrame.getHeight();
 //        _desktop.setPreferredSize(new Dimension(deskWidth,
 //                deskHeight + _portalTableFrame.getHeight() + 100));
-        _desktop.setBackground(new Color(180,180,180));
-        desktopframe.setContentPane(_desktop);
+        desktop.setBackground(new Color(180,180,180));
+        desktopframe.setContentPane(desktop);
         desktopframe.setPreferredSize(new Dimension(deskWidth + 16,
                 deskHeight + _portalTableFrame.getHeight() + 64));
 
         // placed at 0,0
-        _desktop.add(_blockTableFrame);
+        desktop.add(_blockTableFrame);
         _portalTableFrame.setLocation(0, deskHeight);
-        _desktop.add(_portalTableFrame);
+        desktop.add(_portalTableFrame);
         _signalTableFrame.setLocation(200, deskHeight+100);
-        _desktop.add(_signalTableFrame);
+        desktop.add(_signalTableFrame);
         _blockPortalXRefFrame.setLocation(deskWidth - _blockPortalXRefFrame.getWidth(), deskHeight);
-        _desktop.add(_blockPortalXRefFrame);
+        desktop.add(_blockPortalXRefFrame);
     }
 
     public JMenu getOptionMenu() {
@@ -415,10 +412,10 @@ public class TableFrames implements InternalFrameListener {
                     log.debug("Start loop: Path {} on Block {}", n, oBlockName);
                     String toBlockNumber = pa.getBlock().getSystemName().substring(sName.startsWith("IB:AUTO:") ? 8 : 3);
                     toBlockName = oblockPrefix() + toBlockNumber;
-                    String portalName = portalPrefix + toBlockNumber + "-" + blockNumber; // reversed name for new Portal
+                    String portalName = PORTAL_PREFIX + toBlockNumber + "-" + blockNumber; // reversed name for new Portal
                     port = pom.getPortal(portalName);
                     if (port == null) {
-                        portalName = portalPrefix + blockNumber + "-" + toBlockNumber; // normal name for new Portal
+                        portalName = PORTAL_PREFIX + blockNumber + "-" + toBlockNumber; // normal name for new Portal
                         log.debug("new Portal {} on block {}, path #{}", portalName, toBlockName, n);
                         port = pom.providePortal(portalName); // normally, will create a new Portal
                         port.setFromBlock(oBlock, false);
@@ -541,15 +538,15 @@ public class TableFrames implements InternalFrameListener {
             tablesMenu.add(openBlock);
             openBlock.addActionListener(event -> showHideFrame(_blockTableFrame, openBlock, "OpenBlockMenu"));
 
-            openPortal = new JMenuItem(Bundle.getMessage("OpenPortalMenu", Bundle.getMessage("HideTable")));
+            JMenuItem openPortal = new JMenuItem(Bundle.getMessage("OpenPortalMenu", Bundle.getMessage("HideTable")));
             tablesMenu.add(openPortal);
             openPortal.addActionListener(event -> showHideFrame(_portalTableFrame, openPortal, "OpenPortalMenu"));
 
-            openXRef = new JMenuItem(Bundle.getMessage("OpenXRefMenu", Bundle.getMessage("ShowTable")));
+            JMenuItem openXRef = new JMenuItem(Bundle.getMessage("OpenXRefMenu", Bundle.getMessage("ShowTable")));
             tablesMenu.add(openXRef);
             openXRef.addActionListener(event -> showHideFrame(_blockPortalXRefFrame, openXRef, "OpenXRefMenu"));
 
-            openSignal = new JMenuItem(Bundle.getMessage("OpenSignalMenu", Bundle.getMessage("ShowTable")));
+            JMenuItem openSignal = new JMenuItem(Bundle.getMessage("OpenSignalMenu", Bundle.getMessage("ShowTable")));
             tablesMenu.add(openSignal);
             openSignal.addActionListener(event -> showHideFrame(_signalTableFrame, openSignal, "OpenSignalMenu"));
         }
@@ -563,7 +560,7 @@ public class TableFrames implements InternalFrameListener {
             openBlockPathPane(blockSystemName, Bundle.getMessage("TitlePaths")); // handles both interfaces
         };
 
-        if (manager.getNamedBeanSet().size() == 0) {
+        if (manager.getNamedBeanSet().isEmpty()) {
             JMenuItem mi = new JMenuItem(Bundle.getMessage("NoBlockPathYet"));
             mi.setEnabled(false);
             openBlockPath.add(mi);
@@ -579,7 +576,7 @@ public class TableFrames implements InternalFrameListener {
 
         // Path-Turnout submenus
         JMenu openTurnoutPath = new JMenu(Bundle.getMessage("OpenBlockPathTurnoutMenu"));
-        if (manager.getNamedBeanSet().size() == 0) {
+        if (manager.getNamedBeanSet().isEmpty()) {
             JMenuItem mi = new JMenuItem(Bundle.getMessage("NoPathTurnoutYet"));
             mi.setEnabled(false);
             openTurnoutPath.add(mi);
@@ -1008,7 +1005,7 @@ public class TableFrames implements InternalFrameListener {
 
     // *************** Block-Path InternalFrame for _desktop ***********************
 
-    protected BlockPathFrame makeBlockPathFrame(OBlock block) {
+    protected BlockPathFrame makeBlockPathFrame(@Nonnull OBlock block) {
         String title = Bundle.getMessage("TitleBlockPathTable", block.getDisplayName());
         // create table
         BlockPathTableModel model = new BlockPathTableModel(block, this);
@@ -1026,7 +1023,7 @@ public class TableFrames implements InternalFrameListener {
 
     // *************** Block-Path Edit Panel for _tabbed ***********************
 
-    protected BlockPathJPanel makeBlockPathEditPanel(OBlock block) {
+    protected BlockPathJPanel makeBlockPathEditPanel(@Nonnull OBlock block) {
         // Path Table placed on jmri.jmrit.beanedit OBlockEditAction - Paths tab
         String title = Bundle.getMessage("TitleBlockPathEditor", block.getDisplayName());
         // create table
@@ -1072,6 +1069,10 @@ public class TableFrames implements InternalFrameListener {
         return pathEdit;
     }
 
+    @Override
+    public void dispose() {
+        _portalModel.dispose();
+    }
 
     // ***************** Block-Path Frame class for _desktop **************************
     protected static class BlockPathFrame extends JInternalFrame {
@@ -1156,7 +1157,7 @@ public class TableFrames implements InternalFrameListener {
         blockPathTable.doLayout();
         int tableWidth = blockPathTable.getPreferredSize().width;
         blockPathTable.setRowHeight(ROW_HEIGHT);
-        blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, Math.min(TableFrames.ROW_HEIGHT * 10, maxHeight)));
+        blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, Math.min(TableFrames.ROW_HEIGHT * 10, MAX_HEIGHT)));
 
         return blockPathTable;
     }
@@ -1319,7 +1320,7 @@ public class TableFrames implements InternalFrameListener {
         int tableWidth = pathTurnoutTable.getPreferredSize().width;
         pathTurnoutTable.setRowHeight(ROW_HEIGHT);
         pathTurnoutTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth,
-            Math.min(TableFrames.ROW_HEIGHT * 5, maxHeight)));
+            Math.min(TableFrames.ROW_HEIGHT * 5, MAX_HEIGHT)));
 
         return pathTurnoutTable;
     }
@@ -1397,9 +1398,9 @@ public class TableFrames implements InternalFrameListener {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
         p.add(turnouttable);
-        JButton ok;
-        p.add(ok = new JButton(Bundle.getMessage("ButtonOK"))); // no need to save things, handled by TurnoutTable
-        ok.addActionListener((ActionEvent e) -> frame.dispose());
+        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
+        p.add(ok); // no need to save things, handled by TurnoutTable
+        ok.addActionListener( e -> frame.dispose());
         frame.getContentPane().add(p);
         frame.pack();
         frame.setVisible(true);
@@ -1451,12 +1452,12 @@ public class TableFrames implements InternalFrameListener {
 
         JPanel btns = new JPanel();
         btns.setLayout(new BoxLayout(btns, BoxLayout.LINE_AXIS));
-        JButton cancel;
-        btns.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
-        cancel.addActionListener((ActionEvent e) -> frame.dispose());
-        JButton ok;
-        btns.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
-        ok.addActionListener((ActionEvent e) -> {
+        JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
+        btns.add(cancel);
+        cancel.addActionListener( e -> frame.dispose());
+        JButton ok = new JButton(Bundle.getMessage("ButtonOK"));
+        btns.add(ok);
+        ok.addActionListener( e -> {
             if (turnoutBox.getSelectedItem() == null || turnoutBox.getSelectedIndex() < 0) {
                 statusBar.setText(Bundle.getMessage("WarningSelectionEmpty"));
                 statusBar.setForeground(Color.red);
@@ -1598,6 +1599,6 @@ public class TableFrames implements InternalFrameListener {
         //log.debug("Internal frame deactivated: {}", frame.getTitle());
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableFrames.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TableFrames.class);
 
 }

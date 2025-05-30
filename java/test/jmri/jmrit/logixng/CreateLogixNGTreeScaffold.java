@@ -18,6 +18,8 @@ import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
 import jmri.jmrit.logixng.expressions.*;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.logixng.SendMergCbusEvent;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.script.ScriptEngineSelector;
@@ -40,6 +42,8 @@ public class CreateLogixNGTreeScaffold {
         setupHasBeenCalled = newVal;
     }
 
+    private CanSystemConnectionMemo _cbusMemo;
+    private TrafficControllerScaffold _cbusTrafficController;
     private LocoNetSystemConnectionMemo _locoNetMemo;
     private MqttSystemConnectionMemo _mqttMemo;
 
@@ -2884,6 +2888,37 @@ public class CreateLogixNGTreeScaffold {
                 new jmri.jmrit.display.logixng.ActionAudioIcon(digitalActionManager.getAutoSystemName(), null);
         actionAudioIcon.setOperation(jmri.jmrit.display.logixng.ActionAudioIcon.Operation.Stop);
         maleSocket = digitalActionManager.registerAction(actionAudioIcon);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        jmri.jmrix.can.cbus.logixng.SendMergCbusEvent sendCbusEvent =
+                new jmri.jmrix.can.cbus.logixng.SendMergCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
+        maleSocket = digitalActionManager.registerAction(sendCbusEvent);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        sendCbusEvent = new jmri.jmrix.can.cbus.logixng.SendMergCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
+        sendCbusEvent.getSelectNodeNumber().setValue(10);
+        sendCbusEvent.getSelectEventNumber().setValue(20);
+        sendCbusEvent.getSelectEventType().setEnum(SendMergCbusEvent.CbusEventType.On);
+        maleSocket = digitalActionManager.registerAction(sendCbusEvent);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        sendCbusEvent = new jmri.jmrix.can.cbus.logixng.SendMergCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
+        sendCbusEvent.getSelectNodeNumber().setValue(3);
+        sendCbusEvent.getSelectEventNumber().setValue(30);
+        sendCbusEvent.getSelectEventType().setEnum(SendMergCbusEvent.CbusEventType.Off);
+        maleSocket = digitalActionManager.registerAction(sendCbusEvent);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        sendCbusEvent = new jmri.jmrix.can.cbus.logixng.SendMergCbusEvent(digitalActionManager.getAutoSystemName(), null, _cbusMemo);
+        sendCbusEvent.getSelectNodeNumber().setValue(10);
+        sendCbusEvent.getSelectEventNumber().setValue(20);
+        sendCbusEvent.getSelectEventType().setEnum(SendMergCbusEvent.CbusEventType.Request);
+        maleSocket = digitalActionManager.registerAction(sendCbusEvent);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -6222,6 +6257,12 @@ public class CreateLogixNGTreeScaffold {
         JUnitUtil.initSectionManager();
         JUnitUtil.initWarrantManager();
 
+        _cbusMemo = new CanSystemConnectionMemo();
+        _cbusTrafficController = new TrafficControllerScaffold();
+        _cbusMemo.setTrafficController(_cbusTrafficController);
+        _cbusMemo.setProtocol(ConfigurationManager.MERGCBUS);
+        _cbusMemo.configureManagers();
+
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager sm = new SlotManager(lnis);
         _locoNetMemo = new LocoNetSystemConnectionMemo(lnis, sm);
@@ -6235,6 +6276,7 @@ public class CreateLogixNGTreeScaffold {
         InstanceManager.store(_mqttMemo, SystemConnectionMemo.class);
 
         TransitScaffold.initTransits();
+        NamedBeanType.reset();
 
 //        JUnitUtil.initLogixNGManager();
 
@@ -6244,6 +6286,8 @@ public class CreateLogixNGTreeScaffold {
     public void tearDown() {
         CreateLogixNGTreeScaffold.setUpCalled(false);     // Reset for the next test
 
+        _cbusTrafficController.terminateThreads();
+        _cbusMemo = null;
         _locoNetMemo = null;
         _mqttMemo = null;
 

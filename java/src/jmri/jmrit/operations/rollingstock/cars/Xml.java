@@ -28,6 +28,7 @@ public class Xml {
     static final String CABOOSE = "caboose"; // NOI18N
     static final String FRED = "fred"; // NOI18N
     static final String UTILITY = "utility"; // NOI18N
+    static final String CLONE = "clone"; // NOI18N
     static final String KERNEL = "kernel"; // NOI18N
     static final String LEAD_KERNEL = "leadKernel"; // NOI18N
 

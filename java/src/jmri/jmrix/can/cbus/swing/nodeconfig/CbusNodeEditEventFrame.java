@@ -12,7 +12,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.text.DefaultFormatter;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.node.CbusNode;
@@ -22,6 +21,7 @@ import jmri.jmrix.can.cbus.node.CbusNodeSingleEventTableDataModel;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.util.swing.JSpinnerUtil;
 
 /**
  * Frame to control an instance of CBUS highlighter to highlight events.
@@ -102,16 +102,12 @@ public class CbusNodeEditEventFrame extends JmriJFrame
         numberSpinnernd = new JSpinner(new SpinnerNumberModel(Math.max(0,_ndEv.getNn()), 0, 65535, 1));
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(numberSpinnernd, "#");
         numberSpinnernd.setEditor(editor);
-        JFormattedTextField fieldNd = (JFormattedTextField) editor.getComponent(0);
-        DefaultFormatter formatterNd = (DefaultFormatter) fieldNd.getFormatter();
-        formatterNd.setCommitsOnValidEdit(true);
+        JSpinnerUtil.setCommitsOnValidEdit(numberSpinnernd, true);
 
         numberSpinnerEv = new JSpinner(new SpinnerNumberModel(Math.max(0,_ndEv.getEn()), 0, 65535, 1));
         JSpinner.NumberEditor neditor = new JSpinner.NumberEditor(numberSpinnernd, "#");
         numberSpinnernd.setEditor(neditor);
-        JFormattedTextField fieldEv = (JFormattedTextField) neditor.getComponent(0);
-        DefaultFormatter formatterEv = (DefaultFormatter) fieldEv.getFormatter();
-        formatterEv.setCommitsOnValidEdit(true);        
+        JSpinnerUtil.setCommitsOnValidEdit(numberSpinnerEv, true);
         
         infoPane = new JPanel();
         infoPane.setLayout(new BorderLayout() );        

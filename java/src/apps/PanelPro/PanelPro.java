@@ -1,17 +1,17 @@
 package apps.PanelPro;
 
 import apps.Apps;
+
+import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI program for creating control panels.
@@ -52,13 +52,12 @@ public class PanelPro extends Apps {
 
     @Override
     protected String line1() {
-        return MessageFormat.format(Bundle.getMessage("PanelProVersionCredit"),
-                new Object[]{jmri.Version.name()});
+        return Bundle.getMessage("PanelProVersionCredit", jmri.Version.name());
     }
 
     @Override
     protected String line2() {
-        return "http://jmri.org/PanelPro ";
+        return "https://jmri.org/PanelPro";
     }
 
     /**
@@ -82,11 +81,11 @@ public class PanelPro extends Apps {
         p3.setLayout(new java.awt.FlowLayout());
         h1 = new JButton(Bundle.getMessage("ButtonHelp"));
         // as globalHelpBroker is still null, wait to attach help target after help menu is created
-        h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        h1.setAlignmentX(Component.CENTER_ALIGNMENT);
         p3.add(h1);
         JButton q1 = new JButton(Bundle.getMessage("ButtonQuit"));
         q1.addActionListener(quit);
-        q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        q1.setAlignmentX(Component.CENTER_ALIGNMENT);
         p3.add(q1);
         j.add(p3);
 
@@ -128,6 +127,6 @@ public class PanelPro extends Apps {
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PanelPro.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PanelPro.class);
 
 }

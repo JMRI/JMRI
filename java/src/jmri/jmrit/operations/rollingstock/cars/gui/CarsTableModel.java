@@ -50,20 +50,22 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
     private static final int RWE_DESTINATION_COLUMN = 15;
     private static final int RWL_DESTINATION_COLUMN = 16;
     private static final int ROUTE_COLUMN = 17;
-    private static final int PREVIOUS_LOCATION_COLUMN = 18;
+    private static final int LAST_LOCATION_COLUMN = 18;
     private static final int DIVISION_COLUMN = 19;
     private static final int TRAIN_COLUMN = 20;
-    private static final int MOVES_COLUMN = 21;
-    private static final int BUILT_COLUMN = 22;
-    private static final int OWNER_COLUMN = 23;
-    private static final int VALUE_COLUMN = 24;
-    private static final int RFID_COLUMN = 25;
-    private static final int WAIT_COLUMN = 26;
-    private static final int PICKUP_COLUMN = 27;
-    private static final int LAST_COLUMN = 28;
-    private static final int COMMENT_COLUMN = 29;
-    private static final int SET_COLUMN = 30;
-    private static final int EDIT_COLUMN = 31;
+    private static final int LAST_TRAIN_COLUMN = 21;
+    private static final int MOVES_COLUMN = 22;
+    private static final int BUILT_COLUMN = 23;
+    private static final int OWNER_COLUMN = 24;
+    private static final int VALUE_COLUMN = 25;
+    private static final int RFID_COLUMN = 26;
+    private static final int WAIT_COLUMN = 27;
+    private static final int PICKUP_COLUMN = 28;
+    private static final int SETOUT_COLUMN = 29;
+    private static final int LAST_COLUMN = 30;
+    private static final int COMMENT_COLUMN = 31;
+    private static final int SET_COLUMN = 32;
+    private static final int EDIT_COLUMN = 33;
 
     private static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -136,6 +138,10 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
         if (sort == SORTBY_DIVISION) {
             tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), true);
         }
+        if (sort == SORTBY_TRAIN) {
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), true);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), false);
+        }
         if (sort == SORTBY_DESTINATION ||
                 sort == SORTBY_FINALDESTINATION ||
                 sort == SORTBY_RWE ||
@@ -172,8 +178,11 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
             tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), sort == SORTBY_RFID);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), sort == SORTBY_WAIT);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), sort == SORTBY_PICKUP);
-            tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), sort == SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(SETOUT_COLUMN), sort == SORTBY_PICKUP);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_LOCATION_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), sort == SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), sort != SORTBY_LAST);
+            tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), sort == SORTBY_LAST);
             tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), sort == SORTBY_COMMENT);
         }
         fireTableDataChanged();
@@ -448,7 +457,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
 
     // Cars frame table column widths, starts with Select column and ends with Edit
     private final int[] tableColumnWidths = {60, 60, 60, 65, 35, 75, 75, 75, 75, 65, 190, 190, 140, 190, 190, 190, 190,
-            190, 190, 190, 65, 50, 50, 50, 50, 100, 50, 100, 100, 100, 65, 70};
+            190, 190, 190, 65, 90, 50, 50, 50, 50, 100, 50, 100, 60, 100, 100, 65, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -472,7 +481,6 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
 
         // turn off columns
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), false);
-
         tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_DESTINATION_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RWE_LOAD_COLUMN), false);
@@ -487,14 +495,17 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(PREVIOUS_LOCATION_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SETOUT_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_LOCATION_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_TRAIN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COMMENT_COLUMN), false);
 
         // turn on defaults
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), true);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), true);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_COLUMN), true);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DIVISION_COLUMN), carManager.isThereDivisions());
     }
@@ -548,12 +559,14 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 return Bundle.getMessage("RWLLoad");
             case ROUTE_COLUMN:
                 return Bundle.getMessage("Route");
-            case PREVIOUS_LOCATION_COLUMN:
+            case LAST_LOCATION_COLUMN:
                 return Bundle.getMessage("LastLocation");
             case DIVISION_COLUMN:
                 return Bundle.getMessage("HomeDivision");
             case TRAIN_COLUMN:
                 return Bundle.getMessage("Train");
+            case LAST_TRAIN_COLUMN:
+                return Bundle.getMessage("LastTrain");
             case MOVES_COLUMN:
                 return Bundle.getMessage("Moves");
             case BUILT_COLUMN:
@@ -568,6 +581,8 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 return Bundle.getMessage("Wait");
             case PICKUP_COLUMN:
                 return Bundle.getMessage("Pickup");
+            case SETOUT_COLUMN:
+                return Bundle.getMessage("SetOut");
             case LAST_COLUMN:
                 return Bundle.getMessage("LastMoved");
             case COMMENT_COLUMN:
@@ -600,6 +615,10 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
 
     @Override
     public boolean isCellEditable(int row, int col) {
+        Car car = carList.get(row);
+        if (car.isClone()) {
+            return false;
+        }
         switch (col) {
             case SELECT_COLUMN:
             case SET_COLUMN:
@@ -695,7 +714,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 return car.getRoutePath();
             case DIVISION_COLUMN:
                 return car.getDivisionName();
-            case PREVIOUS_LOCATION_COLUMN: {
+            case LAST_LOCATION_COLUMN: {
                 String s = "";
                 if (!car.getLastLocationName().equals(Car.NONE)) {
                     s = car.getLastLocationName() + " (" + car.getLastTrackName() + ")";
@@ -709,6 +728,8 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 }
                 return car.getTrainName();
             }
+            case LAST_TRAIN_COLUMN:
+                return car.getLastTrainName();
             case MOVES_COLUMN:
                 return car.getMoves();
             case BUILT_COLUMN:
@@ -723,6 +744,8 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 return car.getWait();
             case PICKUP_COLUMN:
                 return car.getPickupScheduleName();
+            case SETOUT_COLUMN:
+                return car.getSetoutTime();
             case LAST_COLUMN:
                 return car.getSortDate();
             case COMMENT_COLUMN:
