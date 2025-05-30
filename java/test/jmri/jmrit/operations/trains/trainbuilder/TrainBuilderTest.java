@@ -20174,6 +20174,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", "Boxcar", "40", actonYard1, 13);
         Car c5 = JUnitOperationsUtil.createAndPlaceCar("CP", "50", "Boxcar", "40", actonYard2, 14);
 
+        c3.setWeightTons("40");
+        c4.setWeightTons("40");
+        c5.setWeightTons("40");
+
         Location boston = route1.getRouteLocationBySequenceNumber(2).getLocation();
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
         bostonSpur1.setQuickServiceEnabled(true);
@@ -20201,7 +20205,8 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Train train2 = tmanager.newTrain("TestQuickTurnTrainTiming2");
         train2.setRoute(route2);
-        train2.setDepartureTime("03", "30");
+        // train 2 arrives 2nd Boston at 2:40 same time as clone arrives
+        train2.setDepartureTime("02", "28");
 
         TrainBuilder tb = new TrainBuilder();
 
@@ -20213,6 +20218,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // two cars and two clones
         Assert.assertEquals("should be 2 cars", 2, train1.getNumberCarsWorked());
         Assert.assertEquals("should be 2 cars", 2, train2.getNumberCarsWorked());
+
         Assert.assertEquals("should be 5 cars", 5, cmanager.getNumEntries());
 
         // two cars should now be departing Boston destination Acton
@@ -20239,6 +20245,14 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("drop time", "0:02:40", clone3.getSetoutTime());
         Assert.assertEquals("drop time", "0:02:40", clone4.getSetoutTime());
+
+        Assert.assertEquals("Weight", "40", clone3.getWeightTons());
+        Assert.assertEquals("Weight", "40", clone4.getWeightTons());
+
+        // car is empty so weight is 1/3 of 80 tons
+        Assert.assertEquals("Weight", 26, train1.getTrainWeight());
+        // departs Acton with 0 cars
+        Assert.assertEquals("Weight", 0, train2.getTrainWeight());
 
         // now have train 2 depart before train 1
         train2.reset();
