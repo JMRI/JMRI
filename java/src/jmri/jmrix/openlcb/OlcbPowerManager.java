@@ -80,7 +80,14 @@ public final class OlcbPowerManager extends AbstractPowerManager<CanSystemConnec
             pc.release();
             pc = null;
         }
-    }
+ 
+        onEventTableEntryHolder.release();
+        onEventTableEntryHolder = null;
+        
+        offEventTableEntryHolder.release();
+        offEventTableEntryHolder = null;
+        
+   }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbPowerManager.class);
 
