@@ -402,8 +402,7 @@ public class DigitalFormula extends AbstractDigitalExpression implements FemaleS
             // Search for possible bean references using system and user names.  False positives are possible.
             var formula = getFormula();
             var uname = bean.getUserName();
-            if (uname == null) uname = "9zQqtVv7";
-            if (formula.contains(bean.getSystemName()) || formula.contains(uname)) {
+            if (formula.contains(bean.getSystemName()) || (uname != null && formula.contains(uname))) {
                 report.add(new NamedBeanUsageReport("LogixNGExpression", cdl, getLongDescription()));
             }
         }
