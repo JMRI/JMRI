@@ -1476,7 +1476,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final NamedBeanComboBox<Sensor> whenSensorComboBox = new NamedBeanComboBox<>(
         InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
     private final JSpinner whenDataSpinnerFloat = new JSpinner(new SpinnerNumberModel(
-        0.0f, 0.0f, 65.0f, 0.5f)); // delay
+        Float.valueOf(0.0f), Float.valueOf(0.0f), Float.valueOf(65.0f), Float.valueOf(0.5f))); // delay
     private final JSpinner whenDataSpinnerInt = new JSpinner(new SpinnerNumberModel(0, 0, 65000, 100)); // delay
     private final JRadioButton mSecButton = new JRadioButton(Bundle.getMessage("LabelMilliseconds"));
     private final JRadioButton secButton = new JRadioButton(Bundle.getMessage("LabelSeconds"));
@@ -1648,7 +1648,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             panelPercentageSpinner = new JPanel();
             panelPercentageSpinner.setLayout(new FlowLayout());
             whatPercentSpinner.setModel(new SpinnerNumberModel(
-                1.0f, 0.00f, 1.5f, 0.01f));
+                Float.valueOf(1.0f), Float.valueOf(0.00f), Float.valueOf(1.5f), Float.valueOf(0.01f)));
             whatPercentSpinner.setEditor(new JSpinner.NumberEditor(whatPercentSpinner, "# %")); // show as a percentage % sign
             panelPercentageSpinner.add(whatPercentSpinner);
             panelPercentageSpinner.add(whatMinuteSpinner1);

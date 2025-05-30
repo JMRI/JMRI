@@ -36,6 +36,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
     JTextField destination_TextField = new JTextField(25);
     JTextField dest_track_TextField = new JTextField(25);
     JTextField comment_TextField = new JTextField(25);
+    JTextField last_train_TextField = new JTextField(25);
     // car attributes
     JTextField load_TextField = new JTextField(25);
     JTextField load_type_TextField = new JTextField(25);
@@ -137,6 +138,12 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pComment_TextField.add(comment_TextField);
         comment_TextField.setText(TrainManifestHeaderText.getStringHeader_Comment());
         pManifest.add(pComment_TextField);
+
+        JPanel pLast_Train_TextField = new JPanel();
+        pLast_Train_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LastTrain")));
+        pLast_Train_TextField.add(last_train_TextField);
+        last_train_TextField.setText(TrainManifestHeaderText.getStringHeader_Last_Train());
+        pManifest.add(pLast_Train_TextField);
 
         // car attributes
         JPanel pLoad_TextField = new JPanel();
@@ -265,6 +272,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
             destination_TextField.setText(Bundle.getMessage("Destination"));
             dest_track_TextField.setText(Bundle.getMessage("Dest&Track"));
             comment_TextField.setText(Bundle.getMessage("Comment"));
+            last_train_TextField.setText(Bundle.getMessage("LastTrain"));
             // car attributes
             load_TextField.setText(Bundle.getMessage("Load"));
             load_type_TextField.setText(Bundle.getMessage("Load_Type"));
@@ -316,6 +324,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         TrainManifestHeaderText.setStringHeader_Destination(destination_TextField.getText());
         TrainManifestHeaderText.setStringHeader_Dest_Track(dest_track_TextField.getText());
         TrainManifestHeaderText.setStringHeader_Comment(comment_TextField.getText());
+        TrainManifestHeaderText.setStringHeader_Last_Train(last_train_TextField.getText());
         // car attributes
         TrainManifestHeaderText.setStringHeader_Load(load_TextField.getText());
         TrainManifestHeaderText.setStringHeader_Load_Type(load_type_TextField.getText());
@@ -355,6 +364,9 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
                 && TrainManifestHeaderText.getStringHeader_Destination().equals(destination_TextField.getText())
                 && TrainManifestHeaderText.getStringHeader_Dest_Track().equals(dest_track_TextField.getText())
                 && TrainManifestHeaderText.getStringHeader_Comment().equals(comment_TextField.getText())
+                &&
+                TrainManifestHeaderText.getStringHeader_Last_Train().equals(last_train_TextField
+                        .getText())
                 && TrainManifestHeaderText.getStringHeader_Load().equals(load_TextField.getText())
                 && TrainManifestHeaderText.getStringHeader_Load_Type().equals(load_type_TextField.getText())
                 && TrainManifestHeaderText.getStringHeader_Hazardous().equals(hazardous_TextField.getText())

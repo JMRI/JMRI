@@ -154,7 +154,7 @@ public class TrainManifest extends TrainCommon {
                     }
                 }
 
-                setCarPickupTime(train, rl, carList);
+                setCarPickupAndSetoutTimes(train, rl, carList);
 
                 if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
                     pickupEngines(fileOut, engineList, rl, IS_MANIFEST);

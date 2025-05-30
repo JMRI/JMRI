@@ -6,6 +6,23 @@
   <meta name="author" content="Bob M.">
   <meta name="keywords" content="Digitrax SE74 with JMRI">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <style>
+    .ctr {
+        text-align: center;
+    }
+
+    table {
+        border: 3px solid;
+    }
+
+    th {
+        border: 1px solid;
+    }
+
+    td {
+        border: 1px solid;
+    }
+  </style>
 </head>
 <body>
   <!--#include virtual="/help/en/parts/Header.shtml" -->
@@ -74,7 +91,7 @@
 
       <h2 id="configuring">Configuring the SE74 with JMRI</h2>
       <span class="since">Since <a href="jmri5.3.4.shtml">JMRI 5.3.4</a></span>
-      DecoderPro can configure the Op Switches of the SE74 so long as it has 
+      DecoderPro can configure the Op Switches of the SE74 so long as it has
       a LocoNet connection to the SE74.
       <p>To do this, you open DecoderPro (as an individual application or via
       selecting "Roster" in PanelPro) and create a new roster entry. Select the
@@ -552,10 +569,10 @@
           LocoNet messaging which is suitable for "general-purpose" sensor input.
           Those inputs will be reflected as four JMRI "Sensor" objects, with sensor
           hardware addresses of:
-      <table border="2">
+      <table >
           <tr>
-              <td>&nbsp;&nbsp;Sensor&nbsp;&nbsp;</td>
-              <td>&nbsp;&nbsp;Hardware Address&nbsp;&nbsp;</td>
+              <th>&nbsp;&nbsp;Sensor&nbsp;&nbsp;</th>
+              <th>&nbsp;&nbsp;Hardware Address&nbsp;&nbsp;</th>
           </tr>
           <tr>
               <td><strong>SENS1</strong></td>
@@ -573,7 +590,7 @@
       </table>
         <br>
         <p>Some examples include:
-        <table border="1">
+        <table>
           <tr>
             <th>&nbsp;Base Address&nbsp;</th>
             <th>&nbsp;Input&nbsp;</th>
@@ -584,12 +601,12 @@
             <tr><td>SENS2&nbsp;</td><td>507</td></tr>
             <tr><td>SENS3&nbsp;</td><td>509</td></tr>
             <tr><td>SENS4&nbsp;</td><td>511</td></tr>
-            
+
             <tr><td rowspan="4">254</td ><td>&nbsp;SENS1&nbsp;</td><td>507</td></tr>
             <tr><td>&nbsp;SENS2&nbsp;</td><td>508</td></tr>
             <tr><td>&nbsp;SENS3&nbsp;</td><td>511</td></tr>
             <tr><td>&nbsp;SENS4&nbsp;</td><td>513</td></tr>
-            
+
             <tr><td rowspan="4">255</td ><td>&nbsp;SENS1&nbsp;</td><td>509</td></tr>
             <tr><td>&nbsp;SENS2&nbsp;</td><td>511</td></tr>
             <tr><td>&nbsp;SENS3&nbsp;</td><td>513</td></tr>

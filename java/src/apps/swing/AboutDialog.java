@@ -10,35 +10,49 @@ import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.swing.ConnectionLabel;
 import jmri.util.FileUtil;
+import jmri.util.swing.JmriJOptionPane;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * About dialog.
  *
  * @author Randall Wood Copyright (C) 2012
  */
-public final class AboutDialog extends JDialog {
+public final class AboutDialog {
 
-    // this should probably be changed to a JmriAbstractAction that opens a JmriJOptionPane with the contents and an OK button instead.
-    public AboutDialog(JFrame frame, boolean modal) {
+    private final JFrame frame;
+    private final boolean modal;
 
-        super(frame, modal);
+    // this should probably be changed to a JmriAbstractAction.
+    public AboutDialog(JFrame jframe, boolean isModal) {
+        frame = jframe;
+        modal = isModal;
+        
+    }
 
+    public void setVisible(boolean visible) {
+        if ( !visible ) {
+            return;
+        }
         log.debug("Start UI");
+        if (modal) {
+            JmriJOptionPane.showMessageDialog(frame, getMainPanel(),
+                Bundle.getMessage("TitleAbout", Application.getApplicationName()),
+                JmriJOptionPane.PLAIN_MESSAGE);
+        } else {
+            JmriJOptionPane.showMessageDialogNonModal(frame, getMainPanel(),
+                Bundle.getMessage("TitleAbout", Application.getApplicationName()),
+                JmriJOptionPane.PLAIN_MESSAGE, null);
+        }
+    }
 
+    private JPanel getMainPanel(){
         JPanel pane = new JPanel();
         pane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         pane.add(namePane());
         pane.add(infoPane());
-        this.add(pane);
-        this.pack();
-        this.setResizable(false);
-        this.setLocationRelativeTo(null); // center on screen
-        this.setTitle(Bundle.getMessage("TitleAbout", Application.getApplicationName()));
-        log.debug("End constructor");
+        return pane;
     }
 
     protected JPanel namePane() {
@@ -48,22 +62,26 @@ public final class AboutDialog extends JDialog {
         if (log.isDebugEnabled()) {
             log.debug("Fetch main logo: {} ({})", logo, FileUtil.findURL(logo, FileUtil.Location.INSTALLED));
         }
-        addCenteredComponent(new JLabel(new ImageIcon(getToolkit().getImage(FileUtil.findURL(logo, FileUtil.Location.INSTALLED)), "JMRI logo"), JLabel.CENTER), pane);
+        addCenteredComponent(new JLabel(new ImageIcon(
+            pane.getToolkit().getImage(FileUtil.findURL(logo, FileUtil.Location.INSTALLED)),
+            "JMRI logo"), SwingConstants.CENTER), pane);
         pane.add(Box.createRigidArea(new Dimension(0, 15)));
         String name = Application.getApplicationName();
-        name = checkCopyright(name);
-        JLabel appName = new JLabel(name, JLabel.CENTER);
+        name = checkRegisteredTmInString(name);
+        JLabel appName = new JLabel(name, SwingConstants.CENTER);
         appName.setFont(pane.getFont().deriveFont(Font.BOLD, pane.getFont().getSize() * 1.2f));
         addCenteredComponent(appName, pane);
-        addCenteredComponent(new JLabel(Application.getURL(), JLabel.CENTER), pane);
+        addCenteredComponent(new JLabel(Application.getURL(), SwingConstants.CENTER), pane);
         pane.add(Box.createRigidArea(new Dimension(0, 15)));
         pane.setAlignmentX(Component.CENTER_ALIGNMENT);
         return pane;
     }
 
-    protected String checkCopyright(String name) {
-        if (name.toUpperCase().equals("DECODERPRO")) {
-            name = name + "\u00ae";
+    private static final String REGISTERED_TM_SYMBOL = "\u00ae";
+
+    protected static String checkRegisteredTmInString(String name) {
+        if ( !name.contains(REGISTERED_TM_SYMBOL) ) {
+            return name + " " + REGISTERED_TM_SYMBOL;
         }
         return name;
     }
@@ -91,10 +109,10 @@ public final class AboutDialog extends JDialog {
         return pane1;
     }
 
-    protected void addCenteredComponent(JComponent c, JPanel p) {
+    protected static void addCenteredComponent(JComponent c, JPanel p) {
         c.setAlignmentX(Component.CENTER_ALIGNMENT); // doesn't work
         p.add(c);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AboutDialog.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AboutDialog.class);
 }

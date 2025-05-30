@@ -178,7 +178,8 @@ public class TrainCsvCommon extends TrainCommon {
                 car.getLoadType(),
                 car.getReturnWhenLoadedDestinationName(),
                 car.getReturnWhenLoadedDestTrackName(),
-                car.getRoutePath());
+                car.getRoutePath(),
+                car.getDivisionName());
     }
 
     protected void printEngine(CSVPrinter fileOut, Engine engine, String code, String message) throws IOException {

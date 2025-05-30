@@ -12,7 +12,8 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
-import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -426,13 +427,24 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     private void updateNumCars() {
-        String totalNumber = Integer.toString(InstanceManager.getDefault(CarManager.class).getNumEntries());
+        String count = filterCarList(InstanceManager.getDefault(CarManager.class).getList());
         if (showAllCars) {
-            numCars.setText(totalNumber);
+            numCars.setText(count);
             return;
         }
-        String showNumber = Integer.toString(getSortByList().size());
-        numCars.setText(showNumber + "/" + totalNumber);
+        String showCount = filterCarList(getSortByList());
+        numCars.setText(showCount + "/" + count);
+    }
+
+    // only count real cars, ignore clones
+    private String filterCarList(List<Car> list) {
+        int count = 0;
+        for (Car car : list) {
+            if (!car.isClone()) {
+                count++;
+            }
+        }
+        return Integer.toString(count);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CarsTableFrame.class);

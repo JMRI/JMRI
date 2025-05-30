@@ -448,7 +448,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Fixed editing and rendering issues with Block Contents Icons.  No longer need to have a value in the block to edit the Icon.  Rotated blocks render correctly.  Empty Hidden now works on initial load and after editing the panel</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -471,7 +471,11 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>Improved some GUI layouts by adding scroll bars</li>
+          <li>The LogixNG action <strong>Send MERG CBUS event</strong> has
+              been added. It's available in the category <strong>Merg Cbus</strong>
+              if there is a Merg Cbus connection.</li>
+          <li>The semicolon has been added as field delimiter for CSV files used to create
+          LogixNG Tables.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -483,7 +487,9 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, passenger car blocking order for Manifests and switch lists</li>
+            <li>The train icon now shows the number of local moves in the train's route.</li>
+            <li>New feature, a turn can now drop and pull the same car on a turn.</li>
+            <li>Added local moves enabled to route export and printing.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -525,6 +531,14 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
+            <li>The script <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
+                has been added.<br />
+                <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
+                sets "Unknown" hardware states to default values for sensors
+                (Inactive) and turnouts (Closed). This prevents overriding
+                known states.<br />
+                The existing script <strong>InitAllTurnoutsSensors.py</strong>
+                would override sensor Active and turnout Thrown states.</li>
             <li></li>
         </ul>
 
@@ -535,7 +549,8 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>The aspect mapping in the Italian FS-1987
+                    signal system has been updated.</li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -643,6 +658,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The PlantUML library we use for various documentation images
+                has been updated to the current 1.2025.2 version.</li>
+            <li>Fixed a bug where Dark Mode would fail due to a missing library.</li>
         </ul>
 

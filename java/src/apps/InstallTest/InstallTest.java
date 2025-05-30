@@ -58,7 +58,7 @@ public class InstallTest extends Apps {
 
     @Override
     protected String line2() {
-        return "http://jmri.org/InstallTest";
+        return "https://jmri.org/InstallTest";
     }
 
     @Override

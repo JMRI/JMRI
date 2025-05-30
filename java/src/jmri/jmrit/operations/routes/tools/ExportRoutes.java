@@ -74,6 +74,7 @@ public class ExportRoutes extends XmlFile {
                                 rl.getRandomControl(),
                                 rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
                                 rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
+                                rl.isLocalMovesAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"),
                                 rl.getWait() + Setup.getTravelTime(),
                                 rl.getFormatedDepartureTime(),
                                 rl.getMaxTrainLength(),

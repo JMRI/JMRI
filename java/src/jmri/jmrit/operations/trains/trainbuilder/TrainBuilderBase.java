@@ -1388,7 +1388,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
         addLine(_buildReport, THREE,
                 Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName()));
-        car.setDestination(track.getLocation(), track);
+        car.setDestination(track.getLocation(), track, Car.FORCE);
         int length = car.getTotalLength();
         int weightTons = car.getAdjustedWeightTons();
         // car could be part of a kernel
@@ -1406,7 +1406,7 @@ public class TrainBuilderBase extends TrainCommon {
                     kCar.setTrain(_train);
                     kCar.setRouteLocation(rl);
                     kCar.setRouteDestination(rld);
-                    kCar.setDestination(track.getLocation(), track, true); // force destination
+                    kCar.setDestination(track.getLocation(), track, Car.FORCE); // force destination
                     // save final destination and track values in case of train reset
                     kCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
                     kCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
@@ -1425,8 +1425,9 @@ public class TrainBuilderBase extends TrainCommon {
         _completedMoves++; // bump number of car pick up moves for the location
         _reqNumOfMoves--; // decrement number of moves left for the location
 
-        _carList.remove(car);
-        _carIndex--; // removed car from list, so backup pointer
+        if (_carList.remove(car)) {
+            _carIndex--; // removed car from list, so backup pointer
+        }
 
         rl.setCarMoves(rl.getCarMoves() + 1);
         if (rl != rld) {
@@ -1458,11 +1459,10 @@ public class TrainBuilderBase extends TrainCommon {
                 inTrain = true;
             }
             if (rld == routeLocation) {
-                break;
+                break; // done
             }
             if (inTrain) {
-                routeLocation.setTrainLength(routeLocation.getTrainLength() + length); // includes
-                                                                                       // couplers
+                routeLocation.setTrainLength(routeLocation.getTrainLength() + length);
                 routeLocation.setTrainWeight(routeLocation.getTrainWeight() + weightTons);
             }
         }
@@ -2408,43 +2408,46 @@ public class TrainBuilderBase extends TrainCommon {
      * timing of car pulls by other trains.
      */
     protected String checkReserved(Train train, RouteLocation rld, Car car, Track destTrack, boolean printMsg) {
-        // car can be a kernel so get total length
-        int length = car.getTotalKernelLength();
-        log.debug("Car length: {}, available track space: {}, reserved: {}", length,
-                destTrack.getAvailableTrackSpace(), destTrack.getReserved());
-        if (length > destTrack.getAvailableTrackSpace() +
-                destTrack.getReserved()) {
-            String trainExpectedArrival = train.getExpectedArrivalTime(rld, true);
-            int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
-            int reservedReturned = 0;
-            // does this car already have this destination?
-            if (car.getDestinationTrack() == destTrack) {
-                reservedReturned = -car.getTotalLength();
-            }
-            // get a list of cars on this track
-            List<Car> cars = carManager.getList(destTrack);
-            for (Car kar : cars) {
-                if (kar.getTrain() != null && kar.getTrain() != train) {
-                    int carPullTime = convertStringTime(kar.getPickupTime());
-                    if (trainArrivalTimeMinutes < carPullTime) {
-                        // don't print if checking redirect to alternate
-                        if (printMsg) {
-                            addLine(_buildReport, SEVEN,
-                                    Bundle.getMessage("buildCarTrainTiming", kar.toString(),
-                                            kar.getTrack().getTrackTypeName(), kar.getLocationName(),
-                                            kar.getTrackName(), kar.getTrainName(), kar.getPickupTime(),
-                                            _train.getName(), trainExpectedArrival));
+        // car returning to same track?
+        if (car.getTrack() != destTrack) {
+            // car can be a kernel so get total length
+            int length = car.getTotalKernelLength();
+            log.debug("Car length: {}, available track space: {}, reserved: {}", length,
+                    destTrack.getAvailableTrackSpace(), destTrack.getReserved());
+            if (length > destTrack.getAvailableTrackSpace() +
+                    destTrack.getReserved()) {
+                String trainExpectedArrival = train.getExpectedArrivalTime(rld, true);
+                int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
+                int reservedReturned = 0;
+                // does this car already have this destination?
+                if (car.getDestinationTrack() == destTrack) {
+                    reservedReturned = -car.getTotalKernelLength();
+                }
+                // get a list of cars on this track
+                List<Car> cars = carManager.getList(destTrack);
+                for (Car kar : cars) {
+                    if (kar.getTrain() != null && kar.getTrain() != train) {
+                        int carPullTime = convertStringTime(kar.getPickupTime());
+                        if (trainArrivalTimeMinutes < carPullTime) {
+                            // don't print if checking redirect to alternate
+                            if (printMsg) {
+                                addLine(_buildReport, SEVEN,
+                                        Bundle.getMessage("buildCarTrainTiming", kar.toString(),
+                                                kar.getTrack().getTrackTypeName(), kar.getLocationName(),
+                                                kar.getTrackName(), kar.getTrainName(), kar.getPickupTime(),
+                                                _train.getName(), trainExpectedArrival));
+                            }
+                            reservedReturned += kar.getTotalLength();
                         }
-                        reservedReturned += kar.getTotalLength();
                     }
                 }
-            }
-            if (length > destTrack.getAvailableTrackSpace() - reservedReturned) {
-                if (printMsg) {
-                    addLine(_buildReport, SEVEN,
-                            Bundle.getMessage("buildWarnTrainTiming", car.toString(), _train.getName()));
+                if (length > destTrack.getAvailableTrackSpace() - reservedReturned) {
+                    if (printMsg) {
+                        addLine(_buildReport, SEVEN,
+                                Bundle.getMessage("buildWarnTrainTiming", car.toString(), _train.getName()));
+                    }
+                    return TIMING;
                 }
-                return TIMING;
             }
         }
         return Track.OKAY;
@@ -2786,73 +2789,7 @@ public class TrainBuilderBase extends TrainCommon {
         return false;
     }
 
-    /**
-     * Checks to see if cars that are already in the train can be redirected
-     * from the alternate track to the spur that really wants the car. Fixes the
-     * issue of having cars placed at the alternate when the spur's cars get
-     * pulled by this train, but cars were sent to the alternate because the
-     * spur was full at the time it was tested.
-     *
-     * @return true if one or more cars were redirected
-     * @throws BuildFailedException if coding issue
-     */
-    protected boolean redirectCarsFromAlternateTrack() throws BuildFailedException {
-        // code check, should be aggressive
-        if (!Setup.isBuildAggressive()) {
-            throw new BuildFailedException("ERROR coding issue, should be using aggressive mode");
-        }
-        boolean redirected = false;
-        List<Car> cars = carManager.getByTrainList(_train);
-        for (Car car : cars) {
-            // does the car have a final destination and the destination is this
-            // one?
-            if (car.getFinalDestination() == null ||
-                    car.getFinalDestinationTrack() == null ||
-                    !car.getFinalDestinationName().equals(car.getDestinationName())) {
-                continue;
-            }
-            Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
-            if (alternate == null || car.getDestinationTrack() != alternate) {
-                continue;
-            }
-            // is the car in a kernel?
-            if (car.getKernel() != null && !car.isLead()) {
-                continue;
-            }
-            log.debug("Car ({}) alternate track ({}) has final destination track ({}) location ({})", car.toString(),
-                    car.getDestinationTrackName(), car.getFinalDestinationTrackName(), car.getDestinationName()); // NOI18N
-            if ((alternate.isYard() || alternate.isInterchange()) &&
-                    car.checkDestination(car.getFinalDestination(), car.getFinalDestinationTrack())
-                            .equals(Track.OKAY) &&
-                    checkReserved(_train, car.getRouteDestination(), car, car.getFinalDestinationTrack(), false)
-                            .equals(Track.OKAY) &&
-                    checkDropTrainDirection(car, car.getRouteDestination(), car.getFinalDestinationTrack()) &&
-                    checkTrainCanDrop(car, car.getFinalDestinationTrack())) {
-                log.debug("Car ({}) alternate track ({}) can be redirected to final destination track ({})",
-                        car.toString(), car.getDestinationTrackName(), car.getFinalDestinationTrackName());
-                if (car.getKernel() != null) {
-                    for (Car k : car.getKernel().getCars()) {
-                        if (k.isLead()) {
-                            continue;
-                        }
-                        addLine(_buildReport, FIVE,
-                                Bundle.getMessage("buildRedirectFromAlternate", car.getFinalDestinationName(),
-                                        car.getFinalDestinationTrackName(), k.toString(),
-                                        car.getDestinationTrackName()));
-                        // force car to track
-                        k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
-                    }
-                }
-                addLine(_buildReport, FIVE,
-                        Bundle.getMessage("buildRedirectFromAlternate", car.getFinalDestinationName(),
-                                car.getFinalDestinationTrackName(),
-                                car.toString(), car.getDestinationTrackName()));
-                car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
-                redirected = true;
-            }
-        }
-        return redirected;
-    }
+
 
     /**
      * report any cars left at route location
@@ -3059,8 +2996,7 @@ public class TrainBuilderBase extends TrainCommon {
                     cEngine.setTrain(_train);
                     cEngine.setRouteLocation(rl);
                     cEngine.setRouteDestination(rld);
-                    cEngine.setDestination(track.getLocation(), track, true); // force
-                                                                              // destination
+                    cEngine.setDestination(track.getLocation(), track, RollingStock.FORCE); // force
                 }
             }
         }

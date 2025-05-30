@@ -8,10 +8,11 @@ import jmri.*;
 import jmri.jmrit.display.*;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JMenuOperator;
@@ -24,7 +25,7 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  * @author Bob Jacobsen Copyright (C) 2020
  */
 @Timeout(10)
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     private EditorFrameOperator jfo = null;
@@ -38,7 +39,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.initLayoutBlockManager();
 
         e = new LayoutEditor("Layout Editor Test Layout");
-        e.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> e.setVisible(true));
         jfo = new EditorFrameOperator(e);
 
     }

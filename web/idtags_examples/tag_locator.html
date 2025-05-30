@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>IdTags and Reporters</title>
+        <style>
+            div.aCar{display: inline-block ;  
+                  color: blue ;  
+                  margin: 2px;
+                  padding: 2px;
+            }
+                        
+            div.aLocation{  display: flex; align-items: top; }
+            
+            #HardyBlock{position: absolute; top: 500px ; left: 40px} 
+            #LaurelBlock{position: absolute; top: 160px;  left: 40px}
+            #CentralBlock{position: absolute; top: 320px; left: 500px}
+            #EricBlock{ position: absolute ; top: 160px; left: 900px}
+            #ErnieBlock{ position: absolute ; top: 500px; left: 900px}
+            #ShuntRightBlock{ position: absolute ; top: 320px; left: 900px}
+            #ShuntLeftBlock{ position: absolute ; top: 320px; left: 40px}
+
+            
+            #trackbackground{position: absolute; top: 160px; left: 30px}
+            
+            .locationTitle{font-weight: bold; font-size: larger; text-decoration: underline ;}       
+        </style>
+		
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/panel.css">
+<link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="/css/tables.css">
+
+<!-- include the jquery.jmri library and its dependencies -->
+<script src="/js/jquery-2.2.4.min.js"></script>
+<script src="/js/json2.js"></script>
+<script src="/js/jquery.websocket.js"></script>
+<script src="/js/logger.js"></script>
+<script src="/js/jquery.jmri.js"></script>
+<script src="/js/sorttable.js"></script>
+
+<!--
+    Demonstration of RFID tags on wagons moving around a layout.  
+    Uses IdTags and Reporters within JMRI.  Two Reporters for "central" area, one at each end. 
+    
+    Assumes each IdTag has a userName, optionally a PNG image for each wagon in the "icons" directory, with a name matching the userName of the IdTag.
+    
+    The Locations used are fixed in the code below. 
+    
+    Code maintains a list of items at a given location, so wagons are added to the "left" or "right" of list 
+    appropriately for location, and don't re-sort if a wagon is drawn out temporarily during a shunting move. 
+    
+        
+    Works using the jQuery mechanisms into the JMRI webserver, and requires JMRI 5.7.6 or later.  Recommend JMRI 5.10 or later.  
+    Thanks to Steve Todd for technical guidance, and in adding a few features to JMRI 5.7.6 to make this possible. 
+    
+    author and file copyright  Nigel Cliffe,  January-April 2025.
+    
+-->
+
+<script type="text/javascript">
+    var jmri = null;
+    
+    //  parameters for customising behaviour
+    
+    const carImages = 1 ;   //  add images column if this has value=1  Images in subfolder "icons/"  
+    var carImage = "" ;  // default value is empty string, if carImages=1, then set in function below.
+    
+    //get the URL details to set variables for behaviour of page
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(urlSearchParams.entries());
+    const pagePath = window.location.pathname; 
+    const arrayOfParams = Object.keys(params) ;
+ 
+    //  constants containing HTML elements used to construct page
+    const divCarName = "<div class='carName'>" ;  
+    
+    //  initialise the variables used by the Javascript later on
+ 
+    var locations = [{name:"LeftYard (Laurel)", cars:[] }, 
+                        {name:"LeftYard (Hardy)", cars:[] }, 
+                        {name:"Central", cars:[] }, 
+                        {name:"RightYard (Eric)", cars:[] }, 
+                        {name:"RightYard (Ernie)", cars:[] } ,
+                        {name:"LeftYard (Headshunt and Loco Spur)", cars:[]},
+                        {name:"RightYard (Headshunt and Loco Spur)", cars:[]}    
+                    ] ;  // Note location "Central" is an oddball case, with two reporters (LeftYard and RightYard) associated with it, see code below.
+    var theReporters = [] ; // collection of reporters.  Used to retrieve the reporter 'user name' rather than 'system name'
+    
+    var direction1 = ["LeftYard (Hardy)","LeftYard (Laurel)", "LeftYard (Headshunt and Loco Spur)", "RightYard"];  //  Locations which are "push" or "unshift" to add an element. 
+                
+
+
+    function addCarToLocation(loopCount, data, arrayDirection) {
+        var theObj = {"name": data.userName };
+        if (arrayDirection == 1) { locations[loopCount].cars.push(theObj);  //  push or unshift based on "arrayDirection" of the location. 
+           } else { locations[loopCount].cars.unshift(theObj);
+        }
+    }
+    
+    function redrawLocationHTML () {
+        locations.forEach(myLoc => {
+            var tempHTML = "";   //  the HTML we're creating. 
+            myLoc.cars.forEach(myCar => {
+                var carClass = "aCar " ;
+                if (carImages) {    //  carImages can be 0 or 1  
+                     carImage = "<img src='icons/" + myCar.name + ".png'>" ;
+                } 
+                tempHTML = tempHTML + "<div class='" + carClass + "'>" + carImage + divCarName + myCar.name + "</td><td></div></div>" ;  
+            }) 
+            document.getElementById(myLoc.name).innerHTML = tempHTML ;  //  rewrite the HTML for the location
+        })
+    }
+    
+    
+    //  After the document has loaded, call this to start doing things
+    $(document).ready(function () {
+        // once the document is loaded, assign a $.JMRI object to the jmri variable and overload the function train(name, state, data)        
+        jmri = $.JMRI({
+            // when the JMRI websocket has completed initialization, call this
+            hello: function (data) {
+                // jmri.log("in hello: data=" + JSON.stringify(data).substr(0, 880) + "..." );
+                jmri.getList("reporters"); 
+                jmri.getList("idTag");  // unclear why singular (idTag) rather than Plural (idTags), yet calls the function idTags - may be a bug inside JMRI ?
+            },
+            
+            reporters: function (data) {
+                theReporters = data ;   // create object "theReporters" which is used later to extract usernames rather than system names. 
+            },
+            
+            idTags: function (data) {
+              //  jmri.log("in idTags: data= " + JSON.stringify(data).substr(0, 580) + "...");
+              //  subscribe to each idTag in the "data" array...
+                data.forEach(myTag => { ;  
+                        // jmri.log("requesting listener for tag name: " + myTag.data.name ) ; 
+                        jmri.getObject("idTag", myTag.data.name); 
+                })
+            },
+            
+            idTag: function (name, state, data) {
+                // jmri.log("in idTag: data= " + JSON.stringify(data).substr(0, 580) + "...");
+                // Typical tag data looks like:   {"name":"ID04532A2A655580",   "userName":"Min 007",   "comment":null,
+                //           "properties":[],  "state":3,  "reporter":"IRPepper_1-1",  "time":"2025-01-04T20:13:44.118+00:00"   }
+                
+                var newLoc = "" ;
+                
+                theReporters.forEach(myReporter => {   //  go around the set theReporters, to match against the reporter system name in the "data"
+                    if(myReporter.data.name == data.reporter) {
+                        newLoc = myReporter.data.userName ;   //  newLoc = userName of the Reporter which matches the reporter against the idTag
+                    }
+                })
+                                
+                var arrayDirection = 0 ;  // takes value 0 or 1, depending on push or shift to add item to array. 
+                if (direction1.includes(newLoc)) { arrayDirection = 1 ; } else { arrayDirection = 0 ; }
+                
+                // change the newLoc name of the LeftYard and RightYard to a single place of "Central", the above arrayDirection achieves the "push/unshift" addition of elements
+                if (newLoc == "LeftYard" || newLoc == "RightYard") { newLoc ="Central"; }
+                
+                // jmri.log(newLoc); 
+                var loopCount = 0;
+                locations.forEach(myLoc => {
+                    //jmri.log("in locations loop " + myLoc.name + " " + arrayDirection);
+                    if (myLoc.name == newLoc) {
+                        var isNewCar = true ;   // looking whether myCar is already in myLoc, only add if it is new here.
+                        // jmri.log("locations, looking at cars here: " + JSON.stringify(myLoc).substr(0,400));
+                        myLoc.cars.forEach(myCar => {
+                            if(myCar.name == data.userName) { isNewCar = false ;}  // myCar already exists here, so it is not new.
+                        })
+                        if (isNewCar) {
+                            //jmri.log("is a new car: " + name);
+                            addCarToLocation(loopCount, data, arrayDirection);
+                        }
+                    } else {   //  for every other location, if myCar is there, it should be removed as it has moved elsewhere.
+                        //  locations[loopCount].cars  is an array.
+                        var tempArray = [] ; 
+                        myLoc.cars.forEach(myCar => {
+                            if(myCar.name == data.userName) { //jmri.log("remove car: " + name ) ;
+                            } else { tempArray.push(myCar);  // this is ok, its just rebuilding the array minus one item
+                            }
+                        })
+                        locations[loopCount].cars = tempArray ;  // replace the details of the specific location in the array "locations"
+                    }
+                    loopCount = loopCount + 1; 
+                })
+                // jmri.log( "locations : " +  JSON.stringify(locations).substr(0, 1180)   );
+                redrawLocationHTML();   //  With an update complete, now redraw the HTML
+            },
+            
+            // all messages call console(), so use it for debugging
+            console: function (originalData) {
+                var data = JSON.parse(originalData);
+                // jmri.log("in console: data=" + JSON.stringify(data).substr(0, 80) + "...");
+            }                    
+        });
+        
+        // trigger the initial connection to the JMRI server
+        jmri.connect();
+    
+    });
+
+</script>
+
+
+
+    </head>
+    <body>
+        
+	<div class="jumbotron">
+	   <div class="container">
+                <div class="row vertical-align">
+                    <div id="pageTitleRow" class="col-md-6">
+                        <h1 class="title text-capitalize">IdTags and Reporters </h1>
+                    </div>
+                    <div id="filter-text" class="col-md-6">
+                        <!-- filter text will go here -->
+                    </div>
+                </div>                    
+	   </div>
+	</div>
+		
+
+
+    <div class="container">
+            <div id="train-summary">
+                <span id="train-status"></span>
+				<ul>
+				               
+				</ul>
+			</div>
+              <div id="all_tables">
+        <img src="icons/track.png" id="trackbackground">
+            <div id="locationsDiv">
+                <div id="HardyBlock">
+                    <span class="locationTitle">Hardy</span>
+                    <div id="LeftYard (Hardy)" class="aLocation">
+                        Hardy here
+                    </div>
+                </div>
+                <div id="ShuntLeftBlock">
+                    <span class="locationTitle">Shunt</span>
+                    <div id="LeftYard (Headshunt and Loco Spur)" class="aLocation">
+                        Left Shunt Here
+                    </div>
+                </div>
+                <div id="LaurelBlock">
+                    <span class="locationTitle">Laurel</span>
+                    <div id="LeftYard (Laurel)" class="aLocation">
+                        Laurel here
+                    </div>
+                </div>
+                <div id="CentralBlock">
+                    <span class="locationTitle">Central</span>
+                    <div id="Central" class="aLocation">
+                        Central Transfer here
+                    </div>
+                </div>
+                <div id="EricBlock">
+                    <span class="locationTitle">Eric</span>
+                    <div id="RightYard (Eric)" class="aLocation">
+                        Eric here
+                    </div>
+                </div>
+                <div id="ShuntRightBlock">
+                    <span class="locationTitle">Shunt</span>
+                    <div id="RightYard (Headshunt and Loco Spur)" class="aLocation">
+                        Right Shunt Here
+                    </div>
+                </div>
+                <div id="ErnieBlock">
+                    <span class="locationTitle">Ernie</span>
+                    <div id="RightYard (Ernie)" class="aLocation">
+                        Ernie here
+                    </div>
+                </div>
+            </div><!-- locationsDiv -->
+
+        </div><!-- id="all_tables" -->
+        
+        <p></p>
+    </div><!-- /container -->
+        
+        
+        
+
+
+        
+    </body>
+</html>

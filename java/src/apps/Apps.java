@@ -478,7 +478,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected String line2() {
-        return "http://jmri.org/";
+        return "https://jmri.org/";
     }
 
     protected String line3() {
