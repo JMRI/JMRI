@@ -194,7 +194,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         });
 
         add(_pane1);
-        _pane1.setVisible(true);
+        ThreadingUtil.runOnGUI( () ->  _pane1.setVisible(true) );
 
         tabbedPane.addChangeListener((ChangeEvent e) -> {
             userViewChanged();

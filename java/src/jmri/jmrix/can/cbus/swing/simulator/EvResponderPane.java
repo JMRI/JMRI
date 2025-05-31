@@ -2,14 +2,13 @@ package jmri.jmrix.can.cbus.swing.simulator;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.text.DefaultFormatter;
+
 import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
 import jmri.util.swing.ComboBoxToolTipRenderer;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.JSpinnerUtil;
 
 /**
  * Pane for viewing and setting simulated network objects.
@@ -20,39 +19,35 @@ import org.slf4j.LoggerFactory;
  * @since 4.15.2
  */
 public class EvResponderPane extends JPanel {
-    
+
     private final CbusEventResponder _evr;
-    private JComboBox<String> _selectMode;
-    private int _mode;
-    private ArrayList<String> tooltips;
-    private JSpinner _spinner;
-    
+
     public EvResponderPane( CbusEventResponder evr) {
         super();
-        
+
         _evr = evr;
         if ( _evr != null ){
             init();
         }
-        
+
     }
-    
+
     private void init() {
         
-        _mode = _evr.getMode();
+        int _mode = _evr.getMode();
         
         JLabel _nodeLabel = new JLabel("<html><h3>" + Bundle.getMessage("CbusNode") + " : </h3></html>");
         _nodeLabel.setToolTipText(Bundle.getMessage("simNodeSelect"));
     
-        _selectMode = new JComboBox<>();
+        JComboBox<String> _selectMode = new JComboBox<>();
         _selectMode.setEditable(false);
         
         ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
         _selectMode.setRenderer(renderer);
     
-        tooltips = new ArrayList<>();
+        ArrayList<String> tooltips = new ArrayList<>();
         String getSelected="";
-        
+
         for (int i = 0; i < _evr.evModes.size(); i++) {
             String option = _evr.evModes.get(i);
             _selectMode.addItem(option);
@@ -61,7 +56,7 @@ public class EvResponderPane extends JPanel {
                 getSelected = option;
             }
         }
-        
+
         _selectMode.setSelectedItem(getSelected);
         _selectMode.addActionListener ((ActionEvent e) -> {
             String chosen = (String)_selectMode.getSelectedItem();
@@ -75,35 +70,33 @@ public class EvResponderPane extends JPanel {
             }
         });
         renderer.setTooltips(tooltips);
-    
-        _spinner = new JSpinner(new SpinnerNumberModel(_evr.getNode(), -1, 65535, 1));
+
+        JSpinner _spinner = new JSpinner(new SpinnerNumberModel(_evr.getNode(), -1, 65535, 1));
         JSpinner.NumberEditor editor = new JSpinner.NumberEditor(_spinner, "#");
         _spinner.setEditor(editor);
-        JFormattedTextField field = (JFormattedTextField) editor.getComponent(0);
-        DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
-        formatter.setCommitsOnValidEdit(true);
+        JSpinnerUtil.setCommitsOnValidEdit(_spinner, true);
         _spinner.addChangeListener((ChangeEvent e) -> {
             int minmax = (Integer) _spinner.getValue();
             log.debug("value {}",minmax);
             _evr.setNode(minmax);
         });
         _spinner.setToolTipText(Bundle.getMessage("simNodeSelect"));
-    
+
         DirectionPane dp = new DirectionPane(_evr);
-    
+
         JPanel topPane = new JPanel();
         topPane.add(_selectMode);
         topPane.add(_nodeLabel);
         topPane.add(_spinner);
-    
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEtchedBorder());
-    
+
         add(topPane);
         add(dp);
 
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(EvResponderPane.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EvResponderPane.class);
 
 }
