@@ -86,7 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>updated the "Notes" page for the BDL716's "Roster Entry".</li>
             </ul>
 
         <h4>Maple</h4>
@@ -662,4 +662,3 @@
                 has been updated to the current 1.2025.2 version.</li>
             <li>Fixed a bug where Dark Mode would fail due to a missing library.</li>
         </ul>
-
