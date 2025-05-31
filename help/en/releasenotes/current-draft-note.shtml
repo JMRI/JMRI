@@ -542,7 +542,12 @@
                 known states.<br />
                 The existing script <strong>InitAllTurnoutsSensors.py</strong>
                 would override sensor Active and turnout Thrown states.</li>
-            <li></li>
+            <li>Upgrade YetAnotherAutoTrain.py (YAAT) to version 3.3.  There are two new statements.
+                <ul>
+                    <li>Wait for memory &lt;memory name&gt; value to change</li>
+                    <li>If value for memory &lt;memory name&gt; is &lt;eq | ne | lt | gt | le | ge&gt; &lt;value&gt;</li>
+                </ul>
+            </li>
         </ul>
 
     <h3>Signals</h3>
