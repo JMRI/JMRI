@@ -1498,7 +1498,7 @@ public class Track extends PropertyChangeSupport {
             return ROAD + " (" + rs.getRoadName() + ")";
         }
         // now determine if there's enough space for the rolling stock
-        int length = rs.getTotalLength();
+        int rsLength = rs.getTotalLength();
         // error check
         try {
             Integer.parseInt(rs.getLength());
@@ -1527,7 +1527,7 @@ public class Track extends PropertyChangeSupport {
             }
             // check for car in kernel
             if (car.isLead()) {
-                length = car.getKernel().getTotalLength();
+                rsLength = car.getKernel().getTotalLength();
             }
             if (!isLoadNameAndCarTypeAccepted(car.getLoadName(), car.getTypeName())) {
                 log.debug("Car ({}) load ({}) not accepted at location ({}, {})", rs.toString(), car.getLoadName(),
@@ -1539,32 +1539,33 @@ public class Track extends PropertyChangeSupport {
         if (Engine.class.isInstance(rs)) {
             Engine eng = (Engine) rs;
             if (eng.isLead()) {
-                length = eng.getConsist().getTotalLength();
+                rsLength = eng.getConsist().getTotalLength();
             }
         }
         if (rs.getTrack() != this &&
                 rs.getDestinationTrack() != this &&
-                (getUsedLength() + getReserved() + length) > getLength()) {
+                (getUsedLength() + getReserved() + rsLength) > getLength()) {
             // not enough track length check to see if track is in a pool
-            if (getPool() != null && getPool().requestTrackLength(this, length)) {
+            if (getPool() != null && getPool().requestTrackLength(this, rsLength)) {
                 return OKAY;
             }
             // ignore used length option?
-            if (checkPlannedPickUps(length)) {
+            if (checkPlannedPickUps(rsLength)) {
                 return OKAY;
             }
-            // The code assumes everything is fine with the track if the Length issue is returned.
             // Is rolling stock too long for this track?
-            if ((getLength() < length && getPool() == null) ||
-                    (getPool() != null && getPool().getTotalLengthTracks() < length)) {
+            if ((getLength() < rsLength && getPool() == null) ||
+                    (getPool() != null && getPool().getTotalLengthTracks() < rsLength)) {
                 return Bundle.getMessage("capacityIssue",
-                        CAPACITY, length, Setup.getLengthUnit().toLowerCase(), getLength());
+                        CAPACITY, rsLength, Setup.getLengthUnit().toLowerCase(), getLength());
             }
+
+            // The code assumes everything is fine with the track if the Length issue is returned.
             log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(),
                     getLocation().getName(), getName()); // NOI18N
 
             return Bundle.getMessage("lengthIssue",
-                    LENGTH, length, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength());
+                    LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength());
         }
         return OKAY;
     }
