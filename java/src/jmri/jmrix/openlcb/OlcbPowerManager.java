@@ -81,11 +81,15 @@ public final class OlcbPowerManager extends AbstractPowerManager<CanSystemConnec
             pc = null;
         }
  
-        onEventTableEntryHolder.release();
-        onEventTableEntryHolder = null;
+        if (onEventTableEntryHolder != null) {
+            onEventTableEntryHolder.release();
+            onEventTableEntryHolder = null;
+        }
         
-        offEventTableEntryHolder.release();
-        offEventTableEntryHolder = null;
+        if (offEventTableEntryHolder != null) {
+            offEventTableEntryHolder.release();
+            offEventTableEntryHolder = null;
+        }
         
    }
 
