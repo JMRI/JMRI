@@ -38,7 +38,7 @@ public class SetSpeedZero extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryLocoNet.LOCONET;
     }
 

@@ -105,7 +105,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.OTHER == _base.getCategory());
     }
 
     @Test
@@ -206,7 +206,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         s1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");

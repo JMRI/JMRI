@@ -20,6 +20,6 @@ public interface AnalogExpressionFactory {
      * 
      * @return a set of entries with category and class
      */
-    Set<Map.Entry<Category, Class<? extends Base>>> getClasses();
+    Set<Map.Entry<LogixNG_Category, Class<? extends Base>>> getClasses();
     
 }
