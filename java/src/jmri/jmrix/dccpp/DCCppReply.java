@@ -307,6 +307,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     text += " Type:" + getAutomationTypeString();
                     text += " Desc:'" + getAutomationDescString() + "'";
                     break;
+                } else if (isCurrentMaxesReply()) {    
+                    text = "CurrentMaxes:" + getCurrentMaxesList();
+                    break;
+                } else if (isCurrentValuesReply()) {    
+                    text = "CurrentValues:" + getCurrentValuesList();
+                    break;
                 } else if (isClockReply()) {    
                     String hhmm = String.format("%02d:%02d",
                             getClockMinutesInt() / 60,
@@ -604,6 +610,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.AUTOMATION_IDS_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.AUTOMATION_ID_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.AUTOMATION_ID_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.CURRENT_MAXES_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.CURRENT_MAXES_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.CURRENT_VALUES_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.CURRENT_VALUES_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.CLOCK_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.CLOCK_REPLY_REGEX;
                 }
@@ -1706,6 +1716,37 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
         return ids;
     }
+    public ArrayList<Integer> getCurrentMaxesList() {
+        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        if (this.isCurrentMaxesReply()) {
+            String idList = this.getValueString(1);
+            if (!idList.isEmpty()) {
+                String[] idStrings = idList.split(" ");
+                for (String idString : idStrings) {
+                    ids.add(Integer.parseInt(idString));
+                }
+            }
+        } else {
+            log.error("getCurrentMaxesList called on non-CurrentMaxesListReply message type {}", this.getOpCodeChar());
+        }
+        return ids;
+    }
+    public ArrayList<Integer> getCurrentValuesList() {
+        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        if (this.isCurrentValuesReply()) {
+            String idList = this.getValueString(1);
+            if (!idList.isEmpty()) {
+                String[] idStrings = idList.split(" ");
+                for (String idString : idStrings) {
+                    ids.add(Integer.parseInt(idString));
+                }
+            }
+        } else {
+            log.error("getCurrentValuesList called on non-CurrentValuesListReply message type {}", this.getOpCodeChar());
+        }
+        return ids;
+    }
+
 
     public String getClockMinutesString() {
         if (this.isClockReply()) {
@@ -1916,6 +1957,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isAutomationIDReply() {
         return (this.matches(DCCppConstants.AUTOMATION_ID_REPLY_REGEX));
     }
+    public boolean isCurrentMaxesReply() {
+        return (this.matches(DCCppConstants.CURRENT_MAXES_REPLY_REGEX));
+    }
+    public boolean isCurrentValuesReply() {
+        return (this.matches(DCCppConstants.CURRENT_VALUES_REPLY_REGEX));
+    }
     public boolean isClockReply() {
         return (this.matches(DCCppConstants.CLOCK_REPLY_REGEX));
     }
@@ -1956,6 +2003,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.ROSTER_ID_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.AUTOMATION_IDS_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.AUTOMATION_ID_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.CURRENT_MAXES_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.CURRENT_VALUES_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_IMPL_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_DEF_DCC_REPLY_REGEX)) ||

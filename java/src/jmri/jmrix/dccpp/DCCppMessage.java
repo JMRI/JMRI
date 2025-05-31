@@ -299,6 +299,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     myRegex = DCCppConstants.AUTOMATION_IDS_REGEX;
                 } else if ((match(toString(), DCCppConstants.AUTOMATION_ID_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.AUTOMATION_ID_REGEX;
+                } else if ((match(toString(), DCCppConstants.CURRENT_MAXES_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.CURRENT_MAXES_REGEX;
+                } else if ((match(toString(), DCCppConstants.CURRENT_VALUES_REGEX, "ctor")) != null) {
+                    myRegex = DCCppConstants.CURRENT_VALUES_REGEX;
                 } else if ((match(toString(), DCCppConstants.CLOCK_REQUEST_TIME_REGEX, "ctor")) != null) { //<JC>
                     myRegex = DCCppConstants.CLOCK_REQUEST_TIME_REGEX;
                 } else if ((match(toString(), DCCppConstants.CLOCK_SET_REGEX, "ctor")) != null) {
@@ -588,6 +592,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
                     break;
                 } else if (isAutomationIDMessage()) {    
                     text = "Request details for AutomationID " + getAutomationIDString();
+                    break;
+                } else if (isCurrentMaxesMessage()) {    
+                    text = "Request list of Current Maximums";
+                    break;
+                } else if (isCurrentValuesMessage()) {    
+                    text = "Request list of Current Values";
                     break;
                 } else if (isClockRequestTimeMessage()) {    
                     text = "Request clock update from CS";
@@ -958,6 +968,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
     public boolean isAutomationIDMessage() {
         return (this.match(DCCppConstants.AUTOMATION_ID_REGEX) != null);
+    }
+    public boolean isCurrentMaxesMessage() {
+        return (this.match(DCCppConstants.CURRENT_MAXES_REGEX) != null);
+    }
+    public boolean isCurrentValuesMessage() {
+        return (this.match(DCCppConstants.CURRENT_VALUES_REGEX) != null);
     }
     public boolean isClockRequestTimeMessage() {
         return (this.match(DCCppConstants.CLOCK_REQUEST_TIME_REGEX) != null);
@@ -1967,6 +1983,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public static DCCppMessage makeAutomationIDMsg(int id) {
         DCCppMessage m = makeMessage(DCCppConstants.AUTOMATION_IDS + " " + id); //<JA 123>
         m.myRegex = DCCppConstants.AUTOMATION_ID_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeCurrentMaxesMsg() {
+        DCCppMessage m = makeMessage(DCCppConstants.CURRENT_MAXES); // <JG>
+        m.myRegex = DCCppConstants.CURRENT_MAXES_REGEX;
+        m._nDataChars = m.toString().length();
+        return (m);
+    }
+    public static DCCppMessage makeCurrentValuesMsg() {
+        DCCppMessage m = makeMessage(DCCppConstants.CURRENT_VALUES); // <JI>
+        m.myRegex = DCCppConstants.CURRENT_VALUES_REGEX;
         m._nDataChars = m.toString().length();
         return (m);
     }

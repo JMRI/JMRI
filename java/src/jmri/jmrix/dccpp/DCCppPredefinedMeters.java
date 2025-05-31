@@ -38,7 +38,11 @@ public class DCCppPredefinedMeters implements DCCppListener {
         updateTask = new MeterUpdateTask(10000, 10000) {
             @Override
             public void requestUpdateFromLayout() {
-                tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
+                if (tc.getCommandStation().isCurrentListSupported()) {
+                    tc.sendDCCppMessage(DCCppMessage.makeCurrentValuesMsg(), DCCppPredefinedMeters.this);
+                } else {
+                    tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
+                }
             }
         };
 
@@ -49,8 +53,14 @@ public class DCCppPredefinedMeters implements DCCppListener {
 
         updateTask.initTimer();
 
+        //NOTE: since we may not have the version back yet, send the old AND new requests below
+        
         //request one 'c' reply to set up the meters
         tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), DCCppPredefinedMeters.this);
+
+        // send <=> to get track list and <JG> to get current maximums
+        tc.sendDCCppMessage(DCCppMessage.makeTrackManagerRequestMsg(), DCCppPredefinedMeters.this);
+        tc.sendDCCppMessage(DCCppMessage.makeCurrentMaxesMsg(), DCCppPredefinedMeters.this);
     }
 
     public void setDCCppTrafficController(DCCppTrafficController controller) {
@@ -65,6 +75,39 @@ public class DCCppPredefinedMeters implements DCCppListener {
     @Override
     public void message(DCCppReply r) {
 
+        if (r.isCurrentMaxesReply()) {
+            //create a meter for each Track TODO: ignore duplicate jGs
+            for (int t = 0; t <= r.getCurrentMaxesList().size(); t = t+1) {
+                Meter newMeter;
+                String sysName = systemPrefix + beanType + "_Track_" + t;
+                double maxValue = r.getCurrentMaxesList().get(t);
+                log.debug("Adding new current meter '{}'", sysName);
+                newMeter = new DefaultMeter.DefaultCurrentMeter(
+                        sysName, jmri.Meter.Unit.Milli, -1, maxValue, 1.0, updateTask);
+                //store meter by incoming name for lookup later
+                meters.put(sysName, newMeter);
+                InstanceManager.getDefault(MeterManager.class).register(newMeter);
+            }            
+            return;
+        }
+        
+        if (r.isCurrentValuesReply()) {
+            //update the meter for each Track
+            for (int t = 0; t <= r.getCurrentValuesList().size(); t = t+1) {
+                String sysName = systemPrefix + beanType + "_Track_" + t;
+                //set the newValue for the meter
+                Meter meter = meters.get(sysName);
+                double meterValue = r.getCurrentValuesList().get(t);
+                log.debug("Setting value for '{}' to {}" , sysName, meterValue);
+                try {
+                    meter.setCommandedAnalogValue(meterValue);
+                } catch (JmriException e) {
+                    log.error("exception thrown when setting meter '{}' value {}", sysName, meterValue, e);
+                }
+            }            
+            return;
+        }
+        
         //bail if other message types received
         if (!r.isCurrentReply() && !r.isMeterReply()) return;
 

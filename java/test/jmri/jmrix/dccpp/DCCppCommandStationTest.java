@@ -218,6 +218,37 @@ public class DCCppCommandStationTest {
     }
 
     @Test
+    public void testIsCurrentListSupported() {
+        //added at 4.2.20
+        DCCppCommandStation c = new DCCppCommandStation();
+        DCCppReply r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-4.3.0 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue("v4.2.20+ supports the Current lists", c.isCurrentListSupported());
+
+        r = DCCppReply.parseDCCppReply(
+                "iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertFalse("< v4.2.20 does not support the Current lists", c.isCurrentListSupported());
+
+        r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-3.1.7 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertFalse("< v4.2.20 does not support the Current lists", c.isCurrentListSupported());
+
+        r = DCCppReply.parseDCCppReply(
+                "iDCC-EX V-5.5.15 / MEGA / EX8874 G-devel-202503022043Z");
+        c.setCommandStationInfo(r);
+        log.debug("Version: {}", c.getVersion());
+        Assert.assertTrue("v4.2.20+ supports the Current lists", c.isCurrentListSupported());
+
+
+    }
+
+    @Test
     public void testSetBaseStationTypeString() {
         DCCppCommandStation c = new DCCppCommandStation();
         c.setStationType("MEGA_4.3");
