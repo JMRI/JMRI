@@ -10,7 +10,6 @@ import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
-import jmri.jmrit.logixng.implementation.Bundle;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
 
