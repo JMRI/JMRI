@@ -29,7 +29,7 @@ global instanceList
 
 instanceList = []
 
-class RunDispatcherMaster():
+class RunDispatcherMaster(jmri.jmrit.automat.AbstractAutomaton ):
 
     def __init__(self):
         global g
@@ -96,9 +96,7 @@ class RunDispatcherMaster():
         if "glb_reset_all_trains" not in globals():
             glb_reset_all_trains = True     # first time round delete all memory variables
 
-        if glb_reset_all_trains == True:
-            StopMaster().remove_train_values()
-            StopMaster().remove_all_trains_from_trains_allocated()
+        # print "glb_reset_all_trains", glb_reset_all_trains
 
         #set default values of buttons
         sensors.getSensor("Express").setKnownState(INACTIVE)
@@ -121,3 +119,9 @@ class RunDispatcherMaster():
         if 'stored_simulate' in globals():
             if stored_simulate == ACTIVE:
                 sensors.getSensor("simulateSensor").setKnownState(ACTIVE)
+
+        self.waitMsec(2000)   #wait for panel to load, it may have train values
+        if glb_reset_all_trains == True:
+            # print "removing train values"
+            StopMaster().remove_train_values()
+            # StopMaster().remove_all_trains_from_trains_allocated()

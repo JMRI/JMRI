@@ -14,6 +14,8 @@ from java.awt import Toolkit
 from java.awt.event import ActionListener
 import time
 
+programmatic_update = False
+
 class CreateAndShowGUI5(TableModelListener):
 
     def __init__(self, class_ResetButtonMaster, route_name, param_scheduled_start, \
@@ -196,6 +198,8 @@ class CreateAndShowGUI5(TableModelListener):
 
     class CustomEditor(DefaultCellEditor):
         global add_row_columns_displayed_gbl
+        global programmatic_update
+
         def __init__(self, all_locations, all_actions, model, class_CreateAndShowGUI5):
             super(DefaultCellEditor, self).__init__(JComboBox())
             self.all_locations = all_locations
@@ -337,12 +341,14 @@ class CreateAndShowGUI5(TableModelListener):
         self.completeTablePanel()
 
     def update_journey_time_action(self, e):
+        global programmatic_update
         # we need to update the journey times (with existing values) so that the update can take place
         # in the TableListener routines
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
         for row in range(len(self.model.data)):
             value = self.model.getValueAt(row, journey_time_col)
             if value is not None:
+                programmatic_update = False    # so it updates!
                 self.model.setValueAt(value, row, journey_time_col)
 
     def add_row_action(self, e):
@@ -606,15 +612,18 @@ class CreateAndShowGUI5(TableModelListener):
 class MyModelListener5(TableModelListener):
 
     def __init__(self, class_CreateAndShowGUI5, class_ResetButtonMaster):
+        global programmatic_update
         self.class_CreateAndShowGUI5 = class_CreateAndShowGUI5
         self.class_ResetButtonMaster = class_ResetButtonMaster
         self.cancel = False
         self.logLevel = 0
         self.i = 0
+        programmatic_update = False
+        self.mode = "none"
 
     def tableChanged(self, e):
         self.i +=1
-
+        global programmatic_update
         global trains_allocated
         row = e.getFirstRow()
         column = e.getColumn()
@@ -631,52 +640,105 @@ class MyModelListener5(TableModelListener):
                                     if ".py" not in routelocation.getName()]
         if row in routelocations_rows_list:
             if column == duration_sec_col:
-                if row != self.model.find_row_first_location():
-                    duration = str(self.calc_duration_from_duration_sec(row))
-                    self.model.setValueAt(duration, row, duration_col)
-            elif column == duration_col:     #trains
-                # when duration is clicked
-                # 1) calculate the relevant departure
-                if row != self.model.find_row_first_location():
-                    departure = self.calc_departure_time(row)
-                    self.model.setValueAt(departure, row, departure_time_col)
+                # print "updating duration_sec_col", self.mode
 
-                # 2) Calculate the duration in secs (from fast minutes
+                # print "PROGRAMMATIC UPDATE", programmatic_update
+                # print "self.mode", self.mode
+
+                self.save_value_to_operations(row, duration_sec_col)
+
+                mode_on_entry = programmatic_update
+                if self.mode == "forwards" or programmatic_update == False:
+                    programmatic_update == True
+                    self.mode = "forwards"
+                    # print "calculate_duration_from_duration_sec forwards"
+                    # update duration
+                    if row != self.model.find_row_first_location():
+                        duration = str(self.calc_duration_from_duration_sec(row))
+                        self.model.setValueAt(duration, row, duration_col)
+                    # update departure time
+                    if row != self.model.find_row_first_location():
+                        departure = self.calc_departure_time(row)
+                        self.setValueAt_programmatically(departure, row, departure_time_col)
+                    programmatic_update == False
+
+                elif self.mode == "backwards" or programmatic_update == False:
+                    # calculate journey time from wait time and duration_sec
+                    programmatic_update == True
+                    self.mode = "backwards"
+                    if row != self.model.find_row_first_location():
+                        # print "backwards calculate_journey_time_from_duration_sec_and_wait_time"
+                        journey_time = self.calculate_journey_time_from_duration_sec_and_wait_time(row)
+                        # print "journey time", journey_time
+                        self.setValueAt_programmatically(journey_time, row, journey_time_col)
+                        self.save_value_to_operations(row, journey_time_col)
+                    programmatic_update == False
+
+                # update subsequent rows if user updates
+                if mode_on_entry == False:
+                    self.update_subsequent_rows(row)
+
+            elif column == duration_col:     #trains
+                # print
+                # print "we have updated duration_col mode =", self.mode
+                # 1) Calculate the duration in secs (from fast minutes
+                if self.mode == "backwards":
                     duration_sec = self.calc_duration_sec_from_duration(row)
+                    # print "updating duration_sec", duration_sec
                     existing_val = self.model.getValueAt(row, duration_sec_col)
                     if existing_val != duration_sec:
-                        self.model.setValueAt(duration_sec, row, duration_sec_col)
-                    self.save_value_to_operations(row, duration_sec_col)
-
-                # 2) departure sequence will be triggered
-                # see sequence below
-                # class_CreateAndShowGUI5.save()
+                        self.setValueAt_programmatically(duration_sec, row, duration_sec_col)
+                        self.save_value_to_operations(row, duration_sec_col)
 
             elif column == departure_time_col:       # sections
+                # print "departure_time_col set mode backwards", "programmatic_update", programmatic_update
+
+                # update subsequent rows only if first row
+                if row == self.model.find_row_first_location():
+                    self.update_subsequent_rows(row)
+                    return
+
+                # if we are calculating from duration_sec we have set programmatic_update to true
+                if programmatic_update == True:
+                    # update subsequent rows
+                    self.update_subsequent_rows(row)
+                    return
+
+                # only done if user updates
+                self.mode = "backwards"
                 # when departure is clicked
                 # a) calculate the relevant duration
                 if row != self.model.find_row_first_location():
                     duration = self.calculate_duration_from_current_and_prev_departure_times(row)
+                    # print "duration", duration
                     current_duration = self.model.getValueAt(row, duration_col)
+                    # print "current_duration", current_duration, "duration", duration
                     if duration != current_duration:
                         self.model.setValueAt(duration, row, duration_col)
-                    # class_CreateAndShowGUI5.save()
 
-                # b) touch the durations later
-                next_row = self.model.find_row_next_location(row)
-                if next_row == None:  #if we are not at end of list
-                    try:
-                        value = self.model.getValueAt(next_row, duration_col)
-                        self.model.setValueAt(value, next_row, duration_col)
-                    except:
-                        pass
-                    self.update_departure_time_col(row)
+                # update subsequent rows
+                self.update_subsequent_rows(row)
+
             # elif column == delete_col:
                 # done below so can delete actions
             elif column == journey_time_col or column == wait_time_col:
+
+                if programmatic_update == True: return
+
+                # only done if user updates
+                # print "journey_time_col set mode forwards"
+                self.mode = "forwards"
                 if row != self.model.find_row_first_location():
                     my_duration = self.calc_duration_sec_from_journey_time_and_wait_time(row)
                     self.model.setValueAt(my_duration, row, duration_sec_col)
+                    # print "set value"
+
+                    self.save_value_to_operations(row, journey_time_col)
+                    self.save_value_to_operations(row, wait_time_col)
+                    self.save_value_to_operations(row, duration_sec_col)
+
+                # update subsequent rows
+                self.update_subsequent_rows(row)
 
             elif column == stop_sensor_col:
                 self.save_value_to_operations(row, stop_sensor_col)
@@ -733,20 +795,56 @@ class MyModelListener5(TableModelListener):
 
         class_CreateAndShowGUI5.save()    # save everything when the table is changed
 
+    def update_subsequent_rows(self, current_row):
+
+        [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+        global programmatic_update
+
+        # calculates forwards and backwards if programmatic_update False (see tableChanged duration_sec_col)
+        programmatic_update = False
+        if self.model.route is None : print "************ self.model.route is None H **********************"
+        routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
+                                    for routelocation in self.model.route.getLocationsBySequenceList() \
+                                    if ".py" not in routelocation.getName()]
+
+        for row in routelocations_rows_list:
+            if row > current_row:
+                # trigger the update command by touching the element
+                value = self.model.getValueAt(row, duration_sec_col)
+                self.model.setValueAt(value, row, duration_sec_col)
+                break
+
     def save_value_to_operations(self, row, col):
         value = self.model.getValueAt(row, col)
-        [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
-        if self.model.route is None : print "************ self.model.route is None I **********************"
+        if self.model.route is None :
+            print "************ self.model.route is None I **********************"
+            return
+        # get routeLocation
         routeLocationList = self.model.route.getLocationsBySequenceList()
         routeLocation = routeLocationList[row]
 
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+
+        if col == journey_time_col:
+            self.class_CreateAndShowGUI5.set_value_in_comment(routeLocation, value, "journey_time")
+
+        if col == wait_time_col:
+            self.class_CreateAndShowGUI5.set_value_in_comment(routeLocation, value, "wait_time")
 
         if col == duration_sec_col:
             self.class_CreateAndShowGUI5.set_value_in_comment(routeLocation, value, "duration_sec")
 
         if col == stop_sensor_col:
             self.class_CreateAndShowGUI5.set_value_in_comment(routeLocation, value, "stopMode")
+
+
+    def setValueAt_programmatically(self, value, row, col) :
+        global programmatic_update
+        programmatic_update = True   # inhibit triggering further updates
+        self.model.setValueAt(value, row, col)
+        programmatic_update = False
+
+
 
     def update_departure_time_col(self, current_row):
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
@@ -762,6 +860,20 @@ class MyModelListener5(TableModelListener):
                 self.model.setValueAt(value, row, departure_time_col)
                 break
 
+    def update_duration_sec_col(self, current_row):
+        # print "update_duration_sec_col"
+        [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+        if self.model.route is None : print "************ self.model.route is None H **********************"
+        routelocations_rows_list = [routelocation.getSequenceNumber()-1 \
+                                    for routelocation in self.model.route.getLocationsBySequenceList() \
+                                    if ".py" not in routelocation.getName()]
+
+        for row in routelocations_rows_list:
+            if row > current_row:
+                # trigger the update command by touching the element
+                value = self.model.getValueAt(row, duration_sec_col)
+                self.model.setValueAt(value, row, duration_sec_col)
+                break
 
     def calculate_duration_from_current_and_prev_departure_times(self, row):
         # calculate duration from current and previous departure times
@@ -774,6 +886,7 @@ class MyModelListener5(TableModelListener):
         # time and prev_time are in HH:MM
         hh, _, mm = current_departure_time.partition(":")
         hhprev, _, mmprev = previous_departure_time.partition(":")
+        # print "mmprev", mmprev, "mm", mm
         duration = int(hh) * 60 - int(hhprev) * 60 + int(mm) - int(mmprev)
         return str(duration)
 
@@ -806,7 +919,7 @@ class MyModelListener5(TableModelListener):
                  scheduling_margin_gbl, scheduling_in_operation_gbl] = scheduler_master.read_list()
             # convert to fast_minutes
             current_duration_sec = (float(current_duration) / float(str(fast_clock_rate))) * 60.0  # fast minutes
-
+            # print "calc_duration_sec_from_duration", "current_duration_sec", current_duration_sec, "current_duration", current_duration
         except:
             # use the existing value
             current_duration_sec = self.model.getValueAt(row, duration_sec_col)
@@ -827,6 +940,8 @@ class MyModelListener5(TableModelListener):
             # round up to the next multiple of current_duration_sec
             secs_in_fast_minute = int(1.0 / float(str(fast_clock_rate)) * 60.0)
             current_duration_sec1 = (current_duration_sec // secs_in_fast_minute) * secs_in_fast_minute
+            # print ("current_journey_time", current_journey_time, "current_wait_time", current_wait_time, \
+            #        "secs_in_fast_minute", secs_in_fast_minute, "current_duration_sec1", current_duration_sec1, "current_duration_sec", current_duration_sec)
             if current_duration_sec1 != current_duration_sec:
                 current_duration_sec = current_duration_sec1 + secs_in_fast_minute
         except:
@@ -834,21 +949,35 @@ class MyModelListener5(TableModelListener):
             current_duration_sec = self.model.getValueAt(row, duration_sec_col)
         return str(int(current_duration_sec))
 
+    def calculate_journey_time_from_duration_sec_and_wait_time(self, row):
+        global fast_clock_rate
+
+        [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+
+        try:
+            [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
+            current_duration_sec = int(self.model.getValueAt(row, duration_sec_col))    # secs
+            current_wait_time = int(self.model.getValueAt(row, wait_time_col))          # secs
+
+            current_journey_time = current_duration_sec - current_wait_time
+
+        except:
+            # use the existing value
+            current_duration_sec = self.model.getValueAt(row, duration_sec_col)
+        return str(int(current_journey_time))
+
     def calc_duration_from_duration_sec(self,row):
         global fast_clock_rate
 
         try:
             [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
             current_duration_sec = self.model.getValueAt(row, duration_sec_col)          # secs
-            # print "===== current_duration_sec", current_duration_sec, "fast_clock_rate", fast_clock_rate, "row", row
 
             # convert to fast_minutes
             current_duration = (float(current_duration_sec) * int(str(fast_clock_rate))) / 60.0  # fast minutes
-            # print "===== current_duration", current_duration, "row", row
         except:
             # use the existing value
             current_duration = self.model.getValueAt(row, duration_col)
-            # print "in except"
         return str(int(current_duration))
 
 
@@ -944,6 +1073,7 @@ class MyTableModel5 (DefaultTableModel):
     def populate(self, items_to_put_in_dropdown):
         # print "populate"
         global scheduled_start
+        global programmatic_update
         for row in reversed(range(len(self.data))):
             self.data.pop(row)
         # append all trains to put in dropdown
@@ -996,7 +1126,9 @@ class MyTableModel5 (DefaultTableModel):
                 duration_sec_array.append(duration_sec)
                 stop_at_stop_sensor = None
             i += 1
+            programmatic_update = True
             self.data.append([location, journey_time, wait_time, duration_sec, duration, departure_time, False,  False, False, stop_at_stop_sensor])
+            programmatic_update = False
 
         # update the first location which is a station with the time of the schedule start
         [locations_col, journey_time_col, wait_time_col, duration_sec_col, duration_col, departure_time_col, add_loc_col, add_action_col, delete_col, stop_sensor_col] = [0, 1, 2, 3, 4, 5, 6, 7,8,9]
@@ -1010,10 +1142,6 @@ class MyTableModel5 (DefaultTableModel):
             if ".py" not in location:    # omit actions
                 self.setValueAt(duration_sec_array[i], i, duration_sec_col)
             i += 1
-
-
-
-
 
     def get_route_location_stop_mode(self, station_to_name):
         route_location = self.route.getLastLocationByName(station_to_name)
@@ -1120,6 +1248,9 @@ class MyTableModel5 (DefaultTableModel):
         if col == stop_sensor_col:
             if row not in stop_sensor_present_list:
                 return False
+
+        if col == duration_col:
+            return False
         return True
 
     def stop_sensor_present(self, row, prev_station, last_station):
