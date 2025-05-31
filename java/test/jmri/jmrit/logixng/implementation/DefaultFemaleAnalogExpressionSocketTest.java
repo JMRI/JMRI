@@ -92,14 +92,14 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionLocalVariable.class);
         classes.add(jmri.jmrit.logixng.expressions.AnalogExpressionMemory.class);
         classes.add(jmri.jmrit.logixng.expressions.TimeSinceMidnight.class);
-        map.put(Category.ITEM, classes);
+        map.put(LogixNG_Category.ITEM, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.AnalogFormula.class);
-        map.put(Category.COMMON, classes);
+        map.put(LogixNG_Category.COMMON, classes);
 
         classes = new ArrayList<>();
-        map.put(Category.OTHER, classes);
+        map.put(LogixNG_Category.OTHER, classes);
 
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));

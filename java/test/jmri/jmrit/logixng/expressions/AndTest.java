@@ -2,9 +2,10 @@ package jmri.jmrit.logixng.expressions;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG_Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -301,7 +302,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.COMMON == _base.getCategory());
     }
 
     // Test the methods connected(FemaleSocket) and getExpressionSystemName(int)
@@ -357,7 +358,7 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.COMMON;
+        _category = LogixNG_Category.COMMON;
         _isExternal = false;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N

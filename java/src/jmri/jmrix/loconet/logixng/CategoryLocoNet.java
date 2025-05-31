@@ -2,7 +2,7 @@ package jmri.jmrix.loconet.logixng;
 
 import java.util.List;
 
-import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG_Category;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
@@ -10,7 +10,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * 
  * @author Daniel Bergqvist Copyright 2020
  */
-public final class CategoryLocoNet extends Category {
+public final class CategoryLocoNet extends LogixNG_Category {
     
     /**
      * A item on the layout, for example turnout, sensor and signal mast.
@@ -24,8 +24,8 @@ public final class CategoryLocoNet extends Category {
     
     public static void registerCategory() {
         // We don't want to add these classes if we don't have a LocoNet connection
-        if (hasLocoNet() && !Category.values().contains(LOCONET)) {
-            Category.registerCategory(LOCONET);
+        if (hasLocoNet() && !LogixNG_Category.values().contains(LOCONET)) {
+            LogixNG_Category.registerCategory(LOCONET);
         }
     }
     

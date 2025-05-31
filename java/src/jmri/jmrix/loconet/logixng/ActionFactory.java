@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import jmri.jmrit.logixng.Category;
+import jmri.Category;
 import jmri.jmrit.logixng.DigitalActionFactory;
 import jmri.jmrit.logixng.DigitalActionBean;
 

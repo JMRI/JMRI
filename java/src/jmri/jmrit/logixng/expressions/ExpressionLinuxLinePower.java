@@ -57,8 +57,8 @@ public class ExpressionLinuxLinePower extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.LINUX;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.LINUX;
     }
 
     private List<String> getLinuxPowerSupplies() throws IOException, NoPowerSuppliesException {

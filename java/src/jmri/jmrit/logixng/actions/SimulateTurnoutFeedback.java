@@ -24,7 +24,7 @@ public class SimulateTurnoutFeedback extends AbstractDigitalAction
 
     public SimulateTurnoutFeedback(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
-        super(sys, user, Category.OTHER);
+        super(sys, user, LogixNG_Category.OTHER);
     }
 
     @Override

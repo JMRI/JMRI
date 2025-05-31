@@ -56,7 +56,7 @@ public class ExpressionSlotUsage extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryLocoNet.LOCONET;
     }
 

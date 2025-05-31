@@ -130,8 +130,8 @@ public class StringFormula extends AbstractStringExpression implements FemaleSoc
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /** {@inheritDoc} */

@@ -227,7 +227,7 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryDisplay.DISPLAY;
     }
 

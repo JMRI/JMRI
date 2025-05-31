@@ -216,7 +216,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.FLOW_CONTROL == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.FLOW_CONTROL == _base.getCategory());
     }
 
     @Test
@@ -392,7 +392,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.OTHER;
+        _category = LogixNG_Category.OTHER;
         _isExternal = false;
 
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N

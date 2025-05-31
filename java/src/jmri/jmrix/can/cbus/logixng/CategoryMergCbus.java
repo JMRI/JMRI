@@ -3,7 +3,7 @@ package jmri.jmrix.can.cbus.logixng;
 import java.util.ArrayList;
 import java.util.List;
 
-import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG_Category;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
@@ -11,7 +11,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  *
  * @author Daniel Bergqvist Copyright 2025
  */
-public final class CategoryMergCbus extends Category {
+public final class CategoryMergCbus extends LogixNG_Category {
 
     /**
      * A item on the layout, for example turnout, sensor and signal mast.
@@ -25,8 +25,8 @@ public final class CategoryMergCbus extends Category {
 
     public static void registerCategory() {
         // We don't want to add these classes if we don't have a Cbus connection
-        if (hasCbus() && !Category.values().contains(CBUS)) {
-            Category.registerCategory(CBUS);
+        if (hasCbus() && !LogixNG_Category.values().contains(CBUS)) {
+            LogixNG_Category.registerCategory(CBUS);
         }
     }
 

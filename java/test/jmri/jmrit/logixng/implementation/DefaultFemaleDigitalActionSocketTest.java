@@ -118,7 +118,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.EnableLogixNG.class);
         classes.add(jmri.jmrit.logixng.actions.ProgramOnMain.class);
         classes.add(jmri.jmrit.logixng.actions.TriggerRoute.class);
-        map.put(Category.ITEM, classes);
+        map.put(LogixNG_Category.ITEM, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionTimer.class);
@@ -127,7 +127,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.DoStringAction.class);
         classes.add(jmri.jmrit.logixng.actions.ExecuteDelayed.class);
         classes.add(jmri.jmrit.logixng.actions.DigitalMany.class);
-        map.put(Category.COMMON, classes);
+        map.put(LogixNG_Category.COMMON, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.Break.class);
@@ -142,7 +142,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.RunOnce.class);
         classes.add(jmri.jmrit.logixng.actions.Sequence.class);
         classes.add(jmri.jmrit.logixng.actions.TableForEach.class);
-        map.put(Category.FLOW_CONTROL, classes);
+        map.put(LogixNG_Category.FLOW_CONTROL, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.display.logixng.ActionAudioIcon.class);
@@ -170,7 +170,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.SimulateTurnoutFeedback.class);
         classes.add(jmri.jmrit.logixng.actions.WebBrowser.class);
         classes.add(jmri.jmrit.logixng.actions.WebRequest.class);
-        map.put(Category.OTHER, classes);
+        map.put(LogixNG_Category.OTHER, classes);
 
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));

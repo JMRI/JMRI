@@ -191,8 +191,8 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 
     /** {@inheritDoc} */

@@ -583,7 +583,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initLogixNGManager();
         jmri.jmrit.logixng.NamedBeanType.reset();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");

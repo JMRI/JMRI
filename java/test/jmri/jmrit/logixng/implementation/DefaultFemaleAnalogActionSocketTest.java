@@ -90,14 +90,14 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         List<Class<? extends Base>> classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.AnalogActionLightIntensity.class);
         classes.add(jmri.jmrit.logixng.actions.AnalogActionMemory.class);
-        map.put(Category.ITEM, classes);
+        map.put(LogixNG_Category.ITEM, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.AnalogMany.class);
-        map.put(Category.COMMON, classes);
+        map.put(LogixNG_Category.COMMON, classes);
 
         classes = new ArrayList<>();
-        map.put(Category.OTHER, classes);
+        map.put(LogixNG_Category.OTHER, classes);
 
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));

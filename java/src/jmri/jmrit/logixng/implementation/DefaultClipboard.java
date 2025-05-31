@@ -189,7 +189,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
     }
 
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         throw new UnsupportedOperationException("Not supported");
     }
 

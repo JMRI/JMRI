@@ -404,7 +404,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");

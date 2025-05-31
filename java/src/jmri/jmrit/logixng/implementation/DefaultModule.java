@@ -163,8 +163,8 @@ public class DefaultModule extends AbstractBase
     }
 
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 /*
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {

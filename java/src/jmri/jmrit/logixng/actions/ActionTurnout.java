@@ -27,7 +27,7 @@ public class ActionTurnout extends AbstractDigitalAction
 
     public ActionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
-        super(sys, user, Category.ITEM);
+        super(sys, user, LogixNG_Category.ITEM);
     }
 
     @Override

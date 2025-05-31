@@ -138,8 +138,8 @@ public class ActionLight extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     private int getNewData(SymbolTable symbolTable) throws JmriException {

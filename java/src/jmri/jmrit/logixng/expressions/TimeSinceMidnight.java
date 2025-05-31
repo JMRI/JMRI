@@ -42,8 +42,8 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     public void setType(Type type) {

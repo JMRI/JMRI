@@ -87,16 +87,16 @@ public class DefaultFemaleDigitalBooleanActionSocketTest extends FemaleSocketTes
 
         List<Class<? extends Base>> classes = new ArrayList<>();
 //        classes.add(jmri.jmrit.logixng.actions.ActionLight.class);
-        map.put(Category.ITEM, classes);
+        map.put(LogixNG_Category.ITEM, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.DigitalBooleanMany.class);
         classes.add(jmri.jmrit.logixng.actions.DigitalBooleanLogixAction.class);
-        map.put(Category.COMMON, classes);
+        map.put(LogixNG_Category.COMMON, classes);
 
         classes = new ArrayList<>();
 //        classes.add(jmri.jmrit.logixng.actions.ShutdownComputer.class);
-        map.put(Category.OTHER, classes);
+        map.put(LogixNG_Category.OTHER, classes);
 
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));

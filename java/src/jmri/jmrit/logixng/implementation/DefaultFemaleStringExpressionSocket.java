@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
+import jmri.*;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.FemaleStringExpressionSocket;
 import jmri.jmrit.logixng.MaleStringExpressionSocket;
@@ -23,13 +21,13 @@ public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
     public DefaultFemaleStringExpressionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleStringExpressionSocket;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String evaluate() throws JmriException {
@@ -39,19 +37,19 @@ public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
             return "";
         }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean getTriggerOnChange() {
         throw new UnsupportedOperationException("Not supported");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void setTriggerOnChange(boolean triggerOnChange) {
         throw new UnsupportedOperationException("Not supported");
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {

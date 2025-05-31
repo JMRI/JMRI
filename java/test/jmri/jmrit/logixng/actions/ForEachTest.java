@@ -109,7 +109,7 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.FLOW_CONTROL == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.FLOW_CONTROL == _base.getCategory());
     }
 
     @Test
@@ -248,7 +248,7 @@ public class ForEachTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.OTHER;
+        _category = LogixNG_Category.OTHER;
         _isExternal = false;
 
         _memory = InstanceManager.getDefault(MemoryManager.class).provideMemory("IM1");  // NOI18N

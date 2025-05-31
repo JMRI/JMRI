@@ -475,10 +475,13 @@
               been added. It's available in the category <strong>Merg Cbus</strong>
               if there is a Merg Cbus connection.</li>
           <li>The semicolon has been added as field delimiter for CSV files used to create
-          LogixNG Tables.</li>
+              LogixNG Tables.</li>
           <li>Where Used support has been added to the Formula actions and expressions.  This
-          is a text based search using the item's system and user names.  False positive matches are
-          possible.</li>
+              is a text based search using the item's system and user names.  False positive matches are
+              possible.</li>
+          <li>The class <strong>jmri.jmrit.logixng.Category</strong> has been split into
+              <strong>jmri.Category</strong> and <strong>jmri.jmrit.logixng.LogixNG_Category</strong>.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>

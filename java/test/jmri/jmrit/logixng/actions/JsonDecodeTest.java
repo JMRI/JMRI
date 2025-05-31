@@ -139,7 +139,7 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.OTHER == _base.getCategory());
     }
 
     @Test
@@ -197,7 +197,7 @@ public class JsonDecodeTest extends AbstractDigitalActionTestBase {
 
         _memoryResult2 = InstanceManager.getDefault(MemoryManager.class).provide("IM_RESULT_2");
 
-        _category = Category.OTHER;
+        _category = LogixNG_Category.OTHER;
 
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         _conditionalNG = new DefaultConditionalNGScaffold("IQC1", "A conditionalNG");  // NOI18N;

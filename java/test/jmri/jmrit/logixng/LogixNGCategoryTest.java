@@ -15,9 +15,9 @@ public class LogixNGCategoryTest {
 
     @Test
     public void testEnum() {
-        Assert.assertTrue("ITEM".equals(Category.ITEM.name()));
-        Assert.assertTrue("COMMON".equals(Category.COMMON.name()));
-        Assert.assertTrue("OTHER".equals(Category.OTHER.name()));
+        Assert.assertTrue("ITEM".equals(LogixNG_Category.ITEM.name()));
+        Assert.assertTrue("COMMON".equals(LogixNG_Category.COMMON.name()));
+        Assert.assertTrue("OTHER".equals(LogixNG_Category.OTHER.name()));
     }
 
     // The minimal setup for log4J

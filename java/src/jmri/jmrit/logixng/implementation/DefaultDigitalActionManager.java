@@ -8,15 +8,14 @@ import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.InvokeOnGuiThread;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.util.LoggingUtil;
 import jmri.util.ThreadingUtil;
 
 /**
  * Class providing the basic logic of the DigitalActionManager interface.
- * 
+ *
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
@@ -26,25 +25,25 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
     private MaleSocket _lastRegisteredBean;
 
-    
+
     public DefaultDigitalActionManager() {
         InstanceManager.getDefault(LogixNG_Manager.class).registerManager(this);
-        
+
         for (DigitalActionFactory actionFactory : ServiceLoader.load(DigitalActionFactory.class)) {
             actionFactory.init();
         }
-        
+
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }
-        
+
         for (DigitalActionFactory actionFactory : ServiceLoader.load(DigitalActionFactory.class)) {
             actionFactory.getActionClasses().forEach((entry) -> {
 //                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
-        
+
         for (MaleDigitalActionSocketFactory maleSocketFactory : ServiceLoader.load(MaleDigitalActionSocketFactory.class)) {
             _maleSocketFactories.add(maleSocketFactory);
         }
@@ -67,7 +66,7 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
     public MaleSocket getLastRegisteredMaleSocket() {
         return _lastRegisteredBean;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleDigitalActionSocket registerBean(MaleDigitalActionSocket maleSocket) {
@@ -75,7 +74,7 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
         _lastRegisteredBean = maleSocket;
         return bean;
     }
-    
+
     /**
      * Remember a NamedBean Object created outside the manager.
      * This method creates a MaleDigitalActionSocket for the action.
@@ -85,25 +84,25 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
     @Override
     public MaleDigitalActionSocket registerAction(@Nonnull DigitalActionBean action)
             throws IllegalArgumentException {
-        
+
         if (action instanceof MaleDigitalActionSocket) {
             throw new IllegalArgumentException("registerAction() cannot register a MaleDigitalActionSocket. Use the method register() instead.");
         }
-        
+
         // Check if system name is valid
         if (this.validSystemNameFormat(action.getSystemName()) != NameValidity.VALID) {
             log.warn("SystemName {} is not in the correct format", action.getSystemName() );
             throw new IllegalArgumentException(String.format("System name is invalid: %s", action.getSystemName()));
         }
-        
+
         // Keep track of the last created auto system name
         updateAutoNumber(action.getSystemName());
-        
+
         // save in the maps
         MaleDigitalActionSocket maleSocket = createMaleActionSocket(action);
         return registerBean(maleSocket);
     }
-    
+
     @Override
     public int getXMLOrder() {
         return LOGIXNG_DIGITAL_ACTIONS;
@@ -138,7 +137,7 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
         deregister(x);
         x.dispose();
     }
-    
+
     static volatile DefaultDigitalActionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
@@ -146,7 +145,7 @@ public class DefaultDigitalActionManager extends AbstractBaseManager<MaleDigital
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
-        
+
         if (_instance == null) {
             _instance = new DefaultDigitalActionManager();
         }

@@ -28,7 +28,7 @@ public abstract class AbstractBaseTestBase {
     public final String TREE_INDENT = "   ";
     protected Base _base;
     protected MaleSocket _baseMaleSocket;
-    protected Category _category;
+    protected LogixNG_Category _category;
     protected boolean _isExternal;
 
 
@@ -1043,7 +1043,7 @@ public abstract class AbstractBaseTestBase {
         }
 
         @Override
-        public Category getCategory() {
+        public LogixNG_Category getCategory() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

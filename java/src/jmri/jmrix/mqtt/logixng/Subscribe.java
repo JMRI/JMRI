@@ -93,8 +93,8 @@ public class Subscribe extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return CategoryMqtt.MQTT;
     }
 
     /** {@inheritDoc} */

@@ -32,8 +32,8 @@ public class Exit
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.FLOW_CONTROL;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.FLOW_CONTROL;
     }
 
     /** {@inheritDoc} */

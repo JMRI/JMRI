@@ -6,7 +6,7 @@ import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG_Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
@@ -52,8 +52,8 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
     
     /** {@inheritDoc} */

@@ -186,7 +186,7 @@ public class WindowManagement extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryDisplay.DISPLAY;
     }
 

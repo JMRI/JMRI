@@ -127,8 +127,8 @@ public class ExpressionEntryExit extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     private String getNewState() throws JmriException {
