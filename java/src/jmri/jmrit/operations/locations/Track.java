@@ -295,6 +295,10 @@ public class Track extends PropertyChangeSupport {
         newTrack.setShipLoadOption(getShipLoadOption());
         newTrack.setTrainDirections(getTrainDirections());
         newTrack.setTypeNames(getTypeNames());
+
+        newTrack.setDisableLoadChangeEnabled(isDisableLoadChangeEnabled());
+        newTrack.setQuickServiceEnabled(isQuickServiceEnabled());
+        newTrack.setHoldCarsWithCustomLoadsEnabled(isHoldCarsWithCustomLoadsEnabled());
         return newTrack;
     }
 

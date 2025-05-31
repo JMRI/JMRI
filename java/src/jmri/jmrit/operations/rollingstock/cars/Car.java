@@ -97,6 +97,7 @@ public class Car extends RollingStock {
         car.setColor(getColor());
         car.setLength(getLength());
         car.setLoadName(getLoadName());
+        car.setWeightTons(getWeightTons());
         car.setReturnWhenEmptyLoadName(getReturnWhenEmptyLoadName());
         car.setReturnWhenLoadedLoadName(getReturnWhenLoadedLoadName());
         car.setNumber(getNumber());
