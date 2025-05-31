@@ -150,6 +150,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setTurnoutManager(
                 getTurnoutManager());
 
+        InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
+
         InstanceManager.setStringIOManager(
                 getStringIOManager());
 
@@ -247,6 +249,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
+        if (type.equals(jmri.PowerManager.class)) {
+            return true;
+        }
         if (type.equals(jmri.ReporterManager.class)) {
             return true;
         }
@@ -318,6 +323,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
+        }
+        if (T.equals(jmri.PowerManager.class)) {
+            return (T) getPowerManager();
         }
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
@@ -413,6 +421,18 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             turnoutManager = new OlcbTurnoutManager(adapterMemo);
         }
         return turnoutManager;
+    }
+
+    protected OlcbPowerManager powerManager;
+
+    public OlcbPowerManager getPowerManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (powerManager == null) {
+            powerManager = new OlcbPowerManager(adapterMemo);
+        }
+        return powerManager;
     }
 
     protected OlcbSensorManager sensorManager;
