@@ -86,7 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>The FollowSE*c.py script was broken at some unknown point in the past.
+                    The script is updated in this release to fix that.</li>
             </ul>
 
         <h4>Maple</h4>
