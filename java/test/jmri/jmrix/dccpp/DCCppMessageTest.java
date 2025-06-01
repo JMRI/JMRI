@@ -552,6 +552,10 @@ public class DCCppMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor string", "Request details for AutomationID 145", msg.toMonitorString());
         msg = DCCppMessage.makeAutomationIDMsg(145);
         Assert.assertEquals("Monitor string", "Request details for AutomationID 145", msg.toMonitorString());
+        msg = DCCppMessage.makeCurrentMaxesMsg();
+        Assert.assertEquals("Monitor string", "Request list of Current Maximums", msg.toMonitorString());
+        msg = DCCppMessage.makeCurrentValuesMsg();
+        Assert.assertEquals("Monitor string", "Request list of Current Values", msg.toMonitorString());
         msg = new DCCppMessage("J C");
         Assert.assertEquals("Monitor string", "Request clock update from CS", msg.toMonitorString());
         msg = DCCppMessage.makeClockRequestTimeMsg();

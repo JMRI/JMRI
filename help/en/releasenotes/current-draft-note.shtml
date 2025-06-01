@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Create and update Meters for newer Current messages <JI>, <JG>, etc.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -86,7 +86,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>updated the "Notes" page for the BDL716's "Roster Entry".</li>
+                <li>The FollowSE*c.py script was broken at some unknown point in the past.
+                    The script is updated in this release to fix that.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -231,7 +232,8 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Updated the Digitrax BDL716's "Roster Entry" with better 
+                    information on its "Notes" page.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -476,6 +478,9 @@
               if there is a Merg Cbus connection.</li>
           <li>The semicolon has been added as field delimiter for CSV files used to create
           LogixNG Tables.</li>
+          <li>Where Used support has been added to the Formula actions and expressions.  This
+          is a text based search using the item's system and user names.  False positive matches are
+          possible.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -539,7 +544,12 @@
                 known states.<br />
                 The existing script <strong>InitAllTurnoutsSensors.py</strong>
                 would override sensor Active and turnout Thrown states.</li>
-            <li></li>
+            <li>Upgrade YetAnotherAutoTrain.py (YAAT) to version 3.3.  There are two new statements.
+                <ul>
+                    <li>Wait for memory &lt;memory name&gt; value to change</li>
+                    <li>If value for memory &lt;memory name&gt; is &lt;eq | ne | lt | gt | le | ge&gt; &lt;value&gt;</li>
+                </ul>
+            </li>
         </ul>
 
     <h3>Signals</h3>
