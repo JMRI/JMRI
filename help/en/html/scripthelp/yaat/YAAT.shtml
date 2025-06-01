@@ -288,6 +288,8 @@
         <dt>Wait for block &lt;block name&gt; to become &lt;occupied | unoccupied | reserved |
         free&gt;</dt>
 
+        <dt>Wait for memory &lt;memory name&gt; value to change<span class="since">since 5.11.7</span></dt>
+
         <dt>Wait for sensor &lt;sensor name&gt; to become &lt;active | inactive&gt;</dt>
 
         <dt>Wait for signal head &lt;head name&gt; to [not] show &lt;appearance name&gt; [or
@@ -329,6 +331,9 @@
 
         <dd>For information on speed names, look at the JMRI install location:
         xml/signals/signalSpeeds.xml</dd>
+
+        <dt>If value for memory &lt;memory name&gt; is &lt;eq | ne | lt | gt | le | ge&gt; &lt;value&gt;
+        <span class="since">since 5.11.7</span></dt>
 
         <dt>Else</dt>
 
