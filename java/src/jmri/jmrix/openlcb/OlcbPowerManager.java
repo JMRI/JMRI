@@ -17,6 +17,7 @@ import org.openlcb.implementations.VersionedValueListener;
  */
 public final class OlcbPowerManager extends AbstractPowerManager<CanSystemConnectionMemo> {
 
+    // The following are the Well Known power events defined by the Standard
     OlcbAddress addrOn  = new OlcbAddress(new EventID("01.00.00.00.00.00.FF.FE"));
     OlcbAddress addrOff = new OlcbAddress(new EventID("01.00.00.00.00.00.FF.FF"));
 
@@ -36,7 +37,6 @@ public final class OlcbPowerManager extends AbstractPowerManager<CanSystemConnec
         int flags = PC_DEFAULT_FLAGS;
         log.debug("Power Manager Flags: default {} overridden {} listen bit {}", PC_DEFAULT_FLAGS, flags,
                     BitProducerConsumer.LISTEN_EVENT_IDENTIFIED);
-        dispose();
 
         pc = new BitProducerConsumer(iface, addrOn.toEventID(),
                 addrOff.toEventID(), flags);
