@@ -124,6 +124,9 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         if (r == null) {
             return null;  // no file history object, not recording
         }
+        if (jmri.jmrit.XmlFile.writeConstantFiles) {
+            return null;  // writing of file history is suppressed
+        }
         Element e = historyElement(r, defaultDepth);
 
         // add one more element for this store

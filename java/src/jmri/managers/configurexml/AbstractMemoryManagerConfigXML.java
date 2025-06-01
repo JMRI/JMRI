@@ -59,19 +59,21 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 storeCommon(m, elem);
 
                 // store value if non-null; null values omitted
-                Object obj = m.getValue();
-                if (obj != null) {
-                    if (obj instanceof RosterEntry) {
-                        String valueClass = obj.getClass().getName();
-                        String value = ((RosterEntry) obj).getId();
-                        elem.setAttribute("value", value);
-                        elem.setAttribute("valueClass", valueClass);
-                    } else {
-                        String value = obj.toString();
-                        elem.setAttribute("value", value);
+                if (! (jmri.jmrit.XmlFile.writeConstantFiles && mName.equals("IMCURRENTTIME")) ) {
+                    Object obj = m.getValue();
+                    if (obj != null) {
+                        if (obj instanceof RosterEntry) {
+                            String valueClass = obj.getClass().getName();
+                            String value = ((RosterEntry) obj).getId();
+                            elem.setAttribute("value", value);
+                            elem.setAttribute("valueClass", valueClass);
+                        } else {
+                            String value = obj.toString();
+                            elem.setAttribute("value", value);
+                        }
                     }
                 }
-
+                
                 log.debug("store Memory {}", mName);
                 memories.addContent(elem);
             }
