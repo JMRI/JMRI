@@ -187,9 +187,8 @@ public class TrainManifest extends TrainCommon {
                     // last location in the train's route, print train terminates message
                     if (!hadWork) {
                         newLine(fileOut);
-                    } else if (Setup.isPrintHeadersEnabled() ||
-                            !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-                        printHorizontalLine(fileOut, IS_MANIFEST);
+                    } else {
+                        printHorizontalLine3(fileOut, IS_MANIFEST);
                     }
                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringTrainTerminates(),
@@ -257,8 +256,8 @@ public class TrainManifest extends TrainCommon {
                     !rl.getLocation().getCommentWithColor().equals(Location.NONE)) {
                 newLine(fileOut, rl.getLocation().getCommentWithColor());
             }
-        } else if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-            printHorizontalLine(fileOut, IS_MANIFEST);
+        } else {
+            printHorizontalLine3(fileOut, IS_MANIFEST);
         }
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
             int emptyCars = train.getNumberEmptyCarsInTrain(rl);

@@ -108,7 +108,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     <li><a href="#AddLogo">Add Logo</a></li>
                     <li><a href="#MisplacedCarsComment">Misplaced Cars Comment</a></li>
                     <li><a href="#HazardousComment">Hazardous Comment</a></li>
-                    <li><a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a></li>
+                    <li><a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a>
+                      <ul>
+                        <li>Edit Manifest Header Text</li>
+                        <li>Edit Manifest Text</li>
+                        <li>Edit Switch List Text</li>
+                      </ul></li>
                   </ul></li>
 
                 <li><a href="#BuildReportDetails">Build Report Options</a></li>
@@ -5528,19 +5533,22 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4 id="TrainSchedules">Train Schedules</h4>
       The Train Schedules window allows you to define which trains will run on any given day, and
       can be found under the Trains&rArr;Tools. For each day of the week, select which trains you
-      want to build. Then select which day you want by selecting the appropriate radio button. Then
-      press the "Apply" button to update the <a href="#Trains">Trains</a> "Build" checkboxes. Use
-      the "Save" button to store any changes you made to the train schedules.
+      want to build. Then select which day you want by clicking the appropriate radio button found
+      along the bottom of the window. Then press the "Apply" button to update the
+      <a href="#Trains">Trains</a> "Build" checkboxes. Use the "Save" button to store any changes
+      you made to the train schedules.
       <p>
         <a href="images/TrainSchedules.png"><img src="images/TrainSchedules.png"
           alt="Operations Train Train Schedules"></a>
       </p>
 
-      <p>To change which day of the week is active, select the appropriate radio button and then
+      <h5>Active Train Schedule</h5>
+      <p>To change which day of the week is active, click the appropriate radio button and then
         press the "Activate" button. The day selected is then used by your schedules (Delivery and
         Pickup) when building trains. For each day of the week, you can add a comment. Enter the
-        comment, then press the "Save" button. You can also add or change the days of the week by
-        using the "Edit Train Schedule" window found under "Tools". You can change the order by
+        comment, then press the "Save" button. You can also add, delete or replace the days of the
+        week by using the "Edit Train Schedule" window found under "Tools". For example, you could
+        create "Morning", "Afternoon" and "Evening" train schedules. You can change the order by
         dragging the column with your mouse pointer. Press the "Save" button to complete your
         changes.</p>
 
