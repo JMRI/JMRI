@@ -233,7 +233,8 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Updated the Digitrax BDL716's "Roster Entry" with better 
+                    information on its "Notes" page.</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -673,4 +674,3 @@
                 has been updated to the current 1.2025.2 version.</li>
             <li>Fixed a bug where Dark Mode would fail due to a missing library.</li>
         </ul>
-
