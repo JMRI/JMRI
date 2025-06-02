@@ -51,7 +51,7 @@ public class TrackerTableActionTest {
 
         ControlPanelEditor panel = (ControlPanelEditor) JmriJFrame.getFrame("Indicator Demo 1 Editor");
         assertNotNull(panel);
-        panel.setVisible(false);
+        ThreadingUtil.runOnGUI( () -> panel.setVisible(false));
 
         TrackerTableAction tta = InstanceManager.getDefault(TrackerTableAction.class);
         assertNotNull(tta, "TrackerTableAction not found");
@@ -119,7 +119,7 @@ public class TrackerTableActionTest {
 
         ControlPanelEditor panel = (ControlPanelEditor) JmriJFrame.getFrame("Indicator Demo 1 Editor");
         assertNotNull(panel);
-        panel.setVisible(false);
+        ThreadingUtil.runOnGUI( () -> panel.setVisible(false));
 
         TrackerTableAction tta = InstanceManager.getDefault(TrackerTableAction.class);
         assertNotNull(tta, "TrackerTableAction not found");
@@ -174,7 +174,7 @@ public class TrackerTableActionTest {
 
         ControlPanelEditor panel = (ControlPanelEditor) JmriJFrame.getFrame("Indicator Demo 1 Editor");
         assertNotNull(panel);
-        panel.setVisible(false);
+        ThreadingUtil.runOnGUI( () -> panel.setVisible(false));
 
         TrackerTableAction tta = InstanceManager.getDefault(TrackerTableAction.class);
         assertNotNull(tta, "TrackerTableAction not found");
