@@ -11,7 +11,6 @@ import jmri.NamedBean;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
-import jmri.jmrix.can.cbus.swing.Bundle;
 import jmri.jmrix.can.swing.CanPanel;
 import jmri.util.*;
 
