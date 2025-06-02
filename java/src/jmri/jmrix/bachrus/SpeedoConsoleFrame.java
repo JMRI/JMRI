@@ -1152,7 +1152,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      */
     @Override
     public synchronized void reply(SpeedoReply l) {  // receive a reply message and log it
-        log.debug("Speedo reply " + l.toString());
+        //log.debug("Speedo reply " + l.toString());
         count = l.getCount();
         series = l.getSeries();
         if (count > 0) {
