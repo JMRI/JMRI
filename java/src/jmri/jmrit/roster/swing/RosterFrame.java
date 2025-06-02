@@ -379,7 +379,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     boolean checkIfEntrySelected(boolean allowMultiple) {
         if ((re == null && !allowMultiple) || (this.getSelectedRosterEntries().length < 1)) {
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoSelection"));
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoSelection"));
             return false;
         }
         return true;
@@ -1331,7 +1331,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         // if failed to get programmer, tell user and stop
         if (programmer == null) {
             log.error("Identify loco called when no service mode programmer is available; button should have been disabled");
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("IdentifyError"));
             return;
         }
 
