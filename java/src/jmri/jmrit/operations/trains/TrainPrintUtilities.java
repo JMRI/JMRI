@@ -135,7 +135,7 @@ public class TrainPrintUtilities extends TrainCommon {
                     } else if (line.contains(TEXT_COLOR_END)) {
                         printingColor = false;
                         line = getTextColorString(line);
-                    } else if (!line.startsWith(TAB) && !printingColor) {
+                    } else if (!printingColor) {
                         color = null;
                     }
 
