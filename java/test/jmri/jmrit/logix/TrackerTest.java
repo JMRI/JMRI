@@ -14,7 +14,7 @@ import java.util.List;
 import jmri.util.*;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class TrackerTest {
 
     @Test
