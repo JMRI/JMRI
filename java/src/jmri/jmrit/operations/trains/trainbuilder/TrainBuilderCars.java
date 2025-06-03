@@ -1932,12 +1932,13 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         Car cloneCar = car.copy();
         cloneCar.setNumber(car.getNumber() + Car.CLONE + ++cloneCreationOrder);
         cloneCar.setClone(true);
+        // register car before setting location so the car gets logged
+        carManager.register(cloneCar);
         cloneCar.setLocation(car.getLocation(), car.getTrack(), RollingStock.FORCE);
         // for reset
         cloneCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
         cloneCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
         cloneCar.setPreviousScheduleId(car.getScheduleItemId());
-        carManager.register(cloneCar);
         if (car.getKernel() != null) {
             String kernelName = car.getKernelName() + Car.CLONE + cloneCreationOrder;
             Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
