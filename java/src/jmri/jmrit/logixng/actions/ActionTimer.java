@@ -1,6 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 
 import java.util.*;
 
