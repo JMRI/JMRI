@@ -81,9 +81,11 @@ class SimulationMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             for activeTrain in active_trains_list:
                 activeTrainName = activeTrain.getActiveTrainName()
-
                 # if train being dispatched not in train_being simulated, and train is RUNNING simulate it
-                if activeTrainName not in trains_being_simulated:   # do not want to suimulate a train already being simulated
+                if activeTrainName not in trains_being_simulated:   # do not want to simulate a train already being simulated
+                    while activeTrain.getModeText() != "AUTOMATIC":     # will be DISPATCHED if not enough time for the throttle to start
+                        # print "activeTrain.getMode()", activeTrain.getModeText()  #waiting to change to "AUTOMATIC"
+                        self.waitMsec(500)
                     if self.logLevel > 0: print "!!!!!!activeTrainName started simulation = " , activeTrain, "activeTrainName", activeTrainName,"trains_being_simulated", [train for train in trains_being_simulated]
 
                     if activeTrain.getStatus() == activeTrain.RUNNING:  #only simulate if the train is running
