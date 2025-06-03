@@ -1931,8 +1931,9 @@ class Trigger_Timetable:
                                 if last_station == station_name:
                                     station_departure_time = ""
 
-                                # make sure we don't display trains that have a departure time < current time
-                                if self.curr_time < station_departure_time_in_mins:
+                                # make sure we don't display trains that have a departure time > current time
+                                # keep departures up for 1 fast minutes after the departure time
+                                if self.curr_time - 1 < station_departure_time_in_mins:
 
                                     timetable_entry = [train_name, \
                                                        station_name , \
@@ -2211,6 +2212,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         station_from = None
         prev_station_index = 0
         for station_index, station in enumerate(self.station_list):
+            # print "station_index", station_index, "station", station, "train_to_move", train_to_move
             if self.logLevel > 0: print "self.scheduling_train", self.scheduling_train
 
             # do action if one has been requested
@@ -2259,7 +2261,8 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                         previous_time = int(round(time.time()))  # in secs
 
                     if self.scheduling_train:
-                        self.wait_for_scheduled_time(self.route, station_index, accumulated_duration)
+
+                        self.wait_for_scheduled_time(self.route, previous_station_index, accumulated_duration, train_to_move)
                         # done when we know the transit name
                         # print "__________________________Start__" + train_to_move + "___________________________________"
                         success = self.check_train_in_block_for_scheduling_margin_fast_minutes(start_block, train_to_move)
@@ -2354,7 +2357,8 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         for j in range(int(scheduling_margin_gbl)):    # try to schedule train for scheduling_margin_gbl fast minutes
             train_in_block = self.blockOccupied(start_block)
-            if train_in_block:
+            train_block_name = start_block.getValue()
+            if train_in_block and (train_block_name == train_to_move):
                 # print "--" + str(train_to_move) + " train in start block" + str(start_block.getUserName())
                 return True
             else:
@@ -2436,7 +2440,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         except ValueError:
             return ""
 
-    def wait_for_scheduled_time(self, route, row, accumulated_durations):
+    def wait_for_scheduled_time(self, route, row, accumulated_durations, train_to_move):
         global fast_clock_rate
         global timebase
         global scheduling_margin_gbl
@@ -2446,6 +2450,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
         routeLocationList = route.getLocationsBySequenceList()
         routeLocation = routeLocationList[row]
         train_comment = self.train.getComment()
+        if self.logLevel > 0: print "train_to_move", train_to_move, "routeLocation", routeLocation
         comment = routeLocation.getComment()
         # print "train_comment", train_comment, "comment", comment
         if self.logLevel > 0: print "x1"
@@ -2493,13 +2498,19 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         if self.logLevel > 0: print "station_start_time", station_start_time
         if self.logLevel > 0: print "current_time", current_time, "station_start_time", station_start_time
-        minutes_to_wait_array = [self.subtract_minutes(cm, station_start_mins) for cm in current_minutes_mod_array]
+
+        #calculate minutes to wait
+        minutes_to_wait_array = [self.subtract_minutes(station_start_mins, cm) for cm in current_minutes_mod_array]
         if self.logLevel > 0: print "minutes_to_wait_array", minutes_to_wait_array
+
         minutes_to_wait = min(minutes_to_wait_array)
         if self.logLevel > 0: print "minutes_to_wait", minutes_to_wait
+
         minutes_late = max([m-60 for m in minutes_to_wait_array]) # get the minutes late
-        if self.logLevel > 0: print "minutes_late", minutes_late
         abs_minutes_late = abs(minutes_late)
+        if self.logLevel > 0: print "minutes_late", minutes_late
+        if self.logLevel > 0: print "minutes_late", abs_minutes_late
+
         index = minutes_to_wait_array.index(minutes_to_wait)
         if abs_minutes_late < int(scheduling_margin_gbl):
             if self.logLevel > 0: print "minutes_late2", minutes_late, "scheduling_margin_gbl", scheduling_margin_gbl
@@ -2723,20 +2734,22 @@ class ScheduleTrains(jmri.jmrit.automat.AbstractAutomaton):
                                 station_from, station_to = SchedulerMaster().get_first_and_last_station(route)   # starting from beginning of route
                                 start_block = blocks.getBlock(station_from)
                                 if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
-                                train_block_name = start_block.getValue()
-                                run_route_flag = self.check_train_ok_to_start(train, train_block_name)
+                                # train_block_name = start_block.getValue()
+                                train_to_be_scheduled = train.getDescription()
+                                # this is obsolete: now checked in check_train_in_block_for_scheduling_margin_fast_minutes in run_route in class RunRoute
+                                # run_route_flag = self.check_train_ok_to_start(train, train_block_name)
                                 no_repetitions = 0
                                 if True:
                                     if "stopping" in train.getDescription():
                                         # print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", train
-                                        run_train = RunRoute(route, g.g_stopping, station_from, station_to, no_repetitions, train_block_name, \
+                                        run_train = RunRoute(route, g.g_stopping, station_from, station_to, no_repetitions, train_to_be_scheduled, \
                                                              scheduling_train = True, train = train)
                                         run_train.setName("running_route_" + routeName)
                                         instanceList.append(run_train)
                                         run_train.start()
                                     else:
                                         # print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", train
-                                        run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_block_name, \
+                                        run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_to_be_scheduled, \
                                                              scheduling_train = True, train = train)
                                         run_train.setName("running_route_" + routeName)
                                         instanceList.append(run_train)

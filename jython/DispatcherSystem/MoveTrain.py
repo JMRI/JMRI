@@ -318,12 +318,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         speech_reqd = self.speech_required_flag()
         self.announce( from_name, to_name, speech_reqd, direction, instruction)
 
-    def move(self, e, direction, instruction, train, mode="not_scheduling" ):
+    def move(self, e, direction, instruction, train_name, mode="not_scheduling" ):
         # print "move"
         if self.logLevel > 1: print "++++++++++++++++++++++++"
         if self.logLevel > 1: print e, "Target", e.getTarget()
         if self.logLevel > 1: print e, "Source", e.getSource()
-        if self.logLevel > 1: print e, "Train", train
+        if self.logLevel > 1: print e, "Train", train_name
         if self.logLevel > 1: print "++++++++++++++++++++++++"
         to_name = e.getTarget()
         from_name = e.getSource()
@@ -335,35 +335,36 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 1: print "*************calling call_dispatch**************"
         # print "calling move", train, from_name, to_name
         # print "move a"
-        result = self.call_dispatch(e, direction, train, mode)
 
-        if self.logLevel > 1: print "______________________"
+        if mode == "scheduling":
+            self.wait_till_train_stops_dispatching(train_name)  #it might be already doing a dispatch
+
+        result = self.call_dispatch(e, direction, train_name, mode)
+
+        self.set_sensor(sensor_move_name, "inactive")
         if result == True:
             # print "result from calling move is True!!", train, from_name, to_name
-            # Wait for the Active Trains List to not have the train monotored in it
-            DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-            java_active_trains_list = DF.getActiveTrainsList()
-            java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
-            for t in java_active_trains_Arraylist:
-                if self.logLevel > 1: print "t=",t,t.getActiveTrainName()
-                #active_trains_list = java.util.Arrays.asList(java_active_trains_list)
-            if self.logLevel > 1: print "!!!!!!!! train = ", train, "active_trains_list", java_active_trains_Arraylist
-            active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
-            if self.logLevel > 1: print "!!!!!!!! train = ", train, "active_trains_name_list", active_train_names_list
-            while train in active_train_names_list:
-                self.waitMsec(500)
-                # DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-                # active_trains_list = DF.getActiveTrainsList()
-                # active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
-                java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
-                active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
-                if self.logLevel > 1: print "!!!!!!!! train = ", train, "active_train_names_list", active_train_names_list
+            # Wait for the Active Trains List to not have the train we wish to start in it
+            self.wait_till_train_stops_dispatching(train_name)
             self.set_sensor(sensor_move_name, "inactive")
             if self.logLevel > 1: print ("+++++ sensor " + sensor_move_name + " inactive")
         else:
             # print "result from calling move is False!!", train, from_name, to_name
             self.set_sensor(sensor_move_name, "inactive")
         return result
+
+    def wait_till_train_stops_dispatching(self, train_name):
+        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        java_active_trains_list = DF.getActiveTrainsList()
+        java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
+        active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
+        while train_name in active_train_names_list:
+            self.waitMsec(500)
+            java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
+            active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
+
+        if self.logLevel > 1: print ("+++++ sensor " + sensor_move_name + " inactive")
+        return active_train_names_list
 
     def speech_required_flag(self):
         # print "speech_required_flag"
