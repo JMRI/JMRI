@@ -1,31 +1,28 @@
 package jmri.jmrit.conditional;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.Conditional;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
-/*
-* Tests for the ConditionalListEdit Class.
-*
-* @author Pete Crecssman Copyright (C) 2020
-*/
+/**
+ * Tests for the ConditionalListEdit Class.
+ *
+ * @author Pete Crecssman Copyright (C) 2020
+ */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class ConditionalFrameTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Conditional cond = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName("IX102C1");  // NOI18N
-        Assert.assertNotNull(cond);
+        Assertions.assertNotNull(cond);
 
         ConditionalFrame f = new ConditionalFrame("Test ConditionalCopyFrameTest", cond, null);  // NOI18N
-        Assert.assertNotNull(f);
+        Assertions.assertNotNull(f);
+        JUnitUtil.dispose(f);
     }
 
     @BeforeEach
@@ -33,9 +30,9 @@ public class ConditionalFrameTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        CreateTestObjects.createTestObjects();
     }
 
     @AfterEach
