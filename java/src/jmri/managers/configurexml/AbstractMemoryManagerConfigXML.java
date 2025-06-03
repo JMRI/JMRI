@@ -2,11 +2,14 @@ package jmri.managers.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.configurexml.JmriConfigureXmlException;
+import jmri.configurexml.LoadAndStorePreferences;
 import jmri.jmrit.roster.RosterEntry;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,8 +61,10 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 // store common part
                 storeCommon(m, elem);
 
+                var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
                 // store value if non-null; null values omitted
-                if (! (jmri.jmrit.XmlFile.writeConstantFiles && mName.equals("IMCURRENTTIME")) ) {
+                if (! (loadAndStorePreferences.isExcludeMemoryIMCURRENTTIME()
+                        && mName.equals("IMCURRENTTIME")) ) {
                     Object obj = m.getValue();
                     if (obj != null) {
                         if (obj instanceof RosterEntry) {
@@ -73,7 +78,7 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                         }
                     }
                 }
-                
+
                 log.debug("store Memory {}", mName);
                 memories.addContent(elem);
             }

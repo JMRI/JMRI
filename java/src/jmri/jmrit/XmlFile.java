@@ -11,11 +11,16 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+
 import javax.annotation.Nonnull;
 import javax.swing.JFileChooser;
+
+import jmri.InstanceManager;
+import jmri.configurexml.LoadAndStorePreferences;
 import jmri.util.FileUtil;
 import jmri.util.JmriLocalEntityResolver;
 import jmri.util.NoArchiveFileFilter;
+
 import org.jdom2.Comment;
 import org.jdom2.Content;
 import org.jdom2.DocType;
@@ -68,23 +73,7 @@ public class XmlFile {
      * files on the JMRI.org web server, but only that. </dl>
      */
     public static final String xsltLocation = "/xml/XSLT/";
- 
-    /**
-     * If true, this specifies that files should be written with as little
-     * variable information.  For example:
-     * <ul>
-     *  <li>The comment line with JMRI version and time of writing is suppressed
-     *  <li>The IMCURRENTTIME memory value (contents) is not written
-     *  <li>The file history is not written.
-     * </ul>
-     * The goal is to prevent extraneous changes in written files to that they
-     * can be more easily kept in a version control system, without merge conflicts
-     * due to that extraneous information.
-     *
-     * This is public so that it can be set and reset via a script.
-     */
-    public static boolean writeConstantFiles = false;
-    
+
     /**
      * Specify validation operations on input. The available choices are
      * restricted to what the underlying SAX Xerces and JDOM implementations
@@ -581,7 +570,8 @@ public class XmlFile {
      * @param root The root element of the document that will be written.
      */
     static public void addDefaultInfo(Element root) {
-        if (!writeConstantFiles) {
+        var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
+        if (!loadAndStorePreferences.isExcludeJmriVersion()) {
             String content = "Written by JMRI version " + jmri.Version.name()
                 + " on " + (new Date()).toString();
             Comment comment = new Comment(content);
