@@ -14,7 +14,8 @@ import jmri.configurexml.LoadAndStorePreferences;
 /**
  * Preferences panel for the shutdown options used by StoreAndCompare.
  *
- * @author Dave Sand Copyright 2022
+ * @author Dave Sand         Copyright 2022
+ * @author Daniel Bergqvist  Copyright 2025
  */
 @ServiceProvider(service = PreferencesPanel.class)
 public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesPanel {

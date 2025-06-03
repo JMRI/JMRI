@@ -10,7 +10,8 @@ import jmri.profile.ProfileUtils;
 /**
  * Preferences for Shutdown used by StoreAndCompare
  *
- * @author Dave Sand Copyright 2022
+ * @author Dave Sand         Copyright 2022
+ * @author Daniel Bergqvist  Copyright 2025
  */
 public final class LoadAndStorePreferences extends PreferencesBean implements InstanceManagerAutoDefault {
 
