@@ -12,7 +12,7 @@ import jmri.swing.PreferencesPanel;
 import jmri.configurexml.LoadAndStorePreferences;
 
 /**
- * Preferences panel for the shutdown options used by StoreAndCompare.
+ * Preferences panel for Load and store tables and panel files.
  *
  * @author Dave Sand         Copyright 2022
  * @author Daniel Bergqvist  Copyright 2025
