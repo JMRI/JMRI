@@ -129,6 +129,24 @@
      </xs:complexType>
 
 
+     <xs:complexType name="LogixNG_SelectCharsetType">
+       <xs:sequence>
+         <xs:element name="addressing" minOccurs="0" maxOccurs="1">
+           <xs:simpleType>
+             <xs:restriction base="xs:token">
+               <xs:enumeration value="Standard"/>
+               <xs:enumeration value="All"/>
+               <xs:enumeration value="UserSpecified"/>
+             </xs:restriction>
+           </xs:simpleType>
+         </xs:element>
+         <xs:element name="standardValue" type="xs:string" minOccurs="0" maxOccurs="1"/>
+         <xs:element name="allValue" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="userSpecified" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1" />
+       </xs:sequence>
+     </xs:complexType>
+
+
      <xs:complexType name="LogixNG_SelectComboBoxType">
        <xs:sequence>
          <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
@@ -147,6 +165,28 @@
        <xs:sequence>
          <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
          <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="1"/>
+         <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
+         <xs:element name="localVariable" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="formula" type="xs:string" minOccurs="0" maxOccurs="1" />
+         <xs:element name="table" type="LogixNG_SelectTableType" minOccurs="0" maxOccurs="1"/>
+       </xs:sequence>
+     </xs:complexType>
+
+
+     <xs:complexType name="LogixNG_SelectStringListType">
+       <xs:sequence>
+         <xs:element name="addressing" type="LogixNG_Addressing_Type" minOccurs="0" maxOccurs="1" />
+         
+         <xs:element name="values" minOccurs="0" maxOccurs="1">
+           <xs:complexType>
+             <xs:sequence>
+               <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+             </xs:sequence>
+           </xs:complexType>
+         </xs:element>
+         
          <xs:element name="reference" type="xs:string" minOccurs="0" maxOccurs="1" />
          <xs:element name="memory" type="beanNameType" minOccurs="0" maxOccurs="1" />
          <xs:element name="listenToMemory" type="yesNoType" minOccurs="0" maxOccurs="1" />
