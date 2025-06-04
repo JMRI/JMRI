@@ -25,7 +25,7 @@ public class DCCppInitializationManager {
 
         systemMemo = memo;
 
-        log.debug("Starting DCC++ Initialization Process");
+        log.debug("Starting DCC++/DCC-EX Initialization Process");
 
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
         systemMemo.setProgrammerManager(new DCCppProgrammerManager(new DCCppProgrammer(systemMemo.getDCCppTrafficController()), systemMemo));
@@ -50,7 +50,7 @@ public class DCCppInitializationManager {
 
         systemMemo.register();
 
-        log.info("DCC++ Initialization Complete");
+        log.info("DCC++/DCC-EX Initialization Complete");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppInitializationManager.class);
