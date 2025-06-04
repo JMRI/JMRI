@@ -134,6 +134,8 @@ import jmri.util.JmriJFrame;
                     csvTypeLabel.setText(Table.CsvType.TABBED.toString());
                 } else if (csvType.equals(Table.CsvType.COMMA)) {
                     csvTypeLabel.setText(Table.CsvType.COMMA.toString());
+                } else if (csvType.equals(Table.CsvType.SEMICOLON)) {
+                    csvTypeLabel.setText(Table.CsvType.SEMICOLON.toString());
                 } else {
                     throw new RuntimeException("unrecognized csvType");
                 }

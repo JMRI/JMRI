@@ -96,6 +96,7 @@
         <xs:restriction base="xs:token">
           <xs:enumeration value="TABBED"/>
           <xs:enumeration value="COMMA"/>
+          <xs:enumeration value="SEMICOLON"/>
         </xs:restriction>
       </xs:simpleType>
 

@@ -119,6 +119,10 @@ which checks the dates of the control files to make sure they've been updated wh
  - These provide the DarkLaf look&feel package
  - https://github.com/weisJ/darklaf
  
+##### swingx-core-1.6.5-1.jar   
+ - used by DarkLaf look&feel at runtime
+ - From https://repo1.maven.org/maven2/org/swinglabs/swingx/swingx-core/1.6.5-1/
+ 
 ##### jhall.jar
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>

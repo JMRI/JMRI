@@ -76,6 +76,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             return ""
 
     def move_between_stations(self, station_from_name, station_to_name, train_name, graph, mode = "not_scheduling"):
+        global trains
         if self.logLevel > 0: print "move_between_stations"
         if self.logLevel > 0: print "Moving from " + station_from_name + " to " + station_to_name
         i = 0
@@ -288,15 +289,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_time_to_stop_in_station(self, edge, direction):
 
-        # print "get_time_to_stop_in_station"
-
         if direction == "forward":
             filename_fwd = self.get_filename(edge, "fwd")
             trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
             station_wait_time = trainInfo_fwd.getWaitTime()
         else:
             filename_rvs = self.get_filename(edge, "rvs")
-            # print filename_rvs
             trainInfo_rvs = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_rvs)
             station_wait_time = trainInfo_rvs.getWaitTime()
         if station_wait_time != None:
@@ -320,12 +318,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         speech_reqd = self.speech_required_flag()
         self.announce( from_name, to_name, speech_reqd, direction, instruction)
 
-    def move(self, e, direction, instruction, train, mode="not_scheduling" ):
+    def move(self, e, direction, instruction, train_name, mode="not_scheduling" ):
         # print "move"
         if self.logLevel > 1: print "++++++++++++++++++++++++"
         if self.logLevel > 1: print e, "Target", e.getTarget()
         if self.logLevel > 1: print e, "Source", e.getSource()
-        if self.logLevel > 1: print e, "Train", train
+        if self.logLevel > 1: print e, "Train", train_name
         if self.logLevel > 1: print "++++++++++++++++++++++++"
         to_name = e.getTarget()
         from_name = e.getSource()
@@ -337,29 +335,17 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 1: print "*************calling call_dispatch**************"
         # print "calling move", train, from_name, to_name
         # print "move a"
-        result = self.call_dispatch(e, direction, train, mode)
 
-        if self.logLevel > 1: print "______________________"
+        if mode == "scheduling":
+            self.wait_till_train_stops_dispatching(train_name)  #it might be already doing a dispatch
+
+        result = self.call_dispatch(e, direction, train_name, mode)
+
+        self.set_sensor(sensor_move_name, "inactive")
         if result == True:
             # print "result from calling move is True!!", train, from_name, to_name
-            # Wait for the Active Trains List to not have the train monotored in it
-            DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-            java_active_trains_list = DF.getActiveTrainsList()
-            java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
-            for t in java_active_trains_Arraylist:
-                if self.logLevel > 1: print "t=",t,t.getActiveTrainName()
-                #active_trains_list = java.util.Arrays.asList(java_active_trains_list)
-            if self.logLevel > 1: print "!!!!!!!! train = ", train, "active_trains_list", java_active_trains_Arraylist
-            active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
-            if self.logLevel > 1: print "!!!!!!!! train = ", train, "active_trains_name_list", active_train_names_list
-            while train in active_train_names_list:
-                self.waitMsec(500)
-                DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
-                active_trains_list = DF.getActiveTrainsList()
-                # active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
-                java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
-                active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
-                if self.logLevel > 1: print "!!!!!!!! train = ", train, "active_train_names_list", active_train_names_list
+            # Wait for the Active Trains List to not have the train we wish to start in it
+            self.wait_till_train_stops_dispatching(train_name)
             self.set_sensor(sensor_move_name, "inactive")
             if self.logLevel > 1: print ("+++++ sensor " + sensor_move_name + " inactive")
         else:
@@ -367,19 +353,32 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.set_sensor(sensor_move_name, "inactive")
         return result
 
+    def wait_till_train_stops_dispatching(self, train_name):
+        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+        java_active_trains_list = DF.getActiveTrainsList()
+        java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
+        active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
+        while train_name in active_train_names_list:
+            self.waitMsec(500)
+            java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
+            active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
+
+        if self.logLevel > 1: print ("+++++ sensor " + sensor_move_name + " inactive")
+        return active_train_names_list
+
     def speech_required_flag(self):
         # print "speech_required_flag"
         self.sound_sensor = sensors.getSensor("soundSensor")
         if self.sound_sensor is None:
             OptionDialog().displayMessage("No sound Sensor set up")
             return None
-        sound_state = self.sound_sensor.getKnownState()
-        if self.logLevel > 1: print sound_state,ACTIVE
-        if sound_state == ACTIVE:
-            sound_flag = True
-        else:
-            sound_flag = False
-        return sound_flag
+            sound_state = self.sound_sensor.getKnownState()
+            if self.logLevel > 1: print sound_state,ACTIVE
+            if sound_state == ACTIVE:
+                sound_flag = True
+            else:
+                sound_flag = False
+            return sound_flag
 
     def call_dispatch(self, e, direction, train, mode="not_scheduling"):
         global scheduling_margin_gbl, fast_clock_rate
@@ -417,10 +416,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             # print "call_dispatch b1"
             # print "checking route is clear", from_name
             self.wait_route_is_clear(filename, from_name, train)
-        t = trains[self.train_name]   #train is train_name
+        t = trains[train]   #train is train_name
         t["allocating"] = True
 
-        if self.logLevel > 0 and self.train_name == "shunter": print "     ",
         if self.logLevel > 0: print self.train_name, "route", filename, "is clear"
         # run dispatch
         result = False
@@ -452,7 +450,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                         print "waited", iter+1, "secs, could not schedule train and gave up"
                         return result
                     else:
-                        print "waited", iter+1, "secs but could not schedule train"
+                        print "waited", iter+1, "secs but could not schedule train", train
             iter += 1
 
         #return result
@@ -500,7 +498,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         DF.dispatcherSystemSchedulingInOperation = True  # to inhibit error message when train started but not in station
         # print "DF.dispatcherSystemSchedulingInOperation", DF.dispatcherSystemSchedulingInOperation
         if mode != "not_scheduling":
-            print "--" + self.train_name + " dispatching: transit name: " + transit_name
+            print "__________________________Start__" + self.train_name + "__transit: " + transit_name
         result = DF.loadTrainFromTrainInfo(self.trainInfo, type, train_name)
         # print "loaded returning with code ", result
         if result == 0:
@@ -792,19 +790,20 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         time_train = math.max(time_now,time_last_train)
         time_to_wait = time_train - time_now
         time_last_train = time_train + 1000  #store the time this train will start
-        self.waitMsec(time_to_wait)  #make thiis train wait for 1 sec after previous train
+        self.waitMsec(time_to_wait)  #make this train wait for 1 sec after previous train
 
     def wait_route_is_clear(self, traininfoFileName, startBlockName, train):
 
-        index = 0
-        while index < 1: #requre 1 occurrences of route not occupied
-            route_is_occupied = self.check_route_is_allocated_or_occupied(traininfoFileName, startBlockName)
+        route_is_occupied = True  # occupied
+        i = 0
+        while route_is_occupied : #require 1 occurrences of route not occupied
+            i = i+1
+            route_is_occupied = \
+                self.check_route_is_allocated_or_occupied(traininfoFileName, startBlockName)
             if route_is_occupied:
-                index = 0
-                if self.logLevel > 0: print "waiting for route", traininfoFileName, "to be clear", "index", index
+                if i == 1: print train, "waiting for route", traininfoFileName, "to be clear"
                 self.waitMsec(1000)
-            else:
-                index+=1
+
 
     def check_route_is_allocated_or_occupied(self, traininfoFileName, startBlockName):
 
@@ -859,7 +858,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         #         route_is_occupied = True   # only allow one dispatch to be set up at a time else this routine does not work
         #         # we don't want to check that the route is clear, and then have an allocation take place immediately after
         
-        print "route_is_occupied state is:", route_is_occupied
+        # print "route_is_occupied state is:", route_is_occupied
         return route_is_occupied
         
     def set_route_allocated(self, traininfoFileName, startBlockName):
@@ -1143,6 +1142,10 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
                 new_length = self.od.input(msg, title, default_value)
                 engine.setLength(new_length)
 
+    def set_length0(self, new_train_name):
+        [engine,current_length] = self.get_train_length(new_train_name)
+        engine.setLength(current_length)
+
     def get_train_speed_factor(self, new_train_name):
         EngineManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.engines.EngineManager)
         engineRoad = "Set by Dispatcher System"
@@ -1184,6 +1187,11 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             new_speed_factor= self.od.input(msg, title, default_value)
             new_speed_factor = "speed factor " + new_speed_factor
             engine.setComment(new_speed_factor)
+
+    def set_speed_factor0(self, new_train_name):     # used in set several trains
+        [engine, current_speed_factor] = self.get_train_speed_factor(new_train_name)
+        new_speed_factor = "speed factor " + current_speed_factor
+        engine.setComment(new_speed_factor)
 
     def get_allocated_trains_msg(self):
         allocated_trains =[ str(train) + " in block " + str(trains[train]["edge"].getTarget()) for train in trains_allocated]
@@ -1400,6 +1408,8 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         # 3) set direction so can check direction of transit
 
         train["direction"] = train_direction
+        # print train_name, 'train["direction"]',train["direction"]
+
 
         # 4) add to allocated train list
         if str(train_name) not in trains_allocated:
@@ -2068,38 +2078,23 @@ class createandshowGUI(TableModelListener):
             train_length = self.model.data[row][length]
             train_speed_factor = self.model.data[row][speed_factor]
 
-            in_siding = False
             result = train_direction
-            if in_siding:
-                if result == "reverse":
-                    train_direction = "reverse"
-                else:
-                    train_direction = "forward"
+            if result == "forward":
+                train_direction = "reverse"
             else:
-                if result == "forward":
-                    train_direction = "reverse"
-                else:
-                    train_direction = "forward"
+                train_direction = "forward"
 
             if train_name != "" and train_name != None and block_name != "" and block_name != None:
+                if train_name not in trains_allocated:
+                    trains_allocated.append(train_name)
                 self.super.add_to_train_list_and_set_new_train_location0(train_name, block_name,
                                                 train_direction, train_length, train_speed_factor)
                 self.super.set_blockcontents(block_name, train_name)
-                [engine,current_length] = NewTrainMaster().get_train_length(train_name)
-                # engine.setLength(train_length)
-                # # [engine, current_speed_factor] = self.super.get_train_speed_factor(train_name)
-                # # current_speed_factor_str = "speed factor " + current_speed_factor
-                # engine.setComment(train_speed_factor)
-                # global trains
+                self.super.set_length0(train_name)
+                self.super.set_speed_factor0(train_name)
 
-                # if train_name not in trains:
-                #     trains[train_name] = {}
-                #     train = trains[train_name]
-                #     train["train_name"] = train_name
-                #     train["direction"] = train_direction
-                # else:
-                #     train["direction"] = train_direction
                 self.model.data.pop(row)
+
         # print "end save action"
         self.completeTablePanel()
         if self.model.getRowCount() == 0:
@@ -2317,10 +2312,12 @@ class MyTableModel (DefaultTableModel):
                 current_speed_factor_str = engine.getComment()
                 train = trains[train_name]
                 result = train["direction"]
+                print "train[direction] loading to put in dropdown", result
                 if result == "forward":
                     train_direction = "reverse"
                 else:
                     train_direction = "forward"
+                print "train", train, train_direction
             items_to_put_in_dropdown.append([train_name,block_name,train_direction, False, train_length, current_speed_factor ])
 
         # print "items_to_put_in_dropdown", items_to_put_in_dropdown
