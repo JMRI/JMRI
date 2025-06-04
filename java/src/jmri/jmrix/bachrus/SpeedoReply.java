@@ -59,7 +59,8 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
             }
         }
         // drM SPC200R
-        if (_nDataChars == 7) {
+        if (_nDataChars == 7 &&
+               (_dataChars[0] == 0x50 || _dataChars[0] == 0x51 || _dataChars[0] == 0x52 || _dataChars[0] == 0x53) ) {
             // Check for invalid speed flag (0x2D = 45)
             for (int i = 3; i <= 6; i++) {
                 if (_dataChars[i] == 0x2D) {

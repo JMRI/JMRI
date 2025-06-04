@@ -132,17 +132,24 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
         // Detect that the reply buffer ends with ";"
         int num = msg.getNumDataElements();
         
-        //quick hack - TODO - support different buffer ends
-        // SPC200R has a 7 byte buffer, so assume that if a 7 byte buffer was read it is the SPC200R
-        // if not then check for ; as the Bachrus and KPF-Zeller use ; as termination
-        if (num != 7) {
+        // Check for the SPC200R, the first byte is always 0x50, 0x51, 0x52 or 0x53
+        int value = msg.getElement(0);
+        if (value == 0x50 || value == 0x51 || value == 0x52 || value == 0x53) {
+            // SPC200R has a 7 byte output
+            if (num != 7) {
+                return false;
+            }
+        }
+        else
+        {
+            // Check for ';' as Bachrus and KPF-Zeller use ; as termination
             
             // ptr is offset of last element in SpeedoReply
             int ptr = num - 1;
             if (msg.getElement(ptr) != ';') {
                 return false;
             }
-        }
+      }
 
         unsolicited = true;
         return true;
@@ -171,9 +178,8 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
             case SerialPortEvent.DATA_AVAILABLE:
                 // we get here if data has been received
                 //fill the current reply with any data received
-                log.debug("SerialPortEvent: DATA_AVAILABLE");
                 int replyCurrentSize = this.reply.getNumDataElements();
-                log.debug("number of data elements {}", replyCurrentSize);
+                //log.debug("SerialPortEvent: DATA_AVAILABEL, number of data elements {}", replyCurrentSize);
                 int i;
                 for (i = replyCurrentSize; i < SpeedoReply.maxSize - replyCurrentSize; i++) {
                     try {
