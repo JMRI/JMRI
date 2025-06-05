@@ -49,6 +49,11 @@
                 <li></li>
             </ul>
 
+        <h4>drM</h4>
+            <ul>
+                <li>Added initial support for the SPC200R Speedo meter. Speed will correctly show. Further support pending.</li>
+            </ul>
+
         <h4>ESU</h4>
             <ul>
                 <li></li>
