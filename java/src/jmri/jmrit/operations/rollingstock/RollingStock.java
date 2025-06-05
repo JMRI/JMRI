@@ -481,7 +481,12 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                         oldLocation.deletePickupRS();
                         oldTrack.deletePickupRS(this);
                         // don't update rs's previous location if just re-staging
-                        if (getTrain() != null && getTrain().getRoute() != null && getTrain().getRoute().size() > 2) {
+                        if (!oldLocation.isStaging() ||
+                                location == null ||
+                                !location.isStaging() ||
+                                getTrain() != null &&
+                                        getTrain().getRoute() != null &&
+                                        getTrain().getRoute().size() > 2) {
                             setLastLocationId(oldLocation.getId());
                             setLastTrackId(oldTrack.getId());
                         }
@@ -1151,7 +1156,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @param date yyyy/MM/dd HH:mm:ss, MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa,
      *             or MM/dd/yyyy HH:mm
      */
-    private void setLastDate(String date) {
+    public void setLastDate(String date) {
         Date d = TrainCommon.convertStringToDate(date);
         if (d != null) {
             _lastDate = d;
