@@ -114,7 +114,6 @@
         <!-- <Logger name="jmri.jmrit.symbolicprog.DecVariableValue" level="DEBUG"/> -->
         <!-- <Logger name="jmri.jmrix" level="DEBUG"/> -->
         <!-- <Logger name="jmri.jmrix.nce.NceTrafficController" level="WARN"/> -->
-        <!-- <Logger name="jmri.jmrix.bachrus" level="DEBUG"/> -->
 
         <!-- <Logger name="jmri.jmrit.display.layoutEditor" level="DEBUG"/> -->
         <!-- <Logger name="jmri.jmrit.display.layoutEditor.LayoutBlock" level="DEBUG"/> -->
