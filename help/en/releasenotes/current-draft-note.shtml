@@ -673,4 +673,9 @@
             <li>The PlantUML library we use for various documentation images
                 has been updated to the current 1.2025.2 version.</li>
             <li>Fixed a bug where Dark Mode would fail due to a missing library.</li>
+            <li>There is a new <strong>Load and store</strong> pane in Preferences,
+                that has options to exclude dynamic content in the tables and
+                panels file. Without those dynamic contents, it will be much
+                easier to keep JMRI's XML files in a version control system
+                (e.g. GitHub) without having un-necessary merge conflicts.</li>
         </ul>

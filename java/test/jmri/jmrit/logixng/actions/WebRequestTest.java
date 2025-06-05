@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 import jmri.*;
+import jmri.configurexml.LoadAndStorePreferences;
 import jmri.configurexml.ShutdownPreferences;
 import static jmri.configurexml.StoreAndCompare.checkFile;
 import jmri.jmrit.logixng.*;
@@ -582,6 +583,12 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
         jmri.jmrit.logixng.NamedBeanType.reset();
+
+        // Exclude dynamic content in the tables and panels file
+        var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
+        loadAndStorePreferences.setExcludeMemoryIMCURRENTTIME(true);
+        loadAndStorePreferences.setExcludeJmriVersion(true);
+        loadAndStorePreferences.setExcludeFileHistory(true);
 
         _category = Category.ITEM;
         _isExternal = true;
