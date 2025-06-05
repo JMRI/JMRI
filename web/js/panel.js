@@ -603,6 +603,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                             memorystates.each(function(i, item) {  //get any memorystates defined
                                 //store icon url in "iconXX" where XX is the state to match
                                 $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
+                                $widget.state = item.attributes['value'].value; //default state to last defined value to draw icon
                             });
                             if (isUndefined($widget["systemName"]))
                                 $widget["systemName"] = $widget.name;
@@ -1771,7 +1772,7 @@ function $drawIcon($widget) {
             $("#panel-area>#" + $widget.id + "-overlay").css(ovlCSS);
         }
     } else {
-        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", TOstate=" + $state + ", iconstate=" + $state + " ["+$indicator+"] (icon" + $indicator + $state + ")");
+        log.error("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", iconstate=" + $state + " ["+$indicator+"] (icon" + $indicator + $state + ")");
     }
     $setWidgetPosition($("#panel-area #" + $widget.id));
 }

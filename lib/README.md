@@ -119,6 +119,10 @@ which checks the dates of the control files to make sure they've been updated wh
  - These provide the DarkLaf look&feel package
  - https://github.com/weisJ/darklaf
  
+##### swingx-core-1.6.5-1.jar   
+ - used by DarkLaf look&feel at runtime
+ - From https://repo1.maven.org/maven2/org/swinglabs/swingx/swingx-core/1.6.5-1/
+ 
 ##### jhall.jar
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
@@ -505,7 +509,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### PlantUML
 - plantuml.jar
     from plantuml.org
-    1.2023.1
+    plantuml-1.2025.2
 - umldoclet.jar
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases

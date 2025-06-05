@@ -3,12 +3,15 @@ package jmri.jmrix.can.cbus.swing;
 import java.awt.Color;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Pattern;
+
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
+
 import jmri.jmrix.can.cbus.CbusEventDataElements.EvState;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
 
@@ -114,8 +117,8 @@ public class CbusCommonSwing {
     
     public static void setCellTextHighlighter(String textForSearch, String string, JTextField f){
         if(Pattern.compile(Pattern.quote(textForSearch), Pattern.CASE_INSENSITIVE).matcher(string).find()){
-            string = string.toLowerCase();
-            textForSearch = textForSearch.toLowerCase();
+            string = string.toLowerCase(Locale.getDefault());
+            textForSearch = textForSearch.toLowerCase(Locale.getDefault());
             int indexOf = string.indexOf(textForSearch);
             try {
                 f.getHighlighter().addHighlight(

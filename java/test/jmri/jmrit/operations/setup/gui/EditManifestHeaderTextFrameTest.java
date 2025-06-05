@@ -58,7 +58,14 @@ public class EditManifestHeaderTextFrameTest extends OperationsTestCase {
         Assert.assertTrue("dirty2", p.isDirty());
 
         JemmyUtil.enterClickAndLeave(p.saveButton);
+        Assert.assertFalse("dirty", p.isDirty());
         
+        Assert.assertTrue("default", p.printHeaderLine1.isSelected());
+        JemmyUtil.enterClickAndLeave(p.printHeaderLine1);
+        Assert.assertTrue("dirty", p.isDirty());
+        JemmyUtil.enterClickAndLeave(p.saveButton);
+        Assert.assertFalse("dirty", p.isDirty());
+
         // confirm change by reloading panel
         EditManifestHeaderTextFrame f2 = new EditManifestHeaderTextFrame();
         f2.initComponents();
@@ -66,6 +73,7 @@ public class EditManifestHeaderTextFrameTest extends OperationsTestCase {
         EditManifestHeaderTextPanel p2 = (EditManifestHeaderTextPanel) f2.getContentPane();
         Assert.assertFalse("dirty3", p2.isDirty());
         Assert.assertEquals("confirm", "Test text", p2.road_TextField.getText());
+        Assert.assertFalse("confirm", p2.printHeaderLine1.isSelected());
         
         JemmyUtil.enterClickAndLeave(p2.resetButton);
         Assert.assertTrue("dirty4", p2.isDirty());

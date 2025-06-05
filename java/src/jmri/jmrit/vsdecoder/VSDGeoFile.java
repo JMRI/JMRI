@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import jmri.jmrit.XmlFile;
 import jmri.Scale;
 import jmri.Reporter;
@@ -16,6 +17,7 @@ import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrit.display.EditorManager;
 import jmri.util.FileUtil;
 import jmri.util.PhysicalLocation;
+
 import org.jdom2.Element;
 
 /**
@@ -113,7 +115,7 @@ public class VSDGeoFile extends XmlFile {
             log.info("File {}: Element layout-scale missing, defaulting to N", VSDGeoDataFileName);
         }
         layout_scale = (float) _layout_scale.getScaleRatio(); // Take this for further calculations
-        log.debug("layout-scale: {}, used for further calculations: {}", _layout_scale.toString(), layout_scale);
+        log.debug("layout-scale: {}, used for further calculations: {}", _layout_scale, layout_scale);
 
         check_time_str = "2000"; // string with default value; see getCheckTime() below
         n = root.getChildText("check-time");

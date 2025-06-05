@@ -64,7 +64,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         String carLoad = "";
         String carFinalDest = "";
         String carFinalDestTrack = "";
-        if (rs.getClass().equals(Car.class)) {
+        if (Car.class.isInstance(rs)) {
             Car car = (Car) rs;
             carLoad = car.getLoadName();
             carFinalDest = car.getFinalDestinationName();
@@ -230,7 +230,12 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
             log.error("Rolling stock name ({}) must not contain reserved characters", rs);
             return loggingDirectory + File.separator + "rollingStock" + File.separator + "ERROR" + ".csv"; // NOI18N
         }
-        return loggingDirectory + File.separator + "rollingStock" + File.separator + rs.toString() + ".csv"; // NOI18N
+        String rsName = rs.toString();
+        // put clones in the same file as original car
+        if (Car.class.isInstance(rs) && ((Car) rs).isClone()) {
+            rsName = rs.getRoadName() + " " + rs.getNumber().split(Car.CLONE_REGEX)[0];
+        }
+        return loggingDirectory + File.separator + "rollingStock" + File.separator + rsName + ".csv"; // NOI18N
     }
 
     private String getDate() {

@@ -30,7 +30,7 @@ import jmri.util.ColorUtil;
  * Common routines for trains
  *
  * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011, 2012, 2013,
- *         2021
+ *         2021, 2025
  */
 public class TrainCommon {
 
@@ -612,11 +612,14 @@ public class TrainCommon {
         }
     }
 
-    protected void setCarPickupTime(Train train, RouteLocation rl, List<Car> carList) {
+    protected void setCarPickupAndSetoutTimes(Train train, RouteLocation rl, List<Car> carList) {
         String expectedDepartureTime = train.getExpectedDepartureTime(rl, true);
         for (Car car : carList) {
             if (car.getRouteLocation() == rl) {
                 car.setPickupTime(expectedDepartureTime);
+            }
+            if (car.getRouteDestination() == rl) {
+                car.setSetoutTime(expectedDepartureTime);
             }
         }
 
@@ -1488,9 +1491,9 @@ public class TrainCommon {
         newLine(file);
         newLine(file, Setup.getMiaComment(), isManifest);
         if (Setup.isPrintHeadersEnabled()) {
-            printHorizontalLine(file, isManifest);
+            printHorizontalLine1(file, isManifest);
             newLine(file, SPACE + getHeader(Setup.getMissingCarMessageFormat(), false, false, false), isManifest);
-            printHorizontalLine(file, isManifest);
+            printHorizontalLine2(file, isManifest);
         }
         for (Car car : cars) {
             addSearchForCar(file, car, isManifest);
@@ -1514,7 +1517,7 @@ public class TrainCommon {
     private String getEngineAttribute(Engine engine, String attribute, boolean isPickup) {
         if (!attribute.equals(Setup.BLANK)) {
             String s = SPACE + getEngineAttrib(engine, attribute, isPickup);
-            if (Setup.isTabEnabled() || !s.trim().isEmpty()) {
+            if (Setup.isTabEnabled() || !s.isBlank()) {
                 return s;
             }
         }
@@ -1552,7 +1555,7 @@ public class TrainCommon {
     private String getCarAttribute(Car car, String attribute, boolean isPickup, boolean isLocal) {
         if (!attribute.equals(Setup.BLANK)) {
             String s = SPACE + getCarAttrib(car, attribute, isPickup, isLocal);
-            if (Setup.isTabEnabled() || !s.trim().isEmpty()) {
+            if (Setup.isTabEnabled() || !s.isBlank()) {
                 return s;
             }
         }
@@ -1720,7 +1723,13 @@ public class TrainCommon {
             } else if (attribute.equals(Setup.OWNER)) {
                 return padAndTruncateIfNeeded(rs.getOwnerName(),
                         InstanceManager.getDefault(CarOwners.class).getMaxNameLength());
-            } // the three utility attributes that don't get printed but need to
+            } else if (attribute.equals(Setup.LAST_TRAIN)) {
+                String lastTrainName = padAndTruncateIfNeeded(rs.getLastTrainName(),
+                        InstanceManager.getDefault(TrainManager.class).getMaxTrainNameLength());
+                return Setup.isPrintHeadersEnabled() ? lastTrainName
+                        : TrainManifestHeaderText.getStringHeader_Last_Train() + SPACE + lastTrainName;
+            }
+            // the three utility attributes that don't get printed but need to
               // be tabbed out
             else if (attribute.equals(Setup.NO_NUMBER)) {
                 return padAndTruncateIfNeeded("",
@@ -1774,43 +1783,43 @@ public class TrainCommon {
      */
     public void printEngineHeader(PrintWriter file, boolean isManifest) {
         int lineLength = getLineLength(isManifest);
-        printHorizontalLine(file, 0, lineLength);
-        if (!Setup.isPrintHeadersEnabled()) {
-            return;
-        }
-        if (!Setup.getPickupEnginePrefix().trim().isEmpty() || !Setup.getDropEnginePrefix().trim().isEmpty()) {
-            // center engine pick up and set out text
-            String s = padAndTruncate(tabString(Setup.getPickupEnginePrefix().trim(),
-                    lineLength / 4 - Setup.getPickupEnginePrefix().length() / 2), lineLength / 2) +
-                    VERTICAL_LINE_CHAR +
-                    tabString(Setup.getDropEnginePrefix(), lineLength / 4 - Setup.getDropEnginePrefix().length() / 2);
-            s = padAndTruncate(s, lineLength);
-            addLine(file, s);
-            printHorizontalLine(file, 0, lineLength);
-        }
+        printHorizontalLine(file, isManifest);
+        if (Setup.isPrintHeadersEnabled()) {
+            if (!Setup.getPickupEnginePrefix().isBlank() || !Setup.getDropEnginePrefix().isBlank()) {
+                // center engine pick up and set out text
+                String s = padAndTruncate(tabString(Setup.getPickupEnginePrefix().trim(),
+                        lineLength / 4 - Setup.getPickupEnginePrefix().length() / 2), lineLength / 2) +
+                        VERTICAL_LINE_CHAR +
+                        tabString(Setup.getDropEnginePrefix(),
+                                lineLength / 4 - Setup.getDropEnginePrefix().length() / 2);
+                s = padAndTruncate(s, lineLength);
+                addLine(file, s);
+                printHorizontalLine1(file, isManifest);
+            }
 
-        String s = padAndTruncate(getPickupEngineHeader(), lineLength / 2);
-        s = padAndTruncate(s + VERTICAL_LINE_CHAR + getDropEngineHeader(), lineLength);
-        addLine(file, s);
-        printHorizontalLine(file, 0, lineLength);
+            String s = padAndTruncate(getPickupEngineHeader(), lineLength / 2);
+            s = padAndTruncate(s + VERTICAL_LINE_CHAR + getDropEngineHeader(), lineLength);
+            addLine(file, s);
+            printHorizontalLine2(file, isManifest);
+        }
     }
 
     public void printPickupEngineHeader(PrintWriter file, boolean isManifest) {
         int lineLength = getLineLength(isManifest);
-        printHorizontalLine(file, 0, lineLength);
+        printHorizontalLine1(file, isManifest);
         String s = padAndTruncate(createTabIfNeeded(Setup.getManifestPrefixLength() + 1) + getPickupEngineHeader(),
                 lineLength);
         addLine(file, s);
-        printHorizontalLine(file, 0, lineLength);
+        printHorizontalLine2(file, isManifest);
     }
 
     public void printDropEngineHeader(PrintWriter file, boolean isManifest) {
         int lineLength = getLineLength(isManifest);
-        printHorizontalLine(file, 0, lineLength);
+        printHorizontalLine1(file, isManifest);
         String s = padAndTruncate(createTabIfNeeded(Setup.getManifestPrefixLength() + 1) + getDropEngineHeader(),
                 lineLength);
         addLine(file, s);
-        printHorizontalLine(file, 0, lineLength);
+        printHorizontalLine2(file, isManifest);
     }
 
     /**
@@ -1823,59 +1832,57 @@ public class TrainCommon {
      */
     public void printCarHeader(PrintWriter file, boolean isManifest, boolean isTwoColumnTrack) {
         int lineLength = getLineLength(isManifest);
-        printHorizontalLine(file, 0, lineLength);
-        if (!Setup.isPrintHeadersEnabled()) {
-            return;
-        }
-        // center pick up and set out text
-        String s = padAndTruncate(
-                tabString(Setup.getPickupCarPrefix(), lineLength / 4 - Setup.getPickupCarPrefix().length() / 2),
-                lineLength / 2) +
-                VERTICAL_LINE_CHAR +
-                tabString(Setup.getDropCarPrefix(), lineLength / 4 - Setup.getDropCarPrefix().length() / 2);
-        s = padAndTruncate(s, lineLength);
-        addLine(file, s);
-        printHorizontalLine(file, 0, lineLength);
+        printHorizontalLine(file, isManifest);
+        if (Setup.isPrintHeadersEnabled()) {
+            // center pick up and set out text
+            String s = padAndTruncate(
+                    tabString(Setup.getPickupCarPrefix(), lineLength / 4 - Setup.getPickupCarPrefix().length() / 2),
+                    lineLength / 2) +
+                    VERTICAL_LINE_CHAR +
+                    tabString(Setup.getDropCarPrefix(), lineLength / 4 - Setup.getDropCarPrefix().length() / 2);
+            s = padAndTruncate(s, lineLength);
+            addLine(file, s);
+            printHorizontalLine1(file, isManifest);
 
-        s = padAndTruncate(getPickupCarHeader(isManifest, isTwoColumnTrack), lineLength / 2);
-        s = padAndTruncate(s + VERTICAL_LINE_CHAR + getDropCarHeader(isManifest, isTwoColumnTrack), lineLength);
-        addLine(file, s);
-        printHorizontalLine(file, 0, lineLength);
+            s = padAndTruncate(getPickupCarHeader(isManifest, isTwoColumnTrack), lineLength / 2);
+            s = padAndTruncate(s + VERTICAL_LINE_CHAR + getDropCarHeader(isManifest, isTwoColumnTrack), lineLength);
+            addLine(file, s);
+            printHorizontalLine2(file, isManifest);
+        }
     }
 
     public void printPickupCarHeader(PrintWriter file, boolean isManifest, boolean isTwoColumnTrack) {
-        if (!Setup.isPrintHeadersEnabled()) {
-            return;
+        if (Setup.isPrintHeadersEnabled()) {
+            printHorizontalLine1(file, isManifest);
+            String s = padAndTruncate(createTabIfNeeded(Setup.getManifestPrefixLength() + 1) +
+                    getPickupCarHeader(isManifest, isTwoColumnTrack), getLineLength(isManifest));
+            addLine(file, s);
+            printHorizontalLine2(file, isManifest);
         }
-        printHorizontalLine(file, isManifest);
-        String s = padAndTruncate(createTabIfNeeded(Setup.getManifestPrefixLength() + 1) +
-                getPickupCarHeader(isManifest, isTwoColumnTrack), getLineLength(isManifest));
-        addLine(file, s);
-        printHorizontalLine(file, isManifest);
     }
 
     public void printDropCarHeader(PrintWriter file, boolean isManifest, boolean isTwoColumnTrack) {
-        if (!Setup.isPrintHeadersEnabled() || getDropCarHeader(isManifest, isTwoColumnTrack).trim().isEmpty()) {
+        if (!Setup.isPrintHeadersEnabled() || getDropCarHeader(isManifest, isTwoColumnTrack).isBlank()) {
             return;
         }
-        printHorizontalLine(file, isManifest);
+        printHorizontalLine1(file, isManifest);
         String s = padAndTruncate(
                 createTabIfNeeded(Setup.getManifestPrefixLength() + 1) + getDropCarHeader(isManifest, isTwoColumnTrack),
                 getLineLength(isManifest));
         addLine(file, s);
-        printHorizontalLine(file, isManifest);
+        printHorizontalLine2(file, isManifest);
     }
 
     public void printLocalCarMoveHeader(PrintWriter file, boolean isManifest) {
         if (!Setup.isPrintHeadersEnabled()) {
             return;
         }
-        printHorizontalLine(file, isManifest);
+        printHorizontalLine1(file, isManifest);
         String s = padAndTruncate(
                 createTabIfNeeded(Setup.getManifestPrefixLength() + 1) + getLocalMoveHeader(isManifest),
                 getLineLength(isManifest));
         addLine(file, s);
-        printHorizontalLine(file, isManifest);
+        printHorizontalLine2(file, isManifest);
     }
 
     public String getPickupEngineHeader() {
@@ -2015,6 +2022,9 @@ public class TrainCommon {
                         InstanceManager.getDefault(DivisionManager.class).getMaxDivisionNameLength()) + SPACE);
             } else if (attribute.equals(Setup.BLOCKING_ORDER)) {
                 buf.append("    "); // assume blocking order +/- 99
+            } else if (attribute.equals(Setup.LAST_TRAIN)) {
+                buf.append(padAndTruncateIfNeeded(TrainManifestHeaderText.getStringHeader_Last_Train(),
+                        InstanceManager.getDefault(TrainManager.class).getMaxTrainNameLength()) + SPACE);
             } else if (attribute.equals(Setup.TAB)) {
                 buf.append(createTabIfNeeded(Setup.getTab1Length()));
             } else if (attribute.equals(Setup.TAB2)) {
@@ -2037,7 +2047,28 @@ public class TrainCommon {
                 tabString(trackName.trim(), lineLength / 4 - trackName.trim().length() / 2);
         s = padAndTruncate(s, lineLength);
         addLine(file, s);
-        printHorizontalLine(file, isManifest);
+        if (Setup.isPrintHeaderLine3Enabled()) {
+            printHorizontalLine(file, isManifest);
+        }
+    }
+
+    public void printHorizontalLine1(PrintWriter file, boolean isManifest) {
+        if (Setup.isPrintHeaderLine1Enabled()) {
+            printHorizontalLine(file, isManifest);
+        }
+    }
+
+    public void printHorizontalLine2(PrintWriter file, boolean isManifest) {
+        if (Setup.isPrintHeaderLine2Enabled()) {
+            printHorizontalLine(file, isManifest);
+        }
+    }
+
+    public void printHorizontalLine3(PrintWriter file, boolean isManifest) {
+        if (Setup.isPrintHeadersEnabled() && Setup.isPrintHeaderLine3Enabled() ||
+                !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
+            printHorizontalLine(file, isManifest);
+        }
     }
 
     /**
@@ -2322,7 +2353,7 @@ public class TrainCommon {
 
     private void addLine(PrintWriter file, StringBuffer buf, Color color) {
         String s = buf.toString();
-        if (!s.trim().isEmpty()) {
+        if (!s.isBlank()) {
             addLine(file, formatColorString(s, color));
         }
     }
