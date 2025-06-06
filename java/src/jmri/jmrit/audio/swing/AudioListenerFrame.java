@@ -85,7 +85,8 @@ public class AudioListenerFrame extends AbstractAudioFrame {
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         metersPerUnit.setPreferredSize(new JTextField(8).getPreferredSize());
         metersPerUnit.setModel(
-                new SpinnerNumberModel(0f, 0f, 65536f, 0.0001f));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f),
+                    Float.valueOf(65536f), Float.valueOf(0.0001f)));
         // TODO - I18N of format
         metersPerUnit.setEditor(new JSpinner.NumberEditor(metersPerUnit, "0.0000"));
         p.add(metersPerUnit);
