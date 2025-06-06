@@ -1610,7 +1610,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             // TODO should we leave the car's destination? The spur expects this
             // car!
             if (destTrack.getSchedule() != null && destTrack.getScheduleMode() == Track.SEQUENTIAL) {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("buildPickupCancelled",
+                addLine(_buildReport, SEVEN, Bundle.getMessage("buildPickupCanceled",
                         destTrack.getLocation().getName(), destTrack.getName()));
             }
         }

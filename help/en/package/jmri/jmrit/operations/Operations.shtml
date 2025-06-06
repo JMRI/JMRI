@@ -3333,7 +3333,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         to 1. An alternative is to create a route where the quick load service track is only
         serviced once. Either option will allow the next train built's Manifest to show pulling the
         car before the car is actually delivered. Note that the program won't allow a train that is
-        scheduled to arrived before the car is delivered to pull the car. Timing conflicts are noted
+        scheduled to arrive before the car is delivered to pull the car. Timing conflicts are noted
         in the train's build report. To avoid conflicts, build trains in their departure time order
         with enough time between each departure to allow the previous trains to complete their
         deliveries to the quick load service spurs.
