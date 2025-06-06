@@ -163,7 +163,8 @@ public abstract class AbstractAudioFrame extends JmriJFrame {
             this.add(xLabel);
             xValue.setPreferredSize(new JTextField(8).getPreferredSize());
             xValue.setModel(
-                    new SpinnerNumberModel(0f, -Audio.MAX_DISTANCE, Audio.MAX_DISTANCE, FLT_PRECISION));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-Audio.MAX_DISTANCE),
+                    Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
             // TODO - I18N of format
             xValue.setEditor(new JSpinner.NumberEditor(xValue, "0.00"));
             this.add(xValue);
@@ -171,7 +172,8 @@ public abstract class AbstractAudioFrame extends JmriJFrame {
             this.add(yLabel);
             yValue.setPreferredSize(new JTextField(8).getPreferredSize());
             yValue.setModel(
-                    new SpinnerNumberModel(0f, -Audio.MAX_DISTANCE, Audio.MAX_DISTANCE, FLT_PRECISION));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-Audio.MAX_DISTANCE),
+                    Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
             // TODO - I18N of format
             yValue.setEditor(new JSpinner.NumberEditor(yValue, "0.00"));
             this.add(yValue);
@@ -179,7 +181,8 @@ public abstract class AbstractAudioFrame extends JmriJFrame {
             this.add(zLabel);
             zValue.setPreferredSize(new JTextField(8).getPreferredSize());
             zValue.setModel(
-                    new SpinnerNumberModel(0f, -Audio.MAX_DISTANCE, Audio.MAX_DISTANCE, FLT_PRECISION));
+                new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(-Audio.MAX_DISTANCE),
+                    Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
             // TODO - I18N of format
             zValue.setEditor(new JSpinner.NumberEditor(zValue, "0.00"));
             this.add(zValue);
@@ -224,7 +227,7 @@ public abstract class AbstractAudioFrame extends JmriJFrame {
 
         private JSpinner spinner = new JSpinner();
 
-        JPanelSliderf(String title, float min, float max, int majorTicks, int minorTicks) {
+        JPanelSliderf(String title, Float min, Float max, int majorTicks, int minorTicks) {
             super();
             int iMin = Math.round(min * INT_PRECISION);
             int iMax = Math.round(max * INT_PRECISION);
@@ -257,7 +260,7 @@ public abstract class AbstractAudioFrame extends JmriJFrame {
             });
             spinner.setPreferredSize(new JTextField(5).getPreferredSize());
             spinner.setModel(
-                    new SpinnerNumberModel(min, min, max, FLT_PRECISION));
+                    new SpinnerNumberModel(min, min, max, Float.valueOf(FLT_PRECISION)));
             // TODO - I18N of format
             spinner.setEditor(new JSpinner.NumberEditor(spinner, "0.00"));
             spinner.addChangeListener( e ->
