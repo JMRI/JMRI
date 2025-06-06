@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import java.util.ArrayList;
+
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
@@ -30,6 +32,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     @Nonnull private String version     = "0.0.0";
     private DCCppRegisterManager rmgr = null;
     private int maxNumSlots = DCCppConstants.MAX_MAIN_REGISTERS; //default to register size
+    private ArrayList<String> trackModes = new ArrayList<String>(); //Modes for tracks A-H (if defined) 
 
     public DCCppCommandStation() {
         super();
@@ -398,6 +401,25 @@ public class DCCppCommandStation implements jmri.CommandStation {
     public int getRegisterAddress(int num) {
         creatermgr();
         return (rmgr.getRegisterAddress(num));
+    }
+
+    // entries will be received in order, but the whole list may be sent again
+    public void setTrackMode(int i, String mode) {        
+        if (this.trackModes.size() > i) {
+            this.trackModes.set(i, mode); //update it
+        } else {
+            this.trackModes.add(mode);  // add it
+        }
+    }
+    public ArrayList<String> getTrackModes() {
+        return trackModes;
+    }
+    public String getTrackMode(int i) {
+        if (this.trackModes.size() > i) {
+            return trackModes.get(i);
+        } else {
+            return "";  //don't crash downstream
+        }
     }
 
     /*
