@@ -2062,6 +2062,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // move car to new location for later pick up
         car.setLocation(track.getLocation(), track, RollingStock.FORCE);
         car.setLastTrain(_train);
+        // this car was moved during the build process
+        car.setLastDate(_startTime);
         car.setCloneOrder(cloneCreationOrder); // for reset
         car.setDestination(null, null);
         track.scheduleNext(car); // apply schedule to car
