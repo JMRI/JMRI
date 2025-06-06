@@ -111,6 +111,7 @@ public class Car extends RollingStock {
         car.setPassenger(isPassenger());
         car.setBlocking(getBlocking());
         car.setLastTrain(getLastTrain());
+        car.setLastDate(getLastDate());
         car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
         car.setDivision(getDivision());
         car.loaded = true;
@@ -1074,13 +1075,15 @@ public class Car extends RollingStock {
                 car.setLocation(getLocation(), getTrack(), Car.FORCE);
                 car.setLoadName(getLoadName());
                 car.setLastTrain(getLastTrain());
-                car.setCloneOrder(cloneCreationNumber);
+                car.setLastDate(getLastDate());
                 car.setFinalDestination(getPreviousFinalDestination());
                 car.setFinalDestinationTrack(getPreviousFinalDestinationTrack());
                 car.setPreviousFinalDestination(getPreviousFinalDestination());
                 car.setPreviousFinalDestinationTrack(getPreviousFinalDestinationTrack());
                 car.setScheduleItemId(getPreviousScheduleId());
                 car.setWait(0);
+                // remember the last clone destroyed
+                car.setCloneOrder(cloneCreationNumber);
             }
             InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
             carManager.deregister(this);
