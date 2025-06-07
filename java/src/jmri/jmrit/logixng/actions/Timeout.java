@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.actions;
 
+import jmri.util.TimerUnit;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
