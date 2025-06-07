@@ -187,7 +187,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p2.add(refDistanceLabel);
         refDistance.setPreferredSize(new JTextField(8).getPreferredSize());
         refDistance.setModel(
-                new SpinnerNumberModel(0f, 0f, Audio.MAX_DISTANCE, FLT_PRECISION));
+            new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f),
+                Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
         // TODO - I18N of format
         refDistance.setEditor(new JSpinner.NumberEditor(refDistance, "0.00"));
         refDistance.addChangeListener( e ->
@@ -201,7 +202,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p2.add(maxDistanceLabel);
         maxDistance.setPreferredSize(new JTextField(8).getPreferredSize());
         maxDistance.setModel(
-                new SpinnerNumberModel(0f, 0f, Audio.MAX_DISTANCE, FLT_PRECISION));
+            new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f),
+                Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
         // TODO - I18N of format
         maxDistance.setEditor(new JSpinner.NumberEditor(maxDistance, "0.00"));
         maxDistance.addChangeListener( e ->
@@ -219,7 +221,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p2.add(rollOffFactorLabel);
         rollOffFactor.setPreferredSize(new JTextField(8).getPreferredSize());
         rollOffFactor.setModel(
-                new SpinnerNumberModel(0f, 0f, Audio.MAX_DISTANCE, FLT_PRECISION));
+            new SpinnerNumberModel(Float.valueOf(0f), Float.valueOf(0f),
+                Float.valueOf(Audio.MAX_DISTANCE), Float.valueOf(FLT_PRECISION)));
         // TODO - I18N of format
         rollOffFactor.setEditor(new JSpinner.NumberEditor(rollOffFactor, "0.00"));
         p2.add(rollOffFactor);
@@ -410,7 +413,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 
     private static int nextCounter() {
         counter++;
-        return counter;
+        return counter-1;
     }
 
     private static void prevCounter() {
