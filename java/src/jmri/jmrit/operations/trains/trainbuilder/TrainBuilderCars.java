@@ -1082,6 +1082,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     car.getLocationName(), car.getTrackName()));
         } else {
             // try and send car to staging
+            addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, FIVE,
                     Bundle.getMessage("buildTrySendCarToStaging", car.toString(), car.getLoadName()));
             tracks = locationManager.getTracks(Track.STAGING);
@@ -1132,6 +1133,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildNoStagingForCarLoad", car.toString(), car.getLoadName()));
+            if (!_routeToTrackFound) {
+                addLine(_buildReport, SEVEN, BLANK_LINE);
+            }
         }
         log.debug("routeToSpurFound is {}", _routeToTrackFound);
         return _routeToTrackFound; // done
