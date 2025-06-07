@@ -4,16 +4,14 @@ import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.util.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of RosterFrame
  *
  * @author Paul Bender Copyright (C) 2015, 2016
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 @Timeout(20) // This test class was periodically stalling and causing the CI run to time out. Limit its duration.
 public class RosterFrameTest {
 
@@ -21,25 +19,27 @@ public class RosterFrameTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", frame);
+        Assertions.assertNotNull( frame, "exists");
     }
 
     @Test
     public void testIdentifyEnabled() {
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true) );
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
-        Assert.assertTrue("Identify Button Enabled", operator.isIdentifyButtonEnabled());
+        Assertions.assertTrue( operator.isIdentifyButtonEnabled(), "Identify Button Enabled");
     }
 
     @Test
     public void testIdentify3NotPresent() {
-        frame.pack();
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            frame.pack();
+            frame.setVisible(true);
+        });
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
         jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
-        assert prog != null;
+        Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
 
@@ -69,8 +69,10 @@ public class RosterFrameTest {
         re3.setDccAddress("5");
         roster.addEntry(re3);
 
-        frame.setVisible(true);
-        frame.pack();
+        ThreadingUtil.runOnGUI( () -> {
+            frame.pack();
+            frame.setVisible(true);
+        });
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
@@ -85,8 +87,8 @@ public class RosterFrameTest {
             return frame.getSelectedRosterEntries().length == 1;
         }, "selection complete");
         RosterEntry[] selected = frame.getSelectedRosterEntries();
-        Assert.assertEquals("selected ", 1, selected.length);
-        Assert.assertEquals("selected ", re1, selected[0]);
+        Assertions.assertEquals( 1, selected.length, "selected ");
+        Assertions.assertEquals( re1, selected[0], "selected ");
 
     }
 
@@ -111,8 +113,10 @@ public class RosterFrameTest {
         re3.setDccAddress("5");
         roster.addEntry(re3);
 
-        frame.setVisible(true);
-        frame.pack();
+        ThreadingUtil.runOnGUI( () -> {
+            frame.pack();
+            frame.setVisible(true);
+        });
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
@@ -133,8 +137,8 @@ public class RosterFrameTest {
             return frame.getSelectedRosterEntries().length == 1;
         }, "selection complete");
         RosterEntry[] selected = frame.getSelectedRosterEntries();
-        Assert.assertEquals("selected ", re1, selected[0]);
-        Assert.assertTrue("entry selected", frame.checkIfEntrySelected());
+        Assertions.assertEquals( re1, selected[0], "selected ");
+        Assertions.assertTrue( frame.checkIfEntrySelected(), "entry selected ");
 
     }
 
@@ -159,8 +163,10 @@ public class RosterFrameTest {
         re3.setDccAddress("3");
         roster.addEntry(re3);
 
-        frame.setVisible(true);
-        frame.pack();
+        ThreadingUtil.runOnGUI( () -> {
+            frame.pack();
+            frame.setVisible(true);
+        });
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
@@ -177,9 +183,9 @@ public class RosterFrameTest {
             return frame.getSelectedRosterEntries().length == 2;
         }, "selection complete");
         RosterEntry[] selected = frame.getSelectedRosterEntries();
-        Assert.assertEquals("selected ", re1, selected[0]);
-        Assert.assertEquals("selected ", re3, selected[1]);
-        Assert.assertTrue("entry selected", frame.checkIfEntrySelected());
+        Assertions.assertEquals( re1, selected[0], "selected ");
+        Assertions.assertEquals( re3, selected[1], "selected ");
+        Assertions.assertTrue( frame.checkIfEntrySelected(), "entry selected");
 
     }
 
@@ -205,8 +211,10 @@ public class RosterFrameTest {
         re3.setDecoderFamily("Dual Mode");
         roster.addEntry(re3);
 
-        frame.setVisible(true);
-        frame.pack();
+        ThreadingUtil.runOnGUI( () -> {
+            frame.pack();
+            frame.setVisible(true);
+        });
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
@@ -223,17 +231,16 @@ public class RosterFrameTest {
             return frame.getSelectedRosterEntries().length == 1;
         }, "selection complete");
         RosterEntry[] selected = frame.getSelectedRosterEntries();
-        Assert.assertEquals("selected ", 1, selected.length);
-        Assert.assertEquals("selected ", re3, selected[0]);  // 2nd address=3 selected by decoder match
-        Assert.assertTrue("entry selected", frame.checkIfEntrySelected());
+        Assertions.assertEquals( 1, selected.length, "selected "); // failed here with 0
+        Assertions.assertEquals( re3, selected[0], "selected ");  // 2nd address=3 selected by decoder match
+        Assertions.assertTrue( frame.checkIfEntrySelected(), "entry selected");
 
     }
 
     @Test
-    @Disabled("does not find and close dialog as expected")
     public void testCheckIfEntrySelected() {
 
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true) );
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
         Thread t = new Thread(() -> {
             jmri.util.swing.JemmyUtil.confirmJOptionPane(operator, "Message", "", "OK");
@@ -242,16 +249,17 @@ public class RosterFrameTest {
         t.start();
         // the return true case happens in the identify methods above, so
         // we only check the return false case here.
-        Assert.assertFalse("entry not selected", frame.checkIfEntrySelected());
+        Assertions.assertFalse( frame.checkIfEntrySelected(), "entry not selected");
+        JUnitUtil.waitThreadTerminated(t);
     }
 
     @Test
     public void testGetandSetAllowQuit() {
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true) );
         frame.allowQuit(false);
-        Assert.assertFalse("Quit Not Allowed", frame.isAllowQuit());
+        Assertions.assertFalse( frame.isAllowQuit(), "Quit Not Allowed");
         frame.allowQuit(true);
-        Assert.assertTrue("Quit Allowed", frame.isAllowQuit());
+        Assertions.assertTrue( frame.isAllowQuit(), "Quit Allowed");
     }
 
     @BeforeEach
@@ -261,8 +269,8 @@ public class RosterFrameTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initGuiLafPreferencesManager();
-        jmri.InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
-        jmri.InstanceManager.setDefault(jmri.jmrit.symbolicprog.ProgrammerConfigManager.class, new jmri.jmrit.symbolicprog.ProgrammerConfigManager());
+        InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
+        InstanceManager.setDefault(jmri.jmrit.symbolicprog.ProgrammerConfigManager.class, new jmri.jmrit.symbolicprog.ProgrammerConfigManager());
         JUnitUtil.initDebugProgrammerManager();
         JUnitUtil.initRosterConfigManager();
         Roster.getDefault(); // ensure exists
