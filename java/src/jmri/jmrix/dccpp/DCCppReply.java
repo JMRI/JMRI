@@ -1747,12 +1747,17 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return cvl;
     }
 
-    public String getTrackManagerLetter() {
+    public char getTrackManagerLetter() {
         if (this.isTrackManagerReply()) {
-            return (this.getValueString(1));
+            String s = this.getValueString(1);
+            if (!s.isEmpty()) {                
+                return (s.charAt(0)); //convert to a char
+            } else {
+                return ('0');
+            }
         } else {
             log.error("getTrackManagerLetter Parser called on non-TrackManager message type {}", this.getOpCodeChar());
-            return ("0");
+            return ('0');
         }
     }
     public String getTrackManagerMode() {

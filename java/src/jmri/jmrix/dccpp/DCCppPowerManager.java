@@ -81,7 +81,7 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
         // store trackmanager mode by index (0-7 for A-H) 
         } else if (m.isTrackManagerReply()) {
             log.debug("Track Manager Reply Received: {}", m);
-            int trackNum = m.getTrackManagerLetter().charAt(0) - 'A'; //get track number from track letter
+            int trackNum = m.getTrackManagerLetter() - 'A'; //get track number from track letter
             tc.getCommandStation().setTrackMode(trackNum, m.getTrackManagerMode());
         }
     }

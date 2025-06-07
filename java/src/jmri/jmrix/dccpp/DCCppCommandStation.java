@@ -1,6 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -32,7 +33,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     @Nonnull private String version     = "0.0.0";
     private DCCppRegisterManager rmgr = null;
     private int maxNumSlots = DCCppConstants.MAX_MAIN_REGISTERS; //default to register size
-    private ArrayList<String> trackModes = new ArrayList<String>(); //Modes for tracks A-H (if defined) 
+    private List<String> trackModes = new ArrayList<String>();   //Modes for tracks A-H (as returned from EX-CS) 
 
     public DCCppCommandStation() {
         super();
@@ -411,7 +412,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
             this.trackModes.add(mode);  // add it
         }
     }
-    public ArrayList<String> getTrackModes() {
+    public List<String> getTrackModes() {
         return trackModes;
     }
     public String getTrackMode(int i) {
