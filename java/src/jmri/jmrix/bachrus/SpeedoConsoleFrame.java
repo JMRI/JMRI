@@ -1173,6 +1173,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     circ = (float) ((5.95 + 0.9) * Math.PI);
                     readerLabel.setText(Bundle.getMessage("Reader103"));
                     break;
+                case 200:
+                    circ = 12.5664F;
+                    readerLabel.setText(Bundle.getMessage("Reader200"));
+                    break;
                 default:
                     speedTextField.setText(Bundle.getMessage("ReaderErr"));
                     log.error("Invalid reader type");
@@ -1207,6 +1211,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             avSpeed = sampleSpeed;
             log.debug("New KPF-Zeller sample: {} Average: {}", sampleSpeed, avSpeed);
 
+        } else if (series == 200) {
+            // SPC200R
+            sampleSpeed = count / 10.0f;
+            avSpeed = sampleSpeed;
+            log.debug("New SPC200R sample: {} Average: {}", sampleSpeed, avSpeed);
+            
         } else if (series > 0 && series <= 6) {
             // Bachrus
             // Scale the data and calculate kph
