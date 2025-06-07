@@ -300,7 +300,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     private static int nextCounter() {
         counter++;
-        return counter;
+        return counter-1;
     }
 
     private static void prevCounter() {
