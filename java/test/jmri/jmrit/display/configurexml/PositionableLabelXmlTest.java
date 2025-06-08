@@ -27,11 +27,10 @@ public class PositionableLabelXmlTest {
     @Test
     public void testWindowsFontSpecialCase () {
         var label = new PositionableLabelXml();
-        boolean windows = true;
-        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog", 0, windows));
-        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.plain", 0, windows));
-        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.bold", 1, windows));
-        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.italic", 2, windows));
+        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog", 0));
+        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.plain", 0));
+        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.bold", 1));
+        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.italic", 2));
     }
     
     

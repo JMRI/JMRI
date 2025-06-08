@@ -86,7 +86,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         String fontName = util.getFont().getFontName();
         if (!fontName.equals(defaultFontName)) {
             element.setAttribute("fontFamily", "" + util.getFont().getFamily());
-            String storedfontname = simplifyFontname(fontName, util.getFontStyle(), jmri.util.SystemType.isWindows());
+            String storedfontname = simplifyFontname(fontName, util.getFontStyle());
             element.setAttribute("fontname", "" + storedfontname);
         }
 
@@ -606,32 +606,32 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
     }
 
-    // Remove verbose and redundant information from fontname field on Windows
-    // @param windows jmri.util.SystemType.isWindows(), boolean for testing purposes
-    String simplifyFontname(String fontname, int style, boolean windows) {
-        if (windows) {
-            if (fontname.endsWith(".plain")) {
-                if (style == Font.PLAIN) {
-                    return fontname.substring(0, fontname.length()-(".plain".length()));
-                } else {
-                    log.warn("fontname {} is not consistent with style {}", fontname, style);
-                    return fontname;
-                }
-            } else if (fontname.endsWith(".bold")) {
-                if (style == Font.BOLD) {
-                    return fontname.substring(0, fontname.length()-(".bold".length()));
-                } else {
-                    log.warn("fontname {} is not consistent with style {}", fontname, style);
-                    return fontname;
-                }
-            } else if (fontname.endsWith(".italic")) {
-                if (style == Font.ITALIC) {
-                    return fontname.substring(0, fontname.length()-(".italic".length()));
-                } else {
-                    log.warn("fontname {} is not consistent with style {}", fontname, style);
-                    return fontname;
-                }
+    /**
+     * Remove verbose and redundant information from fontname field
+     * @param fontname The system-specific font name with a possible trailing .plain, etc
+     * @param style  From the Font class static style values
+     * @return A font name without trailing modifiers
+     */
+    String simplifyFontname(String fontname, int style) {
+        if (fontname.endsWith(".plain")) {
+            if (style == Font.PLAIN) {
+                return fontname.substring(0, fontname.length()-(".plain".length()));
             } else {
+                log.warn("fontname {} is not consistent with style {}", fontname, style);
+                return fontname;
+            }
+        } else if (fontname.endsWith(".bold")) {
+            if (style == Font.BOLD) {
+                return fontname.substring(0, fontname.length()-(".bold".length()));
+            } else {
+                log.warn("fontname {} is not consistent with style {}", fontname, style);
+                return fontname;
+            }
+        } else if (fontname.endsWith(".italic")) {
+            if (style == Font.ITALIC) {
+                return fontname.substring(0, fontname.length()-(".italic".length()));
+            } else {
+                log.warn("fontname {} is not consistent with style {}", fontname, style);
                 return fontname;
             }
         } else {
