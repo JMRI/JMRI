@@ -16,7 +16,7 @@ public class PositionableLabelXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("PositionableLabelXml constructor",new PositionableLabelXml());
+      Assert.assertNotNull("PositionableLabelXml constructor", new PositionableLabelXml());
     }
 
     @BeforeEach
@@ -24,6 +24,17 @@ public class PositionableLabelXmlTest {
         JUnitUtil.setUp();
     }
 
+    @Test
+    public void testWindowsFontSpecialCase () {
+        var label = new PositionableLabelXml();
+        boolean windows = true;
+        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog", 0, windows));
+        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.plain", 0, windows));
+        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.bold", 1, windows));
+        Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.italic", 2, windows));
+    }
+    
+    
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
