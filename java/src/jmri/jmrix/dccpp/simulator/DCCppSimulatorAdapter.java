@@ -622,6 +622,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 reply = DCCppReply.parseDCCppReply("= A MAIN");
                 writeReply(reply);
                 reply = DCCppReply.parseDCCppReply("= B PROG");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= C MAIN");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= D MAIN");
                 break;
 
             case DCCppConstants.LCD_TEXT_CMD:
@@ -648,7 +652,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             case DCCppConstants.THROTTLE_COMMANDS:
                 log.debug("THROTTLE_COMMANDS detected");
                 if (msg.isCurrentMaxesMessage()) {
-                    reply = DCCppReply.parseDCCppReply("jG 4998 4998");
+                    reply = DCCppReply.parseDCCppReply("jG 4998 4998 4998 4998");
                 } else if (msg.isCurrentValuesMessage()) {
                     generateCurrentValuesReply(); // Handle this special.
                 }
@@ -755,9 +759,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     /* 'JI' Current Value List request message returns an array of Current Values */
     private void generateCurrentValuesReply() {
         int currentmA_0 = 1100 + ThreadLocalRandom.current().nextInt(64);
-        int currentmA_1 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_1 = 0500 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_2 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_3 = 1100 + ThreadLocalRandom.current().nextInt(64);
         String rs = "jI " + (trackPowerState ? Integer.toString(currentmA_0) : "0") + " " +
-                (trackPowerState ? Integer.toString(currentmA_1) : "0");
+                (trackPowerState ? Integer.toString(currentmA_1) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_2) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_3) : "0");
         DCCppReply r = new DCCppReply(rs);
         writeReply(r);
     }

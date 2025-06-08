@@ -117,14 +117,13 @@ public class DCCppPredefinedMeters implements DCCppListener {
         
         if (r.isTrackManagerReply()) {
             //recalculate the username since mode may have changed 
-            int trackNum = r.getTrackManagerLetter().charAt(0) - 'A'; //get track number from track letter
-            String mode = tc.getCommandStation().getTrackMode(trackNum);
-            String userName = "Track " + String.valueOf((char)('A'+trackNum)) + " " + mode + " (" + systemPrefix + ")";
+            int trackNum = r.getTrackManagerLetter() - 'A'; //get track number from track letter
+            String userName = "Track " + r.getTrackManagerLetter() + " " + r.getTrackManagerMode() + " (" + systemPrefix + ")";
             String sysName = systemPrefix + beanType + trackNum;
             Meter meter = meters.get(sysName);
             if (meter != null) {
                 log.debug("Updating username for current meter {} to '{}'", sysName, userName);
-                meter.setUserName(userName);
+                meter.setUserName(userName); //TODO: fix Meter to redraw title for this change
             }
             return;
         }
