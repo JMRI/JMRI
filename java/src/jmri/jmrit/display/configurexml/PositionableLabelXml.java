@@ -87,7 +87,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if (!fontName.equals(defaultFontName)) {
             element.setAttribute("fontFamily", "" + util.getFont().getFamily());
             String storedfontname = simplifyFontname(fontName, util.getFontStyle(), jmri.util.SystemType.isWindows());
-            element.setAttribute("fontname", "" + fontName);
+            element.setAttribute("fontname", "" + storedfontname);
         }
 
         element.setAttribute("size", "" + util.getFontSize());
