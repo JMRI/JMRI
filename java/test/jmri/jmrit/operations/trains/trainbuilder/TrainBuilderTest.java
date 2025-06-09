@@ -19728,8 +19728,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         TrainBuilder tb = new TrainBuilder();
         
-        //        Assert.assertEquals("clone creation number", 1, cmanager.getCloneCreationNumber());
-
         tb.build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
