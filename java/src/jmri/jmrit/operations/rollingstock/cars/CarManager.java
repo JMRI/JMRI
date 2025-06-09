@@ -519,7 +519,7 @@ public class CarManager extends RollingStockManager<Car>
     int cloneCreationOrder = 0;
 
     /**
-     * Returns the highest clone creator order given to a clone.
+     * Returns the highest clone creation order given to a clone.
      * 
      * @return 1 if the first clone created, otherwise the highest found plus
      *         one. Automatically increments.
