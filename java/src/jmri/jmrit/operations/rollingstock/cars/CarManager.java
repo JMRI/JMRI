@@ -525,7 +525,7 @@ public class CarManager extends RollingStockManager<Car>
      *         one. Automatically increments.
      */
     public int getCloneCreationOrder() {
-        if (cloneCreationOrder == 0 && isThereClones()) {
+        if (cloneCreationOrder == 0) {
             for (Car car : getList()) {
                 if (car.isClone()) {
                     String[] number = car.getNumber().split(Car.CLONE_REGEX);
