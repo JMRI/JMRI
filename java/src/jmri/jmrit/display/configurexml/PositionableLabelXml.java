@@ -634,6 +634,13 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 log.warn("fontname {} is not consistent with style {}", fontname, style);
                 return fontname;
             }
+        } else if (fontname.endsWith(".bolditalic")) {
+            if (style == Font.BOLD+FONT.ITALIC) {
+                return fontname.substring(0, fontname.length()-(".bolditalic".length()));
+            } else {
+                log.warn("fontname {} is not consistent with style {}", fontname, style);
+                return fontname;
+            }
         } else {
             return fontname;
         }
