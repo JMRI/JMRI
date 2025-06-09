@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -23,6 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
+import javax.swing.plaf.basic.BasicFileChooserUI;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -577,6 +579,17 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     public String getFilePathAndName() {
         String returnString = "";
+        if (logFileChooser.getSelectedFile() == null) {
+            // certain UIs do not process the defaultdir and default file unless
+            // ACTION_PERFORMED event has been done.
+            BasicFileChooserUI ui = (BasicFileChooserUI) logFileChooser.getUI();
+            for(ActionListener a: ui.getDefaultButton(logFileChooser).getActionListeners()) {
+                a.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, null) {
+                       // Nothing need go here, the actionPerformed method (with the above arguments)
+                       // will trigger the respective listener
+                  });
+            }
+        }
         java.nio.file.Path p = logFileChooser.getSelectedFile().toPath();
         if (p.getParent() == null) {
             // This case is a file path with a "parent" of "null"
