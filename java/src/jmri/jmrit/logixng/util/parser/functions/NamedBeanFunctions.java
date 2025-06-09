@@ -164,13 +164,10 @@ public class NamedBeanFunctions implements FunctionFactory {
                 Object value = parameterList.get(0).calculate(symbolTable);
                 if (value == null) return null;
 
-                System.out.format("getReference: %s%n", value);
-
                 String s = TypeConversionUtil.convertToString(value, false);
                 if (s.isEmpty()) return null;
 
                 if (ReferenceUtil.isReference(s)) {
-                    System.out.format("getReference(%s)%n", s);
                     return ReferenceUtil.getReference(symbolTable, s);
                 }
 
