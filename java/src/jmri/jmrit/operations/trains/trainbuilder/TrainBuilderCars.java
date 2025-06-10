@@ -528,7 +528,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                               // issues outs of staging
                 }
             }
-
             // check for quick service track timing
             if (!checkQuickServiceDeparting(car, rl)) {
                 continue;
@@ -1082,6 +1081,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     car.getLocationName(), car.getTrackName()));
         } else {
             // try and send car to staging
+            addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, FIVE,
                     Bundle.getMessage("buildTrySendCarToStaging", car.toString(), car.getLoadName()));
             tracks = locationManager.getTracks(Track.STAGING);
@@ -1132,6 +1132,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildNoStagingForCarLoad", car.toString(), car.getLoadName()));
+            if (!_routeToTrackFound) {
+                addLine(_buildReport, SEVEN, BLANK_LINE);
+            }
         }
         log.debug("routeToSpurFound is {}", _routeToTrackFound);
         return _routeToTrackFound; // done
@@ -1999,8 +2002,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         }
     }
 
-    static int cloneCreationOrder = 0;
-
     /**
      * Checks to see if spur/industry is requesting a quick turn, which means
      * that on the outbound side of the turn a car or set of cars in a kernel
@@ -2023,8 +2024,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                         track.getLocation().getName(), track.getName()));
         // quick service enabled, create clones
+        int cloneCreationOrder = carManager.getCloneCreationOrder();
         Car cloneCar = car.copy();
-        cloneCar.setNumber(car.getNumber() + Car.CLONE + ++cloneCreationOrder);
+        cloneCar.setNumber(car.getNumber() + Car.CLONE + cloneCreationOrder);
         cloneCar.setClone(true);
         // register car before setting location so the car gets logged
         carManager.register(cloneCar);
