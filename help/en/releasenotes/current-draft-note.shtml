@@ -27,6 +27,8 @@
         <h4>CBUS</h4>
             <ul>
                 <li>Node Manager highlights duplicate CAN IDs.</li>
+                <li>When WiThrottle ecounters an existing non-JMRI Throttle session and is asked Share / Steal / Cancel?,
+                    the main JMRI Throttle silent Steal / silent Share options are checked for preferred behaviour.</li></li>
             </ul>
 
         <h4>C/MRI</h4>
