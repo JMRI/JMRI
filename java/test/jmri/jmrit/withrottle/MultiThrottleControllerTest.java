@@ -142,7 +142,7 @@ public class MultiThrottleControllerTest {
         controller.notifyThrottleFound(t);
         t.setFunction(1, true);
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>F11", cis.getLastPacket());
-        t.setFunction(1, true);
+        t.setFunction(1, false);
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>F01", cis.getLastPacket());
     }
 
