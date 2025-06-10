@@ -194,7 +194,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         eCbPanel.add(exclusiveCB);
         panel.add(eCbPanel);
 
-        if ( InstanceManager.getDefault(jmri.ThrottleManager.class).enablePrefSilentShareOption() ) {
+        // only display hint if silent share option is enabled in main throttle prefs
+        var tm = InstanceManager.getNullableDefault(jmri.ThrottleManager.class);
+        if ( tm != null && tm.enablePrefSilentShareOption() ) {
             JPanel sscHint = new JPanel();
             sscHint.add(new JLabel(Bundle.getMessage("LabelStealShare")));
             panel.add(sscHint);
