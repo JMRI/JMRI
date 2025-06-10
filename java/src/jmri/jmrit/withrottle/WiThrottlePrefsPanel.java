@@ -187,12 +187,21 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     private JPanel exclusivePanel() {
         JPanel panel = new JPanel();
 
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        JPanel eCbPanel = new JPanel();
         exclusiveCB = new JCheckBox(Bundle.getMessage("LabelExclusive"));
         exclusiveCB.setToolTipText(Bundle.getMessage("ToolTipExclusive"));
-        panel.add(exclusiveCB);
+        eCbPanel.add(exclusiveCB);
+        panel.add(eCbPanel);
+
+        if ( InstanceManager.getDefault(jmri.ThrottleManager.class).enablePrefSilentShareOption() ) {
+            JPanel sscHint = new JPanel();
+            sscHint.add(new JLabel(Bundle.getMessage("LabelStealShare")));
+            panel.add(sscHint);
+        }
         return panel;
     }
-    
+
     private JPanel networkPanel() {
         JPanel nPanelRow1 = new JPanel();
         JPanel nPanelRow2 = new JPanel();
