@@ -176,7 +176,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     }
 
     /**
-     * Does this command station support the latest Current commands <JG>, <JI>, etc.?
+     * Does this command station support the latest Current commands &lt;JG&gt;, &lt;JI&gt;, etc.?
      * @return true if supported, false if not
      */
     public boolean isCurrentListSupported() {

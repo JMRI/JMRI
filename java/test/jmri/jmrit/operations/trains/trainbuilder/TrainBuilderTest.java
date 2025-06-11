@@ -19502,8 +19502,6 @@ public class TrainBuilderTest extends OperationsTestCase {
     @Test
     public void testQuickLoadTurn() {
 
-        TrainBuilder.cloneCreationOrder = 0;
-
         // Route Acton-Boston-Chelmsford-Chelmsford-Boston-Acton
         Route route = JUnitOperationsUtil.createThreeLocationTurnRoute();
 
@@ -19676,8 +19674,6 @@ public class TrainBuilderTest extends OperationsTestCase {
     @Test
     public void testQuickLoadTurnKernels() {
 
-        TrainBuilder.cloneCreationOrder = 0; // reset
-
         // Route Acton-Boston-Chelmsford-Chelmsford-Boston-Acton
         Route route = JUnitOperationsUtil.createThreeLocationTurnRoute();
 
@@ -19732,8 +19728,6 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         TrainBuilder tb = new TrainBuilder();
         
-        Assert.assertEquals("clone creation number", 0, TrainBuilder.cloneCreationOrder);
-
         tb.build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
@@ -19876,8 +19870,6 @@ public class TrainBuilderTest extends OperationsTestCase {
     @Test
     public void testQuickLoadTurnAlternateTrack() {
 
-        TrainBuilder.cloneCreationOrder = 0; // reset
-
         // Route Acton-Boston-Chelmsford-Chelmsford-Boston-Acton
         Route route = JUnitOperationsUtil.createThreeLocationTurnRoute();
 
@@ -19930,8 +19922,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Setup.setBuildAggressive(true);
 
         TrainBuilder tb = new TrainBuilder();
-
-        Assert.assertEquals("clone creation number", 0, TrainBuilder.cloneCreationOrder);
 
         tb.build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
@@ -20156,8 +20146,6 @@ public class TrainBuilderTest extends OperationsTestCase {
      */
     @Test
     public void testQuickServiceTrainTiming() {
-
-        TrainBuilder.cloneCreationOrder = 0; // reset
 
         // Route Acton-Boston-Chelmsford
         Route route1 = JUnitOperationsUtil.createThreeLocationRoute();
