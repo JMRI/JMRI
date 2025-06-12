@@ -2097,6 +2097,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 addLine(_buildReport, FIVE,
                         Bundle.getMessage("buildCarRouteLocation", car.toString(), car.getTrack().getTrackTypeName(),
                                 car.getLocationName(), car.getTrackName(), _train.getName(), rl.getName(), rl.getId()));
+                addLine(_buildReport, FIVE, BLANK_LINE);
                 return false;
             }
             // determine when the clone is going to be delivered
