@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement SensorManager for BiDiB systems.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2008
  * @author Eckart Meyer Copyright (C) 2019-2023
