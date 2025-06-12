@@ -487,6 +487,8 @@
           <li>Where Used support has been added to the Formula actions and expressions.  This
           is a text based search using the item's system and user names.  False positive matches are
           possible.</li>
+          <li>The formula function <strong>evaluateReference()</strong> has been added
+              to the <strong>NamedBean</strong> module.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
