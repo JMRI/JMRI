@@ -19,7 +19,7 @@
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
  | missingCarFormat | tab | manifest | columnFormat | manifestFormat | vsd | reporters | switchList
  | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat 
- | pageOrientation | CATS | router | logger | manifestFileOptions | comments | display)*>
+ | pageOrientation | CATS | router | logger | manifestFileOptions | comments | display | headerLines)*>
  
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT setup EMPTY>
@@ -58,6 +58,7 @@
 <!ELEMENT CATS EMPTY>
 <!ELEMENT comments EMPTY>
 <!ELEMENT display EMPTY>
+<!ELEMENT headerLines EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
 
@@ -234,6 +235,11 @@
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
 <!ATTLIST display showTrackMoves		(true | false ) "false">
+
+<!ATTLIST headerLines printHeaderLine1	(true | false ) "true">
+<!ATTLIST headerLines printHeaderLine2	(true | false ) "true">
+<!ATTLIST headerLines printHeaderLine3	(true | false ) "true">
+
 
 <!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model | hp
 | length | load | color | track | destination | dest_Track | finalDest | fd_Track | location | consist
