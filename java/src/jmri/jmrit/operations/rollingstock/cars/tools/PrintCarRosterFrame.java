@@ -238,7 +238,7 @@ public class PrintCarRosterFrame extends OperationsFrame {
             printRoster(writer);
 
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException we) {
             log.error("Error printing car roster: {}", we.getLocalizedMessage());
         }

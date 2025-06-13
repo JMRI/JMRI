@@ -2,11 +2,14 @@ package jmri.managers.configurexml;
 
 import java.util.List;
 import java.util.SortedSet;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.configurexml.JmriConfigureXmlException;
+import jmri.configurexml.LoadAndStorePreferences;
 import jmri.jmrit.roster.RosterEntry;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,17 +61,21 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
                 // store common part
                 storeCommon(m, elem);
 
+                var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
                 // store value if non-null; null values omitted
-                Object obj = m.getValue();
-                if (obj != null) {
-                    if (obj instanceof RosterEntry) {
-                        String valueClass = obj.getClass().getName();
-                        String value = ((RosterEntry) obj).getId();
-                        elem.setAttribute("value", value);
-                        elem.setAttribute("valueClass", valueClass);
-                    } else {
-                        String value = obj.toString();
-                        elem.setAttribute("value", value);
+                if (! (loadAndStorePreferences.isExcludeMemoryIMCURRENTTIME()
+                        && mName.equals("IMCURRENTTIME")) ) {
+                    Object obj = m.getValue();
+                    if (obj != null) {
+                        if (obj instanceof RosterEntry) {
+                            String valueClass = obj.getClass().getName();
+                            String value = ((RosterEntry) obj).getId();
+                            elem.setAttribute("value", value);
+                            elem.setAttribute("valueClass", valueClass);
+                        } else {
+                            String value = obj.toString();
+                            elem.setAttribute("value", value);
+                        }
                     }
                 }
 

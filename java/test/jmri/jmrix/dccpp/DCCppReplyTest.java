@@ -483,7 +483,9 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         //TrackManager
         r = DCCppReply.parseDCCppReply("= B PROG 123");
         Assert.assertTrue(r.isTrackManagerReply());
-        Assert.assertEquals("Monitor string", "TrackManager:= B PROG 123", r.toMonitorString());
+        Assert.assertEquals(r.getTrackManagerLetter(), 'B');
+        Assert.assertEquals(r.getTrackManagerMode(), "PROG");
+        Assert.assertEquals("Monitor string", "TrackManager Letter:B Mode:PROG", r.toMonitorString());
 
         //LCD message
         r = DCCppReply.parseDCCppReply("@ 0 12 \"this is a test lcd message 12345\"");

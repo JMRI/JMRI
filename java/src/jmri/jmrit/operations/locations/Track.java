@@ -218,6 +218,7 @@ public class Track extends PropertyChangeSupport {
     public static final String ROUTED_CHANGED_PROPERTY = "onlyCarsWithFinalDestinations"; // NOI18N
     public static final String HOLD_CARS_CHANGED_PROPERTY = "trackHoldCarsWithCustomLoads"; // NOI18N
     public static final String TRACK_COMMENT_CHANGED_PROPERTY = "trackComments"; // NOI18N
+    public static final String TRACK_FACTOR_CHANGED_PROPERTY = "trackReservationFactor"; // NOI18N
 
     // IdTag reader associated with this track.
     protected Reporter _reader = null;
@@ -496,7 +497,7 @@ public class Track extends PropertyChangeSupport {
         int old = _reservationFactor;
         _reservationFactor = factor;
         if (old != factor) {
-            setDirtyAndFirePropertyChange("trackReservationFactor", old, factor); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_FACTOR_CHANGED_PROPERTY, old, factor); // NOI18N
         }
     }
 

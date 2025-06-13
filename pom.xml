@@ -649,7 +649,7 @@
                     <!-- change from default 100 warnings; keep number synced with ant javadoc target -->
                     <additionalJOption>-breakiterator -Xmaxwarns 100</additionalJOption><!-- 100 is default, here so we can easily change it -->
                     <!-- remove ",-missing" to get warnings about missing Javadoc tags -->
-                    <doclint>all,-missing,-html</doclint>
+                    <doclint>all,-missing</doclint>
                     <author>true</author><!-- default -->
                     <use>true</use><!-- default -->
                     <failOnError>true</failOnError><!-- default -->

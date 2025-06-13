@@ -11,11 +11,16 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+
 import javax.annotation.Nonnull;
 import javax.swing.JFileChooser;
+
+import jmri.InstanceManager;
+import jmri.configurexml.LoadAndStorePreferences;
 import jmri.util.FileUtil;
 import jmri.util.JmriLocalEntityResolver;
 import jmri.util.NoArchiveFileFilter;
+
 import org.jdom2.Comment;
 import org.jdom2.Content;
 import org.jdom2.DocType;
@@ -565,10 +570,13 @@ public class XmlFile {
      * @param root The root element of the document that will be written.
      */
     static public void addDefaultInfo(Element root) {
-        String content = "Written by JMRI version " + jmri.Version.name()
+        var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
+        if (!loadAndStorePreferences.isExcludeJmriVersion()) {
+            String content = "Written by JMRI version " + jmri.Version.name()
                 + " on " + (new Date()).toString();
-        Comment comment = new Comment(content);
-        root.addContent(comment);
+            Comment comment = new Comment(content);
+            root.addContent(comment);
+        }
     }
 
     /**

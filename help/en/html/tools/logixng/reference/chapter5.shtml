@@ -54,6 +54,10 @@
             </li>
 
             <li>
+              <a href="#digital_action_mergcbus">Merg Cbus <span class="since">since 5.11.7</span></a>
+            </li>
+
+            <li>
               <a href="#digital_action_other">Other</a>
             </li>
           </ul>
@@ -1618,6 +1622,30 @@ LogixNG: IQ:AUTO:0001
       <h4>Update loconet slots</h4>
 
       <p>This action forces an update of the LocoNet slot status in JMRI.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="digital_action_mergcbus">Digital action :: Merg Cbus <span class="since">since 5.11.7</span></h2>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_mergcbus.png"><img class="image-border" src=
+        "images/chapter5/digital_action_mergcbus.png" alt="Chapter 5 digital action Merg Cbus list"></a>
+      </div>
+
+      <h4>Send MERG CBUS event</h4>
+
+      <p>This action sends a MERG event to a node.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/merg_cbus_action.png">
+        <img src="images/chapter5/merg_cbus_action.png"
+        alt="Chapter 5 merg cbus action"></a>
+      </div>
+
+      <p>The Event types are <strong>Off</strong>, <strong>On</strong> and <strong>Request</strong>.</p>
+
+      <p>The Connection defaults to the first MERG connection.  If there is more than one, other
+      connections can be selected.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
