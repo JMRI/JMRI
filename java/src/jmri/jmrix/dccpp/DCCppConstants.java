@@ -284,7 +284,7 @@ public final class DCCppConstants {
     //Track Manager (in 5.x)
     public static final char   TRACKMANAGER_CMD        = '=';
     public static final String TRACKMANAGER_CMD_REGEX  = "=";
-    public static final String TRACKMANAGER_REPLY_REGEX= "\\s*=\\s*[A-H]\\s+([A-Z]+)\\s*(\\d*)"; //<= A PROG> or <= B DC 1234>  
+    public static final String TRACKMANAGER_REPLY_REGEX= "\\s*=\\s*([A-H])\\s+([A-Z]+)\\s*(\\d*)"; //<= A PROG> or <= B DC 1234>  
 
     //LCD message
     public static final char   LCD_TEXT_CMD         = '@'; //request that LCD messages be sent to this instance of JMRI

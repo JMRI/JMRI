@@ -326,7 +326,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text = "Unknown Message: '" + toString() + "'";
                 break;
             case DCCppConstants.TRACKMANAGER_CMD:
-                text = "TrackManager:" + toString();
+                text = "TrackManager Letter:" + getTrackManagerLetter() + " Mode:" + getTrackManagerMode();
                 break;
             case DCCppConstants.LCD_TEXT_CMD:
                 text = "LCD Text '" + getLCDTextString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
@@ -1717,36 +1717,57 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return ids;
     }
     public ArrayList<Integer> getCurrentMaxesList() {
-        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        ArrayList<Integer> cml=new ArrayList<Integer>();
         if (this.isCurrentMaxesReply()) {
-            String idList = this.getValueString(1);
-            if (!idList.isEmpty()) {
-                String[] idStrings = idList.split(" ");
-                for (String idString : idStrings) {
-                    ids.add(Integer.parseInt(idString));
+            String sml = this.getValueString(1);
+            if (!sml.isEmpty()) {
+                String[] mss = sml.split(" ");
+                for (String ms : mss) {
+                    cml.add(Integer.parseInt(ms));
                 }
             }
         } else {
             log.error("getCurrentMaxesList called on non-CurrentMaxesListReply message type {}", this.getOpCodeChar());
         }
-        return ids;
+        return cml;
     }
     public ArrayList<Integer> getCurrentValuesList() {
-        ArrayList<Integer> ids=new ArrayList<Integer>(); 
+        ArrayList<Integer> cvl=new ArrayList<Integer>();
         if (this.isCurrentValuesReply()) {
-            String idList = this.getValueString(1);
-            if (!idList.isEmpty()) {
-                String[] idStrings = idList.split(" ");
-                for (String idString : idStrings) {
-                    ids.add(Integer.parseInt(idString));
+            String svl = this.getValueString(1);
+            if (!svl.isEmpty()) {
+                String[] vss = svl.split(" ");
+                for (String vs : vss) {
+                    cvl.add(Integer.parseInt(vs));
                 }
             }
         } else {
             log.error("getCurrentValuesList called on non-CurrentValuesListReply message type {}", this.getOpCodeChar());
         }
-        return ids;
+        return cvl;
     }
 
+    public char getTrackManagerLetter() {
+        if (this.isTrackManagerReply()) {
+            String s = this.getValueString(1);
+            if (!s.isEmpty()) {                
+                return (s.charAt(0)); //convert to a char
+            } else {
+                return ('0');
+            }
+        } else {
+            log.error("getTrackManagerLetter Parser called on non-TrackManager message type {}", this.getOpCodeChar());
+            return ('0');
+        }
+    }
+    public String getTrackManagerMode() {
+        if (this.isTrackManagerReply()) {
+            return (this.getValueString(2));
+        } else {
+            log.error("getTrackManagerMode Parser called on non-TrackManager message type {}", this.getOpCodeChar());
+            return ("0");
+        }
+    }
 
     public String getClockMinutesString() {
         if (this.isClockReply()) {

@@ -3325,22 +3325,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       destination and track.
 
       <p>
-        The quick load service feature allows the "turn" or another train to also pull the car. For
-        the first legs of a train's route carrying the car, the program will create a "clone" car.
-        The clone cars are used to create the train Manifests with a "car" having multiple set outs
-        and pulls. The last leg has the actual car. If you don't want the train delivering the car
-        to immediate pull the car, set the wait value in the optional <a href="#Schedules">schedule</a>
-        to 1. This will allow the next train built's Manifest to show pulling the car before the car
-        is actually delivered. Note that the program won't allow a train that is scheduled to
-        arrived before the car is delivered to pull the car. Timing conflicts are noted in the
-        train's build report. To avoid conflicts, build trains in their departure time order with
-        enough time between each departure to allow the previous trains to complete their
-        deliveries.
+        The quick load service feature allows the "turn" or another train to pull the car. For the
+        first leg of a train's route carrying the car, the program will create a "clone" car. The
+        clone cars are used to create the train Manifests with a "car" having multiple set outs and
+        pulls. The last leg has the actual car. If you don't want the train delivering the car to
+        immediate pull the car, set the wait value in the optional <a href="#Schedules">schedule</a>
+        to 1. An alternative is to create a route where the quick load service track is only
+        serviced once. Either option will allow the next train built's Manifest to show pulling the
+        car before the car is actually delivered. Note that the program won't allow a train that is
+        scheduled to arrive before the car is delivered to pull the car. Timing conflicts are noted
+        in the train's build report. To avoid conflicts, build trains in their departure time order
+        with enough time between each departure to allow the previous trains to complete their
+        deliveries to the quick load service spurs.
       </p>
 
       <p>When using this feature, you need to be careful in the order you reset trains if you
         allow two or more trains to carry the same car. Always reset the last train built, and work
-        your way backwards resetting in the reverse order you built your trains.</p>
+        your way backwards resetting in the reverse order you built your trains. Also recommended,
+        that you terminate the trains in the order built.</p>
 
       <h5 id="SpurOption">Spur Option (Hold cars with custom loads when spurs are full)</h5>
       In the "Edit Track Load Options" window spurs have the additional option "Hold cars with
@@ -3654,8 +3656,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       Import locations allows you to populate your locations using a CSV file. First do an Export
       Locations and examine the file to see the order the data has to be entered. The import
-      locations code hasn't implemented all of the exports fields. Columns 15 through 23, and
-      columns 27 though 37 are currently ignored during an import.
+      locations code hasn't implemented all of the exports fields and some are ignored. Columns 4
+      through 7, columns 18 through 21, and columns 30 though 40 are currently ignored during an
+      import.
 
       <h4 id="PrintLocation">Print or Preview</h4>
       This tool provides several options with regards to printing or previewing your locations.

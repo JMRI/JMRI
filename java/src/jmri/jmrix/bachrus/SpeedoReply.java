@@ -58,6 +58,30 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
                 return 0;
             }
         }
+        // drM SPC200R
+        if (_nDataChars == 7 &&
+               (_dataChars[0] == 0x50 || _dataChars[0] == 0x51 || _dataChars[0] == 0x52 || _dataChars[0] == 0x53) ) {
+            // Check for invalid speed flag (0x2D = 45)
+            for (int i = 3; i <= 6; i++) {
+                if (_dataChars[i] == 0x2D) {
+                    return -1;
+                }
+            }      
+            int hundreds = _dataChars[3];
+            int tens = _dataChars[4];
+            int units = _dataChars[5];
+            int tenths = _dataChars[6];
+
+            // Basic range check (optional)
+            if (hundreds > 9 || tens > 9 || units > 9 || tenths > 9) {
+                return -1;
+            }
+
+            Float speed = hundreds * 100 + tens * 10 + units + tenths / 10.0f;
+            int scaled = Math.round(speed * 10); // e.g. 123.4 -> 1234
+            log.trace("Speed float {} int {}", speed, scaled);
+            return scaled; 
+        }
         // bachrus formatting
         // don't return 0 as it will cause an exception
         if (_nDataChars < 9) {
@@ -78,6 +102,7 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
      * <dt>5</dt><dd>Reader 50</dd>
      * <dt>6</dt><dd>Reader 60</dd>
      * <dt>103</dt><dd>KPR-Zeller</dd>
+     * <dt>200</dt><dd>drM SPC200R</dd>
      * </dl>
      * @return type code for specific reply content
      */
@@ -86,6 +111,10 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
         // KPF-Zeller formatting
         if (_nDataChars == 13) {
             return 103;
+        }
+        // drM SPC200R formatting
+        if (_nDataChars == 7) {
+            return 200;
         }
         // bachrus formatting
         if (_nDataChars < 7) {

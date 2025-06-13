@@ -547,7 +547,9 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "address request message");
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
-        assertEquals(1, lnis.outbound.size(), "count is correct");
+        // BB 79 01 00 may appear shortly after this in tcis.outbound
+        // for long delays, BF 02 05 00 is re-sent 10 times before halting attempt.
+
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x0A, 0x00, 0x05, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is in-use
         lnis.sendTestMessage(cmdStationReply);

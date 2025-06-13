@@ -10,9 +10,10 @@ import jmri.jmrix.can.cbus.*;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
@@ -27,49 +28,49 @@ public class CbusNodeTest {
     @Test
     public void testCTor() {
         CbusNode t = new CbusNode(memo,256);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
         t.dispose();
     }
 
     @Test
     public void testCanListenAndRemove() {
-        Assert.assertEquals("no listener to start with",0,tcis.numListeners());
+        assertEquals( 0, tcis.numListeners(), "no listener to start with");
         CbusNode t = new CbusNode(memo,256);
-        Assert.assertTrue("table listening",1 == tcis.numListeners());
+        assertEquals( 1, tcis.numListeners(), "table listening");
         t.dispose();
-        Assert.assertTrue("no listener to finish with",0 == tcis.numListeners());
+        assertEquals( 0, tcis.numListeners(), "no listener to finish with");
     }
 
     @Test
     public void testDefaultGets() {
 
         CbusNode t = new CbusNode(memo,256);
-        Assert.assertTrue("nodenum",t.getNodeNumber()==256);
-        Assert.assertTrue("default cs num",t.getCsNum()== -1 );
-        Assert.assertTrue("default getTotalNodeEvents ",t.getNodeEventManager().getTotalNodeEvents()== -1 );
-        Assert.assertTrue("default getLoadedNodeEvents",t.getNodeEventManager().getLoadedNodeEvents()== -1 );
-        Assert.assertTrue("default parameter 0",t.getNodeParamManager().getParameter(0)== -1 );
-        Assert.assertTrue("default getNV 0",t.getNodeNvManager().getNV(0)== -1 );
-        Assert.assertTrue("default getTotalNVs 0",t.getNodeNvManager().getTotalNVs()== 0 );
-        Assert.assertTrue("default getNodeCanId ",t.getNodeCanId()== 1 );
-        Assert.assertTrue("default getNodeTypeName ",t.getNodeStats().getNodeTypeName().isEmpty() );
-        Assert.assertTrue("default getNodeInFLiMMode",t.getNodeInFLiMMode() );
-        Assert.assertFalse("default getNodeInSetupMode",t.getNodeInSetupMode() );
-        Assert.assertEquals("default getNodeNumberName","256",t.getNodeStats().getNodeNumberName() );
-        Assert.assertTrue("default getsendsWRACKonNVSET",t.getsendsWRACKonNVSET() );
-        Assert.assertFalse("default getsendsWRACKonNVSET",t.getnvWriteInLearnOnly() );
-        Assert.assertTrue("default totalNodeBytes ",-1 == t.getNodeStats().totalNodeBytes() );
-        Assert.assertTrue("default totalRemainingNodeBytes",-1 == t.getNodeStats().totalRemainingNodeBytes() );
-        Assert.assertEquals("default toString ","256",t.toString() );
-        Assert.assertTrue("default getNodeFlags ",t.getNodeFlags() == -1 );
-        Assert.assertTrue("default getOutstandingEvVars",t.getNodeEventManager().getOutstandingEvVars() == -1);
-        Assert.assertFalse("default hasActiveTimers",t.getNodeTimerManager().hasActiveTimers());
-        Assert.assertFalse("default isEventIndexValid",t.getNodeEventManager().isEventIndexValid());
-        Assert.assertNull("No First Backup Timestamp",t.getNodeBackupManager().getFirstBackupTime());
-        Assert.assertNull("No Last Backup Timestamp",t.getNodeBackupManager().getLastBackupTime());
-        Assert.assertEquals("0 Backups",0,t.getNodeBackupManager().getNumCompleteBackups());
-        Assert.assertEquals("Backup Outstanding",
-            t.getNodeBackupManager().getSessionBackupStatus(),CbusNodeConstants.BackupType.OUTSTANDING);
+        assertEquals( 256, t.getNodeNumber(), "nodenum");
+        assertEquals( -1, t.getCsNum(), "default cs num");
+        assertEquals( -1, t.getNodeEventManager().getTotalNodeEvents(), "default getTotalNodeEvents");
+        assertEquals( -1, t.getNodeEventManager().getLoadedNodeEvents(), "default getLoadedNodeEvents");
+        assertEquals( -1, t.getNodeParamManager().getParameter(0), "default parameter 0");
+        assertEquals( -1, t.getNodeNvManager().getNV(0), "default getNV 0");
+        assertEquals( 0, t.getNodeNvManager().getTotalNVs(), "default getTotalNVs 0");
+        assertEquals( 1, t.getNodeCanId(), "default getNodeCanId");
+        assertTrue( t.getNodeStats().getNodeTypeName().isEmpty(), "default getNodeTypeName");
+        assertTrue( t.getNodeInFLiMMode(),"default getNodeInFLiMMode");
+        assertFalse( t.getNodeInSetupMode(),"default getNodeInSetupMode");
+        assertEquals( "256", t.getNodeStats().getNodeNumberName(), "default getNodeNumberName");
+        assertTrue( t.getsendsWRACKonNVSET(),"default getsendsWRACKonNVSET");
+        assertFalse( t.getnvWriteInLearnOnly(),"default getsendsWRACKonNVSET");
+        assertEquals( -1, t.getNodeStats().totalNodeBytes(),"default totalNodeBytes");
+        assertEquals( -1, t.getNodeStats().totalRemainingNodeBytes(),"default totalRemainingNodeBytes");
+        assertEquals( "256", t.toString(), "default toString");
+        assertEquals( -1, t.getNodeFlags(), "default getNodeFlags");
+        assertEquals( -1, t.getNodeEventManager().getOutstandingEvVars(), "default getOutstandingEvVars");
+        assertFalse( t.getNodeTimerManager().hasActiveTimers(), "default hasActiveTimers");
+        assertFalse( t.getNodeEventManager().isEventIndexValid(), "default isEventIndexValid");
+        assertNull( t.getNodeBackupManager().getFirstBackupTime(), "No First Backup Timestamp");
+        assertNull( t.getNodeBackupManager().getLastBackupTime(), "No Last Backup Timestamp");
+        assertEquals( 0, t.getNodeBackupManager().getNumCompleteBackups(), "0 Backups");
+        assertEquals( t.getNodeBackupManager().getSessionBackupStatus(),
+            CbusNodeConstants.BackupType.OUTSTANDING, "Backup Outstanding");
 
         t.dispose();
     }
@@ -78,7 +79,7 @@ public class CbusNodeTest {
     public void testInOutLearnModeExtendedRtr() {
         CbusNode t = new CbusNode(memo,1234);
 
-        Assert.assertEquals("default getNodeInLearnMode ",false,t.getNodeInLearnMode() );
+        assertFalse( t.getNodeInLearnMode(),"default getNodeInLearnMode");
 
         // frame to set node into learn
         CanReply r = new CanReply();
@@ -88,7 +89,7 @@ public class CbusNodeTest {
         r.setElement(1, 0x04);
         r.setElement(2, 0xd2);
         t.getCanListener().reply(r);
-        Assert.assertEquals("reply in learn mode ",true,t.getNodeInLearnMode() );
+        assertTrue( t.getNodeInLearnMode(), "reply in learn mode");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -97,7 +98,7 @@ public class CbusNodeTest {
         r.setElement(1, 0x04);
         r.setElement(2, 0xd2);
         t.getCanListener().reply(r);
-        Assert.assertEquals("reply exit learn mode ",false,t.getNodeInLearnMode() );
+        assertFalse( t.getNodeInLearnMode(), "reply exit learn mode");
 
         // frame to set node into learn
         CanMessage m = new CanMessage( tcis.getCanid() );
@@ -106,7 +107,7 @@ public class CbusNodeTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0xd2);
         t.getCanListener().message(m);
-        Assert.assertEquals("message enter learn mode ",true,t.getNodeInLearnMode() );
+        assertTrue( t.getNodeInLearnMode(), "message enter learn mode");
 
         m = new CanMessage( tcis.getCanid() );
         m.setNumDataElements(3);
@@ -114,14 +115,14 @@ public class CbusNodeTest {
         m.setElement(1, 0x04);
         m.setElement(2, 0xd2);
         t.getCanListener().message(m);
-        Assert.assertEquals("message exit learn mode ",false,t.getNodeInLearnMode() );
+        assertFalse( t.getNodeInLearnMode(), "message exit learn mode");
 
         // any message which does nothing to node does not crash it
         m = new CanMessage( tcis.getCanid() );
         m.setNumDataElements(1);
         m.setElement(0, CbusConstants.CBUS_RTOF); // request track off
         t.getCanListener().message(m);
-        Assert.assertEquals("not in learn mode ",false,t.getNodeInLearnMode() );
+        assertFalse( t.getNodeInLearnMode(), "not in learn mode");
 
 
         m = new CanMessage( tcis.getCanid() );
@@ -132,16 +133,16 @@ public class CbusNodeTest {
         m.setExtended(true);
 
         t.getCanListener().message(m);
-        Assert.assertEquals("no change ext",false,t.getNodeInLearnMode() );
+        assertFalse( t.getNodeInLearnMode(), "no change ext");
 
         m.setExtended(false);
         m.setRtr(true);
         t.getCanListener().message(m);
-        Assert.assertEquals("no change rtr",false,t.getNodeInLearnMode() );
+        assertFalse( t.getNodeInLearnMode(), "no change rtr");
 
         m.setRtr(false);
         t.getCanListener().message(m);
-        Assert.assertEquals("message enter learn mode ",true,t.getNodeInLearnMode() );
+        assertTrue( t.getNodeInLearnMode(), "message enter learn mode");
 
 
         r = new CanReply();
@@ -153,12 +154,12 @@ public class CbusNodeTest {
 
         r.setExtended(true);
         t.getCanListener().reply(r);
-        Assert.assertEquals("no change ext",true,t.getNodeInLearnMode() );
+        assertTrue( t.getNodeInLearnMode(), "no change ext");
 
         r.setExtended(false);
         r.setRtr(true);
         t.getCanListener().reply(r);
-        Assert.assertEquals("no change rtr",true,t.getNodeInLearnMode() );
+        assertTrue( t.getNodeInLearnMode(), "no change rtr");
 
         t.dispose();
 
@@ -168,19 +169,19 @@ public class CbusNodeTest {
     public void testSetName() {
 
         CbusNode t = new CbusNode(memo,12345);
-        Assert.assertTrue("default getUserName ",t.getUserName().isEmpty() );
+        assertTrue( t.getUserName().isEmpty(), "default getUserName");
 
         t.setUserName("Alonso Smith");
-        Assert.assertEquals("username set","Alonso Smith",t.getUserName() );
-        Assert.assertEquals("Alonso toString ","12345 Alonso Smith",t.toString() );
+        assertEquals( "Alonso Smith", t.getUserName(), "username set");
+        assertEquals( "12345 Alonso Smith", t.toString(), "Alonso toString");
 
         t.setNameIfNoName("purple");
-        Assert.assertEquals("username unchanged","Alonso Smith",t.getUserName() );
+        assertEquals( "Alonso Smith",t.getUserName(), "username unchanged");
 
         CbusNode tb = new CbusNode(memo,123);
         tb.setNameIfNoName("shirley");
-        Assert.assertEquals("username set if no name","shirley",tb.getUserName() );
-        Assert.assertEquals("username number","123 shirley",tb.getNodeStats().getNodeNumberName() );
+        assertEquals( "shirley", tb.getUserName(), "username set if no name");
+        assertEquals( "123 shirley", tb.getNodeStats().getNodeNumberName(), "username number");
 
         t.dispose();
         tb.dispose();
@@ -189,20 +190,20 @@ public class CbusNodeTest {
     @Test
     public void testStartGetParams() {
 
-        Assert.assertEquals("tcis empty at start", 0 ,tcis.outbound.size() );
+        assertEquals( 0, tcis.outbound.size(), "tcis empty at start");
         CbusNode t = new CbusNode(memo,12345);
 
-        Assert.assertTrue("default parameter 0",t.getNodeParamManager().getParameter(0)== -1 );
+        assertEquals( -1, t.getNodeParamManager().getParameter(0), "default parameter 0");
         // only 1 parameter awaiting knowledge of until total confirmed
-        Assert.assertEquals("default outstanding parameters",8,t.getNodeParamManager().getOutstandingParams() );
+        assertEquals( 8,t.getNodeParamManager().getOutstandingParams(), "default outstanding parameters");
 
-        Assert.assertEquals("tcis empty after creating new node", 0 ,tcis.outbound.size() );
+        assertEquals( 0 ,tcis.outbound.size(), "tcis empty after creating new node");
         t.getNodeParamManager().sendRequestNextParam();
-        Assert.assertEquals("Node has requested parameter 0", 1 ,tcis.outbound.size() );
+        assertEquals( 1 ,tcis.outbound.size(), "Node has requested parameter 0");
         t.getNodeParamManager().sendRequestNextParam();
-        Assert.assertEquals("Node has already requested parameter 0", 1 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent is parameter request", "[5f8] 73 30 39 00",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( 1 ,tcis.outbound.size(), "Node has already requested parameter 0");
+        assertEquals( "[5f8] 73 30 39 00", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Message sent is parameter request");
 
         // frame from physical node to CbusNode advising has 7 parameters
         CanReply r = new CanReply();
@@ -214,15 +215,15 @@ public class CbusNodeTest {
         r.setElement(3, 0x00); // parameter 0
         r.setElement(4, 0x07); // value 7
         t.getCanListener().reply(r);
-        Assert.assertTrue("parameter 0 value 7",t.getNodeParamManager().getParameter(0)== 7 );
-        Assert.assertTrue("default outstanding parameters 7",t.getNodeParamManager().getOutstandingParams()== 7 );
+        assertEquals( 7, t.getNodeParamManager().getParameter(0), "parameter 0 value 7");
+        assertEquals( 7, t.getNodeParamManager().getOutstandingParams(), "default outstanding parameters 7" );
         t.getNodeParamManager().sendRequestNextParam();
         // JUnitUtil.waitFor(()->{ return(tcis.outbound.size()>1); }, " outbound 1 didn't arrive");
 
 
-        Assert.assertEquals("CbusNode has requested parameter 1 manufacturer", 2 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent is parameter 1 request", "[5f8] 73 30 39 01",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( 2 ,tcis.outbound.size(), "CbusNode has requested parameter 1 manufacturer");
+        assertEquals( "[5f8] 73 30 39 01", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Message sent is parameter 1 request");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -233,11 +234,11 @@ public class CbusNodeTest {
         r.setElement(3, 0x01); // parameter 1
         r.setElement(4, 0xa5); // dec 165 MERG
         t.getCanListener().reply(r);
-        Assert.assertTrue("parameter 1 value 165",t.getNodeParamManager().getParameter(1)== 165 );
+        assertEquals( 165, t.getNodeParamManager().getParameter(1), "parameter 1 value 165");
         t.getNodeParamManager().sendRequestNextParam();
-        Assert.assertEquals("CbusNode has requested parameter 3 module type identifier", 3 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent is parameter 3 request", "[5f8] 73 30 39 03",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( 3 ,tcis.outbound.size(), "CbusNode has requested parameter 3 module type identifier");
+        assertEquals( "[5f8] 73 30 39 03", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Message sent is parameter 3 request");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -250,11 +251,11 @@ public class CbusNodeTest {
         t.getCanListener().reply(r);
 
         // now we know params 1 and 3, try nodetype lookup
-        Assert.assertEquals("CbusNode identified as a CANPAN", "CANPAN" ,t.getNodeStats().getNodeTypeName() );
+        assertEquals( "CANPAN" ,t.getNodeStats().getNodeTypeName(), "CbusNode identified as a CANPAN");
         t.getNodeParamManager().sendRequestNextParam();
-        Assert.assertEquals("CbusNode has requested parameter 6 number nv's", 4 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent is parameter 6 request", "[5f8] 73 30 39 06",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( 4 ,tcis.outbound.size(), "CbusNode has requested parameter 6 number nv's");
+        assertEquals( "[5f8] 73 30 39 06", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Message sent is parameter 6 request");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -267,16 +268,16 @@ public class CbusNodeTest {
         t.getCanListener().reply(r);
 
         // now we know number of NV's
-        Assert.assertTrue("getTotalNVs 3",t.getNodeNvManager().getTotalNVs()== 3 );
-        Assert.assertTrue("get oustanding NVs 3",t.getNodeNvManager().getOutstandingNvCount()== 3 );
-        Assert.assertTrue("get NVs 0 3",t.getNodeNvManager().getNV(0)== 3 );
-        Assert.assertTrue("get NVs 1 -1",t.getNodeNvManager().getNV(1)== -1 );
-        Assert.assertTrue("get NVs 3 -1",t.getNodeNvManager().getNV(3)== -1 );
+        assertEquals( 3, t.getNodeNvManager().getTotalNVs(), "getTotalNVs 3");
+        assertEquals( 3, t.getNodeNvManager().getOutstandingNvCount(), "get oustanding NVs 3");
+        assertEquals( 3, t.getNodeNvManager().getNV(0), "get NVs 0 3");
+        assertEquals( -1, t.getNodeNvManager().getNV(1), "get NVs 1 -1");
+        assertEquals( -1, t.getNodeNvManager().getNV(3), "get NVs 3 -1");
 
         t.getNodeParamManager().sendRequestNextParam();
-        Assert.assertEquals("CbusNode has requested parameter 6 number ev vars per event", 5 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent is parameter 5 request", "[5f8] 73 30 39 05",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( 5 ,tcis.outbound.size(), "CbusNode has requested parameter 6 number ev vars per event");
+        assertEquals( "[5f8] 73 30 39 05", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Message sent is parameter 5 request");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -288,12 +289,12 @@ public class CbusNodeTest {
         r.setElement(4, 0x07); // 7 ev vars per ev
         t.getCanListener().reply(r);
 
-        Assert.assertTrue(" outstanding parameters 3",t.getNodeParamManager().getOutstandingParams()== 3 );
+        assertEquals( 3, t.getNodeParamManager().getOutstandingParams(), "outstanding parameters 3");
 
         t.getNodeParamManager().sendRequestNextParam();
-        Assert.assertEquals("CbusNode has requested parameter 7 firmware major", 6 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent is parameter 7 request", "[5f8] 73 30 39 07",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( 6 ,tcis.outbound.size(), "CbusNode has requested parameter 7 firmware major");
+        assertEquals( "[5f8] 73 30 39 07", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Message sent is parameter 7 request");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -307,11 +308,11 @@ public class CbusNodeTest {
 
         t.getNodeParamManager().sendRequestNextParam();
 
-        Assert.assertEquals("CbusNode has requested parameter 2 firmware minor", 7 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent is parameter 2 request", "[5f8] 73 30 39 02",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-        Assert.assertTrue("default getsendsWRACKonNVSET ",t.getsendsWRACKonNVSET() );
-        Assert.assertFalse("default getsendsWRACKonNVSET ",t.getnvWriteInLearnOnly() );
+        assertEquals( 7 ,tcis.outbound.size(), "CbusNode has requested parameter 2 firmware minor");
+        assertEquals( "[5f8] 73 30 39 02", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Message sent is parameter 2 request");
+        assertTrue( t.getsendsWRACKonNVSET(), "default getsendsWRACKonNVSET");
+        assertFalse( t.getnvWriteInLearnOnly(), "default getnvWriteInLearnOnly");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -323,19 +324,21 @@ public class CbusNodeTest {
         r.setElement(4, 0x01); // firmware pt2 1
         t.getCanListener().reply(r);
 
-        Assert.assertTrue(" outstanding parameter 1",t.getNodeParamManager().getOutstandingParams()== 1 );
+        assertEquals( 1, t.getNodeParamManager().getOutstandingParams(), " outstanding parameter 1");
 
-        Assert.assertEquals("getParameters ", "[7, 165, 1, 29, -1, 7, 3, 2]",
-            java.util.Arrays.toString(t.getNodeParamManager().getParameters() ) );
+        assertEquals( "[7, 165, 1, 29, -1, 7, 3, 2]",
+            java.util.Arrays.toString(t.getNodeParamManager().getParameters() ),
+            "getParameters ");
 
         t.getNodeParamManager().sendRequestNextParam();
 
         // with this we should expect CbusNodeConstants.setTraits to have been called
-        Assert.assertFalse("setTraits getsendsWRACKonNVSET ",t.getsendsWRACKonNVSET() );
+        assertFalse( t.getsendsWRACKonNVSET(), "setTraits getsendsWRACKonNVSET ");
 
-        Assert.assertEquals("CbusNode has requested number of events", 8 ,tcis.outbound.size() );
-        Assert.assertEquals("Message sent numev request", "[5f8] 58 30 39",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( 8 ,tcis.outbound.size(), "CbusNode has requested number of events");
+        assertEquals( "[5f8] 58 30 39",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Message sent numev request");
 
         t.dispose();
 
@@ -346,8 +349,8 @@ public class CbusNodeTest {
 
         CbusNode t = new CbusNode(memo,12345);
 
-        Assert.assertTrue("default getTotalNodeEvents ",t.getNodeEventManager().getTotalNodeEvents()== -1 );
-        Assert.assertFalse("default active timers false, ie nothing requested ",t.getNodeTimerManager().hasActiveTimers() );
+        assertEquals( -1, t.getNodeEventManager().getTotalNodeEvents(), "default getTotalNodeEvents");
+        assertFalse( t.getNodeTimerManager().hasActiveTimers(), "default active timers false, ie nothing requested");
 
 
         // set node to 4 ev vars per event, para 5
@@ -357,49 +360,46 @@ public class CbusNodeTest {
 
         t.getNodeEventManager().addNewEvent(ev);
         // index on the event is set to -1, ie unknown when an event is added to the node
-        Assert.assertEquals("index in array -1",-1,ev.getIndex() );
+        assertEquals( -1, ev.getIndex(), "index in array -1");
 
-        Assert.assertTrue("after new ev getTotalNodeEvents 1",t.getNodeEventManager().getTotalNodeEvents()== 1 );
-        Assert.assertTrue("after new ev getOutstandingEvVars 1",t.getNodeEventManager().getOutstandingEvVars()== 4 );
+        assertEquals( 1, t.getNodeEventManager().getTotalNodeEvents(), "after new ev getTotalNodeEvents 1");
+        assertEquals( 4, t.getNodeEventManager().getOutstandingEvVars(), "after new ev getOutstandingEvVars 1");
 
         CbusNodeEvent evb = new CbusNodeEvent(memo,0,8,12345,2,4);
         t.getNodeEventManager().addNewEvent(evb);
-        Assert.assertTrue("after new ev getTotalNodeEvents 2",t.getNodeEventManager().getTotalNodeEvents()== 2 );
-        Assert.assertTrue("after new ev getLoadedNodeEvents 2",t.getNodeEventManager().getLoadedNodeEvents()== 2 );
-        Assert.assertTrue("getOutstandingIndexNodeEvents 0",t.getNodeEventManager().getOutstandingIndexNodeEvents()== 0 );
+        assertEquals( 2, t.getNodeEventManager().getTotalNodeEvents(), "after new ev getTotalNodeEvents 2");
+        assertEquals( 2, t.getNodeEventManager().getLoadedNodeEvents(), "after new ev getLoadedNodeEvents 2");
+        assertEquals( 0, t.getNodeEventManager().getOutstandingIndexNodeEvents(), "getOutstandingIndexNodeEvents 0");
 
-        Assert.assertTrue("node event fetch node 0 ev 7",t.getNodeEventManager().getNodeEvent(0,7) == ev );
-        Assert.assertTrue("node event fetch null node 321 ev 645",t.getNodeEventManager().getNodeEvent(321,654) == null );
-        Assert.assertTrue("node event provide node 0 ev87",t.getNodeEventManager().provideNodeEvent(0,8) == evb );
-        Assert.assertTrue("after provide 321 645 getTotalNodeEvents 3",t.getNodeEventManager().getTotalNodeEvents()== 2 );
+        assertEquals( ev, t.getNodeEventManager().getNodeEvent(0,7), "node event fetch node 0 ev 7");
+        assertNull( t.getNodeEventManager().getNodeEvent(321,654), "node event fetch null node 321 ev 645");
+        assertEquals( evb, t.getNodeEventManager().provideNodeEvent(0,8), "node event provide node 0 ev87");
+        assertEquals( 2, t.getNodeEventManager().getTotalNodeEvents(), "after provide 321 645 getTotalNodeEvents 3");
         t.getNodeEventManager().provideNodeEvent(321,654);
-        Assert.assertTrue("after provide 321 645 getTotalNodeEvents 3",t.getNodeEventManager().getTotalNodeEvents()== 3 );
+        assertEquals( 3, t.getNodeEventManager().getTotalNodeEvents(), "after provide 321 645 getTotalNodeEvents 3");
 
         java.util.ArrayList<CbusNodeEvent> _tArr = t.getNodeEventManager().getEventArray();
-        if (_tArr!=null){
-            Assert.assertEquals("event array size 3",3,_tArr.size() );
-        } else {
-            Assert.fail("Array should not be null");
-        }
+        assertNotNull( _tArr, "Array should not be null");
+        assertEquals( 3, _tArr.size(), "event array size 3");
 
         ev.setIndex(77);
         evb.setIndex(88);
 
-        Assert.assertEquals("index in array 1",1,t.getNodeEventManager().getEventRowFromIndex(88) );
-        Assert.assertEquals("index in array 0",0,t.getNodeEventManager().getEventRowFromIndex(77) );
-        Assert.assertEquals("index 999 not in array",-1,t.getNodeEventManager().getEventRowFromIndex(999) );
+        assertEquals( 1, t.getNodeEventManager().getEventRowFromIndex(88), "index in array 1");
+        assertEquals( 0, t.getNodeEventManager().getEventRowFromIndex(77), "index in array 0");
+        assertEquals( -1, t.getNodeEventManager().getEventRowFromIndex(999), "index 999 not in array");
 
         t.getNodeEventManager().addNewEvent(new CbusNodeEvent(memo,123,-1,12345,3,4));
         t.getNodeEventManager().addNewEvent(new CbusNodeEvent(memo,-1,123,12345,4,4));
 
-        Assert.assertTrue("after remove getTotalNodeEvents 2",t.getNodeEventManager().getTotalNodeEvents()== 5 );
-        Assert.assertTrue("after new ev getLoadedNodeEvents 3",t.getNodeEventManager().getLoadedNodeEvents()== 3 );
+        assertEquals( 5, t.getNodeEventManager().getTotalNodeEvents(), "after remove getTotalNodeEvents 2");
+        assertEquals( 3, t.getNodeEventManager().getLoadedNodeEvents(), "after new ev getLoadedNodeEvents 3");
 
         t.getNodeEventManager().removeEvent(0,8);
-        Assert.assertTrue("node event remove node 0 ev 8",t.getNodeEventManager().getNodeEvent(0,8) == null );
-        Assert.assertTrue("node event not removed others",t.getNodeEventManager().getNodeEvent(321,654) != null );
-        Assert.assertTrue("after remove getTotalNodeEvents 4",t.getNodeEventManager().getTotalNodeEvents()==4 );
-        Assert.assertNull("event fetched by index",t.getNodeEventManager().getNodeEventByIndex(999) );
+        assertNull( t.getNodeEventManager().getNodeEvent(0,8), "node event remove node 0 ev 8");
+        assertNotNull( t.getNodeEventManager().getNodeEvent(321,654), "node event not removed others");
+        assertEquals( 4, t.getNodeEventManager().getTotalNodeEvents(), "after remove getTotalNodeEvents 4");
+        assertNull( t.getNodeEventManager().getNodeEventByIndex(999), "event fetched by index");
 
         t.setNodeInLearnMode(true);
 
@@ -411,10 +411,10 @@ public class CbusNodeTest {
         r.setElement(2, 0x00);
         t.getCanListener().reply(r);
 
-        Assert.assertTrue("after remove getTotalNodeEvents 4 wrong node number",t.getNodeEventManager().getTotalNodeEvents()==4 );
+        assertEquals( 4, t.getNodeEventManager().getTotalNodeEvents(), "after remove getTotalNodeEvents 4 wrong node number");
         r.setElement(2, 0x39);
         t.getCanListener().reply(r);
-        Assert.assertEquals("after CBUS_NNCLR getTotalNodeEvents 0",0,t.getNodeEventManager().getTotalNodeEvents() );
+        assertEquals( 0,t.getNodeEventManager().getTotalNodeEvents(), "after CBUS_NNCLR getTotalNodeEvents 0");
 
         t.dispose();
 
@@ -442,10 +442,10 @@ public class CbusNodeTest {
         r.setElement(6, 0xff); // ev val 255
         t.getCanListener().reply(r);
 
-        Assert.assertTrue("getTotalNodeEvents 1",t.getNodeEventManager().getTotalNodeEvents()==1 );
-        Assert.assertTrue("getLoadedNodeEvents 1",t.getNodeEventManager().getLoadedNodeEvents()== 1 );
-        Assert.assertTrue("getOutstandingEvVars 3",t.getNodeEventManager().getOutstandingEvVars() == 3);
-        Assert.assertEquals("Node has not sent a message", 0 ,tcis.outbound.size() );
+        assertEquals( 1, t.getNodeEventManager().getTotalNodeEvents(), "getTotalNodeEvents 1");
+        assertEquals( 1, t.getNodeEventManager().getLoadedNodeEvents(), "getLoadedNodeEvents 1");
+        assertEquals( 3, t.getNodeEventManager().getOutstandingEvVars(), "getOutstandingEvVars 3");
+        assertEquals( 0 ,tcis.outbound.size(), "Node has not sent a message");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -456,11 +456,11 @@ public class CbusNodeTest {
         r.setElement(3, 0x00); // en 6
         r.setElement(4, 0x06); // en 6
         t.getCanListener().reply(r);
-        Assert.assertTrue("getTotalNodeEvents 1 wrong event",t.getNodeEventManager().getTotalNodeEvents()==1 );
+        assertEquals( 1, t.getNodeEventManager().getTotalNodeEvents(), "getTotalNodeEvents 1 wrong event");
 
         r.setElement(4, 0x07); // en 7
         t.getCanListener().reply(r);
-        Assert.assertTrue("getTotalNodeEvents 0",t.getNodeEventManager().getTotalNodeEvents()==0 );
+        assertEquals( 0, t.getNodeEventManager().getTotalNodeEvents(), "getTotalNodeEvents 0");
 
         t.dispose();
 
@@ -474,9 +474,11 @@ public class CbusNodeTest {
         CbusNodeTableDataModel tModel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
 
-        CbusNode t = tModel.provideNodeByNodeNum(12345);
+        CbusNode t = new CbusNode(memo,12345);
         // set node to 3 ev vars per event( param 5) , 0 NV's ( param 6)
         t.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,3,0,7,8});
+
+        tModel.addNode(t);
 
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -486,14 +488,15 @@ public class CbusNodeTest {
         r.setElement(2, 0x39); // nn 12345
         r.setElement(3, 0x02); // node has 2 events
         t.getCanListener().reply(r);
-        Assert.assertTrue("CBUS_NUMEV 2",t.getNodeEventManager().getTotalNodeEvents()==2 );
-        Assert.assertEquals(0.5 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
+        assertEquals( 2, t.getNodeEventManager().getTotalNodeEvents(), "CBUS_NUMEV 2");
+        assertEquals(0.5 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
 
         t.getNodeEventManager().sendNextEvVarToFetch();
-        Assert.assertEquals("Node has sent a message", 1 ,tcis.outbound.size() );
-        Assert.assertEquals("Node sends NERD request", "[5f8] 57 30 39",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-        Assert.assertTrue("active timer true for NERD / ENRSP responses ",t.getNodeTimerManager().hasActiveTimers() );
+        assertEquals( 1 ,tcis.outbound.size(), "Node has sent a message");
+        assertEquals( "[5f8] 57 30 39",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Node sends NERD request");
+        assertTrue( t.getNodeTimerManager().hasActiveTimers(), "active timer true for NERD / ENRSP responses");
 
         // reply to NERD
         r = new CanReply();
@@ -509,12 +512,12 @@ public class CbusNodeTest {
         r.setElement(7, 0x01); // ev index 1
 
         t.getCanListener().reply(r);
-        Assert.assertTrue("CBUS_ENRSP 2",t.getNodeEventManager().getTotalNodeEvents()==2 );
-        Assert.assertEquals(0.5625 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
+        assertEquals( 2, t.getNodeEventManager().getTotalNodeEvents(), "CBUS_ENRSP 2");
+        assertEquals(0.5625 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
 
-        Assert.assertTrue("getLoadedNodeEvents 1",t.getNodeEventManager().getLoadedNodeEvents()== 1 );
-        Assert.assertTrue("getOutstandingEvVars 3",t.getNodeEventManager().getOutstandingEvVars() == 6);
-        Assert.assertFalse("isEventIndexValid false",t.getNodeEventManager().isEventIndexValid());
+        assertEquals( 1, t.getNodeEventManager().getLoadedNodeEvents(), "getLoadedNodeEvents 1");
+        assertEquals( 6, t.getNodeEventManager().getOutstandingEvVars(), "getOutstandingEvVars 3");
+        assertFalse( t.getNodeEventManager().isEventIndexValid(), "isEventIndexValid false");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -529,17 +532,19 @@ public class CbusNodeTest {
         r.setElement(7, 0x03); // ev index 3
         t.getCanListener().reply(r);
 
-        Assert.assertTrue("CBUS_ENRSP 2 again",t.getNodeEventManager().getTotalNodeEvents()==2 );
-        Assert.assertEquals(0.625 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
-        Assert.assertTrue("isEventIndexValid true",t.getNodeEventManager().isEventIndexValid());
-        Assert.assertFalse("No active timer after NERD / ENRSP responses ",t.getNodeTimerManager().hasActiveTimers() );
-        Assert.assertTrue("getLoadedNodeEvents 2",t.getNodeEventManager().getLoadedNodeEvents()== 2 );
+        assertEquals( 2, t.getNodeEventManager().getTotalNodeEvents(), "CBUS_ENRSP 2 again");
+        assertEquals(0.625 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
+        assertTrue( t.getNodeEventManager().isEventIndexValid(), "isEventIndexValid true");
+        assertFalse( t.getNodeTimerManager().hasActiveTimers(), "No active timer after NERD / ENRSP responses");
+        assertEquals( 2, t.getNodeEventManager().getLoadedNodeEvents(), "getLoadedNodeEvents 2");
 
-        tModel.sendNextBackgroundFetch();
-        Assert.assertEquals("Node has sent a message via model", 2 ,tcis.outbound.size() );
-        Assert.assertEquals("Node sends ev var request", "[5f8] 9C 30 39 01 01",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
-        Assert.assertTrue("active timer true awaiting response ",t.getNodeTimerManager().hasActiveTimers() );
+        JUnitUtil.waitFor( () -> tcis.outbound.size() > 1, "Node sends message via Model");
+        assertEquals( 2 ,tcis.outbound.size(), "Node has sent a message via model " + tcis.outbound);
+
+        assertEquals( "[5f8] 9C 30 39 01 01",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Node sends ev var request");
+        assertTrue( t.getNodeTimerManager().hasActiveTimers(), "active timer true awaiting response");
 
         r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -553,71 +558,71 @@ public class CbusNodeTest {
 
         t.getCanListener().reply(r);
 
-        Assert.assertEquals(0.6875 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
-        Assert.assertFalse("No active timer after NEVAL response",t.getNodeTimerManager().hasActiveTimers() );
+        assertEquals(0.6875 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
+        assertFalse( t.getNodeTimerManager().hasActiveTimers(), "No active timer after NEVAL response");
 
-        tModel.sendNextBackgroundFetch();
-        Assert.assertEquals("Node has sent a message via model", 3 ,tcis.outbound.size() );
-        Assert.assertEquals("Node sends ev var request", "[5f8] 9C 30 39 01 02",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        JUnitUtil.waitFor( () -> tcis.outbound.size() > 2, "Node sends message 2 via Model");
+        assertEquals( 3 ,tcis.outbound.size(), "Node has sent a message via model");
+        assertEquals( "[5f8] 9C 30 39 01 02",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Node sends ev var request");
 
         r.setElement(4, 0x02); // ev var index
         r.setElement(5, 0xff); // ev var value
         t.getCanListener().reply(r);
-        Assert.assertEquals(0.75 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
+        assertEquals(0.75 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
 
-        tModel.sendNextBackgroundFetch();
-        Assert.assertEquals("Node has sent a message via model", 4 ,tcis.outbound.size() );
-        Assert.assertEquals("Node sends ev var request", "[5f8] 9C 30 39 01 03",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        JUnitUtil.waitFor(() -> tcis.outbound.size() > 3, "tcis outbound has 4, was " + tcis.outbound);
+        assertEquals( 4, tcis.outbound.size(), "Node has sent message 4 via model " + tcis.outbound );
+        assertEquals( "[5f8] 9C 30 39 01 03", tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Node sends ev var request " + tcis.outbound);
 
 
         r.setElement(4, 0x03); // ev var index
         r.setElement(5, 0xd1); // ev var value
         t.getCanListener().reply(r);
-        Assert.assertEquals(0.8125 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
+        assertEquals(0.8125 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
 
-        tModel.sendNextBackgroundFetch();
-        Assert.assertEquals("Node has sent a message via model", 5 ,tcis.outbound.size() );
-        Assert.assertEquals("Node sends ev var request index 3", "[5f8] 9C 30 39 03 01",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        JUnitUtil.waitFor(() -> tcis.outbound.size() > 4, "tcis outbound has 5, was " + tcis.outbound);
+        assertEquals( "[5f8] 9C 30 39 03 01",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Node sends ev var request index 3");
 
         r.setElement(3, 0x03); // ev index
         r.setElement(4, 0x01); // ev var index
         r.setElement(5, 0xd1); // ev var value
         t.getCanListener().reply(r);
-        Assert.assertEquals(0.875 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
+        assertEquals(0.875 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
 
-        Assert.assertEquals("0 Backups in middle of fetch",0,t.getNodeBackupManager().getNumCompleteBackups() );
+        assertEquals( 0, t.getNodeBackupManager().getNumCompleteBackups(),
+            "0 Backups in middle of fetch");
 
-        tModel.sendNextBackgroundFetch();
-        Assert.assertEquals("Node has sent a message via model", 6 ,tcis.outbound.size() );
+        JUnitUtil.waitFor(() -> tcis.outbound.size() > 5, "tcis outbound has 6, was " + tcis.outbound);
         r.setElement(4, 0x02); // ev var index
         r.setElement(5, 0xd1); // ev var value
         t.getCanListener().reply(r);
 
-        Assert.assertEquals(0.9375 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
+        assertEquals(0.9375 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
 
-        tModel.sendNextBackgroundFetch();
-        Assert.assertEquals("Node has sent a message via model", 7 ,tcis.outbound.size() );
+        JUnitUtil.waitFor(() -> tcis.outbound.size() > 6, "tcis outbound has 7, was " + tcis.outbound);
         r.setElement(4, 0x03); // ev var index
         r.setElement(5, 0xd1); // ev var value
         t.getCanListener().reply(r);
 
-        Assert.assertEquals(1.0 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
+        assertEquals(1.0 ,t.getNodeStats().floatPercentageRemaining(), 0.0001f );
 
-        tModel.sendNextBackgroundFetch();
+        tModel.sendNextBackgroundFetch(); // all done, should send nothing
 
-        Assert.assertEquals("Node has NOT sent a message via model", 7 ,tcis.outbound.size() );
-        Assert.assertFalse("No active timer after event fetch complete",t.getNodeTimerManager().hasActiveTimers() );
+        assertEquals( 7 ,tcis.outbound.size(), "Node has NOT sent a message via model");
+        assertFalse( t.getNodeTimerManager().hasActiveTimers(), "No active timer after event fetch complete");
 
         // check if node has loaded an xml file
-        Assert.assertNotNull("First Backup Timestamp exists",t.getNodeBackupManager().getFirstBackupTime());
-        Assert.assertNotNull("Last Backup Timestamp exists",t.getNodeBackupManager().getLastBackupTime());
+        assertNotNull( t.getNodeBackupManager().getFirstBackupTime(), "First Backup Timestamp exists");
+        assertNotNull( t.getNodeBackupManager().getLastBackupTime(), "Last Backup Timestamp exists");
 
-        Assert.assertEquals("Backup Complete",
-            t.getNodeBackupManager().getSessionBackupStatus(),CbusNodeConstants.BackupType.COMPLETE);
-        Assert.assertTrue(t.getNodeBackupManager().removeNode(false));
+        assertEquals( t.getNodeBackupManager().getSessionBackupStatus(),CbusNodeConstants.BackupType.COMPLETE,
+            "Backup Complete");
+        assertTrue(t.getNodeBackupManager().removeNode(false));
 
         tModel.dispose();
         t.dispose();
@@ -629,23 +634,23 @@ public class CbusNodeTest {
 
         CbusNode t = new CbusNode(memo,12345);
 
-        Assert.assertTrue("default getNvArray ",t.getNodeNvManager().getNvArray()== null );
-        Assert.assertTrue("default getNv 0 ",t.getNodeNvManager().getNV(0)== -1 );
-        Assert.assertTrue("default getNv 3 ",t.getNodeNvManager().getNV(3)== -1 );
-        Assert.assertTrue("default getOutstandingNvCount ",t.getNodeNvManager().getOutstandingNvCount()== -1 );
+        assertNull( t.getNodeNvManager().getNvArray(), "default getNvArray ");
+        assertEquals( -1, t.getNodeNvManager().getNV(0), "default getNv 0 ");
+        assertEquals( -1, t.getNodeNvManager().getNV(3), "default getNv 3 ");
+        assertEquals( -1, t.getNodeNvManager().getOutstandingNvCount(), "default getOutstandingNvCount");
 
         // set node to 3 node vars , param6
         t.getNodeParamManager().setParameters(new int[]{7,1,2,3,4,5,3,7});
 
-        Assert.assertTrue("3 node vars getNvArray ",t.getNodeNvManager().getNvArray() != null );
-        Assert.assertTrue("3 node vars getNv 0 ",t.getNodeNvManager().getNV(0)== 3 );
-        Assert.assertTrue("3 node vars getNv 3 ",t.getNodeNvManager().getNV(3)== -1 );
-        Assert.assertTrue("3 node vars getOutstandingNvCount ",t.getNodeNvManager().getOutstandingNvCount()== 3 );
+        assertNotNull( t.getNodeNvManager().getNvArray(), "3 node vars getNvArray ");
+        assertEquals( 3, t.getNodeNvManager().getNV(0), "3 node vars getNv 0");
+        assertEquals( -1, t.getNodeNvManager().getNV(3), "3 node vars getNv 3");
+        assertEquals( 3, t.getNodeNvManager().getOutstandingNvCount(), "3 node vars getOutstandingNvCount ");
 
         t.getNodeNvManager().setNV(1,1);
         t.getNodeNvManager().setNV(2,2);
         t.getNodeNvManager().setNV(3,3);
-        Assert.assertTrue("node vars getOutstandingNvCount ",t.getNodeNvManager().getOutstandingNvCount()== 0 );
+        assertEquals( 0, t.getNodeNvManager().getOutstandingNvCount(), "node vars getOutstandingNvCount");
 
         // setNVs
         t.dispose();
@@ -688,18 +693,20 @@ public class CbusNodeTest {
         CbusNode t = new CbusNode(memo,12345);
         t.getNodeParamManager().setParameters(new int[]{8,165,89,10,4,5,3,4,8});
 
-        Assert.assertEquals("165 10 getNodeTypeString ",
-            "MERG Command Station CANCMD Firmware ver: 4Y Node 12345",t.getNodeParamManager().getNodeTypeString() );
+        assertEquals( "MERG Command Station CANCMD Firmware ver: 4Y Node 12345",
+            t.getNodeParamManager().getNodeTypeString(),
+            "165 10 getNodeTypeString ");
 
         t.getNodeParamManager().setParameters(new int[]{20,70,90,4,4,5,3,4,8,9,10,11,12,13,14,15,16,17,18,19,77});
 
-        Assert.assertEquals("70 4 getNodeTypeString ",
-            "ROCRAIL 8 channel RFID reader. CANGC4 Firmware ver: 4Z Beta 77 Node 12345",t.getNodeParamManager().getNodeTypeString() );
+        assertEquals( "ROCRAIL 8 channel RFID reader. CANGC4 Firmware ver: 4Z Beta 77 Node 12345",
+            t.getNodeParamManager().getNodeTypeString(),
+            "70 4 getNodeTypeString ");
 
         t.getNodeParamManager().setParameters(new int[]{8,0,89,0,4,5,3,4,8});
-        Assert.assertEquals("0 0 getNodeTypeName ","",t.getNodeStats().getNodeTypeName() );
+        assertEquals("",t.getNodeStats().getNodeTypeName(), "0 0 getNodeTypeName");
         t.setNodeNameFromName("Alonso");
-        Assert.assertEquals("0 0 Alonso getNodeTypeName ","Alonso",t.getNodeStats().getNodeTypeName() );
+        assertEquals( "Alonso",t.getNodeStats().getNodeTypeName(),"0 0 Alonso getNodeTypeName");
 
         t.dispose();
 

@@ -244,7 +244,9 @@ public abstract class RollingStockSetFrame<T extends RollingStock> extends Opera
         updateTrainComboBox(); // load the train combo box
         enableComponents(!locationUnknownCheckBox.isSelected());
         // has the program generated a pick up and set out for this rolling stock?
-        if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null) {
+        if (_rs.getTrain() != null &&
+                _rs.getTrain().isBuilt() &&
+                (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null)) {
             if (_rs.getRouteLocation() != null) {
                 log.debug("rs ({}) has a pick up location ({})", _rs.toString(), _rs.getRouteLocation().getName());
             }
