@@ -7,8 +7,6 @@ import jmri.ThrottleListener;
 import jmri.LocoAddress;
 
 import org.junit.jupiter.api.Assertions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This is an extension of the DebugThrottleManager that always requires
@@ -18,6 +16,8 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2018
  */
 public class StealingOrSharingThrottleManager extends DebugThrottleManager {
+
+    public ThrottleListener.DecisionType lastResponse = null;
 
     public StealingOrSharingThrottleManager() {
         super();
@@ -48,12 +48,11 @@ public class StealingOrSharingThrottleManager extends DebugThrottleManager {
             Assertions.fail("DebugThrottle needs a dcclocoaddress : " + address );
             return;
         }
+        lastResponse = decision;
         if ( decision == ThrottleListener.DecisionType.STEAL ) {
-            log.error("1: Got a steal decision");
             notifyThrottleKnown(new DebugThrottle((DccLocoAddress) address, adapterMemo), address);
         }
         else if ( decision == ThrottleListener.DecisionType.SHARE ) {
-            log.error("1: Got a share decision");
             notifyThrottleKnown(new DebugThrottle((DccLocoAddress) address, adapterMemo), address);
         }
         else {
@@ -62,6 +61,6 @@ public class StealingOrSharingThrottleManager extends DebugThrottleManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(StealingOrSharingThrottleManager.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StealingOrSharingThrottleManager.class);
 
 }
