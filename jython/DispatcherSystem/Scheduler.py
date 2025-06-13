@@ -172,7 +172,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 msg = "timetables can be shown locally on this computer or\n" + \
                       "on remote computers/tablets communicating by mqtt\n\n" + \
                       "scheduler needs to be on and clock running"
-                opt1 = "turn timetable off"
+                if run_local_timetable_gbl == True:
+                    opt1 = "hide timetable"
+                else:
+                    opt1 = "show timetable"
                 opt4 = "set platforms and station groups"
                 opt2 = "select station for local timetable"
                 opt3 = "select station for mqtt timetable"
@@ -185,7 +188,10 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 if reply == JOptionPane.CANCEL_OPTION:
                     pass
                 elif reply == opt1:
-                    run_local_timetable_gbl = False
+                    if run_local_timetable_gbl == True:
+                        run_local_timetable_gbl = False
+                    else:
+                        run_local_timetable_gbl = True
                     # OptionDialog().displayMessage("turned timetabling off")
                     # timetable_gbl = None
 
@@ -384,13 +390,17 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             #close file
             text_file.close()
+            # create a unique reference for the websocketout node
+            import uuid
+            id = str(uuid.uuid1())
             # change the file to work with station_name
             # websocket names cannot have spaces in them
-            # so where we need to replace spaces we have My_Station$ instaed of MyStation
-            new_data = data.replace('My_Station$', station_name.replace(" ","-")) \
+            # so where we need to replace spaces we have My_Station$ instead of MyStation
+            new_data = (data.replace('My_Station$_ref', id) \
+                .replace('My_Station$', station_name.replace(" ","-")) \
                 .replace("My_Station_List", str(station_name_list)) \
                 .replace("My_Station", station_name) \
-                .replace("My_Emblem", train_operator_emblem)
+                .replace("My_Emblem", train_operator_emblem))
             # 'My_Station$' for url without spaces
             # "My_Station" for title
             # "My_Station_List" for list of stations to include
@@ -1496,7 +1506,7 @@ class TimeListener(java.beans.PropertyChangeListener):
                 if minutes % no_fast_minutes == 0:
                     Trigger_Timetable(minutes)
             else:
-                # print "HIDING TIMETABLE WINDOW8888888888888888888888888888888888888888888888"
+                # print "HIDING TIMETABLE WINDOW"
                 # print "run_timetable_gbl", run_timetable_gbl, "send_mqtt_messages_gbl", send_mqtt_messages_gbl
                 if 'timetable_gbl' in globals():
                     # timetable_gbl = None
@@ -1709,6 +1719,7 @@ class Trigger_Timetable:
 
     def send_timetable_and_clock_via_mqtt(self, minutes):
         global station_name_list_gbl, group_location_gbl, run_local_timetable_gbl
+        global timetable_gbl
         self.logLevel = 0
         global timebase, print_count
         # print "****************start send_timetable_and_clock_via_mqtt"
@@ -1733,38 +1744,35 @@ class Trigger_Timetable:
 
         # get list of origins, destinations and times at intermediate stations
         timetable = self.get_timetable(hour, minutes)
-        # print "timetable", timetable
         if 'group_location_gbl' != "" and 'station_name_list_gbl' != "":
             station_name = group_location_gbl
             station_names_list = station_name_list_gbl
         else:
-            # stations = 'Not Set'
             station_name = 'Not Set'
             station_names_list = ['Not Set']
-        # print "******run_timetable_gbl", run_timetable_gbl
+
+        self.generate_local_timetable(station_name, station_names_list, time, timetable)
+
+        if "run_local_timetable_gbl" not in globals():
+            print "run_local_timetable_gbl not defined"
+            return
+
+        if run_local_timetable_gbl == None:
+            print "run_local_timetable_gbl None"
+            return
+
         if run_local_timetable_gbl:
             if "timetable_gbl" in globals():
-                # print "timetable_gbl", timetable_gbl
                 if timetable_gbl != None:
-                    # print "showing window"
-                    timetable_gbl.showWindow()
-            # print "*********************generating local timetable"
-            # print "station_name", station_name
-            # print "station_names", station_names_list
-            self.generate_local_timetable(station_name, station_names_list, time, timetable)
-            # print "J"
+                    timetable_gbl.frame.setVisible(True)
         else:
             if "timetable_gbl" in globals():
-                if timetable_gbl == None:
-
-                    # print "HIDING WINDOW********************************************************"
-                    timetable_gbl.hideWindow()
-        # send mqtt message
+                if timetable_gbl != None:
+                    timetable_gbl.frame.setVisible(False)
         try:
             self.send_timetable_messages(timetable)
         except:
             pass
-        # print "end send_timetable_and_clock_via_mqtt"
 
     def find_between(self, s, first, last):
         try:
@@ -1958,15 +1966,8 @@ class Trigger_Timetable:
             timetable_gbl = Timetable(station_name)
             timetable_gbl.update_timetable(station_name, station_names_list, time, timetable)
         else:
-            # update the Timetable
-            # timetable_gbl.update(["jim1", "fred"])
-            # timetable_gbl.update_time(time)
-            # print "timetable", timetable
-            # print "station_names[0]", station_names[0]
+            # update the Timetable, Timetable class has already been initiated
             timetable_gbl.update_timetable(station_name, station_names_list, time, timetable)
-
-        if self.logLevel > 0: print "generated timetable"
-
 
     def send_timetable_messages(self,timetable):
         i = 0
@@ -1979,13 +1980,6 @@ class Trigger_Timetable:
              first_station, \
              last_station, \
              via] in timetable:
-            # msg += '{"type" : "' + "schedule" + '", ' + \
-            #        '"train_name" : "' + str(train_name) + '", ' + \
-            #        '"station_name" : "' + str(station_name) + '", ' + \
-            #        '"station_departure_hour" : "' + str(station_departure_time) + '", ' + \
-            #        '"last_station" : "' + str(last_station) + '", ' + \
-            #        '"last_station_arrival_time" : "' + str(last_station_arrival_time) + '", ' + \
-            #        '"via" : "' + str(via) + '"},'
             msg += '{"type" : "' + "schedule" + '", ' + \
                    '"train_name" : "' + str(train_name) + '", ' + \
                    '"station_name" : "' + str(station_name) + '", ' + \
@@ -1998,12 +1992,6 @@ class Trigger_Timetable:
             i += 1
         msg = msg[:-1]
         msg += "]"
-        # print
-        # print "************************************"
-        # print "x"
-        # print i, " msg sent to node_red: ", msg
-        # print "x1"
-        # print "************************************"
         self.send_mqtt_message(msg)
 
     def send_mqtt_message(self, msg):
@@ -2014,9 +2002,7 @@ class Trigger_Timetable:
             # create content to send "/jmri/timetable message content"
             topic = "jmri/timetable"
             payload = msg
-            # print "about to send"
             mqttAdapter.publish(topic, payload)
-            # print "published mqtt message"
         except:
             if "print_count" not in globals(): print_count = 0
             if print_count < 1: print "failure mqtt message"
