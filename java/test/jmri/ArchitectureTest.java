@@ -109,6 +109,7 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.swing.EditableList$MouseListener").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.BusyGlassPane$CBListener").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.JTreeWithPopup$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.swing.JCheckBoxTree").and() // getToolTipText( java.awt.event.MouseEvent ev)
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseListener$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.JmriMouseMotionListener$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.swing.TriStateJCheckBox$1").and()
