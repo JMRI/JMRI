@@ -163,6 +163,24 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     station_list.sort()
                 # print "station_list", station_list
 
+                # get station_group list
+                platform_list = []
+                station_group_list = []
+                station_group_list.append("All Stations")
+                station_group_location_list = []
+                PlatformPanel = MyTableModel7()
+                for location_name in station_list:
+                    LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
+                    location = LocationManager.getLocationByName(location_name)
+                    platform = PlatformPanel.get_location_platform(location)
+                    station_group = PlatformPanel.get_location_station_group(location)
+                    if station_group.strip() is not None and station_group.strip() is not "":
+                        if station_group.strip() not in station_group_list:
+                            station_group_list.append(station_group.strip())
+                        station_group_location_list.append([station_group.strip(), location_name])
+                    station_group_location_list.append(["All Stations", location_name])
+                station_group_location_list.append("All Stations")
+                station_group_list.sort()
 
                 if self.logLevel > 0: print "station list", station_list
                 # LocationsManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
@@ -200,38 +218,54 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     CreateAndShowGUI7()
 
                 elif reply == opt2:
-
-                    if "station_name_list_gbl" not in globals():
-                        station_name_list_gbl = ""
-                    title = "select station(s) for timetable"
-                    list_items_no_trains = self.get_scheduled_routes("no_train")
-                    list_items_with_trains = self.get_scheduled_routes("with_train")
-                    options = ["Cancel", "Show Timetable"]
-                    result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
-                    # result = [[station1,station2],"Show Timetable"]
-                    option = result[1]
-                    # print "option", option
-
-                    if option == "Cancel" or self.od.CLOSED_OPTION == True:
-                        run_local_timetable_gbl = False
-                        self.timetable_sensor.setKnownState(INACTIVE)
-                    else:
-                        # print "result", result
-                        station_name_list_gbl = result[0]
-
-                        # get group_station_name
-                        if len(station_name_list_gbl) == 1:
-                            group_location_gbl = station_name_list_gbl[0]   # the first and only station  station1
+                    repeat = True
+                    select_from_stations = True
+                    while repeat == True:
+                        if "station_name_list_gbl" not in globals():
+                            station_name_list_gbl = ""
+                        list_items_no_trains = self.get_scheduled_routes("no_train")
+                        list_items_with_trains = self.get_scheduled_routes("with_train")
+                        if select_from_stations:
+                            title = "select station(s) for timetable"
+                            options = ["Cancel", "Show Timetable", "Select from Station Groups"]
+                            result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
                         else:
-                            group_location_gbl = self.get_group_station_name(station_name_list_gbl)
-                            # print "group_location_gbl", group_location_gbl
+                            title = "select station_group for timetable"
+                            options = ["Cancel", "Show Timetable", "Select from Stations"]
+                            result = OptionDialog().MultipleListOptions(station_group_list, title, options, preferred_size = "default")
+                        option = result[1]
+                        if option == "Cancel" or self.od.CLOSED_OPTION == True:
+                            run_local_timetable_gbl = False
+                            self.timetable_sensor.setKnownState(INACTIVE)
+                            repeat = False
+                        elif option == "Show Timetable":
+                            if select_from_stations:
+                                station_name_list_gbl = result[0]
+                                # get group_station_name
+                                if len(station_name_list_gbl) == 1:
+                                    group_location_gbl = station_name_list_gbl[0]   # the first and only station  station1
+                                else:
+                                    group_location_gbl = self.get_group_station_name(station_name_list_gbl)
+                            else:
+                                group_location_gbl = result[0][0]
+                                # get station list
+                                station_name_list = []
+                                for l in station_group_location_list:
+                                    if l[0] == group_location_gbl:
+                                        station_name_list.append(l[1])
+                                station_name_list_gbl = station_name_list
 
-                        run_local_timetable_gbl = True
-                        # print "run_timetable_gbl set", run_timetable_gbl
-                        self.ensure_conditions_for_timetable_to_show_are_met()
+                            run_local_timetable_gbl = True
+                            self.ensure_conditions_for_timetable_to_show_are_met()
+                            repeat = False
+                        else:
+                            if select_from_stations == True:
+                                select_from_stations = False
+                            else:
+                                select_from_stations = True
+                            repeat = True
 
                 elif reply == opt3:
-
                     title = "select station(s) for timetable"
                     options = ["Cancel", "Generate Timetable"]
                     result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
