@@ -177,10 +177,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     if station_group.strip() is not None and station_group.strip() is not "":
                         if station_group.strip() not in station_group_list:
                             station_group_list.append(station_group.strip())
+                            # print "type station_group", type(station_group.strip())
                         station_group_location_list.append([station_group.strip(), location_name])
                     station_group_location_list.append(["All Stations", location_name])
-                station_group_location_list.append("All Stations")
-                station_group_list.sort()
+                # station_group_location_list.append("All Stations")
+                # station_group_list.sort()
+                # station_group_list.append("All Stations")
 
                 if self.logLevel > 0: print "station list", station_list
                 # LocationsManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
@@ -227,12 +229,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                         list_items_with_trains = self.get_scheduled_routes("with_train")
                         if select_from_stations:
                             title = "select station(s) for timetable"
-                            options = ["Cancel", "Show Timetable", "Select from Station Groups"]
+                            options = ["Cancel", "Select from Station Groups", "Show Timetable"]
                             result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
                         else:
                             title = "select station_group for timetable"
-                            options = ["Cancel", "Show Timetable", "Select from Stations"]
-                            result = OptionDialog().MultipleListOptions(station_group_list, title, options, preferred_size = "default")
+                            options = ["Cancel", "Select from Stations", "Show Timetable"]
+                            result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
                         option = result[1]
                         if option == "Cancel" or self.od.CLOSED_OPTION == True:
                             run_local_timetable_gbl = False
@@ -247,7 +249,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                                 else:
                                     group_location_gbl = self.get_group_station_name(station_name_list_gbl)
                             else:
-                                group_location_gbl = result[0][0]
+                                group_location_gbl = result[0]
                                 # get station list
                                 station_name_list = []
                                 for l in station_group_location_list:
@@ -266,35 +268,68 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                             repeat = True
 
                 elif reply == opt3:
-                    title = "select station(s) for timetable"
-                    options = ["Cancel", "Generate Timetable"]
-                    result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
-                    option = result[1]
-                    # print "option", option
-                    if option == "Cancel" or self.od.CLOSED_OPTION == True:
-                        self.timetable_sensor.setKnownState(INACTIVE)
-                    else:
-                        station_name_list_mqtt_gbl = result[0]
-                        if len(station_name_list_mqtt_gbl) == 1:
-                            group_location_mqtt_gbl = station_name_list_mqtt_gbl[0]   # the first and only station  station1
+                    repeat = True
+                    select_from_stations = True
+                    while repeat == True:
+                        if "station_name_list_gbl" not in globals():
+                            station_name_list_gbl = ""
+                        list_items_no_trains = self.get_scheduled_routes("no_train")
+                        list_items_with_trains = self.get_scheduled_routes("with_train")
+                        if select_from_stations:
+                            title = "select station(s) for timetable"
+                            options = ["Cancel", "Select from Station Groups", "Generate Timetable"]
+                            result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
                         else:
-                            group_location_mqtt_gbl = self.get_group_station_name(station_name_list_mqtt_gbl)
-                        # print "group_location_mqtt_gbl", group_location_mqtt_gbl
-                        # get emblem
-                        title = "Display Train Operator Emblem?"
-                        emblem_list = ["GB (British Rail)", "Germany (DB)", "No Emblem"]
-                        options = ["Cancel", "Generate Timetable"]
-                        result = self.od.ListOptions(emblem_list, title, options, preferred_size = "default")
-                        # print "result", result
-                        train_operator_emblem = result[0]
-                        option1 = result[1]
-                        if option1 == "Cancel" or self.od.CLOSED_OPTION == True:
-                            # run_local_timetable_gbl = False
+                            title = "select station_group for timetable"
+                            options = ["Cancel", "Select from Stations", "Generate Timetable"]
+                            result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
+                        option = result[1]
+                        if option == "Cancel" or self.od.CLOSED_OPTION == True:
+                            run_local_timetable_gbl = False
                             self.timetable_sensor.setKnownState(INACTIVE)
+                            repeat = False
+                        elif option == "Generate Timetable":
+                            if select_from_stations:
+                                station_name_list_mqtt_gbl = result[0]
+                                # get group_station_name
+                                if len(station_name_list_gbl) == 1:
+                                    group_location_mqtt_gbl = station_name_list_gbl[0]   # the first and only station  station1
+                                else:
+                                    group_location_mqtt_gbl = self.get_group_station_name(station_name_list_gbl)
+                            else:
+                                group_location_mqtt_gbl = result[0]
+                                print "group_location_mqtt_gbl", group_location_mqtt_gbl
+                                # get station list
+                                station_name_list = []
+                                for l in station_group_location_list:
+                                    if l[0] == group_location_mqtt_gbl:
+                                        station_name_list.append(l[1])
+                                station_name_list_mqtt_gbl = station_name_list
+                                print "station_name_list_mqtt_gbl", station_name_list_mqtt_gbl
+
+                            # get emblem
+                            title = "Display Train Operator Emblem?"
+                            emblem_list = ["GB (British Rail)", "Germany (DB)", "No Emblem"]
+                            options = ["Cancel", "Generate Timetable"]
+                            result = self.od.ListOptions(emblem_list, title, options, preferred_size = "default")
+                            # print "result", result
+                            train_operator_emblem = result[0]
+                            option1 = result[1]
+                            if option1 == "Cancel" or self.od.CLOSED_OPTION == True:
+                                # run_local_timetable_gbl = False
+                                self.timetable_sensor.setKnownState(INACTIVE)
+                            else:
+                                self.generate_node_red_code(station_name_list_mqtt_gbl, group_location_mqtt_gbl, train_operator_emblem)
+                                # file = self.directory() + "train_operator_emblem.txt"
+                                self.write_list2([train_operator_emblem])
+
+                            repeat = False
                         else:
-                            self.generate_node_red_code(station_name_list_mqtt_gbl, group_location_mqtt_gbl, train_operator_emblem)
-                            # file = self.directory() + "train_operator_emblem.txt"
-                            self.write_list2([train_operator_emblem])
+                            if select_from_stations == True:
+                                select_from_stations = False
+                            else:
+                                select_from_stations = True
+                            repeat = True
 
             self.timetable_sensor.setKnownState(INACTIVE)
 
@@ -448,7 +483,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             if not os.path.exists(new_node_red_template_directory):
                 os.makedirs(new_node_red_template_directory)
 
-            file_path = new_node_red_template_directory + "/" + station_name + ".json"
+            file_path = new_node_red_template_directory + java.io.File.separator + station_name + ".json"
 
             f = open(file_path, "w")
             f.write(new_data)
@@ -461,6 +496,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
               "and edit as illustrated in the help, and open indicated web page on tablet/laptop \n" + \
               "e.g. http://localhost:1880/" + station_name.replace(" ", "-") + ", where localhost should be replaced by network address \n" + \
               "of computer hosting node_red instance\n\n" + \
+              "Note any spaces in the station name have been replaced by hyphens in the web address\n\n" + \
               "ALSO ensure an MQTT Connection is set up in preferences, as detailed in help."
         OptionDialog().displayMessage(msg)
 
