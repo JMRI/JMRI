@@ -386,7 +386,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         if "start_hour_gbl" not in globals():
             start_hour_gbl = None
-        if start_hour_gbl == None:     # checl if Start Scheduler has been run
+        if start_hour_gbl == None:     # check if Start Scheduler has been run
             sm = SchedulerMaster()     # if not set up everything which would have been run
             sm.set_default_scheduling_values()
             # sm.set_period_trains_will_run_frame()
@@ -408,6 +408,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             event = PropertyChangeEvent("TimeSource", "time", (minute - 1) % 60, minute)
             TimeListener().propertyChange(event)
         else:
+            # print "should be OK to show timetable"
             pass
 
     def generate_node_red_code(self, station_name_list, station_name, train_operator_emblem):
@@ -1769,13 +1770,10 @@ class Trigger_Timetable:
             if "print_count" not in globals(): print_count = 0
             if print_count < 1: print "clock message not sent"
             print_count += 1
-
         if "station_name_list_gbl" not in globals():
             station_name_list_gbl = ""
-
         if "group_location_gbl" not in globals():
             group_location_gbl = ""
-
         # get list of origins, destinations and times at intermediate stations
         timetable = self.get_timetable(hour, minutes)
         if 'group_location_gbl' != "" and 'station_name_list_gbl' != "":
@@ -1829,14 +1827,14 @@ class Trigger_Timetable:
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
 
-        if self.logLevel > 0: print "A5"
         for train in train_list:
+            if self.logLevel > 0: print "train", train, "train.getDescription()", train.getDescription()
+
             if train.getDescription() is not None and "skip" not in train.getDescription():
-                # print "train", train, train.getDescription()
+                if self.logLevel > 0: print "train", train, train.getDescription()
                 comment = train.getComment()
                 repeat = self.find_between(comment, "[repeat-", "-repeat]")
-                # arrival_time = self.find_between(comment, "[arrival_time-", "-arrival_time]"   # only set if routine to set has been run (not written yet)
-                departure_time_minutes = train.getDepartTimeMinutes()
+                departure_time_minutes = train.getDepartTimeMinutes() % 60
                 departure_time_hour = train.getDepartureTimeHour()
                 train_name = train.getName()
 
@@ -1869,13 +1867,12 @@ class Trigger_Timetable:
                 for train_mins in minutes:
                     for train_hour in hours:
                         depart_time = int(str(train_mins)) + int(str(train_hour)) * 60
-                        if self.logLevel > 0: print "train_hour", train_hour, "self.curr_time", self.curr_time, "depart_time", depart_time
 
                         train_route_start_time = str(train_hour).zfill(2) + ":" + str(train_mins).zfill(2)
-                        # print "train", train, train.getDescription(), "train_route_start_time", train_route_start_time
+                        if self.logLevel > 0: print "train", train, train.getDescription(), "train_route_start_time", train_route_start_time
                         train_route = train.getRoute()
                         if train_route is not None:
-                            # print "train_route", train_route
+                            if self.logLevel > 0: print "train_route", train_route
                             locations = [location for location in train_route.getLocationsBySequenceList() \
                                          if ".py" not in location.getName()]
                             first_location = locations[0]
@@ -1887,22 +1884,21 @@ class Trigger_Timetable:
                             journey_duration = 0
                             for comment in comments:
                                 duration_sec = self.find_between(comment, "[duration_sec-", "-duration_sec]")
-                                # print "duration_sec", duration_sec
+                                if self.logLevel > 0: print "duration_sec", duration_sec
                                 if duration_sec != "":
                                     duration = ((float(duration_sec) * int(str(fast_clock_rate))) / 60.0)  # fast minutes
                                 else:
                                     # print "setting duration 0"
                                     duration = 0
                                 journey_duration += int(duration)
-                            # last_station_arrival_time = self.add_times(train_route_start_time, journey_duration)
 
                             for i, route_location in enumerate(train_route.getLocationsBySequenceList()):
                                 station_name = str(route_location.getName())
                                 platform_name = str(MyTableModel7().get_location_platform(route_location.getLocation()))
-                                # print "platform_name", platform_name
+                                if self.logLevel > 0: print "platform_name", platform_name
                                 if platform_name == "":
                                     platform_name = station_name
-                                # print "platform_name", platform_name
+                                if self.logLevel > 0: print "platform_name", platform_name
                                 if self.logLevel > 2: print "****************************", station_name, "***************************"
                                 if ".py" in station_name:   # exclude actions
                                     break
@@ -1916,7 +1912,7 @@ class Trigger_Timetable:
                                 via = [location2 for location2 in via if ".py" not in location2]
                                 if via == []:
                                     via = "-"
-                                if last_station == station_name:
+                                if i != 0 and last_station == station_name:
                                     via = ["Terminates Here"]
                                 via = str(via).replace('[','').replace(']','').replace("'", "")
 
@@ -1935,14 +1931,12 @@ class Trigger_Timetable:
 
                                     time_to_station = int(duration)
                                     if self.logLevel > 2: print "time_to_station", time_to_station
-                                    # print "time_to_station", time_to_station
 
                                 previous_departure_time = station_departure_time
-                                if self.logLevel > 2:
+                                if self.logLevel > 0:
                                     print train_name, "previous_departure_time", previous_departure_time
                                 station_departure_time = self.add_times(station_departure_time, time_to_station)
-                                if self.logLevel > 2: print train_name, route_location, "station_departure_time", station_departure_time
-
+                                if self.logLevel > 0: print train_name, route_location, "station_departure_time", station_departure_time
 
                                 # if the wait_time and journey_time have been set we can set the arrival time
                                 wait_time = self.find_between(comment, "[wait_time-", "-wait_time]")
@@ -1956,8 +1950,6 @@ class Trigger_Timetable:
                                         station_arrival_time = station_departure_time
                                     else:
                                         if self.logLevel > 0: print train_name, route_location, "journey_time", journey_time
-                                        if self.logLevel > 0: print train_name, route_location, "journey_time_fast_mins", journey_time_fast_mins
-                                        # print "previous_departure_time", previous_departure_time
                                         station_arrival_time = self.add_times(previous_departure_time, journey_time_fast_mins)
                                 else:
                                     if i == 0:
@@ -1970,7 +1962,7 @@ class Trigger_Timetable:
                                 # [h, m] = station_arrival_time.split(":")
                                 # station_arrival_time_in_mins = int(m) + int(h) * 60
 
-                                if last_station == station_name:
+                                if i != 0 and last_station == station_name:
                                     station_departure_time = ""
 
                                 # make sure we don't display trains that have a departure time > current time
@@ -1988,7 +1980,7 @@ class Trigger_Timetable:
 
                                     timetable.append(timetable_entry)
         #sort timetable by time
-        timetable.sort(key = lambda row: max(row[3],row[4])         )
+        timetable.sort(key = lambda row: max(row[3],row[4]))
         return timetable
 
     def generate_local_timetable(self, station_name, station_names_list, time, timetable):
@@ -2050,7 +2042,6 @@ class Trigger_Timetable:
         self.send_mqtt_message(msg)
 
     def add_times(self, station_departure_time, time_to_station):
-
         # add time_to_station to station_departure time
         # station_departure_time is in form hh:mm
         # print "time_to_station", time_to_station  , "should be mins"
@@ -2062,7 +2053,6 @@ class Trigger_Timetable:
         station_departure_time_new = str(hour).zfill(2) + ":" + str(min).zfill(2)
         # print "station_departure_time_new", station_departure_time_new
         return station_departure_time_new
-
 
     def directory2(self):
         # print "directory2"
@@ -2085,7 +2075,6 @@ class Trigger_Timetable:
                 fp.write('%s' %items)
                 if i < 5 : fp.write(",")
                 i+=1
-
 
     # Read list to memory
     def read_list2(self):
