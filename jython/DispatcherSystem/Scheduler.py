@@ -536,11 +536,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             return
         elif reply == opt2:
             list_items_no_trains = self.get_scheduled_routes("no_train")
-            print "list_items_no_trains", list_items_no_trains
+            # print "list_items_no_trains", list_items_no_trains
             list_items_with_trains = self.get_scheduled_routes("with_train")
-            print "list_items_with_trains", list_items_with_trains
+            # print "list_items_with_trains", list_items_with_trains
             list_items_starting_from_occupied_blocks = self.get_routes_starting_from_occupied_blocks()
-            print "list_items_starting_from_occupied_blocks", list_items_starting_from_occupied_blocks
+            # print "list_items_starting_from_occupied_blocks", list_items_starting_from_occupied_blocks
             show_trains_in_occupied_blocks = True
             repeat = True
             while repeat:
@@ -553,11 +553,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                     options = ["Cancel", "Run Route", "Show routes starting from occupied blocks"]
                     reply1 = OptionDialog().ListOptions(list_items_no_trains, title, options, preferred_size = "default")
 
-                print "reply1", reply1
                 my_list = reply1[0]
                 route_name = str(my_list)
                 option = str(reply1[1])
-                print "list", my_list, "option", option
 
                 if OptionDialog().CLOSED_OPTION == True or option == "Cancel":
                     # print "cancelling"
