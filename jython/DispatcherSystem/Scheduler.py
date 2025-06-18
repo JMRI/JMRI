@@ -512,11 +512,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         set_departure_trains_gbl = True
         self.set_default_scheduling_values()
-        msg = "set departure times"
+        msg = "Set Departure Times"
         opt1 = "set wait time in stations"
         opt2 = "run train on route to set journey times"
-        opt3 = "set departure times"
-        reply = OptionDialog().customQuestionMessage3str(msg, "", opt1, opt3, opt2)
+        opt3 = "set departure times manually"
+        reply = OptionDialog().customQuestionMessage3str(msg, "", opt1, opt2, opt3)
         if reply == opt1:
             memory = memories.getMemory("IM:" + "DS_wait_time")
             # print "memory", type(memory)
@@ -535,126 +535,144 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "wait_time", wait_time
             return
         elif reply == opt2:
-            title = "Select Route to Record Journey Times"
+            list_items_no_trains = self.get_scheduled_routes("no_train")
+            print "list_items_no_trains", list_items_no_trains
+            list_items_with_trains = self.get_scheduled_routes("with_train")
+            print "list_items_with_trains", list_items_with_trains
+            list_items_starting_from_occupied_blocks = self.get_routes_starting_from_occupied_blocks()
+            print "list_items_starting_from_occupied_blocks", list_items_starting_from_occupied_blocks
+            show_trains_in_occupied_blocks = True
+            repeat = True
+            while repeat:
+                if show_trains_in_occupied_blocks:
+                    title = "Select Route to Record Journey Times: Showing routes from occupied blocks"
+                    options = ["Cancel", "Run Route", "Show all scheduled routes"]
+                    reply1 = OptionDialog().ListOptions(list_items_starting_from_occupied_blocks, title, options, preferred_size = "default")
+                else:
+                    title = "Select Route to Record Journey Times: Showing scheduled routes"
+                    options = ["Cancel", "Run Route", "Show routes starting from occupied blocks"]
+                    reply1 = OptionDialog().ListOptions(list_items_no_trains, title, options, preferred_size = "default")
+
+                print "reply1", reply1
+                my_list = reply1[0]
+                route_name = str(my_list)
+                option = str(reply1[1])
+                print "list", my_list, "option", option
+
+                if OptionDialog().CLOSED_OPTION == True or option == "Cancel":
+                    # print "cancelling"
+                    return
+                elif option == "Run Route":
+                    # print "Run Route"
+                    train = [trn for [rte, trn] in list_items_with_trains if rte == route_name][0]
+                    set_departure_times = True
+                    param_scheduled_start = "00:00"
+                    journey_time_row_displayed = True
+                    if "CreateAndShowGUI5_glb" in globals():
+                        if CreateAndShowGUI5_glb != None:
+                            CreateAndShowGUI5_glb.frame.dispose()
+                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
+                    title = "Run Train"
+                    msg = "Last time to cancel"
+                    opt1 = "Cancel"
+                    opt2 = "Run Train"
+                    reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
+                    if reply == JOptionPane.CANCEL_OPTION or reply == opt1:
+                        CreateAndShowGUI5_glb.frame.dispose()
+                        return
+                    OptionDialog().displayMessageNonModal("Run Train along route " + str(route_name) + " now","<html>Check train is in required station<br>Then click to run route")
+                    # print "Ended non modal, wait for non modal"
+                    self.waitForNonModal()
+                    # print "finished wait for non modal"
+                    if self.logLevel > 0: print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", train.getDescription(), train.getName()
+                    # running_train = RunTrain(train, g.g_stopping, set_departure_times)
+                    route = train.getRoute()
+                    routeName = route.getName()
+                    station_from, station_to = self.get_first_and_last_station(route)   # starting from beginning of route
+                    if self.logLevel > 0: print "station_from", station_from, "station_to", station_to
+                    start_block = blocks.getBlock(station_from)
+                    if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
+                    train_name = start_block.getValue()
+                    no_repetitions = 0
+                    delay_val = 0
+                    # print "%%%%%%%%%%%%%%train_name%%%%%%%%%%%%%%", train_name
+                    if train_name is None:
+                        OptionDialog().displayMessage("No train is in the start position \n\n(maybe it has not been set up so the system recognises it)\npress setup train - register the train -  and try again")
+                        return
+                    else:
+                        # print "train_name is not none"
+                        pass
+
+                    if "stopping" in train.getDescription():
+                        if self.logLevel > 0: print "A"
+                        run_train = RunRoute(route, g.g_stopping, station_from, station_to, no_repetitions, train_name, \
+                                             set_departure_times = True)
+                        run_train.setName("running_route_" + routeName)
+                        instanceList.append(run_train)
+                        run_train.start()
+                    else:
+                        if self.logLevel > 0: print "B"
+                        run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name, \
+                                             set_departure_times = True)
+                        run_train.setName("running_route_" + routeName)
+                        instanceList.append(run_train)
+                        run_train.start()
+                    repeat = False
+                else:
+                    if show_trains_in_occupied_blocks == True:
+                        show_trains_in_occupied_blocks = False
+                    else:
+                        show_trains_in_occupied_blocks = True
+                    repeat = True
+
+            return
+
+        elif reply == opt3:
+
             list_items_no_trains = self.get_scheduled_routes("no_train")
             # print "list_items_no_trains", list_items_no_trains
             list_items_with_trains = self.get_scheduled_routes("with_train")
             # print "list_items_with_trains", list_items_with_trains
-            if list_items_no_trains == []:
-                OptionDialog().displayMessage("Can only record journey times for scheduled trains.\nThere are no scheduled trains")
-                return
-            # options = ["Cancel", "Run Route", "show all routes/scheduled routes"]
-            options = ["Cancel", "Run Route"]
-            reply1 = OptionDialog().ListOptions(list_items_no_trains, title, options, preferred_size = "default")
-            # print "reply1", reply1
-            my_list = reply1[0]
-            option = reply1[1]
-            # print "list", my_list, "option", option
-            route_name = str(my_list)
-            # print "route", route_name
+            list_items_all_routes = self.get_all_routes()
+            # print "list_items_all_routes", list_items_all_routes
+            show_all_routes = True
+            repeat = True
+            while repeat:
+                print "D", show_all_routes
+                if show_all_routes:
+                    title = "Select Route to Record Journey Times: Showing all routes"
+                    options = ["Cancel", "Set Departure Times", "Show scheduled routes"]
+                    reply1 = OptionDialog().ListOptions(list_items_all_routes, title, options, preferred_size = "default")
+                else:
+                    title = "Select Route to Record Journey Times: Showing scheduled routes"
+                    options = ["Cancel", "Set Departure Times", "Show all routes"]
+                    reply1 = OptionDialog().ListOptions(list_items_no_trains, title, options, preferred_size = "default")
 
-            # print "A"
-            # print "train1 ", train
-            # train = list[1]
-            # print "train", train
-            # print "train", train.getName()
-            option = str(option)
-            if OptionDialog().CLOSED_OPTION == True or option == "Cancel":
-                # print "cancelling"
-                return
-            elif option == "Run Route":
-                # print "Run Route"
-                train = [trn for [rte, trn] in list_items_with_trains if rte == route_name][0]
-                set_departure_times = True
-                param_scheduled_start = "00:00"
-                journey_time_row_displayed = True
-                if "CreateAndShowGUI5_glb" in globals():
-                    if CreateAndShowGUI5_glb != None:
+                my_list = reply1[0]
+                option = reply1[1]
+                route_name = str(my_list)
+
+                option = str(option)
+                if OptionDialog().CLOSED_OPTION == True or option == "Cancel":
+                    # print "cancelling"
+                    return
+                elif option == "Set Departure Times":
+                    param_scheduled_start = "00:00"
+                    journey_time_row_displayed = True
+                    if "CreateAndShowGUI5_glb" not in globals():
+                        CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
+                    else:
                         CreateAndShowGUI5_glb.frame.dispose()
-                CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
-                title = "Run Train"
-                msg = "Last time to cancel"
-                opt1 = "Cancel"
-                opt2 = "Run Train"
-                reply = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
-                if reply == JOptionPane.CANCEL_OPTION or reply == opt1:
-                    CreateAndShowGUI5_glb.frame.dispose()
-                    return
-                OptionDialog().displayMessageNonModal("Run Train along route " + str(route_name) + " now","<html>Check train is in required station<br>Then click to run route")
-                # print "Ended non modal, wait for non modal"
-                self.waitForNonModal()
-                # print "finished wait for non modal"
-                if self.logLevel > 0: print "running train %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", train.getDescription(), train.getName()
-                # running_train = RunTrain(train, g.g_stopping, set_departure_times)
-                route = train.getRoute()
-                routeName = route.getName()
-                station_from, station_to = self.get_first_and_last_station(route)   # starting from beginning of route
-                if self.logLevel > 0: print "station_from", station_from, "station_to", station_to
-                start_block = blocks.getBlock(station_from)
-                if self.logLevel > 0:  "start_block",start_block, "station_to", station_to
-                train_name = start_block.getValue()
-                no_repetitions = 0
-                delay_val = 0
-                # print "%%%%%%%%%%%%%%train_name%%%%%%%%%%%%%%", train_name
-                if train_name is None:
-                    OptionDialog().displayMessage("No train is in the start position \n\n(maybe it has not been set up so the system recognises it)\npress setup train - register the train -  and try again")
-                    return
+                        CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
+                    repeat = False
                 else:
-                    # print "train_name is not none"
-                    pass
+                    if show_all_routes == True:
+                        show_all_routes = False
+                    else:
+                        show_all_routes = True
+                    repeat = True
 
-                if "stopping" in train.getDescription():
-                    if self.logLevel > 0: print "A"
-                    run_train = RunRoute(route, g.g_stopping, station_from, station_to, no_repetitions, train_name, \
-                                         set_departure_times = True)
-                    run_train.setName("running_route_" + routeName)
-                    instanceList.append(run_train)
-                    run_train.start()
-                else:
-                    if self.logLevel > 0: print "B"
-                    run_train = RunRoute(route, g.g_express, station_from, station_to, no_repetitions, train_name, \
-                                         set_departure_times = True)
-                    run_train.setName("running_route_" + routeName)
-                    instanceList.append(run_train)
-                    run_train.start()
-
-                return
-
-        elif reply == opt3:
-            title = "Select Route to set Departure Times"
-            list_items_no_trains = self.get_scheduled_routes("no_train")
-            list_items_with_trains = self.get_scheduled_routes("with_train")
-            if list_items_no_trains == []:
-                OptionDialog().displayMessage("Can only record journey times for scheduled trains.\nThere are no scheduled trains")
-                return
-            options = ["Cancel", "Set Departure Times"]
-            reply1 = OptionDialog().ListOptions(list_items_no_trains, title, options, preferred_size = "default")
-            my_list = reply1[0]
-            option = reply1[1]
-            # print "list", list, "option", option
-            route_name = str(my_list)
-            # print "route", route_name
-            train = [trn for [rte, trn] in list_items_with_trains if rte == route_name][0]
-            # print "train ", train
-            # train = list[1]
-            # print "train", train
-            # print "train", train.getName()
-            option = str(option)
-            if OptionDialog().CLOSED_OPTION == True or option == "Cancel":
-                # print "cancelling"
-                return
-            else:
-                param_scheduled_start = "00:00"
-                journey_time_row_displayed = True
-                # print "a"
-                if "CreateAndShowGUI5_glb" not in globals():
-                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
-                else:
-                    CreateAndShowGUI5_glb.frame.dispose()
-                    CreateAndShowGUI5_glb = CreateAndShowGUI5(None, route_name, param_scheduled_start, journey_time_row_displayed = journey_time_row_displayed)
-                    # print "c", CreateAndShowGUI5_glb
-            # print "%%%%%type%%%%%%%%%", type(CreateAndShowGUI5_glb)
-            # CreateAndShowGUI5_glb.frame.setVisible(True)
+            return
 
     def get_first_and_last_station(self, route):
 
@@ -689,6 +707,18 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             my_list = [[train.getRoute().getName() if train is not None else "" , train] for train in train_list if train.getRoute() is not None]
         else:
             my_list = [train.getRoute().getName() if train is not None else "" for train in train_list if train.getRoute() is not None]
+        return sorted(my_list)
+
+    def get_routes_starting_from_occupied_blocks(self):
+        RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
+        route_list = RouteManager.getRoutesByNameList()
+        my_list = [route.getName() for route in route_list if blocks.getBlock(route.getLocationsBySequenceList()[0].getName()).getSensor().getState() == ACTIVE ]
+        return sorted(my_list)
+
+    def get_all_routes(self):
+        RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
+        route_list = RouteManager.getRoutesByNameList()
+        my_list = [route.getName() for route in route_list ]
         return sorted(my_list)
 
     def start_and_end_time_scheduling(self):
