@@ -327,8 +327,11 @@
         </div>
 
         <p>The default is to show the store request dialog and if <strong>Yes</strong> is selected,
-        the actual store dialog will be displayed.  The <strong>Skip</strong> option can be selected
-        to go directly to the store dialog.</p>
+        the actual store dialog will be displayed.  If <strong>No</strong> is selected, the store
+        dialog is skipped and the shutdown continues.  If <strong>Cancel</strong> is selected, the
+        store dialog is skipped, and the shutdown is also cancelled.</p>
+
+        <p>The <strong>Skip</strong> option can be selected to go directly to the store dialog.</p>
 
         <h4>Ignore Options<span class="since">since 5.5.5</span></h4>
 
