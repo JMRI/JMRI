@@ -638,7 +638,6 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             show_all_routes = True
             repeat = True
             while repeat:
-                print "D", show_all_routes
                 if show_all_routes:
                     title = "Select Route to Record Journey Times: Showing all routes"
                     options = ["Cancel", "Set Departure Times", "Show scheduled routes"]
