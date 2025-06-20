@@ -302,7 +302,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Green is set. Cookies from client: ", _replyVariable.getValue());
         String cookies = _cookiesVariable.getValue().toString();
-        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d.\\w\\w\\w.\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
         Assert.assertEquals("{Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
@@ -322,7 +322,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Yellow is set. Cookies from client: Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
-        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d.\\w\\w\\w.\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
         Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
@@ -342,7 +342,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Blue is set. Cookies from client: Yellow=YellowYellow!, Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
-        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d.\\w\\w\\w.\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
         Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Blue=Blue=BlueBlue%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
