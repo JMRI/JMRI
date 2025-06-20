@@ -82,8 +82,8 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /** {@inheritDoc} */

@@ -81,7 +81,7 @@ public class SendMergCbusEvent extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryMergCbus.CBUS;
     }
 

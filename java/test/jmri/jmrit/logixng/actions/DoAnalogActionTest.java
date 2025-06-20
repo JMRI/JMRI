@@ -262,7 +262,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertEquals("Category matches", Category.COMMON, _base.getCategory());
+        Assert.assertEquals("Category matches", LogixNG_Category.COMMON, _base.getCategory());
     }
 
     // The minimal setup for log4J
@@ -276,7 +276,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.OTHER;
+        _category = LogixNG_Category.OTHER;
         _isExternal = false;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N

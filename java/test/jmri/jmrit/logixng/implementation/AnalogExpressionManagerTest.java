@@ -169,7 +169,7 @@ public class AnalogExpressionManagerTest extends AbstractManagerTestBase {
         }
 
         @Override
-        public Category getCategory() {
+        public LogixNG_Category getCategory() {
             throw new UnsupportedOperationException("Not supported");
         }
 

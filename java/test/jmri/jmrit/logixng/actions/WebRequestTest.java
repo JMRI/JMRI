@@ -590,7 +590,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         loadAndStorePreferences.setExcludeJmriVersion(true);
         loadAndStorePreferences.setExcludeFileHistory(true);
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
