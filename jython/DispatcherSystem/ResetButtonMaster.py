@@ -802,18 +802,16 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def modify_stopping_distance(self, found_edge, new_stopping_fraction, filename):
         trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename)
-        #stopping_fraction = trainInfo_rvs.getStopBySpeedProfileAdjust()
         trainInfo.setStopBySpeedProfileAdjust(float(new_stopping_fraction))
 
-        #write the newtraininfo back to file
+        #write the new stopping fraction back to file
         jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo, filename)
 
-    def modify_station_wait_time(self, found_edge, new_stopping_fraction, filename):
+    def modify_station_wait_time(self, found_edge, wait_time, filename):
         trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename)
-        #stopping_fraction = trainInfo_rvs.getStopBySpeedProfileAdjust()
-        trainInfo.setWaitTime(float(new_stopping_fraction))
+        trainInfo.setWaitTime(float(wait_time))
 
-        #write the newtraininfo back to file
+        #write the new wait time back to file
         jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(trainInfo, filename)
 
     def is_integer(self, n):

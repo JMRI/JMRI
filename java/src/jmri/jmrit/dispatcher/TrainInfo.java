@@ -89,7 +89,7 @@ public class TrainInfo {
     private boolean stopBySpeedProfile = false;
     private float stopBySpeedProfileAdjust = 1.0f;
 
-    private float waitTime = 1.0f; //required only by dispatcher system to pause train at beginning of transit (station)
+    private float waitTime = 3.0f; //seconds:  required only by dispatcher system to pause train at beginning of transit (station)
 
     private String blockName = ""; //required only by Dispatcher System to inhibit running of transit if this block is occupied
 

@@ -50,7 +50,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         my_list = JList(list_items)
         if list_items != []:
             my_list.setSelectedIndex(0)
-        scrollPane = JScrollPane(my_list);
+        scrollPane = JScrollPane(my_list)
         if preferred_size != "default":
             scrollPane.setPreferredSize(preferred_size)   # preferred_size should be set to Dimension(300, 500) say
         else:
@@ -58,7 +58,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             my_list.setVisibleRowCount(no_rows_to_display)
             dim = my_list.getPreferredScrollableViewportSize()
             w = int(dim.getWidth()) + 20
-            h = int(dim.getHeight()) + 20  # to leave a bit of space at bottom. Height of row = approx 20
+            h = int(dim.getHeight() + 20) # to leave a bit of space at bottom. Height of row = approx 20
             scrollPane.setPreferredSize(Dimension(w,h))
         self.CLOSED_OPTION = False
         s = JOptionPane.showOptionDialog(None,
@@ -68,7 +68,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
                                          JOptionPane.PLAIN_MESSAGE,
                                          None,
                                          options,
-                                         options[1])
+                                         options[0])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return [None,None]
@@ -88,7 +88,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
         my_list = JList(list_items)
         if list_items != []:
             my_list.setSelectedIndex(0)
-        scrollPane = JScrollPane(my_list);
+        scrollPane = JScrollPane(my_list)
         if preferred_size != "default":
             scrollPane.setPreferredSize(preferred_size)   # preferred_size should be set to Dimension(300, 500) say
         else:
@@ -96,7 +96,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
             my_list.setVisibleRowCount(no_rows_to_display)
             dim = my_list.getPreferredScrollableViewportSize()
             w = int(dim.getWidth()) + 20
-            h = int(dim.getHeight()) + 20  # to leave a bit of space at bottom. Height of row = approx 20
+            h = int(dim.getHeight() + 20)  # to leave a bit of space at bottom. Height of row = approx 20
             scrollPane.setPreferredSize(Dimension(w,h))
         self.CLOSED_OPTION = False
         s = JOptionPane.showOptionDialog(None,
@@ -106,7 +106,7 @@ class OptionDialog( jmri.jmrit.automat.AbstractAutomaton ) :
                                          JOptionPane.PLAIN_MESSAGE,
                                          None,
                                          options,
-                                         options[1])
+                                         options[0])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return [None,"Cancel"]
