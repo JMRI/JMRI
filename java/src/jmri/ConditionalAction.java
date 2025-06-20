@@ -1,7 +1,11 @@
 package jmri;
 
 import java.awt.event.ActionListener;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.Timer;
+
 import jmri.jmrit.Sound;
 
 /**
@@ -19,6 +23,11 @@ public interface ConditionalAction {
      */
     int getActionData();
 
+    /**
+     * Get an I18N String to represent the Action Data.
+     * @return human readable String of the data.
+     */
+    @Nonnull
     String getActionDataString();
 
     /**
@@ -26,6 +35,7 @@ public interface ConditionalAction {
      *
      * @return the action String
      */
+    @Nonnull
     String getActionString();
 
     /**
@@ -43,9 +53,11 @@ public interface ConditionalAction {
     int getOption();
 
     /**
-     * @param type the type
-     * @return String name of the option for this consequent type
+     * Get the Option String in I18N format.
+     * @param type true if option is a change; false if option is a trigger.
+     * @return String name of the option for this consequent type.
      */
+    @Nonnull
     String getOptionString(boolean type);
 
     /**
@@ -53,15 +65,17 @@ public interface ConditionalAction {
      *
      * @return the type
      */
+    @Nonnull
     Conditional.Action getType();
 
     /**
      * @return String name of this consequent type
      */
+    @Nonnull
     String getTypeString();
 
     /**
-     * Sets action data from user's name for it
+     * Sets action data from I18N name for it.
      *
      * @param actionData user name
      */
@@ -69,10 +83,19 @@ public interface ConditionalAction {
 
     void setActionData(int actionData);
 
+    /**
+     * Set the Action String.
+     * Any String float values ( delayed Sensor ) should use a . decimal separator.
+     * @param actionString the action String.
+     */
     void setActionString(String actionString);
 
     void setDeviceName(String deviceName);
 
+    /**
+     * Set the Action Option.
+     * @param option the action option number.
+     */
     void setOption(int option);
 
     /**
@@ -84,11 +107,18 @@ public interface ConditionalAction {
 
     void setType(Conditional.Action type);
 
-    public String description(boolean triggerType);
+    /**
+     * Get an I18N description of the ConditionAction.
+     * @param triggerType true if option is a change; false if option is a trigger.
+     * @return human readable description.
+     */
+    @Nonnull
+    String description(boolean triggerType);
 
     /*
      * get timer for delays and other timed events
      */
+    @CheckForNull
     Timer getTimer();
 
     /*
@@ -105,6 +135,7 @@ public interface ConditionalAction {
     /*
      * set listener for delays and other timed events
      */
+    @CheckForNull
     ActionListener getListener();
 
     /*
@@ -117,15 +148,18 @@ public interface ConditionalAction {
      *
      * @return the sound
      */
-    public Sound getSound();
+    @CheckForNull
+    Sound getSound();
 
-    public NamedBeanHandle<?> getNamedBean();
+    @CheckForNull
+    NamedBeanHandle<?> getNamedBean();
 
-    public NamedBean getBean();
+    @CheckForNull
+    NamedBean getBean();
 
     /**
      * Dispose this ConditionalAction.
      */
-    public void dispose();
+    void dispose();
 
 }
