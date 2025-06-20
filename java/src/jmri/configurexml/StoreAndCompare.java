@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -71,20 +72,24 @@ public class StoreAndCompare extends AbstractAction {
         return false;
     }
 
-    public static void requestStoreIfNeeded() {
+    public static boolean requestStoreIfNeeded() {
         if (!InstanceManager.getDefault(PermissionManager.class)
                 .hasAtLeastPermission(LoadAndStorePermissionOwner.STORE_XML_FILE_PERMISSION,
                         BooleanPermission.BooleanValue.TRUE)) {
             // User has not permission to store.
-            return;
+            return false;
         }
+
+        AtomicBoolean cancelShutdown = new AtomicBoolean(false);
         if (Application.getApplicationName().equals("PanelPro") &&_preferences.isStoreCheckEnabled()) {
             jmri.util.ThreadingUtil.runOnGUI(() -> {
                 if (dataHasChanged() && !GraphicsEnvironment.isHeadless()) {
-                    jmri.configurexml.swing.StoreAndCompareDialog.showDialog();
+                    cancelShutdown.set(jmri.configurexml.swing.StoreAndCompareDialog.showDialog());
+                    log.debug("The store dialog returned {}", cancelShutdown.get());
                 }
             });
         }
+        return cancelShutdown.get();
     }
 
     public static boolean dataHasChanged() {
