@@ -17,7 +17,6 @@ import org.openlcb.*;
  * Table data model for display of LCC node values.
  * <p>
  * Any desired ordering, etc, is handled outside this class.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2010, 2024
  * @since 5.11.1

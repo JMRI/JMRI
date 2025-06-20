@@ -3,9 +3,6 @@ package jmri.jmrix.can.cbus.node;
 import java.util.TimerTask;
 import jmri.util.TimerUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Class to handle Timers for a CbusNode.
  *
@@ -13,7 +10,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusNodeTimerManager {
     private final CbusBasicNodeWithManagers _node;
-    
+
     protected int fetchNvTimeoutCount;
     private TimerTask nextNvTimerTask;
     protected int fetchEvVarTimeoutCount;
@@ -29,9 +26,9 @@ public class CbusNodeTimerManager {
     protected TimerTask sendEnumTask;    
     protected int sendEvErrorCount;
     protected int _sendNVErrorCount;
-    
+
     public static int SINGLE_MESSAGE_TIMEOUT_TIME = 1500;
-    
+
     /**
      * Create a new CbusNodeTimers
      *
@@ -41,14 +38,14 @@ public class CbusNodeTimerManager {
         _node = node;
         resetTimeOutCounts();
     }
-    
+
     /**
      * See if any timers are running, ie waiting for a response from a physical Node.
      *
      * @return true if timers are running else false
      */
     protected boolean hasActiveTimers(){
-        
+
         return allParamTask != null
             || allEvTimerTask != null
             || nextEvTimerTask != null
@@ -58,7 +55,7 @@ public class CbusNodeTimerManager {
             || sendEditNvTask != null
             || numEvTimerTask != null;
     }
-    
+
     // stop any timers running
     protected void cancelTimers(){
         clearSendEnumTimeout();
@@ -70,7 +67,7 @@ public class CbusNodeTimerManager {
         clearNextNvVarTimeout();
         clearNumEvTimeout();
     }
-    
+
     protected final void resetTimeOutCounts(){
         fetchNvTimeoutCount = 0;
         fetchEvVarTimeoutCount = 0;
@@ -79,7 +76,7 @@ public class CbusNodeTimerManager {
         paramRequestTimeoutCount = 0;
         sendEvErrorCount = 0;
     }
-    
+
     /**
      * Stop timer for a single NV fetch request.
      */
@@ -90,7 +87,7 @@ public class CbusNodeTimerManager {
             fetchNvTimeoutCount = 0;
         }
     }
-    
+
     /**
      * Start timer for a single Node Variable request.
      * 
@@ -117,7 +114,7 @@ public class CbusNodeTimerManager {
         };
         TimerUtil.schedule(nextNvTimerTask, SINGLE_MESSAGE_TIMEOUT_TIME);
     }
-    
+
     /**
      * Stop timer for a single event variable request.
      */
@@ -128,7 +125,7 @@ public class CbusNodeTimerManager {
             fetchEvVarTimeoutCount = 0;
         }
     }
-    
+
     /**
      * Start timer for a single event variable request.
      * 
@@ -158,7 +155,7 @@ public class CbusNodeTimerManager {
         };
         TimerUtil.schedule(nextEvTimerTask, SINGLE_MESSAGE_TIMEOUT_TIME);
     }
-    
+
     /**
      * Stop timer for event total RQEVN request.
      */
@@ -169,7 +166,7 @@ public class CbusNodeTimerManager {
         }
         numEvTimeoutCount = 0;
     }
-    
+
     /**
      * Start timer for event total RQEVN request.
      * 
@@ -198,7 +195,7 @@ public class CbusNodeTimerManager {
         };
         TimerUtil.schedule(numEvTimerTask, ( 5000 ) );
     }
-    
+
     /**
      * Stop timer for an ALL event by index fetch request.
      */
@@ -208,7 +205,7 @@ public class CbusNodeTimerManager {
             allEvTimerTask = null;
         }
     }
-    
+
     /**
      * Starts timer for an ALL event by index fetch request.
      * <p>
@@ -227,7 +224,10 @@ public class CbusNodeTimerManager {
                     allEvTimeoutCount++;
                     
                     if ( allEvTimeoutCount < 10 ) {
-                        log.warn("Re-attempting whole event / node / index fetch from node {}", _node );
+                        log.warn("Re-attempting event index fetch from node {}", _node );
+                        log.warn("NUMEV reports {} events, {} outstanding via ENRSP.",
+                            _node.getNodeEventManager().getTotalNodeEvents(),
+                            _node.getNodeEventManager().getOutstandingIndexNodeEvents());
                         setAllEvTimeout();
                         _node.send.nERD( _node.getNodeNumber() );
                     }
@@ -240,7 +240,7 @@ public class CbusNodeTimerManager {
         };
         TimerUtil.schedule(allEvTimerTask, ( 5000 ) );
     }
-    
+
     /**
      * Stop timer for a single parameter fetch
      */
@@ -250,7 +250,7 @@ public class CbusNodeTimerManager {
             allParamTask = null;
         }
     }
-    
+
     /**
      * Start timer for a Parameter request
      * If 10 timeouts are counted, aborts loop, sets 8 parameters to 0
@@ -277,7 +277,7 @@ public class CbusNodeTimerManager {
         };
         TimerUtil.schedule(allParamTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
     }
-    
+
     /**
      * Stop timer for Teaching NV Node Variables
      */
@@ -287,7 +287,7 @@ public class CbusNodeTimerManager {
             sendEditNvTask = null;
         }
     }
-    
+
     /**
      * Start timer for Teaching NV Node Variables
      * If no response received, increases error count and resumes loop to teach next NV
@@ -297,7 +297,7 @@ public class CbusNodeTimerManager {
         if (!(_node instanceof CbusNode )){
             return;
         }
-        
+
         sendEditNvTask = new TimerTask() {
             @Override
             public void run() {
@@ -312,7 +312,7 @@ public class CbusNodeTimerManager {
         };
         TimerUtil.schedule(sendEditNvTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
     }
-    
+
     /**
      * Stops timer for Teaching Events
      */
@@ -322,7 +322,7 @@ public class CbusNodeTimerManager {
             sendEditEvTask = null;
         }
     }
-    
+
     /**
      * Start timer for Teaching Events
      * On timeout, ie Node does not Respond with a success message,
@@ -343,8 +343,7 @@ public class CbusNodeTimerManager {
         };
         TimerUtil.schedule(sendEditEvTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
     }
-    
-    
+
     /**
      * Stops timer for CAN ID Self Enumeration Timeout
      */
@@ -354,7 +353,7 @@ public class CbusNodeTimerManager {
             sendEnumTask = null;
         }
     }
-    
+
     /**
      * Starts timer for CAN ID Self Enumeration Timeout
      * If no response adds warning to console log
@@ -370,7 +369,7 @@ public class CbusNodeTimerManager {
         };
         TimerUtil.schedule(sendEnumTask, ( SINGLE_MESSAGE_TIMEOUT_TIME ) );
     }
-    
-    private static final Logger log = LoggerFactory.getLogger(CbusNodeTimerManager.class);
-    
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeTimerManager.class);
+
 }

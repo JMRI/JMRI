@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import jmri.jmrix.can.*;
+import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,8 +108,10 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
         setHelp();
 
         this.add(panel);
-        pack();
-        setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            pack();
+            setVisible(true);
+        });
     }
     
     

@@ -471,14 +471,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The LogixNG action <strong>Send MERG CBUS event</strong> has
-              been added. It's available in the category <strong>Merg Cbus</strong>
-              if there is a Merg Cbus connection.</li>
-          <li>The semicolon has been added as field delimiter for CSV files used to create
-              LogixNG Tables.</li>
-          <li>Where Used support has been added to the Formula actions and expressions.  This
-              is a text based search using the item's system and user names.  False positive matches are
-              possible.</li>
           <li>The class <strong>jmri.jmrit.logixng.Category</strong> has been split into
               <strong>jmri.Category</strong> and <strong>jmri.jmrit.logixng.LogixNG_Category</strong>.</li>
           <li></li>
@@ -493,9 +485,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>The train icon now shows the number of local moves in the train's route.</li>
-            <li>New feature, a turn can now drop and pull the same car on a turn.</li>
-            <li>Added local moves enabled to route export and printing.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -537,14 +527,6 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>The script <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
-                has been added.<br />
-                <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
-                sets "Unknown" hardware states to default values for sensors
-                (Inactive) and turnouts (Closed). This prevents overriding
-                known states.<br />
-                The existing script <strong>InitAllTurnoutsSensors.py</strong>
-                would override sensor Active and turnout Thrown states.</li>
             <li></li>
         </ul>
 
@@ -555,8 +537,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The aspect mapping in the Italian FS-1987
-                    signal system has been updated.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -664,8 +645,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The PlantUML library we use for various documentation images
-                has been updated to the current 1.2025.2 version.</li>
-            <li>Fixed a bug where Dark Mode would fail due to a missing library.</li>
+            <li></li>
         </ul>
 

@@ -17,7 +17,8 @@ import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.routes.gui.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.tools.*;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
@@ -1008,8 +1009,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             hourBox.setEnabled(false);
             minuteBox.setEnabled(false);
         } else {
-            hourBox.setEnabled(true);
-            minuteBox.setEnabled(true);
+            hourBox.setEnabled(!_train.isBuilt());
+            minuteBox.setEnabled(!_train.isBuilt());
         }
     }
 
@@ -1141,6 +1142,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             routeBox.setSelectedItem(_train.getRoute());
         }
         if (e.getPropertyName().equals(Route.ROUTE_STATUS_CHANGED_PROPERTY)) {
+            updateDepartureTime();
             enableButtons(_train != null);
             updateRouteStatus();
         }

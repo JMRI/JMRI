@@ -20,8 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Utilities for handling BiDiB adresses
- * <p>
+ * Utilities for handling BiDiB addresses.
+ *
  * @author Eckart Meyer Copyright (C) 2019-2023
  * 
  */
