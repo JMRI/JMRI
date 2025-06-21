@@ -13,6 +13,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.trains.gui.TrainConductorAction;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.util.swing.JmriJOptionPane;
@@ -124,33 +125,41 @@ public class TrainIcon extends LocoIcon {
         for (RouteLocation rl : route.getLocationsBySequenceList()) {
             int pickupCars = 0;
             int dropCars = 0;
+            int localCars = 0;
             String current = "     ";
             if (_train.getCurrentRouteLocation() == rl) {
                 current = "-> "; // NOI18N
             }
             for (Car car : carList) {
-                if (car.getRouteLocation() == rl && !car.getTrackName().equals(Car.NONE)) {
+                if (car.getRouteLocation() == rl &&
+                        !car.getTrackName().equals(Car.NONE) &&
+                        car.getRouteDestination() == rl) {
+                    localCars++;
+                } else if (car.getRouteLocation() == rl && !car.getTrackName().equals(Car.NONE)) {
                     pickupCars++;
                 }
-                if (car.getRouteDestination() == rl) {
+                else if (car.getRouteDestination() == rl) {
                     dropCars++;
                 }
             }
-            String rText = "";
+            String rText = current + rl.getName();
             String pickups = "";
             String drops = "";
+            String local = "";
             if (pickupCars > 0) {
-                pickups = " " + Bundle.getMessage("Pickup") + " " + pickupCars;
-                if (dropCars > 0) {
-                    drops = ", " + Bundle.getMessage("SetOut") + " " + dropCars;
-                }
-            } else if (dropCars > 0) {
-                drops = " " + Bundle.getMessage("SetOut") + " " + dropCars;
+                pickups = " " + Bundle.getMessage("Pickup") + " " + pickupCars + ",";
             }
-            if (pickupCars > 0 || dropCars > 0) {
-                rText = current + rl.getName() + "  (" + pickups + drops + " )";
-            } else {
-                rText = current + rl.getName();
+            if (dropCars > 0) {
+                drops = " " + Bundle.getMessage("SetOut") + " " + dropCars + ",";
+            }
+            if (localCars > 0) {
+                local = " " + Bundle.getMessage("LocalMoves") + " " + localCars + ",";
+            }
+            if (pickupCars > 0 || dropCars > 0 || localCars > 0) {
+                String actonText = pickups + drops + local;
+                // remove last comma
+                actonText = actonText.substring(0, actonText.length() - 1);
+                rText = rText + "  (" + actonText + " )";
             }
             routeMenu.add(new RouteAction(rText, rl));
         }

@@ -12,7 +12,9 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -50,7 +52,7 @@ public class PrintTrainsServingLocation {
             printTrains(writer);
 
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException we) {
             log.error("Error printing PrintLocationAction: {}", we.getLocalizedMessage());
         }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import javax.vecmath.Point3d;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for RPS systems.
@@ -53,7 +51,7 @@ public class RpsSensor extends AbstractSensor
         } else {
             notifyOutOfRegion(id);
         }
-        if (contents.size() > 0) {
+        if (!contents.isEmpty()) {
             setOwnState(Sensor.ACTIVE);
         } else {
             setOwnState(Sensor.INACTIVE);
@@ -63,10 +61,8 @@ public class RpsSensor extends AbstractSensor
     // if somebody outside sets state to INACTIVE, clear list
     @Override
     public void setOwnState(int state) {
-        if (state == Sensor.INACTIVE) {
-            if (contents.size() > 0) {
-                contents = new ArrayList<Integer>();
-            }
+        if (state == Sensor.INACTIVE && (!contents.isEmpty())) {
+            contents = new ArrayList<>();
         }
         super.setOwnState(state);
     }
@@ -96,7 +92,7 @@ public class RpsSensor extends AbstractSensor
     }
 
     transient Region region;
-    ArrayList<Integer> contents = new ArrayList<Integer>();
+    ArrayList<Integer> contents = new ArrayList<>();
 
     /**
      * Notify parameter listeners that a device has left the region covered by
@@ -126,6 +122,6 @@ public class RpsSensor extends AbstractSensor
     public void requestUpdateFromLayout() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsSensor.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RpsSensor.class);
 
 }

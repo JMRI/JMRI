@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import jmri.Category;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.JUnitUtil;

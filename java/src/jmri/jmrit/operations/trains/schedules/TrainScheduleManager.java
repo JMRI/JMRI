@@ -16,6 +16,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.csv.TrainCsvSwitchLists;
 
 /**
  * Manages train schedules. The default is the days of the week, but can be

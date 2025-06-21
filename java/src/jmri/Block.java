@@ -226,6 +226,77 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public static final String OCC_SENSOR_CHANGE = "OccupancySensorChange"; // NOI18N
 
     /**
+     * Property name change fired when a Sensor is set to / removed from a Block.
+     * The fired event includes
+     * old value: Sensor Bean Object if previously set, else null
+     * new value: Sensor Bean Object if being set, may be null if Sensor removed.
+     */
+    public static final String BLOCK_REPORTER_CHANGE = "BlockReporterChange"; // NOI18N
+
+    /**
+     * Property name change fired when the Block reporting Current flag changes.
+     * The fired event includes
+     * old value: previous value, Boolean.
+     * new value: new value, Boolean.
+     */
+    public static final String BLOCK_REPORTING_CURRENT = "BlockReportingCurrent"; // NOI18N
+
+    /**
+     * Property name change fired when the Block Permissive Status changes.
+     * The fired event includes
+     * old value: previous permissive status.
+     * new value: new permissive status.
+     */
+    public static final String BLOCK_PERMISSIVE_CHANGE = "BlockPermissiveWorking"; // NOI18N
+
+    /**
+     * Property name change fired when the Block ghost Status changes.
+     * The fired event includes
+     * old value: previous ghost status.
+     * new value: new ghost status.
+     */
+    public static final String GHOST_CHANGE = "BlockGhost"; // NOI18N
+
+    /**
+     * Property name change fired when the Block Speed changes.
+     * The fired event includes
+     * old value: previous speed String.
+     * new value: new speed String.
+     */
+    public static final String BLOCK_SPEED_CHANGE = "BlockSpeedChange"; // NOI18N
+
+    /**
+     * Property name change fired when the Block Curvature changes.
+     * The fired event includes
+     * old value: previous Block Curvature Constant.
+     * new value: new Block Curvature Constant.
+     */
+    public static final String BLOCK_CURVATURE_CHANGE = "BlockCurvatureChange"; // NOI18N
+
+    /**
+     * Property name change fired when the Block Length changes.
+     * The fired event includes
+     * old value: previous float length (mm).
+     * new value: new float length (mm).
+     */
+    public static final String BLOCK_LENGTH_CHANGE = "BlockLengthChange"; // NOI18N
+
+    /**
+     * String constant for property changes to value.
+     */
+    public static final String PROPERTY_VALUE = "value";
+
+    /**
+     * String constant for property changes to direction.
+     */
+    public static final String PROPERTY_DIRECTION = "direction";
+
+    /**
+     * String constant for property changes to allocated.
+     */
+    public static final String PROPERTY_ALLOCATED = "allocated";
+
+    /**
      * Set the sensor by name.
      * Fires propertyChange "OccupancySensorChange" when changed.
      * @param pName the name of the Sensor to set
@@ -280,7 +351,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         if (_namedSensor != null) {
             _sensorListener = this::handleSensorChange;
             _namedSensor.getBean().addPropertyChangeListener(_sensorListener,
-                s.getName(), "Block Sensor " + getDisplayName());
+                _namedSensor.getName(), "Block Sensor " + getDisplayName());
             setState(_namedSensor.getBean().getState());
             // At present does NOT route via goingUnknown() / goingActive() etc.
         } else {
@@ -304,14 +375,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public NamedBeanHandle<Sensor> getNamedSensor() {
         return _namedSensor;
     }
-
-    /**
-     * Property name change fired when a Sensor is set to / removed from a Block.
-     * The fired event includes
-     * old value: Sensor Bean Object if previously set, else null
-     * new value: Sensor Bean Object if being set, may be null if Sensor removed.
-     */
-    public static final String BLOCK_REPORTER_CHANGE = "BlockReporterChange"; // NOI18N
 
     /**
      * Set the Reporter that should provide the data value for this block.
@@ -346,14 +409,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public Reporter getReporter() {
         return _reporter;
     }
-
-    /**
-     * Property name change fired when the Block reporting Current flag changes.
-     * The fired event includes
-     * old value: previous value, Boolean.
-     * new value: new value, Boolean.
-     */
-    public static final String BLOCK_REPORTING_CURRENT = "BlockReportingCurrent"; // NOI18N
 
     /**
      * Define if the Block's value should be populated from the
@@ -460,7 +515,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
         // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
         try {
-            firePropertyChange("state", old, _current);
+            firePropertyChange(PROPERTY_STATE, old, _current);
         } catch (Exception e) {
             log.error("{} got exception during firePropertyChange({},{}) in thread {} {}",
                 getDisplayName(), old, _current,
@@ -484,7 +539,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             log.debug("Block {} value changed from '{}' to '{}'", getDisplayName(), _value, value);
             _previousValue = _value;
             _value = value;
-            firePropertyChange("value", _previousValue, _value); // NOI18N
+            firePropertyChange(PROPERTY_VALUE, _previousValue, _value); // NOI18N
         }
     }
 
@@ -510,7 +565,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             int oldDirection = _direction;
             _direction = direction;
             // this is a bound parameter
-            firePropertyChange("direction", oldDirection, direction); // NOI18N
+            firePropertyChange(PROPERTY_DIRECTION, oldDirection, direction); // NOI18N
         }
     }
 
@@ -605,14 +660,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Property name change fired when the Block Permissive Status changes.
-     * The fired event includes
-     * old value: previous permissive status.
-     * new value: new permissive status.
-     */
-    public static final String BLOCK_PERMISSIVE_CHANGE = "BlockPermissiveWorking"; // NOI18N
-
-    /**
      * Set Block as permissive.
      * Fires propertyChange "BlockPermissiveWorking" when changed.
      * @param w true permissive, false NOT permissive
@@ -634,14 +681,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public boolean getIsGhost() {
         return _ghost;
     }
-
-    /**
-     * Property name change fired when the Block ghost Status changes.
-     * The fired event includes
-     * old value: previous ghost status.
-     * new value: new ghost status.
-     */
-    public static final String GHOST_CHANGE = "BlockGhost"; // NOI18N
 
     /**
      * Set if the block is a ghost
@@ -690,14 +729,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Property name change fired when the Block Speed changes.
-     * The fired event includes
-     * old value: previous speed String.
-     * new value: new speed String.
-     */
-    public static final String BLOCK_SPEED_CHANGE = "BlockSpeedChange"; // NOI18N
-
-    /**
      * Set the Block Speed Name.
      * <p>
      * Does not perform name validity checking.
@@ -744,14 +775,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Property name change fired when the Block Curvature changes.
-     * The fired event includes
-     * old value: previous Block Curvature Constant.
-     * new value: new Block Curvature Constant.
-     */
-    public static final String BLOCK_CURVATURE_CHANGE = "BlockCurvatureChange"; // NOI18N
-
-    /**
      * Set Block Curvature Constant.
      * Valid values :
      * Block.NONE, Block.GRADUAL, Block.TIGHT, Block.SEVERE
@@ -774,14 +797,6 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public int getCurvature() {
         return _curvature;
     }
-
-    /**
-     * Property name change fired when the Block Length changes.
-     * The fired event includes
-     * old value: previous float length (mm).
-     * new value: new float length (mm).
-     */
-    public static final String BLOCK_LENGTH_CHANGE = "BlockLengthChange"; // NOI18N
 
     /**
      * Set length in millimeters.
@@ -905,7 +920,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      */
     void handleSensorChange(PropertyChangeEvent e) {
         Sensor s = getSensor();
-        if ( "KnownState".equals( e.getPropertyName()) && s != null ) {
+        if ( Sensor.PROPERTY_KNOWN_STATE.equals( e.getPropertyName()) && s != null ) {
             int state = s.getState();
             switch (state) {
                 case Sensor.ACTIVE:
@@ -940,8 +955,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * @param e PropertyChangeEvent
      */
     void handleReporterChange(PropertyChangeEvent e) {
-        if ((_reportingCurrent && "currentReport".equals(e.getPropertyName()))
-            || (!_reportingCurrent && "lastReport".equals(e.getPropertyName()))) {
+        if ((_reportingCurrent && Reporter.PROPERTY_CURRENT_REPORT.equals(e.getPropertyName()))
+            || (!_reportingCurrent && Reporter.PROPERTY_LAST_REPORT.equals(e.getPropertyName()))) {
             setValue(e.getNewValue());
         }
     }
@@ -1225,7 +1240,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * @param boo Allocation status
      */
     public void setAllocated(Boolean boo) {
-        firePropertyChange("allocated", !boo, boo);
+        firePropertyChange(PROPERTY_ALLOCATED, !boo, boo);
     }
 
     // Methods to implmement PhysicalLocationReporter Interface
@@ -1345,7 +1360,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // No I18N
+        if (Manager.PROPERTY_CAN_DELETE.equals(evt.getPropertyName())) {
             if (evt.getOldValue() instanceof Sensor
                 && evt.getOldValue().equals(getSensor())) {
                 throw new PropertyVetoException(getDisplayName(), evt);
@@ -1354,7 +1369,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 && evt.getOldValue().equals(getReporter())) {
                 throw new PropertyVetoException(getDisplayName(), evt);
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
+        } else if (Manager.PROPERTY_DO_DELETE.equals(evt.getPropertyName())) {
             if (evt.getOldValue() instanceof Sensor
                 && evt.getOldValue().equals(getSensor())) {
                 setSensor(null);

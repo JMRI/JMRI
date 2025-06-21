@@ -41,8 +41,8 @@ public class WebBrowser
     
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 
     /** {@inheritDoc} */
@@ -64,8 +64,8 @@ public class WebBrowser
                 // Open browser to URL with draft report
                 Desktop.getDesktop().browse(uri);
             } else {
-                throw new JmriException(String.format(
-                        "Failed to connect to web page. java.awt.Desktop doesn't suppport Action.BROWSE"));
+                throw new JmriException(
+                        "Failed to connect to web page. java.awt.Desktop doesn't suppport Action.BROWSE");
             }
         } catch (IOException | URISyntaxException e) {
             throw new JmriException(String.format(

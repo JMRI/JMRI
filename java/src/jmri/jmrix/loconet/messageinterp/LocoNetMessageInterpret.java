@@ -14,7 +14,8 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+import jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents;
+import jmri.jmrix.loconet.lnsvf2.Lnsv2MessageContents;
 import jmri.jmrix.loconet.uhlenbrock.LncvMessageContents;
 import jmri.util.StringUtil;
 
@@ -76,11 +77,11 @@ public class LocoNetMessageInterpret {
      * string contains a message indicating that the message is not decoded followed
      * by the individual bytes of the message (in hexadecimal).
      * <p>
-     * Note that many message types are "poorly defined" here, with many 
-     * "reverse-engineered" messages, and many that do not define actual bits.  This 
+     * Note that many message types are "poorly defined" here, with many
+     * "reverse-engineered" messages, and many that do not define actual bits.  This
      * means that this code can give interpretations that may not actually "decode"
-     * an actual message. 
-     * 
+     * an actual message.
+     *
      * @param l Message to parse
      * @param turnoutPrefix "System Name" + prefix which designates the connection's
      *          Turnouts, such as "LT"
@@ -1132,8 +1133,8 @@ public class LocoNetMessageInterpret {
                     //
                     // Information reverse-engineered by B. Milhaupt and used with permission
 
-                    device = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
-                    String slave = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+                    device = getDeviceNameFromIPLInfo(((l.getElement(4) & 1) << 7) + l.getElement(5));
+                    String slave = getSlaveNameFromIPLInfo( l.getElement(6) + ((l.getElement(4) & 2) << 6));
                     return Bundle.getMessage("LN_MSG_IPL_DISCOVER_SPECIFIC_DEVICES",
                             device, slave);
                 }
@@ -1325,7 +1326,7 @@ public class LocoNetMessageInterpret {
         // devices do not generate this report.
         //
         // Information reverse-engineered by B. Milhaupt and used with permission
-        String hostType = getDeviceNameFromIPLInfo(l.getElement(4), l.getElement(5));
+        String hostType = getDeviceNameFromIPLInfo(((l.getElement(4) & 1) << 7) + l.getElement(5));
 
         String hostVer = ((l.getElement(8) & 0x78) >> 3) + "." + ((l.getElement(8) & 0x7));
 
@@ -1336,9 +1337,10 @@ public class LocoNetMessageInterpret {
         String hostInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_HOST_DETAILS",
                 hostType, hostSN, hostVer);
 
-        String slaveType = getSlaveNameFromIPLInfo(l.getElement(4), l.getElement(6));
+        String slaveType = getSlaveNameFromIPLInfo( l.getElement(6) + ((l.getElement(4) & 2) << 6));
         String slaveInfo;
-        if (l.getElement(6) != 0) {
+
+        if ((l.getElement(6) != 0) && (l.getElement(5) != l.getElement(6))) {
             String slaveVer = (((l.getElement(10) & 0x78) >> 3) + ((l.getElement(9) & 1) << 4)) + "." + ((l.getElement(10) & 0x7));
             int slaveSnInt
                     = ((l.getElement(15) + (((l.getElement(14) & 0x1) == 1) ? 128 : 0)))
@@ -1348,6 +1350,10 @@ public class LocoNetMessageInterpret {
             slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_DETAILS", slaveType,
                     Integer.toHexString(slaveSnInt).toUpperCase(),
                     slaveVer);
+        } else if ((l.getElement(6) != 0) && (l.getElement(5) == l.getElement(6))) {
+            int iplVer =l.getElement(10) + ((l.getElement(9) & 1)<<7);
+            slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_IPL",
+                    Integer.toString(iplVer>>3) + "." + Integer.toString(iplVer & 7));
         } else {
             slaveInfo = Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_SLAVE_NO_SLAVE");
         }
@@ -1511,7 +1517,7 @@ public class LocoNetMessageInterpret {
          * and jmri.jmrix.loconet.uhlenbrock.LncvMessageContents.java
          */
 
-        // check for a specific type - Uhlenbrock LNSV Programming messages format
+        // check for a specific type - Uhlenbrock LNCV Programming messages format
         String result = interpretLncvMessage(l);
         if (!result.isEmpty()) {
             return result;
@@ -1520,81 +1526,82 @@ public class LocoNetMessageInterpret {
         return "";
     }
 
-    private static String interpretSV1Message(LocoNetMessage l) {
-        int[] d = l.getPeerXfrData();
-        if ((l.getElement(4) != 1)
-                || ((l.getElement(5) & 0x70) != 0)
-                || ((l.getElement(10) & 0x70) != 0x10)) {
-            // is not an SV1 message
-            return "";
+    /** Try to decode an LNSV type 1 message as sent in replies from LocoIO boards
+     * in response to a read or write request from LocoBuffer/PC.
+     *
+     * @param l The LocoNet message to decode
+     * @return a localised string for display to the user in a monitor
+     */
+    private static String interpretSV0Message(LocoNetMessage l) {
+        String svReply = "";
+        Lnsv1MessageContents sv1mc = null;
+        try {
+            // assume the message is an SV1 message
+            sv1mc = new Lnsv1MessageContents(l);
+        } catch (IllegalArgumentException e) {
+            // message is not an SV1 message.  Ignore the exception.
         }
-        if (l.getElement(2) == 0x50) {
-            // Packets from the LocoBuffer
-            String dst_subaddrx = (l.getElement(4) != 0x01 ? "" : ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : ""));
-            // LocoBuffer to LocoIO
-            return "LocoBuffer => LocoIO@"
-                    + ((l.getElement(3) == 0) ? "broadcast" : Integer.toHexString(l.getElement(3)) + dst_subaddrx)
-                    + " "
-                    + (d[0] == 2 ? "Query SV" + d[1] : "Write SV" + d[1] + "=0x" + Integer.toHexString(d[3]))
-                    + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
+        if (sv1mc != null) {
+            // the message was indeed an SV1 message
+            try {
+                // get string representation of the message from an
+                // available translation which is best suited to
+                // the currently-active "locale"
+                svReply = sv1mc.toString();
+            } catch (IllegalArgumentException e) {
+                // message is not a properly-formatted SV1 read reply message. Ignore the exception.
+            }
         }
-        return "";
+        return svReply;
     }
 
-    private static String interpretSV0Message(LocoNetMessage l) {
-        int dst_h = l.getElement(4);
-        int pxct1 = l.getElement(5);
-        int pxct2 = l.getElement(10);
-        if ((dst_h != 0x01) || ((pxct1 & 0xF0) != 0x00)
-                || ((pxct2 & 0xF0) != 0x00)) {
-            return "";
+    /** Try to decode an LNSV type 1 message as sent to LocoIO boards
+     * containing a read or write request from LocoBuffer/PC.
+     *
+     * @param l The LocoNet message to decode
+     * @return a localised string for display to the user in a monitor
+     */
+    private static String interpretSV1Message(LocoNetMessage l) {
+        // (New Designs)
+        String svReply = "";
+        Lnsv1MessageContents sv1mc = null;
+        try {
+            // assume the message is an SV1 message
+            sv1mc = new Lnsv1MessageContents(l);
+        } catch (IllegalArgumentException e) {
+            // message is not an SV1 message.  Ignore the exception.
         }
-
-        // (Jabour/DeLoof LocoIO), SV Programming messages format 1
-        int dst_l = l.getElement(3);
-        int[] d = l.getPeerXfrData();
-        int src = l.getElement(2);
-
-        String src_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
-        String dst_subaddrx = ((d[4] != 0) ? "/" + Integer.toHexString(d[4]) : "");
-
-        String src_dev = ((src == 0x50) ? "Locobuffer" : "LocoIO@" + "0x" + Integer.toHexString(src) + src_subaddrx);
-        String dst_dev = ((dst_l == 0x50) ? "LocoBuffer "
-                : ((dst_l == 0x0) ? "broadcast"
-                        : "LocoIO@0x" + Integer.toHexString(dst_l) + dst_subaddrx));
-        String operation = (src == 0x50)
-                ? ((d[0] == 2) ? "Query" : "Write")
-                : ((d[0] == 2) ? "Report" : "Write");
-
-        return src_dev + "=> " + dst_dev + " "
-                + operation + " SV" + d[1]
-                + ((src == 0x50) ? (d[0] != 2 ? ("=0x" + Integer.toHexString(d[3])) : "")
-                        : " = " + ((d[0] == 2) ? ((d[2] != 0) ? (d[5] < 10) ? "" + d[5]
-                                                : d[5] + " (0x" + Integer.toHexString(d[5]) + ")"
-                                        : (d[7] < 10) ? "" + d[7]
-                                                : d[7] + " (0x" + Integer.toHexString(d[7]) + ")")
-                                : (d[7] < 10) ? "" + d[7]
-                                        : d[7] + " (0x" + Integer.toHexString(d[7]) + ")"))
-                + ((d[2] != 0) ? " Firmware rev " + dotme(d[2]) : "") + ".\n";
+        if (sv1mc != null) {
+            // the message was indeed an SV1 message
+            try {
+                // get string representation of the message from an
+                // available translation which is best suited to
+                // the currently-active "locale"
+                svReply = sv1mc.toString();
+            } catch (IllegalArgumentException e) {
+                // message is not a properly-formatted SV1 message.  Ignore the exception.
+            }
+        }
+        return svReply;
     }
 
     private static String interpretSV2Message(LocoNetMessage l) {
         // (New Designs)
         String svReply = "";
-        LnSv2MessageContents svmc = null;
+        Lnsv2MessageContents sv2mc = null;
         try {
             // assume the message is an SV2 message
-            svmc = new LnSv2MessageContents(l);
+            sv2mc = new Lnsv2MessageContents(l);
         } catch (IllegalArgumentException e) {
             // message is not an SV2 message.  Ignore the exception.
         }
-        if (svmc != null) {
+        if (sv2mc != null) {
             // the message was indeed an SV2 message
             try {
                 // get string representation of the message from an
                 // available translation which is best suited to
                 // the currently-active "locale"
-                svReply = svmc.toString();
+                svReply = sv2mc.toString();
             } catch (IllegalArgumentException e) {
                 // message is not a properly-formatted SV2 message.  Ignore the exception.
             }
@@ -1988,7 +1995,7 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_LONG_ACK_WRONG_THROTTLE_ID",
                         Bundle.getMessage("LN_MSG_HEXADECIMAL_REPRESENTATION",
                                     StringUtil.twoHexFromInt(l.getElement(2))));
-                
+
             case LnConstants.OPC_ALM_READ:
                 if (l.getElement(2) == 0) {
                     return Bundle.getMessage("LN_MSG_LONG_ACK_SLOT_NOT_SUPPORTED",
@@ -3811,6 +3818,10 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR93",
                         l.getElement(3) & 0x07);
             }
+            case 0x14: {
+                return Bundle.getMessage("LN_MSG_OPC_D7_TETHERLESS_REPORT_UR90X",
+                        l.getElement(3) & 0x07);
+            }
            default: {
                 return "";
             }
@@ -4785,11 +4796,7 @@ public class LocoNetMessageInterpret {
         }
     }
 
-    public static String getDeviceNameFromIPLInfo(int manuf, int type) {
-        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
-            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
-                    manuf, type);
-        }
+    public static String getDeviceNameFromIPLInfo(int type) {
         switch (type) {
             case LnConstants.RE_IPL_DIGITRAX_HOST_ALL:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_ALLDEVICES");
@@ -4849,17 +4856,14 @@ public class LocoNetMessageInterpret {
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_SE74");
             case LnConstants.RE_IPL_DIGITRAX_HOST_BDL716:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_BDL716");
-
+            case LnConstants.RE_IPL_DIGITRAX_HOST_UR90X:
+                return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UR90X");
             default:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_HOST_UNKNOWN", type);
         }
     }
 
-    public static String getSlaveNameFromIPLInfo(int manuf, int slaveNum) {
-        if (manuf != LnConstants.RE_IPL_MFR_DIGITRAX) {
-            return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_UNDEFINED_MFG_PROD",
-                    manuf, slaveNum);
-        }
+    public static String getSlaveNameFromIPLInfo(int slaveNum) {
         switch (slaveNum) {
             case LnConstants.RE_IPL_DIGITRAX_SLAVE_ALL:
                 return Bundle.getMessage("LN_MSG_IPL_DEVICE_HELPER_DIGITRAX_SLAVE_ALLDEVICES");
@@ -4907,7 +4911,7 @@ public class LocoNetMessageInterpret {
         if ((dest >= 0x79) && (dest <= 0x7f)) {
             return "";
         }
-        
+
         if ((l.getElement(1) & 0x78) != 0x38) {
             // Ignore if message is not one from a DCS240 (or newer) command
             // station's "Expanded" slot messaging.   The message is probably

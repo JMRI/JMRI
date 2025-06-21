@@ -1,17 +1,17 @@
 package apps.SoundPro;
 
 import apps.Apps;
+
+import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
+
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The JMRI application for controlling audio.
@@ -53,13 +53,12 @@ public class SoundPro extends Apps {
 
     @Override
     protected String line1() {
-        return MessageFormat.format(Bundle.getMessage("SoundProVersionCredit"),
-                new Object[]{jmri.Version.name()});
+        return Bundle.getMessage("SoundProVersionCredit", jmri.Version.name());
     }
 
     @Override
     protected String line2() {
-        return "http://jmri.org/SoundPro ";
+        return "https://jmri.org/SoundPro";
     }
 
     /**
@@ -82,18 +81,18 @@ public class SoundPro extends Apps {
 
         JButton b1 = new JButton(Bundle.getMessage("SpButtonAudioTable"));
         b1.addActionListener(audioTable);
-        b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        b1.setAlignmentX(Component.CENTER_ALIGNMENT);
         j.add(b1);
 
         JPanel p3 = new JPanel();
         p3.setLayout(new java.awt.FlowLayout());
         h1 = new JButton(Bundle.getMessage("ButtonHelp"));
         // as globalHelpBroker is still null, wait to attach help target after help menu is created
-        h1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        h1.setAlignmentX(Component.CENTER_ALIGNMENT);
         p3.add(h1);
         JButton q1 = new JButton(Bundle.getMessage("ButtonQuit"));
         q1.addActionListener(quit);
-        q1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        q1.setAlignmentX(Component.CENTER_ALIGNMENT);
         p3.add(q1);
         j.add(p3);
 
@@ -135,6 +134,6 @@ public class SoundPro extends Apps {
         splash(false);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SoundPro.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SoundPro.class);
 
 }

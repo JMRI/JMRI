@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -30,7 +31,7 @@ public class PrintRoutes {
     static final String SPACE = " ";
     private static final char FORM_FEED = '\f';
 
-    private static final int MAX_NAME_LENGTH = Control.max_len_string_location_name - 5;
+    private static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 
     boolean _isPreview;
 
@@ -71,7 +72,7 @@ public class PrintRoutes {
                 }
             }
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print routes: {}", e1.getLocalizedMessage());
         }
@@ -87,7 +88,7 @@ public class PrintRoutes {
 
             printRoute(writer, route);
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print routes: {}", e1.getLocalizedMessage());
         }
@@ -95,6 +96,44 @@ public class PrintRoutes {
 
     private void printRoute(HardcopyWriter writer, Route route) throws IOException {
         writer.write(route.getComment() + NEW_LINE);
+        if (!route.getComment().isBlank()) {
+            writer.write(NEW_LINE);
+        }
+
+        writer.write(getPrintHeader1());
+
+        List<RouteLocation> routeList = route.getLocationsBySequenceList();
+        for (RouteLocation rl : routeList) {
+            String s = padAndTruncate(rl.getName(), MAX_NAME_LENGTH) +
+                    rl.getTrainDirectionString() +
+                    TAB +
+                    padAndTruncate(Integer.toString(rl.getMaxCarMoves()), 4) +
+                    padAndTruncate(rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"), 6) +
+                    padAndTruncate(rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no"), 6) +
+                    (rl.isLocalMovesAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no")) +
+                    TAB +
+                    (rl.getWait() + Setup.getTravelTime()) +
+                    TAB +
+                    rl.getMaxTrainLength() +
+                    TAB +
+                    rl.getGrade() +
+                    TAB +
+                    padAndTruncate(Integer.toString(rl.getTrainIconX()), 5) +
+                    rl.getTrainIconY() +
+                    NEW_LINE;
+            writer.write(s);
+        }
+
+        writer.write(getPrintHeader2());
+
+        for (RouteLocation rl : routeList) {
+            String s = padAndTruncate(rl.getName(),
+                    MAX_NAME_LENGTH) + rl.getDepartureTime() + TAB + rl.getComment() + NEW_LINE;
+            writer.write(s);
+        }
+    }
+
+    private String getPrintHeader1() {
         String s = Bundle.getMessage("Location") +
                 TAB +
                 "    " +
@@ -102,9 +141,11 @@ public class PrintRoutes {
                 SPACE +
                 Bundle.getMessage("MaxMoves") +
                 SPACE +
-                Bundle.getMessage("Pickups") +
+                Bundle.getMessage("Pull?") +
                 SPACE +
-                Bundle.getMessage("Drops") +
+                Bundle.getMessage("Drop?") +
+                SPACE +
+                Bundle.getMessage("Local?") +
                 SPACE +
                 Bundle.getMessage("Travel") +
                 TAB +
@@ -116,59 +157,22 @@ public class PrintRoutes {
                 "    " +
                 Bundle.getMessage("Y") +
                 NEW_LINE;
-        writer.write(s);
-        List<RouteLocation> routeList = route.getLocationsBySequenceList();
-        for (RouteLocation rl : routeList) {
-            String name = rl.getName();
-            name = padAndTruncate(name);
-            String pad = SPACE;
-            if (rl.getTrainIconX() < 10) {
-                pad = "    ";
-            } else if (rl.getTrainIconX() < 100) {
-                pad = "   ";
-            } else if (rl.getTrainIconX() < 1000) {
-                pad = "  ";
-            }
-            s = name +
-                    TAB +
-                    rl.getTrainDirectionString() +
-                    TAB +
-                    rl.getMaxCarMoves() +
-                    TAB +
-                    (rl.isPickUpAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no")) +
-                    TAB +
-                    (rl.isDropAllowed() ? Bundle.getMessage("yes") : Bundle.getMessage("no")) +
-                    TAB +
-                    rl.getWait() +
-                    TAB +
-                    rl.getMaxTrainLength() +
-                    TAB +
-                    rl.getGrade() +
-                    TAB +
-                    rl.getTrainIconX() +
-                    pad +
-                    rl.getTrainIconY() +
-                    NEW_LINE;
-            writer.write(s);
-        }
-        s = NEW_LINE +
+        return s;
+    }
+
+    private String getPrintHeader2() {
+        String s = NEW_LINE +
                 Bundle.getMessage("Location") +
                 TAB +
                 Bundle.getMessage("DepartTime") +
                 TAB +
                 Bundle.getMessage("Comment") +
                 NEW_LINE;
-        writer.write(s);
-        for (RouteLocation rl : routeList) {
-            String name = rl.getName();
-            name = padAndTruncate(name);
-            s = name + TAB + rl.getDepartureTime() + TAB + rl.getComment() + NEW_LINE;
-            writer.write(s);
-        }
+        return s;
     }
 
-    private String padAndTruncate(String string) {
-        return TrainCommon.padAndTruncate(string, MAX_NAME_LENGTH);
+    private String padAndTruncate(String string, int fieldSize) {
+        return TrainCommon.padAndTruncate(string, fieldSize);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PrintRoutes.class);

@@ -38,14 +38,15 @@ public class ImportRoutes extends ImportCommon {
     protected static final int FIELD_ROUTE_LOCATION_RANDOM = 4;
     protected static final int FIELD_ROUTE_LOCATION_PICKUP_ALLOWED = 5;
     protected static final int FIELD_ROUTE_LOCATION_DROP_ALLOWED = 6;
-    protected static final int FIELD_ROUTE_LOCATION_TRAVEL = 7;
-    protected static final int FIELD_ROUTE_LOCATION_DEPARTURE_TIME = 8;
-    protected static final int FIELD_ROUTE_LOCATION_TRAIN_LENGTH = 9;
-    protected static final int FIELD_ROUTE_LOCATION_GRADE = 10;
-    protected static final int FIELD_ROUTE_LOCATION_ICON_X = 11;
-    protected static final int FIELD_ROUTE_LOCATION_ICON_Y = 12;
-    protected static final int FIELD_ROUTE_LOCATION_COMMENT = 13;
-    protected static final int FIELD_ROUTE_LOCATION_COMMENT_COLOR = 14;
+    protected static final int FIELD_ROUTE_LOCATION_LOCAL_MOVES_ALLOWED = 7;
+    protected static final int FIELD_ROUTE_LOCATION_TRAVEL = 8;
+    protected static final int FIELD_ROUTE_LOCATION_DEPARTURE_TIME = 9;
+    protected static final int FIELD_ROUTE_LOCATION_TRAIN_LENGTH = 10;
+    protected static final int FIELD_ROUTE_LOCATION_GRADE = 11;
+    protected static final int FIELD_ROUTE_LOCATION_ICON_X = 12;
+    protected static final int FIELD_ROUTE_LOCATION_ICON_Y = 13;
+    protected static final int FIELD_ROUTE_LOCATION_COMMENT = 14;
+    protected static final int FIELD_ROUTE_LOCATION_COMMENT_COLOR = 15;
 
     @Override
     public void run() {
@@ -97,7 +98,7 @@ public class ImportRoutes extends ImportCommon {
                 }
             }
             // add route location?
-            if (route != null && inputLine.length == 15) {
+            if (route != null && inputLine.length == 16) {
                 log.debug("Adding route location: {}", inputLine[FIELD_ROUTE_LOCATION_NAME]);
                 Location location = locationManager.getLocationByName(inputLine[FIELD_ROUTE_LOCATION_NAME]);
                 if (location == null) {
@@ -111,6 +112,8 @@ public class ImportRoutes extends ImportCommon {
                 rl.setRandomControl(inputLine[FIELD_ROUTE_LOCATION_RANDOM]);
                 rl.setPickUpAllowed(inputLine[FIELD_ROUTE_LOCATION_PICKUP_ALLOWED].equals(Bundle.getMessage("yes")));
                 rl.setDropAllowed(inputLine[FIELD_ROUTE_LOCATION_DROP_ALLOWED].equals(Bundle.getMessage("yes")));
+                rl.setLocalMovesAllowed(
+                        inputLine[FIELD_ROUTE_LOCATION_LOCAL_MOVES_ALLOWED].equals(Bundle.getMessage("yes")));
                 rl.setWait(Integer.parseInt(inputLine[FIELD_ROUTE_LOCATION_TRAVEL]) - Setup.getTravelTime());
                 rl.setDepartureTime(inputLine[FIELD_ROUTE_LOCATION_DEPARTURE_TIME]);
                 rl.setMaxTrainLength(Integer.parseInt(inputLine[FIELD_ROUTE_LOCATION_TRAIN_LENGTH]));

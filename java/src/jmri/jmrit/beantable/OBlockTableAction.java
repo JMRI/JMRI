@@ -34,7 +34,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
 
     // basic table models
     OBlockTableModel oblocks;
-    PortalTableModel portals;
+    private PortalTableModel portals;
     SignalTableModel signals;
     BlockPortalTableModel blockportals;
     // tables created on demand inside TableFrames:
@@ -467,6 +467,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             signals.setEditMode(true);
             if (signalFrame == null) {
                 signalFrame = new SignalEditFrame(Bundle.getMessage("TitleAddSignal"), null, null, signals);
+                signalFrame.initComponents();
             }
             //signalFrame.updateSignalList();
             signalFrame.resetFrame();

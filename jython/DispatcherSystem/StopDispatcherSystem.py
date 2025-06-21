@@ -15,6 +15,7 @@ class createandshowGUI3(TableModelListener):
 
     def __init__(self, class_StopMaster):
         global DF
+        global CreateAndShowGUI3_frame
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         #DF.setState(DF.ICONIFIED);
         self.activeTrainsList = DF.getActiveTrainsList()
@@ -24,27 +25,29 @@ class createandshowGUI3(TableModelListener):
         #Create and set up the window.
 
         self.initialise_model(class_StopMaster)
-        self.frame = JFrame("Modify System")
-        self.frame.setSize(600, 600);
+        CreateAndShowGUI3_frame = JFrame("Modify System")
+        self.frame = CreateAndShowGUI3_frame
+        self.frame.setSize(600, 600)
 
+        self.completeTablePanel1()
         self.completeTablePanel()
         # print "about to populate"
         self.populate_action(None)
         self.cancel = False
 
 
-    def completeTablePanel(self):
+    def completeTablePanel1(self):
 
-        self.topPanel= JPanel();
+        self.topPanel= JPanel()
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
 
-        scrollPane = JScrollPane(self.table);
-        scrollPane.setPreferredSize( Dimension(1000, 300))
+        self.scrollPane = JScrollPane(self.table)
+        self.scrollPane.setPreferredSize(Dimension(1500, 300))
 
-        self.topPanel.add(scrollPane);
+        self.topPanel.add(self.scrollPane)
 
-        self.buttonPane = JPanel();
+        self.buttonPane = JPanel()
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
         #
@@ -53,7 +56,7 @@ class createandshowGUI3(TableModelListener):
         # self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
         button_populate = JButton("Refresh", actionPerformed = self.populate_action)
-        self.buttonPane.add(button_populate);
+        self.buttonPane.add(button_populate)
         self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
         # button_tidy = JButton("Tidy", actionPerformed = self.tidy_action)
@@ -62,25 +65,44 @@ class createandshowGUI3(TableModelListener):
 
         button_del_trains = JButton("Delete Trains", actionPerformed = self.del_trains_action)
         self.buttonPane.add(button_del_trains)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         button_del_transits = JButton("Delete Transits", actionPerformed = self.del_transits_action)
         self.buttonPane.add(button_del_transits)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         button_del_routes = JButton("Delete Routes", actionPerformed = self.del_routes_action)
         self.buttonPane.add(button_del_routes)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         button_cancel = JButton("Close", actionPerformed = self.cancel_action)
         self.buttonPane.add(button_cancel)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         contentPane = self.frame.getContentPane()
 
         contentPane.removeAll()
         contentPane.add(self.topPanel, BorderLayout.CENTER)
         contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
+
+        self.frame.pack()
+        self.frame.setVisible(True)
+        return
+
+    def completeTablePanel(self):
+        contentPane = self.frame.getContentPane()
+
+        contentPane.removeAll()
+        contentPane.add(self.topPanel, BorderLayout.CENTER)
+        contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
+        size_of_one_row = 30
+        height = 60
+        for row in reversed(range(len(self.model.data))):
+            height += size_of_one_row
+            # print "height" , height
+        # print "height" , height
+        height = min(height, 800)
+        self.scrollPane.setPreferredSize(Dimension(1500, height))
 
         self.frame.pack();
         self.frame.setVisible(True)
@@ -125,11 +147,17 @@ class createandshowGUI3(TableModelListener):
         self.table.setRowHeight(30);
         columnModel = self.table.getColumnModel();
 
-        [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
-        columnModel.getColumn(setup_train_col).setPreferredWidth(200);
-        columnModel.getColumn(active_train_col).setPreferredWidth(200);
+        [setup_train_col, del_setup_train_col,  block_col, direction_col, direction_change_col, active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        columnModel.getColumn(setup_train_col).setPreferredWidth(150);
+        columnModel.getColumn(del_setup_train_col).setPreferredWidth(60);
+        columnModel.getColumn(block_col).setPreferredWidth(200);
+        columnModel.getColumn(direction_col).setPreferredWidth(100);
+        columnModel.getColumn(direction_change_col).setPreferredWidth(60);
+        columnModel.getColumn(active_train_col).setPreferredWidth(150);
         columnModel.getColumn(transit_col).setPreferredWidth(200);
+        columnModel.getColumn(del_transit_col).setPreferredWidth(60);
         columnModel.getColumn(route_col).setPreferredWidth(200);
+        columnModel.getColumn(del_route_col).setPreferredWidth(60);
 
         jpane = JScrollPane(self.table)
         panel = JPanel()
@@ -146,7 +174,6 @@ class createandshowGUI3(TableModelListener):
         self.completeTablePanel()
 
     def populate_action(self, event):
-
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         self.activeTrainsList = DF.getActiveTrainsList()
         trains_to_put_in_firstcol = self.activeTrainsList
@@ -161,6 +188,7 @@ class createandshowGUI3(TableModelListener):
         global trains_allocated
         for train_name_to_remove in trains_allocated:
             trains_allocated.remove(train_name_to_remove)
+        self.model.populate()
         self.completeTablePanel()
 
     def delete_transits(self):
@@ -179,16 +207,30 @@ class createandshowGUI3(TableModelListener):
             #swap the direction of the train
             # (found need to do this as train went off in wrong direction after setting new trainsit)
             train_name = activeTrain.getTrainName()
-            self.swap_direction(train_name)
+            MyModelListener3(self, self.class_StopMaster).swap_direction(train_name)
             DF.terminateActiveTrain(activeTrain)
         DF = None
+        self.model.populate()
+        self.completeTablePanel()
 
     def del_transits_action(self,e):
         self.delete_transits()
+        self.model.populate()
         self.completeTablePanel()
 
     def delete_routes(self):
-        self.class_StopMaster.stop_route_threads()
+        DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
+
+        activeTrainList = java.util.concurrent.CopyOnWriteArrayList()
+        for activeTrain in DF.getActiveTrainsList():
+            activeTrainList.add(activeTrain)
+
+        for activeTrain in activeTrainList:
+            train_name = activeTrain.getTrainName()
+            if train_name is not None and train_name != "":
+                MyModelListener3(self, self.class_StopMaster).delete_route(activeTrain.getTrainName())
+        self.model.populate()
+        self.completeTablePanel()
 
     def del_routes_action(self, e):
         self.delete_routes()
@@ -196,6 +238,7 @@ class createandshowGUI3(TableModelListener):
 
     def cancel_action(self, event):
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
+
     def refresh(self):
         self.completeTablePanel()
 
@@ -212,7 +255,7 @@ class MyModelListener3(TableModelListener):
         self.java_active_trains_list = DF.getActiveTrainsList()
 
     def tableChanged(self, e) :
-        [setup_train_col, del_setup_train_col,  active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6]
+        [setup_train_col, del_setup_train_col,  block_col, direction_col, direction_change_col, active_train_col, transit_col, del_transit_col, route_col, del_route_col] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
         global trains_allocated
         row = e.getFirstRow()
@@ -221,6 +264,12 @@ class MyModelListener3(TableModelListener):
         columnName = model.getColumnName(column)
         data = model.getValueAt(row, column)
         tablemodel = self.class_createandshowGUI3.model
+
+        if column == direction_change_col:
+            train_name = str(model.getValueAt(row, setup_train_col))
+            self.swap_direction_of_train(train_name)        # swap throttle direction
+            self.swap_direction(train_name)                 # swap active train direction
+            self.class_createandshowGUI3.populate_action(None)
 
         if column == del_setup_train_col:
             train_name = str(model.getValueAt(row, setup_train_col))
@@ -237,7 +286,6 @@ class MyModelListener3(TableModelListener):
             self.class_createandshowGUI3.populate_action(None)
 
         elif column == del_transit_col:
-
             transit = str(model.getValueAt(row, transit_col))
             train_name = [active_train.getTrainName() for active_train in self.java_active_trains_list \
                        if active_train.getTransit().getUserName() == transit]
@@ -246,7 +294,7 @@ class MyModelListener3(TableModelListener):
                 #tablemodel.fireTableDataChanged()
                 #self.class_createandshowGUI3.refresh()
                 self.class_createandshowGUI3.populate_action(None)
-
+            self.class_createandshowGUI3.completeTablePanel()
 
             # train_name = str(model.getValueAt(row, setup_train_col))
             # self.delete_transit(train_name)
@@ -263,9 +311,52 @@ class MyModelListener3(TableModelListener):
                 #tablemodel.fireTableDataChanged()
                 #self.class_createandshowGUI3.refresh()
                 self.class_createandshowGUI3.populate_action(None)
+            self.class_createandshowGUI3.completeTablePanel()
         else:
             pass
 
+    def swap_direction_of_train(self, train_name):
+        # get throttle of train
+        throttle = self.get_throttle(train_name)
+        self.swap_throttle_direction(throttle)
+
+    def swap_throttle_direction(self, throttle):
+        if throttle == None:
+            print "no throttle"
+            return
+        if throttle.getIsForward():
+            throttle.setIsForward(False)
+        else:
+            throttle.setIsForward(True)
+
+    def get_throttle(self, train_name):
+        dccAddress = self.get_dcc_address(train_name)
+        if dccAddress > 127:
+            isLong = True
+        else:
+            isLong = False
+        if dccAddress != None:
+            throttle = self.class_StopMaster.getThrottle(dccAddress, isLong)
+        else:
+            throttle = None
+        return throttle
+
+    def get_dcc_address(self, train_name):
+        if train_name != None:
+            try:
+                r = jmri.jmrit.roster.Roster.getDefault()
+                for roster_entry in jmri.jmrit.roster.Roster.getAllEntries(r):
+                    # print "roster_entry.getId", roster_entry.getId()
+                    if str(roster_entry.getId()) == str(train_name):
+                        return int(roster_entry.getDccAddress())
+                    # print roster_entry.getId()
+            except Exception as e:
+                # Handle any other exceptions
+                print("error when getting dcc_address: ", e)
+                return None
+        else:
+            return None
+        
     def delete_route(self, train_name):
         global instanceList
         #stop all threads
@@ -312,28 +403,32 @@ class MyModelListener3(TableModelListener):
         activeTrainList = java.util.concurrent.CopyOnWriteArrayList()
         for activeTrain in DF.getActiveTrainsList():
             activeTrainList.add(activeTrain)
-
         active_train = [activeTrain for activeTrain in activeTrainList \
                         if activeTrain.getTrainName() == train_name]
-        if self.logLevel > 0: print ("active_train", active_train)
+        if active_train == []:
+            print "No dispatch to delete"
+            return
+        if self.logLevel > 0: print ("active_train", active_train[0].getActiveTrainName())
         if len(active_train) > 0:
+            transit_name = active_train[0].getTransitName()
             DF.terminateActiveTrain(active_train[0])
-        # train train_name needs its direction swapped
-        # (found need to do this as train went off in wrong direction after setting new trainsit)
-        self.swap_direction(train_name)
+            # train train_name needs its direction swapped
+            # (found need to do this as train went off in wrong direction after setting new transit)
+            self.swap_direction(train_name)
+            return transit_name
 
     def swap_direction(self, train_name):
         global trains
-        train = [trains[t_name] for t_name in trains if t_name ==train_name]
-        print "train", train
+        # train = [trains[t_name] for t_name in trains if t_name == train_name]
+        train = trains[train_name]
+        # print "train", train
         direction_of_train = train["direction"]
-        print "direction_of_train", direction_of_train
+        # print "direction_of_train", direction_of_train
         if direction_of_train == "forward":
             direction_of_train = "reverse"
         else:
             direction_of_train = "forward"
         train["direction"] = direction_of_train
-
 
 class ComboBoxCellRenderer1 (TableCellRenderer):
 
@@ -349,13 +444,12 @@ class ComboBoxCellRenderer1 (TableCellRenderer):
         p.setBorder(BorderFactory.createLineBorder(Color.blue));
         return p;
 
-
 class MyTableModel3 (DefaultTableModel):
 
-    columnNames = ["Train", "Delete Train", "Active Train", "Transit", "Del Transit", "Route", "Del Route"]
+    columnNames = ["Train", "Delete Train", "Block", "Direction", "Change Dir", "Active Train", "Transit", "Del Transit", "Route", "Del Route"]
 
     def __init__(self):
-        l1 = ["", False, "", "", False, "", False]
+        l1 = ["", False, "", "", False, "", "", False, "", False]
         self.data = [l1]
         self.logLevel = 0
 
@@ -383,9 +477,19 @@ class MyTableModel3 (DefaultTableModel):
             active_train = [active_train for active_train in java_active_trains_list \
                             if active_train.getTrainName() == setup_train]
             if self.logLevel > 0: print "active_train", active_train, "len(active_train)", len(active_train)
+            block_names  = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == setup_train]
+            if block_names != []:
+                block = block_names[0]
+            else:
+                block = ""
             if len(active_train) > 0 :
                 active_train = active_train[0]
+
                 active_train_name = active_train.getTrainName()
+                direction = trains[active_train_name]["direction"]
+
+                # print [block.getUserName() for block in blocks if block.getValue() == active_train_name]
+                # block = [block.getUserName() for block in blocks if block.getValue() == active_train_name][0]
                 transit = [active_train.getTransit() for active_train in java_active_trains_list \
                            if active_train.getTrainName() == active_train_name]
                 if self.logLevel > 0: print "active_train_name", active_train_name
@@ -394,35 +498,40 @@ class MyTableModel3 (DefaultTableModel):
             else:
                 active_train = ""
                 active_train_name = ""
+                direction = ""
                 transit_name = ""
             if self.logLevel > 0: print("train", active_train)
             if self.logLevel > 0: print("transit_name", transit_name)
             route_name = self.get_route(active_train_name)
             if self.logLevel > 0: print ("route_name", route_name)
-            self.data.append([setup_train, False, active_train_name, transit_name, False, route_name, False])
+            self.data.append([setup_train, False, block, direction, False, active_train_name, transit_name, False, route_name, False])
 
         active_trains_not_setup = [active_train_name for active_train_name in trains_dispatched \
                                    if active_train_name not in trains_allocated]
-        # for active_train in java_active_trains_list:
-        #     if active_train.getTrainName() not in trains_allocated:
         for active_train_name in active_trains_not_setup:
             active_train = [active_train for active_train in java_active_trains_list \
                             if active_train.getTrainName() == active_train_name]
+            if active_train_name <> []:
+                block = [block.getUserName() for block in blocks.getNamedBeanSet() if block.getValue() == active_train_name][0]
+            else:
+                block = ""
             if len(active_train) > 0 :
                 active_train = active_train[0]
                 active_train_name = active_train.getTrainName()
+                direction = trains[active_train_name]["direction"]
+
                 transit = [active_train.getTransit() for active_train in java_active_trains_list \
                            if active_train.getTrainName() == active_train_name]
                 transit_name = transit[0].getUserName()
             else:
                 active_train = ""
                 active_train_name = ""
+                direction = ""
                 transit_name = ""
             if self.logLevel > 0: print("train", active_train_name)
             route_name = self.get_route(active_train_name)
             if self.logLevel > 0: print ("route_name", route_name)
-            self.data.append(["", False, active_train_name, transit_name, False, route_name, False])
-
+            self.data.append(["", False,  block, direction, False, active_train_name, transit_name, False, route_name, False])
 
     def get_route(self, train_name):
         #look at all threads

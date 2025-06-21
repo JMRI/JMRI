@@ -3,6 +3,7 @@ package jmri.jmrit.roster;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -10,6 +11,7 @@ import javax.annotation.CheckForNull;
 
 import jmri.Block;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Section;
 import jmri.implementation.SignalSpeedMap;
@@ -128,10 +130,10 @@ public class RosterSpeedProfile {
      *         unchanged if Warrant preferences are not a speed.
      */
     public float mmsToScaleSpeed(float mms, boolean factorFastClock) {
-        int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
-        float scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
+        int interp = InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
+        float scale = InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         float fastClockFactor = ( factorFastClock ?
-            (float)jmri.InstanceManager.getDefault(jmri.Timebase.class).userGetRate() : 1 );
+            (float)InstanceManager.getDefault(jmri.Timebase.class).userGetRate() : 1 );
 
         switch (interp) {
             case SignalSpeedMap.SPEED_MPH:
@@ -174,7 +176,7 @@ public class RosterSpeedProfile {
     }
 
     /**
-     * Returns the scale speed format as a string with the units added given
+     * Returns the scale speed format as I18N string with the units added given
      * MilliMetres per Second.
      * If the warrant preference is a percentage of
      * normal or throttle will use metres per second.
@@ -184,26 +186,26 @@ public class RosterSpeedProfile {
      * @return a string with scale speed and units
      */
     public static String convertMMSToScaleSpeedWithUnits(float mms) {
-        int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
-        float scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
+        int interp = InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
+        float scale = InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         String formattedWithUnits;
         switch (interp) {
             case SignalSpeedMap.SPEED_MPH:
                 String unitsMph = Bundle.getMessage("mph");
-                formattedWithUnits = String.format("%.2f %s", mms * scale * MMS_TO_MPH, unitsMph);
+                formattedWithUnits = String.format(Locale.getDefault(), "%.2f %s", mms * scale * MMS_TO_MPH, unitsMph);
                 break;
             case SignalSpeedMap.SPEED_KMPH:
                 String unitsKph = Bundle.getMessage("kph");
-                formattedWithUnits = String.format("%.2f %s", mms * scale * MMS_TO_KPH, unitsKph);
+                formattedWithUnits = String.format(Locale.getDefault(), "%.2f %s", mms * scale * MMS_TO_KPH, unitsKph);
                 break;
             case SignalSpeedMap.PERCENT_THROTTLE:
             case SignalSpeedMap.PERCENT_NORMAL:
                 String unitsMms = Bundle.getMessage("mmps");
-                formattedWithUnits = String.format("%.2f %s", mms, unitsMms);
+                formattedWithUnits = String.format(Locale.getDefault(), "%.2f %s", mms, unitsMms);
                 break;
             default:
                 log.warn("ScaleSpeedToMMS: Signal Speed Map has no interp, not modifing.");
-                formattedWithUnits = String.format("%.2f", mms);
+                formattedWithUnits = String.format( Locale.getDefault(), "%.2f", mms);
         }
         return formattedWithUnits;
     }
@@ -228,8 +230,8 @@ public class RosterSpeedProfile {
      * @return MilliMetres per second
      */
     public float convertScaleSpeedToMMS(float scaleSpeed) {
-        int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
-        float scale = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
+        int interp = InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
+        float scale = InstanceManager.getDefault(SignalSpeedMap.class).getLayoutScale();
         float mmsSpeed;
         switch (interp) {
             case SignalSpeedMap.SPEED_MPH:
@@ -253,7 +255,7 @@ public class RosterSpeedProfile {
      * @return throttle setting
      */
     public float getThrottleSettingFromSignalMapSpeed(float signalMapSpeed, boolean isForward) {
-        int interp = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
+        int interp = InstanceManager.getDefault(SignalSpeedMap.class).getInterpretation();
         float throttleSetting = 0.0f;
         switch (interp) {
             case SignalSpeedMap.PERCENT_NORMAL:

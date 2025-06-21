@@ -9,11 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -28,7 +29,6 @@ public class PrintShowCarsInTrain extends TrainCommon {
 
     static final String NEW_LINE = "\n"; // NOI18N
 
-    CarManager carManager = InstanceManager.getDefault(CarManager.class);
     static int fieldSize =
             InstanceManager.getDefault(CarRoads.class).getMaxNameLength() + Control.max_len_string_road_number;
     static final String TAB = padString("", fieldSize);
@@ -50,7 +50,7 @@ public class PrintShowCarsInTrain extends TrainCommon {
                 printCarsAtLocation(writer, train, train.getCurrentRouteLocation());
 
             } catch (HardcopyWriter.PrintCanceledException ex) {
-                log.debug("Print cancelled");
+                log.debug("Print canceled");
             } catch (IOException ex) {
                 log.error("Error printing car roster: {}", ex.getLocalizedMessage());
             }
@@ -100,7 +100,7 @@ public class PrintShowCarsInTrain extends TrainCommon {
                             .5, .5, .5, isPreview);) {
                 printCarsRoute(writer, train);
             } catch (HardcopyWriter.PrintCanceledException ex) {
-                log.debug("Print cancelled");
+                log.debug("Print canceled");
             } catch (IOException ex) {
                 log.error("Error printing car roster: {}", ex.getLocalizedMessage());
             }

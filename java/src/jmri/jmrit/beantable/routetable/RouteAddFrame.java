@@ -1,9 +1,9 @@
 package jmri.jmrit.beantable.routetable;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.*;
+
+import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.Route;
@@ -53,18 +53,18 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
         // Copy button
         JPanel left = new JPanel();
         left.add(copyButton);
-        copyButton.addActionListener(this::copyPressed);
+        copyButton.addActionListener( e -> copyPressed());
 
         JPanel right = new JPanel();
         right.setLayout(new FlowLayout(FlowLayout.TRAILING));
 
         // Cancel (Add) button
         right.add(cancelButton);
-        cancelButton.addActionListener(this::cancelAddPressed);
+        cancelButton.addActionListener( e -> cancelAddPressed());
 
         // Create button
         right.add(createButton);
-        createButton.addActionListener(this::createPressed);
+        createButton.addActionListener( e -> createPressed());
         createButton.setToolTipText(Bundle.getMessage("TooltipCreateRoute"));
 
         pb.add(left, BorderLayout.WEST);
@@ -81,17 +81,8 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
 
     /**
      * Respond to the CancelAdd button.
-     *
-     * @param e the action event
      */
-    private void cancelAddPressed(ActionEvent e) {
-        cancelAdd();
-    }
-
-    /**
-     * Cancel Add mode.
-     */
-    private void cancelAdd() {
+    private void cancelAddPressed() {
         if (routeDirty) {
             showReminderMessage();
         }
@@ -102,21 +93,15 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
         routeDirty = false;
         // hide addFrame
         setVisible(false);
-        _routeSensorModel.dispose();
-        _routeTurnoutModel.dispose();
         closeFrame();
     }
 
     /**
      * Respond to the Create button.
-     *
-     * @param e the action event
      */
-    private void createPressed(ActionEvent e) {
-        if (!_autoSystemName.isSelected()) {
-            if (!checkNewNamesOK()) {
-                return;
-            }
+    private void createPressed() {
+        if ( !_autoSystemName.isSelected() && !checkNewNamesOK() ) {
+            return;
         }
         updatePressed(true); // close pane after creating
         //status2.setText(Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit")));
@@ -131,10 +116,8 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
     /**
      * Respond to the Copy button.
      * Request a source route for the copy and load the page if possible.
-     *
-     * @param e the action event
      */
-    private void copyPressed(ActionEvent e) {
+    private void copyPressed() {
         var selectedRoute = selectSourceRoute();
         if (selectedRoute != null) {
             var route = InstanceManager.getDefault(RouteManager.class).getRoute(selectedRoute);
@@ -152,9 +135,7 @@ public class RouteAddFrame extends AbstractRouteAddEditFrame {
     private String selectSourceRoute() {
         var routes = InstanceManager.getDefault(RouteManager.class).getNamedBeanSet();
         var routeList = new ArrayList<String>();
-        routes.forEach((r) -> {
-            routeList.add(r.getDisplayName());
-        });
+        routes.forEach( r -> routeList.add(r.getDisplayName()));
         Collections.sort(routeList);
 
         var routeArray = new String[routeList.size()];

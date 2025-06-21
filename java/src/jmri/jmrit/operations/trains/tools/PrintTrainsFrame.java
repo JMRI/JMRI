@@ -17,7 +17,11 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.gui.TrainsTableFrame;
+import jmri.jmrit.operations.trains.gui.TrainsTableModel;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -164,7 +168,7 @@ public class PrintTrainsFrame extends OperationsFrame {
                 }
             }
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print train details: {}", e1.getLocalizedMessage());
         }
@@ -221,7 +225,7 @@ public class PrintTrainsFrame extends OperationsFrame {
 
             printTrain(writer, _train);
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException ex) {
             log.error("Exception in print train: {}", ex.getLocalizedMessage());
         }

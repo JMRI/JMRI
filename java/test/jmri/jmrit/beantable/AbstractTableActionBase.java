@@ -1,25 +1,23 @@
 package jmri.jmrit.beantable;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import jmri.NamedBean;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-
-import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This is an abstract base class for testing bean table action objects derived
@@ -40,21 +38,21 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
      */
     @Test
     public final void testDeferredCreation() {
-        assertThat(a.m).isNull();
-        assertThat(a.f).isNull();
+        assertNull(a.m);
+        assertNull(a.f);
     }
 
     @Test
     public void testGetTableDataModel() {
-        Assert.assertNotNull("Table Data Model Exists", a.getTableDataModel());
+        assertNotNull( a.getTableDataModel(), "Table Data Model Exists");
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
+    @DisabledIfHeadless
     public void testExecute() {
-        a.actionPerformed(null);
+        ThreadingUtil.runOnGUI( () -> a.actionPerformed(null));
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
-        Assert.assertNotNull("failed to find frame", f);
+        assertNotNull( f, "failed to find frame");
         JUnitUtil.dispose(f);
     }
 
@@ -70,7 +68,7 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
      */
     @Test
     public void testGetPanel() {
-        Assert.assertNull("Default getPanel returns null", a.getPanel());
+        assertNull( a.getPanel(), "Default getPanel returns null");
     }
 
     /**
@@ -80,7 +78,7 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
      */
     @Test
     public void testGetClassDescription() {
-        Assert.assertEquals("Default class description", "Abstract Table Action", a.getClassDescription());
+        assertEquals( "Abstract Table Action", a.getClassDescription(), "Default class description");
     }
 
     /**
@@ -90,19 +88,19 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
      */
     @Test
     public void testIncludeAddButton() {
-        Assert.assertFalse("Default include add button", a.includeAddButton());
+        assertFalse( a.includeAddButton(), "Default include add button");
     }
 
     @Test
     public void testHelpTarget() {
-        Assert.assertEquals("help target", helpTarget, a.helpTarget());
+        assertEquals( helpTarget, a.helpTarget(), "help target");
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
+    @DisabledIfHeadless
     public void testAddButton() {
-        Assume.assumeTrue(a.includeAddButton());
-        a.actionPerformed(null);
+        Assumptions.assumeTrue(a.includeAddButton());
+        ThreadingUtil.runOnGUI( () -> a.actionPerformed(null));
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
@@ -129,11 +127,11 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         return getAddFrameName();
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
+    @DisabledIfHeadless
     public void testAddThroughDialog() {
-        Assume.assumeTrue(a.includeAddButton());
-        a.actionPerformed(null);
+        Assumptions.assumeTrue(a.includeAddButton());
+        ThreadingUtil.runOnGUI( () -> a.actionPerformed(null));
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
@@ -142,7 +140,7 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         JFrameOperator jf = new JFrameOperator(f1);
         // Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
-        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        assertNotNull( hwAddressField, "hwAddressTextField");
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).setText("1");
@@ -153,11 +151,11 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         JUnitUtil.dispose(f);
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
+    @DisabledIfHeadless
     public void testEditButton() {
-        Assume.assumeTrue(a.includeAddButton());
-        a.actionPerformed(null);
+        Assumptions.assumeTrue(a.includeAddButton());
+        ThreadingUtil.runOnGUI( () -> a.actionPerformed(null));
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
         // find the "Add... " button and press it.
@@ -167,7 +165,7 @@ public abstract class AbstractTableActionBase<B extends NamedBean> {
         JFrameOperator jf = new JFrameOperator(f1);
         //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
-        Assert.assertNotNull("hwAddressTextField", hwAddressField);
+        assertNotNull( hwAddressField, "hwAddressTextField");
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).typeText("1");

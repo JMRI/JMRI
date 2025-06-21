@@ -14,9 +14,10 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarsTableFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -237,7 +238,7 @@ public class PrintCarRosterFrame extends OperationsFrame {
             printRoster(writer);
 
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException we) {
             log.error("Error printing car roster: {}", we.getLocalizedMessage());
         }

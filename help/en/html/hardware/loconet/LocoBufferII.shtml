@@ -5,7 +5,7 @@
   <title>JMRI Hardware Support - LocoBuffer-II to LocoNet&reg;</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+  "Digitrax LocoBuffer-II java model railroad JMRI hardware">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
@@ -21,10 +21,14 @@
       LocoNet&reg;. It was produced by Dick Bronson's <a href=
       "http://www.rr-cirkits.com">RR-CirKits</a> company, based in part on the original LocoBuffer
       design, but is currently out of production. You might be able to find one in a local hobby
-      shop. It's been replaced by the <a href="LocoBufferUSB.shtml">LocoBuffer-USB</a>, which uses
-      a USB connection.</p>
+      shop. It's been replaced by the <a href="LocoBufferUSB.shtml">LocoBuffer-NG</a>, which uses
+      a built-in USB connection.</p>
 
       <h2>Recommended setup</h2>
+
+      The LocoBuffer-II requires a <a href="KeyspanUSB.shtml">USB-to-serial adapter</a> with dedicated
+      drivers on computers without a serial port. See the <a href="LocoBufferUSB.shtml">LocoBuffer-NG</a>
+      for a LocoNet-PC interface with direct USB support.
 
       <p>The recommended LocoBuffer-II option switch settings are:</p>
 
@@ -69,7 +73,7 @@
 
       <p>The LocoBuffer-II input circuit and code actually reads from the LocoNet output jack, so
       if you install the LocoNet terminator (the small circuit that was shipped with the
-      LocoBuffer-II) and set SW7-8 to ON (down) so that the input circuitry gets it's power from
+      LocoBuffer-II) and set SW7-8 to ON (down) so that the input circuitry gets its power from
       the wall-wart, then you have created a loop back test. The only thing that is not tested is
       the LocoNet jack itself.</p>
 
@@ -78,7 +82,7 @@
       <ol>
         <li>Unplug The LocoNet cable</li>
 
-        <li>Open case (use a small screw driver to work open the latches at the small slots on the
+        <li>Open case (use a small screwdriver to work open the latches at the small slots on the
         sides)</li>
 
         <li>Install terminator</li>
@@ -101,9 +105,10 @@
       </ol>
 
       <h2 id="locoBufferIIPower">LocoBuffer-II Power</h2>
-      When powered by an external supply, the LocoBuffer-II completely isolates your computer from
-      the LocoNet, removing the possibility of ground currents flowing through the LocoNet cable.
-      <p>If you are using an isolated computer, for example a laptop that's not connected to any
+
+      <p>When powered by an external supply, the LocoBuffer-II completely isolates your computer from
+      the LocoNet, removing the possibility of ground currents flowing through the LocoNet cable.<br>
+      If you are using an isolated computer, for example a laptop that's not connected to any
       peripherals, you can configure the LocoBuffer-II for "Local Power" so that it doesn't need an
       external power supply. It will then get it's power from the RailSync leads in the
       LocoNet.</p>

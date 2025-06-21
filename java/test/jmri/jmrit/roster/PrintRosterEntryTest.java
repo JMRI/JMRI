@@ -8,9 +8,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 
 import org.jdom2.JDOMException;
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -20,23 +18,23 @@ public class PrintRosterEntryTest {
 
     @Test
     public void testCTorDTD() throws JDOMException, IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestPrintWindow");
         RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012-DTD.xml"));
         r.setFileName("java/test/jmri/jmrit/roster/ACL1012-DTD.xml");
         PrintRosterEntry t = new PrintRosterEntry(r, jf, "xml/programmers/Basic.xml");
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.dispose(jf);
     }
 
     @Test
     public void testCTorSchema() throws JDOMException, IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame jf = new JmriJFrame("TestPrintWindow");
         RosterEntry r = RosterEntry.fromFile(new File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
         r.setFileName("java/test/jmri/jmrit/roster/ACL1012-Schema.xml");
         PrintRosterEntry t = new PrintRosterEntry(r, jf, "xml/programmers/Basic.xml");
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull(t, "exists");
         JUnitUtil.dispose(jf);
     }
 

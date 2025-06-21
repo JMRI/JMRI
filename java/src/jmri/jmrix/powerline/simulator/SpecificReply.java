@@ -31,8 +31,8 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         int len = getNumDataElements();
         StringBuilder text = new StringBuilder();
         if ((getElement(0) & 0xFF) != Constants.HEAD_STX) {
-            text.append("INVALID HEADER: " + String.format("0x%1X", getElement(0) & 0xFF));
-            text.append(" len: " + len);
+            text.append("INVALID HEADER: ").append( String.format("0x%1X", getElement(0) & 0xFF));
+            text.append(" len: ").append( len);
         } else {
             switch (getElement(1) & 0xFF) {
                 case Constants.FUNCTION_REQ_STD:
@@ -43,7 +43,8 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                         } else if (len == 22) {
                             text.append(" Ext");
                         }
-                        text.append(" addr " + String.format("%1$X.%2$X.%3$X", (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
+                        text.append(" addr ").append( String.format("%1$X.%2$X.%3$X",
+                            (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
                         switch (getElement(6) & 0xFF) {
                             case Constants.CMD_LIGHT_ON_FAST:
                                 text.append(" ON FAST ");
@@ -66,14 +67,14 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                                 text.append((getElement(7) & 0xFF) / 256.0);
                                 break;
                             default:
-                                text.append(" Unknown cmd: " + StringUtil.twoHexFromInt(getElement(6) & 0xFF));
+                                text.append(" Unknown cmd: ").append( StringUtil.twoHexFromInt(getElement(6) & 0xFF));
                                 break;
                         }
                         if ((getElement(8) & 0xFF) == Constants.REPLY_NAK) {
                             text.append(" NAK - command not processed");
                         }
                     } else {
-                        text.append(" !! Length wrong: " + len);
+                        text.append(" !! Length wrong: ").append(len);
                     }
                     break;
                 case Constants.POLL_REQ_BUTTON:
@@ -112,8 +113,8 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                     }
                     break;
                 default: {
-                    text.append(" Unknown command: " + StringUtil.twoHexFromInt(getElement(1) & 0xFF));
-                    text.append(" len: " + len);
+                    text.append(" Unknown command: ").append(StringUtil.twoHexFromInt(getElement(1) & 0xFF));
+                    text.append(" len: ").append(len);
                 }
             }
         }

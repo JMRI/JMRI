@@ -355,7 +355,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JLabel speedStepScaleSpeedMatchWarmUpReverseUnit = new JLabel(Bundle.getMessage("SpeedMatchSecondsLabel"));
 
     protected JLabel speedStepScaleMaxSpeedTargetLabel = new JLabel(Bundle.getMessage("AdvancedSpeedMatchMaxSpeed"));
-    protected JComboBox<SpeedTableStepSpeed> speedStepScaleSpeedMatchMaxSpeedField = new JComboBox<>();
+    private final JComboBox<SpeedTableStepSpeed> speedStepScaleSpeedMatchMaxSpeedField = new JComboBox<>();
     protected JLabel speedStepScaleSpeedMatchMaxSpeedUnit = new JLabel(Bundle.getMessage("SpeedMatchMPHLabel"));
     protected JButton speedStepScaleSpeedMatchStartStopButton = new JButton(Bundle.getMessage(("SpeedMatchStartBtn")));
     protected JLabel speedStepScaleMaxSpeedActualLabel = new JLabel(Bundle.getMessage("AdvancedSpeedMatchActualMaxSpeed"), SwingConstants.RIGHT);
@@ -1173,6 +1173,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     circ = (float) ((5.95 + 0.9) * Math.PI);
                     readerLabel.setText(Bundle.getMessage("Reader103"));
                     break;
+                case 200:
+                    circ = 12.5664F;
+                    readerLabel.setText(Bundle.getMessage("Reader200"));
+                    break;
                 default:
                     speedTextField.setText(Bundle.getMessage("ReaderErr"));
                     log.error("Invalid reader type");
@@ -1207,6 +1211,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             avSpeed = sampleSpeed;
             log.debug("New KPF-Zeller sample: {} Average: {}", sampleSpeed, avSpeed);
 
+        } else if (series == 200) {
+            // SPC200R
+            sampleSpeed = count / 10.0f;
+            avSpeed = sampleSpeed;
+            log.debug("New SPC200R sample: {} Average: {}", sampleSpeed, avSpeed);
+            
         } else if (series > 0 && series <= 6) {
             // Bachrus
             // Scale the data and calculate kph

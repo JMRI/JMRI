@@ -15,9 +15,10 @@ import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.*;
+import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -149,7 +150,7 @@ public class PrintEngineRosterFrame extends OperationsFrame {
         } catch (IOException we) {
             log.error("Error printing ConsistRosterEntry: {}", we.getLocalizedMessage());
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         }
     }
 

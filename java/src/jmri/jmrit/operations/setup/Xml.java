@@ -166,6 +166,11 @@ public class Xml {
     static final String TWO_COLUMN = "1"; // NOI18N
     static final String TWO_COLUMN_TRACK = "2"; // NOI18N
 
+    static final String HEADER_LINES = "headerLines"; // NOI18N
+    static final String PRINT_HEADER_LINE1 = "printHeaderLine1"; // NOI18N
+    static final String PRINT_HEADER_LINE2 = "printHeaderLine2"; // NOI18N
+    static final String PRINT_HEADER_LINE3 = "printHeaderLine3"; // NOI18N
+
     static final String TRUNCATE = "truncate"; // NOI18N
     static final String USE_DEPARTURE_TIME = "useDepartureTime"; // NOI18N
     static final String USE_EDITOR = "useEditor"; // NOI18N

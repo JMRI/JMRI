@@ -24,7 +24,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.PhysicalLocation;
 
 /**
@@ -1113,7 +1113,7 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
      */
     public Pool addPool(String name) {
         Pool pool = getPoolByName(name);
-        if (pool == null) {
+        if (pool == null && !name.isBlank()) {
             _idPoolNumber++;
             String id = getId() + "p" + Integer.toString(_idPoolNumber);
             log.debug("creating new pool ({}) id: {}", name, id);
@@ -1320,6 +1320,15 @@ public class Location extends PropertyChangeSupport implements Identifiable, Pro
         return false;
     }
     
+    public boolean hasQuickService() {
+        for (Track track : getTracksList()) {
+            if (track.isQuickServiceEnabled()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasTracksWithRestrictedTrainDirections() {
         int trainDirections = getTrainDirections() & Setup.getTrainDirection();
         for (Track track : getTracksList()) {

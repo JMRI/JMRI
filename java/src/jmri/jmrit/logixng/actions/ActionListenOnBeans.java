@@ -160,8 +160,8 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 
     /** {@inheritDoc} */
@@ -228,7 +228,22 @@ public class ActionListenOnBeans extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        // Do nothing
+        for (NamedBeanReference ref : getReferences()) {
+            if (ref.getType() == NamedBeanType.EntryExit) {
+                // The EntryExit objects were not available during file loading.
+                if (ref.getName() != null && !ref.getName().isEmpty()) {
+                    var nxBean = ref.getType().getManager().getNamedBean(ref.getName());
+                    if (nxBean != null) {
+                        // Change the system name to user name which will also create the named bean handle
+                        ref.setName(nxBean.getUserName());
+                    } else {
+                        log.error("NX bean null for {} during setup", ref.getName());
+                    }
+                } else {
+                    log.error("NX name is null or empty");
+                }
+            }
+        }
     }
 
     /** {@inheritDoc} */

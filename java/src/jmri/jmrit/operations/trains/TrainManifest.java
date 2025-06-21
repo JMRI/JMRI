@@ -17,6 +17,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Builds a train's manifest. User has the ability to modify the text of the
@@ -153,6 +154,8 @@ public class TrainManifest extends TrainCommon {
                     }
                 }
 
+                setCarPickupAndSetoutTimes(train, rl, carList);
+
                 if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
                     pickupEngines(fileOut, engineList, rl, IS_MANIFEST);
                     // if switcher show loco drop at end of list
@@ -184,9 +187,8 @@ public class TrainManifest extends TrainCommon {
                     // last location in the train's route, print train terminates message
                     if (!hadWork) {
                         newLine(fileOut);
-                    } else if (Setup.isPrintHeadersEnabled() ||
-                            !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-                        printHorizontalLine(fileOut, IS_MANIFEST);
+                    } else {
+                        printHorizontalLine3(fileOut, IS_MANIFEST);
                     }
                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringTrainTerminates(),
@@ -239,7 +241,7 @@ public class TrainManifest extends TrainCommon {
                             .getStringDepartTime(), new Object[]{train.getFormatedDepartureTime()});
                 } else if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
                     s += MessageFormat.format(messageFormatText = TrainManifestText
-                            .getStringDepartTime(), new Object[]{rl.getFormatedDepartureTime()});
+                            .getStringDepartTime(), new Object[]{train.getExpectedDepartureTime(rl)});
                 } else if (Setup.isUseDepartureTimeEnabled() &&
                         !rl.getComment().equals(RouteLocation.NONE)) {
                     s += MessageFormat
@@ -254,8 +256,8 @@ public class TrainManifest extends TrainCommon {
                     !rl.getLocation().getCommentWithColor().equals(Location.NONE)) {
                 newLine(fileOut, rl.getLocation().getCommentWithColor());
             }
-        } else if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-            printHorizontalLine(fileOut, IS_MANIFEST);
+        } else {
+            printHorizontalLine3(fileOut, IS_MANIFEST);
         }
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
             int emptyCars = train.getNumberEmptyCarsInTrain(rl);

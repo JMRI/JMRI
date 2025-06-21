@@ -227,6 +227,8 @@
 
   <indexitem text="UR90 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
+  <indexitem text="UR90X " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
+
   <indexitem text="UR91 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
   <indexitem text="UR92 " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
@@ -365,7 +367,9 @@
 
   <indexitem text="Firmware Downloader " target="package.jmri.jmrix.loconet.downloader.LoaderFrame"/>
 
-  <indexitem text="LNCV Programmer " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
+  <indexitem text="Manage LNCV Modules " target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane"/>
+
+  <indexitem text="Manage LNSV1 Modules " target="package.jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane"/>
 
   <indexitem text="LocoBuffer " target="html.hardware.loconet.LocoBuffer"/>
 
@@ -373,7 +377,9 @@
 
   <indexitem text="LocoBuffer-USB " target="html.hardware.loconet.LocoBufferUSB"/>
 
-  <indexitem text="LocoIO " target="package.jmri.jmrix.loconet.locoio.LocoIOFrame"/>
+  <indexitem text="LocoBuffer-NG " target="html.hardware.loconet.LocoBufferUSB"/>
+
+  <indexitem text="LocoIO " target="html.hardware.loconet.LocoIO"/>
 
   <indexitem text="LocoNet Addressing " target="html.hardware.loconet.Addressing"/>
 

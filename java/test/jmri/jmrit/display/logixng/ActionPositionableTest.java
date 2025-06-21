@@ -509,7 +509,7 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         EditorManager editorManager = InstanceManager.getDefault(EditorManager.class);

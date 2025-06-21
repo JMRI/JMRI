@@ -15,6 +15,8 @@ import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
+import jmri.jmrit.operations.setup.backup.AutoBackup;
+import jmri.jmrit.operations.setup.backup.AutoSave;
 import jmri.jmrit.operations.trains.TrainLogger;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.ColorUtil;
@@ -24,7 +26,7 @@ import jmri.web.server.WebServerPreferences;
 /**
  * Operations settings.
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
+ * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014, 2025
  */
 public class Setup extends PropertyChangeSupport implements InstanceManagerAutoDefault, Disposable {
 
@@ -147,11 +149,13 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String KERNEL_SIZE = Bundle.getMessage("Kernel_Size");
     public static final String OWNER = Bundle.getMessage("Owner");
     public static final String DIVISION = Bundle.getMessage("Division");
+    public static final String BLOCKING_ORDER = Bundle.getMessage("Blocking_Order");
     public static final String RWE = Bundle.getMessage("RWE");
     public static final String COMMENT = Bundle.getMessage("Comment");
     public static final String DROP_COMMENT = Bundle.getMessage("SetOut_Msg");
     public static final String PICKUP_COMMENT = Bundle.getMessage("PickUp_Msg");
     public static final String HAZARDOUS = Bundle.getMessage("Hazardous");
+    public static final String LAST_TRAIN = Bundle.getMessage("LastTrain");
     public static final String BLANK = " "; // blank has be a character or a space
     public static final String TAB = Bundle.getMessage("Tab"); // used to tab out in tabular mode
     public static final String TAB2 = Bundle.getMessage("Tab2");
@@ -178,18 +182,18 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     private static final String[] CAR_ATTRIBUTES = { ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS,
             COLOR, KERNEL, KERNEL_SIZE, OWNER, DIVISION, TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK,
-            COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE };
+            BLOCKING_ORDER, COMMENT, DROP_COMMENT, PICKUP_COMMENT, RWE, LAST_TRAIN};
     
     private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, HP, CONSIST, OWNER,
-            TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS };
+            TRACK, LOCATION, DESTINATION, COMMENT, DCC_ADDRESS, LAST_TRAIN};
     /*
      * The print Manifest and switch list user selectable options are stored in the
      * xml file using the English translations.
      */
     private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type",
             "HP", "Color", "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist",
-            "DCC_Address", "Kernel", "Kernel_Size", "Owner", "Division", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg",
-            "Hazardous", "Tab", "Tab2", "Tab3"};
+            "DCC_Address", "Kernel", "Kernel_Size", "Owner", "Division", "Blocking_Order", "RWE", "Comment",
+            "SetOut_Msg", "PickUp_Msg", "Hazardous", "LastTrain", "Tab", "Tab2", "Tab3"};
 
     private int scale = HO_SCALE; // Default scale
     private int ratio = HO_RATIO;
@@ -332,6 +336,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean printValid = true; // when true print out the valid time and date
     private boolean sortByTrack = false; // when true manifest work is sorted by track names
     private boolean printHeaders = false; // when true add headers to manifest and switch lists
+    private boolean printHeaderLine1 = true; // when true add header line 1 to manifest and switch lists
+    private boolean printHeaderLine2 = true; // when true add header line 2 to manifest and switch lists
+    private boolean printHeaderLine3 = true; // when true add header line 3 to manifest and switch lists
 
     private boolean printCabooseLoad = false; // when true print caboose load
     private boolean printPassengerLoad = false; // when true print passenger car load
@@ -993,6 +1000,30 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static boolean isPrintHeadersEnabled() {
         return getDefault().printHeaders;
+    }
+
+    public static void setPrintHeaderLine1Enabled(boolean enable) {
+        getDefault().printHeaderLine1 = enable;
+    }
+
+    public static boolean isPrintHeaderLine1Enabled() {
+        return getDefault().printHeaderLine1;
+    }
+
+    public static void setPrintHeaderLine2Enabled(boolean enable) {
+        getDefault().printHeaderLine2 = enable;
+    }
+
+    public static boolean isPrintHeaderLine2Enabled() {
+        return getDefault().printHeaderLine2;
+    }
+
+    public static void setPrintHeaderLine3Enabled(boolean enable) {
+        getDefault().printHeaderLine3 = enable;
+    }
+
+    public static boolean isPrintHeaderLine3Enabled() {
+        return getDefault().printHeaderLine3;
     }
 
     public static void setPrintCabooseLoadEnabled(boolean enable) {
@@ -2059,6 +2090,12 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         }
         values.setAttribute(Xml.VALUE, value);
 
+        // new format June 2025
+        e.addContent(values = new Element(Xml.HEADER_LINES));
+        values.setAttribute(Xml.PRINT_HEADER_LINE1, isPrintHeaderLine1Enabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_HEADER_LINE2, isPrintHeaderLine2Enabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_HEADER_LINE3, isPrintHeaderLine3Enabled() ? Xml.TRUE : Xml.FALSE);
+
         if (!getManifestLogoURL().equals(NONE)) {
             values = new Element(Xml.MANIFEST_LOGO);
             values.setAttribute(Xml.NAME, getManifestLogoURL());
@@ -2734,6 +2771,20 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 if (enable.equals(Xml.TRUE)) {
                     setManifestFormat(TWO_COLUMN_FORMAT);
                 }
+            }
+        }
+        if ((operations.getChild(Xml.HEADER_LINES) != null)) {
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE1)) != null) {
+                String enable = a.getValue();
+                setPrintHeaderLine1Enabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE2)) != null) {
+                String enable = a.getValue();
+                setPrintHeaderLine2Enabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE3)) != null) {
+                String enable = a.getValue();
+                setPrintHeaderLine3Enabled(enable.equals(Xml.TRUE));
             }
         }
         // get manifest logo

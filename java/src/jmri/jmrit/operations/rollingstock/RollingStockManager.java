@@ -13,7 +13,7 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Base class for rolling stock managers car and engine.
@@ -546,7 +546,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      */
     public List<T> getList(Train train) {
         List<T> out = new ArrayList<>();
-        _hashTable.values().stream().filter((rs) -> {
+        getList().stream().filter((rs) -> {
             return rs.getTrain() == train;
         }).forEachOrdered((rs) -> {
             out.add(rs);
@@ -562,7 +562,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      */
     public List<T> getList(Location location) {
         List<T> out = new ArrayList<>();
-        _hashTable.values().stream().filter((rs) -> {
+        getList().stream().filter((rs) -> {
             return rs.getLocation() == location;
         }).forEachOrdered((rs) -> {
             out.add(rs);
@@ -578,7 +578,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      */
     public List<T> getList(Track track) {
         List<T> out = new ArrayList<>();
-        _hashTable.values().stream().filter((rs) -> {
+        getList().stream().filter((rs) -> {
             return rs.getTrack() == track;
         }).forEachOrdered((rs) -> {
             out.add(rs);

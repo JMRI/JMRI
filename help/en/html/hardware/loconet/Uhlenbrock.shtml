@@ -190,14 +190,11 @@
 
       <h2 id="tools">JMRI Uhlenbrock Tools</h2>
 
-      <h3>LNCV Programmer</h3>
+      <h3>Manage LNCV Modules</h3>
       <span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri4.21.4.shtml" target=
-      "_blank">JMRI 4.21.4</a></span> <a href=
-      "images/LncvProgrammer/LncvProgrammerPane.png"><img src=
-      "images/LncvProgrammer/LncvProgrammerPane.png" class="floatRight" width="293" height="187"
-      alt="LNCV Programming Tool can't find a matching definition"></a>
-      <p>The <a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Lncv
-      Programming tool</a> is located in the LocoNet menu. It allows to discover stationary LNCV
+      "_blank">JMRI 4.21.4</a></span>
+      <p>The <a href="../../../package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml">Manage LNCV Modules
+      tool</a> is located in the LocoNet menu. It allows to discover stationary LNCV
       devices and read and write individual LNCVs.<br>
       Enter the first 4 digits of the device as the Article Number before starting a Programming
       Session, or the modules will not respond. Once a session is running, use the responses
@@ -210,7 +207,7 @@
       Track-Control items.</p>
 
       <p>The Intellibox Command Stations can't be configured over their LocoNet connection.<br>
-      Please use the keyboard and consult the manual.</p>
+      Please use the keyboard and consult the Uhlenbrock Intellibox manual.</p>
 
       <hr class="hide">
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

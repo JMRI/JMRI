@@ -58,7 +58,7 @@ public class DispatcherPro extends Apps {
 
     @Override
     protected String line2() {
-        return "http://jmri.org/DispatcherPro ";
+        return "https://jmri.org/DispatcherPro";
     }
 
     /**

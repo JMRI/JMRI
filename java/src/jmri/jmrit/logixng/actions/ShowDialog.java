@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.beans.*;
@@ -158,8 +159,8 @@ public class ShowDialog extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 
     private List<Object> getDataValues() throws JmriException {
@@ -253,9 +254,8 @@ public class ShowDialog extends AbstractDigitalAction
                 }
             });
 
-            JPanel panel = new JPanel();
+            JPanel panel = new JPanel(new BorderLayout());
             panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             _dialog.getContentPane().add(panel);
 
             panel.add(new JLabel(strMultiLine));
@@ -266,7 +266,7 @@ public class ShowDialog extends AbstractDigitalAction
                     String strValue = TypeConversionUtil.convertToString(currentValue, false);
                     textField.setText(strValue);
                 }
-                panel.add(textField);
+                panel.add(textField, BorderLayout.NORTH);
             }
 
             JPanel buttonPanel = new JPanel();
@@ -287,7 +287,7 @@ public class ShowDialog extends AbstractDigitalAction
                     buttonPanel.add(jbutton);
                 }
             }
-            panel.add(buttonPanel);
+            panel.add(buttonPanel, BorderLayout.SOUTH);
 
             _dialog.pack();
             _dialog.setLocationRelativeTo(null);

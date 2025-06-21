@@ -68,12 +68,15 @@
 <!ATTLIST car caboose				(true | false ) "false"> 
 <!ATTLIST car fred					(true | false ) "false"> 
 <!ATTLIST car utility				(true | false ) "false"> 
+<!ATTLIST car clone					(true | false ) "false">
 <!ATTLIST car hazardous				(true | false ) "false"> 
 <!ATTLIST car locUnknown			(true | false ) "false"> 
 <!ATTLIST car outOfService			(true | false ) "false">
 <!ATTLIST car loadFromStaging		(true | false ) "false">
 <!ATTLIST car train					CDATA #IMPLIED>  
 <!ATTLIST car trainId				CDATA #IMPLIED>
+<!ATTLIST car lastTrain				CDATA #IMPLIED>  
+<!ATTLIST car lastTrainId			CDATA #IMPLIED>
 <!ATTLIST car owner					CDATA #IMPLIED>  
 <!ATTLIST car moves					CDATA #IMPLIED>                    
 <!ATTLIST car comment				CDATA #IMPLIED>
@@ -91,6 +94,9 @@
 <!ATTLIST car nextPickupId			CDATA #IMPLIED>
 <!ATTLIST car divisionId			CDATA #IMPLIED>
 <!ATTLIST car routePath				CDATA #IMPLIED>
+<!ATTLIST car pickupTime			CDATA #IMPLIED>
+<!ATTLIST car setoutTime			CDATA #IMPLIED>
+
 
 <!ELEMENT loads (defaults | load*)*>
 <!ELEMENT defaults EMPTY>

@@ -1,3 +1,5 @@
+from json.decoder import WHITESPACE
+
 from javax.swing import JTable, JScrollPane, JFrame, JPanel, JComboBox,  BorderFactory, DefaultCellEditor, JLabel, UIManager, SwingConstants, JFileChooser
 from javax.swing.table import  TableCellRenderer, DefaultTableCellRenderer
 from java.awt.event import MouseAdapter,MouseEvent, WindowListener, WindowEvent
@@ -9,6 +11,7 @@ from javax.swing.event import TableModelListener, TableModelEvent
 from javax.swing.filechooser import FileNameExtensionFilter
 from org.apache.commons.io import FilenameUtils
 from java.io import File
+import jmri
 
 class CreateAndShowGUI4(TableModelListener):
 
@@ -23,21 +26,23 @@ class CreateAndShowGUI4(TableModelListener):
         self.frame = CreateAndShowGUI4_frame
         self.frame.setSize(600, 600);
 
-        self.completeTablePanel()
+
+
+        self.completeTablePanel1()
         # print "about to populate"
         self.populate_action(None)
         self.cancel = False
 
-    def completeTablePanel(self):
+    def completeTablePanel1(self):
 
         self.topPanel= JPanel();
         self.topPanel.setLayout(BoxLayout(self.topPanel, BoxLayout.X_AXIS))
         self.self_table()
 
-        scrollPane = JScrollPane(self.table);
-        scrollPane.setSize(600,600);
+        self.scrollPane = JScrollPane(self.table);
+        self.scrollPane.setPreferredSize(Dimension(600,600))
 
-        self.topPanel.add(scrollPane);
+        self.topPanel.add(self.scrollPane);
 
         self.buttonPane = JPanel();
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
@@ -59,7 +64,7 @@ class CreateAndShowGUI4(TableModelListener):
         # self.buttonPane.add(button_apply)
         # self.buttonPane.add(Box.createHorizontalGlue());
 
-        button_close = JButton("Close", actionPerformed = self.close_action)
+        button_close = JButton("Save & Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
         self.buttonPane.add(Box.createHorizontalGlue());
 
@@ -77,11 +82,15 @@ class CreateAndShowGUI4(TableModelListener):
 
         button_savetofile = JButton("Save To File", actionPerformed = self.savetofile_action)
         self.buttonPane.add(button_savetofile)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
 
         button_loadfromfile = JButton("Load From File", actionPerformed = self.loadfromfile_action)
         self.buttonPane.add(button_loadfromfile)
-        self.buttonPane.add(Box.createHorizontalGlue());
+        self.buttonPane.add(Box.createRigidArea(Dimension(10, 0)))
+
+        button_deletesavedfile = JButton("Delete Saved Files", actionPerformed = self.deletesavedfile_action)
+        self.buttonPane.add(button_deletesavedfile)
+        self.buttonPane.add(Box.createHorizontalGlue())
 
         contentPane = self.frame.getContentPane()
 
@@ -91,12 +100,26 @@ class CreateAndShowGUI4(TableModelListener):
 
         self.frame.pack();
         self.frame.setVisible(True)
-
-
         return
 
+    def completeTablePanel(self):
+        # self.self_table()
 
+        contentPane = self.frame.getContentPane()
 
+        contentPane.removeAll()
+        contentPane.add(self.topPanel, BorderLayout.CENTER)
+        contentPane.add(self.buttonPane, BorderLayout.PAGE_END)
+        size_of_one_row = 30
+        height = 50
+        for row in reversed(range(len(self.model.data))):
+            height += size_of_one_row
+        height = min(height, 800)
+        self.scrollPane.setPreferredSize(Dimension(1000,height))
+
+        self.frame.pack();
+        self.frame.setVisible(True)
+        return
 
     def buttonPanel(self):
         row1_1_button = JButton("Add Row", actionPerformed = self.add_row_action)
@@ -135,7 +158,7 @@ class CreateAndShowGUI4(TableModelListener):
         pass
     def self_table(self):
 
-        self.table.setPreferredScrollableViewportSize(Dimension(700, 300));
+        self.table.setPreferredScrollableViewportSize(Dimension(1000, 300));
         #table.setFillsViewportHeight(True)
         #self.table.getModel().addtableModelListener(self)
         self.table.setFillsViewportHeight(True);
@@ -144,13 +167,17 @@ class CreateAndShowGUI4(TableModelListener):
         # self.resizeColumnWidth(table)
         columnModel = self.table.getColumnModel();
 
-        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
         columnModel.getColumn(route_col).setPreferredWidth(300);
         columnModel.getColumn(repeat_col).setPreferredWidth(210);
         columnModel.getColumn(dont_schedule_col).setPreferredWidth(150);
-        columnModel.getColumn(train_name_col).setPreferredWidth(130);
+        columnModel.getColumn(train_name_col).setMinWidth(0);  # train_name is unique identifier which can be hidden from user
+        columnModel.getColumn(train_name_col).setMaxWidth(0);  # train_name is unique identifier which can be hidden from user
+        columnModel.getColumn(train_description_col).setPreferredWidth(300);
         columnModel.getColumn(edit_col).setPreferredWidth(100);
         columnModel.getColumn(delete_col).setPreferredWidth(100);
+
+        # routes column
 
         self.routesColumn = self.table.getColumnModel().getColumn(route_col);
         self.combobox1 = JComboBox()
@@ -159,27 +186,51 @@ class CreateAndShowGUI4(TableModelListener):
         routes = RouteManager.getRoutesByNameList()
         for route in routes:
             self.combobox1.addItem(route)
-        self.routesColumn.setCellEditor(DefaultCellEditor(self.combobox1));
+        self.routesColumn.setCellEditor(DefaultCellEditor(self.combobox1))
         renderer1 = ComboBoxCellRenderer4()
-        self.routesColumn.setCellRenderer(renderer1);
+        self.routesColumn.setCellRenderer(renderer1)
 
-        # first column is the trains
-        self.taskColumn = self.table.getColumnModel().getColumn(repeat_col);
+        # repeat column
+        self.taskColumn = self.table.getColumnModel().getColumn(repeat_col)
         self.combobox3 = JComboBox()
 
-        tasks = ["Once", "Repeat every 20 mins","Repeat every 30 mins", "Repeat every Hour", "Repeat every 2 Hours"]
+        tasks = ["Once", "Repeat every 20 mins", "Repeat every 30 mins", "Repeat every Hour", "Repeat every 2 Hours"]
         for task in tasks:
             self.combobox3.addItem(task)
 
-        self.taskColumn.setCellEditor(DefaultCellEditor(self.combobox3));
+        self.taskColumn.setCellEditor(DefaultCellEditor(self.combobox3))
         renderer3 = ComboBoxCellRenderer4()
-        self.taskColumn.setCellRenderer(renderer3);
+        self.taskColumn.setCellRenderer(renderer3)
+
+        # train column
+        self.trainColumn = self.table.getColumnModel().getColumn(train_description_col)
+        self.combobox4 = JComboBox()
+
+        all_trains = self.get_all_roster_entries_with_speed_profile()
+        for train in all_trains:
+            self.combobox4.addItem(train)
+
+        self.trainColumn.setCellEditor(DefaultCellEditor(self.combobox4))
+        renderer4 = ComboBoxCellRenderer4()
+        self.trainColumn.setCellRenderer(renderer4)
+
+
 
         jpane = JScrollPane(self.table)
         panel = JPanel()
         panel.add(jpane)
         result = JScrollPane(panel)
         return self.table
+
+    def get_all_roster_entries_with_speed_profile(self):
+        roster_entries_with_speed_profile = []
+        r = jmri.jmrit.roster.Roster.getDefault()
+        for roster_entry in jmri.jmrit.roster.Roster.getAllEntries(r):
+            if self.logLevel > 0: print "roster_entry.getSpeedProfile()",roster_entry,roster_entry.getSpeedProfile()
+            if roster_entry.getSpeedProfile() != None:
+                roster_entries_with_speed_profile.append(roster_entry.getId())
+                if self.logLevel > 0: print "roster_entry.getId()",roster_entry.getId()
+        return roster_entries_with_speed_profile
 
     def add_row_action(self, e):
         model = e.getSource()
@@ -193,7 +244,7 @@ class CreateAndShowGUI4(TableModelListener):
     def get_route_list(self):
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
-        my_list = [[train.getName(), train.getDepartureTime(), train.getComment(), train.getRoute()] for train in train_list]
+        my_list = [[train.getName(), train.getDescription(), train.getDepartureTime(), train.getComment(), train.getRoute()] for train in train_list]
         # print "my_list", my_list
         return my_list
 
@@ -223,7 +274,6 @@ class CreateAndShowGUI4(TableModelListener):
         msg = "Saving Valid rows"
         result = OptionDialog().displayMessage(msg)
 
-
         dir = self.directory()
         j = JFileChooser(dir);
         j.setAcceptAllFileFilterUsed(False)
@@ -231,9 +281,11 @@ class CreateAndShowGUI4(TableModelListener):
         j.addChoosableFileFilter(filter);
         j.setDialogTitle("Select a .txt file");
 
+        # Automatically select the first file in the directory
+        files = j.getCurrentDirectory().listFiles()
+        j.setSelectedFile(files[0])
 
-
-        ret = j.showSaveDialog(None);
+        ret = j.showSaveDialog(None)
         if (ret == JFileChooser.APPROVE_OPTION) :
             file = j.getSelectedFile()
             if file == "" or file == None:
@@ -251,16 +303,17 @@ class CreateAndShowGUI4(TableModelListener):
             return
         if self.logLevel > 0: print "savetofile action", file
         my_list = []
-        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
         for row in range(len(self.model.data)):
             time_name = str(self.model.data[row][time_col])
             route_name = str(self.model.data[row][route_col])
             task_name = str(self.model.data[row][repeat_col])
             dont_schedule_name = str(self.model.data[row][dont_schedule_col])
             train_name = str(self.model.data[row][train_name_col])
+            train_description = str(self.model.data[row][train_description_col])
             edit_name = str(self.model.data[row][edit_col])
             delete_name = str(self.model.data[row][delete_col])
-            row_list = [time_name, route_name, task_name, dont_schedule_name, train_name, edit_name, delete_name]
+            row_list = [time_name, route_name, task_name, dont_schedule_name, train_name, train_description, edit_name, delete_name]
             my_list.append(row_list)
         self.write_list(my_list,file)
 
@@ -273,7 +326,12 @@ class CreateAndShowGUI4(TableModelListener):
         filter = FileNameExtensionFilter("text files txt", ["txt"])
         j.setDialogTitle("Select a .txt file");
         j.addChoosableFileFilter(filter);
-        ret = j.showOpenDialog(None);
+
+        # Automatically select the first file in the directory
+        files = j.getCurrentDirectory().listFiles()
+        j.setSelectedFile(files[0])
+
+        ret = j.showOpenDialog(None)
         if (ret == JFileChooser.APPROVE_OPTION) :
             file = j.getSelectedFile()
             if self.logLevel > 0: print "about to read list", file
@@ -282,9 +340,9 @@ class CreateAndShowGUI4(TableModelListener):
             for row in reversed(range(len(self.model.data))):
                 self.model.data.pop(row)
             i = 0
-            [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
+            [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
             for row in my_list:
-                [time_val, route_val, repeat_val, dont_schedule_val, train_name_val, edit_val, delete_val] = row
+                [time_val, route_val, repeat_val, dont_schedule_val, train_name_val, train_description_val, edit_val, delete_val] = row
                 # print "reading row", row
                 self.model.add_row()
                 self.model.data[i][time_col] = time_val.replace('"','')
@@ -293,6 +351,7 @@ class CreateAndShowGUI4(TableModelListener):
                 # print "dont_schedule_val", dont_schedule_val, "(dont_schedule_val == 'True'') ", (dont_schedule_val == "True")
                 self.model.data[i][dont_schedule_col] = (dont_schedule_val.replace('"','') == "True")    #convert string to boolean
                 self.model.data[i][train_name_col] = train_name_val.replace('"','')
+                self.model.data[i][train_description_col] = train_description_val.replace('"','')
                 # self.model.data[i][edit_col] = edit_val.replace('"','')
                 # self.model.data[i][delete_col] = bool(delete_val.replace('"',''))
                 i += 1
@@ -306,37 +365,80 @@ class CreateAndShowGUI4(TableModelListener):
             if result == JOptionPane.NO_OPTION:
                 return
 
-            # check the loaded contents
-            # 1) check that the trains are valid
-            # 2) ckeck that the blocks are occupied by valid trains
-            # if either of the above are not valic we blank the entries
-            # 3) Tidy
-
-            [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
-
-            # check the trains are valid
-
-            # trains_to_put_in_dropdown = [t for t in self.class_ResetButtonMaster.get_list_of_engines_to_move()]
-            # for row in reversed(range(len(self.model.data))):
-            #     if self.model.data[row][train_name_col] not in trains_to_put_in_dropdown:
-            #         self.model.data.pop(row)
-            #
-            # RouteManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
-            # routes = [str(route) for route in RouteManager.getRoutesByNameList()]
-            # for row in reversed(range(len(self.model.data))):
-            #     if self.model.data[row][route_col] not in routes:
-            #         self.model.data.pop(row)
-
         self.completeTablePanel()
         self.save()
 
+    def deletesavedfile_action(self, event):
+
+        while(True):
+
+            self.model.remove_not_set_row()
+            self.completeTablePanel()
+
+            if self.model.getRowCount() == 0:
+                return    self.model.remove_not_set_row()
+            self.completeTablePanel()
+
+            if self.model.getRowCount() == 0:
+                return
+
+            dir = self.directory()
+            j = JFileChooser(dir);
+            j.setAcceptAllFileFilterUsed(False)
+            filter = FileNameExtensionFilter("text files txt", ["txt"])
+            j.addChoosableFileFilter(filter);
+            j.setDialogTitle("Delete not wanted files");
+
+            ret = j.showDialog(None, "Delete");
+            if ret == JFileChooser.APPROVE_OPTION:
+                file = j.getSelectedFile()
+                if file == "" or file == None:
+                    return
+                if file.exists():
+                    os.remove(file.getAbsolutePath())
+                    # print("File " + file.getName() + " has been deleted successfully.")
+                else:
+                    print("The selected file does not exist.")
+            else:
+                print("File selection cancelled.")
+                return
+
     def close_action(self, event):
-        # self.completeTablePanel()
-        # self.save()
+        self.completeTablePanel()
+        self.save()
+        # Open and close the Operations Panel to force save of any extra trains
+        if self.find_frame_by_title("Trains") is None:
+            # print "did not find frame Trains so creating it"
+            a = jmri.jmrit.operations.trains.gui.TrainsTableAction()
+            a.actionPerformed(None)
+        # now close
+        f = self.find_frame_by_title("Trains")
+        if f is not None:
+            # print f
+            f.dispose()
+        # f = None
+        # print "should be closed"
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
 
+    # Function to find a frame by name
+    def find_frame_by_name(self, name):
+        frames = JFrame.getFrames()
+        for f in frames:
+            # print f.getName()
+            if f.getName() == name:
+                return f
+        return None
+
+    # Function to find a frame by title
+    def find_frame_by_title(self, title):
+        frames = JFrame.getFrames()
+        for f in frames:
+            if f.getTitle() == title:
+                return f
+        return None
+
     def delay_action(self, event):
-        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
         for row in reversed(range(len(self.model.data))):
             old_delay = int(self.model.data[0][train_name_col])
             if old_delay == None: old_delay = 0
@@ -358,7 +460,7 @@ class CreateAndShowGUI4(TableModelListener):
         return new_val
 
     def delete_all_action(self, event):
-        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
         # self.model.getDataVector().removeAllElements();
         for row in reversed(range(len(self.model.data))):
             self.model.data.pop(row)
@@ -391,7 +493,7 @@ class CreateAndShowGUI4(TableModelListener):
         return new_val
 
     def task_action(self, event):
-        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
         for row in reversed(range(len(self.model.data))):
             old_val = str(self.model.data[0][repeat_col])
             if old_val == None: old_val = 0
@@ -422,22 +524,25 @@ class CreateAndShowGUI4(TableModelListener):
     #     self.save()
     #
     def save(self):
-        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
         # print "save_action"
+        # print "self.model.data", self.model.data
         self.clear_everything()
+        # print "self.model.data after", self.model.data
         # print "apply action"
         for row in reversed(range(len(self.model.data))):
             # print "save row", row
             time_name = str(self.model.data[row][time_col])
             route_name = str(self.model.data[row][route_col])
             train_name = str(self.model.data[row][train_name_col])
+            train_description = str(self.model.data[row][train_description_col])
             repeat_name = str(self.model.data[row][repeat_col])
             # print "repeat_name", repeat_name
             dont_schedule_name = str(self.model.data[row][dont_schedule_col])
             # if time_name != "" and route_name != "" and train_name_val != "":
             if train_name != "":
                 # print "save schedule"
-                self.save_schedule(row, time_name, route_name, repeat_name, dont_schedule_name, train_name)
+                self.save_schedule(row, time_name, route_name, repeat_name, dont_schedule_name, train_name, train_description)
                 pass
             else:
                 msg = "Cannot save row: " + str(row) + " train name, route or delay is not set"
@@ -446,13 +551,15 @@ class CreateAndShowGUI4(TableModelListener):
         if self.model.getRowCount() == 0:
             self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
 
-    def save_schedule(self, row, time_name, route_name, repeat_name, dont_schedule_name, train_name):
+    def save_schedule(self, row, time_name, route_name, repeat_name, dont_schedule_name, train_name, train_description):
+        # print "save_schedule: train", train_name
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train = TrainManager.newTrain(train_name)
 
         RouteManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.routes.RouteManager)
         route = RouteManager.getRouteByName(route_name)
         train.setRoute(route)
+        train.setDescription(train_description)
 
         [hour, minute] = time_name.split(":")
         train.setDepartureTime(hour, minute)
@@ -557,8 +664,6 @@ class CreateAndShowGUI4(TableModelListener):
                 n_list.append(y)
 
         return n_list
-        # except:
-        #     return ["",""]
 
 class MyModelListener4(TableModelListener):
 
@@ -583,7 +688,7 @@ class MyModelListener4(TableModelListener):
         class_CreateAndShowGUI4 = self.class_CreateAndShowGUI4
         class_ResetButtonMaster = self.class_ResetButtonMaster
         tablemodel = class_CreateAndShowGUI4.model
-        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
         if column == time_col:     #trains
             pass
         elif column == edit_col:       # sections
@@ -591,17 +696,21 @@ class MyModelListener4(TableModelListener):
                 # print "starting edit"
                 route_data = str(self.model.getValueAt(row, route_col))
                 scheduled_start = self.model.getValueAt(row, time_col)
-                if "CreateAndShowGUI5_glb" in globals():
-                    if CreateAndShowGUI5_glb != None:
-                        CreateAndShowGUI5_glb.frame.dispose()
-                CreateAndShowGUI5_glb = CreateAndShowGUI5(self, route_data, scheduled_start)
+
+                if route_data == "" or route_data is None or route_data == "None":
+                    OptionDialog().displayMessage("Cannot display route as route name has not been specified")
+                else:
+                    if "CreateAndShowGUI5_glb" in globals():
+                        if CreateAndShowGUI5_glb != None:
+                            CreateAndShowGUI5_glb.frame.dispose()
+                    CreateAndShowGUI5_glb = CreateAndShowGUI5(self, route_data, scheduled_start)
                 # print "e"
                 self.model.setValueAt(False, row, edit_col)
         elif column == delete_col:
             # print "delete col/row"
             title = ""
             msg = "delete row?"
-            opt1 = "dont' delete row"
+            opt1 = "don't delete row"
             opt2 = "delete row"
             result = OptionDialog().customQuestionMessage2str(msg, title, opt1, opt2)
             if result == opt2:
@@ -620,10 +729,7 @@ class MyModelListener4(TableModelListener):
     def show_time_picker(self):
         # Show a simple JOptionPane input dialog for time selection
         selected_time = JOptionPane.showInputDialog(None, "Select a time (HH:mm):")
-        # if selected_time:
-        #     print("Selected time:", selected_time)
         return selected_time
-
 
 class ComboBoxCellRenderer4 (TableCellRenderer):
 
@@ -641,7 +747,7 @@ class ComboBoxCellRenderer4 (TableCellRenderer):
 
 class MyTableModel4 (DefaultTableModel):
 
-    columnNames = ["Time", "Route", "Repeat", "Don't Schedule", "Train Name", "Edit_Row", "Delete Row"]
+    columnNames = ["Time", "Route", "Repeat", " Don't Schedule", "Train Name", "Train Description", "Edit_Row", "Delete Row"]
 
     def __init__(self):
         # l1 = ["", "", False, "stop at end of route", 10, False, False]
@@ -657,19 +763,21 @@ class MyTableModel4 (DefaultTableModel):
     def add_row(self):
         # TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         # train_list = TrainManager.getTrainsByTimeList()
-        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
-        # for row in reversed(range(len(self.data))):
-
-        # indices = [int(train.getName().split("Train",1)[1]) for train in train_list if train.getName().startswith("Train")]
-        indices = [int(self.data[row][train_name_col].split("Train",1)[1]) for row in reversed(range(len(self.data)))
-                   if self.data[row][train_name_col].startswith("Train")]
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
+        indices = []
+        for row in reversed(range(len(self.data))):
+            # indices = [int(train.getName().split("Train",1)[1]) for train in train_list if train.getName().startswith("Train")]
+            indices = [int(self.data[row][train_name_col].split("Train",1)[1]) for row in reversed(range(len(self.data)))
+                       if self.data[row][train_name_col].startswith("Train")]
+            # print "indices", indices
         if indices == []:
             index = 1
         else:
             index = max(indices) + 1
-        train_name = "Train" + str(index)
+        train_name = "Train" + str(index)       # the train name in operations trains is unique
+        train_description = "Select Train"    # we put the roster name of the train in the description
         # print "adding row"
-        self.data.append(["00:00", "", "Once", False, train_name, False, False])
+        self.data.append(["00:00", "", "Once", False, train_name, train_description, False, False])
         # print "added row"
         # print self.data
         # print "added"
@@ -681,8 +789,8 @@ class MyTableModel4 (DefaultTableModel):
         # print "cleared everything"
         # self.data = []
         # append all trains to put in dropdown
-        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6]
-        for [train, time, comment, route] in items_to_put_in_dropdown:
+        [time_col, route_col, repeat_col, dont_schedule_col, train_name_col, train_description_col, edit_col, delete_col] = [0, 1, 2, 3, 4, 5, 6, 7]
+        for [train, train_description, time, comment, route] in items_to_put_in_dropdown:
             # print "train", train
             if "skip" in comment:
                 skip = True
@@ -692,12 +800,9 @@ class MyTableModel4 (DefaultTableModel):
             train_present = False
             repeat = self.find_between(comment, "[repeat-", "-repeat]")
             if repeat == "": repeat = "Once"
-            # print "repeat" , repeat
-            # for row in reversed(range(len(self.data))):
-            #     if self.data[row][route_col] == route:
-            #         train_present = True
-            # if train_present == False:
-            self.data.append([time, route, repeat, skip, train, False, False])
+            # print "append"
+            self.data.append([time, route, repeat, skip, train, train_description, False, False])
+            # print "appended"
         # print "populated"
         # delete rows with no trains
         # for row in reversed(range(len(self.data))):

@@ -200,13 +200,27 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     }
 
     void doLAF(JPanel panel) {
-        // find L&F definitions
+        // find L&F definitions from Swing
         panel.setLayout(new FlowLayout());
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         HashMap<String, String> installedLAFs = new HashMap<>(plafs.length);
         for (UIManager.LookAndFeelInfo plaf : plafs) {
             installedLAFs.put(plaf.getName(), plaf.getClassName());
         }
+        
+        // explicitly add the desired DarkLaf LaFs
+        installedLAFs.put("DarkLAF HC", "com.github.weisj.darklaf.theme.HighContrastDarkTheme");
+        // The LaFs available are
+        //  com/github/weisj/darklaf/theme/DarculaTheme
+        //  com/github/weisj/darklaf/theme/HighContrastDarkTheme
+        //  com/github/weisj/darklaf/theme/HighContrastLightTheme
+        //  com/github/weisj/darklaf/theme/IntelliJTheme
+        //  com/github/weisj/darklaf/theme/OneDarkTheme
+        //  com/github/weisj/darklaf/theme/SolarizedDarkTheme
+        //  com/github/weisj/darklaf/theme/SolarizedLightTheme
+        // But we're only listing a subset to avoid overwhelming the user
+        // See GuiLafPreferencesManager.applyLookAndFeel(..) for matching code
+
         // make the radio buttons
         for (java.util.Map.Entry<String, String> entry : installedLAFs.entrySet()) {
             String name = entry.getKey();

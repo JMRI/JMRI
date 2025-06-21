@@ -11,15 +11,15 @@ import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.routes.RouteLocation;
-import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Represents a car on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014,
- *         2015, 2023
+ *         2015, 2023, 2025
  */
 public class Car extends RollingStock {
 
@@ -34,6 +34,9 @@ public class Car extends RollingStock {
     protected Kernel _kernel = null;
     protected String _loadName = carLoads.getDefaultEmptyName();
     protected int _wait = 0;
+
+    protected boolean _clone = false;
+    protected int _cloneOrder = 9999999;
 
     protected Location _rweDestination = null; // return when empty destination
     protected Track _rweDestTrack = null; // return when empty track
@@ -61,6 +64,9 @@ public class Car extends RollingStock {
     public static final String PASSENGER_EXTENSION = Bundle.getMessage("(P)");
     public static final String UTILITY_EXTENSION = Bundle.getMessage("(U)");
     public static final String HAZARDOUS_EXTENSION = Bundle.getMessage("(H)");
+    public static final String CLONE = TrainCommon.HYPHEN + "(Clone)"; // NOI18N
+    // parentheses are special chars
+    public static final String CLONE_REGEX = TrainCommon.HYPHEN + "\\(Clone\\)"; // NOI18N
 
     public static final String LOAD_CHANGED_PROPERTY = "Car load changed"; // NOI18N
     public static final String RWE_LOAD_CHANGED_PROPERTY = "Car RWE load changed"; // NOI18N
@@ -91,15 +97,23 @@ public class Car extends RollingStock {
         car.setColor(getColor());
         car.setLength(getLength());
         car.setLoadName(getLoadName());
+        car.setWeightTons(getWeightTons());
         car.setReturnWhenEmptyLoadName(getReturnWhenEmptyLoadName());
         car.setReturnWhenLoadedLoadName(getReturnWhenLoadedLoadName());
         car.setNumber(getNumber());
         car.setOwnerName(getOwnerName());
         car.setRoadName(getRoadName());
         car.setTypeName(getTypeName());
+        car.setComment(getComment());
+        car.setCarHazardous(isCarHazardous());
         car.setCaboose(isCaboose());
         car.setFred(hasFred());
         car.setPassenger(isPassenger());
+        car.setBlocking(getBlocking());
+        car.setLastTrain(getLastTrain());
+        car.setLastDate(getLastDate());
+        car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+        car.setDivision(getDivision());
         car.loaded = true;
         return car;
     }
@@ -156,6 +170,26 @@ public class Car extends RollingStock {
      */
     public boolean hasFred() {
         return _fred;
+    }
+
+    public void setClone(boolean clone) {
+        boolean old = _clone;
+        _clone = clone;
+        if (!old == clone) {
+            setDirtyAndFirePropertyChange("car clone", old ? "true" : "false", clone ? "true" : "false"); // NOI18N
+        }
+    }
+
+    public boolean isClone() {
+        return _clone;
+    }
+
+    public void setCloneOrder(int number) {
+        _cloneOrder = number;
+    }
+
+    public int getCloneOrder() {
+        return _cloneOrder;
     }
 
     public void setLoadName(String load) {
@@ -351,6 +385,9 @@ public class Car extends RollingStock {
     }
 
     public String getPickupScheduleName() {
+        if (getTrain() != null) {
+            return getPickupTime();
+        }
         TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
                 .getScheduleById(getPickupScheduleId());
         if (sch != null) {
@@ -706,11 +743,25 @@ public class Car extends RollingStock {
                 car.setFinalDestinationTrack(getFinalDestinationTrack());
                 car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
                 car.setRoutePath(getRoutePath());
+                car.setWait(getWait());
                 if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), getLoadName())) {
                     car.setLoadName(getLoadName());
                 }
             }
         }
+    }
+
+    /**
+     * Returns the car length or the length of the car's kernel including
+     * couplers.
+     * 
+     * @return length of car or kernel
+     */
+    public int getTotalKernelLength() {
+        if (getKernel() != null) {
+            return getKernel().getTotalLength();
+        }
+        return getTotalLength();
     }
 
     /**
@@ -751,7 +802,7 @@ public class Car extends RollingStock {
      */
     @Override
     public String setDestination(Location destination, Track track) {
-        return setDestination(destination, track, false);
+        return setDestination(destination, track, !Car.FORCE);
     }
 
     /**
@@ -765,7 +816,7 @@ public class Car extends RollingStock {
      *         or Schedule if the destination will not accept the car because
      *         the spur has a schedule and the car doesn't meet the schedule
      *         requirements. Also changes the car load status when the car
-     *         reaches its destination.
+     *         reaches its destination. Removes car if clone.
      */
     @Override
     public String setDestination(Location destination, Track track, boolean force) {
@@ -791,7 +842,13 @@ public class Car extends RollingStock {
         }
         // car was in a train and has been dropped off, update load, RWE could
         // set a new final destination
-        loadNext(destinationTrack);
+        if (isClone()) {
+            // destroy clone
+            InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
+            InstanceManager.getDefault(CarManager.class).deregister(this);
+        } else {
+            loadNext(destinationTrack);
+        }
         return status;
     }
 
@@ -998,6 +1055,39 @@ public class Car extends RollingStock {
             setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
         }
         super.reset();
+        destroyClone();
+    }
+
+    /*
+     * This routine destroys the clone and restores the cloned car to its
+     * original location and load. Note there can be multiple clones for a car.
+     * Only the first clone created has the right info. A clone has creation
+     * order number appended to the road number.
+     */
+    private void destroyClone() {
+        if (isClone()) {
+            // move cloned car back to original location
+            CarManager carManager = InstanceManager.getDefault(CarManager.class);
+            String[] number = getNumber().split(Car.CLONE_REGEX);
+            Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
+            int cloneCreationNumber = Integer.parseInt(number[1]);
+            if (cloneCreationNumber <= car.getCloneOrder()) {
+                car.setLocation(getLocation(), getTrack(), Car.FORCE);
+                car.setLoadName(getLoadName());
+                car.setLastTrain(getLastTrain());
+                car.setLastDate(getLastDate());
+                car.setFinalDestination(getPreviousFinalDestination());
+                car.setFinalDestinationTrack(getPreviousFinalDestinationTrack());
+                car.setPreviousFinalDestination(getPreviousFinalDestination());
+                car.setPreviousFinalDestinationTrack(getPreviousFinalDestinationTrack());
+                car.setScheduleItemId(getPreviousScheduleId());
+                car.setWait(0);
+                // remember the last clone destroyed
+                car.setCloneOrder(cloneCreationNumber);
+            }
+            InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
+            carManager.deregister(this);
+        }
     }
 
     @Override
@@ -1038,6 +1128,9 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.UTILITY)) != null) {
             _utility = a.getValue().equals(Xml.TRUE);
         }
+        if ((a = e.getAttribute(Xml.CLONE)) != null) {
+            _clone = a.getValue().equals(Xml.TRUE);
+        }
         if ((a = e.getAttribute(Xml.KERNEL)) != null) {
             Kernel k = InstanceManager.getDefault(KernelManager.class).getKernelByName(a.getValue());
             if (k != null) {
@@ -1055,7 +1148,6 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.LOAD_FROM_STAGING)) != null && a.getValue().equals(Xml.TRUE)) {
             setLoadGeneratedFromStaging(true);
         }
-
         if ((a = e.getAttribute(Xml.WAIT)) != null) {
             try {
                 _wait = Integer.parseInt(a.getValue());
@@ -1136,6 +1228,9 @@ public class Car extends RollingStock {
         }
         if (isUtility()) {
             e.setAttribute(Xml.UTILITY, isUtility() ? Xml.TRUE : Xml.FALSE);
+        }
+        if (isClone()) {
+            e.setAttribute(Xml.CLONE, isClone() ? Xml.TRUE : Xml.FALSE);
         }
         if (getKernel() != null) {
             e.setAttribute(Xml.KERNEL, getKernelName());

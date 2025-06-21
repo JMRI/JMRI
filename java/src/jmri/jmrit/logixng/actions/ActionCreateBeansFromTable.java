@@ -226,8 +226,8 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.OTHER;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.OTHER;
     }
 
     private List<BeanName> getItems() {
@@ -354,14 +354,14 @@ public class ActionCreateBeansFromTable extends AbstractDigitalAction
             // Remove old bean if desired
             if (_removeOldBean) {
                 try {
-                    _namedBeanType.getDeleteBean().deleteBean(userBean, "CanDelete");
+                    _namedBeanType.getDeleteBean().deleteBean(userBean, Manager.PROPERTY_CAN_DELETE);
                 } catch (java.beans.PropertyVetoException e) {
-                    if (e.getPropertyChangeEvent().getPropertyName().equals("DoNotDelete")) { // NOI18N
+                    if (Manager.PROPERTY_DO_NOT_DELETE.equals(e.getPropertyChangeEvent().getPropertyName())) {
                         throw new JmriException(String.format("Cannot delete bean: %s", e.getPropertyChangeEvent().getOldValue()), e);
                     }
                 }
                 try {
-                    _namedBeanType.getDeleteBean().deleteBean(userBean, "DoDelete");
+                    _namedBeanType.getDeleteBean().deleteBean(userBean, Manager.PROPERTY_DO_DELETE);
                 } catch (java.beans.PropertyVetoException e) {
                     throw new JmriException(String.format("Cannot delete bean: %s", e.getPropertyChangeEvent().getOldValue()), e);
                 }

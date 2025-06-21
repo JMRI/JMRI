@@ -133,7 +133,7 @@
         </tr>
 
         <tr>
-          <td style="text-align:center">(Intended) 5.10</td>
+          <td style="text-align:center">5.10</td>
           <td>Production version, culmination of Fall 2024 series</td>
           <td style="text-align:center">Jan 2025</td>
           <td style="text-align:center"><b>11 required<br/>17 recommended</b></td>
@@ -141,10 +141,26 @@
         </tr>
 
         <tr>
-          <td style="text-align:center">(Intended) 5.12</td>
+          <td style="text-align:center">5.12</td>
           <td>Production version, culmination of Spring 2025 series</td>
           <td style="text-align:center">June 2025</td>
           <td style="text-align:center"><b>11 required<br/>17 recommended</b></td>
+          <td style="text-align:center"><b>11 or later</b></td>
+        </tr>
+
+        <tr>
+          <td style="text-align:center">(Intended) 5.14</td>
+          <td>Production version, culmination of Fall 2025 series</td>
+          <td style="text-align:center">December 2025</td>
+          <td style="text-align:center"><b>11 required<br/>21 recommended</b></td>
+          <td style="text-align:center"><b>11 or later</b></td>
+        </tr>
+
+        <tr>
+          <td style="text-align:center">(Intended) 5.16</td>
+          <td>Production version, culmination of Spring 2026 series</td>
+          <td style="text-align:center">June 2026</td>
+          <td style="text-align:center"><b>11 required<br/>21 recommended</b></td>
           <td style="text-align:center"><b>11 or later</b></td>
         </tr>
 
@@ -155,10 +171,12 @@
       <p>The 4.1.* series of test releases in Fall 2015 started the requirement for Java 8. This
       continued through the following release series. Java 8 continued to be the requirement
       through the Fall of 2021.
-      <p>The next long-term-support (LTS) Java release after Java 8 is Java 11 from Fall of 2018. Oracle has
+      
+      <p>The next long-term-support (LTS) Java release after Java 8 is Java 11 from Fall of 2018. 
+      Oracle has
       <a href=
       "https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">
-      aligned their Java and the OpenJDK from that point</a>.
+      aligned their Java and the OpenJDK from that point</a>
 
       <p>In Spring 2022 the Java version required by JMRI moved forward, making
       <a href="https://www.jmri.org/releasenotes/jmri4.27.1.shtml">JMRI 4.27.1</a> the last JMRI version
@@ -166,16 +184,26 @@
       Newer development releases 4.99.x culminated in the June 2022 production releases
       requiring Java 11 and therefore being called JMRI 5.0.</p>
 
-      <p>Java 17 is the LTS release after Java 11.  
-      Starting with the JMRI 5.9.* development series, 
-      Java 11 is still supported but Java 17 is recommended.
-      We recommend Java 17 to move the user installations forward for some future
-      migration, and because it's easier to install Java 17 on some OSs.</p>
+      <p>Java 11's free support by Oracle ended in
+      <a bref="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">September 2023</a>.
+
+      <p>Java 17 in 2021 was the LTS release after Java 11.  
+      Java 17's free support from Oracle runs through September 2026; after that,
+      there won't be security updates and bug fixes to Java 17.
       
-      <p>Java 21 is the LTS release after Java 17.  We do not yet
-      recommend it because of some not-fully-understood compatibility
-      edge cases. It works for some people, but we're not yet certain
-      that it will work for all.
+      <p>Starting with the JMRI 5.9.* development series, 
+      Java 11 is still supported by JMRI but Java 17 is recommended.
+      We recommend Java 17 to move the user installations forward for eventual future
+      migration, because Java 17 is still getting security updates, 
+      and because it's easier to install Java 17 on some OSs.</p>
+      
+      <p>Java 21 in 2023 was the LTS release after Java 17.  We expect 
+      that we will have enough confidence in it to start recommending 
+      it for use with JMRI 5.13.1 in July 2025. That JMRI release
+      will continue to be compatible with Java 11.
+      
+      <p>Following Java 21, the next Java LTS release is expected to be
+      Java 25 in September 2025.
       
       <p>For more information on compatibility, see the
       <a href="JVMCapabilities.shtml#compatibilty">compatibility discussion</a>.

@@ -1,15 +1,16 @@
 package jmri;
 
-import com.tngtech.archunit.lang.*;
-import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 import java.io.File;
 
-import jmri.util.FileUtil;
-
 import org.junit.jupiter.api.*;
+
+import com.tngtech.archunit.junit.*;
+import com.tngtech.archunit.lang.ArchRule;
+
+import jmri.util.FileUtil;
 
 /**
  * Check the architecture of the JMRI library
@@ -81,9 +82,9 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logix.WarrantRoute$RouteLocation").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.ConditionalNGDebugger$PopupMenu$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.logixng.tools.swing.TreeEditor$5").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$1").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$2").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.LocationEditFrame$3").and()
+            .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.gui.LocationEditFrame$1").and()
+            .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.gui.LocationEditFrame$2").and()
+            .doNotHaveFullyQualifiedName("jmri.jmrit.operations.locations.gui.LocationEditFrame$3").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterGroupsPanel$MouseAdapter").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.roster.swing.RosterTable$RosterCellEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.symbolicprog.CombinedLocoSelTreePane$1").and()
@@ -364,6 +365,7 @@ public class ArchitectureTest {
     public static final ArchRule checkLogixNGActionsXmlNotUsingNamedBeanHandle = noClasses()
             .that()
             .resideInAPackage("jmri.jmrit.logixng.actions.configurexml")
+            .and().doNotHaveFullyQualifiedName("jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml")            // This class doesn't seem to be able to use LogixNG_SelectNamedBean
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.NamedBeanHandle");
 

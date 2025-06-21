@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.jmrit.throttle.ThrottlesPreferences;
 import jmri.jmrix.can.*;
@@ -14,9 +16,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -37,7 +36,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertNotNull("exists",tm);
         DccLocoAddress addr = new DccLocoAddress(1234,true);
 
-        CbusThrottleListen throtListen = new CbusThrottleListen();
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
         tm.requestThrottle(addr,throtListen,true);
 
         Assert.assertEquals("address request message", "[78] 40 C4 D2",
@@ -150,7 +149,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertNotNull("exists",tm);
         DccLocoAddress addr = new DccLocoAddress(221,true);
 
-        CbusThrottleListen throtListen = new CbusThrottleListen();
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
         tm.requestThrottle(addr,throtListen,true);
 
         Assert.assertEquals("address request message", "[78] 40 C0 DD",
@@ -189,7 +188,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertNotNull("exists",cbtmb);
         DccLocoAddress addr = new DccLocoAddress(422,true);
 
-        CbusThrottleListen throtListen = new CbusThrottleListen();
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
         cbtmb.requestThrottle(addr,throtListen,true);
 
         Assert.assertEquals("address request message", "[78] 40 C1 A6",
@@ -315,7 +314,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertNotNull("exists",tm);
         DccLocoAddress addr = new DccLocoAddress(1234,true);
 
-        CbusThrottleListen throtListen = new CbusThrottleListen();
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
         tm.requestThrottle(addr,throtListen,true);
 
         Assert.assertEquals("address request message", "[78] 40 C4 D2",
@@ -383,7 +382,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         m = new CanMessage( new int[]{CbusConstants.CBUS_DSPD, 1, 99 },0x12 );
         ((CbusThrottleManager)tm).message(m);
         Assert.assertEquals("msg speed does not change",(76.0f/126.0f),(float) tm.getThrottleInfo(addr,Throttle.SPEEDSETTING),0.1f);
-        Assert.assertEquals("msg estop reverse",false, tm.getThrottleInfo(addr,Throttle.ISFORWARD));
+        Assert.assertEquals("msg estop reverse",false, (boolean)tm.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         m.setElement(2, 1);
         ((CbusThrottleManager)tm).message(m);
@@ -411,7 +410,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
         DccLocoAddress addr = new DccLocoAddress(555,true);
         Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(addr));
-        CbusThrottleListen throtListen = new CbusThrottleListen();
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
         tm.requestThrottle(addr,throtListen,true);
 
         Assert.assertEquals("address request message", "[78] 40 C2 2B",
@@ -436,23 +435,67 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     }
 
-    private static class CbusThrottleListen implements ThrottleListener {
+    private class CancelRequestThrottleListen implements ThrottleListener {
+
+        private boolean failedRequest;
+        String lastNotification = "";
 
         @Override
         public void notifyThrottleFound(DccThrottle t){
-            // throttleFoundResult = true;
+            throttle = t;
+            lastNotification = "created a throttle";
         }
 
         @Override
         public void notifyFailedThrottleRequest(LocoAddress address, String reason){
-            // throttleNotFoundResult = true;
+            failedRequest = true;
+            lastNotification = "Throttle request failed for " + address + " because " + reason;
         }
 
         @Override
         public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-            // this is a WIP impelementation.
-            // if ( question == DecisionType.STEAL ){
-            // }
+            // this is a never-stealing impelementation.
+            if ( question == DecisionType.STEAL ){
+                InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                lastNotification = "1: Got a Steal question "+ address;
+            }
+            if ( question == DecisionType.SHARE ){
+                InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                lastNotification = "1: Got a Share question "+ address;
+            }
+            if ( question == DecisionType.STEAL_OR_SHARE ){
+                InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                lastNotification = "1: Got a Steal OR Share question "+ address;
+            }
+        }
+
+        boolean getFailedRequest() {
+            return failedRequest;
+        }
+
+        @Nonnull
+        String getLastNotification() {
+            return lastNotification;
+        }
+
+    }
+
+    private class StealRequestThrottleListen extends CancelRequestThrottleListen{
+        @Override
+        public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+
+            if ( question == DecisionType.STEAL ){
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, null, DecisionType.STEAL );
+                lastNotification = "2: Got a Steal question " + address;
+            }
+            if ( question == DecisionType.SHARE ){
+                InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
+                lastNotification = "2: Got a Share question " + address;
+            }
+            if ( question == DecisionType.STEAL_OR_SHARE ){
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, null, DecisionType.STEAL );
+                lastNotification = "2: Got a steal OR share question " + address;
+            }
         }
     }
 
@@ -461,36 +504,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     public void testCreateCbusThrottleStealScenario1() {
 
-        ThrottleListener throtListen = new ThrottleListener() {
-            @Override
-            public void notifyThrottleFound(DccThrottle t) {
-                throttle = t;
-                log.error("created a throttle");
-            }
-
-            @Override
-            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for {} because {}", address, reason);
-                failedThrottleRequest = true;
-            }
-
-            @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-                // this is a never-stealing impelementation.
-                if ( question == DecisionType.STEAL ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal request {}", address);
-                }
-                if ( question == DecisionType.SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a share request {}", address);
-                }
-                if ( question == DecisionType.STEAL_OR_SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question {}", address);
-                }
-            }
-        };
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
 
         memo.setDisabled(true); // disable access to memo.get(CommandStation.class);
 
@@ -500,44 +514,15 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertEquals("count is correct", 1, tc.outbound.size());
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x81, 0x02 },0x12 ); // Loco address taken
         ((CbusThrottleManager)tm).reply(r);
-        JUnitAppender.assertErrorMessage("Throttle request failed for 129(L) because Loco address 129 taken");
-        Assert.assertTrue("No steal or share request", failedThrottleRequest);
+        Assertions.assertEquals( "Throttle request failed for 129(L) because Loco address 129 taken",
+            throtListen.getLastNotification());
+        Assert.assertTrue("No steal or share request", throtListen.getFailedRequest());
     }
 
     @Test
     public void testCreateCbusThrottleStealScenario2() {
 
-        ThrottleListener throtListen = new ThrottleListener() {
-            @Override
-            public void notifyThrottleFound(DccThrottle t) {
-                throttle = t;
-                log.error("created a throttle");
-            }
-
-            @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for {} because {}", address, reason);
-                failedThrottleRequest = true;
-            }
-
-            @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-
-                // this is a never-steal or sharing impelementation.
-                if ( question == DecisionType.STEAL ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Steal question {}", address);
-                }
-                if ( question == DecisionType.SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question {}", address);
-                }
-                if ( question == DecisionType.STEAL_OR_SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question {}", address);
-                }
-            }
-        };
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
 
         CbusNodeTableDataModel nodemodel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
@@ -556,7 +541,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         ((CbusThrottleManager)tm).reply(r);
 
-        JUnitAppender.assertErrorMessage("1: Got a steal OR share question 141(L)");
+        Assertions.assertEquals("1: Got a Steal OR Share question 141(L)",
+            throtListen.getLastNotification());
         // which was cancelled by the throttlelistener
 
         cs.getNodeNvManager().setNV(2, 0b00000010); // steal only enabled
@@ -570,7 +556,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         ((CbusThrottleManager)tm).reply(r);
 
-        JUnitAppender.assertErrorMessage("1: Got a Steal question 141(L)");
+        Assertions.assertEquals("1: Got a Steal question 141(L)",
+            throtListen.getLastNotification());
         // which was cancelled by the throttlelistener
 
         cs.getNodeNvManager().setNV(2, 0b00000100); // share only enabled
@@ -583,7 +570,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         ((CbusThrottleManager)tm).reply(r);
 
-        JUnitAppender.assertErrorMessage("1: Got a Share question 141(L)");
+        Assertions.assertEquals("1: Got a Share question 141(L)",
+            throtListen.getLastNotification());
         // which was cancelled by the throttlelistener
 
         nodemodel.dispose();
@@ -593,36 +581,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     public void testCreateCbusThrottleDefaultShareScenario() {
 
-        ThrottleListener throtListen = new ThrottleListener() {
-            @Override
-            public void notifyThrottleFound(DccThrottle t) {
-                throttle = t;
-                log.error("created a throttle");
-            }
-
-            @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for {} because {}", address, reason);
-                failedThrottleRequest = true;
-            }
-
-            @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-
-                if ( question == DecisionType.STEAL ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Steal question {}", address);
-                }
-                if ( question == DecisionType.SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question {}", address);
-                }
-                if ( question == DecisionType.STEAL_OR_SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question {}", address);
-                }
-            }
-        };
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
 
         CbusNodeTableDataModel nodemodel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
@@ -644,13 +603,14 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertEquals("address request message", "[78] 61 C0 8D 02",
             tc.outbound.elementAt(tc.outbound.size() - 1).toString()); // OPC 0x40 GLOC Request Share Loco
         Assert.assertEquals("count is correct", 2, tc.outbound.size());
-        Assert.assertFalse("not yet failed", failedThrottleRequest);
+        Assert.assertFalse("not yet failed", throtListen.getFailedRequest());
 
         r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         ((CbusThrottleManager)tm).reply(r);
 
-        Assert.assertTrue("Failed on 2nd attempt", failedThrottleRequest);
-        JUnitAppender.assertErrorMessage("Throttle request failed for 141(L) because Loco address 141 taken");
+        Assert.assertTrue("Failed on 2nd attempt", throtListen.getFailedRequest());
+        Assertions.assertEquals("Throttle request failed for 141(L) because Loco address 141 taken",
+            throtListen.getLastNotification());
 
         nodemodel.dispose();
     }
@@ -659,45 +619,22 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     public void testCreateCbusThrottleSilentStealCheckedScenario() {
 
-        ThrottleListener throtListen = new ThrottleListener() {
-            @Override
-            public void notifyThrottleFound(DccThrottle t) {
-                throttle = t;
-                log.error("created a throttle");
-            }
-
-            @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for {} because {}", address, reason);
-                failedThrottleRequest = true;
-            }
-
-            @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-
-                if ( question == DecisionType.STEAL ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Steal question {}", address);
-                }
-                if ( question == DecisionType.SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question {}", address);
-                }
-                if ( question == DecisionType.STEAL_OR_SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question {}", address);
-                }
-            }
-        };
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
 
         CbusNodeTableDataModel nodemodel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
 
         // register a command station in the node table so can be found by the Command Station
-        CbusNode cs = nodemodel.provideNodeByNodeNum(65534);
+        CbusNode cs = new CbusNode(memo, 65534);
         cs.setCsNum(0); // Command Station 0 is master command station
-        cs.getNodeParamManager().setParameters(new int[]{7,165,4,10,0,0,255,4}); // in this test we emulate a CANCMD v4
-        cs.getNodeNvManager().setNV(2, 0b00000110); // steal + share enabled
+        // in this test we emulate a CANCMD v4 but with just 10 NVs
+        cs.getNodeParamManager().setParameters(new int[]{7,165,4,10,0,0,10,4});
+
+        // NV2 = steal + share enabled
+        // set all NVs so Node Manager does not request them from the Node.
+        int[] nVs = {10,1,0b00000110,3,4,5,6,7,8,9,10};
+        cs.getNodeNvManager().setNVs(nVs);
+        nodemodel.addNode(cs);
 
         // set ThrottlesPreferences to steal enabled
         InstanceManager.getDefault(ThrottlesPreferences.class).setSilentSteal(true);
@@ -705,7 +642,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         tm.requestThrottle(141, throtListen, false);
         Assert.assertEquals("address request message", "[78] 40 C0 8D",
             tc.outbound.elementAt(tc.outbound.size() - 1).toString()); // OPC 0x40 RLOC Request Loco
-        Assert.assertEquals("count is correct", 1, tc.outbound.size());
+        Assert.assertEquals("count is correct "+tc.outbound, 1, tc.outbound.size());
 
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         ((CbusThrottleManager)tm).reply(r);
@@ -714,13 +651,14 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertEquals("address request message", "[78] 61 C0 8D 01",
             tc.outbound.elementAt(tc.outbound.size() - 1).toString()); // OPC 0x40 GLOC Request Steal Loco
         Assert.assertEquals("count is correct", 2, tc.outbound.size());
-        Assert.assertFalse("not yet failed", failedThrottleRequest);
+        Assert.assertFalse("not yet failed", throtListen.getFailedRequest());
 
         r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         ((CbusThrottleManager)tm).reply(r);
 
-        Assert.assertTrue("Failed on 2nd attempt", failedThrottleRequest);
-        JUnitAppender.assertErrorMessage("Throttle request failed for 141(L) because Loco address 141 taken");
+        Assert.assertTrue("Failed on 2nd attempt", throtListen.getFailedRequest());
+        Assertions.assertEquals("Throttle request failed for 141(L) because Loco address 141 taken",
+            throtListen.getLastNotification());
 
         nodemodel.dispose();
     }
@@ -729,36 +667,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     public void testCreateCbusThrottleDefaultNoShareavailableScenario() {
 
-        ThrottleListener throtListen = new ThrottleListener() {
-            @Override
-            public void notifyThrottleFound(DccThrottle t) {
-                throttle = t;
-                log.error("created a throttle");
-            }
-
-            @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for {} because {}", address, reason);
-                failedThrottleRequest = true;
-            }
-
-            @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-
-                if ( question == DecisionType.STEAL ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Steal question {}", address);
-                }
-                if ( question == DecisionType.SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question {}", address);
-                }
-                if ( question == DecisionType.STEAL_OR_SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a steal OR share question {}", address);
-                }
-            }
-        };
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
 
         CbusNodeTableDataModel nodemodel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
@@ -779,14 +688,15 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
         Assert.assertEquals("address request message", "[78] 61 C0 8D 02",
             tc.outbound.elementAt(tc.outbound.size() - 1).toString()); // OPC 0x61 GLOC Request Share Loco
-        Assert.assertEquals("count is correct", 2, tc.outbound.size());
-        Assert.assertFalse("not yet failed", failedThrottleRequest);
+        Assert.assertEquals("count is correct " + tc.outbound.toString(), 2, tc.outbound.size());
+        Assert.assertFalse("not yet failed", throtListen.getFailedRequest());
 
         r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         ((CbusThrottleManager)tm).reply(r);
 
-        Assert.assertTrue("Failed on 2nd attempt", failedThrottleRequest);
-        JUnitAppender.assertErrorMessage("Throttle request failed for 141(L) because Loco address 141 taken");
+        Assert.assertTrue("Failed on 2nd attempt", throtListen.getFailedRequest());
+        Assertions.assertEquals("Throttle request failed for 141(L) because Loco address 141 taken",
+            throtListen.getLastNotification());
 
         nodemodel.dispose();
     }
@@ -795,38 +705,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     public void testCreateCbusThrottleSteal() {
 
-        ThrottleListener throtListen = new ThrottleListener() {
-            @Override
-            public void notifyThrottleFound(DccThrottle t) {
-                throttle = t;
-                log.error("created a throttle");
-            }
-
-            @Override
-            public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
-                log.error("Throttle request failed for {} because {}", address, reason);
-                failedThrottleRequest = true;
-            }
-
-            @Override
-            public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
-
-
-                // this is a never-steal or sharing impelementation.
-                if ( question == DecisionType.STEAL ){
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, null, DecisionType.STEAL );
-                    log.error("1: Got a Steal question {}", address);
-                }
-                if ( question == DecisionType.SHARE ){
-                    InstanceManager.throttleManagerInstance().cancelThrottleRequest(address, this);
-                    log.error("1: Got a Share question {}", address);
-                }
-                if ( question == DecisionType.STEAL_OR_SHARE ){
-                    InstanceManager.throttleManagerInstance().responseThrottleDecision(address, null, DecisionType.STEAL );
-                    log.error("1: Got a steal OR share question {}", address);
-                }
-            }
-        };
+        StealRequestThrottleListen throtListen = new StealRequestThrottleListen();
 
         CbusNodeTableDataModel nodemodel = memo.get(CbusConfigurationManager.class)
             .provide(CbusNodeTableDataModel.class);
@@ -845,13 +724,14 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, 0x02 },0x12 ); // Loco address taken
         ((CbusThrottleManager)tm).reply(r);
 
-        JUnitAppender.assertErrorMessage("1: Got a Steal question 141(L)");
+        Assertions.assertEquals("2: Got a Steal question 141(L)",
+            throtListen.getLastNotification());
         // which was confirmed please steal by the throttlelistener
 
         Assert.assertEquals("steal request message", "[78] 61 C0 8D 01",
             tc.outbound.elementAt(tc.outbound.size() - 1).toString()); // OPC 0x61 GLOC Request Steal Loco
         Assert.assertEquals("count is correct", 2, tc.outbound.size());
-        Assert.assertFalse("not yet failed", failedThrottleRequest);
+        Assert.assertFalse("not yet failed", throtListen.getFailedRequest());
 
         r = new CanReply();
         r.setHeader(tc.getCanid());
@@ -866,7 +746,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         r.setElement(7, 0x00); // function f9 to f12
         ((CbusThrottleManager)tm).reply(r);
 
-        JUnitAppender.assertErrorMessage("created a throttle");
+        Assertions.assertEquals("created a throttle",
+            throtListen.getLastNotification());
         Assertions.assertNotNull(throttle);
 
         throttle.dispose(throtListen);
@@ -944,7 +825,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(addr));
         Assert.assertEquals("throttle use 0", 0, tm.getThrottleUsageCount(42, false));
         Assert.assertNull("NULL", tm.getThrottleInfo(addr, Throttle.F28));
-        CbusThrottleListen throtListen = new CbusThrottleListen();
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
         tm.requestThrottle(addr, throtListen, true);
 
         Assert.assertEquals("address request message", "[78] 40 00 2A",
@@ -1003,7 +884,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assertions.assertNotNull(cbtmb);
         DccLocoAddress addr = new DccLocoAddress(10239,true);
 
-        CbusThrottleListen throtListen = new CbusThrottleListen();
+        CancelRequestThrottleListen throtListen = new CancelRequestThrottleListen();
         cbtmb.requestThrottle(addr,throtListen,true);
 
         Assert.assertEquals("address request message", "[78] 40 E7 FF",
@@ -1013,7 +894,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     private CanSystemConnectionMemo memo;
     private DccThrottle throttle;
-    private boolean failedThrottleRequest = false;
     private TrafficControllerScaffold tc;
 
     @BeforeEach
@@ -1043,6 +923,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusThrottleManagerTest.class);
 
 }

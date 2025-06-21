@@ -4,8 +4,7 @@ import java.beans.*;
 import java.io.*;
 import java.util.*;
 
-import jmri.JmriException;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.util.JUnitUtil;
 

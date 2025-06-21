@@ -82,7 +82,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     @Override
     public void notifyThrottleFound(DccThrottle t) {
         // put in map
-        Integer num = Integer.valueOf(((DccLocoAddress) t.getLocoAddress()).getNumber());
+        Integer num = ((DccLocoAddress) t.getLocoAddress()).getNumber();
         throttleTable.put(num, t);
     }
 

@@ -4,6 +4,11 @@
 # Part of the JMRI distribution
 
 from javax.swing import JOptionPane
+from java.awt.geom import Point2D
+
+
+# from jython.DispatcherSystem.Startup import OptionDialog
+
 
 # IS:DSCT:nnn  Control sensors
 # IS:DSMT:nnn  Move TO sensors
@@ -35,6 +40,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     version_no = 0.2    #used to delete DispatcherPanel for new versions if the number of controlsensors/icons has changed
 
     list_of_stopping_points = []
+    blockPoints1 = {}
     blockPoints = {}   # Block center points used by direct access process
     editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
 
@@ -287,8 +293,11 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         if some_checks_OK:
             msg = "Performed some prelimiary checks to ensure the trains run correctly\n\nAll Checks OK"
-            reply = Query().customQuestionMessage2(msg, "Checks", "Continue", "Look in more detail")
-            if reply == JOptionPane.NO_OPTION:
+            title = "Checks"
+            opt1 = "Continue"
+            opt2 = "Look in more detail"
+            reply = Query().customQuestionMessage2str(msg, title, opt1, opt2)
+            if reply == opt2:
                 if sensors_OK:
                     Message = "All blocks have sensors"
                     JOptionPane.showMessageDialog(None, Message, 'Message', JOptionPane.INFORMATION_MESSAGE)
@@ -466,11 +475,9 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         for panel in self.editorManager.getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
             if panel.getTitle() == 'Dispatcher System':
                 if self.version_number_changed():
-                    print "removing panel, version number changed"
+                    # print "removing panel, version number changed"
                     self.editorManager.remove(panel)
                     panel.dispose()
-                    # msg = "should have removed panel"
-                    # Query().displayMessage(msg,"")
                 # Skip the Dispatcher System control panel if it exists
                 continue
 
@@ -682,7 +689,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             vars.append(jmri.ConditionalVariable(False, jmri.Conditional.Operator.AND, jmri.Conditional.Type.SENSOR_ACTIVE, 'startDispatcherSensor', True))
             cdl.setStateVariables(vars)
             actions = []
-            actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/RunDispatchMaster.py'))
+            actions.append(jmri.implementation.DefaultConditionalAction(1, jmri.Conditional.Action.RUN_SCRIPT, '', -1, 'program:jython/DispatcherSystem/Startup.py'))
             cdl.setAction(actions)
             lgx.activateLogix()
 
@@ -698,8 +705,60 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         #add control icons in separate editor panel
         self.addControlIconsAndLabels()
 
-    def getBlockCenterPoints(self, panel):
+    def getCenterPointOfNearestBlockToMid(self, panel):
+
+        self.index = 0
         self.blockPoints.clear()
+
+        # reassign the blockpoints to the nearest track segment to mid if one exists
+        for tsv in panel.getTrackSegmentViews():
+
+            blk = tsv.getBlockName()
+
+            pt1 = panel.getCoords(tsv.getConnect1(), tsv.getType1())
+            pt2 = panel.getCoords(tsv.getConnect2(), tsv.getType2())
+
+            [x1,y1] = [pt1.getX(), pt1.getY()]
+            [x2,y2] = [pt2.getX(), pt2.getY()]
+            if abs(float(y1)-float(y2)) < 15.0:     # East-West place icon to right of circle
+                x_reqd = int((float(x1)+float(x2))/2.0)+25  # to put to right of circle
+                y_reqd = int((float(y1)+float(y2))/2.0)     # to put just under track
+            else:                                   # North south place icon under circle
+                x_reqd = int((float(x1)+float(x2))/2.0)-20  #  to centralise
+                y_reqd = int((float(y1)+float(y2))/2.0)+15  #  to put under circle
+
+            pt_to_try = Point2D.Double(x_reqd, y_reqd)
+            pt_mid =  self.blockPoints1[blk]
+
+            self.updateCoords1(blk, pt_to_try, pt_mid)
+
+
+
+    def updateCoords1(self, blk, pt_to_try, pt_mid):
+        if blk == "CornerUp": self.index += 1; print self.index
+        if blk is not None:
+            if blk in self.blockPoints:
+                if (jmri.util.MathUtil.distance(pt_mid, pt_to_try) < \
+                        jmri.util.MathUtil.distance(pt_mid, self.blockPoints[blk])):
+                    self.blockPoints[blk] = pt_to_try
+            else:
+                self.blockPoints[blk] = pt_to_try
+
+    def updateCoords(self, blk, xy):
+        if blk == "CornerUp": self.index += 1; print self.index
+        if blk is not None:
+            if blk in self.blockPoints1:
+                self.blockPoints1[blk] = jmri.util.MathUtil.midPoint(self.blockPoints1[blk], xy)
+                if blk == "CornerUp":
+                    print "self.blockPoints1[blk]", self.blockPoints1[blk]
+            else:
+                self.blockPoints1[blk] = xy
+                if blk == "CornerUp":
+                    print "self.blockPoints1[blk]", self.blockPoints1[blk]
+
+    def getBlockCenterPoints(self, panel):
+        self.index = 0
+        self.blockPoints1.clear()
         for tsv in panel.getTrackSegmentViews():
             blk = tsv.getBlockName()
 
@@ -738,12 +797,14 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.updateCoords(blkAC, xyA)
             self.updateCoords(blkBD, xyD)
 
-    def updateCoords(self, blk, xy):
-        if blk is not None:
-            if blk in self.blockPoints:
-                self.blockPoints[blk] = jmri.util.MathUtil.midPoint(self.blockPoints[blk], xy)
-            else:
-                self.blockPoints[blk] = xy
+        # place the stations at the block nearest the mid-point
+
+        self.getCenterPointOfNearestBlockToMid(panel)
+
+        for blk in self.blockPoints1:
+            if blk not in self.blockPoints:
+                self.blockPoints[blk] = self.blockPoints1[blk]
+
 
     # **************************************************
     # stop icons
@@ -783,7 +844,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     def addControlIconsAndLabels(self):
         if (not self.version_number_changed()) and self.dispatcher_system_panel_exists():
-            if self.logLevel > -1: print "not adding control Icons and labels"
+            if self.logLevel > 0: print "not adding control Icons and labels"
             return
 
         # Create the Dispatcher System control panel
@@ -908,6 +969,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             [sections.getSection(section_name).setForwardStoppingSensorName(forward_stopping_sensor_name) \
              for [sn_prompt, section_name, fss_prompt, forward_stopping_sensor_name] in forward_stop_sensors \
              if forward_stop_sensors is not [] and sections.getSection(section_name) is not None]
+
     def directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "forwardStoppingSensors"
         if not os.path.exists(path):
@@ -958,10 +1020,8 @@ class DisplayProgress:
         self.frame1 = None
 
 
-
-
 class Query:
-    def customQuestionMessage2(self, msg, title, opt1, opt2):
+    def customQuestionMessage2str(self, msg, title, opt1, opt2):
         self.CLOSED_OPTION = False
         options = [opt1, opt2]
         s = JOptionPane.showOptionDialog(None,
@@ -971,11 +1031,15 @@ class Query:
                                          JOptionPane.QUESTION_MESSAGE,
                                          None,
                                          options,
-                                         options[0])
+                                         options[1])
         if s == JOptionPane.CLOSED_OPTION:
             self.CLOSED_OPTION = True
             return
-        return s
+        if s == JOptionPane.YES_OPTION:
+            s1 = opt1
+        else:
+            s1 = opt2
+        return s1
 
     def displayMessage(self, msg, title = ""):
         self.CLOSED_OPTION = False

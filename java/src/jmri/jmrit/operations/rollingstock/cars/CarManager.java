@@ -117,7 +117,7 @@ public class CarManager extends RollingStockManager<Car>
     }
 
     public List<Car> getByPickupList() {
-        return getByList(getByIdList(), BY_PICKUP);
+        return getByList(getByDestinationList(), BY_PICKUP);
     }
 
     // The special sort options for cars
@@ -502,6 +502,43 @@ public class CarManager extends RollingStockManager<Car>
         return false;
     }
     
+    /**
+     * Used to determine if there are clone cars.
+     * 
+     * @return true if there are clone cars, otherwise false.
+     */
+    public boolean isThereClones() {
+        for (Car car : getList()) {
+            if (car.isClone()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    int cloneCreationOrder = 0;
+
+    /**
+     * Returns the highest clone creation order given to a clone.
+     * 
+     * @return 1 if the first clone created, otherwise the highest found plus
+     *         one. Automatically increments.
+     */
+    public int getCloneCreationOrder() {
+        if (cloneCreationOrder == 0) {
+            for (Car car : getList()) {
+                if (car.isClone()) {
+                    String[] number = car.getNumber().split(Car.CLONE_REGEX);
+                    int creationOrder = Integer.parseInt(number[1]);
+                    if (creationOrder > cloneCreationOrder) {
+                        cloneCreationOrder = creationOrder;
+                    }
+                }
+            }
+        }
+        return ++cloneCreationOrder;
+    }
+
     int _commentLength = 0;
     
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",

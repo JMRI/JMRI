@@ -271,6 +271,26 @@ class SoundBite extends VSDSound {
         sound_src.setPosition(v);
     }
 
+    /**
+     * Method to attach a source to effects
+     *
+     * @return 0 when failed, 1 when successful
+     */
+    @Override
+    int attachSourcesToEffects() {
+        return sound_src.attachSourcesToEffects();
+    }
+
+    /**
+     * Method to detach a source to effects
+     *
+     * @return 0 when failed, 1 when successful
+     */
+    @Override
+    int detachSourcesToEffects() {
+        return sound_src.detachSourcesToEffects();
+    }
+
     public void setURL(String filename) {
         this.filename = filename;
         sound_buf.setURL(filename); // Path must be provided by caller.

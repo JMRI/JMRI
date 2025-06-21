@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * Implementation of the Light Control Object for BiDiB.
  *
  * @author Paul Bender Copyright (C) 2008-2010
- * @author Eckart Meyer Copyright (C) 2019-2023
+ * @author Eckart Meyer Copyright (C) 2019-2025
  */
 public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanInterface {
 
@@ -23,7 +23,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
     private BiDiBTrafficController tc = null;
     protected BiDiBOutputMessageHandler messageHandler = null;
     //private LcConfigX portConfigx;
-    private LcOutputType lcType; //cached type from portConfigX or fixed in type based address
+    private LcOutputType portType; //cached type from portConfigX or fixed in type based address
 
     /**
      * Create a Light object from system name.
@@ -48,14 +48,14 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
         
         if (addr.isValid()  &&  addr.isPortAddr()) {
             if (addr.isPortTypeBasedModel()) {
-                lcType = addr.getPortType();
+                portType = addr.getPortType();
             }
         }
 
 //        // DEBUG
-//        lcType = LcOutputType.LIGHTPORT;
-//        lcType = LcOutputType.SWITCHPORT;
-//        lcType = LcOutputType.BACKLIGHTPORT;
+//        portType = LcOutputType.LIGHTPORT;
+//        portType = LcOutputType.SWITCHPORT;
+//        portType = LcOutputType.BACKLIGHTPORT;
 
         messageHandler.sendQueryConfig();
     }
@@ -126,12 +126,12 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
 
     /**
      * Check if this object can handle variable intensity.
-     * <p>
+     *
      * @return true for some LC output types, false for others
      */
     public boolean isIntensityVariable() {
-        if (lcType != null) {
-            switch (lcType) {
+        if (portType != null) {
+            switch (portType) {
                 case LIGHTPORT: //we misuse the intensity value for encoding the output state value
                 case SERVOPORT:
                 case BACKLIGHTPORT:
@@ -159,7 +159,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
      */
     @Override
     public boolean isTransitionAvailable() {
-        return (lcType != LcOutputType.LIGHTPORT  &&  isIntensityVariable());
+        return (portType != LcOutputType.LIGHTPORT  &&  isIntensityVariable());
 //        return isIntensityVariable();
     }
 
@@ -187,7 +187,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
     public void setTargetIntensity(double intensity) {
         log.trace("BiDiBLight setTargetIntensity: new: {}", intensity);
 //        super.setTargetIntensity(intensity);
-        if (lcType == LcOutputType.LIGHTPORT) {
+        if (portType == LcOutputType.LIGHTPORT) {
             sendIntensity(intensity);
             // update value and tell listeners
             notifyTargetIntensityChange(intensity);
@@ -214,7 +214,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
             }
 
             // see if there's a transition in use
-            if (getTransitionTime() > 0.0  &&  lcType != LcOutputType.LIGHTPORT) {
+            if (getTransitionTime() > 0.0  &&  portType != LcOutputType.LIGHTPORT) {
                 startTransition(intensity);
             } else {
                 // No transition in use, move immediately
@@ -253,7 +253,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
     @Override
     protected void sendIntensity(double intensity) {
         log.trace("sendIntensity: {}", intensity);
-        if (lcType == LcOutputType.LIGHTPORT) {
+        if (portType == LcOutputType.LIGHTPORT) {
             sendLcOutput( (int) (intensity * 100));
         }
         else if (isIntensityVariable()) {
@@ -271,7 +271,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
      */
     public void receiveIntensity(int portstat) {
         log.trace("receiveIntensity: {}", portstat);
-        if (lcType == LcOutputType.LIGHTPORT) {
+        if (portType == LcOutputType.LIGHTPORT) {
 //            notifyTargetIntensityChange( (double)portstat / 100);
             double intensity = 0;
             switch(portstat) {
@@ -343,9 +343,9 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
                 notifyStateChange(getState(), INCONSISTENT);
             }
             @Override
-            public void newLcConfigX(LcConfigX lcConfigX, LcOutputType lcType) {
-                this.portConfigx = lcConfigX;
-                this.lcType = lcType;
+            public void newLcConfigX(LcConfigX lcConfigX, LcOutputType _lcType) {
+                //this.portConfigx = lcConfigX;
+                portType = _lcType;
             }
         };
         tc.addMessageListener(messageHandler);        

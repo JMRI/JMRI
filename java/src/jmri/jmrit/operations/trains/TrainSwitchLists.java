@@ -20,6 +20,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.FileUtil;
 
 /**
@@ -185,9 +186,7 @@ public class TrainSwitchLists extends TrainCommon {
                             blockCarsByTrackNameTwoColumn(fileOut, train, carList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
                         }
                         // print horizontal line if there was work and enabled
-                        if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-                            printHorizontalLine(fileOut, !IS_MANIFEST);
-                        }
+                        printHorizontalLine3(fileOut, !IS_MANIFEST);
                     }
 
                     // done with work, now print summary for this location if we're done

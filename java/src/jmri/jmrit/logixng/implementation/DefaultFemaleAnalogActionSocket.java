@@ -4,10 +4,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
+import jmri.*;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.FemaleAnalogActionSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -24,13 +22,13 @@ public final class DefaultFemaleAnalogActionSocket
     public DefaultFemaleAnalogActionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleAnalogActionSocket;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Map<Category, List<Class<? extends Base>>> getConnectableClasses() {
@@ -62,5 +60,5 @@ public final class DefaultFemaleAnalogActionSocket
     public void disposeMe() {
         // Do nothing
     }
-    
+
 }

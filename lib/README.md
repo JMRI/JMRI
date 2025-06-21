@@ -114,7 +114,15 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.11.0
 - JMRI uses this for file selectors
 
-
+##### darklaf-*, jsvg-*, swing-dsl-*, swing-extensions-*
+ - from Maven Central, with version in file name
+ - These provide the DarkLaf look&feel package
+ - https://github.com/weisJ/darklaf
+ 
+##### swingx-core-1.6.5-1.jar   
+ - used by DarkLaf look&feel at runtime
+ - From https://repo1.maven.org/maven2/org/swinglabs/swingx/swingx-core/1.6.5-1/
+ 
 ##### jhall.jar
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
@@ -138,8 +146,8 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.8.5 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.5/openlcb-0.8.5.jar
-    with merged PR #287
-    with PR #288 from 2025-02-24
+    with merged PR #287, #288, #289
+    with PR #290
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -501,7 +509,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### PlantUML
 - plantuml.jar
     from plantuml.org
-    1.2023.1
+    plantuml-1.2025.2
 - umldoclet.jar
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases

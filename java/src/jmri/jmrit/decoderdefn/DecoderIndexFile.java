@@ -3,6 +3,7 @@ package jmri.jmrit.decoderdefn;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,9 +51,8 @@ import org.slf4j.LoggerFactory;
  * nmra_mfg_list.xml file, but still written to decoderIndex.xml when
  * one is created.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2019
+ * @author Bob Jacobsen Copyright (C) 2001, 2019, 2025
  * @see jmri.jmrit.decoderdefn.DecoderIndexCreateAction
- *
  */
 public class DecoderIndexFile extends XmlFile {
 
@@ -97,7 +97,19 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
-     * Get a List of decoders matching some information.
+     * Get a List of decoders matching (only) the programming mode.
+     *
+     * @param progMode  decoder programming mode as defined in a decoder's programming element
+     * @return a list, possibly empty, of matching decoders
+     */
+    @Nonnull
+    public List<DecoderFile> matchingDecoderList(String progMode) {
+        return (matchingDecoderList(null, null, null, null, null,
+                null, null, null, null, progMode));
+    }
+
+    /**
+     * Get a List of decoders matching basic characteristics.
      *
      * @param mfg              decoder manufacturer
      * @param family           decoder family
@@ -111,11 +123,12 @@ public class DecoderIndexFile extends XmlFile {
     public List<DecoderFile> matchingDecoderList(String mfg, String family,
             String decoderMfgID, String decoderVersionID, String decoderProductID,
             String model) {
-        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null, null, null));
+        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model,
+                null, null, null, null));
     }
 
     /**
-     * Get a List of decoders matching some information.
+     * Get a List of decoders matching basic characteristics + product ID etc.
      *
      * @param mfg              decoder manufacturer
      * @param family           decoder family
@@ -132,9 +145,34 @@ public class DecoderIndexFile extends XmlFile {
     public List<DecoderFile> matchingDecoderList(String mfg, String family,
             String decoderMfgID, String decoderVersionID,
             String decoderProductID, String model, String developerID, String manufacturerID, String productID) {
+        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model,
+                null, null, null, null));
+    }
+
+    /**
+     * Get a List of decoders matching basic characteristics + product ID etc. + programming mode.
+     *
+     * @param mfg              decoder manufacturer
+     * @param family           decoder family
+     * @param decoderMfgID     NMRA decoder manufacturer ID
+     * @param decoderVersionID decoder version ID
+     * @param decoderProductID decoder product ID
+     * @param model            decoder model
+     * @param developerID      developer ID number
+     * @param manufacturerID   manufacturerID number
+     * @param productID        productID number
+     * @param progMode         programming mode as defined in a decoder's programming element
+     * @return a list, possibly empty, of matching decoders
+     */
+    @Nonnull
+    public List<DecoderFile> matchingDecoderList(String mfg, String family,
+                                                 String decoderMfgID, String decoderVersionID,
+                                                 String decoderProductID, String model, String developerID,
+                                                 String manufacturerID, String productID, String progMode) {
         List<DecoderFile> l = new ArrayList<>();
         for (int i = 0; i < numDecoders(); i++) {
-            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, developerID, manufacturerID, productID)) {
+            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, developerID,
+                    manufacturerID, productID, progMode)) {
                 l.add(decoderList.get(i));
             }
         }
@@ -142,7 +180,7 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
-     * Get a JComboBox representing the choices that match some information.
+     * Get a JComboBox representing the choices that match basic characteristics.
      *
      * @param mfg              decoder manufacturer
      * @param family           decoder family
@@ -152,13 +190,14 @@ public class DecoderIndexFile extends XmlFile {
      * @param model            decoder model
      * @return a combo box populated with matching decoders
      */
-    public JComboBox<String> matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model) {
+    public JComboBox<String> matchingComboBox(String mfg, String family, String decoderMfgID, String decoderVersionID,
+                                              String decoderProductID, String model) {
         List<DecoderFile> l = matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model);
         return jComboBoxFromList(l);
     }
 
     /**
-     * Get a JComboBox made with the titles from a list of DecoderFile entries.
+     * Get a new JComboBox made with the titles from a list of DecoderFile.
      *
      * @param l list of decoders
      * @return a combo box populated with the list
@@ -168,7 +207,7 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
-     * Get a new ComboBoxModel made with the titles from a list of DecoderFile
+     * Get a new ComboBoxModel made with the titles from a list of DecoderFile.
      * entries.
      *
      * @param l list of decoders
@@ -176,8 +215,7 @@ public class DecoderIndexFile extends XmlFile {
      */
     public static javax.swing.ComboBoxModel<String> jComboBoxModelFromList(List<DecoderFile> l) {
         javax.swing.DefaultComboBoxModel<String> b = new javax.swing.DefaultComboBoxModel<>();
-        for (int i = 0; i < l.size(); i++) {
-            DecoderFile r = l.get(i);
+        for (DecoderFile r : l) {
             b.addElement(r.titleString());
         }
         return b;
@@ -215,11 +253,12 @@ public class DecoderIndexFile extends XmlFile {
      * @param developerID      developer ID number
      * @param manufacturerID   manufacturer ID number
      * @param productID        product ID number
+     * @param progMode         programming mode as defined in a decoder's programming element
      * @return true if entry at i matches the other parameters; false otherwise
      */
     public boolean checkEntry(int i, String mfgName, String family, String mfgID,
             String decoderVersionID, String decoderProductID, String model,
-            String developerID, String manufacturerID, String productID) {
+            String developerID, String manufacturerID, String productID, String progMode) {
         DecoderFile r = decoderList.get(i);
         if (mfgName != null && !mfgName.equals(r.getMfg())) {
             return false;
@@ -246,7 +285,7 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         if (developerID != null) {
-            // must have a developerID value that matches to consider this entry a match
+            // must have a (LocoNet SV2) developerID value that matches to consider this entry a match
             if (!developerID.equals(r.getDeveloperID())) {
                 // didn't match the getDeveloperID() value, so check the model developerID value
                 if (r.getModelElement().getAttribute("developerID") == null) {
@@ -259,7 +298,6 @@ public class DecoderIndexFile extends XmlFile {
             }
             log.debug("developerID match");
         }
-
 
         if (manufacturerID != null) {
             log.debug("checking manufactureriD {}, mfgID {}, modelElement[manufacturerID] {}",
@@ -283,7 +321,7 @@ public class DecoderIndexFile extends XmlFile {
         }
 
         if (productID != null) {
-            // must have a productID value that matches to consider this entry a match
+            // must have a (LocoNet SV2 or the Uhlenbrock LNCV protocol) productID value that matches to consider this entry a match
             if (!productID.equals(r.getProductID())) {
                 // didn't match the getProductID() value, so check the model productID value
                 if (r.getModelElement().getAttribute("productID") == null) {
@@ -296,6 +334,12 @@ public class DecoderIndexFile extends XmlFile {
             }
             log.debug("productID match");
         }
+
+        if (progMode != null) {
+            // must have a progMode value that matches to consider this entry a match
+            return r.isProgrammingMode(progMode); // simplified logic while this is the last if in method
+        }
+
         return true;
     }
 
@@ -311,10 +355,10 @@ public class DecoderIndexFile extends XmlFile {
      * updated; if it does, then forces the update.
      *
      * @return true is the index should be reloaded because it was updated
-     * @throws org.jdom2.JDOMException if unable to parse decoder index
-     * @throws java.io.IOException     if unable to read decoder index
+     * @throws JDOMException if unable to parse decoder index
+     * @throws IOException     if unable to read decoder index
      */
-    public static boolean updateIndexIfNeeded() throws org.jdom2.JDOMException, java.io.IOException {
+    public static boolean updateIndexIfNeeded() throws JDOMException, IOException {
         switch (FileUtil.findFiles(defaultDecoderIndexFilename(), ".").size()) {
             case 0:
                 log.debug("creating decoder index");
@@ -429,7 +473,7 @@ public class DecoderIndexFile extends XmlFile {
             log.error("Could not access decoder definition directory {}{}", XmlFile.xmlDir(), DecoderFile.fileLocation);
         }
         // copy the decoder entries to the final array
-        String[] sbox = al.toArray(new String[al.size()]);
+        String[] sbox = al.toArray(new String[0]);
 
         //the resulting array is now sorted on file-name to make it easier
         // for humans to read
@@ -452,7 +496,7 @@ public class DecoderIndexFile extends XmlFile {
             try {
                 index.writeFile(DECODER_INDEX_FILE_NAME,
                             InstanceManager.getDefault(DecoderIndexFile.class), sbox, null, null);
-            } catch (java.io.IOException ex) {
+            } catch (IOException ex) {
                 log.error("Error writing new decoder index file: {}", ex.getMessage());
             }
             return;
@@ -478,7 +522,7 @@ public class DecoderIndexFile extends XmlFile {
                 index.writeFile(DECODER_INDEX_FILE_NAME,
                             InstanceManager.getDefault(DecoderIndexFile.class), sbox, pane, pb);
             // catch all exceptions, so progress dialog will close
-            } catch (Exception e) {
+            } catch (IOException e) {
                 // TODO: show message in progress dialog?
                 log.error("Error writing new decoder index file: {}", e.getMessage());
             }
@@ -499,10 +543,10 @@ public class DecoderIndexFile extends XmlFile {
      * this does not clear any existing entries; reset the instance to do that.
      *
      * @param name the name of the decoder index file
-     * @throws org.jdom2.JDOMException if unable to parse to decoder index file
-     * @throws java.io.IOException     if unable to read decoder index file
+     * @throws JDOMException if unable to parse to decoder index file
+     * @throws IOException     if unable to read decoder index file
      */
-    void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
+    void readFile(String name) throws JDOMException, IOException {
         log.debug("readFile {}", name);
 
         // read file, find root
@@ -524,7 +568,7 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    void readMfgSection() throws org.jdom2.JDOMException, java.io.IOException {
+    void readMfgSection() throws JDOMException, IOException {
         // always reads the NMRA manufacturer file distributed with JMRI
         Element mfgList = rootFromName("nmra_mfg_list.xml");
 
@@ -545,12 +589,9 @@ public class DecoderIndexFile extends XmlFile {
             }
 
             List<Element> l = mfgList.getChildren(MANUFACTURER);
-            if (log.isDebugEnabled()) {
-                log.debug("readMfgSection sees {} children",l.size());
-            }
-            for (int i = 0; i < l.size(); i++) {
+            log.debug("readMfgSection sees {} children",l.size());
+            for (Element el : l) {
                 // handle each entry
-                Element el = l.get(i);
                 String mfg = el.getAttribute("mfg").getValue();
                 mMfgNameList.add(mfg);
                 Attribute attr = el.getAttribute(MFG_ID);
@@ -570,9 +611,8 @@ public class DecoderIndexFile extends XmlFile {
 
             List<Element> l = familyList.getChildren("family");
             log.trace("readFamilySection sees {} children", l.size());
-            for (int i = 0; i < l.size(); i++) {
+            for (Element el : l) {
                 // handle each entry
-                Element el = l.get(i);
                 readFamily(el);
             }
         } else {
@@ -598,6 +638,9 @@ public class DecoderIndexFile extends XmlFile {
             log.error("Did not find required mfg attribute, may not find proper manufacturer");
         }
 
+        // extract <programming> modes of a family's parent <decoder> element
+        String modes = ((attr = family.getAttribute("modes")) != null ? attr.getValue() : null);
+
         List<Element> l = family.getChildren("model");
         log.trace("readFamily sees {} children", l.size());
         Element modelElement;
@@ -619,14 +662,14 @@ public class DecoderIndexFile extends XmlFile {
                         (manufacturerID != null) ? manufacturerID : "-1",
                         (productID != null) ? productID : "-1",
                         -1, -1, modelElement,
-                        ParentReplacementFamilyName, ParentReplacementFamilyName); // numFns, numOuts, XML element equal
-        // to the first decoder
+                        ParentReplacementFamilyName, ParentReplacementFamilyName,
+                        modes); // numFns, numOuts, XML element equal
+        // add family model as the first decoder
         decoderList.add(vFamilyDecoderFile);
 
         // record each of the decoders
-        for (int i = 0; i < l.size(); i++) {
+        for (Element decoder : l) {
             // handle each entry by creating a DecoderFile object containing all it knows
-            Element decoder = l.get(i);
             String loVersID = ((attr = decoder.getAttribute(LOW_VERSION_ID)) != null ? attr.getValue() : parentLowVersID);
             String hiVersID = ((attr = decoder.getAttribute(HIGH_VERSION_ID)) != null ? attr.getValue() : parentHighVersID);
             String replacementModelName = ((attr = decoder.getAttribute("replacementModel")) != null ? attr.getValue() : null);
@@ -636,17 +679,17 @@ public class DecoderIndexFile extends XmlFile {
             String devId = ((attr = decoder.getAttribute("developerID")) != null ? attr.getValue() : "-1");
             String manufId = ((attr = decoder.getAttribute("manufacturerID")) != null ? attr.getValue() : "-1");
             String prodId = ((attr = decoder.getAttribute("productID")) != null ? attr.getValue() : "-1");
+
             DecoderFile df = new DecoderFile(mfg, mfgID,
                     ((attr = decoder.getAttribute("model")) != null ? attr.getValue() : null),
                     loVersID, hiVersID, familyName, filename, devId, manufId, prodId, numFns, numOuts, decoder,
-                    replacementModelName, replacementFamilyName);
+                    replacementModelName, replacementFamilyName, modes);
             // and store it
             decoderList.add(df);
             // if there are additional version numbers defined, handle them too
             List<Element> vcodes = decoder.getChildren("versionCV");
-            for (int j = 0; j < vcodes.size(); j++) {
+            for (Element vcv : vcodes) {
                 // for each versionCV element
-                Element vcv = vcodes.get(j);
                 String vLoVersID = ((attr = vcv.getAttribute(LOW_VERSION_ID)) != null ? attr.getValue() : loVersID);
                 String vHiVersID = ((attr = vcv.getAttribute(HIGH_VERSION_ID)) != null ? attr.getValue() : hiVersID);
                 df.setVersionRange(vLoVersID, vHiVersID);
@@ -655,18 +698,18 @@ public class DecoderIndexFile extends XmlFile {
     }
 
     /**
-     * Is target string in comma-delimited string
-     *
+     * Check if target string is in a comma-delimited string
+     * <p>
      * Example:
      *      findString = "47"
      *      inString = "1,4,53,97"
      *      return value is 'false'
-     *
+     * <p>
      * Example:
      *      findString = "47"
      *      inString = "1,31,47,51"
      *      return value is 'true'
-     *
+     * <p>
      * Example:
      *      findString = "47"
      *      inString = "47"
@@ -685,7 +728,7 @@ public class DecoderIndexFile extends XmlFile {
 
     /**
      * Build and write the decoder index file, based on a set of decoder files.
-     *
+     * <p>
      * This creates the full DOM object for the decoder index based on reading the
      * supplied decoder xml files. It then saves the decoder index out to a new file.
      *
@@ -694,13 +737,11 @@ public class DecoderIndexFile extends XmlFile {
      * @param files array of files to read for new index
      * @param pane optional JOptionPane to check for cancellation
      * @param pb optional JProgressBar to update during operations
-     * @throws java.io.IOException for errors writing the decoder index file
+     * @throws IOException for errors writing the decoder index file
      */
     public void writeFile(String name, DecoderIndexFile oldIndex,
-                          String[] files, JOptionPane pane, JProgressBar pb) throws java.io.IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("writeFile {}",name);
-        }
+                          String[] files, JOptionPane pane, JProgressBar pb) throws IOException {
+        log.debug("writeFile {}",name);
 
         // This is taken in large part from "Java and XML" page 368
         File file = new File(FileUtil.getUserFilesPath() + name);
@@ -776,10 +817,26 @@ public class DecoderIndexFile extends XmlFile {
                 // get <family> element and add the file name
                 Element droot = d.rootFromName(DecoderFile.fileLocation + fileName);
                 Element family = droot.getChild("decoder").getChild("family").clone();
+                // get decoder element's child programming and copy the mode children
+                Element prog = droot.getChild("decoder").getChild("programming");
+                if (prog != null) {
+                    List<Element> modes = prog.getChildren("mode");
+                    if (modes != null) {
+                        StringBuilder supportedModes = new StringBuilder();
+                        for (Element md : modes) { // typically only 1 mode element in a definition
+                            String modeName = md.getText(); // example: LOCONETLNCVMODE
+                            if (supportedModes.length() > 0) supportedModes.append(",");
+                            supportedModes.append(modeName);
+                        }
+                        if (supportedModes.length() > 0) {
+                            family.setAttribute("modes", supportedModes.toString());
+                        }
+                    }
+                }
                 family.setAttribute("file", fileName);
 
                 // drop the decoder implementation content
-                    // comment is kept so it displays
+                // comment is kept, so it displays
                 // don't remove "outputs" due to use by ESU function map pane
                 // family.removeChildren("output");
                 // family.removeChildren("functionlabels");
@@ -810,15 +867,12 @@ public class DecoderIndexFile extends XmlFile {
 
                 // and store to output
                 familyList.addContent(family);
-            } catch (org.jdom2.JDOMException exj) {
+            } catch (JDOMException exj) {
                 log.error("could not parse {}: {}", fileName, exj.getMessage());
-            } catch (java.io.FileNotFoundException exj) {
+            } catch (FileNotFoundException exj) {
                 log.error("could not read {}: {}", fileName, exj.getMessage());
             } catch (IOException exj) {
                 log.error("other exception while dealing with {}: {}", fileName, exj.getMessage());
-            } catch (Exception exq) {
-                log.error("exception reading {}", fileName, exq);
-                throw exq;
             }
         }
 
@@ -827,7 +881,11 @@ public class DecoderIndexFile extends XmlFile {
         index.addContent(familyList);
 
         log.debug("Writing decoderIndex");
-        writeXML(file, doc);
+        try {
+            writeXML(file, doc);
+        } catch (Exception e) {
+            log.error("Error writing file: {}", file, e);
+        }
 
         // force a read of the new file next time
         resetInstance();

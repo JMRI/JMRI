@@ -1,5 +1,5 @@
 import re
-
+import jmri
 from java.awt import BorderLayout, Dimension, FlowLayout
 from javax.swing import JEditorPane, JFrame, JPanel, JScrollPane
 from java.awt.event import WindowAdapter, WindowEvent
@@ -18,13 +18,18 @@ class Timetable:
         # print "creating window"
         self.createWindow(station)
 
-    def update_timetable(self, required_station, time, timetable):
+
+
+    def update_timetable(self, station_name, station_names_list, time, timetable):
 
         # print "required_station, time, timetable", required_station, time, timetable
         # print "required_station", required_station
 
         # print "update timetable"
-        html_table = self.get_html_table(time, required_station, timetable)
+        html_table = None
+        # for station in required_stations:
+        #     html_table += self.get_html_table(time, station, timetable)
+        html_table = self.get_html_table(time, station_name, station_names_list, timetable)
 
         # print "html_table", html_table
         html_content2 = self.html_content.replace("$time$", time).replace("$table$", html_table)
@@ -34,7 +39,7 @@ class Timetable:
         self.load_html(html_content2)
         # print "end update timetable"
 
-    def get_html_table(self, time, required_station, timetable):
+    def get_html_table(self, time, station_name, station_names_list, timetable):
 
         # a lot of heavy work here because the arrival and departure times have spaces
         # and to overcome this and sort by time we need to sort by the max of the
@@ -48,7 +53,7 @@ class Timetable:
         string = '''<tr>
             <th>$station_arrival_time$</th>
             <th>$station_departure_time$</th>
-            <th>$train$</th>
+            <th>$platform$</th>
             <th>$first_station$</th>
             <th>$last_station$</th>
             <th>$via$</th$>
@@ -63,7 +68,7 @@ class Timetable:
             <tr>
                 <th class="it">Arrival Time</th>
                 <th class="it">Departure Time</th>
-                <th class="it">Train</th>
+                <th class="it">Platform</th>
                 <th class="it">From</th>
                 <th class="it">Destination</th>
                 <th class="it">Via</th>
@@ -71,22 +76,16 @@ class Timetable:
         '''
 
         try:
-            html_table = html_table1.replace("$station$", required_station).replace("$time$", time)
+            html_table = html_table1.replace("$station$", station_name).replace("$time$", time)
+            # html_table = html_table1.replace("$station$", "fred").replace("$time$", time)
         except:
             html_table = html_table1.replace("$station$", "station not set 1").replace("$time$", time)
         timetable_list = []
         for timetable_entry in timetable:
-
-            # [train, station_name, station_departure_time, last_station, station_arrival_time, via] = timetable_entry
-            [train_name, station_name, station_arrival_time, station_departure_time, first_station, last_station, via] \
+            [train_name, station_name1, platform_name, station_arrival_time, station_departure_time, first_station, last_station, via] \
                 = timetable_entry
-            # print "[station_name, station_departure_time, last_station, last_station_arrival_time, via]", [station_name, station_departure_time, last_station, last_station_arrival_time, via]
-            if str(station_name) == required_station:
-                # print "train_name", train_name
-                # print "timetable_entry", timetable_entry
+            if str(station_name1) in station_names_list:
                 station_time = 0
-                # print "station_arrival_time", station_arrival_time
-                # print "station_departure_time", station_departure_time
                 sat = 0
                 sdt = 0
                 if station_arrival_time != "":
@@ -97,10 +96,10 @@ class Timetable:
                     [h, m] = station_departure_time.split(":")
                     sdt = str(int(h)*60 + int(m))
                 station_time = str(max(sat, sdt))
-                html_table_entry = string.replace("$station_name$", station_name) \
+                html_table_entry = string.replace("$station_name$", station_name1) \
                     .replace("$station_arrival_time$", station_arrival_time) \
                     .replace("$station_departure_time$", station_departure_time) \
-                    .replace("$train$", train_name) \
+                    .replace("$platform$", platform_name) \
                     .replace("$first_station$", first_station) \
                     .replace("$last_station$", last_station) \
                     .replace("$via$", via)
@@ -123,19 +122,7 @@ class Timetable:
         return html_table
 
     def myFunc(self, e):
-
         station_time = e['station_time']
-        # station_departure_time = e['station_departure_time']
-        # sat = 0
-        # sdt = 0
-        # if station_arrival_time != "":
-        #     [h, m] = station_arrival_time.split(":")
-        #     sat = int(h)*60 + int(m)
-        #
-        # if station_departure_time != "":
-        #     [h, m] = station_departure_time.split(":")
-        #     sdt = str(int(h)*60 + int(m))
-        # station_time = str(max(sat, sdt))
         return int(station_time)
 
     def createWindow(self, station):
@@ -143,11 +130,6 @@ class Timetable:
         # print "create window start"
         timetable_frame_gbl = MyFrame("Timetable")    #based on JFrame see definition below
         self.frame = timetable_frame_gbl
-        # Set the default close operation
-        # self.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE)
-        #
-        # # Add a window listener to handle the close event
-        # self.frame.addWindowListener(MyWindowAdapter())
 
         self.createUI(station)
         self.frame.setSize(900, 450)
@@ -155,10 +137,22 @@ class Timetable:
         self.frame.setVisible(True)
         # print "created window"
 
+        # Define a custom window listener for closing events
+        class CustomWindowListener(WindowAdapter):
+            def windowClosing(inner_self, event):
+                global run_local_timetable_gbl
+                # hide the window
+                # can be shown again by clicking show timetable in main menu and selecting show timetable option
+                run_local_timetable_gbl = False
+
+        # Add the custom window listener to the frame.
+        self.frame.addWindowListener(CustomWindowListener())
+        # Prevent the default close operation so that our custom behavior is applied.
+        self.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE)
+
     def hideWindow(self):
         if self.frame is not None:
-            # self.frame.setVisible(False)
-            self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
+            self.frame.setVisible(False)
 
     def showWindow(self):
         if self.frame != None:
@@ -179,7 +173,7 @@ class Timetable:
         #     print "about to get_html2"
         self.html_content = self.get_html()
         self.html_content = self.edit_html_station(station)
-        print "about to load html"
+        # print "about to load html"
         self.load_html(self.html_content)
         # print "loaded html"
         jScrollPane = JScrollPane(self.jEditorPane)

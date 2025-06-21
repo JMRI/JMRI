@@ -11,6 +11,18 @@
     .ctr {
         text-align: center;
     }
+
+    table {
+        border: 3px solid;
+    }
+
+    th {
+        border: 1px solid;
+    }
+
+    td {
+        border: 1px solid;
+    }
   </style>
 </head>
 <body>
@@ -45,9 +57,6 @@
                 <ul>
                   <li>
                     <a href="#LocoNetAddressing">LocoNet Device Addressing</a>
-                  </li>
-                  <li>
-                    <a href="#SE74link">Using the SE74 with JMRI</a>
                   </li>
                   <li>
                     <a href="#LocoNetTools">LocoNet Tools</a>
@@ -104,7 +113,7 @@
               </li>
 
               <li>
-                <a href="#loconetRoster">Configuring some LocoNet devices via "Roster" entries</a>
+                <a href="#locoNetRoster">Configuring some LocoNet devices via "Roster" entries</a>
               </li>
 
               <li>
@@ -162,6 +171,8 @@
 
         <li>DCS240 Advanced Command Station/Booster</li>
 
+        <li>DCS240+ Advanced Command Station/Booster</li>
+
         <li>
           <a href="Uhlenbrock.shtml">Intellibox: The Uhlenbrock Central Unit</a>
         </li>
@@ -218,10 +229,12 @@
         </li>
       </ul>
 
-      <p>(Note: The Digitrax DSC240 has a built-in adapter that's similar to the Digitrax PR3; if
+      <p>(Note: The Digitrax DSC240 has a built-in adapter that's similar to the Digitrax PR4; if
       you have a DCS240 and connect the computer via the DCS240's integrated USB interface, see
-      <a href="DCS240.shtml">this DCS240 page</a>. Similarly, the Digitrax DSC52 has a built-in
-      adapter that's similar to the Digitrax PR3; if you have a DCS52 and connect the computer via
+      <a href="DCS240.shtml">this DCS240 page</a>.  (Note that the DCS240+ is thought to be similar
+      to the DCS240, so those DCS240 comments should likely work for the DCS240+.)
+      Similarly, the Digitrax DSC52 has a built-in
+      adapter that's similar to the Digitrax PR4; if you have a DCS52 and connect the computer via
       the DCS52's integrated USB interface, see <a href="DCS52.shtml">this DCS52 page</a>.</p>
 
       <p>Generally, any of these can be used with any type of computer to communicate with any type
@@ -278,7 +291,7 @@
       <h2 id="ConnectingAdapter">Connecting</h2>
 
       <p>To connect your computer to a Digitrax DCC system, you need either a USB-equipped Command
-      station (DCS240 or DCS52), or a computer-to-LocoNet adapter device such as a <a title=
+      station (DCS240/DSC240+ or DCS52), or a computer-to-LocoNet adapter device such as a <a title=
       "RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-NG</a>, <a title=
       "Digitrax PR3 USB interface" href="PR3.shtml">PR3</a>, <a title="Digitrax PR4 USB interface"
       href="PR4.shtml">PR4</a>, <a title="RR-CirKits Serial interface" href=
@@ -292,16 +305,16 @@
       standalone programmer or as a LocoNet interface. Readback of decoder CVs is possible when
       using a programming track controlled by a PR3 or PR4 (in stand-alone programming mode) or
       when using a programming track controlled by a Chief, Zephyr, Advanced (DCS210) or Evolution
-      (DCS240) command station. The Empire Builder (DB150) command station does not allow Readback
+      (DCS240/DCS240+) command station. The Empire Builder (DB150) command station does not allow Readback
       of decoder CVs; users of the Empire Builder can add CV Readback capability by using a
       programming track connected to a PR3 or PR4 when operating in stand-alone programming
       mode.</p>
 
       <h3>Basic steps to connect to LocoNet</h3>
 
-      <p>If connecting to a DCS240 command station via its integrated USB port, see these
+      <p>If connecting to a DCS240/DCS240+ command station via its integrated USB port, see these
       instructions for configuring JMRI for <a href="DCS240.shtml#ConnectingDCS240">the
-      DCS240</a>.</p>
+      DCS240/DCS240+</a>.</p>
 
       <p>If connecting to a DCS52 command station via its integrated USB port, see these
       instructions for configuring JMRI for <a href="DCS52.shtml#ConnectingDCS52">the
@@ -408,7 +421,7 @@
             to probe DS52s, 64s,74s, BDL16x etc. for the current state of their sensors.</li>
 
             <li>Expanded Protocol(XP Slots) if set to "No" then JMRI will only use the original LocoNet
-            messages to control locomotives, but, slots greater than 120 in the DCS240 will not be accessed.
+            messages to control locomotives, but, slots greater than 120 in the DCS240/DCS240+ will not be accessed.
             If set to "Auto" JMRI will use the Expanded LocoNet protocol used by Evolution series Command
             Stations (DCS52,210,210+,240,240+) if available. If mixing older throttles, such as the UT4 or
             DT402 without the upgraded firmware, on a DCS240 or DCS240+, attempting to use an address first
@@ -416,9 +429,10 @@
             cleared.</li>
 
             <li>Packetizer Type lets you choose "Normal" (recommended) or "Strict". The strict packetizer places
-            each LocoNet message on the wire and does not send the next one until its "sees" the first one echoed back. It also waits
+            each LocoNet message on the wire and does not send the next one until its "sees" the first one
+            echoed back. It also waits
             for a response for those packets that are supposed to have a response. It will try 5 attempts
-            before giving up. It "backs off" sending more packets on recieving "Busy" messages.
+            before giving up. It "backs off" sending more packets on receiving "Busy" messages.
             It will help situations where packets appear to get lost during busy moments. When using "Strict"
             it is best to have the command station powered up with track power "On" before starting JMRI.</li>
 
@@ -464,9 +478,9 @@
         <li>DCS100/DCS200 - OpSw31="t" for faster turnout command handling (i.e. disables
         metering)</li>
 
-        <li>DCS240 - OpSw31="c" for faster turnout command handling (i.e. disables metering)</li>
+        <li>DCS240/DCS240+ - OpSw31="c" for faster turnout command handling (i.e. disables metering)</li>
 
-        <li>DCS210 - OpSw31="c" for faster turnout command handling(i.e. disables metering)</li>
+        <li>DCS210/DCS210+ - OpSw31="c" for faster turnout command handling(i.e. disables metering)</li>
 
         <li>DB150 - does not provide a way to control "metering"</li>
 
@@ -480,7 +494,7 @@
         "metering"</li>
       </ul>
 
-      <p>If you will have multiple connections, the "Defaults" tab in the "Preferences" panel may
+      <p>If you have multiple connections, the "Defaults" tab in the "Preferences" panel may
       be used to direct certain types of operations to different connections. A good example of
       this is a system with two PR3 connections, one in stand-alone programmer mode for programming
       decoder CVs, and the other for communication with a layout LocoNet and command station. In
@@ -496,9 +510,6 @@
       outputs on a DS54, or the individual block detection inputs on a BDL16x. For more information
       on how to find those addresses, see <a href="Addressing.shtml">this page</a>.</p>
 
-      <h3 id="SE74link">Using the SE74 with JMRI</h3>
-      <p>Several aspects of using the SE74 with JMRI are described <a href="SE74.shtml">here</a>. 
-                                                                      
       <h3 id="LocoNetTools">LocoNet Tools</h3>
 
       <p>JMRI provides a variety of LocoNet-related tools. These primarily allow configuration of
@@ -920,7 +931,7 @@
             </li>
 
             <li>
-              <a href="DCS240.shtml">Digitrax DCS240 via its integrated USB port</a>
+              <a href="DCS240.shtml">Digitrax DCS240/DCS240+ via its integrated USB port</a>
             </li>
           </ul>
         </li>
@@ -1070,22 +1081,38 @@
         </li>
       </ul>
 
-      <h3 id="loconetRoster">Configuring some LocoNet devices via "Roster" entries</h3>
+      <h3 id="locoNetRoster">Configuring LocoNet devices via "Roster" entries</h3>
 
       <p>Some LocoNet devices can be configured via JMRI a "roster" entry. Simply select the
       appropriate "decoder" name when creating a new roster entry. These include:</p>
 
       <ul>
-        <li>DCS100/DCS200/DCS50/DCS51/DCS52/DB150/DCS210/DCS240 (only when acting as a command
-        station)</li>
+        <li>DCS100/<wbr>DCS200/<wbr>DCS50/<wbr>DCS51/<wbr>DCS52/<wbr>DB150/
+            <wbr>DCS210/<wbr>DCS240 (probably DCS210+/DCS240+, too!) (only when acting as a
+          command
+              station)</li>
 
         <li>BDL16/BDL162/BDL168</li>
 
+        <li>BDL716</li>
+
         <li>DS64</li>
+
+        <li>DS74</li>
+
+        <li>DS78V</li>
 
         <li>PM4/PM42</li>
 
+        <li>PM74</li>
+
         <li>SE8C</li>
+
+        <li><a href="SE74.shtml">SE74</a></li>
+
+        <li>LocoIO (LNSV1) Modules</li>
+
+        <li>LNCV Modules</li>
       </ul>
 
       <p>Often, these "decoder" definitions have some limitations on which features can be
@@ -1094,10 +1121,10 @@
       window.</p>
 
       <p>Note that JMRI generally provides other (historical) tools which are able to configure the
-      same set of features via tools in the "LocoNet" menu. Any changes made to device
-      configuration using the historical tools will <strong>not</strong> be reflected in a roster
-      entry for the device. If you wish to keep the roster updated with any changes made via
-      historical tools or using other tools or processes, it will be necessary to manually update
+      same set of features via dedicated tools in the upper part of the "LocoNet" menu. Any changes
+      made to device configuration using the historical tools will <strong>not</strong> be reflected
+      in a roster entry for the device. If you wish to keep the roster updated with any changes made via
+      these legacy tools or using other tools or processes, it will be necessary to manually update
       the roster entry.</p>
 
       <h3 id="deviceBoardId">Programming Board ID (Board Address) for some Digitrax devices</h3>
@@ -1133,7 +1160,7 @@
       manual, and, on the right, the instructions when using JMRI. Similar instructions may be used
       to configure other the Board Address (Board ID) on other Digitrax devices.</p>
 
-      <table border="3">
+      <table>
         <tr>
           <th style="width: 6%">Step/th&gt;</th>
           <th style="width: 47%">Digitrax Instructions for changing BDL168 Board Address</th>
@@ -1295,31 +1322,6 @@
 
       <ul>
         <li>
-          <p>At this time, Digitrax "expanded" slots are not directly supported. This has several
-          implicaitons:</p>
-
-          <ul>
-            <li>The <a href=
-            "../../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Monitor Slots</a> tool
-            is only able to display information for "standard" slots. It is possible when using a
-            DCS240 that a loco can be shown as occupying a "standard" slot when it actually is
-            being controlled by an "extended" slot. When this occurs, the display will generallly
-            be "corrected" within a few minutes.
-            </li>
-
-            <li>JMRI can have difficulty acquiring and/or dispatching a loco when the loco has been
-            acquired into an "expanded" slot by a throttle with enabled "expanded" slot
-            capability.</li>
-          </ul>
-
-          <p>As such, many users find that disabling DCS240 "expanded" slot capability can improve
-          some aspects of JMRI "throttle" functionality, including WiThrottle Server
-          funcitonality.</p>
-
-          <p>Additional discussion may be found <a href="EnhancedSlots.shtml">here</a>.</p>
-        </li>
-
-        <li>
           <p>At this time, the Digitrax BXP88 and BXPA1 devices do not support a mechanism to allow
           JMRI to program individual device OpSw settings via LocoNet messaging.</p>
 
@@ -1345,7 +1347,7 @@
         manufacturer.</li>
 
         <li>The LocoNet "Command Station Configure" tool does not give access to OpSw settings for
-        OpSw 49 and above. This prevents the tool from accessing some OpSw settings on DCS240,
+        OpSw 49 and above. This prevents the tool from accessing some OpSw settings on DCS240, DCS240+,
         DCS210, and DCS52 command stations. JMRI's "<a href=
         "../../apps/DecoderPro/Roster.shtml">Roster</a>"-based command station configuration does
         not have this limitation. Both mechanisms are described in <a href=
@@ -1353,7 +1355,7 @@
         </li>
       </ul>
 
-      <h3 id="Support">Third Party/Support</h3>
+      <h3 id="Support">Support</h3>
 
       <ul>
         <li>For JMRI-specific questions, including questions about how JMRI and Digitrax hardware

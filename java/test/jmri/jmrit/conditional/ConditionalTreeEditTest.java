@@ -1,15 +1,14 @@
 package jmri.jmrit.conditional;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -30,9 +29,11 @@ public class ConditionalTreeEditTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void addConditionalTest() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new ConditionalTreeEdit("IX102");
+
+        ConditionalTreeEdit t = new ConditionalTreeEdit("IX102");
+        Assertions.assertNotNull(t);
 
         JFrameOperator editFrame = new JFrameOperator(Bundle.getMessage("TitleEditLogix"));  // NOI18N
         Assert.assertNotNull(editFrame);
@@ -79,9 +80,10 @@ public class ConditionalTreeEditTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void singlePickTest() {
         // Edit a conditional using a single pick list
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 setProperty("jmri.jmrit.beantable.LogixTableAction", "Selection Mode", "USESINGLE");  // NOI18N
         new ConditionalTreeEdit("IX102");
@@ -112,9 +114,9 @@ public class ConditionalTreeEditTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void comboBoxTest() {
         // Edit a conditional using the combo box option
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 setProperty("jmri.jmrit.beantable.LogixTableAction", "Selection Mode", "USECOMBO");  // NOI18N
         new ConditionalTreeEdit("IX102");
@@ -143,10 +145,10 @@ public class ConditionalTreeEditTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        CreateTestObjects.createTestObjects();
     }
 
     @AfterEach

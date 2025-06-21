@@ -1,7 +1,5 @@
 package jmri.jmrit.signalling;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -10,15 +8,14 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SignallingSourceFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            frame = new SignallingSourceFrame();
-        }
+        frame = new SignallingSourceFrame();
     }
 
     @AfterEach

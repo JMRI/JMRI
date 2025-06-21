@@ -431,6 +431,24 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals(789, (int) r.getAutomationIDList().get(2));
         Assert.assertEquals(3, r.getAutomationIDList().size());
         Assert.assertEquals("Monitor string", "AutomationIDs:[123, 456, 789]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jG 123 456 789");
+        Assert.assertTrue(r.isCurrentMaxesReply());
+        Assert.assertFalse(r.isCurrentValuesReply());
+        Assert.assertEquals(789, (int) r.getCurrentMaxesList().get(2));
+        Assert.assertEquals(3, r.getCurrentMaxesList().size());
+        Assert.assertEquals("Monitor string", "CurrentMaxes:[123, 456, 789]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jI 123 456 789");
+        Assert.assertTrue(r.isCurrentValuesReply());
+        Assert.assertFalse(r.isCurrentMaxesReply());
+        Assert.assertEquals(789, (int) r.getCurrentValuesList().get(2));
+        Assert.assertEquals(3, r.getCurrentValuesList().size());
+        Assert.assertEquals("Monitor string", "CurrentValues:[123, 456, 789]", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("jI -1 -1");
+        Assert.assertTrue(r.isCurrentValuesReply());
+        Assert.assertEquals(-1, (int) r.getCurrentValuesList().get(0));
+        Assert.assertEquals(-1, (int) r.getCurrentValuesList().get(1));
+        Assert.assertEquals(2, r.getCurrentValuesList().size());
+        Assert.assertEquals("Monitor string", "CurrentValues:[-1, -1]", r.toMonitorString());
         r = DCCppReply.parseDCCppReply("jC 222 4"); //time and rate
         Assert.assertTrue(r.isClockReply());
         Assert.assertEquals(222, r.getClockMinutesInt());
@@ -453,6 +471,10 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertFalse(r.isAutomationIDsReply());
         r = DCCppReply.parseDCCppReply("jA 123 toolong \"gooddescription\"");
         Assert.assertFalse(r.isAutomationIDReply());
+        r = DCCppReply.parseDCCppReply("jG 4998 4998 notint");        
+        Assert.assertFalse(r.isCurrentMaxesReply());
+        r = DCCppReply.parseDCCppReply("jI 123 456 notint");        
+        Assert.assertFalse(r.isCurrentValuesReply());
         r = DCCppReply.parseDCCppReply("jC 222 4 xx"); //time and rate
         Assert.assertFalse(r.isClockReply());
         r = DCCppReply.parseDCCppReply("jC x222 4 xx"); //time and rate
@@ -461,7 +483,9 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         //TrackManager
         r = DCCppReply.parseDCCppReply("= B PROG 123");
         Assert.assertTrue(r.isTrackManagerReply());
-        Assert.assertEquals("Monitor string", "TrackManager:= B PROG 123", r.toMonitorString());
+        Assert.assertEquals(r.getTrackManagerLetter(), 'B');
+        Assert.assertEquals(r.getTrackManagerMode(), "PROG");
+        Assert.assertEquals("Monitor string", "TrackManager Letter:B Mode:PROG", r.toMonitorString());
 
         //LCD message
         r = DCCppReply.parseDCCppReply("@ 0 12 \"this is a test lcd message 12345\"");
