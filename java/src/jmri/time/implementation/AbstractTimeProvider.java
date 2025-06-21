@@ -28,7 +28,7 @@ public abstract class AbstractTimeProvider extends AbstractNamedBean implements 
     @Override
     @Nonnull
     public String getBeanType() {
-        return Bundle.getMessage("BeanNameClock");
+        return Bundle.getMessage("BeanNameTimeProvider");
     }
 
     /** {@inheritDoc} */

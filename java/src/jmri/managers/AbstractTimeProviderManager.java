@@ -37,7 +37,7 @@ public abstract class AbstractTimeProviderManager extends AbstractManager<TimePr
     /** {@inheritDoc} */
     @Override
     public final String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNameClocks" : "BeanNameClock");
+        return Bundle.getMessage(plural ? "BeanNameTimeProviders" : "BeanNameTimeProvider");
     }
 
     @Override

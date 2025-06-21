@@ -162,7 +162,7 @@ public class TimeProviderTableAction extends AbstractTableAction<TimeProvider> {
         }
 
         // Add some entry pattern checking, before assembling sName and handing it to the memoryManager
-        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameClock"));
+        String statusMessage = Bundle.getMessage("ItemCreateFeedback", Bundle.getMessage("BeanNameTimeProvider"));
         String errorMessage = null;
         for (int x = 0; x < numberOfClock; x++) {
             if (uName != null && !uName.isEmpty()

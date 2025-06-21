@@ -49,7 +49,7 @@ public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
     @Override
     @Nonnull
     public final String getBeanTypeHandled(boolean plural) {
-        return Bundle.getMessage(plural ? "BeanNameClocks" : "BeanNameClock");
+        return Bundle.getMessage(plural ? "BeanNameTimeProviders" : "BeanNameTimeProvider");
     }
 
     /** {@inheritDoc} */
