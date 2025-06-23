@@ -616,7 +616,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
      */
     String simplifyFontname(String fontname, int style) {
         var loadAndStorePreferences = InstanceManager.getDefault(jmri.configurexml.LoadAndStorePreferences.class);
-        if (! loadAndStorePreferences.isExcludeFontExtensions() ) {
+        if (! loadAndStorePreferences.isExcludeFontExtensions() ) { 
+            log.error("Just for CI debugging - returning early from simplifyFontname with {}", fontname);
             return fontname;
         }
 
