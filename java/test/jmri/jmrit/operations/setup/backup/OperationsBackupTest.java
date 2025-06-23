@@ -48,6 +48,8 @@ import jmri.util.FileUtil;
  */
 public class OperationsBackupTest {
 
+    private String tempDirectoryName = "temp2";
+
     private File operationsRoot;
 
     public File getOperationsRoot() {
@@ -87,7 +89,7 @@ public class OperationsBackupTest {
         jmri.util.JUnitUtil.setUp();
 
         // set the file location to temp (in the root of the build directory).
-        OperationsSetupXml.setFileLocation("temp" + File.separator);
+        OperationsSetupXml.setFileLocation(tempDirectoryName + File.separator);
 
         // Set the static Operations root directory used for tests
         OperationsXml.setOperationsDirectoryName("operations" + File.separator
@@ -119,7 +121,7 @@ public class OperationsBackupTest {
         // + regularBackupSetFileNames[i];
         // }
         // set the file location to temp (in the root of the build directory).
-        OperationsSetupXml.setFileLocation("temp" + File.separator);
+        OperationsSetupXml.setFileLocation(tempDirectoryName + File.separator);
 
         // Repoint OperationsSetupXml to JUnitTest subdirectory
         String tempstring = OperationsSetupXml.getOperationsDirectoryName();
@@ -134,26 +136,10 @@ public class OperationsBackupTest {
         InstanceManager.getDefault(LocationManagerXml.class).setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
         InstanceManager.getDefault(TrainManagerXml.class).setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
-        FileUtil.createDirectory("temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName());
+        FileUtil.createDirectory(tempDirectoryName + File.separator + OperationsSetupXml.getOperationsDirectoryName());
 
         // Delete any existing auto or default backup sets
-        if (autoBackupRoot.exists()) {
-            for (File f : autoBackupRoot.listFiles()) {
-                // Delete directories assuming they are backup sets
-                if (f.isDirectory()) {
-                    deleteDirectoryAndFiles(f);
-                }
-            }
-        }
-
-        if (defaultBackupRoot.exists()) {
-            for (File f : defaultBackupRoot.listFiles()) {
-                // Delete directories assuming they are backup sets
-                if (f.isDirectory()) {
-                    deleteDirectoryAndFiles(f);
-                }
-            }
-        }
+        deleteBackupSets();
 
         // Make sure we have a fresh set of file before each test.
         // Clean up our test files, just to be safe.
@@ -164,6 +150,10 @@ public class OperationsBackupTest {
     @AfterEach
     public void tearDown() {
         deleteTestFiles();
+        deleteBackupSets();
+        deleteDirectoryAndFiles(operationsRoot);
+        // delete temp directory
+        deleteDirectoryAndFiles(new File(OperationsXml.getFileLocation()));
         jmri.util.JUnitUtil.tearDown();
     }
 
@@ -218,6 +208,26 @@ public class OperationsBackupTest {
         }
     }
 
+    private void deleteBackupSets() {
+        if (autoBackupRoot.exists()) {
+            for (File f : autoBackupRoot.listFiles()) {
+                // Delete directories assuming they are backup sets
+                if (f.isDirectory()) {
+                    deleteDirectoryAndFiles(f);
+                }
+            }
+        }
+
+        if (defaultBackupRoot.exists()) {
+            for (File f : defaultBackupRoot.listFiles()) {
+                // Delete directories assuming they are backup sets
+                if (f.isDirectory()) {
+                    deleteDirectoryAndFiles(f);
+                }
+            }
+        }
+    }
+
     private void deleteDirectoryAndFiles(File dir) {
         // Deletes all of the files in a directory, and then the directory
         // itself.
@@ -229,7 +239,13 @@ public class OperationsBackupTest {
                 assertTrue(f.delete());
             }
         }
-
+        // now delete directories
+        for (File d : dir.listFiles()) {
+            for (File f : d.listFiles()) {
+                assertTrue(f.delete());
+            }
+            assertTrue(d.delete());
+        }
         assertTrue(dir.delete());
     }
 
@@ -452,6 +468,8 @@ public class OperationsBackupTest {
 
         // Check that they got there
         verifyBackupSetAgainst(operationsRoot, "", dir, "");
+
+        deleteDirectoryAndFiles(dir);
     }
 
     // Comment out for now until I can learn what constitutes an invalid
@@ -549,7 +567,7 @@ public class OperationsBackupTest {
 
         //String usersDir = FileUtil.getUserFilesPath();
         // we're resetting the root directory used to temp
-        String usersDir = "temp" + File.separator;
+        String usersDir = tempDirectoryName + File.separator;
         String opsDirName = OperationsXml.getOperationsDirectoryName();
         File opsRoot = new File(usersDir, opsDirName);
 
@@ -734,7 +752,7 @@ public class OperationsBackupTest {
 
         // String usersDir = FileUtil.getUserFilesPath();
         // we're resetting the root directory used to temp
-        String usersDir = "temp" + File.separator;
+        String usersDir = tempDirectoryName + File.separator;
         String opsDirName = OperationsXml.getOperationsDirectoryName();
         File opsRoot = new File(usersDir, opsDirName);
 

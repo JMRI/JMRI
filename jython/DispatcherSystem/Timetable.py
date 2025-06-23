@@ -18,6 +18,8 @@ class Timetable:
         # print "creating window"
         self.createWindow(station)
 
+
+
     def update_timetable(self, station_name, station_names_list, time, timetable):
 
         # print "required_station, time, timetable", required_station, time, timetable
@@ -80,16 +82,10 @@ class Timetable:
             html_table = html_table1.replace("$station$", "station not set 1").replace("$time$", time)
         timetable_list = []
         for timetable_entry in timetable:
-
-            # [train, station_name, station_departure_time, last_station, station_arrival_time, via] = timetable_entry
             [train_name, station_name1, platform_name, station_arrival_time, station_departure_time, first_station, last_station, via] \
                 = timetable_entry
             if str(station_name1) in station_names_list:
-                # print "train_name", train_name
-                # print "timetable_entry", timetable_entry
                 station_time = 0
-                # print "station_arrival_time", station_arrival_time
-                # print "station_departure_time", station_departure_time
                 sat = 0
                 sdt = 0
                 if station_arrival_time != "":
@@ -126,19 +122,7 @@ class Timetable:
         return html_table
 
     def myFunc(self, e):
-
         station_time = e['station_time']
-        # station_departure_time = e['station_departure_time']
-        # sat = 0
-        # sdt = 0
-        # if station_arrival_time != "":
-        #     [h, m] = station_arrival_time.split(":")
-        #     sat = int(h)*60 + int(m)
-        #
-        # if station_departure_time != "":
-        #     [h, m] = station_departure_time.split(":")
-        #     sdt = str(int(h)*60 + int(m))
-        # station_time = str(max(sat, sdt))
         return int(station_time)
 
     def createWindow(self, station):
@@ -146,11 +130,6 @@ class Timetable:
         # print "create window start"
         timetable_frame_gbl = MyFrame("Timetable")    #based on JFrame see definition below
         self.frame = timetable_frame_gbl
-        # Set the default close operation
-        # self.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE)
-        #
-        # # Add a window listener to handle the close event
-        # self.frame.addWindowListener(MyWindowAdapter())
 
         self.createUI(station)
         self.frame.setSize(900, 450)
@@ -158,9 +137,22 @@ class Timetable:
         self.frame.setVisible(True)
         # print "created window"
 
+        # Define a custom window listener for closing events
+        class CustomWindowListener(WindowAdapter):
+            def windowClosing(inner_self, event):
+                global run_local_timetable_gbl
+                # hide the window
+                # can be shown again by clicking show timetable in main menu and selecting show timetable option
+                run_local_timetable_gbl = False
+
+        # Add the custom window listener to the frame.
+        self.frame.addWindowListener(CustomWindowListener())
+        # Prevent the default close operation so that our custom behavior is applied.
+        self.frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE)
+
     def hideWindow(self):
         if self.frame is not None:
-            self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING))
+            self.frame.setVisible(False)
 
     def showWindow(self):
         if self.frame != None:

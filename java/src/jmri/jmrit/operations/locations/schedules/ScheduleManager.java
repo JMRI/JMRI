@@ -76,7 +76,7 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
      */
     public Schedule newSchedule(String name) {
         Schedule schedule = getScheduleByName(name);
-        if (schedule == null) {
+        if (schedule == null && !name.isBlank()) {
             _id++;
             schedule = new Schedule(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_scheduleHashTable.size());

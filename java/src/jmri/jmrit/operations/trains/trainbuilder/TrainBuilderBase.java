@@ -2444,7 +2444,10 @@ public class TrainBuilderBase extends TrainCommon {
                 if (length > destTrack.getAvailableTrackSpace() - reservedReturned) {
                     if (printMsg) {
                         addLine(_buildReport, SEVEN,
-                                Bundle.getMessage("buildWarnTrainTiming", car.toString(), _train.getName()));
+                                Bundle.getMessage("buildWarnTrainTiming", car.toString(), destTrack.getTrackTypeName(),
+                                        destTrack.getLocation().getName(), destTrack.getName(), _train.getName(),
+                                        destTrack.getAvailableTrackSpace() - reservedReturned,
+                                        Setup.getLengthUnit().toLowerCase()));
                     }
                     return TIMING;
                 }

@@ -582,7 +582,7 @@ public class LayoutEditorToolsTest {
         JUnitUtil.initInternalSignalHeadManager();
 
         layoutEditor = new LayoutEditor();
-        layoutEditor.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> layoutEditor.setVisible(true) );
 
         let = layoutEditor.getLETools();
 
