@@ -125,7 +125,7 @@
         <dt>enableIncludes<span class="since">since YAAT 3.4</span></dt>
 
         <dd>
-          Set to True to enable the @includes command.  See <a href="#includes">Includes</a>.
+          Set to True to enable the @includes statement.  See <a href="#includes">Includes</a>.
         </dd>
       </dl>
 
@@ -437,10 +437,11 @@
       <h3 id="includes">Includes<span class="since">since YAAT 3.4</span></h3>
 
       <p>The <strong>Includes</strong> feature inserts blocks of YAAT code while a program file is
-      being loaded.  The included files are located in the <strong>includes</strong> sub-directory
-      within the <strong>yaat</strong> directory.  The <strong>@include some file name.txt</strong>
-      line is replaced by the YAAT text located in the indicated file name. The included file cannot
-      have includes.</p>
+      being loaded.  This is enabled by setting <strong>enableIncludes</strong> to <strong>True</strong>
+      in the <strong>config.txt</strong> global settings file.  The included files are located in
+      the <strong>includes</strong> sub-directory within the <strong>yaat</strong> directory.  The
+      <strong>@include some file name.txt</strong> line is replaced by the YAAT text located in the
+      indicated file name. The included file cannot have includes.</p>
 
       <p>Here is an example.</p>
       <pre>
