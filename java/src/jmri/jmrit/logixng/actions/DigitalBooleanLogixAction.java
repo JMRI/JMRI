@@ -59,8 +59,8 @@ public class DigitalBooleanLogixAction extends AbstractDigitalBooleanAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /** {@inheritDoc} */

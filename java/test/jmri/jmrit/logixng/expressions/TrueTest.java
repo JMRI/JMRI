@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.LogixNG_Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -134,7 +134,7 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.OTHER == _base.getCategory());
     }
 
     @Test
@@ -161,7 +161,7 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.COMMON;
+        _category = LogixNG_Category.COMMON;
         _isExternal = false;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N

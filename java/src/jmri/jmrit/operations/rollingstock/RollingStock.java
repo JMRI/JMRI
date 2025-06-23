@@ -68,6 +68,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected Train _lastTrain = null; // the last train moving this rs
     protected int _blocking = DEFAULT_BLOCKING_ORDER;
     protected String _pickupTime = NONE;
+    protected String _setoutTime = NONE;
 
     protected IdTag _tag = null;
     protected PropertyChangeListener _tagListener = null;
@@ -480,7 +481,12 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                         oldLocation.deletePickupRS();
                         oldTrack.deletePickupRS(this);
                         // don't update rs's previous location if just re-staging
-                        if (getTrain() != null && getTrain().getRoute() != null && getTrain().getRoute().size() > 2) {
+                        if (!oldLocation.isStaging() ||
+                                location == null ||
+                                !location.isStaging() ||
+                                getTrain() != null &&
+                                        getTrain().getRoute() != null &&
+                                        getTrain().getRoute().size() > 2) {
                             setLastLocationId(oldLocation.getId());
                             setLastTrackId(oldTrack.getId());
                         }
@@ -537,7 +543,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *         acceptable, or "length" if the rolling stock length didn't fit.
      */
     public String setDestination(Location destination, Track track) {
-        return setDestination(destination, track, false);
+        return setDestination(destination, track, !RollingStock.FORCE);
     }
 
     /**
@@ -1150,7 +1156,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @param date yyyy/MM/dd HH:mm:ss, MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa,
      *             or MM/dd/yyyy HH:mm
      */
-    private void setLastDate(String date) {
+    public void setLastDate(String date) {
         Date d = TrainCommon.convertStringToDate(date);
         if (d != null) {
             _lastDate = d;
@@ -1300,6 +1306,19 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return NONE;
     }
 
+    public void setSetoutTime(String time) {
+        String old = _setoutTime;
+        _setoutTime = time;
+        setDirtyAndFirePropertyChange("Setout Time Changed", old, time); // NOI18N
+    }
+
+    public String getSetoutTime() {
+        if (getTrain() != null) {
+            return _setoutTime;
+        }
+        return NONE;
+    }
+
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
         if (current == getRouteLocation()) {
             setLastDate(java.util.Calendar.getInstance().getTime());
@@ -1405,7 +1424,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if ((a = e.getAttribute(Xml.SEC_DESTINATION_ID)) != null && destination != null) {
             track = destination.getTrackById(a.getValue());
         }
-        setDestination(destination, track, true); // force destination
+        setDestination(destination, track, RollingStock.FORCE); // force destination
 
         if ((a = e.getAttribute(Xml.DIVISION_ID)) != null) {
             _division = InstanceManager.getDefault(DivisionManager.class).getDivisionById(a.getValue());
@@ -1472,6 +1491,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         if ((a = e.getAttribute(Xml.PICKUP_TIME)) != null) {
             _pickupTime = a.getValue();
+        }
+        if ((a = e.getAttribute(Xml.SETOUT_TIME)) != null) {
+            _setoutTime = a.getValue();
         }
         if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
             try {
@@ -1570,6 +1592,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         if (!getPickupTime().equals(NONE)) {
             e.setAttribute(Xml.PICKUP_TIME, getPickupTime());
+        }
+        if (!getSetoutTime().equals(NONE)) {
+            e.setAttribute(Xml.SETOUT_TIME, getSetoutTime());
         }
         if (getBlocking() != 0) {
             e.setAttribute(Xml.BLOCKING, Integer.toString(getBlocking()));

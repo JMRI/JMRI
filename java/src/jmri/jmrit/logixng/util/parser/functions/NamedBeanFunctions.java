@@ -35,6 +35,7 @@ public class NamedBeanFunctions implements FunctionFactory {
         addReadMemoryFunction(functionClasses);
         addEvaluateMemoryFunction(functionClasses);
         addWriteMemoryFunction(functionClasses);
+        addEvaluateReferenceFunction(functionClasses);
 
         return functionClasses;
     }
@@ -144,6 +145,31 @@ public class NamedBeanFunctions implements FunctionFactory {
 
                 Object value = parameterList.get(1).calculate(symbolTable);
                 m.setValue(value);
+
+                return value;
+            }
+        });
+    }
+
+    private void addEvaluateReferenceFunction(Set<Function> functionClasses) {
+        functionClasses.add(new AbstractFunction(this, "evaluateReference", Bundle.getMessage("NamedBean.evaluateReference_Descr")) {
+            @Override
+            public Object calculate(SymbolTable symbolTable, List<ExpressionNode> parameterList)
+                    throws JmriException {
+
+                if (parameterList.size() != 1) {
+                    throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
+                }
+
+                Object value = parameterList.get(0).calculate(symbolTable);
+                if (value == null) return null;
+
+                String s = TypeConversionUtil.convertToString(value, false);
+                if (s.isEmpty()) return null;
+
+                if (ReferenceUtil.isReference(s)) {
+                    return ReferenceUtil.getReference(symbolTable, s);
+                }
 
                 return value;
             }

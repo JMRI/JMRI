@@ -546,7 +546,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      */
     public List<T> getList(Train train) {
         List<T> out = new ArrayList<>();
-        _hashTable.values().stream().filter((rs) -> {
+        getList().stream().filter((rs) -> {
             return rs.getTrain() == train;
         }).forEachOrdered((rs) -> {
             out.add(rs);
@@ -562,7 +562,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      */
     public List<T> getList(Location location) {
         List<T> out = new ArrayList<>();
-        _hashTable.values().stream().filter((rs) -> {
+        getList().stream().filter((rs) -> {
             return rs.getLocation() == location;
         }).forEachOrdered((rs) -> {
             out.add(rs);
@@ -578,7 +578,7 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
      */
     public List<T> getList(Track track) {
         List<T> out = new ArrayList<>();
-        _hashTable.values().stream().filter((rs) -> {
+        getList().stream().filter((rs) -> {
             return rs.getTrack() == track;
         }).forEachOrdered((rs) -> {
             out.add(rs);

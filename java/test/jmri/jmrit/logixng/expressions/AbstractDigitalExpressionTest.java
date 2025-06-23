@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.FakeParent;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;

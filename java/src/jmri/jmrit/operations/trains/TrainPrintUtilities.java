@@ -135,7 +135,7 @@ public class TrainPrintUtilities extends TrainCommon {
                     } else if (line.contains(TEXT_COLOR_END)) {
                         printingColor = false;
                         line = getTextColorString(line);
-                    } else if (!line.startsWith(TAB) && !printingColor) {
+                    } else if (!printingColor) {
                         color = null;
                     }
 
@@ -153,7 +153,7 @@ public class TrainPrintUtilities extends TrainCommon {
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist", e);
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException e) {
             log.warn("Exception printing: {}", e.getLocalizedMessage());
         }

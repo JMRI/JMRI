@@ -38,6 +38,10 @@
         </li>
 
         <li>
+          <a href="#LoadStore">Load and store</a>
+        </li>
+
+        <li>
           <a href="#Shutdown">Shutdown</a>
         </li>
 
@@ -279,6 +283,20 @@
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h2 id="LoadStore">Load and store <span class="since">since 5.11.7</span></h2>
+
+      <div>
+
+        <p>When the layout configuration data is stored, the new xml file includes several items
+        that can have different values with each store.  When a version control system is used to
+        manage the files, such as Git, conflicts can occur.  Select the items to be excluded.</p>
+
+        <div style="margin-left: 2em">
+          <a href="images/PrefsLoadStore.png"><img src="images/PrefsLoadStore.png" alt="store exclusions"></a>
+        </div>
+
+      </div>
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
       <h2 id="Shutdown">Shutdown<span class="since">since 5.1.1</span></h2>
 
@@ -309,8 +327,11 @@
         </div>
 
         <p>The default is to show the store request dialog and if <strong>Yes</strong> is selected,
-        the actual store dialog will be displayed.  The <strong>Skip</strong> option can be selected
-        to go directly to the store dialog.</p>
+        the actual store dialog will be displayed.  If <strong>No</strong> is selected, the store
+        dialog is skipped and the shutdown continues.  If <strong>Cancel</strong> is selected, the
+        store dialog is skipped, and the shutdown is also cancelled.</p>
+
+        <p>The <strong>Skip</strong> option can be selected to go directly to the store dialog.</p>
 
         <h4>Ignore Options<span class="since">since 5.5.5</span></h4>
 
@@ -358,7 +379,7 @@
               application.</li>
 
               <li>DarkLaf HC &mdash; a high-contrast dark mode (white on black) style
-              
+
               <li>Nimbus &mdash; An alternate style, most use when using a screen reader.</li>
 
             </ul>
@@ -856,7 +877,7 @@
           leave the Roster Speed Profiles unchanged.</li>
 
           <li><strong>Prompt Merges</strong> - At shutdown at dialog is presented where you may
-          choose which speed profiles shoud be merged and which discarded. The dialog allows you to
+          choose which speed profiles should be merged and which discarded. The dialog allows you to
           view the profiles for each address. Displayed are: the current <strong>Roster Speed
           Profile</strong>, the potential <strong>Merged Speed Profile</strong> and the
           <strong>Session Speed Profile</strong>. (default)</li>

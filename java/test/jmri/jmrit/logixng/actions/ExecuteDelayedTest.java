@@ -92,7 +92,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.COMMON == _base.getCategory());
     }
 
     @Test
@@ -218,7 +218,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.OTHER;
+        _category = LogixNG_Category.OTHER;
         _isExternal = false;
 
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N

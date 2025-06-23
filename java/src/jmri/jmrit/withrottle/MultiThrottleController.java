@@ -4,8 +4,7 @@ import java.beans.PropertyChangeEvent;
 
 import jmri.*;
 import jmri.jmrit.roster.RosterEntry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.throttle.ThrottlesPreferences;
 
 /**
  * @author Brett Hoffman Copyright (C) 2011
@@ -254,6 +253,7 @@ public class MultiThrottleController extends ThrottleController {
      */
     @Override
     public void notifyDecisionRequired(LocoAddress address, DecisionType question) {
+        log.debug("Hardware needs a {} decision for {}", question, address);
         if ( question == DecisionType.STEAL ){
             if (isStealAddress) {
                 //  Address is now staged in ThrottleManager and has been requested as a steal
@@ -266,9 +266,18 @@ public class MultiThrottleController extends ThrottleController {
                 notifyFailedThrottleRequest(address, "Steal Required");
             }
         }
-        else if ( question == DecisionType.STEAL_OR_SHARE ){ // using the same process as a Steal
+        else if ( question == DecisionType.STEAL_OR_SHARE ){ 
+            if ( InstanceManager.getDefault(ThrottlesPreferences.class).isSilentShare() ){
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
+                return;
+            }
+            if ( InstanceManager.getDefault(ThrottlesPreferences.class).isSilentSteal()){
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+                return;
+            }
+            // using the same process as a Steal as we cannot ask a Share question
             if (isStealAddress) {
-                //  Address is now staged in ThrottleManager and has been requested as a steal
+                //  Address is now staged in ThrottleManager and has been requested as a steal OR share.
                 //  Complete the process
                 InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL);
                 isStealAddress = false;
@@ -278,11 +287,15 @@ public class MultiThrottleController extends ThrottleController {
                 notifyFailedThrottleRequest(address, "Steal Required");
             }
         }
-        else { // if encountered likely to be DecisionType.SHARE
-            log.info("{} question not supported by WiThrottle.",question );
+        else if ( question == DecisionType.SHARE ){
+            if ( InstanceManager.getDefault(ThrottlesPreferences.class).isSilentShare() ){
+                InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.SHARE );
+                return;
+            }
+            log.info("Share? question not supported by WiThrottle.");
+            log.info("Enable silent sharing in main Throttle preferences to auto-share sessions.");
         }
-        
-        
+
     }
     
     /**
@@ -293,7 +306,7 @@ public class MultiThrottleController extends ThrottleController {
     @Override
     protected void setAddress(int number, boolean isLong) {
         if(isStealAddress
-                || jmri.InstanceManager.throttleManagerInstance().getThrottleUsageCount(number, isLong) == 0 
+                || InstanceManager.throttleManagerInstance().getThrottleUsageCount(number, isLong) == 0 
                 || ! InstanceManager.getDefault(WiThrottlePreferences.class).isExclusiveUseOfAddress()) {
             super.setAddress(number, isLong);
         }
@@ -326,6 +339,6 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MultiThrottleController.class);
 
 }

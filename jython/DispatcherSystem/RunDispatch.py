@@ -133,7 +133,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         global stored_simulate, glb_reset_all_trains
         opt1= "keep as is"
         opt2 = "reset all trains"
-        res = OptionDialog().customQuestionMessage2str("reset positions of trains?", "", opt1, opt2)
+        res = OptionDialog().customQuestionMessage2str("reset positions of trains?", "", opt2, opt1)
         # store the state of the simulate button
         stored_simulate = sensors.getSensor("simulateSensor").getKnownState()
         if res == opt2:
@@ -148,12 +148,13 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "self.stop_all_threads()"
             self.remove_all_trains_from_trains_allocated()
             glb_reset_all_trains = True
+            # print "set glb_reset_all_trains", glb_reset_all_trains
         else:
             self.delete_active_transits()
             # print "self.delete_active_transits()"
-        self.stop_all_threads()
-        # print "self.stop_all_threads()"
-        glb_reset_all_trains = False
+            self.stop_all_threads()
+            # print "self.stop_all_threads()"
+            glb_reset_all_trains = False
 
     def stop_via_table(self):
         global CreateAndShowGUI3_frame
@@ -340,8 +341,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def remove_train_values(self):
         for block in blocks.getNamedBeanSet():
-            if block.getValue() != None:
-                block.setValue(None)
+            block.setValue(None)
 
 # End of class StopMaster
 

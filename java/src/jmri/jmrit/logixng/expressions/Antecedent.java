@@ -87,8 +87,8 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
     
     /** {@inheritDoc} */

@@ -22,7 +22,7 @@ public class Application {
 
     private static String name = null;
     private static String logo = "resources/logo.gif";
-    private static String URL = "http://jmri.org";
+    private static String URL = "https://jmri.org";
 
     /**
      * Return the current JMRI application name.
@@ -91,7 +91,7 @@ public class Application {
      */
     public static void setURL(String URL) {
         if (URL == null) {
-            URL = "http://jmri.org";
+            URL = "https://jmri.org";
         }
         Application.URL = URL;
     }

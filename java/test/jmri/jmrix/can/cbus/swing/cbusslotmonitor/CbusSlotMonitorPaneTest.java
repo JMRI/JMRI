@@ -7,6 +7,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -24,12 +25,12 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     public void testTableUpdates() {
-        
+
         CbusSlotMonitorPane smPanel = new CbusSlotMonitorPane();
         smPanel.initComponents(memo);
-        
+
         Assert.assertNotNull("exists",smPanel);
-        
+
         jmri.util.JmriJFrame f = new jmri.util.JmriJFrame();
         f.add(smPanel);
         f.setTitle(smPanel.getTitle());
@@ -43,9 +44,11 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
             bar.add(menu);
         }
         f.setJMenuBar(bar);
-        
-        f.pack();
-        f.setVisible(true);
+
+        ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
         
         Assertions.assertNotNull(tcis);
         CanReply r = new CanReply();
@@ -54,16 +57,16 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         r.setElement(0, CbusConstants.CBUS_RLOC); 
         r.setElement(1, 0x00);
         r.setElement(2, 0x03);
-        
+
         // send the CanReply to the SlotMon Data Model
         smPanel.slotModel.reply(r);
-        
+
         JFrameOperator jfo = new JFrameOperator(f);
-        
+
         JTableOperator tbl = new JTableOperator(jfo, 0);
         tbl.waitCell("",0,0); // session null in column 1
         tbl.waitCell("3",0,1); // loco id in col 2
-        
+
         CanReply ra = new CanReply();
         ra.setHeader(tcis.getCanid());
         ra.setNumDataElements(8);
@@ -76,13 +79,13 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         ra.setElement(6, 0x7b);
         ra.setElement(7, 0x00);
         smPanel.slotModel.reply(ra);
-        
+
         tbl.waitCell("1",0,0); // session 1 in column 1
         tbl.waitCell("3",0,1); // loco id in col 2
         tbl.waitCell("38",0,3); // speed in col 4
         tbl.waitCell(Bundle.getMessage("FWD"),0,4); // direction in col 5
         tbl.waitCell("2 5 6 8",0,5); // functions in col 6
-        
+
         JMenuBarOperator mainbar = new JMenuBarOperator(jfo);
         mainbar.pushMenu(Bundle.getMessage("SessCol")); // stops at top level
         JMenuOperator jmo = new JMenuOperator(mainbar, Bundle.getMessage("SessCol"));
@@ -90,14 +93,12 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
         JMenuItemOperator jmio = new JMenuItemOperator(
             new JPopupMenuOperator(jpm),Bundle.getMessage("Long")); // Long DCC Address
         jmio.push();
-        
+
         tbl.waitCell("38",0,4); // Now speed in col 5
-        
-        // jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
-        
+
         smPanel.dispose();
         JUnitUtil.dispose(f);
-        
+
     }
 
     private CanSystemConnectionMemo memo = null;
@@ -107,7 +108,7 @@ public class CbusSlotMonitorPaneTest extends jmri.util.swing.JmriPanelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        
+
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);

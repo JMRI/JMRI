@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
+import jmri.*;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;

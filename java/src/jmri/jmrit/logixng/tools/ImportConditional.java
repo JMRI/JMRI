@@ -61,7 +61,9 @@ public class ImportConditional {
                 counter++;
             }
 
-            if (conditionalNG == null) throw new RuntimeException("Cannot create new ConditionalNG with name: \"" + userName + "\"");
+            if (conditionalNG == null) {
+                throw new RuntimeException("Cannot create new ConditionalNG with name: \"" + userName + "\"");
+            }
 
             _conditionalNG = conditionalNG;
         } else {
@@ -1030,14 +1032,12 @@ public class ImportConditional {
 
                 // Logix COPY_MEMORY stores data reversed
                 String fromMemory = ca.getActionString();
-                if (fromMemory != null && fromMemory.length() > 0 && fromMemory.charAt(0) == '@') {
+                if ((!fromMemory.isEmpty()) && fromMemory.charAt(0) == '@') {
                     action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
                     action.getSelectNamedBean().setReference("{"+fromMemory.substring(1)+"}");
                 } else {
                     action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
-                    if (fromMemory != null) {
-                        action.getSelectNamedBean().setNamedBean(fromMemory);
-                    }
+                    action.getSelectNamedBean().setNamedBean(fromMemory);
                 }
 
                 if (reference != null) {
@@ -1094,7 +1094,7 @@ public class ImportConditional {
                 break;
 
             case SET_LIGHT_INTENSITY:
-                int intensity = 0;
+                int intensity;
                 try {
                     intensity = Integer.parseInt(ca.getActionString());
                     if (intensity < 0 || intensity > 100) {
@@ -1108,7 +1108,7 @@ public class ImportConditional {
                 break;
 
             case SET_LIGHT_TRANSITION_TIME:
-                int interval = 0;
+                int interval;
                 try {
                     interval = Integer.parseInt(ca.getActionString());
                     if (interval < 0) {
@@ -1197,7 +1197,7 @@ public class ImportConditional {
             case SET_SIGNALMAST_ASPECT:
                 action.setOperationType(ActionSignalMast.OperationType.Aspect);
                 String aspect = ca.getActionString();
-                if (aspect != null && aspect.length() > 0 && aspect.charAt(0) == '@') {
+                if ( !aspect.isEmpty() && aspect.charAt(0) == '@') {
                     String memName = aspect.substring(1);
                     action.setAspectAddressing(NamedBeanAddressing.Reference);
                     action.setAspectReference("{" + memName + "}");
@@ -1307,7 +1307,7 @@ public class ImportConditional {
             case SET_TRAIN_ID:
                 action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.SetTrainId);
                 String idData = ca.getActionString();
-                if (idData == null || idData.isEmpty()) {
+                if (idData.isEmpty()) {
                     throw new InvalidConditionalActionException(
                             Bundle.getMessage("ActionBadWarrantValue", ca.getType().toString()));
                 }
@@ -1325,7 +1325,7 @@ public class ImportConditional {
             case SET_TRAIN_NAME:
                 action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.SetTrainName);
                 String nameData = ca.getActionString();
-                if (nameData == null || nameData.isEmpty()) {
+                if (nameData.isEmpty()) {
                     throw new InvalidConditionalActionException(
                             Bundle.getMessage("ActionBadWarrantValue", ca.getType().toString()));
                 }
@@ -1343,7 +1343,7 @@ public class ImportConditional {
             case GET_TRAIN_LOCATION:
                 action.getSelectEnum().setEnum(ActionWarrant.DirectOperation.GetTrainLocation);
                 String locData = ca.getActionString();
-                if (locData == null || locData.isEmpty()) {
+                if (locData.isEmpty()) {
                     throw new InvalidConditionalActionException(
                             Bundle.getMessage("ActionBadWarrantValue", ca.getType().toString()));
                 }
@@ -1393,7 +1393,7 @@ public class ImportConditional {
             case SET_BLOCK_VALUE:
                 action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.SetValue);
                 oblockData = ca.getActionString();
-                if (oblockData == null || oblockData.isEmpty()) {
+                if (oblockData.isEmpty()) {
                     throw new InvalidConditionalActionException(
                             Bundle.getMessage("ActionBadOBlockValue", ca.getType().toString()));
                 }
@@ -1427,7 +1427,7 @@ public class ImportConditional {
             case GET_BLOCK_WARRANT:
                 action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.GetBlockWarrant);
                 oblockData = ca.getActionString();
-                if (oblockData == null || oblockData.isEmpty()) {
+                if (oblockData.isEmpty()) {
                     throw new InvalidConditionalActionException(
                             Bundle.getMessage("ActionBadOBlockMemory", ca.getType().toString()));
                 }
@@ -1437,7 +1437,7 @@ public class ImportConditional {
             case GET_BLOCK_TRAIN_NAME:
                 action.getSelectEnum().setEnum(ActionOBlock.DirectOperation.GetBlockValue);
                 oblockData = ca.getActionString();
-                if (oblockData == null || oblockData.isEmpty()) {
+                if (oblockData.isEmpty()) {
                     throw new InvalidConditionalActionException(
                             Bundle.getMessage("ActionBadOBlockMemory", ca.getType().toString()));
                 }
@@ -1527,12 +1527,14 @@ public class ImportConditional {
         action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
 
         String sound = ca.getActionString();
-        if (sound != null && sound.length() > 0 && sound.charAt(0) == '@') {
+        if ( !sound.isEmpty() && sound.charAt(0) == '@') {
             action.getSelectNamedBean().setAddressing(NamedBeanAddressing.Reference);
             action.getSelectNamedBean().setReference(sound.substring(1));
         } else {
             Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).getAudio(ca.getDeviceName());
-            if (audio != null) action.getSelectNamedBean().setNamedBean(audio);
+            if ( audio != null ) {
+                action.getSelectNamedBean().setNamedBean(audio);
+            }
         }
 
         switch (ca.getActionData()) {
@@ -1582,7 +1584,7 @@ public class ImportConditional {
         action.setSoundAddressing(NamedBeanAddressing.Direct);
 
         String sound = ca.getActionString();
-        if (sound != null && sound.length() > 0 && sound.charAt(0) == '@') {
+        if ( !sound.isEmpty() && sound.charAt(0) == '@') {
             action.setSoundAddressing(NamedBeanAddressing.Reference);
             action.setSoundReference(sound.substring(1));
         } else {
@@ -1616,7 +1618,7 @@ public class ImportConditional {
         action.setScriptAddressing(NamedBeanAddressing.Direct);
 
         String script = ca.getActionString();
-        if (script != null && script.length() > 0 && script.charAt(0) == '@') {
+        if ( !script.isEmpty() && script.charAt(0) == '@') {
             action.setScriptAddressing(NamedBeanAddressing.Reference);
             action.setScriptReference(script.substring(1));
         } else {
@@ -1674,6 +1676,6 @@ public class ImportConditional {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportConditional.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ImportConditional.class);
 
 }

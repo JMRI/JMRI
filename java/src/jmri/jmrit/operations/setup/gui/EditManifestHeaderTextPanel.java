@@ -14,7 +14,6 @@ import jmri.jmrit.operations.trains.TrainManifestHeaderText;
  * Frame for user edit of manifest header text strings
  *
  * @author Dan Boudreau Copyright (C) 2014
- * 
  */
 public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
@@ -54,6 +53,10 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
     JTextField consist_TextField = new JTextField(25);
     JTextField dcc_address_TextField = new JTextField(25);
 
+    JCheckBox printHeaderLine1 = new JCheckBox(Bundle.getMessage("PrintHeaderLine1"));
+    JCheckBox printHeaderLine2 = new JCheckBox(Bundle.getMessage("PrintHeaderLine2"));
+    JCheckBox printHeaderLine3 = new JCheckBox(Bundle.getMessage("PrintHeaderLine3"));
+
     public EditManifestHeaderTextPanel() {
 
         // the following code sets the frame's initial state
@@ -65,6 +68,20 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pManifestPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifestHeader")));
         pManifest.setLayout(new BoxLayout(pManifest, BoxLayout.Y_AXIS));
 
+        JPanel pHeaderLineOptions = new JPanel();
+        pHeaderLineOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutHeaderLines")));
+        pHeaderLineOptions.setLayout(new GridBagLayout());
+
+        addItemLeft(pHeaderLineOptions, printHeaderLine1, 0, 0);
+        addItemLeft(pHeaderLineOptions, printHeaderLine2, 0, 1);
+        addItemLeft(pHeaderLineOptions, printHeaderLine3, 0, 2);
+
+        printHeaderLine1.setSelected(Setup.isPrintHeaderLine1Enabled());
+        printHeaderLine2.setSelected(Setup.isPrintHeaderLine2Enabled());
+        printHeaderLine3.setSelected(Setup.isPrintHeaderLine3Enabled());
+
+        pManifest.add(pHeaderLineOptions);
+
         JPanel pRoad_TextField = new JPanel();
         pRoad_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Road")));
         pRoad_TextField.add(road_TextField);
@@ -72,15 +89,15 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pManifest.add(pRoad_TextField);
 
         JPanel pNumber_TextField = new JPanel();
-        pNumber_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Number") + " ("
-                + Bundle.getMessage("Car") + ")"));
+        pNumber_TextField.setBorder(
+                BorderFactory.createTitledBorder(Bundle.getMessage("Number") + " (" + Bundle.getMessage("Car") + ")"));
         pNumber_TextField.add(number_TextField);
         number_TextField.setText(TrainManifestHeaderText.getStringHeader_Number());
         pManifest.add(pNumber_TextField);
 
         JPanel pEngineNumber_TextField = new JPanel();
-        pEngineNumber_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Number") + " ("
-                + Bundle.getMessage("Loco") + ")"));
+        pEngineNumber_TextField.setBorder(
+                BorderFactory.createTitledBorder(Bundle.getMessage("Number") + " (" + Bundle.getMessage("Loco") + ")"));
         pEngineNumber_TextField.add(engineNumber_TextField);
         engineNumber_TextField.setText(TrainManifestHeaderText.getStringHeader_EngineNumber());
         pManifest.add(pEngineNumber_TextField);
@@ -96,7 +113,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pLength_TextField.add(length_TextField);
         length_TextField.setText(TrainManifestHeaderText.getStringHeader_Length());
         pManifest.add(pLength_TextField);
-        
+
         JPanel pWeight_TextField = new JPanel();
         pWeight_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Weight")));
         pWeight_TextField.add(weight_TextField);
@@ -151,7 +168,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pLoad_TextField.add(load_TextField);
         load_TextField.setText(TrainManifestHeaderText.getStringHeader_Load());
         pManifest.add(pLoad_TextField);
-        
+
         JPanel pLoad_Type_TextField = new JPanel();
         pLoad_Type_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load_Type")));
         pLoad_Type_TextField.add(load_type_TextField);
@@ -204,8 +221,8 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pRWE_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RWELabel")));
         pRWE_TextField.add(rwe_TextField);
         rwe_TextField.setText(TrainManifestHeaderText.getStringHeader_RWE());
-        pManifest.add(pRWE_TextField);   
-        
+        pManifest.add(pRWE_TextField);
+
         JPanel pDivision_TextField = new JPanel();
         pDivision_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Division")));
         pDivision_TextField.add(division_TextField);
@@ -230,7 +247,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         pConsist_TextField.add(consist_TextField);
         consist_TextField.setText(TrainManifestHeaderText.getStringHeader_Consist());
         pManifest.add(pConsist_TextField);
-        
+
         JPanel pDccAddress_TextField = new JPanel();
         pDccAddress_TextField.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DCC_Address")));
         pDccAddress_TextField.add(dcc_address_TextField);
@@ -259,6 +276,9 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == resetButton) {
+            printHeaderLine1.setSelected(true);
+            printHeaderLine2.setSelected(true);
+            printHeaderLine3.setSelected(true);
             road_TextField.setText(Bundle.getMessage("Road"));
             number_TextField.setText(Bundle.getMessage("Number"));
             engineNumber_TextField.setText(Bundle.getMessage("Number"));
@@ -311,6 +331,10 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
     @Override
     public void savePreferences() {
+        // header print lines
+        Setup.setPrintHeaderLine1Enabled(printHeaderLine1.isSelected());
+        Setup.setPrintHeaderLine2Enabled(printHeaderLine2.isSelected());
+        Setup.setPrintHeaderLine3Enabled(printHeaderLine3.isSelected());
         // car and engine attributes
         TrainManifestHeaderText.setStringHeader_Road(road_TextField.getText());
         TrainManifestHeaderText.setStringHeader_Number(number_TextField.getText());
@@ -351,37 +375,37 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return !(TrainManifestHeaderText.getStringHeader_Road().equals(road_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Number().equals(number_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_EngineNumber().equals(engineNumber_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Type().equals(type_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Length().equals(length_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Weight().equals(weight_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Owner().equals(owner_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Division().equals(division_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Track().equals(track_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Location().equals(location_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Destination().equals(destination_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Dest_Track().equals(dest_track_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Comment().equals(comment_TextField.getText())
-                &&
-                TrainManifestHeaderText.getStringHeader_Last_Train().equals(last_train_TextField
-                        .getText())
-                && TrainManifestHeaderText.getStringHeader_Load().equals(load_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Load_Type().equals(load_type_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Hazardous().equals(hazardous_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Color().equals(color_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Final_Dest().equals(final_dest_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Final_Dest_Track().equals(final_dest_track_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Drop_Comment().equals(drop_comment_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Pickup_Comment().equals(pickup_comment_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Kernel().equals(kernel_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_RWE().equals(rwe_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_Model().equals(model_TextField.getText())
-                &&
-                TrainManifestHeaderText.getStringHeader_Hp().equals(hp_TextField
-                        .getText())
-                && TrainManifestHeaderText.getStringHeader_Consist().equals(consist_TextField.getText())
-                && TrainManifestHeaderText.getStringHeader_DCC_Address().equals(dcc_address_TextField.getText()));
+        return !(Setup.isPrintHeaderLine1Enabled() == printHeaderLine1.isSelected() &&
+                Setup.isPrintHeaderLine2Enabled() == printHeaderLine2.isSelected() &&
+                Setup.isPrintHeaderLine3Enabled() == printHeaderLine3.isSelected() &&
+                TrainManifestHeaderText.getStringHeader_Road().equals(road_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Number().equals(number_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_EngineNumber().equals(engineNumber_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Type().equals(type_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Length().equals(length_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Weight().equals(weight_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Owner().equals(owner_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Division().equals(division_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Track().equals(track_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Location().equals(location_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Destination().equals(destination_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Dest_Track().equals(dest_track_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Comment().equals(comment_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Last_Train().equals(last_train_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Load().equals(load_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Load_Type().equals(load_type_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Hazardous().equals(hazardous_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Color().equals(color_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Final_Dest().equals(final_dest_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Final_Dest_Track()
+                        .equals(final_dest_track_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Drop_Comment().equals(drop_comment_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Pickup_Comment().equals(pickup_comment_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Kernel().equals(kernel_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_RWE().equals(rwe_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Model().equals(model_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Hp().equals(hp_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_Consist().equals(consist_TextField.getText()) &&
+                TrainManifestHeaderText.getStringHeader_DCC_Address().equals(dcc_address_TextField.getText()));
     }
 }
