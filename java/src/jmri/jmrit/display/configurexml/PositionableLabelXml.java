@@ -608,11 +608,18 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
 
     /**
      * Remove verbose and redundant information from fontname field
+     * unless that's been disabled in preferences
+     *
      * @param fontname The system-specific font name with a possible trailing .plain, etc
      * @param style  From the Font class static style values
      * @return A font name without trailing modifiers
      */
     String simplifyFontname(String fontname, int style) {
+        var loadAndStorePreferences = InstanceManager.getDefault(jmri.configurexml.LoadAndStorePreferences.class);
+        if (! loadAndStorePreferences.isExcludeFontExtensions() ) {
+            return fontname;
+        }
+
         if (fontname.endsWith(".plain")) {
             if (style == Font.PLAIN) {
                 return fontname.substring(0, fontname.length()-(".plain".length()));
