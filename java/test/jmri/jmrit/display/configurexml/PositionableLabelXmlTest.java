@@ -26,6 +26,9 @@ public class PositionableLabelXmlTest {
 
     @Test
     public void testWindowsFontSpecialCase () {
+        var loadAndStorePreferences = jmri.InstanceManager.getDefault(jmri.configurexml.LoadAndStorePreferences.class);
+        loadAndStorePreferences.setExcludeFontExtensions(true);
+        
         var label = new PositionableLabelXml();
         Assert.assertEquals("Dialog", label.simplifyFontname("Dialog", 0));
         Assert.assertEquals("Dialog", label.simplifyFontname("Dialog.plain", 0));
