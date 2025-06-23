@@ -26,7 +26,8 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>When WiThrottle is asked Share / Steal / Cancel? or Share / Cancel ? , the main
+                    JMRI Throttle silent Steal / silent Share options are checked for preferred behaviour.</li>
             </ul>
 
         <h4>C/MRI</h4>
