@@ -898,7 +898,7 @@ public final class XMLUtil extends Object {
             NodeList nl2 = e.getChildNodes();
             for (int j = 0; j < nl2.getLength(); j++) {
                 Node n = nl2.item(j);
-                if ( n!= null && n.getNodeValue().isBlank()) {
+                if ( n instanceof Text && n.getNodeValue().isBlank() ) {
                     e.removeChild(n);
                     j--; // since list is dynamic
                 }
