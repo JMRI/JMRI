@@ -333,11 +333,11 @@ public class PointDetails {
         }
 
         if (refObj instanceof SignalMast) {
-            return ((SignalMast) refObj).getDisplayName();
+            return refObj.getDisplayName();
         } else if (refObj instanceof Sensor) {
-            return ((Sensor) refObj).getDisplayName();
+            return refObj.getDisplayName();
         } else if (refObj instanceof SignalHead) {
-            return ((SignalHead) refObj).getDisplayName();
+            return refObj.getDisplayName();
         }
         return "no display name";  // NOI18N
     }
