@@ -28,6 +28,7 @@
             <ul>
                 <li>When WiThrottle is asked Share / Steal / Cancel? or Share / Cancel ? , the main
                     JMRI Throttle silent Steal / silent Share options are checked for preferred behaviour.</li>
+                 <li>The Console Filter is now displayed as a check-box tree.</li>
             </ul>
 
         <h4>C/MRI</h4>
