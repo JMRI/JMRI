@@ -179,7 +179,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
      */
     @Override
     public void registerListenersForThisClass() {
-        ((DigitalExpressionBean)getObject()).registerListeners();
+        getObject().registerListeners();
     }
     
     /**
@@ -187,7 +187,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((DigitalExpressionBean)getObject()).unregisterListeners();
+        getObject().unregisterListeners();
     }
     
     @Override
