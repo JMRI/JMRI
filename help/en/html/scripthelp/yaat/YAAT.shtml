@@ -125,7 +125,7 @@
         <dt>enableIncludes<span class="since">since YAAT 3.4</span></dt>
 
         <dd>
-          Set to True to enable the @includes statement.  See <a href="#includes">Includes</a>.
+          Set to True to enable the <em>@include filename</em> statement.  See <a href="#includes">Includes</a>.
         </dd>
       </dl>
 
