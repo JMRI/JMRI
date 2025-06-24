@@ -972,7 +972,7 @@ public final class XMLUtil extends Object {
             if (n.getNodeType() == Node.ELEMENT_NODE) {
                 elements.add((Element) n);
             } else if (n.getNodeType() == Node.TEXT_NODE) {
-                String text = ((Text) n).getNodeValue();
+                String text = n.getNodeValue();
                 if (text.trim().length() > 0) {
                     throw new IllegalArgumentException("non-ws text encountered in " + parent + ": " + text); // NOI18N
                 }
