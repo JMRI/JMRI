@@ -111,7 +111,7 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.ExpressionTransit.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionTurnout.class);
         classes.add(jmri.jmrit.logixng.expressions.ExpressionWarrant.class);
-        map.put(Category.ITEM, classes);
+        map.put(LogixNG_Category.ITEM, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.And.class);
@@ -120,11 +120,11 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.Not.class);
         classes.add(jmri.jmrit.logixng.expressions.Or.class);
         classes.add(jmri.jmrit.logixng.expressions.Timer.class);
-        map.put(Category.COMMON, classes);
+        map.put(LogixNG_Category.COMMON, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.DigitalCallModule.class);
-        map.put(Category.FLOW_CONTROL, classes);
+        map.put(LogixNG_Category.FLOW_CONTROL, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.expressions.ConnectionName.class);
@@ -135,12 +135,12 @@ public class DefaultFemaleDigitalExpressionSocketTest extends FemaleSocketTestBa
         classes.add(jmri.jmrit.logixng.expressions.LogData.class);
         classes.add(jmri.jmrit.logixng.expressions.TriggerOnce.class);
         classes.add(jmri.jmrit.logixng.expressions.True.class);
-        map.put(Category.OTHER, classes);
+        map.put(LogixNG_Category.OTHER, classes);
 
         if (jmri.util.SystemType.isLinux()) {
             classes = new ArrayList<>();
             classes.add(jmri.jmrit.logixng.expressions.ExpressionLinuxLinePower.class);
-            map.put(Category.LINUX, classes);
+            map.put(LogixNG_Category.LINUX, classes);
         }
 
         Assert.assertTrue("maps are equal",

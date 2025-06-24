@@ -27,7 +27,7 @@ public class Publish extends AbstractDigitalAction
             new LogixNG_SelectString(this, this);
 
     private MqttSystemConnectionMemo _memo;
-    
+
     private Retain _retain;
 
 
@@ -80,8 +80,8 @@ public class Publish extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return CategoryMqtt.MQTT;
     }
 
     /** {@inheritDoc} */
@@ -90,7 +90,7 @@ public class Publish extends AbstractDigitalAction
 
         String topic = _selectTopic.evaluateValue(getConditionalNG());
         String data = _selectMessage.evaluateValue(getConditionalNG());
-        
+
         boolean retain = _retain.getRetainValue(_memo);
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
@@ -163,7 +163,7 @@ public class Publish extends AbstractDigitalAction
         private Retain(String text) {
             this._text = text;
         }
-        
+
         public boolean getRetainValue(MqttSystemConnectionMemo memo) {
             switch (this) {
                 case Default:

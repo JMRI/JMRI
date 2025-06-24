@@ -42,7 +42,7 @@ import jmri.jmrix.loconet.SlotMapEntry.SlotType;
  * definitely can't.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2024
- * @author B. Milhaupt, Copyright (C) 2018
+ * @author B. Milhaupt, Copyright (C) 2018, 2024
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -56,7 +56,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     public int serviceModeReplyDelay = 20;  // this is public to allow changes via script and tests. Adjusted by UsbDcs210PlusAdapter
 
-    public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests. 
+    public int opsModeReplyDelay = 100;  // this is public to allow changes via script and tests.
 
     public boolean pmManagerGotReply = false;  //this is public to allow changes via script and tests
 
@@ -524,6 +524,12 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             }
             return;
         }
+
+        if (m.getElement(1) != 0x15) {
+            // cannot check short slot messages.
+            return;
+        }
+
         switch (slot) {
             case 250:
                 // slot info if we have serial, the serial number in this slot

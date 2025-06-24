@@ -26,7 +26,7 @@ import jmri.web.server.WebServerPreferences;
 /**
  * Operations settings.
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014
+ * @author Daniel Boudreau Copyright (C) 2008, 2010, 2012, 2014, 2025
  */
 public class Setup extends PropertyChangeSupport implements InstanceManagerAutoDefault, Disposable {
 
@@ -336,6 +336,9 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean printValid = true; // when true print out the valid time and date
     private boolean sortByTrack = false; // when true manifest work is sorted by track names
     private boolean printHeaders = false; // when true add headers to manifest and switch lists
+    private boolean printHeaderLine1 = true; // when true add header line 1 to manifest and switch lists
+    private boolean printHeaderLine2 = true; // when true add header line 2 to manifest and switch lists
+    private boolean printHeaderLine3 = true; // when true add header line 3 to manifest and switch lists
 
     private boolean printCabooseLoad = false; // when true print caboose load
     private boolean printPassengerLoad = false; // when true print passenger car load
@@ -997,6 +1000,30 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static boolean isPrintHeadersEnabled() {
         return getDefault().printHeaders;
+    }
+
+    public static void setPrintHeaderLine1Enabled(boolean enable) {
+        getDefault().printHeaderLine1 = enable;
+    }
+
+    public static boolean isPrintHeaderLine1Enabled() {
+        return getDefault().printHeaderLine1;
+    }
+
+    public static void setPrintHeaderLine2Enabled(boolean enable) {
+        getDefault().printHeaderLine2 = enable;
+    }
+
+    public static boolean isPrintHeaderLine2Enabled() {
+        return getDefault().printHeaderLine2;
+    }
+
+    public static void setPrintHeaderLine3Enabled(boolean enable) {
+        getDefault().printHeaderLine3 = enable;
+    }
+
+    public static boolean isPrintHeaderLine3Enabled() {
+        return getDefault().printHeaderLine3;
     }
 
     public static void setPrintCabooseLoadEnabled(boolean enable) {
@@ -2063,6 +2090,12 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         }
         values.setAttribute(Xml.VALUE, value);
 
+        // new format June 2025
+        e.addContent(values = new Element(Xml.HEADER_LINES));
+        values.setAttribute(Xml.PRINT_HEADER_LINE1, isPrintHeaderLine1Enabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_HEADER_LINE2, isPrintHeaderLine2Enabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_HEADER_LINE3, isPrintHeaderLine3Enabled() ? Xml.TRUE : Xml.FALSE);
+
         if (!getManifestLogoURL().equals(NONE)) {
             values = new Element(Xml.MANIFEST_LOGO);
             values.setAttribute(Xml.NAME, getManifestLogoURL());
@@ -2738,6 +2771,20 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 if (enable.equals(Xml.TRUE)) {
                     setManifestFormat(TWO_COLUMN_FORMAT);
                 }
+            }
+        }
+        if ((operations.getChild(Xml.HEADER_LINES) != null)) {
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE1)) != null) {
+                String enable = a.getValue();
+                setPrintHeaderLine1Enabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE2)) != null) {
+                String enable = a.getValue();
+                setPrintHeaderLine2Enabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.HEADER_LINES).getAttribute(Xml.PRINT_HEADER_LINE3)) != null) {
+                String enable = a.getValue();
+                setPrintHeaderLine3Enabled(enable.equals(Xml.TRUE));
             }
         }
         // get manifest logo

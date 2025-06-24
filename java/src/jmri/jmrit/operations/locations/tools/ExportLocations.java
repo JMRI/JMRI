@@ -19,11 +19,10 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * Exports the location roster into a comma delimited file (CSV).
- * Keep ImportLocations.java in sync with export
+ * Exports the location roster into a comma delimited file (CSV). Keep
+ * ImportLocations.java in sync with export
  *
- * @author Daniel Boudreau Copyright (C) 2018, 2023
- *
+ * @author Daniel Boudreau Copyright (C) 2018, 2023, 2025
  */
 public class ExportLocations extends XmlFile {
 
@@ -68,6 +67,9 @@ public class ExportLocations extends XmlFile {
                     Bundle.getMessage("Track"),
                     Bundle.getMessage("Type"),
                     Bundle.getMessage("Length"),
+                    Bundle.getMessage("Used"),
+                    Bundle.getMessage("Cars"),
+                    Bundle.getMessage("Engines"),
                     Bundle.getMessage("Moves"),
                     Bundle.getMessage("Division"),
                     Bundle.getMessage("ServicedByTrains"),
@@ -240,6 +242,9 @@ public class ExportLocations extends XmlFile {
                             track.getName(),
                             track.getTrackTypeName(),
                             track.getLength(),
+                            track.getUsedLength(),
+                            track.getNumberCars(),
+                            track.getNumberEngines(),
                             track.getMoves(),
                             track.getDivision(),
                             trainDirections.toString(),

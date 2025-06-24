@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
  * Represents a car on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014,
- *         2015, 2023
+ *         2015, 2023, 2025
  */
 public class Car extends RollingStock {
 
@@ -65,6 +65,8 @@ public class Car extends RollingStock {
     public static final String UTILITY_EXTENSION = Bundle.getMessage("(U)");
     public static final String HAZARDOUS_EXTENSION = Bundle.getMessage("(H)");
     public static final String CLONE = TrainCommon.HYPHEN + "(Clone)"; // NOI18N
+    // parentheses are special chars
+    public static final String CLONE_REGEX = TrainCommon.HYPHEN + "\\(Clone\\)"; // NOI18N
 
     public static final String LOAD_CHANGED_PROPERTY = "Car load changed"; // NOI18N
     public static final String RWE_LOAD_CHANGED_PROPERTY = "Car RWE load changed"; // NOI18N
@@ -95,15 +97,23 @@ public class Car extends RollingStock {
         car.setColor(getColor());
         car.setLength(getLength());
         car.setLoadName(getLoadName());
+        car.setWeightTons(getWeightTons());
         car.setReturnWhenEmptyLoadName(getReturnWhenEmptyLoadName());
         car.setReturnWhenLoadedLoadName(getReturnWhenLoadedLoadName());
         car.setNumber(getNumber());
         car.setOwnerName(getOwnerName());
         car.setRoadName(getRoadName());
         car.setTypeName(getTypeName());
+        car.setComment(getComment());
+        car.setCarHazardous(isCarHazardous());
         car.setCaboose(isCaboose());
         car.setFred(hasFred());
         car.setPassenger(isPassenger());
+        car.setBlocking(getBlocking());
+        car.setLastTrain(getLastTrain());
+        car.setLastDate(getLastDate());
+        car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+        car.setDivision(getDivision());
         car.loaded = true;
         return car;
     }
@@ -733,6 +743,7 @@ public class Car extends RollingStock {
                 car.setFinalDestinationTrack(getFinalDestinationTrack());
                 car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
                 car.setRoutePath(getRoutePath());
+                car.setWait(getWait());
                 if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), getLoadName())) {
                     car.setLoadName(getLoadName());
                 }
@@ -1035,10 +1046,6 @@ public class Car extends RollingStock {
 
     @Override
     public void reset() {
-        // destroy clone
-        if (isClone()) {
-            destroyClone();
-        }
         setScheduleItemId(getPreviousScheduleId()); // revert to previous
         setNextLoadName(NONE);
         setFinalDestination(getPreviousFinalDestination());
@@ -1048,28 +1055,39 @@ public class Car extends RollingStock {
             setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
         }
         super.reset();
+        destroyClone();
     }
 
     /*
      * This routine destroys the clone and restores the cloned car to its
      * original location and load. Note there can be multiple clones for a car.
-     * Only the first clone has the right info.
+     * Only the first clone created has the right info. A clone has creation
+     * order number appended to the road number.
      */
     private void destroyClone() {
-        // move cloned car back to original location
-        CarManager carManager = InstanceManager.getDefault(CarManager.class);
-        String regex = "-\\(Clone\\)";
-        String[] number = getNumber().split(regex);
-        Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
-        int cloneNumber = Integer.parseInt(number[1]);
-        if (cloneNumber <= car.getCloneOrder()) {
-            car.setLocation(getLocation(), getTrack());
-            car.setLoadName(getLoadName());
-            car.setCloneOrder(cloneNumber);
+        if (isClone()) {
+            // move cloned car back to original location
+            CarManager carManager = InstanceManager.getDefault(CarManager.class);
+            String[] number = getNumber().split(Car.CLONE_REGEX);
+            Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
+            int cloneCreationNumber = Integer.parseInt(number[1]);
+            if (cloneCreationNumber <= car.getCloneOrder()) {
+                car.setLocation(getLocation(), getTrack(), Car.FORCE);
+                car.setLoadName(getLoadName());
+                car.setLastTrain(getLastTrain());
+                car.setLastDate(getLastDate());
+                car.setFinalDestination(getPreviousFinalDestination());
+                car.setFinalDestinationTrack(getPreviousFinalDestinationTrack());
+                car.setPreviousFinalDestination(getPreviousFinalDestination());
+                car.setPreviousFinalDestinationTrack(getPreviousFinalDestinationTrack());
+                car.setScheduleItemId(getPreviousScheduleId());
+                car.setWait(0);
+                // remember the last clone destroyed
+                car.setCloneOrder(cloneCreationNumber);
+            }
+            InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
+            carManager.deregister(this);
         }
-        InstanceManager.getDefault(KernelManager.class).deleteKernel(getKernelName());
-        carManager.deregister(this);
-        return;
     }
 
     @Override

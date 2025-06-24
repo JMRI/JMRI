@@ -32,4 +32,4 @@ jobs:
         # compile code and tests
         mvn antrun:run -Danttarget=tests
         # run individual tests
-        ./scripts/run_linked_warrant_test java/test/jmri/jmrit/logix/LinkedWarrantTest.java
+        ./scripts/run_linked_warrant_test jmri/jmrit/logix/LinkedWarrantTest.java

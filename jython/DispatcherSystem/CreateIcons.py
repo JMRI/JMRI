@@ -969,6 +969,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             [sections.getSection(section_name).setForwardStoppingSensorName(forward_stopping_sensor_name) \
              for [sn_prompt, section_name, fss_prompt, forward_stopping_sensor_name] in forward_stop_sensors \
              if forward_stop_sensors is not [] and sections.getSection(section_name) is not None]
+
     def directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "forwardStoppingSensors"
         if not os.path.exists(path):

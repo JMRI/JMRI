@@ -1,5 +1,8 @@
 package jmri.jmrix.dccpp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
@@ -30,6 +33,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     @Nonnull private String version     = "0.0.0";
     private DCCppRegisterManager rmgr = null;
     private int maxNumSlots = DCCppConstants.MAX_MAIN_REGISTERS; //default to register size
+    private List<String> trackModes = new ArrayList<String>();   //Modes for tracks A-H (as returned from EX-CS) 
 
     public DCCppCommandStation() {
         super();
@@ -166,6 +170,19 @@ public class DCCppCommandStation implements jmri.CommandStation {
         try {
             //command stations starting with 3 handle their own function refresh
             ret = (jmri.Version.compareCanonicalVersions(version, "3.0.0") < 0);
+        } catch (IllegalArgumentException ignore) {
+        }
+        return ret;  
+    }
+
+    /**
+     * Does this command station support the latest Current commands &lt;JG&gt;, &lt;JI&gt;, etc.?
+     * @return true if supported, false if not
+     */
+    public boolean isCurrentListSupported() {
+        boolean ret = false;
+        try {
+            ret = (jmri.Version.compareCanonicalVersions(version, "4.2.20") >= 0);
         } catch (IllegalArgumentException ignore) {
         }
         return ret;  
@@ -385,6 +402,25 @@ public class DCCppCommandStation implements jmri.CommandStation {
     public int getRegisterAddress(int num) {
         creatermgr();
         return (rmgr.getRegisterAddress(num));
+    }
+
+    // entries will be received in order, but the whole list may be sent again
+    public void setTrackMode(int i, String mode) {        
+        if (this.trackModes.size() > i) {
+            this.trackModes.set(i, mode); //update it
+        } else {
+            this.trackModes.add(mode);  // add it
+        }
+    }
+    public List<String> getTrackModes() {
+        return trackModes;
+    }
+    public String getTrackMode(int i) {
+        if (this.trackModes.size() > i) {
+            return trackModes.get(i);
+        } else {
+            return "";  //don't crash downstream
+        }
     }
 
     /*

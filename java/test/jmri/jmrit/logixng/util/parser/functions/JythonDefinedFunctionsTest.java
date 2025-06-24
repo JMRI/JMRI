@@ -140,7 +140,7 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertEquals("Category matches", Category.COMMON, _base.getCategory());
+        Assert.assertEquals("Category matches", LogixNG_Category.COMMON, _base.getCategory());
     }
 
     @Test
@@ -211,7 +211,7 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.OTHER;
+        _category = LogixNG_Category.OTHER;
         _isExternal = false;
 
         _memory1 = InstanceManager.getDefault(MemoryManager.class).provideMemory("IM1");  // NOI18N

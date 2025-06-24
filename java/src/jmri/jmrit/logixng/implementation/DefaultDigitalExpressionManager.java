@@ -8,15 +8,13 @@ import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InvokeOnGuiThread;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.util.*;
 
 /**
  * Class providing the basic logic of the DigitalExpressionManager interface.
- * 
+ *
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
@@ -26,18 +24,18 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
     private MaleSocket _lastRegisteredBean;
 
-    
+
     public DefaultDigitalExpressionManager() {
         InstanceManager.getDefault(LogixNG_Manager.class).registerManager(this);
-        
+
         for (DigitalExpressionFactory expressionFactory : ServiceLoader.load(DigitalExpressionFactory.class)) {
             expressionFactory.init();
         }
-        
+
         for (Category category : Category.values()) {
             expressionClassList.put(category, new ArrayList<>());
         }
-        
+
 //        System.out.format("Read expressions%n");
         for (DigitalExpressionFactory expressionFactory : ServiceLoader.load(DigitalExpressionFactory.class)) {
             expressionFactory.getExpressionClasses().forEach((entry) -> {
@@ -45,7 +43,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
                 expressionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
-        
+
         for (MaleDigitalExpressionSocketFactory maleSocketFactory : ServiceLoader.load(MaleDigitalExpressionSocketFactory.class)) {
             _maleSocketFactories.add(maleSocketFactory);
         }
@@ -68,7 +66,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     public MaleSocket getLastRegisteredMaleSocket() {
         return _lastRegisteredBean;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleDigitalExpressionSocket registerBean(MaleDigitalExpressionSocket maleSocket) {
@@ -76,7 +74,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
         _lastRegisteredBean = maleSocket;
         return bean;
     }
-    
+
     /**
      * Remember a NamedBean Object created outside the manager.
      * This method creates a MaleActionSocket for the action.
@@ -86,25 +84,25 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     @Override
     public MaleDigitalExpressionSocket registerExpression(@Nonnull DigitalExpressionBean expression)
             throws IllegalArgumentException {
-        
+
         if (expression instanceof MaleDigitalExpressionSocket) {
             throw new IllegalArgumentException("registerExpression() cannot register a MaleDigitalExpressionSocket. Use the method register() instead.");
         }
-        
+
         // Check if system name is valid
         if (this.validSystemNameFormat(expression.getSystemName()) != NameValidity.VALID) {
             log.warn("SystemName {} is not in the correct format", expression.getSystemName() );
             throw new IllegalArgumentException("System name is invalid: "+expression.getSystemName());
         }
-        
+
         // Keep track of the last created auto system name
         updateAutoNumber(expression.getSystemName());
-        
+
         // save in the maps
         MaleDigitalExpressionSocket maleSocket = createMaleExpressionSocket(expression);
         return registerBean(maleSocket);
     }
-    
+
     @Override
     public int getXMLOrder() {
         return LOGIXNG_DIGITAL_EXPRESSIONS;
@@ -130,10 +128,10 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
     @Override
     public FemaleDigitalExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
-        
+
         return new DefaultFemaleDigitalExpressionSocket(parent, listener, socketName);
     }
-    
+
     @Override
     public Map<Category, List<Class<? extends Base>>> getExpressionClasses() {
         return expressionClassList;
@@ -152,7 +150,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
         deregister(x);
         x.dispose();
     }
-    
+
     static volatile DefaultDigitalExpressionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
@@ -160,7 +158,7 @@ public class DefaultDigitalExpressionManager extends AbstractBaseManager<MaleDig
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
-        
+
         if (_instance == null) {
             _instance = new DefaultDigitalExpressionManager();
         }

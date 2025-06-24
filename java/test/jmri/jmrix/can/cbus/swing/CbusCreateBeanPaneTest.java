@@ -12,8 +12,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.swing.CanPanel;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -46,8 +45,10 @@ public class CbusCreateBeanPaneTest  {
         JmriJFrame f = new JmriJFrame();
         f.add(t);
         f.setTitle("Test CBUS Create Bean");
-        f.pack();
-        f.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
         JFrameOperator jfo = new JFrameOperator( "Test CBUS Create Bean" );
 
         dm = new CbusEventTableDataModel(memo,0,0);

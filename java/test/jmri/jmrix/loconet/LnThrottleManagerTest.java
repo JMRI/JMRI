@@ -383,8 +383,11 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x9, 0x30, 0x04, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x00, 0x00, 0x53});  // slot is in-use no throttle ID
         lnis.sendTestMessage(cmdStationReply);
-        assertEquals( "EF 0E 09 30 04 00 00 07 00 02 00 71 02 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "Write Throttle ID");
+
+        // BB 79 01 00 may appear before this one
+        JUnitUtil.waitFor( () -> "EF 0E 09 30 04 00 00 07 00 02 00 71 02 00".equals(
+            (lnis.outbound.elementAt(lnis.outbound.size()-1).toString())),
+            "Write Throttle ID");
 
         assertNotNull( throtListen.getThrottle(), "Throttle should be created and non-null");
 
@@ -544,7 +547,9 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "address request message");
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
-        assertEquals(1, lnis.outbound.size(), "count is correct");
+        // BB 79 01 00 may appear shortly after this in tcis.outbound
+        // for long delays, BF 02 05 00 is re-sent 10 times before halting attempt.
+
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x0A, 0x00, 0x05, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is in-use
         lnis.sendTestMessage(cmdStationReply);
@@ -760,8 +765,10 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         JUnitUtil.waitFor(()->{return 4 < lnis.outbound.size();},"didn't get the 6th LocoNet message");
 
-        assertEquals("B5 04 13 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "slot is set to 'common' status");
+        // BB 79 01 00 may appear before this one
+        JUnitUtil.waitFor( () -> "B5 04 13 00".equals(
+            (lnis.outbound.elementAt(lnis.outbound.size()-1).toString())),
+            "slot is set to 'common' status");
 
     }
 

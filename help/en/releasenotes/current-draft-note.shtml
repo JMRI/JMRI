@@ -26,7 +26,9 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>When WiThrottle is asked Share / Steal / Cancel? or Share / Cancel ? , the main
+                    JMRI Throttle silent Steal / silent Share options are checked for preferred behaviour.</li>
+                 <li>The Console Filter is now displayed as a check-box tree.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -86,7 +88,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Resolved a Console log 'Error' message that could be seen when
+                    using the Slot Monitor's "Clear All Non-InUse Slots" button.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -471,23 +474,21 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The LogixNG action <strong>Send MERG CBUS event</strong> has
-              been added. It's available in the category <strong>Merg Cbus</strong>
-              if there is a Merg Cbus connection.</li>
+          <li>The class <strong>jmri.jmrit.logixng.Category</strong> has been split into
+              <strong>jmri.Category</strong> and <strong>jmri.jmrit.logixng.LogixNG_Category</strong>.</li>
           <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li></li>
+            <li>The shutdown process has been modified to detect changes to the meter settings.</li>
         </ul>
 
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>The train icon now shows the number of local moves in the train's route.</li>
-            <li>New feature, a turn can now drop and pull the same car on a turn.
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -505,7 +506,8 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>The Shutdown preference help has been updated. The store request now includes
+            a <strong>Cancel</strong> option which cancels the shutdown process.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -647,8 +649,5 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The PlantUML library we use for various documentation images
-                has been updated to the current 1.2025.2 version.</li>
-            <li>Fixed a bug where Dark Mode would fail due to a missing library.</li>
+            <li></li>
         </ul>
-

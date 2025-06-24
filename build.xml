@@ -914,6 +914,7 @@
             <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir '${testreport}'" />
+            <arg value="--fail-if-no-tests" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="-ea"/>
         <jvmarg line="${test-single.jvmargs}"/>
@@ -953,6 +954,7 @@
             <arg value="--include-engine=junit-vintage"/>
             <arg line="-n ${test.includes}"/>
             <arg line="--reports-dir ${testreport}" />
+            <arg value="--fail-if-no-tests" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="-ea"/>
             <jvmarg value="${jacocoagent}"/>
@@ -1656,6 +1658,7 @@
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
+            <arg value="--fail-if-no-tests" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
@@ -1804,6 +1807,7 @@
             <arg line="-n '^(Test.*|.+[.$]Test.*|.*Tests?)$'" />
             <arg line="-n '.*IT.*'" />
             <arg line="--reports-dir ${testreport}" />
+            <arg value="--fail-if-no-tests" />
             <jvmarg value="-Xmx1536m"/>
             <jvmarg value="${jacocoagent}"/>
             <jvmarg line="${jvm.args}"/>
@@ -2086,7 +2090,7 @@
                 <include name="jmri/**"/>
             </packageset>
 
-            <arg value="-Xdoclint:all,-missing,-html"/>
+            <arg value="-Xdoclint:all,-missing"/>
             <arg value="-Xmaxwarns"/>
             <arg value="100"/><!-- default is 100; keep synced with pom.xml, other javadoc targets -->
 

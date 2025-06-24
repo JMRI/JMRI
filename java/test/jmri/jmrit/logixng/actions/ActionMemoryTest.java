@@ -261,7 +261,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
     }
 
     @Test
@@ -310,7 +310,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");

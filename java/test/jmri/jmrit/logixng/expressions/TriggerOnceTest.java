@@ -248,7 +248,7 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.OTHER == _base.getCategory());
     }
 
     @Test
@@ -290,7 +290,7 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.OTHER;
+        _category = LogixNG_Category.OTHER;
         _isExternal = false;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
