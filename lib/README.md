@@ -482,8 +482,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 4.3.1
 
 ##### ecj.jar
-- Eclipse compiler 4.19 from
-    - https://archive.eclipse.org/eclipse/downloads/drops4/R-4.19-202103031800/ (via selecting ecj-4.10.jar) March 3, 2021
+- Eclipse compiler 4.36 from
+    - https://archive.eclipse.org/eclipse/downloads/drops4/R-4.36-202505281830/ (via selecting ecj-4.36.jar) June 24, 2025
 - used in ant warnings target
 
 ##### jemmy-2.3.1.1-RELEASE125.jar
