@@ -37,7 +37,11 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         Element elem = new Element("timebase");
         elem.setAttribute("class", this.getClass().getName());
 
-        elem.setAttribute("time", clock.getStartTime().toString());
+        var loadAndStorePreferences = InstanceManager.getDefault(jmri.configurexml.LoadAndStorePreferences.class);
+        if (! loadAndStorePreferences.isExcludeTimebase() ) {
+            elem.setAttribute("time", clock.getStartTime().toString());
+        }
+
         elem.setAttribute("rate", "" + clock.userGetRate());
         elem.setAttribute("startrate", "" + clock.getStartRate());
         elem.setAttribute("run", (clock.getClockInitialRunState() == DO_START ? "yes" : "no"));

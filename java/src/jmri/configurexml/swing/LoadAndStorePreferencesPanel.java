@@ -25,6 +25,8 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
     private JCheckBox _excludeFileHistoryCheckBox;
     private JCheckBox _excludeMemoryIMCURRENTTIME_CheckBox;
     private JCheckBox _excludeJmriVersionCheckBox;
+    private JCheckBox _excludeTimebaseCheckBox;
+    private JCheckBox _excludeFontExtensionsCheckBox;
 
     public LoadAndStorePreferencesPanel() {
         _preferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
@@ -47,6 +49,8 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
         _preferences.setExcludeFileHistory(_excludeFileHistoryCheckBox.isSelected());
         _preferences.setExcludeMemoryIMCURRENTTIME(_excludeMemoryIMCURRENTTIME_CheckBox.isSelected());
         _preferences.setExcludeJmriVersion(_excludeJmriVersionCheckBox.isSelected());
+        _preferences.setExcludeTimebase(_excludeTimebaseCheckBox.isSelected());
+        _preferences.setExcludeFontExtensions(_excludeFontExtensionsCheckBox.isSelected());
         return didSet;
     }
 
@@ -62,12 +66,20 @@ public class LoadAndStorePreferencesPanel extends JPanel implements PreferencesP
         _excludeJmriVersionCheckBox = new JCheckBox(Bundle.getMessage("ExcludeJmriVersion"));
         _excludeJmriVersionCheckBox.setSelected(_preferences.isExcludeJmriVersion());
 
+        _excludeTimebaseCheckBox = new JCheckBox(Bundle.getMessage("ExcludeTimebase"));
+        _excludeTimebaseCheckBox.setSelected(_preferences.isExcludeTimebase());
+
+        _excludeFontExtensionsCheckBox = new JCheckBox(Bundle.getMessage("ExcludeFontExtensions"));
+        _excludeFontExtensionsCheckBox.setSelected(_preferences.isExcludeFontExtensions());
+
         JPanel gridPanel = new JPanel(new GridLayout(0, 1));
 //        gridPanel.add(new JLabel());
         gridPanel.add(infoLabel);
         gridPanel.add(_excludeMemoryIMCURRENTTIME_CheckBox);
         gridPanel.add(_excludeJmriVersionCheckBox);
         gridPanel.add(_excludeFileHistoryCheckBox);
+        gridPanel.add(_excludeTimebaseCheckBox);
+        gridPanel.add(_excludeFontExtensionsCheckBox);
 //        gridPanel.add(new jmri.swing.JTitledSeparator(Bundle.getMessage("IgnoreSeparator")));
 
         JPanel panel = new JPanel();
