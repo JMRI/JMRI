@@ -600,7 +600,8 @@
             By default, the WiThrottle server will silently share access to a certain loco between all
             WiThrottle clients and JMRI throttles. If this option is selected, it will instead send a
             "Steal from other WiThrottle or JMRI throttle Required" message to the client and wait for
-            the client to confirm the steal if the loco is already in use. See the
+            the client to confirm the steal if the loco is already in use. Note this preference only
+            affects sharing / stealing between WiThrottle and JMRI throttles - see the
             <a href="#Throttle">Throttle</a> section for stealing / sharing interaction with hardware
             throttles from your DCC system.
           </dd>
