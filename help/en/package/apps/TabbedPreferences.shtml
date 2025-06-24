@@ -586,7 +586,7 @@
             later.</p>
           </dd>
 
-          <dt>Function Buttons</dt>
+          <dt>Function Buttons - F2 always momentary</dt>
 
           <dd>
             If selected, the F2 key on WiThrottle clients will always be treated as a momentary function.
@@ -594,7 +594,7 @@
             WiThrottle clients.
           </dd>
 
-          <dt>Acquire address silently if already in use</dt>
+          <dt>Acquire address silently if already in use - Notify client if address is busy</dt>
 
           <dd>
             By default, the WiThrottle server will silently share access to a certain loco between all
