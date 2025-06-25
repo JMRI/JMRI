@@ -740,13 +740,13 @@ public class LocationEditFrameTest extends OperationsTestCase {
         // test quick load change
         track.setQuickServiceEnabled(true);
         Assert.assertEquals("Confirm number of columns", 19, tbl.getColumnCount());
-        Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("QuickLoadService")));
-        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("QuickLoadService")));
+        Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("QuickService")));
+        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("QuickService")));
         Assert.assertFalse("quick load change", track.isQuickServiceEnabled());
 
         // column should disappear
         Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
-        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("QuickLoadService")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("QuickService")));
 
         // test track directions
         track.setTrainDirections(Track.EAST);

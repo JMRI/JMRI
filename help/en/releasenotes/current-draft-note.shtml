@@ -488,7 +488,8 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug where a train build would hang after the upgrade to 5.12 and there were also built trains created with an older version of JMRI.</li>
+            <li>Added quick service for classification/interchange tracks. This is an experimental addition, looking for testing and feedback.
         </ul>
 
    <h3>Panel Editor</h3>
