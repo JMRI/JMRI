@@ -456,7 +456,8 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Fixed a bug which could sometimes cause extraneous messages
+                about failure to create a multipoint route even though one was available.</li>
             </ul>
 
     <h3>LccPro</h3>
