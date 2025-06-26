@@ -667,6 +667,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Routed")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("AbbrevationDirection")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("AlternateTrack")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("QuickService")));
         
         // add track moves column
         Setup.setShowTrackMovesEnabled(true);
