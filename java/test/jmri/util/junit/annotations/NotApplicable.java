@@ -19,7 +19,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Documented
 @Inherited
-@org.junit.jupiter.api.extension.ExtendWith({NotApplicableExecutionCondition.class})
+@org.junit.jupiter.api.extension.ExtendWith(NotApplicableExecutionCondition.class)
 public @interface NotApplicable {
     /**
      * The optional reason why the test is not applicable.

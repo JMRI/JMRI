@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.TYPE}) // method and class
 @Documented
 @Inherited
-@org.junit.jupiter.api.extension.ExtendWith({DisabledIfHeadlessExecutionCondition.class})
+@org.junit.jupiter.api.extension.ExtendWith(DisabledIfHeadlessExecutionCondition.class)
 public @interface DisabledIfHeadless {
     /**
      * The optional reason why the test is not run when headless.
