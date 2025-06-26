@@ -88,7 +88,8 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>Resolved a Console log 'Error' message that could be seen when
+                    using the Slot Monitor's "Clear All Non-InUse Slots" button.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -530,7 +531,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Upgrade YAAT to 3.4.  The @include statement has been added.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -650,4 +651,3 @@
         <ul>
             <li></li>
         </ul>
-

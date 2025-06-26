@@ -110,16 +110,16 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         }
 
         if (p.getConnectA() != null) {
-            element.setAttribute("connectaname", ((TrackSegment) p.getConnectA()).getId());
+            element.setAttribute("connectaname", p.getConnectA().getId());
         }
         if (p.getConnectB() != null) {
-            element.setAttribute("connectbname", ((TrackSegment) p.getConnectB()).getId());
+            element.setAttribute("connectbname", p.getConnectB().getId());
         }
         if (p.getConnectC() != null) {
-            element.setAttribute("connectcname", ((TrackSegment) p.getConnectC()).getId());
+            element.setAttribute("connectcname", p.getConnectC().getId());
         }
         if (p.getConnectD() != null) {
-            element.setAttribute("connectdname", ((TrackSegment) p.getConnectD()).getId());
+            element.setAttribute("connectdname", p.getConnectD().getId());
         }
 
         if (!p.getSignalA1Name().isEmpty()) {
