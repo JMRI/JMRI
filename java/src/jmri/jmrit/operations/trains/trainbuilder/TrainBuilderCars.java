@@ -506,6 +506,13 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
                                 rl.getId(), rl.getName()));
             }
+            // can this car be pulled from an interchange or spur?
+            if (!checkPickupInterchangeOrSpur(car)) {
+                _carList.remove(car);
+                _carIndex--; // removed car from list, so backup pointer
+                addLine(_buildReport, FIVE, BLANK_LINE);
+                continue; // no
+            }
             // can this car be picked up?
             if (!checkPickUpTrainDirection(car, rl)) {
                 addLine(_buildReport, FIVE, BLANK_LINE);
@@ -2035,6 +2042,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         cloneCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
         cloneCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
         cloneCar.setPreviousScheduleId(car.getScheduleItemId());
+        cloneCar.setLastRouteId(car.getLastRouteId());
         // for timing, use arrival times for the train that is building
         // other trains will use their departure time, loaded when creating the Manifest
         String expectedArrivalTime = _train.getExpectedArrivalTime(rld, true);
@@ -2064,6 +2072,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // move car to new location for later pick up
         car.setLocation(track.getLocation(), track, RollingStock.FORCE);
         car.setLastTrain(_train);
+        car.setLastRouteId(_train.getRoute().getId());
         // this car was moved during the build process
         car.setLastDate(_startTime);
         car.setCloneOrder(cloneCreationOrder); // for reset

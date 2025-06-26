@@ -787,8 +787,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
 
             // remove cabooses that have a destination that isn't the terminal,
-            // no caboose
-            // changes in the train's route
+            // and no caboose changes in the train's route
             if (car.isCaboose() &&
                     car.getDestination() != null &&
                     car.getDestination() != _terminateLocation &&
@@ -802,48 +801,12 @@ public class TrainBuilderBase extends TrainCommon {
                 continue;
             }
 
-            // is car at interchange?
-            if (car.getTrack().isInterchange()) {
-                // don't service a car at interchange and has been dropped off
-                // by this train
-                if (car.getTrack().getPickupOption().equals(Track.ANY) &&
-                        car.getLastRouteId().equals(_train.getRoute().getId())) {
-                    addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarDropByTrain", car.toString(),
-                            car.getTypeName(), _train.getRoute().getName(), car.getLocationName(), car.getTrackName()));
-                    _carList.remove(car);
-                    i--;
-                    continue;
-                }
-            }
             // is car at interchange or spur and is this train allowed to pull?
-            if (car.getTrack().isInterchange() || car.getTrack().isSpur()) {
-                if (car.getTrack().getPickupOption().equals(Track.TRAINS) ||
-                        car.getTrack().getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
-                    if (car.getTrack().isPickupTrainAccepted(_train)) {
-                        log.debug("Car ({}) can be picked up by this train", car.toString());
-                    } else {
-                        addLine(_buildReport, SEVEN,
-                                Bundle.getMessage("buildExcludeCarByTrain", car.toString(), car.getTypeName(),
-                                        car.getTrack().getTrackTypeName(), car.getLocationName(), car.getTrackName()));
-                        _carList.remove(car);
-                        i--;
-                        continue;
-                    }
-                } else if (car.getTrack().getPickupOption().equals(Track.ROUTES) ||
-                        car.getTrack().getPickupOption().equals(Track.EXCLUDE_ROUTES)) {
-                    if (car.getTrack().isPickupRouteAccepted(_train.getRoute())) {
-                        log.debug("Car ({}) can be picked up by this route", car.toString());
-                    } else {
-                        addLine(_buildReport, SEVEN,
-                                Bundle.getMessage("buildExcludeCarByRoute", car.toString(), car.getTypeName(),
-                                        car.getTrack().getTrackTypeName(), car.getLocationName(), car.getTrackName()));
-                        _carList.remove(car);
-                        i--;
-                        continue;
-                    }
-                }
+            if (!checkPickupInterchangeOrSpur(car)) {
+                _carList.remove(car);
+                i--;
+                continue;
             }
-
             // note that for trains departing staging the engine and car roads,
             // types, owners, and built date were already checked.
 
@@ -1520,6 +1483,51 @@ public class TrainBuilderBase extends TrainCommon {
 
         addLine(_buildReport, ONE, Bundle.getMessage("buildLocDirection", rl.getName(), rl.getTrainDirectionString()));
         return false;
+    }
+
+    /**
+     * Determines if car can be pulled from an interchange or spur. Needed for
+     * quick service tracks.
+     * 
+     * @param car the car being pulled
+     * @return true if car can be pulled, otherwise false.
+     */
+    protected boolean checkPickupInterchangeOrSpur(Car car) {
+        if (car.getTrack().isInterchange()) {
+            // don't service a car at interchange and has been dropped off
+            // by this train
+            if (car.getTrack().getPickupOption().equals(Track.ANY) &&
+                    car.getLastRouteId().equals(_train.getRoute().getId())) {
+                addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarDropByTrain", car.toString(),
+                        car.getTypeName(), _train.getRoute().getName(), car.getLocationName(), car.getTrackName()));
+                return false;
+            }
+        }
+        // is car at interchange or spur and is this train allowed to pull?
+        if (car.getTrack().isInterchange() || car.getTrack().isSpur()) {
+            if (car.getTrack().getPickupOption().equals(Track.TRAINS) ||
+                    car.getTrack().getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
+                if (car.getTrack().isPickupTrainAccepted(_train)) {
+                    log.debug("Car ({}) can be picked up by this train", car.toString());
+                } else {
+                    addLine(_buildReport, SEVEN,
+                            Bundle.getMessage("buildExcludeCarByTrain", car.toString(), car.getTypeName(),
+                                    car.getTrack().getTrackTypeName(), car.getLocationName(), car.getTrackName()));
+                    return false;
+                }
+            } else if (car.getTrack().getPickupOption().equals(Track.ROUTES) ||
+                    car.getTrack().getPickupOption().equals(Track.EXCLUDE_ROUTES)) {
+                if (car.getTrack().isPickupRouteAccepted(_train.getRoute())) {
+                    log.debug("Car ({}) can be picked up by this route", car.toString());
+                } else {
+                    addLine(_buildReport, SEVEN,
+                            Bundle.getMessage("buildExcludeCarByRoute", car.toString(), car.getTypeName(),
+                                    car.getTrack().getTrackTypeName(), car.getLocationName(), car.getTrackName()));
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**

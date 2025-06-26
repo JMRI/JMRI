@@ -3319,7 +3319,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <a href="#TrainTurnRoute">train turn</a>, select this option. On the outbound leg of the
       train's route, OperationsPro will drop off the car to the spur. On the inbound leg of the
       train's route the car will be pulled and eventually dropped off by the train to the car's
-      destination and track.
+      destination and track. The Manifest below shows boxcars APOX 554 and 556 being dropped off at
+      Bedford Packaging on the eastbound leg, and later pulled on the westbound leg of the train's
+      route.
+
+      <p>
+        <img src="images/Turn.png" alt="">
+      </p>
 
       <p>
         The quick load service feature allows the "turn" or another train to pull the car. For the

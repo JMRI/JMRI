@@ -1075,6 +1075,7 @@ public class Car extends RollingStock {
                 car.setLocation(getLocation(), getTrack(), Car.FORCE);
                 car.setLoadName(getLoadName());
                 car.setLastTrain(getLastTrain());
+                car.setLastRouteId(getLastRouteId());
                 car.setLastDate(getLastDate());
                 car.setFinalDestination(getPreviousFinalDestination());
                 car.setFinalDestinationTrack(getPreviousFinalDestinationTrack());
