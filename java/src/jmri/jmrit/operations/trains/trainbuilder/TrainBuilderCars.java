@@ -1551,7 +1551,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                         tracks.get(0).getTrackTypeName(),
                                         tracks.get(0).getLocation().getName(), tracks.get(0).getName(),
                                         rld.getCarMoves(), rld.getMaxCarMoves()));
-                        car = checkQuickServiceArrival(car, rld, tracks.get(0));
                         addCarToTrain(car, rl, rld, tracks.get(0));
                         return true;
                     }
@@ -1579,7 +1578,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                 (status = checkReserved(_train, rld, car, car.getDestinationTrack(), true))
                                         .equals(Track.OKAY)) {
                             Track destTrack = car.getDestinationTrack();
-                            car = checkQuickServiceArrival(car, rld, destTrack);
                             addCarToTrain(car, rl, rld, destTrack);
                             return true;
                         }
@@ -1906,13 +1904,74 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     finalDestinationTrackSave.bumpMoves(); // bump move count
                 }
             }
-            car = checkQuickServiceArrival(car, rldSave, trackSave);
             addCarToTrain(car, rl, rldSave, trackSave);
             return true;
         }
         addLine(_buildReport, FIVE, Bundle.getMessage("buildNoDestForCar", car.toString()));
         addLine(_buildReport, FIVE, BLANK_LINE);
         return false; // no build errors, but car not given destination
+    }
+
+    /**
+     * Add car to train, and adjust train length and weight
+     *
+     * @param car   the car being added to the train
+     * @param rl    the departure route location for this car
+     * @param rld   the destination route location for this car
+     * @param track the destination track for this car
+     */
+    protected void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
+        car = checkQuickServiceArrival(car, rld, track);
+        addLine(_buildReport, THREE,
+                Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName()));
+        car.setDestination(track.getLocation(), track, Car.FORCE);
+        int length = car.getTotalLength();
+        int weightTons = car.getAdjustedWeightTons();
+        // car could be part of a kernel
+        if (car.getKernel() != null) {
+            length = car.getKernel().getTotalLength(); // includes couplers
+            weightTons = car.getKernel().getAdjustedWeightTons();
+            List<Car> kCars = car.getKernel().getCars();
+            addLine(_buildReport, THREE,
+                    Bundle.getMessage("buildCarPartOfKernel", car.toString(), car.getKernelName(), kCars.size(),
+                            car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()));
+            for (Car kCar : kCars) {
+                if (kCar != car) {
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildCarKernelAssignedDest", kCar.toString(),
+                            kCar.getKernelName(), rld.getName(), track.getName()));
+                    kCar.setTrain(_train);
+                    kCar.setRouteLocation(rl);
+                    kCar.setRouteDestination(rld);
+                    kCar.setDestination(track.getLocation(), track, Car.FORCE); // force destination
+                    // save final destination and track values in case of train reset
+                    kCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
+                    kCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
+                }
+            }
+            car.updateKernel();
+        }
+        // warn if car's load wasn't generated out of staging
+        if (!_train.isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
+            _warnings++;
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("buildWarnCarDepartStaging", car.toString(), car.getLoadName()));
+        }
+        addLine(_buildReport, THREE, BLANK_LINE);
+        _numberCars++; // bump number of cars moved by this train
+        _completedMoves++; // bump number of car pick up moves for the location
+        _reqNumOfMoves--; // decrement number of moves left for the location
+
+        if (_carList.remove(car)) {
+            _carIndex--; // removed car from list, so backup pointer
+        }
+
+        rl.setCarMoves(rl.getCarMoves() + 1);
+        if (rl != rld) {
+            rld.setCarMoves(rld.getCarMoves() + 1);
+        }
+        // now adjust train length and weight for each location that car is in
+        // the train
+        finishAddRsToTrain(car, rl, rld, length, weightTons);
     }
 
     /**
@@ -2004,20 +2063,22 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 car.reset();
             }
             _carList.add(0, car);
-            car = checkQuickServiceArrival(car, rld, track);
             addCarToTrain(car, rl, rld, track);
         }
     }
 
     /**
-     * Checks to see if spur/industry is requesting a quick turn, which means
-     * that on the outbound side of the turn a car or set of cars in a kernel
-     * are set out, and on the return side of the turn the same cars are pulled.
-     * Since it isn't possible for a car to be pulled and set out twice, this
-     * code creates a second "clone" car to create the requested Manifest. A car
-     * could have multiple clones, therefore each clone has a creation order
-     * number. The first clone is used to restore a car's location and load in
-     * the case of reset.
+     * Checks to see if spur/industry is requesting a quick load service, which
+     * means that on the outbound side of the turn a car or set of cars in a
+     * kernel are set out, and on the return side of the turn the same cars are
+     * pulled. Since it isn't possible for a car to be pulled and set out twice,
+     * this code creates a second "clone" car to create the requested Manifest.
+     * A car could have multiple clones, therefore each clone has a creation
+     * order number. The first clone is used to restore a car's location and
+     * load in the case of reset.
+     * <p>
+     * Also works with an interchange track to make the car immediately
+     * available to be pulled by the next train being built.
      * 
      * @param car   the car possibly needing a quick turn
      * @param track the destination track
