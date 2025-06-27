@@ -1893,7 +1893,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 rldSave = rl; // make local move
             } else if (trackSave.isSpur()) {
                 car.setScheduleItemId(trackSave.getScheduleItemId());
-                car = checkQuickServiceArrival(car, rldSave, trackSave);
                 trackSave.bumpSchedule();
                 log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),
                         trackSave.getName(), car.getScheduleItemId());
@@ -1907,6 +1906,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     finalDestinationTrackSave.bumpMoves(); // bump move count
                 }
             }
+            car = checkQuickServiceArrival(car, rldSave, trackSave);
             addCarToTrain(car, rl, rldSave, trackSave);
             return true;
         }
