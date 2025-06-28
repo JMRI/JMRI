@@ -65,7 +65,7 @@ then
 else
     dd if=/dev/zero of="$IMAGEFILE" bs=1M count=${imagesize}
     mkfs.hfsplus -v "JMRI ${REL_VER}" "${IMAGEFILE}"
-    sudo mount -t hfsplus -o loop,rw,uid=$UID "$IMAGEFILE" $tmpdir
+    sudo mount -t hfsplus -o force,loop,rw,uid=$UID "$IMAGEFILE" $tmpdir
     trap '[ "$EJECTED" = 0 ] && sudo umount "$tmpdir"' 0
 fi
 
