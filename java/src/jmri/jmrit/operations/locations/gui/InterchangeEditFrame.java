@@ -10,10 +10,9 @@ import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
 import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
 
 /**
- * Frame for user edit of a classification/interchange track. Adds two panels to
- * TrackEditFrame for train/route car drops and pulls.
+ * Frame for user edit of a classification/interchange track.
  *
- * @author Dan Boudreau Copyright (C) 2008, 2011, 2012
+ * @author Dan Boudreau Copyright (C) 2008, 2011, 2012, 2025
  */
 public class InterchangeEditFrame extends TrackEditFrame {
 
@@ -35,7 +34,7 @@ public class InterchangeEditFrame extends TrackEditFrame {
     public void initComponents(Location location, Track track) {
         _type = Track.INTERCHANGE;
 
-        // setup the optional panel with schedule stuff
+        // setup the optional panel with quick service checkbox
         panelQuickService.setLayout(new GridBagLayout());
         panelQuickService.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("QuickService")));
@@ -63,6 +62,12 @@ public class InterchangeEditFrame extends TrackEditFrame {
         // finish
         pack();
         setVisible(true);
+    }
+
+    @Override
+    protected void enableButtons(boolean enabled) {
+        quickServiceCheckBox.setEnabled(enabled);
+        super.enableButtons(enabled);
     }
 
     @Override

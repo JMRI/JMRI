@@ -1340,67 +1340,6 @@ public class TrainBuilderBase extends TrainCommon {
         return false;
     }
 
-    /**
-     * Add car to train, and adjust train length and weight
-     *
-     * @param car   the car being added to the train
-     * @param rl    the departure route location for this car
-     * @param rld   the destination route location for this car
-     * @param track the destination track for this car
-     */
-    protected void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
-        addLine(_buildReport, THREE,
-                Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName()));
-        car.setDestination(track.getLocation(), track, Car.FORCE);
-        int length = car.getTotalLength();
-        int weightTons = car.getAdjustedWeightTons();
-        // car could be part of a kernel
-        if (car.getKernel() != null) {
-            length = car.getKernel().getTotalLength(); // includes couplers
-            weightTons = car.getKernel().getAdjustedWeightTons();
-            List<Car> kCars = car.getKernel().getCars();
-            addLine(_buildReport, THREE,
-                    Bundle.getMessage("buildCarPartOfKernel", car.toString(), car.getKernelName(), kCars.size(),
-                            car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()));
-            for (Car kCar : kCars) {
-                if (kCar != car) {
-                    addLine(_buildReport, THREE, Bundle.getMessage("buildCarKernelAssignedDest", kCar.toString(),
-                            kCar.getKernelName(), rld.getName(), track.getName()));
-                    kCar.setTrain(_train);
-                    kCar.setRouteLocation(rl);
-                    kCar.setRouteDestination(rld);
-                    kCar.setDestination(track.getLocation(), track, Car.FORCE); // force destination
-                    // save final destination and track values in case of train reset
-                    kCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
-                    kCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
-                }
-            }
-            car.updateKernel();
-        }
-        // warn if car's load wasn't generated out of staging
-        if (!_train.isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
-            _warnings++;
-            addLine(_buildReport, SEVEN,
-                    Bundle.getMessage("buildWarnCarDepartStaging", car.toString(), car.getLoadName()));
-        }
-        addLine(_buildReport, THREE, BLANK_LINE);
-        _numberCars++; // bump number of cars moved by this train
-        _completedMoves++; // bump number of car pick up moves for the location
-        _reqNumOfMoves--; // decrement number of moves left for the location
-
-        if (_carList.remove(car)) {
-            _carIndex--; // removed car from list, so backup pointer
-        }
-
-        rl.setCarMoves(rl.getCarMoves() + 1);
-        if (rl != rld) {
-            rld.setCarMoves(rld.getCarMoves() + 1);
-        }
-        // now adjust train length and weight for each location that car is in
-        // the train
-        finishAddRsToTrain(car, rl, rld, length, weightTons);
-    }
-
     protected void finishAddRsToTrain(RollingStock rs, RouteLocation rl, RouteLocation rld, int length,
             int weightTons) {
         // notify that locations have been modified when build done
