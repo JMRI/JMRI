@@ -35,9 +35,6 @@ public class Car extends RollingStock {
     protected String _loadName = carLoads.getDefaultEmptyName();
     protected int _wait = 0;
 
-    protected boolean _clone = false;
-    protected int _cloneOrder = 9999999;
-
     protected Location _rweDestination = null; // return when empty destination
     protected Track _rweDestTrack = null; // return when empty track
     protected String _rweLoadName = carLoads.getDefaultEmptyName();
@@ -112,6 +109,8 @@ public class Car extends RollingStock {
         car.setBlocking(getBlocking());
         car.setLastTrain(getLastTrain());
         car.setLastDate(getLastDate());
+        car.setLastLocationId(getLastLocationId());
+        car.setLastTrackId(getLastTrackId());
         car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
         car.setDivision(getDivision());
         car.loaded = true;
@@ -170,26 +169,6 @@ public class Car extends RollingStock {
      */
     public boolean hasFred() {
         return _fred;
-    }
-
-    public void setClone(boolean clone) {
-        boolean old = _clone;
-        _clone = clone;
-        if (!old == clone) {
-            setDirtyAndFirePropertyChange("car clone", old ? "true" : "false", clone ? "true" : "false"); // NOI18N
-        }
-    }
-
-    public boolean isClone() {
-        return _clone;
-    }
-
-    public void setCloneOrder(int number) {
-        _cloneOrder = number;
-    }
-
-    public int getCloneOrder() {
-        return _cloneOrder;
     }
 
     public void setLoadName(String load) {
@@ -1129,9 +1108,6 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.UTILITY)) != null) {
             _utility = a.getValue().equals(Xml.TRUE);
         }
-        if ((a = e.getAttribute(Xml.CLONE)) != null) {
-            _clone = a.getValue().equals(Xml.TRUE);
-        }
         if ((a = e.getAttribute(Xml.KERNEL)) != null) {
             Kernel k = InstanceManager.getDefault(KernelManager.class).getKernelByName(a.getValue());
             if (k != null) {
@@ -1229,9 +1205,6 @@ public class Car extends RollingStock {
         }
         if (isUtility()) {
             e.setAttribute(Xml.UTILITY, isUtility() ? Xml.TRUE : Xml.FALSE);
-        }
-        if (isClone()) {
-            e.setAttribute(Xml.CLONE, isClone() ? Xml.TRUE : Xml.FALSE);
         }
         if (getKernel() != null) {
             e.setAttribute(Xml.KERNEL, getKernelName());
