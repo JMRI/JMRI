@@ -30,7 +30,8 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
     static final int SVERSIONCOL = 4;
     public static final int CONFIGURECOL = 5;
     public static final int UPGRADECOL = 6;
-    public static final int NUMCOL = UPGRADECOL + 1;
+    public static final int DESCRIPTIONCOL = 7;
+    public static final int NUMCOL = DESCRIPTIONCOL + 1;
 
     CanSystemConnectionMemo memo;
     MimicNodeStore nodestore;
@@ -92,6 +93,8 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                 return Bundle.getMessage("FieldConfig");
             case UPGRADECOL:
                 return Bundle.getMessage("FieldUpgrade");
+            case DESCRIPTIONCOL:
+                return Bundle.getMessage("FieldDescription");
             default:
                 return "<unexpected column number>";
         }
@@ -168,6 +171,8 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                 } else {
                     return null;
                 }
+            case DESCRIPTIONCOL:
+                return snip.getUserDesc();
             default:
                 return "<unexpected column number>";
         }

@@ -126,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Added a column to the LccPro main window for the node's user-entered description.</li>
             </ul>
 
         <h4>Powerline</h4>
