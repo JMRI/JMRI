@@ -40,7 +40,7 @@ class CreateAndShowGUI7(TableModelListener):
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
 
-        button_close = JButton("Close", actionPerformed = self.close_action)
+        button_close = JButton("Save and Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
         self.buttonPane.add(Box.createHorizontalGlue())
 
@@ -119,6 +119,7 @@ class CreateAndShowGUI7(TableModelListener):
         return height
 
     def close_action(self, event):
+        self.save()
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
 
     def save_action(self, event):
