@@ -2156,7 +2156,8 @@ public class TrainCommon {
 
     /*
      * Converts String time DAYS:HH:MM and DAYS:HH:MM AM/PM to minutes from
-     * midnight.
+     * midnight. Note that the string time could be blank, and in that case
+     * returns 0 minutes.
      */
     protected int convertStringTime(String time) {
         int minutes = 0;

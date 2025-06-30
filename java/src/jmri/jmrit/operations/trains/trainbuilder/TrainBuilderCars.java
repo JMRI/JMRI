@@ -2167,17 +2167,19 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      */
     private boolean checkQuickServiceDeparting(Car car, RouteLocation rl) {
         if (car.getTrack().isQuickServiceEnabled()) {
-            // was the car delivered using this route location?
-            if (car.getRouteDestination() == rl) {
-                addLine(_buildReport, FIVE,
-                        Bundle.getMessage("buildCarRouteLocation", car.toString(), car.getTrack().getTrackTypeName(),
-                                car.getLocationName(), car.getTrackName(), _train.getName(), rl.getName(), rl.getId()));
-                addLine(_buildReport, FIVE, BLANK_LINE);
-                return false;
-            }
-            // determine when the clone is going to be delivered
             Car clone = getClone(car);
             if (clone != null) {
+                // was the car delivered using this route location?
+                if (car.getRouteDestination() == rl) {
+                    addLine(_buildReport, FIVE,
+                            Bundle.getMessage("buildCarRouteLocation", car.toString(),
+                                    car.getTrack().getTrackTypeName(),
+                                    car.getLocationName(), car.getTrackName(), _train.getName(), rl.getName(),
+                                    rl.getId()));
+                    addLine(_buildReport, FIVE, BLANK_LINE);
+                    return false;
+                }
+                // determine when the clone is going to be delivered
                 String trainExpectedArrival = _train.getExpectedArrivalTime(rl, true);
                 int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
                 int cloneSetoutTimeMinutes = convertStringTime(clone.getSetoutTime());
