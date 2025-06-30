@@ -235,6 +235,7 @@
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
 <!ATTLIST display showTrackMoves		(true | false ) "false">
+<!ATTLIST display showClones			(true | false ) "false">
 
 <!ATTLIST headerLines printHeaderLine1	(true | false ) "true">
 <!ATTLIST headerLines printHeaderLine2	(true | false ) "true">
@@ -387,7 +388,7 @@
 <!ATTLIST switchListTrack text			CDATA #IMPLIED>
 <!ATTLIST holdCar text					CDATA #IMPLIED>
 
-<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt | display)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
 <!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">
