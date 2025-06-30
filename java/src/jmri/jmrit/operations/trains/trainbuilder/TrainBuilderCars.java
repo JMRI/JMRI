@@ -2126,6 +2126,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     // move car to new location for later pick up
                     kar.setLocation(track.getLocation(), track, RollingStock.FORCE);
                     kar.setLastTrain(_train);
+                    kar.setLastLocationId(car.getLocationId());
+                    kar.setLastTrackId(car.getTrackId());
+                    kar.setLastDate(_startTime);
                     kar.setCloneOrder(cloneCreationOrder); // for reset
                 }
             }
@@ -2133,6 +2136,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // move car to new location for later pick up
         car.setLocation(track.getLocation(), track, RollingStock.FORCE);
         car.setLastTrain(_train);
+        car.setLastLocationId(cloneCar.getLocationId());
+        car.setLastTrackId(cloneCar.getTrackId());
         car.setLastRouteId(_train.getRoute().getId());
         // this car was moved during the build process
         car.setLastDate(_startTime);

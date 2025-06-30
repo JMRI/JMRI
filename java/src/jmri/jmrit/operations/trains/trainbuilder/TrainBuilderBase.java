@@ -1133,6 +1133,7 @@ public class TrainBuilderBase extends TrainCommon {
             }
             // check to see that all cars have the same location and track
             if (car.getLocation() != c.getLocation() ||
+                    c.getTrack() == null ||
                     !car.getTrack().getSplitName().equals(c.getTrack().getSplitName())) {
                 throw new BuildFailedException(Bundle.getMessage("buildErrorCarKernelLocation", c.toString(),
                         car.getKernelName(), c.getLocationName(), c.getTrackName(), car.toString(),
@@ -2363,6 +2364,7 @@ public class TrainBuilderBase extends TrainCommon {
                     destTrack.getAvailableTrackSpace(), destTrack.getReserved());
             if (length > destTrack.getAvailableTrackSpace() +
                     destTrack.getReserved()) {
+                boolean returned = false;
                 String trainExpectedArrival = train.getExpectedArrivalTime(rld, true);
                 int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
                 int reservedReturned = 0;
@@ -2385,10 +2387,11 @@ public class TrainBuilderBase extends TrainCommon {
                                                 _train.getName(), trainExpectedArrival));
                             }
                             reservedReturned += kar.getTotalLength();
+                            returned = true;
                         }
                     }
                 }
-                if (length > destTrack.getAvailableTrackSpace() - reservedReturned) {
+                if (returned && length > destTrack.getAvailableTrackSpace() - reservedReturned) {
                     if (printMsg) {
                         addLine(_buildReport, SEVEN,
                                 Bundle.getMessage("buildWarnTrainTiming", car.toString(), destTrack.getTrackTypeName(),

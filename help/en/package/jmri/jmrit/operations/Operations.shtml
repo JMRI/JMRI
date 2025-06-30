@@ -190,6 +190,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#CreateClassificationYard">How to Create a Classification Yard</a></li>
                 <li><a href="#ExchangeBetweenFreightAndLocal">How to Exchange Cars Between
                     Through Freight and Local Switcher</a></li>
+                <li><a href="#CreateArrivalDeparture">How to Create Arrival/Departure (A/D)
+                    Tracks using C/I Tracks</a></li>
               </ul></li>
 
             <li><a href="#Staging">Staging Tracks</a>
@@ -3021,6 +3023,42 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       solution is to use the <a href="#PlannedPickUps">Planned Pick Ups</a> feature for both spur
       tracks.
 
+      <h3 id="CreateArrivalDeparture">How to Create Arrival/Departure (A/D) Tracks using C/I
+        Tracks</h3>
+      The easiest way to create <a href="#ArrivalDepartureTracks">Arrival
+        and Departure Tracks</a> is with <a href="#Staging">staging</a> tracks. However, it is
+      possible to create one or more arrival or departure tracks using C/I tracks. You need to tell
+      the program you want all of your cars to arrive or depart on one track. There are several ways
+      to do this. The easiest is to create a location with two C/I tracks and configure each so that
+      your main line trains can only set out cars to one of the C/I tracks, and only pull from the
+      other. See
+      <a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain Trains or Routes</a>
+      for more details. To service the A/D tracks, you would create a switcher that would pull cars
+      off the arrival track and place them where needed. The could be a location using a "similar"
+      name using the hyphen feature, or whatever location name you want. Same goes for servicing the
+      departure track. The switcher would be configured to pull cars off the desired tracks and
+      place them on the departure track.
+      <p>
+        Now if you desire two or more arrival or departure tracks and you want to create them using
+        C/I tracks, things get a little more complicated. You might configure your A/D tracks to
+        only service trains arriving or departing by direction. For example you could configure one
+        arrival track to only accept westbound trains, and the other eastbound trains. Another
+        method would be to create several A/D tracks, but only allow certain trains to use them. For
+        example, you might have 10 trains that can use your A/D tracks, you could configure them so
+        that 5 could use one set of A/D tracks and the remaining 5 the another set of A/D tracks.
+        Another choice is to create one A/D track for every main line train and <a href="#Pools">pool</a>
+        the track space together. Again the track names could be unique, or "similar" using the
+        hyphen feature. In all cases, the key is to get the program to show the main trains arriving
+        or departing from only one track.
+      </p>
+
+      <p>The one advantage of using C/I tracks for A/D is that you can if you wish show your
+        engines and cabooses being serviced by other tracks. For example, you could have a caboose
+        track that services all A/D tracks at a location, and your Manifest would show serving the
+        caboose from the caboose track when the train departs or arrives. Same goes with regards to
+        engines, you could show engines serviced by tracks you define when the train arrives or
+        departs.</p>
+
       <h3 id="Staging">Staging Tracks</h3>
       Staging tracks are normally used to represent locations that generate traffic to and from your
       layout. Many times physical access to staging tracks is limited, therefore the program places
@@ -3255,9 +3293,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="ArrivalDepartureTracks">Arrival and Departure Tracks</h3>
       To create several arrival or departure (A/D) tracks for a location, the correct track type to
-      use is staging. The staging track option will force the locomotives and cars to one track. If
-      you only need one arrival and one departure track, you could with proper configuration use <a
-        href="#Interchange">classification/interchange</a> tracks.
+      use is
+      <a href="#Staging">staging</a>. The staging track option will force the locomotives and cars
+      to one track. If you only need one arrival and one departure track, you could with proper
+      configuration use
+      <a href="#Interchange">classification/interchange</a> tracks.
 
       <p>
         When using staging tracks for A/D you need to consider the following. To prevent any changes

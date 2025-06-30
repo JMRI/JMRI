@@ -232,7 +232,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         }
         String rsName = rs.toString();
         // put clones in the same file as original car
-        if (Car.class.isInstance(rs) && ((Car) rs).isClone()) {
+        if (rs.isClone()) {
             rsName = rs.getRoadName() + " " + rs.getNumber().split(Car.CLONE_REGEX)[0];
         }
         return loggingDirectory + File.separator + "rollingStock" + File.separator + rsName + ".csv"; // NOI18N

@@ -763,7 +763,12 @@ public class Track extends PropertyChangeSupport {
         int old = _dropRS;
         _dropRS++;
         bumpMoves();
-        setReserved(getReserved() + rs.getTotalLength());
+        // don't reserve clones
+        if (rs.isClone()) {
+            log.debug("Ignoring clone {} add drop reserve", rs.toString());
+        } else {
+            setReserved(getReserved() + rs.getTotalLength());
+        }
         _reservedLengthDrops = _reservedLengthDrops + rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackAddDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
     }
@@ -771,7 +776,12 @@ public class Track extends PropertyChangeSupport {
     public void deleteDropRS(RollingStock rs) {
         int old = _dropRS;
         _dropRS--;
-        setReserved(getReserved() - rs.getTotalLength());
+        // don't reserve clones
+        if (rs.isClone()) {
+            log.debug("Ignoring clone {} delete drop reserve", rs.toString());
+        } else {
+            setReserved(getReserved() - rs.getTotalLength());
+        }
         _reservedLengthDrops = _reservedLengthDrops - rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackDeleteDropRS", Integer.toString(old), // NOI18N
                 Integer.toString(_dropRS));
@@ -1544,29 +1554,31 @@ public class Track extends PropertyChangeSupport {
             }
         }
         if (rs.getTrack() != this &&
-                rs.getDestinationTrack() != this &&
-                (getUsedLength() + getReserved() + rsLength) > getLength()) {
-            // not enough track length check to see if track is in a pool
-            if (getPool() != null && getPool().requestTrackLength(this, rsLength)) {
-                return OKAY;
-            }
-            // ignore used length option?
-            if (checkPlannedPickUps(rsLength)) {
-                return OKAY;
-            }
-            // Is rolling stock too long for this track?
-            if ((getLength() < rsLength && getPool() == null) ||
-                    (getPool() != null && getPool().getTotalLengthTracks() < rsLength)) {
-                return Bundle.getMessage("capacityIssue",
-                        CAPACITY, rsLength, Setup.getLengthUnit().toLowerCase(), getLength());
-            }
+                rs.getDestinationTrack() != this) {
+            if (getUsedLength() + getReserved() + rsLength > getLength() ||
+                    getReservedLengthDrops() + rsLength > getLength()) {
+                // not enough track length check to see if track is in a pool
+                if (getPool() != null && getPool().requestTrackLength(this, rsLength)) {
+                    return OKAY;
+                }
+                // ignore used length option?
+                if (checkPlannedPickUps(rsLength)) {
+                    return OKAY;
+                }
+                // Is rolling stock too long for this track?
+                if ((getLength() < rsLength && getPool() == null) ||
+                        (getPool() != null && getPool().getTotalLengthTracks() < rsLength)) {
+                    return Bundle.getMessage("capacityIssue",
+                            CAPACITY, rsLength, Setup.getLengthUnit().toLowerCase(), getLength());
+                }
 
-            // The code assumes everything is fine with the track if the Length issue is returned.
-            log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(),
-                    getLocation().getName(), getName()); // NOI18N
+                // The code assumes everything is fine with the track if the Length issue is returned.
+                log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(),
+                        getLocation().getName(), getName()); // NOI18N
 
-            return Bundle.getMessage("lengthIssue",
-                    LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength());
+                return Bundle.getMessage("lengthIssue",
+                        LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength());
+            }
         }
         return OKAY;
     }
