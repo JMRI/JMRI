@@ -235,7 +235,7 @@
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
 <!ATTLIST display showTrackMoves		(true | false ) "false">
-<!ATTLIST display showClones			(true | false ) "false">
+<!ATTLIST display showClones			(true | false ) "true">
 
 <!ATTLIST headerLines printHeaderLine1	(true | false ) "true">
 <!ATTLIST headerLines printHeaderLine2	(true | false ) "true">
