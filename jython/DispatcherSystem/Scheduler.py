@@ -295,7 +295,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                                 if len(station_name_list_gbl) == 1:
                                     group_location_mqtt_gbl = station_name_list_gbl[0]   # the first and only station  station1
                                 else:
-                                    group_location_mqtt_gbl = self.get_group_station_name(station_name_list_gbl)
+                                    group_location_mqtt_gbl = self.get_group_station_name(station_name_list_mqtt_gbl)
+                                    print "group_location_mqtt_gbl", group_location_mqtt_gbl
                             else:
                                 group_location_mqtt_gbl = result[0]
                                 print "group_location_mqtt_gbl", group_location_mqtt_gbl
@@ -385,30 +386,30 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         # print "station_name_list_gbl", station_name_list_gbl
         concatenated_names = " ".join(station_name_list_gbl)    # [station1,station2]
-        # print "concatenated_names", concatenated_names
+        print "concatenated_names", concatenated_names
 
         station_groups = []
         for station_name in station_name_list_gbl:
             LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
             location = LocationManager.getLocationByName(station_name)
             station_group = MyTableModel7().get_location_station_group(location)
-            # print "station_name", station_name, "station_group", station_group.replace(" ", "*")
+            print "station_name", station_name, "station_group", station_group.replace(" ", "*")
             if station_group != "" and station_group != " ":
                 station_groups.append(station_group)
-                # print "appending station_groups", station_groups
+                print "appending station_groups", station_groups
         counter = Counter(station_groups)
-        # print "counter", counter
-        # print "counter.most_common(1)", counter.most_common(1)
+        print "counter", counter
+        print "counter.most_common(1)", counter.most_common(1)
         most_common_item = " "
         if counter.most_common() != []:
             most_common_item = counter.most_common(1)[0][0]
-            # print "most_common_item", most_common_item
+            print "most_common_item", most_common_item
 
         if most_common_item != " ":
             group_location_gbl = most_common_item.strip()   # need an option to rename this
         else:
             group_location_gbl = concatenated_names
-        # print "group_location_gbl", group_location_gbl
+        print "group_location_gbl", group_location_gbl
 
         return group_location_gbl
 

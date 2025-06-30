@@ -186,8 +186,14 @@ class createandshowGUI3(TableModelListener):
 
     def del_trains_action(self, e):
         global trains_allocated
-        for train_name_to_remove in trains_allocated:
-            trains_allocated.remove(train_name_to_remove)
+        # for train_name_to_remove in trains_allocated:
+        #     trains_allocated.remove(train_name_to_remove)
+        trains_allocated_list = java.util.concurrent.CopyOnWriteArrayList()
+        for train in trains_allocated:
+            trains_allocated_list.add(train)
+        for train in trains_allocated_list:
+            if self.logLevel > 0: print "train in trains_allocated", train, ": trains_allocated", trains_allocated
+            trains_allocated.remove(train)
         self.model.populate()
         self.completeTablePanel()
 
