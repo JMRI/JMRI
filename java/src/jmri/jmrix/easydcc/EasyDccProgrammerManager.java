@@ -32,12 +32,12 @@ public class EasyDccProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new EasyDccOpsModeProgrammer(pAddress, pLongAddress, _memo);
     }
 
     @Override
-    public AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 

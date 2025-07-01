@@ -53,7 +53,7 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if (_memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF)
         {
 
@@ -69,7 +69,7 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

@@ -61,7 +61,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if (manager instanceof AddressedProgrammerManager) {
             return ((AddressedProgrammerManager) manager).reserveAddressedProgrammer(pLongAddress, pAddress);
         }

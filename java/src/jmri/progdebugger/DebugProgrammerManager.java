@@ -32,7 +32,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
     HashMap<Integer, ProgDebugger> opsProgrammers = new HashMap<>();
 
     @Override
-    public AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         int address = pAddress;
         if (!pLongAddress) {
             address = -address;

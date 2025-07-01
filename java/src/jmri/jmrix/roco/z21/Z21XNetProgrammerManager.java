@@ -35,7 +35,7 @@ public class Z21XNetProgrammerManager extends jmri.jmrix.lenz.XNetProgrammerMana
     }
 
     @Override
-    public AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if(lnMemo!=null) {
            return new Z21XNetOpsModeProgrammer(pAddress, tc, lnMemo.getLnTrafficController());
         } else {
