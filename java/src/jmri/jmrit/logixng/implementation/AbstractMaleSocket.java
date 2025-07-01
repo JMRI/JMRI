@@ -713,6 +713,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
      * @param  messageList    a list of error messages
      * @param  e              the exception that has happened
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({"SLF4J_SIGN_ONLY_FORMAT"})
+            // justification="The message is on several lines")
     public void executeErrorHandlingModule(
             Base item,
             String message,
