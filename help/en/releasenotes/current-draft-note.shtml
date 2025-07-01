@@ -471,8 +471,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The class <strong>jmri.jmrit.logixng.Category</strong> has been split into
-              <strong>jmri.Category</strong> and <strong>jmri.jmrit.logixng.LogixNG_Category</strong>.</li>
           <li>It's now possible to execute some LogixNG commands when a LogixNG error occurs.
               It's useful if JMRI run without a display and you want a notification for
               example by a sensor. To use it, select menu item
