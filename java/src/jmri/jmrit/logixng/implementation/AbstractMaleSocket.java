@@ -109,7 +109,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             try {
                 maleSocketMany.getChild(maleSocketMany.getChildCount()-1).connect(maleSocket);
             } catch (SocketAlreadyConnectedException e) {
-                log.error("Exception when creating error handling LogixNG: {}", e.getMessage(), e);
+                log.error("Exception when creating error handling LogixNG: ", e);
             }
             List<String> errors = new ArrayList<>();
             errorHandlingLogixNG.setParentForAllChildren(errors);
