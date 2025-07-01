@@ -76,7 +76,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public Programmer reserveConcreteGlobalProgrammer() {
+    protected Programmer reserveConcreteGlobalProgrammer() {
         return manager.reserveGlobalProgrammer();
     }
 
