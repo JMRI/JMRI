@@ -36,7 +36,6 @@ public class LogixNG_Thread {
     private static int _highestThreadID = -1;
 
     private final int _threadID;
-    private final boolean _visible;
     private String _name;
     private volatile boolean _stopThread = false;
     private volatile boolean _threadIsStopped = false;
@@ -51,10 +50,6 @@ public class LogixNG_Thread {
     }
 
     public static LogixNG_Thread createNewThread(int threadID, @Nonnull String name) {
-        return createNewThread(threadID, name, true);
-    }
-
-    public static LogixNG_Thread createNewThread(int threadID, @Nonnull String name, boolean visible) {
         synchronized (LogixNG_Thread.class) {
             if (threadID == -1) {
                 threadID = ++_highestThreadID;
@@ -74,7 +69,7 @@ public class LogixNG_Thread {
             if (_threadNames.containsKey(name)) {
                 throw new IllegalArgumentException(String.format("Thread name %s already exists", name));
             }
-            LogixNG_Thread thread = new LogixNG_Thread(threadID, name, visible);
+            LogixNG_Thread thread = new LogixNG_Thread(threadID, name);
             _threads.put(threadID, thread);
             _threadNames.put(name, thread);
             thread._logixNGThread.start();
@@ -95,7 +90,7 @@ public class LogixNG_Thread {
             if (thread == null) {
                 switch (threadID) {
                     case ERROR_HANDLING_LOGIXNG_THREAD:
-                        thread = createNewThread(ERROR_HANDLING_LOGIXNG_THREAD, "Error handling thread", false);
+                        thread = createNewThread(ERROR_HANDLING_LOGIXNG_THREAD, "Error handling thread");
                         break;
                     case DEFAULT_LOGIXNG_THREAD:
                         thread = createNewThread(DEFAULT_LOGIXNG_THREAD, Bundle.getMessage("LogixNG_Thread"));
@@ -139,10 +134,9 @@ public class LogixNG_Thread {
         return Collections.unmodifiableCollection(threadsCopy.values());
     }
 
-    private LogixNG_Thread(int threadID, String name, boolean visible) {
+    private LogixNG_Thread(int threadID, String name) {
         _threadID = threadID;
         _name = name;
-        _visible = visible;
 
         synchronized(LogixNG_Thread.class) {
 

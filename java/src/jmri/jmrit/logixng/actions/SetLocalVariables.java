@@ -53,7 +53,6 @@ public class SetLocalVariables extends AbstractDigitalAction {
             cng.getSymbolTable().setValue(entry.getKey(), entry.getValue());
         }
     }
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SetLocalVariables.class);
 
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
