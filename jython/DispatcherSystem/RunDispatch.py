@@ -254,16 +254,20 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         global trains_allocated
         global trains_dispatched
         if self.logLevel > 0: print "train to remove", train_name
-        for train in trains_allocated:
-            if self.logLevel > 0: print "train in trains_allocated", train, ": trains_allocated", trains_allocated
-            trains_allocated.remove(train)
+
         trains_dispatched_list = java.util.concurrent.CopyOnWriteArrayList()
         for train in trains_dispatched:
             trains_dispatched_list.add(train)
-
         for train in trains_dispatched_list:
             #print "train in trains_alloceted", train, ": trains_allocated", trains_allocated
             trains_dispatched.remove(train)
+
+        trains_allocated_list = java.util.concurrent.CopyOnWriteArrayList()
+        for train in trains_allocated:
+            trains_allocated_list.add(train)
+        for train in trains_allocated_list:
+            if self.logLevel > 0: print "train in trains_allocated", train, ": trains_allocated", trains_allocated
+            trains_allocated.remove(train)
 
     def stop_all_threads(self):
 

@@ -19523,7 +19523,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location boston = route.getRouteLocationBySequenceNumber(2).getLocation();
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
         bostonSpur1.setQuickServiceEnabled(true);
-        bostonSpur1.setLength(300); // room for all 6 cars
+        bostonSpur1.setLength(150); // room for 3 cars
 
         // get rid of the other tracks at Boston
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
@@ -19600,7 +19600,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
-        // now build in aggressive mode, 3 more cars will be assigned to the train
+        // now build in aggressive mode
         Setup.setBuildAggressive(true);
         Setup.setNumberPasses(3);
 
@@ -19610,23 +19610,21 @@ public class TrainBuilderTest extends OperationsTestCase {
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
 
-        Assert.assertEquals("should be 12 cars", 12, train1.getNumberCarsWorked());
-        Assert.assertEquals("should be 12 cars", 12, cmanager.getNumEntries());
+        Assert.assertEquals("cars", 6, train1.getNumberCarsWorked());
+        Assert.assertEquals("cars", 9, cmanager.getNumEntries());
 
         // six cars should now be departing Boston destination Acton
         Assert.assertEquals("new location", "Boston", c3.getLocationName());
         Assert.assertEquals("new location", "Boston", c4.getLocationName());
         Assert.assertEquals("new location", "Boston", c5.getLocationName());
-        Assert.assertEquals("new location", "Boston", c6.getLocationName());
-        Assert.assertEquals("new location", "Boston", c7.getLocationName());
-        Assert.assertEquals("new location", "Boston", c8.getLocationName());
+
+        Assert.assertEquals("location", "Acton", c6.getLocationName());
+        Assert.assertEquals("location", "Acton", c7.getLocationName());
+        Assert.assertEquals("location", "Acton", c8.getLocationName());
 
         Assert.assertEquals("destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("destination", "Acton", c4.getDestinationName());
         Assert.assertEquals("destination", "Acton", c5.getDestinationName());
-        Assert.assertEquals("destination", "Acton", c6.getDestinationName());
-        Assert.assertEquals("destination", "Acton", c7.getDestinationName());
-        Assert.assertEquals("destination", "Acton", c8.getDestinationName());
 
         // confirm clone creation
         clone3 = cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "4");
@@ -19635,26 +19633,14 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNotNull(clone4);
         clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "6");
         Assert.assertNotNull(clone5);
-        Car clone6 = cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "7");
-        Assert.assertNotNull(clone6);
-        Car clone7 = cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "8");
-        Assert.assertNotNull(clone7);
-        Car clone8 = cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "9");
-        Assert.assertNotNull(clone8);
 
         Assert.assertEquals("location", "Acton", clone3.getLocationName());
         Assert.assertEquals("location", "Acton", clone4.getLocationName());
         Assert.assertEquals("location", "Acton", clone5.getLocationName());
-        Assert.assertEquals("location", "Acton", clone6.getLocationName());
-        Assert.assertEquals("location", "Acton", clone7.getLocationName());
-        Assert.assertEquals("location", "Acton", clone8.getLocationName());
 
         Assert.assertEquals("destination", "Boston", clone3.getDestinationName());
         Assert.assertEquals("destination", "Boston", clone4.getDestinationName());
         Assert.assertEquals("destination", "Boston", clone5.getDestinationName());
-        Assert.assertEquals("destination", "Boston", clone6.getDestinationName());
-        Assert.assertEquals("destination", "Boston", clone7.getDestinationName());
-        Assert.assertEquals("destination", "Boston", clone8.getDestinationName());
 
         train1.terminate();
 
@@ -19662,9 +19648,6 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "4"));
         Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "5"));
         Assert.assertNull(cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "6"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "60" + Car.CLONE + "7"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "70" + Car.CLONE + "8"));
-        Assert.assertNull(cmanager.getByRoadAndNumber("CP", "80" + Car.CLONE + "9"));
 
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
@@ -19704,7 +19687,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Location boston = route.getRouteLocationBySequenceNumber(2).getLocation();
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
         bostonSpur1.setQuickServiceEnabled(true);
-        bostonSpur1.setLength(300); // room for all 6 cars
+        bostonSpur1.setLength(180); // room for kernel2 cars
 
         // get rid of the other tracks at Boston
         Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", null);
@@ -19781,8 +19764,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("should be 6 cars", 6, cmanager.getNumEntries());
 
-        // now build in aggressive mode, 4 more cars will be assigned to the train
-        Setup.setBuildAggressive(true);
+        bostonSpur1.setLength(270); // room for all cars
 
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
@@ -20167,7 +20149,9 @@ public class TrainBuilderTest extends OperationsTestCase {
         c5.setWeightTons("40");
 
         Location boston = route1.getRouteLocationBySequenceNumber(2).getLocation();
+        // set track length to 100 feet
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", null);
+        bostonSpur1.setLength(100);
         bostonSpur1.setQuickServiceEnabled(true);
 
         // get rid of the other tracks at Boston
@@ -20209,7 +20193,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("should be 5 cars", 5, cmanager.getNumEntries());
 
-        // two cars should now be departing Boston destination Acton
+        // cars should now be departing Boston destination Acton
         Assert.assertEquals("new location", "Boston", c3.getLocationName());
         Assert.assertEquals("new location", "Boston", c4.getLocationName());
 
@@ -20266,8 +20250,11 @@ public class TrainBuilderTest extends OperationsTestCase {
         train2.reset();
 
         // confirm clone destruction
+        Assert.assertEquals("total cars", 3, cmanager.getNumEntries());
         Assert.assertNull(cmanager.getByRoadAndNumber("CP", "30" + Car.CLONE + "1"));
         Assert.assertNull(cmanager.getByRoadAndNumber("CP", "40" + Car.CLONE + "2"));
+
+        Setup.setBuildAggressive(true);
 
         tb.build(train2);
         Assert.assertTrue("train status", train2.isBuilt());

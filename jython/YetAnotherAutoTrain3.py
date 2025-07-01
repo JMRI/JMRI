@@ -27,6 +27,7 @@
 # v3.2 -- Add hold and release signal heads and masts, misc bug fixes, code improvements.
 # v3.3 -- Add 'If value for memory <memory name> is <eq | ne | lt | gt | le | ge> <value>'
 #         Add 'Wait for memory <memory name> value to change'
+# v3.4 -- Add the ability to include text content using '@include <filename>'.
 #
 # Author:  Dave Sand copyright (c) 2018 - 2025
 
@@ -46,7 +47,7 @@ from javax.swing import JOptionPane
 yaatPath = jmri.util.FileUtil.getUserFilesPath() + 'yaat'
 jmri.util.FileUtil.createDirectory(yaatPath)
 yaatLocation = yaatPath + jmri.util.FileUtil.SEPARATOR
-print yaatLocation
+yaatIncludes = None
 
 # Load YAAT configuration options.  If not found, create a file with default values.
 try:
@@ -55,6 +56,7 @@ try:
 except IOError:
     logLevel = 0
     saveYAATcompiles = False
+    enableIncludes = False
     masterSensor = ''
     statusSensor = ''
     yaatMemory = ''
@@ -63,9 +65,21 @@ except IOError:
     with open(yaatLocation + 'config.txt', 'w') as file:
         file.write("logLevel = 0                # 0 for no output, 4 for the most detail\n")
         file.write("saveYAATcompiles = False    # Load/Save compiled trains\n")
+        file.write("enableIncludes = False      # Enable @include support\n")
         file.write("masterSensor = ''           # Optional sensor to stop all threads\n")
         file.write("statusSensor = ''           # Optional sensor to notify JMRI if any threads are active\n")
         file.write("yaatMemory = ''             # Optional memory variable that contains a filename for starting a train\n")
+
+if logLevel > 2: print 'yaatLocation: {}'.format(yaatLocation)
+try:
+    if enableIncludes:
+        jmri.util.FileUtil.createDirectory(yaatPath + jmri.util.FileUtil.SEPARATOR + 'includes')
+        yaatIncludes = yaatLocation + 'includes' + jmri.util.FileUtil.SEPARATOR
+        if logLevel > 2: print 'yaatIncludes location: {}'.format(yaatIncludes)
+except NameError:
+    # enableIncludes was added at 3.4 and might not be in the existing xconfig file.
+    if logLevel > 3: print 'Handle enableIncludes not found'
+    enableIncludes = False
 
 # Set optional objects, will be None if not found
 yaatMaster = sensors.getSensor(masterSensor)
@@ -820,6 +834,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             elif words[0] == 'EndSub':
                 self.compileEndSub(line)
             elif words[0] == 'Halt':
+                if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
                 self.actionTokens.append(['Halt'])
             elif words[0] == 'Hold' and words[1] == 'signal' and words[2] == 'head':
                 self.compileHoldSignalHead(line)
@@ -1051,7 +1066,6 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if mast is None:
             self.compileMessages.append('{} - Hold signal mast error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, mastName))
             return
-        if logLevel > 2: print 'HoldMast', mastName
         self.actionTokens.append(['HoldMast', mastName])
 
     def compileIfBlock(self, line):
@@ -1178,7 +1192,6 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if len(aspectNames) == 0:
             self.compileMessages.append('{} - If signal mast error at line {}: no valid signal mast aspects found'.format(self.threadName, self.lineNumber))
             return
-        if logLevel > 2: print 'IfMast', mastName, aspectNames, notOption
         self.actionTokens.append(['IfMast', mastName, aspectNames, notOption])
         self.createIf()
 
@@ -1254,8 +1267,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
         pattern = re.compile('\s*Release\s+signal\s+mast\s+(.+\S)')
         result = re.findall(pattern, line)
-        if logLevel > 2: print '    {} - result = {}'.format(self.threadName, result)
-#         print '---- {} :: {}'.format(len(result), len(result[0]))
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
         if len(result) != 1:
             self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
             return
@@ -1264,7 +1276,6 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if mast is None:
             self.compileMessages.append('{} - Release signal mast error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, mastName))
             return
-        if logLevel > 2: print 'ReleaseMast', mastName
         self.actionTokens.append(['ReleaseMast', mastName])
 
     def compileReleaseThrottle(self, line):
@@ -1698,7 +1709,6 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if len(aspectNames) == 0:
             self.compileMessages.append('{} - Wait signal mast error at line {}: no valid signal mast aspects found'.format(self.threadName, self.lineNumber))
             return
-        if logLevel > 2: print 'WaitMast', mastName, aspectNames, notOption
         self.actionTokens.append(['WaitMast', mastName, aspectNames, notOption])
 
     def compileSignalSpeed(self, line):
@@ -1815,6 +1825,25 @@ def compileRequired(fullPath):
     if logLevel > 1: print 'Source file = {}, source time = {}, compile time = {}'.format(sourceName, sourceTime, pickleTime)
     return (sourceTime > pickleTime, fullPickleLocation)
 
+# Check the trainLines list for the @include keyword.  Replace the line with the lines from
+# the included file.
+def expandIncludes(sourceLines):
+    expandedLines = []
+    for line in sourceLines:
+        if logLevel > 2: print 'expandIncludes: input line = {}'.format(line)
+        if line[:8] == '@include':
+            includeFName = line[9:].strip()
+            if logLevel > 2: print 'expandIncludes: included file name = {}'.format(includeFName)
+            includeFile = yaatIncludes + includeFName
+            try:
+                with open(includeFile) as file:
+                    expandedLines.extend([includeLine.strip() for includeLine in file])
+            except IOError, e:
+                print 'Error loading include file, error :: {}'.format(e)
+        else:
+            expandedLines.append(line)
+    return expandedLines
+
 instanceList = []   # List of train instances
 def startTrain(fileName):
     if len(fileName) == 0:
@@ -1827,6 +1856,8 @@ def startTrain(fileName):
         try:
             with open(fullName) as file:
                 trainLines = [line.strip() for line in file]
+            if enableIncludes:
+                trainLines = expandIncludes(trainLines)
         except IOError, e:
             print 'Error loading trainLines, error :: {}'.format(e)
 
@@ -1836,7 +1867,7 @@ def startTrain(fileName):
     if instanceList[idx].setup(trainLines, compileNeeded, pickleName):   # Compile the train actions
         instanceList[idx].start()                       # Compile was successful
 
-print 'YAAT v3.3'
+print 'YAAT v3.4'
 startTime = time()
 
 try:

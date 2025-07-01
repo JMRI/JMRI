@@ -26,9 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>When WiThrottle is asked Share / Steal / Cancel? or Share / Cancel ? , the main
-                    JMRI Throttle silent Steal / silent Share options are checked for preferred behaviour.</li>
-                 <li>The Console Filter is now displayed as a check-box tree.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -128,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>Added a column to the LccPro main window for the node's user-entered description.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -485,7 +483,7 @@
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li>The shutdown process has been modified to detect changes to the meter settings.</li>
+            <li></li>
         </ul>
 
     <h3>OperationsPro</h3>
@@ -509,8 +507,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>The Shutdown preference help has been updated. The store request now includes
-            a <strong>Cancel</strong> option which cancels the shutdown process.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -610,7 +607,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Fix OBlock java.util.MissingResourceException: Resource 'BlockUnknown' not found exception.</li>
         </ul>
 
    <h3>Web Access</h3>

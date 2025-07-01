@@ -2178,7 +2178,7 @@ public class TrainCommon {
             minutes += 24 * 60 * Integer.parseInt(splitTime[0]);
             minutes += 60 * Integer.parseInt(splitTime[1]);
             minutes += Integer.parseInt(splitTime[2]);
-        } else {
+        } else if (splitTime.length  == 2){
             // hrs:minutes
             if (hrFormat && splitTime[0].equals("12")) {
                 splitTime[0] = "00";

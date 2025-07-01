@@ -74,8 +74,8 @@
 
       <p>Listed are the common actions for Railsounds 4, ERR conversion boards, and TAS boards. Any
       Accessory that uses Engine ID commands will also work however the function buttons will have
-      different meanings. Consult the manual that came with the Accessor ( Crane Car, etc. ) to
-      determine what the aux 1 buttons do for that item and label the Function Burrons
+      different meanings. Consult the manual that came with the Accessory ( Crane Car, etc. ) to
+      determine what the Aux1 buttons do for that item and label the Function Buttons
       accordingly.</p>
 
       <p>When using a JMRI Throttle to run a Locomotive, the function buttons are allocated as
@@ -102,9 +102,11 @@
 
         <dd>Back Coupler</dd>
 
+        <dt>Aux1 + n</dt>
+
         <dt>F5 +0</dt>
 
-        <dd>Aux 1</dd>
+        <dd>Preface needed for sending specified commands</dd>
 
         <dt>F6 +1</dt>
 

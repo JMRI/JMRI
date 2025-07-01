@@ -62,6 +62,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected RouteLocation _routeLocation = null;
     protected RouteLocation _routeDestination = null;
     protected Division _division = null;
+    protected boolean _clone = false;
+    protected int _cloneOrder = 9999999;
     protected int _moves = 0;
     protected String _lastLocationId = LOCATION_UNKNOWN; // the rollingstock's last location id
     protected String _lastTrackId = LOCATION_UNKNOWN; // the rollingstock's last track id
@@ -705,6 +707,26 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             return getDestinationTrack().getId();
         }
         return NONE;
+    }
+
+    public void setClone(boolean clone) {
+        boolean old = _clone;
+        _clone = clone;
+        if (!old == clone) {
+            setDirtyAndFirePropertyChange("clone", old ? "true" : "false", clone ? "true" : "false"); // NOI18N
+        }
+    }
+
+    public boolean isClone() {
+        return _clone;
+    }
+
+    public void setCloneOrder(int number) {
+        _cloneOrder = number;
+    }
+
+    public int getCloneOrder() {
+        return _cloneOrder;
     }
 
     public void setDivision(Division division) {
@@ -1405,7 +1427,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         if ((a = e.getAttribute(Xml.BUILT)) != null) {
             _built = a.getValue();
         }
-
+        if ((a = e.getAttribute(Xml.CLONE)) != null) {
+            _clone = a.getValue().equals(Xml.TRUE);
+        }
         Location location = null;
         Track track = null;
         if ((a = e.getAttribute(Xml.LOCATION_ID)) != null) {
@@ -1557,6 +1581,9 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
         if (!getLastRouteId().equals(NONE)) {
             e.setAttribute(Xml.LAST_ROUTE_ID, getLastRouteId());
+        }
+        if (isClone()) {
+            e.setAttribute(Xml.CLONE, isClone() ? Xml.TRUE : Xml.FALSE);
         }
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves()));
         e.setAttribute(Xml.DATE, getLastDate());

@@ -225,7 +225,9 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     private void checkItemsHaveParents(SortedSet<? extends MaleSocket> set, List<MaleSocket> beansWithoutParentList) {
         for (MaleSocket bean : set) {
-            if (((Base)bean).getParent() == null) beansWithoutParentList.add(bean);
+            if (bean.getParent() == null) {
+                beansWithoutParentList.add(bean);
+            }
         }
     }
 

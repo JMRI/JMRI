@@ -606,6 +606,10 @@
         <li>The Jython project, who provided a very powerful scripting engine for us <a id="K"></a>
         </li>
 
+        <li>Timothy Jump,   <!-- E3t1jump -->
+        who worked on the TMCC documentation.
+        </li>
+        
         <li>Georg Kautzsch, who provided a decoder definition for the Uhlenbrock 67800 servo
         decoder.</li>
 
