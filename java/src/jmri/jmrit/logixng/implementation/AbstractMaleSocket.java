@@ -80,7 +80,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             try {
                 errorHandlingConditionalNG.getFemaleSocket().connect(maleSocketMany);
             } catch (SocketAlreadyConnectedException e) {
-                log.error("Exception when creating error handling LogixNG: {}", e.getMessage(), e);
+                log.error("Exception when creating error handling LogixNG: ", e);
             }
 
             SetLocalVariables setLocalVariables = new SetLocalVariables("IQDA:JMRI:ErrorHandlingAction", null);
@@ -92,7 +92,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             try {
                 maleSocketMany.getChild(maleSocketMany.getChildCount()-1).connect(maleSocketSetLocalVariables);
             } catch (SocketAlreadyConnectedException e) {
-                log.error("Exception when creating error handling LogixNG: {}", e.getMessage(), e);
+                log.error("Exception when creating error handling LogixNG: ", e);
             }
 
             DigitalCallModule action = new DigitalCallModule("IQDA:JMRI:ErrorHandlingAction", null);
@@ -742,7 +742,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             } else {
                 log.warn("   {}", message);
             }
-            log.warn("Exception: {}", e.getMessage(), e);
+            log.warn("Exception: ", e);
         }
 
         ErrorHandlingModuleClass.INSTANCE._variablesWithValues.put("logixng", item.getLogixNG());
