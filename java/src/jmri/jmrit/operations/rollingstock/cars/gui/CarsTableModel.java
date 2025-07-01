@@ -424,6 +424,15 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
     }
 
     private void filterList(List<Car> list) {
+        if (!Control.showCloneCars) {
+            for (int i = 0; i < list.size(); i++) {
+                Car car = list.get(i);
+                if (car.isClone()) {
+                    list.remove(i--);
+                    continue;
+                }
+            }
+        }
         if (showAllCars) {
             return;
         }
