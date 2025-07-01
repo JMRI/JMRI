@@ -51,6 +51,8 @@ public class Xml {
 
     static final String SPEED_HPT = "speedHpt";
     static final String MPH = "MPH";
+    
+    static final String SHOW_CLONES = "showClones";
 
     // Setup.java
     static final String OPERATIONS = "operations"; // NOI18N
