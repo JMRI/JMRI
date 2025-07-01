@@ -19,7 +19,7 @@ public class EditErrorHandlingModuleAction extends AbstractAction {
     private ErrorModuleEditor _errorModuleEditor;
 
     public EditErrorHandlingModuleAction() {
-        super(Bundle.getMessage("EditErrorHandlingModuleEditor"));
+        super(Bundle.getMessage("TitleErrorHandlingModuleEditor"));
     }
 
     @Override
