@@ -20,7 +20,7 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
 
     public DefaultModuleXml() {
     }
-    
+
     /**
      * Default implementation for storing the contents of a DefaultModule
      *
@@ -34,11 +34,15 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
         Element element = new Element("Module");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
-        
+
         storeCommon(p, element);
-        
+
         element.addContent(new Element("rootSocketType").addContent(p.getRootSocketType().getName()));
-        
+
+        if (!p.isVisible()) {
+            element.addContent(new Element("isVisible").addContent(p.isVisible() ? "yes" : "no"));
+        }
+
         Element elementParameters = new Element("Parameters");
         for (Parameter data : p.getParameters()) {
             Element elementParameter = new Element("Parameter");
@@ -48,7 +52,7 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
             elementParameters.addContent(elementParameter);
         }
         element.addContent(elementParameters);
-        
+
         Element e2 = new Element("RootSocket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getRootSocket().getConnectedSocket();
@@ -62,47 +66,52 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
             e2.addContent(new Element("systemName").addContent(socketSystemName));
         }
         element.addContent(e2);
-        
+
         return element;
     }
-    
+
     @Override
     public boolean load(Element shared, Element perNode) {
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        
+
         String rootSocketTypeName = shared.getChild("rootSocketType").getTextTrim();
-        
+
         FemaleSocketManager.SocketType socketType =
                 InstanceManager.getDefault(FemaleSocketManager.class)
                         .getSocketTypeByType(rootSocketTypeName);
-        
+
         DefaultModule h = (DefaultModule) InstanceManager.getDefault(ModuleManager.class)
                 .createModule(sys, uname, socketType);
-        
+
         loadCommon(h, shared);
-        
+
         List<Element> parameterList = shared.getChild("Parameters").getChildren();  // NOI18N
         log.debug("Found {} parameters", parameterList.size() );  // NOI18N
 
         for (Element e : parameterList) {
             Element elementName = e.getChild("name");
-            
+
             boolean isInput = "yes".equals(e.getChild("isInput").getTextTrim());
             boolean isOutput = "yes".equals(e.getChild("isOutput").getTextTrim());
-            
+
             h.addParameter(elementName.getTextTrim(), isInput, isOutput);
         }
-        
+
         Element socketName = shared.getChild("RootSocket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());
         Element socketSystemName = shared.getChild("RootSocket").getChild("systemName");
         if (socketSystemName != null) {
             h.setSocketSystemName(socketSystemName.getTextTrim());
         }
-        
+
+        Element isVisibleElement = shared.getChild("isVisible");
+        if (isVisibleElement != null) {
+            h.setVisible("yes".equals(isVisibleElement.getTextTrim()));
+        }
+
         return true;
     }
-    
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModuleXml.class);
 }

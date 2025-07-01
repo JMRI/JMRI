@@ -25,6 +25,7 @@ public class DefaultModule extends AbstractBase
         implements Module, FemaleSocketListener {
 
 
+    private boolean _isVisible;
     private final FemaleSocketManager.SocketType _rootSocketType;
     private final FemaleSocket _femaleRootSocket;
     private String _socketSystemName = null;
@@ -35,8 +36,15 @@ public class DefaultModule extends AbstractBase
 
     public DefaultModule(String sys, String user, FemaleSocketManager.SocketType socketType)
             throws BadUserNameException, BadSystemNameException  {
+        this(sys, user, socketType, true);
+    }
+
+    public DefaultModule(String sys, String user, FemaleSocketManager.SocketType socketType, boolean isVisible)
+            throws BadUserNameException, BadSystemNameException  {
 
         super(sys, user);
+
+        this._isVisible = isVisible;
 
         _rootSocketType = socketType;
         _femaleRootSocket = socketType.createSocket(this, this, "Root");
@@ -49,6 +57,16 @@ public class DefaultModule extends AbstractBase
         if (isNameValid != Manager.NameValidity.VALID) {
             throw new IllegalArgumentException("system name is not valid");
         }
+    }
+
+    @Override
+    public boolean isVisible() {
+        return _isVisible;
+    }
+
+    @Override
+    public void setVisible(boolean value) {
+        _isVisible = value;
     }
 
     @Override

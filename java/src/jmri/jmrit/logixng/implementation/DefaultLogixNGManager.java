@@ -537,6 +537,12 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         DefaultConditionalNG.executeModule(module, parameters);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public FemaleSocket getErrorHandlingModuleSocket() {
+        return AbstractMaleSocket.getErrorHandlingModuleSocket();
+    }
+
     /**
      * The PropertyChangeListener interface in this class is intended to keep
      * track of user name changes to individual NamedBeans. It is not completely

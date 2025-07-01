@@ -153,14 +153,24 @@ public interface SymbolTable {
         Formula(Bundle.getMessage("InitialValueType_Formula"), true),
         ScriptExpression(Bundle.getMessage("InitialValueType_ScriptExpression"), true),
         ScriptFile(Bundle.getMessage("InitialValueType_ScriptFile"), true),
-        LogixNG_Table(Bundle.getMessage("InitialValueType_LogixNGTable"), true);
+        LogixNG_Table(Bundle.getMessage("InitialValueType_LogixNGTable"), true),
+
+        // This can't be selected by the user. It's only used internally.
+        Object(Bundle.getMessage("InitialValueType_None"), false, false);
+
 
         private final String _descr;
         private final boolean _isValidAsParameter;
+        private final boolean _isVisible;
 
         private InitialValueType(String descr, boolean isValidAsParameter) {
+            this(descr, isValidAsParameter, true);
+        }
+
+        private InitialValueType(String descr, boolean isValidAsParameter, boolean isVisible) {
             _descr = descr;
             _isValidAsParameter = isValidAsParameter;
+            _isVisible = isVisible;
         }
 
         @Override
@@ -170,6 +180,10 @@ public interface SymbolTable {
 
         public boolean isValidAsParameter() {
             return _isValidAsParameter;
+        }
+
+        public boolean isVisible() {
+            return _isVisible;
         }
     }
 
@@ -499,6 +513,9 @@ public interface SymbolTable {
             case LogixNG_Table:
                 validateValue(type, name, initialData, "from logixng table");
                 return copyLogixNG_Table(initialData);
+
+            case Object:
+                return initialData;
 
             default:
                 log.error("definition._initialValueType has invalid value: {}", initialType.name());

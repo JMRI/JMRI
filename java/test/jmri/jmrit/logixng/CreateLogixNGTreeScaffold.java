@@ -258,6 +258,7 @@ public class CreateLogixNGTreeScaffold {
                 case ScriptExpression:
                 case ScriptFile:
                 case LogixNG_Table:
+                case Object:
                     globalVariable.setInitialValueData("");
                     break;
                 default:
@@ -6110,6 +6111,7 @@ public class CreateLogixNGTreeScaffold {
         "sensors.provide(\"mySensor)\"",    // Script expression
         "scripts:InitLogixNGVariable",      // Script file
         "MyTable",      // LogixNG Table
+        "MyObject",     // Object
     };
 
 
