@@ -51,7 +51,7 @@ public class EditErrorHandlingModuleAction extends AbstractAction {
     /**
      * Editor of the error handling module.
      */
-    public class ErrorModuleEditor extends TreeEditor {
+    public static class ErrorModuleEditor extends TreeEditor {
 
         /**
          * Maintain a list of listeners -- normally only one.
