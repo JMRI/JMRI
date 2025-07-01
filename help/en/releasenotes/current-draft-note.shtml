@@ -475,6 +475,12 @@
               It's useful if JMRI run without a display and you want a notification for
               example by a sensor. To use it, select menu item
               <strong>Tools -> LogixNG -> Edit error handling module</strong>.</li>
+          <li><strong>Preferences -> LogixNG -> Default error handling</strong>
+              has the new option <strong>Abort without error</strong>. If it
+              is selected and there is an error in the CondtionalNG, the
+              ConditionalNG will be aborted but there will be no logging to the
+              system console. This might be useful together with the
+              <strong>Error handling module</strong>.</li>
           <li></li>
         </ul>
 

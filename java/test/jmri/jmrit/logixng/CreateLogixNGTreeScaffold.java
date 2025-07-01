@@ -505,7 +505,7 @@ public class CreateLogixNGTreeScaffold {
         actionBlock.getSelectEnum().setEnum(ActionBlock.DirectOperation.SetOccupied);
 
         maleSocket = digitalActionManager.registerAction(actionBlock);
-        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortWithoutError);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 // Direct / LocalVariable

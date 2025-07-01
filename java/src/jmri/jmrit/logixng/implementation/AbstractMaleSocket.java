@@ -795,6 +795,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
                 throw new AbortConditionalNGExecutionException(this, e);
 
+            case AbortWithoutError:
+                throw new AbortConditionalNG_IgnoreException(this, e);
+
             default:
                 throw e;
         }
@@ -841,6 +844,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
                 log.error("item {}, {} thrown an exception: {}", item.toString(), getObject().toString(), e, e);
                 throw new AbortConditionalNGExecutionException(this, e);
 
+            case AbortWithoutError:
+                throw new AbortConditionalNG_IgnoreException(this, e);
+
             default:
                 throw e;
         }
@@ -881,6 +887,9 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
             case AbortExecution:
                 throw new AbortConditionalNGExecutionException(this, e);
+
+            case AbortWithoutError:
+                throw new AbortConditionalNG_IgnoreException(this, e);
 
             default:
                 throw e;
