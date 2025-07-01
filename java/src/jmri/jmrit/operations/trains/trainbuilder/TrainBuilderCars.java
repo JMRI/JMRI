@@ -1462,7 +1462,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             return false; // the only false return
         }
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildCarHasAssignedDest", car.toString(), car.getLoadName(),
-                car.getDestinationName(), car.getDestinationTrackName()));
+                car.getDestinationName(), car.getDestinationTrackName(), car.getFinalDestinationName(),
+                car.getFinalDestinationTrackName()));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
         if (rld == null) {
             // code check, router doesn't set a car's destination if not carried
@@ -1688,7 +1689,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // route
         boolean multiplePickup = false;
 
-        // more than one location in this route?
         if (!_train.isLocalSwitcher()) {
             start++; // begin looking for tracks at the next location
         }
@@ -1798,7 +1798,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     continue; // no
                 }
             } else {
-                // no staging, start track search
+                // not staging, start track search
                 List<Track> tracks = getTracksAtDestination(car, rld);
                 if (tracks.size() > 0) {
                     trackTemp = tracks.get(0);
@@ -2179,6 +2179,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     addLine(_buildReport, FIVE, BLANK_LINE);
                     return false;
                 }
+                
                 // determine when the clone is going to be delivered
                 String trainExpectedArrival = _train.getExpectedArrivalTime(rl, true);
                 int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);

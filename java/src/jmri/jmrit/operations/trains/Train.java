@@ -557,10 +557,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // AM_PM field
         String am_pm = "";
         if (Setup.is12hrFormatEnabled() && !isSortFormat) {
-            am_pm = " " + Bundle.getMessage("AM");
+            am_pm = TrainCommon.SPACE + Bundle.getMessage("AM");
             if (hours >= 12) {
                 hours = hours - 12;
-                am_pm = " " + Bundle.getMessage("PM");
+                am_pm = TrainCommon.SPACE + Bundle.getMessage("PM");
             }
             if (hours == 0) {
                 hours = 12;

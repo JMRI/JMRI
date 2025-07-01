@@ -2157,12 +2157,12 @@ public class TrainCommon {
     /*
      * Converts String time DAYS:HH:MM and DAYS:HH:MM AM/PM to minutes from
      * midnight. Note that the string time could be blank, and in that case
-     * returns 0 minutes.
+     * returns 0 minutes. 
      */
     protected int convertStringTime(String time) {
         int minutes = 0;
         boolean hrFormat = false;
-        String[] splitTimePM = time.split(" ");
+        String[] splitTimePM = time.split(SPACE);
         if (splitTimePM.length > 1) {
             hrFormat = true;
             if (splitTimePM[1].equals(Bundle.getMessage("PM"))) {
