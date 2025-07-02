@@ -2447,6 +2447,127 @@ public class TrainBuilderTest extends OperationsTestCase {
     }
 
     /**
+     * Test alternate track in FIFO and LIFO modes. This test has to deliver two
+     * sets of cars to the alternate track at different times.
+     */
+    @Test
+    public void testAlternateTrackServiceOrder() {
+
+        // perform this test in aggressive mode
+        Setup.setBuildAggressive(true);
+
+        // custom load for testing
+        cld.addName("Boxcar", "Bolts");
+
+        // Route Acton-Boston-Chelmsford-Chelmsford-Boston-Acton
+        Route route = JUnitOperationsUtil.createThreeLocationTurnRoute();
+
+        RouteLocation rlActon = route.getDepartsRouteLocation();
+        Location acton = rlActon.getLocation();
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        Track actonYard2 = acton.getTrackByName("Acton Yard 2", null);
+
+        // only allow 3 pulls from Acton
+        rlActon.setMaxCarMoves(3);
+
+        RouteLocation rlBoston1 = route.getRouteLocationBySequenceNumber(2);
+
+        Location boston = rlBoston1.getLocation();
+        Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", Track.SPUR); // delete
+        Track bostonSpur2 = boston.getTrackByName("Boston Spur 2", Track.SPUR);
+        Track bostonYard1 = boston.getTrackByName("Boston Yard 1", Track.YARD); // delete
+        Track bostonYard2 = boston.getTrackByName("Boston Yard 2", Track.YARD); // alternate
+        Track bostonInterchange1 = boston.getTrackByName("Boston Interchange 1", Track.INTERCHANGE); // delete
+        Track bostonInterchange2 = boston.getTrackByName("Boston Interchange 2", Track.INTERCHANGE); // delete
+
+        // only use one spur and interchange track
+        boston.deleteTrack(bostonSpur1);
+        boston.deleteTrack(bostonYard1);
+        boston.deleteTrack(bostonInterchange1);
+        boston.deleteTrack(bostonInterchange2);
+
+        // limit the length of the spur to one boxcar
+        bostonSpur2.setLength(50);
+
+        // provide an alternate track for the spur
+        bostonSpur2.setAlternateTrack(bostonYard2);
+        bostonYard2.setServiceOrder(Track.LIFO);
+
+        // confirm
+        Assert.assertEquals("track is an alternate", bostonYard2, bostonSpur2.getAlternateTrack());
+        Assert.assertEquals("track is an alternate", true, bostonYard2.isAlternate());
+
+        // ignore Chelmsford
+        RouteLocation rlchelmsford1 = route.getRouteLocationBySequenceNumber(3);
+        rlchelmsford1.setMaxCarMoves(0);
+        RouteLocation rlchelmsford2 = route.getRouteLocationBySequenceNumber(4);
+        rlchelmsford2.setMaxCarMoves(0);
+
+        // Set up two cabooses and 8 boxcars, two with FRED
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("CP", "10", "Boxcar", "40", actonYard1, 10);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("CP", "20", "Boxcar", "40", actonYard1, 11);
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", actonYard1, 12);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", "Boxcar", "40", actonYard1, 23);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("CP", "50", "Boxcar", "40", actonYard1, 34);
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("CP", "60", "Boxcar", "40", actonYard2, 45);
+        JUnitOperationsUtil.createAndPlaceCar("CP", "70", "Boxcar", "40", actonYard2, 56);
+        JUnitOperationsUtil.createAndPlaceCar("CP", "80", "Boxcar", "40", actonYard2, 67);
+        JUnitOperationsUtil.createAndPlaceCar("CP", "90", "Flat", "40", actonYard2, 78);
+        JUnitOperationsUtil.createAndPlaceCar("CP", "100", "Flat", "40", actonYard2, 89);
+
+        // define the train
+        Train train1 = tmanager.newTrain("TestAlternateTrackOrder");
+        train1.setRoute(route);
+
+        // deliver the first set of cars
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+        Assert.assertEquals("cars", 3, train1.getNumberCarsWorked());
+        train1.terminate(); // move cars
+
+        // confirm car locations
+        Assert.assertEquals("Car location", bostonSpur2, c1.getTrack());
+        Assert.assertEquals("Car location", bostonYard2, c2.getTrack());
+        Assert.assertEquals("Car location", bostonYard2, c3.getTrack());
+
+        // now deliver the second set of cars
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+        Assert.assertEquals("cars", 5, train1.getNumberCarsWorked());
+        train1.terminate(); // move cars
+
+        // c2 has the lowest move count on alternate, cars c2 and c3 have the same last moved time
+        // confirm car locations
+        Assert.assertEquals("Car location", bostonSpur2, c2.getTrack());
+        Assert.assertEquals("Car location", bostonYard2, c4.getTrack());
+        Assert.assertEquals("Car location", bostonYard2, c5.getTrack());
+        Assert.assertEquals("Car location", bostonYard2, c6.getTrack());
+
+        // now cars c4, c5, and c6 have been delivered after c3
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+        Assert.assertEquals("cars", 5, train1.getNumberCarsWorked());
+
+        // c4 delivered after c3 alternate track in LIFO mode
+        Assert.assertEquals("Car destination", null, c3.getDestinationTrack());
+        Assert.assertEquals("Car destination", bostonSpur2, c4.getDestinationTrack());
+
+        // try FIFO mode
+        bostonYard2.setServiceOrder(Track.FIFO);
+        train1.reset();
+
+        new TrainBuilder().build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+        Assert.assertEquals("cars", 5, train1.getNumberCarsWorked());
+
+        // c4 delivered after c3 alternate track in FIFO mode
+        Assert.assertEquals("Car destination", bostonSpur2, c3.getDestinationTrack());
+        Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
      * Test alternate track aggressive mode. Checks to see if cars are
      * redirected from alternate track to spur.
      */
