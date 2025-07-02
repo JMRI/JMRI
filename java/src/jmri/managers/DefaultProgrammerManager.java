@@ -96,18 +96,51 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
     }
 
     @Override
-    public Programmer getGlobalProgrammer() {
+    public final Programmer getGlobalProgrammer() {
+        return getConcreteGlobalProgrammer();
+    }
+
+    /**
+     * Gain access to the Global Mode Programmer without reservation.
+     *
+     * @return null only if there isn't a Global Mode Programmer available via
+     *         this Manager.
+     */
+    @CheckForNull
+    protected Programmer getConcreteGlobalProgrammer() {
         log.debug("return default service-mode programmer of type {}", (programmer != null ? programmer.getClass() : "(null)"));
         return programmer;
     }
 
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public final AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+        return getConcreteAddressedProgrammer(pLongAddress, pAddress);
+    }
+
+    /**
+     * Gain access to a Addressed Mode Programmer without reservation.
+     *
+     * @param pLongAddress true if this is a long (14 bit) address, else false
+     * @param pAddress     specific decoder address to use
+     * @return null only if there isn't an Ops Mode Programmer in the system
+     */
+    @CheckForNull
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
     @Override
-    public Programmer reserveGlobalProgrammer() {
+    public final Programmer reserveGlobalProgrammer() {
+        return reserveConcreteGlobalProgrammer();
+    }
+
+    /**
+     * Gain access to the Global Mode Programmer, in the process reserving it
+     * for yourself.
+     *
+     * @return null if the existing Global Mode programmer is in use
+     */
+    protected Programmer reserveConcreteGlobalProgrammer() {
         return programmer;
     }
 
@@ -116,7 +149,20 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
     }
 
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    public final AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+        return reserveConcreteAddressedProgrammer(pLongAddress, pAddress);
+    }
+
+    /**
+     * Gain access to a (the) Addressed Mode Programmer, in the process
+     * reserving it for yourself.
+     *
+     * @param pLongAddress true if this is a long (14 bit) address, else false
+     * @param pAddress     Specific decoder address to use
+     * @return null if the address is in use by a reserved programmer
+     */
+    @CheckForNull
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
