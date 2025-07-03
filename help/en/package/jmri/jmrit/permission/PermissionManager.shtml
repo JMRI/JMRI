@@ -136,7 +136,7 @@
 
       <p>If an unauthorized user is able to delete or edit files on the computer running
       JMRI, he might be able to disable the permissions and then override them. See the section
-      <strong>I have looked myself out!</strong> above.</p>
+      <strong>I have locked myself out!</strong> above.</p>
 
       <p>If you want to protect from that, you could protect that file from being changed.
       On Linux, it can be done by changing the owner of the file to <strong>root</strong> and to have
