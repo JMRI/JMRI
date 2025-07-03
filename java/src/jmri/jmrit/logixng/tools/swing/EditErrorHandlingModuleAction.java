@@ -4,17 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.util.*;
 
-import javax.swing.AbstractAction;
-
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.JmriPanel;
 
 /**
  * Swing action to edit the error handling module.
  *
  * @author Daniel Bergqvist Copyright (C) 2025
  */
-public class EditErrorHandlingModuleAction extends AbstractAction {
+public class EditErrorHandlingModuleAction extends JmriAbstractAction {
 
     private ErrorModuleEditor _errorModuleEditor;
 
@@ -41,6 +41,7 @@ public class EditErrorHandlingModuleAction extends AbstractAction {
                 _errorModuleEditor.editorData.forEach((key, value) -> {
                     if (key.equals("Finish")) {                  // NOI18N
                         _errorModuleEditor = null;
+                        setName(getTitle());
                     }
                 });
             });
@@ -109,6 +110,11 @@ public class EditErrorHandlingModuleAction extends AbstractAction {
             }
         }
 
+    }
+
+    @Override
+    public JmriPanel makePanel() {
+        throw new IllegalArgumentException("Should not be invoked");
     }
 
 }
