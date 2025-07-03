@@ -31,6 +31,11 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
     public Element store(Object o) {
         DefaultModule p = (DefaultModule) o;
 
+        // Don't store the module if it's empty and if "store if empty" is false.
+        if (!p.isStoreIfEmpty() && !p.getRootSocket().isConnected()) {
+            return null;
+        }
+
         Element element = new Element("Module");
         element.setAttribute("class", this.getClass().getName());
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
@@ -41,6 +46,10 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
 
         if (!p.isVisible()) {
             element.addContent(new Element("isVisible").addContent(p.isVisible() ? "yes" : "no"));
+        }
+
+        if (!p.isStoreIfEmpty()) {
+            element.addContent(new Element("storeIfEmpty").addContent(p.isStoreIfEmpty() ? "yes" : "no"));
         }
 
         Element elementParameters = new Element("Parameters");
@@ -108,6 +117,11 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
         Element isVisibleElement = shared.getChild("isVisible");
         if (isVisibleElement != null) {
             h.setVisible("yes".equals(isVisibleElement.getTextTrim()));
+        }
+
+        Element storeIfEmptyElement = shared.getChild("storeIfEmpty");
+        if (storeIfEmptyElement != null) {
+            h.setStoreIfEmpty("yes".equals(storeIfEmptyElement.getTextTrim()));
         }
 
         return true;

@@ -59,7 +59,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
             } else {
                 FemaleSocketManager.SocketType socketType = InstanceManager.getDefault(
                         FemaleSocketManager.class).getSocketTypeByType("DefaultFemaleDigitalActionSocket");
-                errorHandlingModule = new DefaultModule(LogixNG_Manager.ERROR_HANDLING_MODULE_NAME, null, socketType, false);
+                errorHandlingModule = new DefaultModule(LogixNG_Manager.ERROR_HANDLING_MODULE_NAME, null, socketType, false, false);
                 InstanceManager.getDefault(ModuleManager.class).register(errorHandlingModule);
             }
 
@@ -129,6 +129,16 @@ public abstract class AbstractMaleSocket implements MaleSocket {
 
     public static FemaleSocket getErrorHandlingModuleSocket() {
         return ErrorHandlingModuleClass.INSTANCE.errorHandlingModule.getRootSocket();
+    }
+
+    public static boolean isErrorHandlingModuleInUse() {
+        // Does the error handling module exist?
+        Module errorHandlingModule = InstanceManager.getDefault(ModuleManager.class)
+                .getBySystemName(LogixNG_Manager.ERROR_HANDLING_MODULE_NAME);
+        if (errorHandlingModule == null) {
+            return false;
+        }
+        return errorHandlingModule.getRootSocket().isConnected();
     }
 
     /** {@inheritDoc} */

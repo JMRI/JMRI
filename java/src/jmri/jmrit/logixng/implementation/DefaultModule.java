@@ -26,6 +26,7 @@ public class DefaultModule extends AbstractBase
 
 
     private boolean _isVisible;
+    private boolean _storeIfEmpty;
     private final FemaleSocketManager.SocketType _rootSocketType;
     private final FemaleSocket _femaleRootSocket;
     private String _socketSystemName = null;
@@ -36,15 +37,17 @@ public class DefaultModule extends AbstractBase
 
     public DefaultModule(String sys, String user, FemaleSocketManager.SocketType socketType)
             throws BadUserNameException, BadSystemNameException  {
-        this(sys, user, socketType, true);
+        this(sys, user, socketType, true, true);
     }
 
-    public DefaultModule(String sys, String user, FemaleSocketManager.SocketType socketType, boolean isVisible)
+    public DefaultModule(String sys, String user, FemaleSocketManager.SocketType socketType,
+            boolean isVisible, boolean storeIfEmpty)
             throws BadUserNameException, BadSystemNameException  {
 
         super(sys, user);
 
         this._isVisible = isVisible;
+        this._storeIfEmpty = storeIfEmpty;
 
         _rootSocketType = socketType;
         _femaleRootSocket = socketType.createSocket(this, this, "Root");
@@ -67,6 +70,16 @@ public class DefaultModule extends AbstractBase
     @Override
     public void setVisible(boolean value) {
         _isVisible = value;
+    }
+
+    @Override
+    public boolean isStoreIfEmpty() {
+        return _storeIfEmpty;
+    }
+
+    @Override
+    public void setStoreIfEmpty(boolean value) {
+        _storeIfEmpty = value;
     }
 
     @Override

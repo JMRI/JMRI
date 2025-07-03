@@ -180,6 +180,7 @@
 
               <xs:element name="rootSocketType" type="xs:string" minOccurs="0" maxOccurs="1"/>
               <xs:element name="isVisible" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="storeIfEmpty" type="yesNoType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="Parameters" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>

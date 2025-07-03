@@ -19,7 +19,15 @@ public class EditErrorHandlingModuleAction extends AbstractAction {
     private ErrorModuleEditor _errorModuleEditor;
 
     public EditErrorHandlingModuleAction() {
-        super(Bundle.getMessage("TitleErrorHandlingModuleEditor"));
+        super(getTitle());
+    }
+
+    public static String getTitle() {
+        if (InstanceManager.getDefault(LogixNG_Manager.class).isErrorHandlingModuleInUse()) {
+            return Bundle.getMessage("TitleErrorHandlingModuleEditor_InUse");
+        } else {
+            return Bundle.getMessage("TitleErrorHandlingModuleEditor");
+        }
     }
 
     @Override

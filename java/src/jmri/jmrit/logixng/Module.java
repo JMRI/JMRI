@@ -21,6 +21,10 @@ public interface Module extends Base, NamedBean {
 
     void setVisible(boolean value);
 
+    boolean isStoreIfEmpty();
+
+    void setStoreIfEmpty(boolean value);
+
     FemaleSocketManager.SocketType getRootSocketType();
 
     FemaleSocket getRootSocket();

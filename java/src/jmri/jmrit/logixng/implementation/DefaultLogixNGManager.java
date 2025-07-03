@@ -545,6 +545,12 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         return AbstractMaleSocket.getErrorHandlingModuleSocket();
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public boolean isErrorHandlingModuleInUse() {
+        return AbstractMaleSocket.isErrorHandlingModuleInUse();
+    }
+
     /**
      * The PropertyChangeListener interface in this class is intended to keep
      * track of user name changes to individual NamedBeans. It is not completely

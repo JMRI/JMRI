@@ -303,4 +303,11 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      */
     FemaleSocket getErrorHandlingModuleSocket();
 
+    /**
+     * Is the error handling module in use?
+     * It's in use if it exists and the root socket is connected.
+     * @return true if it's in use, false otherwise.
+     */
+    boolean isErrorHandlingModuleInUse();
+
 }
