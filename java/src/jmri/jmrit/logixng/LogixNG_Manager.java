@@ -16,6 +16,14 @@ import org.apache.commons.lang3.mutable.MutableInt;
  */
 public interface LogixNG_Manager extends Manager<LogixNG> {
 
+    /**
+     * This property is fired when the {@link #setupAllLogixNGs()} method is completed.
+     */
+    public static final String PROPERTY_SETUP = "LogixNG_Setup";
+
+    /**
+     * This is the name of the error handling module.
+     */
     public static final String ERROR_HANDLING_MODULE_NAME = "IQM:JMRI:ErrorHandlingModule";
 
     /**

@@ -93,6 +93,11 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
         DefaultModule h = (DefaultModule) InstanceManager.getDefault(ModuleManager.class)
                 .createModule(sys, uname, socketType);
 
+        // The error handling module might already exist. If so, get the existing module.
+        if (h == null && LogixNG_Manager.ERROR_HANDLING_MODULE_NAME.equals(sys)) {
+            h = (DefaultModule) InstanceManager.getDefault(ModuleManager.class).getBySystemName(sys);
+        }
+
         loadCommon(h, shared);
 
         List<Element> parameterList = shared.getChild("Parameters").getChildren();  // NOI18N

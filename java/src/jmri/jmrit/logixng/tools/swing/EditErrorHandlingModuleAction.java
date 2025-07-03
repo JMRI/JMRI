@@ -20,6 +20,10 @@ public class EditErrorHandlingModuleAction extends JmriAbstractAction {
 
     public EditErrorHandlingModuleAction() {
         super(getTitle());
+        InstanceManager.getDefault(LogixNG_Manager.class)
+                .addPropertyChangeListener(LogixNG_Manager.PROPERTY_SETUP, (evt) -> {
+                    setName(getTitle());
+                });
     }
 
     public static String getTitle() {
