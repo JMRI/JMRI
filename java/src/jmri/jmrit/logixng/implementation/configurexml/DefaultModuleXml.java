@@ -98,6 +98,11 @@ public class DefaultModuleXml extends jmri.managers.configurexml.AbstractNamedBe
             h = (DefaultModule) InstanceManager.getDefault(ModuleManager.class).getBySystemName(sys);
         }
 
+        if (h == null) {
+            log.error("Module {} cannot be loaded", sys);
+            return false;
+        }
+
         loadCommon(h, shared);
 
         List<Element> parameterList = shared.getChild("Parameters").getChildren();  // NOI18N
