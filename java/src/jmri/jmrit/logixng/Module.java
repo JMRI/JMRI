@@ -15,34 +15,60 @@ import jmri.jmrit.logixng.SymbolTable.VariableData;
  */
 public interface Module extends Base, NamedBean {
 
-//    void setRootSocketType(FemaleSocketManager.SocketType socketType);
-
+    /**
+     * Is the module visible to the user?
+     * @return true if the module is visible, false otherwise.
+     */
     boolean isVisible();
 
+    /**
+     * Makes the module visible or not visible to the user.
+     * @param value true to make the module visible, false to make it invisible
+     */
     void setVisible(boolean value);
 
+    /**
+     * Is the module stored in the tables and panels file if the module is empty?
+     * @return true if it's always stored, false if it's not stored if empty
+     */
     boolean isStoreIfEmpty();
 
+    /**
+     * Set whenether the module should be stored in the tables and panels file
+     * if the module is empty.
+     * @param value true if it's always stored, false if it's not stored if empty
+     */
     void setStoreIfEmpty(boolean value);
 
+    /**
+     * Get the type of the root socket of the module.
+     * @return the type
+     */
     FemaleSocketManager.SocketType getRootSocketType();
 
+    /**
+     * Get the root socket of the module.
+     * @return the root socket
+     */
     FemaleSocket getRootSocket();
 
+    /**
+     * Set the current ConditionalNG of the module.
+     * This method is called on all modules before a ConditionalNG is executed
+     * to let the modules know which ConditionalNG is running in which thread.
+     * 
+     * @param conditionalNG the ConditionalNG
+     */
     void setCurrentConditionalNG(ConditionalNG conditionalNG);
 
     void addParameter(String name, boolean isInput, boolean isOutput);
 
     void addParameter(Parameter parameter);
 
-//    public void removeParameter(String name);
-
     void addLocalVariable(
             String name,
             SymbolTable.InitialValueType initialValueType,
             String initialValueData);
-
-//    public void removeLocalVariable(String name);
 
     Collection<Parameter> getParameters();
 
