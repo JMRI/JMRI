@@ -131,7 +131,7 @@ public abstract class AbstractMaleSocket implements MaleSocket {
         return ErrorHandlingModuleClass.INSTANCE.errorHandlingModule.getRootSocket();
     }
 
-    public static boolean isErrorHandlingModuleInUse() {
+    public static boolean isErrorHandlingModuleEnabled() {
         // Does the error handling module exist?
         Module errorHandlingModule = InstanceManager.getDefault(ModuleManager.class)
                 .getBySystemName(LogixNG_Manager.ERROR_HANDLING_MODULE_NAME);

@@ -27,8 +27,8 @@ public class EditErrorHandlingModuleAction extends JmriAbstractAction {
     }
 
     public static String getTitle() {
-        if (InstanceManager.getDefault(LogixNG_Manager.class).isErrorHandlingModuleInUse()) {
-            return Bundle.getMessage("TitleErrorHandlingModuleEditor_InUse");
+        if (InstanceManager.getDefault(LogixNG_Manager.class).isErrorHandlingModuleEnabled()) {
+            return Bundle.getMessage("TitleErrorHandlingModuleEditor_Enabled");
         } else {
             return Bundle.getMessage("TitleErrorHandlingModuleEditor");
         }

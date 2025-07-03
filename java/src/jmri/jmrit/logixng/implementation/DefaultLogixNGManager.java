@@ -550,8 +550,8 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     /** {@inheritDoc} */
     @Override
-    public boolean isErrorHandlingModuleInUse() {
-        return AbstractMaleSocket.isErrorHandlingModuleInUse();
+    public boolean isErrorHandlingModuleEnabled() {
+        return AbstractMaleSocket.isErrorHandlingModuleEnabled();
     }
 
     /**
