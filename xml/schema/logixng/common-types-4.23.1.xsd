@@ -59,6 +59,7 @@
         <xs:enumeration value="ScriptExpression"/>
         <xs:enumeration value="ScriptFile"/>
         <xs:enumeration value="LogixNG_Table"/>
+        <xs:enumeration value="Object"/>
       </xs:restriction>
     </xs:simpleType>
 

@@ -25,7 +25,8 @@ public interface MaleSocket extends Debugable {
         LogError(Bundle.getMessage("ErrorHandling_LogError")),
         LogErrorOnce(Bundle.getMessage("ErrorHandling_LogErrorOnce")),
         ThrowException(Bundle.getMessage("ErrorHandling_ThrowException")),
-        AbortExecution(Bundle.getMessage("ErrorHandling_AbortExecution"));
+        AbortExecution(Bundle.getMessage("ErrorHandling_AbortExecution")),
+        AbortWithoutError(Bundle.getMessage("ErrorHandling_AbortWithoutError"));
 
         private final String _description;
 

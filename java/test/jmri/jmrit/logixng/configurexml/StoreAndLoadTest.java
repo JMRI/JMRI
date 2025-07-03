@@ -105,6 +105,7 @@ public class StoreAndLoadTest {
                     if (type == SymbolTable.InitialValueType.String) continue;
                     if (type == SymbolTable.InitialValueType.Array) continue;
                     if (type == SymbolTable.InitialValueType.Map) continue;
+                    if (type == SymbolTable.InitialValueType.Object) continue;
                     JUnitAppender.assertWarnMessage(String.format("Variable %s could not be initialized", "TestVariable_"+type.name()));
                     JUnitAppender.assertWarnMessage(String.format("Variable %s could not be initialized", "TestVariable_"+type.name()+"_2"));
 
