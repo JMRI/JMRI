@@ -493,7 +493,8 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>Additional improvements to quick service tracks</li>
+            <li>Fixed a bug with alternate tracks in FIFO or LIFO mode</li>
         </ul>
 
    <h3>Panel Editor</h3>

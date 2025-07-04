@@ -518,6 +518,10 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 addLine(_buildReport, FIVE, BLANK_LINE);
                 continue; // no
             }
+            // do alternate track moves on the second pass (makes FIFO / LIFO work correctly)
+            if (Setup.isBuildAggressive() && !isSecondPass && car.getTrack().isAlternate() && _completedMoves != 0) {
+                continue;
+            }
 
             showCarServiceOrder(car); // car on FIFO or LIFO track?
 
