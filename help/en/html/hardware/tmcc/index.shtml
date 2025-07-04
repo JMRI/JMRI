@@ -17,27 +17,26 @@
 
       <h3>Command Station</h3>
 
-      <p>Lionel TMCC or Lionel Legacy thru the serial port on the Command Base.</p>
+      <p>Lionel TMCC 1 or TMCC 2 Legacy thru the serial port on the Command Base 1, Command Base 1L, or Command Base 992.
+	  Via WiFi to Command Base 992 and Command Base 3.
+	  Note: Connecting to the Command Base 1L will require an LCS SER2 serial converter. Connecting to the Command Base 992
+	  may require the Y-cable included with the Lionel Legacy Command Set. </p>
 
       <h2 id="limitations">Limitations</h2>
 
-      <p>As of JMRI v 2.11.8, Lionel TMCC Train commands are not yet available.</p>
-
-      <p>There is no Lionel TMCC model under the DecoderPro Roster Entry tabs, but you can set up
-      TMCC decoder equipped Locomotives using the NMRA standard decoder near the top of the
-      list.</p>
+      <p>As of JMRI v 5.1.2, Lionel TMCC Train(TR), Route(RTE), Accessory(ACC), Switch(SW) and Group(GR) commands are not yet available.</p>
 
       <h2 id="connecting">Connecting</h2>
 
-      <h3>Wiring</h3>
+      <h3>DB9 Serial Cable</h3>
 
-      <p>First, connect your computer's serial port to the TMCC command station using a serial
-      cable. This should be a "straight-through" or "modem" cable, <em>not</em>a "crossover" or
+      <p>First, connect your computer's serial port to the TMCC command station using a DB9 serial
+      cable. This should be a "straight-through" or "modem" cable, <em>not</em> a "crossover" or
       "null-modem" cable. if your computer doesn't have a built-in serial port, you can use a
       USB-serial adapter, but make sure you install the correct drivers if needed. Recent Mac OS
-      distributions have the drivers already there for some adaptors.</p>
-
-      <h3>Settings</h3>
+      distributions and Windows versions have the drivers already there for some adaptors.</p>
+	  
+	  <h3>Settings</h3>
 
       <p>Next, configure the program:</p>
 
@@ -60,157 +59,142 @@
 
         <li>Restart the program. You should be up and running.</li>
       </ul>
+	  
+	  <h3>WiFi</h3>
 
-      <h3>Features</h3>
+      <p>Follow the instructions in the Lionel Legacy Control System or Command Base 3 Manual.</p>
+
+	  <h2>Features</h2>
 
       <p>(Not yet complete)</p>
 
-      <p>With JMRI 2.11.8, Lionel TMCC operation for engines and accessory decoders is available.
-      Train commands are not yet available.</p>
+      <p>As of JMRI v 5.1.2, Lionel TMCC Train(TR), Route(RTE), Accessory(ACC), Switch(SW) and Group(GR) commands are not yet available.</p>
 
-      <p>The functions below will take care of all Engine Controls on TMCC and the basic commands
-      on Legacy. The Accessory and Route and Train ( multi Lash Ups ) are not implimented. The
-      Switch commands should also work.</p>
+      <p>The functions below will take care of all Engine Controls on TMCC 1 and TMCC 2 Legacy equiped locomotives, and up to Railsounds 4
+      including aftermarket units such as ERR, K-Line and TAS. Any Accessory/Other component that uses "Engine ID" commands will also work 
+	  however the function buttons will probably have different meanings. Consult the manual that came with the Accessory ( Crane Car, etc. )
+	  to determine what the Aux1 buttons do for that item and label the Function Buttons accordingly.</p>
 
-      <p>Listed are the common actions for Railsounds 4, ERR conversion boards, and TAS boards. Any
-      Accessory that uses Engine ID commands will also work however the function buttons will have
-      different meanings. Consult the manual that came with the Accessory ( Crane Car, etc. ) to
-      determine what the Aux1 buttons do for that item and label the Function Buttons
-      accordingly.</p>
+      <h3>TMCC 1 and TMCC 2 Legacy Standard Functions</h3>
+	  
+	  <p>When using a JMRI Throttle to run a Locomotive, the function buttons are allocated as
+      follows:</p>	  
+	  
+	  <style>
+	  dl {
+	  display: grid;
+	  grid-gap: 4px 16px;
+	  grid-template-columns: max-content;
+	  margin-left: 25px; /* Shift the entire grid 25px to the right */
+	  }
+	  
+	  dt {
+	  font-weight: bold; /* Optional styling */
+	  }
+	  
+	  dd {
+	  margin: 0; /* Remove default margin */
+	  grid-column-start: 2; /* Position the dd in the second column */
+	  }
+	  </style>	  
+	  
+	  <dl>
+	  
+		<dt>F0</dt><dd>AUX 2 (Headlights On / Off )</dd>
 
-      <p>When using a JMRI Throttle to run a Locomotive, the function buttons are allocated as
-      follows:</p>
+		<dt>F1</dt><dd>Bell</dd>
 
-      <dl>
-        <dt>F0</dt>
+        <dt>F2</dt><dd>Whistle 1 (Steam) / Horn 1 (Diesel)</dd>
 
-        <dd>AUX 2 (Headlights On / Off )</dd>
+        <dt>F3</dt><dd>Front Coupler</dd>
 
-        <dt>F1</dt>
+        <dt>F4</dt><dd>Rear Coupler</dd>
+		
+		<dt></dt><dd></dd>
+		
+		<dt></dt><dd>--------------------------------------------------------------------------</dd>
+		
+		<dt>Aux1 + n</dt><dd></dd>
+		
+		<dt></dt><dd></dd>
 
-        <dd>Bell</dd>
+        <dt>F5 +0</dt><dd>Preface needed for sending specified commands (TBD)</dd>
 
-        <dt>F2</dt>
+        <dt>F6 +1</dt><dd>Volume Up</dd>
 
-        <dd>Horn/Whistle 1</dd>
+        <dt>F7 +2</dt><dd>Crew Talk</dd>
 
-        <dt>F3</dt>
+        <dt>F8 +3</dt><dd>Activate Sound Card and Play Start up Sounds</dd>
 
-        <dd>Front Coupler</dd>
+        <dt>F9 +4</dt><dd>Volume Down</dd>
 
-        <dt>F4</dt>
+        <dt>F10 +5</dt><dd>Deactivate Sound Card after Playing Shut Down Sounds</dd>
 
-        <dd>Back Coupler</dd>
+        <dt>F11 +6</dt><dd>Steam Release (Steam) / Air Horn and RPM Decrease (Diesel)</dd>
 
-        <dt>Aux1 + n</dt>
+        <dt>F12 +7</dt><dd>Tower Comm</dd>
 
-        <dt>F5 +0</dt>
+        <dt>F13 +8</dt><dd>Aux Off (Smoke and Firebox OFF on Steam) / (Auxilliary Lighting OFF on Diesel)</dd>
 
-        <dd>Preface needed for sending specified commands</dd>
+        <dt>F14 +9</dt><dd>Aux On (Smoke and Firebox ON on Steam) / (Auxilliary Lighting ON on Diesel)</dd>
+		
+		<dt></dt><dd>--------------------------------------------------------------------------</dd>
+		
+		<dt></dt><dd></dd>
+		
+		<dt></dt><dd></dd>
 
-        <dt>F6 +1</dt>
+        <dt>F15</dt><dd>Aux 1</dd>
 
-        <dd>Volume Up</dd>
+        <dt>F16</dt><dd>Let Off Sound</dd>
 
-        <dt>F7 +2</dt>
+        <dt>F17</dt><dd>Forward</dd>
 
-        <dd>Crew Talk</dd>
+        <dt>F18</dt><dd>Reverse</dd>
 
-        <dt>F8 +3</dt>
+        <dt>F19</dt><dd>Toggle Direction</dd>
 
-        <dd>Start up Sounds</dd>
+        <dt>F20</dt><dd>Boost</dd>
 
-        <dt>F9 +4</dt>
+        <dt>F21</dt><dd>Brake</dd>
 
-        <dd>Volume Down</dd>
+        <dt>F22</dt><dd>Increse Speed 2 Steps</dd>
 
-        <dt>F10 +5</dt>
+        <dt>F23</dt><dd>Decrease Speed 2 Steps</dd>
 
-        <dd>Shut Down Sounds</dd>
+        <dt>F24</dt><dd>Momentum Low</dd>
 
-        <dt>F11 +6</dt>
+        <dt>F25</dt><dd>Momentum Medium</dd>
 
-        <dd>Steam Release / RPM Decrease</dd>
+        <dt>F26</dt><dd>Momentum High</dd>
 
-        <dt>F12 +7</dt>
-
-        <dd>Tower Comm</dd>
-
-        <dt>F13 +8</dt>
-
-        <dd>Aux Off ( Smoke OFF on Steam Usually )</dd>
-
-        <dt>F14 +9</dt>
-
-        <dd>Aux On ( Smoke ON on steam Usually )</dd>
-
-        <dt>F15</dt>
-
-        <dd>Aux 1</dd>
-
-        <dt>F16</dt>
-
-        <dd>Let Off Sound</dd>
-
-        <dt>F17</dt>
-
-        <dd>Forward</dd>
-
-        <dt>F18</dt>
-
-        <dd>Reverse</dd>
-
-        <dt>F19</dt>
-
-        <dd>Toggle Direction</dd>
-
-        <dt>F20</dt>
-
-        <dd>Boost</dd>
-
-        <dt>F21</dt>
-
-        <dd>Brake</dd>
-
-        <dt>F22</dt>
-
-        <dd>Increse Speed 2 Steps</dd>
-
-        <dt>F23</dt>
-
-        <dd>Decrease Speed 2 Steps</dd>
-
-        <dt>F24</dt>
-
-        <dd>Momentum Low</dd>
-
-        <dt>F25</dt>
-
-        <dd>Momentum Medium</dd>
-
-        <dt>F26</dt>
-
-        <dd>Momentum High</dd>
-
-        <dt>F27</dt>
-
-        <dd>Set</dd>
+        <dt>F27</dt><dd>Set</dd>
       </dl>
+	  
+	  <h3>TMCC 2 Legacy Extended Functions</h3>
 
       <p>In addition, if you have a TMCC 2 Legacy system and JMRI
-      is connected via a SER2 adapter, you can use additional Legacy
+      is connected via a Legacy Command Base (Base 1L w/SER2 adapter, Base 992, Base 3), you can use additional Legacy
       functions:</p>
-
-      <dl>
+	  
+	  <dl>
         <dt>F28</dt><dd>Start Up Sequence 1 (Delayed Prime Mover)</dd>
+		
         <dt>F29</dt><dd>Start Up Sequence 2 (Immediate Start Up)</dd>
+		
         <dt>F30</dt><dd>Shut Down Sequence 1 (Delay w/ Announcement)</dd>
+		
         <dt>F31</dt><dd>Shut down Sequence 2 (Immediate Shut Down)</dd>
       </dl>
 
-      If you have suggestions for usage of additional function keys,
+      Extended TMCC 2 Legacy Functions beyond F31 are not yet implemented.
+	  If you have suggestions for usage of additional function keys,
       please make a suggestion via the
       <a href="https://groups.io/g/jmriusers">JMRIusers list</a>.
+	  
+	  <br>
+	  <br>
+
 
       <h2 id="tools">JMRI TMCC Tools</h2>
 
