@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import jmri.*;
+import jmri.progdebugger.ProgDebugger;
 
 /**
  * A programmer which supports permissions.
@@ -136,6 +137,24 @@ public class PermissionProgrammer implements jmri.Programmer {
     @Override
     public String decodeErrorCode(int i) {
         return _programmer.decodeErrorCode(i);
+    }
+
+    /**
+     * This method returns the encapsulated programmer if and only if it's
+     * a ProgDebugger.
+     *
+     * It should only be used by tests. The design of this method is to ensure
+     * it cannot be used by a hacker to circumvent the permissions and get
+     * direct access to the programmer.
+     *
+     * @return the prog debugger
+     * @throws UnsupportedOperationException if the programmer is not a ProgDebugger
+     */
+    public ProgDebugger getProgDebugger() {
+        if (!(_programmer instanceof ProgDebugger)) {
+            throw new UnsupportedOperationException("programmer is not a ProgDebugger");
+        }
+        return (ProgDebugger) _programmer;
     }
 
 }
