@@ -31,9 +31,10 @@ public class XNetInitializationManagerTest {
         softly.assertThat(memo.getCommandStation()).isEqualTo(cs);
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
         softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(XNetThrottleManager.class);
-        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
-        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
-        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
+        // The programmers are now encapsulated and not directly accessible
+//        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
+//        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
+//        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
         softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(XNetTurnoutManager.class);
         softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
         softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
@@ -73,9 +74,10 @@ public class XNetInitializationManagerTest {
         softly.assertThat(memo.getCommandStation()).isEqualTo(cs);
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
         softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(XNetThrottleManager.class);
-        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
-        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
-        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
+        // The programmers are now encapsulated and not directly accessible
+//        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
+//        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
+//        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
         softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(XNetTurnoutManager.class);
         softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
         softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
@@ -132,9 +134,10 @@ public class XNetInitializationManagerTest {
         softly.assertThat(memo.getCommandStation()).isEqualTo(cs);
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
         softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(RocoXNetThrottleManager.class);
-        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
-        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
-        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
+        // The programmers are now encapsulated and not directly accessible
+//        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
+//        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
+//        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
         softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(XNetTurnoutManager.class);
         softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
         softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
@@ -153,9 +156,10 @@ public class XNetInitializationManagerTest {
         softly.assertThat(memo.getCommandStation()).isEqualTo(cs);
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
         softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(RocoXNetThrottleManager.class);
-        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
-        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
-        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
+        // The programmers are now encapsulated and not directly accessible
+//        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
+//        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
+//        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
         softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(XNetTurnoutManager.class);
         softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
         softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
@@ -174,9 +178,10 @@ public class XNetInitializationManagerTest {
         softly.assertThat(memo.getCommandStation()).isEqualTo(cs);
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
         softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(XNetThrottleManager.class);
-        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
-        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
-        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
+        // The programmers are now encapsulated and not directly accessible
+//        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(XNetProgrammerManager.class);
+//        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(LI100XNetProgrammer.class);
+//        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false, 42)).isExactlyInstanceOf(XNetOpsModeProgrammer.class);
         softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(XNetTurnoutManager.class);
         softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
         softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
