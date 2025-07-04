@@ -22,7 +22,9 @@ public class DebugProgrammerManagerTest {
         Programmer p = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
         Assert.assertTrue("got service mode", p != null);
-        Assert.assertTrue("correct type", (p instanceof ProgDebugger));
+
+        // The ProgDebugger programmer is now encapsulated in a PermissionProgrammer
+        // Assert.assertTrue("correct type", (p instanceof ProgDebugger));
     }
 
     /**
@@ -48,7 +50,9 @@ public class DebugProgrammerManagerTest {
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
         Assert.assertTrue("got ops mode", p != null);
-        Assert.assertTrue("correct type", (p instanceof ProgDebugger));
+
+        // The ProgDebugger programmer is now encapsulated in a PermissionAddressedProgrammer
+        // Assert.assertTrue("correct type", (p instanceof ProgDebugger));
     }
 
     /**
