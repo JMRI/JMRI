@@ -31,7 +31,6 @@ public class PermissionProgrammer implements jmri.Programmer {
     protected boolean throttleUserRequest() {
         long oldTime = _throttleUserRequestTime;
         _throttleUserRequestTime = System.currentTimeMillis();
-        System.out.format("Throttle delay: %d%n", _throttleUserRequestTime - oldTime);
         return (_throttleUserRequestTime - oldTime) > THROTTLE_USER_REQUEST_TIME;
     }
 
@@ -59,7 +58,6 @@ public class PermissionProgrammer implements jmri.Programmer {
 
     @Override
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        System.out.format("writeCV: %s, %d%n", CV, val);
         if (hasPermission()) {
             _programmer.writeCV(CV, val, p);
         } else {
@@ -69,7 +67,6 @@ public class PermissionProgrammer implements jmri.Programmer {
 
     @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
-        System.out.format("readCV: %s%n", CV);
         if (hasPermission()) {
             _programmer.readCV(CV, p);
         } else {
@@ -79,7 +76,6 @@ public class PermissionProgrammer implements jmri.Programmer {
 
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        System.out.format("confirmCV: %s, %d%n", CV, val);
         if (hasPermission()) {
             _programmer.confirmCV(CV, val, p);
         } else {
