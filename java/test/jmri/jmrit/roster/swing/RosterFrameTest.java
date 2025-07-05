@@ -38,7 +38,10 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        jmri.progdebugger.ProgDebugger prog =
+                ((jmri.managers.PermissionProgrammer) InstanceManager
+                        .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer())
+                        .getProgDebugger();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
@@ -76,7 +79,10 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        jmri.progdebugger.ProgDebugger prog =
+                ((jmri.managers.PermissionProgrammer) InstanceManager
+                        .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer())
+                        .getProgDebugger();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
@@ -120,7 +126,10 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        jmri.progdebugger.ProgDebugger prog =
+                ((jmri.managers.PermissionProgrammer) InstanceManager
+                        .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer())
+                        .getProgDebugger();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
@@ -218,7 +227,10 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        jmri.progdebugger.ProgDebugger prog = (jmri.progdebugger.ProgDebugger) InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
+        jmri.progdebugger.ProgDebugger prog =
+                ((jmri.managers.PermissionProgrammer) InstanceManager
+                        .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer())
+                        .getProgDebugger();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);

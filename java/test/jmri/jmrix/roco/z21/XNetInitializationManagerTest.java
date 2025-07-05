@@ -40,9 +40,10 @@ public class XNetInitializationManagerTest {
         softly.assertThat(memo.getCommandStation()).isNull();
         softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
         softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(Z21XNetThrottleManager.class);
-        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(Z21XNetProgrammerManager.class);
-        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(Z21XNetProgrammer.class);
-        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false,42)).isExactlyInstanceOf(Z21XNetOpsModeProgrammer.class);
+        // The programmers are now encapsulated and not directly accessible
+//        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(Z21XNetProgrammerManager.class);
+//        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(Z21XNetProgrammer.class);
+//        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false,42)).isExactlyInstanceOf(Z21XNetOpsModeProgrammer.class);
         softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(Z21XNetTurnoutManager.class);
         softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
         softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);

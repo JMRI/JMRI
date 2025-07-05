@@ -4,6 +4,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
+import jmri.managers.PermissionProgrammer;
 import jmri.managers.TurnoutManagerScaffold;
 import jmri.progdebugger.DebugProgrammerManager;
 import jmri.util.JUnitAppender;
@@ -87,7 +88,9 @@ public class InstanceManagerTest {
         // initialize the system
         Programmer p = new jmri.progdebugger.ProgDebugger();
         InstanceManager.store(new jmri.managers.DefaultProgrammerManager(p), GlobalProgrammerManager.class);
-        Assert.assertEquals(p, InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer());
+        Assert.assertEquals(p, ((PermissionProgrammer)InstanceManager
+                .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer())
+                .getProgDebugger());
     }
 
     // Testing new load store
@@ -154,7 +157,7 @@ public class InstanceManagerTest {
         InstanceManager.store(t1, TurnoutManager.class);
 
         var set = InstanceManager.getInstanceClasses();
-        
+
         Assert.assertTrue("PowerManager", set.contains(PowerManager.class));
         Assert.assertTrue("TurnoutManager", set.contains(TurnoutManager.class));
     }
@@ -217,7 +220,7 @@ public class InstanceManagerTest {
     static synchronized void setavoidLoopAutoCreateCycle( boolean newVal) {
         avoidLoopAutoCreateCycle = newVal;
     }
-    
+
     public static class AutoCreateCycle implements InstanceManagerAutoDefault {
 
         public AutoCreateCycle() {
