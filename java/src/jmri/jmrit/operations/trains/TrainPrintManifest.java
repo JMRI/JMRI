@@ -94,7 +94,6 @@ public class TrainPrintManifest extends TrainCommon {
                 }
             }
             print(writer, lines, true);
-            in.close();
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist", e);
         } catch (HardcopyWriter.PrintCanceledException ex) {
@@ -105,7 +104,8 @@ public class TrainPrintManifest extends TrainCommon {
     }
 
     private static void print(HardcopyWriter writer, List<String> lines, boolean lastBlock) throws IOException {
-        if (writer.getCurrentLineNumber() != 0 &&
+        if (Setup.isPrintNoPageBreaksEnabled() &&
+                writer.getCurrentLineNumber() != 0 &&
                 writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
             writer.pageBreak();
         }
@@ -156,7 +156,7 @@ public class TrainPrintManifest extends TrainCommon {
             }
             writer.write(line);
             // no line feed if last line of file, eliminates blank page
-            if (!lastBlock || line != lines.get(lines.size() - 1)) {
+            if (!lastBlock || !line.equals(lines.get(lines.size() - 1))) {
                 writer.write(NEW_LINE);
             }
         }

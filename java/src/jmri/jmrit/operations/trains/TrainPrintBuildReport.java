@@ -64,7 +64,6 @@ public class TrainPrintBuildReport extends TrainCommon {
                 }
                 writer.write(line + NEW_LINE);
             }
-            in.close();
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist", e);
         } catch (HardcopyWriter.PrintCanceledException ex) {

@@ -336,6 +336,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private boolean printValid = true; // when true print out the valid time and date
     private boolean sortByTrack = false; // when true manifest work is sorted by track names
     private boolean printHeaders = false; // when true add headers to manifest and switch lists
+    private boolean printNoPageBreaks = true; // when true no page breaks for a location's work
     private boolean printHeaderLine1 = true; // when true add header line 1 to manifest and switch lists
     private boolean printHeaderLine2 = true; // when true add header line 2 to manifest and switch lists
     private boolean printHeaderLine3 = true; // when true add header line 3 to manifest and switch lists
@@ -1000,6 +1001,14 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
 
     public static boolean isPrintHeadersEnabled() {
         return getDefault().printHeaders;
+    }
+
+    public static void setPrintNoPageBreaksEnabled(boolean enable) {
+        getDefault().printNoPageBreaks = enable;
+    }
+
+    public static boolean isPrintNoPageBreaksEnabled() {
+        return getDefault().printNoPageBreaks;
     }
 
     public static void setPrintHeaderLine1Enabled(boolean enable) {
@@ -2069,6 +2078,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_PAGE_HEADER, isPrintPageHeaderEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_NO_PAGE_BREAKS, isPrintNoPageBreaksEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.TRUNCATE, isPrintTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -2706,6 +2716,11 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 String enable = a.getValue();
                 log.debug("manifest print headers: {}", enable);
                 setPrintHeadersEnabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_NO_PAGE_BREAKS)) != null) {
+                String enable = a.getValue();
+                log.debug("printNoPageBreaks: {}", enable);
+                setPrintNoPageBreaksEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.TRUNCATE)) != null) {
                 String enable = a.getValue();
