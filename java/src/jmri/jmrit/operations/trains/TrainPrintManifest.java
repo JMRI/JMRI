@@ -105,7 +105,8 @@ public class TrainPrintManifest extends TrainCommon {
     }
 
     private static void print(HardcopyWriter writer, List<String> lines, boolean lastBlock) throws IOException {
-        if (writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
+        if (writer.getCurrentLineNumber() != 0 &&
+                writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
             writer.pageBreak();
         }
         Color color = null;
