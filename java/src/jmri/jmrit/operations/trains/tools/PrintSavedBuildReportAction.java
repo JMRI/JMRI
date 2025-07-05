@@ -58,13 +58,11 @@ public class PrintSavedBuildReportAction extends AbstractAction implements java.
             return;
         }
         if (_isPreview && Setup.isBuildReportEditorEnabled()) {
-            TrainPrintUtilities.editReport(file, _train.getName()); 
+            TrainPrintBuildReport.editReport(file, _train.getName());
             return;
         }
-        TrainPrintUtilities.printReport(file,
-                Bundle.getMessage("buildReport", _train.getDescription()),
-                _isPreview, Train.NONE, true, Train.NONE, Train.NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(),
-                true, null);
+        TrainPrintBuildReport.printReport(file,
+                Bundle.getMessage("buildReport", _train.getDescription()), _isPreview);
         return;
     }
 
