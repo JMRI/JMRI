@@ -18,8 +18,7 @@
       <h3>Command Station</h3>
 
       <p>Lionel TMCC 1 or TMCC 2 Legacy thru the serial port on the Command Base 1, Command Base 1L, or Command Base 992.
-	  Via WiFi to Command Base 992 and Command Base 3.
-	  Note: Connecting to the Command Base 1L will require an LCS SER2 serial converter. Connecting to the Command Base 992
+	  Via WiFi to Command Base 992 and Command Base 3. Note: Connecting to the Command Base 1L will require an LCS SER2 serial converter. Connecting to the Command Base 992
 	  may require the Y-cable included with the Lionel Legacy Command Set. </p>
 
       <h2 id="limitations">Limitations</h2>
