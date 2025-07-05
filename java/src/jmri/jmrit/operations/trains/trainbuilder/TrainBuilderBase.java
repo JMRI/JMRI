@@ -2504,7 +2504,8 @@ public class TrainBuilderBase extends TrainCommon {
                         Bundle.getMessage("buildNoPickupLaterDirection", car.toString(), rld.getName(), rld.getId()));
                 return false;
             }
-            if (!rld.isPickUpAllowed()) {
+            if (!rld.isPickUpAllowed() && !rld.isLocalMovesAllowed() ||
+                    !rld.isPickUpAllowed() && rld.isLocalMovesAllowed() && !car.isLocalMove()) {
                 addLine(_buildReport, SEVEN,
                         Bundle.getMessage("buildNoPickupLater", car.toString(), rld.getName(), rld.getId()));
                 return false;
