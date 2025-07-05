@@ -501,7 +501,7 @@ public class TrainSwitchLists extends TrainCommon {
         if (isPreview && Setup.isManifestEditorEnabled()) {
             TrainUtilities.openDesktop(switchListFile);
         } else {
-            TrainPrintUtilities.printReport(switchListFile, location.getName(), isPreview, Setup.getFontName(), false,
+            TrainPrintManifest.printReport(switchListFile, location.getName(), isPreview, Setup.getFontName(),
                     FileUtil.getExternalFilename(Setup.getManifestLogoURL()), location.getDefaultPrinterName(),
                     Setup.getSwitchListOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled(),
                     Setup.getPrintDuplexSides());

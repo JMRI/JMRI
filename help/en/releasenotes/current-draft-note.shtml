@@ -495,6 +495,7 @@
         <ul>
             <li>Additional improvements to quick service tracks</li>
             <li>Fixed a bug with alternate tracks in FIFO or LIFO mode</li>
+            <li>Printing Manifests or switch list will no longer have a page break in the middle of a locations work</li>
         </ul>
 
    <h3>Panel Editor</h3>
