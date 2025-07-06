@@ -424,6 +424,11 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
+            <li>The permissions <strong>On Program Track</strong> and
+                <strong>Program On Main</strong> has been added in the
+                section <strong>Decoder programming</strong>. If
+                permissions are enabled, these needs to be enabled
+                for the user to program decoders.</li>
             <li></li>
         </ul>
 
@@ -505,6 +510,11 @@
     <h3>Permissions</h3>
         <a id="Permissions" name="Permissions"></a>
         <ul>
+            <li>The permissions <strong>On Program Track</strong> and
+                <strong>Program On Main</strong> has been added in the
+                section <strong>Decoder programming</strong>. If
+                permissions are enabled, these needs to be enabled
+                for the user to program decoders.</li>
             <li></li>
         </ul>
 
