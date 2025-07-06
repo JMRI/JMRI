@@ -11,6 +11,8 @@ import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
+import jmri.implementation.PermissionProgrammer;
+import jmri.implementation.PermissionAddressedProgrammer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
