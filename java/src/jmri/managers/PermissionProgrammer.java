@@ -57,6 +57,7 @@ public class PermissionProgrammer implements jmri.Programmer {
         return hasPerm;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (hasPermission()) {
@@ -66,6 +67,7 @@ public class PermissionProgrammer implements jmri.Programmer {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         if (hasPermission()) {
@@ -75,6 +77,7 @@ public class PermissionProgrammer implements jmri.Programmer {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (hasPermission()) {
@@ -84,56 +87,67 @@ public class PermissionProgrammer implements jmri.Programmer {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         return _programmer.getSupportedModes();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setMode(ProgrammingMode p) {
         _programmer.setMode(p);
     }
 
+    /** {@inheritDoc} */
     @Override
     public ProgrammingMode getMode() {
         return _programmer.getMode();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean getCanRead() {
         return _programmer.getCanRead();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean getCanRead(String addr) {
         return _programmer.getCanRead(addr);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean getCanWrite() {
         return _programmer.getCanWrite();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean getCanWrite(String addr) {
         return _programmer.getCanWrite(addr);
     }
 
+    /** {@inheritDoc} */
     @Override
     public WriteConfirmMode getWriteConfirmMode(String addr) {
         return _programmer.getWriteConfirmMode(addr);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener p) {
         _programmer.addPropertyChangeListener(p);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener p) {
         _programmer.removePropertyChangeListener(p);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String decodeErrorCode(int i) {
         return _programmer.decodeErrorCode(i);
@@ -157,4 +171,9 @@ public class PermissionProgrammer implements jmri.Programmer {
         return (ProgDebugger) _programmer;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public Configurator getConfigurator() {
+        return _programmer.getConfigurator();
+    }
 }
