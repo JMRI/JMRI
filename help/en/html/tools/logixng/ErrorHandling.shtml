@@ -46,7 +46,8 @@
       that you have trouble with. Note that every ConditionalNG that's using the same thread will
       stop until the dialog is closed, but if you have trouble with only a few ConditionalNGs, you
       can put these on a separate thread to let the other ConditionalNGs to continue to run despite
-      the dialog box.</p>
+      the dialog box.  This option should not be used when running JMRI without a physical or
+      virtual display.</p>
 
       <div style="margin-left: 2em">
         <a href="images/error_dialog.png"><img src="images/error_dialog.png" alt=
@@ -78,6 +79,13 @@
 
       <p>Aborts the current execution of the ConditionalNG and log an error message. This is useful
       if an error is so severe that the current execution of the ConditionalNG must be stopped.</p>
+
+      <h3>Abort without error</h3>
+
+      <p>Aborts the current execution of the ConditionalNG without displaying an error message. This
+      is useful when the <a href="ErrorHandlingModule.shtml">Error handling module</a> is used to
+      handle the error.</p>
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
