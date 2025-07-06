@@ -1,7 +1,6 @@
 package jmri.progdebugger;
 
 import jmri.*;
-import jmri.managers.PermissionProgrammer;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -23,8 +22,7 @@ public class DebugProgrammerManagerTest {
         Programmer p = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
         Assert.assertTrue("got service mode", p != null);
-        Assert.assertEquals("correct type", "jmri.progdebugger.ProgDebugger",
-                ((PermissionProgrammer)p).getProgDebugger().getClass().getName());
+        Assert.assertTrue("correct type", (p.getConfigurator() instanceof ProgDebugger.ProgDebuggerConfigurator));
     }
 
     /**
@@ -50,8 +48,7 @@ public class DebugProgrammerManagerTest {
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
         Assert.assertTrue("got ops mode", p != null);
-        Assert.assertEquals("correct type", "jmri.progdebugger.ProgDebugger",
-                ((PermissionProgrammer)p).getProgDebugger().getClass().getName());
+        Assert.assertTrue("correct type", (p.getConfigurator() instanceof ProgDebugger.ProgDebuggerConfigurator));
     }
 
     /**

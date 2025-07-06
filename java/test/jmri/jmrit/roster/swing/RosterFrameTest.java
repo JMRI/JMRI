@@ -2,6 +2,7 @@ package jmri.jmrit.roster.swing;
 
 import jmri.*;
 import jmri.jmrit.roster.*;
+import jmri.progdebugger.ProgDebugger.ProgDebuggerConfigurator;
 import jmri.util.*;
 
 import org.junit.jupiter.api.*;
@@ -38,10 +39,8 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        jmri.progdebugger.ProgDebugger prog =
-                ((jmri.managers.PermissionProgrammer) InstanceManager
-                        .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer())
-                        .getProgDebugger();
+        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) InstanceManager
+                .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
@@ -79,10 +78,8 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        jmri.progdebugger.ProgDebugger prog =
-                ((jmri.managers.PermissionProgrammer) InstanceManager
-                        .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer())
-                        .getProgDebugger();
+        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) InstanceManager
+                .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
@@ -126,10 +123,8 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        jmri.progdebugger.ProgDebugger prog =
-                ((jmri.managers.PermissionProgrammer) InstanceManager
-                        .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer())
-                        .getProgDebugger();
+        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) InstanceManager
+                .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);
@@ -227,10 +222,8 @@ public class RosterFrameTest {
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
 
         // set some CV values
-        jmri.progdebugger.ProgDebugger prog =
-                ((jmri.managers.PermissionProgrammer) InstanceManager
-                        .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer())
-                        .getProgDebugger();
+        ProgDebuggerConfigurator prog = (ProgDebuggerConfigurator) InstanceManager
+                .getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator();
         Assertions.assertNotNull(prog);
         prog.resetCv(1, 3);
         prog.resetCv(29, 0);

@@ -411,6 +411,25 @@ public class ProgDebugger extends PropertyChangeSupport implements AddressedProg
         }
     }
 
+    private final ProgDebuggerConfigurator configurator =
+            new ProgDebuggerConfigurator();
+
+    @Override
+    public Configurator getConfigurator() {
+        return configurator;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(ProgDebugger.class);
+
+
+    /**
+     * This class is used by tests.
+     */
+    public class ProgDebuggerConfigurator implements Configurator {
+
+        public void resetCv(int cv, int val) {
+            ProgDebugger.this.resetCv(cv, val);
+        }
+    }
 
 }
