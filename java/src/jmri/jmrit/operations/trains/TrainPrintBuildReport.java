@@ -119,7 +119,6 @@ public class TrainPrintBuildReport extends TrainCommon {
                     break;
                 }
             }
-            in.close();
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist: {}", e.getLocalizedMessage());
         } catch (IOException e) {

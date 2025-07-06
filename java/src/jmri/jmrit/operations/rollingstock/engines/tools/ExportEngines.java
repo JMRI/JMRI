@@ -113,8 +113,6 @@ public class ExportEngines extends XmlFile {
                         engine.getComment(),
                         engine.isOutOfService() ? Bundle.getMessage("OutOfService") : "");
             }
-            fileOut.flush();
-            fileOut.close();
             log.info("Exported {} engines to file {}", engineList.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ExportedEnginesToFile",
                     engineList.size(), defaultOperationsFilename()), Bundle.getMessage("ExportComplete"),

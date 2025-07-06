@@ -286,8 +286,6 @@ public class ExportLocations extends XmlFile {
                             track.getCommentSetout().replace('\n', ' '));
                 }
             }
-            fileOut.flush();
-            fileOut.close();
             log.info("Exported {} locations to file {}", locations.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedLocationsToFile", locations.size(), defaultOperationsFilename()),

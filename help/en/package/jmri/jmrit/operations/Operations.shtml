@@ -1933,16 +1933,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>The next option is "Truncate" and when selected will cause the program to reduce the
         amount of information printed when setting out or picking up a car at a location that also
         has a switch list. The idea here is that you have a location that is staffed by a crew
-        member with a switch list and he or she will be doing the actual car pick up and set out for
+        member with a switch list and they will be doing the actual car pick up and set out for
         the train. Since the switch list contains all of the needed information with regards to
         where the cars are and eventually where they need to be, the train Manifest only shows which
         cars are being removed and added to the train.</p>
 
       <h4>Manifests and Switch List Options</h4>
-      There are eleven checkboxes that modify both Manifests and switch lists and are as follows:
+      There are twelve checkboxes that modify both Manifests and switch lists and are as follows:
       <p>The "Print Valid" checkbox causes the program to print date and time the train was
-        built, which isn't the same as when the Manifest was printed. The print time is always shown
-        at the top right of the Manifest or switch list.</p>
+        built, which isn't the same as when the Manifest was printed. The print time is shown
+        at the top right of the Manifest or switch list when "Print Page Header" is selected.</p>
 
       <p>If you want the Manifest and switch list to show how many car loads and empties are in
         the train, select the "Loads and Empties" checkbox.</p>
@@ -1977,6 +1977,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         would rather have the cars listed by the track name rather than blocking order, select the
         option "Sort by Track".
       </p>
+
+      <p>The option "No Page Breaks" when selected, prevents page breaks in a location's work
+        for Manifests and switch lists. When printing, the program will determine if the work for a
+        location can fix on the current page, and if not, will print the work on the next page. The
+        program will only use page breaks if the work for a location won't fit on a single page.</p>
 
       <p>
         The next option is "Print Headers". When this option is selected, the train Manifests and
