@@ -20,17 +20,17 @@
 
 <!-- CV197,198,199 set brake functions -->
   <variable item="Brake1 Function" CV="197" default="255">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
     <label>Brake 1 function</label>
   </variable>
 
   <variable item="Brake2 Function" CV="198" default="255">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
     <label>Brake 2 function</label>
   </variable>
 
   <variable item="Brake3 Function" CV="199" default="255">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
     <label>Brake 3 function</label>
   </variable>
 

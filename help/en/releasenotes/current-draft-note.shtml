@@ -361,7 +361,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li></li>
+                <li>Fix for Brake function key selection (F0-F28), including "no active" value. (Lokommander II decoders)</li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
