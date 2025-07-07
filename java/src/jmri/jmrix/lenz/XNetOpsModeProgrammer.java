@@ -240,7 +240,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     /**
      * This class is used by tests.
      */
-    public class XNetOpsConfigurator implements Configurator {
+    public static class XNetOpsConfigurator implements Configurator {
     }
 
     // initialize logging

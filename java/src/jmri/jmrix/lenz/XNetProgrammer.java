@@ -575,7 +575,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     /**
      * This class is used by tests.
      */
-    public class XNetConfigurator implements Configurator {
+    public static class XNetConfigurator implements Configurator {
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetProgrammer.class);
