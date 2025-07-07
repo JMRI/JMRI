@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.expressions;
 
+import jmri.util.TimerUnit;
+
 import java.util.*;
 
 import javax.annotation.Nonnull;
