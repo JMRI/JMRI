@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars.gui;
 
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- * 2014
+ *         2014, 2025
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
@@ -214,6 +215,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         addRadioButtonAction(sortByLast);
         addRadioButtonAction(sortByComment);
 
+        findCarTextBox.addActionListener(this::textBoxActionPerformed);
+
         group.add(sortByNumber);
         group.add(sortByRoad);
         group.add(sortByType);
@@ -279,7 +282,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     @Override
-    public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void radioButtonActionPerformed(ActionEvent ae) {
         log.debug("radio button activated");
         // clear any sorts by column
         clearTableSort(carsTable);
@@ -362,19 +365,10 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
     // add, find or save button
     @Override
-    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void buttonActionPerformed(ActionEvent ae) {
         // log.debug("car button activated");
         if (ae.getSource() == findButton) {
-            int rowindex = carsTableModel.findCarByRoadNumber(findCarTextBox.getText());
-            if (rowindex < 0) {
-                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carWithRoadNumNotFound",
-                        findCarTextBox.getText()), Bundle.getMessage("carCouldNotFind"),
-                        JmriJOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            // clear any sorts by column
-            clearTableSort(carsTable);
-            carsTable.changeSelection(rowindex, 0, false, false);
+            findCar();
             return;
         }
         if (ae.getSource() == addButton) {
@@ -394,6 +388,23 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
                 dispose();
             }
         }
+    }
+
+    public void textBoxActionPerformed(ActionEvent ae) {
+        findCar();
+    }
+
+    private void findCar() {
+        int rowindex = carsTableModel.findCarByRoadNumber(findCarTextBox.getText());
+        if (rowindex < 0) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carWithRoadNumNotFound",
+                    findCarTextBox.getText()), Bundle.getMessage("carCouldNotFind"),
+                    JmriJOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        // clear any sorts by column
+        clearTableSort(carsTable);
+        carsTable.changeSelection(rowindex, 0, false, false);
     }
 
     protected int[] getCurrentTableColumnWidths() {
