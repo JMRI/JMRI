@@ -253,7 +253,6 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
 
     List<Engine> engineList = null;
 
-    JTable _table;
     EnginesTableFrame _frame;
 
     void initTable(JTable table, EnginesTableFrame frame) {
