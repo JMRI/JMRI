@@ -115,8 +115,6 @@ public class ExportSchedules extends XmlFile {
                             scheduleMode);
                 }
             }
-            fileOut.flush();
-            fileOut.close();
             log.info("Exported {} schedules to file {}", schedules.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedSchedulesToFile", schedules.size(), defaultOperationsFilename()),

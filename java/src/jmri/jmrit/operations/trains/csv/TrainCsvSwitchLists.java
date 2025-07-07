@@ -281,8 +281,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 
             // Are there any cars that need to be found?
             listCarsLocationUnknown(fileOut);
-            fileOut.flush();
-            fileOut.close();
+
         } catch (IOException e) {
             log.error("Can not open CSV switch list file: {}", e.getLocalizedMessage());
             return null;
@@ -331,12 +330,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         break; // done
                     }
                 }
-                in.close();
             } catch (FileNotFoundException e) {
                 log.error("Can not open CSV switch list file: {}", file.getName());
             }
-            fileOut.flush();
-            fileOut.close();
         } catch (IOException e) {
             log.error("Can not open CSV switch list file: {}", e.getLocalizedMessage());
         }
