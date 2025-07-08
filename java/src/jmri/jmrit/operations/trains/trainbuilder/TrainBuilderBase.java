@@ -1983,7 +1983,8 @@ public class TrainBuilderBase extends TrainCommon {
             }
             if (!terminateStageTrack.isTypeNameAccepted(name)) {
                 addLine(_buildReport, FIVE,
-                        Bundle.getMessage("buildStagingTrackType", terminateStageTrack.getName(), name));
+                        Bundle.getMessage("buildStagingTrackType", terminateStageTrack.getLocation().getName(),
+                                terminateStageTrack.getName(), name));
                 return false;
             }
         }
@@ -2000,7 +2001,8 @@ public class TrainBuilderBase extends TrainCommon {
             if (_train.isCarRoadNameAccepted(road)) {
                 if (!terminateStageTrack.isRoadNameAccepted(road)) {
                     addLine(_buildReport, FIVE,
-                            Bundle.getMessage("buildStagingTrackRoad", terminateStageTrack.getName(), road));
+                            Bundle.getMessage("buildStagingTrackRoad", terminateStageTrack.getLocation().getName(),
+                                    terminateStageTrack.getName(), road));
                     return false;
                 }
             }
@@ -2018,7 +2020,8 @@ public class TrainBuilderBase extends TrainCommon {
             for (String load : carLoads.getNames(type)) {
                 if (_train.isLoadNameAccepted(load, type)) {
                     if (!terminateStageTrack.isLoadNameAndCarTypeAccepted(load, type)) {
-                        addLine(_buildReport, FIVE, Bundle.getMessage("buildStagingTrackLoad",
+                        addLine(_buildReport, FIVE,
+                                Bundle.getMessage("buildStagingTrackLoad", terminateStageTrack.getLocation().getName(),
                                 terminateStageTrack.getName(), type + CarLoad.SPLIT_CHAR + load));
                         return false;
                     }
@@ -2568,18 +2571,21 @@ public class TrainBuilderBase extends TrainCommon {
      */
     protected boolean generateLoadCarDepartingAndTerminatingIntoStaging(Car car, Track stageTrack)
             throws BuildFailedException {
+        addLine(_buildReport, SEVEN, BLANK_LINE);
         // code check
         if (stageTrack == null || !stageTrack.isStaging()) {
             throw new BuildFailedException("ERROR coding issue, staging track null or not staging");
         }
         if (!stageTrack.isTypeNameAccepted(car.getTypeName())) {
             addLine(_buildReport, SEVEN,
-                    Bundle.getMessage("buildStagingTrackType", stageTrack.getName(), car.getTypeName()));
+                    Bundle.getMessage("buildStagingTrackType", stageTrack.getLocation().getName(), stageTrack.getName(),
+                            car.getTypeName()));
             return false;
         }
         if (!stageTrack.isRoadNameAccepted(car.getRoadName())) {
             addLine(_buildReport, SEVEN,
-                    Bundle.getMessage("buildStagingTrackRoad", stageTrack.getName(), car.getRoadName()));
+                    Bundle.getMessage("buildStagingTrackRoad", stageTrack.getLocation().getName(), stageTrack.getName(),
+                            car.getRoadName()));
             return false;
         }
         // Departing and returning to same location in staging?
@@ -2603,7 +2609,6 @@ public class TrainBuilderBase extends TrainCommon {
                     stageTrack.getName());
             return false;
         }
-        addLine(_buildReport, SEVEN, BLANK_LINE);
         addLine(_buildReport, SEVEN,
                 Bundle.getMessage("buildSearchTrackLoadStaging", car.toString(), car.getTypeName(),
                         car.getLoadType().toLowerCase(), car.getLoadName(), car.getLocationName(), car.getTrackName(),
