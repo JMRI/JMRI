@@ -74,9 +74,12 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         final int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         tc.sendXNetMessage(msg, this);
-        /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XpressNet */
-        notifyProgListenerEnd(p,CV,jmri.ProgListener.NotImplemented);
+        /* we need to save the programer and value so we can send messages 
+         back to the screen when the programming screen when we receive
+         something from the command station */
+        progListener = p;
+        progState = REQUESTSENT;
+        restartTimer(msg.getTimeout());
     }
 
     /** 
@@ -87,9 +90,13 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
-        /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XpressNet */
-        notifyProgListenerEnd(p,val,jmri.ProgListener.NotImplemented);
+        /* we need to save the programer and value so we can send messages 
+         back to the screen when the programming screen when we receive
+         something from the command station */
+        progListener = p;
+        value = val;
+        progState = REQUESTSENT;
+        restartTimer(msg.getTimeout());
     }
 
     /** 
@@ -118,7 +125,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     public boolean getCanRead() {
         // An operations mode read can be triggered on command 
         // stations which support Operations Mode Writes (LZ100,
-        // LZV100,MultiMouse).  Whether or not the operation produces
+        // LZV100, MultiMouse).  Whether or not the operation produces
         // a result depends on additional external hardware (a booster 
         // with an enabled  RailCom cutout (LV102 or similar) and a 
         // RailCom receiver circuit (LRC120 or similar)).
