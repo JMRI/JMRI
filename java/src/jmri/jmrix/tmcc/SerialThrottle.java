@@ -198,7 +198,7 @@ public class SerialThrottle extends AbstractThrottle {
             tc.sendSerialMessage(m, null);
             tc.sendSerialMessage(m, null);
 
-		// Send to layout 32 speed steps
+                // Send to layout 32 speed steps
         } else {
 
             // assume TMCC 32 step mode
