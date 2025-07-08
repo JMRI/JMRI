@@ -32,7 +32,6 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
     protected Location _location;
     protected List<Track> _tracksList = new ArrayList<>();
     protected String _trackType;
-    protected JTable _table;
     protected boolean _dirty = false;
 
     // Defines the columns

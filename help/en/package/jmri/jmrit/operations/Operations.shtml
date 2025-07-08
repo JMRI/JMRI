@@ -3798,12 +3798,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       the "Pick up" column. The format for pick up time is day:hour:minute.
 
       <h4>Add, Find, Save Buttons</h4>
-      There are three buttons located at the bottom of the Cars window. The <a href="#CarsEdit">Add</a>
-      button allows you to add a car to your roster. The "Save" button stores the cars roster to a
-      file. The "Find" button and the adjacent text window can be used to find a car by its road
-      number. You can use the wild card "*" when entering a car number. For example if you want to
-      find all cars with numbers that end with 345, enter *345, and press find. Each time you press
-      find, the next car with a road number ending with "345" will be highlighted.
+      There are three buttons located at the bottom of the Cars window. The
+      <a href="#CarsEdit">Add</a> button allows you to add a car to your roster. The "Save" button
+      stores the cars roster to a file.
+
+      <p>The "Find" button and the adjacent text window can be used to find a car by its road
+        number. You can use the wild card "*" when entering a car number. For example if you want to
+        find all cars with numbers that end with 345, enter *345, and press "Find" or the enter key.
+        Each time you press find or enter, the next car with a road number ending with 345 will be
+        highlighted. To find all cars that contain the numbers 345, use *345* for the search. And
+        use 345* to search for all cars that start with 345.</p>
 
       <h3 id="ImportingCars">Importing Cars from a File</h3>
       If you already have a list of cars in a database, you can import the cars into the program.

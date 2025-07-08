@@ -61,7 +61,6 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
     Schedule _schedule;
     Location _location;
     Track _track;
-    JTable _table;
     ScheduleEditFrame _frame;
     boolean _matchMode = false;
 
@@ -93,7 +92,6 @@ public class ScheduleTableModel extends OperationsTableModel implements Property
         _schedule = schedule;
         _location = location;
         _track = track;
-        _table = table;
         _frame = frame;
 
         // add property listeners

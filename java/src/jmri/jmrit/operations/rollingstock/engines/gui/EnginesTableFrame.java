@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines.gui;
 
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -40,15 +41,15 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     JRadioButton sortByNumber = new JRadioButton(Bundle.getMessage("Number"));
     JRadioButton sortByRoad = new JRadioButton(Bundle.getMessage("Road"));
     JRadioButton sortByModel = new JRadioButton(Bundle.getMessage("Model"));
-    public JRadioButton sortByConsist = new JRadioButton(Bundle.getMessage("Consist"));
+    JRadioButton sortByConsist = new JRadioButton(Bundle.getMessage("Consist"));
     JRadioButton sortByLocation = new JRadioButton(Bundle.getMessage("Location"));
     JRadioButton sortByDestination = new JRadioButton(Bundle.getMessage("Destination"));
     JRadioButton sortByTrain = new JRadioButton(Bundle.getMessage("Train"));
     JRadioButton sortByMoves = new JRadioButton(Bundle.getMessage("Moves"));
     JRadioButton sortByBuilt = new JRadioButton(Bundle.getMessage("Built"));
     JRadioButton sortByOwner = new JRadioButton(Bundle.getMessage("Owner"));
-    public JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
-    public JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
+    JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
+    JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
     JRadioButton sortByDcc = new JRadioButton(Bundle.getMessage("DccAddress"));
     JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
     JRadioButton sortByComment = new JRadioButton(Bundle.getMessage("Comment"));
@@ -169,6 +170,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         addRadioButtonAction(sortByLast);
         addRadioButtonAction(sortByComment);
 
+        findEngineTextBox.addActionListener(this::textBoxActionPerformed);
+
         group.add(sortByNumber);
         group.add(sortByRoad);
         group.add(sortByModel);
@@ -211,7 +214,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     }
 
     @Override
-    public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void radioButtonActionPerformed(ActionEvent ae) {
         log.debug("radio button activated");
         // clear any sorts by column
         clearTableSort(enginesTable);
@@ -270,20 +273,10 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
     // add, save or find button
     @Override
-    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void buttonActionPerformed(ActionEvent ae) {
         // log.debug("engine button activated");
         if (ae.getSource() == findButton) {
-            int rowindex = enginesTableModel.findEngineByRoadNumber(findEngineTextBox.getText());
-            if (rowindex < 0) {
-                JmriJOptionPane.showMessageDialog(this, 
-                        Bundle.getMessage("engineWithRoadNumNotFound", findEngineTextBox.getText()),
-                        Bundle.getMessage("engineCouldNotFind"), JmriJOptionPane.INFORMATION_MESSAGE);
-                return;
-
-            }
-            // clear any sorts by column
-            clearTableSort(enginesTable);
-            enginesTable.changeSelection(rowindex, 0, false, false);
+            findEngine();
             return;
         }
         if (ae.getSource() == addButton) {
@@ -303,6 +296,24 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
                 dispose();
             }
         }
+    }
+
+    public void textBoxActionPerformed(ActionEvent ae) {
+        findEngine();
+    }
+
+    private void findEngine() {
+        int rowindex = enginesTableModel.findEngineByRoadNumber(findEngineTextBox.getText());
+        if (rowindex < 0) {
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("engineWithRoadNumNotFound", findEngineTextBox.getText()),
+                    Bundle.getMessage("engineCouldNotFind"), JmriJOptionPane.INFORMATION_MESSAGE);
+            return;
+
+        }
+        // clear any sorts by column
+        clearTableSort(enginesTable);
+        enginesTable.changeSelection(rowindex, 0, false, false);
     }
 
     protected int[] getCurrentTableColumnWidths() {
