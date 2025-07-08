@@ -452,7 +452,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
     public static XNetMessage getVerifyOpsModeCVMsg(int AH, int AL, int cv, int val) {
         XNetMessage m = new XNetMessage(8);
         m.setElement(0, XNetConstants.OPS_MODE_PROG_REQ);
-        m.setElement(1, XNetConstants.OPS_MODE_PROG_WRITE_REQ);
+        m.setElement(1, XNetConstants.OPS_MODE_PROG_READ_REQ);
         m.setElement(2, AH);
         m.setElement(3, AL);
         /* Element 4 is 0xE4 + the upper two  bits of the 10 bit CV address.

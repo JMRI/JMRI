@@ -202,7 +202,7 @@ public final class XNetConstants {
     public static final int PROG_READ_MODE_PAGED = 0x14;
     public static final int PROG_READ_MODE_CV_V36 = 0x18; // version 3.6 read
 
-    /* Program mode read requests */
+    /* Program mode write requests */
     public static final int PROG_WRITE_REQUEST = 0x23;
 
     /* programming modes to be used with PROG_WRITE_REQUEST */
@@ -349,6 +349,9 @@ public final class XNetConstants {
 
     /* Operations mode programming */
     public static final int OPS_MODE_PROG_REQ = 0xE6;
+
+    /* Read requests (second byte for above) */
+    public static final int OPS_MODE_PROG_READ_REQ = 0x30;
 
     /* Write requests (second byte for above) */
     public static final int OPS_MODE_PROG_WRITE_REQ = 0x30;
