@@ -13,13 +13,12 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.automation.gui.AutomationsTableFrameAction;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.backup.AutoSave;
 import jmri.jmrit.operations.setup.gui.*;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.excel.SetupExcelProgramFrameAction;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.schedules.*;
@@ -41,10 +40,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     public static final String RESET = Bundle.getMessage("Reset");
     public static final String CONDUCTOR = Bundle.getMessage("Conductor");
 
-    CarManagerXml carManagerXml = InstanceManager.getDefault(CarManagerXml.class); // load cars
-    EngineManagerXml engineManagerXml = InstanceManager.getDefault(EngineManagerXml.class); // load engines
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
-    TrainManagerXml trainManagerXml = InstanceManager.getDefault(TrainManagerXml.class);
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     public TrainsTableModel trainsModel;
