@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.automation;
 
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
+import java.util.*;
 
 import javax.swing.JComboBox;
 
@@ -13,10 +10,12 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
+import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 
 /**
@@ -25,7 +24,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2016
  */
-public class AutomationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, PropertyChangeListener {
+public class AutomationManager extends PropertyChangeSupport implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
     public static final String LISTLENGTH_CHANGED_PROPERTY = "automationListLength"; // NOI18N
     private int _id = 0; // retain highest automation Id seen to ensure no Id
@@ -313,6 +312,14 @@ public class AutomationManager extends PropertyChangeSupport implements Instance
         // set dirty
         InstanceManager.getDefault(TrainManagerXml.class).setDirty(true);
         firePropertyChange(p, old, n);
+    }
+
+    @Override
+    public void initialize() {
+        InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(CarManagerXml.class); // load cars
+        InstanceManager.getDefault(EngineManagerXml.class); // load engines
+        InstanceManager.getDefault(TrainManagerXml.class); // load trains
     }
 
     private final static Logger log = LoggerFactory.getLogger(AutomationManager.class);
