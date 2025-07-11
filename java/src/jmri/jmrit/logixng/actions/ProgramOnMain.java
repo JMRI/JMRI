@@ -224,7 +224,17 @@ public class ProgramOnMain extends AbstractDigitalAction
         DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(conditionalNG.getSymbolTable());
 
         String progModeStr = _selectProgrammingMode.evaluateValue(conditionalNG).getKey();
-        ProgrammingMode progMode = new ProgrammingMode(progModeStr);
+
+        ProgrammingMode progMode = null;
+        for (ProgrammingMode mode : _programmerManager.getDefaultModes()) {
+            if (mode.getStandardName().equals(progModeStr)) {
+                progMode = mode;
+            }
+        }
+
+        if (progMode == null) {
+            throw new IllegalArgumentException("Programming mode "+progModeStr+" is not found");
+        }
 
         int address = _selectAddress.evaluateValue(conditionalNG);
         LongOrShortAddress longOrShort = _selectLongOrShortAddress.evaluateEnum(conditionalNG);

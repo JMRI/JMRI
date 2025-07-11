@@ -485,6 +485,8 @@
               <strong>Run automation</strong> have been added. The
               <strong>Run automation</strong> lets you run an OperationsPro
               automation from LogixNG.</li>
+          <li>Fixed a bug in the action <strong>Program On Main</strong>
+              that caused connection specific programming modes to fail.</li>
           <li></li>
         </ul>
 
