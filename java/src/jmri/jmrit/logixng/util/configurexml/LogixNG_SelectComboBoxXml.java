@@ -71,7 +71,7 @@ public class LogixNG_SelectComboBoxXml {
 
                 elem = comboBoxElement.getChild("value");
                 if (elem != null) {
-                    selectComboBox.setValue(selectComboBox.getValue(elem.getTextTrim()));
+                    selectComboBox.setValue(selectComboBox.getValueByKey(elem.getTextTrim()));
                 }
 
                 elem = comboBoxElement.getChild("reference");

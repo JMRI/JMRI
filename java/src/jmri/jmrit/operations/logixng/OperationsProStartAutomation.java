@@ -11,7 +11,6 @@ import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -32,10 +31,6 @@ public class OperationsProStartAutomation extends AbstractDigitalAction
     public OperationsProStartAutomation(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-
-        // Ensure that the OperationsPro train file is loaded by getting
-        // the train file manager first.
-        InstanceManager.getDefault(TrainManagerXml.class);
 
         _automationManager = InstanceManager.getDefault(AutomationManager.class);
         updateList();

@@ -85,12 +85,13 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
     }
 
     public void setValues(Item[] valuesArray) {
+        String key = _value != null ? _value.getKey() : null;
         _valuesArray = valuesArray;
 
-        // Ensure the selected value is in the array
+        // Check if the selected value is in the array
         boolean found = false;
         for (Item value : _valuesArray) {
-            if (value.equals(this._value)) {
+            if (value.getKey().equals(key)) {
                 found = true;
             }
         }
@@ -145,7 +146,7 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
         return _value;
     }
 
-    public Item getValue(String key) {
+    public Item getValueByKey(String key) {
         for (Item value : _valuesArray) {
             if (value.getKey().equals(key)) return value;
         }
@@ -284,7 +285,7 @@ public class LogixNG_SelectComboBox implements VetoableChangeListener {
                     throw new IllegalArgumentException("invalid _addressing state: " + _addressing.name());
             }
 
-            return LogixNG_SelectComboBox.this.getValue(key);
+            return LogixNG_SelectComboBox.this.getValueByKey(key);
         }
     }
 
