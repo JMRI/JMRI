@@ -251,15 +251,22 @@ public class SerialThrottle extends AbstractThrottle {
     }
 
     /**
-     * Send these messages to the layout four times
-     * to make sure they're accepted.
+     * Send these messages to the layout and repeat
+     * while button is on.
      * @param value Content of message to be sent in three bytes
      * @param func  The number of the function being addressed
      */
     protected void sendFnToLayout(int value, int func) {
         tc.sendSerialMessage(new SerialMessage(value), null);
-        tc.sendSerialMessage(new SerialMessage(value), null);
-        tc.sendSerialMessage(new SerialMessage(value), null);
+
+    /**
+     * Commenting out these repeat send lines in case it is
+     * necessary to reinstate them after testing. These are
+     * holdovers from the original "repeat 4 times to make
+     * sure they're accepted" instructions.
+     */
+        // tc.sendSerialMessage(new SerialMessage(value), null);
+        // tc.sendSerialMessage(new SerialMessage(value), null);
      
         repeatFunctionSendWhileOn(value, func); // 4th send is here
     }
