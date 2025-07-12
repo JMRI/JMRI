@@ -3550,6 +3550,14 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrit.operations.logixng.OperationsProStartAutomation operationsProStartAutomation =
+                new jmri.jmrit.operations.logixng.OperationsProStartAutomation(digitalActionManager.getAutoSystemName(), null);
+//        operationsProStartAutomation.getSelectEnum().setValue("");
+        maleSocket = digitalActionManager.registerAction(operationsProStartAutomation);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         DigitalMany many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(many);
         maleSocket.setEnabled(false);
