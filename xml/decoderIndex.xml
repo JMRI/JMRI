@@ -12233,6 +12233,28 @@
           <output name="2" label="B - Yellow" />
         </model>
       </family>
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1.xml">
+        <!-- Lionel has no NMRA id, but that's OK -->
+        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+        </outputs>
+        <model model="TMCC 1" maxFnNum="28" numOuts="1" />
+      </family>
+      <family name="TMCC2 Legacy" mfg="Lionel" file="Lionel-TMCC2-Legacy.xml">
+        <!-- Lionel has no NMRA id, but that's OK -->
+        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+        </outputs>
+        <model model="TMCC2 Legacy" maxFnNum="68" numOuts="1" />
+      </family>
       <family name="TMCC Steam" mfg="Lionel" file="Lionel-TMCC-Steam.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
