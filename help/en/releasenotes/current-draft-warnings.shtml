@@ -1,10 +1,6 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>DecoderPro has been added to the permission system. Due to the
-        complexity of many different programmers on many different
-        hardware, there might be bugs that we haven't noticed yet. If
-        something isn't working as expected, please report it on the
-        <a href="https://groups.io/g/jmriusers/topics">JMRI users group.</a>
+    <li>
     </li>
     <li>
     </li>
