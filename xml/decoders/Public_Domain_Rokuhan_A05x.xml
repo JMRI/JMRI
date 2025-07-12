@@ -44,12 +44,7 @@
 					   should always be set to 1 (28/128 speed step mode)
 			-->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-			<variable CV="29" mask="XXXXXXVX" item="28/128 Speed Steps" default="1" />
-			<variable CV="29" mask="XXXXXVXX" item="Analog Mode DISABLED" default="0" />
-			<variable CV="29" mask="XXXXVXXX" item="Railcom OFF" default="0" />
-			<variable CV="29" mask="XXXVXXXX" item="Alternate speed curve OFF" default="0" />
-			<variable CV="29" mask="XVXXXXXX" item="Ignored0" default="0" />
-			<variable CV="29" mask="VXXXXXXX" item="Ignored1" default="0" />
+			<constant item="28/128 Speed Steps" default="1" />
 			<!-- CV11. Packet Timeout Time -->
 			<variable CV="11" item="Packet Timeout" comment="Maximum time period the decoder will maintain its speed without receiving a valid packet" default="0">
 				<decVal max="30"/>
