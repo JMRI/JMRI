@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -119,8 +120,6 @@ public class PrintCarLoadsAction extends AbstractAction {
                         writer.write(buf.toString() + NEW_LINE);
                     }
                 }
-                // and force completion of the printing
-//                writer.close(); not needed when using try / catch
             } catch (HardcopyWriter.PrintCanceledException ex) {
                 log.debug("Print canceled");
             } catch (IOException ex) {
@@ -130,14 +129,7 @@ public class PrintCarLoadsAction extends AbstractAction {
     }
 
     private static String tabString(String s, int fieldSize) {
-        if (s.length() > fieldSize) {
-            s = s.substring(0, fieldSize - 1);
-        }
-        StringBuffer buf = new StringBuffer(s + " ");
-        while (buf.length() < fieldSize) {
-            buf.append(" ");
-        }
-        return buf.toString();
+        return TrainCommon.padAndTruncate(s, fieldSize);
     }
 
     private final static Logger log = LoggerFactory.getLogger(PrintCarLoadsAction.class);

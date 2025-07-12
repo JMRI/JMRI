@@ -48,6 +48,10 @@ public abstract class Category implements Comparable<Category> {
     public static Category registerCategory(Category category)
             throws IllegalArgumentException {
         for (Category c : _categories) {
+            if (c == category) {
+                // Don't register category twice. This can happen during tests.
+                return c;
+            }
             if (c.equals(category)) {
                 throw new IllegalArgumentException(String.format(
                         "Category '%s' with description '%s' is already registered",

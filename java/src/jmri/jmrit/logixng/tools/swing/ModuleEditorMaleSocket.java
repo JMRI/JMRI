@@ -29,7 +29,7 @@ class ModuleEditorMaleSocket extends AbstractMaleSocket {
 
     @Override
     protected void disposeMe() {
-        ((Module)getObject()).dispose();
+        getObject().dispose();
     }
 
     @Override
@@ -64,12 +64,12 @@ class ModuleEditorMaleSocket extends AbstractMaleSocket {
 
     @Override
     public String getComment() {
-        return ((Module)getObject()).getComment();
+        return getObject().getComment();
     }
 
     @Override
     public void setComment(String comment) {
-        ((Module)getObject()).setComment(comment);
+        getObject().setComment(comment);
     }
 
     @Override

@@ -107,8 +107,6 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
                     StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
             log.debug("Log: {}", line);
             fileOut.printRecord(line);
-            fileOut.flush();
-            fileOut.close();
         } catch (IOException e) {
             log.error("Exception while opening log file: {}", e.getLocalizedMessage());
         }
@@ -232,7 +230,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         }
         String rsName = rs.toString();
         // put clones in the same file as original car
-        if (Car.class.isInstance(rs) && ((Car) rs).isClone()) {
+        if (rs.isClone()) {
             rsName = rs.getRoadName() + " " + rs.getNumber().split(Car.CLONE_REGEX)[0];
         }
         return loggingDirectory + File.separator + "rollingStock" + File.separator + rsName + ".csv"; // NOI18N

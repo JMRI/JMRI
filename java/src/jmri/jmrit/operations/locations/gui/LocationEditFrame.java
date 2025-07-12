@@ -44,6 +44,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         public String getToolTipText(MouseEvent e) {
             int colIndex = columnAtPoint(e.getPoint());
             int realColumnIndex = convertColumnIndexToModel(colIndex);
+            if (realColumnIndex == TrackTableModel.QUICK_SERVICE_COLUMN) {
+                return Bundle.getMessage("QuickServiceTip");
+            }
             if (realColumnIndex == TrackTableModel.HOLD_COLUMN) {
                 return Bundle.getMessage("HoldCarsWithCustomLoads");
             }
@@ -59,6 +62,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         public String getToolTipText(MouseEvent e) {
             int colIndex = columnAtPoint(e.getPoint());
             int realColumnIndex = convertColumnIndexToModel(colIndex);
+            if (realColumnIndex == TrackTableModel.QUICK_SERVICE_COLUMN) {
+                return Bundle.getMessage("QuickServiceTip");
+            }
             if (realColumnIndex == TrackTableModel.ROUTED_COLUMN) {
                 return Bundle.getMessage("TipOnlyCarsWithFD");
             }

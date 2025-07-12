@@ -136,8 +136,6 @@ public class ExportTimetable extends XmlFile {
                             defaultOperationsFilename()),
                     Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
 
-            fileOut.flush();
-            fileOut.close();
         } catch (IOException e) {
             log.error("Can not open export timetable CSV file: {}", e.getLocalizedMessage());
             JmriJOptionPane.showMessageDialog(null,

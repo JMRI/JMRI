@@ -1136,12 +1136,12 @@ class MyTableModel5 (DefaultTableModel):
         if scheduled_start is not None:
             self.setValueAt(scheduled_start, row, departure_time_col)
 
-        # do the following after updating the first location so the departure times are calculated correctly
-        i = 0
-        for [location, comment] in items_to_put_in_dropdown:
-            if ".py" not in location:    # omit actions
-                self.setValueAt(duration_sec_array[i], i, duration_sec_col)
-            i += 1
+        # # do the following after updating the first location so the departure times are calculated correctly
+        # i = 0
+        # for [location, comment] in items_to_put_in_dropdown:
+        #     if ".py" not in location:    # omit actions
+        #         self.setValueAt(duration_sec_array[i], i, duration_sec_col)
+        #     i += 1
 
     def get_route_location_stop_mode(self, station_to_name):
         route_location = self.route.getLastLocationByName(station_to_name)

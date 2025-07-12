@@ -506,10 +506,21 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
                                 rl.getId(), rl.getName()));
             }
+            // can this car be pulled from an interchange or spur?
+            if (!checkPickupInterchangeOrSpur(car)) {
+                _carList.remove(car);
+                _carIndex--; // removed car from list, so backup pointer
+                addLine(_buildReport, FIVE, BLANK_LINE);
+                continue; // no
+            }
             // can this car be picked up?
             if (!checkPickUpTrainDirection(car, rl)) {
                 addLine(_buildReport, FIVE, BLANK_LINE);
                 continue; // no
+            }
+            // do alternate track moves on the second pass (makes FIFO / LIFO work correctly)
+            if (Setup.isBuildAggressive() && !isSecondPass && car.getTrack().isAlternate() && _completedMoves != 0) {
+                continue;
             }
 
             showCarServiceOrder(car); // car on FIFO or LIFO track?
@@ -1455,7 +1466,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             return false; // the only false return
         }
         addLine(_buildReport, SEVEN, Bundle.getMessage("buildCarHasAssignedDest", car.toString(), car.getLoadName(),
-                car.getDestinationName(), car.getDestinationTrackName()));
+                car.getDestinationName(), car.getDestinationTrackName(), car.getFinalDestinationName(),
+                car.getFinalDestinationTrackName()));
         RouteLocation rld = _train.getRoute().getLastLocationByName(car.getDestinationName());
         if (rld == null) {
             // code check, router doesn't set a car's destination if not carried
@@ -1544,7 +1556,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                         tracks.get(0).getTrackTypeName(),
                                         tracks.get(0).getLocation().getName(), tracks.get(0).getName(),
                                         rld.getCarMoves(), rld.getMaxCarMoves()));
-                        car = checkQuickServiceArrival(car, rld, tracks.get(0));
                         addCarToTrain(car, rl, rld, tracks.get(0));
                         return true;
                     }
@@ -1572,7 +1583,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                 (status = checkReserved(_train, rld, car, car.getDestinationTrack(), true))
                                         .equals(Track.OKAY)) {
                             Track destTrack = car.getDestinationTrack();
-                            car = checkQuickServiceArrival(car, rld, destTrack);
                             addCarToTrain(car, rl, rld, destTrack);
                             return true;
                         }
@@ -1683,7 +1693,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // route
         boolean multiplePickup = false;
 
-        // more than one location in this route?
         if (!_train.isLocalSwitcher()) {
             start++; // begin looking for tracks at the next location
         }
@@ -1793,7 +1802,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     continue; // no
                 }
             } else {
-                // no staging, start track search
+                // not staging, start track search
                 List<Track> tracks = getTracksAtDestination(car, rld);
                 if (tracks.size() > 0) {
                     trackTemp = tracks.get(0);
@@ -1886,7 +1895,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 rldSave = rl; // make local move
             } else if (trackSave.isSpur()) {
                 car.setScheduleItemId(trackSave.getScheduleItemId());
-                car = checkQuickServiceArrival(car, rldSave, trackSave);
                 trackSave.bumpSchedule();
                 log.debug("Sending car to spur ({}, {}) with car schedule id ({}))", trackSave.getLocation().getName(),
                         trackSave.getName(), car.getScheduleItemId());
@@ -1906,6 +1914,68 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         addLine(_buildReport, FIVE, Bundle.getMessage("buildNoDestForCar", car.toString()));
         addLine(_buildReport, FIVE, BLANK_LINE);
         return false; // no build errors, but car not given destination
+    }
+
+    /**
+     * Add car to train, and adjust train length and weight
+     *
+     * @param car   the car being added to the train
+     * @param rl    the departure route location for this car
+     * @param rld   the destination route location for this car
+     * @param track the destination track for this car
+     */
+    protected void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
+        car = checkQuickServiceArrival(car, rld, track);
+        addLine(_buildReport, THREE,
+                Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName()));
+        car.setDestination(track.getLocation(), track, Car.FORCE);
+        int length = car.getTotalLength();
+        int weightTons = car.getAdjustedWeightTons();
+        // car could be part of a kernel
+        if (car.getKernel() != null) {
+            length = car.getKernel().getTotalLength(); // includes couplers
+            weightTons = car.getKernel().getAdjustedWeightTons();
+            List<Car> kCars = car.getKernel().getCars();
+            addLine(_buildReport, THREE,
+                    Bundle.getMessage("buildCarPartOfKernel", car.toString(), car.getKernelName(), kCars.size(),
+                            car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()));
+            for (Car kCar : kCars) {
+                if (kCar != car) {
+                    addLine(_buildReport, THREE, Bundle.getMessage("buildCarKernelAssignedDest", kCar.toString(),
+                            kCar.getKernelName(), rld.getName(), track.getName()));
+                    kCar.setTrain(_train);
+                    kCar.setRouteLocation(rl);
+                    kCar.setRouteDestination(rld);
+                    kCar.setDestination(track.getLocation(), track, Car.FORCE); // force destination
+                    // save final destination and track values in case of train reset
+                    kCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
+                    kCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
+                }
+            }
+            car.updateKernel();
+        }
+        // warn if car's load wasn't generated out of staging
+        if (!_train.isLoadNameAccepted(car.getLoadName(), car.getTypeName())) {
+            _warnings++;
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("buildWarnCarDepartStaging", car.toString(), car.getLoadName()));
+        }
+        addLine(_buildReport, THREE, BLANK_LINE);
+        _numberCars++; // bump number of cars moved by this train
+        _completedMoves++; // bump number of car pick up moves for the location
+        _reqNumOfMoves--; // decrement number of moves left for the location
+
+        if (_carList.remove(car)) {
+            _carIndex--; // removed car from list, so backup pointer
+        }
+
+        rl.setCarMoves(rl.getCarMoves() + 1);
+        if (rl != rld) {
+            rld.setCarMoves(rld.getCarMoves() + 1);
+        }
+        // now adjust train length and weight for each location that car is in
+        // the train
+        finishAddRsToTrain(car, rl, rld, length, weightTons);
     }
 
     /**
@@ -1997,20 +2067,22 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 car.reset();
             }
             _carList.add(0, car);
-            car = checkQuickServiceArrival(car, rld, track);
             addCarToTrain(car, rl, rld, track);
         }
     }
 
     /**
-     * Checks to see if spur/industry is requesting a quick turn, which means
-     * that on the outbound side of the turn a car or set of cars in a kernel
-     * are set out, and on the return side of the turn the same cars are pulled.
-     * Since it isn't possible for a car to be pulled and set out twice, this
-     * code creates a second "clone" car to create the requested Manifest. A car
-     * could have multiple clones, therefore each clone has a creation order
-     * number. The first clone is used to restore a car's location and load in
-     * the case of reset.
+     * Checks to see if spur/industry is requesting a quick load service, which
+     * means that on the outbound side of the turn a car or set of cars in a
+     * kernel are set out, and on the return side of the turn the same cars are
+     * pulled. Since it isn't possible for a car to be pulled and set out twice,
+     * this code creates a second "clone" car to create the requested Manifest.
+     * A car could have multiple clones, therefore each clone has a creation
+     * order number. The first clone is used to restore a car's location and
+     * load in the case of reset.
+     * <p>
+     * Also works with an interchange track to make the car immediately
+     * available to be pulled by the next train being built.
      * 
      * @param car   the car possibly needing a quick turn
      * @param track the destination track
@@ -2035,6 +2107,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         cloneCar.setPreviousFinalDestination(car.getPreviousFinalDestination());
         cloneCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
         cloneCar.setPreviousScheduleId(car.getScheduleItemId());
+        cloneCar.setLastRouteId(car.getLastRouteId());
         // for timing, use arrival times for the train that is building
         // other trains will use their departure time, loaded when creating the Manifest
         String expectedArrivalTime = _train.getExpectedArrivalTime(rld, true);
@@ -2057,6 +2130,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     // move car to new location for later pick up
                     kar.setLocation(track.getLocation(), track, RollingStock.FORCE);
                     kar.setLastTrain(_train);
+                    kar.setLastLocationId(car.getLocationId());
+                    kar.setLastTrackId(car.getTrackId());
+                    kar.setLastDate(_startTime);
                     kar.setCloneOrder(cloneCreationOrder); // for reset
                 }
             }
@@ -2064,6 +2140,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // move car to new location for later pick up
         car.setLocation(track.getLocation(), track, RollingStock.FORCE);
         car.setLastTrain(_train);
+        car.setLastLocationId(cloneCar.getLocationId());
+        car.setLastTrackId(cloneCar.getTrackId());
+        car.setLastRouteId(_train.getRoute().getId());
         // this car was moved during the build process
         car.setLastDate(_startTime);
         car.setCloneOrder(cloneCreationOrder); // for reset
@@ -2092,17 +2171,20 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      */
     private boolean checkQuickServiceDeparting(Car car, RouteLocation rl) {
         if (car.getTrack().isQuickServiceEnabled()) {
-            // was the car delivered using this route location?
-            if (car.getRouteDestination() == rl) {
-                addLine(_buildReport, FIVE,
-                        Bundle.getMessage("buildCarRouteLocation", car.toString(), car.getTrack().getTrackTypeName(),
-                                car.getLocationName(), car.getTrackName(), _train.getName(), rl.getName(), rl.getId()));
-                addLine(_buildReport, FIVE, BLANK_LINE);
-                return false;
-            }
-            // determine when the clone is going to be delivered
             Car clone = getClone(car);
             if (clone != null) {
+                // was the car delivered using this route location?
+                if (car.getRouteDestination() == rl) {
+                    addLine(_buildReport, FIVE,
+                            Bundle.getMessage("buildCarRouteLocation", car.toString(),
+                                    car.getTrack().getTrackTypeName(),
+                                    car.getLocationName(), car.getTrackName(), _train.getName(), rl.getName(),
+                                    rl.getId()));
+                    addLine(_buildReport, FIVE, BLANK_LINE);
+                    return false;
+                }
+                
+                // determine when the clone is going to be delivered
                 String trainExpectedArrival = _train.getExpectedArrivalTime(rl, true);
                 int trainArrivalTimeMinutes = convertStringTime(trainExpectedArrival);
                 int cloneSetoutTimeMinutes = convertStringTime(clone.getSetoutTime());

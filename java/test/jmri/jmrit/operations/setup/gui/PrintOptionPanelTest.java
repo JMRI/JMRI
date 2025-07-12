@@ -33,6 +33,7 @@ public class PrintOptionPanelTest extends OperationsTestCase {
         Assert.assertFalse(p.printTrainScheduleNameCheckBox.isSelected());
         Assert.assertTrue(p.printValidCheckBox.isSelected());
         Assert.assertFalse(p.sortByTrackCheckBox.isSelected());
+        Assert.assertTrue(p.noPageBreaksCheckBox.isSelected());
         Assert.assertFalse(p.printHeadersCheckBox.isSelected());
         Assert.assertTrue(p.printPageHeaderCheckBox.isSelected());
         Assert.assertFalse(p.truncateCheckBox.isSelected());

@@ -9,7 +9,7 @@ import jmri
 class openTrainWindow(jmri.jmrit.automat.AbstractAutomaton) : 
   def init(self):
     # Open the train window
-    f = jmri.jmrit.operations.trains.TrainsTableFrame()
+    f = jmri.jmrit.operations.trains.gui.TrainsTableFrame()
     f.setVisible(True)
     return
 

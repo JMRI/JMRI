@@ -12,6 +12,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotListener;
+import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.util.StringUtil;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -832,7 +833,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         for (int row = 0; row < (count - 1); row++) {
             LocoNetSlot s = memo.getSlotManager().slot(row);
 
-            if ((s.slotStatus() != LnConstants.LOCO_IN_USE) && (s.consistStatus() == LnConstants.CONSIST_NO)) {
+            if (s.getSlotType() == SlotType.LOCO
+                    && ((s.slotStatus() != LnConstants.LOCO_IN_USE) && (s.consistStatus() == LnConstants.CONSIST_NO))) {
                 log.debug("Freeing {} from slot {}, old status: {}", s.locoAddr(), s.getSlot(), s.slotStatus());
                 memo.getLnTrafficController().sendLocoNetMessage(
                         s.writeStatus(LnConstants.LOCO_FREE

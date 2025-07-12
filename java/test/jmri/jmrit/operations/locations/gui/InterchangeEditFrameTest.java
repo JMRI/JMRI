@@ -376,6 +376,23 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
+    @Test
+    public void testQuickService() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Track t = l.addTrack("Test Quick Service", Track.INTERCHANGE);
+        InterchangeEditFrame f = new InterchangeEditFrame();
+        f.initComponents(l, t);
+
+        // confirm default
+        Assert.assertFalse(t.isQuickServiceEnabled());
+        Assert.assertFalse(f.quickServiceCheckBox.isSelected());
+        JemmyUtil.enterClickAndLeave(f.quickServiceCheckBox);
+        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        Assert.assertTrue(t.isQuickServiceEnabled());
+
+        JUnitUtil.dispose(f);
+    }
+
 
 
     // Ensure minimal setup for log4J

@@ -573,23 +573,61 @@
       <h2 id="WiThrottle">WiThrottle</h2>
 
       <div>
+        <a href="images/PrefsWiThrottle.png"><img src="images/PrefsWiThrottle.png" height=
+        "530" width="480" class="floatRight" alt="JMRI v5.12 WiThrottle Preferences Tab"></a>
+
         <dl>
           <dt>eStop</dt>
 
           <dd>
-            If selected, listens for a packet to be sent from the connected mobile device. If
-            WiThrottle Server does not receive any communication in the chosen time, the affected
-            JMRI throttle will idle its train.
+            <p>If selected: If the WiThrottle Server does not receive any communication in the chosen time,
+            the affected JMRI throttle will send an emergency stop command to its train.</p>
             <p>The chosen time is approximate; the response may be a few seconds earlier or
             later.</p>
           </dd>
 
+          <dt>Function Buttons - F2 always momentary</dt>
+
+          <dd>
+            If selected, the F2 key on WiThrottle clients will always be treated as a momentary function.
+            This setting overrides any setting from the roster and it cannot be overridden by
+            WiThrottle clients.
+          </dd>
+
+          <dt>Acquire address silently if already in use - Notify client if address is busy</dt>
+
+          <dd>
+            By default, the WiThrottle server will silently share access to a certain loco between all
+            WiThrottle clients and JMRI throttles. If this option is selected, it will instead send a
+            "Steal from other WiThrottle or JMRI throttle Required" message to the client and wait for
+            the client to confirm the steal if the loco is already in use. Note this preference only
+            affects sharing / stealing between WiThrottle and JMRI throttles - see the
+            <a href="#Throttle">Throttle</a> section for stealing / sharing interaction with hardware
+            throttles from your DCC system.
+          </dd>
+
           <dt>Network</dt>
 
-          <dd>Change the port number to use. Ensure your firewall software allows this port to be
-          used.<br>
-          Only change the Port Number after stopping WiThrottle Server if there is a chance mobile
-          devices are still connected.</dd>
+          <dd>
+            <dl>
+
+              <dt>Port number</dt>
+              <dd>Change the port number to use. Ensure your firewall software allows this port to be
+                used.
+                Only change the Port Number after stopping WiThrottle Server if there is a chance mobile
+                devices are still connected.
+              </dd>
+
+              <dt>Start automatically with application</dt>
+              <dd>If selected, starting JMRI will also start the WiThrottle server.</dd>
+
+              <dt>Broadcast IPv4 / Broadcast IPv6</dt>
+              <dd>If selected, the WiThrottle server will use ZeroConf / mDNS / Bonjour (three names for
+                the same protocol) to broadcast its IPv4 / IPv6 address and announce the service. This
+                allows compatible clients / apps to automatically find the WiThrottle server.</dd>
+            </dl>
+          
+          </dd>
 
           <dt>Allowed Controls</dt>
 

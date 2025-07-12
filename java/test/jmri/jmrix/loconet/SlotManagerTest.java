@@ -588,9 +588,9 @@ public class SlotManagerTest {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertEquals("reply status", -999, status);
         Assert.assertEquals("reply value", -999, value);
-        
+
         // provide LONG_ACK: Function not implemented, no reply will follow.
-        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F}));             
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F}));
         JUnitUtil.waitFor(releaseTestDelay);
         Assert.assertEquals("reply status", 0, status);
         Assert.assertEquals("reply value", -1, value);
@@ -609,11 +609,11 @@ public class SlotManagerTest {
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         Assert.assertEquals("reply status", -999, status);
         Assert.assertEquals("reply value", -999, value);
-        
+
         // provide LONG_ACK: Function not implemented, no reply will follow.
-        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F}));             
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F}));
         // LONG_ACK: The Slot Write command was accepted blind (no response will be sent).
-        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x40}));             
+        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x40}));
         JUnitUtil.waitFor(releaseTestDelay);
         Assert.assertEquals("reply status", 0, status);
         Assert.assertEquals("reply value", -1, value);
@@ -1491,6 +1491,15 @@ public class SlotManagerTest {
                 lnis.outbound.elementAt(0).toString());
     }
 
+    @Test
+    public void testClearAllNonZeroSlotsFail() {
+        // test fix of error when "clear All Non-zero slots" operation is executed.
+        slotmanager.message(new LocoNetMessage(new int[]{0xD4, 0x39, 0x7A, 0x60,
+            0x02, 0x0A}));
+        JUnitUtil.waitFor(200);
+        Assert.assertEquals("No Outbound Data", 0, lnis.outbound.size());
+    }
+
     private LocoNetInterfaceScaffold lnis;
     private SlotManager slotmanager;
     private int status;
@@ -1500,9 +1509,9 @@ public class SlotManagerTest {
     private boolean stoppedTimer = false;
 
     private ProgListener lstn;
-    
+
     private int releaseTestDelay;
-    
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -1536,8 +1545,8 @@ public class SlotManagerTest {
         value = -999;
         startedShortTimer = false;
         startedLongTimer = false;
-        
-        releaseTestDelay = Math.max(slotmanager.serviceModeReplyDelay, slotmanager.opsModeReplyDelay)+75; 
+
+        releaseTestDelay = Math.max(slotmanager.serviceModeReplyDelay, slotmanager.opsModeReplyDelay)+75;
 
         lstn = (int val, int stat) -> {
             log.debug("   reply val: {} status: {}", val, stat);
