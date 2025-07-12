@@ -1937,8 +1937,8 @@ public class TrainBuilderBase extends TrainCommon {
                                 terminateStageTrack.getIgnoreUsedLengthPercentage(), terminateStageTrack.getLength(),
                                 Setup.getLengthUnit().toLowerCase(), terminateStageTrack.getUsedLength(),
                                 terminateStageTrack.getReserved(),
-                                terminateStageTrack.getReservedLengthDrops(),
-                                terminateStageTrack.getReservedLengthDrops() - terminateStageTrack.getReserved(),
+                                terminateStageTrack.getReservedLengthSetouts(),
+                                terminateStageTrack.getReservedLengthSetouts() - terminateStageTrack.getReserved(),
                                 terminateStageTrack.getAvailableTrackSpace()));
             }
         }
@@ -2244,8 +2244,8 @@ public class TrainBuilderBase extends TrainCommon {
                         Bundle.getMessage("buildTrackHasPlannedPickups", testTrack.getName(),
                                 testTrack.getIgnoreUsedLengthPercentage(), testTrack.getLength(),
                                 Setup.getLengthUnit().toLowerCase(), testTrack.getUsedLength(), testTrack.getReserved(),
-                                testTrack.getReservedLengthDrops(),
-                                testTrack.getReservedLengthDrops() - testTrack.getReserved(),
+                                testTrack.getReservedLengthSetouts(),
+                                testTrack.getReservedLengthPickups(),
                                 testTrack.getAvailableTrackSpace()));
             }
             String status = car.checkDestination(testDestination, testTrack);

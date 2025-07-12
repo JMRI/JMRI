@@ -47,7 +47,8 @@ public class Track extends PropertyChangeSupport {
     protected int _dropRS = 0; // number of set outs by trains
     protected int _length = 0; // length of track
     protected int _reserved = 0; // length of track reserved by trains
-    protected int _reservedLengthDrops = 0; // reserved for car drops
+    protected int _reservedLengthSetouts = 0; // reserved for car drops
+    protected int _reservedLengthPickups = 0; // reserved for car pulls
     protected int _numberCarsEnRoute = 0; // number of cars en-route
     protected int _usedLength = 0; // length of track filled by cars and engines
     protected int _ignoreUsedLengthPercentage = IGNORE_0;
@@ -733,6 +734,7 @@ public class Track extends PropertyChangeSupport {
         if (Setup.isBuildAggressive()) {
             setReserved(getReserved() - rs.getTotalLength());
         }
+        _reservedLengthPickups = _reservedLengthPickups + rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackPickupRS", Integer.toString(old), // NOI18N
                 Integer.toString(_pickupRS));
     }
@@ -742,6 +744,7 @@ public class Track extends PropertyChangeSupport {
         if (Setup.isBuildAggressive()) {
             setReserved(getReserved() + rs.getTotalLength());
         }
+        _reservedLengthPickups = _reservedLengthPickups - rs.getTotalLength();
         _pickupRS--;
         setDirtyAndFirePropertyChange("trackDeletePickupRS", Integer.toString(old), // NOI18N
                 Integer.toString(_pickupRS));
@@ -755,8 +758,8 @@ public class Track extends PropertyChangeSupport {
         return _pickupRS;
     }
 
-    public int getDropRS() {
-        return _dropRS;
+    public int getReservedLengthPickups() {
+        return _reservedLengthPickups;
     }
 
     public void addDropRS(RollingStock rs) {
@@ -769,7 +772,7 @@ public class Track extends PropertyChangeSupport {
         } else {
             setReserved(getReserved() + rs.getTotalLength());
         }
-        _reservedLengthDrops = _reservedLengthDrops + rs.getTotalLength();
+        _reservedLengthSetouts = _reservedLengthSetouts + rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackAddDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
     }
 
@@ -782,9 +785,17 @@ public class Track extends PropertyChangeSupport {
         } else {
             setReserved(getReserved() - rs.getTotalLength());
         }
-        _reservedLengthDrops = _reservedLengthDrops - rs.getTotalLength();
+        _reservedLengthSetouts = _reservedLengthSetouts - rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackDeleteDropRS", Integer.toString(old), // NOI18N
                 Integer.toString(_dropRS));
+    }
+
+    public int getDropRS() {
+        return _dropRS;
+    }
+
+    public int getReservedLengthSetouts() {
+        return _reservedLengthSetouts;
     }
 
     public void setComment(String comment) {
@@ -1556,7 +1567,7 @@ public class Track extends PropertyChangeSupport {
         if (rs.getTrack() != this &&
                 rs.getDestinationTrack() != this) {
             if (getUsedLength() + getReserved() + rsLength > getLength() ||
-                    getReservedLengthDrops() + rsLength > getLength()) {
+                    getReservedLengthSetouts() + rsLength > getLength()) {
                 // not enough track length check to see if track is in a pool
                 if (getPool() != null && getPool().requestTrackLength(this, rsLength)) {
                     return OKAY;
@@ -1619,15 +1630,11 @@ public class Track extends PropertyChangeSupport {
             available = available3;
         }
         // could be less based on track length
-        int available2 = getLength() - getReservedLengthDrops();
+        int available2 = getLength() - getReservedLengthSetouts();
         if (available2 < available) {
             available = available2;
         }
         return available;
-    }
-
-    public int getReservedLengthDrops() {
-        return _reservedLengthDrops;
     }
 
     public int getMoves() {
