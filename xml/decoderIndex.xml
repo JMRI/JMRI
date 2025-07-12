@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.11.7plus+jake+20250628T2005Z+Rd749ddd9521 on Sat Jun 28 16:06:03 EDT 2025-->
-  <decoderIndex version="647">
+  <!--Written by JMRI version 5.13.1plus+jake+20250711T0458Z+Rd5f95b3c6f2 on Fri Jul 11 06:58:42 CEST 2025-->
+  <decoderIndex version="649">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -15632,6 +15632,18 @@
           <output name="3" label="FC " />
           <output name="4" label="FD " />
           <output name="5" label="FE " />
+        </model>
+      </family>
+      <family name="Rokuhan A05x" mfg="Public-domain and DIY" file="Public_Domain_Rokuhan_A05x.xml">
+        <model model="A053" numOuts="2" numFns="2">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+        </model>
+        <model model="A059" numOuts="4" numFns="4">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
         </model>
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" modes="OPSACCEXTBYTEMODE" file="Public_Domain_dccdoma_ARD_4SERVO.xml">

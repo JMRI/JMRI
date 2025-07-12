@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
+	<version author="Frank Collingwood fcollingwwod@gmail.com" version="1" lastUpdated="20240315"/>
+	<!-- Japanese Z scale decoders. For some reason Rokuhan has not registered for their own mfr Id -->
+	<decoder>
+        <family name="Rokuhan A05x" mfg="Public-domain and DIY" >
+ 			<model model="A053" numOuts="2" numFns="2">
+				<output name="1" label="White" connection="wire"/>
+				<output name="2" label="Yellow" connection="wire"/>
+			</model>
+			<model model="A059" numOuts="4" numFns="4">
+				<output name="1" label="White" connection="wire"/>
+				<output name="2" label="Yellow" connection="wire"/>
+				<output name="3" label="Green" connection="wire"/>
+				<output name="4" label="Violet" connection="wire"/>
+			</model>
+        </family>
+        <programming direct="yes" paged="yes" register="no" ops="no" />
+		<variables>
+			<!-- CV7, CV8. -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+			<!-- CV2, CV5, CV6. Start, middle and high voltage -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
+			<!-- CV3 and CV4. Acceleration and deceleration -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>			
+			<!-- CV1, CV17 and CV18. Short and long address -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<!-- CV29. Only NDOT (Bit 0) and 2/4 digit address should be selectable
+			           All other bits should be set to 0 ***EXCEPT*** bit 1, which 
+					   should always be set to 1 (28/128 speed step mode)
+			-->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+			<constant item="28/128 Speed Steps" default="1" />
+			<!-- CV11. Packet Timeout Time -->
+			<variable CV="11" item="Packet Timeout" comment="Maximum time period the decoder will maintain its speed without receiving a valid packet" default="0">
+				<decVal max="30"/>
+				<label>Packet Timeout</label>
+			</variable>
+		</variables> 
+		<resets>
+			<factReset label="Reset All CVs" CV="8" default="8">
+				<label>Reset All CVs</label>
+			</factReset>
+		</resets>
+	</decoder>
+	<pane>
+		<column>
+			<display item="Packet Timeout"/>
+		</column>
+		<name>Rokuhan</name>
+	</pane>      
+</decoder-config>
