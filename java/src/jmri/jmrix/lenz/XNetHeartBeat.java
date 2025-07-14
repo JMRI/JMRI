@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.Programmer;
 import jmri.jmrix.lenz.XNetProgrammer.XNetConfigurator;
 
 /**
@@ -40,8 +41,10 @@ public class XNetHeartBeat implements XNetListener {
                 // programming, send a request for status
                 XNetConfigurator p = null;
                 if(memo.provides(jmri.GlobalProgrammerManager.class)){
-                    p = (XNetConfigurator) (memo.getProgrammerManager()
-                            .getGlobalProgrammer().getConfigurator());
+                    Programmer prog = memo.getProgrammerManager().getGlobalProgrammer();
+                    if (prog != null) {
+                        p = (XNetConfigurator) prog.getConfigurator();
+                    }
                 }
                 if (p == null || !(p.programmerBusy())) {
                    tc.sendXNetMessage(
