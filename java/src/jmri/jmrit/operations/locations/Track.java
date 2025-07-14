@@ -1012,10 +1012,10 @@ public class Track extends PropertyChangeSupport {
     }
 
     public boolean isRoadNameAccepted(String road) {
-        if (_roadOption.equals(ALL_ROADS)) {
+        if (getRoadOption().equals(ALL_ROADS)) {
             return true;
         }
-        if (_roadOption.equals(INCLUDE_ROADS)) {
+        if (getRoadOption().equals(INCLUDE_ROADS)) {
             return _roadList.contains(road);
         }
         // exclude!
@@ -1117,10 +1117,10 @@ public class Track extends PropertyChangeSupport {
      * @return true if track will service this load.
      */
     public boolean isLoadNameAccepted(String load) {
-        if (_loadOption.equals(ALL_LOADS)) {
+        if (getLoadOption().equals(ALL_LOADS)) {
             return true;
         }
-        if (_loadOption.equals(INCLUDE_LOADS)) {
+        if (getLoadOption().equals(INCLUDE_LOADS)) {
             return _loadList.contains(load);
         }
         // exclude!
@@ -1135,10 +1135,10 @@ public class Track extends PropertyChangeSupport {
      * @return true if track will service this load.
      */
     public boolean isLoadNameAndCarTypeAccepted(String load, String type) {
-        if (_loadOption.equals(ALL_LOADS)) {
+        if (getLoadOption().equals(ALL_LOADS)) {
             return true;
         }
-        if (_loadOption.equals(INCLUDE_LOADS)) {
+        if (getLoadOption().equals(INCLUDE_LOADS)) {
             return _loadList.contains(load) || _loadList.contains(type + CarLoad.SPLIT_CHAR + load);
         }
         // exclude!
@@ -1239,10 +1239,10 @@ public class Track extends PropertyChangeSupport {
      * @return true if track will service this load.
      */
     public boolean isLoadNameShipped(String load) {
-        if (_shipLoadOption.equals(ALL_LOADS)) {
+        if (getShipLoadOption().equals(ALL_LOADS)) {
             return true;
         }
-        if (_shipLoadOption.equals(INCLUDE_LOADS)) {
+        if (getShipLoadOption().equals(INCLUDE_LOADS)) {
             return _shipLoadList.contains(load);
         }
         // exclude!
@@ -1257,10 +1257,10 @@ public class Track extends PropertyChangeSupport {
      * @return true if track will service this load.
      */
     public boolean isLoadNameAndCarTypeShipped(String load, String type) {
-        if (_shipLoadOption.equals(ALL_LOADS)) {
+        if (getShipLoadOption().equals(ALL_LOADS)) {
             return true;
         }
-        if (_shipLoadOption.equals(INCLUDE_LOADS)) {
+        if (getShipLoadOption().equals(INCLUDE_LOADS)) {
             return _shipLoadList.contains(load) || _shipLoadList.contains(type + CarLoad.SPLIT_CHAR + load);
         }
         // exclude!

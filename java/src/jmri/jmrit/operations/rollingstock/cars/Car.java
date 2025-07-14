@@ -1,6 +1,8 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -717,14 +719,63 @@ public class Car extends RollingStock {
     public void updateKernel() {
         if (isLead()) {
             for (Car car : getKernel().getCars()) {
-                car.setScheduleItemId(getScheduleItemId());
-                car.setFinalDestination(getFinalDestination());
-                car.setFinalDestinationTrack(getFinalDestinationTrack());
-                car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
-                car.setRoutePath(getRoutePath());
-                car.setWait(getWait());
-                if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), getLoadName())) {
-                    car.setLoadName(getLoadName());
+                if (car != this) {
+                    car.setScheduleItemId(getScheduleItemId());
+                    car.setFinalDestination(getFinalDestination());
+                    car.setFinalDestinationTrack(getFinalDestinationTrack());
+                    car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+                    car.setRoutePath(getRoutePath());
+                    car.setWait(getWait());
+                    if (carLoads.containsName(car.getTypeName(), getLoadName())) {
+                        car.setLoadName(getLoadName());
+                    } else {
+                        updateKernelCarCustomLoad(car);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * The non-lead car in a kernel can't use the custom load of the lead car.
+     * Determine if car has custom loads, and if the departure and arrival
+     * tracks allows one of the custom loads.
+     * 
+     * @param car the non-lead car in a kernel
+     */
+    private void updateKernelCarCustomLoad(Car car) {
+        // only update car's load if departing staging or spur
+        if (getTrack() != null) {
+            if (getTrack().isStaging() || getTrack().isSpur()) {
+                List<String> carLoadNames = carLoads.getNames(car.getTypeName());
+                List<String> okLoadNames = new ArrayList<>();
+                for (String name : carLoadNames) {
+                    if (getTrack().isLoadNameAndCarTypeShipped(name, car.getTypeName())) {
+                        if (getTrain() != null && !getTrain().isLoadNameAccepted(name, car.getTypeName())) {
+                            continue; // load not carried by train
+                        }
+                        if (getFinalDestinationTrack() != null &&
+                                getDestinationTrack() != null &&
+                                !getDestinationTrack().isSpur()) {
+                            if (getFinalDestinationTrack().isLoadNameAndCarTypeAccepted(name, car.getTypeName())) {
+                                okLoadNames.add(name);
+                            }
+                        } else if (getDestinationTrack() != null &&
+                                getDestinationTrack().isLoadNameAndCarTypeAccepted(name, car.getTypeName())) {
+                            okLoadNames.add(name);
+                        }
+                    }
+                }
+                // remove default names leaving only custom
+                okLoadNames.remove(carLoads.getDefaultEmptyName());
+                okLoadNames.remove(carLoads.getDefaultLoadName());
+                // randomly pick one of the available car loads
+                if (okLoadNames.size() > 0) {
+                    int rnd = (int) (Math.random() * okLoadNames.size());
+                    car.setLoadName(okLoadNames.get(rnd));
+                } else {
+                    log.debug("Car ({}) in kernel ({}) leaving staging ({}, {}) with load ({})", car.toString(),
+                            getKernelName(), getLocationName(), getTrackName(), car.getLoadName());
                 }
             }
         }
@@ -924,6 +975,10 @@ public class Car extends RollingStock {
             loadName = getNextLoadName();
         }
         setNextLoadName(NONE);
+        // car could be part of a kernel
+        if (getKernel() != null && !carLoads.containsName(getTypeName(), loadName)) {
+            loadName = NONE;
+        }
         if (!loadName.equals(NONE)) {
             setLoadName(loadName);
             // RWE or RWL load and no destination?
@@ -1031,7 +1086,7 @@ public class Car extends RollingStock {
         setFinalDestinationTrack(getPreviousFinalDestinationTrack());
         if (isLoadGeneratedFromStaging()) {
             setLoadGeneratedFromStaging(false);
-            setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
+            setLoadName(carLoads.getDefaultEmptyName());
         }
         super.reset();
         destroyClone();

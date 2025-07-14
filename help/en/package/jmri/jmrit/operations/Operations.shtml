@@ -4037,6 +4037,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         blocking number will place the car before positive numbers.
       </p>
 
+      <p>The program when assigning load names to a kernel will if possible assign the same load
+        name to all cars. However, if the kernel has different car types, there can be cases where
+        the lead car's custom load name isn't available for for a certain car type. In those cases,
+        the program will assign the non-lead cars a load name is that allowed by the departure track
+        and accepted by the destination track.</p>
+
       <h4 id="BuiltDate">Built</h4>
       An optional built date can be entered for the car. The built date can be entered as a two or
       four digit year, or in the format of month-year (mm-yy). A two digit year will be converted to
