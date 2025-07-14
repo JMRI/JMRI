@@ -113,29 +113,29 @@
 		
 		<dt></dt><dd>--------------------------------------------------------------------------</dd>
 		
-		<dt>Aux1 + n</dt><dd></dd>
+		<dt>Numeric Keypad (Active in ENG mode after pressing Aux1 when using Lionel remote.)</dt><dd></dd>
 		
 		<dt></dt><dd></dd>
 
-        <dt>F5 +0</dt><dd>Preface needed for sending specified commands (TBD)</dd>
+        <dt>F5 (0)</dt><dd>Preface needed for sending specified commands (TBD)</dd>
 
-        <dt>F6 +1</dt><dd>Volume Up</dd>
+        <dt>F6 (1)</dt><dd>Volume Up</dd>
 
-        <dt>F7 +2</dt><dd>Crew Talk</dd>
+        <dt>F7 (2)</dt><dd>Crew Talk</dd>
 
-        <dt>F8 +3</dt><dd>Activate Sound Card and Play Start up Sounds</dd>
+        <dt>F8 (3)</dt><dd>Activate Sound Card and Play Start up Sounds</dd>
 
-        <dt>F9 +4</dt><dd>Volume Down</dd>
+        <dt>F9 (4)</dt><dd>Volume Down</dd>
 
-        <dt>F10 +5</dt><dd>Deactivate Sound Card after Playing Shut Down Sounds</dd>
+        <dt>F10 (5)</dt><dd>Deactivate Sound Card after Playing Shut Down Sounds</dd>
 
-        <dt>F11 +6</dt><dd>Steam Release (Steam) / Air Horn and RPM Decrease (Diesel)</dd>
+        <dt>F11 (6)</dt><dd>Steam Release (Steam) / Air Horn and RPM Decrease (Diesel)</dd>
 
-        <dt>F12 +7</dt><dd>Tower Comm</dd>
+        <dt>F12 (7)</dt><dd>Tower Comm</dd>
 
-        <dt>F13 +8</dt><dd>Aux Off (Smoke and Firebox OFF on Steam) / (Auxilliary Lighting OFF on Diesel)</dd>
+        <dt>F13 (8)</dt><dd>Aux Off (Smoke and Firebox OFF on Steam) / (Auxilliary Lighting OFF on Diesel)</dd>
 
-        <dt>F14 +9</dt><dd>Aux On (Smoke and Firebox ON on Steam) / (Auxilliary Lighting ON on Diesel)</dd>
+        <dt>F14 (9)</dt><dd>Aux On (Smoke and Firebox ON on Steam) / (Auxilliary Lighting ON on Diesel)</dd>
 		
 		<dt></dt><dd>--------------------------------------------------------------------------</dd>
 		
