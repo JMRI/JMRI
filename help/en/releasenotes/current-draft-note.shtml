@@ -81,6 +81,7 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
+                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 
@@ -141,6 +142,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
+                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 

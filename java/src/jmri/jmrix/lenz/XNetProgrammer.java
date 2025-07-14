@@ -572,10 +572,12 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         return new XNetConfigurator();
     }
 
-    /**
-     * This class is used by tests.
-     */
-    public static class XNetConfigurator implements Configurator {
+
+    public class XNetConfigurator implements Configurator {
+
+        public boolean programmerBusy() {
+            return XNetProgrammer.this.programmerBusy();
+        }
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetProgrammer.class);
