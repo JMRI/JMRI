@@ -198,15 +198,15 @@ public class SerialThrottle extends AbstractThrottle {
                 // immediate stop
                 m.putAsWord(0x0060 + address.getNumber() * 128 + 0);
             }
+            if (value / 3 > 32) {
+                // max possible speed
+                value = 32 * 3;
+            }
             if (value > 0) {
                 // normal speed step setting
                 m.putAsWord(0x0060 + address.getNumber() * 128 + value / 3);
             }
-            if (value / 3 > 32) {
-                // max possible speed
-                value / 3 = 32;
-            }
-                
+                            
             // only send twice to advanced command station
             tc.sendSerialMessage(m, null);
             tc.sendSerialMessage(m, null);
