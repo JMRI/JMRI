@@ -160,7 +160,8 @@ public class SerialThrottle extends AbstractThrottle {
             // TMCC2 Legacy 200 step mode
             int value = (int) (199 * speed); // max value to send is 199 in 200 step mode
             if (value > 199) {
-                value = 199;    // max possible speed
+                // max possible speed
+                value = 199;
             }
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xF8);
@@ -178,11 +179,17 @@ public class SerialThrottle extends AbstractThrottle {
 
             // send to layout option 100 speed steps
         } else if (speedStepMode == jmri.SpeedStepMode.TMCC_100) {
-
-            // TMCC1 ERR 100 speed step mode
+            
+          /** 
+            * TMCC1 ERR 100 speed step mode
+            * purpose is to increase resolution of 32 bits
+            * across 100 throttle 'clicks' by dividing value by 3            
+            * and setting top speed at 32
+          */
             int value = (int) (99 * speed); // max value to send is 99 in 100 step mode
             if (value > 99) {
-                value = 99;    // max possible speed
+                // max possible speed step
+                value = 99;
             }
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xFE);
@@ -190,15 +197,21 @@ public class SerialThrottle extends AbstractThrottle {
             if (value < 0) {
                 // immediate stop
                 m.putAsWord(0x0060 + address.getNumber() * 128 + 0);
-            } else {
-                // normal speed setting
-                m.putAsWord(0x0060 + address.getNumber() * 128 + value);
             }
+            if (value / 3 > 32) {
+                // max possible speed
+                value = 32 * 3;
+            }
+            if (value > 0) {
+                // normal speed step setting
+                m.putAsWord(0x0060 + address.getNumber() * 128 + value / 3);
+            }
+                            
             // only send twice to advanced command station
             tc.sendSerialMessage(m, null);
             tc.sendSerialMessage(m, null);
 
-                // Send to layout 32 speed steps
+            // Send to layout 32 speed steps
         } else {
 
             // assume TMCC 32 step mode
@@ -257,8 +270,6 @@ public class SerialThrottle extends AbstractThrottle {
      * @param func  The number of the function being addressed
      */
     protected void sendFnToLayout(int value, int func) {
-        tc.sendSerialMessage(new SerialMessage(value), null);
-
     /**
      * Commenting out these repeat send lines in case it is
      * necessary to reinstate them after testing. These are
@@ -267,7 +278,8 @@ public class SerialThrottle extends AbstractThrottle {
      */
         // tc.sendSerialMessage(new SerialMessage(value), null);
         // tc.sendSerialMessage(new SerialMessage(value), null);
-     
+        // tc.sendSerialMessage(new SerialMessage(value), null);     
+    
         repeatFunctionSendWhileOn(value, func); // 4th send is here
     }
 
