@@ -503,7 +503,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -627,7 +627,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
