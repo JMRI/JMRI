@@ -1,15 +1,7 @@
 package apps;
 
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
-import jmri.util.FileUtil;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 
