@@ -1422,10 +1422,11 @@ public class TrainCommon {
 
     /**
      * Splits a string if there's a hyphen followed by a left parenthesis "-(".
-     *
+     * 
+     * @param name the string to split
      * @return First half of the string.
      */
-    private static String splitStringLeftParenthesis(String name) {
+    protected static String splitStringLeftParenthesis(String name) {
         String[] splitname = name.split(HYPHEN);
         if (splitname.length > 1 && splitname[1].startsWith("(")) {
             return splitname[0].trim();

@@ -56,7 +56,7 @@ public class TrainManifest extends TrainCommon {
             }
             newLine(fileOut); // empty line
             newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText.getStringManifestForTrain(),
-                    new Object[]{train.getName(), train.getDescription()}));
+                    new Object[]{splitStringLeftParenthesis(train.getName()), train.getDescription()}));
 
             String valid = MessageFormat.format(messageFormatText = TrainManifestText.getStringValid(),
                     new Object[]{getDate(true)});
