@@ -646,5 +646,6 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Fixed a formating problem in "Report Issue" tool</li>
+            <li>Added a link to the JMRI users group in the Help menu</li>
         </ul>
 
