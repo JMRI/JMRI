@@ -11,6 +11,7 @@ import jmri.*;
 import jmri.jmrit.display.logixng.CategoryDisplay;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTurnout;
+import jmri.jmrit.operations.logixng.CategoryOperations;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
@@ -151,6 +152,10 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.display.logixng.ActionPositionableByClass.class);
         classes.add(jmri.jmrit.display.logixng.WindowManagement.class);
         map.put(CategoryDisplay.DISPLAY, classes);
+
+        classes = new ArrayList<>();
+        classes.add(jmri.jmrit.operations.logixng.OperationsProStartAutomation.class);
+        map.put(CategoryOperations.OPERATIONS, classes);
 
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.actions.ActionCreateBeansFromTable.class);

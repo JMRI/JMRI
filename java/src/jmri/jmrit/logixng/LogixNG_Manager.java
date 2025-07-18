@@ -1,8 +1,7 @@
 package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import jmri.Manager;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
@@ -16,6 +15,16 @@ import org.apache.commons.lang3.mutable.MutableInt;
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public interface LogixNG_Manager extends Manager<LogixNG> {
+
+    /**
+     * This property is fired when the {@link #setupAllLogixNGs()} method is completed.
+     */
+    public static final String PROPERTY_SETUP = "LogixNG_Setup";
+
+    /**
+     * This is the name of the error handling module.
+     */
+    public static final String ERROR_HANDLING_MODULE_NAME = "IQM:JMRI:ErrorHandlingModule";
 
     /**
      * Create a new LogixNG if the LogixNG does not exist.
@@ -295,5 +304,18 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      */
     void executeModule(Module module, Map<String, Object> parameters)
             throws IllegalArgumentException;
+
+    /**
+     * Get the female socket of the error handling module.
+     * @return the socket.
+     */
+    FemaleSocket getErrorHandlingModuleSocket();
+
+    /**
+     * Is the error handling module enabled?
+     * It's enabled if it exists and the root socket is connected.
+     * @return true if it's in use, false otherwise.
+     */
+    boolean isErrorHandlingModuleEnabled();
 
 }

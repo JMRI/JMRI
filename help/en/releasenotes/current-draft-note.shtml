@@ -26,9 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>When WiThrottle is asked Share / Steal / Cancel? or Share / Cancel ? , the main
-                    JMRI Throttle silent Steal / silent Share options are checked for preferred behaviour.</li>
-                 <li>The Console Filter is now displayed as a check-box tree.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -83,13 +81,13 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
+                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>Resolved a Console log 'Error' message that could be seen when
-                    using the Slot Monitor's "Clear All Non-InUse Slots" button.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -144,6 +142,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
+                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 
@@ -474,21 +473,19 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The class <strong>jmri.jmrit.logixng.Category</strong> has been split into
-              <strong>jmri.Category</strong> and <strong>jmri.jmrit.logixng.LogixNG_Category</strong>.</li>
           <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
         <a id="Meters" name="Meters"></a>
         <ul>
-            <li>The shutdown process has been modified to detect changes to the meter settings.</li>
+            <li></li>
         </ul>
 
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature, a non-lead car in a kernel departing staging or spur can now have a custom load that doesn't match the lead car</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -506,8 +503,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>The Shutdown preference help has been updated. The store request now includes
-            a <strong>Cancel</strong> option which cancels the shutdown process.</li>
+            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -531,7 +527,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Upgrade YAAT to 3.4.  The @include statement has been added.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -631,7 +627,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -649,5 +645,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Fixed a formating problem in "Report Issue" tool</li>
         </ul>
+

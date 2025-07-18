@@ -48,13 +48,13 @@
         <adapter>apps.PanelPro.PanelProAction</adapter>
     </node>
     <node name="Open DecoderPro Window">
-        <name xml:lang="fr">Ouvrir la fenêtre PanelPro</name>
-        <name xml:lang="it">Aprire la finestra PanelPro</name>
-        <name xml:lang="da">Åben PanelPro Window</name>
-        <name xml:lang="de">Öffne PanelPro Fenster</name>
-		<name xml:lang="ca">Obrir la finestra del PanelPro</name>
-        <name xml:lang="cs">Otevřít okno PanelPro</name>
-        <name xml:lang="nl">Open PanelPro venster</name>
+        <name xml:lang="fr">Ouvrir la fenêtre DecoderPro</name>
+        <name xml:lang="it">Aprire la finestra DecoderPro</name>
+        <name xml:lang="da">Åben DecoderPro Window</name>
+        <name xml:lang="de">Öffne DecoderPro Fenster</name>
+		<name xml:lang="ca">Obrir la finestra del DecoderPro</name>
+        <name xml:lang="cs">Otevřít okno DecoderPro</name>
+        <name xml:lang="nl">Open DecoderPro venster</name>
         <adapter>jmri.jmrit.roster.swing.RosterFrameAction</adapter>
     </node>
     <node>separator</node><!-- separator -->

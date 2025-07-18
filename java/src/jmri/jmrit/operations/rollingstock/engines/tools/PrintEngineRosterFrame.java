@@ -145,8 +145,6 @@ public class PrintEngineRosterFrame extends OperationsFrame {
 
             printRoster(writer);
 
-            // and force completion of the printing
-            writer.close();
         } catch (IOException we) {
             log.error("Error printing ConsistRosterEntry: {}", we.getLocalizedMessage());
         } catch (HardcopyWriter.PrintCanceledException ex) {

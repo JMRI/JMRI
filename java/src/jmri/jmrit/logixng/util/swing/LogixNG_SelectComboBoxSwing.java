@@ -12,6 +12,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.LogixNG_SelectComboBox;
+import jmri.jmrit.logixng.util.LogixNG_SelectComboBox.Item;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.BeanSelectPanel;
 import jmri.util.swing.JComboBoxUtil;
@@ -27,7 +28,7 @@ public class LogixNG_SelectComboBoxSwing {
     private final LogixNG_SelectTableSwing _selectTableSwing;
 
     private JTabbedPane _tabbedPane;
-    private JComboBox<String> _valuesComboBox;
+    private JComboBox<Item> _valuesComboBox;
     private JPanel _panelDirect;
     private JPanel _panelReference;
     private JPanel _panelMemory;
@@ -54,7 +55,7 @@ public class LogixNG_SelectComboBoxSwing {
     }
 
     public JPanel createPanel(
-            @Nonnull LogixNG_SelectComboBox selectComboBox, String defaultValue) {
+            @Nonnull LogixNG_SelectComboBox selectComboBox, Item defaultValue) {
 
         JPanel panel = new JPanel();
 
@@ -81,7 +82,7 @@ public class LogixNG_SelectComboBoxSwing {
         _tabbedPane.addTab(NamedBeanAddressing.Table.toString(), _panelTable);
 
         _valuesComboBox = new JComboBox<>();
-        for (String value : selectComboBox.getValues()) {
+        for (Item value : selectComboBox.getValues()) {
             _valuesComboBox.addItem(value);
         }
         JComboBoxUtil.setupComboBoxMaxRows(_valuesComboBox);
@@ -114,8 +115,9 @@ public class LogixNG_SelectComboBoxSwing {
             case Table: _tabbedPane.setSelectedComponent(_panelTable); break;
             default: throw new IllegalArgumentException("invalid _addressing state: " + selectComboBox.getAddressing().name());
         }
-        if (selectComboBox.getValue() != null) {
-            _valuesComboBox.setSelectedItem(selectComboBox.getValue());
+        Item value = selectComboBox.getValue();
+        if (value != null) {
+            setValueByKey(value.getKey());
         }
         _referenceTextField.setText(selectComboBox.getReference());
         _memoryPanel.setDefaultNamedBean(selectComboBox.getMemory());
@@ -163,7 +165,11 @@ public class LogixNG_SelectComboBoxSwing {
     public void updateObject(@Nonnull LogixNG_SelectComboBox selectComboBox) {
 
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
-            selectComboBox.setValue(_valuesComboBox.getItemAt(_valuesComboBox.getSelectedIndex()));
+            if (_valuesComboBox.getSelectedIndex() >= 0) {
+                selectComboBox.setValue(_valuesComboBox.getItemAt(_valuesComboBox.getSelectedIndex()));
+            } else {
+                selectComboBox.setValue((Item)null);
+            }
         }
 
         try {
@@ -194,7 +200,7 @@ public class LogixNG_SelectComboBoxSwing {
         _selectTableSwing.updateObject(selectComboBox.getSelectTable());
     }
 
-    public boolean isValueSelected(String value) {
+    public boolean isValueSelected(Item value) {
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
             return _valuesComboBox.getItemAt(_valuesComboBox.getSelectedIndex()).equals(value);
         } else {
@@ -202,7 +208,7 @@ public class LogixNG_SelectComboBoxSwing {
         }
     }
 
-    public boolean isValueSelectedOrIndirectAddressing(String value) {
+    public boolean isValueSelectedOrIndirectAddressing(Item value) {
         if (_tabbedPane.getSelectedComponent() == _panelDirect) {
             return _valuesComboBox.getItemAt(_valuesComboBox.getSelectedIndex()).equals(value);
         } else {
@@ -228,19 +234,27 @@ public class LogixNG_SelectComboBoxSwing {
         }
     }
 
-    public String getValue() {
+    public Item getValue() {
         return _valuesComboBox.getItemAt(_valuesComboBox.getSelectedIndex());
     }
 
-    public void setValue(String value) {
+    public void setValueByKey(String key) {
+        for (int i=0; i < _valuesComboBox.getItemCount(); i++) {
+            if (_valuesComboBox.getItemAt(i).getKey().equals(key)) {
+                _valuesComboBox.setSelectedIndex(i);
+            }
+        }
+    }
+
+    public void setValue(Item value) {
         _valuesComboBox.setSelectedItem(value);
     }
 
-    public void setValues(String[] valuesArray) {
-        String selectedValue = _valuesComboBox.getItemAt(_valuesComboBox.getSelectedIndex());
+    public void setValues(Item[] valuesArray) {
+        Object selectedValue = _valuesComboBox.getItemAt(_valuesComboBox.getSelectedIndex());
 
         _valuesComboBox.removeAllItems();
-        for (String value : valuesArray) {
+        for (Item value : valuesArray) {
             _valuesComboBox.addItem(value);
         }
 

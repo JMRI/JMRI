@@ -280,7 +280,8 @@ public class ActionsAndExpressionsTest {
                     "AbstractAnalogAction","AnalogFactory",         // Analog
                     "AbstractDigitalAction","ActionAtomicBoolean","AbstractScriptDigitalAction","DigitalFactory",   // Digital
                     "AbstractDigitalBooleanAction","DigitalBooleanFactory",     // Boolean digital
-                    "AbstractStringAction","StringFactory"          // String
+                    "AbstractStringAction","StringFactory",         // String
+                    "SetLocalVariables"
                 });
 
 

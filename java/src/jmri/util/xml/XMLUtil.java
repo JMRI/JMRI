@@ -898,7 +898,7 @@ public final class XMLUtil extends Object {
             NodeList nl2 = e.getChildNodes();
             for (int j = 0; j < nl2.getLength(); j++) {
                 Node n = nl2.item(j);
-                if (n instanceof Text && ((Text) n).getNodeValue().trim().length() == 0) {
+                if ( n instanceof Text && n.getNodeValue().isBlank() ) {
                     e.removeChild(n);
                     j--; // since list is dynamic
                 }
@@ -972,7 +972,7 @@ public final class XMLUtil extends Object {
             if (n.getNodeType() == Node.ELEMENT_NODE) {
                 elements.add((Element) n);
             } else if (n.getNodeType() == Node.TEXT_NODE) {
-                String text = ((Text) n).getNodeValue();
+                String text = n.getNodeValue();
                 if (text.trim().length() > 0) {
                     throw new IllegalArgumentException("non-ws text encountered in " + parent + ": " + text); // NOI18N
                 }

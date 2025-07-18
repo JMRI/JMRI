@@ -190,6 +190,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#CreateClassificationYard">How to Create a Classification Yard</a></li>
                 <li><a href="#ExchangeBetweenFreightAndLocal">How to Exchange Cars Between
                     Through Freight and Local Switcher</a></li>
+                <li><a href="#CreateArrivalDeparture">How to Create Arrival/Departure (A/D)
+                    Tracks using C/I Tracks</a></li>
               </ul></li>
 
             <li><a href="#Staging">Staging Tracks</a>
@@ -1931,16 +1933,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>The next option is "Truncate" and when selected will cause the program to reduce the
         amount of information printed when setting out or picking up a car at a location that also
         has a switch list. The idea here is that you have a location that is staffed by a crew
-        member with a switch list and he or she will be doing the actual car pick up and set out for
+        member with a switch list and they will be doing the actual car pick up and set out for
         the train. Since the switch list contains all of the needed information with regards to
         where the cars are and eventually where they need to be, the train Manifest only shows which
         cars are being removed and added to the train.</p>
 
       <h4>Manifests and Switch List Options</h4>
-      There are eleven checkboxes that modify both Manifests and switch lists and are as follows:
+      There are twelve checkboxes that modify both Manifests and switch lists and are as follows:
       <p>The "Print Valid" checkbox causes the program to print date and time the train was
-        built, which isn't the same as when the Manifest was printed. The print time is always shown
-        at the top right of the Manifest or switch list.</p>
+        built, which isn't the same as when the Manifest was printed. The print time is shown
+        at the top right of the Manifest or switch list when "Print Page Header" is selected.</p>
 
       <p>If you want the Manifest and switch list to show how many car loads and empties are in
         the train, select the "Loads and Empties" checkbox.</p>
@@ -1975,6 +1977,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         would rather have the cars listed by the track name rather than blocking order, select the
         option "Sort by Track".
       </p>
+
+      <p>The option "No Page Breaks" when selected, prevents page breaks in a location's work
+        for Manifests and switch lists. When printing, the program will determine if the work for a
+        location can fix on the current page, and if not, will print the work on the next page. The
+        program will only use page breaks if the work for a location won't fit on a single page.</p>
 
       <p>
         The next option is "Print Headers". When this option is selected, the train Manifests and
@@ -3021,6 +3028,42 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       solution is to use the <a href="#PlannedPickUps">Planned Pick Ups</a> feature for both spur
       tracks.
 
+      <h3 id="CreateArrivalDeparture">How to Create Arrival/Departure (A/D) Tracks using C/I
+        Tracks</h3>
+      The easiest way to create <a href="#ArrivalDepartureTracks">Arrival
+        and Departure Tracks</a> is with <a href="#Staging">staging</a> tracks. However, it is
+      possible to create one or more arrival or departure tracks using C/I tracks. You need to tell
+      the program you want all of your cars to arrive or depart on one track. There are several ways
+      to do this. The easiest is to create a location with two C/I tracks and configure each so that
+      your main line trains can only set out cars to one of the C/I tracks, and only pull from the
+      other. See
+      <a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain Trains or Routes</a>
+      for more details. To service the A/D tracks, you would create a switcher that would pull cars
+      off the arrival track and place them where needed. The could be a location using a "similar"
+      name using the hyphen feature, or whatever location name you want. Same goes for servicing the
+      departure track. The switcher would be configured to pull cars off the desired tracks and
+      place them on the departure track.
+      <p>
+        Now if you desire two or more arrival or departure tracks and you want to create them using
+        C/I tracks, things get a little more complicated. You might configure your A/D tracks to
+        only service trains arriving or departing by direction. For example you could configure one
+        arrival track to only accept westbound trains, and the other eastbound trains. Another
+        method would be to create several A/D tracks, but only allow certain trains to use them. For
+        example, you might have 10 trains that can use your A/D tracks, you could configure them so
+        that 5 could use one set of A/D tracks and the remaining 5 the another set of A/D tracks.
+        Another choice is to create one A/D track for every main line train and <a href="#Pools">pool</a>
+        the track space together. Again the track names could be unique, or "similar" using the
+        hyphen feature. In all cases, the key is to get the program to show the main trains arriving
+        or departing from only one track.
+      </p>
+
+      <p>The one advantage of using C/I tracks for A/D is that you can if you wish show your
+        engines and cabooses being serviced by other tracks. For example, you could have a caboose
+        track that services all A/D tracks at a location, and your Manifest would show serving the
+        caboose from the caboose track when the train departs or arrives. Same goes with regards to
+        engines, you could show engines serviced by tracks you define when the train arrives or
+        departs.</p>
+
       <h3 id="Staging">Staging Tracks</h3>
       Staging tracks are normally used to represent locations that generate traffic to and from your
       layout. Many times physical access to staging tracks is limited, therefore the program places
@@ -3255,9 +3298,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h3 id="ArrivalDepartureTracks">Arrival and Departure Tracks</h3>
       To create several arrival or departure (A/D) tracks for a location, the correct track type to
-      use is staging. The staging track option will force the locomotives and cars to one track. If
-      you only need one arrival and one departure track, you could with proper configuration use <a
-        href="#Interchange">classification/interchange</a> tracks.
+      use is
+      <a href="#Staging">staging</a>. The staging track option will force the locomotives and cars
+      to one track. If you only need one arrival and one departure track, you could with proper
+      configuration use
+      <a href="#Interchange">classification/interchange</a> tracks.
 
       <p>
         When using staging tracks for A/D you need to consider the following. To prevent any changes
@@ -3319,7 +3364,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <a href="#TrainTurnRoute">train turn</a>, select this option. On the outbound leg of the
       train's route, OperationsPro will drop off the car to the spur. On the inbound leg of the
       train's route the car will be pulled and eventually dropped off by the train to the car's
-      destination and track.
+      destination and track. The Manifest below shows boxcars APOX 554 and 556 being dropped off at
+      Bedford Packaging on the eastbound leg, and later pulled on the westbound leg of the train's
+      route.
+
+      <p>
+        <img src="images/Turn.png" alt="">
+      </p>
 
       <p>
         The quick load service feature allows the "turn" or another train to pull the car. For the
@@ -3747,12 +3798,16 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       the "Pick up" column. The format for pick up time is day:hour:minute.
 
       <h4>Add, Find, Save Buttons</h4>
-      There are three buttons located at the bottom of the Cars window. The <a href="#CarsEdit">Add</a>
-      button allows you to add a car to your roster. The "Save" button stores the cars roster to a
-      file. The "Find" button and the adjacent text window can be used to find a car by its road
-      number. You can use the wild card "*" when entering a car number. For example if you want to
-      find all cars with numbers that end with 345, enter *345, and press find. Each time you press
-      find, the next car with a road number ending with "345" will be highlighted.
+      There are three buttons located at the bottom of the Cars window. The
+      <a href="#CarsEdit">Add</a> button allows you to add a car to your roster. The "Save" button
+      stores the cars roster to a file.
+
+      <p>The "Find" button and the adjacent text window can be used to find a car by its road
+        number. You can use the wild card "*" when entering a car number. For example if you want to
+        find all cars with numbers that end with 345, enter *345, and press "Find" or the enter key.
+        Each time you press find or enter, the next car with a road number ending with 345 will be
+        highlighted. To find all cars that contain the numbers 345, use *345* for the search. And
+        use 345* to search for all cars that start with 345.</p>
 
       <h3 id="ImportingCars">Importing Cars from a File</h3>
       If you already have a list of cars in a database, you can import the cars into the program.
@@ -3981,6 +4036,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         by changing their blocking order in the <a href="#CarsEdit">Edit Car</a> window. A negative
         blocking number will place the car before positive numbers.
       </p>
+
+      <p>The program when assigning load names to a kernel will if possible assign the same load
+        name to all cars. However, if the kernel has different car types, there can be cases where
+        the lead car's custom load name isn't available for for a certain car type. In those cases,
+        the program will assign the non-lead cars a load name is that allowed by the departure track
+        and accepted by the destination track.</p>
 
       <h4 id="BuiltDate">Built</h4>
       An optional built date can be entered for the car. The built date can be entered as a two or

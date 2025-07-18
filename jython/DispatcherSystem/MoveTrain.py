@@ -487,7 +487,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         if self.logLevel > 1: print "traininfoFileName",traininfoFileName
-        train = trains[train_name]
+        if train_name in trains:
+            train = trains[train_name]
+        else:
+            print "train", train_name , "cannot be dispatched", "trains", trains
+            return
         self.trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
         self.modify_trainInfo(train_name)  # sets the speed factor and other train dependent factors
         transit_name = self.trainInfo.getTransitName()

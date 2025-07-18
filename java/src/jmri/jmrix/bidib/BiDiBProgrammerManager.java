@@ -69,18 +69,18 @@ public class BiDiBProgrammerManager extends DefaultProgrammerManager {
      * {@inheritDoc}
      */
     @Override
-    public Programmer getGlobalProgrammer() {
+    protected Programmer getConcreteGlobalProgrammer() {
         if (!isGlobalProgrammerAvailable()) {
             return null;
         }
-        return super.getGlobalProgrammer();
+        return super.getConcreteGlobalProgrammer();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new BiDiBOpsModeProgrammer(pAddress, tc);
     }
 
@@ -88,7 +88,7 @@ public class BiDiBProgrammerManager extends DefaultProgrammerManager {
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null; //what is this??
     }
 

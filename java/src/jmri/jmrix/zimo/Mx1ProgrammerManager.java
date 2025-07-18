@@ -14,11 +14,11 @@ import jmri.managers.DefaultProgrammerManager;
  * @author Ken Cameron Copyright (C) 2014
  * @author Kevin Dickerson Copyright (C) 2014
  * @author Alger Pike Copyright (c) 2022
- * 
+ *
  *
  */
 public class Mx1ProgrammerManager extends DefaultProgrammerManager {
-    
+
     private Mx1SystemConnectionMemo _memo = null;
 
     public Mx1ProgrammerManager(Programmer serviceModeProgrammer, Mx1SystemConnectionMemo memo) {
@@ -35,7 +35,7 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
     public boolean isAddressedModePossible() {
         if (_memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF)
         {
-            
+
             // currently only supporting MXULF. In theory I think any Zimo
             // system that supports the binary protocol would work but I am
             // unable to test said systems.
@@ -53,10 +53,10 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if (_memo.getConnectionType() == Mx1SystemConnectionMemo.MXULF)
         {
-            
+
             // currently only supporting MXULF. In theory I think any Zimo
             // system that supports the binary protocol would work but I am
             // unable to test said systems.
@@ -69,7 +69,7 @@ public class Mx1ProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 }

@@ -9,6 +9,7 @@ import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
@@ -232,17 +233,50 @@ public class TrackTest extends OperationsTestCase {
         Car c1 = new Car("TESTROAD", "TESTNUMBER1");
         c1.setLength("40");
 
+        // confirm default not aggressive
+        Assert.assertFalse(Setup.isBuildAggressive());
+
         t.addPickupRS(c1);
         Assert.assertEquals("Location Track Pick Ups 1st", 1, t.getPickupRS());
+        Assert.assertEquals("Location Track pick ups reserved", 0, t.getReserved());
+        Assert.assertEquals("Reserved pick up", 44, t.getReservedLengthPickups());
 
         t.addPickupRS(c1);
         Assert.assertEquals("Location Track Pick Ups 2nd", 2, t.getPickupRS());
+        Assert.assertEquals("Location Track pick ups reserved", 0, t.getReserved());
+        Assert.assertEquals("Reserved pick up", 88, t.getReservedLengthPickups());
 
         t.deletePickupRS(c1);
         Assert.assertEquals("Location Track Pick Ups 3rd", 1, t.getPickupRS());
+        Assert.assertEquals("Location Track pick ups reserved", 0, t.getReserved());
+        Assert.assertEquals("Reserved pick up", 44, t.getReservedLengthPickups());
 
         t.deletePickupRS(c1);
         Assert.assertEquals("Location Track Pick Ups 4th", 0, t.getPickupRS());
+        Assert.assertEquals("Location Track pick ups reserved", 0, t.getReserved());
+        Assert.assertEquals("Reserved pick up", 0, t.getReservedLengthPickups());
+
+        Setup.setBuildAggressive(true);
+
+        t.addPickupRS(c1);
+        Assert.assertEquals("Location Track Pick Ups 1st", 1, t.getPickupRS());
+        Assert.assertEquals("Location Track pick ups reserved", -(40 + 4), t.getReserved());
+        Assert.assertEquals("Reserved pick up", 44, t.getReservedLengthPickups());
+
+        t.addPickupRS(c1);
+        Assert.assertEquals("Location Track Pick Ups 2nd", 2, t.getPickupRS());
+        Assert.assertEquals("Location Track pick ups reserved", -88, t.getReserved());
+        Assert.assertEquals("Reserved pick up", 88, t.getReservedLengthPickups());
+
+        t.deletePickupRS(c1);
+        Assert.assertEquals("Location Track Pick Ups 3rd", 1, t.getPickupRS());
+        Assert.assertEquals("Location Track pick ups reserved", -44, t.getReserved());
+        Assert.assertEquals("Reserved pick up", 44, t.getReservedLengthPickups());
+
+        t.deletePickupRS(c1);
+        Assert.assertEquals("Location Track Pick Ups 4th", 0, t.getPickupRS());
+        Assert.assertEquals("Location Track pick ups reserved", 0, t.getReserved());
+        Assert.assertEquals("Reserved pick up", 0, t.getReservedLengthPickups());
     }
 
     // test Track drop support
@@ -263,20 +297,24 @@ public class TrackTest extends OperationsTestCase {
         t.addDropRS(c1);
         Assert.assertEquals("Location Track Drops 1st", 1, t.getDropRS());
         Assert.assertEquals("Location Track Drops 1st Reserved", 40 + 4, t.getReserved());
+        Assert.assertEquals("Reserved set outs", 44, t.getReservedLengthSetouts());
 
         Car c2 = new Car("TESTROAD", "TESTNUMBER2");
         c2.setLength("50");
         t.addDropRS(c2);
         Assert.assertEquals("Location Track Drops 2nd", 2, t.getDropRS());
         Assert.assertEquals("Location Track Drops 2nd Reserved", 40 + 4 + 50 + 4, t.getReserved());
+        Assert.assertEquals("Reserved set outs", 98, t.getReservedLengthSetouts());
 
         t.deleteDropRS(c2);
         Assert.assertEquals("Location Track Drops 3rd", 1, t.getDropRS());
         Assert.assertEquals("Location Track Drops 3rd Reserved", 40 + 4, t.getReserved());
+        Assert.assertEquals("Reserved set outs", 44, t.getReservedLengthSetouts());
 
         t.deleteDropRS(c1);
         Assert.assertEquals("Location Track Drops 4th", 0, t.getDropRS());
         Assert.assertEquals("Location Track Drops 4th Reserved", 0, t.getReserved());
+        Assert.assertEquals("Reserved set outs", 0, t.getReservedLengthSetouts());
     }
 
     // test Track typename support

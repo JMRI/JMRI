@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Error Handling Module</title>
+  <meta name="author" content="Dave Sand">
+  <meta name="keywords" content="java model railroad JMRI LogixNG export">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Error Handling Module</h1>
+
+      <p>LogixNG error handling is configured using <strong>Preferences &rArr; LogixNG</strong>.
+      The details are at <a href="ErrorHandling.shtml">Error Handling</a>.  The <strong>Error Handling Module</strong>
+      makes it possible to implement custom error handling.</p>
+
+      <p>The module is similar to the standard LogixNG modules at <strong>Tools &rArr; Tables &rArr;
+      LogixNG Modules</strong>.  The main differences are that the error module is a system module
+      instead of a user module and it is called when an error occurs instead of from a ConditionalNG.
+      It is managed using <strong>Tools &rArr; LogixNG &rArr; Error handling module</strong>.
+      The error module is not included in the <strong>LogixNG Modules</strong> table.</p>
+
+      <dl>
+        <dt>Create/Edit Module</dt>
+        <dd>Click on <strong>Tools &rArr; LogixNG &rArr; Error handling module</strong>.  This will
+        open the standard LogixNG editing window.  Enter the logic to be performed when an error
+        occurs.  It can be as simple as <strong>Log local variables</strong>.  Other ideas include
+        putting a message in a JMRI Memory variable to be displayed on a panel, or set a sensor, or
+        send a MQTT message.  The tool's menu text is modified to include <strong>(enabled)</strong>
+        to indicate that the module is ready to handle errors.</dd>
+
+        <dt>Delete Module</dt>
+        <dd>To delete the module, remove all of the content, leaving only an empty <strong>Root</strong>
+        item.  The tool's menu text will no longer show <strong>(enabled)</strong>.</dd>
+
+        <dt>Local Variables</dt>
+        <dd>When the error module is called, seven local variables are available.  See the example
+        below.  The local variables provide detail location and error information.</dd>
+      </dl>
+
+<pre>
+Log local variables: [JMRI LogixNGThread]
+    Name: __logixng__, Value: IQ:AUTO:0001
+    Name: __conditionalng__, Value: IQC:AUTO:0001
+    Name: __module__, Value: null
+    Name: __item__, Value: IQDA:AUTO:0002
+    Name: __exception__, Value: jmri.jmrit.logixng.SymbolTable$SymbolNotFound: Symbol 'MyTurnout' does not exist in symbol table
+    Name: __messageList__, Value: null
+    Name: __message__, Value: An exception has occurred during execute: Symbol 'MyTurnout' does not exist in symbol table
+Log local variables done
+</pre>
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

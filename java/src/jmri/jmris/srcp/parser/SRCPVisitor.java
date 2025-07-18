@@ -166,7 +166,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
 
             int cv = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(4)).jjtGetValue()));
             //try {
-            ((jmri.jmris.srcp.JmriSRCPProgrammerServer) ((jmri.jmris.ServiceHandler) data).getProgrammerServer()).readCV(modeno, cv);
+            ((jmri.jmris.ServiceHandler) data).getProgrammerServer().readCV(modeno, cv);
             //} catch(java.io.IOException ie) {
             //}
 
@@ -392,7 +392,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor {
             int value = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(5)).jjtGetValue()));
 
             //try {
-            ((jmri.jmris.srcp.JmriSRCPProgrammerServer) ((jmri.jmris.ServiceHandler) data).getProgrammerServer()).writeCV(modeno, cv, value);
+            ((jmri.jmris.ServiceHandler) data).getProgrammerServer().writeCV(modeno, cv, value);
             //} catch(java.io.IOException ie) {
             //}
 

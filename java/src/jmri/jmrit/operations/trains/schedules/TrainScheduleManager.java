@@ -292,7 +292,7 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
         Attribute a;
         if (e != null) {
             if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
-                InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(a.getValue());
+                setTrainScheduleActiveId(a.getValue());
             }
         }
 

@@ -11,7 +11,8 @@ import org.apache.commons.csv.CSVPrinter;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -178,8 +179,6 @@ public class ExportTrains extends XmlFile {
                 }
             }
 
-            fileOut.flush();
-            fileOut.close();
             log.info("Exported {} trains to file {}", count, defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedTrainsToFile",

@@ -1422,10 +1422,11 @@ public class TrainCommon {
 
     /**
      * Splits a string if there's a hyphen followed by a left parenthesis "-(".
-     *
+     * 
+     * @param name the string to split
      * @return First half of the string.
      */
-    private static String splitStringLeftParenthesis(String name) {
+    protected static String splitStringLeftParenthesis(String name) {
         String[] splitname = name.split(HYPHEN);
         if (splitname.length > 1 && splitname[1].startsWith("(")) {
             return splitname[0].trim();
@@ -2156,12 +2157,13 @@ public class TrainCommon {
 
     /*
      * Converts String time DAYS:HH:MM and DAYS:HH:MM AM/PM to minutes from
-     * midnight.
+     * midnight. Note that the string time could be blank, and in that case
+     * returns 0 minutes. 
      */
     protected int convertStringTime(String time) {
         int minutes = 0;
         boolean hrFormat = false;
-        String[] splitTimePM = time.split(" ");
+        String[] splitTimePM = time.split(SPACE);
         if (splitTimePM.length > 1) {
             hrFormat = true;
             if (splitTimePM[1].equals(Bundle.getMessage("PM"))) {
