@@ -109,6 +109,10 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         // format the last updated date time, last operated date time.
         dataTable.setDefaultRenderer(Date.class, new DateTimeCellRenderer());
 
+        // Start with two columns not visible
+        columnModel.setColumnVisible(columnModel.getColumnByModelIndex(RosterTableModel.DECODERMFGCOL), false);
+        columnModel.setColumnVisible(columnModel.getColumnByModelIndex(RosterTableModel.DECODERFAMILYCOL), false);
+
         TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
         columnModel.setColumnVisible(tc, false);
 
