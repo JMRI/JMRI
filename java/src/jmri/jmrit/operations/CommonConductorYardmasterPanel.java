@@ -769,13 +769,13 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
             if (rl == _train.getTrainTerminatesRouteLocation()) {
                 return MessageFormat.format(text = TrainManifestText.getStringTrainTerminates(),
                         new Object[]{_train.getTrainTerminatesName(),
-                                TrainCommon.splitStringLeftParenthesis(_train.getName()), _train.getDescription(),
+                                _train.getSplitName(), _train.getDescription(),
                                 rl.getLocation().getDivisionName()});
             }
             if (rl != _train.getCurrentRouteLocation() &&
                     _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
                 return MessageFormat.format(text = TrainSwitchListText.getStringTrainDone(),
-                        new Object[]{TrainCommon.splitStringLeftParenthesis(_train.getName()), _train.getDescription(),
+                        new Object[]{_train.getSplitName(), _train.getDescription(),
                                 rl.getSplitName()});
             }
             if (!_train.isBuilt() || rl == null) {
@@ -793,7 +793,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                                 _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
                                 Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
                                 _train.getTrainTerminatesName(),
-                                TrainCommon.splitStringLeftParenthesis(_train.getName())});
+                                _train.getSplitName()});
             } else {
                 if (isManifest) {
                     text = TrainManifestText.getStringTrainDepartsCars();
@@ -805,7 +805,7 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
                                 _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
                                 Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
                                 _train.getTrainTerminatesName(),
-                                TrainCommon.splitStringLeftParenthesis(_train.getName())});
+                                _train.getSplitName()});
             }
         } catch (IllegalArgumentException e) {
             log.error("Illegal argument", e);
