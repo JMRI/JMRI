@@ -1426,7 +1426,7 @@ public class TrainCommon {
      * @param name the string to split
      * @return First half of the string.
      */
-    protected static String splitStringLeftParenthesis(String name) {
+    public static String splitStringLeftParenthesis(String name) {
         String[] splitname = name.split(HYPHEN);
         if (splitname.length > 1 && splitname[1].startsWith("(")) {
             return splitname[0].trim();
