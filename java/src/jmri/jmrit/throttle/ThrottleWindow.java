@@ -237,7 +237,7 @@ public class ThrottleWindow extends JmriJFrame {
         jbClose.setToolTipText(Bundle.getMessage("ThrottleToolBarCloseToolTip"));
         jbClose.setVerticalTextPosition(JButton.BOTTOM);
         jbClose.setHorizontalTextPosition(JButton.CENTER);
-        jbClose.addActionListener(e -> removeThrottleFrame());
+        jbClose.addActionListener(e -> removeAndDisposeCurentThrottleFrame());
         throttleToolBar.add(jbClose);
 
         throttleToolBar.addSeparator();
@@ -573,17 +573,13 @@ public class ThrottleWindow extends JmriJFrame {
     }
 
     public void removeThrottleFrame(ThrottleFrame tf) {
-        if (cardCounterNB > 1) // we don't like empty ThrottleWindow
-        {
-            cardCounterNB--;
-            if (getCurrentThrottleFrame() == tf) {
-                log.debug("Closing last created");
-            }
-            throttlesPanel.remove(tf);
-            throttleFrames.remove(tf.getTitle());
-            tf.dispose();
-            throttlesLayout.invalidateLayout(throttlesPanel);
+        cardCounterNB--;
+        if (getCurrentThrottleFrame() == tf) {
+            log.debug("Closing last created");
         }
+        throttlesPanel.remove(tf);
+        throttleFrames.remove(tf.getTitle());
+        throttlesLayout.invalidateLayout(throttlesPanel);
         updateGUI();
         updateCurentThrottleFrame();
         pcs.firePropertyChange("ThrottleFrame", tf, getCurrentThrottleFrame());
@@ -652,31 +648,32 @@ public class ThrottleWindow extends JmriJFrame {
         }
     }
 
-    public void removeThrottleFrame() {
+    public void removeAndDisposeCurentThrottleFrame() {
+        ThrottleFrame tf = getCurrentThrottleFrame();
         removeThrottleFrame(getCurrentThrottleFrame());
+        tf.dispose();
     }
 
-    public void addThrottleFrame(ThrottleFrame tp) {
+    public String addThrottleFrame(ThrottleFrame tp) {
         ThrottleFrame otf = getCurrentThrottleFrame();
         cardCounterID++;
         cardCounterNB++;
         String txt = "Card-" + cardCounterID;
         tp.setTitle(txt);
         throttleFrames.put(txt, tp);
-        throttlesPanel.add(tp, txt);
-        throttlesLayout.show(throttlesPanel, txt);
-        if (!isEditMode) {
-            tp.setEditMode(isEditMode);
-        }
-        updateCurentThrottleFrame();
+        throttlesPanel.add(tp, txt);        
+        tp.setEditMode(isEditMode); // sync with window        
         updateGUI();
         pcs.firePropertyChange("ThrottleFrame", otf, tp);
+        return txt;
     }
 
     public ThrottleFrame addThrottleFrame() {
         setCurrentThrottleFrame(new ThrottleFrame(this, throttleManager));
         installInputsListenerOnAllComponents(getCurrentThrottleFrame());
-        addThrottleFrame(getCurrentThrottleFrame());
+        throttlesLayout.show(throttlesPanel, addThrottleFrame(getCurrentThrottleFrame()));
+        updateCurentThrottleFrame();
+        updateGUI();
         return getCurrentThrottleFrame();
     }
 

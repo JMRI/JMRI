@@ -5,9 +5,10 @@ import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.swing.table.AbstractTableModel;
 
-import jmri.ConsistListListener;
-import jmri.DccLocoAddress;
-import jmri.Throttle;
+import jmri.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A TableModel to display active Throttles in a summary table
@@ -38,6 +39,22 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
 
     public Iterator<ThrottleFrame> iterator() {
         return throttleFrames.iterator();
+    }
+    
+    public void moveValueAt(int from, int to) {
+        log.debug("Move value at "+from+" to "+to);
+        ThrottleFrame tfToMove = throttleFrames.get(from);
+        if (to >= throttleFrames.size()) {
+            to = throttleFrames.size()-1;
+        }
+        ThrottleFrame tfmoveTo = throttleFrames.get(to);
+        tfToMove.getThrottleWindow().removeThrottleFrame(tfToMove);
+        tfmoveTo.getThrottleWindow().addThrottleFrame(tfToMove);
+        tfToMove.setThrottleWindow(tfmoveTo.getThrottleWindow());
+        // update throttle list table
+        removeThrottleFrame(tfToMove);
+        addThrottleFrame(tfToMove.getThrottleWindow(),tfToMove);
+        fireTableDataChanged();
     }
 
     public void addThrottleFrame(ThrottleWindow tw, ThrottleFrame ntf) {
@@ -78,7 +95,7 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         return ret;
     }
 
-    public void removeThrottleFrame(ThrottleFrame tf, DccLocoAddress la) {
+    public void removeThrottleFrame(ThrottleFrame tf) {
         throttleFrames.remove(tf);
         fireTableDataChanged();
     }
@@ -98,6 +115,6 @@ public class ThrottlesTableModel extends AbstractTableModel implements java.bean
         fireTableDataChanged();
     }
 
-    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThrottlesTableModel.class);
+    private final static Logger log = LoggerFactory.getLogger(ThrottlesTableModel.class);
 
 }

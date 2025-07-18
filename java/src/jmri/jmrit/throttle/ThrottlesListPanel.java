@@ -4,13 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import jmri.ConsistManager;
 import jmri.InstanceManager;
@@ -51,6 +45,9 @@ public class ThrottlesListPanel extends JPanel {
         throttleFrames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         throttleFrames.setRowHeight(ThrottlesTableCellRenderer.LINE_HEIGHT);
         throttleFrames.setTableHeader(null);
+        throttleFrames.setDragEnabled(true);
+        throttleFrames.setDropMode(DropMode.INSERT_ROWS);
+        throttleFrames.setTransferHandler(new ThrottlesTableRowTransferHandler(throttleFrames)); 
         throttleFrames.setDefaultRenderer(Object.class, new ThrottlesTableCellRenderer());
         throttleFrames.addMouseListener(JmriMouseListener.adapt(new JmriMouseListener() {
             @Override

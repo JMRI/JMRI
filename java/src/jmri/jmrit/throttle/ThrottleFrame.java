@@ -70,7 +70,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
     private JInternalFrame[] frameList;
     private int activeFrame;
 
-    private final ThrottleWindow throttleWindow;
+    private ThrottleWindow throttleWindow;
 
     private ControlPanel controlPanel;
     private FunctionPanel functionPanel;
@@ -111,6 +111,10 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
 
     public ThrottleWindow getThrottleWindow() {
         return throttleWindow;
+    }
+    
+    public void setThrottleWindow(ThrottleWindow tw) {
+        throttleWindow = tw;
     }
 
     public ControlPanel getControlPanel() {
@@ -623,7 +627,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
         }
         
         // remove from the throttle list table
-        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().removeThrottleFrame(this, addressPanel.getCurrentAddress());
+        InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesListPanel().getTableModel().removeThrottleFrame(this);
         // check for any special disposing in InternalFrames
         controlPanel.destroy();
         functionPanel.destroy();

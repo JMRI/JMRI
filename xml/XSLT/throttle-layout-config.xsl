@@ -85,7 +85,6 @@ This page was produced by <a href="https://www.jmri.org">JMRI</a>.
     <h3>Toolbar Jynstrument</h3>
     <table border="border-width:thin" width="67%">
           <tr><td>Jynstrument Folder</td><td><xsl:value-of select="@JynstrumentFolder"/></td></tr>
-      <!-- Future proofing: ["USBThottle" is only element at current time 2022/03/25] -->
       <xsl:for-each select="./*">
         <tr>
           <td><xsl:value-of select="name()"/></td>

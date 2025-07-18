@@ -47,17 +47,9 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element type="USBThrottleType" name="USBThrottle" minOccurs="0"/>
+      <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
     </xs:sequence>
     <xs:attribute type="xs:string" name="JynstrumentFolder" use="required"/>
-  </xs:complexType>
-
-  <xs:complexType name="USBThrottleType">
-    <xs:simpleContent>
-      <xs:extension base="xs:string">
-        <xs:attribute type="xs:string" name="DesiredController" use="optional"/>
-      </xs:extension>
-    </xs:simpleContent>
   </xs:complexType>
 
   <xs:complexType name="ThrottleWindowFrameType">
