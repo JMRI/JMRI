@@ -4055,7 +4055,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <h4>Comment</h4>
       You can enter a comment for this car. If you want to see the car's comment on the Train's
-      Manifest or switch lists, make an adjust to the <a href="#MessageFormats">Message Formats</a>.
+      Manifest or switch lists, make an adjustment to the <a href="#MessageFormats">Message Formats</a>.
 
       <h4 id="CARIDTAG">
         Id Tag [only if <a href="#EnableIdentificationTagFields">Enable ID Tag</a> option has been
@@ -5159,12 +5159,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>
         Enter the train's name and optional description, and then press the "Add Train" button. Both
         will show up in the train's Manifest. The train's name will also appear on the <a
-          href="#PanelOptionsTrainIcons">train icon</a>, so short names work best. If you want the
-        train's lead locomotive number and departure direction as part of the train's description
-        when printing, enter {0} and {1} respectively for the number and direction. This allows you
-        to create a train description like "Extra 1234 East" for your Manifests and switch lists.
-        You can also include the locomotive's reporting mark (road) by entering {2} in the
-        description.
+          href="#PanelOptionsTrainIcons">train icon</a>, so short names work best. If you want to
+        create several trains that will print out using the same train name, use the hyphen feature
+        by adding "-(something)" to the train's name. The program will drop the characters after the
+        hyphen when printing Manifests and switch lists. If you want the train's lead locomotive
+        number and departure direction as part of the train's description when printing, enter {0}
+        and {1} respectively for the number and direction. This allows you to create a train
+        description like "Extra 1234 East" for your Manifests and switch lists. You can also include
+        the locomotive's reporting mark (road) by entering {2} in the description.
       </p>
 
       <p>Next select the route that this train will travel. There's an "Edit" button to the

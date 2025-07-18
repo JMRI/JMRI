@@ -636,7 +636,7 @@ public class TrainCommon {
             // Scheduled work at {0}
             msg = MessageFormat.format(messageFormatText = TrainManifestText
                     .getStringScheduledWork(),
-                    new Object[]{routeLocationName, train.getName(),
+                    new Object[]{routeLocationName, splitStringLeftParenthesis(train.getName()),
                             train.getDescription(), rl.getLocation().getDivisionName()});
             if (train.isShowArrivalAndDepartureTimesEnabled()) {
                 if (rl == train.getTrainDepartsRouteLocation()) {
@@ -644,7 +644,7 @@ public class TrainCommon {
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkDepartureTime(),
                             new Object[]{routeLocationName,
-                                    train.getFormatedDepartureTime(), train.getName(),
+                                    train.getFormatedDepartureTime(), splitStringLeftParenthesis(train.getName()),
                                     train.getDescription(), rl.getLocation().getDivisionName()});
                 } else if (!rl.getDepartureTime().equals(RouteLocation.NONE) &&
                         rl != train.getTrainTerminatesRouteLocation()) {
@@ -654,7 +654,7 @@ public class TrainCommon {
                             new Object[]{routeLocationName,
                                     expectedArrivalTime.equals(Train.ALREADY_SERVICED)
                                             ? rl.getFormatedDepartureTime() : train.getExpectedDepartureTime(rl),
-                                    train.getName(), train.getDescription(),
+                                    splitStringLeftParenthesis(train.getName()), train.getDescription(),
                                     rl.getLocation().getDivisionName()});
                 } else if (Setup.isUseDepartureTimeEnabled() &&
                         rl != train.getTrainTerminatesRouteLocation() &&
@@ -663,21 +663,21 @@ public class TrainCommon {
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkDepartureTime(),
                             new Object[]{routeLocationName,
-                                    train.getExpectedDepartureTime(rl), train.getName(),
+                                    train.getExpectedDepartureTime(rl), splitStringLeftParenthesis(train.getName()),
                                     train.getDescription(), rl.getLocation().getDivisionName()});
                 } else if (!expectedArrivalTime.equals(Train.ALREADY_SERVICED)) {
                     // Scheduled work at {0}, arrival time {1}
                     msg = MessageFormat.format(messageFormatText = TrainManifestText
                             .getStringWorkArrivalTime(),
                             new Object[]{routeLocationName, expectedArrivalTime,
-                                    train.getName(), train.getDescription(),
+                                    splitStringLeftParenthesis(train.getName()), train.getDescription(),
                                     rl.getLocation().getDivisionName()});
                 }
             }
             return msg;
         } catch (IllegalArgumentException e) {
             msg = Bundle.getMessage("ErrorIllegalArgument",
-                    Bundle.getMessage("TitleSwitchListText"), e.getLocalizedMessage()) + NEW_LINE + messageFormatText;
+                    Bundle.getMessage("TitleManifestText"), e.getLocalizedMessage()) + NEW_LINE + messageFormatText;
             log.error(msg);
             log.error("Illegal argument", e);
             return msg;
@@ -696,7 +696,7 @@ public class TrainCommon {
                 // Scheduled work at {0}, departure time {1}
                 msg = MessageFormat.format(messageFormatText = TrainManifestText.getStringWorkDepartureTime(),
                         new Object[]{splitString(train.getTrainDepartsName()), train.getFormatedDepartureTime(),
-                                train.getName(), train.getDescription(),
+                                splitStringLeftParenthesis(train.getName()), train.getDescription(),
                                 rl.getLocation().getDivisionName()});
             } else if (rl == train.getTrainDepartsRouteLocation()) {
                 // Departs {0} {1}bound at {2}
