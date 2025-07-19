@@ -2538,12 +2538,18 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // c2 has the lowest move count on alternate, cars c2 and c3 have the same last moved time
         // confirm car locations
+        Assert.assertEquals("Car location", "Acton Spur 1", c1.getTrackName());
         Assert.assertEquals("Car location", bostonSpur2, c2.getTrack());
+        Assert.assertEquals("Car location", bostonYard2, c3.getTrack());
         Assert.assertEquals("Car location", bostonYard2, c4.getTrack());
         Assert.assertEquals("Car location", bostonYard2, c5.getTrack());
         Assert.assertEquals("Car location", bostonYard2, c6.getTrack());
 
         // now cars c4, c5, and c6 have been delivered after c3
+        Assert.assertTrue("confirm date order", c4.getLastMoveDate().after(c3.getLastMoveDate()));
+        Assert.assertTrue("confirm date order", c5.getLastMoveDate().after(c3.getLastMoveDate()));
+        Assert.assertTrue("confirm date order", c6.getLastMoveDate().after(c3.getLastMoveDate()));
+
         new TrainBuilder().build(train1);
         Assert.assertTrue("train status", train1.isBuilt());
         Assert.assertEquals("cars", 5, train1.getNumberCarsWorked());
@@ -2551,6 +2557,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // c4 delivered after c3 alternate track in LIFO mode
         Assert.assertEquals("Car destination", null, c3.getDestinationTrack());
         Assert.assertEquals("Car destination", bostonSpur2, c4.getDestinationTrack());
+        Assert.assertEquals("Car destination", null, c5.getDestinationTrack());
+        Assert.assertEquals("Car destination", null, c6.getDestinationTrack());
 
         // try FIFO mode
         bostonYard2.setServiceOrder(Track.FIFO);
@@ -2563,6 +2571,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         // c4 delivered after c3 alternate track in FIFO mode
         Assert.assertEquals("Car destination", bostonSpur2, c3.getDestinationTrack());
         Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
+        Assert.assertEquals("Car destination", null, c5.getDestinationTrack());
+        Assert.assertEquals("Car destination", null, c6.getDestinationTrack());
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
