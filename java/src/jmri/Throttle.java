@@ -34,20 +34,46 @@ public interface Throttle extends PropertyChangeProvider {
     /**
      * Constant used in getThrottleInfo.
      */
-    static final String SPEEDSTEPMODE = "SpeedStepsMode"; // speed steps NOI18N
+    String SPEEDSTEPMODE = "SpeedStepsMode"; // speed steps NOI18N
 
     /*
      * Properties strings sent to property change listeners
      */
 
     /**
-     * Constant sent by Throttle on Property Change.
+     * Constant sent by Throttle on Speed Steps Property Change.
      */
-    static final String SPEEDSTEPS = "SpeedSteps"; // speed steps NOI18N
+    String SPEEDSTEPS = "SpeedSteps";
 
-    static final String SPEEDSETTING = "SpeedSetting"; // speed setting NOI18N
-    static final String ISFORWARD = "IsForward"; // direction setting NOI18N
-    static final String SPEEDINCREMENT = "SpeedIncrement"; // direction setting NOI18N
+    /**
+     * Constant sent by Throttle on Speed Setting Property Change.
+     */
+    String SPEEDSETTING = "SpeedSetting";
+
+    /**
+     * Constant sent by Throttle on Direction Property Change.
+     */
+    String ISFORWARD = "IsForward";
+
+    /**
+     * Constant sent by Throttle on Speed Increment Property Change.
+     */
+    String SPEEDINCREMENT = "SpeedIncrement";
+
+    /**
+     * Constant sent by Throttle on Connected Property Change.
+     */
+    String CONNECTED = "ThrottleConnected";
+
+    /**
+     * Constant sent by Throttle on Dispatch Enabled Property Change.
+     */
+    String DISPATCH_ENABLED = "DispatchEnabled";
+
+    /**
+     * Constant sent by Throttle on Release Enabled Property Change.
+     */
+    String RELEASE_ENABLED = "ReleaseEnabled";
 
     /**
      * Constants to represent the functions F0 through F28.
