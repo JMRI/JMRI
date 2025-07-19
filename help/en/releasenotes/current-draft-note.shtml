@@ -426,7 +426,11 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>There are two new columns in the DecoderPro main 
+                display:  "Decoder Manufacturer" and "Decoder Family".
+                These start out hidden.  To display them, 
+                right or control click in the header of any column, 
+                and then put a check next to the column name.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -515,7 +519,11 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>There are two new columns in the DecoderPro display of the 
+                roster:  "Decoder Manufacturer" and "Decoder Family".
+                These start out hidden.  To display them, 
+                right or control click in the header of any column, 
+                and then put a check next to the column name.</li>
         </ul>
 
     <h3>Routes</h3>
