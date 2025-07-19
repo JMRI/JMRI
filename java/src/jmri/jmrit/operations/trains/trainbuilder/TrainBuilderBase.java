@@ -1087,18 +1087,17 @@ public class TrainBuilderBase extends TrainCommon {
             Car bestCar = car;
             for (int i = _carIndex + 1; i < _carList.size(); i++) {
                 Car testCar = _carList.get(i);
-                if (testCar.getTrack() == car.getTrack()) {
+                if (testCar.getTrack() == car.getTrack() &&
+                        bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
                     log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackTypeName(), testCar.toString(),
                             testCar.getLastDate()); // NOI18N
                     if (car.getTrack().getServiceOrder().equals(Track.FIFO)) {
-                        if (bestCar.getLastMoveDate().after(testCar.getLastMoveDate()) &&
-                                bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
+                        if (bestCar.getLastMoveDate().after(testCar.getLastMoveDate())) {
                             bestCar = testCar;
                             log.debug("New best car ({})", bestCar.toString());
                         }
                     } else if (car.getTrack().getServiceOrder().equals(Track.LIFO)) {
-                        if (bestCar.getLastMoveDate().before(testCar.getLastMoveDate()) &&
-                                bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
+                        if (bestCar.getLastMoveDate().before(testCar.getLastMoveDate())) {
                             bestCar = testCar;
                             log.debug("New best car ({})", bestCar.toString());
                         }
