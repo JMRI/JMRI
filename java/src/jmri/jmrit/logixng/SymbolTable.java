@@ -16,11 +16,13 @@ import javax.script.SimpleBindings;
 
 import jmri.*;
 import jmri.JmriException;
+import jmri.jmrit.logixng.Stack.ValueAndType;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
 import jmri.jmrit.logixng.util.parser.LocalVariableExpressionVariable;
 import jmri.script.JmriScriptEngineManager;
+import jmri.util.TypeConversionUtil;
 
 import org.slf4j.Logger;
 
@@ -49,6 +51,14 @@ public interface SymbolTable {
      * @return the value
      */
     Object getValue(String name);
+
+    /**
+     * Get the value and type of a symbol.
+     * This method does not lookup global variables.
+     * @param name the name
+     * @return the value and type
+     */
+    ValueAndType getValueAndType(String name);
 
     /**
      * Is the symbol in the symbol table?
@@ -131,6 +141,7 @@ public interface SymbolTable {
     enum InitialValueType {
 
         None(Bundle.getMessage("InitialValueType_None"), true),
+        Boolean(Bundle.getMessage("InitialValueType_Boolean"), true),
         Integer(Bundle.getMessage("InitialValueType_Integer"), true),
         FloatingNumber(Bundle.getMessage("InitialValueType_FloatingNumber"), true),
         String(Bundle.getMessage("InitialValueType_String"), true),
@@ -142,14 +153,24 @@ public interface SymbolTable {
         Formula(Bundle.getMessage("InitialValueType_Formula"), true),
         ScriptExpression(Bundle.getMessage("InitialValueType_ScriptExpression"), true),
         ScriptFile(Bundle.getMessage("InitialValueType_ScriptFile"), true),
-        LogixNG_Table(Bundle.getMessage("InitialValueType_LogixNGTable"), true);
+        LogixNG_Table(Bundle.getMessage("InitialValueType_LogixNGTable"), true),
+
+        // This can't be selected by the user. It's only used internally.
+        Object(Bundle.getMessage("InitialValueType_None"), false, false);
+
 
         private final String _descr;
         private final boolean _isValidAsParameter;
+        private final boolean _isVisible;
 
         private InitialValueType(String descr, boolean isValidAsParameter) {
+            this(descr, isValidAsParameter, true);
+        }
+
+        private InitialValueType(String descr, boolean isValidAsParameter, boolean isVisible) {
             _descr = descr;
             _isValidAsParameter = isValidAsParameter;
+            _isVisible = isVisible;
         }
 
         @Override
@@ -159,6 +180,10 @@ public interface SymbolTable {
 
         public boolean isValidAsParameter() {
             return _isValidAsParameter;
+        }
+
+        public boolean isVisible() {
+            return _isVisible;
         }
     }
 
@@ -235,6 +260,7 @@ public interface SymbolTable {
      * @param name         the name
      * @param value        the value
      * @param expandArraysAndMaps   true if arrays and maps should be expanded, false otherwise
+     * @param showClassName         true if class name should be shown
      * @param headerName   header for the variable name
      * @param headerValue  header for the variable value
      */
@@ -246,6 +272,7 @@ public interface SymbolTable {
             String name,
             Object value,
             boolean expandArraysAndMaps,
+            boolean showClassName,
             String headerName,
             String headerValue) {
 
@@ -253,20 +280,34 @@ public interface SymbolTable {
             log.warn("{}{}: {},", pad, headerName, name);
             var map = ((Map<? extends Object, ? extends Object>)value);
             for (var entry : map.entrySet()) {
-                log.warn("{}{}{} -> {},", pad, pad, entry.getKey(), entry.getValue());
+                String className = showClassName && entry.getValue() != null
+                        ? ", " + entry.getValue().getClass().getName()
+                        : "";
+                log.warn("{}{}{} -> {}{},", pad, pad, entry.getKey(), entry.getValue(), className);
             }
         } else if (expandArraysAndMaps && (value instanceof List)) {
             log.warn("{}{}: {},", pad, headerName, name);
             var list = ((List<? extends Object>)value);
             for (int i=0; i < list.size(); i++) {
-                log.warn("{}{}{}: {},", pad, pad, i, list.get(i));
+                Object val = list.get(i);
+                String className = showClassName && val != null
+                        ? ", " + val.getClass().getName()
+                        : "";
+                log.warn("{}{}{}: {}{},", pad, pad, i, val, className);
             }
         } else  {
-            log.warn("{}{}: {}, {}: {}", pad, headerName, name, headerValue, value);
+            String className = showClassName && value != null
+                    ? ", " + value.getClass().getName()
+                    : "";
+            if (value instanceof NamedBean) {
+                // Show display name instead of system name
+                value = ((NamedBean)value).getDisplayName();
+            }
+            log.warn("{}{}: {}, {}: {}{}", pad, headerName, name, headerValue, value, className);
         }
     }
 
-    private static Object runScriptExpression(String initialData) {
+    private static Object runScriptExpression(SymbolTable symbolTable, String initialData) {
         String script =
                 "import jmri\n" +
                 "variable.set(" + initialData + ")";
@@ -279,6 +320,8 @@ public interface SymbolTable {
         var variable = new Reference<Object>();
         bindings.put("variable", variable);
 
+        bindings.put("symbolTable", symbolTable);    // Give the script access to the local variables in the symbol table
+
         try {
             String theScript = String.format("import jmri%n") + script;
             scriptEngineManager.getEngineByName(JmriScriptEngineManager.JYTHON)
@@ -290,7 +333,7 @@ public interface SymbolTable {
         return variable.get();
     }
 
-    private static Object runScriptFile(String initialData) {
+    private static Object runScriptFile(SymbolTable symbolTable, String initialData) {
 
         JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
 
@@ -299,6 +342,8 @@ public interface SymbolTable {
 
         var variable = new Reference<Object>();
         bindings.put("variable", variable);
+
+        bindings.put("symbolTable", symbolTable);    // Give the script access to the local variables in the symbol table
 
         try (InputStreamReader reader = new InputStreamReader(
                 new FileInputStream(jmri.util.FileUtil.getExternalFilename(initialData)),
@@ -335,7 +380,32 @@ public interface SymbolTable {
         return myMap;
     }
 
+
+    enum Type {
+        Global("global variable"),
+        Local("local variable"),
+        Parameter("parameter");
+
+        private final String _descr;
+
+        private Type(String descr) {
+            _descr = descr;
+        }
+    }
+
+
+    private static void validateValue(Type type, String name, String initialData, String descr) {
+        if (initialData == null) {
+            throw new IllegalArgumentException(String.format("Initial data is null for %s \"%s\". Can't set value %s.", type._descr, name, descr));
+        }
+        if (initialData.isBlank()) {
+            throw new IllegalArgumentException(String.format("Initial data is empty string for %s \"%s\". Can't set value %s.", type._descr, name, descr));
+        }
+    }
+
     static Object getInitialValue(
+            Type type,
+            String name,
             InitialValueType initialType,
             String initialData,
             SymbolTable symbolTable,
@@ -346,11 +416,17 @@ public interface SymbolTable {
             case None:
                 return null;
 
+            case Boolean:
+                validateValue(type, name, initialData, "to boolean");
+                return TypeConversionUtil.convertToBoolean(initialData, true);
+
             case Integer:
-                return Long.parseLong(initialData);
+                validateValue(type, name, initialData, "to integer");
+                return Long.valueOf(initialData);
 
             case FloatingNumber:
-                return Double.parseDouble(initialData);
+                validateValue(type, name, initialData, "to floating number");
+                return Double.valueOf(initialData);
 
             case String:
                 return initialData;
@@ -366,10 +442,10 @@ public interface SymbolTable {
                         initialValueData = parts[0];
                         if (Character.isDigit(parts[1].charAt(0))) {
                             try {
-                                data = Long.parseLong(parts[1]);
+                                data = Long.valueOf(parts[1]);
                             } catch (NumberFormatException e) {
                                 try {
-                                    data = Double.parseDouble(parts[1]);
+                                    data = Double.valueOf(parts[1]);
                                 } catch (NumberFormatException e2) {
                                     throw new IllegalArgumentException("Data is not a number", e2);
                                 }
@@ -400,14 +476,17 @@ public interface SymbolTable {
                 return new java.util.HashMap<>();
 
             case LocalVariable:
+                validateValue(type, name, initialData, "from local variable");
                 return symbolTable.getValue(initialData);
 
             case Memory:
+                validateValue(type, name, initialData, "from memory");
                 Memory m = InstanceManager.getDefault(MemoryManager.class).getNamedBean(initialData);
                 if (m != null) return m.getValue();
                 else return null;
 
             case Reference:
+                validateValue(type, name, initialData, "from reference");
                 if (ReferenceUtil.isReference(initialData)) {
                     return ReferenceUtil.getReference(
                             symbolTable, initialData);
@@ -417,19 +496,26 @@ public interface SymbolTable {
                 }
 
             case Formula:
+                validateValue(type, name, initialData, "from formula");
                 RecursiveDescentParser parser = createParser(symbols);
                 ExpressionNode expressionNode = parser.parseExpression(
                         initialData);
                 return expressionNode.calculate(symbolTable);
 
             case ScriptExpression:
-                return runScriptExpression(initialData);
+                validateValue(type, name, initialData, "from script expression");
+                return runScriptExpression(symbolTable, initialData);
 
             case ScriptFile:
-                return runScriptFile(initialData);
+                validateValue(type, name, initialData, "from script file");
+                return runScriptFile(symbolTable, initialData);
 
             case LogixNG_Table:
+                validateValue(type, name, initialData, "from logixng table");
                 return copyLogixNG_Table(initialData);
+
+            case Object:
+                return initialData;
 
             default:
                 log.error("definition._initialValueType has invalid value: {}", initialType.name());
@@ -449,6 +535,39 @@ public interface SymbolTable {
         return new RecursiveDescentParser(variables);
     }
 
+    /**
+     * Validates that the value can be assigned to a local or global variable
+     * of the specified type if strict typing is enforced. The caller must check
+     * first if this method should be called or not.
+     * @param type the type
+     * @param oldValue the old value
+     * @param newValue the new value
+     * @return the value to assign. It might be converted if needed.
+     */
+    public static Object validateStrictTyping(InitialValueType type, Object oldValue, Object newValue)
+            throws NumberFormatException {
+
+        switch (type) {
+            case None:
+                return newValue;
+            case Boolean:
+                return TypeConversionUtil.convertToBoolean(newValue, true);
+            case Integer:
+                return TypeConversionUtil.convertToLong(newValue, true, true);
+            case FloatingNumber:
+                return TypeConversionUtil.convertToDouble(newValue, false, true, true);
+            case String:
+                if (newValue == null) {
+                    return null;
+                }
+                return newValue.toString();
+            default:
+                if (oldValue == null) {
+                    return newValue;
+                }
+                throw new IllegalArgumentException(String.format("A variable of type %s cannot change its value", type._descr));
+        }
+    }
 
 
     static class SymbolNotFound extends IllegalArgumentException {

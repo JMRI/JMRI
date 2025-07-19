@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<copyright xmlns="http://docbook.org/ns/docbook">
 		<year>2022</year>
 		<holder>JMRI</holder>
@@ -36,6 +36,12 @@
 			<date>2023-10-20</date>
 			<authorinitials>UG</authorinitials>
 			<revremark>Add decoder</revremark>
+		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2024-04-01</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add Decoder ML4000</revremark>
 		</revision>
 	</revhistory>
 	<!-- Piko Smart Decoder 4.1 -->
@@ -109,7 +115,7 @@
 		<tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
 	</variable>
 	<!-- Piko Smart Decoder XP5.1 -->
-	<variable item="Error register" CV="30" default="0" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
+	<variable item="Error register" CV="30" default="0" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
 		<enumVal>
 			<enumChoice choice="No error" value="0">
 				<choice>No error</choice>

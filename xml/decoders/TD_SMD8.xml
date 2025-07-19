@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="td@teamdigital1.com" version="1" lastUpdated="20051012"/>
   <version author="Michael Mosher" version="2" lastUpdated="20200109"/>
   <!-- Version 1 initial release -->
@@ -192,135 +192,51 @@
         <label>Output 8 Type</label>
       </variable>
       <variable item="Input 1 Toggle" CV="14" mask="XXXXXXXV" default="0" tooltip="Check to enable toggle function">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Input 1 Toggle</label>
       </variable>
       <variable item="Input 2 Toggle" CV="14" mask="XXXXXXVX" default="0" tooltip="Check to enable toggle function">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Input 2 Toggle</label>
       </variable>
       <variable item="Input 3 Toggle" CV="14" mask="XXXXXVXX" default="0" tooltip="Check to enable toggle function">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Input 3 Toggle</label>
       </variable>
       <variable item="Input 4 Toggle" CV="14" mask="XXXXVXXX" default="0" tooltip="Check to enable toggle function">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Input 4 Toggle</label>
       </variable>
       <variable item="LR1 Out1" CV="15" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR1 Out2" CV="15" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR1 Out3" CV="15" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR1 Out4" CV="15" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR1 Out5" CV="15" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR1 Out6" CV="15" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR1 Out7" CV="15" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR1 Out8" CV="15" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR1 S1" CV="16" mask="XXXXXXXV" default="0">
@@ -412,91 +328,35 @@
         <label/>
       </variable>
       <variable item="LR2 Out1" CV="17" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR2 Out2" CV="17" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR2 Out3" CV="17" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR2 Out4" CV="17" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR2 Out5" CV="17" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR2 Out6" CV="17" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR2 Out7" CV="17" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR2 Out8" CV="17" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR2 S1" CV="18" mask="XXXXXXXV" default="0">
@@ -588,91 +448,35 @@
         <label/>
       </variable>
       <variable item="LR3 Out1" CV="19" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR3 Out2" CV="19" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR3 Out3" CV="19" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR3 Out4" CV="19" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR3 Out5" CV="19" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR3 Out6" CV="19" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR3 Out7" CV="19" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR3 Out8" CV="19" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR3 S1" CV="20" mask="XXXXXXXV" default="0">
@@ -764,91 +568,35 @@
         <label/>
       </variable>
       <variable item="LR4 Out1" CV="21" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR4 Out2" CV="21" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR4 Out3" CV="21" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR4 Out4" CV="21" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR4 Out5" CV="21" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR4 Out6" CV="21" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR4 Out7" CV="21" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR4 Out8" CV="21" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="LR4 S1" CV="22" mask="XXXXXXXV" default="0">
@@ -978,91 +726,35 @@
         <label>Select Power On Option</label>
       </variable>
       <variable item="R1 Out1" CV="30" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R1 Out2" CV="30" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R1 Out3" CV="30" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R1 Out4" CV="30" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R1 Out5" CV="30" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R1 Out6" CV="30" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R1 Out7" CV="30" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R1 Out8" CV="30" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R1 S1" CV="31" mask="XXXXXXXV" default="0">
@@ -1154,91 +846,35 @@
         <label/>
       </variable>
       <variable item="R2 Out1" CV="32" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R2 Out2" CV="32" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R2 Out3" CV="32" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R2 Out4" CV="32" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R2 Out5" CV="32" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R2 Out6" CV="32" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R2 Out7" CV="32" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R2 Out8" CV="32" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R2 S1" CV="33" mask="XXXXXXXV" default="0">
@@ -1330,91 +966,35 @@
         <label/>
       </variable>
       <variable item="R3 Out1" CV="34" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R3 Out2" CV="34" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R3 Out3" CV="34" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R3 Out4" CV="34" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R3 Out5" CV="34" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R3 Out6" CV="34" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R3 Out7" CV="34" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R3 Out8" CV="34" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R3 S1" CV="35" mask="XXXXXXXV" default="0">
@@ -1506,91 +1086,35 @@
         <label/>
       </variable>
       <variable item="R4 Out1" CV="36" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R4 Out2" CV="36" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R4 Out3" CV="36" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R4 Out4" CV="36" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R4 Out5" CV="36" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R4 Out6" CV="36" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R4 Out7" CV="36" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R4 Out8" CV="36" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R4 S1" CV="37" mask="XXXXXXXV" default="0">
@@ -1682,91 +1206,35 @@
         <label/>
       </variable>
       <variable item="R5 Out1" CV="38" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R5 Out2" CV="38" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R5 Out3" CV="38" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R5 Out4" CV="38" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R5 Out5" CV="38" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R5 Out6" CV="38" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R5 Out7" CV="38" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R5 Out8" CV="38" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R5 S1" CV="39" mask="XXXXXXXV" default="0">
@@ -1858,91 +1326,35 @@
         <label/>
       </variable>
       <variable item="R6 Out1" CV="40" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R6 Out2" CV="40" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R6 Out3" CV="40" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R6 Out4" CV="40" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R6 Out5" CV="40" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R6 Out6" CV="40" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R6 Out7" CV="40" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R6 Out8" CV="40" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R6 S1" CV="41" mask="XXXXXXXV" default="0">
@@ -2034,91 +1446,35 @@
         <label/>
       </variable>
       <variable item="R7 Out1" CV="42" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R7 Out2" CV="42" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R7 Out3" CV="42" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R7 Out4" CV="42" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R7 Out5" CV="42" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R7 Out6" CV="42" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R7 Out7" CV="42" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R7 Out8" CV="42" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R7 S1" CV="43" mask="XXXXXXXV" default="0">
@@ -2210,91 +1566,35 @@
         <label/>
       </variable>
       <variable item="R8 Out1" CV="44" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R8 Out2" CV="44" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R8 Out3" CV="44" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R8 Out4" CV="44" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R8 Out5" CV="44" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R8 Out6" CV="44" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R8 Out7" CV="44" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R8 Out8" CV="44" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R8 S1" CV="45" mask="XXXXXXXV" default="0">
@@ -2386,91 +1686,35 @@
         <label/>
       </variable>
       <variable item="R9 Out1" CV="46" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R9 Out2" CV="46" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R9 Out3" CV="46" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R9 Out4" CV="46" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R9 Out5" CV="46" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R9 Out6" CV="46" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R9 Out7" CV="46" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R9 Out8" CV="46" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R9 S1" CV="47" mask="XXXXXXXV" default="0">
@@ -2562,91 +1806,35 @@
         <label/>
       </variable>
       <variable item="R10 Out1" CV="48" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R10 Out2" CV="48" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R10 Out3" CV="48" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R10 Out4" CV="48" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R10 Out5" CV="48" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R10 Out6" CV="48" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R10 Out7" CV="48" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R10 Out8" CV="48" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R10 S1" CV="49" mask="XXXXXXXV" default="0">
@@ -2738,91 +1926,35 @@
         <label/>
       </variable>
       <variable item="R11 Out1" CV="50" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R11 Out2" CV="50" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R11 Out3" CV="50" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R11 Out4" CV="50" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R11 Out5" CV="50" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R11 Out6" CV="50" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R11 Out7" CV="50" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R11 Out8" CV="50" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R11 S1" CV="51" mask="XXXXXXXV" default="0">
@@ -2914,91 +2046,35 @@
         <label/>
       </variable>
       <variable item="R12 Out1" CV="52" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R12 Out2" CV="52" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R12 Out3" CV="52" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R12 Out4" CV="52" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R12 Out5" CV="52" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R12 Out6" CV="52" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R12 Out7" CV="52" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R12 Out8" CV="52" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R12 S1" CV="53" mask="XXXXXXXV" default="0">
@@ -3090,91 +2166,35 @@
         <label/>
       </variable>
       <variable item="R13 Out1" CV="54" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R13 Out2" CV="54" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R13 Out3" CV="54" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R13 Out4" CV="54" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R13 Out5" CV="54" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R13 Out6" CV="54" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R13 Out7" CV="54" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R13 Out8" CV="54" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R13 S1" CV="55" mask="XXXXXXXV" default="0">
@@ -3266,91 +2286,35 @@
         <label/>
       </variable>
       <variable item="R14 Out1" CV="56" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R14 Out2" CV="56" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R14 Out3" CV="56" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R14 Out4" CV="56" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R14 Out5" CV="56" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R14 Out6" CV="56" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R14 Out7" CV="56" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R14 Out8" CV="56" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R14 S1" CV="57" mask="XXXXXXXV" default="0">
@@ -3442,91 +2406,35 @@
         <label/>
       </variable>
       <variable item="R15 Out1" CV="58" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R15 Out2" CV="58" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R15 Out3" CV="58" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R15 Out4" CV="58" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R15 Out5" CV="58" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R15 Out6" CV="58" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R15 Out7" CV="58" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R15 Out8" CV="58" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R15 S1" CV="59" mask="XXXXXXXV" default="0">
@@ -3618,91 +2526,35 @@
         <label/>
       </variable>
       <variable item="R16 Out1" CV="60" mask="XXXXXXXV" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R16 Out2" CV="60" mask="XXXXXXVX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R16 Out3" CV="60" mask="XXXXXVXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R16 Out4" CV="60" mask="XXXXVXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R16 Out5" CV="60" mask="XXXVXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R16 Out6" CV="60" mask="XXVXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R16 Out7" CV="60" mask="XVXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R16 Out8" CV="60" mask="VXXXXXXX" default="0" tooltip="Check to add output to this route">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label/>
       </variable>
       <variable item="R16 S1" CV="61" mask="XXXXXXXV" default="0">

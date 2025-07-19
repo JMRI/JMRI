@@ -60,6 +60,12 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     }
 
     @Override
+    protected void createModel() {
+        m = new LogixNGModuleTableAction.TableModel();
+        m.setFilter((Module t) -> t.isVisible());
+    }
+
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLogixNGModuleTable"));
     }
@@ -122,9 +128,9 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     }
 
     @Override
-    protected String getBeanText(Module bean) {
+    protected String getBeanText(Module bean, Base.PrintTreeSettings printTreeSettings) {
         StringWriter writer = new StringWriter();
-        _curNamedBean.printTree(_printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
+        _curNamedBean.printTree(printTreeSettings, new PrintWriter(writer), "    ", new MutableInt(0));
         return writer.toString();
     }
 
@@ -236,7 +242,7 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);
         cancel.addActionListener(this::cancelAddPressed);
-        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelLogixNGModuleButtonHint"));      // NOI18N
 
         addLogixNGFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override

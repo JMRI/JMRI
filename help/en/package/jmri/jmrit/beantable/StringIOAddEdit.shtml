@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Adding StringIO Help</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help StringIO Add Edit">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>Adding StringIOs</h1>
+
+      <p>To create a StringIO, click the "Add..." button on the <a href=
+      "StringIOTable.shtml">StringIO Table</a>. This will open a new pane with space to enter
+      a System Name and User Name for the new StringIO, and a "Create" button at the
+      bottom.</p>
+      <img src="images/StringIOAddEdit.png" width="594" height="162" alt="add stringIO dialog">
+      <p>You must enter a unique System Name. System Names for internal StringIOs have no set
+      pattern. You can call them whatever you want. System-specific StringIOs may 
+      have a pattern specific to that system.</p>
+
+      <p>The User Name is optional, unless you check "Automatically generate System Name", and if
+      you enter one it has to be unique in your JMRI setup. See the "<a href=
+      "../../../../html/doc/Technical/Names.shtml">Names</a>" Help page for more information.</p>
+
+      <h2>Creating a Number of StringIOs</h2>
+
+      <p>It is also possible to create a number of StringIOs in one go.<br>
+      Checking the "Add a sequential range" box will enable the "Number of items" field. Set the
+      number of StringIOs that you wish to add. Clicking [Create] will create a number of
+      sequentially numbered StringIOs.<br>
+      If a User Name has been entered, a number will be added to the end of that name (starting
+      with the second item) to keep each StringIO User Name unique.</p>
+
+      <p>Back to the <a href="StringIOTable.shtml">StringIO Table help page</a>.</p>
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

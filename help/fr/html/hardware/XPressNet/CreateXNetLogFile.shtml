@@ -3,11 +3,11 @@
 <head>
   <!--Updated by Herv&#233; Blorec le 2017-01-12-->
   <title>JMRI Hardware Support - Creating an XPressNet Log File</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -38,9 +38,9 @@
 Paul Bender<br>
 paul.bender@acm.org
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

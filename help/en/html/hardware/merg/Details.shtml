@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content="JMRI help CBUS Connecting connection canusb4 network">
   <title>JMRI Hardware Support - CBUS&reg; - Tech Details</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -106,10 +106,9 @@
 
       <p>Most MERG modules can do "enumeration" for CBUS, but some other adapters can't because of
       their intrinsic latency. Their slow replies effectively make them invisible.<br>
-      Therefore Mike Bolton, one of the CBUS developers suggested that JMRI use a CAN ID of 126.
-      That's a fixed value in some systems.</p>
+      Therefore Mike Bolton, one of the CBUS developers suggested that JMRI use a CAN ID of 126.</p>
 
-      <p>If you have multiple copies of JMRI attached to a MERGCBUS network, be sure to give these
+      <p>If you have multiple copies of JMRI attached to a MERG CBUS network, be sure to give these
       unique CAN ID's.</p>
 
       <h3 id="c1">CAN via MERG CAN-RS or CAN-USB</h3>
@@ -148,7 +147,7 @@
         <li>460,800</li>
       </ul>
 
-      <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
+      <p>CAN ID for JMRI : 126 ( selectable from 100-127 )</p>
 
       <p>Connection Protocol : "CBUS" (other options are "OpenLCB", "Raw CAN" and "Test - do not
       use")</p>
@@ -182,7 +181,7 @@
 
       <p>Connection Name : "MERG"</p>
       <em>Additional Connection Settings shown when box checked</em>
-      <p>CAN ID for CAN-USB : 126 ( selectable from 120-127 )</p>
+      <p>CAN ID for JMRI : 126 ( selectable from 100-127 )</p>
 
       <p>Gateway : Pass All ( Filtering also selectable )</p>
 
@@ -329,11 +328,11 @@
       Guide</p>
 
       <p>CBUS&reg; is a registered trade mark of Dr Michael Bolton</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

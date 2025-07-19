@@ -5,10 +5,10 @@
   <!-- Copyright Bob Jacobsen 2008, 2022 -->
 
   <title>JMRI: DecoderPro - Tour</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -95,8 +95,8 @@
 
       <div class="flex-container">
         <div class="flex-item-30">
-          <a href="./images/DP4StartScreen.png"><img src="./images/DP4StartScreen.png"
-                                                     alt="Create Roster Entry"></a>
+          <a href="images/DP4StartScreen2.png"><img src="images/DP4StartScreen2.png"
+                                                    alt="Create Roster Entry"></a>
         </div>
         <div class="flex-item-70">
           <h3>Creating an entry</h3>
@@ -278,20 +278,21 @@
       </div>
 
       <p>A combination of menus allow you to access and manipulate your roster entries.<br>
-      For example you can print the information for a selected roster entry by choosing "Print Rostre &gt; Selected
-      Entry" from the File menu.</p>
+      For example, you can print the information for a selected roster entry by choosing "Print Roster
+      &gt; Selected Entry" from the File menu.</p>
 
       <h2>More Info</h2>
+
       <p>For information on how to set up and use DecoderPro, please see <a href="index.shtml">the
       DecoderPro User Guide</a>.</p>
       <p>Here's more information on <a href="MoreInfo.shtml">how DecoderPro works</a> and
       <a href="CreateDecoder.shtml">how to add a new Decoder Type</a>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

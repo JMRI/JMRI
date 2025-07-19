@@ -72,8 +72,8 @@ public class ActionClock extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     /** {@inheritDoc} */
@@ -139,7 +139,7 @@ public class ActionClock extends AbstractDigitalAction
             }
             return Bundle.getMessage(locale, "ActionClock_Long", _selectEnum.getDescription(locale), value);
         } else {
-            return Bundle.getMessage(locale, "ActionClock_LongTime", _selectEnum.getDescription(locale), value);
+            return Bundle.getMessage(locale, "ActionClock_LongTimeIndirect", _selectEnum.getDescription(locale), value);
         }
     }
 

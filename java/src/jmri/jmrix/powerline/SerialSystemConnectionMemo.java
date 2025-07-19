@@ -4,9 +4,9 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import jmri.*;
+import jmri.jmrix.SerialPort;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
-import purejavacomm.SerialPort;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -80,7 +80,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnecti
         // now does nothing here, it's done by the specific class
         register(); // registers general type
     }
-    
+
     // menu support parts
     // subclasses can override to change menu items
 
@@ -96,7 +96,7 @@ public class SerialSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnecti
         new MenuItem("MenuItemCommandMonitor", "jmri.jmrix.powerline.swing.serialmon.SerialMonPane"),
         new MenuItem("MenuItemSendCommand", "jmri.jmrix.powerline.swing.packetgen.SerialPacketGenPane")
     };
-    
+
     public MenuItem[] provideMenuItemList() {
         return panelItems;
     }

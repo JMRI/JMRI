@@ -32,7 +32,7 @@ import jmri.implementation.DefaultClockControl;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author Ken Cameron Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2007, 2023
  * @author Dave Duchamp Copyright (C) 2007
  * @author Bob Jacobsen, Alex Shepherd
  */
@@ -69,7 +69,6 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
     private static final boolean DEBUG_SHOW_PUBLIC_CALLS = true; // enable debug for each public interface
     private static final boolean DEBUG_SHOW_SYNC_CALLS = false; // enable debug for sync logic
 
-    public static final int CS_CLOCK_MEM_ADDR = 0xDC00;
     public static final int CS_CLOCK_MEM_SIZE = 0x10;
     public static final int CS_CLOCK_SCALE = 0x00;
     public static final int CS_CLOCK_TICK = 0x01;
@@ -481,7 +480,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
 
     private void issueReadOnlyRequest() {
         if (!waitingForCmdRead) {
-            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
+            byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(tc.csm.getClockAddr());
             NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CS_CLOCK_MEM_SIZE);
             waiting++;
             waitingForCmdRead = true;
@@ -499,7 +498,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         b[0] = (byte) ss;
         b[1] = (byte) mm;
         b[2] = (byte) hh;
-        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(CS_CLOCK_MEM_ADDR + CS_CLOCK_SECONDS, b);
+        byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryWriteN(tc.csm.getClockAddr() + CS_CLOCK_SECONDS, b);
         NceMessage cmdNce = jmri.jmrix.nce.NceMessage.createBinaryMessage(tc, cmd, CMD_MEM_SET_REPLY_SIZE);
         waiting++;
         waitingForCmdTime = true;

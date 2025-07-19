@@ -15,6 +15,7 @@ import jmri.util.StringUtil;
  * published November 2007 and is used with NCE's permission.
  *
  * @author Daniel Boudreau Copyright (C) 2012
+ * @author Ken Cameron (C) 2023
  */
 public class NceMonBinary {
 
@@ -546,7 +547,7 @@ public class NceMonBinary {
             case (REPLY_DATA):
                 break;
             default:
-                log.debug("Unhandled reply type code: {}, display as raw", replyType);
+                log.debug("Unhandled reply type code1: {}, display as raw", replyType);
                 break;
         }
         return MessageFormat.format(Bundle.getMessage("NceReply"), new Object[]{r.toString()});

@@ -8,27 +8,27 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.openlcb.EventID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010, 2011
  */
-public class OlcbSensor extends AbstractSensor {
+public final class OlcbSensor extends AbstractSensor {
 
     static final int ON_TIME = 500; // time that sensor is active after being tripped
 
     OlcbAddress addrActive;    // go to active state
     OlcbAddress addrInactive;  // go to inactive state
-    final OlcbInterface iface;
+    private final OlcbInterface iface;
+    private final CanSystemConnectionMemo memo;
 
     VersionedValueListener<Boolean> sensorListener;
     BitProducerConsumer pc;
@@ -41,9 +41,14 @@ public class OlcbSensor extends AbstractSensor {
 
     private TimerTask timerTask;
 
-    public OlcbSensor(String prefix, String address, OlcbInterface iface) {
+    public OlcbSensor(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "S" + address);
-        this.iface = iface;
+        this.memo = memo;
+        if (memo != null) { // greatly simplify testing
+            this.iface = memo.get(OlcbInterface.class);
+        } else {
+            this.iface = null;
+        }
         init(address);
     }
 
@@ -54,8 +59,8 @@ public class OlcbSensor extends AbstractSensor {
      */
     private void init(String address) {
         // build local addresses
-        OlcbAddress a = new OlcbAddress(address);
-        OlcbAddress[] v = a.split();
+        OlcbAddress a = new OlcbAddress(address, memo);
+        OlcbAddress[] v = a.split(memo);
         if (v == null) {
             log.error("Did not find usable system name: {}", address);
             return;
@@ -120,11 +125,33 @@ public class OlcbSensor extends AbstractSensor {
      * @param isActive true for sensor active, false for inactive.
      * @return user-visible string to represent this event.
      */
-    private String getEventName(boolean isActive) {
+    public String getEventName(boolean isActive) {
         String name = getUserName();
         if (name == null) name = mSystemName;
         String msgName = isActive ? "SensorActiveEventName": "SensorInactiveEventName";
         return Bundle.getMessage(msgName, name);
+    }
+
+    public EventID getEventID(boolean isActive) {
+        if (isActive) return addrActive.toEventID();
+        else {
+            if (addrInactive != null) {
+                return addrInactive.toEventID();
+            } else {
+                return null;
+            }
+        }
+    }
+
+    @Override
+    @CheckReturnValue
+    @Nonnull
+    public String getRecommendedToolTip() {
+        // Some events are not pairs
+        if (addrInactive == null) {
+            return addrActive.toDottedString();
+        }
+        return addrActive.toDottedString()+";"+addrInactive.toDottedString();
     }
 
     /**
@@ -194,7 +221,7 @@ public class OlcbSensor extends AbstractSensor {
     }
 
     /**
-     * Changes how the turnout reacts to inquire state events. With authoritative == false the
+     * Changes how the sensor reacts to inquire state events. With authoritative == false the
      * state will always be reported as UNKNOWN to the layout when queried.
      *
      * @param authoritative whether we should respond true state or unknown to the layout event
@@ -240,7 +267,7 @@ public class OlcbSensor extends AbstractSensor {
     }
 
     /**
-     * Changes how the turnout reacts to state declaration messages. With listen == true state
+     * Changes how the sensor reacts to state declaration messages. With listen == true state
      * declarations will update local state at all times. With listen == false state declarations
      * will update local state only if local state is unknown.
      *
@@ -289,9 +316,9 @@ public class OlcbSensor extends AbstractSensor {
     @CheckReturnValue
     @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull jmri.NamedBean n) {
-        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2);
+        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2, memo);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensor.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbSensor.class);
 
 }

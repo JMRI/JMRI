@@ -595,22 +595,26 @@ public abstract class AbstractMRTrafficController {
         return timeoutFlag;
     }
 
-    private boolean timeoutFlag = false;
-    private int timeouts = 0;
+    protected boolean timeoutFlag = false;
+    protected int timeouts = 0;
     protected boolean flushReceiveChars = false;
 
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {
         //log.debug("Timeout mCurrentState: {}", mCurrentState);
-        String[] packages = this.getClass().getName().split("\\.");
-        String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
-                +(packages.length>=1 ? packages[packages.length-1] :"");
-
-        log.warn("Timeout on reply to message: {} consecutive timeouts = {} in {}", msg, timeouts, name);
+        warnOnTimeout(msg, l);
         timeouts++;
         timeoutFlag = true;
         flushReceiveChars = true;
     }
 
+    protected void warnOnTimeout(AbstractMRMessage msg, AbstractMRListener l) {
+        String[] packages = this.getClass().getName().split("\\.");
+        String name = (packages.length>=2 ? packages[packages.length-2]+"." :"")
+                +(packages.length>=1 ? packages[packages.length-1] :"");
+
+        log.warn("Timeout on reply to message: {} consecutive timeouts = {} in {}", msg, timeouts, name);
+    }
+    
     protected void resetTimeout(AbstractMRMessage msg) {
         if (timeouts > 0) {
             log.debug("Reset timeout after {} timeouts", timeouts);
@@ -799,12 +803,20 @@ public abstract class AbstractMRTrafficController {
                     public void run() {
                         try {
                             transmitLoop();
-                        } catch (ThreadDeath td) {
-                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", td, td);
-                            // ThreadDeath must be thrown per Java API Javadocs
-                            throw td;
                         } catch (Throwable e) {
-                            if (!threadStopRequest) log.error("Transmit thread terminated prematurely by: {}", e, e);
+                            if (!threadStopRequest) {
+                                log.error("Transmit thread terminated prematurely by: {}", e, e);
+                            }
+                            // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html
+                            // ThreadDeath must be thrown per Java API Javadocs
+                            // 
+                            // The type ThreadDeath has been deprecated since version 20 and marked for removal
+                            // and the warning cannot be suppressed in Java 21. But external libraries might
+                            // throw the exception outside of JMRI control. So check the name of the exception
+                            // instead of using "instanceof".
+                            if ("java.lang.ThreadDeath".equals(e.getClass().getName())) {
+                                throw e;
+                            }
                         }
                 }
             });
@@ -920,7 +932,8 @@ public abstract class AbstractMRTrafficController {
         }
         if (!threadStopRequest) { // if e.g. unexpected end
             ConnectionStatus.instance().setConnectionState(controller.getUserName(), controller.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
-            log.error("Exit from rcv loop in {}", this.getClass());
+            log.debug("Exit from rcv loop in {}", this.getClass());
+            log.info("Exiting receive loop");
             recovery(); // see if you can restart
         }
     }
@@ -964,9 +977,9 @@ public abstract class AbstractMRTrafficController {
     /**
      * Read a single byte, protecting against various timeouts, etc.
      * <p>
-     * When a port is set to have a receive timeout (via the
-     * {@link purejavacomm.SerialPort#enableReceiveTimeout(int)} method), some will return
-     * zero bytes or an EOFException at the end of the timeout. In that case, the read
+     * When a port is set to have a receive timeout, some will return
+     * zero bytes, an EOFException or a InterruptedIOException at the end of the timeout. 
+     * In that case, the read()
      * should be repeated to get the next real character.
      *
      * @param istream stream to read
@@ -979,6 +992,13 @@ public abstract class AbstractMRTrafficController {
         }
         while (true) { // loop will repeat until character found
             int nchars;
+            // The istream should be configured so that the following
+            // read(..) call only blocks for a short time, e.g. 100msec, if no
+            // data is available.  It's OK if it 
+            // throws e.g. java.io.InterruptedIOException
+            // in that case, as the calling loop should just go around
+            // and request input again.  This semi-blocking behavior will
+            // let the terminateThreads() method end this thread cleanly.
             nchars = istream.read(rcvBuffer, 0, 1);
             if (nchars == -1) {
                 // No more bytes can be read from the channel
@@ -1300,7 +1320,7 @@ public abstract class AbstractMRTrafficController {
         if (xmtThread != null) {
             xmtThread.interrupt();
             try {
-                xmtThread.join();
+                xmtThread.join(150);
             } catch (InterruptedException ie){
                 // interrupted during cleanup.
             }
@@ -1309,7 +1329,7 @@ public abstract class AbstractMRTrafficController {
         if (rcvThread != null) {
             rcvThread.interrupt();
             try {
-                rcvThread.join();
+                rcvThread.join(150);
             } catch (InterruptedException ie){
                 // interrupted during cleanup.
             }

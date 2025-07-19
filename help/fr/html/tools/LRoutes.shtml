@@ -8,11 +8,11 @@
   <meta name="author" content="Pete Cressman">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -342,9 +342,9 @@ Si vous voulez que le LItin&#233;raire s'effectue de  mani&#232;re passive comme
 appuyez sur le bouton <b>Old</b>. Si vous voulez que le LItin&#233;raire d&#233;clenche ses 
 actions quand tout les ""droit de v&#233;to" sont retir&#233;s, appuyez sur le bouton <b>New</b>.</p>
   
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

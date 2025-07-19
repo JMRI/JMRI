@@ -767,6 +767,9 @@ public class AutoTrainsMultiBlockStopTest {
 
         // cleanup window
         JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
     }
 
     // reset to inactive all sensors except clock.
@@ -873,7 +876,7 @@ public class AutoTrainsMultiBlockStopTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
         
         try {

@@ -6,10 +6,10 @@
   "save store jython script, jython naming, jython threads, jython automation, jython siglets, jython AbstractAutomaton">
 
   <title>JMRI: "What...Where" of Jython Scripting with JMRI</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -95,14 +95,14 @@
         <p>Additional information can be found in the JavaDocs for specific types of classes, for
         example:</p>
 
-        <p><a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html" target=
-        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html</a><br>
-        <a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html" target=
-        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html</a><br>
-        <a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html" target=
-        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html</a><br>
-        <a href="https://www.jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html" target=
-        "_blank">https://www.jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html</a>
+        <p><a href="https://www.jmri.org/JavaDoc/doc/jmri/SensorManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/jmri/SensorManager.html</a><br>
+        <a href="https://www.jmri.org/JavaDoc/doc/jmri/TurnoutManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/jmri/TurnoutManager.html</a><br>
+        <a href="https://www.jmri.org/JavaDoc/doc/jmri/LightManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/jmri/LightManager.html</a><br>
+        <a href="https://www.jmri.org/JavaDoc/doc/jmri/BlockManager.html" target=
+        "_blank">https://www.jmri.org/JavaDoc/doc/jmri/BlockManager.html</a>
         </p>
 
         <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a>
@@ -294,7 +294,7 @@
         </p>
       </div>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

@@ -5,10 +5,10 @@
   <title>JMRI Hardware Support - Using a PDA</title>
   <meta name="author" content="Michael Beck">
   <meta name="author" content="John Plocher">
-  <meta name="keywords" content="model railroad JMRI PDA"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="model railroad JMRI PDA"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -66,11 +66,11 @@
       <p>For the currently supported approach, involving running a specific program on your
       Smartphone, see the <a href=
       "../../package/jmri/jmrit/withrottle/UserInterface.shtml">WiThrottle</a> page.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

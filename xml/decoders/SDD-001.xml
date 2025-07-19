@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="brorson@theworld.com" version="1" lastUpdated="20120927"/>
   <decoder>
 
@@ -22,6 +22,8 @@
     <programming direct="yes" paged="no" register="no" ops="yes"/>
 
     <variables>
+    
+<!-- commented out because without a type specification element it doesn't do anything   
       <variable item="Decoder Address lo" CV="1" default="03">
         <label>Decoder address low byte</label>
       </variable>
@@ -45,6 +47,7 @@
       <variable item="Configuration" CV="29" readOnly="yes" default="192">
         <label>Configuration</label>
       </variable>
+-->
 
     </variables>
 

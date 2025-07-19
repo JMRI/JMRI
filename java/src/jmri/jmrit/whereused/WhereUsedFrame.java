@@ -191,6 +191,9 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case ENTRYEXIT:
                 _textArea = EntryExitWhereUsed.getWhereUsed(bean);
                 break;
+            case AUDIO:
+                _textArea = AudioWhereUsed.getWhereUsed(bean);
+                break;
             default:
                 _textArea = new JTextArea(Bundle.getMessage("TypePrompt", Bundle.getMessage("ButtonCreate")));
                 break;
@@ -306,6 +309,9 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
             case ENTRYEXIT:
                 nameBox = new NamedBeanComboBox<DestinationPoints>(InstanceManager.getDefault(EntryExitPairs.class));
                 break;
+            case AUDIO:
+                nameBox = new NamedBeanComboBox<Audio>(InstanceManager.getDefault(AudioManager.class));
+                break;
             default:
                 return null;             // Skip any other items.
         }
@@ -333,7 +339,8 @@ public class WhereUsedFrame extends jmri.util.JmriJFrame {
         BLOCK("BeanNameBlock"),
         SECTION("BeanNameSection"),
         WARRANT("BeanNameWarrant"),
-        ENTRYEXIT("BeanNameEntryExit");
+        ENTRYEXIT("BeanNameEntryExit"),
+        AUDIO("BeanNameAudio");
 
         private final String _bundleKey;
 

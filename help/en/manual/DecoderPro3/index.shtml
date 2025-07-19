@@ -5,7 +5,7 @@
   <title>JMRI DP3 Manual: Index</title>
   <meta name="Author" content="Dale A. Tripp">
   <meta name="Author" content="Bruce Shanks">
-  <meta name="Author" content="Egbert Broerse"><!--#include virtual="/Style.shtml" -->
+  <meta name="Author" content="Egbert Broerse"><!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- /Style -->
   <!-- DecoderPro Styles -->
 
@@ -15,7 +15,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -346,11 +346,11 @@
       </table>
 
       <hr>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

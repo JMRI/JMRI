@@ -26,7 +26,6 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     /**
      * Overload to load l with actual object; create scaffolds as needed
      */
-    @BeforeEach
     abstract public void setUp();
 
     protected boolean listenerResult = false;
@@ -43,6 +42,7 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractProvidingManage
     // test creation - real work is in the setup() routine
     @Test
     public void testCreate() {
+        Assertions.assertNotNull( l );
     }
 
     @Test

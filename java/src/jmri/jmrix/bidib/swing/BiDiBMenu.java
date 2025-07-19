@@ -16,7 +16,7 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
  */
 public class BiDiBMenu extends JMenu {
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BiDiBMenu(BiDiBSystemConnectionMemo memo) {
 
         super();
@@ -36,8 +36,13 @@ public class BiDiBMenu extends JMenu {
                 add(new BiDiBNamedPaneAction(item.name, wi, item.load, memo)); // NOI18N
             }
         }
-        add(new javax.swing.JSeparator());
-        add(new jmri.jmrix.bidib.tcpserver.TcpServerAction(memo, Bundle.getMessage("MenuItemStartBiDiBOverTCPServer"), Bundle.getMessage("MenuItemStopBiDiBOverTCPServer")));
+        if (memo != null) {
+            add(new javax.swing.JSeparator());
+            add(new jmri.jmrix.bidib.tcpserver.TcpServerAction(memo, Bundle.getMessage("MenuItemStartBiDiBOverTCPServer"), Bundle.getMessage("MenuItemStopBiDiBOverTCPServer")));
+            if (memo.getBiDiBTrafficController() != null  &&  memo.getBiDiBTrafficController().isNetBiDiB()) {
+                add(new jmri.jmrix.bidib.netbidib.NetBiDiBLogonAction(memo, Bundle.getMessage("MenuItemLocalLogon"), Bundle.getMessage("MenuItemLocalLogoff")));
+            }
+        }
     }
 
     Item[] panelItems = new Item[]{

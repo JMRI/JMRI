@@ -80,7 +80,7 @@ public class JmriInsets {
         if (!SystemType.isWindows()
                 && !OS_NAME.toLowerCase().startsWith("mac")) { // NOI18N
             try {
-                Process p = Runtime.getRuntime().exec("ps ax"); // NOI18N
+                Process p = Runtime.getRuntime().exec(new String[]{"ps","ax"}); // NOI18N
                 BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
                 try {

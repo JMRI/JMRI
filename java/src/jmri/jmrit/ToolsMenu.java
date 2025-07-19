@@ -1,6 +1,7 @@
 package jmri.jmrit;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
@@ -9,15 +10,14 @@ import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.jmrit.throttle.ThrottleCreationAction;
+import jmri.jmrit.z21server.Z21serverCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
+import jmri.jmrit.swing.ToolsMenuAction;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Create a "Tools" menu containing the Jmri system-independent tools
@@ -32,10 +32,10 @@ public class ToolsMenu extends JMenu {
 
     ConnectionConfig serModeProCon = null;
     ConnectionConfig opsModeProCon = null;
-    
+
     AbstractAction serviceAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("MenuItemDecoderProServiceProgrammer"));
     AbstractAction opsAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("MenuItemDecoderProOpsModeProgrammer"));
-        
+
     public ToolsMenu(String name) {
         this();
         setText(name);
@@ -46,7 +46,7 @@ public class ToolsMenu extends JMenu {
         super();
 
         setText(Bundle.getMessage("MenuTools"));
-        
+
         JMenu programmerMenu = new JMenu(Bundle.getMessage("MenuProgrammers"));
         programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction());
         programmerMenu.add(serviceAction);
@@ -76,6 +76,7 @@ public class ToolsMenu extends JMenu {
 
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemReporterTable"), "jmri.jmrit.beantable.ReporterTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemMemoryTable"), "jmri.jmrit.beantable.MemoryTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemStringIOTable"), "jmri.jmrit.beantable.StringIOTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRouteTable"), "jmri.jmrit.beantable.RouteTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLRouteTable"), "jmri.jmrit.beantable.LRouteTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixTable"), "jmri.jmrit.beantable.LogixTableAction"));
@@ -173,11 +174,12 @@ public class ToolsMenu extends JMenu {
 
         add(new JSeparator());
         JMenu serverMenu = new JMenu(Bundle.getMessage("MenuServers"));
-        serverMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
         serverMenu.add(new jmri.web.server.WebServerAction());
+        serverMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
+        serverMenu.add(new Z21serverCreationAction());
         serverMenu.add(new JSeparator());
-        serverMenu.add(new jmri.jmris.srcp.JmriSRCPServerAction());
         serverMenu.add(new jmri.jmris.simpleserver.SimpleServerAction());
+        serverMenu.add(new jmri.jmris.srcp.JmriSRCPServerAction());
         add(serverMenu);
 
         add(new JSeparator());
@@ -217,6 +219,20 @@ public class ToolsMenu extends JMenu {
                     updateProgrammerStatus(evt);
                 });
         InstanceManager.getList(GlobalProgrammerManager.class).forEach(m -> m.addPropertyChangeListener(this::updateProgrammerStatus));
+
+        // add items given by ToolsMenuItem service provider
+        var newItemList = new ArrayList<ToolsMenuAction>();
+        java.util.ServiceLoader.load(jmri.jmrit.swing.ToolsMenuAction.class).forEach((toolsMenuAction) -> {
+            newItemList.add(toolsMenuAction);
+        });
+        if (!newItemList.isEmpty()) {
+            add(new JSeparator());
+            newItemList.forEach((item) -> {
+                log.info("Adding Plug In \'{}\' to Tools Menu", item);
+                add(item);
+            });
+        }
+
     }
 
     /**
@@ -224,7 +240,7 @@ public class ToolsMenu extends JMenu {
      * available.
      *
      * Adapted from similar named function in @link jmri.jmrit.roster.swing.RosterFrame.java
-     * 
+     *
      * @param evt the triggering event; if not null and if a removal of a
      *            ProgrammerManager, care will be taken not to trigger the
      *            automatic creation of a new ProgrammerManager
@@ -316,6 +332,6 @@ public class ToolsMenu extends JMenu {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
-    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(jmri.jmrit.ToolsMenu.class);
+
 }

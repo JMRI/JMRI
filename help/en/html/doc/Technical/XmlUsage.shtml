@@ -5,10 +5,10 @@
   <title>JMRI: XML Usage</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml usage">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -54,11 +54,11 @@
       <p>XML files can be edited with a text editor, but a dedicated editor can help a lot. We
       provide a <a href="XmlEditors.shtml">list of editors</a>, along with a few comments on
       each.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

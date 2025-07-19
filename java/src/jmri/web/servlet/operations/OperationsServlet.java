@@ -165,9 +165,9 @@ public class OperationsServlet extends HttpServlet {
                     train.getIconName(),
                     StringEscapeUtils.escapeHtml4(train.getDescription()),
                     Setup.isPrintValidEnabled() ? manifest.getValidity() : "",
-                    StringEscapeUtils.escapeHtml4(train.getComment()).replaceAll("\n", "<br>"),
+                    HtmlTrainCommon.convertToHTMLColor(StringEscapeUtils.escapeHtml4(train.getCommentWithColor())),
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
-                    manifest.getLocations().replaceAll("\n", "<br>")
+                    HtmlTrainCommon.convertToHTMLColor(manifest.getLocations())
             ));
         } else if (JSON.JSON.equals(request.getParameter("format"))) {
             log.debug("Getting manifest JSON code for train {}", id);
@@ -213,7 +213,7 @@ public class OperationsServlet extends HttpServlet {
             ((ObjectNode) data).put("format", request.getParameter("format"));
         }
         if (data.path("format").asText().equals("html")) {
-            JsonNode location = data.path(JsonOperations.LOCATION);
+            JsonNode location = data.path(JSON.LOCATION);
             if (!location.isMissingNode()) {
                 if (location.isNull() || train.getNextLocationName().equals(location.asText())) {
                     train.move();

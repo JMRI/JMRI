@@ -9,13 +9,11 @@ import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.True;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.script.ScriptEngineSelector;
+import jmri.script.ScriptEngineSelector.Engine;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test ActionSimpleScript
@@ -220,6 +218,12 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     @Test
     public void testAction_SingleEcmaCommand() throws Exception {
         actionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
+
+        // Java 17 doesn't have ECMA_SCRIPT
+        Engine engine = actionScript.getScriptEngineSelector().getSelectedEngine();
+        Assume.assumeNotNull(engine);
+        Assume.assumeTrue(engine.getLanguageName().equals(ScriptEngineSelector.ECMA_SCRIPT));
+
         actionScript.setScript(ECMA_SCRIPT);
 
         // Test action
@@ -358,6 +362,24 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
+    public void testAction_GetAndSetLocalVariables() throws Exception {
+
+        ((MaleSocket)ifThenElse.getParent()).addLocalVariable("in", SymbolTable.InitialValueType.Integer, "10");
+        var globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("out");
+
+        actionScript.setScript("symbolTable.setValue(\"out\",symbolTable.getValue(\"in\")*15)");
+
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
+        // Set the sensor to execute the conditionalNG
+        sensor.setState(Sensor.ACTIVE);
+
+        // The action should now be executed so the global variable should have the correct value
+        Assert.assertEquals("global variable has the correct value", 150,
+                ((java.math.BigInteger)globalVariable.getValue()).longValue());
+    }
+
+    @Test
     public void testSetScript() {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
@@ -382,7 +404,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");

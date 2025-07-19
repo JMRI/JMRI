@@ -3,7 +3,7 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>Comprehensive Programmer - Speed Control Pane</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -12,7 +12,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -71,6 +71,21 @@
       Below is an example of the result.</p>
 
       <h1><img src="images/Speed_Table_Match.png" alt="speed table match" height="315" width="914">
+      </h1>
+
+      <p>If you prefer to always see the speed steps rather than hovering over the slider to see
+      the tooltip, you can change DecoderPro to always show some or all of the steps.
+      With the roster entry open, click on file in the top menu. The last option in the drop-down 
+      is Speed Table. That gives 4 options:
+      <ul>
+        <li>Don't show numbers</li>
+        <li>Show all numbers</li>
+        <li>Show 1, 4, 7, 10, ...</li>
+        <li>Show 1, 7, 14, 21, 28</li>
+      </ul>
+      </p>
+
+      <h1><img src="images/Speed_Table_Speedsteps.png" alt="speed steps" height="597" width="848">
       </h1>
 
       <p>Now if you've used DecoderPro in the past, you're probably wondering what those little
@@ -234,11 +249,11 @@
         <p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
         </p>
       </div>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

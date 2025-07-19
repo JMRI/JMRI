@@ -1,13 +1,13 @@
 package jmri.jmris;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import jmri.DccLocoAddress;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+
+import org.junit.jupiter.api.AfterEach;
 
 /**
  * Common tests for classes derived from jmri.jmris.AbstractThrottleServer class
@@ -61,7 +61,6 @@ abstract public class AbstractThrottleServerTestBase {
      */
     abstract public void confirmThrottleStatusSent();
 
-    @BeforeEach
     // derived classes must configure the ThrottleServer variable (ats)
     // and should also install a throttle manager.
     abstract public void setUp();
@@ -70,6 +69,5 @@ abstract public class AbstractThrottleServerTestBase {
     public void postTestReset(){
        ats = null;
     }
-
 
 }

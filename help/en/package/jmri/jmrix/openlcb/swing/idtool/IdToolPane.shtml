@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!-- Copyright Bob Jacobsen 2023 -->
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: OpenLCB ID Tool</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="keywords" content="JMRI help OpenLCB LCC">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+    <h1>OpenLCB ID Tool</h1>
+        This helps you locate a specific physical node under the railroad
+        by flashing its activity lights, in particular its "send" light.
+        <p>
+        On RR-CirKits nodes, this is the blue LED.
+        <p>
+        Press "Identify" to start and "Cancel" to end the process.
+        
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+  </div>
+  <!-- close #mBody -->
+  <script src="/js/help.js"></script>
+</body>
+</html>

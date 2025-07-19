@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.clockmon;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -8,13 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotListener;
 import jmri.jmrix.loconet.swing.LnPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.util.swing.WrapLayout;
 
 /**
  * Pane displaying a LocoNet clock monitor.
@@ -54,7 +53,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
 
         // add GUI items
         JPanel panel1 = new JPanel();
-        panel1.setLayout(new FlowLayout());
+        panel1.setLayout(new WrapLayout());
         panel1.add(new JLabel(Bundle.getMessage("ClockDayLabel")));
         panel1.add(days);
         days.setPreferredSize(spacer.getPreferredSize());
@@ -69,13 +68,13 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         add(panel1);
 
         JPanel panel2 = new JPanel();
-        panel2.setLayout(new FlowLayout());
+        panel2.setLayout(new WrapLayout());
         panel2.add(new JLabel(Bundle.getMessage("ClockRateLabel")));
         panel2.add(rate);
         add(panel2);
 
         JPanel panel3 = new JPanel();
-        panel3.setLayout(new FlowLayout());
+        panel3.setLayout(new WrapLayout());
         panel3.add(readButton);
         add(panel3);
         // Load GUI element contents with current slot contents
@@ -139,6 +138,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     JButton readButton = new JButton(Bundle.getMessage("ButtonRead"));
     final static JTextField spacer = new JTextField("123");
 
-    private final static Logger log = LoggerFactory.getLogger(ClockMonPane.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClockMonPane.class);
 
 }

@@ -3,11 +3,11 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI Manual: Index</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -198,7 +198,7 @@
       <h2>System Requirements</h2>
 
       <p>JMRI&reg; requires that Java be installed, whether your computer is <a href=
-      "https://jmri.org/install/MacOSX.shtml">Mac</a>, <a href=
+      "https://jmri.org/install/MacOSX.shtml">macOS</a>, <a href=
       "https://jmri.org/install/WindowsNew.shtml">Windows</a>, or <a href=
       "https://jmri.org/install/Linux.shtml">Linux</a> based.</p>
 
@@ -210,11 +210,11 @@
 
       <p>More on our <a href="/java/index.shtml">Java installer page</a>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -1,15 +1,18 @@
 package jmri.jmrix;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.SystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -156,7 +159,7 @@ abstract public class AbstractPortController implements PortAdapter {
     @Override
     public String[] getOptions() {
         Set<String> keySet = options.keySet();
-        String[] result = keySet.toArray(new String[keySet.size()]);
+        String[] result = keySet.toArray(String[]::new);
         java.util.Arrays.sort(result);
         return result;
     }
@@ -184,8 +187,6 @@ abstract public class AbstractPortController implements PortAdapter {
      * @return the option value
      */
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "availability was checked before, should never get here")
     public String getOptionState(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getCurrent();
@@ -218,7 +219,7 @@ abstract public class AbstractPortController implements PortAdapter {
         log.error("did not find option {} for type", option);
         return false;
     }
-    
+
     @Override
     public boolean isOptionTypePassword(String option) {
         if (options.containsKey(option)) {
@@ -227,10 +228,8 @@ abstract public class AbstractPortController implements PortAdapter {
         log.error("did not find option {} for type", option);
         return false;
     }
-    
+
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "availability was checked before, should never get here")
     public String getOptionDisplayName(String option) {
         if (options.containsKey(option)) {
             return options.get(option).getDisplayText();
@@ -248,34 +247,41 @@ abstract public class AbstractPortController implements PortAdapter {
 
     protected HashMap<String, Option> options = new HashMap<>();
 
-    static protected class Option {
+    protected static class Option {
 
         public enum Type {
             JCOMBOBOX,
             TEXT,
             PASSWORD
         }
-        
-        String currentValue = null;
-        
-        /** 
+
+        private String currentValue = null;
+
+        /**
          * As a heuristic, we consider the 1st non-null
          * currentValue as the configured value. Changes away from that
          * mark an Option object as "dirty".
          */
-        String configuredValue = null;
-        
+        private String configuredValue = null;
+
         String displayText;
         String[] options;
+        private final String defaultChoice;
         Type type;
-        
-        Boolean advancedOption = true;  // added options in advanced section by default
 
-        public Option(String displayText, @Nonnull String[] options, boolean advanced, Type type) {
+        boolean advancedOption = true;  // added options in advanced section by default
+
+        public Option(String displayText, @Nonnull String[] options,
+            boolean advanced, Type type, @CheckForNull String defaultValue ) {
             this.displayText = displayText;
             this.options = java.util.Arrays.copyOf(options, options.length);
             this.advancedOption = advanced;
-            this.type = type;            
+            this.type = type;
+            this.defaultChoice = defaultValue;
+        }
+
+        public Option(String displayText, @Nonnull String[] options, boolean advanced, Type type) {
+            this(displayText, options, advanced, type, null);
         }
 
         public Option(String displayText, String[] options, boolean advanced) {
@@ -290,19 +296,23 @@ abstract public class AbstractPortController implements PortAdapter {
             this(displayText, options, true, Type.JCOMBOBOX);
         }
 
+        public Option(String displayText, String[] options, @CheckForNull String defaultValue) {
+            this(displayText, options, true, Type.JCOMBOBOX, defaultValue);
+        }
+
         void configure(String value) {
-            log.trace("Option.configure({}) with \"{}\", \"{}\"", value, configuredValue, currentValue);
-            if (configuredValue == null ) {
-                configuredValue = value;
+            log.trace("Option.configure({}) with \"{}\", \"{}\"", value, getConfiguredValue(), getCurrentValue());
+            if (getConfiguredValue() == null ) {
+                setConfiguredValue(value);
             }
-            currentValue = value;
+            setCurrentValue(value);
         }
 
         String getCurrent() {
-            if (currentValue == null) {
-                return options[0];
+            if (getCurrentValue() == null) {
+                return defaultChoice != null ? defaultChoice : options[0];
             }
-            return currentValue;
+            return getCurrentValue();
         }
 
         String[] getOptions() {
@@ -322,7 +332,23 @@ abstract public class AbstractPortController implements PortAdapter {
         }
 
         boolean isDirty() {
-            return (currentValue != null && !currentValue.equals(configuredValue));
+            return (getCurrentValue() != null && !getCurrentValue().equals(getConfiguredValue()));
+        }
+
+        public String getCurrentValue() {
+            return currentValue;
+        }
+
+        public void setCurrentValue(String currentValue) {
+            this.currentValue = currentValue;
+        }
+
+        public String getConfiguredValue() {
+            return configuredValue;
+        }
+
+        public void setConfiguredValue(String configuredValue) {
+            this.configuredValue = configuredValue;
         }
     }
 
@@ -386,7 +412,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     /**
      * {@inheritDoc}
-     * After checking the allowConnectionRecovery flag, closes the 
+     * After checking the allowConnectionRecovery flag, closes the
      * connection, resets the open flag and attempts a reconnection.
      */
     @Override
@@ -397,19 +423,19 @@ abstract public class AbstractPortController implements PortAdapter {
         opened = false;
         try {
             closeConnection();
-        } 
+        }
         catch (RuntimeException e) {
             log.warn("closeConnection failed");
         }
         reconnect();
     }
-    
+
     /**
      * Abstract class for controllers to close the connection.
      * Called prior to any re-connection attempts.
      */
     protected void closeConnection(){}
-    
+
     /**
      * Attempts to reconnect to a failed port.
      * Starts a reconnect thread
@@ -428,13 +454,13 @@ abstract public class AbstractPortController implements PortAdapter {
             log.error("Unable to join to the reconnection thread");
         }
     }
-    
+
     /**
      * Abstract class for controllers to re-setup a connection.
      * Called on connection reconnect success.
      */
     protected void resetupConnection(){}
-    
+
     /**
      * Abstract class for ports to attempt a single re-connection attempt.
      * Called from within main reconnect thread.
@@ -474,13 +500,13 @@ abstract public class AbstractPortController implements PortAdapter {
             }
         }
     }
-    
+
     /**
      * Initial interval between reconnection attempts.
      * Default 1 second.
      */
     protected int reconnectinterval = 1;
-    
+
     /**
      * Maximum reconnection attempts that the port should make.
      * Default 100 attempts.
@@ -493,7 +519,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * Default 120 seconds.
      */
     protected int reconnectMaxInterval = 120;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -501,7 +527,7 @@ abstract public class AbstractPortController implements PortAdapter {
     public void setReconnectMaxInterval(int maxInterval) {
         reconnectMaxInterval = maxInterval;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -509,7 +535,7 @@ abstract public class AbstractPortController implements PortAdapter {
     public void setReconnectMaxAttempts(int maxAttempts) {
         reconnectMaxAttempts = maxAttempts;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -517,7 +543,7 @@ abstract public class AbstractPortController implements PortAdapter {
     public int getReconnectMaxInterval() {
         return reconnectMaxInterval;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -525,7 +551,7 @@ abstract public class AbstractPortController implements PortAdapter {
     public int getReconnectMaxAttempts() {
         return reconnectMaxAttempts;
     }
-    
+
     protected static void safeSleep(long milliseconds, String s) {
         try {
             Thread.sleep(milliseconds);
@@ -559,18 +585,18 @@ abstract public class AbstractPortController implements PortAdapter {
      * Service method to purge a stream of initial contents
      * while opening the connection.
      * @param serialStream input data
-     * @throws java.io.IOException from underlying operations
+     * @throws IOException if the stream is e.g. closed due to failure to open the port completely
      */
      @SuppressFBWarnings(value = "SR_NOT_CHECKED", justification = "skipping all, don't care what skip() returns")
-     protected void purgeStream(@Nonnull java.io.InputStream serialStream) throws java.io.IOException {
+     public static void purgeStream(@Nonnull java.io.InputStream serialStream) throws IOException {
         int count = serialStream.available();
-         log.debug("input stream shows {} bytes available", count);
+        log.debug("input stream shows {} bytes available", count);
         while (count > 0) {
             serialStream.skip(count);
             count = serialStream.available();
         }
     }
-    
+
     /**
      * Get the {@link SystemConnectionMemo} associated with this
      * object.
@@ -608,6 +634,6 @@ abstract public class AbstractPortController implements PortAdapter {
         this.connectionMemo = connectionMemo;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractPortController.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractPortController.class);
 
 }

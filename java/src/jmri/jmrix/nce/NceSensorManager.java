@@ -20,15 +20,21 @@ import org.slf4j.LoggerFactory;
  * NceTrafficController, see nextAiuPoll()
  *
  * @author Bob Jacobsen Copyright (C) 2003
+ * @author Ken Cameron (C) 2023
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
         implements NceListener {
 
     public NceSensorManager(NceSystemConnectionMemo memo) {
         super(memo);
-        for (int i = MINAIU; i <= MAXAIU; i++) {
+        aiuCabIdMin = memo.getNceTrafficController().csm.getCabMin();
+        aiuCabIdMax = memo.getNceTrafficController().csm.getCabMax();
+        aiuArray = new NceAIU[aiuCabIdMax + 1];  // element 0 isn't used
+        for (int i = aiuCabIdMin; i <= aiuCabIdMax; i++) {
             aiuArray[i] = null;
         }
+        activeAIUs = new int[aiuCabIdMax];  // keep track of those worth polling
+        mInstance = this;
         listener = new NceListener() {
             @Override
             public void message(NceMessage m) {
@@ -44,7 +50,14 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         memo.getNceTrafficController().addNceListener(listener);
     }
 
-    private final NceSensorManager mInstance = null;
+    private final NceSensorManager mInstance;
+    private final int aiuCabIdMin;
+    private final int aiuCabIdMax;
+    private NceAIU[] aiuArray = null;   // P
+    private int[] activeAIUs = null;    // P
+    private int activeAIUMax = 0;       // last+1 element used of activeAIUs
+    private static final int MINPIN = 1;    // only pins 1 - 14 used on NCE AIU
+    private static final int MAXPIN = 14;    // only pins 1 - 14 used on NCE AIU
 
     /**
      * {@inheritDoc}
@@ -113,18 +126,12 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         return s;
     }
 
-    NceAIU[] aiuArray = new NceAIU[MAXAIU + 1];  // element 0 isn't used
-    int[] activeAIUs = new int[MAXAIU];  // keep track of those worth polling
-    int activeAIUMax = 0;       // last+1 element used of activeAIUs
-    private static final int MINAIU = 1;
-    private static final int MAXAIU = 63;
-    private static final int MAXPIN = 14;    // only pins 1 - 14 used on NCE AIU
-
     volatile Thread pollThread;
     volatile boolean stopPolling = false;
     NceListener listener;
 
     // polling parameters and variables
+    private boolean loggedAiuNotSupported = false;  // set after logging that AIU isn't supported on this config
     private final int shortCycleInterval = 200;
     private final int longCycleInterval = 10000;  // when we know async messages are flowing
     private final long maxSilentInterval = 30000;  // max slow poll time without hearing an async message
@@ -167,8 +174,16 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      *
      */
     private void buildActiveAIUs() {
+        if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ)
+                != NceTrafficController.CMDS_AUI_READ) {
+            if (!loggedAiuNotSupported) {
+                log.info("AIU not supported in this configuration");
+                loggedAiuNotSupported = true;
+                return;
+            }
+        }
         activeAIUMax = 0;
-        for (int a = MINAIU; a <= MAXAIU; ++a) {
+        for (int a = aiuCabIdMin; a <= aiuCabIdMax; ++a) {
             if (aiuArray[a] != null) {
                 activeAIUs[activeAIUMax++] = a;
             }
@@ -183,7 +198,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                         pollManager();
                     }
                 });
-                pollThread.setName("NCE Sensor Poll");
+                pollThread.setName(getMemo().getNceTrafficController().getUserName()+" Sensor Poll");
                 pollThread.setDaemon(true);
                 pollThread.start();
             } else {
@@ -197,10 +212,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     public NceMessage makeAIUPoll(int aiuNo) {
-        // use old 4 byte read command if not USB
         if (getMemo().getNceTrafficController().getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
+            // use old 4 byte read command if not USB
             return makeAIUPoll4ByteReply(aiuNo);
         } else {
+            // use new 2 byte read command if USB
             return makeAIUPoll2ByteReply(aiuNo);
         }
     }
@@ -244,48 +260,56 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * one poll of each sensor before squelching active polls.
      */
     private void pollManager() {
-        while (!stopPolling) {
-            for (int a = 0; a < activeAIUMax; ++a) {
-                int aiuNo = activeAIUs[a];
-                currentAIU = aiuArray[aiuNo];
-                if (currentAIU != null) {    // in case it has gone away
-                    NceMessage m = makeAIUPoll(aiuNo);
-                    synchronized (this) {
-                        log.debug("queueing poll request for AIU {}", aiuNo);
-                        getMemo().getNceTrafficController().sendNceMessage(m, this);
-                        awaitingReply = true;
-                        try {
-                            wait(pollTimeout);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt(); // retain if needed later
-                            return;
+        if ((getMemo().getNceTrafficController().getCmdGroups() & NceTrafficController.CMDS_AUI_READ)
+                != NceTrafficController.CMDS_AUI_READ) {
+            if (!loggedAiuNotSupported) {
+                log.info("AIU not supported in this configuration");
+                loggedAiuNotSupported = true;
+            }
+        } else {
+            while (!stopPolling) {
+                for (int a = 0; a < activeAIUMax; ++a) {
+                    int aiuNo = activeAIUs[a];
+                    currentAIU = aiuArray[aiuNo];
+                    if (currentAIU != null) {    // in case it has gone away
+                        NceMessage m = makeAIUPoll(aiuNo);
+                        synchronized (this) {
+                            log.debug("queueing poll request for AIU {}", aiuNo);
+                            getMemo().getNceTrafficController().sendNceMessage(m, this);
+                            awaitingReply = true;
+                            try {
+                                wait(pollTimeout);
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt(); // retain if needed later
+                                return;
+                            }
                         }
-                    }
-                    int delay = shortCycleInterval;
-                    if (aiuCycleCount >= 2
-                            && lastMessageReceived >= System.currentTimeMillis() - maxSilentInterval) {
-                        delay = longCycleInterval;
-                    }
-                    synchronized (this) {
-                        if (awaitingReply && !stopPolling) {
-                            log.warn("timeout awaiting poll response for AIU {}", aiuNo);
-                            // slow down the poll since we're not getting responses
-                            // this lets NceConnectionStatus to do its thing
-                            delay = pollTimeout;
+                        int delay = shortCycleInterval;
+                        if (aiuCycleCount >= 2
+                                && lastMessageReceived >= System.currentTimeMillis() - maxSilentInterval) {
+                            delay = longCycleInterval;
                         }
-                        try {
-                            awaitingDelay = true;
-                            wait(delay);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt(); // retain if needed later
-                            return;
-                        } finally {
-                            awaitingDelay = false;
+                        synchronized (this) {
+                            if (awaitingReply && !stopPolling) {
+                                log.warn("timeout awaiting poll response for AIU {}", aiuNo);
+                                // slow down the poll since we're not getting responses
+                                // this lets NceConnectionStatus to do its thing
+                                delay = pollTimeout;
+                            }
+                            try {
+                                awaitingDelay = true;
+                                wait(delay);
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt(); // retain if needed later
+                                return;
+                            } finally {
+                                awaitingDelay = false;
+                            }
                         }
                     }
                 }
+                ++aiuCycleCount;
             }
-            ++aiuCycleCount;
         }
     }
 
@@ -376,7 +400,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 aiucab = Integer.parseInt(curAddress.substring(0, seperator));
                 pin = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
-                throw new JmriException("Unable to convert "+curAddress+" into the cab and pin format of nn:xx");
+                throw new JmriException(
+                    Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadColonFormat", curAddress));
             }
             iName = (aiucab - 1) * 16 + pin - 1;
 
@@ -385,17 +410,20 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 iName = Integer.parseInt(curAddress);
             } catch (NumberFormatException ex) {
-                throw new JmriException("Hardware Address passed "+curAddress+" should be a number or the cab and pin format of nn:xx");
+                throw new JmriException(
+                    Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadValueFormat", curAddress));
             }
             pin = iName % 16 + 1;
             aiucab = iName / 16 + 1;
         }
         // only pins 1 through 14 are valid
-        if (pin == 0 || pin > MAXPIN) {
-            throw new JmriException("Sensor pin number "+pin+" for address "+curAddress+" is out of range; only pin numbers 1 - 14 are valid");
+        if (pin < MINPIN || pin > MAXPIN) {
+            throw new JmriException(
+                Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadPinValue", pin, curAddress, MINPIN, MAXPIN));
         }
-        if (aiucab == 0 || aiucab > MAXAIU) {
-            throw new JmriException("AIU number "+aiucab+" for address "+curAddress+" is out of range; only AIU 1 - 63 are valid");
+        if (aiucab < aiuCabIdMin || aiucab > aiuCabIdMax) {
+            throw new JmriException(
+                Bundle.getMessage(Locale.ENGLISH, "CreateSystemNameBadAIUValue", aiucab, curAddress, aiuCabIdMin, aiuCabIdMin));
         }
         return prefix + typeLetter() + iName;
     }
@@ -425,6 +453,11 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             try {
                 num = Integer.parseInt(super.validateSystemNameFormat(name, locale)
                         .substring(getSystemNamePrefix().length()));
+                if (num < (aiuCabIdMin * 16)) {
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax),
+                            Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax));
+                }
                 parts[0] = Integer.toString((num / 16) + 1); // aiu cab
                 parts[1] = Integer.toString((num % 16) + 1); // aiu pin
             } catch (NumberFormatException ex) {
@@ -435,27 +468,27 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
         try {
             num = Integer.parseInt(parts[0]);
-            if (num < MINAIU || num > MAXAIU) {
+            if (num < aiuCabIdMin || num > aiuCabIdMax) {
                 throw new NamedBean.BadSystemNameException(
-                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name),
-                        Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name));
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax),
+                        Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax));
             }
         } catch (NumberFormatException ex) {
             throw new NamedBean.BadSystemNameException(
-                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name),
-                    Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name));
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax),
+                    Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax));
         }
         try {
             num = Integer.parseInt(parts[1]);
-            if (num < 1 || num > MAXPIN) {
+            if (num < MINPIN || num > MAXPIN) {
                 throw new NamedBean.BadSystemNameException(
                         Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUPin", name),
                         Bundle.getMessage(locale, "InvalidSystemNameBadAIUPin", name));
             }
         } catch (NumberFormatException ex) {
             throw new NamedBean.BadSystemNameException(
-                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name),
-                    Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name));
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax),
+                    Bundle.getMessage(locale, "InvalidSystemNameBadAIUCab", name, aiuCabIdMin, aiuCabIdMax));
         }
         return name;
     }
@@ -472,7 +505,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 if (systemName.endsWith(":")) {
                     try {
                         int num = Integer.parseInt(systemName.substring(getSystemNamePrefix().length(), systemName.length() - 1));
-                        if (num >= MINAIU && num <= MAXAIU) {
+                        if (num >= aiuCabIdMin && num <= aiuCabIdMax) {
                             return NameValidity.VALID_AS_PREFIX_ONLY;
                         }
                     } catch (NumberFormatException | IndexOutOfBoundsException iex) {

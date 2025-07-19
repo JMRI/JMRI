@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- This file is no longer used by an decoder definitions -->
+<!-- Further use of it is deprecated sonce April 2024      -->
+<!-- We're keeping it here for a littie while in case      -->
+<!-- somebody has a local copy of older decoder            -->
+<!-- definitions that uses it.                             -->
+
+
 <!-- Copyright (C) JMRI 2023 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -32,7 +40,7 @@
 <!--  any F# that are configured for expanded control. Any F# page that is not enabled will automatically -->
 <!--  use legacy output mapping and FX controls.                                            -->
 <!-- ...decoders/digitrax/functionmap7.xml										-->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"  include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd"  include="SDXH167,SDXH167Ext,SDXH167ExtS,SDXH167ExtD">
     <row>
      <column>
      <display item="XfnC Page"/>

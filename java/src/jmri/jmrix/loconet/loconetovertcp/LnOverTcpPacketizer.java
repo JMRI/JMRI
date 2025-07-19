@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
-import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import jmri.jmrix.loconet.LnNetworkPortController;
 import jmri.jmrix.loconet.LnPacketizer;
@@ -110,10 +109,18 @@ public class LnOverTcpPacketizer extends LnPacketizer {
         public void run() {
 
             String rxLine;
-            while (true) {  // loop permanently, program close will exit
+            while (! Thread.interrupted()) {  // loop permanently, program close will exit
                 try {
-                    // start by looking for a complete line
+                    // Start by looking for a complete line.
+                    // This will block until input is returned, even if the thread is interrupted.
                     rxLine = istream.readLine();
+                    if (Thread.interrupted()) {
+                        // This indicates normal termination of the thread
+                        // followed by some input being provided by readLine above.
+                        // We return immediately to end the thread, rather than
+                        // processing the no-long-relevant input.
+                        return;
+                    }
                     if (rxLine == null) {
                         log.warn("run: input stream returned null, exiting loop");
                         return;
@@ -228,12 +235,10 @@ public class LnOverTcpPacketizer extends LnPacketizer {
             while (true) {   // loop permanently
                 // any input?
                 try {
-                    // get content; failure is a NoSuchElementException
+                    // get content; blocks write until present
                     log.debug("check for input");
-                    byte msg[] = null;
-                    synchronized (this) {
-                        msg = xmtList.removeFirst();
-                    }
+
+                    byte msg[] = xmtList.take();
 
                     // input - now send
                     try {
@@ -266,13 +271,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString());
                     }
-                } catch (NoSuchElementException e) {
-                    // message queue was empty, wait for input
-                    log.debug("start wait");
-
-                    new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
-
-                    log.debug("end wait");
+                } catch (InterruptedException ie) {
+                    return; // ending the thread
                 }
             }
         }

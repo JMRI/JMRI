@@ -497,11 +497,13 @@ public abstract class AbstractVariableValueTestBase {
         return m;
     }
 
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         p = new ProgDebugger();
     }
 
+    @AfterEach
     public void tearDown() {
         if ( p != null ) {
             p.dispose();

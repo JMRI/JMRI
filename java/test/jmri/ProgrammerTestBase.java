@@ -1,6 +1,5 @@
 package jmri;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,63 +15,61 @@ abstract public class ProgrammerTestBase {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(programmer);
+        Assertions.assertNotNull(programmer);
     }
 
     @Test
     public void testDefault() {
-        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTMODE,
-                programmer.getMode());        
+        Assertions.assertEquals( ProgrammingMode.DIRECTMODE,
+            programmer.getMode(), "Check Default");
     }
 
     @Test
     public void testGetCanRead() {
-        Assert.assertTrue("can read", programmer.getCanRead());
+        Assertions.assertTrue( programmer.getCanRead(), "can read");
     }
 
     @Test
     public void testGetCanWrite() {
-        Assert.assertTrue("can write", programmer.getCanWrite());
+        Assertions.assertTrue( programmer.getCanWrite(), "can write");
     }
 
     @Test
     public void testGetCanReadAddress() {
-        Assert.assertFalse("can read address", programmer.getCanRead("1234"));
+        Assertions.assertFalse( programmer.getCanRead("1234"), "can read address");
     }
 
     @Test
     public void testGetCanWriteAddress() {
-        Assert.assertTrue("can write address", programmer.getCanWrite("1234"));
-    }   
+        Assertions.assertTrue( programmer.getCanWrite("1234"), "can write address");
+    }
  
     @Test
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
-        Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
-                programmer.getMode());        
+        Assertions.assertEquals( ProgrammingMode.REGISTERMODE,
+            programmer.getMode(), "Check mode matches set");
     }
-    
+
     @Test
     public void testSetModeNull() {
-        Throwable throwable = Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(null));
+        Throwable throwable = Assertions.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(null));
         Assertions.assertNotNull(throwable.getMessage());
     }
 
     @Test
     public void testGetWriteConfirmMode(){
-        Assert.assertEquals("Write Confirm Mode",Programmer.WriteConfirmMode.NotVerified,
-                programmer.getWriteConfirmMode("1234"));
+        Assertions.assertEquals( Programmer.WriteConfirmMode.NotVerified,
+            programmer.getWriteConfirmMode("1234"), "Write Confirm Mode");
     }
 
     @Test
     public void testWriteCVNullListener() throws jmri.ProgrammerException {
-                programmer.writeCV("1",42,null);
+        programmer.writeCV("1",42,null);
     }
-    
-    @BeforeEach
+
     abstract public void setUp();
 
-    @AfterEach
     abstract public void tearDown();
 
 }

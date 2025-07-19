@@ -1,11 +1,11 @@
 package jmri.implementation;
 
 import java.util.*;
+
 import javax.annotation.Nonnull;
+
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * SignalMast implemented via Turnout objects.
@@ -36,7 +36,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         configureFromName(systemName);
     }
 
-    private static final String mastType = "IF$tsm";
+    private static final String THE_MAST_TYPE = "IF$tsm";
 
     private void configureFromName(String systemName) {
         // split out the basic information
@@ -45,8 +45,8 @@ public class TurnoutSignalMast extends AbstractSignalMast {
             log.error("SignalMast system name needs at least three parts: {}", systemName);
             throw new IllegalArgumentException("System name needs at least three parts: " + systemName);
         }
-        if (!parts[0].equals(mastType)) {
-            log.warn("SignalMast system name should start with {} but is {}", mastType, systemName);
+        if (!parts[0].equals(THE_MAST_TYPE)) {
+            log.warn("SignalMast system name should start with {} but is {}", THE_MAST_TYPE, systemName);
         }
         String system = parts[1];
         String mast = parts[2];
@@ -74,15 +74,17 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         if (!map.checkAspect(aspect)) {
             // not a valid aspect
             log.warn("attempting to set invalid aspect: {} on mast: {}", aspect, getDisplayName());
-            throw new IllegalArgumentException("attempting to set invalid aspect: " + aspect + " on mast: " + getDisplayName());
+            throw new IllegalArgumentException("attempting to set invalid aspect: "
+                + aspect + " on mast: " + getDisplayName());
         } else if (disabledAspects.contains(aspect)) {
             log.warn("attempting to set an aspect that has been disabled: {} on mast: {}", aspect, getDisplayName());
-            throw new IllegalArgumentException("attempting to set an aspect that has been disabled: " + aspect + " on mast: " + getDisplayName());
+            throw new IllegalArgumentException("attempting to set an aspect that has been disabled: "
+                + aspect + " on mast: " + getDisplayName());
         }
-        
-        
+
+
         if (getLit()) { // If the signalmast is lit, then send the commands to change the aspect.
-            
+
             // reset all states before setting this one, including this one
             if (resetPreviousStates) {
                 // Clear all the current states, this will result in the signalmast going blank for a very short time.
@@ -99,7 +101,8 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                                 aspt.getTurnout().setCommandedState(setState);
                             }
                         } else {
-                            log.error("Trying to reset \"{}\" on signal mast \"{}\" which has not been configured", appearance, getDisplayName());
+                            log.error("Trying to reset \"{}\" on signal mast \"{}\" which has not been configured",
+                                appearance, getDisplayName());
                         }
                     }
                 }
@@ -111,10 +114,11 @@ public class TurnoutSignalMast extends AbstractSignalMast {
                 int stateToSet = turnouts.get(aspect).getTurnoutState();
                 turnToSet.setCommandedState(stateToSet);
             } else {
-                log.error("Trying to set \"{}\" on signal mast \"{}\" which has not been configured", aspect, getDisplayName());
+                log.error("Trying to set \"{}\" on signal mast \"{}\" which has not been configured",
+                    aspect, getDisplayName());
             }
-            
-        } else if (log.isDebugEnabled()) {
+
+        } else {
             log.debug("Mast set to unlit, will not send aspect change to hardware");
         }
         super.setAspect(aspect);
@@ -205,7 +209,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         turnouts.put(appearance, new TurnoutAspect(turn, state));
     }
 
-    HashMap<String, TurnoutAspect> turnouts = new HashMap<>();
+    private final HashMap<String, TurnoutAspect> turnouts = new HashMap<>();
 
     private boolean resetPreviousStates = false;
 
@@ -223,20 +227,21 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         return resetPreviousStates;
     }
 
-    static class TurnoutAspect {
+    private static class TurnoutAspect {
 
         NamedBeanHandle<Turnout> namedTurnout;
         int state;
 
         TurnoutAspect(String turnoutName, int turnoutState) {
-            if (turnoutName != null && !turnoutName.equals("")) {
+            if (turnoutName != null && !turnoutName.isEmpty()) {
                 state = turnoutState;
                 Turnout turn = jmri.InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-                if (turn == null) {  
+                if (turn == null) {
                     log.error("TurnoutAspect couldn't locate turnout {}", turnoutName);
                     return;
                 }
-                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turn);
+                namedTurnout = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)
+                    .getNamedBeanHandle(turnoutName, turn);
             }
         }
 
@@ -259,7 +264,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         }
     }
 
-    boolean isTurnoutUsed(Turnout t) {
+    public boolean isTurnoutUsed(Turnout t) {
         for (TurnoutAspect ta : turnouts.values()) {
             if (t.equals(ta.getTurnout())) {
                 return true;
@@ -296,16 +301,16 @@ public class TurnoutSignalMast extends AbstractSignalMast {
 
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        if ("CanDelete".equals(evt.getPropertyName())) { // NOI18N
-            if (evt.getOldValue() instanceof Turnout) {
-                if (isTurnoutUsed((Turnout) evt.getOldValue())) {
-                    java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
-                    throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto", getDisplayName()), e); // NOI18N
-                }
-            }
+        if (jmri.Manager.PROPERTY_CAN_DELETE.equals(evt.getPropertyName())
+                && (evt.getOldValue() instanceof Turnout) && (isTurnoutUsed((Turnout) evt.getOldValue()))) {
+
+            java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this,
+                jmri.Manager.PROPERTY_DO_NOT_DELETE, null, null);
+            throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalMastVeto",
+                getDisplayName()), e);
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutSignalMast.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutSignalMast.class);
 
 }

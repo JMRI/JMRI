@@ -103,6 +103,16 @@ AbstractRailComReporter <|-- Z21Reporter
 public interface Reporter extends NamedBean {
 
     /**
+     * String constant for last Report.
+     */
+    String PROPERTY_LAST_REPORT = "lastReport";
+
+    /**
+     * String constant for current Report.
+     */
+    String PROPERTY_CURRENT_REPORT = "currentReport";
+
+    /**
      * Query the last report. This will return a value even if there's no
      * current report available. If there is a current report, both this and the
      * current report will be equal. If nothing has ever been reported, this

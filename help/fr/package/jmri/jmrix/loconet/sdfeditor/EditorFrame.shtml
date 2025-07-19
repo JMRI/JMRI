@@ -5,11 +5,11 @@
   <title>JMRI: SDF Sound File Editor</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Digitrax SDF Sound File Editor">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -277,9 +277,9 @@
       fen&egrave;tre afin que les gens sachent ce que font
       les options.</p>
       
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

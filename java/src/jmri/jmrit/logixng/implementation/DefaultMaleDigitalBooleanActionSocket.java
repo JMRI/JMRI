@@ -72,7 +72,7 @@ public class DefaultMaleDigitalBooleanActionSocket
      */
     @Override
     public void registerListenersForThisClass() {
-        ((DigitalBooleanActionBean)getObject()).registerListeners();
+        getObject().registerListeners();
     }
 
     /**
@@ -80,7 +80,7 @@ public class DefaultMaleDigitalBooleanActionSocket
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((DigitalBooleanActionBean)getObject()).unregisterListeners();
+        getObject().unregisterListeners();
     }
 
     @Override

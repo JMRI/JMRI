@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - Modbus</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Hardware Support - Modbus</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
@@ -15,6 +15,11 @@
       "145" class="floatRight">
       <h1>Hardware Support: Modbus</h1>
 
+      <b>There is no released JMRI support for anything on this page yet.
+        This was a planned addition that never was ready for release.</b><br/>
+        If you're interested in ModBus support in JMRI, please
+        <a href="https://groups.io/g/jmriusers">contact us on the JMRIusers list</a>. 
+         
       <ul class="snav">
         <!-- TOC -->
 
@@ -167,11 +172,11 @@
 
       <p><a href="https://modbus.org">Modbus website</a>
       </p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -17,7 +17,7 @@
 <!-- such as the the MRC_soundbrillance1645.xml file                         -->
 <!--                     LDEHAYES@COMCAST.NET                                -->
 <!--                                                                                                                                           -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Alain Le Marchand" version="2.0" lastUpdated="20150427"/>
   <version author="John Crellin" version="1.9" lastUpdated="20120706"/>
   <version author="John Crellin" version="1.8" lastUpdated="20110512"/>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: Virtual Sound Decoder</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Virtual Sound Decoder</title><!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -11,7 +11,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -280,7 +280,7 @@
       <p>Another prerequisite is to add the Action "Start Virtual Sound Decoder Manager" to your
       JMRI Preferences Start Up.</p>
 
-      <p>The number of Roster Entries for Auto-Loading is limited to four.</p>
+      <p>The number of Roster Entries for Auto-Loading is limited to eight.</p>
 
       <p><em>Note:</em> A change of the Auto-Load mode only becomes effective after a restart of
       the VSDecoder Manager.</p>
@@ -316,9 +316,15 @@
 
       <h5>Use Blocks</h5>
       <a id="use-blocks"></a>
-      <p>If unchecked, Blocks are ignored. This may be helpful on <a href=
+      <p>This option is intended for the use of VSD on the base of a LayoutEditor panel.<br>
+      If unchecked, Blocks are ignored. This may be helpful on <a href=
       "VSDLocationsMgr.shtml#advanced_location_following">Advanced Location Following</a>
-      in Simulator Mode. Default: checked.</p>
+      or in a Simulator mode.<br>
+      If checked, VSD is listening to tracking hardware.
+      If there is no tracking hardware, you need to trigger changes manually,
+      e.g. set a sensor state.<br>
+      Restart PanelPro after a change to ensure the new setting works.<br>
+      Default: checked.</p>
 
       <h5>Default VSD File Path</h5>
 
@@ -340,11 +346,11 @@
         <p><a href="index.shtml">Back</a>
         </p>
       </div>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

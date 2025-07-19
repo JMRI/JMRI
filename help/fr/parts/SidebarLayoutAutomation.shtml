@@ -2,7 +2,7 @@
 <!-- This is the common sidebar definition for Layout Automation pages (French) -->
 <!-- *) = link to English TODO translate that page -->
 
-<dt><a href="/help/fr/html/tools/automation/">Automatisation du R&#233;seau</a></dt>
+<dt><a href="/help/fr/html/tools/automation/index.shtml">Automatisation du R&#233;seau</a></dt>
 
 <dd>JMRI peut &#234;tre utilis&#233; pour automatiser des parties
   de votre r&#233;seau, depuis un simple contr&#244;le d'un croisement

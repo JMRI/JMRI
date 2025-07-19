@@ -10,9 +10,7 @@ import jmri.jmrit.logixng.expressions.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test DefaultLogixNG
@@ -656,8 +654,8 @@ public class DefaultLogixNGManagerTest {
     }
 
     @Test
+    @Disabled("Test requires further development")
     public void testDeleteTable() throws SocketAlreadyConnectedException {
-//        Assert.fail("Not implemented yet");
     }
 
 

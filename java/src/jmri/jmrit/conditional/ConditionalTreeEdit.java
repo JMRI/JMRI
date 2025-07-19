@@ -1483,6 +1483,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      * Clean up, notify the parent Logix that edit session is done.
      */
     void donePressed() {
+        showSaveReminder();
         if (_curNodeType != null) {
             switch (_curNodeType) {
                 case "Variable":       // NOI18N
@@ -1832,7 +1833,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     }
 
     /**
-     * Display reminder to save.
+     * Display reminder to finish a node before starting another.  This is a session reminder.
      */
     void showNodeEditMessage() {
         if (InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class) != null) {
@@ -1840,7 +1841,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                     showInfoMessage(Bundle.getMessage("NodeEditTitle"), // NOI18N
                             Bundle.getMessage("NodeEditText"), // NOI18N
                             getClassName(),
-                            "SkipNodeEditMessage"); // NOI18N
+                            "SkipNodeEditMessage", // NOI18N
+                            true,
+                            false);
         }
     }
 

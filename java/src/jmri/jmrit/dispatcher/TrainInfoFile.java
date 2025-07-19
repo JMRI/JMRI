@@ -1,6 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,6 +13,11 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.configurexml.AbstractXmlAdapter.EnumIO;
+import jmri.configurexml.AbstractXmlAdapter.EnumIoNamesNumbers;
+import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 
 /**
  * Handles reading and writing of TrainInfo files to disk as an XML file to/from
@@ -51,6 +57,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
     private Document doc = null;
     private Element root = null;
 
+    static final EnumIO<ActiveTrain.TrainDetection> trainsdectionFromEnumMap = new EnumIoNamesNumbers<>(ActiveTrain.TrainDetection.class);
+    static final EnumIO<ActiveTrain.TrainLengthUnits> trainlengthFromEnumMap = new EnumIoNamesNumbers<>(ActiveTrain.TrainLengthUnits.class);
+
     /*
      *  Reads Dispatcher TrainInfo from a file in the user's preferences directory
      *  If the file containing Dispatcher TrainInfo does not exist this routine returns quietly.
@@ -89,11 +98,30 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     } else {
                         log.error("Transit name missing when reading TrainInfoFile {}", name);
                     }
-                    if (traininfo.getAttribute("trainname") != null) {
-                        // there is a transit name selected
-                        tInfo.setTrainName(traininfo.getAttribute("trainname").getValue());
+                    if (traininfo.getAttribute("dynamictransit") != null ) {
+                        tInfo.setDynamicTransit(traininfo.getAttribute("dynamictransit").getValue().equals("yes"));
+                    }
+                    if (traininfo.getAttribute("dynamictransitcloseloop") != null ) {
+                        tInfo.setDynamicTransitCloseLoopIfPossible(traininfo.getAttribute("dynamictransitcloseloop").getValue().equals("yes"));
+                    }
+                    if (version < 6) {
+                        if (traininfo.getAttribute("trainname") != null) {
+                            tInfo.setTrainName(traininfo.getAttribute("trainname").getValue());
+                            tInfo.setRosterId(traininfo.getAttribute("trainname").getValue());
+                            tInfo.setTrainUserName(traininfo.getAttribute("trainname").getValue());
+                        } else {
+                            log.error("Train name missing when reading TrainInfoFile {}", name);
+                        }
                     } else {
-                        log.error("Train name missing when reading TrainInfoFile {}", name);
+                        if (traininfo.getAttribute("trainname") != null) {
+                            tInfo.setTrainName(traininfo.getAttribute("trainname").getValue());
+                        }
+                        if (traininfo.getAttribute("rosterid") != null) {
+                            tInfo.setRosterId(traininfo.getAttribute("rosterid").getValue());
+                        }
+                        if (traininfo.getAttribute("trainusername") != null) {
+                            tInfo.setTrainUserName(traininfo.getAttribute("trainusername").getValue());
+                        }
                     }
                     if (traininfo.getAttribute("dccaddress") != null) {
                         tInfo.setDccAddress(traininfo.getAttribute("dccaddress").getValue());
@@ -120,7 +148,14 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     } else {
                         log.error("Destination block name missing when reading TrainInfoFile {}", name);
                     }
-
+                    if (tInfo.getDynamicTransit()) {
+                        if (traininfo.getAttribute("viablockname") != null) {
+                            // there is a transit name selected
+                            tInfo.setViaBlockName(traininfo.getAttribute("viablockname").getValue());
+                        } else {
+                            log.error("Via block name missing for dynamic trainsit when reading TrainInfoFile {}", name);
+                        }
+                    }
                     if (traininfo.getAttribute("trainfromroster") != null) {
                         tInfo.setTrainFromRoster(true);
                         if (traininfo.getAttribute("trainfromroster").getValue().equals("no")) {
@@ -141,7 +176,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     }
                     if (traininfo.getAttribute("trainfromsetlater") != null) {
                         tInfo.setTrainFromSetLater(true);
-                        if (traininfo.getAttribute("trainfromuser").getValue().equals("no")) {
+                        if (traininfo.getAttribute("trainfromsetlater").getValue().equals("no")) {
                             tInfo.setTrainFromSetLater(false);
                         }
                     }
@@ -282,13 +317,21 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("maxspeed") != null) {
                         tInfo.setMaxSpeed(Float.parseFloat(traininfo.getAttribute("maxspeed").getValue()));
                     }
+                    if (traininfo.getAttribute("minreliableoperatingspeed") != null) {
+                        tInfo.setMinReliableOperatingSpeed(Float.parseFloat(traininfo.getAttribute("minreliableoperatingspeed").getValue()));
+                    }
                     if (traininfo.getAttribute("ramprate") != null) {
                         tInfo.setRampRate(traininfo.getAttribute("ramprate").getValue());
                     }
-                    if (traininfo.getAttribute("resistancewheels") != null) {
-                        tInfo.setResistanceWheels(true);
+                    tInfo.setTrainDetection(TrainDetection.TRAINDETECTION_WHOLETRAIN);
+                    if (version > 4) {
+                        if (traininfo.getAttribute("traindetection") != null) {
+                            tInfo.setTrainDetection(trainsdectionFromEnumMap.inputFromAttribute(traininfo.getAttribute("traindetection")));
+                        }
+                    }
+                    else {
                         if (traininfo.getAttribute("resistancewheels").getValue().equals("no")) {
-                            tInfo.setResistanceWheels(false);
+                            tInfo.setTrainDetection(TrainDetection.TRAINDETECTION_HEADONLY);
                         }
                     }
                     if (traininfo.getAttribute("runinreverse") != null) {
@@ -303,8 +346,21 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setSoundDecoder(false);
                         }
                     }
-                    if (traininfo.getAttribute("maxtrainlength") != null) {
-                        tInfo.setMaxTrainLength(Float.parseFloat(traininfo.getAttribute("maxtrainlength").getValue()));
+                    if (version > 5) {
+                        if (traininfo.getAttribute("trainlengthunits") != null) {
+                            tInfo.setTrainLengthUnits(trainlengthFromEnumMap.inputFromAttribute(traininfo.getAttribute("trainlengthunits")));
+                        }
+                    }
+                    if (traininfo.getAttribute("maxtrainlengthscalemeters") != null) {
+                        tInfo.setMaxTrainLengthScaleMeters(Float.parseFloat(traininfo.getAttribute("maxtrainlengthscalemeters").getValue()));
+                    } else {
+                        if (traininfo.getAttribute("maxtrainlength") != null) {
+                            if (InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters()) {
+                                tInfo.setMaxTrainLengthScaleMeters(Float.parseFloat(traininfo.getAttribute("maxtrainlength").getValue()));
+                            } else {
+                                tInfo.setMaxTrainLengthScaleFeet(Float.parseFloat(traininfo.getAttribute("maxtrainlength").getValue()));
+                            }
+                        }
                     }
                     if (traininfo.getAttribute("terminatewhendone") != null) {
                         tInfo.setTerminateWhenDone(false);
@@ -460,10 +516,13 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // save Dispatcher TrainInfo in xml format
         Element traininfo = new Element("traininfo");
         // write version number
-        traininfo.setAttribute("version", "4");
+        traininfo.setAttribute("version", "7");
         traininfo.setAttribute("transitname", tf.getTransitName());
         traininfo.setAttribute("transitid", tf.getTransitId());
+        traininfo.setAttribute("dynamictransit", (tf.getDynamicTransit() ? "yes" : "no"));
         traininfo.setAttribute("trainname", tf.getTrainName());
+        traininfo.setAttribute("trainusername", tf.getTrainUserName());
+        traininfo.setAttribute("rosterid", tf.getRosterId());
         traininfo.setAttribute("dccaddress", tf.getDccAddress());
         traininfo.setAttribute("trainintransit", "" + (tf.getTrainInTransit() ? "yes" : "no"));
         traininfo.setAttribute("startblockname", tf.getStartBlockName());
@@ -472,11 +531,13 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("endblockname", tf.getDestinationBlockName());
         traininfo.setAttribute("endblockid", tf.getDestinationBlockId());
         traininfo.setAttribute("endblockseq", Integer.toString(tf.getDestinationBlockSeq()));
+        traininfo.setAttribute("viablockname", tf.getViaBlockName());
         traininfo.setAttribute("trainfromroster", "" + (tf.getTrainFromRoster() ? "yes" : "no"));
         traininfo.setAttribute("trainfromtrains", "" + (tf.getTrainFromTrains() ? "yes" : "no"));
         traininfo.setAttribute("trainfromuser", "" + (tf.getTrainFromUser() ? "yes" : "no"));
         traininfo.setAttribute("trainfromsetlater", "" + (tf.getTrainFromSetLater() ? "yes" : "no"));
         traininfo.setAttribute("priority", Integer.toString(tf.getPriority()));
+        traininfo.setAttribute("traindetection", trainsdectionFromEnumMap.outputFromEnum(tf.getTrainDetection()));
         traininfo.setAttribute("resetwhendone", "" + (tf.getResetWhenDone() ? "yes" : "no"));
         switch (tf.getDelayedRestart()) {
             case ActiveTrain.SENSORDELAY:
@@ -530,11 +591,12 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         // here save items related to automatically running active trains
         traininfo.setAttribute("speedfactor", Float.toString(tf.getSpeedFactor()));
         traininfo.setAttribute("maxspeed", Float.toString(tf.getMaxSpeed()));
+        traininfo.setAttribute("minreliableoperatingspeed", Float.toString(tf.getMinReliableOperatingSpeed()));
         traininfo.setAttribute("ramprate", tf.getRampRate());
-        traininfo.setAttribute("resistancewheels", "" + (tf.getResistanceWheels() ? "yes" : "no"));
         traininfo.setAttribute("runinreverse", "" + (tf.getRunInReverse() ? "yes" : "no"));
         traininfo.setAttribute("sounddecoder", "" + (tf.getSoundDecoder() ? "yes" : "no"));
-        traininfo.setAttribute("maxtrainlength", Float.toString(tf.getMaxTrainLength()));
+        traininfo.setAttribute("maxtrainlengthscalemeters", Float.toString(tf.getMaxTrainLengthScaleMeters()));
+        traininfo.setAttribute("trainlengthunits", trainlengthFromEnumMap.outputFromEnum(tf.getTrainLengthUnits()));
         traininfo.setAttribute("usespeedprofile", "" + (tf.getUseSpeedProfile() ? "yes" : "no"));
         traininfo.setAttribute("stopbyspeedprofile", "" + (tf.getStopBySpeedProfile() ? "yes" : "no"));
         traininfo.setAttribute("stopbyspeedprofileadjust", Float.toString(tf.getStopBySpeedProfileAdjust()));
@@ -587,6 +649,28 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             return s1.compareTo(s2);
         });
         return names.toArray(new String[names.size()]);
+    }
+
+    /**
+     * Get the names of all current TrainInfo files. Returns list
+     * of files and some basic details for each file
+     *.
+     * @return names as an array or an empty array if none present
+     */
+    public List<TrainInfoFileSummary> getTrainInfoFileSummaries() {
+        List<TrainInfoFileSummary> summaries = new ArrayList<>();
+        for (String fileName : getTrainInfoFileNames()) {
+            try {
+                TrainInfo ti = readTrainInfo(fileName);
+                summaries.add(new TrainInfoFileSummary(fileName, ti.getTransitName(), ti.getTrainName(),
+                        ti.getStartBlockName(), ti.getDestinationBlockName(), ti.getDccAddress()));
+            } catch (org.jdom2.JDOMException ex) {
+                summaries.add(new TrainInfoFileSummary(fileName));
+            } catch (IOException ex) {
+                summaries.add(new TrainInfoFileSummary(fileName));
+            }
+        }
+        return summaries;
     }
 
     /**

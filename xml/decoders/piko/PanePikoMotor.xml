@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<copyright xmlns="http://docbook.org/ns/docbook">
 		<year>2022</year>
 		<holder>JMRI</holder>
@@ -37,6 +37,18 @@
 			<authorinitials>UG</authorinitials>
 			<revremark>Add decoder</revremark>
 		</revision>
+		<revision>
+			<revnumber>3</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2024-04-01</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add Decoder ML4000</revremark>
+		</revision>
 	</revhistory>
 	<name>Motor</name>
 	<column>
@@ -46,8 +58,8 @@
 					<text> </text>
 				</label>
 				<label>
-					<text>Errors or Information (Read-Only)</text>
-					<text xml:lang="de">Fehler oder Information (Read-Only)</text>
+					<text>&gt;&gt; Errors or Information (Read-Only) &lt;&lt;</text>
+					<text xml:lang="de">&gt;&gt; Fehler oder Information (Read-Only) &lt;&lt;</text>
 					<text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
 					<text xml:lang="nl">Fouten en ov. informatie (Alleen Lezen)</text>
 					<text xml:lang="cs">Chyby nebo Informace (Pouze pro čtení)</text>
@@ -73,8 +85,8 @@
 					<text> </text>
 				</label>
 				<label>
-					<text>Decoder Programming Lock</text>
-					<text xml:lang="de">          Decoder Programmiersperre</text>
+					<text>&gt;&gt; Decoder Programming Lock &lt;&lt;</text>
+					<text xml:lang="de">          &gt;&gt; Decoder Programmiersperre &lt;&lt;</text>
 					<text xml:lang="nl">          Decoder Programmeerslot</text>
 					<text xml:lang="cs">          Zámek programování dekodéru</text>
 				</label>
@@ -97,8 +109,8 @@
 			<row>
 				<column>
 					<label>
-						<text>Decoder Config 2 </text>
-						<text xml:lang="de">                   SmartDecoder 4.1 Konfiguration 2 (CV 51-58, 200-202)</text>
+						<text>&gt;&gt; PSD 4.2 Config 2 CV 51-58, 200-202) &lt;&lt;</text>
+						<text xml:lang="de">               &gt;&gt; SmartDecoder 4.1 Konfiguration 2 (CV 51-58, 200-202) &lt;&lt;</text>
 					</label>
 					<display item="Motor Control" format="checkbox"/>
 					<display item="Motor Control PIDSX"/>
@@ -136,13 +148,13 @@
 				</column>
 			</row>
 		</group>
-		<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16">
+		<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
 			<!--Piko SmartDecoder XP5.1-->
 			<row>
 				<column>
 					<label>
-						<text>Motor Management Settings</text>
-						<text xml:lang="de">Motorregelung PSD XP5.1 CV 62</text>
+						<text>&gt;&gt; Motor Management Settings XP5.1 CV 62 &lt;&lt;</text>
+						<text xml:lang="de">&gt;&gt; Motorregelung PSD XP5.1 CV 62 &lt;&lt;</text>
 						<text xml:lang="nl">Motorregeling</text>
 						<text xml:lang="cs">Správa nastavení motoru</text>
 					</label>
@@ -158,8 +170,8 @@
 						<text>      </text>
 					</label>
 					<label>
-						<text>Motor Management Settings</text>
-						<text xml:lang="de">Motorregelung PSD XP5.1 CV 240-250</text>
+						<text>&gt;&gt; Motor Management Settings XP5.1 CV 240-250 &lt;&lt;</text>
+						<text xml:lang="de">&gt;&gt; Motorregelung PSD XP5.1 CV 240-250 &lt;&lt;</text>
 						<text xml:lang="nl">Motorregeling</text>
 						<text xml:lang="cs">Správa nastavení motoru</text>
 					</label>

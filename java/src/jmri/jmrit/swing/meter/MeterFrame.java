@@ -1,5 +1,7 @@
 package jmri.jmrit.swing.meter;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
@@ -101,9 +103,10 @@ public class MeterFrame extends JmriJFrame {
     NamedIcon percentIcon;
     NamedIcon errorIcon;
 
-    JPanel pane1;
+    JLayeredPane pane1;
     JPanel meterPane;
-
+    JLabel jlDisplayName = new JLabel(Bundle.getMessage("VoltageMeterTitle"));
+    
     public MeterFrame() {
         this(UUID.randomUUID());
     }
@@ -167,10 +170,17 @@ public class MeterFrame extends JmriJFrame {
 
         meter.addPropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
         meter.enable();
+        
+        //set title and label to username or systemname
+        this.setTitle(m.getDisplayName());
+        jlDisplayName.setText(m.getDisplayName());
+        
+        //make this text semi-transparent
+        jlDisplayName.setForeground(new Color(0,0,0,128));
 
         if (frameIsInitialized) {
             // Initially we want to scale the icons to fit the previously saved window size
-            scaleImage();
+            scaleComponents();
 
             JCheckBoxMenuItem menuItem = meter_MenuItemMap.get(meter);
             menuItem.setSelected(true);
@@ -296,8 +306,7 @@ public class MeterFrame extends JmriJFrame {
         // clear the contents
         getContentPane().removeAll();
 
-        pane1 = new JPanel();
-        pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
+        pane1 = new JLayeredPane();
 
         meterPane = new JPanel();
         meterPane.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder()));
@@ -369,7 +378,7 @@ public class MeterFrame extends JmriJFrame {
         unitIconWidth = milliVoltIcon.getIconWidth();
 
         // Initially we want to scale the icons to fit the previously saved window size
-        scaleImage();
+        scaleComponents();
 
         if (meter != null) {
             meter.enable();
@@ -389,11 +398,13 @@ public class MeterFrame extends JmriJFrame {
                 new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                scaleImage();
+                scaleComponents();
             }
         });
 
-        pane1.add(meterPane);
+        //add both layers to the panel
+        pane1.add(meterPane, JLayeredPane.DEFAULT_LAYER);
+        pane1.add(jlDisplayName, JLayeredPane.PALETTE_LAYER);
         getContentPane().add(pane1);
 
         getContentPane().setPreferredSize(meterPane.getPreferredSize());
@@ -442,7 +453,7 @@ public class MeterFrame extends JmriJFrame {
     }
 
     // Scale the clock digit images to fit the size of the display window.
-    synchronized public void scaleImage() {
+    synchronized public void scaleComponents() {
 
         int frameHeight = this.getContentPane().getHeight()
                 - meterPane.getInsets().top - meterPane.getInsets().bottom;
@@ -471,6 +482,13 @@ public class MeterFrame extends JmriJFrame {
         percentIcon.scale(scale, this);
         errorIcon.scale(scale, this);
 
+        // resize the userName (note: bounds must be taller than font or some letters get clipped)
+        jlDisplayName.setBounds(0,0,frameWidth,frameHeight/4);
+        jlDisplayName.setFont(new Font("SansSerif", Font.ITALIC, (int) (frameHeight/5.5)));
+
+        //make the meterPane fit the window
+        meterPane.setBounds(0,0,frameWidth,frameHeight);
+        
         meterPane.revalidate();
         this.getContentPane().revalidate();
     }
@@ -530,7 +548,7 @@ public class MeterFrame extends JmriJFrame {
 
         if (widthOfAllIconsToDisplay != oldWidthOfAllIconsToDisplay){
             // clear the content pane and rebuild it.
-            scaleImage();
+            scaleComponents();
             oldWidthOfAllIconsToDisplay = widthOfAllIconsToDisplay;
         }
     }
@@ -546,6 +564,11 @@ public class MeterFrame extends JmriJFrame {
             return;
         }
 
+        // we want to keep the title and name updated to the displayname 
+        // so we do it on updates
+        setTitle(meter.getDisplayName());
+        jlDisplayName.setText(meter.getDisplayName());
+        
         double meterValue = meter.getKnownAnalogValue() * selectedUnit.multiply;
 
         switch (meter.getUnit()) {
@@ -625,7 +648,7 @@ public class MeterFrame extends JmriJFrame {
 
         if (widthOfAllIconsToDisplay != oldWidthOfAllIconsToDisplay){
             // clear the content pane and rebuild it.
-            scaleImage();
+            scaleComponents();
             oldWidthOfAllIconsToDisplay = widthOfAllIconsToDisplay;
         }
     }

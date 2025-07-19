@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Analog Control slider 1" CV="101" default="100">
+		<decVal max="255"/>
+		<label>Hysteresis Analog Mode (CV 101)</label>
+		<label xml:lang="de">Hysterese Analogbetrieb (CV 101)</label>
+		<tooltip>corresponds to 1 V voltage change for internal speed step change</tooltip>
+		<tooltip xml:lang="de">entspricht 1 V Spannungsveränderung für interne Fahrstufenveränderung</tooltip>
+	</variable>
+	<variable item="Analog Control slider 2" CV="102" default="10">
+		<decVal max="255"/>
+		<label>Voltage difference analog threshold value Start sound (CV 102)</label>
+		<label xml:lang="de">Schwellwert analog Sound starten (CV 102)</label>
+		<tooltip>= CV value * 100 mV</tooltip>
+		<tooltip xml:lang="de">= CV-Wert * 100 mV</tooltip>
+	</variable>
+	<variable item="Analog Control slider 3" CV="103" default="10">
+		<decVal max="255"/>
+		<label>Voltage difference Analog threshold value Start motor (CV 103)</label>
+		<label xml:lang="de">Schwellwert analog Motor starten (CV 103)</label>
+		<tooltip>= CV value * 100 mV</tooltip>
+		<tooltip xml:lang="de">= CV-Wert * 100 mV</tooltip>
+	</variable>
+	<variable item="Analog Control slider 4" CV="104" default="170">
+		<decVal max="255"/>
+		<label>Analog voltage for maximum speed (CV 104)</label>
+		<label xml:lang="de">Analogspannung für Höchstgeschwindigkeit (CV 104)</label>
+		<tooltip>= CV value * 100 mV</tooltip>
+		<tooltip xml:lang="de">= CV-Wert * 100 mV</tooltip>
+	</variable>
+</variables>

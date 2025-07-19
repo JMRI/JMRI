@@ -1,8 +1,6 @@
 package jmri;
 
 import javax.annotation.CheckForNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * General input device representation. Often subclassed for specific types of
@@ -30,6 +28,25 @@ public interface Sensor extends DigitalIO {
     // Max value for Debounce Parameter
     static final Long MAX_DEBOUNCE = 9999999L;
 
+    /**
+     * String constant for the Active Timer property.
+     */
+    String PROPERTY_ACTIVE_TIMER = "ActiveTimer";
+
+    /**
+     * String constant for the InActive Timer property.
+     */
+    String PROPERTY_INACTIVE_TIMER = "InActiveTimer";
+
+    /**
+     * String constant for the Global Timer property.
+     */
+    String PROPERTY_GLOBAL_TIMER = "GlobalTimer";
+
+    /**
+     * String constant for the inverted property.
+     */
+    String PROPERTY_SENSOR_INVERTED = "inverted";
 
     /** {@inheritDoc} */
     @Override
@@ -241,7 +258,8 @@ public interface Sensor extends DigitalIO {
      */
     PullResistance getPullResistance();
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",justification="Private not available in interface")
-    static final Logger log = LoggerFactory.getLogger(Sensor.class);
-    
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_LOGGER_SHOULD_BE_PRIVATE",
+        justification="Private not available in interface")
+    static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Sensor.class);
+
 }

@@ -5,10 +5,10 @@
   <!-- Copyright Kevin Dickerson 2011 -->
 
   <title>JMRI: Interlocking</title>
-  <meta name="author" content="Kevin Dickerson"><!--#include virtual="/Style.shtml" -->
+  <meta name="author" content="Kevin Dickerson"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
@@ -250,10 +250,10 @@
 
       <p><img src="images/blockrouting.png" width="542" height="460" alt="show block routing">
       </p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

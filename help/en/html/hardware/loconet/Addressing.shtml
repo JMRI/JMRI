@@ -5,10 +5,10 @@
   <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -896,7 +896,7 @@
 
       <p>LocoNet&reg; is a registered trademark of <a href="https://www.digitrax.com/">Digitrax,
       Inc.</a></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

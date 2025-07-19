@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an BiDiB connection.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Eckart Meyer Copyright (C) 2019-2023
@@ -62,7 +61,7 @@ public class BiDiBThrottle extends AbstractThrottle {
      * @param memo system connection memo to use
      * @param locoAddress DCC loco locoAddress
      */
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BiDiBThrottle(BiDiBSystemConnectionMemo memo, DccLocoAddress locoAddress) {
         super(memo);
         this.tc = memo.getBiDiBTrafficController();
@@ -191,7 +190,6 @@ public class BiDiBThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */

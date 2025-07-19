@@ -25,12 +25,12 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
-        
+
         LocationsByCarLoadFrame t = new LocationsByCarLoadFrame();
-        Assert.assertNotNull("exists", t);  
+        Assert.assertNotNull("exists", t);
         t.initComponents();
         Assert.assertTrue("frame visible", t.isVisible());
-        
+
         JUnitUtil.dispose(t);
 
     }
@@ -46,14 +46,14 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
 
         LocationsByCarLoadFrame lclf = new LocationsByCarLoadFrame();
         Assert.assertNotNull("exists", lclf);
-        
+
         lclf.initComponents(loc);
         Assert.assertTrue("frame visible", lclf.isVisible());
-        
+
         JUnitUtil.dispose(lclf);
 
     }
-    
+
     @Test
     public void testFrameSaveButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -64,22 +64,22 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", loc);
         Track track = loc.getTrackByName("NI Yard", null);
         Assert.assertNotNull("exists", track);
-        
+
         // confirm default load
         Assert.assertTrue(track.isLoadNameAndCarTypeAccepted("E", "Flat"));
 
         LocationsByCarLoadFrame lclf = new LocationsByCarLoadFrame();
         Assert.assertNotNull("exists", lclf);
-        
+
         lclf.initComponents(loc);
         Assert.assertTrue("frame visible", lclf.isVisible());
-        
+
         JemmyUtil.enterClickAndLeave(lclf.clearButton);
         JemmyUtil.enterClickAndLeave(lclf.saveButton);
-        
+
         // confirm change
         Assert.assertFalse(track.isLoadNameAndCarTypeAccepted("E", "Flat"));
-        
+
         JUnitUtil.dispose(lclf);
 
     }

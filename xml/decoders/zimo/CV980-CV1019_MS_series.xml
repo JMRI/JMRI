@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1.0 - Nigel Cliffe,  March 2025,  Zimo Sound Project Scripting variables  -->
+
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable CV="980" item="Script Variable 980">
+     <decVal/>
+    <label>Script Variable 980</label>
+  </variable>
+  <variable CV="981" item="Script Variable 981">
+     <decVal/>
+    <label>Script Variable 981</label>
+  </variable>
+  <variable CV="982" item="Script Variable 982">
+     <decVal/>
+    <label>Script Variable 982</label>
+  </variable>
+  <variable CV="983" item="Script Variable 983">
+     <decVal/>
+    <label>Script Variable 983</label>
+  </variable>
+  <variable CV="984" item="Script Variable 984">
+     <decVal/>
+    <label>Script Variable 984</label>
+  </variable>
+  <variable CV="985" item="Script Variable 985">
+     <decVal/>
+    <label>Script Variable 985</label>
+  </variable>
+  <variable CV="986" item="Script Variable 986">
+     <decVal/>
+    <label>Script Variable 986</label>
+  </variable>
+  <variable CV="987" item="Script Variable 987">
+     <decVal/>
+    <label>Script Variable 987</label>
+  </variable>
+  <variable CV="988" item="Script Variable 988">
+     <decVal/>
+    <label>Script Variable 988</label>
+  </variable>
+  <variable CV="989" item="Script Variable 989">
+     <decVal/>
+    <label>Script Variable 989</label>
+  </variable>
+  <variable CV="990" item="Script Variable 990">
+     <decVal/>
+    <label>Script Variable 990</label>
+  </variable>
+  <variable CV="991" item="Script Variable 991">
+     <decVal/>
+    <label>Script Variable 991</label>
+  </variable>
+  <variable CV="992" item="Script Variable 992">
+     <decVal/>
+    <label>Script Variable 992</label>
+  </variable>
+  <variable CV="993" item="Script Variable 993">
+     <decVal/>
+    <label>Script Variable 993</label>
+  </variable>
+  <variable CV="994" item="Script Variable 994">
+     <decVal/>
+    <label>Script Variable 994</label>
+  </variable>
+  <variable CV="995" item="Script Variable 995">
+     <decVal/>
+    <label>Script Variable 995</label>
+  </variable>
+  <variable CV="996" item="Script Variable 996">
+     <decVal/>
+    <label>Script Variable 996</label>
+  </variable>
+  <variable CV="997" item="Script Variable 997">
+     <decVal/>
+    <label>Script Variable 997</label>
+  </variable>
+  <variable CV="998" item="Script Variable 998">
+     <decVal/>
+    <label>Script Variable 998</label>
+  </variable>
+  <variable CV="999" item="Script Variable 999">
+     <decVal/>
+    <label>Script Variable 999</label>
+  </variable>
+    <variable CV="1000" item="Script Variable 1000">
+     <decVal/>
+    <label>Script Variable 1000</label>
+  </variable>
+  <variable CV="1001" item="Script Variable 1001">
+     <decVal/>
+    <label>Script Variable 1001</label>
+  </variable>
+  <variable CV="1002" item="Script Variable 1002">
+     <decVal/>
+    <label>Script Variable 1002</label>
+  </variable>
+  <variable CV="1003" item="Script Variable 1003">
+     <decVal/>
+    <label>Script Variable 1003</label>
+  </variable>
+  <variable CV="1004" item="Script Variable 1004">
+     <decVal/>
+    <label>Script Variable 1004</label>
+  </variable>
+  <variable CV="1005" item="Script Variable 1005">
+     <decVal/>
+    <label>Script Variable 1005</label>
+  </variable>
+  <variable CV="1006" item="Script Variable 1006">
+     <decVal/>
+    <label>Script Variable 1006</label>
+  </variable>
+  <variable CV="1007" item="Script Variable 1007">
+     <decVal/>
+    <label>Script Variable 1007</label>
+  </variable>
+  <variable CV="1008" item="Script Variable 1008">
+     <decVal/>
+    <label>Script Variable 1008</label>
+  </variable>
+  <variable CV="1009" item="Script Variable 1009">
+     <decVal/>
+    <label>Script Variable 1009</label>
+  </variable>
+  <variable CV="1010" item="Script Variable 1010">
+     <decVal/>
+    <label>Script Variable 1010</label>
+  </variable>
+  <variable CV="1011" item="Script Variable 1011">
+     <decVal/>
+    <label>Script Variable 1011</label>
+  </variable>
+  <variable CV="1012" item="Script Variable 1012">
+     <decVal/>
+    <label>Script Variable 1012</label>
+  </variable>
+  <variable CV="1013" item="Script Variable 1013">
+     <decVal/>
+    <label>Script Variable 1013</label>
+  </variable>
+  <variable CV="1014" item="Script Variable 1014">
+     <decVal/>
+    <label>Script Variable 1014</label>
+  </variable>
+  <variable CV="1015" item="Script Variable 1015">
+     <decVal/>
+    <label>Script Variable 1015</label>
+  </variable>
+  <variable CV="1016" item="Script Variable 1016">
+     <decVal/>
+    <label>Script Variable 1016</label>
+  </variable>
+  <variable CV="1017" item="Script Variable 1017">
+     <decVal/>
+    <label>Script Variable 1017</label>
+  </variable>
+  <variable CV="1018" item="Script Variable 1018">
+     <decVal/>
+    <label>Script Variable 1018</label>
+  </variable>
+  <variable CV="1019" item="Script Variable 1019">
+     <decVal/>
+    <label>Script Variable 1019</label>
+  </variable>
+
+  
+</variables>

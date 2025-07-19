@@ -5,11 +5,11 @@
   <title>JMRI: Building with Eclipse</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Eclipse">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -295,9 +295,9 @@ pour: <pre>-Djava.library.path=.;lib;lib/windows/x64
 	alt="Eclipse Error pane"></a>
 	</p>
 
-		  <!--#include virtual="/Footer_fr.shtml" -->
+		  <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
   		</div><!-- closes #mainContent-->
 	</div><!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

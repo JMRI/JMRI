@@ -70,6 +70,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         log.trace("start to get configuration profile - locate files");
         // Needs to be done before loading a ConfigManager or UserPreferencesManager
         FileUtil.createDirectory(FileUtil.getPreferencesPath());
+        // Load permission manager
+        InstanceManager.getDefault(PermissionManager.class);
         // Needs to be declared final as we might need to
         // refer to this on the Swing thread
         final File profileFile;
@@ -137,7 +139,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new AppsConfigurationManager());
 
         // record startup
-        InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
+        String appString = String.format("%s (v%s)", jmri.Application.getApplicationName(), Version.getCanonicalVersion());
+        InstanceManager.getDefault(FileHistory.class).addOperation("app", appString, null);
 
         // Install abstractActionModel
         InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
@@ -328,22 +331,26 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             if (e instanceof MouseEvent) {
                 JmriMouseEvent me = new JmriMouseEvent((MouseEvent) e);
                 if (me.isPopupTrigger() && me.getComponent() instanceof JTextComponent) {
-                    final JTextComponent component1 = (JTextComponent) me.getComponent();
-                    final JPopupMenu menu = new JPopupMenu();
-                    JMenuItem item;
-                    item = new JMenuItem(new DefaultEditorKit.CopyAction());
-                    item.setText("Copy");
-                    item.setEnabled(component1.getSelectionStart() != component1.getSelectionEnd());
-                    menu.add(item);
-                    item = new JMenuItem(new DefaultEditorKit.CutAction());
-                    item.setText("Cut");
-                    item.setEnabled(component1.isEditable() && component1.getSelectionStart() != component1.getSelectionEnd());
-                    menu.add(item);
-                    item = new JMenuItem(new DefaultEditorKit.PasteAction());
-                    item.setText("Paste");
-                    item.setEnabled(component1.isEditable());
-                    menu.add(item);
-                    menu.show(me.getComponent(), me.getX(), me.getY());
+                    var tc = (JTextComponent)me.getComponent();
+                    // provide a pop up if one not already defined
+                    if (tc.getComponentPopupMenu() == null) {
+                        final JTextComponent component1 = (JTextComponent) me.getComponent();
+                        final JPopupMenu menu = new JPopupMenu();
+                        JMenuItem item;
+                        item = new JMenuItem(new DefaultEditorKit.CopyAction());
+                        item.setText("Copy");
+                        item.setEnabled(component1.getSelectionStart() != component1.getSelectionEnd());
+                        menu.add(item);
+                        item = new JMenuItem(new DefaultEditorKit.CutAction());
+                        item.setText("Cut");
+                        item.setEnabled(component1.isEditable() && component1.getSelectionStart() != component1.getSelectionEnd());
+                        menu.add(item);
+                        item = new JMenuItem(new DefaultEditorKit.PasteAction());
+                        item.setText("Paste");
+                        item.setEnabled(component1.isEditable());
+                        menu.add(item);
+                        menu.show(me.getComponent(), me.getX(), me.getY());
+                    }
                 }
             }
         }, eventMask);
@@ -471,7 +478,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     protected String line2() {
-        return "http://jmri.org/";
+        return "https://jmri.org/";
     }
 
     protected String line3() {

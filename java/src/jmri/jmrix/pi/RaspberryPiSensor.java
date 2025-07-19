@@ -15,9 +15,6 @@ import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import jmri.jmrix.pi.simulator.GpioSimulator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Sensor interface for RaspberryPi GPIO pins.
  *
@@ -96,33 +93,24 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
      */
     @Override
     public void requestUpdateFromLayout() {
-       if (pin.isHigh())
-          setOwnState(Sensor.ACTIVE);
-       else setOwnState(Sensor.INACTIVE);
-    }
-
-    @Override
-    public void dispose() {
-        try {
-            gpio.unprovisionPin(pin);
-            // will remove all listeners and triggers from pin and remove it from the <GpioPin> pins list in _gpio
-        } catch ( com.pi4j.io.gpio.exception.GpioPinNotProvisionedException npe ){
-            log.trace("Pin not provisioned, was this sensor already disposed?");
-        }
-        super.dispose();
+        setStateBeforeInvert(pin.isHigh());
     }
 
     @Override
     public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event){
-       // log pin state change
-       log.debug("GPIO PIN STATE CHANGE: {} = {}", event.getPin(), event.getState());
-       if (event.getPin() == pin){
-          if (event.getState().isHigh()) {
-             setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
-          } else {
-             setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
-          }
+        // log pin state change
+        log.debug("GPIO PIN STATE CHANGE: {} = {}", event.getPin(), event.getState());
+        if (event.getPin() == pin){
+            setStateBeforeInvert(event.getState().isHigh());
        }
+    }
+
+    private void setStateBeforeInvert(boolean high) {
+        if ( high ) {
+            setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
+        } else {
+            setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
+        }
     }
 
     /**
@@ -170,6 +158,17 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiSensor.class);
+    @Override
+    public void dispose() {
+        try {
+            gpio.unprovisionPin(pin);
+            // will remove all listeners and triggers from pin and remove it from the <GpioPin> pins list in _gpio
+        } catch ( com.pi4j.io.gpio.exception.GpioPinNotProvisionedException npe ){
+            log.trace("Pin not provisioned, was this sensor already disposed?");
+        }
+        super.dispose();
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RaspberryPiSensor.class);
 
 }

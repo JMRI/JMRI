@@ -7,8 +7,6 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the
@@ -26,31 +24,21 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
 
         options.remove(option2Name);
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationOptions(), false));
+        setOptionState("TranspondingPresent", "Yes"); // set the default value
+    }
 
+    @Override
+    protected void reportOpen(String portName) {
+        log.info("Connecting USB DCS240Plus via {} {}", portName, currentSerialPort);
     }
 
     /**
-     * Sets up the serial port characteristics.  Always uses flow control, which is
-     * not considered a user-settable option.  Sets the DCS240Plus USB interface for the appropriate
-     * operating mode, based on the selected "command station type".
-     *
-     * @param activeSerialPort  the port to be configured
+     * Always on flow control
      */
     @Override
-    protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        // configure flow control to always on
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
-        if (getOptionState(option1Name).equals(validOption1[1])) {
-            flow = SerialPort.FLOWCONTROL_NONE;
-        }
-        configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        log.info("USB DCS240Plus adapter{}{} RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN, activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=", activeSerialPort.getFlowControlMode());
+    protected void setLocalFlowControl() {
+        FlowControl flow = FlowControl.RTSCTS;
+        setFlowControl(currentSerialPort, flow);
     }
 
     /**
@@ -63,6 +51,7 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
     public void configure() {
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
+
         if (commandStationType == LnCommandStationType.COMMAND_STATION_USB_DCS240PLUS_ALONE) {
             // DCS240Plus USB in standalone programmer case:
             // connect to a packetizing traffic controller
@@ -77,6 +66,10 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
 
             // set traffic controller and configure command station and mangers
             this.getSystemConnectionMemo().setLnTrafficController(packets);
+            // DCS204+ has transponding built in
+            setOptionState("TranspondingPresent", "Yes");
+            mTranspondingAvailable = true;
+
             // do the common manager config
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                     mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable, mInterrogateAtStart, mLoconetProtocolAutoDetect);  // never transponding!
@@ -96,8 +89,10 @@ public class UsbDcs240PlusAdapter extends LocoBufferAdapter {
 
         } else {
             // MS100 modes - connecting to a separate command station
-            // get transponding option
+            // set transponding option - DCS240+ has transponding built in
+            setOptionState("TranspondingPresent", "Yes");
             setTranspondingAvailable(getOptionState("TranspondingPresent"));
+            
             setInterrogateOnStart(getOptionState("InterrogateOnStart"));
             setLoconetProtocolAutoDetect(getOptionState("LoconetProtocolAutoDetect"));
             // connect to a packetizing traffic controller

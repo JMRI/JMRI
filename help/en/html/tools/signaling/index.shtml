@@ -8,10 +8,10 @@
   <meta name="Author" content="Bob Jacobsen">
   <meta name="Author" content="Egbert Broerse">
   <meta name="Author" content="B. Milhaupt">
-  <meta name="Date.Modified" content="20200106"><!--#include virtual="/Style.shtml" -->
+  <meta name="Date.Modified" content="20200106"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -171,7 +171,7 @@
           <strong>System Name</strong> The name of a JMRI object identifying either a virtual
           (Internal) or physical piece of hardware being used, e.g. an output on a decoder to
           control a signal. The System Name must follow certain <a href=
-          "../../doc/Technical/Names.shtml">Naming Rules</a> to be correctly interpreted bij JMRI,
+          "../../doc/Technical/Names.shtml">Naming Rules</a> to be correctly interpreted by JMRI,
           and the name will vary depending on your hardware so it must match your DCC system.
         </li>
       </ul>
@@ -538,11 +538,11 @@ signals.getSignalHead("IH1").setAppearance(YELLOW)
         same signals.
         </li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

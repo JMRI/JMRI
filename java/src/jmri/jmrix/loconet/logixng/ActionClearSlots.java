@@ -33,12 +33,13 @@ public class ActionClearSlots extends AbstractDigitalAction {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionClearSlots copy = new ActionClearSlots(sysName, userName, _memo);
+        copy.setComment(getComment());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryLocoNet.LOCONET;
     }
 

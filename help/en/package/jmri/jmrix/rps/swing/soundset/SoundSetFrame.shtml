@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: RPS Sound Speed Control</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: RPS Sound Speed Control</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -47,11 +47,11 @@
       <p>Currently, the automatic update only works while this window is open. Once we have more
       experience with this tool, we'll probably make this feature operate automatically, without
       needing the window.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

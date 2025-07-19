@@ -71,6 +71,11 @@ public class LocationManagerXml extends OperationsXml implements InstanceManager
             log.debug("{} file could not be read", name);
             return;
         }
+        
+        if (!root.getName().equals("operations-config")) {
+            log.warn("OperationsPro location file corrupted");
+            return;
+        }
 
         InstanceManager.getDefault(DivisionManager.class).load(root);
         InstanceManager.getDefault(LocationManager.class).load(root);

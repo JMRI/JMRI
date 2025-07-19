@@ -1,10 +1,7 @@
 package jmri.jmrix.rps.serial;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Arrays;
+import java.io.IOException;
 
 import jmri.InvokeOnGuiThread;
 import jmri.jmrix.rps.Distributor;
@@ -14,14 +11,6 @@ import jmri.jmrix.rps.RpsSystemConnectionMemo;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the RPS system.
@@ -70,64 +59,39 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         this.getSystemConnectionMemo().configureManagers();
     }
 
-    transient SerialPort activeSerialPort = null;
-
     @Override
     public synchronized String openPort(String portName, String appName) {
-        // open the port, check ability to set moderators
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
 
-            // try to set it for communication via SerialDriver
-            try {
-                // find the baud rate value, configure comm options
-                int baud = currentBaudNumber(mBaudRate);
-                activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
-
-            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            configureLeadsAndFlowControl(activeSerialPort, 0);
-
-            // set timeout
-            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(),
-                    activeSerialPort.isReceiveTimeoutEnabled());
-
-            // get and save streams
-            serialStream = new DataInputStream(activeSerialPort.getInputStream());
-            ostream = activeSerialPort.getOutputStream();
-
-            // start getting the initial message
-            sendBytes(new byte[]{(byte) 'A', 13});
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                log.info("{} port opened at {} baud, sees  DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        // get and open the primary port
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
+            log.error("failed to connect RPS to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
         }
+        log.info("Connecting RPS to {} {}", portName, currentSerialPort);
+        
+        // try to set it for communication via SerialDriver
+        // find the baud rate value, configure comm options
+        int baud = currentBaudNumber(mBaudRate);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
+        setFlowControl(currentSerialPort, FlowControl.NONE);
+
+        // report status
+        reportPortStatus(log, portName);
+
+        opened = true;
+        
+        // capture streams
+        serialStream = getInputStream();
+        ostream = getOutputStream();
 
         return null; // indicates OK return
     }
 
+    java.io.DataInputStream serialStream;
+    java.io.OutputStream ostream;
+    
     /**
      * Send output bytes, e.g. characters controlling operation, with small
      * delays between the characters. This is used to reduce overrrun problems.
@@ -150,28 +114,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     }
 
     // base class methods for the PortController interface
-    @Override
-    public synchronized DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public synchronized DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: ", e);
-        }
-        return null;
-    }
-
     @Override
     public boolean status() {
         return opened;
@@ -217,9 +159,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
     }
 
     // private control members
-    private boolean opened = false;
-    transient DataInputStream serialStream = null;
-    volatile OutputStream ostream = null;
     int[] offsetArray = null;
 
     // code for handling the input characters
@@ -450,6 +389,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialAdapter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialAdapter.class);
 
 }

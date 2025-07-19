@@ -1,14 +1,5 @@
 package jmri.server.json.operations;
 
-import static jmri.server.json.operations.JsonOperations.CAR;
-import static jmri.server.json.operations.JsonOperations.CARS;
-import static jmri.server.json.operations.JsonOperations.ENGINE;
-import static jmri.server.json.operations.JsonOperations.ENGINES;
-import static jmri.server.json.operations.JsonOperations.LOCATION;
-import static jmri.server.json.operations.JsonOperations.LOCATIONS;
-import static jmri.server.json.operations.JsonOperations.TRAIN;
-import static jmri.server.json.operations.JsonOperations.TRAINS;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -18,10 +9,10 @@ import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -36,11 +27,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.server.json.JSON;
-import jmri.server.json.JsonConnection;
-import jmri.server.json.JsonException;
-import jmri.server.json.JsonRequest;
-import jmri.server.json.JsonSocketService;
+import jmri.server.json.*;
 
 /**
  * @author Randall Wood (C) 2016, 2019, 2020
@@ -78,16 +65,16 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                 service.doDelete(type, name, data, request);
                 // remove listener to object being deleted
                 switch (type) {
-                    case CAR:
+                    case JsonOperations.CAR:
                         carListeners.remove(name);
                         break;
-                    case ENGINE:
+                    case JsonOperations.ENGINE:
                         engineListeners.remove(name);
                         break;
-                    case LOCATION:
+                    case JSON.LOCATION:
                         locationListeners.remove(name);
                         break;
-                    case TRAIN:
+                    case JsonOperations.TRAIN:
                         trainListeners.remove(name);
                         break;
                     default:
@@ -106,37 +93,37 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         if (!request.method.equals(JSON.DELETE)) {
             if (request.method.equals(JSON.PUT) && name.isEmpty()) {
                 // cover situations where object was just created, so client could not specify correct name
-                if (CAR.equals(type) || ENGINE.equals(type)) {
+                if (JsonOperations.CAR.equals(type) || JsonOperations.ENGINE.equals(type)) {
                     name = RollingStock.createId(data.path(JSON.ROAD).asText(), data.path(JSON.NUMBER).asText());
-                } else if (LOCATION.equals(type)) {
+                } else if (JSON.LOCATION.equals(type)) {
                     name = InstanceManager.getDefault(LocationManager.class).getLocationByName(data.path(JSON.USERNAME).asText()).getId();
                 } else {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "ErrorMissingName", request.id);
                 }
             }
             switch (type) {
-                case CAR:
+                case JsonOperations.CAR:
                     carListeners.computeIfAbsent(name, id -> {
                         CarListener l = new CarListener(id);
                         InstanceManager.getDefault(CarManager.class).getById(id).addPropertyChangeListener(l);
                         return l;
                     });
                     break;
-                case ENGINE:
+                case JsonOperations.ENGINE:
                     engineListeners.computeIfAbsent(name, id -> {
                         EngineListener l = new EngineListener(id);
                         InstanceManager.getDefault(EngineManager.class).getById(id).addPropertyChangeListener(l);
                         return l;
                     });
                     break;
-                case LOCATION:
+                case JSON.LOCATION:
                     locationListeners.computeIfAbsent(name, id -> {
                         LocationListener l = new LocationListener(id);
                         InstanceManager.getDefault(LocationManager.class).getLocationById(id).addPropertyChangeListener(l);
                         return l;
                     });
                     break;
-                case TRAIN:
+                case JsonOperations.TRAIN:
                     trainListeners.computeIfAbsent(name, id -> {
                         TrainListener l = new TrainListener(id);
                         InstanceManager.getDefault(TrainManager.class).getTrainById(id).addPropertyChangeListener(l);
@@ -155,23 +142,23 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             throws IOException, JmriException, JsonException {
         connection.sendMessage(service.doGetList(type, data, request), request.id);
         switch (type) {
-            case CAR:
-            case CARS:
+            case JsonOperations.CAR:
+            case JsonOperations.CARS:
                 log.debug("adding CarsListener");
                 InstanceManager.getDefault(CarManager.class).addPropertyChangeListener(carsListener);
                 break;
-            case ENGINE:
-            case ENGINES:
+            case JsonOperations.ENGINE:
+            case JsonOperations.ENGINES:
                 log.debug("adding EnginesListener");
                 InstanceManager.getDefault(EngineManager.class).addPropertyChangeListener(enginesListener);
                 break;
-            case LOCATION:
-            case LOCATIONS:
+            case JSON.LOCATION:
+            case JSON.LOCATIONS:
                 log.debug("adding LocationsListener");
                 InstanceManager.getDefault(LocationManager.class).addPropertyChangeListener(locationsListener);
                 break;
-            case TRAIN:
-            case TRAINS:
+            case JsonOperations.TRAIN:
+            case JsonOperations.TRAINS:
                 log.debug("adding TrainsListener");
                 InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(trainsListener);
                 break;
@@ -262,7 +249,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            propertyChange(CAR, carListeners);
+            propertyChange(JsonOperations.CAR, carListeners);
         }
     }
 
@@ -274,7 +261,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            propertyChange(CAR);
+            propertyChange(JsonOperations.CAR);
         }
     }
 
@@ -286,7 +273,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            propertyChange(ENGINE, engineListeners);
+            propertyChange(JsonOperations.ENGINE, engineListeners);
         }
     }
 
@@ -298,7 +285,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            propertyChange(ENGINE);
+            propertyChange(JsonOperations.ENGINE);
         }
     }
 
@@ -310,7 +297,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            propertyChange(LOCATION, locationListeners);
+            propertyChange(JSON.LOCATION, locationListeners);
         }
     }
 
@@ -322,7 +309,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            propertyChange(LOCATION);
+            propertyChange(JSON.LOCATION);
         }
     }
 
@@ -334,7 +321,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            propertyChange(TRAIN, trainListeners);
+            propertyChange(JsonOperations.TRAIN, trainListeners);
         }
     }
 
@@ -346,7 +333,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            propertyChange(TRAIN);
+            propertyChange(JsonOperations.TRAIN);
         }
     }
 }

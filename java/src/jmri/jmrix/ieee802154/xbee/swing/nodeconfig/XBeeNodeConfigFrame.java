@@ -30,8 +30,8 @@ import jmri.util.swing.JmriJOptionPane;
 public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame implements IDiscoveryListener {
 
     private XBeeTrafficController xtc = null;
-    protected javax.swing.JButton discoverButton = new javax.swing.JButton(Bundle.getMessage("ButtonDiscover"));
-    private JComboBox<XBeeNode> nodeField = new javax.swing.JComboBox<XBeeNode>();
+    protected final javax.swing.JButton discoverButton = new javax.swing.JButton(Bundle.getMessage("ButtonDiscover"));
+    private final JComboBox<XBeeNode> nodeField = new javax.swing.JComboBox<>();
     protected JTable assignmentTable = null;
     protected javax.swing.table.TableModel assignmentListModel = null;
 
@@ -94,12 +94,7 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
         panel11.add(new JLabel(Bundle.getMessage("LabelNodeSelection") + " "));
         panel11.add(nodeField);
         nodeField.setToolTipText(Bundle.getMessage("TipNodeSelection"));
-        nodeField.addItemListener(new java.awt.event.ItemListener() {
-            @Override
-            public void itemStateChanged(java.awt.event.ItemEvent e) {
-                   nodeSelected();
-            }
-        });
+        nodeField.addItemListener(e -> nodeSelected());
 
         initAddressBoxes();
 
@@ -119,79 +114,44 @@ public class XBeeNodeConfigFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.
         addButton.setText(Bundle.getMessage("ButtonAdd"));
         addButton.setVisible(true);
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
-        addButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                addButtonActionPerformed();
-            }
-        });
+        addButton.addActionListener(e -> addButtonActionPerformed());
         panel4.add(addButton);
         discoverButton.setText(Bundle.getMessage("ButtonDiscover"));
         discoverButton.setVisible(true);
         discoverButton.setToolTipText(Bundle.getMessage("TipAddButton"));
-        discoverButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                discoverButtonActionPerformed();
-            }
-        });
+        discoverButton.addActionListener(e -> discoverButtonActionPerformed());
         discoverButton.setEnabled(!(xtc.getXBee().getNetwork().isDiscoveryRunning()));
         panel4.add(discoverButton);
         editButton.setText(Bundle.getMessage("ButtonEdit"));
         editButton.setVisible(true);
         editButton.setToolTipText(Bundle.getMessage("TipEditButton"));
         panel4.add(editButton);
-        editButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                editButtonActionPerformed();
-            }
-        });
+        editButton.addActionListener(e -> editButtonActionPerformed());
         panel4.add(deleteButton);
         deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.setVisible(true);
         deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         panel4.add(deleteButton);
-        deleteButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                deleteButtonActionPerformed();
-            }
-        });
+        deleteButton.addActionListener(e -> deleteButtonActionPerformed());
         panel4.add(doneButton);
         doneButton.setText(Bundle.getMessage("ButtonDone"));
         doneButton.setVisible(true);
         doneButton.setToolTipText(Bundle.getMessage("TipDoneButton"));
         panel4.add(doneButton);
-        doneButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                doneButtonActionPerformed();
-            }
-        });
+        doneButton.addActionListener(e -> doneButtonActionPerformed());
         panel4.add(updateButton);
         updateButton.setText(Bundle.getMessage("ButtonUpdate"));
         updateButton.setVisible(true);
         updateButton.setToolTipText(Bundle.getMessage("TipUpdateButton"));
         panel4.add(updateButton);
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                updateButtonActionPerformed();
-            }
-        });
+        updateButton.addActionListener(e -> updateButtonActionPerformed());
         updateButton.setVisible(false);
         panel4.add(cancelButton);
         cancelButton.setText(Bundle.getMessage("ButtonCancel"));
         cancelButton.setVisible(true);
         cancelButton.setToolTipText(Bundle.getMessage("TipCancelButton"));
         panel4.add(cancelButton);
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                cancelButtonActionPerformed();
-            }
-        });
+        cancelButton.addActionListener(e -> cancelButtonActionPerformed());
         cancelButton.setVisible(false);
         return panel4;
     }

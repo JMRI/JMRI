@@ -97,7 +97,8 @@ public class ExceptionContext {
             sb.append(getHint()).append(System.lineSeparator());
         }
 
-        if (!getException().getMessage().equals(getException().getLocalizedMessage())) {
+        String msg = getException().getMessage();
+        if ( msg != null && !msg.equals(getException().getLocalizedMessage())) {
             sb.append(getException().getLocalizedMessage()).append(System.lineSeparator());
         }
 

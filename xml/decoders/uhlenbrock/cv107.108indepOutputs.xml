@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<copyright xmlns="http://docbook.org/ns/docbook">
 		<year>2014</year>
 		<holder>JMRI</holder>
@@ -59,13 +59,19 @@
 			<revnumber>3</revnumber>
 			<date>2023-01-08</date>
 			<authorinitials>UG</authorinitials>
-			<revremark>Added "Tillig 0423x" decoder</revremark>
+			<revremark>Added "Tillig0423x" decoder</revremark>
+		</revision>
+		<revision>
+			<revnumber>4</revnumber>
+			<date>2023-12-26</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Added "Tillig66036" decoder</revremark>
 		</revision>	
 		<!-- Uhlenbrock Decoder Configuration CV 107/108 - independent control of A1/A2 outputs -->
 		<!-- valid for 73100, 73140, 75330, 76425, 76560 (IntelliSound4); 73105, 73235, 73405, PIKO41RH2400 (IntelliDrive2)
                            (to be declared explicitly with include)                       -->
 	</revhistory>
-	<variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Output 1 effect generated" CV="107" default="0" mask="VVVVXXXX" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<!--repeat include= below-->
 		<enumVal>
 			<enumChoice choice="Deactivated">
@@ -90,7 +96,7 @@
 					<choice>A4</choice>
 				</enumChoice>
 			</enumChoiceGroup>
-			<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120,Tillig 0423x">
+			<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120,Tillig0423x,Tillig66036">
 				<enumChoice choice="A5">
 					<choice>A5</choice>
 				</enumChoice>
@@ -112,7 +118,7 @@
 		<tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
 		<tooltip xml:lang="cs">Deaktivováno - deaktivuje OBOJE Přední i Zadní světla volba přepínač vypnuto</tooltip>
 	</variable>
-	<variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Output 1 behavior" CV="107" default="0" mask="XXXXVVVV" minOut="3" include="73100,73140,75330,76425,76560,73105,73235,73405,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<enumVal>
 			<enumChoice choice="None">
 				<choice>None</choice>
@@ -167,7 +173,7 @@
 		<tooltip xml:lang="it">La funzione selezionata non deve essere usata per altri scopi con la mappa funzioni</tooltip>
 		<tooltip xml:lang="cs">Vybraná funkce nesmí být použita poro jiný účel pomocí mapování funkcí</tooltip>
 	</variable>
-	<variable item="Output 2 effect generated" CV="108" default="0" mask="VVVVXXXX" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,PIKO41RH2400,Tillig 0423x">
+	<variable item="Output 2 effect generated" CV="108" default="0" mask="VVVVXXXX" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<enumVal>
 			<enumChoice choice="Deactivated">
 				<choice>Deactivated</choice>
@@ -183,7 +189,7 @@
 					<choice>A2</choice>
 				</enumChoice>
 			</enumChoiceGroup>
-			<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120,Tillig 0423x">
+			<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120,Tillig0423x,Tillig66036">
 				<enumChoice choice="A3">
 					<choice>A3</choice>
 				</enumChoice>
@@ -191,7 +197,7 @@
 					<choice>A4</choice>
 				</enumChoice>
 			</enumChoiceGroup>
-			<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120,Tillig 0423x">
+			<enumChoiceGroup exclude="73105,73115,73145,73405,73415,74120,Tillig0423x,Tillig66036">
 				<enumChoice choice="A5">
 					<choice>A5</choice>
 				</enumChoice>
@@ -213,7 +219,7 @@
 		<tooltip xml:lang="it">Disattivata - saranno disattivate entrambe le opzioni di spegnimento luci frontali e posteriori</tooltip>
 		<tooltip xml:lang="cs">Deaktivováno - deaktivuje OBOJE Přední i Zadní světla volba přepínač vypnuto</tooltip>
 	</variable>
-	<variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,74120,PIKO41RH2400,Tillig 0423x">
+	<variable item="Output 2 behavior" CV="108" default="0" mask="XXXXVVVV" minOut="4" include="73100,73140,75330,76425,76560,73105,73115,73235,73405,74120,PIKO41RH2400,Tillig0423x,Tillig66036">
 		<enumVal>
 			<enumChoice choice="None">
 				<choice>None</choice>

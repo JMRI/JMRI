@@ -6,10 +6,10 @@
   <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -196,16 +196,8 @@
       <h3>Editing an existing Route</h3>
 
       <ol>
-        <li>Edit of an existing Route may be started in either of two ways:
-          <ul>
-            <li>Click on a Route's <strong>Edit</strong> button in the Route Table.</li>
-
-            <li>Enter the System Name of the Route to be edited in the Add/Edit Route pane and
-            click the <strong>Edit Route</strong> button at the bottom of the pane. This must be
-            the same as one of the System Names shown in the Route Table.</li>
-          </ul>
-          The <strong>Add Route</strong> and <strong>Edit Route</strong> buttons in the Add/Edit
-          Route pane will change to <strong>Update Route</strong> and <strong>Cancel</strong>.
+        <li>Edit of an existing Route may be started 
+        by clicking on a Route's <strong>Edit</strong> button in the Route Table.</li>
         </li>
 
         <li>Make whatever changes or additions you need to the information in the dialog. Note that
@@ -213,11 +205,12 @@
         Other items are as described <a href="#addroute">above</a>.
         </li>
 
-        <li>After making changes to the Route information, click <strong>Update Route</strong> to
-        change the selected Route. If everything is fine, a message stating "Route updated... "
-        will be displayed in the notes box near the bottom of the window. If there is any trouble,
+        <li>After making changes to the Route information, click <strong>Update</strong> to
+        change the selected Route. 
+        If there is any trouble,
         an error message will be displayed in the notes box, and the update is stopped for you to
-        correct the error and click <strong>Update Route</strong> again.</li>
+        correct the error and click <strong>Update Route</strong> again.
+        If all is OK, the Route will be updated and the window will close.</li>
 
         <li>Click <strong>Cancel</strong> to exit edit mode without changing the selected Route. If
         the Add/Edit Route window is dismissed (closed) while in edit mode, <strong>Cancel</strong>
@@ -368,11 +361,20 @@
       of the 'veto' Sensors and the 'veto' Turnout, if there is one, must be in their non-veto
       state _and_ at least one of the triggering Sensors or a triggering Turnout must see the
       appropriate change for the Route to be set.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      
+      <p>You can also specify whether the Route should respond to changes in the Known state
+        (the default) or whether it should respond to changes in the Commanded state.
+        If you are not using
+        <a href="../doc/Technical/TurnoutFeedback.shtml">turnout feedback</a>
+        these are the same.  If you do have feedback enabled, the Commanded state is what 
+        JMRI has requested will be set on the turnout, and the Known state is what
+        is returned from the feedback. Usually the default is the right choice here.
+      
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

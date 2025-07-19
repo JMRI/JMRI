@@ -1,10 +1,8 @@
 package jmri.jmrix.bidib.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBSignalMastXml class
@@ -12,19 +10,21 @@ import org.junit.Test;
  * @author  Eckart Meyer  Copyright (C) 2020
  */
 public class BiDiBSignalMastXmlTest {
-    
+
     @Test
     public void testCtor(){
-      Assert.assertNotNull("BiDiBSignalMastXml constructor",new BiDiBSignalMastXml());
+        BiDiBSignalMastXml t = new BiDiBSignalMastXml();
+        Assertions.assertNotNull(t, "BiDiBSignalMastXml constructor");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
-    
-    @After
+
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

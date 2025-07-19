@@ -4,10 +4,9 @@ import static org.junit.Assert.*;
 
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+
 import org.bidib.jbidibc.messages.enums.LcOutputType;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBAddress class
@@ -136,7 +135,7 @@ public class BiDiBAddressTest {
         JUnitAppender.assertWarnMessage("*** BiDiB system name \"BSTest1:p20S\" is invalid");
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         memo = new BiDiBSystemConnectionMemo();
@@ -148,7 +147,7 @@ public class BiDiBAddressTest {
         r = new BiDiBReporterManager(memo).typeLetter();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

@@ -1,42 +1,44 @@
 package jmri.server.json.operations;
 
 import static jmri.server.json.JSON.*;
+import static jmri.server.json.JSON.COMMENT;
+import static jmri.server.json.JSON.DESTINATION;
 import static jmri.server.json.JSON.ENGINES;
+import static jmri.server.json.JSON.KERNEL;
+import static jmri.server.json.JSON.LENGTH;
+import static jmri.server.json.JSON.LOCATION;
+import static jmri.server.json.JSON.MODEL;
+import static jmri.server.json.JSON.NUMBER;
+import static jmri.server.json.JSON.ROAD;
+import static jmri.server.json.JSON.TRACK;
+import static jmri.server.json.JSON.TYPE;
+import static jmri.server.json.JSON.WEIGHT;
 import static jmri.server.json.operations.JsonOperations.*;
-import static jmri.server.json.operations.JsonOperations.KERNEL;
 import static jmri.server.json.operations.JsonOperations.OUT_OF_SERVICE;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import jmri.InstanceManager;
-import jmri.Reporter;
-import jmri.ReporterManager;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.*;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.server.json.JsonException;
-import jmri.server.json.JsonHttpService;
-import jmri.server.json.JsonRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.server.json.*;
 
 /**
  * @author Randall Wood (C) 2016, 2018, 2019, 2020
@@ -416,8 +418,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
      * Set the properties in the data parameter for the train with the given id.
      * <p>
      * Currently only moves the train to the location given with the key
-     * {@value jmri.server.json.operations.JsonOperations#LOCATION}. If the move
-     * cannot be completed, throws error code 428.
+     * LOCATION. If the move cannot be completed, throws error code 428.
      *
      * @param name   id of the train
      * @param data   train data to change
@@ -456,7 +457,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
             }
         }
         location.setName(data.path(USERNAME).asText(location.getName()));
-        location.setComment(data.path(COMMENT).asText(location.getComment()));
+        location.setComment(data.path(COMMENT).asText(location.getCommentWithColor()));
         return utilities.getLocation(location, locale);
     }
 
@@ -608,10 +609,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     String trackId = node.path(TRACK).path(NAME).asText();
                     Track track = location.getTrackById(trackId);
                     if (trackId.isEmpty() || track != null) {
-                        if (!rs.setLocation(location, track).equals(Track.OKAY)) {
+                        String status = rs.setLocation(location, track);
+                        if (!status.equals(Track.OKAY)) {
                             throw new JsonException(HttpServletResponse.SC_CONFLICT,
                                     Bundle.getMessage(locale, "ErrorMovingCar",
-                                            rs.getId(), LOCATION, location.getId(), trackId), id);
+                                            rs.getId(), LOCATION, location.getId(), trackId, status), id);
                         }
                     } else {
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
@@ -623,10 +625,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 }
             } else { 
                 //if new location is null, remove car from current location
-                if (!rs.setLocation(null, null).equals(Track.OKAY)) {
+                String status = rs.setLocation(null, null);
+                if (!status.equals(Track.OKAY)) {
                     throw new JsonException(HttpServletResponse.SC_CONFLICT,
                             Bundle.getMessage(locale, "ErrorMovingCar",
-                                    rs.getId(), LOCATION, null, null), id);
+                                    rs.getId(), LOCATION, null, null, status), id);
                 }                
             }
         }
@@ -649,10 +652,11 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 String trackId = node.path(TRACK).path(NAME).asText();
                 Track track = location.getTrackById(trackId);
                 if (trackId.isEmpty() || track != null) {
-                    if (!rs.setDestination(location, track).equals(Track.OKAY)) {
+                    String status = rs.setDestination(location, track);
+                    if (!status.equals(Track.OKAY)) {
                         throw new JsonException(HttpServletResponse.SC_CONFLICT,
                                 Bundle.getMessage(locale, "ErrorMovingCar", rs.getId(),
-                                        DESTINATION, location.getId(), trackId),
+                                        DESTINATION, location.getId(), trackId, status),
                                 id);
                     }
                 } else {
@@ -665,22 +669,18 @@ public class JsonOperationsHttpService extends JsonHttpService {
             }
         }
         // set properties using the existing property as the default
-        rs.setRoadName(data.path(ROAD).asText(rs.getRoadName()));
-        rs.setNumber(data.path(NUMBER).asText(rs.getNumber()));
+        rs.setRoadName(data.path(JsonOperations.ROAD).asText(rs.getRoadName()));
+        rs.setNumber(data.path(JsonOperations.NUMBER).asText(rs.getNumber()));
         rs.setColor(data.path(COLOR).asText(rs.getColor()));
-        rs.setComment(data.path(COMMENT).asText(rs.getComment()));
-        rs.setOwnerName(data.path(OWNER).asText(rs.getOwnerName()));
+        rs.setComment(data.path(JsonOperations.COMMENT).asText(rs.getComment()));
+        rs.setOwnerName(data.path(JsonOperations.OWNER).asText(rs.getOwnerName()));
         rs.setBuilt(data.path(BUILT).asText(rs.getBuilt()));
-        if (data.path(WEIGHT).isValueNode()) {
-            rs.setWeight(Double.toString(data.path(WEIGHT).asDouble()));
-        }
-        if (data.path(WEIGHT_TONS).isValueNode()) {
-            rs.setWeightTons(Double.toString(data.path(WEIGHT_TONS).asDouble()));
-        }
+
+        rs.setWeightTons(data.path(WEIGHT_TONS).asText());
         rs.setRfid(data.path(RFID).asText(rs.getRfid()));
         rs.setLength(Integer.toString(data.path(LENGTH).asInt(rs.getLengthInteger())));
         rs.setOutOfService(data.path(OUT_OF_SERVICE).asBoolean(rs.isOutOfService()));
-        rs.setTypeName(data.path(CAR_TYPE).asText(rs.getTypeName()));
+        rs.setTypeName(data.path(JsonOperations.TYPE).asText(rs.getTypeName()));
         ObjectNode result = utilities.getRollingStock(rs, locale);
         if (!rs.getId().equals(name)) {
             result.put(RENAME, name);

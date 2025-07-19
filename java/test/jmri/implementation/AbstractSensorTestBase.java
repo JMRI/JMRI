@@ -33,7 +33,6 @@ public abstract class AbstractSensorTestBase {
     abstract public void checkStatusRequestMsgSent();
 
     // implementing classes must provide this abstract member:
-    @BeforeEach
     abstract public void setUp(); // load t with actual object; create scaffolds as needed
 
     protected AbstractSensor t = null; // holds object under test; set by setUp()
@@ -253,7 +252,6 @@ public abstract class AbstractSensorTestBase {
     }
 
     //dispose of t.
-    @AfterEach
     abstract public void tearDown();
 
 }

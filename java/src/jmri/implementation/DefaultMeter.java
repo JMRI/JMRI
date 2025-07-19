@@ -15,7 +15,7 @@ import jmri.VoltageMeter;
  */
 public class DefaultMeter extends AbstractAnalogIO implements Meter {
     
-    @Nonnull private final MeterUpdateTask _updateTask;
+    private final MeterUpdateTask _updateTask;
     @Nonnull private final Unit _unit;
     private final double _min;
     private final double _max;
@@ -25,28 +25,30 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
             @Nonnull String sys,
             @Nonnull Unit unit,
             double min, double max, double resolution,
-            @Nonnull MeterUpdateTask updateTask) {
+            MeterUpdateTask updateTask) { // null is valid if no updater needed
         super(sys, true);
         this._unit = unit;
         this._updateTask = updateTask;
         this._min = min;
         this._max = max;
         this._resolution = resolution;
-        _updateTask.addMeter(DefaultMeter.this);
+        if (_updateTask != null)  {
+            _updateTask.addMeter(DefaultMeter.this);
+        }
     }
     
     /** {@inheritDoc} */
     @Override
     public void enable() {
         log.debug("Enabling meter.");
-        _updateTask.enable(this);
+        if (_updateTask != null) _updateTask.enable(this);
     }
 
     /** {@inheritDoc} */
     @Override
     public void disable() {
         log.debug("Disabling meter.");
-        _updateTask.disable(this);
+        if (_updateTask != null) _updateTask.disable(this);
     }
 
     /**
@@ -116,7 +118,7 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
     /** {@inheritDoc} */
     @Override
     public void dispose() {
-        _updateTask.removeMeter(this);
+        if (_updateTask != null)_updateTask.removeMeter(this);
         super.dispose();
     }
     
@@ -125,7 +127,7 @@ public class DefaultMeter extends AbstractAnalogIO implements Meter {
      */
     @Override
     public void requestUpdateFromLayout() {
-        _updateTask.requestUpdateFromLayout();
+        if (_updateTask != null)_updateTask.requestUpdateFromLayout();
     }
     
     

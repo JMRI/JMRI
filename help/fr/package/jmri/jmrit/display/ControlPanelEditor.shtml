@@ -4,11 +4,11 @@
   <title>JMRI: L'&Eacute;diteur Panneau de Commande</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -298,9 +298,9 @@
       aucune modification ne serait apport&eacute;e &agrave;
       l'horloge.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

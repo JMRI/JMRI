@@ -479,6 +479,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -487,6 +488,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -495,6 +497,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -503,6 +506,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -511,6 +515,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 
@@ -550,6 +555,9 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         l = DCCppReply.parseDCCppReply("l 88 3 129 0"); //eStop (forward)
         Assert.assertEquals("Monitor string", "Loco State: LocoId:88 Dir:Forward Speed:-1 F0-28:00000000000000000000000000000", l.toMonitorString());
         Assert.assertTrue("eStop", l.isEStop());
+        l = DCCppReply.parseDCCppReply("l 1225 -1 239 0"); //reg is -1 (ignored)
+        Assert.assertEquals("Monitor string", "Loco State: LocoId:1225 Dir:Forward Speed:110 F0-28:00000000000000000000000000000", l.toMonitorString());
+        Assert.assertFalse("eStop", l.isEStop());
     }
 
     // Test the constructor with an address specified.

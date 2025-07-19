@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import jmri.Block;
+import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Sensor;
@@ -205,8 +206,7 @@ public class AutoAllocate implements Runnable {
                         continue;
                     }
                     // apparently holdAllocation() is not set when holding !!!
-                    if (InstanceManager.getDefault(DispatcherFrame.class)
-                            .getSignalType() == DispatcherFrame.SIGNALMAST &&
+                    if (activeTrain.getSignalType() == DispatcherFrame.SIGNALMAST &&
                             isSignalHeldAtStartOfSection(ar)) {
                         continue;
                     }
@@ -227,8 +227,10 @@ public class AutoAllocate implements Runnable {
                                 ar.getSection().getDisplayName());
                         // if the last allocated section is safe but not
                         // occupied short cut out of here
-                        if (arCurrentTransitSection.isSafe() &&
-                                activeTrain.getLastAllocatedSection().getOccupancy() != Section.OCCUPIED) {
+                        if ( (activeTrain.getLastAllocOverrideSafe() == null ||
+                                    ( activeTrain.getLastAllocOverrideSafe() != arCurrentTransitSection.getSection()))
+                                && arCurrentTransitSection.isSafe()
+                                && activeTrain.getLastAllocatedSection().getOccupancy() != Section.OCCUPIED) {
                             log.debug("Allocating Train [{}] has not arrived at Passing Point",
                                     trainName);
                             continue;
@@ -371,9 +373,9 @@ public class AutoAllocate implements Runnable {
                     // Section is currently free and not occupied
                     if ((ar.getSection().getState() == Section.FREE) &&
                             (ar.getSection().getOccupancy() != Section.OCCUPIED) &&
-                            (_dispatcher.getSignalType() == DispatcherFrame.SIGNALHEAD ||
-                                    _dispatcher.getSignalType() == DispatcherFrame.SECTIONSALLOCATED ||
-                                    (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST &&
+                            (ar.getActiveTrain().getSignalType() == DispatcherFrame.SIGNALHEAD ||
+                                    ar.getActiveTrain().getSignalType() == DispatcherFrame.SECTIONSALLOCATED ||
+                                    (ar.getActiveTrain().getSignalType() == DispatcherFrame.SIGNALMAST &&
                                             _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(),
                                                     ar) == null))) {
                         // requested Section is currently free and not
@@ -588,9 +590,9 @@ public class AutoAllocate implements Runnable {
         for (int i = 0; i < sList.size(); i++) {
             if ((sList.get(i).getOccupancy() == Section.UNOCCUPIED) &&
                     (sList.get(i).getState() == Section.FREE) &&
-                    (_dispatcher.getSignalType() == DispatcherFrame.SIGNALHEAD ||
-                            _dispatcher.getSignalType() == DispatcherFrame.SECTIONSALLOCATED ||
-                            (_dispatcher.getSignalType() == DispatcherFrame.SIGNALMAST &&
+                    (ar.getActiveTrain().getSignalType() == DispatcherFrame.SIGNALHEAD ||
+                            ar.getActiveTrain().getSignalType() == DispatcherFrame.SECTIONSALLOCATED ||
+                            (ar.getActiveTrain().getSignalType() == DispatcherFrame.SIGNALMAST &&
                                     _dispatcher.checkBlocksNotInAllocatedSection(sList.get(i), ar) == null))) {
                 return sList.get(i);
             }
@@ -771,6 +773,8 @@ public class AutoAllocate implements Runnable {
             if (allocateBySafeSections &&
                     (curAS != null) &&
                     ((curAS.getSection().getOccupancy() != jmri.Section.OCCUPIED) &&
+                            (ar.getActiveTrain().getLastAllocOverrideSafe() == null ||
+                                    ( ar.getActiveTrain().getLastAllocOverrideSafe() != curAS.getSection())) &&
                             ar.getActiveTrain().getTransit()
                                     .getTransitSectionFromSectionAndSeq(curAS.getSection(), curSeq).isSafe())) {
                 // last allocated section exists and is not occupied but is a
@@ -1205,7 +1209,7 @@ public class AutoAllocate implements Runnable {
                 }
             }
         }
-        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST) {
+        if (ar.getActiveTrain().getSignalType() == DispatcherFrame.SIGNALMAST) {
             if (!at.isAllocationReversed()) {
                 for (int i = 0; i < tsList.size(); i++) {
                     if (tsList.get(i).getSequenceNumber() > curSeq) {
@@ -1614,14 +1618,13 @@ public class AutoAllocate implements Runnable {
 
         Block facingBlock;
         Block protectingBlock;
-        if (ar.getSectionDirection() == jmri.Section.FORWARD) {
-            protectingBlock = sec.getBlockBySequenceNumber(0);
-            facingBlock = lastSec.getBlockBySequenceNumber(lastSec.getNumBlocks() - 1);
-        } else {
-            // Reverse
-            protectingBlock = sec.getBlockBySequenceNumber(sec.getNumBlocks() - 1);
-            facingBlock = lastSec.getBlockBySequenceNumber(0);
+        EntryPoint protectingEP = sec.getEntryPointFromSection(lastSec, ar.getSectionDirection());
+        EntryPoint facingEP =  lastSec.getExitPointToSection(sec, lastSec.getState());
+        if (protectingEP == null || facingEP == null ) {
+            return false;
         }
+        protectingBlock = protectingEP.getBlock();
+        facingBlock = facingEP.getBlock();
         if (protectingBlock == null || facingBlock == null) {
             return false;
         }

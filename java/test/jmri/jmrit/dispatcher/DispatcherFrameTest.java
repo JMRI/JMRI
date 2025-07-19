@@ -33,6 +33,9 @@ public class DispatcherFrameTest {
         dw.requestClose();
         // we still have a reference to the window, so make sure that clears
         JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
     }
 
     @Test
@@ -175,7 +178,7 @@ public class DispatcherFrameTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 }

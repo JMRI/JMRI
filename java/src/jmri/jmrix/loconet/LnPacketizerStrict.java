@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import java.util.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -182,19 +181,22 @@ public class LnPacketizerStrict extends LnPacketizer {
                 } catch (LocoNetMessageException e) {
                     // just let it ride for now
                     log.warn("run: unexpected LocoNetMessageException", e); // NOI18N
-                } catch (java.io.EOFException e) {
+                    continue;
+                } catch (java.io.EOFException | java.io.InterruptedIOException e) {
                     // posted from idle port when enableReceiveTimeout used
-                    log.trace("EOFException, is LocoNet serial I/O using timeouts?"); // NOI18N
+                    // Normal condition, go around the loop again
+                    continue;
                 } catch (java.io.IOException e) {
                     // fired when write-end of HexFile reaches end
                     log.debug("IOException, should only happen with HexFile", e); // NOI18N
                     log.info("End of file"); // NOI18N
                     disconnectPort(controller);
                     return;
-                } // normally, we don't catch RuntimeException, but in this
-                // permanently running loop it seems wise.
-                catch (RuntimeException e) {
+                } catch (RuntimeException e) {
+                    // normally, we don't catch RuntimeException, but in this
+                    // permanently running loop it seems wise.
                     log.warn("run: unexpected Exception", e); // NOI18N
+                    continue;
                 }
             } // end of permanent loop
         }
@@ -235,12 +237,11 @@ public class LnPacketizerStrict extends LnPacketizer {
             while (true) { // loop permanently
                 // any input?
                 try {
-                    // get content; failure is a NoSuchElementException
+                    // get content; blocks until present
                     log.trace("check for input"); // NOI18N
-                    byte msg[] = null;
-                    synchronized (this) {
-                        msg = xmtList.removeFirst();
-                    }
+
+                    byte msg[] = xmtList.take();
+
                     // input - now send
                     try {
                         if (ostream != null) {
@@ -340,11 +341,8 @@ public class LnPacketizerStrict extends LnPacketizer {
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
                     }
-                } catch (NoSuchElementException e) {
-                    // message queue was empty, wait for input
-                    log.trace("start wait"); // NOI18N
-                    new jmri.util.WaitHandler(this); // handle synchronization, spurious wake, interruption
-                    log.trace("end wait"); // NOI18N
+                } catch (InterruptedException ie) {
+                    return; // ending the thread
                 }
             }
         }
@@ -366,7 +364,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         if (xmtHandler == null) {
             xmtHandler = new XmtHandlerStrict();
         }
-        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        xmtThread = jmri.util.ThreadingUtil.newThread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
@@ -376,7 +374,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandlerStrict(this);
         }
-        rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread = jmri.util.ThreadingUtil.newThread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();

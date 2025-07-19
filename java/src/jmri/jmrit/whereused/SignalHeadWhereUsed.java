@@ -25,6 +25,7 @@ public class SignalHeadWhereUsed {
 
         textArea.append(WhereUsedCollectors.checkSignalHeadLogic(signalHead));
         textArea.append(WhereUsedCollectors.checkSignalGroups(signalHead));
+        textArea.append(WhereUsedCollectors.checkSignalMasts(signalHead));
         textArea.append(WhereUsedCollectors.checkOBlocks(signalHead));
         textArea.append(WhereUsedCollectors.checkWarrants(signalHead));
         textArea.append(WhereUsedCollectors.checkEntryExit(signalHead));

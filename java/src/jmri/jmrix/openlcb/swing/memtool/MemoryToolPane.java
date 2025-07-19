@@ -1,6 +1,5 @@
 package jmri.jmrix.openlcb.swing.memtool;
 
-import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
@@ -8,12 +7,14 @@ import java.util.*;
 import javax.swing.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.WrapLayout;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import org.openlcb.*;
 import org.openlcb.implementations.*;
 import org.openlcb.swing.*;
 import org.openlcb.swing.memconfig.MemConfigDescriptionPane;
+import org.openlcb.swing.MemorySpaceSelector;
 
 
 /**
@@ -39,7 +40,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
     static final int CHUNKSIZE = 64;
 
-    JTextField spaceField;
+    MemorySpaceSelector spaceField;
     JLabel statusField;
     JButton gb;
     JButton pb;
@@ -79,7 +80,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
 
         // Add to GUI here
         var ns = new JPanel();
-        ns.setLayout(new FlowLayout());
+        ns.setLayout(new WrapLayout());
         add(ns);
         nodeSelector = new org.openlcb.swing.NodeSelector(store, Integer.MAX_VALUE);
         ns.add(nodeSelector);
@@ -88,10 +89,10 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         check.addActionListener(this::pushedCheckButton);
 
         var ms = new JPanel();
-        ms.setLayout(new FlowLayout());
+        ms.setLayout(new WrapLayout());
         add(ms);
         ms.add(new JLabel("Memory Space:"));
-        spaceField = new JTextField("255");
+        spaceField = new MemorySpaceSelector(0xFF);
         ms.add(spaceField);
 
         trustStatusReply = new JCheckBox("Trust Status Info");
@@ -99,7 +100,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         ms.add(trustStatusReply);
 
         var bb = new JPanel();
-        bb.setLayout(new FlowLayout());
+        bb.setLayout(new WrapLayout());
         add(bb);
         gb = new JButton(Bundle.getMessage("ButtonGet"));
         bb.add(gb);
@@ -112,7 +113,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         cb.addActionListener(this::pushedCancel);
 
         bb = new JPanel();
-        bb.setLayout(new FlowLayout());
+        bb.setLayout(new WrapLayout());
         add(bb);
         statusField = new JLabel("                          ",SwingConstants.CENTER);
         bb.add(statusField);
@@ -139,11 +140,11 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         if (memo != null) {
             return (memo.getUserName() + " Memory Tool");
         }
-        return getTitle(Bundle.getMessage("TitleEventTable"));
+        return getTitle(Bundle.getMessage("TitleMemoryTool"));
     }
 
     void pushedCheckButton(ActionEvent e) {
-        var node = nodeSelector.getSelectedItem();
+        var node = nodeSelector.getSelectedNodeID();
         JmriJFrame f = new JmriJFrame();
         f.setTitle("Configuration Capabilities");
 
@@ -152,7 +153,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 
         JPanel q = new JPanel();
-        q.setLayout(new java.awt.FlowLayout());
+        q.setLayout(new WrapLayout());
         p.add(q);
         q.add(new JLabel(node.toString()));
 
@@ -165,7 +166,7 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
                 if (ident != null) {
                     name = ident.getUserName();
                     q = new JPanel();
-                    q.setLayout(new java.awt.FlowLayout());
+                    q.setLayout(new WrapLayout());
                     q.add(new JLabel(name));
                     p.add(q);
                 }
@@ -281,15 +282,16 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
      */
     void pushedGetButton(ActionEvent e) {
         setRunning(true);
-        farID = nodeSelector.getSelectedItem();
+        farID = nodeSelector.getSelectedNodeID();
         try {
-            space = Integer.parseInt(spaceField.getText().trim());
+            space = spaceField.getMemorySpace();
         } catch (NumberFormatException ex) {
             log.error("error parsing the space field value \"{}\"", spaceField.getText());
             statusField.setText("Error parsing the space value");
             setRunning(false);
             return;
         }
+
         log.debug("Start get");
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
@@ -398,8 +400,17 @@ public class MemoryToolPane extends jmri.util.swing.JmriPanel
         };
 
     void pushedPutButton(ActionEvent e) {
-        farID = nodeSelector.getSelectedItem();
+        farID = nodeSelector.getSelectedNodeID();
+        try {
+            space = spaceField.getMemorySpace();
+        } catch (NumberFormatException ex) {
+            log.error("error parsing the space field value \"{}\"", spaceField.getText());
+            statusField.setText("Error parsing the space value");
+            setRunning(false);
+            return;
+        }
         log.debug("Start put");
+
         if (fileChooser == null) {
             fileChooser = new jmri.util.swing.JmriJFileChooser();
         }

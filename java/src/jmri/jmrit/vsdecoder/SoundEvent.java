@@ -7,8 +7,6 @@ import java.util.Iterator;
 import javax.swing.AbstractButton;
 import javax.swing.JComponent;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Process Sound Events.
@@ -36,7 +34,6 @@ public class SoundEvent implements PropertyChangeListener {
     }
 
     String name;
-    String button_label;
     String event_name;
     ButtonType buttontype;
 
@@ -54,17 +51,8 @@ public class SoundEvent implements PropertyChangeListener {
     protected HashMap<String, Trigger> trigger_list;
     VSDSound my_sound;
 
-    public SoundEvent() {
-        this(null, null);
-    }
-
     public SoundEvent(String n) {
-        this(n, n);
-    }
-
-    public SoundEvent(String n, String bl) {
         name = n;
-        button_label = bl;
         trigger_list = new HashMap<>();
         button_trigger_list = new HashMap<>();
         button = null;
@@ -399,6 +387,6 @@ public class SoundEvent implements PropertyChangeListener {
 
     }  // end setXml()
 
-    private static final Logger log = LoggerFactory.getLogger(SoundEvent.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SoundEvent.class);
 
 }

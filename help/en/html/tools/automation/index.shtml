@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen, John Plocher 2008 -->
 
-  <title>JMRI: Layout Automation</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Layout Automation</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -54,6 +54,15 @@
         <dd>
           Dispatcher lets you dispatch and (automatically) run trains on layouts with <a href=
           "../../apps/PanelPro/index.shtml#le">Layout Editor Panels</a>.
+        </dd>
+
+        <dt>
+          <a href="../../../html/scripthelp/DispatcherSystem/DispatcherSystem.shtml">Dispatcher System</a>
+        </dt>
+
+        <dd>
+          Dispatcher System extends Dispatcher by automatically creating stations and associated dispatcher files
+          allowing trains to be dispatched between the stations and scheduled with timetables.
         </dd>
 
         <dt>
@@ -105,11 +114,11 @@
         <dd>The JMRI libraries greatly simplify writing a program to make your layout do exactly
         what you want.</dd>
       </dl>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

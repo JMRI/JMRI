@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- This file is no longer used by an decoder definitions -->
+<!-- Further use of it is deprecated sonce April 2024      -->
+<!-- We're keeping it here for a littie while in case      -->
+<!-- somebody has a local copy of older decoder            -->
+<!-- definitions that uses it.                             -->
+
+
 <!-- Copyright (C) JMRI  2023 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -11,7 +19,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2023</year>
     <holder>JMRI</holder>

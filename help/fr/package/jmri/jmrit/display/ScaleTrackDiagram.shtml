@@ -5,11 +5,11 @@
   <title>JMRI: Scale/Translate Track Diagram Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Track">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div  id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -80,9 +80,9 @@
       <p><b>Pour conserver vos modifications, s'il vous pla&icirc;t
       n'oubliez pas d'enregistrer votre panneau!</b></p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

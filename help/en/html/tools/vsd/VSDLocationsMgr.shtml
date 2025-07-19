@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: Virtual Sound Decoder</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Virtual Sound Decoder</title><!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- DecoderPro Styles -->
 
   <style>
@@ -11,7 +11,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -221,7 +221,7 @@
       <p>Since JMRI 4.99.5 there is an easy way to use Advanced Location Following.
       For the setup a LayoutEditor (LE) panel and a simple VSDGeoData.xm file is required.</p>
 
-      <p>The LE Panel must meet some minimum standards:</p>
+      <p>The LE panel must meet some minimum standards:</p>
 
       <ul>
         <li>at least one Track Segment with a Block</li>
@@ -257,7 +257,8 @@
 
       <p>To run a locomotive open PanelPro and load your LayoutEditor panel first. Then add a
       VSDecoder and start the engine. Now enter the DCC address in the Block Tables into a
-      possible starting Block, then open the throttle.</p>
+      possible starting Block (if the DCC address matches "blockvalues.xml", this happens
+      automatically - since JMRI 5.7.3), then open the throttle.</p>
 
       <p>The current sound position is printed in the System Console.</p>
 
@@ -340,9 +341,9 @@
       layout. The described route should go away from the left to the right in forward direction,
       or in case of a circle, in clock-wise forward direction.</p>
 
-      <p>The Advanced Location Following allows up to four locomotives. Normally only one
+      <p>The Advanced Location Following allows up to eight locomotives. Normally only one
       locomotive can be detected in a tracking section. If you want to run more than one
-      locomotive, you may create a JMRI Route (again, up to four for VSD purposes) and add the
+      locomotive, you may create a JMRI Route (up to four for VSD purposes) and add the
       Route to a Train. Please choose the predetermined Route names VSDRoute1 (default), VSDRoute2,
       VSDRoute3 or VSDRoute4. On the "Virtual Sound Decoder Manager" window you'll find an "Option"
       button on each VSDecoder. There you can select a JMRI Train and accordingly a Route. Please
@@ -406,11 +407,11 @@
         <p><a href="index.shtml">Back</a>
         </p>
       </div>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

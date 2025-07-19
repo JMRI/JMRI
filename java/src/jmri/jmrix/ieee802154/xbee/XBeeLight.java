@@ -25,10 +25,7 @@ public class XBeeLight extends AbstractLight {
 
     private XBeeNode node = null; // Which node does this belong too.
 
-    private int address;
     private int pin;         /* Which DIO pin does this light represent. */
-
-    private String systemName;
 
     protected XBeeTrafficController tc = null;
 
@@ -56,7 +53,6 @@ public class XBeeLight extends AbstractLight {
      */
     private void init(String id) {
         // store address
-        systemName = id;
         jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo m = tc.getAdapterMemo();
         if( !(m instanceof XBeeConnectionMemo))
         {
@@ -65,11 +61,11 @@ public class XBeeLight extends AbstractLight {
         } else {
            XBeeConnectionMemo memo = (XBeeConnectionMemo) m;
            String prefix = memo.getLightManager().getSystemPrefix();
-           if (systemName.contains(":")) {
+           if (id.contains(":")) {
                //Address format passed is in the form of encoderAddress:input or L:light address
-               int seperator = systemName.indexOf(":");
+               int seperator = id.indexOf(":");
                try {
-                   nodeIdentifier = systemName.substring(prefix.length() + 1, seperator);
+                   nodeIdentifier = id.substring(prefix.length() + 1, seperator);
                    if ((node = (XBeeNode) tc.getNodeFromName(nodeIdentifier)) == null) {
                        if ((node = (XBeeNode) tc.getNodeFromAddress(nodeIdentifier)) == null) {
                            try {
@@ -81,23 +77,23 @@ public class XBeeLight extends AbstractLight {
                           }
                        }
                    }
-                   pin = Integer.parseInt(systemName.substring(seperator + 1));
+                   pin = Integer.parseInt(id.substring(seperator + 1));
                } catch (NumberFormatException ex) {
-                   log.debug("Unable to convert {} into the cab and input format of nn:xx", systemName);
+                   log.debug("Unable to convert {} into the cab and input format of nn:xx", id);
               }
            } else {
                try {
-                   nodeIdentifier = systemName.substring(prefix.length() + 1, id.length() - 1);
-                   address = Integer.parseInt(systemName.substring(prefix.length() + 1));
+                   nodeIdentifier = id.substring(prefix.length() + 1, id.length() - 1);
+                   int address = Integer.parseInt(id.substring(prefix.length() + 1));
                    node = (XBeeNode) tc.getNodeFromAddress(address / 10);
                    // calculate the pin to use.
                    pin = ((address) % 10);
                } catch (NumberFormatException ex) {
-                   log.debug("Unable to convert {} Hardware Address to a number", systemName);
+                   log.debug("Unable to convert {} Hardware Address to a number", id);
                }
            }
            if (log.isDebugEnabled()) {
-               log.debug("Created Light {} (NodeIdentifier {} D{})", systemName, nodeIdentifier, pin);
+               log.debug("Created Light {} (NodeIdentifier {} D{})", id, nodeIdentifier, pin);
            }
         }
     }

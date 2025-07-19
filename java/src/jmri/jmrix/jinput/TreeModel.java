@@ -1,17 +1,23 @@
 package jmri.jmrix.jinput;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Arrays;
+
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+
 import jmri.util.SystemType;
+
 import net.java.games.input.Component;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Event;
 import net.java.games.input.EventQueue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +41,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright 2008, 2010
  */
+@SuppressFBWarnings(value = "SING_SINGLETON_IMPLEMENTS_SERIALIZABLE",
+        justification = "DefaultTreeModel implements Serializable")
 public final class TreeModel extends DefaultTreeModel {
 
     private TreeModel() {
@@ -45,7 +53,7 @@ public final class TreeModel extends DefaultTreeModel {
         // load initial USB objects
         boolean pass = loadSystem();
         if (!pass) {
-            log.error("loadSystem failed");
+            log.warn("loading of HID System failed");
         }
 
         // If you don't call loadSystem, the following line was
@@ -268,6 +276,12 @@ public final class TreeModel extends DefaultTreeModel {
 
             // could not load some component(s)
             ca = null;
+            return false;
+        }
+
+        if (controllers().length == 0) {
+            log.warn("No controllers found; tool is probably not working");
+            jmri.util.HelpUtil.displayHelpRef("package.jmri.jmrix.jinput.treemodel.TreeFrame");
             return false;
         }
 

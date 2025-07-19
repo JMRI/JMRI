@@ -430,7 +430,7 @@ public class SerialAddress {
      * @param prefix     system connection prefix from memo
      * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, final char type, String prefix) {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {
@@ -443,17 +443,22 @@ public class SerialAddress {
             return NameValidity.INVALID;
         }
         Pattern p;
-        if (type == 'L') {
-            p = getLightPattern();
-        } else if (type == 'T') {
-            p = getTurnoutPattern();
-        } else if (type == 'H') {
-            p = getHeadPattern();
-        } else if (type == 'S') {
-            p = getSensorPattern();
-        } else {
-            log.error("cannot match type in {}, which is unexpected", systemName);
-            return NameValidity.INVALID;
+        switch (type) {
+            case 'L':
+                p = getLightPattern();
+                break;
+            case 'T':
+                p = getTurnoutPattern();
+                break;
+            case 'H':
+                p = getHeadPattern();
+                break;
+            case 'S':
+                p = getSensorPattern();
+                break;
+            default:
+                log.error("cannot match type in {}, which is unexpected", systemName);
+                return NameValidity.INVALID;
         }
 
         // check format
@@ -498,8 +503,7 @@ public class SerialAddress {
                 log.debug("invalid bit number {} in {}", bit, systemName);
                 return NameValidity.INVALID;
             }
-        } else {
-            assert type == 'S'; // see earlier decoding
+        } else { // type MUST be 'S', see earlier logic to get Pattern
             // sort on subtype
             String subtype = matcher.group(4);
             if (subtype == null) { // no subtype, just look at total

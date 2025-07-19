@@ -52,8 +52,6 @@ import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide the individual panes for the TabbedPaneProgrammer.
@@ -453,6 +451,15 @@ public class PaneProgPane extends javax.swing.JPanel
         }
     }
 
+    public void setNoDecoder() {
+        readChangesButton.setEnabled(false);
+        readAllButton.setEnabled(false);
+        writeChangesButton.setEnabled(false);
+        writeAllButton.setEnabled(false);
+        confirmChangesButton.setEnabled(false);
+        confirmAllButton.setEnabled(false);
+    }
+
     @Override
     public String getName() {
         return mName;
@@ -648,6 +655,8 @@ public class PaneProgPane extends javax.swing.JPanel
         setToRead(justChanges, true);
         varListIndex = 0;
         cvListIterator = cvList.iterator();
+        cvReadSoFar = 0 ;
+        cvReadStartTime = System.currentTimeMillis();
     }
 
     /**
@@ -793,6 +802,10 @@ public class PaneProgPane extends javax.swing.JPanel
         }
     }
 
+    // keep track of multi reads.
+    long  cvReadSoFar;
+    long  cvReadStartTime;
+
     /**
      * If there are any more read operations to be done on this pane, do the
      * next one.
@@ -830,8 +843,10 @@ public class PaneProgPane extends javax.swing.JPanel
         if (log.isDebugEnabled()) {
             log.debug("nextRead scans {} CVs", cvList.size());
         }
+
         while (cvListIterator != null && cvListIterator.hasNext()) {
             int cvNum = cvListIterator.next();
+            cvReadSoFar++;
             CvValue cv = _cvModel.getCvByRow(cvNum);
             if (log.isDebugEnabled()) {
                 log.debug("nextRead cv index {} state {}", cvNum, cv.getState());
@@ -849,7 +864,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 _programmingCV.addPropertyChangeListener(this);
                 // and make the read request
                 // _programmingCV.setToRead(false);  // CVs set this themselves
-                _programmingCV.read(_cvModel.getStatusLabel());
+                _programmingCV.read(_cvModel.getStatusLabel(), cvReadSoFar, cvList.size(), cvReadStartTime);
                 log.debug("return from starting CV read");
                 // the request may have instantateously been satisfied...
                 return true;  // only make one request at a time!
@@ -2101,12 +2116,13 @@ public class PaneProgPane extends javax.swing.JPanel
         cvTable.setRowHeight(new JButton("X").getPreferredSize().height);
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         // instead of forcing the columns to fill the frame (and only fill)
-        cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        //cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         JScrollPane cvScroll = new JScrollPane(cvTable);
         cvScroll.setColumnHeaderView(cvTable.getTableHeader());
 
-        cs.fill = GridBagConstraints.VERTICAL;
+        cs.fill = GridBagConstraints.BOTH;
         cs.weighty = 2.0;
+        cs.weightx = 0.75;
         g.setConstraints(cvScroll, cs);
         c.add(cvScroll);
 
@@ -2655,12 +2671,13 @@ public class PaneProgPane extends javax.swing.JPanel
             final int TABLE_COLS = 3;
 
             // index over CVs
-            if (cvList.size() > 0) {
+            if (!cvList.isEmpty()) {
 //            Check how many Cvs there are to print
                 int cvCount = cvList.size();
                 w.setFontStyle(Font.BOLD); //set font to Bold
                 // print a simple heading with I18N
-                s = String.format("%1$21s", Bundle.getMessage("Value")) + String.format("%1$28s", Bundle.getMessage("Value")) +
+                s = String.format("%1$21s", Bundle.getMessage("Value"))
+                    + String.format("%1$28s", Bundle.getMessage("Value")) +
                         String.format("%1$28s", Bundle.getMessage("Value"));
                 w.write(s, 0, s.length());
                 w.writeBorders();
@@ -2699,7 +2716,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     //convert and pad numbers as needed
                     String numString = String.format("%12s", cv.number());
                     StringBuilder valueString = new StringBuilder(Integer.toString(value));
-                    String valueStringHex = Integer.toHexString(value).toUpperCase();
+                    String valueStringHex = Integer.toHexString(value).toUpperCase(Locale.ENGLISH);
                     if (value < 16) {
                         valueStringHex = "0" + valueStringHex;
                     }
@@ -2794,6 +2811,6 @@ public class PaneProgPane extends javax.swing.JPanel
         return l;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgPane.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PaneProgPane.class);
 
 }

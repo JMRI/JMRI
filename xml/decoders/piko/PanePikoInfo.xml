@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <name>Decoder Information</name>
+    <column>
+        <separator/>
+        <label>
+            <text>Decoder Information</text>
+            <text xml:lang="it">Informazioni Decoder</text>
+        </label>
+        <label>
+            <text>   </text>
+        </label>
+        <xi:include href="http://jmri.org/xml/decoders/piko/decoderInfoDisplay.xml"/>
+    </column>
+    <column>
+        <separator/>
+        <label>
+            <text>Project Information</text>
+            <text xml:lang="it">Informazioni Progetto</text>
+            <text xml:lang="de">Projekt Information</text>
+            <text xml:lang="ca">Informació del projecte</text>
+        </label>
+        <label>
+            <text>   </text>
+        </label>
+         <label>
+            <text>   </text>
+        </label>
+        <xi:include href="http://jmri.org/xml/decoders/piko/projectInfoDisplay.xml"/>
+		<label>
+            <text>   </text>
+        </label>
+    </column>
+</pane>

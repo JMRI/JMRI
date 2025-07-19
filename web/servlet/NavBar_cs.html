@@ -64,6 +64,13 @@ should not be changed. See Javadoc for jmri.web.servlet.ServletHelper#getNavBar(
                         <li><a href="/tables/type">Všechny Typy</a></li>                        
                     </ul>
                 </li>
+                <li class="dropdown context-permissions">
+                    <a href="/permission" class="dropdown-toggle" data-toggle="dropdown">Oprávnění <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/permission/login">Přihlášení</a></li>
+                        <li><a href="/permission/logout">Odhlášení</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li id="navbar-power" data-power="readonly" class="disabled"><a href="#" class="visible-xs">Napájení kolejiště neznámé</a><button type="button" class="btn navbar-btn disabled btn-warning hidden-xs"><span class="glyphicon glyphicon-off"></span></button></li>

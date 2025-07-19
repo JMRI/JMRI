@@ -6,8 +6,7 @@ import java.util.*;
 
 import javax.annotation.*;
 
-import jmri.JmriException;
-import jmri.NamedBean;
+import jmri.*;
 import jmri.beans.PropertyChangeProvider;
 
 import org.apache.commons.lang3.mutable.MutableInt;
@@ -649,6 +648,8 @@ public interface Base extends PropertyChangeProvider {
         public boolean _printNotConnectedSockets = true;
         public boolean _printLocalVariables = true;
         public boolean _printSystemNames = false;
+        public boolean _printDisabled = false;
+        public boolean _printStartup = false;
     }
 
 }

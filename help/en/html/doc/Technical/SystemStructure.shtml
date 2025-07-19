@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Structure of External System Connections</title>
   <meta name="author" content="Bob Jacoben">
-  <meta name="keywords" content="JMRI technical system add"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI technical system add"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -500,11 +500,11 @@ package that might contain multiple variants of a specific connection. Within
         class is a Swing JLabel that listens to a single connection and displays its status. We use
         those on the main splash screen, but they can also be used in other places.</li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

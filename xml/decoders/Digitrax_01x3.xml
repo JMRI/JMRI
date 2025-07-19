@@ -11,7 +11,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Peter Ulvestad" version="37" lastUpdated="20231224"/>
   <version author="Alain Le Marchand" version="36" lastUpdated="20140427"/>
   <version author="Alain Le Marchand" version="35" lastUpdated="20140406"/>
   <version author="Alain Le Marchand" version="34" lastUpdated="20140302"/>
@@ -74,7 +75,8 @@
   <!--				Removed LowVersionID for DZ143 and DZ143PS (back to default for this family - tested with a decoder of that type -->
   <!--				Add comment to N and Z-Scale decoders. Change connector to DropIn for N and Z-scale replacement boards -->
   <!--  			Update DN143K2 output definition + add a note for swapped headlights for display on Function map pane (Alain Le Marchand) -->
-  <!-- Version 35 - Refactoring of common parts - more comments for HO decoders (Alain Le Marchand) -->
+  <!-- Version 36 - Refactoring of common parts - more comments for HO decoders (Alain Le Marchand) -->
+  <!-- Version 37 - Add DN163K5B (Peter Ulvestad) -->
   <decoder>
     <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51">
       <model model="DG383" numOuts="8" numFns="14" maxMotorCurrent="3A (peak=5A)" formFactor="O/G" connector="9pin">
@@ -447,6 +449,9 @@
         <output name="5" label="Pad" connection="solder"/>
         <output name="6" label="Pad" connection="solder"/>
         <size length="2.351" width="0.411" height="0.061" units="inches"/>
+      </model>
+      <model model="DN163K5B" numOuts="6" numFns="6" maxMotorCurrent="1.5A (peak=2A)" formFactor="N" connector="DropIn" comment="OEM installed Kato ALC-42">
+        <size length="not specified" width="not specified" height="not specified" units="inches"/>
       </model>
       <model model="DN163L0A" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=1.25A)" formFactor="N" connector="DropIn" comment="for Life Like/Walthers Proto N-Scale GP20 &amp; similar">
         <output name="1" label="LED" connection="LED"/>

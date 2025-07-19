@@ -25,7 +25,7 @@ public class ThrottlesPreferencesTest {
         Assertions.assertFalse( preferences.isDirty(), "default preferences not dirty");
 
         Assert.assertTrue("default using extended throttle", preferences.isUsingExThrottle());
-        Assert.assertFalse("default not using icons", preferences.isUsingFunctionIcon());
+        Assert.assertTrue("default using icons", preferences.isUsingFunctionIcon());
 
         preferences.setUsingFunctionIcon(true);
         Assert.assertTrue("preferences dirty after setting icons", preferences.isDirty());

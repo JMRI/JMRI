@@ -1,11 +1,8 @@
 package jmri.jmrix.bidib.bidibovertcp;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBOverTcpAdapter class
@@ -17,16 +14,16 @@ public class BiDiBOverTcpAdapterTest {
     @Test
     public void testCTor() {
         BiDiBOverTcpAdapter t = new BiDiBOverTcpAdapter();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     // The minimal setup for log4J
-    @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }

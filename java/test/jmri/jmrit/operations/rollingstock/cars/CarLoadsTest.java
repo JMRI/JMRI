@@ -1,10 +1,12 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.util.List;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations RollingStock Cars Loads class Last manually
@@ -58,7 +60,6 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertTrue("Default empty", cl.containsName("bOxCaR", "E"));
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "A boxcar load"));
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "B boxcar load"));
-
     }
 
     @Test
@@ -76,7 +77,6 @@ public class CarLoadsTest extends OperationsTestCase {
         Assert.assertFalse("new load", cl.containsName("bOxCaR", "A boxcar load"));
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "B boxcar load"));
         Assert.assertTrue("new load", cl.containsName("bOxCaR", "C boxcar load"));
-
     }
 
     @Test
@@ -139,6 +139,26 @@ public class CarLoadsTest extends OperationsTestCase {
         cl.addName("BoXcaR", "New Boxcar Load");
         cl.setHazardous("BoXcaR", "New Boxcar Load", true);
         Assert.assertTrue("Now hazardous", cl.isHazardous("BoXcaR", "New Boxcar Load"));
+    }
+
+    @Test
+    public void testReplaceType() {
+        CarLoads cl = InstanceManager.getDefault(CarLoads.class);
+        cl.addName("BoXcaR", "LoadName");
+        // don't use defaults to confirm proper operation
+        cl.setLoadType("BoXcaR", "LoadName", CarLoad.LOAD_TYPE_EMPTY);
+        cl.setPriority("BoXcaR", "LoadName", CarLoad.PRIORITY_HIGH);
+        cl.setHazardous("BoXcaR", "LoadName", true);
+        cl.setPickupComment("BoXcaR", "LoadName", "Pick up comment");
+        cl.setDropComment("BoXcaR", "LoadName", "Drop comment");
+
+        cl.replaceType("BoXcaR", "BOXCAR");
+
+        Assert.assertEquals("Load type", CarLoad.LOAD_TYPE_EMPTY, cl.getLoadType("BOXCAR", "LoadName"));
+        Assert.assertEquals("Load priority", CarLoad.PRIORITY_HIGH, cl.getPriority("BOXCAR", "LoadName"));
+        Assert.assertEquals("Hazardous", true, cl.isHazardous("BOXCAR", "LoadName"));
+        Assert.assertEquals("Pick up comment", "Pick up comment", cl.getPickupComment("BOXCAR", "LoadName"));
+        Assert.assertEquals("Drop comment", "Drop comment", cl.getDropComment("BOXCAR", "LoadName"));
     }
 
 }

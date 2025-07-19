@@ -28,6 +28,11 @@
   Updates made for 5.5.5 schema and additional JMRI capabilities by jerryg2003:
    [Update info for LogixNG DigitalBooleanActions               (2023-10-10)
    [Add info for LogixNG Icon in paneleditor                    (2023-10-10)
+   [Add type for different types of reporters                   (2023-12-15)
+   [Add positionableRectangle and reportericon                  (2023-12-15)
+   [Add position info for most icons and text                   (2023-12-15)
+   [Separate "inline" LogixNGs                                  (2024-05-22)
+   [Display "do not execute on startup" for LogixNG conditionals (2024-05-22)
 -->
 
 <!-- This file is part of JMRI.  Copyright 2007-2011, 2016, 2018, 2022, 2023.     -->
@@ -39,12 +44,12 @@
      via the build.xml file. We build it by concatenation
      because XPath will evaluate '1997 - 2017' to '20'.
 -->
-<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2023')" />
+<xsl:param name="JmriCopyrightYear" select="concat('1997','-','2025')" />
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details
 -->
-<xsl:output method="html" encoding="ISO-8859-1"/>
+<xsl:output method="html" encoding="UTF-8"/>
 
 
 <!-- Define variables for translation -->
@@ -304,7 +309,9 @@ This page was produced by <a href="https://www.jmri.org">JMRI</a>.
 <!-- each one becomes a table         -->
 <xsl:template match="layout-config/reporters">
 <p><a href="#toc">[Click to go back to TOC]</a></p>
-<h2 style="page-break-before: always">Reporters</h2>
+<h2 style="page-break-before: always">Reporters (<xsl:call-template name="substring-after-last">
+  <xsl:with-param name="string" select="substring-before(@class,'ManagerXml')" /><xsl:with-param name="delimiter" select="'.'" /></xsl:call-template>)</h2>
+  <!-- NOTE: ")</h2>" above must be on same as selection or TOC script fails to generate a link -->
     <table style="width:50%" border="1">
         <tr><th>System Name</th><th>User Name</th><th>Comment</th></tr>
         <!-- index through individual reporter elements -->
@@ -957,7 +964,7 @@ value="<xsl:value-of select="@dataString"/>"
 </xsl:template>
 
 <!-- *************************************************************************************** -->  
-<!-- Index through logixNG elements sorted by ENABLED and NOT ENABLED    -->
+<!-- Index through logixNG elements sorted by ENABLED and NOT ENABLED  and INLINE  -->
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/LogixNGs">
   <p><a href="#toc">[Click to go back to TOC]</a></p>
@@ -970,6 +977,8 @@ value="<xsl:value-of select="@dataString"/>"
   <p><a href="#toc">[Click to go back to TOC]</a></p>
   <h2 style="page-break-before: always">LogixNG NOT ENABLED</h2>
   <xsl:apply-templates select="LogixNG" mode="logixNGnotenabled"/>
+  <h2 style="page-break-before: always">LogixNG INLINE</h2>
+  <xsl:apply-templates select="LogixNG" mode="logixNGinline"/>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -1021,7 +1030,7 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- Index through logixNG elements  ENABLED     -->
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/LogixNGs/LogixNG" mode="logixNGenabled">
-<xsl:if test="( @enabled = 'yes' )">
+<xsl:if test="( @enabled = 'yes' and @inline = 'no' )">
   <p><a href="#toc">[Click to go back to TOC]</a></p>
   <h3 style="page-break-before: always">LogixNG <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
     <xsl:if test="string-length(userName)!=0" > (<xsl:value-of select="userName"/>)</xsl:if>
@@ -1041,7 +1050,27 @@ value="<xsl:value-of select="@dataString"/>"
 <!-- Index through logixNG elements  NOT ENABLED     -->
 <!-- each one becomes a separate section -->
 <xsl:template match="layout-config/LogixNGs/LogixNG" mode="logixNGnotenabled">
-<xsl:if test="( @enabled = 'no' )">
+<xsl:if test="( @enabled = 'no'  and @inline = 'no')">
+  <p><a href="#toc">[Click to go back to TOC]</a></p>
+  <h3 style="page-break-before: always">LogixNG <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
+    <xsl:if test="string-length(userName)!=0" > (<xsl:value-of select="userName"/>)</xsl:if>
+    <xsl:if test="( @enabled = 'yes' )"> [Enabled] </xsl:if>
+    <xsl:if test="( @enabled = 'no'  )"> [NOT Enabled]</xsl:if></h3>
+    <!-- NOTE: prior "/h3" cannot have a line break before it or js will not pick up header -->
+    <h5><xsl:if test="string-length(comment) !=0" > [<xsl:value-of select="comment"/>]</xsl:if></h5>
+    <xsl:for-each select="ConditionalNGs/systemName">      
+      <xsl:call-template name="oneConditionalNG">
+         <xsl:with-param name="name" select="."/>
+      </xsl:call-template>
+  </xsl:for-each>
+</xsl:if>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<!-- Index through logixNG elements  INLINE     -->
+<!-- each one becomes a separate section -->
+<xsl:template match="layout-config/LogixNGs/LogixNG" mode="logixNGinline">
+<xsl:if test="( @inline = 'yes')">
   <p><a href="#toc">[Click to go back to TOC]</a></p>
   <h3 style="page-break-before: always">LogixNG <xsl:value-of select="systemName"/> <!--names as attributes deprecated since 2.9.6-->
     <xsl:if test="string-length(userName)!=0" > (<xsl:value-of select="userName"/>)</xsl:if>
@@ -1070,6 +1099,7 @@ value="<xsl:value-of select="@dataString"/>"
               <xsl:if test="string-length(userName)!=0" > (<xsl:value-of select="userName"/>)</xsl:if>
               <xsl:if test="( @enabled = 'yes' )"> [Enabled] </xsl:if>
               <xsl:if test="( @enabled = 'no'  )"> [NOT Enabled]</xsl:if>
+              <xsl:if test="( @executeAtStartup = 'no' )"> [DO NOT Execute at StartUp]</xsl:if>
             </h3>
             <table style="width:75%" border="1">
               <tr>
@@ -1188,9 +1218,9 @@ value="<xsl:value-of select="@dataString"/>"
                  <td>
                  <xsl:value-of select="./csvType"/>: <xsl:value-of select="./fileName"/></td>
               </xsl:when>
-              <xsl:if test="string-length(comment)!=0" > 
+              <xsl:when test="string-length(comment)!=0" > 
                  <td><xsl:value-of select="comment"/></td>
-              </xsl:if>
+              </xsl:when>
             </xsl:choose>
         </tr>
      </xsl:for-each>
@@ -1915,22 +1945,34 @@ value="<xsl:value-of select="@dataString"/>"
 
 <!-- *************************************************************************************** -->
 <xsl:template match="signalheadicon">
-<tr><td>Signalhead Icon </td><td><xsl:value-of select="@signalhead"/></td></tr>
+<tr><td>Signalhead Icon </td>
+    <td><xsl:value-of select="@signalhead"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="signalmasticon">
-<tr><td>Signalmast Icon </td><td><xsl:value-of select="@signalmast"/></td></tr>
+<tr><td>Signalmast Icon </td>
+    <td><xsl:value-of select="@signalmast"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="turnouticon">
-<tr><td>Turnout Icon </td><td><xsl:value-of select="@turnout"/></td></tr>
+<tr><td>Turnout Icon </td>
+    <td><xsl:value-of select="@turnout"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="sensoricon">
-<tr><td>Sensor Icon </td><td><xsl:value-of select="@sensor"/></td></tr>
+<tr><td>Sensor Icon </td>
+    <td><xsl:value-of select="@sensor"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -1943,7 +1985,7 @@ value="<xsl:value-of select="@dataString"/>"
 </td>
 <td></td><td>
 <xsl:choose>
-  <xsl:when test="( @text != '' )" >"<xsl:value-of select="@text"/>"</xsl:when>
+  <xsl:when test="( @text != '' )" >"<xsl:value-of select="@text"/>" x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</xsl:when>
   <xsl:when test="( icon/@url != '' )" ><xsl:value-of select="icon/@url"/></xsl:when>
 </xsl:choose>
 </td>
@@ -2042,7 +2084,10 @@ connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select=
 
 <!-- *************************************************************************************** -->
 <xsl:template match="memoryicon">
-<tr><td>Memory Icon </td><td><xsl:value-of select="@memory"/></td></tr>
+<tr><td>Memory Icon </td>
+    <td><xsl:value-of select="@memory"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -2071,7 +2116,10 @@ paths:
 
 <!-- *************************************************************************************** -->
 <xsl:template match="BlockContentsIcon">
-<tr><td>Block Contents Icon </td><td><xsl:value-of select="@blockcontents"/></td></tr>
+<tr><td>Block Contents Icon </td>
+    <td><xsl:value-of select="@blockcontents"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
@@ -2107,13 +2155,35 @@ connects to "<xsl:value-of select="@connect2name"/>" (type=<xsl:value-of select=
 </xsl:template>
 
 <!-- *************************************************************************************** -->
+<xsl:template match="reportericon">
+<tr><td>Reporter Icon </td>
+    <td><xsl:value-of select="@reporter"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
+<xsl:template match="positionableRectangle">
+<tr><td>Positionable Rectangle </td>
+    <td></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
+</xsl:template>
+
+<!-- *************************************************************************************** -->
 <xsl:template match="locoicon">
-<tr><td>Loco icon </td><td><xsl:value-of select="@text"/>"</td></tr>
+<tr><td>Loco icon </td>
+    <td><xsl:value-of select="@text"/>"</td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->
 <xsl:template match="LightIcon">
-<tr><td>Light Icon </td><td><xsl:value-of select="@light"/></td></tr>
+<tr><td>Light Icon </td>
+    <td><xsl:value-of select="@light"/></td>
+    <td>x="<xsl:value-of select="@x"/>"  y="<xsl:value-of select="@y"/>"</td>
+</tr>
 </xsl:template>
 
 <!-- *************************************************************************************** -->

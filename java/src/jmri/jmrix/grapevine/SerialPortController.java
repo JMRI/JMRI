@@ -1,7 +1,5 @@
 package jmri.jmrix.grapevine;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import jmri.SystemConnectionMemo;
 
 /**
@@ -16,18 +14,6 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
     protected SerialPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract DataInputStream getInputStream();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract DataOutputStream getOutputStream();
 
     /**
      * {@inheritDoc}

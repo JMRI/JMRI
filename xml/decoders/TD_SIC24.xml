@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Stephen Lowens" version="1.5" lastUpdated="20210131"/>  
   <version author="Michael Mosher" version="1.4" lastUpdated="20200109"/>
   <version author="B. Milhaupt" version="1.3" lastUpdated="20180823"/>
@@ -39,58 +39,23 @@
         <label>through</label>
       </variable>
       <variable CV="2" mask="XXXXXXXV" item="Op1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Option 1</label>
       </variable>
       <variable CV="2" mask="XXXXXXVX" item="Op2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Option 2</label>
       </variable>
       <variable CV="2" mask="XXXXXVXX" item="Op3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Option 3</label>
       </variable>
       <variable CV="2" mask="XXXXVXXX" item="Op4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Option 4</label>
       </variable>
       <variable CV="2" mask="XXXVXXXX" item="Op5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Option 5</label>
       </variable>
       <variable item="CV2" CV="2" mask="VVVVVVVV">
@@ -122,25 +87,11 @@
         <label>Primary Address 1</label>
       </variable>
       <variable CV="11" mask="XVXXXXXX" item="Tog P1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable CV="11" mask="VXXXXXXX" item="Inv P1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Primary Type 1" CV="11" mask="XXVVXXXX">
@@ -182,14 +133,7 @@
         <label>Secondary Address 1</label>
       </variable>
       <variable CV="14" mask="VXXXXXXX" item="Inv S1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Secondary Type 1" CV="14" mask="XXVVXXXX">
@@ -231,25 +175,11 @@
         <label>Primary Address 2</label>
       </variable>
       <variable CV="16" mask="XVXXXXXX" item="Tog P2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable CV="16" mask="VXXXXXXX" item="Inv P2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Primary Type 2" CV="16" mask="XXVVXXXX">
@@ -291,14 +221,7 @@
         <label>Secondary Address 2</label>
       </variable>
       <variable CV="19" mask="VXXXXXXX" item="Inv S2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Secondary Type 2" CV="19" mask="XXVVXXXX">
@@ -340,25 +263,11 @@
         <label>Primary Address 3</label>
       </variable>
       <variable CV="21" mask="XVXXXXXX" item="Tog P3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable CV="21" mask="VXXXXXXX" item="Inv P3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Primary Type 3" CV="21" mask="XXVVXXXX">
@@ -400,14 +309,7 @@
         <label>Secondary Address 3</label>
       </variable>
       <variable CV="24" mask="VXXXXXXX" item="Inv S3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Secondary Type 3" CV="24" mask="XXVVXXXX">
@@ -449,25 +351,11 @@
         <label>Primary Address 4</label>
       </variable>
       <variable CV="26" mask="XVXXXXXX" item="Tog P4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable CV="26" mask="VXXXXXXX" item="Inv P4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Primary Type 4" CV="26" mask="XXVVXXXX">
@@ -509,14 +397,7 @@
         <label>Secondary Address 4</label>
       </variable>
       <variable CV="29" mask="VXXXXXXX" item="Inv S4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Secondary Type 4" CV="29" mask="XXVVXXXX">
@@ -558,25 +439,11 @@
         <label>Primary Address 5</label>
       </variable>
       <variable CV="31" mask="XVXXXXXX" item="Tog P5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable CV="31" mask="VXXXXXXX" item="Inv P5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Primary Type 5" CV="31" mask="XXVVXXXX">
@@ -618,14 +485,7 @@
         <label>Secondary Address 5</label>
       </variable>
       <variable CV="34" mask="VXXXXXXX" item="Inv S5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Secondary Type 5" CV="34" mask="XXVVXXXX">
@@ -667,25 +527,11 @@
         <label>Primary Address 6</label>
       </variable>
       <variable CV="36" mask="XVXXXXXX" item="Tog P6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable CV="36" mask="VXXXXXXX" item="Inv P6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Primary Type 6" CV="36" mask="XXVVXXXX">
@@ -727,14 +573,7 @@
         <label>Secondary Address 6</label>
       </variable>
       <variable CV="39" mask="VXXXXXXX" item="Inv S6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Secondary Type 6" CV="39" mask="XXVVXXXX">
@@ -776,25 +615,11 @@
         <label>Primary Address 7</label>
       </variable>
       <variable CV="41" mask="XVXXXXXX" item="Tog P7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable CV="41" mask="VXXXXXXX" item="Inv P7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Primary Type 7" CV="41" mask="XXVVXXXX">
@@ -836,14 +661,7 @@
         <label>Secondary Address 7</label>
       </variable>
       <variable CV="44" mask="VXXXXXXX" item="Inv S7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Secondary Type 7" CV="44" mask="XXVVXXXX">
@@ -885,25 +703,11 @@
         <label>Primary Address 8</label>
       </variable>
       <variable CV="46" mask="XVXXXXXX" item="Tog P8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Toggle</label>
       </variable>
       <variable CV="46" mask="VXXXXXXX" item="Inv P8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Primary Type 8" CV="46" mask="XXVVXXXX">
@@ -945,14 +749,7 @@
         <label>Secondary Address 8</label>
       </variable>
       <variable CV="49" mask="VXXXXXXX" item="Inv S8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert</label>
       </variable>
       <variable item="Secondary Type 8" CV="49" mask="XXVVXXXX">
@@ -1113,25 +910,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="56" mask="VXXXXXXX" item="Inv o1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="56" mask="XXXXXVXX" item="Recip1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="56" mask="XXXVVXXX" item="Eff1">
@@ -1292,25 +1075,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="63" mask="VXXXXXXX" item="Inv o2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="63" mask="XXXXXVXX" item="Recip2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="63" mask="XXXVVXXX" item="Eff2">
@@ -1471,25 +1240,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="70" mask="VXXXXXXX" item="Inv o3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="70" mask="XXXXXVXX" item="Recip3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="70" mask="XXXVVXXX" item="Eff3">
@@ -1650,25 +1405,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="77" mask="VXXXXXXX" item="Inv o4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="77" mask="XXXXXVXX" item="Recip4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="77" mask="XXXVVXXX" item="Eff4">
@@ -1829,25 +1570,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="84" mask="VXXXXXXX" item="Inv o5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="84" mask="XXXXXVXX" item="Recip5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="84" mask="XXXVVXXX" item="Eff5">
@@ -2008,25 +1735,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="91" mask="VXXXXXXX" item="Inv o6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="91" mask="XXXXXVXX" item="Recip6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="91" mask="XXXVVXXX" item="Eff6">
@@ -2187,25 +1900,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="98" mask="VXXXXXXX" item="Inv o7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="98" mask="XXXXXVXX" item="Recip7">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="98" mask="XXXVVXXX" item="Eff7">
@@ -2366,25 +2065,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="105" mask="VXXXXXXX" item="Inv o8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="105" mask="XXXXXVXX" item="Recip8">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="105" mask="XXXVVXXX" item="Eff8">
@@ -2545,25 +2230,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="112" mask="VXXXXXXX" item="Inv o9">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="112" mask="XXXXXVXX" item="Recip9">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="112" mask="XXXVVXXX" item="Eff9">
@@ -2724,25 +2395,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="119" mask="VXXXXXXX" item="Inv o10">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="119" mask="XXXXXVXX" item="Recip10">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="119" mask="XXXVVXXX" item="Eff10">
@@ -2903,25 +2560,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="126" mask="VXXXXXXX" item="Inv o11">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="126" mask="XXXXXVXX" item="Recip11">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="126" mask="XXXVVXXX" item="Eff11">
@@ -3082,25 +2725,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="133" mask="VXXXXXXX" item="Inv o12">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="133" mask="XXXXXVXX" item="Recip12">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="133" mask="XXXVVXXX" item="Eff12">
@@ -3261,25 +2890,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="140" mask="VXXXXXXX" item="Inv o13">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="140" mask="XXXXXVXX" item="Recip13">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="140" mask="XXXVVXXX" item="Eff13">
@@ -3440,25 +3055,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="147" mask="VXXXXXXX" item="Inv o14">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="147" mask="XXXXXVXX" item="Recip14">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="147" mask="XXXVVXXX" item="Eff14">
@@ -3619,25 +3220,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="154" mask="VXXXXXXX" item="Inv o15">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="154" mask="XXXXXVXX" item="Recip15">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="154" mask="XXXVVXXX" item="Eff15">
@@ -3798,25 +3385,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="161" mask="VXXXXXXX" item="Inv o16">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="161" mask="XXXXXVXX" item="Recip16">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="161" mask="XXXVVXXX" item="Eff16">
@@ -3977,25 +3550,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="168" mask="VXXXXXXX" item="Inv o17">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="168" mask="XXXXXVXX" item="Recip17">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="168" mask="XXXVVXXX" item="Eff17">
@@ -4156,25 +3715,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="175" mask="VXXXXXXX" item="Inv o18">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="175" mask="XXXXXVXX" item="Recip18">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="175" mask="XXXVVXXX" item="Eff18">
@@ -4335,25 +3880,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="182" mask="VXXXXXXX" item="Inv o19">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="182" mask="XXXXXVXX" item="Recip19">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="182" mask="XXXVVXXX" item="Eff19">
@@ -4514,25 +4045,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="189" mask="VXXXXXXX" item="Inv o20">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="189" mask="XXXXXVXX" item="Recip20">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="189" mask="XXXVVXXX" item="Eff20">
@@ -4693,25 +4210,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="196" mask="VXXXXXXX" item="Inv o21">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="196" mask="XXXXXVXX" item="Recip21">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="196" mask="XXXVVXXX" item="Eff21">
@@ -4872,25 +4375,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="203" mask="VXXXXXXX" item="Inv o22">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="203" mask="XXXXXVXX" item="Recip22">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="203" mask="XXXVVXXX" item="Eff22">
@@ -5051,25 +4540,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="210" mask="VXXXXXXX" item="Inv o23">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="210" mask="XXXXXVXX" item="Recip23">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="210" mask="XXXVVXXX" item="Eff23">
@@ -5230,25 +4705,11 @@
         <label>Bi-Color</label>
       </variable>
       <variable CV="217" mask="VXXXXXXX" item="Inv o24">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Invert State</label>
       </variable>
       <variable CV="217" mask="XXXXXVXX" item="Recip24">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Reciprocal</label>
       </variable>
       <variable CV="217" mask="XXXVVXXX" item="Eff24">

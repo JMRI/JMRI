@@ -1,20 +1,8 @@
 package jmri.jmrix.wangrow.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for the Wangrow system.
@@ -33,8 +21,6 @@ import purejavacomm.UnsupportedCommOperationException;
  */
 public class SerialDriverAdapter extends NcePortController {
 
-    SerialPort activeSerialPort = null;
-
     public SerialDriverAdapter() {
         super(new NceSystemConnectionMemo());
         setManufacturer(jmri.jmrix.wangrow.WangrowConnectionTypeList.WANGROW);
@@ -42,53 +28,26 @@ public class SerialDriverAdapter extends NcePortController {
 
     @Override
     public String openPort(String portName, String appName) {
-        // open the port, check ability to set moderators
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
 
-            // try to set it for communication via SerialDriver
-            try {
-                activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
-
-            // disable flow control; hardware lines used for signaling, XON/XOFF might appear in data
-            configureLeadsAndFlowControl(activeSerialPort, 0);
-            activeSerialPort.enableReceiveTimeout(50);  // 50 mSec timeout before sending chars
-
-            // set timeout
-            // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
-
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status
-            if (log.isInfoEnabled()) {
-                log.info("Wangrow {} port opened at {} baud", portName, activeSerialPort.getBaudRate());
-            }
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (UnsupportedCommOperationException | IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        // get and open the primary port
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
+            log.error("failed to connect Wangrow to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
         }
+        log.info("Connecting Wangrow to {} {}", portName, currentSerialPort);
+        
+        // try to set it for communication via SerialDriver, configure comm options
+        setBaudRate(currentSerialPort, 9600);
+        configureLeads(currentSerialPort, true, true);
+        setFlowControl(currentSerialPort, FlowControl.NONE);
+
+        // report status
+        reportPortStatus(log, portName);
+
+        opened = true;
 
         return null; // indicates OK return
-
     }
 
     /**
@@ -110,27 +69,6 @@ public class SerialDriverAdapter extends NcePortController {
     }
 
     // base class methods for the NcePortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception", e);
-        }
-        return null;
-    }
 
     @Override
     public boolean status() {
@@ -154,10 +92,6 @@ public class SerialDriverAdapter extends NcePortController {
         return new int[]{9600};
     }
 
-    // private control members
-    private boolean opened = false;
-    InputStream serialStream = null;
-
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

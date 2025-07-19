@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Nigel Cliffe ncliffe@btinternet.com" version="1" lastUpdated="20090904"/>
   <!-- ZTC badged custom version of the Tsunami sound chip for UK prototypes,  -->
   <!-- Based on SoundTraxx_Tsu_Steam_3Light, version 6, with some further changes -->

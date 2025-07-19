@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
     <holder>JMRI</holder>
@@ -90,7 +90,7 @@
     <label xml:lang="it">Velocità Intermedi</label>
     <label xml:lang="fr">Vmoy</label>
     <label xml:lang="de">Mittengeschwindigkeit</label>
-    <label xml:lang="nl">Min. snelheid</label>
+    <label xml:lang="nl">Middelste snelheid</label>
     <label xml:lang="es">Velocidad intermedia</label>
     <label xml:lang="cs">Střední rychlost</label>
   </variable>

@@ -1,6 +1,5 @@
 package jmri.jmris;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,7 +23,6 @@ abstract public class AbstractLightServerTestBase {
         ls.initLight("IL1");
     }
 
-    @BeforeEach
     abstract public void setUp(); // must setup ls as a light server instance;
 
 }

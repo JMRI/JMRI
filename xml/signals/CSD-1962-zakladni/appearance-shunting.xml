@@ -36,6 +36,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators JOP</revremark>
     </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2024-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-zakladni</aspecttable>
@@ -50,6 +56,7 @@
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/27_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/27_w.png</imagelink>
       <imagelink type="JOP seřaďovací">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_shunting_grey.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m27_pz_2.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -58,6 +65,7 @@
       <imagelink type="AŽD b">../../../resources/icons/smallschematics/aspects/CSD/AZD/28_w.png</imagelink>
       <imagelink type="ESP b">../../../resources/icons/smallschematics/aspects/CSD/ESP/28_w.png</imagelink>
       <imagelink type="JOP seřaďovací">../../../resources/icons/smallschematics/aspects/CSD/JOP/signal_shunting_white.png</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/m28_pd_2.gif</imagelink>
     </appearance>
 
   </appearances>

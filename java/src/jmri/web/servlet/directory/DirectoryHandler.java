@@ -20,7 +20,7 @@ public class DirectoryHandler extends ResourceHandler {
     public DirectoryHandler(@Nonnull String resourceBase) {
         super(new DirectoryService());
         super.setDirectoriesListed(true);
-        super.setWelcomeFiles(new String[]{"index.html"}); // NOI18N
+        super.setWelcomeFiles(new String[]{"index.shtml", "index.html"}); // NOI18N
         super.setResourceBase(resourceBase);
     }
 }

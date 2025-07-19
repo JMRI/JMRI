@@ -84,7 +84,7 @@ public class CbusBasicNode {
      * ALLNVUPDATE
      * SINGLEEVUPDATE ( newValue event row )
      * ALLEVUPDATE
-     * DELETEEVCOMPLETE ( newValue Error String else null )
+     * DELETEEVCOMPLETE ( newValue Error String else empty String )
      * ADDEVCOMPLETE ( newValue Error String else null )
      * ADDALLEVCOMPLETE ( Event Teach Loop Completed, newValue error count )
      * TEACHNVCOMPLETE ( newValue error count )

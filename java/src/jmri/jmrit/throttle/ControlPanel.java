@@ -1142,6 +1142,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
             changeOrientation(); // force buttons resizing
         }
+        
+        setHideSpeedStep(preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector());        
     }
 
     /**
@@ -1269,15 +1271,16 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else {
             trackSliderMinInterval = trackSliderMinIntervalDefault;
         }
+        final ThrottlesPreferences preferences = InstanceManager.getDefault(ThrottlesPreferences.class);        
         Attribute hssAtt = e.getAttribute("hideSpeedStep");
         if (hssAtt != null) {
             try {
                 setHideSpeedStep ( hssAtt.getBooleanValue() );
             } catch (org.jdom2.DataConversionException ex) {
-                setHideSpeedStep ( false );
+                setHideSpeedStep ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
             }
         } else {
-            setHideSpeedStep ( false );
+            setHideSpeedStep ( preferences.isUsingExThrottle() && preferences.isHidingSpeedStepSelector() );
         }
         if ((prevShuntingFn == null) && (e.getAttribute("switchSliderOnFunction") != null)) {
             setSwitchSliderFunction(e.getAttribute("switchSliderOnFunction").getValue());

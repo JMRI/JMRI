@@ -173,13 +173,11 @@ public abstract class AbstractBeanTableDataModelBase<B extends NamedBean> {
     /**
      * Derived classes should use this method to set t.
      */
-    @BeforeEach
     abstract public void setUp();
 
     /**
      * Derived classes should use this method to clean up after tests.
      */
-    @AfterEach
     abstract public void tearDown();
 
     // private final static Logger log = LoggerFactory.getLogger(AbstractBeanTableDataModelBase.class);

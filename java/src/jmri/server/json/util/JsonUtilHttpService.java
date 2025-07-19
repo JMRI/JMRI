@@ -14,8 +14,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.awt.Container;
-import java.awt.Frame;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -27,6 +26,8 @@ import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JFrame;
+
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Metadata;
@@ -46,11 +47,12 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.server.json.JsonRequest;
-import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 import jmri.web.server.WebServerPreferences;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Randall Wood Copyright 2016, 2017, 2018
@@ -58,6 +60,7 @@ import jmri.web.server.WebServerPreferences;
 public class JsonUtilHttpService extends JsonHttpService {
 
     private static final String RESOURCE_PATH = "jmri/server/json/util/";
+    private static final Logger log = LoggerFactory.getLogger(JsonUtilHttpService.class);
 
     public JsonUtilHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -145,6 +148,17 @@ public class JsonUtilHttpService extends JsonHttpService {
     // Use @CheckForNull to override non-null requirement of superclass
     public JsonNode doPost(String type, @CheckForNull String name,
             JsonNode data, JsonRequest request) throws JsonException {
+        log.debug("doPost(type='{}', name='{}', data='{}')", type, name, data);
+        // This will be expanded with more cases and warrants a CASE rather than an IF
+        switch (type) {
+            case JSON.RAILROAD:
+                InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(name);
+                break;
+            default:
+                log.debug("Received unexpected POST command: '{}'", type);
+                break;
+        }
+        // Implicitly answer all doPost the way an equivalent doGet would be answered.
         return this.doGet(type, name, data, request);
     }
 
@@ -337,9 +351,9 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     public ObjectNode getPanel(Editor editor, String format, int id) {
         if (editor.getAllowInFrameServlet()) {
-            Container container = editor.getTargetPanel().getTopLevelAncestor();
-            if (container instanceof JmriJFrame) {
-                String title = ((Frame) container).getTitle();
+            JFrame frame = editor.getTargetFrame();
+            if (frame != null) {
+                String title = frame.getTitle();
                 if (!title.isEmpty() &&
                         !Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames())
                                 .contains(title)) {

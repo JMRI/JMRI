@@ -19,9 +19,11 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
  * Represents a location (track) on the layout Can be a spur, yard, staging, or
@@ -45,7 +47,8 @@ public class Track extends PropertyChangeSupport {
     protected int _dropRS = 0; // number of set outs by trains
     protected int _length = 0; // length of track
     protected int _reserved = 0; // length of track reserved by trains
-    protected int _reservedLengthDrops = 0; // reserved for car drops
+    protected int _reservedLengthSetouts = 0; // reserved for car drops
+    protected int _reservedLengthPickups = 0; // reserved for car pulls
     protected int _numberCarsEnRoute = 0; // number of cars en-route
     protected int _usedLength = 0; // length of track filled by cars and engines
     protected int _ignoreUsedLengthPercentage = IGNORE_0;
@@ -117,8 +120,9 @@ public class Track extends PropertyChangeSupport {
     private static final int EMPTY_GENERIC_LOADS = 16;
     private static final int GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK = 32;
 
-    // load option for spur
+    // load options for spur
     private static final int DISABLE_LOAD_CHANGE = 64;
+    private static final int QUICK_SERVICE = 128;
 
     // block options
     protected int _blockOptions = 0;
@@ -214,6 +218,8 @@ public class Track extends PropertyChangeSupport {
     public static final String TRACK_REPORTER_CHANGED_PROPERTY = "trackReporterChange"; // NOI18N
     public static final String ROUTED_CHANGED_PROPERTY = "onlyCarsWithFinalDestinations"; // NOI18N
     public static final String HOLD_CARS_CHANGED_PROPERTY = "trackHoldCarsWithCustomLoads"; // NOI18N
+    public static final String TRACK_COMMENT_CHANGED_PROPERTY = "trackComments"; // NOI18N
+    public static final String TRACK_FACTOR_CHANGED_PROPERTY = "trackReservationFactor"; // NOI18N
 
     // IdTag reader associated with this track.
     protected Reporter _reader = null;
@@ -291,6 +297,10 @@ public class Track extends PropertyChangeSupport {
         newTrack.setShipLoadOption(getShipLoadOption());
         newTrack.setTrainDirections(getTrainDirections());
         newTrack.setTypeNames(getTypeNames());
+
+        newTrack.setDisableLoadChangeEnabled(isDisableLoadChangeEnabled());
+        newTrack.setQuickServiceEnabled(isQuickServiceEnabled());
+        newTrack.setHoldCarsWithCustomLoadsEnabled(isHoldCarsWithCustomLoadsEnabled());
         return newTrack;
     }
 
@@ -348,6 +358,15 @@ public class Track extends PropertyChangeSupport {
 
     public boolean isStaging() {
         return getTrackType().equals(Track.STAGING);
+    }
+
+    public boolean hasMessages() {
+        if (!getCommentBoth().isBlank() ||
+                !getCommentPickup().isBlank() ||
+                !getCommentSetout().isBlank()) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -479,7 +498,7 @@ public class Track extends PropertyChangeSupport {
         int old = _reservationFactor;
         _reservationFactor = factor;
         if (old != factor) {
-            setDirtyAndFirePropertyChange("trackReservationFactor", old, factor); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_FACTOR_CHANGED_PROPERTY, old, factor); // NOI18N
         }
     }
 
@@ -568,12 +587,8 @@ public class Track extends PropertyChangeSupport {
      * @return true if space available.
      */
     public boolean isSpaceAvailable(Car car) {
-        int carLength = car.getTotalLength();
-        if (car.getKernel() != null) {
-            carLength = car.getKernel().getTotalLength();
-        }
+        int carLength = car.getTotalKernelLength();
         int trackLength = getLength();
-
         // is the car or kernel too long for the track?
         if (trackLength < carLength && getPool() == null) {
             return false;
@@ -719,6 +734,7 @@ public class Track extends PropertyChangeSupport {
         if (Setup.isBuildAggressive()) {
             setReserved(getReserved() - rs.getTotalLength());
         }
+        _reservedLengthPickups = _reservedLengthPickups + rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackPickupRS", Integer.toString(old), // NOI18N
                 Integer.toString(_pickupRS));
     }
@@ -728,6 +744,7 @@ public class Track extends PropertyChangeSupport {
         if (Setup.isBuildAggressive()) {
             setReserved(getReserved() + rs.getTotalLength());
         }
+        _reservedLengthPickups = _reservedLengthPickups - rs.getTotalLength();
         _pickupRS--;
         setDirtyAndFirePropertyChange("trackDeletePickupRS", Integer.toString(old), // NOI18N
                 Integer.toString(_pickupRS));
@@ -741,26 +758,44 @@ public class Track extends PropertyChangeSupport {
         return _pickupRS;
     }
 
-    public int getDropRS() {
-        return _dropRS;
+    public int getReservedLengthPickups() {
+        return _reservedLengthPickups;
     }
 
     public void addDropRS(RollingStock rs) {
         int old = _dropRS;
         _dropRS++;
         bumpMoves();
-        setReserved(getReserved() + rs.getTotalLength());
-        _reservedLengthDrops = _reservedLengthDrops + rs.getTotalLength();
+        // don't reserve clones
+        if (rs.isClone()) {
+            log.debug("Ignoring clone {} add drop reserve", rs.toString());
+        } else {
+            setReserved(getReserved() + rs.getTotalLength());
+        }
+        _reservedLengthSetouts = _reservedLengthSetouts + rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackAddDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
     }
 
     public void deleteDropRS(RollingStock rs) {
         int old = _dropRS;
         _dropRS--;
-        setReserved(getReserved() - rs.getTotalLength());
-        _reservedLengthDrops = _reservedLengthDrops - rs.getTotalLength();
+        // don't reserve clones
+        if (rs.isClone()) {
+            log.debug("Ignoring clone {} delete drop reserve", rs.toString());
+        } else {
+            setReserved(getReserved() - rs.getTotalLength());
+        }
+        _reservedLengthSetouts = _reservedLengthSetouts - rs.getTotalLength();
         setDirtyAndFirePropertyChange("trackDeleteDropRS", Integer.toString(old), // NOI18N
                 Integer.toString(_dropRS));
+    }
+
+    public int getDropRS() {
+        return _dropRS;
+    }
+
+    public int getReservedLengthSetouts() {
+        return _reservedLengthSetouts;
     }
 
     public void setComment(String comment) {
@@ -779,7 +814,7 @@ public class Track extends PropertyChangeSupport {
         String old = _commentPickup;
         _commentPickup = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentPickup", old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
         }
     }
 
@@ -795,7 +830,7 @@ public class Track extends PropertyChangeSupport {
         String old = _commentSetout;
         _commentSetout = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentSetout", old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
         }
     }
 
@@ -811,7 +846,7 @@ public class Track extends PropertyChangeSupport {
         String old = _commentBoth;
         _commentBoth = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
+            setDirtyAndFirePropertyChange(TRACK_COMMENT_CHANGED_PROPERTY, old, comment); // NOI18N
         }
     }
 
@@ -977,10 +1012,10 @@ public class Track extends PropertyChangeSupport {
     }
 
     public boolean isRoadNameAccepted(String road) {
-        if (_roadOption.equals(ALL_ROADS)) {
+        if (getRoadOption().equals(ALL_ROADS)) {
             return true;
         }
-        if (_roadOption.equals(INCLUDE_ROADS)) {
+        if (getRoadOption().equals(INCLUDE_ROADS)) {
             return _roadList.contains(road);
         }
         // exclude!
@@ -1082,10 +1117,10 @@ public class Track extends PropertyChangeSupport {
      * @return true if track will service this load.
      */
     public boolean isLoadNameAccepted(String load) {
-        if (_loadOption.equals(ALL_LOADS)) {
+        if (getLoadOption().equals(ALL_LOADS)) {
             return true;
         }
-        if (_loadOption.equals(INCLUDE_LOADS)) {
+        if (getLoadOption().equals(INCLUDE_LOADS)) {
             return _loadList.contains(load);
         }
         // exclude!
@@ -1100,10 +1135,10 @@ public class Track extends PropertyChangeSupport {
      * @return true if track will service this load.
      */
     public boolean isLoadNameAndCarTypeAccepted(String load, String type) {
-        if (_loadOption.equals(ALL_LOADS)) {
+        if (getLoadOption().equals(ALL_LOADS)) {
             return true;
         }
-        if (_loadOption.equals(INCLUDE_LOADS)) {
+        if (getLoadOption().equals(INCLUDE_LOADS)) {
             return _loadList.contains(load) || _loadList.contains(type + CarLoad.SPLIT_CHAR + load);
         }
         // exclude!
@@ -1204,10 +1239,10 @@ public class Track extends PropertyChangeSupport {
      * @return true if track will service this load.
      */
     public boolean isLoadNameShipped(String load) {
-        if (_shipLoadOption.equals(ALL_LOADS)) {
+        if (getShipLoadOption().equals(ALL_LOADS)) {
             return true;
         }
-        if (_shipLoadOption.equals(INCLUDE_LOADS)) {
+        if (getShipLoadOption().equals(INCLUDE_LOADS)) {
             return _shipLoadList.contains(load);
         }
         // exclude!
@@ -1222,10 +1257,10 @@ public class Track extends PropertyChangeSupport {
      * @return true if track will service this load.
      */
     public boolean isLoadNameAndCarTypeShipped(String load, String type) {
-        if (_shipLoadOption.equals(ALL_LOADS)) {
+        if (getShipLoadOption().equals(ALL_LOADS)) {
             return true;
         }
-        if (_shipLoadOption.equals(INCLUDE_LOADS)) {
+        if (getShipLoadOption().equals(INCLUDE_LOADS)) {
             return _shipLoadList.contains(load) || _shipLoadList.contains(type + CarLoad.SPLIT_CHAR + load);
         }
         // exclude!
@@ -1443,7 +1478,7 @@ public class Track extends PropertyChangeSupport {
                         if (rLoc.getName().equals(getLocation().getName()) &&
                                 rLoc.isPickUpAllowed() &&
                                 rLoc.getMaxCarMoves() > 0 &&
-                                !train.isLocationSkipped(rLoc.getId()) &&
+                                !train.isLocationSkipped(rLoc) &&
                                 ((getTrainDirections() & rLoc.getTrainDirection()) != 0 || train.isLocalSwitcher()) &&
                                 ((getLocation().getTrainDirections() & rLoc.getTrainDirection()) != 0 ||
                                         train.isLocalSwitcher())) {
@@ -1485,7 +1520,7 @@ public class Track extends PropertyChangeSupport {
             return ROAD + " (" + rs.getRoadName() + ")";
         }
         // now determine if there's enough space for the rolling stock
-        int length = rs.getTotalLength();
+        int rsLength = rs.getTotalLength();
         // error check
         try {
             Integer.parseInt(rs.getLength());
@@ -1506,12 +1541,15 @@ public class Track extends PropertyChangeSupport {
                         Bundle.getMessage("carIsNotAllowed", getName()); // no
             }
             // does this track accept cars without a final destination?
-            if (isOnlyCarsWithFinalDestinationEnabled() && car.getFinalDestination() == null) {
+            if (isOnlyCarsWithFinalDestinationEnabled() &&
+                    car.getFinalDestination() == null &&
+                    !car.isCaboose() &&
+                    !car.hasFred()) {
                 return NO_FINAL_DESTINATION;
             }
             // check for car in kernel
             if (car.isLead()) {
-                length = car.getKernel().getTotalLength();
+                rsLength = car.getKernel().getTotalLength();
             }
             if (!isLoadNameAndCarTypeAccepted(car.getLoadName(), car.getTypeName())) {
                 log.debug("Car ({}) load ({}) not accepted at location ({}, {})", rs.toString(), car.getLoadName(),
@@ -1523,32 +1561,35 @@ public class Track extends PropertyChangeSupport {
         if (Engine.class.isInstance(rs)) {
             Engine eng = (Engine) rs;
             if (eng.isLead()) {
-                length = eng.getConsist().getTotalLength();
+                rsLength = eng.getConsist().getTotalLength();
             }
         }
         if (rs.getTrack() != this &&
-                rs.getDestinationTrack() != this &&
-                (getUsedLength() + getReserved() + length) > getLength()) {
-            // not enough track length check to see if track is in a pool
-            if (getPool() != null && getPool().requestTrackLength(this, length)) {
-                return OKAY;
-            }
-            // ignore used length option?
-            if (checkPlannedPickUps(length)) {
-                return OKAY;
-            }
-            // The code assumes everything is fine with the track if the Length issue is returned.
-            // Is rolling stock too long for this track?
-            if ((getLength() < length && getPool() == null) ||
-                    (getPool() != null && getPool().getTotalLengthTracks() < length)) {
-                return Bundle.getMessage("capacityIssue",
-                        CAPACITY, length, Setup.getLengthUnit().toLowerCase(), getLength());
-            }
-            log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(),
-                    getLocation().getName(), getName()); // NOI18N
+                rs.getDestinationTrack() != this) {
+            if (getUsedLength() + getReserved() + rsLength > getLength() ||
+                    getReservedLengthSetouts() + rsLength > getLength()) {
+                // not enough track length check to see if track is in a pool
+                if (getPool() != null && getPool().requestTrackLength(this, rsLength)) {
+                    return OKAY;
+                }
+                // ignore used length option?
+                if (checkPlannedPickUps(rsLength)) {
+                    return OKAY;
+                }
+                // Is rolling stock too long for this track?
+                if ((getLength() < rsLength && getPool() == null) ||
+                        (getPool() != null && getPool().getTotalLengthTracks() < rsLength)) {
+                    return Bundle.getMessage("capacityIssue",
+                            CAPACITY, rsLength, Setup.getLengthUnit().toLowerCase(), getLength());
+                }
 
-            return Bundle.getMessage("lengthIssue",
-                    LENGTH, length, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength());
+                // The code assumes everything is fine with the track if the Length issue is returned.
+                log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(),
+                        getLocation().getName(), getName()); // NOI18N
+
+                return Bundle.getMessage("lengthIssue",
+                        LENGTH, rsLength, Setup.getLengthUnit().toLowerCase(), getAvailableTrackSpace(), getLength());
+            }
         }
         return OKAY;
     }
@@ -1589,15 +1630,11 @@ public class Track extends PropertyChangeSupport {
             available = available3;
         }
         // could be less based on track length
-        int available2 = getLength() - getReservedLengthDrops();
+        int available2 = getLength() - getReservedLengthSetouts();
         if (available2 < available) {
             available = available2;
         }
         return available;
-    }
-
-    public int getReservedLengthDrops() {
-        return _reservedLengthDrops;
     }
 
     public int getMoves() {
@@ -1922,7 +1959,8 @@ public class Track extends PropertyChangeSupport {
         }
         // search schedule if match mode
         if (getScheduleMode() == MATCH && !getSchedule().searchSchedule(car, this).equals(OKAY)) {
-            return SCHEDULE + " " + Bundle.getMessage("matchMessage", getScheduleName());
+            return Bundle.getMessage("matchMessage", SCHEDULE, getScheduleName(),
+                            getSchedule().hasRandomItem() ? Bundle.getMessage("Random") : "");
         }
         ScheduleItem currentSi = getCurrentScheduleItem();
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),
@@ -1954,12 +1992,10 @@ public class Track extends PropertyChangeSupport {
             if (sch != null) {
                 currentTrainScheduleName = sch.getName();
             }
-            return SCHEDULE +
-                    " " +
-                    Bundle.getMessage("sequentialMessage", getScheduleName(), getScheduleModeName(), car.toString(),
-                            car.getTypeName(), scheduleName, car.getRoadName(), car.getLoadName(),
-                            currentSi.getTypeName(), currentTrainScheduleName, currentSi.getRoadName(),
-                            currentSi.getReceiveLoadName());
+            return Bundle.getMessage("sequentialMessage", SCHEDULE, getScheduleName(), getScheduleModeName(),
+                    car.toString(), car.getTypeName(), scheduleName, car.getRoadName(), car.getLoadName(),
+                    currentSi.getTypeName(), currentTrainScheduleName, currentSi.getRoadName(),
+                    currentSi.getReceiveLoadName());
         } else {
             log.error("ERROR Track {} current schedule item is null!", getName());
             return SCHEDULE + " ERROR Track " + getName() + " current schedule item is null!"; // NOI18N
@@ -2121,6 +2157,20 @@ public class Track extends PropertyChangeSupport {
 
     public boolean isDisableLoadChangeEnabled() {
         return (0 != (_loadOptions & DISABLE_LOAD_CHANGE));
+    }
+
+    public void setQuickServiceEnabled(boolean enable) {
+        boolean old = isQuickServiceEnabled();
+        if (enable) {
+            _loadOptions = _loadOptions | QUICK_SERVICE;
+        } else {
+            _loadOptions = _loadOptions & 0xFFFF - QUICK_SERVICE;
+        }
+        setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
+    }
+
+    public boolean isQuickServiceEnabled() {
+        return (isSpur() || isInterchange()) && !isAlternate() && (0 != (_loadOptions & QUICK_SERVICE));
     }
 
     public void setBlockCarsEnabled(boolean enable) {

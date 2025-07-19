@@ -15,7 +15,7 @@ programming commands. See LNCV help in help/en/package/jmri/jmrix/loconet/swing/
 Compare to 66410. Because of the way LNCV includes the art.nr. in the CV they cannot be combined in 1 file.
 Copy any changes to Uhlenbrock_FunkMaster66410.xml -->
 
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
     <version author="Egbert Broerse" version="1.1" lastUpdated="20220728"/>
     <!-- version 1 - new decoder definition using new programming mode LOCONETLNCVMODE, requires JMRI 4.22 -->
     <!-- version 1.1 - renamed with article, copied to 66410 -->

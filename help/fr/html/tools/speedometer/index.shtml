@@ -4,11 +4,11 @@
 <head>
   <!-- Copyright Bob Jacobsen 2008 -->
   <title>JMRI: Compteur</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -73,9 +73,9 @@ fen&#234;tres d'outils Compteur ouvertes si vous le souhaitez.</p>
 	<li>Le <a href="../../hardware/bachrus/index.shtml">Compteur Bachrus</a></li>
 </ul>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

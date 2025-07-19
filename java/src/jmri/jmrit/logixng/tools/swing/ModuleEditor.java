@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.tools.swing;
 import java.awt.event.*;
 import java.util.*;
 
+import jmri.Category;
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;

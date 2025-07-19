@@ -5,10 +5,10 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro User Guide - Use XSLT Transformation for complex decoders File</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -31,7 +31,7 @@
       done: each change propagates consistently to all generated parts.</p>
 
       <p>To give some example of simplification possible - let's take the decoder file
-      <code>Public_Domain_dccdoma_ARD_SCOM_MX.xm</code>. It configures a decoder, capable of
+      <code>Public_Domain_dccdoma_ARD_SCOM_MX.xml</code>. It configures a decoder, capable of
       displaying signal aspects on several signal masts. The configuration contains over 500 of CVs
       - yet the basic idea behind the configuration is dead simple:</p>
 
@@ -78,7 +78,7 @@
       JMRI installation. It is <strong>based on Petr Sidlo's dccdoma.cz - ARD-SCOM-MX
       decoder</strong> - generates the same decoder panels as the original one (as of 12/2019). The
       stylesheet (<strong>scom.xsl</strong>) should be placed also into
-      <strong><code>xml/decoder</code></strong> folder of the JMRI installation.</p>
+      <strong><code>xml/decoders</code></strong> folder of the JMRI installation.</p>
 
       <p>The template can be processed from the commandline to generate the decoder XML, so you can
       inspect effects of changing the stylesheet and/or data embedded in the decoder template. The
@@ -491,11 +491,11 @@ xsltproc scom.xsl decoder-template.xml &gt; decoder-gen.xml
       prefix <strong>http://jmri.org/xml</strong> is guaranteed to resolve to the
       <strong>xml</strong> directory of your local JMRI installation. For more mapping, please see
       other JMRI documentation.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

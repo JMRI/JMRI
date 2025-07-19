@@ -24,6 +24,11 @@ public final class MathUtil {
     public static final Rectangle2D infinityRectangle2D = infinityRectangle2D();
 
     /**
+     * Class only supplies static methods.
+     */
+    private MathUtil() {}
+
+    /**
      * @return the point {0, 0}
      */
     @CheckReturnValue
@@ -862,14 +867,14 @@ public final class MathUtil {
     }
 
     /**
-     * rectangle2DToString return a string to represent a rectangle
+     * Return an I18N string to represent a rectangle.
      *
      * @param r the rectangle2D
      * @return the string
      */
     @Nonnull
     public static String rectangle2DToString(@Nonnull Rectangle2D r) {
-        return String.format("{%.2f, %.2f, %.2f, %.2f}",
+        return String.format(Locale.getDefault(), "{%.2f, %.2f, %.2f, %.2f}",
                 r.getMinX(), r.getMinY(), r.getWidth(), r.getHeight());
     }
 
@@ -919,14 +924,14 @@ public final class MathUtil {
     }
 
     /**
-     * dimensionToString return a string to represent a Dimension
+     * An I18N string to represent a Dimension.
      *
      * @param d the Dimension
      * @return the string
      */
     @Nonnull
     public static String dimensionToString(@Nonnull Dimension d) {
-        return String.format("{%.2f, %.2f}", d.getWidth(), d.getHeight());
+        return String.format(Locale.getDefault(), "{%.2f, %.2f}", d.getWidth(), d.getHeight());
     }
 
     /**
@@ -1171,7 +1176,7 @@ public final class MathUtil {
     // (also returns distance!)
     private static double plotBezier(
             GeneralPath path,
-            @Nonnull Point2D points[],
+            @Nonnull Point2D[] points,
             int depth,
             double displacement) {
         int len = points.length, idx, jdx;
@@ -1247,7 +1252,7 @@ public final class MathUtil {
      */
     private static double plotBezier(
             @CheckForNull Graphics2D g2,
-            @Nonnull Point2D p[],
+            @Nonnull Point2D[] p,
             double displacement,
             boolean fillFlag) {
         double result;
@@ -1275,7 +1280,7 @@ public final class MathUtil {
      * @return the length of the Bezier curve
      */
     public static GeneralPath getBezierPath(
-            @Nonnull Point2D p[],
+            @Nonnull Point2D[] p,
             double displacement) {
         GeneralPath result = new GeneralPath();
         if (p.length == 4) {    // draw cubic bezier?
@@ -1292,7 +1297,7 @@ public final class MathUtil {
      * @param p control points
      * @return the length of the Bezier curve
      */
-    public static GeneralPath getBezierPath(@Nonnull Point2D p[]) {
+    public static GeneralPath getBezierPath(@Nonnull Point2D[] p) {
         return getBezierPath(p, 0);
     }
 
@@ -1307,7 +1312,7 @@ public final class MathUtil {
      */
     public static double drawBezier(
             @CheckForNull Graphics2D g2,
-            @Nonnull Point2D p[],
+            @Nonnull Point2D[] p,
             double displacement) {
         return plotBezier(g2, p, displacement, false);
     }
@@ -1322,7 +1327,7 @@ public final class MathUtil {
      */
     public static double fillBezier(
             @CheckForNull Graphics2D g2,
-            @Nonnull Point2D p[],
+            @Nonnull Point2D[] p,
             double displacement) {
         return plotBezier(g2, p, displacement, true);
     }
@@ -1334,7 +1339,7 @@ public final class MathUtil {
      * @param p  the control points
      * @return the length of the Bezier curve
      */
-    public static double drawBezier(@CheckForNull Graphics2D g2, @Nonnull Point2D p[]) {
+    public static double drawBezier(@CheckForNull Graphics2D g2, @Nonnull Point2D[] p) {
         return drawBezier(g2, p, 0.0);
     }
 
@@ -1345,7 +1350,7 @@ public final class MathUtil {
      * @param p  the control points
      * @return the length of the Bezier curve
      */
-    public static double fillBezier(@CheckForNull Graphics2D g2, @Nonnull Point2D p[]) {
+    public static double fillBezier(@CheckForNull Graphics2D g2, @Nonnull Point2D[] p) {
         return plotBezier(g2, p, 0.0, true);
     }
 
@@ -1355,7 +1360,7 @@ public final class MathUtil {
      * @param p the control points
      * @return the bounds of the Bezier curve
      */
-    public static Rectangle2D getBezierBounds(@Nonnull Point2D p[]) {
+    public static Rectangle2D getBezierBounds(@Nonnull Point2D[] p) {
         return getBezierPath(p).getBounds2D();
     }
 
@@ -1441,13 +1446,17 @@ public final class MathUtil {
     public static boolean isPointInPolygon(Point2D pointT, List<Point2D> points) {
         boolean result = false;
 
-        Double pointT_x = pointT.getX(), pointT_y = pointT.getY();
+        Double pointT_x = pointT.getX();
+        Double pointT_y = pointT.getY();
 
         int n = points.size();
         for (int i = 0, j = n - 1; i < n; j = i++) {
-            Point2D pointI = points.get(i), pointJ = points.get(j);
-            Double pointI_x = pointI.getX(), pointI_y = pointI.getY();
-            Double pointJ_x = pointJ.getX(), pointJ_y = pointJ.getY();
+            Point2D pointI = points.get(i);
+            Point2D pointJ = points.get(j);
+            Double pointI_x = pointI.getX();
+            Double pointI_y = pointI.getY();
+            Double pointJ_x = pointJ.getX();
+            Double pointJ_y = pointJ.getY();
 
             if ((pointI_y > pointT_y) != (pointJ_y > pointT_y)
                     && (pointT_x < (pointJ_x - pointI_x) * (pointT_y - pointI_y) / (pointJ_y - pointI_y) + pointI_x)) {
@@ -1517,5 +1526,6 @@ public final class MathUtil {
         return ((b.getX() - a.getX()) * (c.getY() - a.getY())) > ((b.getY() - a.getY()) * (c.getX() - a.getX()));
     }
 
-    // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MathUtil.class);
+
 }

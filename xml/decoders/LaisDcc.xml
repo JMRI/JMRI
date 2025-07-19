@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <version author="Stanley@laisdcc.com" version="1" lastUpdated="20160923"/>
     <version author="Alain Le Marchand" version="2" lastUpdated="20170408"/>
     <version author="Stanley@laisdcc.com" version="3" lastUpdated="20180103"/>
@@ -1520,9 +1520,9 @@
             <variable CV="133" default="0" item="Motor Option 3" >
                 <decVal/>
                 <label>Power to button controlled motor</label>
-                <label xml:lang="cs">Motor řízený tlačítkem napájení</label>
+                <label xml:lang="cs">Napájení motoru řízené tlačítkem</label>
                 <tooltip>&lt;html&gt;If motor button control is enabled.&lt;br&gt;Power level (drive voltage) for button control of the motor circuit (range 0-255)&lt;/html&gt;</tooltip>
-                <tooltip xml:lang="cs">&lt;html&gt;Pokud je povoleno tlačítko řízení motoru.&lt;br&gt;Úroveň napájení (napětí pohonu) pro ovládací tlačítko obvodu motoru (meze 0-255)&lt;/html&gt;</tooltip>
+                <tooltip xml:lang="cs">&lt;html&gt;Pokud je povoleno tlačítko řízení motoru.&lt;br&gt;Tlačítko řídí úroveň napájení (napětí pohonu) v obvodu motoru (meze 0-255)&lt;/html&gt;</tooltip>
             </variable>
             <!-- Function map for virtual outputs -->
             <variable item="FL(f) controls output 9" CV="134" mask="XXXXXXXV" minOut="1">

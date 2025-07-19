@@ -6,10 +6,10 @@
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference local variables">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -24,14 +24,14 @@
 
       <p>A year passes and you need to count something else. You create a new LogixNG that does the
       new counting and you need a memory, so you decide to use the memory IMCOUNTER. And your new
-      LogixNG works fine. But then you suddenly realise that something else on the layout stops
+      LogixNG works fine. But then you suddenly realize that something else on the layout stops
       working. Why? What has happen? Well, the problem is that you use the same memory IMCOUNTER
       for two different things in two different places. And when that happens, you get into
       trouble.</p>
 
       <p>LogixNG has a simple solution to this problem, <strong>local variables</strong>. A local
       variable is similar to a memory, but it only exists in a very limited context and nothing
-      outside that context can interfer with the variable. The local variable is also transient. It
+      outside that context can interfere with the variable. The local variable is also transient. It
       is only available during the execution of the ConditionalNG and it goes away when the
       execution is finished. This protects the local variable from being changed in an
       unpredictable way.</p>
@@ -78,6 +78,12 @@
         <dt>None</dt>
         <dd>The initial value will be <code>null</code>.</dd>
 
+        <dt>Boolean <span class="since">since 5.7.5</span></dt>
+        <dd>Contains the boolean value <strong>true</strong> or <strong>false</strong>.  The state
+        is set or referenced by using the words <strong><em>true</em></strong> and
+        <strong><em>false</em></strong>. The words are case insensitive.  Setting an initial value
+        is recommended.</dd>
+
         <dt>Integer</dt>
         <dd>A whole number such as 123</dd>
 
@@ -110,14 +116,16 @@
         <dt>Script expression</dt>
         <dd>Use a one line script command to set the value of the variable.  For example:
         <code>sensors.getSensor("BlinkSensor")</code>.  This gets a sensor object which can then
-        be set active or inactive.</dd>
+        be set active or inactive.  For details on accessing LogixNG objects from a script see
+        <a href="chapter13.shtml">Chapter 13 - Jython Scripting Support</a>.</dd>
 
         <dt>Script file</dt>
         <dd>For more complex logic, a script file can be used to set the value.  There are sample
         scripts at the <strong>jython/LogixNG</strong> directory within the JMRI install location.
         Note:  The results of the script are passed back to LogixNG using
         <code>variable.set(<em>some_python_variable</em>)</code>.  This is a Python global variable
-        that is added by the LogixNG scripting support.</dd>
+        that is added by the LogixNG scripting support.  For details on accessing LogixNG objects
+        from a script see <a href="chapter13.shtml">Chapter 13 - Jython Scripting Support</a>.</dd>
 
         <dt>LogixNG Table</dt>
         <dd>Load the contents of a specified LogixNG table into a variable.  The table name is
@@ -234,7 +242,7 @@ Log local variables done
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Map<span class="since">since 4.25.8</span></h5>
+      <h5 id="lv_map">Map<span class="since">since 4.25.8</span></h5>
 
       <p>When a <strong>Map</strong> Local Variable is defined, it is empty.  Rows are added as
       shown in the example.</p>
@@ -330,7 +338,7 @@ WARN  - Log local variables done [JMRI LogixNGThread]
 
       <p>When an action or expression is executed that defines local variables, these local
       variables are created with an initial value. When you create the local variable, you define
-      what the inital value should be. 'None' means that the value will be 'null'. Reference means
+      what the initial value should be. 'None' means that the value will be 'null'. Reference means
       that the value will be the value that the reference is pointing at. Formula means the result
       of the formula.</p>
       <a id="LogLocalVariables"></a>
@@ -340,19 +348,25 @@ WARN  - Log local variables done [JMRI LogixNGThread]
       but another tool is the action <strong>Log local variables</strong>. Each time it's executed,
       it prints all the local variables and their values to the JMRI Sytem Console.</p>
 
+      <div style="margin-left: 2em;">
+        <a href="images/chapter8/log_variables.png"><img src=
+        "images/chapter8/log_variables.png" alt="Chapter 8 log variables"></a>
+      </div>
+
       <p>Options:</p>
 
       <ul>
         <li><strong>Include global variables</strong> &mdash; The global variables will be
         listed after the local variables.</li>
-        <li><strong>Expand arrays and maps</strong> &mdash; the contents of each array and map
+
+        <li><strong>Expand arrays and maps</strong> &mdash; The contents of each array and map
         will be listed.</li>
+
+        <li><strong>Show class name</strong> &mdash; The name of the Java class will be included
+        for each item.  Sometimes it is useful for debugging to know the actual type of the value.</li>
       </ul>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter8/log_variables.png"><img src=
-        "images/chapter8/log_variables.png" alt="Chapter 8 log variables"></a>
-      </div>
+      <p>Example:</p>
 
       <div style="margin-left: 2em;">
         <pre>
@@ -381,11 +395,11 @@ WARN  - Log local variables done [JMRI LogixNGThread]
 
       <p><a href="index.shtml">Return to the Reference TOC</a>
       </p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

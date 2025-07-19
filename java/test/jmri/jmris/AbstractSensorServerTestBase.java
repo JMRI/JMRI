@@ -83,7 +83,6 @@ abstract public class AbstractSensorServerTestBase {
     /**
      * pre test setup.  Must setup SensorServer ss.
      */
-    @BeforeEach
     abstract public void setUp(); 
 
     /**

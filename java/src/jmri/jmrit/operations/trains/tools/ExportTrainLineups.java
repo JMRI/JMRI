@@ -116,8 +116,6 @@ public class ExportTrainLineups extends XmlFile {
                 fileOut.println();
             }
 
-            fileOut.flush();
-            fileOut.close();
             log.info("Exported {} trains to file {}", count, defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedTrainsToFile",
@@ -126,7 +124,7 @@ public class ExportTrainLineups extends XmlFile {
                     JmriJOptionPane.INFORMATION_MESSAGE);
 
         } catch (IOException e) {
-            log.error("Can not open export trains CSV file: {}", file.getName());
+            log.error("Can not open export trains CSV file: {}", e.getLocalizedMessage());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedTrainsToFile",
                             0, defaultOperationsFilename()),

@@ -6,11 +6,11 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -338,7 +338,7 @@ d&#233;clench&#233;. Tous les "v&#233;to" des capteurs et des "v&#233;to" d'aigu
 d&#233;clenchement doit voir le Changement appropri&#233; pour que l'Itin&#233;raire soit fix&#233;
 </p>
 
-        <!--#include virtual="/Footer_fr.shtml" -->
+        <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

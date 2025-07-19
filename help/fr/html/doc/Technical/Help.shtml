@@ -5,11 +5,11 @@
   <title>JMRI: Use of JavaHelp</title>
   <meta name="Author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -209,9 +209,9 @@ apr&#232;s un court moment.Il y a une
 <a href="https://builds.jmri.org/jenkins/job/WebSite/job/generate-website/">t&#226;che Jenkins</a>
 qui manipule p&#233;riodiquement les actualisations pour les pages statistiques ( depuis le r&#233;pertoire, comme JavaDoc )
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

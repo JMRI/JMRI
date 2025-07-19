@@ -5,20 +5,20 @@
   <title>JMRI: Zimo Command Generator</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="JMRI Help TAMS Command Generator">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <h1>Zimo Command Generator</h1>
       The Zimo command generator tool lets you type a message for the Zimo command station and then
-      send it. <!--#include virtual="/Footer.shtml" -->
+      send it. <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

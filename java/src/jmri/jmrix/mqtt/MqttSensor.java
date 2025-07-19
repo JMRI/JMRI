@@ -48,7 +48,7 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
                     setOwnState(! _inverted ? ACTIVE : INACTIVE);
                     break;
                 default:
-                    log.warn("Unknown state : {}", payload);
+                    log.warn("{} saw unknown state : {}", getDisplayName(), payload);
                     break;
             }
         }
@@ -106,11 +106,18 @@ public class MqttSensor extends AbstractSensor implements MqttEventListener {
     @Override
     public void notifyMqttMessage(String receivedTopic, String message) {
         if (! ( receivedTopic.endsWith(rcvTopic) || receivedTopic.endsWith(sendTopic) ) ) {
-            log.error("Got a message whose topic ({}) wasn't for me ({})", receivedTopic, rcvTopic);
+            log.error("{} got a message whose topic ({}) wasn't for me ({})", getDisplayName(), receivedTopic, rcvTopic);
             return;
         }
         
         parser.beanFromPayload(this, message, receivedTopic);
+    }
+
+
+    @Override
+    public void dispose() {
+        mqttAdapter.unsubscribe(rcvTopic, this);
+        super.dispose();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttSensor.class);

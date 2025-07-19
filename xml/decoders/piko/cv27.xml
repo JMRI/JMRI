@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="ABC stop with asymmetrical DCC (right rail higher)" CV="27" default="0" mask="XXXXXXXV">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>ABC stop with asymmetrical DCC (right rail higher)</label>
+		<label xml:lang="de">ABC rechte Schiene positiver</label>
+		<label xml:lang="cs">ABC zastavení s asymetrickým DCC (pravá kolejnice vyšší)</label>
+	</variable>
+	<variable item="ABC stop with asymmetrical DCC (left rail higher)" CV="27" default="0" mask="XXXXXXVX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>ABC stop with asymmetrical DCC (left rail higher)</label>
+		<label xml:lang="de">ABC linke Schiene positiver</label>
+		<label xml:lang="cs">ABC zastavení s asymetrickým DCC (levá kolejnice vyšší)</label>
+	</variable>
+	<variable item="DC stop when polarity in opposite direction" CV="27" default="0" mask="XXXVXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>DC stop when polarity in opposite direction</label>
+		<label xml:lang="de">DC mit Fahrtrichtung entgegengesetzt</label>
+		<label xml:lang="cs">DC zastavení když je polarita v opačném směru</label>
+	</variable>
+	<variable item="DC stop when polarity in same direction" CV="27" default="0" mask="XXVXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>DC stop when polarity in same direction</label>
+		<label xml:lang="de">DC mit Fahrtrichtung gleich</label>
+		<label xml:lang="cs">DC zastavení když je polarita ve stejném směru</label>
+	</variable>
+</variables>

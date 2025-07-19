@@ -228,7 +228,7 @@ public class Tokenizer {
             return TokenType.STRING;
         }
 
-        if (Character.isSpaceChar(ch)) {
+        if (Character.isWhitespace(ch)) {
             return TokenType.SPACE;
         }
 

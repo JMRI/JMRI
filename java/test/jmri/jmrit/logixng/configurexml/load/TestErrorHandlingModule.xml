@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
+  <jmriversion>
+    <major>5</major>
+    <minor>13</minor>
+    <test>1</test>
+    <modifier>plus</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISErrorSensor</systemName>
+      <userName>ErrorSensor</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISTestSensor</systemName>
+      <userName>TestSensor</userName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="5:33 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IHTransitScaffold</systemName>
+    </signalhead>
+  </signalheads>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Jul 01 17:27:11 CEST 2025" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
+    <Thread>
+      <id>0</id>
+      <name>LogixNG thread</name>
+    </Thread>
+    <LogixNG enabled="yes" inline="no">
+      <systemName>IQ:AUTO:0001</systemName>
+      <ConditionalNGs>
+        <systemName>IQC:AUTO:0001</systemName>
+      </ConditionalNGs>
+    </LogixNG>
+    <InitializationTable />
+    <Clipboard>
+      <Many class="jmri.jmrit.logixng.implementation.configurexml.ClipboardManyXml">
+        <Socket>
+          <socketName>X1</socketName>
+        </Socket>
+      </Many>
+    </Clipboard>
+  </LogixNGs>
+  <LogixNGModules class="jmri.jmrit.logixng.implementation.configurexml.DefaultModuleManagerXml">
+    <Module class="jmri.jmrit.logixng.implementation.configurexml.DefaultModuleXml">
+      <systemName>IQM:JMRI:ErrorHandlingModule</systemName>
+      <rootSocketType>DefaultFemaleDigitalActionSocket</rootSocketType>
+      <isVisible>no</isVisible>
+      <Parameters />
+      <RootSocket>
+        <socketName>Root</socketName>
+        <systemName>IQDA:AUTO:0003</systemName>
+      </RootSocket>
+    </Module>
+  </LogixNGModules>
+  <LogixNGConditionalNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultConditionalNGManagerXml">
+    <ConditionalNG enabled="yes">
+      <systemName>IQC:AUTO:0001</systemName>
+      <thread>0</thread>
+      <Socket>
+        <socketName>A</socketName>
+        <systemName>IQDA:AUTO:0001</systemName>
+      </Socket>
+    </ConditionalNG>
+  </LogixNGConditionalNGs>
+  <LogixNGDigitalExpressions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalExpressionManagerXml">
+    <ExpressionSensor class="jmri.jmrit.logixng.expressions.configurexml.ExpressionSensorXml">
+      <systemName>IQDE:AUTO:0001</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>TestSensor</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <is_isNot>Is</is_isNot>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Active</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalExpressionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalExpressionSocketXml" DefaultMaleDigitalExpressionSocketListen="yes">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ExpressionSensor>
+  </LogixNGDigitalExpressions>
+  <LogixNGDigitalActions class="jmri.jmrit.logixng.implementation.configurexml.DefaultDigitalActionManagerXml">
+    <IfThenElse class="jmri.jmrit.logixng.actions.configurexml.IfThenElseXml" executeType="ExecuteOnChange" evaluateType="EvaluateAll">
+      <systemName>IQDA:AUTO:0001</systemName>
+      <Expressions>
+        <Socket>
+          <socketName>If</socketName>
+          <systemName>IQDE:AUTO:0001</systemName>
+        </Socket>
+      </Expressions>
+      <Actions>
+        <Socket>
+          <socketName>Then</socketName>
+          <systemName>IQDA:AUTO:0002</systemName>
+        </Socket>
+        <Socket>
+          <socketName>Else</socketName>
+        </Socket>
+      </Actions>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </IfThenElse>
+    <ActionTurnout class="jmri.jmrit.logixng.actions.configurexml.ActionTurnoutXml">
+      <systemName>IQDA:AUTO:0002</systemName>
+      <namedBean>
+        <addressing>LocalVariable</addressing>
+        <listenToMemory>no</listenToMemory>
+        <localVariable>MyTurnout</localVariable>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Thrown</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionTurnout>
+    <DigitalMany class="jmri.jmrit.logixng.actions.configurexml.DigitalManyXml">
+      <systemName>IQDA:AUTO:0003</systemName>
+      <Actions>
+        <Socket>
+          <socketName>A1</socketName>
+          <systemName>IQDA:AUTO:0004</systemName>
+        </Socket>
+        <Socket>
+          <socketName>A2</socketName>
+          <systemName>IQDA:AUTO:0005</systemName>
+        </Socket>
+        <Socket>
+          <socketName>A3</socketName>
+        </Socket>
+      </Actions>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </DigitalMany>
+    <ActionSensor class="jmri.jmrit.logixng.actions.configurexml.ActionSensorXml">
+      <systemName>IQDA:AUTO:0004</systemName>
+      <namedBean>
+        <addressing>Direct</addressing>
+        <name>ErrorSensor</name>
+        <listenToMemory>no</listenToMemory>
+      </namedBean>
+      <state>
+        <addressing>Direct</addressing>
+        <enum>Active</enum>
+        <listenToMemory>no</listenToMemory>
+      </state>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </ActionSensor>
+    <LogLocalVariables class="jmri.jmrit.logixng.actions.configurexml.LogLocalVariablesXml">
+      <systemName>IQDA:AUTO:0005</systemName>
+      <includeGlobalVariables>no</includeGlobalVariables>
+      <expandArraysAndMaps>no</expandArraysAndMaps>
+      <MaleSocket>
+        <AbstractDebuggerMaleSocket class="jmri.jmrit.logixng.tools.debugger.configurexml.DebuggerMaleDigitalActionSocketXml" />
+        <AbstractMaleSocket enabled="yes" locked="no" system="no" catchAbortExecution="no" class="jmri.jmrit.logixng.implementation.configurexml.DefaultMaleDigitalActionSocketXml">
+          <errorHandling>Default</errorHandling>
+        </AbstractMaleSocket>
+      </MaleSocket>
+    </LogLocalVariables>
+  </LogixNGDigitalActions>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Tue Jul 01 17:32:06 CEST 2025</date>
+      <filename>PanelPro (v5.13.1)</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Tue Jul 01 17:32:08 CEST 2025</date>
+      <filename>/home/daniel/.jmri/TestErrorHandlingModule.jmri/TestErrorHandlingModule.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Tue Jul 01 17:27:10 CEST 2025</date>
+          <filename>PanelPro (v5.13.1)</filename>
+        </operation>
+        <operation>
+          <type>Load with errors</type>
+          <date>Tue Jul 01 17:27:14 CEST 2025</date>
+          <filename>/home/daniel/.jmri/TestErrorHandlingModule.jmri/Daniel.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Tue Jul 01 17:29:31 CEST 2025</date>
+          <filename>/home/daniel/.jmri/TestErrorHandlingModule.jmri/TestErrorHandlingModule.xml</filename>
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Tue Jul 01 17:33:03 CEST 2025</date>
+      <filename>/home/daniel/.jmri/TestErrorHandlingModule.jmri/TestErrorHandlingModule.xml</filename>
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 5.13.1plus+daniel+2025-07-01T15:31:40Z+R3403e6e on Tue Jul 01 17:33:03 CEST 2025-->
+</layout-config>

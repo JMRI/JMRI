@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <enumChoice>
+    <choice>0 – Pushbutton (default state ON/ACTIVATED); Accessory Decoder Address Enabled</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>1 – Pushbutton (default state OFF/DEACTIVATED); Accessory Decoder Address Enabled</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>2 – Momentary Pushbutton (default state OFF/DEACTIVATED); Use with Auto-Off Timer; Accessory Decoder Address Disabled</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>3 – Toggle switch (ON/ACTIVATED when switch is closed); Accessory Decoder Address Disabled</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>4 – Toggle switch (OFF/DEACTIVATED when switch is closed); Accessory Decoder Address Disabled</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>5 – Follows Previous output control; Accessory Decoder Address Disabled</choice>
+  </enumChoice>
+</enumVal>

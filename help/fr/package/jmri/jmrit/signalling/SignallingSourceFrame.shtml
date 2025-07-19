@@ -3,11 +3,11 @@
 <head>
   <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-11-->
   <title>JMRI: Cadre Logique du Signal</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
@@ -21,9 +21,9 @@
       est possible de d&eacute;couvrir automatiquement toutes les
       logiques M&acirc;t Signal bas&eacute;es sur le panneau.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

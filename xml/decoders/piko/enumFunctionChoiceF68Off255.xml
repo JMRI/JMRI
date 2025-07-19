@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- 																		-->
 <!-- Version 1 - Include file for Piko SmartDecoder 4.1 and XP5.1 (11/2022) -->
-<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<enumChoice choice="F0">
 		<choice>F0</choice>
 	</enumChoice>

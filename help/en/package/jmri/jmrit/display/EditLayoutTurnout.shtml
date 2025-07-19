@@ -5,10 +5,10 @@
   <title>JMRI: Edit Turnout Help</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Layout Editor Turnout">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -93,11 +93,11 @@
       any of <strong>Block 2</strong>, <strong>Block 3</strong>, or <strong>Block 4</strong>
       entries are blank, the default block is used. Block connection points are numbered 1, 2, 3
       and 4, proceeding from the upper left connection point in a clockwise direction.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

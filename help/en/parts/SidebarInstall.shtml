@@ -4,11 +4,11 @@
 <dt><a href="/help/en/html/setup/index.shtml">JMRI Setup and Installation</a></dt>
 		<dd> JMRI environments...
 		    <ul>
-            <li><a href="/install/WindowsNew.shtml">Windows</a>
-            <li><a href="/install/MacOSX.shtml">macOS</a>
-            <li><a href="/install/Linux.shtml">Linux (multiple vers)</a>
-            <li><a href="/install/Raspberry_Pi.shtml">Raspberry Pi OS on Raspberry Pi</a>
-            <li><i><a href="/install/Debug.shtml">Debugging an installation</a></i>
+            <li><a href="https://jmri.org/install/WindowsNew.shtml">Windows</a>
+            <li><a href="https://jmri.org/install/MacOSX.shtml">macOS</a>
+            <li><a href="https://jmri.org/install/Linux.shtml">Linux (multiple vers)</a>
+            <li><a href="https://jmri.org/install/Raspberry_Pi.shtml">Raspberry Pi OS on Raspberry Pi</a>
+            <li><i><a href="https://jmri.org/install/Debug.shtml">Debugging an installation</a></i>
 		    </ul>
 		</dd>
 

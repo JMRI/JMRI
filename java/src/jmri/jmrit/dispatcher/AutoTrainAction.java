@@ -247,7 +247,8 @@ public class AutoTrainAction {
             if (_activeActionList.get(i).getWaitingForSectionExit()
                     && (_activeActionList.get(i).getTargetTransitSection() == ts)) {
                 // this action is waiting for this Section to exit
-                checkDelay(_activeActionList.get(i));
+                // no delay on exit
+                executeAction(_activeActionList.get(i));
             }
         }
         // cancel any O/S actions not triggered.
@@ -372,6 +373,10 @@ public class AutoTrainAction {
             case TransitSectionAction.TERMINATETRAIN:
                 log.trace("Terminate Train Section [[{}]",tsa.getTargetTransitSection().getSectionName());
                 InstanceManager.getDefault(DispatcherFrame.class).terminateActiveTrain(_activeTrain,true,false);
+                break;
+            case TransitSectionAction.FORCEALLOCATEPASSSAFESECTION:
+                log.trace("Force pass next safe Section [[{}]",tsa.getTargetTransitSection().getSectionName());
+                _activeTrain.forcePassNextSafeSection();
                 break;
             case TransitSectionAction.LOADTRAININFO:
                 log.info("Section[[{}] LoadTrain [{}]",tsa.getTargetTransitSection().getSectionName(),tsa.getStringWhat());

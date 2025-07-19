@@ -6,7 +6,7 @@ package jmri.jmrix.ieee802154;
  * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011 Modified for IEEE 802.15.4 connection
- * @author Paul Bender Copyright (C) 2013
+ * @author Paul Bender Copyright (C) 2013,2023
  */
 public abstract class IEEE802154PortController extends jmri.jmrix.AbstractSerialPortController {
 
@@ -20,14 +20,6 @@ public abstract class IEEE802154PortController extends jmri.jmrix.AbstractSerial
     public IEEE802154SystemConnectionMemo getSystemConnectionMemo() {
         return (IEEE802154SystemConnectionMemo) super.getSystemConnectionMemo();
     }
-
-    // returns the InputStream from the port
-    @Override
-    public abstract java.io.DataInputStream getInputStream();
-
-    // returns the outputStream to the port
-    @Override
-    public abstract java.io.DataOutputStream getOutputStream();
 
     // check that this object is ready to operate
     @Override

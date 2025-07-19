@@ -92,7 +92,7 @@ public class SprogSystemConnectionMemoTest extends SystemConnectionMemoTestBase<
     @AfterEach
     public void tearDown() {
         scm.getSlotThread().interrupt();
-        JUnitUtil.waitFor(() -> { return !scm.getSlotThread().isAlive(); });
+        JUnitUtil.waitThreadTerminated(scm.getSlotThread().getName());
         scm.getSprogTrafficController().dispose();
         scm.dispose();
         stcs.dispose();

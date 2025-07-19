@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Block Table Help</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI help Block Table"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Block Table"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -23,7 +23,7 @@
       If you want to change the User Name of a Block used in a Layout Editor Panel, make the change
       in the Layout Editor, not in the Block Table.</p>
 
-      <h2 id="blockPaths">Blocks & Paths</h2>
+      <h2 id="blockPaths">Blocks &amp; Paths</h2>
 
       <p>To complete the definition of a Block, Paths and Bean Settings must be attached to each
       Block.<br>
@@ -178,6 +178,22 @@
 
           <p>The global value is set via the <strong>Speeds</strong> menu.</p>
         </li>
+
+        <li>
+          <p><strong>Ghost</strong><span class="since">since 5.11.2</span> The Ghost option is used
+          by Dispatcher to simulate block occupancy for blocks that don't have real occupancy sensors.
+          This option can be used for very short blocks.  It can also be used when turnouts physically
+          have the same block as the throat track segment.  By using a ghost block for the turnout,
+          there are now block boundaries for signal masts and signal mast logic.</p>
+
+          <p>A ghost block requires an internal sensor to simulate the occupancy.  The sensor is
+          only used by Dispatcher.  Logix, LogixNG or scripting must not change the sensor state.</p>
+
+          <p>Consecutive ghost blocks will result in errors when a transit is run.  There must be
+          at least one real block between ghost blocks.  Note:  This means ghost blocks cannot be
+          used for both halves of crossovers.  A ghost block could be used for the recommended
+          third block for double crossovers.</p>
+        </li>
       </ul>
 
       <h2>Block Table Controls</h2>
@@ -215,11 +231,11 @@
       </p>
 
       <p>Back to the <a href="../../../../html/tools/Blocks.shtml">Blocks Help page</a></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

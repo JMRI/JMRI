@@ -129,7 +129,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
     private NamedBeanHandle<Sensor> mReverseStoppingNamedSensor = null;
 
     private final List<PropertyChangeListener> mBlockListeners = new ArrayList<>();
-    protected jmri.NamedBeanHandleManager nbhm = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+    protected NamedBeanHandleManager nbhm = InstanceManager.getDefault(NamedBeanHandleManager.class);
 
     /**
      * Get the state of the Section.
@@ -154,42 +154,45 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         if ((state == Section.FREE) || (state == Section.FORWARD) || (state == Section.REVERSE)) {
             int old = mState;
             mState = state;
-            firePropertyChange("state", old, mState);
+            firePropertyChange(PROPERTY_STATE, old, mState);
             // update the forward/reverse blocking sensors as needed
+            Sensor fbSensor = getForwardBlockingSensor();
+            Sensor rbSensor = getReverseBlockingSensor();
+
             switch (state) {
                 case FORWARD:
                     try {
-                        if ((getForwardBlockingSensor() != null) && (getForwardBlockingSensor().getState() != Sensor.INACTIVE)) {
-                            getForwardBlockingSensor().setState(Sensor.INACTIVE);
+                        if ((fbSensor != null) && (fbSensor.getState() != Sensor.INACTIVE)) {
+                            fbSensor.setState(Sensor.INACTIVE);
                         }
-                        if ((getReverseBlockingSensor() != null) && (getReverseBlockingSensor().getState() != Sensor.ACTIVE)) {
-                            getReverseBlockingSensor().setKnownState(Sensor.ACTIVE);
+                        if ((rbSensor != null) && (rbSensor.getState() != Sensor.ACTIVE)) {
+                            rbSensor.setKnownState(Sensor.ACTIVE);
                         }
-                    } catch (jmri.JmriException reason) {
+                    } catch (JmriException reason) {
                         log.error("Exception when setting Sensors for Section {}", getDisplayName(USERSYS));
                     }
                     break;
                 case REVERSE:
                     try {
-                        if ((getReverseBlockingSensor() != null) && (getReverseBlockingSensor().getState() != Sensor.INACTIVE)) {
-                            getReverseBlockingSensor().setKnownState(Sensor.INACTIVE);
+                        if ((rbSensor != null) && (rbSensor.getState() != Sensor.INACTIVE)) {
+                            rbSensor.setKnownState(Sensor.INACTIVE);
                         }
-                        if ((getForwardBlockingSensor() != null) && (getForwardBlockingSensor().getState() != Sensor.ACTIVE)) {
-                            getForwardBlockingSensor().setKnownState(Sensor.ACTIVE);
+                        if ((fbSensor != null) && (fbSensor.getState() != Sensor.ACTIVE)) {
+                            fbSensor.setKnownState(Sensor.ACTIVE);
                         }
-                    } catch (jmri.JmriException reason) {
+                    } catch (JmriException reason) {
                         log.error("Exception when setting Sensors for Section {}", getDisplayName(USERSYS));
                     }
                     break;
                 case FREE:
                     try {
-                        if ((getForwardBlockingSensor() != null) && (getForwardBlockingSensor().getState() != Sensor.ACTIVE)) {
-                            getForwardBlockingSensor().setKnownState(Sensor.ACTIVE);
+                        if ((fbSensor != null) && (fbSensor.getState() != Sensor.ACTIVE)) {
+                            fbSensor.setKnownState(Sensor.ACTIVE);
                         }
-                        if ((getReverseBlockingSensor() != null) && (getReverseBlockingSensor().getState() != Sensor.ACTIVE)) {
-                            getReverseBlockingSensor().setKnownState(Sensor.ACTIVE);
+                        if ((rbSensor != null) && (rbSensor.getState() != Sensor.ACTIVE)) {
+                            rbSensor.setKnownState(Sensor.ACTIVE);
                         }
-                    } catch (jmri.JmriException reason) {
+                    } catch (JmriException reason) {
                         log.error("Exception when setting Sensors for Section {}", getDisplayName(USERSYS));
                     }
                     break;
@@ -230,7 +233,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
     private void setOccupancy(int occupancy) {
         int old = mOccupancy;
         mOccupancy = occupancy;
-        firePropertyChange("occupancy", old, mOccupancy);
+        firePropertyChange(PROPERTY_OCCUPANCY, old, mOccupancy);
     }
 
     @Override
@@ -251,7 +254,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
             Sensor s = InstanceManager.sensorManagerInstance().
                     getSensor(mForwardBlockingSensorName);
             if (s == null) {
-                log.error("Missing Sensor - {} - when initializing Section - {}",
+                log.error("Missing FB Sensor - {} - when initializing Section - {}",
                         mForwardBlockingSensorName, getDisplayName(USERSYS));
                 return null;
             }
@@ -511,9 +514,8 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                 setOccupancy(OCCUPIED);
             }
         }
-        PropertyChangeListener listener = (PropertyChangeEvent e) -> {
-            handleBlockChange(e);
-        };
+        PropertyChangeListener listener = e -> handleBlockChange();
+
         b.addPropertyChangeListener(listener);
         mBlockListeners.add(listener);
         return true;
@@ -529,7 +531,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
 
     private void initializeBlocks() {
         for (int i = 0; i < blockNameList.size(); i++) {
-            Block b = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(blockNameList.get(i));
+            Block b = InstanceManager.getDefault(BlockManager.class).getBlock(blockNameList.get(i));
             if (b == null) {
                 log.error("Missing Block - {} - when initializing Section - {}",
                         blockNameList.get(i), getDisplayName(USERSYS));
@@ -539,9 +541,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                 }
                 mBlockEntries.add(b);
                 mLastBlock = b;
-                PropertyChangeListener listener = (PropertyChangeEvent e) -> {
-                    handleBlockChange(e);
-                };
+                PropertyChangeListener listener = e ->  handleBlockChange();
                 b.addPropertyChangeListener(listener);
                 mBlockListeners.add(listener);
             }
@@ -551,10 +551,8 @@ public class DefaultSection extends AbstractNamedBean implements Section {
 
     /**
      * Handle change in occupancy of a Block in the Section.
-     *
-     * @param e event with change
      */
-    void handleBlockChange(PropertyChangeEvent e) {
+    private void handleBlockChange() {
         int o = UNOCCUPIED;
         for (Block block : mBlockEntries) {
             if (block.getState() == OCCUPIED) {
@@ -820,16 +818,19 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         }
     }
 
+    @Nonnull
     @Override
     public List<EntryPoint> getForwardEntryPointList() {
         return new ArrayList<>(this.mForwardEntryPoints);
     }
 
+    @Nonnull
     @Override
     public List<EntryPoint> getReverseEntryPointList() {
         return new ArrayList<>(this.mReverseEntryPoints);
     }
 
+    @Nonnull
     @Override
     public List<EntryPoint> getEntryPointList() {
         List<EntryPoint> list = new ArrayList<>(this.mForwardEntryPoints);
@@ -1516,19 +1517,19 @@ public class DefaultSection extends AbstractNamedBean implements Section {
 
     private boolean placeSensorInCrossover(String b1Name, String b2Name, String c1Name, String c2Name,
             int direction, ConnectivityUtil cUtil) {
-        SignalHead b1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(b1Name);
+        SignalHead b1Head = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(b1Name);
         SignalHead b2Head = null;
         SignalHead c1Head = null;
         SignalHead c2Head = null;
         boolean success = true;
         if ((b2Name != null) && (!b2Name.isEmpty())) {
-            b2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(b2Name);
+            b2Head = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(b2Name);
         }
         if ((c1Name != null) && (!c1Name.isEmpty())) {
-            c1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(c1Name);
+            c1Head = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(c1Name);
         }
         if ((c2Name != null) && (!c2Name.isEmpty())) {
-            c2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(c2Name);
+            c2Head = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(c2Name);
         }
         if (b2Head != null) {
             if (!checkDirectionSensor(b1Head, direction, ConnectivityUtil.OVERALL, cUtil)) {
@@ -1711,9 +1712,10 @@ public class DefaultSection extends AbstractNamedBean implements Section {
             return 1;
         }
         LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
-        LayoutEditor panel = null;
-        ConnectivityUtil cUtil = null;
-        LayoutBlock lBlock = null;
+        SignalHeadManager signalHeadManager = InstanceManager.getDefault(SignalHeadManager.class);
+        LayoutEditor panel;
+        ConnectivityUtil cUtil;
+        LayoutBlock lBlock;
         for (Block cBlock : mBlockEntries) {
             String userName = cBlock.getUserName();
             if (userName == null) {
@@ -1786,8 +1788,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                                     (TrackSegment) x.getConnectA(), false, 0);
                             TrackNode altNode = new TrackNode(x, HitPointType.LEVEL_XING_C,
                                     (TrackSegment) x.getConnectC(), false, 0);
-                            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    x.getSignalAName());
+                            SignalHead sh = signalHeadManager.getSignalHead(x.getSignalAName());
                             if (!setDirectionSensorByConnectivity(tn, altNode, sh, cBlock, cUtil)) {
                                 errorCount++;
                             }
@@ -1798,8 +1799,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                                     (TrackSegment) x.getConnectC(), false, 0);
                             TrackNode altNode = new TrackNode(x, HitPointType.LEVEL_XING_A,
                                     (TrackSegment) x.getConnectA(), false, 0);
-                            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    x.getSignalCName());
+                            SignalHead sh = signalHeadManager.getSignalHead(x.getSignalCName());
                             if (!setDirectionSensorByConnectivity(tn, altNode, sh, cBlock, cUtil)) {
                                 errorCount++;
                             }
@@ -1810,8 +1810,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                     int direction = getDirectionForBlocks(alBlock, clBlock);
                     if (direction != EntryPoint.UNKNOWN) {
                         if (!x.getSignalCName().isEmpty()) {
-                            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    x.getSignalCName());
+                            SignalHead sh = signalHeadManager.getSignalHead(x.getSignalCName());
                             if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
@@ -1824,8 +1823,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                     int direction = getDirectionForBlocks(clBlock, alBlock);
                     if (direction != EntryPoint.UNKNOWN) {
                         if (!x.getSignalAName().isEmpty()) {
-                            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    x.getSignalAName());
+                            SignalHead sh = signalHeadManager.getSignalHead(x.getSignalAName());
                             if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
@@ -1844,8 +1842,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                                     (TrackSegment) x.getConnectB(), false, 0);
                             TrackNode altNode = new TrackNode(x, HitPointType.LEVEL_XING_D,
                                     (TrackSegment) x.getConnectD(), false, 0);
-                            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    x.getSignalBName());
+                            SignalHead sh = signalHeadManager.getSignalHead(x.getSignalBName());
                             if (!setDirectionSensorByConnectivity(tn, altNode, sh, cBlock, cUtil)) {
                                 errorCount++;
                             }
@@ -1856,8 +1853,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                                     (TrackSegment) x.getConnectD(), false, 0);
                             TrackNode altNode = new TrackNode(x, HitPointType.LEVEL_XING_B,
                                     (TrackSegment) x.getConnectB(), false, 0);
-                            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    x.getSignalDName());
+                            SignalHead sh = signalHeadManager.getSignalHead(x.getSignalDName());
                             if (!setDirectionSensorByConnectivity(tn, altNode, sh, cBlock, cUtil)) {
                                 errorCount++;
                             }
@@ -1868,8 +1864,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                     int direction = getDirectionForBlocks(blBlock, dlBlock);
                     if (direction != EntryPoint.UNKNOWN) {
                         if (!x.getSignalDName().isEmpty()) {
-                            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    x.getSignalDName());
+                            SignalHead sh = signalHeadManager.getSignalHead(x.getSignalDName());
                             if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
@@ -1882,8 +1877,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                     int direction = getDirectionForBlocks(dlBlock, blBlock);
                     if (direction != EntryPoint.UNKNOWN) {
                         if (!x.getSignalBName().isEmpty()) {
-                            SignalHead sh = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    x.getSignalBName());
+                            SignalHead sh = signalHeadManager.getSignalHead(x.getSignalBName());
                             if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
@@ -1912,17 +1906,14 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                         if (direction == EntryPoint.UNKNOWN) {
                             errorCount++;
                         } else {
-                            SignalHead aHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    t.getSignalA1Name());
+                            SignalHead aHead = signalHeadManager.getSignalHead(t.getSignalA1Name());
                             SignalHead a2Head = null;
                             String a2Name = t.getSignalA2Name(); // returns "" for empty name, never null
                             if (!a2Name.isEmpty()) {
-                                a2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(a2Name);
+                                a2Head = signalHeadManager.getSignalHead(a2Name);
                             }
-                            SignalHead bHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    t.getSignalB1Name());
-                            SignalHead cHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    t.getSignalC1Name());
+                            SignalHead bHead = signalHeadManager.getSignalHead(t.getSignalB1Name());
+                            SignalHead cHead = signalHeadManager.getSignalHead(t.getSignalC1Name());
                             if (t.getLayoutBlock().getBlock() == cBlock) {
                                 // turnout is in this block, set direction sensors on all signal heads
                                 // Note: need allocation to traverse this turnout
@@ -2010,19 +2001,17 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                         if (tLinked == null) {
                             log.error("null Layout Turnout linked to turnout {}", t.getTurnout().getDisplayName(USERSYS));
                         } else if (t.getLinkType() == LayoutTurnout.LinkType.THROAT_TO_THROAT) {
-                            SignalHead b1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    t.getSignalB1Name());
+                            SignalHead b1Head = signalHeadManager.getSignalHead(t.getSignalB1Name());
                             SignalHead b2Head = null;
                             String hName = t.getSignalB2Name(); // returns "" for empty name, never null
                             if (!hName.isEmpty()) {
-                                b2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
+                                b2Head = signalHeadManager.getSignalHead(hName);
                             }
-                            SignalHead c1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    t.getSignalC1Name());
+                            SignalHead c1Head = signalHeadManager.getSignalHead(t.getSignalC1Name());
                             SignalHead c2Head = null;
                             hName = t.getSignalC2Name(); // returns "" for empty name, never null
                             if (!hName.isEmpty()) {
-                                c2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
+                                c2Head = signalHeadManager.getSignalHead(hName);
                             }
                             int direction = getDirectionStandardTurnout(t, cUtil);
                             int altDirection = EntryPoint.FORWARD;
@@ -2055,19 +2044,17 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                                     }
                                 } else {
                                     // turnout is not in this block, switch to heads of linked turnout
-                                    b1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                            tLinked.getSignalB1Name());
+                                    b1Head = signalHeadManager.getSignalHead(tLinked.getSignalB1Name());
                                     hName = tLinked.getSignalB2Name(); // returns "" for empty name, never null
                                     b2Head = null;
                                     if (!hName.isEmpty()) {
-                                        b2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
+                                        b2Head = signalHeadManager.getSignalHead(hName);
                                     }
-                                    c1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                            tLinked.getSignalC1Name());
+                                    c1Head = signalHeadManager.getSignalHead(tLinked.getSignalC1Name());
                                     c2Head = null;
                                     hName = tLinked.getSignalC2Name(); // returns "" for empty name, never null
                                     if (!hName.isEmpty()) {
-                                        c2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
+                                        c2Head = signalHeadManager.getSignalHead(hName);
                                     }
                                     if (((t.getContinuingSense() == Turnout.CLOSED)
                                             && (((TrackSegment) t.getConnectB()).getLayoutBlock().getBlock() == cBlock))
@@ -2127,20 +2114,18 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                                 }
                             }
                         } else if (t.getLinkType() == LayoutTurnout.LinkType.FIRST_3_WAY) {
-                            SignalHead a1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    t.getSignalA1Name());
+                            SignalHead a1Head = signalHeadManager.getSignalHead(t.getSignalA1Name());
                             SignalHead a2Head = null;
                             String hName = t.getSignalA2Name();
                             if (!hName.isEmpty()) {
-                                a2Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
+                                a2Head = signalHeadManager.getSignalHead(hName);
                             }
                             SignalHead a3Head = null;
                             hName = t.getSignalA3Name(); // returns "" for empty name, never null
                             if (!hName.isEmpty()) {
-                                a3Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
+                                a3Head = signalHeadManager.getSignalHead(hName);
                             }
-                            SignalHead cHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    t.getSignalC1Name());
+                            SignalHead cHead = signalHeadManager.getSignalHead(t.getSignalC1Name());
                             int direction = getDirectionStandardTurnout(t, cUtil);
                             int altDirection = EntryPoint.FORWARD;
                             if (direction == EntryPoint.FORWARD) {
@@ -2193,16 +2178,13 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                                 }
                             }
                         } else if (t.getLinkType() == LayoutTurnout.LinkType.SECOND_3_WAY) {
-                            SignalHead bHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    t.getSignalB1Name());
-                            SignalHead cHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    t.getSignalC1Name());
-                            SignalHead a1Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(
-                                    tLinked.getSignalA1Name());
+                            SignalHead bHead = signalHeadManager.getSignalHead(t.getSignalB1Name());
+                            SignalHead cHead = signalHeadManager.getSignalHead(t.getSignalC1Name());
+                            SignalHead a1Head = signalHeadManager.getSignalHead(tLinked.getSignalA1Name());
                             SignalHead a3Head = null;
                             String hName = tLinked.getSignalA3Name();
                             if (!hName.isEmpty()) {
-                                a3Head = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(hName);
+                                a3Head = signalHeadManager.getSignalHead(hName);
                             }
                             int direction = getDirectionStandardTurnout(t, cUtil);
                             int altDirection = EntryPoint.FORWARD;
@@ -2329,40 +2311,40 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                         if (direction == EntryPoint.UNKNOWN) {
                             errorCount++;
                         } else {
-                            if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalA1Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
+                            if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalA1Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
-                            if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalA2Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
+                            if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalA2Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
                             if (t.getTurnoutType() == LayoutSlip.TurnoutType.SINGLE_SLIP) {
-                                if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalB1Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
+                                if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalB1Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }
                             } else {
-                                if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalB1Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
+                                if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalB1Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }
-                                if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalB2Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
+                                if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalB2Name()), altDirection, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }
                             }
                             if (t.getTurnoutType() == LayoutSlip.TurnoutType.SINGLE_SLIP) {
-                                if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalC1Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
+                                if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalC1Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }
                             } else {
-                                if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalC1Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
+                                if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalC1Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }
-                                if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalC2Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
+                                if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalC2Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
                                     errorCount++;
                                 }
                             }
-                            if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalD1Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
+                            if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalD1Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
-                            if (!checkDirectionSensor(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(t.getSignalD2Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
+                            if (!checkDirectionSensor(signalHeadManager.getSignalHead(t.getSignalD2Name()), direction, ConnectivityUtil.OVERALL, cUtil)) {
                                 errorCount++;
                             }
                         }
@@ -2490,10 +2472,9 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         }
         // validate entry points
         if ((mForwardEntryPoints.isEmpty()) && (mReverseEntryPoints.isEmpty())) {
-            String s = "Section " + getDisplayName(USERSYS) + "has no Entry Points.";
-            return s;
+            return "Section " + getDisplayName(USERSYS) + "has no Entry Points.";
         }
-        if (mForwardEntryPoints.size() > 0) {
+        if (!mForwardEntryPoints.isEmpty()) {
             for (int i = 0; i < mForwardEntryPoints.size(); i++) {
                 EntryPoint ep = mForwardEntryPoints.get(i);
                 if (!containsBlock(ep.getBlock())) {
@@ -2520,7 +2501,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                 }
             }
         }
-        if (mReverseEntryPoints.size() > 0) {
+        if (!mReverseEntryPoints.isEmpty()) {
             for (int i = 0; i < mReverseEntryPoints.size(); i++) {
                 EntryPoint ep = mReverseEntryPoints.get(i);
                 if (!containsBlock(ep.getBlock())) {

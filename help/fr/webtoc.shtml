@@ -10,7 +10,7 @@
         <LINK REL="home" TITLE="Home" HREF="/">
     </HEAD>
     <BODY>
-        <!--#include virtual="/Header_fr.shtml" -->
+        <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
         <!--#include virtual="tocheader" -->
         <ul>
              
@@ -1170,6 +1170,6 @@
             </li>
             
         </ul>
-        <!--#include virtual="/Footer_fr.shtml" -->
+        <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </BODY>
 </HTML>

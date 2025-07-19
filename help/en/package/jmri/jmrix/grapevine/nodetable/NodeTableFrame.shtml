@@ -5,10 +5,10 @@
   <title>JMRI: Grapevine Node Table</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help configure grapevine node">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -86,10 +86,10 @@
 
       <p>Back to the <a href="../../../../../html/hardware/grapevine/index.shtml">Grapevine
       Hardware Help</a> page.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
   </variable>

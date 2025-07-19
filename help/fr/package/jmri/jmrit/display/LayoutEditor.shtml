@@ -5,12 +5,12 @@
   <title>JMRI: L'Éditeur de Réseau</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor panel">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -1442,9 +1442,9 @@
       cantons définis et signaux placés peuvent aider à décider où placer les cantons et les
       signaux avant de les installer sur votre réseau.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

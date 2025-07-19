@@ -1,7 +1,5 @@
 package jmri.jmrix.can.adapters.gridconnect;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
@@ -22,20 +20,6 @@ public abstract class GcPortController extends jmri.jmrix.AbstractSerialPortCont
     protected GcPortController(CanSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }
-
-    /**
-     * Get the InputStream to the port.
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract DataInputStream getInputStream();
-
-    /**
-     * Get the outputStream to the port.
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract DataOutputStream getOutputStream();
 
     /**
      * Get the CAN System Connection.

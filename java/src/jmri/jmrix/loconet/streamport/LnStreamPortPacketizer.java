@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.streamport;
 
-import java.util.NoSuchElementException;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -86,12 +85,10 @@ public class LnStreamPortPacketizer extends LnPacketizer {
             while (!threadStopRequest) {   // loop until asked to stop
                 // any input?
                 try {
-                    // get content; failure is a NoSuchElementException
+                    // get content; blocks until present
                     log.trace("check for input"); // NOI18N
-                    byte msg[] = null;
-                    synchronized (this) {
-                        msg = xmtList.removeFirst();
-                    }
+
+                    byte msg[] = xmtList.take();
 
                     // input - now send
                     try {
@@ -115,13 +112,8 @@ public class LnStreamPortPacketizer extends LnPacketizer {
                     } catch (java.io.IOException e) {
                         log.warn("sendLocoNetMessage: IOException: {}", e.toString()); // NOI18N
                     }
-                } catch (NoSuchElementException e) {
-                    // message queue was empty, wait for input
-                    log.trace("start wait"); // NOI18N
-
-                    new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
-
-                    log.trace("end wait"); // NOI18N
+                } catch (InterruptedException ie) {
+                    return; // ending the thread
                 }
             }
         }
@@ -141,7 +133,7 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         if (xmtHandler == null) {
             xmtHandler = new XmtHandler();
         }
-        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        xmtThread = jmri.util.ThreadingUtil.newThread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
@@ -151,7 +143,7 @@ public class LnStreamPortPacketizer extends LnPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandler(this);
         }
-        rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread = jmri.util.ThreadingUtil.newThread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();

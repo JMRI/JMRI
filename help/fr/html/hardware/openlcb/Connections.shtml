@@ -3,11 +3,11 @@
 <head>
   <!-- Translated by Herv&#233; BLOREC on2017-02-05 -->
   <title>JMRI Hardware Support - OpenLCB Connections</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -40,9 +40,9 @@ nc -l 12022
 <h3>Aide JMRI </h3>
 <p>Retour &#224; la <a href="index.shtml">page d'aide principale OpenLCB</a></p>
  
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

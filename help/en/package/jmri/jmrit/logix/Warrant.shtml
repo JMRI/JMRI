@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Warrants Help</title>
   <meta name="author" content="Pete Cressman">
-  <meta name="keywords" content="JMRI Warrant Help"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Warrant Help"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -325,13 +325,18 @@
       the train occupies. This is the most simple way of tracking in that both the name and
       location are done with a single drag and drop.</p>
 
-      <h2>Using Warrants in Logix</h2>
+      <h2>Using Warrants in Logix and LogixNG</h2>
 
       <p>Several of the operations that can be done from the Warrant List and Warrant Editing frame
-      can be done with Logix Conditionals. You may design and implement a dispatcher's panel using
-      the Warrant state variables and actions found in Logix.</p>
+      can be done with Logix/LogixNG conditionals. You may design and implement a dispatcher's panel
+      using the Warrant state variables/expressions and actions found in Logix/LogixNG.</p>
 
-      <h3>Warrant State Variables</h3>
+      <p>Detailed LogixNG descriptions are at
+      <a href="../../../../html/tools/logixng/reference/chapter5.shtml#WarrantAction">LogixNG Actions</a>
+      and <a href="../../../../html/tools/logixng/reference/chapter6.shtml#WarrantExpression">LogixNG
+      Expressions</a>.</p>
+
+      <h3>Warrant State Variables (Logix)</h3>
 
       <p>When a Warrant has been allocated or is in effect, the following state variables can be
       tested in a Logix conditional.</p>
@@ -354,7 +359,7 @@
         running either in Learn Mode or Auto Run Mode. False otherwise.</li>
       </ul>
 
-      <h3>Warrant Actions</h3>
+      <h3>Warrant Actions (Logix)</h3>
 
       <ul>
         <li><strong>Allocate Warrant Route</strong>: - Allocates the route to this Warrant.</li>
@@ -403,11 +408,11 @@
         Warrants</a>
         </li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

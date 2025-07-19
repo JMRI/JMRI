@@ -122,4 +122,14 @@ public class CdiPanelDemo {
         JUnitUtil.tearDown();
     }
 
+    public static void main(String args[]) throws InterruptedException {
+        var tests = new CdiPanelDemo();
+        
+        tests.setUp();
+        tests.testDisplaySample1();
+        
+        Thread.sleep(360000);
+        
+        tests.tearDown();
+    }
 }

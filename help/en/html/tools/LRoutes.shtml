@@ -5,10 +5,10 @@
   <title>JMRI: LRoute Documentation</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="layout java model railroad JMRI panelpro tools LRoute">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -406,11 +406,11 @@
       give either option. If you want the LRoute to perform in this passive manner as a Route does,
       press the <strong>Old</strong> button. If you want the LRoute to trigger its actions when all
       the 'veto's are removed, press the <strong>New</strong> button.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -10,10 +10,7 @@ import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.script.ScriptEngineSelector;
 import jmri.util.JUnitUtil;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test ActionSimpleScript
@@ -213,6 +210,11 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         expressionScript.getScriptEngineSelector().setSelectedEngine(ScriptEngineSelector.ECMA_SCRIPT);
         expressionScript.setScript(ECMA_SCRIPT);
 
+        // Java 17 doesn't have ECMA_SCRIPT
+        ScriptEngineSelector.Engine engine = expressionScript.getScriptEngineSelector().getSelectedEngine();
+        Assume.assumeNotNull(engine);
+        Assume.assumeTrue(engine.getLanguageName().equals(ScriptEngineSelector.ECMA_SCRIPT));
+
         // Test expression
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
@@ -293,6 +295,24 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     }
 
     @Test
+    public void testAction_GetAndSetLocalVariables() throws Exception {
+
+        ((MaleSocket)ifThenElse.getParent()).addLocalVariable("in", SymbolTable.InitialValueType.Integer, "10");
+        var globalVariable = InstanceManager.getDefault(GlobalVariableManager.class).createGlobalVariable("out");
+
+        expressionScript.setScript("symbolTable.setValue(\"out\",symbolTable.getValue(\"in\")*15)");
+
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
+        // Execute the conditionalNG
+        conditionalNG.execute();
+
+        // The expression should now be evaluated so the global variable should have the correct value
+        Assert.assertEquals("global variable has the correct value", 150,
+                ((java.math.BigInteger)globalVariable.getValue()).longValue());
+    }
+
+    @Test
     public void testSetScript() {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
@@ -317,7 +337,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");

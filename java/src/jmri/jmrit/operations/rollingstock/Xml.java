@@ -40,6 +40,8 @@ public class Xml {
     static final String RFID = "rfid"; // NOI18N
     static final String TRAIN = "train"; // NOI18N
     static final String TRAIN_ID = "trainId"; // NOI18N
+    static final String LAST_TRAIN = "lastTrain"; // NOI18N
+    static final String LAST_TRAIN_ID = "lastTrainId"; // NOI18N
     static final String OUT_OF_SERVICE = "outOfService"; // NOI18N
     static final String DESTINATION = "destination"; // NOI18N
     static final String DES_TRACK = "desTrack"; // NOI18N
@@ -59,6 +61,9 @@ public class Xml {
     static final String LAST_ROUTE_ID = "lastRouteId"; // NOI18N
     static final String DIVISION_ID_ERROR = "DivisionId"; // NOI18N
     static final String DIVISION_ID = "divisionId"; // NOI18N
+    static final String PICKUP_TIME = "pickupTime"; // NOI18N
+    static final String SETOUT_TIME = "setoutTime"; // NOI18N
+    static final String CLONE = "clone"; // NOI18N
 
     // Car.java
     static final String PASSENGER = "passenger"; // NOI18N

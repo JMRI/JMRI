@@ -3,11 +3,11 @@
 <!-- Translated by Blorec Herv&#233; le 2011-11-07-->
 <head>
   <title>JMRI: Signaux - Mise En Route</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -346,9 +346,9 @@
   un peu de r&eacute;alisme qui serait difficile &aacute; 
   reproduire.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

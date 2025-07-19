@@ -27,7 +27,8 @@ public class BlockCurvatureJComboBoxTest {
     
     @Test
     public void testSetCurvature() {
-        
+
+        Assertions.assertNotNull(t);
         assertEquals("get curve default", Block.NONE, t.getCurvature());
         
         t.setCurvature(Block.TIGHT);
@@ -83,7 +84,8 @@ public class BlockCurvatureJComboBoxTest {
     
     @Test
     public void testGetCurvatureFromObject() {
-        
+
+        Assertions.assertNotNull(t);
         t.setCurvature(Block.SEVERE);
         assertEquals("BlockSevere found", Block.SEVERE, 
             BlockCurvatureJComboBox.getCurvatureFromObject(t));
@@ -91,9 +93,9 @@ public class BlockCurvatureJComboBoxTest {
             BlockCurvatureJComboBox.getCurvatureFromObject("String, not a Curvature ComboBox"));
         
     }
-    
-    private BlockCurvatureJComboBox t;
-    
+
+    private BlockCurvatureJComboBox t = null;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

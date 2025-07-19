@@ -867,7 +867,7 @@
 	<name>Signal Selectors</name>
 	<name xml:lang="cs">Voliče návěstidel</name>
     <column>
-		<display item="Start Address"/>
+		<display item="Signal Select Start Address"/>
 		<xsl:call-template name="SignalSelectorsInPane">
 		  <xsl:with-param name="index" select="1"/>
 		</xsl:call-template>

@@ -152,10 +152,10 @@ public class XmlFileLocationAction extends AbstractAction {
         s.append(Bundle.getMessage("ButtonRosterLoc") + ": ").append(Roster.getDefault().getRosterLocation()).append("\n");
         s.append(Bundle.getMessage("ButtonProfileLoc") + ": ").append(FileUtil.getProfilePath()).append("\n");
         s.append(Bundle.getMessage("ButtonSettingsLoc") + ": ").append(FileUtil.getPreferencesPath()).append("\n");
-        s.append(Bundle.getMessage("CurrentConfig")).append(configName).append("\n");
+        s.append(Bundle.getMessage("CurrentConfig") + ": ").append(configName).append("\n");
         s.append(Bundle.getMessage("ButtonScriptsLoc") + ": ").append(FileUtil.getScriptsPath()).append("\n");
         s.append(Bundle.getMessage("ButtonProgramLoc") + ": ").append(System.getProperty("user.dir")).append("\n");
-        s.append(Bundle.getMessage("TempFilesLoc")).append(System.getProperty("java.io.tmpdir")).append("\n");
+        s.append(Bundle.getMessage("TempFilesLoc") + ": ").append(System.getProperty("java.io.tmpdir")).append("\n");
         s.append(Bundle.getMessage("ButtonLogFilesLoc") + ": ").append(logDir).append("\n");
 
         //include names of any *.log files in log folder

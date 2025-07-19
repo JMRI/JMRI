@@ -24,8 +24,12 @@
 #         Trains can be loaded and started by setting a memory variable to a train file name.
 # v3.1 -- The wait for seconds command has support for random wait times:  Wait for <n> [to <n>] seconds.
 #         The function key limit has been changed to 68.
+# v3.2 -- Add hold and release signal heads and masts, misc bug fixes, code improvements.
+# v3.3 -- Add 'If value for memory <memory name> is <eq | ne | lt | gt | le | ge> <value>'
+#         Add 'Wait for memory <memory name> value to change'
+# v3.4 -- Add the ability to include text content using '@include <filename>'.
 #
-# Author:  Dave Sand copyright (c) 2018 - 2023
+# Author:  Dave Sand copyright (c) 2018 - 2025
 
 # The help information is available at https://jmri.org/help/en/html/scripthelp/yaat/YAAT.shtml
 
@@ -43,7 +47,7 @@ from javax.swing import JOptionPane
 yaatPath = jmri.util.FileUtil.getUserFilesPath() + 'yaat'
 jmri.util.FileUtil.createDirectory(yaatPath)
 yaatLocation = yaatPath + jmri.util.FileUtil.SEPARATOR
-print yaatLocation
+yaatIncludes = None
 
 # Load YAAT configuration options.  If not found, create a file with default values.
 try:
@@ -52,6 +56,7 @@ try:
 except IOError:
     logLevel = 0
     saveYAATcompiles = False
+    enableIncludes = False
     masterSensor = ''
     statusSensor = ''
     yaatMemory = ''
@@ -60,9 +65,34 @@ except IOError:
     with open(yaatLocation + 'config.txt', 'w') as file:
         file.write("logLevel = 0                # 0 for no output, 4 for the most detail\n")
         file.write("saveYAATcompiles = False    # Load/Save compiled trains\n")
+        file.write("enableIncludes = False      # Enable @include support\n")
         file.write("masterSensor = ''           # Optional sensor to stop all threads\n")
         file.write("statusSensor = ''           # Optional sensor to notify JMRI if any threads are active\n")
         file.write("yaatMemory = ''             # Optional memory variable that contains a filename for starting a train\n")
+
+if logLevel > 2: print 'yaatLocation: {}'.format(yaatLocation)
+try:
+    if enableIncludes:
+        jmri.util.FileUtil.createDirectory(yaatPath + jmri.util.FileUtil.SEPARATOR + 'includes')
+        yaatIncludes = yaatLocation + 'includes' + jmri.util.FileUtil.SEPARATOR
+        if logLevel > 2: print 'yaatIncludes location: {}'.format(yaatIncludes)
+except NameError:
+    # enableIncludes was added at 3.4 and might not be in the existing xconfig file.
+    if logLevel > 3: print 'Handle enableIncludes not found'
+    enableIncludes = False
+
+# Set optional objects, will be None if not found
+yaatMaster = sensors.getSensor(masterSensor)
+yaatRunning = sensors.getSensor(statusSensor)
+trainMemory = memories.getMemory(yaatMemory)
+
+def setYaatMaster(state):
+    if yaatMaster is not None:
+        yaatMaster.setKnownState(state)
+
+def setYaatRunnning(state):
+    if yaatRunning is not None:
+        yaatRunning.setKnownState(state)
 
 class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     threadCount = 0
@@ -131,20 +161,19 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.displayMessage("\n".join(self.compileMessages))
             YetAnotherAutoTrain.threadCount -= 1
             if YetAnotherAutoTrain.threadCount < 1:
-                statSensor = sensors.getSensor(statusSensor)
-                if statSensor is not None:
-                    statSensor.setKnownState(INACTIVE)
+                setYaatRunnning(INACTIVE)
             return False
         if len(self.actionTokens) == 0:
             self.displayMessage('{} - The action list is empty, terminating'.format(self.threadName))
             return False
+
+        setYaatRunnning(ACTIVE)
 
         return True
 
     def handle(self):
         if logLevel > 0: print '{} - Start YAAT Program'.format(self.threadName)
         while True:
-            if logLevel > 2: print '\nprogAddr = {}'.format(self.progAddr)
             if self.progAddr >= len(self.actionTokens):
                 self.progAddr = 0
                 continue
@@ -155,7 +184,7 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.displayMessage('Empty Action row')
                 continue
 
-            if logLevel > 2: print '{} - Action: {}'.format(self.threadName, action)
+            if logLevel > 2: print '{:3d} :: {} - Action: {}'.format(self.progAddr, self.threadName, action)
             actionKey = action[0]
 
             if actionKey == 'Assign':
@@ -176,8 +205,14 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.doEndSub(action)
             elif actionKey == 'Halt':
                 break    # Direct execution
+            elif actionKey == 'HoldHead':
+                self.doHoldSignalHead(action)
+            elif actionKey == 'HoldMast':
+                self.doHoldSignalMast(action)
             elif actionKey == 'IfBlock':
                 self.doIfBlock(action)
+            elif actionKey == 'IfMemoryValue':
+                self.doIfMemoryValue(action)
             elif actionKey == 'IfSensor':
                 self.doIfSensor(action)
             elif actionKey == 'IfHead':
@@ -190,6 +225,10 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 continue
             elif actionKey == 'Print':
                 self.doPrint(action)
+            elif actionKey == 'ReleaseHead':
+                self.doReleaseSignalHead(action)
+            elif actionKey == 'ReleaseMast':
+                self.doReleaseSignalMast(action)
             elif actionKey == 'ReleaseThrottle':
                 self.doReleaseThrottle(action)
             elif actionKey == 'Repeat':
@@ -221,15 +260,15 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                     if logLevel > 0: print '>> Stop YAAT for {} <<'.format(self.threadName)
                     YetAnotherAutoTrain.threadCount -= 1
                     if YetAnotherAutoTrain.threadCount == 0:
-                        statSensor = sensors.getSensor(statusSensor)
-                        if statSensor is not None:
-                            statSensor.setKnownState(INACTIVE)
+                        setYaatRunnning(INACTIVE)
                     break;
             elif actionKey == 'Sub':
                 self.progAddr = 0
                 continue
             elif actionKey == 'WaitBlock':
                 self.doWaitBlock(action)
+            elif actionKey == 'WaitMemory':
+                self.doWaitMemory(action)
             elif actionKey == 'WaitSensor':
                 self.doWaitSensor(action)
             elif actionKey == 'WaitHead':
@@ -287,6 +326,22 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         returnAddress = self.subStack.pop()
         self.progAddr = returnAddress
 
+    def doHoldSignalHead(self, action):
+        act, headName = action
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.displayMessage('{} - Signal head {} not found'.format(self.threadName, headName))
+            return
+        head.setHeld(True)
+
+    def doHoldSignalMast(self, action):
+        act, mastName = action
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.displayMessage('{} - Signal mast {} not found'.format(self.threadName, mastName))
+            return
+        mast.setHeld(True)
+
     def doIfBlock(self, action):
         act, blockName, blockState = action
         layoutBlock = layoutblocks.getLayoutBlock(blockName)
@@ -309,6 +364,32 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.displayMessage('{} - block state, {}, is not valid'.format(self.threadName, blockState))
             return
         self.pushIfState(currentState)
+
+    def doIfMemoryValue(self, action):
+        act, memoryName, operator, value = action
+        memory = memories.getMemory(memoryName)
+        if memory is None:
+            self.displayMessage('{} - Memory {} not found'.format(self.threadName, memoryName))
+            return
+        checkState = False
+        currentValue = str(memory.getValue())
+        if currentValue:
+            if operator == 'eq':
+                if currentValue == value: checkState = True
+            elif operator == 'ne':
+                if currentValue != value: checkState = True
+            elif operator == 'gt':
+                if currentValue > value: checkState = True
+            elif operator == 'lt':
+                if currentValue < value: checkState = True
+            elif operator == 'ge':
+                if currentValue >= value: checkState = True
+            elif operator == 'le':
+                if currentValue <= value: checkState = True
+            else:
+                self.displayMessage('{} - Invalid operator: {}'.format(self.threadName, operator))
+                return
+        self.pushIfState(checkState)
 
     def doIfSensor(self, action):
         act, sensorName, sensorState = action
@@ -394,6 +475,22 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
     def doPrint(self, action):
         act, printText = action
         print '{} - {}'.format(self.threadName, printText)
+
+    def doReleaseSignalHead(self, action):
+        act, headName = action
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.displayMessage('{} - Signal head {} not found'.format(self.threadName, headName))
+            return
+        head.setHeld(False)
+
+    def doReleaseSignalMast(self, action):
+        act, mastName = action
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.displayMessage('{} - Signal mast {} not found'.format(self.threadName, mastName))
+            return
+        mast.setHeld(False)
 
     def doReleaseThrottle(self, action):
         if self.throttle is not None:
@@ -596,6 +693,18 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.waitMsec(1000)
         return
 
+    def doWaitMemory(self, action):
+        act, memoryName = action
+        memory = memories.getMemory(memoryName)
+        if memory is None:
+            self.displayMessage('{} - Memory {} not found'.format(self.threadName, memoryName))
+            return
+        currValue = str(memory.getValue())
+        newValue = currValue
+        while newValue == currValue:
+            self.waitChange([memory])
+            newValue = str(memory.getValue())
+
     def doWaitSensor(self, action):
         act, sensorName, sensorState = action
         sensor = sensors.getSensor(sensorName)
@@ -725,9 +834,16 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             elif words[0] == 'EndSub':
                 self.compileEndSub(line)
             elif words[0] == 'Halt':
+                if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
                 self.actionTokens.append(['Halt'])
+            elif words[0] == 'Hold' and words[1] == 'signal' and words[2] == 'head':
+                self.compileHoldSignalHead(line)
+            elif words[0] == 'Hold' and words[1] == 'signal' and words[2] == 'mast':
+                self.compileHoldSignalMast(line)
             elif words[0] == 'If' and words[1] == 'block':
                 self.compileIfBlock(line)
+            elif words[0] == 'If' and words[1] == 'value' and words[3] == 'memory':
+                self.compileIfMemoryValue(line)
             elif words[0] == 'If' and words[1] == 'sensor':
                 self.compileIfSensor(line)
             elif words[0] == 'If' and words[1] == 'signal' and words[2] == 'head':
@@ -742,6 +858,10 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.compilePrint(line)
             elif words[0] == 'Repeat':
                 self.compileRepeat(line)
+            elif words[0] == 'Release' and words[1] == 'signal' and words[2] == 'head':
+                self.compileReleaseSignalHead(line)
+            elif words[0] == 'Release' and words[1] == 'signal' and words[2] == 'mast':
+                self.compileReleaseSignalMast(line)
             elif words[0] == 'Release':
                 self.compileReleaseThrottle(line)
             elif words[0] == 'Set' and words[1] == 'block':
@@ -770,6 +890,8 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
                 self.compileSub(line)
             elif words[0] == 'Wait' and words[1] == 'for' and words[2] == 'block':
                 self.compileWaitBlock(line)
+            elif words[0] == 'Wait' and words[1] == 'for' and words[2] == 'memory':
+                self.compileWaitMemory(line)
             elif words[0] == 'Wait' and words[1] == 'for' and words[2] == 'sensor':
                 self.compileWaitSensor(line)
             elif words[0] == 'Wait' and words[1] == 'for' and words[3] == 'head':
@@ -913,6 +1035,39 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             return
         self.actionTokens.append(['EndSub', result[0]])
 
+    def compileHoldSignalHead(self, line):
+        # Hold signal head <headName>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*Hold\s+signal\s+head\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) != 1:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        headName = result[0]
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.compileMessages.append('{} - Hold signal head error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, headName))
+            return
+        if logLevel > 2: print 'HoldHead', headName
+        self.actionTokens.append(['HoldHead', headName])
+
+    def compileHoldSignalMast(self, line):
+        # Hold signal mast <mastName>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*Hold\s+signal\s+mast\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) != 1:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        mastName = result[0]
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.compileMessages.append('{} - Hold signal mast error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, mastName))
+            return
+        self.actionTokens.append(['HoldMast', mastName])
+
     def compileIfBlock(self, line):
         # If block <block name> is <occupied | unoccupied | reserved | free>
         if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
@@ -931,6 +1086,27 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.compileMessages.append('{} - Block error at line {}: occupancy sensor for block {} not found'.format(self.threadName, self.lineNumber, blockName))
             return
         self.actionTokens.append(['IfBlock', blockName, blockState])
+        self.createIf()
+
+    def compileIfMemoryValue(self, line):
+        # If value for memory <memory name> is <eq | ne | lt | gt | le | ge> <value>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*If\s+value\s+for\s+memory\s+(.+\S)\s+is\s+(eq|ne|gt|lt|ge|le)\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) == 0 or len(result[0]) != 3:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        memoryName, operator, value = result[0]
+        memory = memories.getMemory(memoryName)
+        if memory is None:
+            self.compileMessages.append('{} - If memory value error at line {}: memory "{}" not found'.format(self.threadName, self.lineNumber, memoryName))
+            return
+        if not value:
+            self.compileMessages.append('{} - If memory value error at line {}: the value is empty'.format(self.threadName, self.lineNumber))
+            return
+        if logLevel > 2: print 'IfMemoryValue', memoryName, operator, value
+        self.actionTokens.append(['IfMemoryValue', memoryName, operator, value])
         self.createIf()
 
     def compileIfSensor(self, line):
@@ -1016,7 +1192,6 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if len(aspectNames) == 0:
             self.compileMessages.append('{} - If signal mast error at line {}: no valid signal mast aspects found'.format(self.threadName, self.lineNumber))
             return
-        if logLevel > 2: print 'IfMast', mastName, aspectNames, notOption
         self.actionTokens.append(['IfMast', mastName, aspectNames, notOption])
         self.createIf()
 
@@ -1069,6 +1244,39 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
             return
         self.actionTokens.append(['Print', result[0]])
+
+    def compileReleaseSignalHead(self, line):
+        # Release signal head <headName>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*Release\s+signal\s+head\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) != 1:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        headName = result[0]
+        head = signals.getSignalHead(headName)
+        if head is None:
+            self.compileMessages.append('{} - Release signal head error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, headName))
+            return
+        if logLevel > 2: print 'ReleaseHead', headName
+        self.actionTokens.append(['ReleaseHead', headName])
+
+    def compileReleaseSignalMast(self, line):
+        # Release signal mast <mastName>
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*Release\s+signal\s+mast\s+(.+\S)')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) != 1:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        mastName = result[0]
+        mast = masts.getSignalMast(mastName)
+        if mast is None:
+            self.compileMessages.append('{} - Release signal mast error at line {}: head "{}" not found'.format(self.threadName, self.lineNumber, mastName))
+            return
+        self.actionTokens.append(['ReleaseMast', mastName])
 
     def compileReleaseThrottle(self, line):
         # Release throttle
@@ -1361,6 +1569,22 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         self.actionTokens.append(['WaitBlock', blockName, blockState])
         return
 
+    def compileWaitMemory(self, line):
+        # Wait for memory <memory name> value to change
+        if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
+        pattern = re.compile('\s*Wait\s+for\s+memory\s+(.+\S)\s+value\s+to\s+change')
+        result = re.findall(pattern, line)
+        if logLevel > 3: print '    {} - result = {}'.format(self.threadName, result)
+        if len(result) == 0:
+            self.compileMessages.append('{} - Syntax error at line {}: {}'.format(self.threadName, self.lineNumber, line))
+            return
+        memoryName = result[0]
+        if memories.getMemory(memoryName) is None:
+            self.compileMessages.append('{} - Wait memory error at line {}: memory {} not found'.format(self.threadName, self.lineNumber, memoryName))
+            return
+        self.actionTokens.append(['WaitMemory', memoryName])
+        return
+
     def compileWaitSensor(self, line):
         # Wait for sensor <sensor name> to become <active | inactive>
         if logLevel > 2: print '  {} - {}'.format(self.threadName, line)
@@ -1485,7 +1709,6 @@ class YetAnotherAutoTrain(jmri.jmrit.automat.AbstractAutomaton):
         if len(aspectNames) == 0:
             self.compileMessages.append('{} - Wait signal mast error at line {}: no valid signal mast aspects found'.format(self.threadName, self.lineNumber))
             return
-        if logLevel > 2: print 'WaitMast', mastName, aspectNames, notOption
         self.actionTokens.append(['WaitMast', mastName, aspectNames, notOption])
 
     def compileSignalSpeed(self, line):
@@ -1529,14 +1752,13 @@ class YAATMaster(jmri.jmrit.automat.AbstractAutomaton):
         if logLevel > 0: print 'Create Master Thread'
 
     def setup(self):
-        self.mSensor = sensors.getSensor(masterSensor)
-        if self.mSensor is None:
+        if yaatMaster is None:
             return False
-        self.mSensor.setKnownState(INACTIVE)
+        setYaatMaster(INACTIVE)
         return True
 
     def handle(self):
-        self.waitSensorActive(self.mSensor)
+        self.waitSensorActive(yaatMaster)
         for thread in instanceList:
             if thread is not None:
                 if thread.isRunning():
@@ -1545,6 +1767,13 @@ class YAATMaster(jmri.jmrit.automat.AbstractAutomaton):
                         thread.throttle.setSpeedSetting(0.0)
                         thread.throttle.release(None)
                     thread.stop()
+
+        setYaatRunnning(INACTIVE)
+        setYaatMaster(INACTIVE)
+
+        if memoryListener is not None:
+            memoryListener.removeListener()
+
         return False;
 
 # End of class YAATMaster
@@ -1552,17 +1781,22 @@ class YAATMaster(jmri.jmrit.automat.AbstractAutomaton):
 # Compile and run a train when the memory variable contains a train file name.
 class YAATMemoryListener(java.beans.PropertyChangeListener):
     def __init__(self):
-        self.memory = memories.getMemory(yaatMemory)
-        if self.memory is None:
-            return
-        self.memory.setValue('')    # Clear any residual values
-        self.memory.removePropertyChangeListener(self)
-        self.memory.addPropertyChangeListener(self)
+        if trainMemory is None:
+            return None
+        trainMemory.setValue('')    # Clear any residual values
+        trainMemory.removePropertyChangeListener(self)
+        trainMemory.addPropertyChangeListener(self)
+        return
 
     def propertyChange(self, event):
         if event.getPropertyName() == 'value':
             fileName = str(event.getNewValue())
-            startTrain(fileName)
+            if fileName is not None and len(fileName) > 4:
+                startTrain(fileName.strip())
+
+    def removeListener(self):
+        if trainMemory is not None:
+            trainMemory.removePropertyChangeListener(self)
 
 # End of class YAATMemoryListener
 
@@ -1591,6 +1825,25 @@ def compileRequired(fullPath):
     if logLevel > 1: print 'Source file = {}, source time = {}, compile time = {}'.format(sourceName, sourceTime, pickleTime)
     return (sourceTime > pickleTime, fullPickleLocation)
 
+# Check the trainLines list for the @include keyword.  Replace the line with the lines from
+# the included file.
+def expandIncludes(sourceLines):
+    expandedLines = []
+    for line in sourceLines:
+        if logLevel > 2: print 'expandIncludes: input line = {}'.format(line)
+        if line[:8] == '@include':
+            includeFName = line[9:].strip()
+            if logLevel > 2: print 'expandIncludes: included file name = {}'.format(includeFName)
+            includeFile = yaatIncludes + includeFName
+            try:
+                with open(includeFile) as file:
+                    expandedLines.extend([includeLine.strip() for includeLine in file])
+            except IOError, e:
+                print 'Error loading include file, error :: {}'.format(e)
+        else:
+            expandedLines.append(line)
+    return expandedLines
+
 instanceList = []   # List of train instances
 def startTrain(fileName):
     if len(fileName) == 0:
@@ -1603,6 +1856,8 @@ def startTrain(fileName):
         try:
             with open(fullName) as file:
                 trainLines = [line.strip() for line in file]
+            if enableIncludes:
+                trainLines = expandIncludes(trainLines)
         except IOError, e:
             print 'Error loading trainLines, error :: {}'.format(e)
 
@@ -1612,22 +1867,23 @@ def startTrain(fileName):
     if instanceList[idx].setup(trainLines, compileNeeded, pickleName):   # Compile the train actions
         instanceList[idx].start()                       # Compile was successful
 
-print 'YAAT v3.1'
+print 'YAAT v3.4'
 startTime = time()
 
 try:
     with open(yaatLocation + 'LoadTrains.txt') as file:
         for line in file:
-            startTrain(line.strip())
+            if len(line) > 4:
+                startTrain(line.strip())
 except IOError, e:
     pass    # Ignore file errors since this file is optional
 
 endTime = time()
-if logLevel > 1: print "\nTiming"
-if logLevel > 1: print ("  Load duration: {}").format(endTime - startTime)
+if logLevel > 1: print '\nTiming'
+if logLevel > 1: print ('  Load duration: {}').format(endTime - startTime)
 
 # Start YAAT memory listener
-YAATMemoryListener()
+memoryListener = YAATMemoryListener()
 
 # Keep last -- create the master thread
 master = YAATMaster()

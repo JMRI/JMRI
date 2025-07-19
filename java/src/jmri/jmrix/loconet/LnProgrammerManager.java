@@ -38,7 +38,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new LnOpsModeProgrammer(memo, pAddress, pLongAddress);
     }
 
@@ -46,7 +46,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 
@@ -69,7 +69,6 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      * Programming for Uhlenbrock (LocoNet) LNCV protocol.
      */
     public static final ProgrammingMode LOCONETLNCVMODE    = new ProgrammingMode("LOCONETLNCVMODE", Bundle.getMessage("LOCONETLNCVMODE"));
-
 
     /**
      * Programming via LocoNet messages for Digitrax DS*, PM*, BDL*, SE* boards

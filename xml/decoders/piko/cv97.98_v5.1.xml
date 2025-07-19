@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2022</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-02-11</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<!-- CV 97 - 98 -->
+	<variable item="Function 1 check 3" CV="97" mask="XXXXXXXV">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Forward Off - A1</label>
+		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A1</label>
+		<label xml:lang="nl">Functieuitgang Vooruit Uit - A1</label>
+		<label xml:lang="cs">Funkční výstup Vpřed Vypnuto - A1</label>
+	</variable>
+	<variable item="Function 1 check 4" CV="98" mask="XXXXXXXV">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Reverse Off - A1</label>
+		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A1</label>
+		<label xml:lang="nl">Functieuitgang Achteruit Uit - A1</label>
+		<label xml:lang="cs">Funkční výstup Vzad Vypnuto - A1</label>
+	</variable>
+	<variable item="Function 2 check 3" CV="97" mask="XXXXXXVX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Forward Off - A2</label>
+		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A2</label>
+		<label xml:lang="nl">Functieuitgang Vooruit Uit - A2</label>
+		<label xml:lang="cs">Funkční výstup Vpřed Vypnuto - A2</label>
+	</variable>
+	<variable item="Function 2 check 4" CV="98" mask="XXXXXXVX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Reverse Off - A2</label>
+		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A2</label>
+		<label xml:lang="nl">Functieuitgang Achteruit Uit - A2</label>
+		<label xml:lang="cs">Funkční výstup Vzad Vypnuto - A2</label>
+	</variable>
+	<variable item="Function 3 check 3" CV="97" mask="XXXXXVXX" minOut="4">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Forward Off - A3</label>
+		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A3</label>
+		<label xml:lang="nl">Functieuitgang Vooruit Uit - A3</label>
+		<label xml:lang="cs">Funkční výstup Vpřed Vypnuto - A3</label>
+	</variable>
+	<variable item="Function 3 check 4" CV="98" mask="XXXXXVXX" minOut="4">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Reverse Off - A3</label>
+		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A3</label>
+		<label xml:lang="nl">Functieuitgang Achteruit Uit - A3</label>
+		<label xml:lang="cs">Funkční výstup Vzad Vypnuto - A3</label>
+	</variable>
+	<variable item="Function 4 check 3" CV="97" mask="XXXXVXXX" minOut="4">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Forward Off - A4</label>
+		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A4</label>
+		<label xml:lang="nl">Functieuitgang Vooruit Uit - A4</label>
+		<label xml:lang="cs">Funkční výstup Vpřed Vypnuto - A4</label>
+	</variable>
+	<variable item="Function 4 check 4" CV="98" mask="XXXXVXXX" minOut="4">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Reverse Off - A4</label>
+		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A4</label>
+		<label xml:lang="nl">Functieuitgang Achteruit Uit - A4</label>
+		<label xml:lang="cs">Funkční výstup Vzad Vypnuto - A4</label>
+	</variable>
+	<variable item="Function 5 check 3" CV="97" mask="XXXVXXXX" minOut="6">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Forward Off - A5</label>
+		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A5</label>
+		<label xml:lang="nl">Functieuitgang Vooruit Uit - A5</label>
+		<label xml:lang="cs">Funkční výstup Vpřed Vypnuto - A5</label>
+	</variable>
+	<variable item="Function 5 check 4" CV="98" mask="XXXVXXXX" minOut="6">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Reverse Off - A5</label>
+		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A5</label>
+		<label xml:lang="nl">Functieuitgang Achteruit Uit - A5</label>
+		<label xml:lang="cs">Funkční výstup Vzad Vypnuto - A5</label>
+	</variable>
+	<variable item="Function 6 check 3" CV="97" mask="XXVXXXXX" minOut="6">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Forward Off - A6</label>
+		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A6</label>
+		<label xml:lang="nl">Functieuitgang Vooruit Uit - A6</label>
+		<label xml:lang="cs">Funkční výstup Vpřed Vypnuto - A6</label>
+	</variable>
+	<variable item="Function 6 check 4" CV="98" mask="XXVXXXXX" minOut="6">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Reverse Off - A6</label>
+		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A6</label>
+		<label xml:lang="nl">Functieuitgang Achteruit Uit - A6</label>
+		<label xml:lang="cs">Funkční výstup Vzad Vypnuto - A6</label>
+	</variable>
+	<variable item="Function 7 check 3" CV="97" mask="XVXXXXXX" minOut="7">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Forward Off - A7</label>
+		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A7</label>
+		<label xml:lang="nl">Functieuitgang Vooruit Uit - A7</label>
+		<label xml:lang="cs">Funkční výstup Vpřed Vypnuto - A7</label>
+	</variable>
+	<variable item="Function 7 check 4" CV="98" mask="XVXXXXXX" minOut="7">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Reverse Off - A7</label>
+		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A7</label>
+		<label xml:lang="nl">Functieuitgang Achteruit Uit - A7</label>
+		<label xml:lang="cs">Funkční výstup Vzad Vypnuto - A7</label>
+	</variable>
+	<variable item="Function 8 check 3" CV="97" mask="VXXXXXXX" minOut="8">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Forward Off - A8</label>
+		<label xml:lang="de">Funktionsausgang Vorwärts Aus - A8</label>
+		<label xml:lang="nl">Functieuitgang Vooruit Uit - A8</label>
+		<label xml:lang="cs">Funkční výstup Vpřed Vypnuto - A8</label>
+	</variable>
+	<variable item="Function 8 check 4" CV="98" mask="VXXXXXXX" minOut="8">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function output Reverse Off - A8</label>
+		<label xml:lang="de">Funktionsausgang Rückwärts Aus - A8</label>
+		<label xml:lang="nl">Functieuitgang Achteruit Uit - A8</label>
+		<label xml:lang="cs">Funkční výstup Vzad Vypnuto - A8</label>
+	</variable>
+</variables>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Rangiertango OnSwitchTime" CV="130" default="30">
+		<decVal/>
+		<label>Switch-on time for digital couplings (CV 130)</label>
+		<label xml:lang="de">Einschaltzeit Digitalkupplungen (CV 130)</label>
+		<tooltip>Switch-on time = CV value * 0,1 Sek</tooltip>
+		<tooltip xml:lang="de">Einschaltzeit = CV-Wert * 0,1 Sek (wenn CV 47 aktiviert)</tooltip>
+	</variable>
+	<variable item="Rangiertango Step" CV="131" default="20">
+		<decVal/>
+		<label>Shunting Speed (CV 131)</label>
+		<label xml:lang="de">Rangiertango Fahrstufe (CV 131)</label>
+		<label xml:lang="nl">Rangeersnelheid</label>
+		<label xml:lang="cs">Rychlost posunu</label>
+		<tooltip>Autom. shunting speed (0 = Tango Off)</tooltip>
+		<tooltip xml:lang="de">Fahrtgeschwindigkeit in Automatikbetrieb (0 = keine Kupplungsfahrt)</tooltip>
+		<tooltip xml:lang="nl">Rangeersnelheid (0 = Tango Uit)</tooltip>
+		<tooltip xml:lang="cs">Automatická rychlost posunu (0 = Tango Vypnuto)</tooltip>
+	</variable>
+	<variable item="Rangiertango Pushtime" CV="132" default="15">
+		<decVal/>
+		<label>Push Duration (CV 132)</label>
+		<label xml:lang="de">Andrückzeit Abkuppeln (CV 132)</label>
+		<label xml:lang="nl">Aanduwtijd</label>
+		<label xml:lang="cs">Čas najetí</label>
+		<tooltip>Coupling Push Duration T1 * 0.1 Sec</tooltip>
+		<tooltip xml:lang="de">Andrückzeit T1 * 0,1 Sek</tooltip>
+		<tooltip xml:lang="nl">Aanduwtijd T1 * 0,1 Sek</tooltip>
+		<tooltip xml:lang="cs">Čas najetí pro přivěšení T1 * 0,1 s</tooltip>
+	</variable>
+	<variable item="Rangiertango Pushtime 2" CV="133" default="40">
+		<decVal/>
+		<label>Push Duration 2 (CV 133)</label>
+		<label xml:lang="de">Andrückzeit Ankuppeln (CV 133)</label>
+		<label xml:lang="nl">Aanduwtijd</label>
+		<label xml:lang="cs">Čas najetí</label>
+		<tooltip>Coupling Push Duration T2 * 0.1 Sec</tooltip>
+		<tooltip xml:lang="de">Andrückzeit T2 * 0,1 Sek</tooltip>
+		<tooltip xml:lang="nl">Aanduwtijd T2 * 0,1 Sek</tooltip>
+		<tooltip xml:lang="cs">Čas najetí pro přivěšení T2 * 0,1 s</tooltip>
+	</variable>
+	<variable item="Rangiertango Pulltime" CV="134" default="30">
+		<decVal/>
+		<label>Retract Duration (CV 134)</label>
+		<label xml:lang="de">Abrückzeit Abkuppeln (CV 134)</label>
+		<label xml:lang="nl">Wegrijtijd</label>
+		<label xml:lang="cs">Čas odstoupení</label>
+		<tooltip>Decoupling Pull Duration T2 * 0.1 Sec</tooltip>
+		<tooltip xml:lang="de">Abrückzeit T2 * 0,1 Sek</tooltip>
+		<tooltip xml:lang="nl">Terugrijtijd T2 * 0,1 s</tooltip>
+		<tooltip xml:lang="cs">Čas odstoupení pro odvěšení T2 * 0,1 s</tooltip>
+	</variable>
+	<variable item="Rangiertango PWM" CV="135" default="30">
+		<decVal/>
+		<label>PWM Coupling (CV 135)</label>
+		<label xml:lang="de">PWM Haltestrom (CV 135)</label>
+		<tooltip/>
+		<tooltip xml:lang="de"/>
+	</variable>
+</variables>

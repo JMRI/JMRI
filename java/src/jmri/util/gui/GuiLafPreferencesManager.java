@@ -95,8 +95,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (!this.initialized) {
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
             this.setLocale(Locale.forLanguageTag(preferences.get(LOCALE, this.getLocale().toLanguageTag())));
-            this.setLookAndFeel(preferences.get(LOOK_AND_FEEL, this.getLookAndFeel()));
 
+            var lookAndFeelClassname = preferences.get(LOOK_AND_FEEL, this.getLookAndFeel());
+            this.setLookAndFeel(lookAndFeelClassname);
+            
             this.setDefaultFontSize(); // before we change anything
             this.setFontSize(preferences.getInt(FONT_SIZE, this.getDefaultFontSize()));
             if (this.getFontSize() == 0) {
@@ -496,13 +498,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         String oldLookAndFeel = this.lookAndFeel;
         this.lookAndFeel = lookAndFeel;
         firePropertyChange(LOOK_AND_FEEL, oldLookAndFeel, lookAndFeel);
+        // the actual change to the LAF will happen when that event reaches `applyLookAndFeel` below
     }
 
     /**
      * Apply the existing look and feel.
      */
     public void applyLookAndFeel() {
-        String lafClassName = null;
+        String lafClassName = lookAndFeel;
         for (LookAndFeelInfo LAF : UIManager.getInstalledLookAndFeels()) {
             // accept either name or classname of look and feel
             if (LAF.getClassName().equals(this.lookAndFeel) || LAF.getName().equals(this.lookAndFeel)) {
@@ -515,17 +518,26 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (lafClassName != null) {
             if (!lafClassName.equals(UIManager.getLookAndFeel().getClass().getName())) {
                 log.debug("Apply look and feel \"{}\" ({})", this.lookAndFeel, lafClassName);
-                try {
-                    UIManager.setLookAndFeel(lafClassName);
-                } catch (ClassNotFoundException ex) {
-                    log.error("Could not find look and feel \"{}\".", this.lookAndFeel);
-                } catch (
-                        IllegalAccessException |
-                        InstantiationException ex) {
-                    log.error("Could not load look and feel \"{}\".", this.lookAndFeel);
-                } catch (UnsupportedLookAndFeelException ex) {
-                    log.error("Look and feel \"{}\" is not supported on this platform.", this.lookAndFeel);
-                }
+                final String localLafClassName = lafClassName;  // final for thread invoke
+                jmri.util.ThreadingUtil.runOnGUI(() -> {
+                    try {
+                        if (localLafClassName.startsWith("com.github.weisj.darklaf") ) {
+                            // DarkLAF special case - will have to use reflection if we have more than one in GuiLafConfigPane
+                            com.github.weisj.darklaf.LafManager.install(new com.github.weisj.darklaf.theme.HighContrastDarkTheme());
+                        } else {
+                            // Swing-handled class name
+                            UIManager.setLookAndFeel(localLafClassName);
+                        }
+                    } catch (ClassNotFoundException ex) {
+                        log.error("Could not find look and feel \"{}\".", this.lookAndFeel);
+                    } catch (
+                            IllegalAccessException |
+                            InstantiationException ex) {
+                        log.error("Could not load look and feel \"{}\".", this.lookAndFeel);
+                    } catch (UnsupportedLookAndFeelException ex) {
+                        log.error("Look and feel \"{}\" is not supported on this platform.", this.lookAndFeel);
+                    }
+                });
             } else {
                 log.debug("Not updating look and feel {} matching existing look and feel", lafClassName);
             }
@@ -570,6 +582,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      *
      * @param profile The profile to get the locale from
      */
+    @SuppressWarnings("deprecation")    // The constructor Locale(String) is deprecated since version 19
+                                        // The replacement Locale.of(String) isn't available before version 19
     public static void setLocaleMinimally(Profile profile) {
         // en is default if a locale preference has not been set
         String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale", "en");

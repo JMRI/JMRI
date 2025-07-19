@@ -11,13 +11,16 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
 
 <!-- Comments by Author: Lolke Bijlsma (lbijlsma@pobox.com)                                                      -->
 <!-- Based on decoder manual 0.5.05 (v5 & v6). With support of Train-O-Matic.                                    -->
 <!-- Covers all the known versions of the Lokommander II decoder with firmware versions 5 & 6 at this time       -->
 
   <version author="lbijlsma@pobox.com" version="1" lastUpdated="20230913"/>
+  <version author="lbijlsma@pobox.com" version="2" lastUpdated="20240422"/>
+  <version author="lbijlsma@pobox.com" version="3" lastUpdated="20250116"/> <!-- factReset CV8 -->
+
   <decoder>
     <family name="Lokommander 2 v6" mfg="Tehnologistic (train-O-matic)">
       <model model="Lokommander 2 Micro" numOuts="6" numFns="15" lowVersionID="5" highVersionID="6" connector="Wires/NEM651" productID="2010220,2010221,2010222,2010223,2010227">
@@ -35,7 +38,7 @@
         <output name="6"  label="Aux4" />
         <size length="12.9" width="9.2" height="3.3" units="mm"/>
       </model>
-      <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" connector="Next18" productID="2010216">
+      <model model="Lokommander 2 Micro N18" numOuts="8" numFns="15" lowVersionID="5" highVersionID="6" connector="Next18" productID="2010216,2010226">
         <output name="1" >
             <label>FL</label>
             <label xml:lang="cs">Světla|vpřed</label>
@@ -92,6 +95,7 @@
 
       <xi:include href="http://jmri.org/xml/decoders/tOm/commonCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/cv33.47.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/tOm/cv114.116_v6.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/brakeCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tOm/functionOutputsCVs.xml"/>
 
@@ -99,7 +103,7 @@
     </variables>
 
     <resets>
-      <factReset CV="8" default="78">
+      <factReset CV="8" default="8">
           <label>HARD RESET all CVs reset to default values</label>
           <label xml:lang="cs">HARD RESET všechny CV se resetují na výchozí hodnoty</label>
       </factReset>

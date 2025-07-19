@@ -1,8 +1,6 @@
 package jmri.jmrix.nce.consist;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -24,13 +22,13 @@ import jmri.util.swing.JmriJOptionPane;
  * Pane for user edit of NCE Consists
  *
  * NCE Consists are stored in Command Station (CS) memory starting at address
- * xF500 and ending xFAFF. NCE supports up to 127 consists, numbered 1 to 127.
+ * xF500 and ending xFAFF (PH5 0x4E00 - 0x53FF). NCE supports up to 127 consists, numbered 1 to 127.
  * They track the lead loco, rear loco, and four mid locos in the consist file.
  * NCE cabs start at consist 127 when building and reviewing consists, so we
  * also start with 127. Consist lead locos are stored in memory locations xF500
- * through xF5FF. Consist rear locos are stored in memory locations xF600
- * through xF6FF. Mid consist locos (four max) are stored in memory locations
- * xF700 through xFAFF. If a long address is in use, bits 6 and 7 of the high
+ * through xF5FF (PH5 0x4E00 - 0x4EFF). Consist rear locos are stored in memory locations xF600
+ * through xF6FF (PH5 0x4F00 - 0x4FFF). Mid consist locos (four max) are stored in memory locations
+ * xF700 through xFAFF (PH5 0x500 - 0x53FF). If a long address is in use, bits 6 and 7 of the high
  * byte are set. Example: Long address 3 = 0xc0 0x03 Short address 3 = 0x00 0x03
  *
  * NCE file format:
@@ -48,18 +46,26 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Dan Boudreau Copyright (C) 2007 2008 Cloned from NceConsistEditFrame
  * by
- * @author kcameron Copyright (C) 2010
+ * @author kcameron Copyright (C) 2010, 2023
  */
 public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implements
         jmri.jmrix.nce.NceListener {
     
     NceConsistRoster nceConsistRoster = InstanceManager.getDefault(NceConsistRoster.class);
 
-    private static final int CONSIST_MIN = 1;    // NCE doesn't use consist 0
-    private static final int CONSIST_MAX = 127;
+    private int CONSIST_MIN = 1;    // NCE doesn't use consist 0
+    private int CONSIST_MAX = 127;
     private static final int LOC_ADR_MIN = 0;    // loco address range
     private static final int LOC_ADR_MAX = 9999; // max range for NCE
     private static final int LOC_ADR_REPLACE = 0x3FFF;  // dummy loco address
+    // added for PC, SB5, Twin usb memory
+    Thread nceMemoryThread;
+    private boolean isUsb = false;
+    /*
+     * private boolean consistValid = false; private boolean readRequested =
+     * false; private boolean writeRequested = false;
+     */    
+//    private static final int FAILED = -1;
 
     private int consistNum = 0;     // consist being worked
     private boolean newConsist = true;    // new consist is displayed
@@ -96,6 +102,8 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     private int consistCount = 0;      // search count not to exceed CONSIST_MAX
 
     private boolean refresh = false;     // when true, refresh loco info from CS
+    
+    private static int DELAY_AFTER_CLEAR = 1000;    // number of mSec to wait after sending a del loco
 
     // member declarations
     JLabel textConsist = new JLabel();
@@ -192,7 +200,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     JButton adrButton6 = new JButton();
     JButton cmdButton6 = new JButton();
     JButton dirButton6 = new JButton();
-
+    
     private NceTrafficController tc = null;
 
     public NceConsistEditPanel() {
@@ -253,12 +261,26 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
     }
 
     /**
+     * The minimum frame size for font size 16
+     */
+    @Override
+    public Dimension getMinimumDimension() {
+        return new Dimension(700, 500);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void initComponents(NceSystemConnectionMemo m) {
         this.memo = m;
         this.tc = m.getNceTrafficController();
+        CONSIST_MIN = tc.csm.getConsistMin();
+        CONSIST_MAX = tc.csm.getConsistMax();
+        if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
+                (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
+            isUsb = true;
+        }
         // the following code sets the frame's initial state
 
         textConsist.setText(Bundle.getMessage("L_Consist"));
@@ -381,12 +403,14 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         // row 11 Mid Locomotive
         addLocoRow(textLoco4, locoRosterBox4, locoTextField4, adrButton4,
                 dirButton4, cmdButton4, 11);
-        // row 12 Mid Locomotive
-        addLocoRow(textLoco5, locoRosterBox5, locoTextField5, adrButton5,
-                dirButton5, cmdButton5, 12);
-        // row 13 Mid Locomotive
-        addLocoRow(textLoco6, locoRosterBox6, locoTextField6, adrButton6,
-                dirButton6, cmdButton6, 13);
+        if (!isUsb) {
+            // row 12 Mid Locomotive
+            addLocoRow(textLoco5, locoRosterBox5, locoTextField5, adrButton5,
+                    dirButton5, cmdButton5, 12);
+            // row 13 Mid Locomotive
+            addLocoRow(textLoco6, locoRosterBox6, locoTextField6, adrButton6,
+                    dirButton6, cmdButton6, 13);
+        }
 
         // row 15 padding for looks
         addItem(space15, 2, 15);
@@ -395,8 +419,10 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         addItem(clearCancelButton, 1, 16);
         addItem(saveLoadButton, 2, 16);
         addItem(deleteButton, 3, 16);
-        addItem(backUpButton, 4, 16);
-        addItem(restoreButton, 5, 16);
+        if (!isUsb) {
+            addItem(backUpButton, 4, 16);
+            addItem(restoreButton, 5, 16);
+        }
 
         // setup buttons
         addButtonAction(previousButton);
@@ -406,8 +432,10 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         addButtonAction(clearCancelButton);
         addButtonAction(saveLoadButton);
         addButtonAction(deleteButton);
-        addButtonAction(backUpButton);
-        addButtonAction(restoreButton);
+        if (!isUsb) {
+            addButtonAction(backUpButton);
+            addButtonAction(restoreButton);
+        }
 
         // setup checkboxes
         addCheckBoxAction(checkBoxConsist);
@@ -511,12 +539,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             // Get Consist
             consistNum = getConsist();
         }
-        if (ae.getSource() == backUpButton) {
+        if (!isUsb && ae.getSource() == backUpButton) {
             Thread mb = new NceConsistBackup(tc);
             mb.setName("Consist Backup");
             mb.start();
         }
-        if (ae.getSource() == restoreButton) {
+        if (!isUsb && ae.getSource() == restoreButton) {
             Thread mr = new NceConsistRestore(tc);
             mr.setName("Consist Restore");
             mr.start();
@@ -756,6 +784,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         newConsist = true;
         int consistNumber = validConsist(consistTextField.getText());
         if (consistNumber == CONSIST_ERROR) {
+            consistStatus.setText(Bundle.getMessage("EditStateERROR"));
             consistSearchPrevious = false;
             consistSearchNext = false;
             return consistNumber;
@@ -776,9 +805,18 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         }
 
         if (consistSearchNext) {
-            readConsistMemory(consistNumber - 7, LEAD);
+            if (!isUsb) {
+                readConsistMemory(consistNumber - 7, LEAD);
+            } else {
+                // readConsistMemoryUsb(consistNumber - 7, LEAD);
+            }
         } else {
-            readConsistMemory(consistNumber, LEAD); // Get or Previous button
+            // Get or Previous button
+            if (!isUsb) {
+                readConsistMemory(consistNumber, LEAD);
+            } else {
+                // readConsistMemoryUsb(consistNumber, LEAD);
+            }
         }
         return consistNumber;
     }
@@ -809,6 +847,10 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             return CONSIST_ERROR;
         }
         if (consistNumber < CONSIST_MIN || consistNumber > CONSIST_MAX) {
+            JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DIALOG_ConsistOutOfRange", s, CONSIST_MIN, CONSIST_MAX),
+                    Bundle.getMessage("DIALOG_NceConsist"),
+                    JmriJOptionPane.ERROR_MESSAGE);
             return CONSIST_ERROR;
         } else {
             return consistNumber;
@@ -856,12 +898,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
      */
     private void readConsistMemory(int consistNum, int engPosition) {
         locoPosition = engPosition;
-        int nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+        int nceMemAddr = (consistNum * 2) + tc.csm.getConsistHeadAddr();
         if (locoPosition == REAR) {
-            nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_REAR;
+            nceMemAddr = (consistNum * 2) + tc.csm.getConsistTailAddr();
         }
         if (locoPosition == MID) {
-            nceMemAddr = (consistNum * 8) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_MID;
+            nceMemAddr = (consistNum * 8) + tc.csm.getConsistMidAddr();
         }
         log.debug("Read consist ({}) position ({}) NCE memory address ({})", consistNum, engPosition, Integer.toHexString(nceMemAddr));
         byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);
@@ -889,7 +931,10 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 loadFullRoster(nceConsistRosterEntry);
                 saveLoadButton.setEnabled(false);
             } else {
-                log.error("roster consist number is out of range: {}", consistNum);
+                JmriJOptionPane.showMessageDialog(this,
+                    Bundle.getMessage("DIALOG_ConsistOutOfRange", CONSIST_MIN, CONSIST_MAX, consistNum),
+                    Bundle.getMessage("DIALOG_NceConsist"),
+                    JmriJOptionPane.ERROR_MESSAGE);
                 consistStatus.setText(Bundle.getMessage("EditStateERROR"));
             }
         }
@@ -1714,7 +1759,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             // delete loco from any existing consists
             sendNceBinaryCommand(locoAddr,
                     NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
-
+            synchronized (this) {
+                try {
+                    wait(DELAY_AFTER_CLEAR);  // needed for booster to reset
+                } catch (InterruptedException ignored) {
+                }
+            }
             // check to see if loco is already a lead or rear in another consist
             verifyLocoAddr(locoAddr);
 
@@ -1810,6 +1860,12 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
         // delete loco from any existing consists
         sendNceBinaryCommand(locoAddr,
                 NceMessage.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
+        synchronized (this) {
+            try {
+                wait(DELAY_AFTER_CLEAR);  // needed for booster to reset
+            } catch (InterruptedException ignored) {
+            }
+        }
         // now we need to determine if lead, rear, or mid loco
         // lead loco?
         if (locoTextField == locoTextField1) {
@@ -2159,7 +2215,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                         Bundle.getMessage("DIALOG_NceConsist"), JmriJOptionPane.WARNING_MESSAGE);
                 break;
             default:
-                log.error("Error code out of range");
+                JmriJOptionPane.showMessageDialog(this,
+                        Bundle.getMessage("DIALOG_ErrorUnknown", errorCode),
+                        Bundle.getMessage("DIALOG_NceConsist"),
+                        JmriJOptionPane.ERROR_MESSAGE);
+                log.error("Error code out of range: {}", errorCode);
         }
         errorCode = 0;
     }
@@ -2207,6 +2267,177 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                     jmri.InstanceManager.getDefault(NceSystemConnectionMemo.class));
         }
     }
+    /**
+    // USB set memory pointer
+    private void setUsbMemoryPointer(int cab, int offset) {
+        log.debug("Consist base address: {}, offset: {}", Integer.toHexString(cab), offset);
+        replyLen = NceMessage.REPLY_1; // Expect 1 byte response
+        waiting++;
+        byte[] bl = NceBinaryCommand.usbMemoryPointer(cab, offset);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+        tc.sendNceMessage(m, this);
+    }
+
+    // USB Read N bytes of NCE cab memory
+    private void readUsbMemoryN(int num) {
+        switch (num) {
+            case 1:
+                replyLen = NceMessage.REPLY_1; // Expect 1 byte response
+                break;
+            case 2:
+                replyLen = NceMessage.REPLY_2; // Expect 2 byte response
+                break;
+            case 4:
+                replyLen = NceMessage.REPLY_4; // Expect 4 byte response
+                break;
+            default:
+                log.error("Invalid usb read byte count");
+                return;
+        }
+        waiting++;
+        byte[] bl = NceBinaryCommand.usbMemoryRead((byte) num);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
+        tc.sendNceMessage(m, this);
+    }
+
+    // USB Write 1 byte of NCE memory
+    private void writeUsbMemory1(byte value) {
+        log.debug("Write byte: {}", String.format("%2X", value));
+        replyLen = NceMessage.REPLY_1; // Expect 1 byte response
+        waiting++;
+        byte[] bl = NceBinaryCommand.usbMemoryWrite1(value);
+        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+        tc.sendNceMessage(m, this);
+    }
+
+    private void processMemory(boolean doRead, boolean doWrite, int consistId, byte[] consistArray) {
+        final byte[] consistData = new byte[consistSize];
+        consistValid = false;
+        readRequested = false;
+        writeRequested = false;
+
+        if (doRead) {
+            readRequested = true;
+        }
+        if (doWrite) {
+            writeRequested = true;
+            System.arraycopy(consistArray, 0, consistData, 0, consistSize);
+        }
+
+        // Set up a separate thread to access CS memory
+        if (nceMemoryThread != null && nceMemoryThread.isAlive()) {
+            return; // thread is already running
+        }
+        nceMemoryThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (readRequested) {
+                    consistNum = consistId;
+                    int consistCount = 0;
+                    while (true) {
+                        int entriesRead = readConsistMemoryUsb(consistNum, LEAD);
+                        consistTextField.setText(Integer.toString(consistNum));
+                        if (entriesRead == 0) {
+                            consistStatus.setText(Bundle.getMessage("consistEmpty"));
+                            if (checkBoxEmpty.isSelected()) {
+                                consistValid = true;
+                                consistSearchInc = false;
+                                consistSearchDec = false;
+                                break;
+                            }
+                        } else if (entriesRead < 0) {
+                            consistStatus.setText(Bundle.getMessage("error"));
+                            consistValid = false;
+                            consistSearchInc = false;
+                            consistSearchDec = false;
+                            break;
+                        } else {
+                            consistStatus.setText(Bundle.getMessage("consistFound"));
+                            if (!checkBoxEmpty.isSelected()) {
+                                consistSearchInc = false;
+                                consistSearchDec = false;
+                                consistValid = true;
+                                break;
+                            }
+                        }
+                        if ((consistSearchInc || consistSearchDec) && !consistValid) {
+                            consistCount++;
+                            if (consistCount > maxNumconsists) {
+                                consistSearchInc = false;
+                                consistSearchDec = false;
+                                break;
+                            }
+                            consistNum = getconsist();
+                        }
+                        if (!(consistSearchInc || consistSearchDec)) {
+                            // we were doing a get, not a search
+                            consistValid = true;
+                            break;
+                        }
+                    }
+                }
+                if (writeRequested) {
+                    writeconsistMemoryUsb(consistId, consistData);
+                }
+            }
+        });
+        nceMemoryThread.setName(Bundle.getMessage("ThreadTitle"));
+        nceMemoryThread.setPriority(Thread.MIN_PRIORITY);
+        nceMemoryThread.start();
+    }
+    
+    // Reads 2 or 4 bytes of NCE USB consist memory based on consist number and loco
+    // position in the consist 0=lead 1=rear 2=mid
+    private int readConsistMemoryUsb(int consistNum, int engPosition) {
+        locoPosition = engPosition;
+        int memAddr = (tc.csm.getConsistMidEntries() * (-1 * (consistNum - tc.csm.getConsistMax())));
+        if (locoPosition == REAR) {
+            memAddr = (consistNum * 2) + tc.csm.getConsistTailAddr();
+        }
+        if (locoPosition == MID) {
+            memAddr = (consistNum * tc.csm.getConsistMidEntries()) + tc.csm.getConsistMidAddr();
+        }
+        log.debug("Read consist ({}) position ({}) NCE memory address ({})", consistNum, engPosition, Integer.toHexString(memAddr));
+        int consistPage = tc.csm.getConsistAddr();
+        setUsbMemoryPointer(consistPage, memAddr);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        byte[] bl = NceBinaryCommand.accMemoryRead(memAddr);
+        sendNceMessage(bl, NceMessage.REPLY_4);
+        if (!waitNce()) {
+            return FAILED;
+        }
+        return(0);
+    }
+
+    // puts the thread to sleep while we wait for the read CS memory to complete
+    private boolean waitNce() {
+        int count = 100;
+        if (log.isDebugEnabled()) {
+            log.debug("Going to sleep");
+        }
+        while (waiting > 0) {
+            synchronized (this) {
+                try {
+                    wait(100);
+                } catch (InterruptedException e) {
+                    //nothing to see here, move along
+                }
+            }
+            count--;
+            if (count < 0) {
+                consistStatus.setText("Error");
+                return false;
+            }
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("awake!");
+        }
+        return true;
+    }
+
+*/
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceConsistEditPanel.class);
 

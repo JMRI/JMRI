@@ -246,7 +246,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * @param df  the source {@link DecoderFile} instance (needed for
      *            include/exclude processing at the sub-variable level)
      */
-    public void setRow(int row, Element e, DecoderFile df) {
+    public void setRow(int row, Element e, DecoderFile df) {    
         // get the values for the VariableValue ctor
         _df = df;
         String name = LocaleSelector.getAttribute(e, "label");  // Note the name variable is actually the label attribute
@@ -346,6 +346,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         } else if ((child = e.getChild("splitHexVal")) != null) {
             v = processSplitHexVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
+        } else if ((child = e.getChild("splitHundredsVal")) != null) {
+            v = processSplitHundredsVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
+
         } else if ((child = e.getChild("splitTextVal")) != null) {
             v = processSplitTextVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
@@ -356,7 +359,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             v = processSplitEnumVal(child, CV, readOnly, infoOnly, writeOnly, name, comment, opsOnly, mask, item);
 
         } else {
-            reportBogus();
+            reportBogus(e);
             return;
         }
 
@@ -844,6 +847,43 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         return v;
     }
 
+    protected VariableValue processSplitHundredsVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
+        VariableValue v;
+        Attribute a;
+        int minVal = 0;
+        int maxVal = 255;
+        String highCV = null;
+
+        if ((a = child.getAttribute("highCV")) != null) {
+            highCV = a.getValue();
+            _cvModel.addCV("" + (highCV), readOnly, infoOnly, writeOnly); // ensure 2nd CV exists
+            _cvModel.registerCvToVariableMapping("" + (highCV), name);
+        }
+        int factor = 1;
+        if ((a = child.getAttribute("factor")) != null) {
+            factor = Integer.parseInt(a.getValue());
+        }
+        int offset = 0;
+        if ((a = child.getAttribute("offset")) != null) {
+            offset = Integer.parseInt(a.getValue());
+        }
+        String uppermask = "VVVVVVVV";
+        if ((a = child.getAttribute("upperMask")) != null) {
+            uppermask = a.getValue();
+        }
+        String extra3 = "0";
+        if ((a = child.getAttribute("min")) != null) {
+            extra3 = a.getValue();
+        }
+        String extra4 = Long.toUnsignedString(~0);
+        if ((a = child.getAttribute("max")) != null) {
+            extra4 = a.getValue();
+        }
+        v = new SplitHundredsVariableValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvMap(), _status, item, highCV, factor, offset, uppermask, null, null, extra3, extra4);
+        _cvModel.registerCvToVariableMapping(CV, name);
+        return v;
+    }
+
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
         justification="I18N of Error Message")
     protected VariableValue processSplitTextVal(Element child, String CV, boolean readOnly, boolean infoOnly, boolean writeOnly, String name, String comment, boolean opsOnly, String mask, String item) throws NumberFormatException {
@@ -1006,8 +1046,9 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
     }
 
-    void reportBogus() {
-        log.error("Did not find a valid variable type");
+    void reportBogus(Element elem) {
+        log.error("Did not find a valid type in {}", elem.getChildren());
+        for (Attribute a : elem.getAttributes()) log.error("   attribute: {}",a);
     }
 
     /**

@@ -404,7 +404,7 @@ public class TreeEditor extends TreeViewer {
 
         contentPanel.add(p);
 
-        // set up create and cancel buttons
+        // set up Create and Cancel buttons
         JPanel panel5 = new JPanel();
         panel5.setLayout(new FlowLayout());
         // Cancel
@@ -413,8 +413,7 @@ public class TreeEditor extends TreeViewer {
         cancel.addActionListener((ActionEvent e) -> {
             cancelRenameSocketPressed(null);
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("CancelRenameLogixNGButtonHint"));      // NOI18N
 
         _renameSocketDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -486,6 +485,8 @@ public class TreeEditor extends TreeViewer {
                             || (_systemName.getText().isEmpty() && _autoSystemName.isSelected())) {
                         _systemName.setText(_addSwingConfiguratorInterface.getAutoSystemName());
                     }
+
+                    checkAndAdjustSystemName();
 
                     if (_addSwingConfiguratorInterface.getManager()
                             .validSystemNameFormat(_systemName.getText()) != Manager.NameValidity.VALID) {
@@ -561,6 +562,33 @@ public class TreeEditor extends TreeViewer {
                 makeAddEditFrame(true, femaleSocket, _create, commentStr);
             }
         }
+    }
+
+    /**
+     * Check the system name format.  Add prefix and/or $ as neeeded.
+     */
+    void checkAndAdjustSystemName() {
+        if (_autoSystemName.isSelected()) {
+            return;
+        }
+
+        var sName = _systemName.getText().trim();
+        var prefix = _addSwingConfiguratorInterface.getManager().getSubSystemNamePrefix();
+
+        if (!sName.isEmpty() && !sName.startsWith(prefix)) {
+            var isNumber = sName.matches("^\\d+$");
+            var hasDollar = sName.startsWith("$");
+
+            var newName = new StringBuilder(prefix);
+            if (!isNumber && !hasDollar) {
+                newName.append("$");
+            }
+            newName.append(sName);
+            sName = newName.toString();
+        }
+
+        _systemName.setText(sName);
+        return;
     }
 
     /**
@@ -686,7 +714,12 @@ public class TreeEditor extends TreeViewer {
                 false);
 //        frame.addHelpMenu(
 //                "package.jmri.jmrit.logixng.tools.swing.ConditionalNGAddEdit", true);     // NOI18N
-        Container contentPanel = dialog.getContentPane();
+
+//        Container contentPanel = dialog.getContentPane();
+
+        JPanel contentPanel = new JPanel();
+        var scrollPane = new javax.swing.JScrollPane(contentPanel);
+        dialog.getContentPane().add(scrollPane);
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         JPanel p;
@@ -749,7 +782,7 @@ public class TreeEditor extends TreeViewer {
 
         // set up create and cancel buttons
         JPanel panel5 = new JPanel();
-        panel5.setLayout(new FlowLayout());
+        panel5.setLayout(new jmri.util.swing.WrapLayout());
 
         Base object = null;
 
@@ -840,8 +873,7 @@ public class TreeEditor extends TreeViewer {
                 cancelEditPressed(null);
             }
         });
-//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-        cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+        cancel.setToolTipText(Bundle.getMessage("LogixNG_CancelButtonHint"));      // NOI18N
 
         panel5.add(button);
 
@@ -877,6 +909,8 @@ public class TreeEditor extends TreeViewer {
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefMgr) -> {
             _autoSystemName.setSelected(prefMgr.getCheckboxPreferenceState(_systemNameAuto, true));
         });
+
+        _systemName.setEnabled(addOrEdit);
 
         dialog.setVisible(true);
     }
@@ -1012,8 +1046,7 @@ public class TreeEditor extends TreeViewer {
                 _editLocalVariablesDialog = null;
                 setPopupMenuLock(false);
             });
-    //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-            cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+            cancel.setToolTipText(Bundle.getMessage("LogixNG_CancelButtonHint"));      // NOI18N
 
             buttonPanel.add(_edit);
             _editLocalVariablesDialog.getRootPane().setDefaultButton(_edit);
@@ -1174,8 +1207,7 @@ public class TreeEditor extends TreeViewer {
                 _changeUsernameDialog = null;
                 setPopupMenuLock(false);
             });
-    //        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
-            cancel.setToolTipText("CancelLogixButtonHint");      // NOI18N
+            cancel.setToolTipText(Bundle.getMessage("LogixNG_CancelButtonHint"));      // NOI18N
 
             buttonPanel.add(_edit);
             _changeUsernameDialog.getRootPane().setDefaultButton(_edit);
@@ -1432,6 +1464,10 @@ public class TreeEditor extends TreeViewer {
                     if (clipboard.getTopItem() == null) {
                         return;
                     }
+                    if (!femaleSocket.isCompatible(clipboard.getTopItem())) {
+                        log.error("Top item on clipboard is not compatible with the female socket");
+                        return;
+                    }
                     femaleSocket.connect(clipboard.fetchTopItem());
                     List<String> errors = new ArrayList<>();
                     if (!femaleSocket.setParentForAllChildren(errors)) {
@@ -1474,6 +1510,13 @@ public class TreeEditor extends TreeViewer {
                 Clipboard clipboard =
                         InstanceManager.getDefault(LogixNG_Manager.class).getClipboard();
 
+                if (clipboard.getTopItem() == null) {
+                    return;
+                }
+                if (!femaleSocket.isCompatible(clipboard.getTopItem())) {
+                    log.error("Top item on clipboard is not compatible with the female socket");
+                    return;
+                }
                 Map<String, String> systemNames = new HashMap<>();
                 Map<String, String> userNames = new HashMap<>();
                 MaleSocket maleSocket = null;
@@ -1980,13 +2023,17 @@ public class TreeEditor extends TreeViewer {
         }
 
         public void doDelete() {
+            _treePane._femaleRootSocket.unregisterListeners();
             try {
                 _currentFemaleSocket.disconnect();
-
                 _maleSocket.getManager().deleteBean(_maleSocket, "DoDelete");
             } catch (PropertyVetoException e) {
                 //At this stage the DoDelete shouldn't fail, as we have already done a can delete, which would trigger a veto
                 log.error("Unexpected doDelete failure for {}, {}", _maleSocket, e.getMessage() );
+            } finally {
+                if (_treePane._femaleRootSocket.isActive()) {
+                    _treePane._femaleRootSocket.registerListeners();
+                }
             }
         }
 
@@ -1995,8 +2042,6 @@ public class TreeEditor extends TreeViewer {
          */
         @Override
         public Void doInBackground() {
-            _treePane._femaleRootSocket.unregisterListeners();
-
             StringBuilder message = new StringBuilder();
             try {
                 _maleSocket.getManager().deleteBean(_maleSocket, "CanDelete");  // NOI18N
@@ -2112,9 +2157,6 @@ public class TreeEditor extends TreeViewer {
                         (Toolkit.getDefaultToolkit().getScreenSize().height) / 2 - dialog.getHeight() / 2);
                 dialog.setModal(true);
                 dialog.setVisible(true);
-            }
-            if (_treePane._femaleRootSocket.isActive()) {
-                _treePane._femaleRootSocket.registerListeners();
             }
             return null;
         }

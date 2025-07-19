@@ -90,7 +90,9 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     @Override
     protected void createModel() {
         m = new BeanTableDataModel<SignalGroup>() {
+            @SuppressWarnings("hiding")     // Field has same name as a field in the super class
             static public final int COMMENTCOL = 2;
+            @SuppressWarnings("hiding")     // Field has same name as a field in the super class
             static public final int DELETECOL = 3;
             static public final int ENABLECOL = 4;
             static public final int EDITCOL = 5; // default name: SETCOL
@@ -687,7 +689,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
                     InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                             showInfoMessage(Bundle.getMessage("ReminderTitle"),
                                     Bundle.getMessage("ReminderSaveString", Bundle.getMessage("SignalGroup")),
-                                    "beantable.SignalGroupTableAction",
+                                    getClassName(),
                                     "remindSignalGroup"); // NOI18N
                     signalGroupDirty = false;
                 }
@@ -1757,6 +1759,13 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
     @Override
     public String getClassDescription() {
         return Bundle.getMessage("TitleSignalGroupTable");
+    }
+
+    @Override
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "remindSignalGroup", Bundle.getMessage("HideSaveReminder"));  // NOI18N
+        super.setMessagePreferencesDetails();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalGroupTableAction.class);

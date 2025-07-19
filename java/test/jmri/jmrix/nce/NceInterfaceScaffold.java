@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
  * Stands in for the NceTrafficController class
  *
  * @author Bob Jacobsen
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceInterfaceScaffold extends NceTrafficController {
 
@@ -41,6 +42,7 @@ public class NceInterfaceScaffold extends NceTrafficController {
     // test control member functions
     /**
      * forward a message to the listeners, e.g. test receipt
+     * @param m the message
      */
     public void sendTestMessage(NceMessage m) {
         // forward a test message to Listeners

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2023 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		                                    -->
+<!-- version 1 - include file for Train-O-Matic FD Micro outputs            -->
+<!-- 																		                                    -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <enumChoice choice="1" value="1">
+    <choice>Lights switch on and off with no effect</choice>
+  </enumChoice>
+  <enumChoice choice="2" value="2">
+    <choice>Lights switch on and off with fade effect</choice>
+  </enumChoice>
+  <enumChoice choice="3" value="3">
+    <choice>Lights switch on with specific Neon flicker effect</choice>
+  </enumChoice>
+  <enumChoice choice="4" value="4">
+    <choice>Defective neon effect (flickering)</choice>
+  </enumChoice>
+  <enumChoice choice="5" value="5">
+    <choice>Output used for SPP</choice>
+  </enumChoice>
+  <enumChoice choice="8" value="8">
+    <choice>Symmetrical flashing with blinking period TSD (instant)</choice>
+  </enumChoice>
+  <enumChoice choice="9" value="9">
+    <choice>Symmetrical flashing with with fade in/out</choice>
+  </enumChoice>
+  <enumChoice choice="10" value="10">
+    <choice>Asymmetrical flashing 1/4-ON, 3/4-OFF</choice>
+  </enumChoice>
+  <enumChoice choice="11" value="11">
+    <choice>Asymmetrical flashing 1/4-ON, 3/4-OFF with fade in/out</choice>
+  </enumChoice>
+  <enumChoice choice="12" value="12">
+    <choice>Asymmetrical flashing 3/4-ON, 1/4-OFF</choice>
+  </enumChoice>
+  <enumChoice choice="13" value="13">
+    <choice>Asymmetrical flashing 3/4-ON, 1/4-OFF with fade in/out</choice>
+  </enumChoice>
+  <enumChoice choice="14" value="14">
+    <choice>Customing blinking</choice>
+  </enumChoice>
+  <enumChoice choice="15" value="15">
+    <choice>Customing blinking with random number of blinks</choice>
+  </enumChoice>
+</enumVal>

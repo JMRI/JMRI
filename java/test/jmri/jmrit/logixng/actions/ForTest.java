@@ -216,7 +216,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.FLOW_CONTROL == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.FLOW_CONTROL == _base.getCategory());
     }
 
     @Test
@@ -224,7 +224,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
         TableForEach a1 = new TableForEach("IQDA321", null);
         Assert.assertEquals("strings are equal", "Table: For each", a1.getShortDescription());
         TableForEach a2 = new TableForEach("IQDA321", null);
-        Assert.assertEquals("strings are equal", "Table: For each column of row \"\" in table \"''\" set variable \"\" and execute action A1", a2.getLongDescription());
+        Assert.assertEquals("strings are equal", "Table: For each column of row \"-- Header --\" in table \"''\" set variable \"\" and execute action A1", a2.getLongDescription());
     }
 
     @Test
@@ -392,7 +392,7 @@ public class ForTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.OTHER;
+        _category = LogixNG_Category.OTHER;
         _isExternal = false;
 
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N

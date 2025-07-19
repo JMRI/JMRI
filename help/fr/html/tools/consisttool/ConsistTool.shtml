@@ -6,12 +6,12 @@
   <meta name="author" content="Paul Bender">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
@@ -262,11 +262,11 @@
       boîte déroulante à côté de l'actuel ID de couplage</p>
       <img src="images/ConsistTool-SelectConsist.jpg" alt="Select à Consist">
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

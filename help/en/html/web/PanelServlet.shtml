@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright 2012, 2014, 2020 -->
 
-  <title>JMRI Remote Panels</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Remote Panels</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -30,17 +30,21 @@
 
         <dt>/panel?name=&lt;type&gt;/&lt;name&gt;</dt>
 
-        <dd>Displays an open, oparable panel. <em>&lt;type&gt;</em> is one of: <em>Panel</em>,
+        <dd>Displays an open, operable panel. <em>&lt;type&gt;</em> is one of: <em>Panel</em>,
         <em>ControlPanel</em>, <em>Switchboard</em> or <em>Layout</em>.</dd>
 
         <dt>/panel/&lt;type&gt;/&lt;name&gt;?format=xml</dt>
 
         <dd>Retrieves a portable XML representation of the panel. <em>&lt;type&gt;</em> is one of:
         <em>Panel</em>, <em>ControlPanel</em>, <em>Switchboard</em> or <em>Layout</em>.</dd>
+
+        <dt>/panel/&lt;type&gt;/&lt;name&gt;?protect=yes</dt>
+
+        <dd>Displays a read-only representation of the specified panel.</dd>
       </dl>
 
-      <p>Panel redisplay requires a modern browser with HTML5 support (Chrome, FireFox, Safari,
-      IE9).</p>
+      <p>Panel display requires a modern browser with HTML5 support including WebSocket. 
+      The JMRI web server's About page includes a test for this.</p>
 
       <h2 id="example">Technical Example: Behind the scenes of Web Server Panels</h2>
       <a href="images/WebServerFlow.png"><img src="images/WebServerFlow.png" alt=
@@ -359,11 +363,11 @@
       create and maintain web display for a panel type, and how each part is connected to display
       stuff from JMRI in the web browser, and back.<br>
       As always, start small and check often!</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

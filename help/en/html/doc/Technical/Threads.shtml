@@ -5,10 +5,10 @@
   <title>JMRI: Threading</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code threading">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -47,15 +47,16 @@
 
         <li>You might be interfacing to some other existing code that uses threads.</li>
       </ul>
-      We would prefer that you handle the threading issues that arise in that case via the <a href=
+
+      <p>We would prefer that you handle the threading issues that arise in that case via the <a href=
       "https://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
       class. ThreadingUtil provides utilities that make it easy to invoke needed functions on the
-      right thread.
+      right thread.</p>
       <p>For example, if you want to read a bunch of data from a file, spend some time munging it,
       and then create a window to present it all, you might want to do all that work on a separate
       thread. At the end, when it's time to set your new frame visible, <a href=
       "http://web.archive.org/web/20090526170426/http://java.sun.com/developer/JDCTechTips/2003/tt1208.html">
-      you have to to that on the Swing (GUI) thread</a>. Here's the code to do that:</p>
+      you have to do that on the Swing (GUI) thread</a>. Here's the code to do that:</p>
       <div class="wide">
       <pre>
  frame = new JmriJFrame();  // frame declared as instance variable
@@ -92,7 +93,7 @@
 </pre>
       <p>That check does take a bit of time, so it should probably only be done on entry to a large
       chunk of code, or perhaps be protected by a check of <code>log.isDebugEnabled()</code>. If the call
-      occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code> logs the first occurance with
+      occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code> logs the first occurrence with
       traceback info. In addition to the <code>@InvokeOnGuiThread</code>,
       <code>@InvokeOnLayoutThread</code> and <code>@InvokeOnAnyThread</code> annotations mentioned here,
       there are <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, <code>@Immutable</code>, and
@@ -248,11 +249,11 @@
       <p>Note that if running under Ant or an IDE, you might get more than one dump: The one you're
       looking for from JMRI, plus maybe one from Ant or the IDE itself.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

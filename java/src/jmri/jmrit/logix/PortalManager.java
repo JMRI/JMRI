@@ -3,12 +3,11 @@ package jmri.jmrit.logix;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+
 import java.util.*;
+
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Basic implementation of a PortalManager.
@@ -37,10 +36,14 @@ import org.slf4j.LoggerFactory;
  */
 public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyChangeListener {
 
-    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private ArrayList<Portal> _nameList = new ArrayList<>();          // stores Portal in loaded order
-    private HashMap<String, Portal> _portalMap = new HashMap<>(); // stores portal by current name
-    private Integer _nextIndex = 1;
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private final ArrayList<Portal> _nameList = new ArrayList<>();          // stores Portal in loaded order
+    private final HashMap<String, Portal> _portalMap = new HashMap<>(); // stores portal by current name
+
+    /**
+     * String constant for the property num portals.
+     */
+    public static final String PROPERTY_NUM_PORTALS = "numPortals";
 
     public PortalManager() {
         // no setup currently required
@@ -89,8 +92,7 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         // save in the maps
         _nameList.add(portal);
         _portalMap.put(userName, portal);
-        _nextIndex = _nextIndex + 1;
-        pcs.firePropertyChange("numPortals", null, _nameList.size());
+        pcs.firePropertyChange(PROPERTY_NUM_PORTALS, null, _nameList.size());
         // listen for name and state changes to forward
         portal.addPropertyChangeListener(this);
         return portal;
@@ -111,7 +113,7 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         String name = portal.getName();
         _nameList.remove(portal);
         _portalMap.remove(name);
-        pcs.firePropertyChange("numPortals", portal, _nameList.size());
+        pcs.firePropertyChange(PROPERTY_NUM_PORTALS, portal, _nameList.size());
     }
 
     @OverridingMethodsMustInvokeSuper
@@ -132,11 +134,11 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         Portal portal = (Portal)e.getSource();
         String propertyName = e.getPropertyName();
         log.debug("property = {}", propertyName);
-        if (propertyName.equals("portalDelete")) {
+        if (Portal.PROPERTY_PORTAL_DELETE.equals(propertyName)) {
             deletePortal(portal);
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(PortalManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PortalManager.class);
 
 }

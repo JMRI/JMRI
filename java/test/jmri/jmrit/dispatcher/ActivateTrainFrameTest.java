@@ -25,6 +25,9 @@ public class ActivateTrainFrameTest {
         ActivateTrainFrame t = new ActivateTrainFrame(d);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
     }
 
     @BeforeEach
@@ -36,7 +39,7 @@ public class ActivateTrainFrameTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

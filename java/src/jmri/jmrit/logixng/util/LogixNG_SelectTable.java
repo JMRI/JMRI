@@ -600,6 +600,14 @@ public class LogixNG_SelectTable implements VetoableChangeListener {
                 evaluateTableRow(conditionalNG), evaluateTableColumn(conditionalNG));
     }
 
+    public void evaluateAndSetTableData(ConditionalNG conditionalNG, Object value)
+            throws JmriException {
+        evaluateTableBean(conditionalNG).setCell(
+                value,
+                evaluateTableRow(conditionalNG),
+                evaluateTableColumn(conditionalNG));
+    }
+
     public String getTableNameDescription(Locale locale) {
         String namedBean;
 

@@ -69,7 +69,8 @@ public class JsonRosterHttpService extends JsonHttpService {
             case JsonRoster.ROSTER_GROUPS:
                 return getRosterGroups(request);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 
@@ -85,9 +86,11 @@ public class JsonRosterHttpService extends JsonHttpService {
             case JsonRoster.ROSTER_GROUPS:
                 break;
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
-        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "PostNotAllowed", type), request.id);
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+            Bundle.getMessage(request.locale, "PostNotAllowed", type), request.id);
     }
 
     @Override
@@ -100,10 +103,12 @@ public class JsonRosterHttpService extends JsonHttpService {
             case JsonRoster.ROSTER_GROUPS:
                 return getRosterGroups(request);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 
+    @Nonnull
     public JsonNode getRoster(@Nonnull Locale locale, @Nonnull JsonNode data, int id) throws JsonException {
         String group = (!data.path(GROUP).isMissingNode()) ? data.path(GROUP).asText() : null;
         if (Roster.ALLENTRIES.equals(group) || Roster.allEntries(locale).equals(group)) {
@@ -117,8 +122,12 @@ public class JsonRosterHttpService extends JsonHttpService {
         String decoderFamily = (!data.path(DECODER_FAMILY).isMissingNode()) ? data.path(DECODER_FAMILY).asText() : null;
         String name = (!data.path(NAME).isMissingNode()) ? data.path(NAME).asText() : null;
         ArrayNode array = mapper.createArrayNode();
-        for (RosterEntry entry : Roster.getDefault().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, name, group)) {
-            array.add(getRosterEntry(locale, entry, id));
+        var profile = Roster.getDefault();
+        if ( profile != null ) {
+            for (RosterEntry entry : profile.getEntriesMatchingCriteria(
+                roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, name, group)) {
+                array.add(getRosterEntry(locale, entry, id));
+            }
         }
         return message(array, id);
     }
@@ -138,11 +147,15 @@ public class JsonRosterHttpService extends JsonHttpService {
      *                                        given id
      */
     public JsonNode getRosterEntry(Locale locale, String name, int id) throws JsonException {
-        try {
-            return getRosterEntry(locale, Roster.getDefault().getEntryForId(name), id);
-        } catch (NullPointerException ex) {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
+        var profile = Roster.getDefault();
+        if ( profile != null ) {
+            var entry = profile.getEntryForId(name);
+            if ( entry != null ) {
+                return getRosterEntry(locale, entry, id);
+            }
         }
+        throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+            Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
     }
 
     /**
@@ -162,9 +175,11 @@ public class JsonRosterHttpService extends JsonHttpService {
     public JsonNode getRosterEntry(Locale locale, @Nonnull RosterEntry entry, int id) throws JsonException {
         String entryPath;
         try {
-            entryPath = String.format("/%s/%s/", JsonRoster.ROSTER, URLEncoder.encode(entry.getId(), StandardCharsets.UTF_8.toString()));
+            entryPath = String.format("/%s/%s/", JsonRoster.ROSTER,
+                URLEncoder.encode(entry.getId(), StandardCharsets.UTF_8.toString()));
         } catch (UnsupportedEncodingException ex) {
-            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnencodeable", JsonRoster.ROSTER_ENTRY, entry.getId(), NAME), id);
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                Bundle.getMessage(locale, "ErrorUnencodeable", JsonRoster.ROSTER_ENTRY, entry.getId(), NAME), id);
         }
         ObjectNode data = mapper.createObjectNode();
         data.put(NAME, entry.getId());
@@ -222,24 +237,32 @@ public class JsonRosterHttpService extends JsonHttpService {
      * @return a message containing the roster groups
      * @throws JsonException if a requested roster group does not exist
      */
+    @Nonnull
     public JsonNode getRosterGroups(JsonRequest request) throws JsonException {
         ArrayNode array = mapper.createArrayNode();
         array.add(getRosterGroup(request.locale, Roster.ALLENTRIES, request.id));
-        for (String name : Roster.getDefault().getRosterGroupList()) {
-            array.add(getRosterGroup(request.locale, name, request.id));
+        var profile = Roster.getDefault();
+        if ( profile != null ) {
+            for (String name : profile.getRosterGroupList()) {
+                array.add(getRosterGroup(request.locale, name, request.id));
+            }
         }
         return message(array, request.id);
     }
 
+    @Nonnull
     public JsonNode getRosterGroup(Locale locale, String name, int id) throws JsonException {
-        if (name.equals(Roster.ALLENTRIES) || Roster.getDefault().getRosterGroupList().contains(name)) {
-            int size = Roster.getDefault().getEntriesInGroup(name).size();
+        var profile = Roster.getDefault();
+        if ( profile != null &&
+            ( name.equals(Roster.ALLENTRIES) || profile.getRosterGroupList().contains(name))) {
+            int size = profile.getEntriesInGroup(name).size();
             ObjectNode data = mapper.createObjectNode();
             data.put(NAME, name.isEmpty() ? Roster.allEntries(locale) : name);
             data.put(LENGTH, size);
             return message(JsonRoster.ROSTER_GROUP, data, id);
         } else {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_GROUP, name), id);
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_GROUP, name), id);
         }
     }
 
@@ -261,7 +284,8 @@ public class JsonRosterHttpService extends JsonHttpService {
                         "jmri/server/json/roster/rosterGroup-client.json",
                         request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                    Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 
@@ -277,12 +301,17 @@ public class JsonRosterHttpService extends JsonHttpService {
      *                                        to the user
      */
     public JsonNode postRosterEntry(Locale locale, String name, JsonNode data, int id) throws JsonException {
-        RosterEntry entry;
-        try {
-            entry = Roster.getDefault().getEntryForId(name);
-        } catch (NullPointerException ex) {
-            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
+        
+        RosterEntry re = null;
+        var defaultProfile = Roster.getDefault();
+        if ( defaultProfile != null ) {  // there may not be a default Profile set
+            re = defaultProfile.getEntryForId(name);
         }
+        if ( re == null )  {
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage
+                (locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
+        }
+        final RosterEntry entry = re;
         if (data.path(JsonRoster.ATTRIBUTES).isArray()) {
             List<String> toKeep = new ArrayList<>();
             List<String> toRemove = new ArrayList<>();
@@ -316,7 +345,8 @@ public class JsonRosterHttpService extends JsonHttpService {
         if (data.path(FUNCTION_KEYS).isArray()) {
             data.path(FUNCTION_KEYS).forEach(functionKey -> {
                 int function = Integer.parseInt(functionKey.path(NAME).asText().substring(F.length() - 1));
-                entry.setFunctionLabel(function, functionKey.path(LABEL).isNull() ? null : functionKey.path(LABEL).asText());
+                entry.setFunctionLabel(function,
+                    functionKey.path(LABEL).isNull() ? null : functionKey.path(LABEL).asText());
                 entry.setFunctionLockable(function, functionKey.path(LOCKABLE).asBoolean());
             });
         }
@@ -342,7 +372,8 @@ public class JsonRosterHttpService extends JsonHttpService {
             entry.setMaxSpeedPCT(data.path(MAX_SPD_PCT).asInt());
         }
         if (!data.path(SHUNTING_FUNCTION).isMissingNode()) {
-            entry.setShuntingFunction(data.path(SHUNTING_FUNCTION).isTextual() ? data.path(SHUNTING_FUNCTION).asText() : null);
+            entry.setShuntingFunction(
+                data.path(SHUNTING_FUNCTION).isTextual() ? data.path(SHUNTING_FUNCTION).asText() : null);
         }
         if (!data.path(OWNER).isMissingNode()) {
             entry.setOwner(data.path(OWNER).isTextual() ? data.path(OWNER).asText() : null);

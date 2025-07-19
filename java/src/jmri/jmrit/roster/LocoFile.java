@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents and manipulates a locomotive definition, both as a file and in
- * memory. The interal storage is a JDOM tree. See locomotive-config.xsd
+ * memory. The internal storage is a JDOM tree. See locomotive-config.xsd
  * <p>
  * This class is intended for use by RosterEntry only; you should not use it
  * directly. That's why this is not a public class.
@@ -115,7 +115,8 @@ public class LocoFile extends XmlFile {
                         cvObject = cvModel.allCvMap().get(name);
                      } else {
                         // this is a valid way to migrate a decoder definition, i.e. to remove a variable.
-                        log.info("CV {} was in loco file, but not defined by the decoder definition; migrated", name);
+                        log.info("CV {} was in '{}' roster file, but not defined by the decoder definition '{}'. '{}'; migrated", 
+                                name, rosterName, mfgID, family);
                     }
                 }
                 if (cvObject != null) {
@@ -196,7 +197,7 @@ public class LocoFile extends XmlFile {
                 var.setValue(value);
             } else {
                 if (selectMissingVarResponse(item) == MessageResponse.REPORT) {
-                    // not an warning, as this is how some definitions are migrated to remove erroneous variables
+                    // not a warning, as this is how some definitions are migrated to remove erroneous variables
                     log.debug("Did not find locofile variable \"{}\" in decoder definition, no variable loaded", item);
                 }
             }
@@ -294,7 +295,7 @@ public class LocoFile extends XmlFile {
     /**
      * Write an XML version of this object from an existing XML tree, updating
      * only the ID string.
-     *
+     * <p>
      * Does not do an automatic backup of the file, so that should be done
      * elsewhere. This is intended for copy and import operations, where the
      * tree has been read from an existing file. Hence, only the "ID"
@@ -333,7 +334,7 @@ public class LocoFile extends XmlFile {
     /**
      * Write an XML version of this object, updating the RosterEntry
      * information, from an existing XML tree.
-     *
+     * <p>
      * Does not do an automatic backup of the file, so that should be done
      * elsewhere. This is intended for writing out changes to the RosterEntry
      * information only.

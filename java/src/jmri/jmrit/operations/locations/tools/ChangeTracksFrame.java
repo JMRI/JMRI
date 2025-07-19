@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.gui.LocationEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 

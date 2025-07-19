@@ -5,10 +5,10 @@
   <title>JMRI: Patterns and Structure</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code patterns structure">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -231,6 +231,10 @@ and distribute JMRI.
         </dt>
       </dl>
 
+      <p>To see more on the places where SPI can be used to insert functionality into 
+      JMRI, see the
+      <a href="plugins.shtml">Plug-in page</a>.
+
       <p>Classes that provide SPI also have to be registered with the system so they can be found.
       JMRI does this with entries inside files in the
       <code>target/classes/META-INF/services/</code> directory. These entries are created
@@ -268,11 +272,11 @@ and distribute JMRI.
     into the <code>jython/</code> directory, though of course people can run scripts from
     any location they choose.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

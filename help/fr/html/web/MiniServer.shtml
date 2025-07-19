@@ -3,11 +3,11 @@
 <!-- Translated by Blorec Herv&#233; le 2012-01-23-->
 <head>
   <title>JMRI: Mini Serveur Web</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -76,9 +76,9 @@
       contenu important dans ces r&eacute;pertoires ou de lien vers
       d'autres parties de votre ordinateur.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

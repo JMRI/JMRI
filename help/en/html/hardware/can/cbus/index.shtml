@@ -6,10 +6,10 @@
   <title>JMRI Hardware Support - CBUS Main Support</title>
   <meta name="author" content=
   "Andrew Crosland Oct 2020 CBUS has it's own trademark and should not be referred to as MERG CBUS">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -451,6 +451,12 @@
         <p>If you are using an automation script and neither option is checked, the system will
         attempt to acquire a Share on the session.</p>
 
+        <p>When WiThrottle encounters an existing non-JMRI Throttle session and is asked Share / Steal / Cancel?,
+            the main JMRI Throttle silent Steal / silent Share options are checked for preferred behaviour.</p>
+
+        <p>If neither option is checked, the WiThrottle client may be asked if it wants to steal the session,
+        the sharing question is unsupported.</p>
+
         <p>The command station may disable or enable steal / share at any point, so even if you
         have a preferred option, an automation script may attempt to use the non-preferred option
         to obtain the session.</p>
@@ -643,7 +649,7 @@
       </div>
 
       <p><a href="https://cbus-traincontrol.com/">CBUS</a> is a registered trade mark of Dr Michael Bolton</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>

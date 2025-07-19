@@ -6,7 +6,18 @@
 # Part of the JMRI distribution
 import java
 import jmri
-from jmri.jmrit.ussctc import *
+from jmri.jmrit.ussctc import CodeButton
+from jmri.jmrit.ussctc import CodeLine
+from jmri.jmrit.ussctc import OccupancyLock
+from jmri.jmrit.ussctc import PhysicalBell
+from jmri.jmrit.ussctc import RouteLock
+from jmri.jmrit.ussctc import SignalHeadSection
+from jmri.jmrit.ussctc import Station
+from jmri.jmrit.ussctc import TimeLock
+from jmri.jmrit.ussctc import TrackCircuitSection
+from jmri.jmrit.ussctc import TrafficLock
+from jmri.jmrit.ussctc import TurnoutSection
+from jmri.jmrit.ussctc import VetoedBell
 from jmri.jmrit import Sound
 
 # First, we define Turnouts and Sensors used by this example

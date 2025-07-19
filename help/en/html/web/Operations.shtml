@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright 2015 -->
 
-  <title>JMRI: Operations web functions</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: Operations web functions</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -32,11 +32,11 @@
        <h4>Example Manifest page:</h4><img src="images/WebServerOperationsTrainsManifestExample.jpg">
        <h4>Example Conductor page:</h4><img src="images/WebServerOperationsTrainsConductorExample.jpg">
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

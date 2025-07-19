@@ -22,7 +22,7 @@ import org.python.modules.math;
                   + "Loop Increments do not need to be exact")
 public class MathUtilTest {
 
-    static final double tolerance = 0.000001;
+    static final double TOLERANCE = 0.000001;
 
     @Test
     public void testPointToPoint2D() {
@@ -154,21 +154,21 @@ public class MathUtilTest {
         Point2D p1 = new Point2D.Double(31.4, 15.9);
         Point2D p2 = new Point2D.Double(159.4, 314.6);
         Assert.assertEquals("MathUtil.Dot(p1, p2)", 10007.3,
-                MathUtil.dot(p1, p2), tolerance);
+                MathUtil.dot(p1, p2), TOLERANCE);
     }
 
     @Test
     public void testLengthSquared() {
         Point2D p = new Point2D.Double(31.4, 15.9);
         Assert.assertEquals("MathUtil.lengthSquared(p1)", 1238.77,
-                MathUtil.lengthSquared(p), tolerance);
+                MathUtil.lengthSquared(p), TOLERANCE);
     }
 
     @Test
     public void testLength() {
         Point2D p = new Point2D.Double(31.4, 15.9);
         Assert.assertEquals("MathUtil.length(p1)", 35.196164563770296,
-                MathUtil.length(p), tolerance);
+                MathUtil.length(p), TOLERANCE);
     }
 
     @Test
@@ -176,7 +176,7 @@ public class MathUtilTest {
         Point2D p1 = new Point2D.Double(31.4, 15.9);
         Point2D p2 = new Point2D.Double(159.4, 314.6);
         Assert.assertEquals("MathUtil.distance(p1, p2)", 324.97029094980365,
-                MathUtil.distance(p1, p2), tolerance);
+                MathUtil.distance(p1, p2), TOLERANCE);
     }
 
     @Test
@@ -194,15 +194,15 @@ public class MathUtilTest {
     public void testComputeAngles() {
         Point2D p1 = new Point2D.Double(31.4, 15.9);
         Assert.assertEquals("MathUtil.computeAngleRAD(p)", 1.1020661694371947,
-                MathUtil.computeAngleRAD(p1), tolerance);
+                MathUtil.computeAngleRAD(p1), TOLERANCE);
         Assert.assertEquals("MathUtil.computeAngleDEG(p)", 63.143740252900734,
-                MathUtil.computeAngleDEG(p1), tolerance);
+                MathUtil.computeAngleDEG(p1), TOLERANCE);
 
         Point2D p2 = new Point2D.Double(159.4, 314.6);
         Assert.assertEquals("MathUtil.computeAngleRAD(p1, p2)", -2.7367412729776444,
-                MathUtil.computeAngleRAD(p1, p2), tolerance);
+                MathUtil.computeAngleRAD(p1, p2), TOLERANCE);
         Assert.assertEquals("MathUtil.computeAngleDEG(p1, p2)", -156.80372456087935,
-                MathUtil.computeAngleDEG(p1, p2), tolerance);
+                MathUtil.computeAngleDEG(p1, p2), TOLERANCE);
     }
 
     @Test
@@ -219,8 +219,8 @@ public class MathUtilTest {
         for (double theV = 0.0; theV < 2.f; theV += 0.15) {
             double c = MathUtil.lerp(minV, maxV, theV);
             double t = (c - minV) / (maxV - minV);
-            Assert.assertEquals("MathUtil.lerp(min, max, v)", t, theV, tolerance);
-            passed = (math.fabs(t - theV) <= tolerance);
+            Assert.assertEquals("MathUtil.lerp(min, max, v)", t, theV, TOLERANCE);
+            passed = (math.fabs(t - theV) <= TOLERANCE);
             if (!passed) {
                 break;
             }
@@ -228,8 +228,8 @@ public class MathUtilTest {
             Double theD = theV;
             Double cD = MathUtil.lerp(minD, maxD, theD);
             Double tD = (cD - minD) / (maxD - minD);
-            Assert.assertEquals("MathUtil.lerp(minD, maxD, vD)", tD, theD, tolerance);
-            passed = (math.fabs(tD - theD) <= tolerance);
+            Assert.assertEquals("MathUtil.lerp(minD, maxD, vD)", tD, theD, TOLERANCE);
+            passed = (math.fabs(tD - theD) <= TOLERANCE);
             if (!passed) {
                 break;
             }
@@ -247,8 +247,8 @@ public class MathUtilTest {
             Point2D pC = MathUtil.lerp(pA, pB, f);
             double distanceAC = pA.distance(pC);
             double t = distanceAC / distanceAB;
-            Assert.assertEquals(f, t, tolerance);
-            passed = (math.fabs(t - f) <= tolerance);
+            Assert.assertEquals(f, t, TOLERANCE);
+            passed = (math.fabs(t - f) <= TOLERANCE);
             if (!passed) {
                 break;
             }
@@ -266,8 +266,8 @@ public class MathUtilTest {
         Point2D pC = MathUtil.oneThirdPoint(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
-        Assert.assertEquals(1.0 / 3.0, t, tolerance);
-        boolean passed = (math.fabs(t - (1.0 / 3.0)) <= tolerance);
+        Assert.assertEquals(1.0 / 3.0, t, TOLERANCE);
+        boolean passed = (math.fabs(t - (1.0 / 3.0)) <= TOLERANCE);
 
         Assert.assertEquals("Point2D third is good", true, passed);
     }
@@ -282,8 +282,8 @@ public class MathUtilTest {
         Point2D pC = MathUtil.twoThirdsPoint(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
-        Assert.assertEquals(2.0 / 3.0, t, tolerance);
-        boolean passed = (math.fabs(t - (2.0 / 3.0)) <= tolerance);
+        Assert.assertEquals(2.0 / 3.0, t, TOLERANCE);
+        boolean passed = (math.fabs(t - (2.0 / 3.0)) <= TOLERANCE);
 
         Assert.assertEquals("Point2D two third is good", true, passed);
     }
@@ -298,9 +298,9 @@ public class MathUtilTest {
         Point2D pC = MathUtil.oneFourthPoint(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
-        Assert.assertEquals(1.0 / 4.0, t, tolerance);
+        Assert.assertEquals(1.0 / 4.0, t, TOLERANCE);
 
-        boolean passed = (math.fabs(t - (1.0 / 4.0)) <= tolerance);
+        boolean passed = (math.fabs(t - (1.0 / 4.0)) <= TOLERANCE);
         Assert.assertEquals("Point2D fourth is good", true, passed);
     }
 
@@ -314,16 +314,16 @@ public class MathUtilTest {
         Point2D pC = MathUtil.threeFourthsPoint(pA, pB);
         double distanceAC = pA.distance(pC);
         double t = distanceAC / distanceAB;
-        Assert.assertEquals(3.0 / 4.0, t, tolerance);
+        Assert.assertEquals(3.0 / 4.0, t, TOLERANCE);
 
-        boolean passed = (math.fabs(t - (3.0 / 4.0)) <= tolerance);
+        boolean passed = (math.fabs(t - (3.0 / 4.0)) <= TOLERANCE);
         Assert.assertEquals("Point2D three fourths is good", true, passed);
     }
 
     @Test
     public void testGranulize() {
         Assert.assertEquals("MathUtil.granulize(v, g)", 314.2,
-                MathUtil.granulize(314.15926, 0.1), tolerance);
+                MathUtil.granulize(314.15926, 0.1), TOLERANCE);
 
         Point2D p = new Point2D.Double(31.4159, 15.926283);
         Assert.assertEquals("MathUtil.granulize(p, h, v)",
@@ -363,8 +363,8 @@ public class MathUtilTest {
                 t += theRange;
             }
             double c = MathUtil.wrap(a, theMin, theMax);
-            Assert.assertEquals(t, c, tolerance);
-            passed = (math.fabs(t - c) <= tolerance);
+            Assert.assertEquals(t, c, TOLERANCE);
+            passed = (math.fabs(t - c) <= TOLERANCE);
             if (!passed) {
                 break;
             }
@@ -387,8 +387,8 @@ public class MathUtilTest {
                 t += theRange;
             }
             double c = MathUtil.wrapPM180(a);
-            Assert.assertEquals(t, c, tolerance);
-            passed = (math.fabs(t - c) <= tolerance);
+            Assert.assertEquals(t, c, TOLERANCE);
+            passed = (math.fabs(t - c) <= TOLERANCE);
             if (!passed) {
                 break;
             }
@@ -411,8 +411,8 @@ public class MathUtilTest {
                 t += theRange;
             }
             double c = MathUtil.wrapPM360(a);
-            Assert.assertEquals(t, c, tolerance);
-            passed = (math.fabs(t - c) <= tolerance);
+            Assert.assertEquals(t, c, TOLERANCE);
+            passed = (math.fabs(t - c) <= TOLERANCE);
             if (!passed) {
                 break;
             }
@@ -433,8 +433,8 @@ public class MathUtilTest {
                 t -= limits;
             }
             double c = MathUtil.wrap360(a);
-            Assert.assertEquals(t, c, tolerance);
-            passed = (math.fabs(t - c) <= tolerance);
+            Assert.assertEquals(t, c, TOLERANCE);
+            passed = (math.fabs(t - c) <= TOLERANCE);
             if (!passed) {
                 break;
             }
@@ -455,8 +455,8 @@ public class MathUtilTest {
                 t += limits;
             }
             double c = MathUtil.normalizeAngleDEG(a);
-            Assert.assertEquals(t, c, tolerance);
-            passed = (math.fabs(t - c) <= tolerance);
+            Assert.assertEquals(t, c, TOLERANCE);
+            passed = (math.fabs(t - c) <= TOLERANCE);
             if (!passed) {
                 break;
             }
@@ -481,8 +481,8 @@ public class MathUtilTest {
                     t += theRange;
                 }
                 double c = MathUtil.diffAngleDEG(a, b);
-                Assert.assertEquals(t, c, tolerance);
-                passed = (math.fabs(t - c) <= tolerance);
+                Assert.assertEquals(t, c, TOLERANCE);
+                passed = (math.fabs(t - c) <= TOLERANCE);
                 if (!passed) {
                     break;
                 }
@@ -498,14 +498,14 @@ public class MathUtilTest {
     public void testDouble_diffAngleRAD() {
 
         Assert.assertEquals("MathUtil.diffAngleRAD(a, b)", -1.2759999999999998,
-                MathUtil.diffAngleRAD(0.314, 1.59), tolerance);
+                MathUtil.diffAngleRAD(0.314, 1.59), TOLERANCE);
     }
 
     @Test
     public void testDouble_absDiffAngleRAD() {
 
         Assert.assertEquals("MathUtil.absDiffAngleRAD(a, b)", +1.2759999999999998,
-                MathUtil.absDiffAngleRAD(0.314, 1.59), tolerance);
+                MathUtil.absDiffAngleRAD(0.314, 1.59), TOLERANCE);
     }
 
     @Test
@@ -528,8 +528,8 @@ public class MathUtilTest {
                     t = -t;
                 }
                 double c = MathUtil.absDiffAngleDEG(a, b);
-                Assert.assertEquals(t, c, tolerance);
-                passed = (math.fabs(t - c) <= tolerance);
+                Assert.assertEquals(t, c, TOLERANCE);
+                passed = (math.fabs(t - c) <= TOLERANCE);
                 if (!passed) {
                     break;
                 }
@@ -556,8 +556,8 @@ public class MathUtilTest {
                         t = c;
                     }
                     double d = MathUtil.pin(a, b, c);
-                    Assert.assertEquals(t, d, tolerance);
-                    passed = (math.fabs(t - d) <= tolerance);
+                    Assert.assertEquals(t, d, TOLERANCE);
+                    passed = (math.fabs(t - d) <= TOLERANCE);
                     if (!passed) {
                         break;
                     }

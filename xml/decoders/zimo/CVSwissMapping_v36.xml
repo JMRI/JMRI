@@ -17,7 +17,7 @@
 <!-- version 1.3 - Ronald Kuhn, disable groups 14 to 17 for non Sounddecoder, 25 April 2019-->
 <!-- version 1.4 - Nigel Cliffe. Added masks to group members (A1 Fwd, A2 Fwd, A1 Rev, A2 Rev) and dimming group selection. Added dimming levels,  14 Feb 2021 -->
 <!-- version 1.5 - Ronald Kuhn, add german translation, 29 November 2021-->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable item="Swiss Mapping Group 1 F-key" CV="430">
     <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-F0F28.xml"/>

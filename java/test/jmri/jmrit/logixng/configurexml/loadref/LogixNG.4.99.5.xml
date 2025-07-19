@@ -13919,6 +13919,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>SetToString</variableOperation>
+      <constantType>String</constantType>
       <constant />
       <otherVariable />
       <reference />
@@ -14012,6 +14013,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CalculateFormula</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -14107,6 +14109,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyMemoryToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -14202,6 +14205,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyBlockToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -14297,6 +14301,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyReporterToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -14390,6 +14395,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyVariableToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -14497,6 +14503,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>CopyTableCellToVariable</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -14602,6 +14609,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>SetToNull</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />
@@ -14707,6 +14715,7 @@
       </reporterNamedBean>
       <listenToReporter>no</listenToReporter>
       <variableOperation>SetToString</variableOperation>
+      <constantType>String</constantType>
       <constant>1</constant>
       <otherVariable>SomeVar</otherVariable>
       <reference />

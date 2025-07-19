@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -9,8 +10,10 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.XmlFile;
@@ -21,14 +24,14 @@ import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
+
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Hold configuration data for Warrants, includes Speed Map
@@ -76,6 +79,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     private boolean _trace = false;         // trace warrant activity to log.info on the console
     private float _slowSpeedAssistance = 0.02f;
+
     /**
      * Get the default instance.
      *
@@ -108,7 +112,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
             root = null;
         }
         if (root != null) {
-//            log.info("Found Warrant preferences file: {}", _fileName);
             loadLayoutParams(root.getChild(LAYOUT_PARAMS));
             if (!loadSpeedMap(root.getChild(SPEED_MAP_PARAMS))) {
                 loadSpeedMapFromOldXml();
@@ -123,8 +126,8 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         if (layoutParm == null) {
             return;
         }
-        Attribute a;
-        if ((a = layoutParm.getAttribute(LAYOUT_SCALE)) != null) {
+        Attribute a = layoutParm.getAttribute(LAYOUT_SCALE);
+        if ( a != null ) {
             try {
                 setLayoutScale(a.getFloatValue());
             } catch (DataConversionException ex) {
@@ -132,7 +135,8 @@ public class WarrantPreferences extends AbstractPreferencesManager {
                 log.error("Unable to read layout scale. Setting to default value.", ex);
             }
         }
-        if ((a = layoutParm.getAttribute(SEARCH_DEPTH)) != null) {
+        a = layoutParm.getAttribute(SEARCH_DEPTH);
+        if ( a != null ) {
             try {
                 _searchDepth = a.getIntValue();
             } catch (DataConversionException ex) {
@@ -196,8 +200,8 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         if (rampParms == null) {
             return false;
         }
-        Attribute a;
-        if ((a = rampParms.getAttribute(TIME_INCREMENT)) != null) {
+        Attribute a = rampParms.getAttribute(TIME_INCREMENT);
+        if ( a != null ) {
             try {
                 this._msIncrTime = a.getIntValue();
             } catch (DataConversionException ex) {
@@ -205,7 +209,8 @@ public class WarrantPreferences extends AbstractPreferencesManager {
                 log.error("Unable to read ramp time increment. Setting to default value (500ms).", ex);
             }
         }
-        if ((a = rampParms.getAttribute(RAMP_INCREMENT)) != null) {
+        a = rampParms.getAttribute(RAMP_INCREMENT);
+        if ( a != null ) {
             try {
                 this._throttleIncr = a.getFloatValue();
             } catch (DataConversionException ex) {
@@ -213,7 +218,8 @@ public class WarrantPreferences extends AbstractPreferencesManager {
                 log.error("Unable to read ramp throttle increment. Setting to default value (0.03).", ex);
             }
         }
-        if ((a = rampParms.getAttribute(THROTTLE_SCALE)) != null) {
+        a = rampParms.getAttribute(THROTTLE_SCALE);
+        if ( a != null ) {
             try {
                 _throttleScale = a.getFloatValue();
             } catch (DataConversionException ex) {
@@ -226,14 +232,16 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         if (rampParms == null) {
             return false;
         }
-        if ((a = rampParms.getAttribute("percentNormal")) != null) {
+        a = rampParms.getAttribute("percentNormal");
+        if ( a != null ) {
             if (a.getValue().equals("yes")) {
                 _interpretation = 1;
             } else {
                 _interpretation = 2;
             }
         }
-        if ((a = rampParms.getAttribute(INTERPRETATION)) != null) {
+        a = rampParms.getAttribute(INTERPRETATION);
+        if ( a != null) {
             try {
                 _interpretation = a.getIntValue();
             } catch (DataConversionException ex) {
@@ -444,9 +452,9 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     Iterator<Entry<String, Float>> getSpeedNameEntryIterator() {
         List<Entry<String, Float>> vec = new java.util.ArrayList<>();
-        _speedNames.entrySet().forEach((entry) -> {
-            vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
-        });
+        _speedNames.entrySet().forEach((entry) ->
+            vec.add(new DataPair<>(entry.getKey(), entry.getValue()))
+        );
         return vec.iterator();
     }
 
@@ -467,7 +475,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     }
 
     // Called when preferences is updated from panel
-    protected void setSpeedNames(ArrayList<DataPair<String, Float>> speedNameMap) {
+    protected void setSpeedNames(@Nonnull ArrayList<DataPair<String, Float>> speedNameMap) {
         LinkedHashMap<String, Float> map = new LinkedHashMap<>();
         for (int i = 0; i < speedNameMap.size(); i++) {
             DataPair<String, Float> dp = speedNameMap.get(i);
@@ -480,9 +488,9 @@ public class WarrantPreferences extends AbstractPreferencesManager {
 
     Iterator<Entry<String, String>> getAppearanceEntryIterator() {
         List<Entry<String, String>> vec = new ArrayList<>();
-        _headAppearances.entrySet().stream().forEach((entry) -> {
-            vec.add(new DataPair<>(entry.getKey(), entry.getValue()));
-        });
+        _headAppearances.entrySet().stream().forEach((entry) ->
+            vec.add(new DataPair<>(entry.getKey(), entry.getValue()))
+        );
         return vec.iterator();
     }
 
@@ -594,5 +602,6 @@ public class WarrantPreferences extends AbstractPreferencesManager {
     public static class WarrantPreferencesXml extends XmlFile {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WarrantPreferences.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WarrantPreferences.class);
+
 }

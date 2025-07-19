@@ -45,6 +45,20 @@
             ],
             "description": "null to remove engine from its train"
         },
+        "trainName": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "name of train engine is assigned to, null if not assigned"
+        },
+        "trainIconName": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "icon name of train engine is assigned to, null if not assigned"
+        },
         "destination": {
             "type": [
                 "object",
@@ -67,6 +81,10 @@
             "type": "string",
             "description": "The model of engine"
         },
+        "hp": {
+            "type": "string",
+            "description": "The HP of engine"
+        },
         "outOfService": {
             "type": "boolean",
             "description": "True if out of service; false otherwise"
@@ -86,17 +104,31 @@
             ],
             "description": "RFID tag attached to car; null if none"
         },
-        "carType": {
+        "whereLastSeen": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The location of the last reported sighting of the tag"
+        },
+        "whenLastSeen": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The timestamp of the last reported sighting of the tag"
+        },
+        "type": {
             "type": "string",
             "description": "The engine type"
         },
         "weight": {
             "type": "number",
-            "description": "Weight of car in onces"
+            "description": "Weight of engine in tons"
         },
         "weightTons": {
-            "type": "number",
-            "description": "Weight of car in tons"
+            "type": "string",
+            "description": "Weight of engine in tons"
         }
     },
     "additionalProperties": false,

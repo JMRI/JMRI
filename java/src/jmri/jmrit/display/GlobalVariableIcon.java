@@ -358,7 +358,9 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
 
     /*As the size of a global variable label can change we want to adjust
      the position of the x,y if the width is fixed*/
+    @SuppressWarnings("hiding")  // OVerrides a value in SwingConstants
     static final int LEFT = 0x00;
+    @SuppressWarnings("hiding")  // OVerrides a value in SwingConstants
     static final int RIGHT = 0x02;
     static final int CENTRE = 0x04;
 
@@ -461,6 +463,10 @@ public class GlobalVariableIcon extends MemoryOrGVIcon implements java.beans.Pro
     @Override
     public void doMouseClicked(JmriMouseEvent e) {
         if (e.getClickCount() == 2) { // double click?
+            if (!getEditor().isEditable() && isValueEditDisabled()) {
+                log.debug("Double click global variable value edit is disabled");
+                return;
+            }
             editGlobalVariableValue();
         }
     }

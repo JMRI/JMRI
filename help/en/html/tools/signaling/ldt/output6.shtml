@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright Bob Jacobsen 2008 -->
 
-  <title>JMRI: LDT Signaling for CSD/CD/ZSR Signals</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: LDT Signaling for CSD/CD/ZSR Signals</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style>
     th {
@@ -18,7 +18,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -222,10 +222,10 @@
           <td>train stop</td>
         </tr>
       </table>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

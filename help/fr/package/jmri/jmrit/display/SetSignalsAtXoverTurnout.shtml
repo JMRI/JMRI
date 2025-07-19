@@ -7,11 +7,11 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor panel">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -257,9 +257,9 @@
       <p>S'il vous pla&icirc;t rappelez vous de <b>sauvegarder
       votre TCO apr&egrave;s l'utilisation de cet outil.</b></p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

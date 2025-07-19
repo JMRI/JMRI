@@ -79,8 +79,8 @@
 <mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml"/>
 <mapID target="html.hardware.cmri.CMRI" url="html/hardware/cmri/CMRI.shtml"/>
 <mapID target="html.hardware.cmri.Signals" url="html/hardware/cmri/Signals.shtml"/>
+<mapID target="html.hardware.dcc-ex.index" url="html/hardware/dcc-ex/index.shtml"/>
 <mapID target="html.hardware.dcc4pc.index" url="html/hardware/dcc4pc/index.shtml"/>
-<mapID target="html.hardware.dcc_ex.index" url="html/hardware/dcc-ex/index.shtml"/>
 <mapID target="html.hardware.dccpp.index" url="html/hardware/dccpp/index.shtml"/>
 <mapID target="html.hardware.digirails.index" url="html/hardware/digirails/index.shtml"/>
 <mapID target="html.hardware.easydcc.EasyDCC" url="html/hardware/easydcc/EasyDCC.shtml"/>
@@ -94,6 +94,7 @@
 <mapID target="html.hardware.loconet.LocoBuffer" url="html/hardware/loconet/LocoBuffer.shtml"/>
 <mapID target="html.hardware.loconet.LocoBufferII" url="html/hardware/loconet/LocoBufferII.shtml"/>
 <mapID target="html.hardware.loconet.LocoBufferUSB" url="html/hardware/loconet/LocoBufferUSB.shtml"/>
+<mapID target="html.hardware.loconet.LocoIO" url="html/hardware/loconet/LocoIO.shtml"/>
 <mapID target="html.hardware.loconet.LocoNetTools" url="html/hardware/loconet/LocoNetTools.shtml"/>
 <mapID target="html.hardware.loconet.PR2" url="html/hardware/loconet/PR2.shtml"/>
 <mapID target="html.hardware.loconet.PR3" url="html/hardware/loconet/PR3.shtml"/>
@@ -112,6 +113,7 @@
 <mapID target="html.hardware.oaktree.OakTree" url="html/hardware/oaktree/OakTree.shtml"/>
 <mapID target="html.hardware.openlcb.Names" url="html/hardware/openlcb/Names.shtml"/>
 <mapID target="html.hardware.openlcb.OlcbSignalMast" url="html/hardware/openlcb/OlcbSignalMast.shtml"/>
+<mapID target="html.hardware.openlcb.TCS" url="html/hardware/openlcb/TCS.shtml"/>
 <mapID target="html.hardware.openlcb.index" url="html/hardware/openlcb/index.shtml"/>
 <mapID target="html.hardware.pi.index" url="html/hardware/pi/index.shtml"/>
 <mapID target="html.hardware.powerline.index" url="html/hardware/powerline/index.shtml"/>
@@ -152,6 +154,7 @@
 <mapID target="html.tools.Routes" url="html/tools/Routes.shtml"/>
 <mapID target="html.tools.Sections" url="html/tools/Sections.shtml"/>
 <mapID target="html.tools.Sensors" url="html/tools/Sensors.shtml"/>
+<mapID target="html.tools.StringIOs" url="html/tools/StringIOs.shtml"/>
 <mapID target="html.tools.TimeTable" url="html/tools/TimeTable.shtml"/>
 <mapID target="html.tools.Transits" url="html/tools/Transits.shtml"/>
 <mapID target="html.tools.Turnouts" url="html/tools/Turnouts.shtml"/>
@@ -227,6 +230,7 @@
 <mapID target="package.apps.InstallTest.InstallTest" url="package/apps/InstallTest/InstallTest.shtml"/>
 <mapID target="package.apps.SystemConsole" url="package/apps/SystemConsole.shtml"/>
 <mapID target="package.apps.TabbedPreferences" url="package/apps/TabbedPreferences.shtml"/>
+<mapID target="package.apps.gui3.lccpro.LccPro" url="package/apps/gui3/lccpro/LccPro.shtml"/>
 <mapID target="package.apps.util.issuereporter.swing.IssueReporter" url="package/apps/util/issuereporter/swing/IssueReporter.shtml"/>
 <mapID target="package.jmri.configurexml.ErrorHandler" url="package/jmri/configurexml/ErrorHandler.shtml"/>
 <mapID target="package.jmri.jmrit.MemoryFrameAction" url="package/jmri/jmrit/MemoryFrameAction.shtml"/>
@@ -268,6 +272,8 @@
 <mapID target="package.jmri.jmrit.beantable.SignalMastLogicTable" url="package/jmri/jmrit/beantable/SignalMastLogicTable.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.SignalMastRepeater" url="package/jmri/jmrit/beantable/SignalMastRepeater.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.SignalMastTable" url="package/jmri/jmrit/beantable/SignalMastTable.shtml"/>
+<mapID target="package.jmri.jmrit.beantable.StringIOAddEdit" url="package/jmri/jmrit/beantable/StringIOAddEdit.shtml"/>
+<mapID target="package.jmri.jmrit.beantable.StringIOTable" url="package/jmri/jmrit/beantable/StringIOTable.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.TransitAddEdit" url="package/jmri/jmrit/beantable/TransitAddEdit.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.TransitTable" url="package/jmri/jmrit/beantable/TransitTable.shtml"/>
 <mapID target="package.jmri.jmrit.beantable.TurnoutAddEdit" url="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml"/>
@@ -370,6 +376,7 @@
 <mapID target="package.jmri.jmrit.webThrottle.webThrottle" url="package/jmri/jmrit/webThrottle/webThrottle.shtml"/>
 <mapID target="package.jmri.jmrit.whereused.WhereUsed" url="package/jmri/jmrit/whereused/WhereUsed.shtml"/>
 <mapID target="package.jmri.jmrit.withrottle.UserInterface" url="package/jmri/jmrit/withrottle/UserInterface.shtml"/>
+<mapID target="package.jmri.jmrit.z21server.z21server" url="package/jmri/jmrit/z21server/z21server.shtml"/>
 <mapID target="package.jmri.jmrix.acela.acelamon.AcelaMonFrame" url="package/jmri/jmrix/acela/acelamon/AcelaMonFrame.shtml"/>
 <mapID target="package.jmri.jmrix.acela.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml"/>
 <mapID target="package.jmri.jmrix.acela.packetgen.AcelaPacketGenFrame" url="package/jmri/jmrix/acela/packetgen/AcelaPacketGenFrame.shtml"/>
@@ -407,7 +414,6 @@
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.locogen.LocoGenFrame" url="package/jmri/jmrix/loconet/locogen/LocoGenFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.locoid.LocoIdFrame" url="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml"/>
-<mapID target="package.jmri.jmrix.loconet.locoio.LocoIOFrame" url="package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.locomon.LocoMonFrame" url="package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.locostats.LocoStatsFrame" url="package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.pm4.PM4Frame" url="package/jmri/jmrix/loconet/pm4/PM4Frame.shtml"/>
@@ -418,6 +424,7 @@
 <mapID target="package.jmri.jmrix.loconet.soundloader.EditorFrame" url="package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.soundloader.LoaderFrame" url="package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.swing.lncvprog.LncvProgPane" url="package/jmri/jmrix/loconet/swing/lncvprog/LncvProgPane.shtml"/>
+<mapID target="package.jmri.jmrix.loconet.swing.lnsv1prog.Lnsv1ProgPane" url="package/jmri/jmrix/loconet/swing/lnsv1prog/Lnsv1ProgPane.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.swing.throttlemsg.MessageFrame" url="package/jmri/jmrix/loconet/swing/throttlemsg/MessageFrame.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.usb_dcs240.swing.Dcs240UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs240/swing/Dcs240UsbModeSelect.shtml"/>
 <mapID target="package.jmri.jmrix.loconet.usb_dcs52.swing.Dcs52UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs52/swing/Dcs52UsbModeSelect.shtml"/>

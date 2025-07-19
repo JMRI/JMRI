@@ -5,7 +5,6 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of CbusConsoleLoggingPane
@@ -13,17 +12,17 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2020
 */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class CbusConsoleLoggingPaneTest  {
 
     @Test
-    public void testInitComponents() throws Exception{
+    public void testCbusConsoleLoggingPaneCtor() {
         // for now, just makes sure there isn't an exception.
         CbusConsoleLoggingPane t = new CbusConsoleLoggingPane(mainConsolePane);
         Assertions.assertNotNull(t);
         
     }
-    
+
     private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tc = null;
     private CbusConsolePane mainConsolePane = null;

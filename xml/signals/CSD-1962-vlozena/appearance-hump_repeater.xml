@@ -24,6 +24,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-vlozena</aspecttable>
@@ -35,26 +41,31 @@
     <appearance>
       <aspectname>Sunout zakázáno opakovaná</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/215_su_zakazano_spo.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/s15_suzop_4.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Sunout pomalu</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/217_su_pomalu_spo.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/s17_supo_4.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Sunout rychleji</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/218_su_rychle_spo.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/s18_sury_4.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Zpět opakovaná</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/220_su_zpet_spo.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/s20_zpop_4.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Na spádovišti se neposunuje</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/226_neposunuje_spo.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/s26_nepo_4.gif</imagelink>
     </appearance>
 
   </appearances>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="ABC Braking Value" CV="48" default="0">
+		<decVal/>
+		<label>ABC Voltage difference (CV 48)</label>
+		<label xml:lang="de">ABC Spannungsdifferenz (CV 48)</label>
+		<tooltip>Voltage difference is approx. CV value * 0.1 V + 1.6 V</tooltip>
+		<tooltip xml:lang="de">Spannungsdifferenz ist ca. CV-Wert * 0,1 V + 1,6 V</tooltip>
+	</variable>
+	<variable item="ABC Option CV49 Bit 0" CV="49" default="0" mask="XXXXXXXV">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>ABC Drive slowly right rail more positive</label>
+		<label xml:lang="de">ABC Langsamfahrt rechte Schiene positiver</label>
+	</variable>
+	<variable item="ABC Option CV49 Bit 1" CV="49" default="0" mask="XXXXXXVX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>ABC Drive slowly left rail more positive</label>
+		<label xml:lang="de">ABC Langsamfahrt linke Schiene positiver</label>
+	</variable>
+	<variable item="ABC Option CV49 Bit 2" CV="49" default="0" mask="XXXXXVXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>ABC Drive slowly in the active stop area</label>
+		<label xml:lang="de">ABC Langsamfahrt im aktiven Stoppbereich</label>
+	</variable>
+	<variable item="ABC Option CV49 Bit 3" CV="49" default="0" mask="XXXXVXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>ABC Shuttle operation on</label>
+		<label xml:lang="de">ABC Pendelbetrieb ein</label>
+	</variable>
+	<variable item="ABC Option CV49 Bit 4" CV="49" default="0" mask="XXXVXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>ABV1 in ABC Bremsstrecke</label>
+		<label xml:lang="de">ABV1 in ABC Bremsstrecke</label>
+	</variable>
+	<variable item="ABC Option CV49 Bit 5" CV="49" default="0" mask="XXVXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>ABV2 in ABC Bremsstrecke</label>
+		<label xml:lang="de">ABV2 in ABC Bremsstrecke</label>
+	</variable>
+	<variable item="ABC Slow Speed" CV="50" default="50">
+		<decVal max="255"/>
+		<label>ABC mode reduced speed (CV 50)</label>
+		<label xml:lang="de">ABC max. Langsamgeschwindigkeit (CV 50)</label>
+		<tooltip>Speed in ABC Slow block</tooltip>
+		<tooltip xml:lang="de">maximale Geschwindigkeit bei ABC-Langsamfahrt</tooltip>
+	</variable>
+	<variable item="ABC Option CV51" CV="51" default="30">
+		<decVal max="255"/>
+		<label>Stop time for change of direction Shuttle operation (CV 51)</label>
+		<label xml:lang="de">Stoppzeit bei Richtungswechsel Pendelbetrieb (CV 51)</label>
+		<tooltip>Stop time = CV value * 100 ms</tooltip>
+		<tooltip xml:lang="de">Stoppzeit = CV-Wert * 100 ms</tooltip>
+	</variable>
+	<variable item="Stoppzeit CV52" CV="52" default="50">
+		<decVal max="255"/>
+		<label>General stop time for change of direction CV 52)</label>
+		<label xml:lang="de">Allgemeine Stoppzeit bei Richtungswechsel (CV 52)</label>
+		<tooltip>Stop time = CV value * 100 ms</tooltip>
+		<tooltip xml:lang="de">Stoppzeit = CV-Wert * 100 ms</tooltip>
+	</variable>
+</variables>

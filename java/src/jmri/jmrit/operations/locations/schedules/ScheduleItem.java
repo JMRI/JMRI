@@ -1,15 +1,15 @@
 package jmri.jmrit.operations.locations.schedules;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents one schedule item of a schedule
@@ -85,6 +85,34 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
         String old = _random;
         _random = value;
         firePropertyChange("scheduleItemRandomValueChanged", old, value); // NOI18N
+    }
+    
+    /**
+     * Method determines by random if a car is accepted by a scheduleItem
+     * 
+     * @return true if car is accepted by the scheduleItem
+     */
+    public boolean doRandom() {
+        // make an adjustment based on the number of cars of a given type
+        int numberOfCars = InstanceManager.getDefault(CarManager.class).getByTypeList(getTypeName()).size();
+        int adjustment = 100 + numberOfCars;
+        _calculatedRandom = adjustment * Math.random();
+        try {
+            int value = Integer.parseInt(getRandom());
+            log.debug("Selected random {}, created random {}", getRandom(), _calculatedRandom);
+            if (_calculatedRandom <= value) {
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            log.error("Schedule item ({}) random value ({}) isn't a number", getId(), getRandom());
+        }
+        return false;
+    }
+    
+    double _calculatedRandom;
+    
+    public double getCalculatedRandom() {
+        return _calculatedRandom;
     }
 
     public String getSetoutTrainScheduleId() {

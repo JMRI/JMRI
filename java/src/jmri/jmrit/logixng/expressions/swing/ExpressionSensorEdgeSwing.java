@@ -38,6 +38,11 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ExpressionSensorEdge expression = (ExpressionSensorEdge)object;
 
+        if (expression == null) {
+            // Create a temporary expression since only direct addressing is allowed
+            expression = new ExpressionSensorEdge("IQDE1", null);
+        }
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -54,16 +59,10 @@ public class ExpressionSensorEdgeSwing extends AbstractDigitalExpressionSwing {
         JPanel _tabbedPaneEnumFromState;
         JPanel _tabbedPaneEnumToState;
 
-        if (expression != null) {
-            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean());
-            _tabbedPaneEnumFromState = _selectEnumFromStateSwing.createPanel(expression.getSelectEnumFromState(), SensorState.values());
-            _tabbedPaneEnumToState = _selectEnumToStateSwing.createPanel(expression.getSelectEnumToState(), SensorState.values());
-            _onlyTrueOnceCheckBox.setSelected(expression.getOnlyTrueOnce());
-        } else {
-            _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(null);
-            _tabbedPaneEnumFromState = _selectEnumFromStateSwing.createPanel(null, SensorState.values());
-            _tabbedPaneEnumToState = _selectEnumToStateSwing.createPanel(null, SensorState.values());
-        }
+        _tabbedPaneNamedBean = _selectNamedBeanSwing.createPanel(expression.getSelectNamedBean());
+        _tabbedPaneEnumFromState = _selectEnumFromStateSwing.createPanel(expression.getSelectEnumFromState(), SensorState.values());
+        _tabbedPaneEnumToState = _selectEnumToStateSwing.createPanel(expression.getSelectEnumToState(), SensorState.values());
+        _onlyTrueOnceCheckBox.setSelected(expression.getOnlyTrueOnce());
 
 
         JComponent[] components = new JComponent[]{

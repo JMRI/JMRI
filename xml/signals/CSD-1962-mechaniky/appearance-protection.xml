@@ -30,6 +30,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Image types</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2024-02-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Small icons</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>CSD-1962-mechaniky</aspecttable>
@@ -43,6 +49,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/426_sku_u.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/426_sku_u_n.gif</imagelink>
       <imagelink type="uzávěry">../../../resources/icons/largeschematics/aspects/CSD-1962/426_sku_u.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x26_uk_u.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -50,6 +57,7 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/425_ukz_u.gif</imagelink>
       <imagelink type="prototype-night">../../../resources/icons/largeschematics/aspects/CSD-1962/425_ukz_u_n.gif</imagelink>
       <imagelink type="uzávěry">../../../resources/icons/largeschematics/aspects/CSD-1962/425_ukz_u.gif</imagelink>
+      <imagelink type="malé">../../../resources/icons/smallschematics/aspects/CSD/small/x25_ukz_u.gif</imagelink>
     </appearance>
 
   </appearances>

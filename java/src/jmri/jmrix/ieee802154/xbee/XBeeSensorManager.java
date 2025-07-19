@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the XBee specific Sensor implementation.
- *
+ * <p>
  * System names are formatted as one of:
  * <ul>
  *   <li>"ZSnnn", where nnn is the sensor number without padding</li>

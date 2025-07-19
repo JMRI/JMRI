@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - BiDiB</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Hardware Support - BiDiB</title><!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta name="author" content="Eckart Meyer">
   <meta name="keywords" content="BiDiB java model railroad JMRI install">
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
@@ -34,7 +34,7 @@
         <li><a href="#documentation">Documentation</a></li>
       </ul>
       
-      <img src="images/bidib_logo.png" class="floatRight" alt="BiDiB logo" height="48">
+      <img src="images/bidib_logo.png" class="floatRight" alt="BiDiB logo" height="48" width="150">
       
       <a name="summary" id="summary"></a>
       <h2>Summary</h2>
@@ -92,6 +92,11 @@
           does not matter.
       </p>
       
+      <h4>netBiDiB</h4>
+      
+      <p><a href="https://bidib.org/transport/bidib_net_e.html">netBiDiB</a> allows the transport of the BiDiB protocol over a network connection (TCP). The connection is authorized once through the pairing process, so that a device cannot simply be controlled by someone else. To simplify configuration, BiDiB devices should announce themself in the network (mDNS/Bonjour) and can be selected in a combo box field in the JMRI settings for BiDiB. If this discovery is not available, automatic configuration can be switched off and the IP address of the device entered manually. The standard port number is 62875.
+      </p>
+      
       <h4>BiDiB over TCP</h4>
       <p>
       In this case the hardware is not directly connected to JMRI, but JMRI connects to a TCP server which in turn connects to the hardware. This may be usefull if another program is used
@@ -101,11 +106,17 @@
       
       <h4>Simulator</h4>
       
-      <p>A BiDiB simulator is provided. This connection type has field for a XML file with the simulated configuration. The location for this file is the profile directory.</p>
+      <p>A BiDiB simulator is provided. This connection type has a field for a XML file with the simulated configuration. The location for this file is the profile directory.</p>
       
       <h3>Settings</h3>
       
+      <p>Dialog for the serial interface:</p>
+      
       <img src="images/BiDiB_Connection.png" alt="BiDiB Connection" height="480">
+      
+      <p>Dialog for netBiDiB with discovery (Automatic Configuration):</p>
+      
+      <img src="images/BiDiB_netBiDiB_Connection.png" alt="netBiDiB Connection" height="525">
       
       <h4>BiDiB Naming</h4>
       <p>JMRI System Names generally consist of a system connection prefix Xn where X is the system connection letter and n is either empty or a number for multi-connections, followed by the type letter ("T" for turnout, "L" for lights, "S" for sensors and "R" for reporters (loco address feedback) and the system address.
@@ -145,7 +156,7 @@
         <tr>
           <td>a</td>
           <td>(non-DCC) accessory address</td>
-          <td>turnouts and sensors if node is not a command station and the node supports BiDiB accessories</td>
+          <td>turnouts if node is not a command station and the node supports BiDiB accessories</td>
         </tr>
         <tr>
           <td>f</td>
@@ -322,8 +333,8 @@
       
       <a name="tools" id="tools"></a>
 
-      <h2>JMRI BiDiB Tools</h2><img src="BiDiBMenu.png"
-      width="100" height="100" align="right" alt="Menu">
+      <h2>JMRI BiDiB Tools</h2><img src="images/BiDiBMenu.png"
+      height="100" align="right" alt="Menu"></p>
 
       <p>When JMRI is connected to a layout via this system, an
       <b>BiDiB</b> menu is shown:</p>
@@ -332,6 +343,7 @@
         <li><b>Traffic Monitor</b><br>
         <li><b>Start/Stop BiDiB over TCP server</b><br>the server listens to port 62875 for incoming clients, forwards all messages from the client to the system connection and sends
         all response messages comming in from the connection to all connected clients. This is something like the opposite of the "BiDiB over TCP" system connection mentioned above.<br>
+        <li><b>netBiDiB Logon/Logoff</b> (netBiDiB only)<br>JMRI is logged on/off on the connected device. Logging off can be useful to allow another program (e.g. the BiDiB Wizard) access to the device. After logging off of the other program, JMRI can be logged on again.<br>
 <!--
         <a href="images/OpenLCBMonitor.png"><img src=
         "images/OpenLCBMonitor.png" alt="Monitor Pane" width="488"
@@ -364,11 +376,11 @@
       <h4>BiDiB Manufacturers</h4>
       <p>The developers of BiDiB sell modules in the <a href="https://fichtelbahn.de">Fichtelbahn</a> shop (german only).</p>
       <p>There are some other manufacturers - see <a href="http://www.bidib.org/vendors_e.html">www.bidib.org/vendors_e.html</a></p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

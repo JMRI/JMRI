@@ -5,11 +5,11 @@
   <title>JMRI: Le Tableau Lumi&egrave;re</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Light Table">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -170,9 +170,9 @@
       charg&eacute;es &agrave; partir d'un fichier de
       configuration, elles sont tous activ&eacute;es.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

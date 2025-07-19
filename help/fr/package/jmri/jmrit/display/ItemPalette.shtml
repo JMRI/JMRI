@@ -5,11 +5,11 @@
   <title>JMRI: L'&eacute;l&eacute;ment Palette</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Item Palette">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -348,9 +348,9 @@
       Statut</b> - ou restaur&eacute; par le bouton <b>Ajouter
       &eacute;tat Manquant</b>.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

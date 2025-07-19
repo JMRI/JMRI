@@ -1,6 +1,5 @@
 package jmri.jmrix.rps;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 
 import jmri.jmrit.display.EditorManager;
@@ -9,9 +8,7 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.display.Editor;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * JUnit tests for the rps.Reading class.
@@ -21,8 +18,8 @@ import org.junit.Assume;
 public class RpsPositionIconTest {
 
     @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCtorAndID() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // init test system
         new Engine() {
             void reset() {
@@ -38,9 +35,11 @@ public class RpsPositionIconTest {
         Distributor.instance().submitMeasurement(m);
 
         Editor e = InstanceManager.getDefault(EditorManager.class).get("RPS Location Test Editor");
-        Assert.assertNotNull("has target frame", e.getTargetFrame());
-        Assert.assertEquals("RPS Location Test", e.getTargetFrame().getTitle());
+        Assertions.assertNotNull(e);
+        Assertions.assertNotNull( e.getTargetFrame(), "has target frame");
+        Assertions.assertEquals("RPS Location Test", e.getTargetFrame().getTitle());
         e.dispose();
+        JUnitUtil.disposeFrame("RPS Location Test", false, true);
     }
 
     @BeforeEach

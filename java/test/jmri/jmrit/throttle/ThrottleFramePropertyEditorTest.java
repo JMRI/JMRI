@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -18,10 +19,12 @@ public class ThrottleFramePropertyEditorTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // this will disable svg icons, batik randomly crashes JUnit tests
+        InstanceManager.getDefault(ThrottlesPreferences.class).setUseLargeSpeedSlider(false);
         ThrottleWindow frame = new ThrottleWindow();
         frame.setVisible(true);
         ThrottleFramePropertyEditor dialog = new ThrottleFramePropertyEditor(frame);
-        Assert.assertNotNull("exists", dialog);
+        Assert.assertNotNull("exists", dialog);        
         JUnitUtil.dispose(dialog);
         JUnitUtil.dispose(frame);
      }

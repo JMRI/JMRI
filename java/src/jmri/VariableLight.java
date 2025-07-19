@@ -60,6 +60,21 @@ package jmri;
  */
 public interface VariableLight extends Light, AnalogIO {
 
+    /**
+     * String constant for the property current intensity.
+     */
+    String PROPERTY_CURRENT_INTENSITY = "CurrentIntensity";
+
+    /**
+     * String constant for the property min intensity.
+     */
+    String PROPERTY_MIN_INTENSITY = "MinIntensity";
+
+    /**
+     * String constant for the property max intensity.
+     */
+    String PROPERTY_MAX_INTENSITY = "MaxIntensity";
+
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread

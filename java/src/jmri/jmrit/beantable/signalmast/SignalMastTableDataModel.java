@@ -12,11 +12,10 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.beantable.RowComboBoxPanel;
 import jmri.jmrit.signalling.SignallingSourceAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Data model for a SignalMastTable
@@ -26,14 +25,14 @@ import org.slf4j.LoggerFactory;
  */
 public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
 
-    static public final int EDITMASTCOL = NUMCOLUMN;
-    static public final int EDITLOGICCOL = EDITMASTCOL + 1;
-    static public final int LITCOL = EDITLOGICCOL + 1;
-    static public final int HELDCOL = LITCOL + 1;
+    public static final int EDITMASTCOL = NUMCOLUMN;
+    public static final int EDITLOGICCOL = EDITMASTCOL + 1;
+    public static final int LITCOL = EDITLOGICCOL + 1;
+    public static final int HELDCOL = LITCOL + 1;
 
     @Override
     public String getValue(String name) {
-        SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
+        SignalMast sm = InstanceManager.getDefault(SignalMastManager.class).getBySystemName(name);
         if (sm != null) {
             return sm.getAspect();
         } else {
@@ -112,17 +111,17 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
 
     @Override
     protected Manager<SignalMast> getManager() {
-        return InstanceManager.getDefault(jmri.SignalMastManager.class);
+        return InstanceManager.getDefault(SignalMastManager.class);
     }
 
     @Override
     protected SignalMast getBySystemName(@Nonnull String name) {
-        return InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
+        return InstanceManager.getDefault(SignalMastManager.class).getBySystemName(name);
     }
 
     @Override
     protected SignalMast getByUserName(@Nonnull String name) {
-        return InstanceManager.getDefault(jmri.SignalMastManager.class).getByUserName(name);
+        return InstanceManager.getDefault(SignalMastManager.class).getByUserName(name);
     }
 
     @Override
@@ -132,6 +131,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
 
     @Override
     protected void clickOn(SignalMast t) {
+        log.debug("No action for click on {}",t.getDisplayName());
     }
 
     @Override
@@ -142,7 +142,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
             return "error";
         }
         String name = sysNameList.get(row);
-        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
+        SignalMast s = InstanceManager.getDefault(SignalMastManager.class).getBySystemName(name);
         if (s == null) {
             return false; // if due to race condition, the device is going away
         }
@@ -156,17 +156,12 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
             case EDITMASTCOL:
                 return Bundle.getMessage("ButtonEdit");
             case VALUECOL:
-                try {
-                    if (s.getAspect() != null) {
-                        return s.getAspect();
-                    } else {
-                        //Aspect not set
-                        //log.trace("Aspect not set, NULL aspect returned for mast in row {}", row); - too verbose, even at trace
-                        return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
-                    }
-                } catch (java.lang.NullPointerException e) {
-                    //Aspect not set
-                    log.debug("Aspect for mast in row {} not set", row);
+                String aspect = s.getAspect();
+                if ( aspect != null) {
+                    return aspect;
+                } else {
+                    //Aspect not set,  - too verbose, even at trace
+                    //log.trace("Aspect not set, NULL aspect returned for mast in row {}", row);
                     return Bundle.getMessage("BeanStateUnknown"); // use place holder string in table
                 }
             default:
@@ -177,14 +172,13 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
     @Override
     public void setValueAt(Object value, int row, int col) {
         String name = sysNameList.get(row);
-        SignalMast s = InstanceManager.getDefault(jmri.SignalMastManager.class).getBySystemName(name);
+        SignalMast s = InstanceManager.getDefault(SignalMastManager.class).getBySystemName(name);
         if (s == null) {
             return;  // device is going away anyway
         }
         switch (col) {
             case VALUECOL:
                 if ((String) value != null) {
-                    //row = table.convertRowIndexToModel(row); // find the right row in model instead of table (not needed here)
                     log.debug("setValueAt (rowConverted={}; value={})", row, value);
                     s.setAspect((String) value);
                     fireTableRowsUpdated(row, row);
@@ -214,14 +208,15 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
 
     void editLogic(int row, int col) {
         SwingUtilities.invokeLater(() -> {
-            SignallingSourceAction action = new SignallingSourceAction(Bundle.getMessage("TitleSignalMastLogicTable"), getBySystemName(sysNameList.get(row)));
+            SignallingSourceAction action = new SignallingSourceAction(Bundle.getMessage(
+                "TitleSignalMastLogicTable"), getBySystemName(sysNameList.get(row)));
             action.actionPerformed(null);
         });
     }
 
     void editMast(int row, int col) {
         SwingUtilities.invokeLater(() -> {
-            AddSignalMastJFrame editFrame = new jmri.jmrit.beantable.signalmast.AddSignalMastJFrame(getBySystemName(sysNameList.get(row)));
+            AddSignalMastJFrame editFrame = new AddSignalMastJFrame(getBySystemName(sysNameList.get(row)));
             editFrame.setVisible(true);
         });
     }
@@ -233,17 +228,17 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().contains("aspectEnabled") || e.getPropertyName().contains("aspectDisabled")) {
-            if (e.getSource() instanceof NamedBean) {
-                String name = ((NamedBean) e.getSource()).getSystemName();
-                if (log.isDebugEnabled()) {
-                    log.debug("Update cell {}, {} for {}", sysNameList.indexOf(name), VALUECOL, name);
-                }
-                // since we can add columns, the entire row is marked as updated
-                int row = sysNameList.indexOf(name);
-                this.fireTableRowsUpdated(row, row);
-                clearAspectVector(row);
+        if ( (e.getPropertyName().contains("aspectEnabled") || e.getPropertyName().contains("aspectDisabled"))
+            && (e.getSource() instanceof NamedBean ) ) {
+
+            String name = ((NamedBean) e.getSource()).getSystemName();
+            if (log.isDebugEnabled()) {
+                log.debug("Update cell {}, {} for {}", sysNameList.indexOf(name), VALUECOL, name);
             }
+            // since we can add columns, the entire row is marked as updated
+            int row = sysNameList.indexOf(name);
+            this.fireTableRowsUpdated(row, row);
+            clearAspectVector(row);
         }
         super.propertyChange(e);
     }
@@ -272,8 +267,9 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
         setColumnToHoldButton(table, VALUECOL, configureButton());
         // add extras, override BeanTableDataModel
         log.debug("Mast configValueColumn (I am {})", super.toString());
-        table.setDefaultEditor(RowComboBoxPanel.class, new AspectComboBoxPanel()); // provide BeanTableDataModel
-        table.setDefaultRenderer(RowComboBoxPanel.class, new AspectComboBoxPanel()); // create a separate class for the renderer
+        table.setDefaultEditor(RowComboBoxPanel.class, new AspectComboBoxPanel());
+        // create a separate class for the renderer
+        table.setDefaultRenderer(RowComboBoxPanel.class, new AspectComboBoxPanel());
         // Set more things?
     }
 
@@ -375,6 +371,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
         return Bundle.getMessage("TitleSignalMastTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalMastTableDataModel.class);
 
 }

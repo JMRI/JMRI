@@ -14,7 +14,7 @@
 <!-- 																		-->
 <!-- version 1 - include file for Uhlenbrock IntelliSound4 Decoder 3230x    -->
 <!-- 																		-->
-<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <enumChoice choice="None">
 	<choice>No Sound</choice>
 	<choice xml:lang="de">kein Sound</choice>

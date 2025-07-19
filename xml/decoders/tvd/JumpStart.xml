@@ -14,7 +14,7 @@
 
 <!-- include for QUAD-LN_S -->
 <!-- jump start  v3.0  -->
-<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <enumChoice choice="Use Speed Setting"/>
     <enumChoice choice="Jump to Setpoint"/>
 </enumVal>

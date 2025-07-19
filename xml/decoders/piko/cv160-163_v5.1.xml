@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="CV160" CV="160" default="190">
+		<decVal/>
+		<label>Distance measurement of the wheel turns (CV 160)</label>
+		<label xml:lang="de">Wegmessung der Radumdrehungen (CV 160)</label>
+		<tooltip>Internal path measurement of wheel revolutions (steam shock trigger sound)</tooltip>
+		<tooltip xml:lang="de">Interne Wegmessung der Radumdrehungen (Dampfstoßtrigger Sound)</tooltip>
+	</variable>
+	<variable item="CV162" CV="162" default="0">
+		<decVal/>
+		<label>Number of switching steps (CV 162)</label>
+		<label xml:lang="de">Anzahl der Schaltstufen (CV 162)</label>
+		<tooltip>For suitable sound projects for electric locomotives, diesel locomotives, railcars</tooltip>
+		<tooltip xml:lang="de">Für geeignete Soundprojekte von E-Loks, Dieselloks, Triebwagen</tooltip>
+	</variable>
+	<variable item="CV163" CV="163" default="0">
+		<decVal/>
+		<label>Number of cylinders (steam locomotive) (CV 163)</label>
+		<label xml:lang="de">Zylinderanzahl (Dampflok) (CV 163)</label>
+		<tooltip/>
+		<tooltip xml:lang="de"/>
+	</variable>
+</variables>

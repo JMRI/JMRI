@@ -39,7 +39,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
+import javax.swing.table.JTableHeader;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
@@ -80,11 +83,11 @@ import org.slf4j.LoggerFactory;
 @ServiceProvider(service = HttpServlet.class)
 public class JmriJFrameServlet extends HttpServlet {
 
-    void sendClick(String name, Component c, int xg, int yg, Container frameContentPane) {  // global positions
+    void sendClick(String name, @Nonnull Component c, int xg, int yg, Container frameContentPane) {  // global positions
         int x = xg - c.getLocation().x;
         int y = yg - c.getLocation().y;
         // log.debug("component is {}", c);
-        log.debug("Local click at {},{}", x, y);
+        log.debug("Local click at {},{} in {}", x, y, c.getClass());
 
         if (c.getClass().equals(JButton.class)) {
             ((AbstractButton) c).doClick();
@@ -118,7 +121,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     1, // one click
                     false // not a popup
             );
-            ((jmri.jmrit.display.Positionable) c).doMousePressed(e);
+            ((Positionable) c).doMousePressed(e);
 
             e = new JmriMouseEvent(c,
                     JmriMouseEvent.MOUSE_RELEASED,
@@ -128,7 +131,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     1, // one click
                     false // not a popup
             );
-            ((jmri.jmrit.display.Positionable) c).doMouseReleased(e);
+            ((Positionable) c).doMouseReleased(e);
 
             e = new JmriMouseEvent(c,
                     JmriMouseEvent.MOUSE_CLICKED,
@@ -138,8 +141,12 @@ public class JmriJFrameServlet extends HttpServlet {
                     1, // one click
                     false // not a popup
             );
-            ((jmri.jmrit.display.Positionable) c).doMouseClicked(e);
+            ((Positionable) c).doMouseClicked(e);
         } else {
+            if ( c instanceof JButton ){
+                ((JButton)c).doClick();
+                return;
+            }
             MouseListener[] la = c.getMouseListeners();
             log.debug("Invoke {} contained mouse listeners", la.length);
             log.debug("component is {}", c);
@@ -151,13 +158,18 @@ public class JmriJFrameServlet extends HttpServlet {
              * to adjust the click position for the offset of the Component
              * relative to the frame.
              */
-            // was incorrect for zoomed panels, turned off
-            // Point pc = c.getLocationOnScreen();
-            // Point pf = FrameContentPane.getLocationOnScreen();
-            // x -= (int)(pc.getX() - pf.getX());
-            // y -= (int)(pc.getY() - pf.getY());
+            if (c instanceof JTable || c instanceof JTableHeader) {
+                // need to make clicks on a JTable and JTableHeader all relative
+                Rectangle rT = c.getBounds();
+                Rectangle r = SwingUtilities.convertRectangle(c.getParent(), rT, frameContentPane);
+                // need to adjust table click, note that table can scroll
+                x += (int) rT.getX() - (int) r.getX();
+                y += (int) rT.getY() - (int) r.getY();
+                log.debug("New JTable x: {} and y: {}", x, y);
+            }
+
             for (MouseListener ml : la) {
-                log.debug("Send click sequence at {},{}", x, y);
+                log.trace("Send click sequence at {},{}", x, y);
                 sendClickSequence(ml, c, x, y);
             }
         }
@@ -166,7 +178,7 @@ public class JmriJFrameServlet extends HttpServlet {
     private void sendClickSequence(MouseListener m, Component c, int x, int y) {
         /*
          * create the sequence of mouse events needed to click on a control:
-         * MOUSE_ENTERED MOUSE_PRESSED MOUSE_RELEASED MOUSE_CLICKED
+         * MOUSE_ENTERED MOUSE_PRESSED MOUSE_RELEASED MOUSE_CLICKED MOUSE_EXITED
          */
         MouseEvent e = new MouseEvent(c,
                 MouseEvent.MOUSE_ENTERED,
@@ -280,8 +292,8 @@ public class JmriJFrameServlet extends HttpServlet {
         }
         JmriJFrame frame = null;
         String name = getFrameName(request.getRequestURI());
-        List<String> disallowedFrames = Arrays.asList(preferences.getDisallowedFrames());
         if (name != null) {
+            List<String> disallowedFrames = Arrays.asList(preferences.getDisallowedFrames());
             if (disallowedFrames.contains(name)) {
                 response.sendError(HttpServletResponse.SC_FORBIDDEN, "Frame [" + name + "] not allowed (check Preferences)");
                 return;
@@ -298,7 +310,8 @@ public class JmriJFrameServlet extends HttpServlet {
             }
         }
         Map<String, String[]> parameters = this.populateParameterMap(request.getParameterMap());
-        if (parameters.containsKey("coords") && !(parameters.containsKey("protect") && Boolean.parseBoolean(parameters.get("protect")[0]))) { // NOI18N
+        if (frame != null && parameters.containsKey("coords") &&
+            !(parameters.containsKey("protect") && Boolean.parseBoolean(parameters.get("protect")[0]))) { // NOI18N
             this.doClick(frame, parameters.get("coords")[0]); // NOI18N
         }
         if (frame != null && request.getRequestURI().contains(".html")) { // NOI18N
@@ -315,7 +328,8 @@ public class JmriJFrameServlet extends HttpServlet {
         this.doGet(request, response);
     }
 
-    private void doHtml(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response, Map<String, String[]> parameters) throws ServletException, IOException {
+    private void doHtml(@Nonnull JmriJFrame frame, HttpServletRequest request,
+        @Nonnull HttpServletResponse response, Map<String, String[]> parameters) throws ServletException, IOException {
         WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
         Date now = new Date();
         boolean click = false;
@@ -373,7 +387,8 @@ public class JmriJFrameServlet extends HttpServlet {
         log.debug("Sent jframe html with click={}", (click ? "True" : "False"));
     }
 
-    private void doImage(JmriJFrame frame, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void doImage(@Nonnull JmriJFrame frame, HttpServletRequest request,
+        @Nonnull HttpServletResponse response) throws ServletException, IOException {
         Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("image/png"); // NOI18N
@@ -398,7 +413,7 @@ public class JmriJFrameServlet extends HttpServlet {
         log.debug("Sent [{}] as {} byte png.", frame.getTitle(), tmpFile.size());
     }
 
-    private void doDialog(JDialog dialog, BufferedImage image){
+    private void doDialog(@CheckForNull JDialog dialog, @Nonnull BufferedImage image){
         if ( dialog == null ) {
             return;
         }
@@ -422,7 +437,7 @@ public class JmriJFrameServlet extends HttpServlet {
         g.drawString(dialog.getTitle(), 10, 15);
     }
 
-    private void doList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void doList(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response) throws ServletException, IOException {
         List<String> disallowedFrames = Arrays.asList(InstanceManager.getDefault(WebServerPreferences.class).getDisallowedFrames());
         String format = request.getParameter("format"); // NOI18N
         ObjectMapper mapper = new ObjectMapper();
@@ -503,13 +518,13 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     // Requests for frames are always /frame/<name>.html or /frame/<name>.png
-    private String getFrameName(String URI) throws UnsupportedEncodingException {
-        if (!URI.contains(".")) { // NOI18N
+    private String getFrameName(@Nonnull String uri) throws UnsupportedEncodingException {
+        if (!uri.contains(".")) {
             return null;
         } else {
             // if request contains parameters, strip those off
-            int stop = (URI.contains("?")) ? URI.indexOf('?') : URI.length(); // NOI18N
-            String name = URI.substring(URI.lastIndexOf('/'), stop); // NOI18N
+            int stop = (uri.contains("?")) ? uri.indexOf('?') : uri.length(); // NOI18N
+            String name = uri.substring(uri.lastIndexOf('/'), stop); // NOI18N
             // URI contains a leading / at this point
             name = name.substring(1, name.lastIndexOf('.')); // NOI18N
             name = URLDecoder.decode(name, UTF8); //undo escaped characters
@@ -555,7 +570,7 @@ public class JmriJFrameServlet extends HttpServlet {
         return parameters;
     }
 
-    private void doClick(JmriJFrame frame, String coords) {
+    private void doClick(@Nonnull JmriJFrame frame, @Nonnull String coords) {
         String[] click = coords.split(","); // NOI18N
         int x = Integer.parseInt(click[0]);
         int y = Integer.parseInt(click[1]);
@@ -573,6 +588,9 @@ public class JmriJFrameServlet extends HttpServlet {
 
         //send click to topmost component under click spot
         Component c = frame.getContentPane().findComponentAt(x, y);
+        if ( c == null ) { // click outside of Frame
+            return;
+        }
         //log.debug("topmost component is class={}", c.getClass().getName());
         sendClick(frame.getTitle(), c, x, y, frame.getContentPane());
 
@@ -593,7 +611,7 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     //recursively search components to find editor target pane, where layout editor paints components
-    public void clickOnEditorPane(Component c, int x, int y, JmriJFrame f) {
+    public void clickOnEditorPane(@Nonnull Component c, int x, int y, JmriJFrame f) {
 
         if (c.getClass().getName().equals("jmri.jmrit.display.Editor$TargetPane")) { // NOI18N
             log.debug("Sending additional click to Editor$TargetPane");
@@ -610,7 +628,7 @@ public class JmriJFrameServlet extends HttpServlet {
     }
 
     @CheckForNull
-    private static JDialog getDialog(JmriJFrame frame) {
+    private static JDialog getDialog(@Nonnull JmriJFrame frame) {
         for ( var pcl : frame.getPropertyChangeListeners() ) {
             log.debug("PCL : {}", pcl);
             if ( pcl instanceof JDialogListener ){

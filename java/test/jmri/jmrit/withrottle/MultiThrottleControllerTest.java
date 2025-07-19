@@ -1,10 +1,14 @@
 package jmri.jmrit.withrottle;
 
 import java.beans.PropertyChangeEvent;
-//import jmri.InstanceManager;
+
 //import jmri.NamedBeanHandleManager;
 
+import jmri.InstanceManager;
 import jmri.Throttle;
+import jmri.ThrottleManager;
+import jmri.ThrottleListener.DecisionType;
+import jmri.jmrit.throttle.ThrottlesPreferences;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -84,13 +88,13 @@ public class MultiThrottleControllerTest {
         // before notifying the throttle is found, set a function on
         // which runs a couple of additional lines of code in
         // sendAllFunctionStates.
-        t.setF6(true);
+        t.setFunction(6, true);
         controller.notifyThrottleFound(t);
         // function "on" from withrottle represents a button click event.
         Assert.assertTrue("Continue after set F1 on", controller.sort("F11"));
-        Assert.assertTrue("F1 set on", t.getF1());
+        Assert.assertTrue("F1 set on", t.getFunction(1));
         Assert.assertTrue("Continue after set F1 off", controller.sort("F11"));
-        Assert.assertFalse("F1 set off", t.getF1());
+        Assert.assertFalse("F1 set off", t.getFunction(1));
     }
 
     @Test
@@ -98,9 +102,9 @@ public class MultiThrottleControllerTest {
         jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after set F1 on", controller.sort("f11"));
-        Assert.assertTrue("F1 set on", t.getF1());
+        Assert.assertTrue("F1 set on", t.getFunction(1));
         Assert.assertTrue("Continue after set F1 off", controller.sort("f01"));
-        Assert.assertFalse("F1 set off", t.getF1());
+        Assert.assertFalse("F1 set off", t.getFunction(1));
     }
 
     @Test
@@ -108,9 +112,9 @@ public class MultiThrottleControllerTest {
         jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after set F1 momentary", controller.sort("m11"));
-        Assert.assertTrue("F1 set on", t.getF1Momentary());
+        Assert.assertTrue("F1 set on", t.getFunctionMomentary(1));
         Assert.assertTrue("Continue after set F1 continuous", controller.sort("m01"));
-        Assert.assertFalse("F1 set off", t.getF1Momentary());
+        Assert.assertFalse("F1 set off", t.getFunctionMomentary(1));
     }
 
     @Test
@@ -136,9 +140,9 @@ public class MultiThrottleControllerTest {
     public void testFunctionPropertyChange() {
         jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
         controller.notifyThrottleFound(t);
-        t.setF1(true);
+        t.setFunction(1, true);
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>F11", cis.getLastPacket());
-        t.setF1(false);
+        t.setFunction(1, false);
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>F01", cis.getLastPacket());
     }
 
@@ -264,6 +268,53 @@ public class MultiThrottleControllerTest {
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after query velocity", controller.sort("qm"));
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>m028", cis.getLastPacket());
+    }
+
+    @Test
+    public void testSharingThrottleManager() {
+        // install a ThrottleManager which will request a Share / Cancel response
+        InstanceManager.reset(ThrottleManager.class);
+        InstanceManager.setThrottleManager(new jmri.managers.SharingThrottleManager());
+
+        // set to Silently Share
+        InstanceManager.getDefault(ThrottlesPreferences.class).setSilentShare(true);
+
+        Assertions.assertTrue( controller.sort("L279"),"request address 279L");
+        Assertions.assertTrue( tcls.hasAddressBeenFound(),"throttle created");
+
+        Assertions.assertTrue( controller.sort("r"), "request loco released");
+        Assertions.assertTrue( tcls.hasAddressBeenReleased(), "tcls Address Released");
+
+    }
+
+    @Test
+    public void testStealOrSharingThrottleManager() {
+        // install a ThrottleManager which will request a Share / Steal / Cancel response
+        InstanceManager.reset(ThrottleManager.class);
+        var tm = new jmri.managers.StealingOrSharingThrottleManager();
+        InstanceManager.setThrottleManager(tm);
+
+        // set to Silently Share
+        InstanceManager.getDefault(ThrottlesPreferences.class).setSilentShare(true);
+
+        Assertions.assertTrue( controller.sort("L280"),"request address 280L");
+        Assertions.assertTrue( tcls.hasAddressBeenFound(),"throttle created");
+        Assertions.assertEquals( DecisionType.SHARE, tm.lastResponse, "a share response was sent");
+
+        Assertions.assertTrue( controller.sort("r"), "request loco released");
+        Assertions.assertTrue( tcls.hasAddressBeenReleased(), "tcls Address Released");
+
+        // set to Silently Steal
+        InstanceManager.getDefault(ThrottlesPreferences.class).setSilentShare(false);
+        InstanceManager.getDefault(ThrottlesPreferences.class).setSilentSteal(true);
+
+        Assertions.assertTrue( controller.sort("L281"),"request address 281L");
+        Assertions.assertTrue( tcls.hasAddressBeenFound(),"throttle created");
+        Assertions.assertEquals( DecisionType.STEAL, tm.lastResponse, "a steal response was sent");
+
+        Assertions.assertTrue( controller.sort("r"), "request loco released");
+        Assertions.assertTrue( tcls.hasAddressBeenReleased(), "tcls Address Released");
+
     }
 
     @BeforeEach

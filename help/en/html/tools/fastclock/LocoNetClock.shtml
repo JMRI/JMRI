@@ -5,10 +5,10 @@
   <title>JMRI: Fast Clock - LocoNet Capability</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help Setup LocoNet Fast Clock">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -61,11 +61,11 @@
       as a master. You may notice that the Logic Rail Technologies fast clock lags behind by one
       fast clock minute. Be assured that the correct commands are being sent by JMRI. This lag, if
       present, is just an artifact of the Logic Rail clock's internal programming.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

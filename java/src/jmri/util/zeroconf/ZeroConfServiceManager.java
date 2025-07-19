@@ -15,12 +15,14 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+
 import javax.annotation.Nonnull;
 import javax.jmdns.JmDNS;
 import javax.jmdns.JmmDNS;
 import javax.jmdns.NetworkTopologyEvent;
 import javax.jmdns.NetworkTopologyListener;
 import javax.jmdns.ServiceInfo;
+
 import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
@@ -29,8 +31,6 @@ import jmri.profile.ProfileManager;
 import jmri.util.SystemType;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A ZeroConfServiceManager object manages zeroConf network service
@@ -88,11 +88,13 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      * {@link #getDNSes() } to ensure this is populated correctly.
      */
     static final HashMap<InetAddress, JmDNS> JMDNS_SERVICES = new HashMap<>();
-    private static final Logger log = LoggerFactory.getLogger(ZeroConfServiceManager.class);
+
     // class data objects
     protected final HashMap<String, ZeroConfService> services = new HashMap<>();
     protected final NetworkListener networkListener = new NetworkListener(this);
     protected final Runnable shutDownTask = () -> dispose(this);
+
+    public static final String DNS_CLOSE_THREAD_NAME = "dns.close in ZerConfServiceManager#stopAll";
 
     protected final ZeroConfPreferences preferences = new ZeroConfPreferences(ProfileManager.getDefault().getActiveProfile());
 
@@ -315,7 +317,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                 }
                 nsLatch.countDown();
             });
-            t.setName("dns.close in ZerConfServiceManager#stopAll");
+            t.setName(DNS_CLOSE_THREAD_NAME);
             t.start();
         });
         try {
@@ -616,4 +618,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         }
 
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ZeroConfServiceManager.class);
+
 }

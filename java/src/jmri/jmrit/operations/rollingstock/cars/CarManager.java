@@ -95,6 +95,10 @@ public class CarManager extends RollingStockManager<Car>
         return getByList(getByLocationList(), BY_RWL);
     }
 
+    public List<Car> getByRouteList() {
+        return getByList(getByLocationList(), BY_ROUTE);
+    }
+
     public List<Car> getByDivisionList() {
         return getByList(getByLocationList(), BY_DIVISION);
     }
@@ -113,7 +117,7 @@ public class CarManager extends RollingStockManager<Car>
     }
 
     public List<Car> getByPickupList() {
-        return getByList(getByIdList(), BY_PICKUP);
+        return getByList(getByDestinationList(), BY_PICKUP);
     }
 
     // The special sort options for cars
@@ -125,7 +129,8 @@ public class CarManager extends RollingStockManager<Car>
     private static final int BY_PICKUP = 35;
     private static final int BY_HAZARD = 36;
     private static final int BY_RWL = 37; // Return When loaded
-    private static final int BY_DIVISION = 38;
+    private static final int BY_ROUTE = 38;
+    private static final int BY_DIVISION = 39;
     
     // the name of the location and track is "split"
     private static final int BY_SPLIT_FINAL_DEST = 40;
@@ -151,6 +156,8 @@ public class CarManager extends RollingStockManager<Car>
             case BY_FINAL_DEST:
                 return (c1, c2) -> (c1.getFinalDestinationName() + c1.getFinalDestinationTrackName())
                         .compareToIgnoreCase(c2.getFinalDestinationName() + c2.getFinalDestinationTrackName());
+            case BY_ROUTE:
+                return (c1, c2) -> (c1.getRoutePath().compareToIgnoreCase(c2.getRoutePath()));
             case BY_DIVISION:
                 return (c1, c2) -> (c1.getDivisionName().compareToIgnoreCase(c2.getDivisionName()));
             case BY_WAIT:
@@ -495,6 +502,43 @@ public class CarManager extends RollingStockManager<Car>
         return false;
     }
     
+    /**
+     * Used to determine if there are clone cars.
+     * 
+     * @return true if there are clone cars, otherwise false.
+     */
+    public boolean isThereClones() {
+        for (Car car : getList()) {
+            if (car.isClone()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    int cloneCreationOrder = 0;
+
+    /**
+     * Returns the highest clone creation order given to a clone.
+     * 
+     * @return 1 if the first clone created, otherwise the highest found plus
+     *         one. Automatically increments.
+     */
+    public int getCloneCreationOrder() {
+        if (cloneCreationOrder == 0) {
+            for (Car car : getList()) {
+                if (car.isClone()) {
+                    String[] number = car.getNumber().split(Car.CLONE_REGEX);
+                    int creationOrder = Integer.parseInt(number[1]);
+                    if (creationOrder > cloneCreationOrder) {
+                        cloneCreationOrder = creationOrder;
+                    }
+                }
+            }
+        }
+        return ++cloneCreationOrder;
+    }
+
     int _commentLength = 0;
     
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",

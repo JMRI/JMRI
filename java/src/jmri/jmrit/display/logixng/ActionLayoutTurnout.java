@@ -281,7 +281,7 @@ public class ActionLayoutTurnout extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryDisplay.DISPLAY;
     }
 
@@ -375,7 +375,7 @@ public class ActionLayoutTurnout extends AbstractDigitalAction
             operation = Operation.valueOf(name);
         }
 
-        ThreadingUtil.runOnLayout(() -> {
+        ThreadingUtil.runOnGUI(() -> {
             switch (operation) {
                 case Disable:
                     layoutTurnout.setDisabled(true);

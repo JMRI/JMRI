@@ -26,9 +26,9 @@ public class TableEditorTest {
         InstanceManager.getDefault(NamedTableManager.class).newInternalTable("IQT1", null, 2, 3);
         TableEditor b = new TableEditor(null, "IQT1");
         Assert.assertNotNull("exists", b);
+        b.finishDone();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

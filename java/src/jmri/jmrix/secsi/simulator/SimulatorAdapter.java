@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members
-    private boolean opened = false;
     private Thread sourceThread;
 
     private boolean outputBufferEmpty = true;

@@ -25,7 +25,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public Programmer getGlobalProgrammer() {
+    protected Programmer getConcreteGlobalProgrammer() {
         return manager.getGlobalProgrammer();
     }
 
@@ -53,7 +53,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if (manager instanceof AddressedProgrammerManager) {
             return new Dcc4PcOpsModeProgrammer(pLongAddress, pAddress, (AddressedProgrammerManager) manager);
         }
@@ -61,7 +61,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if (manager instanceof AddressedProgrammerManager) {
             return ((AddressedProgrammerManager) manager).reserveAddressedProgrammer(pLongAddress, pAddress);
         }
@@ -76,7 +76,7 @@ public class Dcc4PcProgrammerManager extends DefaultProgrammerManager {
     }
 
     @Override
-    public Programmer reserveGlobalProgrammer() {
+    protected Programmer reserveConcreteGlobalProgrammer() {
         return manager.reserveGlobalProgrammer();
     }
 

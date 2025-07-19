@@ -1,8 +1,5 @@
 package jmri.jmrix.acela;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 /**
  * Abstract base for classes representing an Acela communications port
  *
@@ -18,14 +15,6 @@ public abstract class AcelaPortController extends jmri.jmrix.AbstractSerialPortC
     protected AcelaPortController(AcelaSystemConnectionMemo memo) {
         super(memo);
     }
-
-    // returns the InputStream from the port
-    @Override
-    public abstract DataInputStream getInputStream();
-
-    // returns the outputStream to the port
-    @Override
-    public abstract DataOutputStream getOutputStream();
 
     // check that this object is ready to operate
     @Override

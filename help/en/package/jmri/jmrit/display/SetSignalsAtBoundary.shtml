@@ -5,10 +5,10 @@
   <title>JMRI: Set Signals at Block Boundary Help</title>
   <meta name="author" content="Dave Duchamp">
   <meta name="keywords" content="JMRI help Layout Editor Tool">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -94,11 +94,11 @@
       entered by the tool. The Simple Signal Logic dialog can be accessed from the popup menu of
       the signal icon. If your special situation cannot be handled by Simple Signal Logic, you
       should refer to Logix to tailor the signal logic to your needs.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

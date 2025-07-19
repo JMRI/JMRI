@@ -1,9 +1,13 @@
 package jmri.jmrix.openlcb.swing.send;
 
+import java.awt.GraphicsEnvironment;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.jupiter.api.*;
+
 import org.openlcb.EventID;
 
 /**
@@ -18,31 +22,35 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     @Test
     @Override
     public void testInitComponents() {
-        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         // for now, just makes ure there isn't an exception.
         ((OpenLcbCanSendPane)panel).initComponents(memo);
     }
 
     @Test
     public void testInitContext() {
-        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         // for now, just makes ure there isn't an exception.
         panel.initContext(memo);
     }
 
     @Test
     public void testEventId() {
-        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         OpenLcbCanSendPane p = (OpenLcbCanSendPane) panel;
 
-        p.sendEventField.setText("05 01 01 01 14 FF 01 02");
+        p.sendEventField.setText("05.01.01.01.14.FF.01.02");
         EventID expected = new EventID(new byte[]{0x05, 0x01, 0x01, 0x01, 0x14, (byte) 0xff, 0x01, 0x02});
         Assert.assertEquals(expected, p.eventID());
     }
 
     @Test
     public void testEventIdDotted() {
-        org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         OpenLcbCanSendPane p = (OpenLcbCanSendPane) panel;
 
         p.sendEventField.setText("05.01.01.01.14.FF.01.02");
@@ -55,6 +63,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
        // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         JUnitUtil.resetProfileManager();
@@ -71,6 +80,7 @@ public class OpenLcbCanSendPaneTest extends jmri.util.swing.JmriPanelTest {
     @AfterEach
     @Override
     public void tearDown() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if (Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning") == false) {
             memo.dispose();
             memo = null;

@@ -14,7 +14,7 @@
 
 <!-- include for QuadLN_S -->
 <!-- LED Pane header row v1.0 -->
-<group xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<group xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <griditem gridx="0" gridy="NEXT" insets="10,0,0,0">
     </griditem>
     <griditem gridx="0" gridy="NEXT">

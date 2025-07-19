@@ -195,6 +195,15 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return _emptyHidden;
     }
 
+    @Override
+    public void setValueEditDisabled(boolean isDisabled) {
+    }
+
+    @Override
+    public boolean isValueEditDisabled() {
+        return false;
+    }
+
     /**
      * Delayed setDisplayLevel for DnD.
      *

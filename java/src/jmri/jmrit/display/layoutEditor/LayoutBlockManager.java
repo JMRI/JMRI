@@ -11,6 +11,7 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.jmrit.display.EditorManager;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Memory;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -22,6 +23,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.util.ThreadingUtil;
 
 /**
  * Implementation of a Manager to handle LayoutBlocks. Note: the same
@@ -39,9 +41,19 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     public LayoutBlockManager() {
         super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+        InstanceManager.sensorManagerInstance().addVetoableChangeListener(LayoutBlockManager.this);
+        InstanceManager.memoryManagerInstance().addVetoableChangeListener(LayoutBlockManager.this);
     }
+
+    /**
+     * String constant for advanced routing enabled.
+     */
+    public static final String PROPERTY_ADVANCED_ROUTING_ENABLED = "advancedRoutingEnabled";
+
+    /**
+     * String constant for the topology property.
+     */
+    public static final String PROPERTY_TOPOLOGY = "topology";
 
     @Override
     public int getXMLOrder() {
@@ -72,7 +84,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @CheckForNull String systemName,
             String userName) {
         // Check that LayoutBlock does not already exist
-        LayoutBlock result = null;
+        LayoutBlock result;
 
         if ((userName == null) || userName.isEmpty()) {
             log.error("Attempt to create a LayoutBlock with no user name");
@@ -358,9 +370,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         //blocks are connected, get connection item types
-        LayoutTurnout lt = null;
+        LayoutTurnout lt;
         TrackSegment tr = lc.getTrackSegment();
-        int boundaryType = 0;
+        int boundaryType;
 
         if (tr == null) {
             // this is an internal crossover block boundary
@@ -403,8 +415,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
                 case LayoutConnectivity.XOVER_BOUNDARY_BD: {
                     if (facingIsBlock1) {
-                        if (lt.getSignalHead(LayoutTurnout.Geometry.POINTB2) == null) { //there is no signal head for diverging (crossed
-                            //over)
+                        if (lt.getSignalHead(LayoutTurnout.Geometry.POINTB2) == null) {
+                            // there is no signal head for diverging (crossed over)
                             return lt.getSignalHead(LayoutTurnout.Geometry.POINTB1);
                         } else { //there is a diverging (crossed over) signal head, return it
                             return lt.getSignalHead(LayoutTurnout.Geometry.POINTB2);
@@ -1288,7 +1300,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         for (TrackSegment t : panel.getTrackSegments()) {
             if (t.getLayoutBlock() == fLayoutBlock) {
-                PositionablePoint p = null;
+                PositionablePoint p;
 
                 if (t.getType1() == HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
@@ -1357,7 +1369,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
         for (TrackSegment t : panel.getTrackSegments()) {
             if (t.getLayoutBlock() == fLayoutBlock) {
-                PositionablePoint p = null;
+                PositionablePoint p;
 
                 if (t.getType1() == HitPointType.POS_POINT) {
                     p = (PositionablePoint) t.getConnect1();
@@ -1551,7 +1563,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
             return null;
         }
-        LayoutTurnout lt = null;
+        LayoutTurnout lt;
         LayoutTrack connected = lc.getConnectedObject();
 
         TrackSegment tr = lc.getTrackSegment();
@@ -1914,7 +1926,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @Nonnull
     private List<LayoutBlock> getProtectingBlocksByBeanByPanel(
             @CheckForNull NamedBean bean,
-            @CheckForNull LayoutEditor panel) {
+            @Nonnull LayoutEditor panel) {
         List<LayoutBlock> protectingBlocks = new ArrayList<>();
 
         if (!(bean instanceof SignalMast) && !(bean instanceof Sensor)) {
@@ -1924,7 +1936,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         }
 
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
-        TrackSegment tr = null;
+        TrackSegment tr;
         boolean east = true;
 
         if (pp == null) {
@@ -2202,7 +2214,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull NamedBean bean,
             @Nonnull LayoutEditor panel) {
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
-        TrackSegment tr = null;
+        TrackSegment tr;
         boolean east = true;
 
         //Don't think that the logic for this is the right way round
@@ -2495,7 +2507,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (boo && initialized) {
             initializeLayoutBlockRouting();
         }
-        firePropertyChange("advancedRoutingEnabled", !enableAdvancedRouting, enableAdvancedRouting);
+        firePropertyChange(PROPERTY_ADVANCED_ROUTING_ENABLED, !enableAdvancedRouting, enableAdvancedRouting);
     }
 
     private void initializeLayoutBlockRouting() {
@@ -2519,7 +2531,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return lbct;
     }
 
-    LayoutBlockConnectivityTools lbct = new LayoutBlockConnectivityTools();
+    private final LayoutBlockConnectivityTools lbct = new LayoutBlockConnectivityTools();
 
     private long lastRoutingChange;
 
@@ -2530,7 +2542,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         setRoutingStabilised();
     }
 
-    boolean checking = false;
+    private boolean checking = false;
     boolean stabilised = false;
 
     private void setRoutingStabilised() {
@@ -2543,13 +2555,13 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (namedStabilisedIndicator != null) {
             try {
                 namedStabilisedIndicator.getBean().setState(Sensor.INACTIVE);
-            } catch (jmri.JmriException ex) {
+            } catch (JmriException ex) {
                 log.debug("Error setting stability indicator sensor");
             }
         }
         Runnable r = () -> {
             try {
-                firePropertyChange("topology", true, false);
+                firePropertyChange(PROPERTY_TOPOLOGY, true, false);
                 long oldvalue = lastRoutingChange;
 
                 while (!stabilised) {
@@ -2559,15 +2571,15 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                         log.debug("routing table has now been stable for 2 seconds");
                         checking = false;
                         stabilised = true;
-                        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> firePropertyChange("topology", false, true));
+                        ThreadingUtil.runOnLayoutEventually(() -> firePropertyChange(PROPERTY_TOPOLOGY, false, true));
 
                         if (namedStabilisedIndicator != null) {
-                            jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
+                            ThreadingUtil.runOnLayoutEventually(() -> {
                                 log.debug("Setting StabilisedIndicator Sensor {} ACTIVE",
                                         namedStabilisedIndicator.getBean().getDisplayName());
                                 try {
                                     namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
-                                } catch (jmri.JmriException ex) {
+                                } catch (JmriException ex) {
                                     log.debug("Error setting stability indicator sensor");
                                 }
                             });
@@ -2586,11 +2598,9 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 Thread.currentThread().interrupt();
                 checking = false;
 
-                //} catch (jmri.JmriException ex) {
-                //log.debug("Error setting stability indicator sensor");
             }
         };
-        thr = jmri.util.ThreadingUtil.newThread(r, "Routing stabilising timer");
+        thr = ThreadingUtil.newThread(r, "Routing stabilising timer");
         thr.start();
     } //setRoutingStabilised
 
@@ -2605,11 +2615,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * @throws jmri.JmriException if no sensor manager.
      *
      */
-    public void setStabilisedSensor(@Nonnull String pName) throws jmri.JmriException {
+    public void setStabilisedSensor(@Nonnull String pName) throws JmriException {
         if (InstanceManager.getNullableDefault(jmri.SensorManager.class) != null) {
             try {
                 Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-                namedStabilisedIndicator = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(
+                namedStabilisedIndicator = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(
                         pName,
                         sensor);
                 try {
@@ -2618,16 +2628,16 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                     } else {
                         sensor.setState(Sensor.INACTIVE);
                     }
-                } catch (jmri.JmriException ex) {
+                } catch (JmriException ex) {
                     log.error("Error setting stablilty indicator sensor");
                 }
             } catch (IllegalArgumentException ex) {
                 log.error("Sensor '{}' not available", pName);
-                throw new jmri.JmriException("Sensor '" + pName + "' not available");
+                throw new JmriException("Sensor '" + pName + "' not available");
             }
         } else {
             log.error("No SensorManager for this protocol");
-            throw new jmri.JmriException("No Sensor Manager Found");
+            throw new JmriException("No Sensor Manager Found");
         }
     }
 
@@ -2696,7 +2706,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull RosterEntry re) {
         List<LayoutBlock> result = new ArrayList<>();
 
-        BlockManager bm = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
+        BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         List<Block> blockList = bm.getBlocksOccupiedByRosterEntry(re);
         for (Block block : blockList) {
             String uname = block.getUserName();
@@ -2710,6 +2720,13 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return result;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockManager.class);
+    @Override
+    public void dispose(){
+        InstanceManager.sensorManagerInstance().removeVetoableChangeListener(this);
+        InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
+        super.dispose();
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutBlockManager.class);
 
 }

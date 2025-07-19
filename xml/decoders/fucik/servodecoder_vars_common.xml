@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     
     <variable CV="1" item="Short Address" default="200" exclude="1 ServoDecoder v3.4">
         <splitVal highCV="9" upperMask="XXXXXVVV" factor="1" offset="0" />

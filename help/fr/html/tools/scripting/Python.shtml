@@ -5,11 +5,11 @@
   <!-- Updated by Blorec Herv&#233; 2013-09-26-->
 
   <title>JMRI: The Python/Jython language</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -98,9 +98,9 @@ print done
       regardez le num&eacute;ro de la ligne indiqu&eacute;e pour voir si
       votre indentation n'est pas align&eacute;e.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

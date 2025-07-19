@@ -4,11 +4,11 @@
 <!-- Copyright Bob Jacobsen 2008 -->
  <!--Updated et Translated by Herv&#233; Blorec le 2016-06-18 -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -362,9 +362,9 @@ d&#233;codeurs disponibles est construite .</p>
  <p>Pour des informations plus avanc&#233;es sur le contenu des fichiers, svp voir la page
 <a href="CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a>.
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
 </div>  <!-- close #mBody -->
-<script src="/js/main.js"></script>
+<script src="/js/help.js"></script>
 </body>
 </html>

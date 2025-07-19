@@ -54,7 +54,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
     }
 
     public static final ProgrammingMode OPENLCBMODE = new ProgrammingMode("OPENLCBMODE", Bundle.getMessage("OPENLCBMODE"));
-    
+
     /**
      * Gain access to a Addressed Mode Programmer without reservation.
      *
@@ -63,7 +63,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new OlcbProgrammer(system.get(OlcbInterface.class), pLongAddress, pAddress);
     }
 
@@ -76,7 +76,7 @@ public class OlcbProgrammerManager extends jmri.managers.DefaultProgrammerManage
      * @return null if the address is in use by a reserved programmer
      */
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) { return null; }
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) { return null; }
 
     /**
      * Return access to an Addressed Mode Programmer, so that it can be used

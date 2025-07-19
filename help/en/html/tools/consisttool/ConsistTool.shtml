@@ -6,10 +6,10 @@
   <meta name="author" content="Paul Bender">
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -299,7 +299,7 @@
       <p>To recall an existing Consist for inspection, select the appropriate entry from the
       drop-down box next to the current Consist's ID:</p>
       <img src="images/ConsistTool-SelectConsist.png" alt="Select a Consist" height="83" width=
-      "353"> <!--#include virtual="/Footer.shtml" -->
+      "353"> <!--#include virtual="/help/en/parts/Footer.shtml" -->
 
 
       <h2 id="track">Keeping Track of Consists</h2>
@@ -336,6 +336,6 @@
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

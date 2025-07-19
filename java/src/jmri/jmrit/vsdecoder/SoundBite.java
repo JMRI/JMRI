@@ -5,8 +5,6 @@ import jmri.AudioManager;
 import jmri.jmrit.audio.AudioBuffer;
 import jmri.jmrit.audio.AudioSource;
 import jmri.util.PhysicalLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * VSD implementation of an audio sound.
@@ -25,24 +23,23 @@ import org.slf4j.LoggerFactory;
  * for more details.
  *
  * @author Mark Underwood Copyright (C) 2011
+ * @author Klaus Killinger Copyright (C) 2025
  */
 class SoundBite extends VSDSound {
 
-    public static enum BufferMode {
+    private static enum BufferMode {
 
         BOUND_MODE, QUEUE_MODE
     }
 
-    String filename, system_name, user_name;
-    AudioBuffer sound_buf;
-    AudioSource sound_src;
-    boolean initialized = false;
-    boolean looped = false;
-    int minloops;
-    int maxloops;
-    float rd;
-    long length;
-    BufferMode bufferMode;
+    private String filename, system_name, user_name;
+    private AudioBuffer sound_buf;
+    private AudioSource sound_src;
+    private boolean initialized;
+    private float rd;
+    private long length;
+    private BufferMode bufferMode;
+    private VSDFile vsdfile;
 
     // Constructor for QUEUE_MODE.
     public SoundBite(String name) {
@@ -50,17 +47,18 @@ class SoundBite extends VSDSound {
         system_name = name;
         user_name = name;
         bufferMode = BufferMode.QUEUE_MODE;
-        initialized = init(null, bufferMode);
+        initialized = false;
     }
 
     // Constructor for BOUND_MODE.
     public SoundBite(VSDFile vf, String filename, String sname, String uname) {
         super(uname);
+        vsdfile = vf;
         this.filename = filename;
         system_name = sname;
         user_name = uname;
         bufferMode = BufferMode.BOUND_MODE;
-        initialized = init(vf, bufferMode);
+        initialized = false;
     }
 
     public String getFileName() {
@@ -75,33 +73,33 @@ class SoundBite extends VSDSound {
         return user_name;
     }
 
-    public boolean isInitialized() {
-        return initialized;
-    }
-
-    public final boolean init(VSDFile vf, BufferMode mode) {
+    final boolean isInitialized() {
         AudioManager am = jmri.InstanceManager.getDefault(jmri.AudioManager.class);
         if (!initialized) {
             try {
                 sound_src = (AudioSource) am.provideAudio(SrcSysNamePrefix + system_name);
                 sound_src.setUserName(SrcUserNamePrefix + user_name);
                 setLooped(false);
-                if (mode == BufferMode.BOUND_MODE) {
-                    sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix + system_name);
-                    sound_buf.setUserName(BufUserNamePrefix + user_name);
-                    if (vf == null) {
-                        log.debug("No VSD File! Filename: {}", filename);
-                        sound_buf.setURL(filename); // Path must be provided by caller.
-                    } else {
-                        java.io.InputStream ins = vf.getInputStream(filename);
-                        if (ins != null) {
-                            sound_buf.setInputStream(ins);
+                if (bufferMode == BufferMode.BOUND_MODE) {
+                   if (checkForFreeBuffer()) {
+                        sound_buf = (AudioBuffer) am.provideAudio(BufSysNamePrefix + system_name);
+                        sound_buf.setUserName(BufUserNamePrefix + user_name);
+                        if (vsdfile == null) {
+                            log.debug("No VSD File! Filename: {}", filename);
+                            sound_buf.setURL(filename); // Path must be provided by caller.
                         } else {
-                            return false;
+                            java.io.InputStream ins = vsdfile.getInputStream(filename);
+                            if (ins != null) {
+                                sound_buf.setInputStream(ins);
+                            } else {
+                                return false;
+                            }
                         }
+                        sound_src.setAssignedBuffer(sound_buf);
+                        setLength();
+                    } else {
+                        return false;
                     }
-                    sound_src.setAssignedBuffer(sound_buf);
-                    setLength();
                 }
             } catch (AudioException | IllegalArgumentException ex) {
                 log.warn("Problem creating SoundBite", ex);
@@ -170,25 +168,8 @@ class SoundBite extends VSDSound {
         return BufUserNamePrefix + user_name;
     }
 
-    public void setLooped(boolean loop, int minloops, int maxloops) {
-        this.looped = loop;
-        this.minloops = minloops;
-        this.maxloops = maxloops;
-        sound_src.setLooped(looped);
-        sound_src.setMinLoops(minloops);
-        sound_src.setMaxLoops(maxloops);
-    }
-
     public void setLooped(boolean loop) {
-        if (loop) {
-            this.setLooped(true, AudioSource.LOOP_CONTINUOUS, AudioSource.LOOP_CONTINUOUS);
-        } else {
-            this.setLooped(false, AudioSource.LOOP_NONE, AudioSource.LOOP_NONE);
-        }
-    }
-
-    public boolean isLooped() {
-        return looped;
+        sound_src.setLooped(loop);
     }
 
     public int getFadeInTime() {
@@ -290,6 +271,26 @@ class SoundBite extends VSDSound {
         sound_src.setPosition(v);
     }
 
+    /**
+     * Method to attach a source to effects
+     *
+     * @return 0 when failed, 1 when successful
+     */
+    @Override
+    int attachSourcesToEffects() {
+        return sound_src.attachSourcesToEffects();
+    }
+
+    /**
+     * Method to detach a source to effects
+     *
+     * @return 0 when failed, 1 when successful
+     */
+    @Override
+    int detachSourcesToEffects() {
+        return sound_src.detachSourcesToEffects();
+    }
+
     public void setURL(String filename) {
         this.filename = filename;
         sound_buf.setURL(filename); // Path must be provided by caller.
@@ -350,5 +351,5 @@ class SoundBite extends VSDSound {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SoundBite.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SoundBite.class);
 }

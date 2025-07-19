@@ -42,11 +42,13 @@ public class RailComTableDataModelTest extends AbstractBeanTableDataModelBase<Id
     
     @Test
     @Override
+    @Disabled("Test needs further development")
     public void testGetBaseColumnClasses() {
     }
     
     @Test
     @Override
+    @Disabled("Test needs further development")
     public void testGetBaseColumnNames() {
     }
     

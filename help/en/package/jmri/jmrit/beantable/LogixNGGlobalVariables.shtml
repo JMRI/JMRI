@@ -5,10 +5,10 @@
   <title>JMRI: LogixNG Global Variables Table</title>
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="JMRI logixng tables csv table">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../../../../html/tools/logixng/Sidebar.shtml" -->
@@ -174,11 +174,11 @@
       will have the <strong>None</strong> variable type and the initial value will be
       <strong>null</strong>.</p>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

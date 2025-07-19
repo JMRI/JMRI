@@ -6,7 +6,7 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="B. Milhaupt">
   <meta name="keywords" content="JMRI help digitrax downloader">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- center class -->
 
   <style>
@@ -14,7 +14,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -599,10 +599,10 @@
       <p>LocoNet is a registered trademark of Digitrax, Inc.</p>
 
       <p>(This is the package/jmri/jmrix/loconet/downloader/LoaderFrame help page)</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

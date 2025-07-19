@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+		<revision>
+			<revnumber>2</revnumber>
+			<date>2023-12-03</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Add English translations</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Constant Brakedist 2" CV="140" default="128">
+		<decVal max="255"/>
+		<label>Brake Distance, Reduced speed (CV 140)</label>
+		<label xml:lang="de">Bremsweg reduzierte Geschwindigkeit (CV 140)</label>
+		<tooltip>Value 255 corresponds to approx. 11% of the max. maximum speed</tooltip>
+		<tooltip xml:lang="de">Wert 255 entspricht ca. 11% der max. Höchstgeschwindigkeit</tooltip>
+	</variable>
+	<variable item="Constant Brakedist 1" CV="141" default="30">
+		<decVal max="255"/>
+		<label>Brake Distance in cm (CV 141)</label>
+		<label xml:lang="de">Konstanter Bremsweg in cm (CV 141)</label>
+		<label xml:lang="nl">Remafstand</label>
+		<label xml:lang="cs">Brzdná dráha</label>
+		<tooltip>First brake distance (in cm)</tooltip>
+		<tooltip xml:lang="de">Bremweg (in cm)</tooltip>
+		<tooltip xml:lang="nl">Remweg (in cm)</tooltip>
+		<tooltip xml:lang="cs">Brzdná dráha (cm)</tooltip>
+	</variable>
+	<variable item="Constant Brakedist Threshold" CV="142" default="0">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off0.xml"/>
+		<label>Test Function Key (CV 142)</label>
+		<label xml:lang="de">Funktionstaste für Testfunktion (CV 142)</label>
+		<tooltip>(0 - 68) 0 = Off</tooltip>
+		<tooltip xml:lang="de">F1 - F68 / 0 = Aus</tooltip>
+	</variable>
+	<variable item="Constant Brakedist Max" CV="143" default="90">
+		<decVal max="255"/>
+		<label>Calibration High speed (CV 143)</label>
+		<label xml:lang="de">Kalibrierung hohe Geschwindigkeit (CV 143)</label>
+		<tooltip>Calibration for high speed (in cm)</tooltip>
+		<tooltip xml:lang="de">Kalibrierung für hohe Geschwindigkeit (in cm)</tooltip>
+	</variable>
+	<variable item="Constant Brakedist Rest" CV="144" default="10">
+		<decVal max="255"/>
+		<label>Calibration Low speed (CV 144)</label>
+		<label xml:lang="de">Kalibrierung niedrige Geschwindigkeit (CV 144)</label>
+		<tooltip>Calibration for low speed (in cm)</tooltip>
+		<tooltip xml:lang="de">Kalibrierung für niedrige Geschwindigkeit (in cm)</tooltip>
+	</variable>
+	<variable item="Constant Brakedist Trigger" CV="145">
+		<enumVal>
+			<enumChoice choice="Off">
+				<choice>Inactive</choice>
+				<choice xml:lang="it">Non si ferma</choice>
+				<choice xml:lang="cs">Vypnuto</choice>
+				<choice xml:lang="de">Ausgeschaltet</choice>
+				<choice xml:lang="nl">Uitgeschakeld</choice>
+			</enumChoice>
+			<enumChoice choice="ALL" value="15">
+				<choice>All Types</choice>
+				<choice xml:lang="de">Alle Bremstypen</choice>
+				<choice xml:lang="nl">Alle methodes</choice>
+				<choice xml:lang="cs">Všechny typy</choice>
+			</enumChoice>
+			<enumChoice choice="Step 0" value="8">
+				<choice>Speed Step 0</choice>
+				<choice xml:lang="de">Sollfahrstufe 0</choice>
+				<choice xml:lang="nl">Snelheidsstap 0</choice>
+				<choice xml:lang="cs">Krok 0</choice>
+			</enumChoice>
+			<enumChoice choice="ABC" value="1">
+				<choice>ABC Braking</choice>
+				<choice xml:lang="de">ABC  Bremsen</choice>
+				<choice xml:lang="nl">ABC Remmen</choice>
+				<choice xml:lang="cs">ABC brždění</choice>
+			</enumChoice>
+			<enumChoice choice="DC" value="2">
+				<choice>DC Braking</choice>
+				<choice xml:lang="de">DC Bremsen</choice>
+				<choice xml:lang="nl">DC Remmen</choice>
+				<choice xml:lang="cs">DC brždění</choice>
+			</enumChoice>
+			<enumChoice choice="DCC" value="4">
+				<choice>DCC Brake Signal</choice>
+				<choice xml:lang="de">DCC Bremssignal</choice>
+				<choice xml:lang="nl">DCC Remsignaal</choice>
+				<choice xml:lang="cs">DCC brzdící signál</choice>
+			</enumChoice>
+			<enumChoice choice="Step 0 ABC" value="9">
+				<choice>Step 0 and ABC Braking</choice>
+				<choice xml:lang="de">Stufe 0 u. ABC Bremsen</choice>
+				<choice xml:lang="nl">Stap 0 en ABC Remmen</choice>
+				<choice xml:lang="cs">Krok 0 ABC brždění</choice>
+			</enumChoice>
+			<enumChoice choice="Step 0 DC" value="10">
+				<choice>Step 0 and DC Braking</choice>
+				<choice xml:lang="de">Stufe 0 u. DC Bremsen</choice>
+				<choice xml:lang="nl">Stap 0 en DC Remmen</choice>
+				<choice xml:lang="cs">Krok 0 DC brždění</choice>
+			</enumChoice>
+			<enumChoice choice="Step 0 DCC" value="12">
+				<choice>Step 0 and DCC Braking</choice>
+				<choice xml:lang="de">Stufe 0 u. DCC Bremsen</choice>
+				<choice xml:lang="nl">Stap 0 en DCC Remmen</choice>
+				<choice xml:lang="cs">Krok 0 a DCC brždění</choice>
+			</enumChoice>
+			<enumChoice choice="Step 0 ABC DC" value="11">
+				<choice>Step 0, ABC and DC Braking</choice>
+				<choice xml:lang="de">Stufe 0, ABC u. DC Bremsen</choice>
+				<choice xml:lang="nl">Stap 0, ABC en DC Remmen</choice>
+				<choice xml:lang="cs">Krok 0, ABC a DC brždění</choice>
+			</enumChoice>
+			<enumChoice choice="Step 0 ABC DCC" value="13">
+				<choice>Step 0, ABC and DCC Braking</choice>
+				<choice xml:lang="de">Stufe 0, ABC u. DCC Bremsen</choice>
+				<choice xml:lang="nl">Stap 0, ABC en DCC Remmen</choice>
+				<choice xml:lang="cs">Krok 0, ABC a DCC brždění</choice>
+			</enumChoice>
+			<enumChoice choice="ABC DC" value="3">
+				<choice>ABC and DC Braking</choice>
+				<choice xml:lang="de">ABC u. DC Bremsen</choice>
+				<choice xml:lang="nl">ABC en DC Remmen</choice>
+				<choice xml:lang="cs">ABC a DC brždění</choice>
+			</enumChoice>
+			<enumChoice choice="ABC DCC" value="5">
+				<choice>ABC and DCC Braking Signal</choice>
+				<choice xml:lang="de">ABC u. DCC Bremssignal</choice>
+				<choice xml:lang="nl">ABC en DCC Remsignal</choice>
+				<choice xml:lang="cs">ABC a DCC brzdící signál</choice>
+			</enumChoice>
+			<enumChoice choice="DC DCC" value="6">
+				<choice>DC and DCC Braking Signal</choice>
+				<choice xml:lang="de">DC u. DCC Bremssignal</choice>
+				<choice xml:lang="nl">DC en DCC Remsignal</choice>
+				<choice xml:lang="cs">DC a DCC brzdící signál</choice>
+			</enumChoice>
+			<enumChoice choice="ABC DC DCC" value="7">
+				<choice>ABC, DC and DCC Braking</choice>
+				<choice xml:lang="de">ABC, DC u. DCC Bremsen</choice>
+				<choice xml:lang="nl">ABC, DC en DCC Remmen</choice>
+				<choice xml:lang="cs">ABC, DC a DCC brzdící signál</choice>
+			</enumChoice>
+		</enumVal>
+		<label>Constant Braking Trigger (CV 145)</label>
+		<label xml:lang="de">Aktivierung durch (CV 145)</label>
+		<label xml:lang="nl">Geactiveerd door</label>
+		<label xml:lang="cs">Spouštěč konstantního brždění</label>
+		<tooltip>Select which (combination of) methods activates CB</tooltip>
+		<tooltip xml:lang="de">Welche Bremstypen aktivieren Konstanter Bremweg? (0=AUS)</tooltip>
+		<tooltip xml:lang="nl">Welke remmethoden activeren constante Remweg?</tooltip>
+		<tooltip xml:lang="cs">Vyberte která (nebo kombinace) metoda aktivuje konstantní brždění</tooltip>
+	</variable>
+</variables>

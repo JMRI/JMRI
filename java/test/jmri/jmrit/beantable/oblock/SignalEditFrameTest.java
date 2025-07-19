@@ -4,31 +4,30 @@ import jmri.implementation.VirtualSignalMast;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 import jmri.util.JUnitUtil;
-import org.junit.jupiter.api.*;
 
-import java.awt.*;
+import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Egbert Broerse Copyright (C) 2020
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SignalEditFrameTest {
 
     @Test
     public void testCTor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         SignalEditFrame sef = new SignalEditFrame(
                 "Edit Signal-1",
                 null,
                 null,
                 null);
         Assertions.assertNotNull(sef, "New SEF exists");
+        JUnitUtil.dispose(sef);
     }
 
     @Test
     public void testCTorSignal() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalMast m = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)", "mast1");
         TableFrames tf = new TableFrames();
         SignalTableModel model = new SignalTableModel(tf);
@@ -38,7 +37,9 @@ public class SignalEditFrameTest {
         SignalTableModel.SignalRow sr = new SignalTableModel.SignalRow(m, b1, p1, b2, 0.0f, false);
 
         SignalEditFrame sef = new SignalEditFrame("Edit mast1", m, sr, model);
+        sef.initComponents();
         Assertions.assertNotNull(sef, "Mast SEF exists");
+        JUnitUtil.dispose(sef);
     }
 
     @BeforeEach

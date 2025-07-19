@@ -45,6 +45,8 @@
   <!-- v2.2,  added MX660 decoder, 23 Nov 2022 -->
   <version author="Ronald Kuhn   ronald@wirkuhns.de" version="2.2.1" lastUpdated="2022/12/16"/>
   <!-- v2.2.1,  change CV7 default from 39 to 40,  Ronald Kuhn, 16 Dec 2022 -->
+  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="2.3" lastUpdated="2024/04/05"/>
+  <!-- v2.3,  added new level CVs-->
   
 
   <decoder>
@@ -686,6 +688,7 @@
       <!-- CV158 has both sound and Railcom information -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV190-CV191.xml"/>
      <!-- CV7 set to default 39 to allow Swiss Mapping Groups 11 to 17 if creating a brand new decoder from scratch -->
       <variable CV="7" item="Decoder Version" readOnly="yes" default="40">
         <decVal/>
@@ -701,11 +704,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="189" readOnly="yes" include="189">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="190" readOnly="yes" include="190">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="190" readOnly="yes" include="190">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="221" readOnly="yes" include="221">
         <decVal/>
@@ -713,11 +722,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="221" readOnly="yes" include="221">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="222" readOnly="yes" include="222">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="222" readOnly="yes" include="222">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="225" readOnly="yes" include="225">
         <decVal/>
@@ -725,11 +740,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="225" readOnly="yes" include="225">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="246" readOnly="yes" include="246">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="246" readOnly="yes" include="246">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 1" CV="250" default="249" readOnly="yes" include="249">
         <decVal/>
@@ -737,11 +758,17 @@
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
       </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="249" readOnly="yes" include="249">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
+      </variable>
       <variable item="Decoder ID 1" CV="250" default="253" readOnly="yes" include="253">
         <decVal/>
         <label>Decoder ID 1</label>
         <label xml:lang="it">ID 1 Decoder: </label>
         <label xml:lang="cs">Dekodér ID 1</label>
+      </variable>
+      <variable item="Decoder ID 1 Text" CV="250" default="253" readOnly="yes" include="253">
+        <xi:include href="http://jmri.org/xml/decoders/zimo/CV250_ProductID_enum.xml"/>
       </variable>
       <variable item="Decoder ID 2" CV="251" readOnly="yes">
         <decVal/>
@@ -779,6 +806,7 @@
       <!-- Begin constant stopping distance variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV830-CV833.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV835.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV850-CV861_v40.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version37.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version39.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CVs_version40.xml"/>
@@ -791,6 +819,7 @@
     <!--   End additional extraMemu elements - Jacobsen / Cliffe,   Feb 2022  -->
 
   </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSecondEffectLevel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneConsist.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>

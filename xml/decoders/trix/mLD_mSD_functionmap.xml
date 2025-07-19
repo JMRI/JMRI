@@ -18,7 +18,7 @@
 <!--       NO NEED TO TRANSLATE the following, as it generally only appears -->
 <!-- 			 in the function map selection pane.															-->
 
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2018</year>
     <holder>JMRI</holder>
@@ -105,51 +105,51 @@
     <label>FL(f) controls output Sound4</label>
   </variable>
   <variable item="FL(f) controls output Sound5" CV="259" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound5</label>
   </variable>
   <variable item="FL(f) controls output Sound6" CV="259" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound6</label>
   </variable>
   <variable item="FL(f) controls output Sound7" CV="259" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound7</label>
   </variable>
   <variable item="FL(f) controls output Sound8" CV="259" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound8</label>
   </variable>
   <variable item="FL(f) controls output Sound9" CV="259" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound9</label>
   </variable>
   <variable item="FL(f) controls output Sound10" CV="259" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound10</label>
   </variable>
   <variable item="FL(f) controls output Sound11" CV="259" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound11</label>
   </variable>
   <variable item="FL(f) controls output Sound12" CV="259" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound12</label>
   </variable>
   <variable item="FL(f) controls output Sound13" CV="260" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound13</label>
   </variable>
   <variable item="FL(f) controls output Sound14" CV="260" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound14</label>
   </variable>
   <variable item="FL(f) controls output Sound15" CV="260" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound15</label>
   </variable>
   <variable item="FL(f) controls output Sound16" CV="260" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(f) controls output Sound16</label>
   </variable>
   <variable item="FL(r) controls output 1" CV="357" mask="XXXXXXXV" minOut="1">
@@ -217,51 +217,51 @@
     <label>FL(r) controls output Sound4</label>
   </variable>
   <variable item="FL(r) controls output Sound5" CV="359" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound5</label>
   </variable>
   <variable item="FL(r) controls output Sound6" CV="359" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound6</label>
   </variable>
   <variable item="FL(r) controls output Sound7" CV="359" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound7</label>
   </variable>
   <variable item="FL(r) controls output Sound8" CV="359" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound8</label>
   </variable>
   <variable item="FL(r) controls output Sound9" CV="359" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound9</label>
   </variable>
   <variable item="FL(r) controls output Sound10" CV="359" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound10</label>
   </variable>
   <variable item="FL(r) controls output Sound11" CV="359" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound11</label>
   </variable>
   <variable item="FL(r) controls output Sound12" CV="359" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound12</label>
   </variable>
   <variable item="FL(r) controls output Sound13" CV="360" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound13</label>
   </variable>
   <variable item="FL(r) controls output Sound14" CV="360" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound14</label>
   </variable>
   <variable item="FL(r) controls output Sound15" CV="360" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound15</label>
   </variable>
   <variable item="FL(r) controls output Sound16" CV="360" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>FL(r) controls output Sound16</label>
   </variable>
 
@@ -330,51 +330,51 @@
     <label>F1(f) controls output Sound4</label>
   </variable>
   <variable item="F1(f) controls output Sound5" CV="264" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound5</label>
   </variable>
   <variable item="F1(f) controls output Sound6" CV="264" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound6</label>
   </variable>
   <variable item="F1(f) controls output Sound7" CV="264" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound7</label>
   </variable>
   <variable item="F1(f) controls output Sound8" CV="264" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound8</label>
   </variable>
   <variable item="F1(f) controls output Sound9" CV="264" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound9</label>
   </variable>
   <variable item="F1(f) controls output Sound10" CV="264" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound10</label>
   </variable>
   <variable item="F1(f) controls output Sound11" CV="264" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound11</label>
   </variable>
   <variable item="F1(f) controls output Sound12" CV="264" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound12</label>
   </variable>
   <variable item="F1(f) controls output Sound13" CV="265" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound13</label>
   </variable>
   <variable item="F1(f) controls output Sound14" CV="265" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound14</label>
   </variable>
   <variable item="F1(f) controls output Sound15" CV="265" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound15</label>
   </variable>
   <variable item="F1(f) controls output Sound16" CV="265" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(f) controls output Sound16</label>
   </variable>
   <variable item="F1(r) controls output 1" CV="362" mask="XXXXXXXV" minOut="1">
@@ -442,51 +442,51 @@
     <label>F1(r) controls output Sound4</label>
   </variable>
   <variable item="F1(r) controls output Sound5" CV="364" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound5</label>
   </variable>
   <variable item="F1(r) controls output Sound6" CV="364" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound6</label>
   </variable>
   <variable item="F1(r) controls output Sound7" CV="364" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound7</label>
   </variable>
   <variable item="F1(r) controls output Sound8" CV="364" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound8</label>
   </variable>
   <variable item="F1(r) controls output Sound9" CV="364" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound9</label>
   </variable>
   <variable item="F1(r) controls output Sound10" CV="364" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound10</label>
   </variable>
   <variable item="F1(r) controls output Sound11" CV="364" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound11</label>
   </variable>
   <variable item="F1(r) controls output Sound12" CV="364" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound12</label>
   </variable>
   <variable item="F1(r) controls output Sound13" CV="365" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound13</label>
   </variable>
   <variable item="F1(r) controls output Sound14" CV="365" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound14</label>
   </variable>
   <variable item="F1(r) controls output Sound15" CV="365" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound15</label>
   </variable>
   <variable item="F1(r) controls output Sound16" CV="365" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F1(r) controls output Sound16</label>
   </variable>
 
@@ -555,51 +555,51 @@
     <label>F2(f) controls output Sound4</label>
   </variable>
   <variable item="F2(f) controls output Sound5" CV="269" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound5</label>
   </variable>
   <variable item="F2(f) controls output Sound6" CV="269" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound6</label>
   </variable>
   <variable item="F2(f) controls output Sound7" CV="269" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound7</label>
   </variable>
   <variable item="F2(f) controls output Sound8" CV="269" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound8</label>
   </variable>
   <variable item="F2(f) controls output Sound9" CV="269" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound9</label>
   </variable>
   <variable item="F2(f) controls output Sound10" CV="269" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound10</label>
   </variable>
   <variable item="F2(f) controls output Sound11" CV="269" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound11</label>
   </variable>
   <variable item="F2(f) controls output Sound12" CV="269" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound12</label>
   </variable>
   <variable item="F2(f) controls output Sound13" CV="270" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound13</label>
   </variable>
   <variable item="F2(f) controls output Sound14" CV="270" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound14</label>
   </variable>
   <variable item="F2(f) controls output Sound15" CV="270" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound15</label>
   </variable>
   <variable item="F2(f) controls output Sound16" CV="270" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(f) controls output Sound16</label>
   </variable>
   <variable item="F2(r) controls output 1" CV="367" mask="XXXXXXXV" minOut="1">
@@ -667,51 +667,51 @@
     <label>F2(r) controls output Sound4</label>
   </variable>
   <variable item="F2(r) controls output Sound5" CV="369" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound5</label>
   </variable>
   <variable item="F2(r) controls output Sound6" CV="369" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound6</label>
   </variable>
   <variable item="F2(r) controls output Sound7" CV="369" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound7</label>
   </variable>
   <variable item="F2(r) controls output Sound8" CV="369" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound8</label>
   </variable>
   <variable item="F2(r) controls output Sound9" CV="369" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound9</label>
   </variable>
   <variable item="F2(r) controls output Sound10" CV="369" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound10</label>
   </variable>
   <variable item="F2(r) controls output Sound11" CV="369" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound11</label>
   </variable>
   <variable item="F2(r) controls output Sound12" CV="369" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound12</label>
   </variable>
   <variable item="F2(r) controls output Sound13" CV="370" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound13</label>
   </variable>
   <variable item="F2(r) controls output Sound14" CV="370" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound14</label>
   </variable>
   <variable item="F2(r) controls output Sound15" CV="370" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound15</label>
   </variable>
   <variable item="F2(r) controls output Sound16" CV="370" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F2(r) controls output Sound16</label>
   </variable>
 
@@ -780,51 +780,51 @@
     <label>F3(f) controls output Sound4</label>
   </variable>
   <variable item="F3(f) controls output Sound5" CV="274" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound5</label>
   </variable>
   <variable item="F3(f) controls output Sound6" CV="274" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound6</label>
   </variable>
   <variable item="F3(f) controls output Sound7" CV="274" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound7</label>
   </variable>
   <variable item="F3(f) controls output Sound8" CV="274" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound8</label>
   </variable>
   <variable item="F3(f) controls output Sound9" CV="274" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound9</label>
   </variable>
   <variable item="F3(f) controls output Sound10" CV="274" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound10</label>
   </variable>
   <variable item="F3(f) controls output Sound11" CV="274" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound11</label>
   </variable>
   <variable item="F3(f) controls output Sound12" CV="274" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound12</label>
   </variable>
   <variable item="F3(f) controls output Sound13" CV="275" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound13</label>
   </variable>
   <variable item="F3(f) controls output Sound14" CV="275" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound14</label>
   </variable>
   <variable item="F3(f) controls output Sound15" CV="275" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound15</label>
   </variable>
   <variable item="F3(f) controls output Sound16" CV="275" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(f) controls output Sound16</label>
   </variable>
   <variable item="F3(r) controls output 1" CV="372" mask="XXXXXXXV" minOut="1">
@@ -892,51 +892,51 @@
     <label>F3(r) controls output Sound4</label>
   </variable>
   <variable item="F3(r) controls output Sound5" CV="374" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound5</label>
   </variable>
   <variable item="F3(r) controls output Sound6" CV="374" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound6</label>
   </variable>
   <variable item="F3(r) controls output Sound7" CV="374" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound7</label>
   </variable>
   <variable item="F3(r) controls output Sound8" CV="374" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound8</label>
   </variable>
   <variable item="F3(r) controls output Sound9" CV="374" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound9</label>
   </variable>
   <variable item="F3(r) controls output Sound10" CV="374" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound10</label>
   </variable>
   <variable item="F3(r) controls output Sound11" CV="374" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound11</label>
   </variable>
   <variable item="F3(r) controls output Sound12" CV="374" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound12</label>
   </variable>
   <variable item="F3(r) controls output Sound13" CV="375" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound13</label>
   </variable>
   <variable item="F3(r) controls output Sound14" CV="375" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound14</label>
   </variable>
   <variable item="F3(r) controls output Sound15" CV="375" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound15</label>
   </variable>
   <variable item="F3(r) controls output Sound16" CV="375" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F3(r) controls output Sound16</label>
   </variable>
 
@@ -1005,51 +1005,51 @@
     <label>F4(f) controls output Sound4</label>
   </variable>
   <variable item="F4(f) controls output Sound5" CV="279" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound5</label>
   </variable>
   <variable item="F4(f) controls output Sound6" CV="279" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound6</label>
   </variable>
   <variable item="F4(f) controls output Sound7" CV="279" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound7</label>
   </variable>
   <variable item="F4(f) controls output Sound8" CV="279" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound8</label>
   </variable>
   <variable item="F4(f) controls output Sound9" CV="279" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound9</label>
   </variable>
   <variable item="F4(f) controls output Sound10" CV="279" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound10</label>
   </variable>
   <variable item="F4(f) controls output Sound11" CV="279" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound11</label>
   </variable>
   <variable item="F4(f) controls output Sound12" CV="279" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound12</label>
   </variable>
   <variable item="F4(f) controls output Sound13" CV="280" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound13</label>
   </variable>
   <variable item="F4(f) controls output Sound14" CV="280" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound14</label>
   </variable>
   <variable item="F4(f) controls output Sound15" CV="280" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound15</label>
   </variable>
   <variable item="F4(f) controls output Sound16" CV="280" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(f) controls output Sound16</label>
   </variable>
   <variable item="F4(r) controls output 1" CV="377" mask="XXXXXXXV" minOut="1">
@@ -1117,51 +1117,51 @@
     <label>F4(r) controls output Sound4</label>
   </variable>
   <variable item="F4(r) controls output Sound5" CV="379" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound5</label>
   </variable>
   <variable item="F4(r) controls output Sound6" CV="379" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound6</label>
   </variable>
   <variable item="F4(r) controls output Sound7" CV="379" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound7</label>
   </variable>
   <variable item="F4(r) controls output Sound8" CV="379" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound8</label>
   </variable>
   <variable item="F4(r) controls output Sound9" CV="379" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound9</label>
   </variable>
   <variable item="F4(r) controls output Sound10" CV="379" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound10</label>
   </variable>
   <variable item="F4(r) controls output Sound11" CV="379" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound11</label>
   </variable>
   <variable item="F4(r) controls output Sound12" CV="379" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound12</label>
   </variable>
   <variable item="F4(r) controls output Sound13" CV="380" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound13</label>
   </variable>
   <variable item="F4(r) controls output Sound14" CV="380" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound14</label>
   </variable>
   <variable item="F4(r) controls output Sound15" CV="380" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound15</label>
   </variable>
   <variable item="F4(r) controls output Sound16" CV="380" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F4(r) controls output Sound16</label>
   </variable>
 
@@ -1230,51 +1230,51 @@
     <label>F5(f) controls output Sound4</label>
   </variable>
   <variable item="F5(f) controls output Sound5" CV="284" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound5</label>
   </variable>
   <variable item="F5(f) controls output Sound6" CV="284" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound6</label>
   </variable>
   <variable item="F5(f) controls output Sound7" CV="284" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound7</label>
   </variable>
   <variable item="F5(f) controls output Sound8" CV="284" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound8</label>
   </variable>
   <variable item="F5(f) controls output Sound9" CV="284" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound9</label>
   </variable>
   <variable item="F5(f) controls output Sound10" CV="284" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound10</label>
   </variable>
   <variable item="F5(f) controls output Sound11" CV="284" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound11</label>
   </variable>
   <variable item="F5(f) controls output Sound12" CV="284" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound12</label>
   </variable>
   <variable item="F5(f) controls output Sound13" CV="285" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound13</label>
   </variable>
   <variable item="F5(f) controls output Sound14" CV="285" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound14</label>
   </variable>
   <variable item="F5(f) controls output Sound15" CV="285" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound15</label>
   </variable>
   <variable item="F5(f) controls output Sound16" CV="285" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(f) controls output Sound16</label>
   </variable>
   <variable item="F5(r) controls output 1" CV="382" mask="XXXXXXXV" minOut="1">
@@ -1342,51 +1342,51 @@
     <label>F5(r) controls output Sound4</label>
   </variable>
   <variable item="F5(r) controls output Sound5" CV="384" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound5</label>
   </variable>
   <variable item="F5(r) controls output Sound6" CV="384" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound6</label>
   </variable>
   <variable item="F5(r) controls output Sound7" CV="384" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound7</label>
   </variable>
   <variable item="F5(r) controls output Sound8" CV="384" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound8</label>
   </variable>
   <variable item="F5(r) controls output Sound9" CV="384" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound9</label>
   </variable>
   <variable item="F5(r) controls output Sound10" CV="384" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound10</label>
   </variable>
   <variable item="F5(r) controls output Sound11" CV="384" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound11</label>
   </variable>
   <variable item="F5(r) controls output Sound12" CV="384" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound12</label>
   </variable>
   <variable item="F5(r) controls output Sound13" CV="385" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound13</label>
   </variable>
   <variable item="F5(r) controls output Sound14" CV="385" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound14</label>
   </variable>
   <variable item="F5(r) controls output Sound15" CV="385" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound15</label>
   </variable>
   <variable item="F5(r) controls output Sound16" CV="385" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F5(r) controls output Sound16</label>
   </variable>
 
@@ -1455,51 +1455,51 @@
     <label>F6(f) controls output Sound4</label>
   </variable>
   <variable item="F6(f) controls output Sound5" CV="289" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound5</label>
   </variable>
   <variable item="F6(f) controls output Sound6" CV="289" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound6</label>
   </variable>
   <variable item="F6(f) controls output Sound7" CV="289" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound7</label>
   </variable>
   <variable item="F6(f) controls output Sound8" CV="289" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound8</label>
   </variable>
   <variable item="F6(f) controls output Sound9" CV="289" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound9</label>
   </variable>
   <variable item="F6(f) controls output Sound10" CV="289" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound10</label>
   </variable>
   <variable item="F6(f) controls output Sound11" CV="289" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound11</label>
   </variable>
   <variable item="F6(f) controls output Sound12" CV="289" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound12</label>
   </variable>
   <variable item="F6(f) controls output Sound13" CV="290" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound13</label>
   </variable>
   <variable item="F6(f) controls output Sound14" CV="290" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound14</label>
   </variable>
   <variable item="F6(f) controls output Sound15" CV="290" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound15</label>
   </variable>
   <variable item="F6(f) controls output Sound16" CV="290" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(f) controls output Sound16</label>
   </variable>
   <variable item="F6(r) controls output 1" CV="387" mask="XXXXXXXV" minOut="1">
@@ -1567,51 +1567,51 @@
     <label>F6(r) controls output Sound4</label>
   </variable>
   <variable item="F6(r) controls output Sound5" CV="389" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound5</label>
   </variable>
   <variable item="F6(r) controls output Sound6" CV="389" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound6</label>
   </variable>
   <variable item="F6(r) controls output Sound7" CV="389" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound7</label>
   </variable>
   <variable item="F6(r) controls output Sound8" CV="389" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound8</label>
   </variable>
   <variable item="F6(r) controls output Sound9" CV="389" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound9</label>
   </variable>
   <variable item="F6(r) controls output Sound10" CV="389" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound10</label>
   </variable>
   <variable item="F6(r) controls output Sound11" CV="389" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound11</label>
   </variable>
   <variable item="F6(r) controls output Sound12" CV="389" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound12</label>
   </variable>
   <variable item="F6(r) controls output Sound13" CV="390" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound13</label>
   </variable>
   <variable item="F6(r) controls output Sound14" CV="390" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound14</label>
   </variable>
   <variable item="F6(r) controls output Sound15" CV="390" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound15</label>
   </variable>
   <variable item="F6(r) controls output Sound16" CV="390" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F6(r) controls output Sound16</label>
   </variable>
 
@@ -1680,51 +1680,51 @@
     <label>F7(f) controls output Sound4</label>
   </variable>
   <variable item="F7(f) controls output Sound5" CV="294" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound5</label>
   </variable>
   <variable item="F7(f) controls output Sound6" CV="294" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound6</label>
   </variable>
   <variable item="F7(f) controls output Sound7" CV="294" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound7</label>
   </variable>
   <variable item="F7(f) controls output Sound8" CV="294" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound8</label>
   </variable>
   <variable item="F7(f) controls output Sound9" CV="294" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound9</label>
   </variable>
   <variable item="F7(f) controls output Sound10" CV="294" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound10</label>
   </variable>
   <variable item="F7(f) controls output Sound11" CV="294" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound11</label>
   </variable>
   <variable item="F7(f) controls output Sound12" CV="294" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound12</label>
   </variable>
   <variable item="F7(f) controls output Sound13" CV="295" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound13</label>
   </variable>
   <variable item="F7(f) controls output Sound14" CV="295" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound14</label>
   </variable>
   <variable item="F7(f) controls output Sound15" CV="295" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound15</label>
   </variable>
   <variable item="F7(f) controls output Sound16" CV="295" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(f) controls output Sound16</label>
   </variable>
   <variable item="F7(r) controls output 1" CV="392" mask="XXXXXXXV" minOut="1">
@@ -1792,51 +1792,51 @@
     <label>F7(r) controls output Sound4</label>
   </variable>
   <variable item="F7(r) controls output Sound5" CV="394" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound5</label>
   </variable>
   <variable item="F7(r) controls output Sound6" CV="394" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound6</label>
   </variable>
   <variable item="F7(r) controls output Sound7" CV="394" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound7</label>
   </variable>
   <variable item="F7(r) controls output Sound8" CV="394" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound8</label>
   </variable>
   <variable item="F7(r) controls output Sound9" CV="394" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound9</label>
   </variable>
   <variable item="F7(r) controls output Sound10" CV="394" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound10</label>
   </variable>
   <variable item="F7(r) controls output Sound11" CV="394" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound11</label>
   </variable>
   <variable item="F7(r) controls output Sound12" CV="394" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound12</label>
   </variable>
   <variable item="F7(r) controls output Sound13" CV="395" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound13</label>
   </variable>
   <variable item="F7(r) controls output Sound14" CV="395" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound14</label>
   </variable>
   <variable item="F7(r) controls output Sound15" CV="395" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound15</label>
   </variable>
   <variable item="F7(r) controls output Sound16" CV="395" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F7(r) controls output Sound16</label>
   </variable>
 
@@ -1905,51 +1905,51 @@
     <label>F8(f) controls output Sound4</label>
   </variable>
   <variable item="F8(f) controls output Sound5" CV="299" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound5</label>
   </variable>
   <variable item="F8(f) controls output Sound6" CV="299" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound6</label>
   </variable>
   <variable item="F8(f) controls output Sound7" CV="299" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound7</label>
   </variable>
   <variable item="F8(f) controls output Sound8" CV="299" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound8</label>
   </variable>
   <variable item="F8(f) controls output Sound9" CV="299" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound9</label>
   </variable>
   <variable item="F8(f) controls output Sound10" CV="299" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound10</label>
   </variable>
   <variable item="F8(f) controls output Sound11" CV="299" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound11</label>
   </variable>
   <variable item="F8(f) controls output Sound12" CV="299" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound12</label>
   </variable>
   <variable item="F8(f) controls output Sound13" CV="300" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound13</label>
   </variable>
   <variable item="F8(f) controls output Sound14" CV="300" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound14</label>
   </variable>
   <variable item="F8(f) controls output Sound15" CV="300" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound15</label>
   </variable>
   <variable item="F8(f) controls output Sound16" CV="300" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(f) controls output Sound16</label>
   </variable>
   <variable item="F8(r) controls output 1" CV="397" mask="XXXXXXXV" minOut="1">
@@ -2017,51 +2017,51 @@
     <label>F8(r) controls output Sound4</label>
   </variable>
   <variable item="F8(r) controls output Sound5" CV="399" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound5</label>
   </variable>
   <variable item="F8(r) controls output Sound6" CV="399" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound6</label>
   </variable>
   <variable item="F8(r) controls output Sound7" CV="399" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound7</label>
   </variable>
   <variable item="F8(r) controls output Sound8" CV="399" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound8</label>
   </variable>
   <variable item="F8(r) controls output Sound9" CV="399" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound9</label>
   </variable>
   <variable item="F8(r) controls output Sound10" CV="399" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound10</label>
   </variable>
   <variable item="F8(r) controls output Sound11" CV="399" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound11</label>
   </variable>
   <variable item="F8(r) controls output Sound12" CV="399" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound12</label>
   </variable>
   <variable item="F8(r) controls output Sound13" CV="400" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound13</label>
   </variable>
   <variable item="F8(r) controls output Sound14" CV="400" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound14</label>
   </variable>
   <variable item="F8(r) controls output Sound15" CV="400" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound15</label>
   </variable>
   <variable item="F8(r) controls output Sound16" CV="400" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F8(r) controls output Sound16</label>
   </variable>
 
@@ -2130,51 +2130,51 @@
     <label>F9(f) controls output Sound4</label>
   </variable>
   <variable item="F9(f) controls output Sound5" CV="304" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound5</label>
   </variable>
   <variable item="F9(f) controls output Sound6" CV="304" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound6</label>
   </variable>
   <variable item="F9(f) controls output Sound7" CV="304" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound7</label>
   </variable>
   <variable item="F9(f) controls output Sound8" CV="304" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound8</label>
   </variable>
   <variable item="F9(f) controls output Sound9" CV="304" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound9</label>
   </variable>
   <variable item="F9(f) controls output Sound10" CV="304" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound10</label>
   </variable>
   <variable item="F9(f) controls output Sound11" CV="304" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound11</label>
   </variable>
   <variable item="F9(f) controls output Sound12" CV="304" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound12</label>
   </variable>
   <variable item="F9(f) controls output Sound13" CV="305" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound13</label>
   </variable>
   <variable item="F9(f) controls output Sound14" CV="305" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound14</label>
   </variable>
   <variable item="F9(f) controls output Sound15" CV="305" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound15</label>
   </variable>
   <variable item="F9(f) controls output Sound16" CV="305" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(f) controls output Sound16</label>
   </variable>
   <variable item="F9(r) controls output 1" CV="402" mask="XXXXXXXV" minOut="1">
@@ -2242,51 +2242,51 @@
     <label>F9(r) controls output Sound4</label>
   </variable>
   <variable item="F9(r) controls output Sound5" CV="404" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound5</label>
   </variable>
   <variable item="F9(r) controls output Sound6" CV="404" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound6</label>
   </variable>
   <variable item="F9(r) controls output Sound7" CV="404" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound7</label>
   </variable>
   <variable item="F9(r) controls output Sound8" CV="404" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound8</label>
   </variable>
   <variable item="F9(r) controls output Sound9" CV="404" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound9</label>
   </variable>
   <variable item="F9(r) controls output Sound10" CV="404" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound10</label>
   </variable>
   <variable item="F9(r) controls output Sound11" CV="404" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound11</label>
   </variable>
   <variable item="F9(r) controls output Sound12" CV="404" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound12</label>
   </variable>
   <variable item="F9(r) controls output Sound13" CV="405" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound13</label>
   </variable>
   <variable item="F9(r) controls output Sound14" CV="405" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound14</label>
   </variable>
   <variable item="F9(r) controls output Sound15" CV="405" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound15</label>
   </variable>
   <variable item="F9(r) controls output Sound16" CV="405" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F9(r) controls output Sound16</label>
   </variable>
 
@@ -2355,51 +2355,51 @@
     <label>F10(f) controls output Sound4</label>
   </variable>
   <variable item="F10(f) controls output Sound5" CV="309" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound5</label>
   </variable>
   <variable item="F10(f) controls output Sound6" CV="309" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound6</label>
   </variable>
   <variable item="F10(f) controls output Sound7" CV="309" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound7</label>
   </variable>
   <variable item="F10(f) controls output Sound8" CV="309" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound8</label>
   </variable>
   <variable item="F10(f) controls output Sound9" CV="309" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound9</label>
   </variable>
   <variable item="F10(f) controls output Sound10" CV="309" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound10</label>
   </variable>
   <variable item="F10(f) controls output Sound11" CV="309" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound11</label>
   </variable>
   <variable item="F10(f) controls output Sound12" CV="309" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound12</label>
   </variable>
   <variable item="F10(f) controls output Sound13" CV="310" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound13</label>
   </variable>
   <variable item="F10(f) controls output Sound14" CV="310" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound14</label>
   </variable>
   <variable item="F10(f) controls output Sound15" CV="310" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound15</label>
   </variable>
   <variable item="F10(f) controls output Sound16" CV="310" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(f) controls output Sound16</label>
   </variable>
   <variable item="F10(r) controls output 1" CV="407" mask="XXXXXXXV" minOut="1">
@@ -2467,51 +2467,51 @@
     <label>F10(r) controls output Sound4</label>
   </variable>
   <variable item="F10(r) controls output Sound5" CV="409" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound5</label>
   </variable>
   <variable item="F10(r) controls output Sound6" CV="409" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound6</label>
   </variable>
   <variable item="F10(r) controls output Sound7" CV="409" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound7</label>
   </variable>
   <variable item="F10(r) controls output Sound8" CV="409" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound8</label>
   </variable>
   <variable item="F10(r) controls output Sound9" CV="409" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound9</label>
   </variable>
   <variable item="F10(r) controls output Sound10" CV="409" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound10</label>
   </variable>
   <variable item="F10(r) controls output Sound11" CV="409" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound11</label>
   </variable>
   <variable item="F10(r) controls output Sound12" CV="409" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound12</label>
   </variable>
   <variable item="F10(r) controls output Sound13" CV="410" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound13</label>
   </variable>
   <variable item="F10(r) controls output Sound14" CV="410" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound14</label>
   </variable>
   <variable item="F10(r) controls output Sound15" CV="410" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound15</label>
   </variable>
   <variable item="F10(r) controls output Sound16" CV="410" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F10(r) controls output Sound16</label>
   </variable>
 
@@ -2580,51 +2580,51 @@
     <label>F11(f) controls output Sound4</label>
   </variable>
   <variable item="F11(f) controls output Sound5" CV="314" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound5</label>
   </variable>
   <variable item="F11(f) controls output Sound6" CV="314" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound6</label>
   </variable>
   <variable item="F11(f) controls output Sound7" CV="314" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound7</label>
   </variable>
   <variable item="F11(f) controls output Sound8" CV="314" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound8</label>
   </variable>
   <variable item="F11(f) controls output Sound9" CV="314" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound9</label>
   </variable>
   <variable item="F11(f) controls output Sound10" CV="314" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound10</label>
   </variable>
   <variable item="F11(f) controls output Sound11" CV="314" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound11</label>
   </variable>
   <variable item="F11(f) controls output Sound12" CV="314" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound12</label>
   </variable>
   <variable item="F11(f) controls output Sound13" CV="315" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound13</label>
   </variable>
   <variable item="F11(f) controls output Sound14" CV="315" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound14</label>
   </variable>
   <variable item="F11(f) controls output Sound15" CV="315" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound15</label>
   </variable>
   <variable item="F11(f) controls output Sound16" CV="315" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(f) controls output Sound16</label>
   </variable>
   <variable item="F11(r) controls output 1" CV="412" mask="XXXXXXXV" minOut="1">
@@ -2692,51 +2692,51 @@
     <label>F11(r) controls output Sound4</label>
   </variable>
   <variable item="F11(r) controls output Sound5" CV="414" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound5</label>
   </variable>
   <variable item="F11(r) controls output Sound6" CV="414" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound6</label>
   </variable>
   <variable item="F11(r) controls output Sound7" CV="414" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound7</label>
   </variable>
   <variable item="F11(r) controls output Sound8" CV="414" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound8</label>
   </variable>
   <variable item="F11(r) controls output Sound9" CV="414" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound9</label>
   </variable>
   <variable item="F11(r) controls output Sound10" CV="414" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound10</label>
   </variable>
   <variable item="F11(r) controls output Sound11" CV="414" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound11</label>
   </variable>
   <variable item="F11(r) controls output Sound12" CV="414" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound12</label>
   </variable>
   <variable item="F11(r) controls output Sound13" CV="415" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound13</label>
   </variable>
   <variable item="F11(r) controls output Sound14" CV="415" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound14</label>
   </variable>
   <variable item="F11(r) controls output Sound15" CV="415" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound15</label>
   </variable>
   <variable item="F11(r) controls output Sound16" CV="415" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F11(r) controls output Sound16</label>
   </variable>
 
@@ -2805,51 +2805,51 @@
     <label>F12(f) controls output Sound4</label>
   </variable>
   <variable item="F12(f) controls output Sound5" CV="319" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound5</label>
   </variable>
   <variable item="F12(f) controls output Sound6" CV="319" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound6</label>
   </variable>
   <variable item="F12(f) controls output Sound7" CV="319" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound7</label>
   </variable>
   <variable item="F12(f) controls output Sound8" CV="319" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound8</label>
   </variable>
   <variable item="F12(f) controls output Sound9" CV="319" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound9</label>
   </variable>
   <variable item="F12(f) controls output Sound10" CV="319" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound10</label>
   </variable>
   <variable item="F12(f) controls output Sound11" CV="319" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound11</label>
   </variable>
   <variable item="F12(f) controls output Sound12" CV="319" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound12</label>
   </variable>
   <variable item="F12(f) controls output Sound13" CV="320" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound13</label>
   </variable>
   <variable item="F12(f) controls output Sound14" CV="320" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound14</label>
   </variable>
   <variable item="F12(f) controls output Sound15" CV="320" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound15</label>
   </variable>
   <variable item="F12(f) controls output Sound16" CV="320" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(f) controls output Sound16</label>
   </variable>
   <variable item="F12(r) controls output 1" CV="417" mask="XXXXXXXV" minOut="1">
@@ -2917,51 +2917,51 @@
     <label>F12(r) controls output Sound4</label>
   </variable>
   <variable item="F12(r) controls output Sound5" CV="419" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound5</label>
   </variable>
   <variable item="F12(r) controls output Sound6" CV="419" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound6</label>
   </variable>
   <variable item="F12(r) controls output Sound7" CV="419" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound7</label>
   </variable>
   <variable item="F12(r) controls output Sound8" CV="419" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound8</label>
   </variable>
   <variable item="F12(r) controls output Sound9" CV="419" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound9</label>
   </variable>
   <variable item="F12(r) controls output Sound10" CV="419" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound10</label>
   </variable>
   <variable item="F12(r) controls output Sound11" CV="419" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound11</label>
   </variable>
   <variable item="F12(r) controls output Sound12" CV="419" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound12</label>
   </variable>
   <variable item="F12(r) controls output Sound13" CV="420" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound13</label>
   </variable>
   <variable item="F12(r) controls output Sound14" CV="420" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound14</label>
   </variable>
   <variable item="F12(r) controls output Sound15" CV="420" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound15</label>
   </variable>
   <variable item="F12(r) controls output Sound16" CV="420" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F12(r) controls output Sound16</label>
   </variable>
 
@@ -3030,51 +3030,51 @@
     <label>F13(f) controls output Sound4</label>
   </variable>
   <variable item="F13(f) controls output Sound5" CV="324" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound5</label>
   </variable>
   <variable item="F13(f) controls output Sound6" CV="324" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound6</label>
   </variable>
   <variable item="F13(f) controls output Sound7" CV="324" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound7</label>
   </variable>
   <variable item="F13(f) controls output Sound8" CV="324" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound8</label>
   </variable>
   <variable item="F13(f) controls output Sound9" CV="324" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound9</label>
   </variable>
   <variable item="F13(f) controls output Sound10" CV="324" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound10</label>
   </variable>
   <variable item="F13(f) controls output Sound11" CV="324" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound11</label>
   </variable>
   <variable item="F13(f) controls output Sound12" CV="324" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound12</label>
   </variable>
   <variable item="F13(f) controls output Sound13" CV="325" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound13</label>
   </variable>
   <variable item="F13(f) controls output Sound14" CV="325" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound14</label>
   </variable>
   <variable item="F13(f) controls output Sound15" CV="325" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound15</label>
   </variable>
   <variable item="F13(f) controls output Sound16" CV="325" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(f) controls output Sound16</label>
   </variable>
   <variable item="F13(r) controls output 1" CV="422" mask="XXXXXXXV" minOut="1">
@@ -3142,51 +3142,51 @@
     <label>F13(r) controls output Sound4</label>
   </variable>
   <variable item="F13(r) controls output Sound5" CV="424" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound5</label>
   </variable>
   <variable item="F13(r) controls output Sound6" CV="424" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound6</label>
   </variable>
   <variable item="F13(r) controls output Sound7" CV="424" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound7</label>
   </variable>
   <variable item="F13(r) controls output Sound8" CV="424" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound8</label>
   </variable>
   <variable item="F13(r) controls output Sound9" CV="424" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound9</label>
   </variable>
   <variable item="F13(r) controls output Sound10" CV="424" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound10</label>
   </variable>
   <variable item="F13(r) controls output Sound11" CV="424" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound11</label>
   </variable>
   <variable item="F13(r) controls output Sound12" CV="424" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound12</label>
   </variable>
   <variable item="F13(r) controls output Sound13" CV="425" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound13</label>
   </variable>
   <variable item="F13(r) controls output Sound14" CV="425" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound14</label>
   </variable>
   <variable item="F13(r) controls output Sound15" CV="425" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound15</label>
   </variable>
   <variable item="F13(r) controls output Sound16" CV="425" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F13(r) controls output Sound16</label>
   </variable>
 
@@ -3255,51 +3255,51 @@
     <label>F14(f) controls output Sound4</label>
   </variable>
   <variable item="F14(f) controls output Sound5" CV="329" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound5</label>
   </variable>
   <variable item="F14(f) controls output Sound6" CV="329" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound6</label>
   </variable>
   <variable item="F14(f) controls output Sound7" CV="329" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound7</label>
   </variable>
   <variable item="F14(f) controls output Sound8" CV="329" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound8</label>
   </variable>
   <variable item="F14(f) controls output Sound9" CV="329" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound9</label>
   </variable>
   <variable item="F14(f) controls output Sound10" CV="329" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound10</label>
   </variable>
   <variable item="F14(f) controls output Sound11" CV="329" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound11</label>
   </variable>
   <variable item="F14(f) controls output Sound12" CV="329" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound12</label>
   </variable>
   <variable item="F14(f) controls output Sound13" CV="330" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound13</label>
   </variable>
   <variable item="F14(f) controls output Sound14" CV="330" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound14</label>
   </variable>
   <variable item="F14(f) controls output Sound15" CV="330" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound15</label>
   </variable>
   <variable item="F14(f) controls output Sound16" CV="330" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(f) controls output Sound16</label>
   </variable>
   <variable item="F14(r) controls output 1" CV="427" mask="XXXXXXXV" minOut="1">
@@ -3367,51 +3367,51 @@
     <label>F14(r) controls output Sound4</label>
   </variable>
   <variable item="F14(r) controls output Sound5" CV="429" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound5</label>
   </variable>
   <variable item="F14(r) controls output Sound6" CV="429" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound6</label>
   </variable>
   <variable item="F14(r) controls output Sound7" CV="429" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound7</label>
   </variable>
   <variable item="F14(r) controls output Sound8" CV="429" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound8</label>
   </variable>
   <variable item="F14(r) controls output Sound9" CV="429" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound9</label>
   </variable>
   <variable item="F14(r) controls output Sound10" CV="429" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound10</label>
   </variable>
   <variable item="F14(r) controls output Sound11" CV="429" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound11</label>
   </variable>
   <variable item="F14(r) controls output Sound12" CV="429" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound12</label>
   </variable>
   <variable item="F14(r) controls output Sound13" CV="430" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound13</label>
   </variable>
   <variable item="F14(r) controls output Sound14" CV="430" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound14</label>
   </variable>
   <variable item="F14(r) controls output Sound15" CV="430" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound15</label>
   </variable>
   <variable item="F14(r) controls output Sound16" CV="430" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F14(r) controls output Sound16</label>
   </variable>
 
@@ -3480,51 +3480,51 @@
     <label>F15(f) controls output Sound4</label>
   </variable>
   <variable item="F15(f) controls output Sound5" CV="334" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound5</label>
   </variable>
   <variable item="F15(f) controls output Sound6" CV="334" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound6</label>
   </variable>
   <variable item="F15(f) controls output Sound7" CV="334" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound7</label>
   </variable>
   <variable item="F15(f) controls output Sound8" CV="334" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound8</label>
   </variable>
   <variable item="F15(f) controls output Sound9" CV="334" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound9</label>
   </variable>
   <variable item="F15(f) controls output Sound10" CV="334" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound10</label>
   </variable>
   <variable item="F15(f) controls output Sound11" CV="334" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound11</label>
   </variable>
   <variable item="F15(f) controls output Sound12" CV="334" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound12</label>
   </variable>
   <variable item="F15(f) controls output Sound13" CV="335" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound13</label>
   </variable>
   <variable item="F15(f) controls output Sound14" CV="335" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound14</label>
   </variable>
   <variable item="F15(f) controls output Sound15" CV="335" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound15</label>
   </variable>
   <variable item="F15(f) controls output Sound16" CV="335" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(f) controls output Sound16</label>
   </variable>
   <variable item="F15(r) controls output 1" CV="432" mask="XXXXXXXV" minOut="1">
@@ -3592,51 +3592,51 @@
     <label>F15(r) controls output Sound4</label>
   </variable>
   <variable item="F15(r) controls output Sound5" CV="434" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound5</label>
   </variable>
   <variable item="F15(r) controls output Sound6" CV="434" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound6</label>
   </variable>
   <variable item="F15(r) controls output Sound7" CV="434" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound7</label>
   </variable>
   <variable item="F15(r) controls output Sound8" CV="434" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound8</label>
   </variable>
   <variable item="F15(r) controls output Sound9" CV="434" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound9</label>
   </variable>
   <variable item="F15(r) controls output Sound10" CV="434" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound10</label>
   </variable>
   <variable item="F15(r) controls output Sound11" CV="434" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound11</label>
   </variable>
   <variable item="F15(r) controls output Sound12" CV="434" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound12</label>
   </variable>
   <variable item="F15(r) controls output Sound13" CV="435" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound13</label>
   </variable>
   <variable item="F15(r) controls output Sound14" CV="435" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound14</label>
   </variable>
   <variable item="F15(r) controls output Sound15" CV="435" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound15</label>
   </variable>
   <variable item="F15(r) controls output Sound16" CV="435" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>F15(r) controls output Sound16</label>
   </variable>
 
@@ -3705,51 +3705,51 @@
     <label>STOP(f) controls output Sound4</label>
   </variable>
   <variable item="STOP(f) controls output Sound5" CV="339" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound5</label>
   </variable>
   <variable item="STOP(f) controls output Sound6" CV="339" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound6</label>
   </variable>
   <variable item="STOP(f) controls output Sound7" CV="339" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound7</label>
   </variable>
   <variable item="STOP(f) controls output Sound8" CV="339" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound8</label>
   </variable>
   <variable item="STOP(f) controls output Sound9" CV="339" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound9</label>
   </variable>
   <variable item="STOP(f) controls output Sound10" CV="339" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound10</label>
   </variable>
   <variable item="STOP(f) controls output Sound11" CV="339" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound11</label>
   </variable>
   <variable item="STOP(f) controls output Sound12" CV="339" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound12</label>
   </variable>
   <variable item="STOP(f) controls output Sound13" CV="340" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound13</label>
   </variable>
   <variable item="STOP(f) controls output Sound14" CV="340" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound14</label>
   </variable>
   <variable item="STOP(f) controls output Sound15" CV="340" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound15</label>
   </variable>
   <variable item="STOP(f) controls output Sound16" CV="340" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(f) controls output Sound16</label>
   </variable>
   <variable item="STOP(r) controls output 1" CV="437" mask="XXXXXXXV" minOut="1">
@@ -3817,51 +3817,51 @@
     <label>STOP(r) controls output Sound4</label>
   </variable>
   <variable item="STOP(r) controls output Sound5" CV="439" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound5</label>
   </variable>
   <variable item="STOP(r) controls output Sound6" CV="439" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound6</label>
   </variable>
   <variable item="STOP(r) controls output Sound7" CV="439" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound7</label>
   </variable>
   <variable item="STOP(r) controls output Sound8" CV="439" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound8</label>
   </variable>
   <variable item="STOP(r) controls output Sound9" CV="439" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound9</label>
   </variable>
   <variable item="STOP(r) controls output Sound10" CV="439" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound10</label>
   </variable>
   <variable item="STOP(r) controls output Sound11" CV="439" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound11</label>
   </variable>
   <variable item="STOP(r) controls output Sound12" CV="439" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound12</label>
   </variable>
   <variable item="STOP(r) controls output Sound13" CV="440" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound13</label>
   </variable>
   <variable item="STOP(r) controls output Sound14" CV="440" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound14</label>
   </variable>
   <variable item="STOP(r) controls output Sound15" CV="440" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound15</label>
   </variable>
   <variable item="STOP(r) controls output Sound16" CV="440" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>STOP(r) controls output Sound16</label>
   </variable>
 
@@ -3930,51 +3930,51 @@
     <label>DRIVE(f) controls output Sound4</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound5" CV="344" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound5</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound6" CV="344" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound6</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound7" CV="344" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound7</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound8" CV="344" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound8</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound9" CV="344" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound9</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound10" CV="344" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound10</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound11" CV="344" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound11</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound12" CV="344" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound12</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound13" CV="345" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound13</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound14" CV="345" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound14</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound15" CV="345" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound15</label>
   </variable>
   <variable item="DRIVE(f) controls output Sound16" CV="345" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(f) controls output Sound16</label>
   </variable>
   <variable item="DRIVE(r) controls output 1" CV="442" mask="XXXXXXXV" minOut="1">
@@ -4042,51 +4042,51 @@
     <label>DRIVE(r) controls output Sound4</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound5" CV="444" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound5</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound6" CV="444" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound6</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound7" CV="444" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound7</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound8" CV="444" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound8</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound9" CV="444" mask="XXXVXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound9</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound10" CV="444" mask="XXVXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound10</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound11" CV="444" mask="XVXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound11</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound12" CV="444" mask="VXXXXXXX">
-    <xi:include href="http://jmri.oSound6/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound12</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound13" CV="445" mask="XXXXXXXV">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound13</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound14" CV="445" mask="XXXXXXVX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound14</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound15" CV="445" mask="XXXXXVXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound15</label>
   </variable>
   <variable item="DRIVE(r) controls output Sound16" CV="445" mask="XXXXVXXX">
-    <xi:include href="http://jmri.oSound14/xml/decoders/parts/enum-NoYes.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>DRIVE(r) controls output Sound16</label>
   </variable>
 

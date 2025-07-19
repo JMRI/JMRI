@@ -270,7 +270,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
 
         public static final int EDITCOL = NUMCOLUMN;
 
-        @SuppressWarnings({"OverridableMethodCallInConstructor", "LeakingThisInConstructor"})
+//        @SuppressWarnings({"OverridableMethodCallInConstructor", "LeakingThisInConstructor"})
         public AudioTableDataModel(char subType) {
             super();
             this.subType = subType;
@@ -285,7 +285,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
 
         @Override
         protected String getMasterClassName() {
-            return getClassName();
+            return this.getClass().getName();
         }
 
         @Override

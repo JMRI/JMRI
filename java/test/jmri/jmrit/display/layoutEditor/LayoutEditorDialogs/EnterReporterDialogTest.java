@@ -1,16 +1,15 @@
 package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.geom.Rectangle2D;
+
 import javax.swing.JTextField;
 
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -22,7 +21,7 @@ import org.netbeans.jemmy.operators.JTextFieldOperator;
  *
  * @author George Warner Copyright (C) 2019
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class EnterReporterDialogTest {
 
     @Test
@@ -35,7 +34,7 @@ public class EnterReporterDialogTest {
     @Test
     public void testEnterReporterCanceled() {
 
-        enterReporterDialog.enterReporter(150, 200);
+        ThreadingUtil.runOnGUI(() -> enterReporterDialog.enterReporter(150, 200) );
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));
 
         // cancel the dialog
@@ -46,7 +45,7 @@ public class EnterReporterDialogTest {
     @Test
     public void testEnterReporter() {
 
-        enterReporterDialog.enterReporter(150, 200);
+        ThreadingUtil.runOnGUI(() -> enterReporterDialog.enterReporter(150, 200) );
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));
 
         // Try to press Add New Label button with reporter name blank... should get an error dialog
@@ -72,7 +71,7 @@ public class EnterReporterDialogTest {
         JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"IR\".");
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
 
-        enterReporterDialog.enterReporter(150, 200);
+        ThreadingUtil.runOnGUI(() -> enterReporterDialog.enterReporter(150, 200) );
         jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));
 
         // ok, now set the reporter name to an valid (starts with IB) value
@@ -135,7 +134,7 @@ public class EnterReporterDialogTest {
         layoutEditor = new LayoutEditor();
         enterReporterDialog = new EnterReporterDialog(layoutEditor);
         layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
-        layoutEditor.setVisible(true);
+        ThreadingUtil.runOnGUI(() -> layoutEditor.setVisible(true) );
 
     }
 

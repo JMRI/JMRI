@@ -6,11 +6,11 @@
   <title>JMRI OpenLCB: Browse Configuration</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI OpenLCB">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -53,18 +53,56 @@
           a DecoderPro-like configuration tool for the node. 
           Note that this is entirely taken from
           the OpenLCB node itself. There's no need to find a decoder configuration file, select the
-          right board type, etc.</td>
+          right board type, etc.
+          <p>
+          The top section is identification information from the selected node
+          that shows the manufacturer, model and version information.
+          <p>
+          Below that is user-configurable information.
+          </td>
           <td>
             <a href="StartConfigWindow.png"><img src="StartConfigWindow.png" width="254" height=
             "406" alt="Initial configuration window"></a>
           </td>
         </tr>
 
-        <tr>
-          <td>You can fill that out and click "Write" to configure the node. The top few fields are
+        <tr id="configure">
+          <td>You can fill those fields out and click "Write" to configure the node. 
+          The top few fields are
           used to give it a user-chosen name and description, so you can remember this node later.
           You can set the events that correspond to different inputs and outputs, and even give
-          those user-convenient names. That's all stored permanently in the node.</td>
+          those user-convenient names. That's all stored permanently in the node.
+          <p>
+          At the bottom are some additional buttons:
+          <ul>
+            <li>Refresh All - reads all the values from the node, over-writing
+                any changes you may have made
+            <li>Save Changes - writes any changed values to the node.  This is 
+                equivalent to pressing the "Write" buttons that are next to the changed fields.
+                If there are no changes, this button is disabled.
+            <li>Backup... - stores the node's configuration information to a file
+                on your computer
+            <li>Restore... - reloads the configuration from a previously-created
+                backup file.  Note that this just changes the values in the window;
+                you have to click "Save Changes" to store them to the node.
+            <li>More.. - additional options specific to the capabilities of the node.
+          </ul>
+          <p>
+          As you change values, you'll notice the background on some type of items and tabs
+          change from white to orange.  Orange indicates that you've changed a
+          value and should write it to the node so it's not lost. If you enter
+          an invalid value, such as an integer value that's too large or too
+          small for that particular item, the background will turn to blue.
+          You can see the valid range for each integer value by hovering your
+          mouse cursor over it. A tooltip will pop up showing the 
+          correct range of values. You can also press the Refresh button to 
+          reload the current value from the node.
+          <p>
+          Some replicated sections will appear as tabs.  You can copy
+          and paste all the values in a section between tabs using the usual ctrl-C/cmd-C and 
+          ctrl-V/cmd-V keys on your keyboard.  You can then click "Write" or "Save Changes"
+          to set those values in the node.
+          </td>
           <td>
             <a href="FilledOutConfigWindow.png"><img src="FilledOutConfigWindow.png" width="254"
             height="406" alt="Filled-out configuration window"></a>
@@ -81,10 +119,10 @@
         </tr>
       </table>
 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

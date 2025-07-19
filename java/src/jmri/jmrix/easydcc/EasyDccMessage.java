@@ -218,6 +218,7 @@ public class EasyDccMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    @SuppressWarnings("hiding")  // redefines value from super class
     static protected final int LONG_TIMEOUT = 180000; // e.g. for programming options
 
     private final static Logger log = LoggerFactory.getLogger(EasyDccMessage.class);

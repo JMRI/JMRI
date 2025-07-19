@@ -1,16 +1,15 @@
 package jmri.util;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
-import org.assertj.core.api.Assertions;
-import org.junit.Assert;
-
-import java.io.Serializable;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.Filter;
@@ -22,14 +21,27 @@ import org.apache.logging.log4j.core.config.plugins.*;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.apache.logging.log4j.core.config.Property;
 
+import org.junit.jupiter.api.Assertions;
+
 /**
  * Log4J2 Appender Plugin that works with JUnit tests to check for expected vs
  * unexpected log messages.
  * Used by tests_lcf.xml
- *
+ * Most tests log at WARN or ERROR, the root logging level within tests_lcf.xml
  * Much of the interface is static to avoid lots of instance() calls, but this
  * is not a problem as there should be only one of these while tests are running
  *
+ * level.isLessSpecificThan(Level.WARN) true if level DEBUG / INFO / WARN
+ * level.isMoreSpecificThan(Level.WARN) true if level WARN / ERROR
+ *
+ * ( level.compareTo(Level.WARN) &gt; 0 )  true if level DEBUG / INFO
+ * ( level.compareTo(Level.WARN) &gt;= 0 ) true if level DEBUG / INFO / WARN
+ * ( level.compareTo(Level.WARN) == 0 ) true if level WARN
+ * ( level.compareTo(Level.WARN) &lt;= 0 ) true if level WARN / ERROR
+ * ( level.compareTo(Level.WARN) &lt; 0 )  true if level ERROR
+ *
+ * Level.ERROR = 200
+ * Level.DEBUG = 500
  * @see jmri.util.JUnitUtil
  *
  * @author Bob Jacobsen - Copyright 2007
@@ -69,7 +81,7 @@ public class JUnitAppender extends AbstractAppender {
         return new JUnitAppender(name, filter, layout, true, Property.EMPTY_ARRAY);
     }
 
-    static java.util.ArrayList<LogEvent> list = new java.util.ArrayList<>();
+    private static final java.util.ArrayList<LogEvent> list = new java.util.ArrayList<>();
 
     /**
      * Called for each logging event.
@@ -85,6 +97,11 @@ public class JUnitAppender extends AbstractAppender {
         }
     }
 
+    /**
+     * Send a Logging Event to the Console.
+     * @param ev the LogEvent to send.
+     */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
     private void sendToConsole(LogEvent ev){
         try {
             final byte[] bytes = getLayout().toByteArray(ev);
@@ -95,11 +112,12 @@ public class JUnitAppender extends AbstractAppender {
             }
         }
     }
-    
+
     /**
      * Called once options are set.
      *
      */
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
     private void activateInstance() {
         if (JUnitAppender.instance != null) {
             System.err.println("JUnitAppender initialized more than once"); // can't count on logging here
@@ -120,9 +138,9 @@ public class JUnitAppender extends AbstractAppender {
         super.stop();
     }
 
-    static boolean hold = false;
+    private static boolean hold = false;
 
-    static private JUnitAppender instance = null;
+    private static JUnitAppender instance = null;
 
     // package-level access for testing
     static volatile boolean unexpectedFatalSeen = false;
@@ -195,18 +213,18 @@ public class JUnitAppender extends AbstractAppender {
             return unexpectedFatalContent;
         }
         if (l == Level.ERROR) {
-            if (unexpectedFatalContent != null ) return unexpectedFatalContent;
+            if (unexpectedFatalContent != null ) { return unexpectedFatalContent; }
             return unexpectedErrorContent;
         }
         if (l == Level.WARN) {
-            if (unexpectedFatalContent != null ) return unexpectedFatalContent;
-            if (unexpectedErrorContent != null ) return unexpectedErrorContent;
+            if (unexpectedFatalContent != null ) { return unexpectedFatalContent; }
+            if (unexpectedErrorContent != null ) { return unexpectedErrorContent; }
             return unexpectedWarnContent;
         }
         if (l == Level.INFO) {
-            if (unexpectedFatalContent != null ) return unexpectedFatalContent;
-            if (unexpectedErrorContent != null ) return unexpectedErrorContent;
-            if (unexpectedWarnContent != null ) return unexpectedWarnContent;
+            if (unexpectedFatalContent != null ) { return unexpectedFatalContent; }
+            if (unexpectedErrorContent != null ) { return unexpectedErrorContent; }
+            if (unexpectedWarnContent != null ) { return unexpectedWarnContent; }
             return unexpectedInfoContent;
         }
         throw new java.lang.IllegalArgumentException("Did not expect " + l);
@@ -268,7 +286,7 @@ public class JUnitAppender extends AbstractAppender {
      *
      * @param l the event to process
      */
-    void superappend(LogEvent l) {
+    private void superappend(LogEvent l) {
         if (l.getLevel() == Level.FATAL) {
             setUnexpectedFatalSeen(true);
             setUnexpectedFatalContent(l.getMessage().getFormattedMessage());
@@ -294,9 +312,14 @@ public class JUnitAppender extends AbstractAppender {
     }
 
     /**
-     * Remove any messages stored up, returning how many there were. This is
-     * used to skip over messages that don't matter, e.g. during setting up a
-     * test. Removed messages are not sent for further logging.
+     * Remove any messages stored up, returning how many there were.
+     * This is used to skip over messages that don't matter,
+     * e.g. during setting up a test.
+     * Please check the return value of this method against the expected number.
+     * Please do not use this method to clear the backlog without checking.
+     * The majority of tests are set to only log at the Levels WARN / ERROR so
+     * INFO / DEBUG levels are not normally included.
+     * Removed messages are not sent for further logging.
      *
      * @param l lowest level counted in return value, e.g. WARN means WARN
      *                  and higher will be counted
@@ -323,10 +346,12 @@ public class JUnitAppender extends AbstractAppender {
 
     /**
      * Remove any messages stored up, returning how many of WARN or higher
-     * severity there are. This is used to skip over messages that don't matter,
-     * e.g. during setting up a test. Removed messages are not sent for further
-     * logging.
-     *
+     * severity there are.
+     * This is used to skip over messages that don't matter,
+     * e.g. during setting up a test.
+     * Removed messages are not sent for further logging.
+     * Please check the return value of this method against the expected number.
+     * Please do not use this method to clear the backlog without checking.
      * @return count of skipped messages of WARN or more specific level
      * @see #clearBacklog(Level)
      */
@@ -336,155 +361,156 @@ public class JUnitAppender extends AbstractAppender {
 
     /**
      * Returns the backlog.
-     * @return the backlog
+     * @return the backlog, unmodifiable.
      */
+    @Nonnull
     public static List<LogEvent> getBacklog() {
         return Collections.unmodifiableList(list);
     }
 
     /**
-     * Verify that no messages were emitted, logging any that were. Does not
-     * stop the logging. Clears the accumulated list.
-     *
+     * Verify that no messages were emitted, logging any that were.
+     * Does not stop the logging.
+     * Clears the accumulated list.
+     * The majority of tests are set to only log at the Levels WARN / ERROR.
      * @return true if no messages logged
      */
     public static boolean verifyNoBacklog() {
         if (list.isEmpty()) {
             return true;
         }
-        while (!list.isEmpty()) { // should probably add a skip of lower levels?
+        while (!list.isEmpty()) {
             LogEvent evt = list.remove(0);
             instance().superappend(evt);
         }
         return false;
     }
 
+    /**
+     * Assert that no Error Messages are present in the logging queue.
+     * Messages of Level WARN / INFO / DEBUG are permitted.
+     * No messages are removed from the message queue.
+     */
     public static void assertNoErrorMessage() {
-        assertThat(list).isEmpty();
+        assertNoMessagesOf( Level.ERROR );
     }
 
     /**
-     * Check that the next queued message was of Error severity, and has a
-     * specific message. White space is ignored.
+     * Assert that no messages are present of a specific severity or higher.
+     * Does not remove any messages from the message queue.
+     * @param level the level of which to check.
+     */
+    private static void assertNoMessagesOf( Level level) {
+        for (LogEvent event : list) {
+            if ( event.getLevel().isMoreSpecificThan(level) ) {
+                Assertions.fail("Log Message " + event.getLevel().name() + ": " + event.getMessage().getFormattedMessage());
+            }
+        }
+    }
+
+    /**
+     * Check that the next queued message was of Error severity,
+     * and has a specific message.
+     * White space is ignored.
      * <p>
      * Invokes a JUnit Assert if the message doesn't match.
      *
      * @param msg the message to assert exists
      */
     public static void assertErrorMessage(String msg) {
+        assertNextMessage(msg, Level.ERROR, Level.INFO);
+    }
+
+    private static void assertNextMessage(String msg, Level level, Level exclude) {
         if (list.isEmpty()) {
-            Assert.fail("No message present: " + msg);
+            Assertions.fail("No " + level.name()+ " message present: \"" + msg + "\"");
             return;
         }
 
         LogEvent evt = list.remove(0);
 
-        // next piece of code appears three times, should be refactored away during Log4J 2 migration
-        while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
+        while ((evt.getLevel().isLessSpecificThan(exclude))) {
             if (list.isEmpty()) {
-                Assert.fail("Only debug/info messages present: " + msg);
+                Assertions.fail("Only " + exclude.name() + " or less severe messages present: Looking for "
+                    + level.name()+ " \""+ msg + "\"");
                 return;
             }
             evt = list.remove(0);
         }
 
         // check the remaining message, if any
-        if (evt.getLevel() != Level.ERROR) {
-            Assert.fail("Level mismatch when looking for ERROR message: \"" +
-                    msg +
-                    "\" found \"" +
-                    evt.getMessage().getFormattedMessage() +
-                    "\"");
-        }
-
-        if (!compare(evt, msg)) {
-            Assert.fail("Looking for ERROR message \"" + msg + "\" got \"" + evt.getMessage().getFormattedMessage() + "\"");
+        if ( (evt.getLevel() != level) || !compare(evt, msg)) {
+            Assertions.fail("Looking for " + level.name() + " message \"" + msg + "\" got "
+                + evt.getLevel().name() + "\"" + evt.getMessage().getFormattedMessage() + "\"");
         }
     }
 
     /**
-     * Check that the next queued message was of Error severity, and has a
-     * specific message. White space is ignored.
+     * Check that the next queued message was of Error severity,
+     * and text is at start of this message.
+     * White space is ignored.
+     * Prior TRACE / DEBUG / INFO level messages are ignored.
+     * Prior messages of level WARN or ERROR are NOT ignored.
      * <p>
      * Invokes a JUnit Assert if the message doesn't match.
      *
      * @param msg the message to assert exists
      */
     public static void assertErrorMessageStartsWith(String msg) {
-        if (list.isEmpty()) {
-            Assert.fail("No message present: " + msg);
-            return;
-        }
-
-        LogEvent evt = list.remove(0);
-
-        // next piece of code appears three times, should be refactored away during Log4J 2 migration
-        while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
-            if (list.isEmpty()) {
-                Assert.fail("Only debug/info messages present: " + msg);
-                return;
-            }
-            evt = list.remove(0);
-        }
-
-        // check the remaining message, if any
-        if (evt.getLevel() != Level.ERROR) {
-            Assert.fail("Level mismatch when looking for ERROR message: \"" +
-                    msg +
-                    "\" found \"" +
-                    evt.getMessage().getFormattedMessage() +
-                    "\"");
-        }
-
-        if (!compareStartsWith(evt, msg)) {
-            Assert.fail("Looking for ERROR message \"" + msg + "\" got \"" + evt.getMessage().getFormattedMessage() + "\"");
-        }
+        assertNextMessageStartsWith(Level.ERROR, msg);
     }
 
     /**
-     * Check that the next queued message was of Warn severity, and text
-     * is at start of this message. White space is ignored.
-     * <p>
+     * Check that the next queued message was of Warn severity,
+     * and text is at start of this message.
+     * White space is ignored.
+     * Prior TRACE / DEBUG / INFO level messages are ignored.
+     * Prior messages of level WARN or ERROR are NOT ignored.tt
+    * <p>
      * Invokes a JUnit Assert if the message doesn't match.
      *
      * @param msg the message to assert starts with
      */
     public static void assertWarnMessageStartsWith(String msg) {
+        assertNextMessageStartsWith(Level.WARN, msg);
+    }
+
+    /**
+     * Assert that a message exists of a given level and message String.
+     * Strips INFO / DEBUG / TRACE messages,
+     * then checks the next message in the queue.
+     * @param level the level to match
+     * @param msg the message to match
+     */
+    private static void assertNextMessageStartsWith(Level level, String msg) {
         if (list.isEmpty()) {
-            Assert.fail("No message present: " + msg);
+            Assertions.fail("No " + level + " message present: " + msg);
             return;
         }
 
         LogEvent evt = list.remove(0);
 
-        // next piece of code appears three times, should be refactored away during Log4J 2 migration
-        while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
+        while (evt.getLevel().isLessSpecificThan(Level.INFO) ) {
             if (list.isEmpty()) {
-                Assert.fail("Only debug/info messages present: " + msg);
+                Assertions.fail("Only debug/info messages present when looking to Assert "
+                    + level.name() + " StartsWith: " + msg);
                 return;
             }
             evt = list.remove(0);
         }
 
         // check the remaining message, if any
-        if (evt.getLevel() != Level.WARN) {
-            Assert.fail("Level mismatch when looking for WARN message: \"" +
-                    msg +
-                    "\" found \"" +
-                    evt.getMessage().getFormattedMessage() +
-                    "\"");
-        }
-
-        if (!compareStartsWith(evt, msg)) {
-            Assert.fail("Looking for WARN message \"" + msg + "\" got \"" + evt.getMessage().getFormattedMessage() + "\"");
+        if ( (evt.getLevel() != level ) || !compareStartsWith(evt, msg)) {
+            Assertions.fail("Looking for " + level.name() + " message starting with \"" + msg + "\" got "
+                + evt.getLevel().name() + "\"" + evt.getMessage().getFormattedMessage() + "\"");
         }
     }
 
     /**
-     * If there's a next matching message of specific severity, just ignore it.
-     * Not an error if not present; mismatch is an error. Skips messages of
-     * lower severity while looking for the specific one. White space is
-     * ignored.
+     * If there's a last matching message of specific severity, just ignore it.
+     * Not an error if not present; mismatch is an error.
+     * Removes messages of lower or equal severity while looking for the specific one.
+     * White space is ignored.
      *
      * @param level the level at which to suppress the message
      * @param msg   the message to suppress
@@ -496,17 +522,8 @@ public class JUnitAppender extends AbstractAppender {
 
         LogEvent evt = list.remove(0);
 
-        while (((level.equals(Level.WARN)) &&
-                (evt.getLevel() == Level.TRACE ||
-                        evt.getLevel() == Level.DEBUG ||
-                        evt.getLevel() == Level.INFO ||
-                        evt.getLevel() == Level.WARN)) ||
-                ((level.equals(Level.ERROR)) &&
-                        (evt.getLevel() == Level.TRACE ||
-                                evt.getLevel() == Level.DEBUG ||
-                                evt.getLevel() == Level.INFO ||
-                                evt.getLevel() == Level.WARN ||
-                                evt.getLevel() == Level.ERROR))) { // this is much better with Log4J 2's compareTo method
+        // TODO test while ( level.compareTo(evt.getLevel() ) < 0 ) {
+        while ( level.compareTo(evt.getLevel() ) <= 0 ) {
             if (list.isEmpty()) {
                 return;
             }
@@ -514,26 +531,17 @@ public class JUnitAppender extends AbstractAppender {
         }
 
         // check the remaining message, if any
-        if (evt.getLevel() != level) {
-            Assert.fail("Level mismatch when looking for " +
-                    level +
-                    " message: \"" +
-                    msg +
-                    "\" found \"" +
-                    evt.getMessage().getFormattedMessage() +
-                    "\"");
-        }
-
-        if (!compare(evt, msg)) {
-            Assert.fail("Looking for " + level + " message \"" + msg + "\" got \"" + evt.getMessage().getFormattedMessage() + "\"");
+        if ( (evt.getLevel() != level) || !compare(evt, msg)) {
+            Assertions.fail("Looking to suppress " + level + " message \"" + msg + "\" got "
+                + evt.getLevel().name()+ " \"" + evt.getMessage().getFormattedMessage() + "\"");
         }
     }
 
     /**
      * If there's a next matching message of specific severity, just ignore it.
-     * Not an error if not present; mismatch is an error. Skips messages of
-     * lower severity while looking for the specific one. White space is
-     * ignored.
+     * Not an error if not present; mismatch is an error.
+     * Removes messages of lower or equal severity while looking for a matching one.
+     * White space is ignored.
      *
      * @param level the level at which to suppress the message
      * @param msg   text at start of the message to suppress
@@ -545,17 +553,8 @@ public class JUnitAppender extends AbstractAppender {
 
         LogEvent evt = list.remove(0);
 
-        while (((level.equals(Level.WARN)) &&
-                (evt.getLevel() == Level.TRACE ||
-                        evt.getLevel() == Level.DEBUG ||
-                        evt.getLevel() == Level.INFO ||
-                        evt.getLevel() == Level.WARN)) ||
-                ((level.equals(Level.ERROR)) &&
-                        (evt.getLevel() == Level.TRACE ||
-                                evt.getLevel() == Level.DEBUG ||
-                                evt.getLevel() == Level.INFO ||
-                                evt.getLevel() == Level.WARN ||
-                                evt.getLevel() == Level.ERROR))) { // this is much better with Log4J 2's compareTo method
+        // TODO test while ( level.compareTo(evt.getLevel() ) < 0 ) {
+        while ( level.compareTo(evt.getLevel() ) <= 0 ) {
             if (list.isEmpty()) {
                 return;
             }
@@ -563,24 +562,16 @@ public class JUnitAppender extends AbstractAppender {
         }
 
         // check the remaining message, if any
-        if (evt.getLevel() != level) {
-            Assert.fail("Level mismatch when looking for " +
-                    level +
-                    " message: \"" +
-                    msg +
-                    "\" found \"" +
-                    evt.getMessage().getFormattedMessage() +
-                    "\"");
-        }
-
-        if (!compareStartsWith(evt, msg)) {
-            Assert.fail("Looking for " + level + " message \"" + msg + "\" got \"" + evt.getMessage().getFormattedMessage() + "\"");
+        if ( (evt.getLevel() != level) || !compareStartsWith(evt, msg)) {
+            Assertions.fail("Looking to suppress " + level + " message starting with \"" + msg + "\" got "
+                + evt.getLevel() + " \"" + evt.getMessage().getFormattedMessage() + "\"");
         }
     }
 
     /**
-     * If there's a next matching message of Error severity, just ignore it. Not
-     * an error if not present; mismatch is an error. White space is ignored.
+     * If there's a next matching message of Error severity, just ignore it.
+     * Not an error if not present; mismatch is an error.
+     * White space is ignored.
      *
      * @param msg the message to suppress
      */
@@ -589,9 +580,10 @@ public class JUnitAppender extends AbstractAppender {
     }
 
     /**
-     * If there's a next matching message of Error severity, just ignore it. Not
-     * an error if not present; mismatch is an error. White space is ignored.
-     *
+     * If there's a next matching message of Error severity, just ignore it.
+     * Not an error if not present; mismatch is an error.
+     * White space is ignored.
+     * Removes messages of lower or equal severity while looking for a matching one.
      * @param msg text at start of the message to suppress
      */
     public static void suppressErrorMessageStartsWith(String msg) {
@@ -599,8 +591,9 @@ public class JUnitAppender extends AbstractAppender {
     }
 
     /**
-     * If there's a next matching message of Warn severity, just ignore it. Not
-     * an error if not present; mismatch is an error. White space is ignored.
+     * If there's a next matching message of Warn severity, just ignore it.
+     * Not an error if not present; mismatch is an error.
+     * White space is ignored.
      *
      * @param msg the message to suppress
      */
@@ -609,9 +602,10 @@ public class JUnitAppender extends AbstractAppender {
     }
 
     /**
-     * If there's a next matching message of Warn severity, just ignore it. Not
-     * an error if not present; mismatch is an error. White space is ignored.
-     *
+     * If there's a next matching message of Warn severity, just ignore it.
+     * Not an error if not present; mismatch is an error.
+     * White space is ignored.
+     * Removes messages of lower or equal severity while looking for a matching one.
      * @param msg text at start of the message to suppress
      */
     public static void suppressWarnMessageStartsWith(String msg) {
@@ -620,17 +614,21 @@ public class JUnitAppender extends AbstractAppender {
 
     /**
      * See if a message (completely matching particular text) has been emitted
-     * yet. White space is ignored. All messages before the requested one are
-     * dropped; it the requested message hasn't been issued, this means that the
+     * yet.
+     * White space is ignored.
+     * All messages of any severity sent before the matching String are dropped.
+     * If the requested message hasn't been issued, this means that the
      * message queue is cleared.
      *
      * @param msg the message text to check for
      * @return null if not present, else the LoggingEvent for possible further
      *         checks of level, etc
      */
+    @CheckForNull
     public static LogEvent checkForMessage(String msg) {
-        if (list.isEmpty())
+        if (list.isEmpty()) {
             return null;
+        }
 
         LogEvent evt = list.remove(0);
         while (!compare(evt, msg)) {
@@ -646,17 +644,20 @@ public class JUnitAppender extends AbstractAppender {
 
     /**
      * See if a message that starts with particular text has been emitted yet.
-     * White space is ignored. All messages before the matching one are dropped;
-     * it a matching message hasn't been issued, this means that the message
+     * White space is ignored.
+     * All messages OF ANY SEVERITY before the matching one are dropped.
+     * If a matching message hasn't been issued, this means that the message
      * queue is cleared.
      *
      * @param msg the message text to check for
      * @return null if not present, else the LoggingEvent for possible further
      *         checks of level, etc
      */
+    @CheckForNull
     public static LogEvent checkForMessageStartingWith(String msg) {
-        if (list.isEmpty())
+        if (list.isEmpty()) {
             return null;
+        }
 
         String tmsg = StringUtils.deleteWhitespace(msg);
 
@@ -674,7 +675,9 @@ public class JUnitAppender extends AbstractAppender {
 
     /**
      * Check that the next queued message was of Warn severity, and has a
-     * specific message. White space is ignored.
+     * specific message.
+     * ALL messages of ANY severity sent before the matching one are dropped.
+     * White space is ignored.
      * <p>
      * Invokes a JUnit Assert if the message doesn't match.
      *
@@ -688,6 +691,7 @@ public class JUnitAppender extends AbstractAppender {
      * Check that the next queued message has a specific message
      * and matches the expected severity level.
      * White space is ignored.<p>
+     * ALL messages of ANY severity sent before the matching one are dropped.
      * Invokes a JUnit Assertion Fail if the message doesn't match,
      * or if the Logging Level is different.
      *
@@ -698,10 +702,16 @@ public class JUnitAppender extends AbstractAppender {
         assertMessage(msg, convertSlf4jLevelToLog4jLevel(level));
     }
 
-    private static void assertMessage(String msg, Level level) {
+    /**
+     * Assert Message with matching String and Level.
+     * All messages of any severity sent before the matching one are dropped.
+     * @param msg the Message String to match.
+     * @param level the expected level of the LogEvent.
+     */
+    private static void assertMessage(String msg, @Nonnull Level level) {
         LogEvent evt = checkForMessage(msg);
         if (evt == null) {
-            Assertions.fail("Looking for message \"" + msg + "\" and didn't find it");
+            Assertions.fail("Looking for " + level.name() + " message \"" + msg + "\" and didn't find it");
             return;
         }
         if (level != evt.getLevel() ){
@@ -712,52 +722,52 @@ public class JUnitAppender extends AbstractAppender {
 
     /**
      * Check that the next queued message was of Warn severity, and has a
-     * specific message. White space is ignored.
+     * specific message.
+     * ALL messages of ANY severity sent before the matching one are dropped.
+     * White space is ignored.
      * <p>
      * Invokes a JUnit Assert if the message doesn't match.
-     *
+     * Does NOT currently ensure correct logging level ( WARN ) is matched.
      * @param msg the message to assert exists
      */
+    @jmri.util.junit.annotations.ToDo("Add check for message Level severity")
     public static void assertWarnMessageStartingWith(String msg) {
         if (list.isEmpty()) {
-            Assert.fail("No message present: " + msg);
+            Assertions.fail("No message present: " + msg);
             return;
         }
         LogEvent evt = checkForMessageStartingWith(msg);
 
+        // TODO - add check the message found is actually a WARN, currently passes ANY level
         if (evt == null) {
-            Assert.fail("Looking for message \"" + msg + "\" and didn't find it");
+            Assertions.fail("Looking for WARN message starting with \"" + msg + "\" and didn't find it");
         }
     }
 
     /**
-     * Assert that a specific message, of any severity, has been logged. White
-     * space is ignored.
+     * Assert that a specific message, of any severity, has been logged.
+     * White space is ignored.
+     * Does not remove any other messages of any severity from the message queue.
      * <p>
      * Invokes a JUnit Assert if no matching message is found, but doesn't
-     * require it to be the next message. This allows use e.g. for
-     * debug-severity messages.
+     * require it to be the next message.
+     * This allows use e.g. for debug-severity messages.
      *
      * @param msg the message to assert exists
      */
     public static void assertMessage(String msg) {
-        if (list.isEmpty()) {
-            Assert.fail("No message present: " + msg);
-            return;
-        }
-        LogEvent evt = list.remove(0);
-
-        while ((evt.getLevel() == Level.INFO) || (evt.getLevel() == Level.DEBUG) || (evt.getLevel() == Level.TRACE)) { // better in Log4J 2
-            if (list.isEmpty()) {
-                Assert.fail("Message not found: " + msg);
+        Iterator<LogEvent> iterator = list.iterator();
+        LogEvent lastEvent = null;
+        while (iterator.hasNext()) {
+            lastEvent = iterator.next();
+            if (compare(lastEvent, msg) ) {
+                iterator.remove();
                 return;
             }
-            evt = list.remove(0);
         }
-
-        if (!compare(evt, msg)) {
-            Assert.fail("Looking for message \"" + msg + "\" got \"" + evt.getMessage().getFormattedMessage() + "\"");
-        }
+        Assertions.fail("No message present for ANY logging level: \"" + msg + "\""
+            + ( lastEvent==null ? "" : " last was " + lastEvent.getLevel().name()
+            + " \"" + lastEvent.getMessage().getFormattedMessage() + "\"" ) );
     }
 
     /**
@@ -767,7 +777,7 @@ public class JUnitAppender extends AbstractAppender {
      * @param s2 the string to compare e1 to
      * @return true if message in e1 equals s2; false otherwise
      */
-    protected static boolean compare(LogEvent e1, String s2) {
+    protected static boolean compare(@CheckForNull LogEvent e1, @CheckForNull String s2) {
         if (e1 == null) {
             System.err.println("Logging event null when comparing to " + s2);
             return s2 == null;
@@ -786,7 +796,7 @@ public class JUnitAppender extends AbstractAppender {
      * @param s2 the string to compare e1 to
      * @return true if message in e1 starts with s2; false otherwise
      */
-    protected static boolean compareStartsWith(LogEvent e1, String s2) {
+    protected static boolean compareStartsWith(@CheckForNull LogEvent e1, String s2) {
         if (e1 == null) {
             System.err.println("Logging event null when comparing to " + s2);
             return s2 == null;

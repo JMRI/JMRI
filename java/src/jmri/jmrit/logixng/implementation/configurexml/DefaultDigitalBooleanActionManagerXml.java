@@ -47,8 +47,8 @@ public class DefaultDigitalBooleanActionManagerXml extends AbstractManagerXml {
                     List<Element> elements = new ArrayList<>();
                     // The male socket may be embedded in other male sockets
                     MaleDigitalBooleanActionSocket a = action;
+                    elements.add(storeMaleSocket(a));
                     while (!(a instanceof DefaultMaleDigitalBooleanActionSocket)) {
-                        elements.add(storeMaleSocket(a));
                         a = (MaleDigitalBooleanActionSocket) a.getObject();
                     }
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(a.getObject());

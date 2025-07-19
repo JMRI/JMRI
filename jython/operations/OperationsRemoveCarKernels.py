@@ -2,7 +2,7 @@
 # Sample script to remove car kernels created by operation scripts.
 # Use this script after terminating a train that services kernels created by operation scripts.
 #
-# Author: Daniel Boudreau, copyright 2015
+# Author: Daniel Boudreau, copyright 2015, 2024
 #
 
 
@@ -14,7 +14,7 @@ class RemoveCarKernels(jmri.jmrit.automat.AbstractAutomaton):
     # used when creating kernel names
     self.regex = "_$_"
 
-    print "Script to remove operation created kernels starts now!"
+    print ('Script to remove operation created kernels starts now!')
 
     return
 
@@ -37,11 +37,11 @@ class RemoveCarKernels(jmri.jmrit.automat.AbstractAutomaton):
         # only delete kernels that don't have a train assignment or final destination
         if not car.getTrain() == None or not car.getFinalDestination() == None:
             continue
-        print "Car (" + car.toString() + ") type (" + car.getTypeName() + ") is part of kernel (" + car.getKernel().getName() + ")"
+        print ('Car ({}) type ({}) is part of kernel ({})'.format(car.toString(), car.getTypeName(), car.getKernel().getName()))
         # delete the kernel
         kernelManager.deleteKernel(car.getKernel().getName())
 
-    print "Done"
+    print ('Done')
     return False              # all done, don't repeat again
 
 RemoveCarKernels().start()          # create one of these, and start it running

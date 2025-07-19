@@ -14,7 +14,7 @@
 
 <!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II              -->
 
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 
 <!-- Function mapping CV's for Lokommander decoders with 10 outputs         -->
 

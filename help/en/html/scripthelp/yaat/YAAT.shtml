@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>YAAT</title><!--#include virtual="/Style.shtml" -->
+  <title>YAAT</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style type="text/css">
     dt {padding-top: 10px;}
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -121,6 +121,12 @@
           possible to start a train using Logix, LogixNG, scripting or even a YAAT train using
           the <strong><em>Set &lt;memory name&gt; to &lt;value&gt;</em></strong> YAAT action.
         </dd>
+
+        <dt>enableIncludes<span class="since">since YAAT 3.4</span></dt>
+
+        <dd>
+          Set to True to enable the <em>@include filename</em> statement.  See <a href="#includes">Includes</a>.
+        </dd>
       </dl>
 
       <h3>Trains</h3>
@@ -186,6 +192,14 @@
         the throttle speed should be set to zero and the throttle should be released.  This is
         generally used when starting another train using the <strong>Set memory</strong> action.</dd>
 
+        <dt>Hold signal head &lt;name&gt;<span class="since">since YAAT 3.2</span></dt>
+
+        <dd>Enable the <strong>Held</strong> state for the signal head table entry.</dd>
+
+        <dt>Hold signal mast &lt;name&gt;<span class="since">since YAAT 3.2</span></dt>
+
+        <dd>Enable the <strong>Held</strong> state for the signal mast table entry.</dd>
+
         <dt>Loop</dt>
 
         <dd>Marks the end of the one time start up actions, such as the throttle assignment,
@@ -195,6 +209,14 @@
 
         <dd>Display a message in the script output window or the system console log. Useful for
         debugging.</dd>
+
+        <dt>Release signal head &lt;name&gt;<span class="since">since YAAT 3.2</span></dt>
+
+        <dd>Disable the <strong>Held</strong> state for the signal head table entry.</dd>
+
+        <dt>Release signal mast &lt;name&gt;<span class="since">since YAAT 3.2</span></dt>
+
+        <dd>Disable the <strong>Held</strong> state for the signal mast table entry.</dd>
 
         <dt>Release throttle<span class="since">since YAAT 3.0</span></dt>
 
@@ -272,6 +294,8 @@
         <dt>Wait for block &lt;block name&gt; to become &lt;occupied | unoccupied | reserved |
         free&gt;</dt>
 
+        <dt>Wait for memory &lt;memory name&gt; value to change<span class="since">since 5.11.7</span></dt>
+
         <dt>Wait for sensor &lt;sensor name&gt; to become &lt;active | inactive&gt;</dt>
 
         <dt>Wait for signal head &lt;head name&gt; to [not] show &lt;appearance name&gt; [or
@@ -313,6 +337,9 @@
 
         <dd>For information on speed names, look at the JMRI install location:
         xml/signals/signalSpeeds.xml</dd>
+
+        <dt>If value for memory &lt;memory name&gt; is &lt;eq | ne | lt | gt | le | ge&gt; &lt;value&gt;
+        <span class="since">since 5.11.7</span></dt>
 
         <dt>Else</dt>
 
@@ -407,6 +434,33 @@
       is loaded. If it is greater than the compiled train, if any, the compile will occur. Otherwise
       the compiled version will be loaded.</p>
 
+      <h3 id="includes">Includes<span class="since">since YAAT 3.4</span></h3>
+
+      <p>The <strong>Includes</strong> feature inserts blocks of YAAT code while a program file is
+      being loaded.  This is enabled by setting <strong>enableIncludes</strong> to <strong>True</strong>
+      in the <strong>config.txt</strong> global settings file.  The included files are located in
+      the <strong>includes</strong> sub-directory within the <strong>yaat</strong> directory.  The
+      <strong>@include some file name.txt</strong> line is replaced by the YAAT text located in the
+      indicated file name. The included file cannot have includes.</p>
+
+      <p>Here is an example.</p>
+      <pre>
+# Move 2019 from SCS 1A to SCS 1
+
+Assign long address 2019 as 2019 in SCS-1A
+Set direction to forward
+
+@include SCS1A-SCS1.txt
+
+Set sensor 2019-SCS1A-SCS1 inactive
+Release throttle
+Halt
+
+@include _sub_SCS-Turnout-Locks.txt
+@include _sub_SCS-Signals.txt
+@include _sub_SCS-XO-Locks.txt
+      </pre>
+
       <h3>Custom Extensions</h3>
 
       <p class="noted">This feature has been removed from YAAT 3.0.</p>
@@ -420,11 +474,11 @@
 
       <p>The custom actions are added to the <strong>customExtensions</strong> dictionary. The key
       is the file name and the data is a list of actions.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

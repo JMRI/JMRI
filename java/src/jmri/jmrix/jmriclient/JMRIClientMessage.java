@@ -63,6 +63,7 @@ public class JMRIClientMessage extends jmri.jmrix.AbstractMRMessage {
         return null;
     }
 
+    @SuppressWarnings("hiding")  // redefines timeout value from super class
     final static protected int LONG_TIMEOUT = 180000;  // e.g. for programming options
 
 }

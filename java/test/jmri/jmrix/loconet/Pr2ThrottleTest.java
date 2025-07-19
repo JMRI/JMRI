@@ -373,6 +373,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup1() {
     }
 
@@ -381,6 +382,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup2() {
     }
 
@@ -389,6 +391,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup3() {
     }
 
@@ -397,6 +400,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup4() {
     }
 
@@ -405,6 +409,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
+    @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
     }
 
@@ -424,6 +429,7 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void tearDown() {
         memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 

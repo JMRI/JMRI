@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI Hardware Support - SRCP Protocol</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Hardware Support - SRCP Protocol</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="../SidebarUp.shtml" -->
@@ -62,11 +62,11 @@
       German)</a>. There's an English <a href="https://srcpd.sourceforge.net/srcp/">overview</a> and
       <a href="https://srcpd.sourceforge.net/srcp/srcp-084.html">document for version 0.8.4 of the
       protocol</a>. The overview page has links to some sample implementations.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

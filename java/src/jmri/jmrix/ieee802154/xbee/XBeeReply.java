@@ -25,7 +25,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public XBeeReply(String s) {
         super(s);
         setBinary(true);
-        byte ba[] = jmri.util.StringUtil.bytesFromHexString(s);
+        byte[] ba = jmri.util.StringUtil.bytesFromHexString(s);
         for(int i=0;i<ba.length;i++) {
            _dataChars[i] = ba[i];
         }
@@ -36,7 +36,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public XBeeReply(XBeeReply l) {
         super(l);
         xbresponse = l.xbresponse;
-        byte data[] = xbresponse.getPacketData();
+        byte[] data = xbresponse.getPacketData();
         for(int i=0;i<data.length;i++) {
            _dataChars[i] = data[i];
         }
@@ -47,7 +47,7 @@ public class XBeeReply extends jmri.jmrix.ieee802154.IEEE802154Reply {
     public XBeeReply(XBeePacket xbr) {
         super();
         xbresponse = xbr;
-        byte data[] = xbr.getPacketData();
+        byte[] data = xbr.getPacketData();
         for(int i=0;i<data.length;i++) {
            _dataChars[i] = data[i];
         }

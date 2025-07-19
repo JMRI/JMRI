@@ -9,17 +9,17 @@
 
         <!--#include virtual="/help/en/parts/SidebarApplications.shtml" -->
 
-        <dt><a href="/help/en/html/tools/">Tools</a></dt>
+        <dt><a href="/help/en/html/tools/index.shtml">Tools</a></dt>
 	<dd>JMRI provides powerful tools for working with your layout.</dd>
 
-        <dt><a href="/help/en/html/tools/automation/">Layout Automation</a></dt>
+        <dt><a href="/help/en/html/tools/automation/index.shtml">Layout Automation</a></dt>
 	<dd>Use JMRI to automate parts of your layout, from simply controlling a crossing gate
 		to running trains in the background.</dd>
 
-        <dt><a href="/help/en/html/hardware/">Supported Hardware</a></dt>
+        <dt><a href="/help/en/html/hardware/index.shtml">Supported Hardware</a></dt>
         <dd>JMRI supports a wide range of DCC systems, command stations and protocols.</dd>
 
-        <dt><a href="/help/en/html/setup/">Installing JMRI</a></dt>
+        <dt><a href="/help/en/html/setup/index.shtml">Installing JMRI</a></dt>
         <dd>JMRI can be installed on a variety of hardware and operating systems.</dd>
 
       </dl>

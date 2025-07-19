@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>JMRI: WiFi Throttle</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: WiFi Throttle</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <!-- Page needs to be split into (1) WiFi Throttles page including intro and table and section on remote use (file location in repository TBD), and (2) section on WiThrottle and its UI (the original intent of this page based on the name of the file and where this file resides in the JMRI repository). @jerryg2003 01/12/2020 -->
 
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -265,10 +265,10 @@
       remote monitoring cameras such as are used for baby monitoring or security cameras as most
       introduce a several second delay -- something that could lead to some very interesting
       railroad accidents!]</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

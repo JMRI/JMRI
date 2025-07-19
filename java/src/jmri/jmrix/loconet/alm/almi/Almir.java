@@ -4,6 +4,9 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.alm.Alm;
 
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+
 /**
  * ALM Interpretation for Routes
  *
@@ -31,7 +34,7 @@ public class Almir {
             return ret;
         }
         String key = EMPTY;
-        if ((l.getOpCode() == 0xE6) && (l.getElement(3) == 0x02)) {
+        if ((l.getOpCode() == LnConstants.OPC_ALM_READ) && (l.getElement(3) == 0x02)) {
             if (l.getElement(2) == 1) {
                 key = "LN_MSG_ALM_ROUTE_CMD_STN_REPORT"; // NOI18N
             } else if (l.getElement(2) != 2) {
@@ -39,7 +42,7 @@ public class Almir {
             } else {
                 key = "LN_MSG_ALM_ROUTE_DEV_REPORT"; // NOI18N
             }
-        } else if ((l.getOpCode() == 0xEE) && (l.getElement(3) == 3)) {
+        } else if ((l.getOpCode() == LnConstants.OPC_IMM_PACKET_2) && (l.getElement(3) == 3)) {
             if (l.getElement(2) == 1) {
                 key = "LN_MSG_ALM_ROUTE_CMD_STN_WRITE"; // NOI18N
             } else if (l.getElement(2) != 2) {
@@ -174,24 +177,38 @@ public class Almir {
         int rts;            // number of routes
         int ents;           // number of entries in routes
         switch (l.getElement(9)) {
-            case 0x74:
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DS74:
                 dev = "DS74"; //NOI18N
                 rts = 8;
                 ents = 8;
                 be = ((mod == DevMode.DS74_LIGHT)?(bs + 7):(bs + 3));
                 break;
-            case 0x7c:
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DS78V:
                 dev = "DS78V"; //NOI18N
                 rts = 16;
                 ents = 8;
                 be = ((mod == DevMode.DS78V_3_POS)?(bs + 15):(bs + 7));
                 break;
-            case 0x46:
+            case LnConstants.RE_IPL_DIGITRAX_HOST_SE74:
                 dev = "SE74"; //NOI18N
                 rts = 64;
                 ents = 16;
                 be = bs + 36;
                 break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_PM74:
+                dev = "PM74"; //NOI18N
+                rts = 0;
+                ents = 0;
+                be = bs + 7;
+                break;
+
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BDL716:
+                dev = "BDL716"; //NOI18N
+                rts = 0;
+                ents = 0;
+                be = bs + 15;
+                break;
+
             default:
                 dev = Bundle.getMessage("LN_MSG_ALM_HELPER_DEVICE_UNKNOWN");
                 be = bs;
@@ -208,7 +225,8 @@ public class Almir {
             return Bundle.getMessage("LN_MSG_ALM_SEL_ROUTE_QUERY", rn, re, re+3);
         }
 
-        if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) || Alm.isSe74CapsRpt(l) ) {
+        if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) ||
+                Alm.isSe74CapsRpt(l) || Alm.isPm74CapsRpt(l) ) {
             if (Alm.isDs74CapsRpt(l) || Alm.isDs78vCapsRpt(l) ) {
                 switch ((l.getElement(10) & 0x1e) >>1) {
                     case 0:
@@ -239,18 +257,27 @@ public class Almir {
             } else if (Alm.isSe74CapsRpt(l)) { // element 10 observed at 0
                 mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
                 // addressing has already been set above
+            } else if (Alm.isPm74CapsRpt(l)) { // element 10 observed at 0
+                mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
+                // addressing has already been set above
             } else {
                 be = bs;  // only show one address
                 mode = "LN_MSG_ALM_HELPER_DEV_MODE_UNDEF"; // NOI18N
             }
 
             mode = Bundle.getMessage(mode);
+
+            if (Alm.isPm74CapsRpt(l)) {
+                return Bundle.getMessage("LN_MSG_DEVICE_NO_ROUTES_CAPABILITIES_REPLY",
+                   dev, ser, bs );
+            }
+
             return Bundle.getMessage("LN_MSG_DEVICE_ROUTES_CAPABILITIES_REPLY",
                    dev, ser, mode, enable, bs, be, rts, ents );
         }
 
         LocoNetMessage seldev = new LocoNetMessage(new int[] {
-            0xee, 0x10, 0x02, 0x0e, 0,0,0,0,0,0,0,0,0,0,0,0
+            LnConstants.OPC_IMM_PACKET_2, 0x10, 0x02, 0x0e, 0,0,0,0,0,0,0,0,0,0,0,0
         });
         int sdm[] = {255,255,255,255,255,255,255,255,255,0,0,0,0,0,0,0};
         if (l.equals(seldev, sdm)) {
@@ -283,7 +310,7 @@ public class Almir {
         return (l.getElement(10)& 0x40) == 0x40;
     }
     private static DevMode getMode(LocoNetMessage l) {
-        if (l.getElement(9) == 0x74) {
+        if (l.getElement(9) == LnConstants.RE_IPL_DIGITRAX_HOST_DS74) {
             switch (l.getElement(10) & 0x1E) {
                 case 0:
                     return DevMode.DS74_SOLE;
@@ -294,7 +321,7 @@ public class Almir {
                 default:
                     break;
             }
-        } else if (l.getElement(9) == 0x7c) {
+        } else if (l.getElement(9) == LnConstants.RE_IPL_DIGITRAX_HOST_DS78V) {
             switch (l.getElement(10) & 0xF) {
                 case 4:
                     return DevMode.DS78V_2_POS;
@@ -310,26 +337,26 @@ public class Almir {
     private static final String EMPTY = "";
 
     private static final LocoNetMessage DESEL = new LocoNetMessage(new int[] {
-    0xEE, 0x10, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3});
+    LnConstants.OPC_IMM_PACKET_2, 0x10, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3});
 
     private static final LocoNetMessage almRouteCapabilitiesQuery = new LocoNetMessage(new int[] {
-        0xEE, 0x10, 1, 0, 0, 0, 0, 0,
+        LnConstants.OPC_IMM_PACKET_2, 0x10, 1, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0});
 
     private static final LocoNetMessage almRouteCapabilitiesQuery2 = new LocoNetMessage(new int[] {
-        0xEE, 0x10, 1, 0, 0, 0, 15, 0,
+        LnConstants.OPC_IMM_PACKET_2, 0x10, 1, 0, 0, 0, 15, 0,
         0, 0, 0, 0, 0, 0, 0, 0});
 
     private static final LocoNetMessage cmdStnRoutesCap = new LocoNetMessage(new int[] {
-            0xE6, 0x10, 1, 0, 0x40, 0, 3, 2, 8,
+            LnConstants.OPC_ALM_READ, 0x10, 1, 0, 0x40, 0, 3, 2, 8,
             0x7F, 0, 0, 0, 0, 0, 0x64});
 
     private static final LocoNetMessage cmdStnRoutesCap2 = new LocoNetMessage(new int[] {
-            0xE6, 0x10, 1, 0, 0, 2, 3, 2, 0x10,
+            LnConstants.OPC_ALM_READ, 0x10, 1, 0, 0, 2, 3, 2, 0x10,
             0x7F, 0, 0, 0, 0, 0, 0x64});
 
     private static final LocoNetMessage AlmRoutesDataQuery = new LocoNetMessage(new int[] {
-        0xEE, 0x10, 1, 2, 0, 0, 0, 0,
+        LnConstants.OPC_IMM_PACKET_2, 0x10, 1, 2, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0});
 
     private static final int[] ardqm = new int[] {255, 255, 255, 255, 0, 0, 0, 0,
@@ -343,5 +370,6 @@ public class Almir {
         DS78V_3_POS,
         UNKN
     }
+//    private final static Logger log = LoggerFactory.getLogger(Almir.class);
 
 }

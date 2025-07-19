@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="ABV2 F Key" CV="154" default="255">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off255.xml"/>
+		<label>Key to activate Rate 2:</label>
+		<label xml:lang="de">ABV2 Funktionstaste:</label>
+		<label xml:lang="nl">ABV2 Functietoets:</label>
+		<label xml:lang="cs">Tlačítko pro aktivaci Míry 2:</label>
+	</variable>
+	<variable item="ABV3 F Key" CV="155" default="255">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off255.xml"/>
+		<label>Key to activate Rate 3:</label>
+		<label xml:lang="de">ABV3 Funktionstaste:</label>
+		<label xml:lang="nl">ABV3 Functietoets:</label>
+		<label xml:lang="cs">Tlačítko pro aktivaci Míry 3:</label>
+	</variable>
+	<variable item="ABV AUS F Key" CV="156" default="255">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off255.xml"/>
+		<label>Key to deactivate ABV:</label>
+		<label xml:lang="de">ABV aus Funktionstaste:</label>
+	</variable>
+	<variable item="RG F Key" CV="157" default="255">
+		<xi:include href="http://jmri.org/xml/decoders/piko/enumFunctionChoiceF68Off255.xml"/>
+		<label>Key to activate shunting mode:</label>
+		<label xml:lang="de">Rangiergang Funktionstaste:</label>
+	</variable>
+</variables>

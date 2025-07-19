@@ -1,0 +1,462 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <variable CV="121" item="Light 1 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 1 Brightness</label>
+  </variable>
+  <variable CV="122" item="Light 2 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 2 Brightness</label>
+  </variable>
+  <variable CV="123" item="Light 3 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 3 Brightness</label>
+  </variable>
+  <variable CV="124" item="Light 4 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 4 Brightness</label>
+  </variable>
+  <variable CV="125" item="Light 5 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 5 Brightness</label>
+  </variable>
+  <variable CV="126" item="Light 6 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 6 Brightness</label>
+  </variable>
+  <variable CV="127" item="Light 7 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 7 Brightness</label>
+  </variable>
+  <variable CV="128" item="Light 8 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 8 Brightness</label>
+  </variable>
+  <variable CV="129" item="Light 9 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 9 Brightness</label>
+  </variable>
+  <variable CV="130" item="Light 10 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 10 Brightness</label>
+  </variable>
+  <variable CV="131" item="Light 11 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 11 Brightness</label>
+  </variable>
+  <variable CV="132" item="Light 12 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 12 Brightness</label>
+  </variable>
+  <variable CV="133" item="Light 13 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 13 Brightness</label>
+  </variable>
+  <variable CV="134" item="Light 14 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 14 Brightness</label>
+  </variable>
+  <variable CV="135" item="Light 15 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 15 Brightness</label>
+  </variable>
+  <variable CV="136" item="Light 16 Brightness" default="100" opsOnly="yes">
+    <decVal />
+    <label>Light 16 Brightness</label>
+  </variable>
+  <variable CV="141" item="Light 1 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 1 Effect</label>
+  </variable>
+  <variable CV="142" item="Light 2 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 2 Effect</label>
+  </variable>
+  <variable CV="143" item="Light 3 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 3 Effect</label>
+  </variable>
+  <variable CV="144" item="Light 4 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 4 Effect</label>
+  </variable>
+  <variable CV="145" item="Light 5 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 5 Effect</label>
+  </variable>
+  <variable CV="146" item="Light 6 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 6 Effect</label>
+  </variable>
+  <variable CV="147" item="Light 7 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 7 Effect</label>
+  </variable>
+  <variable CV="148" item="Light 8 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 8 Effect</label>
+  </variable>
+  <variable CV="149" item="Light 9 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 9 Effect</label>
+  </variable>
+  <variable CV="150" item="Light 10 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 10 Effect</label>
+  </variable>
+  <variable CV="151" item="Light 11 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 11 Effect</label>
+  </variable>
+  <variable CV="152" item="Light 12 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 12 Effect</label>
+  </variable>
+  <variable CV="153" item="Light 13 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 13 Effect</label>
+  </variable>
+  <variable CV="154" item="Light 14 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 14 Effect</label>
+  </variable>
+  <variable CV="155" item="Light 15 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 15 Effect</label>
+  </variable>
+  <variable CV="156" item="Light 16 Effect" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumLightEffect.xml"/>
+      <label>Light 16 Effect</label>
+  </variable>
+<variable CV="161" item="Light 1 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 1 Input Type</label>
+  </variable>
+<variable CV="162" item="Light 2 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 2 Input Type</label>
+  </variable>
+<variable CV="163" item="Light 3 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 3 Input Type</label>
+  </variable>
+<variable CV="164" item="Light 4 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 4 Input Type</label>
+  </variable>
+<variable CV="165" item="Light 5 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 5 Input Type</label>
+  </variable>
+<variable CV="166" item="Light 6 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 6 Input Type</label>
+  </variable>
+<variable CV="167" item="Light 7 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 7 Input Type</label>
+  </variable>
+<variable CV="168" item="Light 8 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 8 Input Type</label>
+  </variable>
+<variable CV="169" item="Light 9 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 9 Input Type</label>
+  </variable>
+<variable CV="170" item="Light 10 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 10 Input Type</label>
+  </variable>
+<variable CV="171" item="Light 11 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 11 Input Type</label>
+  </variable>
+<variable CV="172" item="Light 12 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 12 Input Type</label>
+  </variable>
+<variable CV="173" item="Light 13 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 13 Input Type</label>
+  </variable>
+<variable CV="174" item="Light 14 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 14 Input Type</label>
+  </variable>
+<variable CV="175" item="Light 15 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 15 Input Type</label>
+  </variable>
+<variable CV="176" item="Light 16 Input Type" default="0" opsOnly="yes">
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16EnumInputType.xml"/>
+      <label>Light 16 Input Type</label>
+  </variable>
+
+
+  <variable CV="201" item="Light 1 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="181" max="2047"/>
+    <label>Light 1 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="202" item="Light 2 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="182" max="2047"/>
+    <label>Light 2 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="203" item="Light 3 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="183" max="2047"/>
+    <label>Light 3 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="204" item="Light 4 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="184" max="2047"/>
+    <label>Light 4 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="205" item="Light 5 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="185" max="2047"/>
+    <label>Light 5 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="206" item="Light 6 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="186" max="2047"/>
+    <label>Light 6 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="207" item="Light 7 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="187" max="2047"/>
+    <label>Light 7 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="208" item="Light 8 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="188" max="2047"/>
+    <label>Light 8 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="209" item="Light 9 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="189" max="2047"/>
+    <label>Light 9 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="210" item="Light 10 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="190" max="2047"/>
+    <label>Light 10 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="211" item="Light 11 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="191" max="2047"/>
+    <label>Light 11 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="212" item="Light 12 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="192" max="2047"/>
+    <label>Light 12 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="213" item="Light 13 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="193" max="2047"/>
+    <label>Light 13 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="214" item="Light 14 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="194" max="2047"/>
+    <label>Light 14 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="215" item="Light 15 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="195" max="2047"/>
+    <label>Light 15 Accessory Decoder Number</label>
+  </variable>
+  <variable CV="216" item="Light 16 Accessory Decoder Number" default="0" opsOnly="yes">
+    <splitHundredsVal highCV="196" max="2047"/>
+    <label>Light 16 Accessory Decoder Number</label>
+  </variable>
+
+  <!-- the definition no longer needs the separate thousands-hundreds and tens-ones -->
+  <!-- variables.  We comment them out instead of deleting them in case that was -->
+  <!-- an incorrect decision -->
+
+<!-- 
+  <variable CV="181" item="Light 1 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 1 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="182" item="Light 2 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 2 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="183" item="Light 3 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 3 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="184" item="Light 4 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 4 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="185" item="Light 5 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 5 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="186" item="Light 6 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 6 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="187" item="Light 7 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 7 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="188" item="Light 8 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 8 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="189" item="Light 9 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 9 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="190" item="Light 10 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 10 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="191" item="Light 11 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 11 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="192" item="Light 12 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 12 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="193" item="Light 13 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 13 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="194" item="Light 14 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 14 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="195" item="Light 15 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 15 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  <variable CV="196" item="Light 16 Accessory Decoder Number thousands-hundreds" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 16 Accessory Decoder Number thousands-hundreds</label>
+  </variable>
+  
+  <variable CV="201" item="Light 1 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 1 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="202" item="Light 2 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 2 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="203" item="Light 3 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 3 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="204" item="Light 4 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 4 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="205" item="Light 5 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 5 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="206" item="Light 6 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 6 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="207" item="Light 7 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 7 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="208" item="Light 8 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 8 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="209" item="Light 9 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 9 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="210" item="Light 10 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 10 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="211" item="Light 11 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 11 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="212" item="Light 12 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 12 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="213" item="Light 13 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 13 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="214" item="Light 14 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 14 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="215" item="Light 15 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 15 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="216" item="Light 16 Accessory Decoder Number tens-ones" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 16 Accessory Decoder Number tens-ones</label>
+  </variable>
+  <variable CV="221" item="Light 1 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 1 Auto-Off Timer</label>
+  </variable>
+  <variable CV="222" item="Light 2 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 2 Auto-Off Timer</label>
+  </variable>
+  <variable CV="223" item="Light 3 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 3 Auto-Off Timer</label>
+  </variable>
+  <variable CV="224" item="Light 4 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 4 Auto-Off Timer</label>
+  </variable>
+  <variable CV="225" item="Light 5 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 5 Auto-Off Timer</label>
+  </variable>
+  <variable CV="226" item="Light 6 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 6 Auto-Off Timer</label>
+  </variable>
+  <variable CV="227" item="Light 7 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 7 Auto-Off Timer</label>
+  </variable>
+  <variable CV="228" item="Light 8 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 8 Auto-Off Timer</label>
+  </variable>
+  <variable CV="229" item="Light 9 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 9 Auto-Off Timer</label>
+  </variable>
+  <variable CV="230" item="Light 10 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 10 Auto-Off Timer</label>
+  </variable>
+  <variable CV="231" item="Light 11 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 11 Auto-Off Timer</label>
+  </variable>
+  <variable CV="232" item="Light 12 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 12 Auto-Off Timer</label>
+  </variable>
+  <variable CV="233" item="Light 13 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 13 Auto-Off Timer</label>
+  </variable>
+  <variable CV="234" item="Light 14 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 14 Auto-Off Timer</label>
+  </variable>
+  <variable CV="235" item="Light 15 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 15 Auto-Off Timer</label>
+  </variable>
+  <variable CV="236" item="Light 16 Auto-Off Timer" default="0" opsOnly="yes">
+    <decVal />
+    <label>Light 16 Auto-Off Timer</label>
+  </variable>
+ -->
+ 
+</variables>

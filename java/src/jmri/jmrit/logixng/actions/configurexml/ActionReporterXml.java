@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.actions.configurexml;
 
-import java.util.ResourceBundle;
 
 import jmri.*;
 import jmri.configurexml.JmriConfigureXmlException;
@@ -22,8 +21,6 @@ import org.jdom2.Element;
  * @author Dave Sand Copyright (C) 2021
  */
 public class ActionReporterXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logixng.actions.ActionBundle");
 
     public ActionReporterXml() {
     }

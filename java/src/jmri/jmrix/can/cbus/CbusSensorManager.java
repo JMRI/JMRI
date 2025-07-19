@@ -8,9 +8,6 @@ import javax.annotation.*;
 import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Implement SensorManager for CAN CBUS systems.
  * <p>
@@ -47,7 +44,8 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
             throw e;
         }
         // OK, make
-        Sensor s = new CbusSensor(getSystemPrefix(), newAddress, ((CanSystemConnectionMemo)getMemo()).getTrafficController());
+        Sensor s = new CbusSensor(getSystemPrefix(), newAddress,
+            ((CanSystemConnectionMemo)getMemo()).getTrafficController());
         s.setUserName(userName);
         return s;
     }
@@ -80,7 +78,9 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     @Nonnull
     @CheckReturnValue
     public String getNextValidSystemName(@Nonnull NamedBean currentBean) throws JmriException {
-        if (!allowMultipleAdditions(currentBean.getSystemName())) throw new UnsupportedOperationException("Not supported");
+        if (!allowMultipleAdditions(currentBean.getSystemName())) {
+            throw new UnsupportedOperationException("Not supported");
+        }
 
         String currentName = currentBean.getSystemName();
         String suffix = Manager.getSystemSuffix(currentName);
@@ -104,11 +104,10 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         validateSystemNamePrefix(name, locale);
         try {
-            name = CbusAddress.validateSysName(name.substring(getSystemNamePrefix().length()));
+            return getSystemNamePrefix() + CbusAddress.validateSysName(name.substring(getSystemNamePrefix().length()));
         } catch (IllegalArgumentException ex) {
             throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCustom", ex.getMessage());
         }
-        return getSystemNamePrefix() + name;
     }
 
     /**
@@ -134,27 +133,6 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    /**
-     * Update All Sensors by Requesting Event Status.
-     * Sends a query message to each sensor using the active Sensor address.
-     * e.g. for a CBUS address "-7;+5", the query will go to event 7.
-     * Delay between sends is determined by the Connection Output Interval Setting.
-     * {@inheritDoc}
-     */
-    @Override
-    public void updateAll() {
-        log.info("Requesting status for all sensors");
-        int i = 0;
-        for (Sensor nb : getNamedBeanSet()) {
-            if (nb instanceof CbusSensor) {
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
-                    nb.requestUpdateFromLayout();
-                }, (i * getMemo().getOutputInterval()) );
-                i++;
-            }
-        }
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
@@ -163,6 +141,6 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusSensorManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusSensorManager.class);
 
 }

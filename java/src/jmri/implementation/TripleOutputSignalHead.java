@@ -167,7 +167,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     }
 
     @Override
-    boolean isTurnoutUsed(Turnout t) {
+    public boolean isTurnoutUsed(Turnout t) {
         if (super.isTurnoutUsed(t)) {
             return true;
         }

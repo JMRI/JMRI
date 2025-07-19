@@ -2,7 +2,7 @@
 <!-- CV158, which is sound & Railcom related, added by Nigel Cliffe, 17 Nov 2012 -->
 <!-- version 1.1 Corrected labeling errors for CV158 RailCom speed reporting method, Mark Waters, 17 jan 2015 --> 
 <!-- version 1.2, Ronald Kuhn - add german translation  -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <variable CV="158" item="RailCom speed reporting method" mask="XXXXXVXX" default="0">
     <enumVal>
       <enumChoice choice="Zimo for MX31ZL" value="0">

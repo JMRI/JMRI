@@ -141,15 +141,30 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     }
 
     private void addInetAddresses(){
-        ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
-        Set<InetAddress> addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.All, true, true);
-        for (InetAddress ha : addresses) {
-            textArea.append( System.lineSeparator() + Bundle.getMessage(("IpAddressLine"), // NOI18N
-            !ha.getHostAddress().equals(ha.getHostName()) ? ha.getHostName() : "",
-            ha.isLoopbackAddress() ? " Loopback" : "", // NOI18N
-            ha.isLinkLocalAddress() ? " LinkLocal" : "", // NOI18N
-            ha.getHostAddress(), String.valueOf(hub.getPort())));
-        }
+        var t = jmri.util.ThreadingUtil.newThread(() -> {
+
+                log.trace("start addInetAddresses");
+                ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
+                Set<InetAddress> addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.All, true, true);
+                for (InetAddress ha : addresses) {
+    
+                    var hostAddress = ha.getHostAddress();
+                    var hostName = ha.getHostName();
+                    var hostNameDup = !hostAddress.equals(hostName) ? hostName : "";
+                    var isLoopBack = ha.isLoopbackAddress() ? " Loopback" : ""; // NOI18N
+                    var isLinkLocal = ha.isLinkLocalAddress() ? " LinkLocal" : ""; // NOI18N
+                    var port = String.valueOf(hub.getPort());
+        
+                    jmri.util.ThreadingUtil.runOnGUIEventually( () -> {
+                        textArea.append( System.lineSeparator() + Bundle.getMessage(("IpAddressLine"), // NOI18N
+                            hostNameDup, isLoopBack, isLinkLocal, hostAddress, port));
+                        log.trace("    added a line");
+                    });
+                }
+                log.trace("end addInetAddresses");
+            },
+            memo.getUserName() + " Hub Thread");
+        t.start();    
     }
 
     Thread t;
@@ -196,15 +211,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         advertise(port);
     }
 
-    // For testing
-    @SuppressWarnings("deprecation") // Thread.stop
-    void stopHubThread() {
-        if (t != null) {
-            t.stop();
-            t = null;
-        }
-    }
-
     ArrayList<CanReply> workingReplySet = new ArrayList<>(); // collection of self-sent replies
     ArrayList<CanMessage> workingMessageSet = new ArrayList<>(); // collection of self-sent messages
 
@@ -212,8 +218,12 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
     protected String zero_conf_addr = "_openlcb-can._tcp.local.";
 
     protected void advertise(int port) {
+        log.trace("start advertise");
         _zero_conf_service = ZeroConfService.create(zero_conf_addr, port);
+        log.trace("start publish");
         _zero_conf_service.publish();
+        log.trace("end publish and advertise");
+        
     }
 
     @Override
@@ -285,7 +295,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         if ( _zero_conf_service != null ) { // set on void advertise(int port)
             _zero_conf_service.stop();
         }
-        stopHubThread();
         hub.dispose();
     }
 

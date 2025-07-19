@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - Pierre Billon, Created, since light boards have specific reset/preset options, 26 Feb 2024 -->
+<resets xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <factReset CV="8" default="0" >
+      <label>HARD RESET all CVs reset to default values CV8=0</label>
+      <label xml:lang="cs">HARD RESET všechny CV se resetují na výchozí hodnoty CV8=0</label>
+  </factReset>
+  <factReset CV="8" default="8" >
+      <label>HARD RESET all CVs reset to default for the current Sound Project or CVset CV8=8</label>
+      <label xml:lang="cs">HARD RESET všechny CV se resetují na výchozí hodnoty pro aktuální Zvukový projekt nebo CVset CV8=8</label>
+  </factReset>
+  <factReset CV="8" default="9" >
+      <label>HARD RESET for LGB operation (14 speed steps,pulse chain)</label>
+      <label xml:lang="cs">HARD RESET pro provoz LGB (14 rychlostních kroků, řetězce impulsů)</label>
+  </factReset>
+  <factReset CV="8" default="100" >
+      <label>RESET light board for MAIN+2ND ADDRESS: F0=All on and Fx individually controls FOx LEDs, without lighting effect (CV8=100)</label>
+  </factReset>
+  <factReset CV="8" default="101" >
+      <label>RESET light board for MAIN+2ND ADDRESS: F0=All on and Fx individually controls FOx LEDs, with neon effect (CV8=101)</label>
+  </factReset>
+  <factReset CV="8" default="102" >
+      <label>RESET light board for 2ND ADDRESS: F13=Headlights+FO1 and F14 controls all other LEDs, without lighting effect (CV8=102)</label>
+  </factReset>
+  <factReset CV="8" default="103" >
+      <label>RESET light board for 2ND ADDRESS: F13=Headlights+FO1 and F14 controls all other LEDs, with neon effect (CV8=103)</label>
+  </factReset>
+  <factReset CV="8" default="104" >
+      <label>RESET light board for 2ND ADDRESS: F15=Headlights+FO1 and F16 controls all other LEDs, without lighting effect (CV8=104)</label>
+  </factReset>
+  <factReset CV="8" default="105" >
+      <label>RESET light board for 2ND ADDRESS: F15=Headlights+FO1 and F16 controls all other LEDs, with neon effect (CV8=105)</label>
+  </factReset>
+  <!-- Options for 106 to 117 not included here for sake of simplicity, refer to manual -->
+  <factReset CV="8" default="118" >
+      <label>RESET light board for 2ND ADDRESS: F13=Headlights+FO1 and F14/F15/F16 control front/middle/rear LED groups, without lighting effect (CV8=118)</label>
+  </factReset>
+  <factReset CV="8" default="119" >
+      <label>RESET light board for 2ND ADDRESS: F13=Headlights+FO1 and F14/F15/F16 control front/middle/rear LED groups, with neon effect (CV8=119)</label>
+  </factReset>  
+  <!-- Options for 120 to 125 not included here for sake of simplicity, refer to manual -->
+</resets>

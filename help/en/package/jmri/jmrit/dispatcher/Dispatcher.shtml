@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: DispatcherPro Help</title>
   <meta name="author" content="Dave Duchamp">
-  <meta name="keywords" content="JMRI help Dispatcher"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Dispatcher"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -1104,11 +1104,11 @@
           System: a way of automatically setting up a Dispatcher system</a>
         </li>
       </ul>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

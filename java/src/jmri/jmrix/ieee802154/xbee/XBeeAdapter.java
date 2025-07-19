@@ -2,19 +2,24 @@ package jmri.jmrix.ieee802154.xbee;
 
 import com.digi.xbee.api.connection.ConnectionType;
 import com.digi.xbee.api.connection.IConnectionInterface;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.io.IOException;
+
 import java.util.Arrays;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import jmri.jmrix.SerialPort;
+import jmri.jmrix.SerialPortDataListener;
+import jmri.jmrix.SerialPortEvent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.*;
 
 /**
  * Provide access to IEEE802.15.4 devices via a serial com port.
  *
- * @author Paul Bender Copyright (C) 2013
+ * @author Paul Bender Copyright (C) 2013,2023
  */
-public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements IConnectionInterface, SerialPortEventListener {
+public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements IConnectionInterface, SerialPortDataListener {
 
     private boolean iConnectionOpened = false;
 
@@ -24,148 +29,30 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 
     @Override
     public String openPort(String portName, String appName) {
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
-            // try to set it for serial
-            try {
-                setSerialPort();
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
+           // get and open the primary port
+           currentSerialPort = activatePort(portName,log);
+           // try to set it for serial
+           setSerialPort();
 
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                // report now
-                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-
-            }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows {}", // NOI18N
-                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
-
-                // log events
-                setPortEventLogging(activeSerialPort);
-            }
-
-            opened = true;
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {} ", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;
-        }
-
+        // report status
+        reportPortStatus(log,portName);
+        opened = true;
         return null; // normal operation
     }
-
-    @SuppressFBWarnings(value = {"NO_NOTIFY_NOT_NOTIFYALL", "NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available.  There is only one receive thead, so no reason to call notifyAll.")
-    @Override
-    public void serialEvent(SerialPortEvent e) {
-        int type = e.getEventType();
-        try {
-            if (type == SerialPortEvent.DATA_AVAILABLE) {
-                if (this.getInputStream().available() > 0) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
-                    }
-                    synchronized (this) {
-                        this.notifyAll();
-                    }
-                } else {
-                    log.warn("SerialEvent: DATA_AVAILABLE but no data available.");
-                }
-                return;
-            } else if (log.isDebugEnabled()) {
-                switch (type) {
-                    case SerialPortEvent.DATA_AVAILABLE:
-                        log.info("SerialEvent: DATA_AVAILABLE is {}", e.getNewValue());
-                        return;
-                    case SerialPortEvent.OUTPUT_BUFFER_EMPTY:
-                        log.info("SerialEvent: OUTPUT_BUFFER_EMPTY is {}", e.getNewValue());
-                        return;
-                    case SerialPortEvent.CTS:
-                        log.info("SerialEvent: CTS is {}", e.getNewValue());
-                        return;
-                    case SerialPortEvent.DSR:
-                        log.info("SerialEvent: DSR is {}", e.getNewValue());
-                        return;
-                    case SerialPortEvent.RI:
-                        log.info("SerialEvent: RI is {}", e.getNewValue());
-                        return;
-                    case SerialPortEvent.CD:
-                        log.info("SerialEvent: CD is {}", e.getNewValue());
-                        return;
-                    case SerialPortEvent.OE:
-                        log.info("SerialEvent: OE (overrun error) is {}", e.getNewValue());
-                        return;
-                    case SerialPortEvent.PE:
-                        log.info("SerialEvent: PE (parity error) is {}", e.getNewValue());
-                        return;
-                    case SerialPortEvent.FE:
-                        log.info("SerialEvent: FE (framing error) is {}", e.getNewValue());
-                        return;
-                    case SerialPortEvent.BI:
-                        log.info("SerialEvent: BI (break interrupt) is {}", e.getNewValue());
-                        return;
-                    default:
-                        log.info("SerialEvent of unknown type: {} value: {}", type, e.getNewValue());
-                        return;
-                }
-            }
-        } catch (java.io.IOException ex) {
-            // it's best not to throw the exception because the RXTX thread may not be prepared to handle
-            log.error("RXTX error in serialEvent method", ex);
-        }
-    }
-
 
     /**
      * Local method to do specific port configuration
      */
     @Override
-    protected void setSerialPort() throws UnsupportedCommOperationException {
+    protected void setSerialPort() {
         log.debug("setSerialPort() called.");
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_NONE; // default
-        configureLeadsAndFlowControl(activeSerialPort, flow);
-
-        if (log.isDebugEnabled()) {
-            activeSerialPort.notifyOnFramingError(true);
-            activeSerialPort.notifyOnBreakInterrupt(true);
-            activeSerialPort.notifyOnParityError(true);
-            activeSerialPort.notifyOnOverrunError(true);
-        }
-
-        activeSerialPort.enableReceiveTimeout(10);
+        setBaudRate(currentSerialPort,baud);
+        configureLeads(currentSerialPort,true,true);
 
         // The following are required for the XBee API's input thread.
-        activeSerialPort.notifyOnDataAvailable(true);
-
-        // arrange to notify later
-        try {
-            activeSerialPort.addEventListener(this);
-        } catch (java.util.TooManyListenersException e) {
-            log.error("Exception adding listener ", e);
-        }
+        setDataListener(currentSerialPort,this);
     }
 
     /**
@@ -181,8 +68,6 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         tc.setAdapterMemo(this.getSystemConnectionMemo());
         tc.connectPort(this);
         this.getSystemConnectionMemo().configureManagers();
-        // Configure the form of serial address validation for this connection
-        // adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
     }
 
     /**
@@ -211,12 +96,12 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         }
     }
 
-    private String[] validSpeeds = new String[]{Bundle.getMessage("Baud1200"),
+    private final String[] validSpeeds = new String[]{Bundle.getMessage("Baud1200"),
             Bundle.getMessage("Baud2400"), Bundle.getMessage("Baud4800"),
             Bundle.getMessage("Baud9600"), Bundle.getMessage("Baud19200"),
             Bundle.getMessage("Baud38400"), Bundle.getMessage("Baud57600"),
             Bundle.getMessage("Baud115200")};
-    private int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200};
+    private final int[] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400, 57600, 115200};
 
     @Override
     public int defaultBaudIndex() {
@@ -227,20 +112,20 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 
     @Override
     public void close() {
-        activeSerialPort.close();
+        closeSerialPort(currentSerialPort);
         iConnectionOpened = false;
     }
 
     @Override
     public int readData(byte[] b) throws java.io.IOException {
        log.debug("read data called with {}", b);
-       return serialStream.read(b);
+       return getInputStream().read(b);
     }
 
     @Override
     public int readData(byte[] b,int off, int len) throws java.io.IOException {
        log.debug("read data called with {} {} {}", b, off, len);
-       return serialStream.read(b,off,len);
+       return getInputStream().read(b,off,len);
     }
 
     @Override
@@ -272,6 +157,22 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     @Override
     public ConnectionType getConnectionType() {
         return ConnectionType.UNKNOWN;
+    }
+
+    // SerialPortEventListener methods
+    @Override
+    public int getListeningEvents() {
+        return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
+    }
+
+    @SuppressFBWarnings(value = {"NN_NAKED_NOTIFY"}, justification="The notify call is notifying the receive thread that data is available due to an event.")
+    @Override
+    public void serialEvent(SerialPortEvent serialPortEvent) {
+        if (serialPortEvent.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
+            return;
+        synchronized (this) {
+            this.notifyAll();
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeAdapter.class);

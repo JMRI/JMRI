@@ -34,7 +34,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
 
     // basic table models
     OBlockTableModel oblocks;
-    PortalTableModel portals;
+    private PortalTableModel portals;
     SignalTableModel signals;
     BlockPortalTableModel blockportals;
     // tables created on demand inside TableFrames:
@@ -42,9 +42,9 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     // - PathTurnoutTable(block)
 
     @Nonnull
-    protected OBlockManager oblockManager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
+    protected OBlockManager oblockManager = InstanceManager.getDefault(OBlockManager.class);
     @Nonnull
-    protected PortalManager portalManager = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
+    protected PortalManager portalManager = InstanceManager.getDefault(PortalManager.class);
 
     TableFrames tf;
     OBlockTableFrame otf;
@@ -303,7 +303,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
     // Three [Addx...] buttons on tabbed bottom box handlers
-    
+
     @Override
     protected void addPressed(ActionEvent e) {
         log.warn("This should not have happened");
@@ -467,6 +467,7 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
             signals.setEditMode(true);
             if (signalFrame == null) {
                 signalFrame = new SignalEditFrame(Bundle.getMessage("TitleAddSignal"), null, null, signals);
+                signalFrame.initComponents();
             }
             //signalFrame.updateSignalList();
             signalFrame.resetFrame();
@@ -508,6 +509,15 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         return Bundle.getMessage("TitleOBlockTable");
     }
 
+    @Override
+    public void setMessagePreferencesDetails() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "duplicateUserName", Bundle.getMessage("HideDupUserError"));  // NOI18N
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                setPreferenceItemDetails(getClassName(), "duplicateSystemName", Bundle.getMessage("HideDupSysError"));  // NOI18N
+        super.setMessagePreferencesDetails();
+    }
+
 //    @Override
 //    public void addToPanel(AbstractTableTabAction<OBlock> f) {
 //        // not used (checkboxes etc.)
@@ -543,6 +553,6 @@ public class OBlockTableAction extends AbstractTableAction<OBlock> implements Pr
         return "package.jmri.jmrit.beantable.OBlockTable";
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OBlockTableAction.class);
 
 }

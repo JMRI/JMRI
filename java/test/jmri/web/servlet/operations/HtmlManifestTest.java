@@ -1,11 +1,12 @@
 package jmri.web.servlet.operations;
 
-import jmri.InstanceManager;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.util.JUnitUtil;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -18,6 +19,16 @@ public class HtmlManifestTest {
         HtmlManifest t = new HtmlManifest(java.util.Locale.US,
                      (InstanceManager.getDefault(TrainManager.class)).getTrainById("2"));
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testLocations() throws java.io.IOException {
+        Train train = InstanceManager.getDefault(TrainManager.class).getTrainById("2");
+        train.build();
+        HtmlManifest hc = new HtmlManifest(java.util.Locale.US, train);
+        Assert.assertNotNull("exists", hc);
+        String loc = hc.getLocations();
+        Assert.assertTrue("departure location", loc.contains("Scheduled work at North End Staging"));
     }
 
     @BeforeEach

@@ -6,11 +6,11 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Translated by Blorec Herv&#233; le 2013-09-25-->
   <title>JMRI: DecoderPro User Guide - Fichiers Locomotives</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -78,9 +78,9 @@
               &lt;cvvalue name="2" value="0" /&gt;<br>
               &lt;cvvalue name="3" value="0" /&gt;<br>
               &lt;cvvalue name="4" value="0" /&gt;<br></p>
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
 </div>  <!-- close #mBody -->
-<script src="/js/main.js"></script>
+<script src="/js/help.js"></script>
 </body>
 </html>

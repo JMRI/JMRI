@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceCmdStationMemory;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
@@ -41,28 +40,28 @@ import jmri.util.swing.TextFilter;
  * This backup routine uses the same consist data format as NCE.
  *
  * @author Dan Boudreau Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CONSIST_LNTH = 16; // 16 bytes per line
+    private int consistRecLen = 16; // bytes per line
     private int replyLen = 0; // expected byte length
     private int waiting = 0; // to catch responses not intended for this module
     private boolean fileValid = false; // used to flag backup status messages
 
-    private final byte[] nceConsistData = new byte[CONSIST_LNTH];
+    private final byte[] nceConsistData = new byte[consistRecLen];
 
     JLabel textConsist = new JLabel();
     JLabel consistNumber = new JLabel();
 
     private NceTrafficController tc = null;
-    private int workingNumConsists = -1;
+    private int consistStartNum = -1;
+    private int consistEndNum = -1;
 
     public NceConsistBackup(NceTrafficController t) {
         tc = t;
-        workingNumConsists = NceCmdStationMemory.CabMemorySerial.NUM_CONSIST;
-        if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            workingNumConsists = NceCmdStationMemory.CabMemoryUsb.NUM_CONSIST;
-        }
+        consistStartNum = tc.csm.getConsistMin();
+        consistEndNum = tc.csm.getConsistMax();
     }
 
     @Override
@@ -130,23 +129,29 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
             waiting = 0; // reset in case there was a previous error
             fileValid = true; // assume we're going to succeed
             // output string to file
+            // head 2 bytes, end 2 bytes, mid num * 2 bytes
+            int consistBytesEach = (tc.csm.getConsistMidEntries() * 2) + 2 + 2;
+            int memOffsetEnd = consistBytesEach * (1 +consistEndNum - consistStartNum);
+            int consistRecNum = 0;
+            int consistNum = consistStartNum;
 
-            for (int consistNum = 0; consistNum < workingNumConsists; consistNum++) {
-
+            for (int memOffset = 0; memOffset < memOffsetEnd; memOffset += consistRecLen) {
+                
+                consistNum = consistStartNum + (memOffset / consistBytesEach);
+                consistRecNum = memOffset / consistRecLen;
                 consistNumber.setText(Integer.toString(consistNum));
                 fstatus.setVisible(true);
 
-                getNceConsist(consistNum);
+                getNceConsist(consistRecNum);
 
                 if (!fileValid) {
-                    consistNum = workingNumConsists; // break out of for loop
+                    memOffset = memOffsetEnd; // break out of for loop
                 }
                 if (fileValid) {
                     StringBuilder buf = new StringBuilder();
-                    buf.append(":").append(Integer.toHexString(
-                            NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
+                    buf.append(":").append(Integer.toHexString(tc.csm.getConsistHeadAddr() + memOffset));
 
-                    for (int i = 0; i < CONSIST_LNTH; i++) {
+                    for (int i = 0; i < consistRecLen; i++) {
                         buf.append(" ").append(StringUtil.twoHexFromInt(nceConsistData[i++]));
                         buf.append(StringUtil.twoHexFromInt(nceConsistData[i]));
                     }
@@ -216,10 +221,36 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
         return true;
     }
 
+    /*
+     * // USB set cab memory pointer private void setUsbCabMemoryPointer(int
+     * cab, int offset) { log.debug("Macro base address: {}, offset: {}",
+     * Integer.toHexString(cab), offset); replyLen = NceMessage.REPLY_1; //
+     * Expect 1 byte response waiting++; byte[] bl =
+     * NceBinaryCommand.usbMemoryPointer(cab, offset); NceMessage m =
+     * NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+     * tc.sendNceMessage(m, this); }
+     * 
+     * // USB Read N bytes of NCE cab memory private void readUsbMemoryN(int
+     * num) { switch (num) { case 1: replyLen = NceMessage.REPLY_1; // Expect 1
+     * byte response break; case 2: replyLen = NceMessage.REPLY_2; // Expect 2
+     * byte response break; case 4: replyLen = NceMessage.REPLY_4; // Expect 4
+     * byte response break; default: log.error("Invalid usb read byte count");
+     * return; } waiting++; byte[] bl = NceBinaryCommand.usbMemoryRead((byte)
+     * num); NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
+     * tc.sendNceMessage(m, this); }
+     * 
+     * // USB Write 1 byte of NCE memory private void writeUsbMemory1(byte
+     * value) { log.debug("Write byte: {}", String.format("%2X", value));
+     * replyLen = NceMessage.REPLY_1; // Expect 1 byte response waiting++;
+     * byte[] bl = NceBinaryCommand.usbMemoryWrite1(value); NceMessage m =
+     * NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+     * tc.sendNceMessage(m, this); }
+     */
+    
     // Reads 16 bytes of NCE consist memory
     private NceMessage readConsistMemory(int consistNum) {
 
-        int nceConsistAddr = (consistNum * CONSIST_LNTH) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
+        int nceConsistAddr = (consistNum * consistRecLen) + tc.csm.getConsistHeadAddr();
         replyLen = NceMessage.REPLY_16; // Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);

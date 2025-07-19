@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new include file for SoundTraxx Econami (Micheal Mosher)   -->
 <!-- version 1.1 - fixed enum value for User Adjustable to 7 (Alain LM)     -->
-<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <enumChoice>
     <choice>Flat (off)</choice>
     <choice xml:lang="it">Piatto (off)</choice>

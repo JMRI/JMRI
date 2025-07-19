@@ -5,12 +5,12 @@
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: PanelPro, Fabriquer de Panneaux de Commande</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -295,11 +295,11 @@
       est sur un système LocoNet, vous vous référez à un aiguillage LocoNet tel que LT13, un
       capteur LocoNet tel que LS21, etc. Voir la page sur les <a href=
       "../../doc/Technical/Names.shtml">Noms</a> pour plus d'informations. 
-      <!--#include virtual="/Footer_fr.shtml" --></p>
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" --></p>
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

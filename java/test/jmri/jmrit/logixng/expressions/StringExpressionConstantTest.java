@@ -192,7 +192,7 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
     }
 
     @Test

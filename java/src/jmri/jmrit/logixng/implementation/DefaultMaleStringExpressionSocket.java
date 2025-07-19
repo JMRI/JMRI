@@ -92,7 +92,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
      */
     @Override
     public void registerListenersForThisClass() {
-        ((StringExpressionBean)getObject()).registerListeners();
+        getObject().registerListeners();
     }
     
     /**
@@ -100,7 +100,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((StringExpressionBean)getObject()).unregisterListeners();
+        getObject().unregisterListeners();
     }
     
     @Override

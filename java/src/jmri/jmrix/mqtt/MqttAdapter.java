@@ -110,6 +110,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         options.put("LastWillMessage", new Option(Bundle.getMessage("NameMessageLastWill"),
                     new String[]{Bundle.getMessage("MessageLastWill")}, Option.Type.TEXT));
         allowConnectionRecovery = true;
+
     }
 
     public MqttConnectOptions getMqttConnectionOptions() {
@@ -117,6 +118,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         // Setup the MQTT Connection Options
         MqttConnectOptions mqttConnOpts = new MqttConnectOptions();
         mqttConnOpts.setCleanSession(true);
+        mqttConnOpts.setMaxInflight(100);
+
         if ( getOptionState(MQTT_USERNAME_OPTION) != null
                 && ! getOptionState(MQTT_USERNAME_OPTION).isEmpty()) {
             mqttConnOpts.setUserName(getOptionState(MQTT_USERNAME_OPTION));
@@ -161,14 +164,21 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             }
 
             // generate a unique client ID based on the network ID and the system prefix of the MQTT connection.
-            String clientID = jmri.util.node.NodeIdentity.networkIdentity() + getSystemPrefix();
+            String clientID = jmri.InstanceManager.getDefault(jmri.web.server.WebServerPreferences.class).getRailroadName();
 
-            // ensure that only valid characters are included in the client ID
+            // ensure that only guaranteed valid characters are included in the client ID
             clientID = clientID.replaceAll("[^A-Za-z0-9]", "");
-            //ensure the length of the client ID doesn't exceed the guaranteed acceptable length of 23
-            if (clientID.length() > 23) {
-                clientID = clientID.substring(clientID.length() - 23);
-            }
+
+            String clientIDsuffix = "JMRI" + Integer.toHexString(jmri.util.node.NodeIdentity.networkIdentity().hashCode()) .toUpperCase() + getSystemPrefix();
+
+            // Trim railroad name to fit within MQTT client id 23 character limit.
+            if (clientID.length() > 23 - clientIDsuffix.length())
+                clientID = clientID.substring(0,23 - clientIDsuffix.length());
+
+            clientID = clientID + clientIDsuffix;
+
+            log.info("Connection {} is using a clientID of \"{}\"", getSystemPrefix(), clientID);
+
             String tempdirName = jmri.util.FileUtil.getExternalFilename(jmri.util.FileUtil.PROFILE);
             log.debug("will use {} as temporary directory", tempdirName);
 
@@ -241,6 +251,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             mqttEventListeners.get(fullTopic).remove(mel);
         } catch (NullPointerException e) {
             // Not subscribed
+            log.debug("Unsubscribe but not subscribed: \"{}\"", fullTopic);
             return;
         }
         if (mqttEventListeners.get(fullTopic).isEmpty()) {
@@ -268,9 +279,20 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
      */
     @API(status=API.Status.MAINTAINED)
     public void publish(@Nonnull String topic, @Nonnull byte[] payload) {
+        publish(topic, payload, retained);
+    }
+
+    /**
+     * Send a message over the existing link to a broker.
+     * @param topic The topic, which follows the channel and precedes the payload in the message
+     * @param payload The payload makes up the final part of the message
+     * @param retain Should the message be retained?
+     */
+    @API(status=API.Status.MAINTAINED)
+    public void publish(@Nonnull String topic, @Nonnull byte[] payload, boolean retain) {
         try {
             String fullTopic = baseTopic + topic;
-            mqttClient.publish(fullTopic, payload, qosflag, retained);
+            mqttClient.publish(fullTopic, payload, qosflag, retain);
         } catch (MqttException ex) {
             log.error("Can't publish : ", ex);
         }
@@ -284,6 +306,17 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @API(status=API.Status.MAINTAINED)
     public void publish(@Nonnull String topic, @Nonnull String payload) {
         publish(topic, payload.getBytes());
+    }
+
+    /**
+     * Send a message over the existing link to a broker.
+     * @param topic The topic, which follows the channel and precedes the payload in the message
+     * @param retain Should the message be retained?
+     * @param payload The payload makes up the final part of the message
+     */
+    @API(status=API.Status.MAINTAINED)
+    public void publish(@Nonnull String topic, @Nonnull String payload, boolean retain) {
+        publish(topic, payload.getBytes(), retain);
     }
 
     public MqttClient getMQttClient() {
@@ -373,6 +406,28 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @API(status=API.Status.INTERNAL)
     public void deliveryComplete(IMqttDeliveryToken imdt) {
         log.debug("Message delivered");
+    }
+
+
+    @Override
+    protected void closeConnection(){
+       log.debug("Closing MqttAdapter");
+        try {
+            if (mqttClient != null) {
+                mqttClient.disconnect();
+            }
+        }
+        catch (Exception exception) {
+            log.error("MqttEventListener exception: ", exception);
+        }
+
+    }
+
+    @Override
+    public void dispose() {
+        log.debug("Disposing MqttAdapter");
+        closeConnection();
+        super.dispose();
     }
 
     private final static Logger log = LoggerFactory.getLogger(MqttAdapter.class);

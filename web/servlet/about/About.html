@@ -39,6 +39,7 @@
         <script src="/js/logger.js"></script>
         <script src="/js/jquery.jmri.js"></script>
         <script src="/js/main.js"></script>
+        <script src="/js/about.js"></script>
         <script src="/js/user.js"></script>
     </head>
     <body id="about">
@@ -62,12 +63,14 @@
 				</div>
 				<div class="col-md-10">
 					<ul class="list-group">
-						<li class="list-group-item"><em>JMRI &reg; version</em> <strong>%6$s</strong></li>
+						<li class="list-group-item"><em>JMRI &reg; version:</em> <strong>%6$s</strong></li>
 						<li class="list-group-item"><strong>%7$s</strong></li>
-						<li class="list-group-item"><em>Java version</em> <strong>%8$s (%9$s)</strong></li>
-						<li class="list-group-item"><em>Railroad name</em> <strong>%3$s</strong></li>
-						<li class="list-group-item"><em>Active profile</em> <strong>%10$s</strong></li>
-						<li class="list-group-item"><em>Connections</em> <strong>%5$s</strong></li>
+						<li class="list-group-item"><em>Java version:</em> <strong>%8$s (%9$s)</strong></li>
+						<li class="list-group-item"><em>Railroad name:</em> <strong>%3$s</strong></li>
+						<li class="list-group-item"><em>Active profile:</em> <strong>%10$s</strong></li>
+                        <li class="list-group-item"><em>Connections:</em> <strong>%5$s</strong></li>
+                        <li class="list-group-item"><em>WebSocket Support:</em> <strong>This browser <i><span id='websockettest'>does not support</span></i>
+                         the <a href="https://en.wikipedia.org/wiki/WebSocket">WebSocket protocol</a>.</strong></li>
 					</ul>
 				</div><!-- /col-md-10 -->
 			</div><!-- /row -->

@@ -1,8 +1,8 @@
-# This parses a backup file from a RR-CirKits Tower LCC to make a CSV file of selected contents
+# This parses a backup file from a RR-CirKits Tower/Signal LCC to make a CSV file of selected contents
 # Bob Jacobsen  Copyright 2023
 
 import java
-
+from javax.swing import JFileChooser
 
 fcIn = JFileChooser()
 fcIn.setSelectedFile(java.io.File("."))
@@ -27,7 +27,7 @@ if retIn == JFileChooser.APPROVE_OPTION and retOut == JFileChooser.APPROVE_OPTIO
         index = item.index("=")
         front = item[:index]
         back = item[index+1:-1] # skip NL at end of line
-    
+
         outfile.write("\""+front+"\",\""+back+"\"\n")
 
     outfile.close()

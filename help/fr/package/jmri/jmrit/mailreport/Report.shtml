@@ -3,11 +3,11 @@
 <head>
   <!-- Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013-11-04 -->
   <title>JMRI: Send Problem Report</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -58,9 +58,9 @@
       fen&ecirc;tre va se fermer quelques secondes apr&egrave;s que
       l'information ait &eacute;t&eacute; envoy&eacute;.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

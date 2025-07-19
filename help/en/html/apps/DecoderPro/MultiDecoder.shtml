@@ -5,10 +5,10 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro - Multi-Decoder Tool</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -185,11 +185,11 @@ equal, only CV15 can be written.
       eventually give an answer. This can be made faster in the future by having command stations
       attempt to read just the expected value, instead of 0 to 255, in the absense of an
       acknowledge.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- close #mainContent -->
   </div>
   <!-- closes #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

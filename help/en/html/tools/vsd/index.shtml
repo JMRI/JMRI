@@ -6,11 +6,11 @@
   <meta name="author" content="Klaus Killinger">
   <meta name="author" content="Mark Underwood">
   <meta name="keywords" content="sound model railroad JMRI panelpro">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
   <div id="container">
-    <!--#include virtual="/Header.shtml" -->
+    <!--#include virtual="/help/en/parts/Header.shtml" -->
 
     <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
@@ -55,13 +55,13 @@
           </li>
         </ul>
 
-        <!--#include virtual="/Footer.shtml" -->
+        <!--#include virtual="/help/en/parts/Footer.shtml" -->
       </div>
       <!-- closes #mainContent-->
     </div>
     <!-- closes #mBody-->
   </div>
   <!-- closes #container -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

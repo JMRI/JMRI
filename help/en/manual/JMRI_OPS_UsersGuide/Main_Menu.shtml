@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
-  <title>OperationsPro Menus</title><!--#include virtual="/Style.shtml" -->
+  <title>OperationsPro Menus</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 
   <style>
     .ops-center {text-align: center;}
@@ -10,7 +10,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -117,7 +117,7 @@
         <p><a href="index.shtml#Main">Back to Index</a>
         </p>
       </div>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent -->
   </div>

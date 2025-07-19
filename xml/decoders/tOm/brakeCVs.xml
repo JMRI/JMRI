@@ -14,23 +14,23 @@
 
 <!-- Version 1 - Lolke H Bijlsma - Introduction Lokommander II v5           -->
 
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 
 <!-- Brake functions, see section 12.4 in 0.5.04 decoder manual             -->
 
 <!-- CV197,198,199 set brake functions -->
   <variable item="Brake1 Function" CV="197" default="255">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
     <label>Brake 1 function</label>
   </variable>
 
   <variable item="Brake2 Function" CV="198" default="255">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
     <label>Brake 2 function</label>
   </variable>
 
   <variable item="Brake3 Function" CV="199" default="255">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-F1-F28.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/tOm/enum-tom-F0-F28.xml"/>
     <label>Brake 3 function</label>
   </variable>
 

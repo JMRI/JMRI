@@ -187,8 +187,8 @@ public class ActionScript extends AbstractDigitalAction {
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     private String getTheScript() throws JmriException {
@@ -265,7 +265,7 @@ public class ActionScript extends AbstractDigitalAction {
         LogixNG_ScriptBindings.addScriptBindings(bindings);
 
         SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-        bindings.put("symbolTable", symbolTable);    // Give the script access to the local variable 'symbolTable'
+        bindings.put("symbolTable", symbolTable);    // Give the script access to the local variables in the symbol table
 
         ThreadingUtil.runOnLayoutWithJmriException(() -> {
             ScriptEngineSelector.Engine engine =

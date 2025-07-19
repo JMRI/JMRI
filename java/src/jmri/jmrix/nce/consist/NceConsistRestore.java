@@ -31,10 +31,10 @@ import jmri.util.swing.TextFilter;
  * appropriate consist address.
  *
  * @author Dan Boudreau Copyright (C) 2007
+ * @author Ken Cameron Copyright (C) 2023
  */
 public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListener {
 
-    private static final int CS_CONSIST_MEM = 0xF500; // start of NCE CS Consist memory
     private static final int CONSIST_LNTH = 16; // 16 bytes per consist line
     private static final int REPLY_1 = 1; // reply length of 1 byte expected
     private int replyLen = 0; // expected byte length
@@ -84,9 +84,12 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             waiting = 0;
             fileValid = false; // in case we break out early
             int consistNum = 0; // for user status messages
-            int curConsist = CS_CONSIST_MEM; // load the start address of the NCE consist memory
+            int curConsist = tc.csm.getConsistHeadAddr(); // load the start address of the NCE consist memory
             byte[] consistData = new byte[CONSIST_LNTH]; // NCE Consist data
             String line;
+            int consistMemMim = tc.csm.getConsistHeadAddr();
+            int consistMemMax = consistMemMim + 0x100 + 0x100 + tc.csm.getConsistMidSize();
+            int consistMemAddr;
 
             while (true) {
                 line = in.readLine();
@@ -109,6 +112,27 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                     fileValid = true; // success!
                     break;
                 }
+                
+                // check for consistLine our of range
+                consistMemAddr = Integer.parseUnsignedInt(consistLine[0].replace(":", ""), 16);
+                if (consistMemAddr < consistMemMim) {
+                    log.warn("consist mem file out of range, ending restore, got: {} mimimum: {} ",
+                            Integer.toHexString(consistMemAddr), Integer.toHexString(consistMemMim));
+                    fileValid = true;
+                    break;
+                }
+                if (consistMemAddr >= consistMemMax ) {
+                    log.warn("consist mem file out of range, ending restore, got: {} maximum: {} ",
+                            Integer.toHexString(consistMemAddr), Integer.toHexString(consistMemMax));
+                    fileValid = true;
+                    break;
+                }
+                if (consistMemAddr != curConsist) {
+                    log.warn("consist mem file out of range, ending restore, got: {} expected: {} ",
+                            Integer.toHexString(consistMemAddr), Integer.toHexString(curConsist));
+                    fileValid = true;
+                    break;
+                }
 
                 if (!consistAddr.equalsIgnoreCase(consistLine[0])) {
                     log.error("Restore file selected is not a valid backup file"); // NOI18N
@@ -118,7 +142,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                 }
 
                 // consist file found, give the user the choice to continue
-                if (curConsist == CS_CONSIST_MEM) {
+                if (curConsist == tc.csm.getConsistHeadAddr()) {
                     if (JmriJOptionPane.showConfirmDialog(null,
                             Bundle.getMessage("RestoreTakesAwhile"),
                             Bundle.getMessage("NceConsistRestore"),
@@ -180,6 +204,48 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             // this is the end of the try-with-resources that opens in.
         }
     }
+//
+//    // USB set cab memory pointer
+//    private void setUsbCabMemoryPointer(int cab, int offset) {
+//        log.debug("Macro base address: {}, offset: {}", Integer.toHexString(cab), offset);
+//        replyLen = NceMessage.REPLY_1; // Expect 1 byte response
+//        waiting++;
+//        byte[] bl = NceBinaryCommand.usbMemoryPointer(cab, offset);
+//        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+//        tc.sendNceMessage(m, this);
+//    }
+//
+//    // USB Read N bytes of NCE cab memory
+//    private void readUsbMemoryN(int num) {
+//        switch (num) {
+//            case 1:
+//                replyLen = NceMessage.REPLY_1; // Expect 1 byte response
+//                break;
+//            case 2:
+//                replyLen = NceMessage.REPLY_2; // Expect 2 byte response
+//                break;
+//            case 4:
+//                replyLen = NceMessage.REPLY_4; // Expect 4 byte response
+//                break;
+//            default:
+//                log.error("Invalid usb read byte count");
+//                return;
+//        }
+//        waiting++;
+//        byte[] bl = NceBinaryCommand.usbMemoryRead((byte) num);
+//        NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
+//        tc.sendNceMessage(m, this);
+//    }
+//
+//    // USB Write 1 byte of NCE memory
+//    private void writeUsbMemory1(byte value) {
+//        log.debug("Write byte: {}", String.format("%2X", value));
+//        replyLen = NceMessage.REPLY_1; // Expect 1 byte response
+//        waiting++;
+//        byte[] bl = NceBinaryCommand.usbMemoryWrite1(value);
+//        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
+//        tc.sendNceMessage(m, this);
+//    }
 
     // writes 16 bytes of NCE consist memory
     private NceMessage writeNceConsistMemory(int curConsist, byte[] b) {

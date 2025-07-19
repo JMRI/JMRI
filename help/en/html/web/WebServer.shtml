@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <!-- Copyright 2015 -->
 
-  <title>JMRI Web Server</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI Web Server</title><!--#include virtual="/help/en/parts/Style.shtml" -->
   <meta http-equiv="refresh" content="0; url=index.shtml">
 </head>
 <body>

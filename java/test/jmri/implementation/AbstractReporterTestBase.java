@@ -104,10 +104,8 @@ abstract public class AbstractReporterTestBase {
         }
     }
 
-    @BeforeEach
     abstract public void setUp();
 
-    @AfterEach
     abstract public void tearDown();
 
 }

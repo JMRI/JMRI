@@ -20,9 +20,9 @@ abstract public class AbstractConsistManagerTestBase {
     
     // implementing classes should set cm to a valid value in setUp and 
     // cleanup in tearDown.
-    @BeforeEach
+
     abstract public void setUp();
-    @AfterEach
+
     abstract public void tearDown();
 
 

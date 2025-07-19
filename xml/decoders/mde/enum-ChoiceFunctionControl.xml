@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2012 All rights reserved -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<enumChoice>
+		<choice>by Function Key</choice>
+	</enumChoice>
+	<enumChoice value="1">
+		<choice>Permanently Off</choice>
+		<choice xml:lang="de">Permanent Aus</choice>
+	</enumChoice>
+	<enumChoice value="2">
+		<choice>Permanently On</choice>
+		<choice xml:lang="de">Permanent An</choice>
+	</enumChoice>
+</enumVal>

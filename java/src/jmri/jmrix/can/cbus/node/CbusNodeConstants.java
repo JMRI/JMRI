@@ -184,6 +184,7 @@ public class CbusNodeConstants {
         result.put(1, "CAN"); // NOI18N
         result.put(2, "ETH"); // NOI18N
         result.put(3, "MIWI"); // NOI18N
+        result.put(4, "USB"); // NOI18N
         return Collections.unmodifiableMap(result);
     }
     
@@ -303,6 +304,20 @@ public class CbusNodeConstants {
         result.put(64, "CANEMIO"); // NOI18N
         result.put(65, "CANCABDC"); // NOI18N
         result.put(66, "CANRCOM"); // NOI18N
+        result.put(67, "CANMP3");
+        result.put(68, "CANXMAS");
+        result.put(69, "CANSVOSET");
+        result.put(70, "CANCMDDC");
+        result.put(71, "CANTEXT");
+        result.put(72, "CANASIGNAL");
+        result.put(73, "CANSLIDER");
+        result.put(74, "CANDCATC");
+        result.put(75, "CANGATE");
+        result.put(76, "CANSINP");
+        result.put(77, "CANSOUT");
+        result.put(78, "CANSBIP");
+        result.put(79, "CANBUFFER");
+        result.put(80, "CANLEVER");
         
         result.put(253, "CANUSB"); // NOI18N
         result.put(254, "EMPTY"); // NOI18N
@@ -369,17 +384,21 @@ public class CbusNodeConstants {
      */
     public static String getModuleTypeExtra(int man, int type) {
         String format="";
-        if (man == MANU_MERG) {
-            format = extra165Map.get(type);
-        }
-        else if (man == MANU_ROCRAIL) {
-            format = extra70Map.get(type);
-        }
-        else if (man == MANU_SPECTRUM) {
-            format = extra80Map.get(type);
-        }
-        else if (man == SPROG_DCC) {
-            format = extra44Map.get(type);
+        switch (man) {
+            case MANU_MERG:
+                format = extra165Map.get(type);
+                break;
+            case MANU_ROCRAIL:
+                format = extra70Map.get(type);
+                break;
+            case MANU_SPECTRUM:
+                format = extra80Map.get(type);
+                break;
+            case SPROG_DCC:
+                format = extra44Map.get(type);
+                break;
+            default:
+                break;
         }
         return format;
     }
@@ -464,6 +483,20 @@ public class CbusNodeConstants {
         result.put(64, "Extended CANMIO (24 I/O ports)");
         result.put(65, "DC cab");
         result.put(66, "DCC Railcom detector/reader");
+        result.put(67, "MP3 sound player in response to events (eg: station announcements)");
+        result.put(68, "Addressed RGB LED driver");
+        result.put(69, "Servo setting box");
+        result.put(70, "DC Command station");
+        result.put(71, "Text message display");
+        result.put(72, "Signal controller");
+        result.put(73, "DCC cab with slider control");
+        result.put(74, "DC ATC module");
+        result.put(75, "Logic module using and/or gates");
+        result.put(76, "Q series PIC input module");
+        result.put(77, "Q series PIC output module");
+        result.put(78, "Q series PIC BIP module");
+        result.put(79, "Message buffer");
+        result.put(80, "Lever frame module");
         
         result.put(253, "USB interface");
         result.put(254, "Empty module, bootloader only");
@@ -620,7 +653,21 @@ public class CbusNodeConstants {
         // result.put(64, "CANEMIO"); // NOI18N
         result.put(65, "https://merg.org.uk/merg_wiki/doku.php?id=cbus:cancabdc"); // NOI18N
         result.put(66, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:canrcom"); // NOI18N
-        
+        // result.put(67, "CANMP3");
+        result.put(68, "https://www.merg.org.uk/merg_wiki/doku.php?id=projects:canxmas");
+        // result.put(69, "CANSVOSET");
+        // result.put(70, "CANCMDDC");
+        // result.put(71, "CANTEXT");
+        // result.put(72, "CANASIGNAL");
+        result.put(73, "https://www.merg.org.uk/merg_wiki/doku.php?id=projects:canslider");
+        // result.put(74, "CANDCATC");
+        result.put(75, "https://www.merg.org.uk/merg_wiki/doku.php?id=cbus:cangate");
+        // result.put(76, "CANSINP");
+        // result.put(77, "CANSOUT");
+        // result.put(78, "CANSBIP");
+        // result.put(79, "CANBUFFER");
+        // result.put(80, "CANLEVER");
+
         // result.put(253, "CANUSB"); // NOI18N
         // result.put(254, "EMPTY"); // NOI18N
         // result.put(255, "CAN_SW"); // NOI18N        
@@ -689,28 +736,33 @@ public class CbusNodeConstants {
      */
     private static Map<Integer, String> createModMap() {
         Map<Integer, String> result = new HashMap<>();
-        // Opcodes with no data
-        
+
         for (int i = 100; i < 126; i++) {
             result.put(i, Bundle.getMessage("NdNumReserveFixed")); // NOI18N
         }
+        // use html with br so text fits into dialogue
+        result.put(120, "Reserved / Command Station Shuttles");
         result.put(126, "Reserved for CAN_RS Modules");
         result.put(127, "Reserved for CAN_USB Modules");
+        result.put(162, "Used in Command Station Shuttles");
+        result.put(163, "Used in Command Station Shuttles");
+        result.put(164, "Used in Command Station Shuttles");
+        result.put(167, "Used in Command Station Shuttles");
         result.put(65534, "Reserved for Command Station");
         result.put(65535, "Reserved, used by all CABS");
         return Collections.unmodifiableMap(result);
     }
-    
+
     private static final Map<String, BackupType> nameIndex =
-            new HashMap<String, BackupType>(BackupType.values().length);
+            new HashMap<>(BackupType.values().length);
     static {
         for (BackupType t : BackupType.values()) {
             nameIndex.put(t.name(), t);
         }
     }
-    
+
     private static final Map<BackupType, String> displayPhraseIndex =
-            new HashMap<BackupType, String>(BackupType.values().length);
+            new HashMap<>(BackupType.values().length);
     static {
         displayPhraseIndex.put(BackupType.INCOMPLETE, Bundle.getMessage("BackupIncomplete"));
         displayPhraseIndex.put(BackupType.COMPLETE, Bundle.getMessage("BackupComplete"));
@@ -760,7 +812,7 @@ public class CbusNodeConstants {
         
         private final int v;
 
-        private BackupType(final int v) {
+        BackupType(final int v) {
             this.v = v;
         }
     

@@ -192,10 +192,13 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         for (Runnable r : _setupTasks) {
             r.run();
         }
-        if (errors.size() > 0) {
+        if (!errors.isEmpty()) {
             messageDialog("SetupErrorsTitle", errors, null);
         }
         checkItemsHaveParents();
+
+        // Notify listeners that setupAllLogixNGs() is completed.
+        firePropertyChange(PROPERTY_SETUP, false, true);
     }
 
     /**
@@ -225,7 +228,9 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
     private void checkItemsHaveParents(SortedSet<? extends MaleSocket> set, List<MaleSocket> beansWithoutParentList) {
         for (MaleSocket bean : set) {
-            if (((Base)bean).getParent() == null) beansWithoutParentList.add(bean);
+            if (bean.getParent() == null) {
+                beansWithoutParentList.add(bean);
+            }
         }
     }
 
@@ -305,7 +310,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             for (GlobalVariable gv : globalVariables) {
                 try {
                     gv.initialize();
-                } catch (JmriException e) {
+                } catch (JmriException | IllegalArgumentException e) {
                     log.warn("Variable {} could not be initialized", gv.getUserName(), e);
                 }
             }
@@ -321,7 +326,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                 logixNG.activate();
                 if (logixNG.isActive()) {
                     logixNG.registerListeners();
-                    logixNG.execute(false);
+                    logixNG.execute(false, true);
                     activeLogixNGs.add(logixNG);
                 } else {
                     logixNG.unregisterListeners();
@@ -338,7 +343,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
 
                 if (logixNG.isActive()) {
                     logixNG.registerListeners();
-                    logixNG.execute();
+                    logixNG.execute(true, true);
                 } else {
                     logixNG.unregisterListeners();
                 }
@@ -398,6 +403,13 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
             MutableInt lineNumber) {
 
         for (LogixNG logixNG : getNamedBeanSet()) {
+            if (logixNG.isInline()) continue;
+            logixNG.printTree(settings, locale, writer, indent, "", lineNumber);
+            writer.println();
+        }
+
+        for (LogixNG logixNG : getNamedBeanSet()) {
+            if (!logixNG.isInline()) continue;
             logixNG.printTree(settings, locale, writer, indent, "", lineNumber);
             writer.println();
         }
@@ -491,6 +503,55 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     @Override
     public void registerSetupTask(Runnable task) {
         _setupTasks.add(task);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void executeModule(Module module, Object parameter)
+            throws IllegalArgumentException {
+
+        if (module == null) {
+            throw new IllegalArgumentException("The parameter \"module\" is null");
+        }
+        // Get the parameters for the module
+        Collection<Module.Parameter> parameterNames = module.getParameters();
+
+        // Ensure that there is only one parameter
+        if (parameterNames.size() != 1) {
+            throw new IllegalArgumentException("The module doesn't take exactly one parameter");
+        }
+
+        // Get the parameter
+        Module.Parameter param = parameterNames.toArray(Module.Parameter[]::new)[0];
+        if (!param.isInput()) {
+            throw new IllegalArgumentException("The module's parameter is not an input parameter");
+        }
+
+        // Set the value of the parameter
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put(param.getName(), parameter);
+
+        // Execute the module
+        executeModule(module, parameters);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void executeModule(Module module, Map<String, Object> parameters)
+            throws IllegalArgumentException {
+        DefaultConditionalNG.executeModule(module, parameters);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public FemaleSocket getErrorHandlingModuleSocket() {
+        return AbstractMaleSocket.getErrorHandlingModuleSocket();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isErrorHandlingModuleEnabled() {
+        return AbstractMaleSocket.isErrorHandlingModuleEnabled();
     }
 
     /**

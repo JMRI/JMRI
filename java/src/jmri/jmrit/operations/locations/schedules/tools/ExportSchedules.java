@@ -9,6 +9,7 @@ import org.apache.commons.csv.CSVPrinter;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.util.swing.JmriJOptionPane;
@@ -17,7 +18,6 @@ import jmri.util.swing.JmriJOptionPane;
  * Exports the Operation Schedules into a comma delimited file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2018
- *
  */
 public class ExportSchedules extends XmlFile {
 
@@ -39,7 +39,8 @@ public class ExportSchedules extends XmlFile {
             }
             writeFile(defaultOperationsFilename());
         } catch (IOException e) {
-            log.error("Exception while writing the new CSV operations file, may not be complete", e);
+            log.error("Exception while writing the new CSV operations file, may not be complete: {}",
+                    e.getLocalizedMessage());
         }
     }
 
@@ -50,8 +51,9 @@ public class ExportSchedules extends XmlFile {
             file = new File(name);
         }
 
-        try (CSVPrinter fileOut = new CSVPrinter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
-                    CSVFormat.DEFAULT)) {
+        try (CSVPrinter fileOut = new CSVPrinter(
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
+                CSVFormat.DEFAULT)) {
 
             // create header
             fileOut.printRecord(Bundle.getMessage("ScheduleName"),
@@ -68,11 +70,30 @@ public class ExportSchedules extends XmlFile {
                     Bundle.getMessage("Count"),
                     Bundle.getMessage("Wait"),
                     Bundle.getMessage("Hits"),
-                    Bundle.getMessage("Comment"));
+                    Bundle.getMessage("Comment"),
+                    Bundle.getMessage("Number"),
+                    Bundle.getMessage("Location"),
+                    Bundle.getMessage("Spur"),
+                    Bundle.getMessage("ScheduleMode"));
 
-            List<Schedule> schedules = InstanceManager.getDefault(ScheduleManager.class).getSchedulesByNameList();
+            ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
+            List<Schedule> schedules = scheduleManager.getSchedulesByNameList();
             for (Schedule schedule : schedules) {
+                List<Track> spurs = scheduleManager.getListSpurs(schedule);
+                int size = spurs.size();
                 for (ScheduleItem scheduleItem : schedule.getItemsBySequenceList()) {
+                    // list each location, track, and mode for this schedule
+                    String num = "";
+                    String locationName = "";
+                    String spurName = "";
+                    String scheduleMode = "";
+                    if (size > 0) {
+                        num = Integer.toString(size);
+                        Track spur = spurs.get(--size);
+                        locationName = spur.getLocation().getName();
+                        spurName = spur.getName();
+                        scheduleMode = spur.getScheduleModeName();
+                    }
                     fileOut.printRecord(schedule.getName(),
                             scheduleItem.getId(),
                             scheduleItem.getTypeName(),
@@ -87,18 +108,19 @@ public class ExportSchedules extends XmlFile {
                             scheduleItem.getCount(),
                             scheduleItem.getWait(),
                             scheduleItem.getHits(),
-                            schedule.getComment());
+                            schedule.getComment(),
+                            num,
+                            locationName,
+                            spurName,
+                            scheduleMode);
                 }
-
             }
-            fileOut.flush();
-            fileOut.close();
             log.info("Exported {} schedules to file {}", schedules.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedSchedulesToFile", schedules.size(), defaultOperationsFilename()),
                     Bundle.getMessage("ExportComplete"), JmriJOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            log.error("Can not open export schedules CSV file: {}", file.getName());
+            log.error("Can not open export schedules CSV file: {}", e.getLocalizedMessage());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedSchedulesToFile", 0, defaultOperationsFilename()),
                     Bundle.getMessage("ExportFailed"), JmriJOptionPane.ERROR_MESSAGE);

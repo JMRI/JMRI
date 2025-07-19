@@ -4,8 +4,8 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: GitHub Administration</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI Git Github"><!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+  <meta name="keywords" content="JMRI Git Github"><!--#include virtual="/help/en/parts/Style.shtml" -->
+</head><!--#include virtual="/help/en/parts/Header.shtml" -->
 
 <body>
   <div id="mBody">
@@ -160,11 +160,11 @@
       <h2 id="branches">Branches</h2>
       What do we keep as <a href="https://github.com/JMRI/JMRI/branches">main repository
       branches</a> (as opposed to in user repositories, which is not our problem)? When do we clean
-      them out? <!--#include virtual="/Footer.shtml" -->
+      them out? <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

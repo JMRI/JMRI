@@ -84,7 +84,6 @@ abstract public class AbstractTurnoutServerTestBase {
     /**
      * pre test setup.  Must setup TurnoutServer ts.
      */
-    @BeforeEach
     abstract public void setUp(); 
 
     /**

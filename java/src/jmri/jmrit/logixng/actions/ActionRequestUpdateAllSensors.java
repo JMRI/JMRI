@@ -27,13 +27,14 @@ public class ActionRequestUpdateAllSensors extends AbstractDigitalAction {
         String userName = userNames.get(getSystemName());
         if (sysName == null) sysName = manager.getAutoSystemName();
         ActionRequestUpdateAllSensors copy = new ActionRequestUpdateAllSensors(sysName, userName, _memo);
+        copy.setComment(getComment());
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     public void setMemo(SystemConnectionMemo memo) {

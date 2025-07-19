@@ -2,9 +2,10 @@ package jmri.jmrix.powerline.dmx512;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
-import purejavacomm.SerialPort;
 
 import java.io.IOException;
+
+import jmri.jmrix.SerialPort;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +39,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     public byte[] dmxArray = new byte[513];
     private int intensitySteps = 255;
     private SerialPort activePort = null;
-    
+
     /**
      * set value in dmxArray
      * @param unitId offset in dmxArray
@@ -52,7 +53,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         }
         return(false);
     }
-     
+
     @Override
     protected void transmitLoop() {
         if (oneTimeLog) {
@@ -84,17 +85,37 @@ public class SpecificTrafficController extends SerialTrafficController {
         while (!connectionError && !threadStopRequest) {
             try {
                 if (ostream != null) {
-                    // break should be for 176 mSec 
+                    // break should be for at least 176 uSec
                     if (activePort != null) {
                         //log.info("Start Break");
-                        activePort.sendBreak(0);
+                        activePort.setBreak();
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException e) {
+                            log.warn("transmitLoop did not expected to be interrupted during break");
+                            break;
+                        }
+                        activePort.clearBreak();
                         //log.info("Break Sent");
+                        // wait at least 8 usec (not msec, usec)
+                        try {
+                            Thread.sleep(1);
+                        } catch (InterruptedException e) {
+                            log.warn("transmitLoop did not expected to be interrupted during clear");
+                            break;
+                        }
                     }
                     /**
                      * send the buffer of data
                      */
-                    ostream.write(dmxArray);
-
+                    try {
+                        ostream.write(dmxArray);
+                    } catch (com.fazecast.jSerialComm.SerialPortTimeoutException ex) {
+                        if (!threadStopRequest) {
+                            log.warn("DMX512 write operation ended early");
+                        }
+                        return;
+                    }
                     /**
                      * wait 25 mSec, then repeat
                      */
@@ -124,7 +145,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             Thread.currentThread().interrupt();
         }
     }
-    
+
     /**
      * This system provides 256 dim steps
      */

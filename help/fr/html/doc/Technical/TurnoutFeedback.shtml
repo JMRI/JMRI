@@ -5,11 +5,11 @@
   <title>JMRI: Turnout Feedback</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI Turnout feedback">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -228,9 +228,9 @@ confirmation que l'aiguillage a chang&#233;.
 Avec le r&#233;glage MONITORING, quand quelque chose en dehord de JMRI ( un autre programme , un r&#233;gulateur manuel)
 change l'&#233;tat de l'aiguillage, JMRI l'accepte et change ses &#233;tats internes pour l'aiguillage.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

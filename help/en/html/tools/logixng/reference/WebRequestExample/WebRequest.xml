@@ -12,8 +12,8 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
   <jmriversion>
     <major>5</major>
-    <minor>5</minor>
-    <test>5</test>
+    <minor>7</minor>
+    <test>3</test>
     <modifier>plus</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -60,7 +60,7 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
     </light>
   </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="11:40 AM">
+    <memory value="10:58 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -564,9 +564,9 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Fri Nov 10 11:40:30 CET 2023</date>
-      <filename />
+      <date>Tue Feb 06 22:58:32 CET 2024</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/WebRequest_temp.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.5.5plus+daniel+2023-11-10T10:39:00Z+R4ada181 on Fri Nov 10 11:40:30 CET 2023-->
+  <!--Written by JMRI version 5.7.3plus+daniel+2024-02-06T21:58:15Z+RUNKNOWN on Tue Feb 06 22:58:32 CET 2024-->
 </layout-config>

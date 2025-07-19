@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2023</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Chuck</firstname>
+        <surname>Stancil</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2023-12-12</date>
+      <authorinitials>CJS</authorinitials>
+      <revremark>Created</revremark>
+    </revision>
+  </revhistory>
+  <decoder>
+    <family name="Signal and Lighting" mfg="Logic Rail Technologies">
+      <model model="Light EFX-16" connector="Wires">
+        <output name="1" label="Light 1" />
+        <output name="2" label="Light 2" />
+        <output name="3" label="Light 3" />
+        <output name="4" label="Light 4" />
+        <output name="5" label="Light 5" />
+        <output name="6" label="Light 6" />
+        <output name="7" label="Light 7" />
+        <output name="8" label="Light 8" />
+        <output name="9" label="Light 9" />
+        <output name="10" label="Light 10" />
+        <output name="11" label="Light 11" />
+        <output name="12" label="Light 12" />
+        <output name="13" label="Light 13" />
+        <output name="14" label="Light 14" />
+        <output name="15" label="Light 15" />
+        <output name="16" label="Light 16" />
+        <size length="114.3" width="81.3" height="12" units="mm" />
+        <protocols>
+          <protocol>dcc</protocol>
+        </protocols>
+      </model>
+    </family>
+    <programming direct="no" paged="no" register="no" ops="yes">
+      <capability>
+        <name>Ops Mode Delayed Programming</name>
+        <parameter name="Delay">500</parameter>
+      </capability>
+      <mode>OPSBYTEMODE</mode>
+    </programming>
+    <variables>
+      <!-- Add dummy variables first to set up opsOnly mode for shortAddressOnly-->
+      <variable CV="1" item="Dummy 1" opsOnly="yes">
+        <decVal />
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAddressOnly.xml" />
+      <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16CVs.xml" />
+    </variables>
+    <resets>
+      <mode>OPSBYTEMODE</mode>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16BasicPane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light1Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light2Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light3Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light4Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light5Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light6Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light7Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light8Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light9Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light10Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light11Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light12Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light13Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light14Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light15Pane.xml" />
+  <xi:include href="http://jmri.org/xml/decoders/logicrailtech/lightEFX16Light16Pane.xml" />
+</decoder-config>

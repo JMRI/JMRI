@@ -6,11 +6,11 @@
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content=
   "JMRI help SignalMast Logic Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -140,9 +140,9 @@
       tableaux contenant les donn&eacute;es automatiquement
       g&eacute;n&eacute;r&eacute;s seront alors re-remplis.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

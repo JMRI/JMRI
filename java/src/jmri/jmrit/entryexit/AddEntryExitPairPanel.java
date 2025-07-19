@@ -20,6 +20,7 @@ import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.display.EditorManager;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -128,6 +129,64 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
         nxPairs.addNXDestination(from.getPoint(), to.getPoint(), panel);
         nxPairs.setEntryExitType(from.getPoint(), panel, to.getPoint(), typeBox.getSelectedIndex());
+
+        validateManualPair(from.getPoint(), to.getPoint());
+    }
+
+    /**
+     * Verify that a route can be set between the source and destination points.
+     * @parm fromPoint The source bean, normally a sensor.
+     * @parm toPoint The destination bean, normally a sensor.
+     */
+    private void validateManualPair(NamedBean fromPoint, NamedBean toPoint) {
+        var fromDetail = nxPairs.getPointDetails(fromPoint, panel);
+        var toDetail = nxPairs.getPointDetails(toPoint, panel);
+        if (fromDetail == null || toDetail == null) {
+            log.debug("validateManualPair: a point detail was null, skip checks");
+            return;
+        }
+
+        // Get the facing and protected blocks for each point.
+        var fromFace = fromDetail.getFacing();
+        var fromProtect = fromDetail.getProtecting();
+        var toFace = toDetail.getFacing();
+        var toProtect = toDetail.getProtecting();
+        if (fromFace == null || fromProtect.isEmpty() || toFace == null || toProtect.isEmpty()) {
+            log.debug("validateManualPair: a facing block or a protected block was not found, skip checks");
+            return;
+        }
+
+        log.debug("validateManualPair: from: {} :: {}", fromFace.getDisplayName(), fromProtect.get(0).getDisplayName());
+        log.debug("validateManualPair: to: {} :: {}", toFace.getDisplayName(), toProtect.get(0).getDisplayName());
+
+        var lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+        var lbc = lbm.getLayoutBlockConnectivityTools();
+
+        try {
+            if (!lbc.checkValidDest(
+                    fromFace, fromProtect.get(0), toFace, toProtect,
+                    jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR)) {
+                log.debug("validateManualPair: checkValidDest returned false");
+                validateDialog(fromPoint, toPoint);
+            }
+        } catch(jmri.JmriException ex) {
+            log.debug("validateManualPair: JmriException: {}", ex.getMessage());
+            validateDialog(fromPoint, toPoint);
+        }
+    }
+
+    /**
+     * Display the validation failed dialog.  Provide an option to delete the bad NX pair that was just added.
+     * @parm fromPoint The source bean, normally a sensor.
+     * @parm toPoint The destination bean, normally a sensor.
+     */
+    private void validateDialog(NamedBean fromPoint, NamedBean toPoint) {
+        int reply = JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("ValidateWarning"), Bundle.getMessage("ValidateTitle"),  // NOI18N
+                JmriJOptionPane.YES_NO_OPTION,
+                JmriJOptionPane.WARNING_MESSAGE);
+        if (reply == JmriJOptionPane.YES_OPTION) {
+            nxPairs.deleteNxPair(fromPoint, toPoint, panel);
+        }
     }
 
     jmri.util.JmriJFrame entryExitFrame = null;

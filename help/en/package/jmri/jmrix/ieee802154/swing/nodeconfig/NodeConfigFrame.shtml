@@ -4,19 +4,19 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <meta name="keywords" content=
   "JMRI help IEEE802154 NODE Manager CONFIG TOOL configuration variable">
-  <title>JMRI: IEEE802154 Node Configuration</title><!--#include virtual="/Style.shtml" -->
+  <title>JMRI: IEEE802154 Node Configuration</title><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <h1>JMRI: IEEE802154 - Node Configuration</h1>
-      Help is on the way. <!--#include virtual="/Footer.shtml" -->
+      Help is on the way. <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

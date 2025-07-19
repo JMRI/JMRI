@@ -128,6 +128,8 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                 case BidibLibrary.MSG_BM_CURRENT:
                 case BidibLibrary.MSG_CS_STATE:
                 case BidibLibrary.MSG_CS_SET_STATE:
+                case BidibLibrary.MSG_LOCAL_PING:
+                case BidibLibrary.MSG_LOCAL_PONG:
                     return true;
                 default:
                     break;
@@ -139,7 +141,8 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
     private void log1Message(BidibMessageInterface message, String line) {
         Node node = tc.getNodeByAddr(message.getAddr());
         if (node != null) {
-            output += String.format(" %010X (%s)", node.getUniqueId() & 0xffffffffffL, node.getStoredString(StringData.INDEX_USERNAME)) + ": ";
+            output += String.format(" %010X (%s)", node.getUniqueId() & 0xffffffffffL,
+                node.getStoredString(StringData.INDEX_USERNAME)) + ": ";
         }
         else {
             output += NodeUtils.formatAddress(message.getAddr()) + ": ";
@@ -781,6 +784,9 @@ public class BiDiBMonPane extends jmri.jmrix.AbstractMonPane implements BiDiBPan
                 List<String> lines = new ArrayList<>();
                 List<BidibMessageInterface> messages = new ArrayList<>();
                 BidibRequestFactory requestFactory = tc.getBidib().getRootNode().getRequestFactory();
+                // Note: netBiDiB does NOT use the escape sequence. We must tell the parser not to use them
+                // otherwise a byte could be misinterpreted as an escape character and the parser will fail.
+                requestFactory.setEscapeMagic(!tc.isNetBiDiB());
                 try {
                     List<BidibMessageInterface> commandMessages = requestFactory.create(data);
                     for (BidibMessageInterface message : commandMessages) {

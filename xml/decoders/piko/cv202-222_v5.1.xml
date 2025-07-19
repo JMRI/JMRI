@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Servo1_speed" CV="202" default="20" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 1 speed</label>
+		<label xml:lang="de">Servo 1 Geschwindigkeit</label>
+		<tooltip/>
+		<tooltip xml:lang="de"/>
+	</variable>
+	<variable item="Servo1_Pos1" CV="203" default="128" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 1 hold position 1</label>
+		<label xml:lang="de">Servo 1 Halteposition 1</label>
+	</variable>
+	<variable item="Servo1_Pos2" CV="204" default="128" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 1 hold position 2</label>
+		<label xml:lang="de">Servo 1 Halteposition 2</label>
+	</variable>
+	<variable item="Servo2_speed" CV="208" default="20" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 2 speed</label>
+		<label xml:lang="de">Servo 2 Geschwindigkeit</label>
+		<tooltip/>
+		<tooltip xml:lang="de"/>
+	</variable>
+	<variable item="Servo2_Pos1" CV="209" default="128" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 2 hold position 1</label>
+		<label xml:lang="de">Servo 2 Halteposition 1</label>
+	</variable>
+	<variable item="Servo2_Pos2" CV="210" default="128" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 2 hold position 2</label>
+		<label xml:lang="de">Servo 2 Halteposition 2</label>
+	</variable>
+	<variable item="Servo3_speed" CV="214" default="20" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 3 speed</label>
+		<label xml:lang="de">Servo 3 Geschwindigkeit</label>
+		<tooltip/>
+		<tooltip xml:lang="de"/>
+	</variable>
+	<variable item="Servo3_Pos1" CV="215" default="128" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 3 hold position 1</label>
+		<label xml:lang="de">Servo 3 Halteposition 1</label>
+	</variable>
+	<variable item="Servo3_Pos2" CV="216" default="128" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 3 hold position 2</label>
+		<label xml:lang="de">Servo 3 Halteposition 2</label>
+	</variable>
+	<variable item="Servo4_speed" CV="220" default="20" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 4 speed</label>
+		<label xml:lang="de">Servo 4 Geschwindigkeit</label>
+		<tooltip/>
+		<tooltip xml:lang="de"/>
+	</variable>
+	<variable item="Servo4_Pos1" CV="221" default="128" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 4 hold position 1</label>
+		<label xml:lang="de">Servo 4 Halteposition 1</label>
+	</variable>
+	<variable item="Servo4_Pos2" CV="222" default="128" tooltip="(0-255)">
+		<decVal/>
+		<label>Servo 4 hold position 2</label>
+		<label xml:lang="de">Servo 4 Halteposition 2</label>
+	</variable>
+</variables>

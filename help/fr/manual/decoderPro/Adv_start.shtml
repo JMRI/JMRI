@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <title>Basic Programming</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
     <!--#include virtual="../Sidebar.shtml" -->
     <div id="mainContent">
@@ -46,9 +46,9 @@ so.&nbsp; This is done just &nbsp;as you would in the <a href="Basic_Programming
 <p><a href="index.shtml#AdvanceProgram">Back to Index</a></p>
 </div>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
  </body>
 </html>

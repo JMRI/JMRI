@@ -5,11 +5,11 @@
   <title>JMRI: Xml Schema Examples</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml schema usage">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -145,9 +145,9 @@ peu probable qu'il soit utilis&eacute; ailleur:
 &lt;xs:attributeGroup ref="EditorCommonAttributesGroup" /&gt;
 </pre>
 
-        <!--#include virtual="/Footer_fr.shtml" -->
+        <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

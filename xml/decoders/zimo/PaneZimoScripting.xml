@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- scripting variables CVs 980-1019, primarily MS series decoders, but may be used with some MX series -->
+<!-- version 1.0 - Nigel Cliffe, March 2025 -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <name>Zimo Scripting</name>
+  <column>
+      <row>
+        <column> 
+            <label>
+                <text>Zimo Scripts can control features in sound projects.  Refer to documentation for specific sound project for details of any script within that sound project.</text>
+            </label>
+            <label>
+            <text>        </text>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+            <display item="Script Running 1" format="checkbox"/>
+            <display item="Script Running 2" format="checkbox"/>
+            <display item="Script Running 3" format="checkbox"/>
+            <display item="Script Running 4" format="checkbox"/>
+        </column>
+        
+         <column>
+          <label>
+            <text>        </text>
+          </label>
+        </column>
+        
+        <column>
+            <display item="Script Running 5" format="checkbox"/>
+            <display item="Script Running 6" format="checkbox"/>
+            <display item="Script Running 7" format="checkbox"/>
+            <display item="Script Running 8" format="checkbox"/>
+        </column>
+
+        <column>
+          <label>
+            <text>        </text>
+          </label>
+        </column>
+        
+        <column>
+            <display item="Script Running 9" format="checkbox"/>
+            <display item="Script Running 10" format="checkbox"/>
+            <display item="Script Running 11" format="checkbox"/>
+            <display item="Script Running 12" format="checkbox"/>
+        </column>
+
+        <column>
+          <label>
+            <text>        </text>
+          </label>
+        </column>
+        
+        <column>
+            <display item="Script Running 13" format="checkbox"/>
+            <display item="Script Running 14" format="checkbox"/>
+            <display item="Script Running 15" format="checkbox"/>
+            <display item="Script Running 16" format="checkbox"/>
+        </column>
+      </row>
+      
+    <row>
+        <column> 
+            <label>
+                <text>        
+                </text>
+            </label>
+            <label>
+                <text>Zimo Script Variables can control features within a script. Refer to documentation for specific sound project for how these variables are used in the project.</text>
+            </label>
+            <label>
+            <text>        </text>
+          </label>
+        </column>
+      </row>
+
+      
+      <row>
+        <column>
+            <display item="Script Variable 980" />
+            <display item="Script Variable 981" />
+            <display item="Script Variable 982" />
+            <display item="Script Variable 983" />
+            <display item="Script Variable 984" />
+            <display item="Script Variable 985" />
+            <display item="Script Variable 986" />
+            <display item="Script Variable 987" />
+            <display item="Script Variable 988" />
+            <display item="Script Variable 989" />
+            
+        </column>
+
+        <column>
+          <label>
+            <text>        </text>
+          </label>
+        </column>
+        
+        <column>
+            <display item="Script Variable 990" />
+            <display item="Script Variable 991" />
+            <display item="Script Variable 992" />
+            <display item="Script Variable 993" />
+            <display item="Script Variable 994" />
+            <display item="Script Variable 995" />
+            <display item="Script Variable 996" />
+            <display item="Script Variable 997" />
+            <display item="Script Variable 998" />
+            <display item="Script Variable 999" />
+            
+        </column>
+
+        <column>
+          <label>
+            <text>        </text>
+          </label>
+        </column>
+        
+        <column>
+            <display item="Script Variable 1000" />
+            <display item="Script Variable 1001" />
+            <display item="Script Variable 1002" />
+            <display item="Script Variable 1003" />
+            <display item="Script Variable 1004" />
+            <display item="Script Variable 1005" />
+            <display item="Script Variable 1006" />
+            <display item="Script Variable 1007" />
+            <display item="Script Variable 1008" />
+            <display item="Script Variable 1009" />
+            
+        </column>
+
+        <column>
+          <label>
+            <text>        </text>
+          </label>
+        </column>
+        
+        <column>
+            <display item="Script Variable 1010" />
+            <display item="Script Variable 1011" />
+            <display item="Script Variable 1012" />
+            <display item="Script Variable 1013" />
+            <display item="Script Variable 1014" />
+            <display item="Script Variable 1015" />
+            <display item="Script Variable 1016" />
+            <display item="Script Variable 1017" />
+            <display item="Script Variable 1018" />
+            <display item="Script Variable 1019" />
+            
+        </column>
+
+      </row>
+  </column>
+</pane>

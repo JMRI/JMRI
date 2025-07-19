@@ -6,10 +6,10 @@
   <meta name="author" content="Daniel Bergqvist">
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference tables">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -263,15 +263,15 @@
 
       <p><strong>You must not use single or double quotes in the CSV table. OpenOffice Calc uses
       different single quote characters at the beginning of a word and at the end of a word, and if
-      you store a csv file with these, you might end up with non readable characters in the CSV
-      file. OpenOffice Calc also writes non readable characters for double qoute characters to the
+      you store a CSV file with these, you might end up with non readable characters in the CSV
+      file. OpenOffice Calc also writes non readable characters for double quote characters to the
       CSV file.</strong>
       </p>
 
       <p>Also, don't use backspace in the CSV file. It might later be supported to quote other
-      characters so it's reserved fornow.</p>
+      characters so it's reserved for now.</p>
 
-      <p>If a name has the characters comma, left or righ square bracket or left or right curly
+      <p>If a name has the characters comma, left or right square bracket or left or right curly
       brackets, these characters must be escaped by preceding them with a backslash. Examples: \,
       \[ \] \{ \} \\</p>
 
@@ -311,8 +311,12 @@
       will change based on the table and row/column selections. Enter the name of a local
       variable.  The table, row and column names can also refer to local variables or references.</p>
 
-      <p>After the action has been created, add another action to the new A1 do handle the current
+      <p>After the action has been created, add another action to the new A1 to handle the current
       cell item.</p>
+
+      <p>If the <strong>-- Header --</strong> item is selected, the column names will be returned if
+      <strong>Row</strong> is selected and the row names if <strong>Column</strong> is selected.
+      <span class="since">since 5.7.4</span></p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -359,7 +363,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Find table row or column<span class="since">since 5.1.6</span></h5>
+      <h5 id="find_in_table">Find table row or column<span class="since">since 5.1.6</span></h5>
 
       <p>Search table cells for a cell that contains the string value in the bean local variable.
       When a match is found, a <strong>map</strong> of the cells for the row or column is in the row
@@ -393,7 +397,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Listen on beans - Table</h5>
+      <h5 id="lob_table">Listen on beans - Table</h5>
 
       <p>Since the items in the table, such as turnouts and sensors, are accessed using references,
       when their state changes, there is no notification of the event. See <a href=
@@ -473,11 +477,11 @@
 
       <p><a href="index.shtml">Return to the Reference TOC</a>
       </p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

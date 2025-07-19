@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Understanding the Data Management</title>
   <meta name="author" content="Jerry Grochow">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
   <!-- Sortable tables -->
   <!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
 
@@ -40,7 +40,7 @@
   </style>
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -357,7 +357,7 @@
           </td>
           <td class="who">UC/US</td>
           <td class="cmd">Tools &rArr; Speedometer, Hit "Save as default"</td>
-          <td class="store">In PanelProSpeedometer.xml in User Files location. NOTE: <em>"Save as default" 
+          <td class="store">In PanelProSpeedometer.xml in User Files location. NOTE: <em>"Save as default"
           causes sensors to be created if they do not already exist.  These must then be saved in a panel file.</em></td>
           <td>
           </td>
@@ -439,11 +439,11 @@
         <tr>
           <td class="type">Other</td>
           <td class="data">Backup panels</td>
-          <td class="where">Whenever panels or tables are stored</td>
+          <td class="where">Whenever tables and panels are stored with the same file name.</td>
           <td class="who"><strong>AC/AS</strong>
           </td>
           <td class="cmd">NA</td>
-          <td class="store">In backupPanels/ in Profile location</td>
+          <td class="store">In backupPanels/ in User Files location</td>
           <td>&#10004;</td>
         </tr>
 
@@ -641,11 +641,11 @@
       <p><a href="#TopOfPage">[Go to top of page]</a>
       </p>
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

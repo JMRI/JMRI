@@ -6,10 +6,10 @@
   <meta name="Date.Modified" content="20140328">
   <meta name="author" content="Kevin Dickerson, Egbert Broerse">
   <meta name="keywords" content="JMRI help Signal Mast Logic Table">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -95,11 +95,11 @@
       options in the "File" menu before quitting JMRI.
       <p>Back to the <a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast
       Logic help page</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

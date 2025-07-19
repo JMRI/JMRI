@@ -3,11 +3,11 @@
 <!--Updated by Blorec Herv&#233; le 2013-09-24-->
 <head>
 <title>JMRI: Memories</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -72,9 +72,9 @@ Malheureusement, JMRI n'a pas un bon outil graphique pour la d&#233;finition des
 ic&#244;nes affich&#233;es lors de l'utilisation d'une ic&#244;ne de la m&#233;moire de cette fa&#231;on. Vous devez &#233;diter le fichier XML
 &#224; la main, en suivant l'un des exemples.</p>
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

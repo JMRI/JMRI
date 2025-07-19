@@ -45,7 +45,7 @@ public class DefaultWebServerConfigurationTest {
                 .as("Default file paths")
                 .satisfies(paths -> {
                     assertThat(paths).isNotNull();
-                    assertThat(paths.size()).isEqualTo(15);
+                    assertThat(paths.size()).isEqualTo(14);
                 });
     }
 

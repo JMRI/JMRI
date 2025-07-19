@@ -8,14 +8,13 @@ import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.InvokeOnGuiThread;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.util.*;
 
 /**
  * Class providing the basic logic of the ActionManager interface.
- * 
+ *
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
@@ -25,25 +24,25 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
     private MaleSocket _lastRegisteredBean;
 
-    
+
     public DefaultStringActionManager() {
         InstanceManager.getDefault(LogixNG_Manager.class).registerManager(this);
-        
+
         for (StringActionFactory actionFactory : ServiceLoader.load(StringActionFactory.class)) {
             actionFactory.init();
         }
-        
+
         for (Category category : Category.values()) {
             actionClassList.put(category, new ArrayList<>());
         }
-        
+
         for (StringActionFactory actionFactory : ServiceLoader.load(StringActionFactory.class)) {
             actionFactory.getClasses().forEach((entry) -> {
 //                System.out.format("Add action: %s, %s%n", entry.getKey().name(), entry.getValue().getName());
                 actionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
-        
+
         for (MaleStringActionSocketFactory maleSocketFactory : ServiceLoader.load(MaleStringActionSocketFactory.class)) {
             _maleSocketFactories.add(maleSocketFactory);
         }
@@ -66,7 +65,7 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
     public MaleSocket getLastRegisteredMaleSocket() {
         return _lastRegisteredBean;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleStringActionSocket registerBean(MaleStringActionSocket maleSocket) {
@@ -74,7 +73,7 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
         _lastRegisteredBean = maleSocket;
         return bean;
     }
-    
+
     /**
      * Remember a NamedBean Object created outside the manager.
      * This method creates a MaleActionSocket for the action.
@@ -84,24 +83,24 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
     @Override
     public MaleStringActionSocket registerAction(@Nonnull StringActionBean action)
             throws IllegalArgumentException {
-        
+
         if (action instanceof MaleStringActionSocket) {
             throw new IllegalArgumentException("registerAction() cannot register a MaleStringActionSocket. Use the method register() instead.");
         }
-        
+
         // Check if system name is valid
         if (this.validSystemNameFormat(action.getSystemName()) != NameValidity.VALID) {
             log.warn("SystemName {} is not in the correct format", action.getSystemName() );
             throw new IllegalArgumentException(String.format("System name is invalid: %s", action.getSystemName()));
         }
-        
+
         // Keep track of the last created auto system name
         updateAutoNumber(action.getSystemName());
-        
+
         MaleStringActionSocket maleSocket = createMaleActionSocket(action);
         return registerBean(maleSocket);
     }
-    
+
     @Override
     public int getXMLOrder() {
         return LOGIXNG_STRING_ACTIONS;
@@ -148,7 +147,7 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
         deregister(x);
         x.dispose();
     }
-    
+
     static volatile DefaultStringActionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
@@ -156,7 +155,7 @@ public class DefaultStringActionManager extends AbstractBaseManager<MaleStringAc
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
-        
+
         if (_instance == null) {
             _instance = new DefaultStringActionManager();
         }

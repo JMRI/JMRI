@@ -20,6 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  *
  * @author Bob Jacobsen Copyright (C) 2012
  * @since 3.3.1
+ * @author Ken Cameron (C) 2023
  */
 public class Bundle extends jmri.jmrix.nce.Bundle {
 
@@ -38,7 +39,7 @@ public class Bundle extends jmri.jmrix.nce.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static String getMessage(String key) {
+    public static String getMessage(String key) {
         return getBundle().handleGetMessage(key);
     }
 

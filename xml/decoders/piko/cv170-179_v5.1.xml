@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Light Energy Start" CV="170" default="30">
+		<decVal max="255"/>
+		<label>Energy-saving Lamp - Initial brightness (CV 170)</label>
+		<label xml:lang="de">Energiesparlampe Starthelligkeit (CV 170)</label>
+		<label xml:lang="nl">Spaarlamp - Beginhelderheid</label>
+		<label xml:lang="cs">Úspora energie - počáteční jas</label>
+		<tooltip>(Value 0-255)</tooltip>
+		<tooltip xml:lang="de">(Wert 0-255)</tooltip>
+		<tooltip xml:lang="nl">(Bereik 0-255)</tooltip>
+		<tooltip xml:lang="cs">(Hodnota 0-255)</tooltip>
+	</variable>
+	<variable item="Light Energy Time" CV="171" default="100">
+		<decVal/>
+		<label>Energy-saving Lamp - Warm Up Time (CV 171)</label>
+		<label xml:lang="de">Energiesparlampe Aufblendzeit (CV 171)</label>
+		<label xml:lang="nl">Spaarlamp - Opwarmtijd</label>
+		<label xml:lang="cs">Úspora energie - Čas zahřátí</label>
+		<tooltip>Time to reach full brightness - CV value * 100 millisec</tooltip>
+		<tooltip xml:lang="de">Zeit bis maximale Helligkeit erreicht ist - Wert * 100 mSek</tooltip>
+		<tooltip xml:lang="nl">Spaarlamp - Duur totdat max. helderheid is bereikt - waarde * 100 ms</tooltip>
+		<tooltip xml:lang="cs">Úspora energie - čas pro dosažení plného jasu - Hodnota × 100 ms</tooltip>
+	</variable>
+	<variable item="Light Neon Time" CV="172" default="20">
+		<decVal/>
+		<label>Neon - Flash Time (CV 172)</label>
+		<label xml:lang="de">Leuchtstofflampe Startzeit (CV 172)</label>
+		<label xml:lang="nl">Neon - Knippertijd</label>
+		<label xml:lang="cs">Zářivka - Doba záblesku</label>
+		<tooltip>Start Flash Duration - CV value * 100 millisec</tooltip>
+		<tooltip xml:lang="de">Dauer des Blitzen = CV-Wert * 100 mSek</tooltip>
+		<tooltip xml:lang="nl">Duur van het knipperen - waarde * 100 ms</tooltip>
+		<tooltip xml:lang="cs">Doba blikání při startu - hodnota × 100 ms</tooltip>
+	</variable>
+	<variable item="Intervall BG1" CV="173" default="50">
+		<decVal/>
+		<label>Flashing Interval 1 (CV 173)</label>
+		<label xml:lang="de">Blinkintervall 1 (CV 173)</label>
+		<tooltip>Interval = CV value * 20 ms</tooltip>
+		<tooltip xml:lang="de">Blinkintervall = CV-Wert * 20 ms</tooltip>
+	</variable>
+	<variable item="Intervall BG2" CV="174" default="100">
+		<decVal/>
+		<label>Flashing Interval 2 (CV 174)</label>
+		<label xml:lang="de">Blinkintervall 2 (CV 174)</label>
+		<tooltip>Interval = CV value * 20 ms</tooltip>
+		<tooltip xml:lang="de">Blinkintervall = CV-Wert * 20 ms</tooltip>
+	</variable>
+	<variable item="Intervall BG3" CV="175" default="150">
+		<decVal/>
+		<label>Flashing Interval 3 (CV 175)</label>
+		<label xml:lang="de">Blinkintervall 3 (CV 175)</label>
+		<tooltip>Interval = CV value * 20 ms</tooltip>
+		<tooltip xml:lang="de">Blinkintervall = CV-Wert * 20 ms</tooltip>
+	</variable>
+	<variable item="Intervall BG4" CV="176" default="200">
+		<decVal/>
+		<label>Flashing Interval 4 (CV 176)</label>
+		<label xml:lang="de">Blinkintervall 4 (CV 176)</label>
+		<tooltip>Interval = CV value * 20 ms</tooltip>
+		<tooltip xml:lang="de">Blinkintervall = CV-Wert * 20 ms</tooltip>
+	</variable>
+	<variable item="Light Blend Time" CV="177" default="30">
+		<decVal/>
+		<label>Blend In - Duration (CV 177)</label>
+		<label xml:lang="de">Funktionsausgänge einblenden (CV 177)</label>
+		<tooltip>Blend Effect Duration - CV value * 20 millisec</tooltip>
+		<tooltip xml:lang="de">Einblendzeit = CV-Wert * 20 mSek</tooltip>
+		<tooltip xml:lang="nl">Duur van het verloop - waarde * 20 ms</tooltip>
+		<tooltip xml:lang="cs">Efekt rozsvěcení/stmívání doba trvání - hodnota × 20 ms</tooltip>
+	</variable>
+	<variable item="Light Blend Time2" CV="178" default="30">
+		<decVal/>
+		<label>Blend Out - Duration (CV 178)</label>
+		<label xml:lang="de">Funktionsausgänge ausblenden (CV 178)</label>
+		<tooltip>Blend Effect Duration - CV value * 20 millisec</tooltip>
+		<tooltip xml:lang="de">Ausblendzeit = CV-Wert * 20 mSek</tooltip>
+		<tooltip xml:lang="nl">Duur van het verloop - waarde * 20 ms</tooltip>
+		<tooltip xml:lang="cs">Efekt rozsvěcení/stmívání doba trvání - hodnota × 20 ms</tooltip>
+	</variable>
+	<variable item="Speedlevel Ax=Off" CV="179" default="50">
+		<decVal/>
+		<label>Speed Level Function Output Off (CV 179)</label>
+		<label xml:lang="de">Geschwindigkeitsschwelle Funktionsausgänge AUS (CV 179)</label>
+		<tooltip>for automatic shutdown of the function outputs</tooltip>
+		<tooltip xml:lang="de">für automatische Abschaltung der Funktionsausgänge</tooltip>
+	</variable>
+</variables>

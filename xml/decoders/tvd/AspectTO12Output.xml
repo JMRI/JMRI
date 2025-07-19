@@ -13,7 +13,7 @@
 
 <!-- include for QUAD-LN_S -->
 <!-- aspect turnout choices  v1,0 -->
-<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <enumChoice choice="Turnout 1" value="0"/>
   <enumChoice choice="Lock 1" value="16"/>
   <enumChoice choice="Turnout 2" value="1"/>

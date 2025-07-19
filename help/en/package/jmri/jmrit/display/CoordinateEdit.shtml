@@ -4,10 +4,10 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: Coordinate Edit Help</title>
   <meta name="author" content="Dan Boudreau">
-  <meta name="keywords" content="JMRI Coordinate Edit Help"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI Coordinate Edit Help"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -47,8 +47,7 @@
       <h2>Scaling an Icon</h2>
 
       <p>Right click an icon and select <strong>Scale (percentage)...</strong> to increase or
-      decrease the size of the icon relative to its original size. To restore the icon to its
-      original size, enter the value 100 (%).</p>
+      decrease the size of the icon relative to its current scaling. </p>
 
       <h2>Text Label Editor</h2>
 
@@ -90,11 +89,11 @@
       Close this pane by clicking on "Okay" to update the Panel with your changes, "Cancel" to
       abort or click "Apply" to update the Panel using your edits but keep the Properties pane
       open.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

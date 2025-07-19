@@ -1,0 +1,11 @@
+This is the README file for the jmrix.nce.ph5driver package.
+
+The jmrix Java package defines implementations for the JMRI interfaces. jmrix.nce.ph5driver
+defines classes for interfacing to an NCE PH5 command station via a built in USB connection. 
+
+
+
+
+
+	
+	

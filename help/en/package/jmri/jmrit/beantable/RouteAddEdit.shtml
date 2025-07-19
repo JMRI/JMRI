@@ -5,10 +5,10 @@
   <title>JMRI: Adding/Editing Routes</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="Egbert Broerse">
-  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/Style.shtml" -->
+  <meta name="keywords" content="JMRI help Route Add Edit"><!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -94,11 +94,11 @@
       "TurnoutTable.shtml#Turnout_lock_feature">Turnout Table page</a>.</p>
 
       <p>Back to the <a href="RouteTable.shtml">Route Table help page</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

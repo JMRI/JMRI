@@ -6,11 +6,11 @@
   <title>JMRI: How to set up Signaling in JMRI</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="author" content="Egbert Broerse">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
@@ -180,9 +180,9 @@
 </p>
 		<p>Retour &#224; la <a href="index.shtml">page d'aide principale Signalisation</a>.</p>				
 
-      <!--#include virtual="/Footer_fr.shtml" -->
+      <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

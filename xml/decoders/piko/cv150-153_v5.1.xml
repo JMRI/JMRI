@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Accel2" CV="150" default="50">
+		<decVal/>
+		<label>Acceleration Rate 2</label>
+		<label xml:lang="it">Accellerazione 2</label>
+		<label xml:lang="cs">Míra zrychlení 2</label>
+		<label xml:lang="fr">2ème Accelération</label>
+		<label xml:lang="de">2. Anfahrverzögerung</label>
+		<label xml:lang="nl">2e Wegrijvertraging</label>
+		<tooltip>Range 0-255</tooltip>
+		<tooltip xml:lang="it">Valori 0-255</tooltip>
+		<tooltip xml:lang="cs">Meze 0-255</tooltip>
+		<tooltip xml:lang="fr">Valeur 0-255</tooltip>
+		<tooltip xml:lang="de">Ersatz für CV 3, Wert 0-255</tooltip>
+		<tooltip xml:lang="nl">Waarde van 0-255</tooltip>
+	</variable>
+	<variable item="Decel2" CV="151" default="20">
+		<decVal/>
+		<label>Deceleration Rate 2</label>
+		<label xml:lang="it">Decellerazione 2</label>
+		<label xml:lang="cs">Míra zpomalení 2</label>
+		<label xml:lang="fr">2ème Décélération</label>
+		<label xml:lang="de">2. Bremsverzögerung</label>
+		<label xml:lang="nl">2e Remvertraging</label>
+		<tooltip>Range 0-255</tooltip>
+		<tooltip xml:lang="it">Valori 0-255</tooltip>
+		<tooltip xml:lang="cs">Meze 0-255</tooltip>
+		<tooltip xml:lang="fr">Valeur 0-255</tooltip>
+		<tooltip xml:lang="de">Ersatz für CV 4, Wert 0-255</tooltip>
+		<tooltip xml:lang="nl">Waarde van 0-255</tooltip>
+	</variable>
+	<variable item="Accel3" CV="152" default="80">
+		<decVal/>
+		<label>Acceleration Rate 3</label>
+		<label xml:lang="it">Accellerazione 3</label>
+		<label xml:lang="cs">Míra zrychlení 3</label>
+		<label xml:lang="fr">3ème Accelération</label>
+		<label xml:lang="de">3. Anfahrverzögerung</label>
+		<label xml:lang="nl">3e Wegrijvertraging</label>
+		<tooltip>Range 0-255</tooltip>
+		<tooltip xml:lang="it">Valori 0-255</tooltip>
+		<tooltip xml:lang="cs">Meze 0-255</tooltip>
+		<tooltip xml:lang="fr">Valeur 0-255</tooltip>
+		<tooltip xml:lang="de">Ersatz für CV 3, Wert 0-255</tooltip>
+		<tooltip xml:lang="nl">Waarde van 0-255</tooltip>
+	</variable>
+	<variable item="Decel3" CV="153" default="80">
+		<decVal/>
+		<label>Deceleration Rate 3</label>
+		<label xml:lang="it">Decellerazione 3</label>
+		<label xml:lang="cs">Míra zpomalení 3</label>
+		<label xml:lang="fr">3ème Décélération</label>
+		<label xml:lang="de">3. Bremsverzögerung</label>
+		<label xml:lang="nl">3e Remvertraging</label>
+		<tooltip>Range 0-255</tooltip>
+		<tooltip xml:lang="it">Valori 0-255</tooltip>
+		<tooltip xml:lang="cs">Meze 0-255</tooltip>
+		<tooltip xml:lang="fr">Valeur 0-255</tooltip>
+		<tooltip xml:lang="de">Ersatz für CV 4, Wert 0-255</tooltip>
+		<tooltip xml:lang="nl">Waarde van 0-255</tooltip>
+	</variable>
+</variables>

@@ -5,10 +5,10 @@
   <title>JMRI: LocoNet Statistics</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help digitrax downloader">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
@@ -84,10 +84,10 @@
 
       <p>Some of these are displayed when the interface is acting as a programmer (PR2 mode), and
       others when it's acting as an interface (MS100 mode).</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
   <!-- close #mBody -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

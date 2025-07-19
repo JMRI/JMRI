@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <enumChoice>
+    <choice>0 – None / Steady On</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>1 – Fade On/Off</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>2 – Blink Phase A</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>3 – Blink Phase B</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>4 – Pulse Phase A</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>5 – Pulse Phase B</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>6 – Fast Blink Phase A</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>7 – Fast Blink Phase B</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>8 – Strobe</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>9 – Double Strobe</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>10 – Fire 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>11 – Fire 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>12 – Fire 3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>13 – Fusee (30 sec)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>14 – Fusee(indef)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>15 – Welding (White)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>16 – Welding (Blue)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>17 – Photographer (Modern)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>18 – Photographer (Classic)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>19 – Mercury Vapor Lamp</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>20 – Fluorescent Tube (Good) </choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>21 – Fluorescent Tube (Bad 1)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>22 – Fluorescent Tube (Bad 2)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>23 – Random On/Off (10-300 seconds)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>24 – Random On/Off (2-60 seconds)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>25 – Bathroom</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>26 – Rotary Beacon</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>27 - Emergency Beacon A</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>28 - Emergency Beacon B</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>29 – Emergency Headlight A</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>30 – Emergency Headlight B</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>31 – Emergency Strobe A</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>32 – Emergency Strobe B</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>33 – Emergency Strobe Alt A</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>34 – Emergency Strobe Alt B</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>35 - Traffic Light A Red</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>36 - Traffic Light A Yellow</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>37 - Traffic Light A Yellow (EU)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>38 - Traffic Light A Green</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>39 - Traffic Light A Pedestrian Red (US)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>40 - Traffic Light A Pedestrian Green (EU)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>41 - Traffic Light B Red</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>42 - Traffic Light B Yellow</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>43 - Traffic Light B Yellow (EU)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>44 - Traffic Light B Green</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>45 - Traffic Light B Pedestrian Red (US)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>46 - Traffic Light B Pedestrian Green (EU)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>47 - Chase Light 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>48 - Chase Light 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>49 - Chase Light 3</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>50 - Chase Light 4</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>51 - Chase Light 5</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>52 - Chase Light 6</choice>
+  </enumChoice>
+</enumVal>

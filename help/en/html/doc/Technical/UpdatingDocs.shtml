@@ -8,10 +8,10 @@
   <meta name="Revised_By" content="Egbert Broerse">
   <meta name="Revision" content=
   "Updated instructions for GitHub instead of single file edit and ZIP">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -122,9 +122,9 @@
       <p>You can view the current <a href="https://github.com/JMRI/JMRI" target="_blank">JMRI
       repository on GitHub</a>. To learn how to make changes to connect to GitHub and contribute
       your changes, please read <a href="getgitcode.shtml">Using Git</a>.</p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

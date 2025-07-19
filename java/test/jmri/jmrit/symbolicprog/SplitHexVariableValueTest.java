@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import jmri.util.CvUtil;
+import jmri.util.junit.annotations.NotApplicable;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -99,85 +100,101 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
     // some of the premade tests don't quite make sense; override them here.
     @Override
     @Test
+    @NotApplicable("mask is ignored by splitAddress tests")
     public void testVariableValueCreate() {
-    } // mask is ignored by splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueTwinMask() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("low CV is upper part of address")
     public void testVariableFromCV() {
-    } // low CV is upper part of address
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of splitAddress tests")
     public void testVariableValueRead() {
-    } // due to multi-cv nature of splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of splitAddress tests")
     public void testVariableValueWrite() {
-    } // due to multi-cv nature of splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("due to multi-cv nature of splitAddress tests")
     public void testVariableCvWrite() {
-    } // due to multi-cv nature of splitAddress tests
+    }
 
     @Override
     @Test
+    @NotApplicable("programmer synch is different")
     public void testWriteSynch2() {
-    } // programmer synch is different
+    }
 
     // at some point, these should pass, but have to think hard about
     // how to define the split/shift/mask operations for long CVs
     @Override
     @Test
+    @Disabled("mask is ignored, test requires further development")
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @Disabled("test requires further development")
     public void testVariableSynch() {
     }
 
     @Override
     @Test
+    @Disabled("test requires further development")
     public void testVariableReadOnly() {
     }
 
     @Override
     @Test
+    @Disabled("test requires further development")
     public void testVariableValueStates() {
     }
 
     @Override
     @Test
+    @Disabled("test requires further development")
     public void testVariableRepStateColor() {
     }
 
     @Override
     @Test
+    @Disabled("test requires further development")
     public void testVariableVarChangeColorRep() {
     }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored
+    }
 
     // Local tests
     @Test

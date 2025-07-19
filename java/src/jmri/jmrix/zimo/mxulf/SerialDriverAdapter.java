@@ -1,9 +1,5 @@
 package jmri.jmrix.zimo.mxulf;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
@@ -11,11 +7,6 @@ import jmri.jmrix.zimo.Mx1PortController;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to Zimo's MX-1 on an attached serial com port. Normally
@@ -35,58 +26,33 @@ public class SerialDriverAdapter extends Mx1PortController {
         this.getSystemConnectionMemo().setConnectionType(Mx1SystemConnectionMemo.MXULF);
     }
 
-    SerialPort activeSerialPort = null;
-
     @Override
     public String openPort(String portName, String appName) {
-        // open the port in MX-1 mode, check ability to set moderators
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
-            // try to set it for Can Net
-            try {
-                setSerialPort();
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
-
-            log.debug("Serial timeout was observed as: {} {}", activeSerialPort.getReceiveTimeout(), activeSerialPort.isReceiveTimeoutEnabled());
-
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                // report now
-                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows {}", activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control"); // NOI18N
-
-                // log events
-                setPortEventLogging(activeSerialPort);
-            }
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {}", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;
+        // get and open the primary port
+        currentSerialPort = activatePort(portName, log);
+        if (currentSerialPort == null) {
+            log.error("failed to connect Zimo MXULF to {}", portName);
+            return Bundle.getMessage("SerialPortNotFound", portName);
         }
+        log.info("Connecting Zimo MXULF to {} {}", portName, currentSerialPort);
+        
+        // try to set it for communication via SerialDriver
+        // find the baud rate value, configure comm options
+        int baud = currentBaudNumber(mBaudRate);
+        setBaudRate(currentSerialPort, baud);
+        configureLeads(currentSerialPort, true, true);
+        FlowControl flow = FlowControl.RTSCTS; // default, but also defaults in selectedOption1
+        if (getOptionState(option1Name).equals(validOption1[1])) {
+            flow = FlowControl.NONE;
+        }
+        setFlowControl(currentSerialPort, flow);
 
-        return null; // normal operation
+        // report status
+        reportPortStatus(log, portName);
+
+        opened = true;
+
+        return null; // indicates OK return
     }
 
     /**
@@ -97,7 +63,7 @@ public class SerialDriverAdapter extends Mx1PortController {
      */
     @Override
     public boolean okToSend() {
-        return activeSerialPort.isCTS();
+        return currentSerialPort.getCTS();
     }
 
     /**
@@ -118,51 +84,9 @@ public class SerialDriverAdapter extends Mx1PortController {
         packets.startThreads();
     }
 
-// base class methods for the ZimoPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: {}", e.getMessage());
-        }
-        return null;
-    }
-
     @Override
     public boolean status() {
         return opened;
-    }
-
-    /**
-     * Local method to do specific configuration.
-     *
-     * @throws purejavacomm.UnsupportedCommOperationException if unable to
-     *                                                        communicate
-     */
-    protected void setSerialPort() throws UnsupportedCommOperationException {
-        // find the baud rate value, configure comm options
-        int baud = currentBaudNumber(mBaudRate);
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-
-        // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT | SerialPort.FLOWCONTROL_RTSCTS_IN; // default, but also defaults in selectedOption1
-        if (getOptionState(option1Name).equals(validOption1[1])) {
-            flow = 0;
-        }
-        configureLeadsAndFlowControl(activeSerialPort, flow);
     }
 
     /**
@@ -196,8 +120,6 @@ public class SerialDriverAdapter extends Mx1PortController {
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionHwRecomm"), Bundle.getMessage("FlowOptionNo")};
 
     //protected String selectedOption1=validOption1[0];
-    private boolean opened = false;
-    InputStream serialStream = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

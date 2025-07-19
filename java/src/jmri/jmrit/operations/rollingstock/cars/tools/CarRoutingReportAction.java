@@ -7,10 +7,12 @@ import java.nio.charset.StandardCharsets;
 import javax.swing.AbstractAction;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.gui.CarSetFrame;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainPrintUtilities;
+import jmri.jmrit.operations.trains.TrainPrintBuildReport;
 import jmri.jmrit.operations.trains.TrainUtilities;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -57,21 +59,20 @@ public class CarRoutingReportAction extends AbstractAction {
                     new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)),
                     true);
         } catch (IOException e) {
-            log.error("Can not open build report file: {}", file.getName());
+            log.error("Can not open build report file: {}", e.getLocalizedMessage());
         }
         return printWriter;
     }
 
     private void showCarRoutingReport(Car car) {
         CarManagerXml carManagerXml = InstanceManager.getDefault(CarManagerXml.class);
-        TrainPrintUtilities.editReport(carManagerXml.getRawCarRouterReportFile(car.toString()),
+        TrainPrintBuildReport.editReport(carManagerXml.getRawCarRouterReportFile(car.toString()),
                 carManagerXml.createCarRouterReportFile(car.toString()));
         File file = carManagerXml.getCarRouterReportFile(car.toString());
         if (_isPreview && Setup.isBuildReportEditorEnabled()) {
             TrainUtilities.openDesktop(file);
         } else {
-            TrainPrintUtilities.printReport(file, Bundle.getMessage("RoutingReportCar", car.toString()), _isPreview,
-                    Car.NONE, false, Car.NONE, Car.NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true);
+            TrainPrintBuildReport.printReport(file, Bundle.getMessage("RoutingReportCar", car.toString()), _isPreview);
         }
     }
 

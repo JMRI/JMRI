@@ -15,7 +15,7 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
  */
 public class RfidMenu extends JMenu {
 
-    @SuppressWarnings("OverridableMethodCallInConstructor")
+//    @SuppressWarnings("OverridableMethodCallInConstructor")
     public RfidMenu(RfidSystemConnectionMemo memo) {
 
         super();

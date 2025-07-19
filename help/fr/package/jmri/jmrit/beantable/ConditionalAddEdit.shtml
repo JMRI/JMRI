@@ -5,11 +5,11 @@
     <title>JMRI: Adding/Editing Logix Conditionals</title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI help Logix Conditional Add Edit">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header_fr.shtml" -->
+  <!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
 
@@ -417,9 +417,9 @@ Logix est d&#233;clench&#233; lorsqu'un changement d'&#233;tat surveill&#233; co
   message d'erreur en r&#233;sultera.</li>
 </ul>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div>
   </div>
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

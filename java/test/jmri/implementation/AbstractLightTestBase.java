@@ -18,7 +18,6 @@ public abstract class AbstractLightTestBase {
 
     // implementing classes must provide these abstract members:
     //
-    @BeforeEach
     abstract public void setUp();       // load t with actual object; create scaffolds as needed
 
     abstract public int numListeners(); // return number of listeners registered with the TrafficController

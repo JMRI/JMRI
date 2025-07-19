@@ -21,9 +21,6 @@ import jmri.swing.ManagerComboBox;
 import jmri.util.swing.TriStateJCheckBox;
 import jmri.util.swing.XTableColumnModel;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Swing action to create and register a NamedBeanTable GUI.
  *
@@ -73,7 +70,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
              */
             @Override
             void extras() {
-                
+
                 addBottomButtons(this, dataTable);
             }
         };
@@ -117,11 +114,6 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         log.debug("columns updated {}",colsVisible);
     }
 
-    public BeanTableDataModel<E> getTableDataModel() {
-        createModel();
-        return m;
-    }
-
     public void setFrame(@Nonnull BeanTableFrame<E> frame) {
         f = frame;
     }
@@ -130,6 +122,22 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         return f;
     }
 
+    /**
+     * Get the relevant data model for the current table.
+     * <p> This is overridden in the tabbed-table classes
+     * to return their own local data model.
+     * <p> Unlike {@link #getTableDataModel()}, this therefore
+     * doesn't attempt to (re)-create the model.
+     */
+    public BeanTableDataModel<E> getDataModel() {
+        return m;
+    }
+   
+    final public BeanTableDataModel<E> getTableDataModel() {
+        createModel();
+        return m;
+    }
+ 
     /**
      * Allow subclasses to add to the frame without having to actually subclass
      * the BeanTableDataFrame.
@@ -185,7 +193,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
     public void setMenuBar(BeanTableFrame<E> f) {
     }
 
-    public JPanel getPanel() {
+    public JComponent getPanel() {
         return null;
     }
 
@@ -196,6 +204,10 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
     protected void configureTable(JTable table){
     }
 
+    /**
+     * Dispose of the BeanTableDataModel ( if present ),
+     * which removes the DataModel property change listeners from Beans.
+     */
     public void dispose() {
         if (m != null) {
             m.dispose();
@@ -243,6 +255,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         options.put(0x02, Bundle.getMessage("DeleteAlways"));
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(),
                 "deleteInUse", Bundle.getMessage("DeleteItemInUse"), options, 0x00);
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "remindSaveReLoad", Bundle.getMessage("HideMoveUserReminder"));
     }
 
     protected abstract String getClassName();
@@ -285,7 +298,9 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      */
     protected void configureManagerComboBox(ManagerComboBox<E> comboBox, Manager<E> manager,
             Class<? extends Manager<E>> managerClass) {
+        log.trace("configureManagerComboBox called with manager {}", manager);
         Manager<E> defaultManager = InstanceManager.getDefault(managerClass);
+        log.trace("default manager is {}", defaultManager);
         // populate comboBox
         if (defaultManager instanceof ProxyManager) {
             comboBox.setManagers(defaultManager);
@@ -301,6 +316,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
                 SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
                         .getSystemConnectionMemoForUserName(userPref);
                 if (memo!=null) {
+                    log.trace("managerClass is {}, memo is {}", managerClass, memo);
                     comboBox.setSelectedItem(memo.get(managerClass));
                 } else {
                     ProxyManager<E> proxy = (ProxyManager<E>) manager;
@@ -347,18 +363,19 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
                         true,false);
     }
 
-    static protected class TableItem<E extends NamedBean> implements TableColumnModelListener {  // E comes from the parent
-        
+    protected static class TableItem<E extends NamedBean> implements TableColumnModelListener {  // E comes from the parent
+
         BeanTableDataModel<E> dataModel;
         JTable dataTable;
         final AbstractTableAction<E> tableAction;
         BeanTableFrame<E> beanTableFrame;
-        
+
         void setTableFrame(BeanTableFrame<E> frame){
             beanTableFrame = frame;
         }
 
-        final TriStateJCheckBox propertyVisible = new TriStateJCheckBox(Bundle.getMessage("ShowSystemSpecificProperties"));
+        final TriStateJCheckBox propertyVisible =
+            new TriStateJCheckBox(Bundle.getMessage("ShowSystemSpecificProperties"));
 
         public TableItem(@Nonnull AbstractTableAction<E> tableAction) {
             this.tableAction = tableAction;
@@ -368,7 +385,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         public AbstractTableAction<E> getAAClass() {
             return tableAction;
         }
-        
+
         public JTable getDataTable() {
             return dataTable;
         }
@@ -384,23 +401,20 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
                 propertyVisible.setToolTipText(Bundle.getMessage
                         ("ShowSystemSpecificPropertiesToolTip"));
                 addToBottomBox(propertyVisible);
-                propertyVisible.addActionListener((ActionEvent e) -> {
-                    dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected());
-                });
+                propertyVisible.addActionListener((ActionEvent e) ->
+                    dataModel.setPropertyColumnsVisible(dataTable, propertyVisible.isSelected()));
             }
             fireColumnsUpdated(); // init bottom buttons
             dataTable.getColumnModel().addColumnModelListener(this);
 
         }
-        
+
         void includeAddButton(boolean includeAddButton){
-        
+
             if (includeAddButton) {
                 JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
                 addToBottomBox(addButton );
-                addButton.addActionListener((ActionEvent e1) -> {
-                    tableAction.addPressed(e1);
-                });
+                addButton.addActionListener(tableAction::addPressed);
             }
         }
 
@@ -493,7 +507,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
          */
         @Override
         public void columnMarginChanged(ChangeEvent e) {}
-        
+
         protected void dispose() {
             if (dataTable !=null ) {
                 dataTable.getColumnModel().removeColumnModelListener(this);
@@ -507,8 +521,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         }
 
     }
-    
-    
-    private static final Logger log = LoggerFactory.getLogger(AbstractTableAction.class);
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractTableAction.class);
 
 }

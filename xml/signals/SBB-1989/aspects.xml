@@ -55,7 +55,6 @@
         <name>Spento</name>
         <indication>Stop</indication>
 	  <description>no light</description>
-	  <description></description>
 	  <comment>Fermata</comment>
         <speed>Stop</speed>
         <speed2>Stop</speed2>
@@ -113,7 +112,6 @@
       <name>Arancione 70km/h</name>
       <indication>Proceed at 70km/h from next signal</indication>
 	  <description>One orange light with next speed limit</description>
-	  <description></description>
 	  <comment>segnale aperto</comment>
       <speed>Slow</speed>
       <speed2>Slow</speed2>

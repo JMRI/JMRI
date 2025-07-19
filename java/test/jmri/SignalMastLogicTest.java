@@ -15,7 +15,7 @@ public class SignalMastLogicTest {
 
     @Test
     public void testSetup() {
-        jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
+        NamedBeanHandleManager nbhm = InstanceManager.getDefault(NamedBeanHandleManager.class);
         // provide 2 turnouts:
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
@@ -30,7 +30,7 @@ public class SignalMastLogicTest {
         SignalMast sm3 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0003)");
         Assert.assertNotNull("SignalMast is null!", sm3);
         // provide a signal mast logic:
-        SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sm1);
+        SignalMastLogic sml = InstanceManager.getDefault(SignalMastLogicManager.class).newSignalMastLogic(sm1);
         sml.setDestinationMast(sm2);
         Assert.assertNotNull("SignalMastLogic is null!", sml);
         sml.allowAutoMaticSignalMastGeneration(false, sm2);
@@ -94,39 +94,40 @@ public class SignalMastLogicTest {
         Assert.assertNotNull("SignalMast sm2 is null!", sm2);
 
         // Change logic delay from 500ms to 20ms to speed tests:
-        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).setSignalLogicDelay(20);
+        InstanceManager.getDefault(SignalMastLogicManager.class).setSignalLogicDelay(20);
 
         // provide a signal mast logic:
-        SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sm1);
+        SignalMastLogic sml = InstanceManager.getDefault(SignalMastLogicManager.class).newSignalMastLogic(sm1);
         sml.setDestinationMast(sm2);
         Assert.assertNotNull("SignalMastLogic is null!", sml);
 
         sml.initialise();
-        JUnitUtil.waitFor( ()->{ return sm1.getAspect().equals("Medium Approach"); }, "sm1 aspect (1)" );
-        JUnitUtil.waitFor( ()->{ return sm2.getAspect().equals("Stop"); }, "sm2 aspect (1)" );
-        
+        JUnitUtil.waitFor( ()-> "Medium Approach".equals(sm1.getAspect()), "sm1 aspect (1)" );
+        JUnitUtil.waitFor( ()-> "Stop".equals(sm2.getAspect()), "sm2 aspect (1)" );
+
         sm2.setAspect("Clear");
-        JUnitUtil.waitFor( ()->{ return sm1.getAspect().equals("Clear"); }, "sm1 aspect (2)" );
-        JUnitUtil.waitFor( ()->{ return sm2.getAspect().equals("Clear"); }, "sm2 aspect (2)" );
+        JUnitUtil.waitFor( ()-> "Clear".equals(sm1.getAspect()), "sm1 aspect (2)" );
+        JUnitUtil.waitFor( ()-> "Clear".equals(sm2.getAspect()), "sm2 aspect (2)" );
 
         // rename the masts
         sm1.setUserName("new name 1");
         sm2.setUserName("new name 2");
 
         sm2.setAspect("Stop");
-        JUnitUtil.waitFor( ()->{ return sm1.getAspect().equals("Medium Approach"); }, "sm1 aspect (3)" );
-        JUnitUtil.waitFor( ()->{ return sm2.getAspect().equals("Stop"); }, "sm2 aspect (3)" );
+        JUnitUtil.waitFor( ()-> "Medium Approach".equals(sm1.getAspect()), "sm1 aspect (3)" );
+        JUnitUtil.waitFor( ()-> "Stop".equals(sm2.getAspect()), "sm2 aspect (3)" );
 
         // clean up
         sml.dispose();
+        sm2.dispose();
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
     }
 
     @AfterEach

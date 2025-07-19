@@ -58,13 +58,16 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     private static final int[] turnoutInputModeValues = new int[]{Route.ONCLOSED, Route.ONTHROWN, Route.ONCHANGE,
             Route.VETOCLOSED, Route.VETOTHROWN};
 
-    static int ROW_HEIGHT;
+    private static int ROW_HEIGHT;
     // This group will get runtime updates to system-specific contents at
     // the start of buildModel() above.  This is done to prevent
     // invoking the TurnoutManager at class construction time,
     // when it hasn't been configured yet
+
+    // used in RouteTurnout
     static String SET_TO_CLOSED = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateClosed");
+    // used in RouteTurnout
     static String SET_TO_THROWN = Bundle.getMessage("Set") + " "
             + Bundle.getMessage("TurnoutStateThrown");
     private static String[] turnoutInputModes = new String[]{
@@ -74,6 +77,9 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             "Veto " + Bundle.getMessage("WhenCondition") + " " + Bundle.getMessage("TurnoutStateThrown")
     };
+    private static final String[] turnoutFeedbackModes = new String[]{Bundle.getMessage("TurnoutFeedbackKnown"),
+                                                                Bundle.getMessage("TurnoutFeedbackCommanded")};
+
     private static String[] lockTurnoutInputModes = new String[]{
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateClosed"),
             Bundle.getMessage("OnCondition") + " " + Bundle.getMessage("TurnoutStateThrown"),
@@ -89,6 +95,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     final JComboBox<String> sensor3mode = new JComboBox<>(sensorInputModes);
     final JSpinner timeDelay = new JSpinner();
     final JComboBox<String> cTurnoutStateBox = new JComboBox<>(turnoutInputModes);
+    final JComboBox<String> cTurnoutFeedbackBox = new JComboBox<>(turnoutFeedbackModes);
     final JComboBox<String> cLockTurnoutStateBox = new JComboBox<>(lockTurnoutInputModes);
     final JLabel nameLabel = new JLabel(Bundle.getMessage("LabelSystemName"));
     final JLabel userLabel = new JLabel(Bundle.getMessage("LabelUserName"));
@@ -97,18 +104,18 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
 
     protected final String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
-    ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
-    ArrayList<RouteSensor> _sensorList;        // array of all Sensors
-    RouteTurnoutModel _routeTurnoutModel;
-    JScrollPane _routeTurnoutScrollPane;
-    RouteSensorModel _routeSensorModel;
-    JScrollPane _routeSensorScrollPane;
-    NamedBeanComboBox<Sensor> turnoutsAlignedSensor;
-    NamedBeanComboBox<Sensor> sensor1;
-    NamedBeanComboBox<Sensor> sensor2;
-    NamedBeanComboBox<Sensor> sensor3;
-    NamedBeanComboBox<Turnout> cTurnout;
-    NamedBeanComboBox<Turnout> cLockTurnout;
+    private ArrayList<RouteTurnout> _turnoutList;      // array of all Turnouts
+    private ArrayList<RouteSensor> _sensorList;        // array of all Sensors
+    private RouteTurnoutModel _routeTurnoutModel;
+    private JScrollPane _routeTurnoutScrollPane;
+    private RouteSensorModel _routeSensorModel;
+    private JScrollPane _routeSensorScrollPane;
+    private NamedBeanComboBox<Sensor> turnoutsAlignedSensor;
+    private NamedBeanComboBox<Sensor> sensor1;
+    private NamedBeanComboBox<Sensor> sensor2;
+    private NamedBeanComboBox<Sensor> sensor3;
+    private NamedBeanComboBox<Turnout> cTurnout;
+    private NamedBeanComboBox<Turnout> cLockTurnout;
     Route curRoute = null;
     boolean editMode = false;
     protected ArrayList<RouteTurnout> _includedTurnoutList;
@@ -119,7 +126,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     private boolean showAll = true;   // false indicates show only included Turnouts
     private JFileChooser soundChooser = null;
     private ScriptFileChooser scriptChooser = null;
-    private boolean checkEnabled = jmri.InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
+    private boolean checkEnabled = InstanceManager.getDefault(jmri.configurexml.ShutdownPreferences.class).isStoreCheckEnabled();
 
     public AbstractRouteAddEditFrame(String name, boolean saveSize, boolean savePosition) {
         super(name, saveSize, savePosition);
@@ -385,6 +392,9 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         p34.add(new JLabel("   " + Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelCondition"))));
         cTurnoutStateBox.setToolTipText(Bundle.getMessage("TooltipTurnoutCondition"));
         p34.add(cTurnoutStateBox);
+        p34.add(new JLabel(Bundle.getMessage("Is")));
+        cTurnoutFeedbackBox.setToolTipText(Bundle.getMessage("TooltipTurnoutFeedback"));
+        p34.add(cTurnoutFeedbackBox);
         p3.add(p34);
         // add additional route-specific delay
         JPanel p36 = new JPanel();
@@ -577,11 +587,14 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
     }
 
     protected void showReminderMessage() {
-        if (checkEnabled) return;
+        // Use the RouteTabelAction class to combine messages in Preferences -> Messages
+        if (checkEnabled) {
+            return;
+        }
         InstanceManager.getDefault(UserPreferencesManager.class).
-                showInfoMessage(Bundle.getMessage("ReminderTitle"),  // NOI18N
+                showInfoMessage(this, Bundle.getMessage("ReminderTitle"),  // NOI18N
                         Bundle.getMessage("ReminderSaveString", Bundle.getMessage("MenuItemRouteTable")),  // NOI18N
-                        getClassName(), "remindSaveRoute"); // NOI18N
+                        jmri.jmrit.beantable.RouteTableAction.class.getName(), "remindSaveRoute"); // NOI18N
     }
 
     private int sensorModeFromBox(JComboBox<String> box) {
@@ -680,6 +693,8 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
             g.setControlTurnout(cTurnout.getSelectedItemDisplayName());
             // set up Control Turnout state
             g.setControlTurnoutState(turnoutModeFromBox(cTurnoutStateBox));
+            g.setControlTurnoutFeedback(cTurnoutFeedbackBox.getSelectedIndex() == 1);
+
         } else {
             // No Control Turnout was entered
             g.setControlTurnout("");
@@ -837,6 +852,12 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
 
         setTurnoutModeBox(route.getControlTurnoutState(), cTurnoutStateBox);
 
+        if (route.getControlTurnoutFeedback()) {
+            cTurnoutFeedbackBox.setSelectedIndex(1); // Known
+        } else {
+            cTurnoutFeedbackBox.setSelectedIndex(0);  // Commanded
+        }
+
         // set up Lock Control Turnout if there is one
         cLockTurnout.setSelectedItem(route.getLockCtlTurnout());
 
@@ -873,10 +894,6 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         if (!showAll) {
             allButton.doClick();
         }
-    }
-
-    private String getClassName() {
-        return this.getClass().getName();
     }
 
     List<RouteTurnout> get_turnoutList() {
@@ -948,6 +965,8 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         status1.setText((newRoute ? Bundle.getMessage("RouteAddStatusCreated") :
                 Bundle.getMessage("RouteAddStatusUpdated")) + ": \"" + uName + "\" (" + _includedTurnoutList.size() + " "
                 + Bundle.getMessage("Turnouts") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("Sensors") + ")");
+
+        closeFrame();
     }
 
     /**

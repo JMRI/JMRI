@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022, 2023 All rights reserved                      -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2023</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>Ulrich</firstname>
+				<surname>Gerlach</surname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2023-11-30</date>
+			<authorinitials>UG</authorinitials>
+			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+		</revision>
+	</revhistory>
+	<variable item="Lasterkennung CV54" CV="54" default="128">
+		<decVal max="255"/>
+		<label>Threshold value of the load detection (CV 54)</label>
+		<label xml:lang="de">Schwellwert der Lasterkennung (CV 54)</label>
+		<tooltip>Sensitivity of the load detection for sound control</tooltip>
+		<tooltip xml:lang="de">Empfindlichkeit der Lasterkennnung zur Soundansteuereung</tooltip>
+	</variable>
+	<variable item="Null-Last Hysterese" CV="55" default="1">
+		<decVal max="255"/>
+		<label>Zero load hysteresis (CV 55)</label>
+		<label xml:lang="de">Null-Last Hysterese (CV 55)</label>
+		<tooltip>Noise filter for load detection</tooltip>
+		<tooltip xml:lang="de">Rauschfilter der Lasterkennung</tooltip>
+	</variable>
+	<variable item="Laststeigung" CV="56" default="128">
+		<decVal max="255"/>
+		<label>Load gradient (CV 56)</label>
+		<label xml:lang="de">Laststeigung (CV 56)</label>
+		<tooltip>Faktor für Lasterkennung</tooltip>
+		<tooltip xml:lang="de">Faktor für Lasterkennung</tooltip>
+	</variable>
+	<variable item="Motorregelung CV62 Bit 0" CV="62" default="0" mask="XXXXXXXV">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Bell-shaped rotor motor</label>
+		<label xml:lang="de">Motorregelung Glockenankermotoren</label>
+	</variable>
+	<variable item="Motorregelung CV62 Bit 2" CV="62" default="0" mask="XXXXXVXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Motor without a Flywheel</label>
+		<label xml:lang="de">Motorregelung ohne Schwungmasse</label>
+	</variable>
+	<variable item="Motorregelung CV62 Bit 3" CV="62" default="1" mask="XXXXVXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Motor Control Min./Max. adaptive</label>
+		<label xml:lang="de">Motorregelung Min./Max. adaptiv</label>
+	</variable>
+	<variable item="Motorregelung CV62 Bit 4" CV="62" default="0" mask="XXXVXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Minimum control voltage</label>
+		<label xml:lang="de">Minimale Steuerspannung</label>
+	</variable>
+	<variable item="Motorregelung CV62 Bit 5" CV="62" default="0" mask="XXVXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+		<label>Proportional factor slower</label>
+		<label xml:lang="de">Proportionalfaktor träger</label>
+	</variable>
+</variables>

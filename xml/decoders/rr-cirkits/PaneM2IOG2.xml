@@ -14,7 +14,7 @@
 <!-- version 1 - new file includes for Decoder files -->
 <!-- version 1.1 - Add Inv check box -->
 <!-- Panes to show I/O lines -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>I/O-7 B</name>
   <column>
     <row>

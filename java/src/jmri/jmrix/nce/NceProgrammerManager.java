@@ -89,18 +89,18 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
      * before returning it.
      */
     @Override
-    public Programmer getGlobalProgrammer() {
+    protected Programmer getConcreteGlobalProgrammer() {
         if (!isGlobalProgrammerAvailable()) {
             return null;
         }
-        return super.getGlobalProgrammer();
+        return super.getConcreteGlobalProgrammer();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return new NceOpsModeProgrammer(tc, pAddress, pLongAddress);
     }
 
@@ -108,7 +108,7 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
      * {@inheritDoc}
      */
     @Override
-    public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
 

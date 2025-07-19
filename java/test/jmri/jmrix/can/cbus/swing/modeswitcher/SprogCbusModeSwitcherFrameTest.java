@@ -5,25 +5,24 @@ import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Tests for the ModeSwitcherPane class
  *
  * @author Andrew Crosland (C) 2020
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class SprogCbusModeSwitcherFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private CanSystemConnectionMemo memo = null;
     private jmri.jmrix.can.TrafficController tc = null;
-    
+
     @Test
-    public void testInitSetup () throws Exception{
-        // for now, just makes ure there isn't an exception.
-        ((SprogCbusModeSwitcherFrame) frame).initSetup();
+    public void testInitSetup () {
+        Assertions.assertTrue(((SprogCbusModeSwitcherFrame) frame).initSetup(),
+            "frame setup, GlobalProgrammerManager found");
     }
-    
+
     @BeforeEach
     @Override
     public void setUp() {

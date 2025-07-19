@@ -19,9 +19,6 @@ import jmri.jmrix.can.cbus.swing.CbusSendEventPane;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.TextAreaFIFO;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
-
 /**
  * Frame for CBUS Console
  *
@@ -106,6 +103,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
             decodePane.dispose();
         }
         displayPane.dispose();
+        statsPane.dispose();
         super.dispose();
     }
 
@@ -329,5 +327,5 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusConsolePane.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsolePane.class);
 }

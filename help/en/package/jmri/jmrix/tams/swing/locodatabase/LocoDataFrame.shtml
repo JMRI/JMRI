@@ -5,20 +5,20 @@
   <title>JMRI: Tams LocoData Frame</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content="JMRI Help TAMS Command Generator">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
       <h1>Tams LocoData Frame</h1>
       The Tams LocoData tool lets you read and write Locomotive Data to the Tams command station. 
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

@@ -6,10 +6,10 @@
   <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
   <meta name="description" content="Throttle documentation for JMRI project">
   <meta name="author" content="Paul Fraker (paul@frakers.com)">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
-  <!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
 
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
@@ -79,11 +79,11 @@
 
       <p><a href="ThrottleChapter1.shtml">Throttles Help for JMRI v 1.x/2.x</a>
       </p>
-      <!--#include virtual="/Footer.shtml" -->
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->
   </div>
   <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

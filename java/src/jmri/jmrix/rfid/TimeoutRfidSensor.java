@@ -78,7 +78,7 @@ public class TimeoutRfidSensor extends RfidSensor {
         }
 
         @Override
-        @SuppressWarnings("SleepWhileInLoop")
+//        @SuppressWarnings("SleepWhileInLoop")
         public void run() {
             while ((whenLastSensed + TIMEOUT) > System.currentTimeMillis()) {
                 try {

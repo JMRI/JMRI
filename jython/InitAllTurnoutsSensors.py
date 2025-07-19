@@ -21,8 +21,13 @@
 #######    The layout must be turned on and the Panel loaded 
 #######         before activating this script!!!!
 #
-#######    WE HAVE LEARNED THE HARD WAY, THAT PANEL FILES THAT ACTIATE Turnouts
+#######    WE HAVE LEARNED THE HARD WAY, THAT PANEL FILES THAT ACTIVATE Turnouts
 #######    AT LOAD TIME, RISK THE CONSEQUENCES OF MOVING A Turnout UNDER A TRAIN
+
+# This script kicks off an independent series of actions that will take some time to 
+# complete once the script itself completes.  If you are running this script as a 
+# startup action, you might need to include a pause startup action before you run any
+# additional scripts later.
 
 
 # Original script, circa 2014, was loosely based on several example scripts supplied in the distribution folder

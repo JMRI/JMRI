@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Martin Gostling ingleborough@yahoo.com" version="3" lastUpdated="20080308"/>
   <version author="Martin Gostling ingleborough@yahoo.com" version="2" lastUpdated="20070430"/>
   <version author="Martin Gostling ingleborough@yahoo.com" version="1" lastUpdated="20070314"/>
@@ -2455,14 +2455,7 @@
         <label>Local route 1 sets turnout 2</label>
       </variable>
       <variable item="Turnout 3 included in local route 1" CV="48" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Turnout 3 included in local route 1</label>
       </variable>
       <variable item="Local route 1 sets turnout 3" CV="49" mask="XXXXXVXX">

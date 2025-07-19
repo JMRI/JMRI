@@ -77,7 +77,12 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
     public void setManagers(@Nonnull Manager<B> manager) {
         if (manager instanceof ProxyManager) {
             ProxyManager<B> proxy = (ProxyManager<B>) manager;
+            for (var item : proxy.getDisplayOrderManagerList()) {
+                log.trace("adding {} to manager combobox", item);
+            }
+            log.trace("Setting {} selected", proxy.getDefaultManager());
             setManagers(proxy.getDisplayOrderManagerList(), proxy.getDefaultManager());
+            log.trace("{} is selected", this.getSelectedItem());
         } else {
             List<Manager<B>> list = new ArrayList<>();
             list.add(manager);
@@ -95,16 +100,16 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
 
     private class ManagerRenderer implements ListCellRenderer<Manager<B>> {
 
-        private final ListCellRenderer<? super Manager<B>> renderer;
+        private final ListCellRenderer<? super Manager<B>> myRenderer;
 
         public ManagerRenderer(ListCellRenderer<? super Manager<B>> renderer) {
-            this.renderer = renderer;
+            this.myRenderer = renderer;
         }
 
         @Override
         public Component getListCellRendererComponent(JList<? extends Manager<B>> list, Manager<B> value, int index,
                 boolean isSelected, boolean cellHasFocus) {
-            JLabel label = (JLabel) renderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            JLabel label = (JLabel) myRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             if (value != null) {
                 label.setText(value.getMemo().getUserName());
             }
@@ -112,4 +117,5 @@ public class ManagerComboBox<B extends NamedBean> extends JComboBox<Manager<B>> 
         }
     }
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerComboBox.class);
 }

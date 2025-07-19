@@ -114,7 +114,15 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.11.0
 - JMRI uses this for file selectors
 
-
+##### darklaf-*, jsvg-*, swing-dsl-*, swing-extensions-*
+ - from Maven Central, with version in file name
+ - These provide the DarkLaf look&feel package
+ - https://github.com/weisJ/darklaf
+ 
+##### swingx-core-1.6.5-1.jar   
+ - used by DarkLaf look&feel at runtime
+ - From https://repo1.maven.org/maven2/org/swinglabs/swingx/swingx-core/1.6.5-1/
+ 
 ##### jhall.jar
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
@@ -137,17 +145,23 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://mvnrepository.com/artifact/org.slf4j/jul-to-slf4j/2.0.7
 
 ##### openlcb.jar
- - 0.7.32 from https://github.com/openlcb/OpenLCB_Java
- - Through PR#239 included as of 2023-10-29
-
+ - 0.8.5 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.5/openlcb-0.8.5.jar
+    with merged PR #287, #288, #289
+    with PR #290
+ 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
+
+##### jSerialComm-2.10.4.jar
+- Supported serial lib since JMRI 5.7.1
+- from https://fazecast.github.io/jSerialComm/
 
 ##### purejavacomm-1.0.5.jar
 - version 1.0.5 plus custom change to the Mac M1 support (only)
 - from https://search.maven.org/artifact/org.opensmarthouse/purejavacomm/1.0.5/jar
 - formerly from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
 - javadoc still at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
+- we are migrating away from this for JMRI itself, but we keep distributing it because BiDib and some scripts use it
 
 ##### security.policy
 - (JMRI file)
@@ -199,16 +213,15 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - unlike jython-2.7.2.jar, includes embedded standard python libs
 - unlike jython-slim-2.7.2.jar, includes embedded Java dependencies
 
-##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
-- from <https://jinput.dev.java.net/> jinput_dist_20090401
-- (most recent as of 2010-Jan-02)
-- libjinput-osx.jnilib is a custom version lipo'd from the x86 version above and a custom arm64 build from https://shadowfacts.net/2022/lwjgl-arm64/ and https://github.com/shadowfacts/jinput-arm64
+##### jinput (including jinput-2.0.9.jar and unpacked jinput-2.0.9-natives-all.jar)
+- 2.0.9 from maven central
 
 ##### JavaMail 1.4.1 (used to validate email address formats)
 - mailapi.jar
 
-##### Joal 2.4.0-rc-20210111
-- -javadoc at https://jogamp.org/deployment/archive/rc/v2.5.0-rc-20230507/jar/
+##### Joal 2.4.0-rc-20230507 (Windows x86 and Linux i386 from v2.4.0-rc-20210111)
+- from https://jogamp.org/deployment/archive/rc/v2.5.0-rc-20230507/jar/ (no longer accessible)
+- -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
 - cross-platform .jar files
     joal.jar
     gluegen-rt.jar
@@ -221,55 +234,61 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
     extracted from gluegen-rt-natives-macosx-universal.jar
       libgluegen_rt.dylib
 
-Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/>
-
-- for Windows x86
-    extracted from joal-natives-windows-i586.jar
-      joal.dll
-      soft_oal.dll
-    extracted from glugen-rt-natives-windows-i586.jar
-      gluegen_rt.dll
-
-- for Windows x64
+- Windows and Linux libraries from v2.5.0-rc-20230507 <https://jogamp.org/deployment/archive/master/gluegen_954-joal_672-jogl_1522-jocl_1160/jar/>
+  for Windows x64
     extracted from joal-natives-windows-amd64.jar
       joal.dll
-      soft_oal.dll
+      OpenAL32.dll
     extracted from glugen-rt-natives-windows-amd64.jar
       gluegen_rt.dll
 
-- for Linux i386
-    extracted from joal-natives-linux-i586.jar
-      libjoal.so
-      libopenal.so
-    extracted from glugen-rt-natives-linux-i586.jar
-      libgluegen_rt.so
+  for Windows x86
+    not provided, see v2.4.0-rc-20210111 below
 
-- for Linux x86_64
+  for Linux x86_64
     extracted from joal-natives-linux-amd64.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-amd64.jar
       libgluegen_rt.so
 
-- for Linux armv6l
+  for Linux armv6l
     extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-armv6hf.jar
       libgluegen_rt.so
 
-- for Linux armv7l
+  for Linux armv7l
     extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-armv6hf.jar
       libgluegen_rt.so
 
-- for Linux aarch64
+  for Linux aarch64
     extracted from joal-natives-linux-aarch64.jar
       libjoal.so
       libopenal.so
     extracted from glugen-rt-natives-linux-aarch64.jar
+      libgluegen_rt.so
+
+  for Linux i386
+    not provided, see v2.4.0-rc-20210111 below
+
+- Windows and Linux libraries from v2.4.0-rc-20210111 <https://jogamp.org/deployment/archive/rc/v2.4.0-rc-20210111/jar/> (no longer accessible)
+  for Windows x86
+    extracted from joal-natives-windows-i586.jar
+      joal.dll
+      soft_oal.dll
+    extracted from glugen-rt-natives-windows-i586.jar
+      gluegen_rt.dll
+
+  for Linux i386
+    extracted from joal-natives-linux-i586.jar
+      libjoal.so
+      libopenal.so
+    extracted from glugen-rt-natives-linux-i586.jar
       libgluegen_rt.so
 
 ##### jmdns.jar
@@ -358,23 +377,20 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 ##### javacc.jar
 - version 7.0.3
 
-##### javassist-3.20.0-GA.jar
+##### javassist-3.28.0-GA.jar
 - initially used to mock an XBee Connection for testing.
 
 ##### javax.servlet-api-3.1.0.jar
 - version 3.1.0
 - Related to Jetty Web Server
 
-##### jhidrawplugin.jar
-- see jinput.jar
-
 ##### jsoup-1.15.3.jar
 - version 1.15.3
 - used to rebuild Help metadata
 
-##### objenesis-2.2.jar
-- version 2.2
-- initially used to mock an XBee Connection for testing.
+##### objenesis-3.3.jar
+- version 3.3
+- Mockito dependency
 
 ##### opentest4j-1.2.0.jar
 - version 1.2.0
@@ -394,6 +410,37 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - version 2.6
 - batik related
 
+##### BiDiB protocol implementation: jbidibc-*-2.0.29.jar, bidibwizard-*-2.0.30.jar
+- version 2.0.29 / 2.0.30
+- bidibwizard*.jar supports the BiDiB connection simulation
+
+##### commons-collections4-4.4.jar
+- version 4.4
+- used by jbidibc/bidibwizard
+
+##### eventbus-1.4.jar
+- version 1.4
+- used by jbidibc/bidibwizard
+
+##### javax.activation-api-1.2.0.jar
+- version 1.2.0
+- used by jbidibc/bidibwizard
+
+##### jaxb-api-2.3.1.jar, jaxb-core-2.3.0.1.jar, jaxb-impl-2.3.2.jar
+- version 2.3
+- used by jbidibc/bidibwizard
+
+##### jgoodies-binding-2.13.0.jar
+- version 2.13.0
+- used by jbidibc/bidibwizard
+
+##### jgoodies-common-1.8.1.jar
+- version 1.8.1
+- used by jbidibc/bidibwizard
+
+##### reflections-0.10.2.jar
+- used for runtime intraspection of classes.
+
 ## For unit tests & development work only:
 
 ##### ArchUnit: archunit-*.jar, archunit-junit5-api-*.jar, archunit-junit5-engine-*.jar, archunit-junit5-engine-api*.jar
@@ -401,8 +448,9 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - Jars from https://search.maven.org/search?q=g:com.tngtech.archunit
 - version 1.0.0-rc1
 
-##### byte-buddy-1.10.14
-- version 1.10.14
+##### byte-buddy-1.14.15
+- version 1.14.15
+- Mockito dependency
 
 ##### checker-framework directory and contents
 - The Checker Framework 2.0.1 (1-Jun-2016)
@@ -450,8 +498,8 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 
 ##### junit-vintage-engine-5.9.1.jar
 
-##### mockito-core mockito-inline mockito-junit-jupiter
-- version 3.5.11
+##### mockito-core mockito-junit-jupiter
+- version 5.12.0
 
 ##### OpenIDE Utilities
 - org-openide-util-lookup-RELEASE150.jar
@@ -461,7 +509,7 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 ##### PlantUML
 - plantuml.jar
     from plantuml.org
-    1.2023.1
+    plantuml-1.2025.2
 - umldoclet.jar
     downloaded as umldoclet-2.0.10-javadoc.jar
     from https://github.com/talsma-ict/umldoclet/releases
@@ -489,10 +537,10 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-4.7.3.jar
-- From SpotBugs 4.7.3
+##### spotbugs-annotations-4.8.6.jar
+- From SpotBugs 4.8.6
 - Only needed at compile/build time, not runtime
-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.7.3
+- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.8.6
 
 ##### picocontainer-2.15.jar
 - version 2.15
@@ -500,8 +548,8 @@ Windows and Linux libraries from <https://jogamp.org/deployment/archive/rc/v2.4.
 - Used for testing only, not at runtime
 
 
-##### org.jacoco.ant-0.8.5-nodeps.jar
-- version 0.8.5
+##### org.jacoco.ant-0.8.11-nodeps.jar
+- version 0.8.11
 
 ## Older, no longer present:
 

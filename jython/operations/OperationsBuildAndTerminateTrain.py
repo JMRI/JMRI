@@ -1,6 +1,6 @@
 # Sample script showing how to build and terminate a train. Used in operations
 #
-# Author: Daniel Boudreau, copyright 2010
+# Author: Daniel Boudreau, copyright 2010, 2024
 # Part of the JMRI distribution
 
 import jmri
@@ -16,7 +16,7 @@ class buildAndTerminate(jmri.jmrit.automat.AbstractAutomaton) :
     # Build and terminate train
       trainName = "BL"
       train = self.tm.getTrainByName(trainName)
-      print "Build and terminate train", trainName
+      print ('Build and terminate train {}'.format(trainName)) 
 
     # Build train
       if (train != None):
@@ -24,13 +24,13 @@ class buildAndTerminate(jmri.jmrit.automat.AbstractAutomaton) :
         built = train.isBuilt()
         train.setBuildEnabled(False)    # deselect build option (Checkbox in Trains window)
         if (built == True):
-          print "Train", trainName, "has been built"
+          print ('Train {} has been built'.format(trainName))
           train.terminate() # now terminate the train
-          print "Train", trainName, "has been terminated"
+          print ('Train {} has been terminated'.format(trainName))
         else:
-          print "Train", trainName, "build failed"
+          print ('Train {} build failed'.format(trainName))
       else:
-        print "Train", trainName, "does not exist"
+        print ('Train {} does not exist'.format(trainName))
       return False              # all done, don't repeat again
 
 buildAndTerminate().start()    # create one of these, and start it running

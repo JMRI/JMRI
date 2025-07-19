@@ -13,8 +13,8 @@
 <!-- for more details.                                                      -->
 <!-- version 2 - add german translation, Ronald Kuhn 14 Dec 2016 -->
 <!-- version 1 - for Unified Software V32+, Mark Waters 26 Jan 2015 -->
-<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <enumChoiceGroup xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
       <enumChoice choice="None">
         <choice>None</choice>
         <choice xml:lang="it">Nessuna</choice>

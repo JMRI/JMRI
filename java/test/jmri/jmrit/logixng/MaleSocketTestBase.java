@@ -5,8 +5,6 @@ import jmri.jmrit.logixng.Debugable.DebugConfig;
 import jmri.util.JUnitAppender;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -192,10 +190,8 @@ public abstract class MaleSocketTestBase {
         Assert.assertNull("debugConfig is null", maleSocketA.getDebugConfig());
     }
     
-    @BeforeEach
     abstract public void setUp();
     
-    @AfterEach
     abstract public void tearDown();
     
 }

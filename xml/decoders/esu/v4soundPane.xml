@@ -309,7 +309,43 @@
                     <display item="SoundCV16" format="hslider" label=""/>
                 </griditem>
             </grid>
+            <label>
+                <text> </text>
+            </label>
+            <separator/>
+            <label>
+                <text>ESU Tone Control</text>
+            </label>
+            <label>
+                <text> </text>
+            </label>
+            <group>
+                <qualifier>
+                    <variableref>Firmware Full Version</variableref>
+                    <relation>lt</relation>
+                    <!-- 5.9.159 -> 0x509009f -> 84476063 -->
+                    <value>84476063</value>
+                </qualifier>
+                <label>
+                    <text>Requires decoder firmware version 5.9.159 or greater.</text>
+                </label>
+                <label>
+                    <text>You may need to re-read the info pane for DecoderPro to correctly see your firmware version.</text>
+                </label>
+                <label>
+                    <text> </text>
+                </label>
+            </group>
+            <grid gridx="0" gridy="NEXT" ipady="10" anchor="LINE_END">
+                <griditem>
+                    <display item="Bass setting"/>
+                    <display item="Bass setting" format="hslider" label=""/>
+                </griditem>
+                <griditem>
+                    <display item="Treble setting"/>
+                    <display item="Treble setting" format="hslider" label=""/>
+                </griditem>
+            </grid>
         </column>
     </group>
-
 </pane>

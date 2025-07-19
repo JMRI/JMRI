@@ -18,7 +18,7 @@
                  a universal pane usable by all variants notably UK
                  (Alain Le Marchand)                                        -->
 <!-- version 4 - Additional items for SoundTraxx Tsunami2 SW version 1.2    -->
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <name>Function Map</name>
   <name xml:lang="ca">Mapejat de funcions</name>
   <name xml:lang="cs">Přiřazení funkcí</name>

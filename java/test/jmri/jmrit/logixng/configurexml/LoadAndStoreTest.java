@@ -12,7 +12,7 @@ import jmri.NamedBeanHandleManager;
 import jmri.SystemConnectionMemo;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.TransitScaffold;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
@@ -72,7 +72,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     @Override
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
         super.setUp(tempDir);
-//        super.setUp(new File("F:\\Projekt\\Java\\GitHub\\JMRI\\temp\\temp"));
+//        super.setUp(new File("temp"));
 
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDebugCommandStation();
@@ -90,6 +90,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         InstanceManager.setDefault(MqttSystemConnectionMemo.class, mqttMemo);
 
         TransitScaffold.initTransits();
+        NamedBeanType.reset();
     }
 
     @AfterEach

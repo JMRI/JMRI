@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - for WoW 100 & 101 -->
 
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
 	<variable CV="3" item="Accel" default="32" tooltip="Sets the acceleration rate (delay or momentum), 1(default)" comment="Range 0-255">
 		<decVal max="255"/>
 		<label>Accel 1 Rate</label>

@@ -9,11 +9,13 @@ import javax.swing.*;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionLocalVariable;
+import jmri.jmrit.logixng.actions.ActionLocalVariable.ConstantType;
 import jmri.jmrit.logixng.actions.ActionLocalVariable.VariableOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectTableSwing;
 import jmri.util.swing.BeanSelectPanel;
+import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Configures an ActionLocalVariable object with a Swing JPanel.
@@ -42,6 +44,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
     private JPanel _copyReference;
     private JPanel _calculateFormula;
     private JPanel _copyTableCell;
+    private JComboBox<ConstantType> _setToConstantTypeComboBox;
     private JTextField _setToConstantTextField;
     private JTextField _copyLocalVariableTextField;
     private JTextField _copyReferenceTextField;
@@ -62,6 +65,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
         _setToNull = new JPanel();
         _setToConstant = new JPanel();
+        _setToConstant.setLayout(new BoxLayout(_setToConstant, BoxLayout.Y_AXIS));
         _copyMemory = new JPanel();
         _copyBlock = new JPanel();
         _copyReporter = new JPanel();
@@ -73,6 +77,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
         _copyVariable = new JPanel();
         _copyReference = new JPanel();
         _calculateFormula = new JPanel();
+
 
         _tabbedPaneVariableOperation.addTab(VariableOperation.SetToNull.toString(), _setToNull);
         _tabbedPaneVariableOperation.addTab(VariableOperation.SetToString.toString(), _setToConstant);
@@ -86,8 +91,20 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
         _setToNull.add(new JLabel("Null"));     // No I18N
 
+        JPanel _setToConstantTypeInnerPanel = new JPanel();
+        _setToConstantTypeComboBox = new JComboBox<>();
+        for (ConstantType value : ConstantType.values()) {
+            _setToConstantTypeComboBox.addItem(value);
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_setToConstantTypeComboBox);
+        _setToConstantTypeInnerPanel.add(new JLabel(Bundle.getMessage("ActionLocalVariable_ConstantType")));
+        _setToConstantTypeInnerPanel.add(_setToConstantTypeComboBox);
+        _setToConstant.add(_setToConstantTypeInnerPanel);
+
+        JPanel _setToConstantTextFieldInnerPanel = new JPanel();
         _setToConstantTextField = new JTextField(30);
-        _setToConstant.add(_setToConstantTextField);
+        _setToConstantTextFieldInnerPanel.add(_setToConstantTextField);
+        _setToConstant.add(_setToConstantTextFieldInnerPanel);
 
         _copyMemoryBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
         _listenOnMemory = new JCheckBox(Bundle.getMessage("ActionLocalVariable_ListenOnMemory"));
@@ -139,6 +156,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 case CalculateFormula: _tabbedPaneVariableOperation.setSelectedComponent(_calculateFormula); break;
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getVariableOperation().name());
             }
+            _setToConstantTypeComboBox.setSelectedItem(action.getConstantType());
             _setToConstantTextField.setText(action.getConstantValue());
             _copyLocalVariableTextField.setText(action.getOtherLocalVariable());
             _copyReferenceTextField.setText(action.getReference());
@@ -255,6 +273,8 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
                 action.setVariableOperation(VariableOperation.SetToNull);
             } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _setToConstant) {
                 action.setVariableOperation(VariableOperation.SetToString);
+                action.setConstantType(_setToConstantTypeComboBox.getItemAt(
+                        _setToConstantTypeComboBox.getSelectedIndex()));
                 action.setConstantValue(_setToConstantTextField.getText());
             } else if (_tabbedPaneVariableOperation.getSelectedComponent() == _copyMemory) {
                 action.setVariableOperation(VariableOperation.CopyMemoryToVariable);

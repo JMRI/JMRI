@@ -5,11 +5,11 @@
   <title>JMRI: Turnout Documentation</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="turnout model railroad JMRI Turnouts PanelPro">
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
   <div id="container">
-    <!--#include virtual="/Header.shtml" -->
+    <!--#include virtual="/help/en/parts/Header.shtml" -->
 
     <div id="mBody">
       <!--#include virtual="Sidebar.shtml" -->
@@ -106,13 +106,13 @@
             clicking its <strong>Cmd</strong> button.</p>
           </li>
         </ol>
-        <!--#include virtual="/Footer.shtml" -->
+        <!--#include virtual="/help/en/parts/Footer.shtml" -->
       </div>
       <!-- closes #mainContent-->
     </div>
     <!-- closes #mBody-->
   </div>
   <!-- closes #container -->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

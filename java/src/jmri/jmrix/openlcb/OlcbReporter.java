@@ -5,6 +5,8 @@ import jmri.NamedBean;
 import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.implementation.AbstractIdTagReporter;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+
 import org.openlcb.Connection;
 import org.openlcb.ConsumerRangeIdentifiedMessage;
 import org.openlcb.EventID;
@@ -14,8 +16,6 @@ import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.ProducerIdentifiedMessage;
 import org.openlcb.implementations.EventTable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -28,7 +28,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
  * @author Balazs Racz Copyright (C) 2023
  * @since 5.3.5
  */
-public class OlcbReporter extends AbstractIdTagReporter {
+public final class OlcbReporter extends AbstractIdTagReporter {
 
     /// How many bits does a reporter event range contain.
     private static final int REPORTER_BIT_COUNT = 16;
@@ -53,13 +53,19 @@ public class OlcbReporter extends AbstractIdTagReporter {
     private EventID baseEventID;
     private long baseEventNumber;
     private final OlcbInterface iface;
+    private final CanSystemConnectionMemo memo;
     private final Connection messageListener = new Receiver();
 
     EventTable.EventTableEntryHolder baseEventTableEntryHolder = null;
 
-    public OlcbReporter(String prefix, String address, OlcbInterface iface) {
+    public OlcbReporter(String prefix, String address, CanSystemConnectionMemo memo) {
         super(prefix + "R" + address);
-        this.iface = iface;
+        this.memo = memo;
+        if (memo != null) { // greatly simplify testing
+            this.iface = memo.get(OlcbInterface.class);
+        } else {
+            this.iface = null;
+        }
         init(address);
     }
 
@@ -71,8 +77,8 @@ public class OlcbReporter extends AbstractIdTagReporter {
     private void init(String address) {
         iface.registerMessageListener(messageListener);
         // build local addresses
-        OlcbAddress a = new OlcbAddress(address);
-        OlcbAddress[] v = a.split();
+        OlcbAddress a = new OlcbAddress(address, memo);
+        OlcbAddress[] v = a.split(memo);
         if (v == null) {
             log.error("Did not find usable system name: {}", address);
             return;
@@ -165,7 +171,7 @@ public class OlcbReporter extends AbstractIdTagReporter {
     @CheckReturnValue
     @Override
     public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
-        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2);
+        return OlcbAddress.compareSystemNameSuffix(suffix1, suffix2, memo);
     }
 
     /**
@@ -244,6 +250,6 @@ public class OlcbReporter extends AbstractIdTagReporter {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbReporter.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbReporter.class);
 
 }

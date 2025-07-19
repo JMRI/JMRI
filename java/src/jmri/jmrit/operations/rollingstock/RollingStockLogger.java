@@ -64,7 +64,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
         String carLoad = "";
         String carFinalDest = "";
         String carFinalDestTrack = "";
-        if (rs.getClass().equals(Car.class)) {
+        if (Car.class.isInstance(rs)) {
             Car car = (Car) rs;
             carLoad = car.getLoadName();
             carFinalDest = car.getFinalDestinationName();
@@ -107,10 +107,8 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
                     StandardCharsets.UTF_8)), CSVFormat.DEFAULT)) {
             log.debug("Log: {}", line);
             fileOut.printRecord(line);
-            fileOut.flush();
-            fileOut.close();
         } catch (IOException e) {
-            log.error("Exception while opening log file: {}", e.getMessage());
+            log.error("Exception while opening log file: {}", e.getLocalizedMessage());
         }
     }
 
@@ -139,7 +137,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
                     fileLogger = new java.io.File(getFullLoggerFileName());
                 }
             } catch (IOException e) {
-                log.error("Exception while making logging directory: {}", e.getMessage());
+                log.error("Exception while making logging directory: {}", e.getLocalizedMessage());
             }
         }
         return fileLogger;
@@ -185,7 +183,7 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
                     file = new java.io.File(getFullLoggerFileName(rs));
                 }
             } catch (IOException e) {
-                log.error("Exception while making logging directory: {}", e.getMessage());
+                log.error("Exception while making logging directory: {}", e.getLocalizedMessage());
             }
         }
         return file;
@@ -230,7 +228,12 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
             log.error("Rolling stock name ({}) must not contain reserved characters", rs);
             return loggingDirectory + File.separator + "rollingStock" + File.separator + "ERROR" + ".csv"; // NOI18N
         }
-        return loggingDirectory + File.separator + "rollingStock" + File.separator + rs.toString() + ".csv"; // NOI18N
+        String rsName = rs.toString();
+        // put clones in the same file as original car
+        if (rs.isClone()) {
+            rsName = rs.getRoadName() + " " + rs.getNumber().split(Car.CLONE_REGEX)[0];
+        }
+        return loggingDirectory + File.separator + "rollingStock" + File.separator + rsName + ".csv"; // NOI18N
     }
 
     private String getDate() {

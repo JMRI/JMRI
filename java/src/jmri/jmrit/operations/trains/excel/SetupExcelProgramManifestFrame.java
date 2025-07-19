@@ -5,7 +5,6 @@ import java.io.File;
 import javax.swing.JLabel;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
@@ -14,10 +13,11 @@ import jmri.util.swing.JmriJOptionPane;
  * Frame for user edit of the file name of an Excel program used to generate
  * custom manifests.
  *
- * @author Dan Boudreau Copyright (C) 2014
- * 
+ * @author Dan Boudreau Copyright (C) 2014, 2023
  */
 public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
+
+    TrainCustomManifest tcm = InstanceManager.getDefault(TrainCustomManifest.class);
 
     @Override
     public void initComponents() {
@@ -25,33 +25,34 @@ public class SetupExcelProgramManifestFrame extends SetupExcelProgramFrame {
 
         generateCheckBox.setText(rb.getString("GenerateCsvManifest"));
         generateCheckBox.setSelected(Setup.isGenerateCsvManifestEnabled());
-        fileNameTextField.setText(InstanceManager.getDefault(TrainCustomManifest.class).getFileName());
-        pDirectoryName.add(new JLabel(InstanceManager.getDefault(OperationsManager.class).getFile(InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName()).getPath()));
+        fileNameTextField.setText(tcm.getFileName());
+        pDirectoryName.add(new JLabel(tcm.getDirectoryPathName()));
     }
 
     // Add, Test and Save buttons
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
-            File f = selectFile(InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName());
+            File f = selectFile(tcm.getDirectoryName());
             if (f != null) {
                 log.debug("User selected file: {}", f.getName());
                 fileNameTextField.setText(f.getName());
             }
         }
 
-        InstanceManager.getDefault(TrainCustomManifest.class).setFileName(fileNameTextField.getText());
+        tcm.setFileName(fileNameTextField.getText());
 
         if (ae.getSource() == testButton) {
-            if (InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+            if (tcm.excelFileExists()) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("DirectoryNameFileName",
-                        InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName()),
+                        tcm.getDirectoryName(), tcm.getFileName()),
                         Bundle.getMessage("ManifestCreatorFound"), JmriJOptionPane.INFORMATION_MESSAGE);
             } else {
                 JmriJOptionPane.showMessageDialog(this, 
                         Bundle.getMessage("LoadDirectoryNameFileName",
-                            InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryName(), InstanceManager.getDefault(TrainCustomManifest.class).getFileName()), Bundle
-                        .getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
+                                tcm.getDirectoryPathName(),
+                                tcm.getFileName()),
+                        Bundle.getMessage("ManifestCreatorNotFound"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
         if (ae.getSource() == saveButton) {

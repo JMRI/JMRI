@@ -33,8 +33,9 @@ public class CounterActionTest extends OperationsTestCase {
         automationItem.setAction(action);
         Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
         
+        Assert.assertEquals("confirm counter initialized", "0", automationItem.getStatus());
         action.doAction();
-        Assert.assertEquals("confirm counter incremented", "1", action.getActionSuccessfulString());
+        Assert.assertEquals("confirm counter incremented", "1", automationItem.getStatus());
         action.doAction();
         Assert.assertEquals("confirm counter incremented", "2", automationItem.getStatus());
     }

@@ -1,19 +1,10 @@
 package jmri.jmrix.ieee802154.serialdriver;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import jmri.jmrix.ieee802154.IEEE802154PortController;
 import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.NoSuchPortException;
-import purejavacomm.PortInUseException;
-import purejavacomm.SerialPort;
-import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Provide access to IEEE802.15.4 devices via a serial com port.
@@ -23,11 +14,9 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
- * @author Paul Bender Copyright (C) 2013
+ * @author Paul Bender Copyright (C) 2013,2023
  */
 public class SerialDriverAdapter extends IEEE802154PortController {
-
-    protected SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
         this(new SerialSystemConnectionMemo());
@@ -40,50 +29,13 @@ public class SerialDriverAdapter extends IEEE802154PortController {
 
     @Override
     public String openPort(String portName, String appName) {
-        try {
-            // get and open the primary port
-            CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
-            try {
-                activeSerialPort = (SerialPort) portID.open(appName, 2000);  // name of program, msec to wait
-            } catch (PortInUseException p) {
-                return handlePortBusy(p, portName, log);
-            }
-            // try to set it for serial
-            try {
-                setSerialPort();
-            } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
-                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
-            }
+        currentSerialPort = activatePort(portName,log);
+        // try to set it for serial
+        setSerialPort();
 
-            // get and save stream
-            serialStream = activeSerialPort.getInputStream();
-
-            // purge contents, if any
-            purgeStream(serialStream);
-
-            // report status?
-            if (log.isInfoEnabled()) {
-                // report now
-                log.info("{} port opened at {} baud with DTR: {} RTS: {} DSR: {} CTS: {}  CD: {}", portName, activeSerialPort.getBaudRate(), activeSerialPort.isDTR(), activeSerialPort.isRTS(), activeSerialPort.isDSR(), activeSerialPort.isCTS(), activeSerialPort.isCD());
-            }
-            if (log.isDebugEnabled()) {
-                // report additional status
-                log.debug(" port flow control shows {}", // NOI18N
-                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
-
-                // log events
-                setPortEventLogging(activeSerialPort);
-            }
-
-            opened = true;
-
-        } catch (NoSuchPortException p) {
-            return handlePortNotFound(p, portName, log);
-        } catch (IOException ex) {
-            log.error("Unexpected exception while opening port {} ", portName, ex);
-            return "Unexpected error while opening port " + portName + ": " + ex;
-        }
+        // report status?
+        reportPortStatus(log,portName);
+        opened = true;
 
         return null; // normal operation
     }
@@ -109,31 +61,6 @@ public class SerialDriverAdapter extends IEEE802154PortController {
         tc.setAdapterMemo(this.getSystemConnectionMemo());
         this.getSystemConnectionMemo().configureManagers();
         tc.connectPort(this);
-        // Configure the form of serial address validation for this connection
-//        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
-    }
-
-    // base class methods for the SerialPortController interface
-    @Override
-    public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-            return null;
-        }
-        return new DataInputStream(serialStream);
-    }
-
-    @Override
-    public DataOutputStream getOutputStream() {
-        if (!opened) {
-            log.error("getOutputStream called before load(), stream not available");
-        }
-        try {
-            return new DataOutputStream(activeSerialPort.getOutputStream());
-        } catch (IOException e) {
-            log.error("getOutputStream exception: {}", e.getMessage());
-        }
-        return null;
     }
 
     @Override
@@ -143,19 +70,14 @@ public class SerialDriverAdapter extends IEEE802154PortController {
 
     /**
      * Local method to do specific port configuration.
-     *
-     * @throws UnsupportedCommOperationException if options not supported by port
      */
-    protected void setSerialPort() throws UnsupportedCommOperationException {
+    protected void setSerialPort() {
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
-
-        activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
-                SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+        setBaudRate(currentSerialPort,baud);
 
         // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_NONE; // default
-        configureLeadsAndFlowControl(activeSerialPort, flow);
+        configureLeads(currentSerialPort,true,true);
     }
 
     /**
@@ -216,9 +138,6 @@ public class SerialDriverAdapter extends IEEE802154PortController {
     public String option2Name() {
         return "";
     }
-
-    // private control members
-    protected InputStream serialStream = null;
 
     private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 

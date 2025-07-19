@@ -31,13 +31,13 @@ public class Z21XNetProgrammerManager extends jmri.jmrix.lenz.XNetProgrammerMana
      */
     @Override
     public boolean isAddressedModePossible() {
-        return true; 
+        return true;
     }
 
     @Override
-    public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
+    protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         if(lnMemo!=null) {
-           return new Z21XNetOpsModeProgrammer(pAddress, tc, lnMemo.getLnTrafficController()); 
+           return new Z21XNetOpsModeProgrammer(pAddress, tc, lnMemo.getLnTrafficController());
         } else {
            return new Z21XNetOpsModeProgrammer(pAddress, tc );
         }

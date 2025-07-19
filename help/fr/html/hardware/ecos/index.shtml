@@ -3,11 +3,11 @@
 <head>
   <!-- Updated by Blorec Herv&#233;  2017-01-26-->
   <title>JMRI Hardware Support - ESU ECoS</title>
-  <!--#include virtual="/Style.shtml" -->
+  <!--#include virtual="/help/fr/parts/Style.shtml" -->
 </head>
 
 <body>
-<!--#include virtual="/Header_fr.shtml" -->
+<!--#include virtual="/help/fr/parts/Header_fr.shtml" -->
 <div id="mBody">
   <!--#include virtual="../Sidebar.shtml" -->
   <div id="mainContent">
@@ -94,9 +94,9 @@ ajouter l'entr&#233;e de l'Inventaire dans la base de donn&#233;es Ecos. L'entr&
 l'Inventaire comme nom de la loco, d&#233;finit la vitesse de 128 pas, et r&#232;gle l'adresse de la locomotive.
 Le nombre de crans de vitesses peut &#234;tre modifi&#233; dans le Menu Pr&#233;f&#233;rences Ecos.</p>
 
-    <!--#include virtual="/Footer_fr.shtml" -->
+    <!--#include virtual="/help/fr/parts/Footer_fr.shtml" -->
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
-  <script src="/js/main.js"></script>
+  <script src="/js/help.js"></script>
 </body>
 </html>

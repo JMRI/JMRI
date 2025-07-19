@@ -95,8 +95,9 @@ public class OBlockManager extends AbstractManager<OBlock>
      * If both fail, returns null.
      *
      * @param name OBlock name
-     * @return the OBlock, oe null if not found
+     * @return the OBlock, or null if not found.
      */
+    @CheckForNull
     public OBlock getOBlock(@Nonnull String name) {
         OBlock r = getByUserName(name);
         if (r != null) {
@@ -113,7 +114,7 @@ public class OBlockManager extends AbstractManager<OBlock>
     @Nonnull
     public OBlock provideOBlock(@Nonnull String name) {
         if (name.trim().length() == 0) {
-            throw new IllegalArgumentException("name \"" + name + "\" invalid");
+            throw new IllegalArgumentException("No name given for OBlock");
         }
         OBlock ob = getByUserName(name);
         if (ob == null) {
