@@ -144,7 +144,7 @@ public class OlcbSystemConnectionMemoScaffold extends jmri.jmrix.can.CanSystemCo
             return null;
         }
         if (throttleManager == null) {
-            throttleManager = new OlcbThrottleManager();
+            throttleManager = new OlcbThrottleManager(this);
         }
         return throttleManager;
     }
