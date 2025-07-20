@@ -3,7 +3,6 @@ package jmri.jmrit.throttle;
 import java.awt.GraphicsEnvironment;
 
 import jmri.*;
-import jmri.jmrit.throttle.Bundle;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
