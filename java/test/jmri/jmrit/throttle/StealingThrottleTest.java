@@ -2,8 +2,9 @@ package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
 
-import jmri.InstanceManager;
-import jmri.DccLocoAddress;
+import jmri.*;
+import jmri.jmrit.throttle.Bundle;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -111,7 +112,10 @@ public class StealingThrottleTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
         // these tests use the StealingThrottleManager.
-        jmri.ThrottleManager m = new jmri.managers.StealingThrottleManager();
+        var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        // these tests use the StealingThrottleManager.
+        ThrottleManager m = new jmri.managers.StealingThrottleManager(memo);
+        memo.store(m, ThrottleManager.class);
         jmri.InstanceManager.setThrottleManager(m);
 
         if (!GraphicsEnvironment.isHeadless()) {
