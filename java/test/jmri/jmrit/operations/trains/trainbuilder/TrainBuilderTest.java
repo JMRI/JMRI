@@ -21,6 +21,7 @@ import jmri.jmrit.operations.trains.*;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
 
 /**
  * Tests for the TrainBuilder class NOTE: Many of the tests here are nearly
@@ -2529,6 +2530,16 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("Car location", bostonSpur2, c1.getTrack());
         Assert.assertEquals("Car location", bostonYard2, c2.getTrack());
         Assert.assertEquals("Car location", bostonYard2, c3.getTrack());
+        // the following cars shouldn't move
+        Assert.assertEquals("Car location", actonYard1, c4.getTrack());
+        Assert.assertEquals("Car location", actonYard1, c5.getTrack());
+        Assert.assertEquals("Car location", actonYard2, c6.getTrack());
+        
+        // time is to the millisecond, need to wait a bit on a fast machine
+        JUnitUtil.waitFor(() -> {
+            return java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate());
+        });
+        Assert.assertTrue(java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate()));
 
         // now deliver the second set of cars
         new TrainBuilder().build(train1);
