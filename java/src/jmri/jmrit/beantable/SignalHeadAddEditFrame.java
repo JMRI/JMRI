@@ -829,7 +829,7 @@ public class SignalHeadAddEditFrame extends JmriJFrame {
 
         var keys = head.getValidStateKeys();
         for (int i = 0; i < keys.length; i++) {
-            dccAspectSpinners[i].setValue(((DccSignalHead) head).getOutputForAppearance(head.getValidStates()[i]));
+            dccAspectSpinners[i].setValue(head.getOutputForAppearance(head.getValidStates()[i]));
         }
     }
 
