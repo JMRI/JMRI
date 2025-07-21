@@ -352,9 +352,9 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 69");
     }
 
-    SerialTrafficController tcis;
-    TmccSystemConnectionMemo memo;
-    SerialThrottleManager tm;
+    private SerialTrafficController tcis;
+    private TmccSystemConnectionMemo memo;
+    private SerialThrottleManager tm;
 
     @BeforeEach
     @Override
@@ -365,6 +365,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = new TmccSystemConnectionMemo(tcis);
         tm = new SerialThrottleManager(memo);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new SerialThrottle(memo, new jmri.DccLocoAddress(1024, true));
         setMaxFns(69);
     }
