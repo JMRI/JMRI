@@ -5,8 +5,7 @@ import java.util.List;
 
 import javax.swing.*;
 
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.*;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
@@ -131,6 +130,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         selectPool.setLayout(new GridBagLayout());
         selectPool.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PoolSelect")));
         addItem(selectPool, comboBoxPools, 0, 0);
+        OperationsPanel.padComboBox(comboBoxPools);
 
         JPanel minLengthTrack = new JPanel();
         minLengthTrack.setLayout(new GridBagLayout());
@@ -171,7 +171,6 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         if (_track.isStaging()) {
             p1.add(panelOrder);
         }
-        p1.add(savePool);
 
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
@@ -183,6 +182,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         poolStatus.setLayout(new GridBagLayout());
 
         p2.add(poolStatus);
+        p2.add(savePool);
 
         getContentPane().add(p1Pane);
         getContentPane().add(p2Pane);
@@ -273,7 +273,11 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
             Location location = _track.getLocation();
-            location.addPool(trackPoolNameTextField.getText().trim());
+            Pool pool = location.addPool(trackPoolNameTextField.getText().trim());
+            if (_track.getPool() == null) {
+                _track.setPool(pool);
+                updatePoolsComboBox();
+            }
         }
 
         if (ae.getSource() == saveButton) {
