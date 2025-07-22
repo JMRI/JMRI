@@ -426,10 +426,10 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>There are two new columns in the DecoderPro main 
+            <li>There are two new columns in the DecoderPro main
                 display:  "Decoder Manufacturer" and "Decoder Family".
-                These start out hidden.  To display them, 
-                right or control click in the header of any column, 
+                These start out hidden.  To display them,
+                right or control click in the header of any column,
                 and then put a check next to the column name.</li>
         </ul>
 
@@ -520,10 +520,10 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>There are two new columns in the DecoderPro display of the 
+            <li>There are two new columns in the DecoderPro display of the
                 roster:  "Decoder Manufacturer" and "Decoder Family".
-                These start out hidden.  To display them, 
-                right or control click in the header of any column, 
+                These start out hidden.  To display them,
+                right or control click in the header of any column,
                 and then put a check next to the column name.</li>
         </ul>
 
@@ -551,7 +551,10 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li></li>
+                <li>For signal heads using the DCC Signal Decoder, an option has been added to the
+                Add/Edit dialog to copy the set of appearance numbers from another signal head.  This
+                can be used to create a custom set of appearance numbers that can be easily applied
+                to new and existing signal heads.</li>
             </ul>
 
         <h4>Signal Masts</h4>
