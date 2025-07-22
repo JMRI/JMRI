@@ -922,7 +922,7 @@ public class BeanSwitch extends JPanel implements java.beans.PropertyChangeListe
         if (addFrame != null) {
             ThreadingUtil.runOnGUI( () -> addFrame.setVisible(false) );
             addFrame.dispose();
-           addFrame = null;
+            addFrame = null;
         }
     }
 
