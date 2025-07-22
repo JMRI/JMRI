@@ -1879,6 +1879,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
         l.setHorizontalTextPosition(SwingConstants.CENTER);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setEditable(isEditable());    // match popup mode to editor mode
+        l.setLocation(75, 75);  // fixed location 
         try {
             putItem(l);
         } catch (Positionable.DuplicateIdException e) {
