@@ -5,33 +5,21 @@ import java.util.List;
 
 import javax.swing.*;
 
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.*;
 import jmri.jmrit.operations.locations.*;
-import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
+ * Things to test with this frame: - Adding a new Pool name to the available
+ * pools list - What happens when a null track is passed to the frame -
+ * Selecting an existing pool and saving it to the track - Selecting a minimum
+ * length and saving it to the track - Not sure if we want to test the status
+ * display panel, as it doesn't do anything.
  *
- * Things to test with this frame:
- *
- * - Adding a new Pool name to the available pools list
- *
- * - What happens when a null track is passed to the frame
- *
- * - Selecting an existing pool and saving it to the track
- *
- * - Selecting a minimum length and saving it to the track
- *
- * - Not sure if we want to test the status display panel, as it doesn't do
- * anything.
- *
- * @author Daniel Boudreau Copyright (C) 2011
+ * @author Daniel Boudreau Copyright (C) 2011, 2025
  * @author Gregory Madsen Copyright (C) 2012
- *
- *
  */
 class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -60,16 +48,8 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
     // pool status
     JPanel poolStatus = new JPanel();
 
-    private TrackEditFrame _tefx;
     protected Track _track;
     protected Pool _pool;
-
-    public PoolTrackFrame(TrackEditFrame tef) {
-        super();
-
-        _tefx = tef;
-        _track = _tefx._track;
-    }
 
     public PoolTrackFrame(Track track) {
         super();
@@ -131,6 +111,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         selectPool.setLayout(new GridBagLayout());
         selectPool.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PoolSelect")));
         addItem(selectPool, comboBoxPools, 0, 0);
+        OperationsPanel.padComboBox(comboBoxPools);
 
         JPanel minLengthTrack = new JPanel();
         minLengthTrack.setLayout(new GridBagLayout());
@@ -171,30 +152,20 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         if (_track.isStaging()) {
             p1.add(panelOrder);
         }
-        p1.add(savePool);
-
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
-        JScrollPane p2Pane = new JScrollPane(p2);
-        p2Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        p2Pane.setBorder(BorderFactory.createTitledBorder(""));
 
         // pool status panel
         poolStatus.setLayout(new GridBagLayout());
 
-        p2.add(poolStatus);
+        p1.add(poolStatus);
+        p1.add(savePool);
 
         getContentPane().add(p1Pane);
-        getContentPane().add(p2Pane);
         setTitle(Bundle.getMessage("MenuItemPoolTrack"));
 
         // load comboBox
         updatePoolsComboBox();
         updatePoolStatus();
 
-        // button action - These use a convention in the OperationsFrame base
-        // class that requires the events to be sorted out in
-        // buttonActionPerformed.
         addButtonAction(addButton);
         addButtonAction(saveButton);
         
@@ -273,7 +244,11 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == addButton) {
             Location location = _track.getLocation();
-            location.addPool(trackPoolNameTextField.getText().trim());
+            Pool pool = location.addPool(trackPoolNameTextField.getText().trim());
+            if (_track.getPool() == null) {
+                _track.setPool(pool);
+                updatePoolsComboBox();
+            }
         }
 
         if (ae.getSource() == saveButton) {
