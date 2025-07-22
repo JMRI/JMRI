@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 
 import jmri.*;
 import jmri.util.*;
+import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
 
@@ -231,11 +232,9 @@ public class BeanSwitchTest {
 
         var editor = new SwitchboardEditor("BeanSwitch TestSetUserName " + nbA.getBeanType());
         editor.setSwitchType(String.valueOf(mgr.typeLetter()));
-        // editor.setTitle();
         ThreadingUtil.runOnGUI( () -> editor.setVisible(true));
 
         BeanSwitch t = new BeanSwitch(4, nbA, nbA.getSystemName(), SwitchboardEditor.BUTTON, editor);
-        // BeanSwitch tB = new BeanSwitch(5, nbB, nbB.getSystemName(), SwitchboardEditor.BUTTON, editor);
         ThreadingUtil.runOnGUI( () -> t.connectNew() );
 
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("ConnectNewMenu", ""));
@@ -261,7 +260,7 @@ public class BeanSwitchTest {
         assertNotNull(jtfo);
         jtfo.setText(EXISTING_UNAME);
 
-        Thread closeDialog = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread closeDialog = JemmyUtil.createModalDialogOperatorThread(
             Bundle.getMessage("WarningUserName", EXISTING_UNAME), Bundle.getMessage("ButtonOK"));
 
         jbo = new JButtonOperator(jfo, Bundle.getMessage("ButtonOK"));
