@@ -585,7 +585,7 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li></li>
+            <li>Adds check to prevent a duplicate Turnout / Sensor / Light UserName being set.</li>
         </ul>
 
     <h3>Throttle</h3>
