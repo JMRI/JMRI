@@ -2,13 +2,15 @@ package jmri.jmrit.withrottle;
 
 import java.beans.PropertyChangeEvent;
 
-//import jmri.NamedBeanHandleManager;
-
+import jmri.DccThrottle;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.ThrottleManager;
 import jmri.ThrottleListener.DecisionType;
+import jmri.jmrix.debugthrottle.DebugThrottle;
 import jmri.jmrit.throttle.ThrottlesPreferences;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -68,7 +70,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testSetVelocityChange() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after velocity", controller.sort("V63"));
         Assert.assertEquals("Velocity set", 0.5f, t.getSpeedSetting(), 0.0005f);
@@ -76,7 +78,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testSetEStop() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after EStop", controller.sort("X"));
         Assert.assertTrue("Estop", t.getSpeedSetting() < 0.0f);
@@ -84,7 +86,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testSetFunction() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         // before notifying the throttle is found, set a function on
         // which runs a couple of additional lines of code in
         // sendAllFunctionStates.
@@ -99,7 +101,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testForceFunction() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after set F1 on", controller.sort("f11"));
         Assert.assertTrue("F1 set on", t.getFunction(1));
@@ -109,7 +111,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testMomentaryFunction() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after set F1 momentary", controller.sort("m11"));
         Assert.assertTrue("F1 set on", t.getFunctionMomentary(1));
@@ -119,7 +121,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testSetDirection() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after set R1", controller.sort("R1"));
         Assert.assertTrue("Velocity set", t.getIsForward());
@@ -129,7 +131,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testSetIdle() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after velocity", controller.sort("V63"));
         Assert.assertTrue("Continue after Idle", controller.sort("I"));
@@ -138,7 +140,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testFunctionPropertyChange() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         t.setFunction(1, true);
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>F11", cis.getLastPacket());
@@ -156,7 +158,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testSpeedStepsPropertyChange() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         t.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_14);
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>s8", cis.getLastPacket());
@@ -168,7 +170,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testSpeedPropertyChange() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         t.setSpeedSetting(0.5f);
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>V63", cis.getLastPacket());
@@ -180,7 +182,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testIsForwardPropertyChange() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         t.setIsForward(false);
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>R0", cis.getLastPacket());
@@ -195,7 +197,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testQuitWithAddress() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after velocity", controller.sort("V63"));
         Assert.assertEquals("Velocity set", 0.5f, t.getSpeedSetting(), 0.0005f);
@@ -206,7 +208,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testVelocityChangeSequence() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null) {
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo) {
             @Override
             public synchronized void setSpeedSetting(float s) {
                 // override so we can send property changes in sequence.
@@ -240,7 +242,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testQueryVelocity() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after query velocity", controller.sort("qV"));
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>V0", cis.getLastPacket());
@@ -248,7 +250,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testQueryDirection() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after query velocity", controller.sort("qR"));
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>R1", cis.getLastPacket());
@@ -256,7 +258,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testQuerySpeedStepMode() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after query velocity", controller.sort("qs"));
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>s1", cis.getLastPacket());
@@ -264,7 +266,7 @@ public class MultiThrottleControllerTest {
 
     @Test
     public void testQueryMomentary() {
-        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1, false), null);
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
         controller.notifyThrottleFound(t);
         Assert.assertTrue("Continue after query velocity", controller.sort("qm"));
         Assert.assertEquals("outgoing message after property change", "MAAtest<;>m028", cis.getLastPacket());
@@ -274,7 +276,11 @@ public class MultiThrottleControllerTest {
     public void testSharingThrottleManager() {
         // install a ThrottleManager which will request a Share / Cancel response
         InstanceManager.reset(ThrottleManager.class);
-        InstanceManager.setThrottleManager(new jmri.managers.SharingThrottleManager());
+        memo.dispose();
+        memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        var tm = new jmri.managers.SharingThrottleManager(memo);
+        InstanceManager.setThrottleManager(tm);
+        memo.store(tm, ThrottleManager.class);
 
         // set to Silently Share
         InstanceManager.getDefault(ThrottlesPreferences.class).setSilentShare(true);
@@ -291,7 +297,10 @@ public class MultiThrottleControllerTest {
     public void testStealOrSharingThrottleManager() {
         // install a ThrottleManager which will request a Share / Steal / Cancel response
         InstanceManager.reset(ThrottleManager.class);
-        var tm = new jmri.managers.StealingOrSharingThrottleManager();
+        memo.dispose();
+        memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        var tm = new jmri.managers.StealingOrSharingThrottleManager(memo);
+        memo.store(tm, ThrottleManager.class);
         InstanceManager.setThrottleManager(tm);
 
         // set to Silently Share
@@ -317,10 +326,13 @@ public class MultiThrottleControllerTest {
 
     }
 
+    private InternalSystemConnectionMemo memo;
+
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        JUnitUtil.initDebugThrottleManager();
+        memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        JUnitUtil.initDebugThrottleManager(memo);
         JUnitUtil.initRosterConfigManager();
         cis = new ControllerInterfaceScaffold();
         tcls = new ThrottleControllerListenerScaffold();
@@ -332,6 +344,8 @@ public class MultiThrottleControllerTest {
         cis = null;
         tcls = null;
         controller = null;
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 }

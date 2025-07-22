@@ -4,6 +4,8 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.InstanceManager;
 import jmri.DccLocoAddress;
+import jmri.ThrottleManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
@@ -166,8 +168,10 @@ public class StealingOrSharingThrottleTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
+        var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         // these tests use the StealingOrSharingThrottleManager.
-        jmri.ThrottleManager m = new jmri.managers.StealingOrSharingThrottleManager();
+        jmri.ThrottleManager m = new jmri.managers.StealingOrSharingThrottleManager(memo);
+        memo.store(m, ThrottleManager.class);
         jmri.InstanceManager.setThrottleManager(m);
 
         if (!GraphicsEnvironment.isHeadless()) {

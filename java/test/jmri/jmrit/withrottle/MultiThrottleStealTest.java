@@ -1,5 +1,7 @@
 package jmri.jmrit.withrottle;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 
@@ -75,7 +77,9 @@ public class MultiThrottleStealTest {
         JUnitUtil.setUp();
         JUnitUtil.initRosterConfigManager();
         // these tests use the StealingThrottleManager.
-        jmri.ThrottleManager m = new jmri.managers.StealingThrottleManager();
+        var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        jmri.ThrottleManager m = new jmri.managers.StealingThrottleManager(memo);
+        memo.store(m, jmri.ThrottleManager.class);
         jmri.InstanceManager.setThrottleManager(m);
         cis = new ControllerInterfaceScaffold();
         tcls = new ThrottleControllerListenerScaffold();
