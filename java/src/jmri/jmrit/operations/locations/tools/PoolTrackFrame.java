@@ -69,10 +69,6 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 
         _pool = _track.getPool();
 
-        if (_pool != null) {
-            _pool.addPropertyChangeListener(this);
-        }
-
         // load the panel
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
@@ -180,6 +176,8 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         addButtonAction(addButton);
         addButtonAction(saveButton);
         
+        addPropertyChangeListeners();
+
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_Pools", true); // NOI18N
         
@@ -293,9 +291,8 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         if (ae.getSource() == addButton) {
             Location location = _track.getLocation();
             Pool pool = location.addPool(trackPoolNameTextField.getText().trim());
-            if (_track.getPool() == null) {
-                _track.setPool(pool);
-                updatePoolsComboBox();
+            if (_pool == null) {
+                comboBoxPools.setSelectedItem(pool);
             }
         }
         if (ae.getSource() == saveButton) {
@@ -314,12 +311,12 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
     }
 
     private void save() {
-        if (_pool != null) {
-            _pool.removePropertyChangeListener(this);
-        }
-        _pool = (Pool) comboBoxPools.getSelectedItem();
-        if (_pool != null) {
-            _pool.addPropertyChangeListener(this);
+        Pool pool = (Pool) comboBoxPools.getSelectedItem();
+        if (pool != _pool) {
+            maxLengthCheckBox.setSelected(false);
+            removePropertyChangeListeners();
+            _pool = pool;
+            addPropertyChangeListeners();
         }
         try {
             _track.setPoolMinimumLength(Integer.parseInt(trackMinLengthTextField.getText()));
@@ -373,15 +370,35 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         orderLIFO.setSelected(_track.getServiceOrder().equals(Track.LIFO));
     }
 
+    private void addPropertyChangeListeners() {
+        if (_pool != null) {
+            _pool.addPropertyChangeListener(this);
+            for (Track t : _pool.getTracks()) {
+                if (t != _track) {
+                    t.addPropertyChangeListener(this);
+                }
+            }
+        }
+    }
+
+    private void removePropertyChangeListeners() {
+        if (_pool != null) {
+            _pool.removePropertyChangeListener(this);
+            for (Track t : _pool.getTracks()) {
+                if (t != _track) {
+                    t.removePropertyChangeListener(this);
+                }
+            }
+        }
+    }
+
     @Override
     public void dispose() {
         if (_track != null) {
             _track.removePropertyChangeListener(this);
             _track.getLocation().removePropertyChangeListener(this);
         }
-        if (_pool != null) {
-            _pool.removePropertyChangeListener(this);
-        }
+        removePropertyChangeListeners();
         super.dispose();
     }
 
@@ -393,6 +410,10 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         }
         if (e.getPropertyName().equals(Location.POOL_LENGTH_CHANGED_PROPERTY)) {
             updatePoolsComboBox();
+        }
+        if (e.getPropertyName().equals(Pool.LISTCHANGE_CHANGED_PROPERTY)) {
+            removePropertyChangeListeners();
+            addPropertyChangeListeners();
         }
         if (e.getPropertyName().equals(Pool.LISTCHANGE_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(Location.LENGTH_CHANGED_PROPERTY) ||
