@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.*;
-import java.util.List;
 
 import javax.swing.*;
 
@@ -12,11 +11,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * Things to test with this frame: - Adding a new Pool name to the available
- * pools list - What happens when a null track is passed to the frame -
- * Selecting an existing pool and saving it to the track - Selecting a minimum
- * length and saving it to the track - Not sure if we want to test the status
- * display panel, as it doesn't do anything.
  *
  * @author Daniel Boudreau Copyright (C) 2011, 2025
  * @author Gregory Madsen Copyright (C) 2012
@@ -27,11 +21,16 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
     JLabel name = new JLabel(Bundle.getMessage("Name"));
     JLabel minimum = new JLabel(Bundle.getMessage("Minimum"));
     JLabel maximum = new JLabel(Bundle.getMessage("Maximum"));
+    JLabel maxUser = new JLabel(Bundle.getMessage("Maximum") + "*");
     JLabel length = new JLabel(Bundle.getMessage("Length"));
 
     // text field
     JTextField trackPoolNameTextField = new JTextField(20);
     JTextField trackMinLengthTextField = new JTextField(5);
+    JTextField trackMaxLengthTextField = new JTextField(5);
+
+    // checkbox
+    JCheckBox maxLengthCheckBox = new JCheckBox(Bundle.getMessage("EnableMax"));
 
     // combo box
     JComboBox<Pool> comboBoxPools = new JComboBox<>();
@@ -119,8 +118,18 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
                 .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PoolTrackMinimum", _track.getName())));
         addItem(minLengthTrack, trackMinLengthTextField, 0, 0);
 
-        trackMinLengthTextField.setText(Integer.toString(_track.getMinimumLength()));
+        trackMinLengthTextField.setText(Integer.toString(_track.getPoolMinimumLength()));
         
+        JPanel maxLengthTrack = new JPanel();
+        maxLengthTrack.setLayout(new GridBagLayout());
+        maxLengthTrack
+                .setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PoolTrackMaximum", _track.getName())));
+        addItemLeft(maxLengthTrack, maxLengthCheckBox, 0, 0);
+        addItemLeft(maxLengthTrack, trackMaxLengthTextField, 1, 0);
+
+        maxLengthCheckBox.setToolTipText(Bundle.getMessage("EnableMaxTrackTip"));
+        updateMaxLengthFields();
+
         // row 4, train service order panel
         JPanel panelOrder = new JPanel();
         panelOrder.setLayout(new GridBagLayout());
@@ -149,6 +158,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         p1.add(poolName);
         p1.add(selectPool);
         p1.add(minLengthTrack);
+        p1.add(maxLengthTrack);
         if (_track.isStaging()) {
             p1.add(panelOrder);
         }
@@ -166,18 +176,40 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         updatePoolsComboBox();
         updatePoolStatus();
 
+        addCheckBoxAction(maxLengthCheckBox);
         addButtonAction(addButton);
         addButtonAction(saveButton);
         
         // add help menu to window
         addHelpMenu("package.jmri.jmrit.operations.Operations_Pools", true); // NOI18N
         
-        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight300));
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight400));
     }
 
     private void updatePoolsComboBox() {
         _track.getLocation().updatePoolComboBox(comboBoxPools);
         comboBoxPools.setSelectedItem(_track.getPool());
+    }
+
+    private void updateMaxLengthFields() {
+        maxLengthCheckBox.setSelected(false);
+        if (_track != null && _track.getPool() != null) {
+            boolean enable = _track.getPool().isMaxLengthOptionEnabled();
+            maxLengthCheckBox.setEnabled(enable);
+            if (enable) {
+                if (_track.getPoolMaximumLength() != Integer.MAX_VALUE) {
+                    maxLengthCheckBox.setSelected(true);
+                    trackMaxLengthTextField.setText(Integer.toString(_track.getPoolMaximumLength()));
+                } else {
+                    trackMaxLengthTextField.setText(Integer.toString(_track.getPool().getMaxLengthTrack(_track)));
+                }
+            }
+
+        } else {
+            maxLengthCheckBox.setEnabled(false);
+            trackMaxLengthTextField.setText("");
+        }
+        trackMaxLengthTextField.setEnabled(maxLengthCheckBox.isSelected());
     }
 
     private void updatePoolStatus() {
@@ -186,52 +218,68 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 
         addItemLeft(poolStatus, name, 0, 0);
         addItem(poolStatus, maximum, 1, 0);
-        addItem(poolStatus, minimum, 2, 0);
-        addItem(poolStatus, length, 3, 0);
+        addItem(poolStatus, minimum, 3, 0);
+        addItem(poolStatus, length, 4, 0);
 
         String poolName = "";
         if (_track.getPool() != null) {
             Pool pool = _track.getPool();
+            if (pool.isThereMaxLengthRestrictions()) {
+                addItem(poolStatus, maxUser, 2, 0);
+            }
             poolName = pool.getName();
-            List<Track> tracks = pool.getTracks();
+
             int totalMinLength = 0;
             int totalLength = 0;
-            for (int i = 0; i < tracks.size(); i++) {
-                Track track = tracks.get(i);
+            int i = 0;
+            for (Track track : pool.getTracks()) {
+                i++;
+
                 JLabel name = new JLabel();
                 name.setText(track.getName());
                 
                 JLabel maximum = new JLabel();
                 maximum.setText(Integer.toString(pool.getMaxLengthTrack(track)));
 
+                JLabel maxUser = new JLabel();
+                if (track.getPoolMaximumLength() == Integer.MAX_VALUE) {
+                    maxUser.setText("");
+                } else {
+                    maxUser.setText(Integer.toString(track.getPoolMaximumLength()));
+                }
+
                 JLabel minimum = new JLabel();
-                minimum.setText(Integer.toString(track.getMinimumLength()));
-                totalMinLength = totalMinLength + track.getMinimumLength();
+                minimum.setText(Integer.toString(track.getPoolMinimumLength()));
+                totalMinLength = totalMinLength + track.getPoolMinimumLength();
 
                 JLabel length = new JLabel();
                 length.setText(Integer.toString(track.getLength()));
                 totalLength = totalLength + track.getLength();
 
-                addItemLeft(poolStatus, name, 0, i + 1);
-                addItem(poolStatus, maximum, 1, i + 1);
-                addItem(poolStatus, minimum, 2, i + 1);
-                addItem(poolStatus, length, 3, i + 1);
+                addItemLeft(poolStatus, name, 0, i);
+                addItem(poolStatus, maximum, 1, i);
+                addItem(poolStatus, minimum, 3, i);
+                addItem(poolStatus, length, 4, i);
+
+                if (pool.isThereMaxLengthRestrictions()) {
+                    addItem(poolStatus, maxUser, 2, i);
+                }
             }
+            i++;
             // Summary
-            int totalLine = tracks.size() + 1;
             JLabel total = new JLabel(Bundle.getMessage("Totals"));
-            addItem(poolStatus, total, 0, totalLine);
+            addItem(poolStatus, total, 0, i);
             if (totalMinLength > totalLength) {
                 JLabel error = new JLabel(Bundle.getMessage("ErrorMinLen"));
                 error.setForeground(Color.RED);
-                addItem(poolStatus, error, 1, totalLine);
+                addItem(poolStatus, error, 1, i);
             }
             JLabel totalMin = new JLabel();
             totalMin.setText(Integer.toString(totalMinLength));
-            addItem(poolStatus, totalMin, 2, totalLine);
+            addItem(poolStatus, totalMin, 3, i);
             JLabel totalLen = new JLabel();
             totalLen.setText(Integer.toString(totalLength));
-            addItem(poolStatus, totalLen, 3, totalLine);
+            addItem(poolStatus, totalLen, 4, i);
         }
         poolStatus.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PoolTracks", poolName)));
         poolStatus.repaint();
@@ -250,26 +298,8 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
                 updatePoolsComboBox();
             }
         }
-
         if (ae.getSource() == saveButton) {
-            try {
-                _track.setMinimumLength(Integer.parseInt(trackMinLengthTextField.getText()));
-            } catch (NumberFormatException e) {
-                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeNumber"), Bundle
-                        .getMessage("ErrorTrackLength"), JmriJOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            if (_pool != null) {
-                _pool.removePropertyChangeListener(this);
-            }
-            _pool = (Pool) comboBoxPools.getSelectedItem();
-            if (_pool != null) {
-                _pool.addPropertyChangeListener(this);
-            }
-            _track.setPool(_pool); // this causes a property change to this frame
-            updateServiceOrder();
-
+            save();
             // save location file
             OperationsXml.save();
             if (Setup.isCloseWindowOnSaveEnabled()) {
@@ -278,6 +308,35 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         }
     }
     
+    @Override
+    public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+        trackMaxLengthTextField.setEnabled(maxLengthCheckBox.isSelected());
+    }
+
+    private void save() {
+        if (_pool != null) {
+            _pool.removePropertyChangeListener(this);
+        }
+        _pool = (Pool) comboBoxPools.getSelectedItem();
+        if (_pool != null) {
+            _pool.addPropertyChangeListener(this);
+        }
+        try {
+            _track.setPoolMinimumLength(Integer.parseInt(trackMinLengthTextField.getText()));
+            if (maxLengthCheckBox.isSelected() && _pool != null && _pool.isMaxLengthOptionEnabled()) {
+                _track.setPoolMaximumLength(Integer.parseInt(trackMaxLengthTextField.getText()));
+            } else {
+                _track.setPoolMaximumLength(Integer.MAX_VALUE); // default
+            }
+        } catch (NumberFormatException e) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("TrackMustBeNumber"), Bundle
+                    .getMessage("ErrorTrackLength"), JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        _track.setPool(_pool); // this causes a property change to this frame
+        updateServiceOrder();
+    }
+
     @Override
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button activated");
@@ -328,9 +387,6 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        // This should move to the base class
-        // Just call LogEvent(e); instead. It will figure out if logging is
-        // enabled, etc.
         if (Control.SHOW_PROPERTY) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
@@ -338,12 +394,16 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
         if (e.getPropertyName().equals(Location.POOL_LENGTH_CHANGED_PROPERTY)) {
             updatePoolsComboBox();
         }
-
-        if (e.getPropertyName().equals(Pool.LISTCHANGE_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Location.LENGTH_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.MIN_LENGTH_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Pool.LISTCHANGE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Location.LENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.MIN_LENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.MAX_LENGTH_CHANGED_PROPERTY)) {
             updatePoolStatus();
+        }
+        if (e.getPropertyName().equals(Track.POOL_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.MAX_LENGTH_CHANGED_PROPERTY)) {
+            updateMaxLengthFields();
         }
     }
 

@@ -82,6 +82,7 @@
 <!ATTLIST track alternative		CDATA #IMPLIED> 
 <!ATTLIST track pool			CDATA #IMPLIED>
 <!ATTLIST track minLength		CDATA #IMPLIED>
+<!ATTLIST track maxLength		CDATA #IMPLIED>
 <!ATTLIST track comment			CDATA #IMPLIED>
 <!ATTLIST track blockOptions	CDATA #IMPLIED>
 <!ATTLIST track ignoreUsedPercentage	CDATA #IMPLIED>

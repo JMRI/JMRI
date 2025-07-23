@@ -3450,12 +3450,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       share their track lengths with each other. This is useful if you've divided a location into
       track segments and you want each segment to adjust its length based on the program's demands.
       To create and place a track into a pool, select Tools&rArr;Pools in one of the track edit
-      windows. Enter a name for your pool and press the "Add" button. You can also specify the
-      minimum length for the track. A minimum track length prevents the other tracks in the pool
-      from acquiring all of the track's length. Next select a pool name for the track and press
-      "Save". The bottom of the pool window will show the other tracks that are in the track's pool.
-      The program on restart, will automatically delete any pools that aren't assigned to a track.
-      
+      windows. Enter a name for your pool and press the "Add" button. Next select a pool name for
+      the track and press "Save". The bottom of the pool window will show the other tracks that are
+      in the track's pool. The program on restart, will automatically delete any pools that aren't
+      assigned to a track.
+
+      <p>You can also specify the minimum or maximum length for the track. A minimum track
+        length prevents the other tracks in the pool from acquiring all of the track's length. The
+        program allows you to set a maximum length when there are three or more tracks in the pool.</p>
+
       <p>A "pool" can be used to share track space with two or more industries. For example,
         let's say you have a spur that services two industries, and it can hold four 50' cars, or is
         roughly 220' feet long. Now you could enter into operations a track length of say 110' for

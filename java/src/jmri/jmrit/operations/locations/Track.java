@@ -177,6 +177,7 @@ public class Track extends PropertyChangeSupport {
     // pool
     protected Pool _pool = null;
     protected int _minimumLength = 0;
+    protected int _maximumLength = Integer.MAX_VALUE;
 
     // return status when checking rolling stock
     public static final String OKAY = Bundle.getMessage("okay");
@@ -198,6 +199,7 @@ public class Track extends PropertyChangeSupport {
     public static final String NAME_CHANGED_PROPERTY = "trackName"; // NOI18N
     public static final String LENGTH_CHANGED_PROPERTY = "trackLength"; // NOI18N
     public static final String MIN_LENGTH_CHANGED_PROPERTY = "trackMinLength"; // NOI18N
+    public static final String MAX_LENGTH_CHANGED_PROPERTY = "trackMaxLength"; // NOI18N
     public static final String SCHEDULE_CHANGED_PROPERTY = "trackScheduleChange"; // NOI18N
     public static final String DISPOSE_CHANGED_PROPERTY = "trackDispose"; // NOI18N
     public static final String TRAIN_DIRECTION_CHANGED_PROPERTY = "trackTrainDirection"; // NOI18N
@@ -280,7 +282,8 @@ public class Track extends PropertyChangeSupport {
         // track pools are only shared within a specific location
         if (getPool() != null) {
             newTrack.setPool(newLocation.addPool(getPool().getName()));
-            newTrack.setMinimumLength(getMinimumLength());
+            newTrack.setPoolMinimumLength(getPoolMinimumLength());
+            newTrack.setPoolMaximumLength(getPoolMaximumLength());
         }
 
         newTrack.setPrintManifestCommentEnabled(isPrintManifestCommentEnabled());
@@ -428,7 +431,7 @@ public class Track extends PropertyChangeSupport {
      *
      * @param length minimum
      */
-    public void setMinimumLength(int length) {
+    public void setPoolMinimumLength(int length) {
         int old = _minimumLength;
         _minimumLength = length;
         if (old != length) {
@@ -436,11 +439,34 @@ public class Track extends PropertyChangeSupport {
         }
     }
 
-    public int getMinimumLength() {
+    public int getPoolMinimumLength() {
         return _minimumLength;
     }
 
-    public void setReserved(int reserved) {
+    /**
+     * Sets the maximum length of this track when the track is in a pool.
+     *
+     * @param length maximum
+     */
+    public void setPoolMaximumLength(int length) {
+        int old = _maximumLength;
+        _maximumLength = length;
+        if (old != length) {
+            setDirtyAndFirePropertyChange(MAX_LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length));
+        }
+    }
+
+    public int getPoolMaximumLength() {
+        return _maximumLength;
+    }
+
+    /**
+     * The amount of track space that is reserved for car drops or pick ups. Can
+     * be positive or negative.
+     * 
+     * @param reserved the calculated track space
+     */
+    protected void setReserved(int reserved) {
         int old = _reserved;
         _reserved = reserved;
         if (old != reserved) {
@@ -1490,7 +1516,6 @@ public class Track extends PropertyChangeSupport {
                 }
             }
             // None of the trains servicing this track can pick up car type
-            // ({0})
             status = Bundle.getMessage("ErrorNoTrain", getName(), carType);
             break;
         }
@@ -2338,6 +2363,7 @@ public class Track extends PropertyChangeSupport {
         // change the name in case object is still in use, for example
         // ScheduleItem.java
         setName(Bundle.getMessage("NotValid", getName()));
+        setPool(null);
         setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
     }
 
@@ -2598,6 +2624,13 @@ public class Track extends PropertyChangeSupport {
                     log.error("Minimum pool length isn't a vaild number for track {}", getName());
                 }
             }
+            if ((a = e.getAttribute(Xml.MAX_LENGTH)) != null) {
+                try {
+                    _maximumLength = Integer.parseInt(a.getValue());
+                } catch (NumberFormatException nfe) {
+                    log.error("Maximum pool length isn't a vaild number for track {}", getName());
+                }
+            }
         }
         if ((a = e.getAttribute(Xml.IGNORE_USED_PERCENTAGE)) != null) {
             try {
@@ -2786,7 +2819,10 @@ public class Track extends PropertyChangeSupport {
         }
         if (getPool() != null) {
             e.setAttribute(Xml.POOL, getPool().getName());
-            e.setAttribute(Xml.MIN_LENGTH, Integer.toString(getMinimumLength()));
+            e.setAttribute(Xml.MIN_LENGTH, Integer.toString(getPoolMinimumLength()));
+            if (getPoolMaximumLength() != Integer.MAX_VALUE) {
+                e.setAttribute(Xml.MAX_LENGTH, Integer.toString(getPoolMaximumLength()));
+            }
         }
         if (getIgnoreUsedLengthPercentage() > IGNORE_0) {
             e.setAttribute(Xml.IGNORE_USED_PERCENTAGE, Integer.toString(getIgnoreUsedLengthPercentage()));
