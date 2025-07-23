@@ -1693,17 +1693,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * ActiveTrain object should not be used again after this method is called.
      *
      * @param at the train to terminate
-     */
-    @Deprecated // 5.1.1 #11086
-    public void terminateActiveTrain(ActiveTrain at) {
-        terminateActiveTrain(at,true,false);
-    }
-
-    /**
-     * Terminate an Active Train and remove it from the Dispatcher. The
-     * ActiveTrain object should not be used again after this method is called.
-     *
-     * @param at the train to terminate
      * @param terminateNow TRue if doing a full terminate, not just an end of transit.
      * @param runNextTrain if false the next traininfo is not run.
      */
