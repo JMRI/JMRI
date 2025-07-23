@@ -41,7 +41,7 @@
       font-size: 1.5em;
       color: darkred;
     }
-    p.command, p.example {
+    p.command, p.exampleInfo {
         margin-left: 30px;
     }
     table.data, table.data th, table.data td {
@@ -101,7 +101,7 @@
       <p>JMRI commands and results are very often arrays of values, and sometimes arrays of arrays.
       The array elements are separated by three-character delimiters.</p>
 
-      <p class="example">For example, the following
+      <p class="exampleInfo">For example, the following
       roster entry contains two engines, and each engine has three values:</p>
 
 <pre class="code">
@@ -109,7 +109,7 @@ RL2<span class="delimiter1">]\[</span>RGS 41<span class="delimiter2">}|{</span>4
 "delimiter2">}|{</span>L<span class="delimiter1">]\[</span>Test Loco<span class=
 "delimiter2">}|{</span>1234<span class="delimiter2">}|{</span>L
 </pre>
-      <p class="example">Here the delimiters are color-coded to make it easier to see the two different delimiters.
+      <p class="exampleInfo">Here the delimiters are color-coded to make it easier to see the two different delimiters.
       The <code class="delimiter1"><strong>]\[</strong></code> delimiter is used to divide the
       different roster entries (there are two), while the <code class="delimiter2">}|{</code>
       delimiter is used to divide the parts of each roster entry. The details are described in
@@ -181,7 +181,7 @@ PW12080
       <p>The roster string always begins with <code>RL</code> (Roster List) followed by the number 
       of entries in the roster.</p>
       
-      <p class="example">Here are three different examples of roster strings that might be
+      <p class="exampleInfo">Here are three different examples of roster strings that might be
       returned by JMRI:</p>
 
 <pre class="code">
@@ -189,7 +189,7 @@ RL0
 RL2]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 </pre>
-      <p class="example">with zero, two, and three roster entries, respectively. Each roster entry contains three
+      <p class="exampleInfo">with zero, two, and three roster entries, respectively. Each roster entry contains three
       pieces of information, always in the same order:</p>
 
       <p>Command Segments:</p>
@@ -255,7 +255,7 @@ RL3]\[D&amp;RGW 341}|{3}|{S]\[RGS 41}|{41}|{L]\[Test Loco}|{1234}|{L
 
       <h3>Track Power</h3>
 
-      <p style="margin-left: 50px;"><strong>PPA</strong>«powerState»</p>
+      <p class="command"><strong>PPA</strong>«powerState»</p>
 
       <p>Returns information about the current state of track power. This takes the following form:</p>
 
@@ -448,7 +448,7 @@ PTL]\[LT12}|{Rico Station N}|{1]\[LT324}|{Rico Station S}|{2
 
       <p>The first string is likewise a list of labels for the route values.</p>
 
-      <p class="example">For example:</p>
+      <p class="exampleInfo">For example:</p>
 
 <pre class="code">
 PRT]\[Routes}|{Route]\[Active}|{2]\[Inactive}|{4]\[Unknown}|{0]\[Inconsistent}|{8
@@ -695,7 +695,7 @@ RCD}|{123(S)}|{123(S)]\[3374(L)}|{true
       <p>Addresses have the format <em>address</em>(S/L). For example, 3374(L) is a long address
       and 74(S) is a short addresses.</p>
 
-      <p class="example">In the first example above, here is the information about the first consist entry:</p>
+      <p class="exampleInfo">In the first example above, here is the information about the first consist entry:</p>
 
       <table class="data">
         <tr>
@@ -732,12 +732,12 @@ RCD}|{123(S)}|{123(S)]\[3374(L)}|{true
               
       <p>The final string from the initial reply provides the port set for the JMRI web server.</p> 
       
-      <p class="example">For example:</p>
+      <p class="exampleInfo">For example:</p>
 
 <pre class="code">
 PW12080
 </pre>
-      <p class="example">This example indicates that the web server port is set to 12080.</p>
+      <p class="exampleInfo">This example indicates that the web server port is set to 12080.</p>
 
       <p>Command Segments:</p>
  
@@ -1051,7 +1051,7 @@ PFT1550681224&lt;;&gt;0.0
       Alert message: 'HM' + message text. Normally used to return errors to be shown to user.<br>
       Info message: 'Hm' + message text. Same as HM, but informational only.</p>
 
-      <p class="example">Example returned after client requests invalid address (say
+      <p class="exampleInfo">Example returned after client requests invalid address (say
       <code>M0+L23&lt;;&gt;L23</code>) the response is:</p>
 
 <pre class="code">
@@ -1293,7 +1293,7 @@ NJohn's Throttle
 M0+L341&lt;;&gt;ED&amp;RGW 341
 </pre>
 
-      <p class="example">This example contains the array elements "+L341" and "ED&amp;RGW 341".</p>
+      <p class="exampleInfo">This example contains the array elements "+L341" and "ED&amp;RGW 341".</p>
 
       <p>Command Segments:</p>
  
@@ -1399,12 +1399,12 @@ M0+L341&lt;;&gt;ED&amp;RGW 341
 <pre class="code">
 M0+S3&lt;;&gt;ED&amp;RGW 341
 </pre>
-      <p class="example">In this example, the first element is "+S3" has the '+' to indicate that this is a request to add a
+      <p class="exampleInfo">In this example, the first element is "+S3" has the '+' to indicate that this is a request to add a
       locomotive to the multithrottle. The rest of the string is another key, formatted like an
       address (e.g., "S3" or "L341"), which will be used in future references by MultiThrottle
       commands.</p>
 
-      <p class="example">The second element is the actual address to select, using either the address directly
+      <p class="exampleInfo">The second element is the actual address to select, using either the address directly
       ("S79" or "L3002") or by referencing a roster entry using the "E" command (such as
       "ED&amp;RGW 341").</p>
 
@@ -1505,7 +1505,7 @@ M0-*&lt;;&gt;r
 <pre class="code">
 M0A*&lt;;&gt;qR
 </pre>
-      <p class="example">The characters after the 'A' in the first element are the key to a locomotive in the
+      <p class="exampleInfo">The characters after the 'A' in the first element are the key to a locomotive in the
       multithrottle, or '*' to send the command to all of the locomotives. In the example above,
       the client is sending a "qR" command to all of the locomotives on the '0' throttle.</p>
 
@@ -1874,7 +1874,7 @@ M0A*&lt;;&gt;V30
         <li>Send a steal request (MTS) for the locomotive</li>
       </ul>
 
-      <p class="example">Here is an example</p>
+      <p class="exampleInfo">Here is an example</p>
 
       <table class="data">
         <tr>
@@ -1937,7 +1937,7 @@ M0A*&lt;;&gt;V30
         </tr>
       </table>
 
-      <p class="example">Example requesting current speed and direction for all locos on throttle '0':</p>
+      <p class="exampleInfo">Example requesting current speed and direction for all locos on throttle '0':</p>
 
 <pre class="code">
 M0A*&lt;;&gt;qV
@@ -2054,13 +2054,13 @@ RC+&lt;;&gt;S74&lt;;&gt;My consist&lt;:&gt;L342&lt;;&gt;true
       <p>Removes a single locomotive from the consist.</p>
 
 
-      <p class="example">For example:</p>
+      <p class="exampleInfo">For example:</p>
 
 <pre class="code">
 RC-&lt;;&gt;S74&lt;:&gt;L341
 </pre>
 
-      <p class="example">This example removes DCC address L341 from the consist with the DCC address of S74.</p>
+      <p class="exampleInfo">This example removes DCC address L341 from the consist with the DCC address of S74.</p>
 
       <p>Command Segments:</p>
  
@@ -2117,13 +2117,13 @@ RC-&lt;;&gt;S74&lt;:&gt;L341
 <pre class="code">
 RCP&lt;;&gt;consistAddress&lt;:&gt;leadLoco&lt;;&gt;nextLoco&lt;;&gt;...* ...&lt;;&gt;nextLoco&lt;;&gt;trailLoco
 </pre>
-      <p class="example">Notice that this has no direction information--it just has a list of locomotive DCC
+      <p class="exampleInfo">Notice that this has no direction information--it just has a list of locomotive DCC
       addresses. For example:</p>
 
 <pre class="code">
 RCP&lt;;&gt;S74&lt;:&gt;L346&lt;;&gt;L3374
 </pre>
-      <p class="example">This example sets the position of the locos in the consist with the DCC address of S74 so
+      <p class="exampleInfo">This example sets the position of the locos in the consist with the DCC address of S74 so
       that DCC L346 is the lead and L3374 is the trailing loco.</p>
 
       <p>Command Segments:</p>
@@ -2178,7 +2178,7 @@ RCP&lt;;&gt;S74&lt;:&gt;L346&lt;;&gt;L3374
       <p>Deletes a consist.</p>
 
 
-      <p class="example">For example, the following command deletes the consist with DCC address
+      <p class="exampleInfo">For example, the following command deletes the consist with DCC address
       S74.</p>
 
 <pre class="code">
