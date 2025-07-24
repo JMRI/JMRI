@@ -147,7 +147,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         Location l = new Location("LOC1", "Location One");
 
         Track t = new Track("ID1", "TestTrack1", "Spur", l);
-        Assert.assertEquals("Minimum track length", 0, t.getMinimumLength());
+        Assert.assertEquals("Minimum track length", 0, t.getPoolMinimumLength());
 
         PoolTrackFrame f = new PoolTrackFrame(t);
         f.initComponents();
@@ -157,7 +157,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         // Now click the Save button and the Track should be updated with the selected Pool
         JemmyUtil.enterClickAndLeave(f.saveButton);
  
-        Assert.assertEquals("Updated min track length", 23, t.getMinimumLength());
+        Assert.assertEquals("Updated min track length", 23, t.getPoolMinimumLength());
 
         // close window
         JUnitUtil.dispose(f);
@@ -170,7 +170,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         Location l = new Location("LOC1", "Location One");
 
         Track t = new Track("ID1", "TestTrack1", "Spur", l);
-        Assert.assertEquals("Minimum track length", 0, t.getMinimumLength());
+        Assert.assertEquals("Minimum track length", 0, t.getPoolMinimumLength());
 
         PoolTrackFrame f = new PoolTrackFrame(t);
         f.initComponents();
@@ -202,7 +202,7 @@ public class PoolTrackGuiTest extends OperationsTestCase {
         Track t2 = new Track("ID2", "TestStagingTrack2", Track.STAGING, l);
         t2.setPool(pool);
         // improve test coverage by setting a minimum
-        t2.setMinimumLength(100);
+        t2.setPoolMinimumLength(100);
         
         PoolTrackFrame f = new PoolTrackFrame(t1);
         f.initComponents();
