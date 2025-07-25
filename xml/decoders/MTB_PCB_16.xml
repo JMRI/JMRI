@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no" >
-    <version version="1" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20250723"/>
+    <version version="1" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20250725"/>
     <!-- Function decoder  -->
     <!-- Description https://mtb-model.com -->
     
@@ -23,7 +23,7 @@
             <model model="PCB-16" lowVersionID="16" highVersionID="16" maxInputVolts="12V AC" maxTotalCurrent="1.0A" />
         </family>
 
-        <programming direct="yes" paged="no" register="no" ops="no" />
+        <programming direct="yes" paged="no" register="no" ops="yes" />
         
     <variables>
         
