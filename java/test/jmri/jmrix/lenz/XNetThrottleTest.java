@@ -26,7 +26,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // Test the constructor with an address specified.
     @Test
-    public void testCtorWithArg() throws Exception {
+    public void testCtorWithArg() {
         XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
         Assert.assertNotNull(t);
         t.throttleDispose();
@@ -34,7 +34,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // Test the initialization sequence.
     @Test
-    public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
+    public void testInitSequenceNormalUnitSpeedStep128() {
         int n = tc.outbound.size();
         // this test requires a new throttle.
         XNetThrottle t = new XNetThrottle(memo, new jmri.DccLocoAddress(3, false), tc);
@@ -110,7 +110,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void initSequenceNormalUnitSpeedStep14() throws Exception {
+    public void initSequenceNormalUnitSpeedStep14() {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         // this test requires a new throttle.
@@ -199,7 +199,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void initSequenceMUAddress28SpeedStep() throws Exception {
+    public void initSequenceMUAddress28SpeedStep() {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         // this test requires a new throttle.
@@ -272,7 +272,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void initSequenceMuedUnitSpeedStep128() throws Exception {
+    public void initSequenceMuedUnitSpeedStep128() {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         // this test requires a new throttle.
@@ -362,7 +362,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void initSequenceDHUnitSpeedStep27() throws Exception {
+    public void initSequenceDHUnitSpeedStep27() {
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 36 00 74"));
         int n = tc.outbound.size();
         // this test requires a new throttle.
@@ -453,7 +453,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void testSendStatusInformationRequest() throws Exception {
+    public void testSendStatusInformationRequest() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -545,7 +545,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
+    public void testSendFunctionHighMomentaryStatusRequest() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -745,7 +745,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void testSendFunctionGroup5v35() throws Exception {
+    public void testSendFunctionGroup5v35() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottlev35(t, n);
@@ -941,7 +941,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void setReverse() throws Exception {
+    public void setReverse() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -973,7 +973,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void setForward() throws Exception {
+    public void setForward() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1005,7 +1005,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void sendEmergencyStop() throws Exception {
+    public void sendEmergencyStop() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1034,7 +1034,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void setSpeedStep128() throws Exception {
+    public void setSpeedStep128() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1068,7 +1068,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void setSpeedStep28() throws Exception {
+    public void setSpeedStep28() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1102,7 +1102,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void setSpeedStep27() throws Exception {
+    public void setSpeedStep27() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1136,7 +1136,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @Test
-    public void setSpeedStep14() throws Exception {
+    public void setSpeedStep14() {
         int n = tc.outbound.size();
         XNetThrottle t = (XNetThrottle) instance;
         initThrottle(t, n);
@@ -1593,7 +1593,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @BeforeEach
     @Override
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
 
@@ -1614,7 +1614,7 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @AfterEach
     @Override
-    public void tearDown() throws Exception {
+    public void tearDown() {
         try {
             ((XNetThrottle) instance).throttleDispose();
         }
