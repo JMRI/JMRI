@@ -33,7 +33,7 @@ public class AbstractThrottleTest {
     private InternalSystemConnectionMemo memo;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         var tm = new AbstractThrottleManager(memo) {
@@ -63,7 +63,7 @@ public class AbstractThrottleTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    public void tearDown() throws Exception {
         memo.dispose();
         memo = null;
         instance = null;
