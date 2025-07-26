@@ -460,7 +460,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
          its value actually is one less than what we normally think of it as.*/
         int temp = (cv - 1) & 0x0300;
         temp = temp / 0x00FF;
-        m.setElement(4, 0xEA + temp);
+        m.setElement(4, 0xE4 + temp);
         /* Element 5 is the lower 8 bits of the cv */
         m.setElement(5, ((0x00ff & cv) - 1));
         m.setElement(6, val);
