@@ -102,7 +102,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>Improved Node Manager CANCMDB support.</li>
             </ul>
 
         <h4>MQTT</h4>
