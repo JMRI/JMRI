@@ -668,7 +668,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @return the current speed message or "Not available".
      */
     public String getWarrantSpeedMessage() {
-        var msg = "Not available";
+        var msg = Bundle.getMessage("SpeedNotAvailable");
         if (_runMode == Warrant.MODE_RUN && _engineer != null) {
             msg = getSpeedMessage(_engineer.getSpeedType(true));
         }
