@@ -15,18 +15,22 @@ import jmri.util.TimerUtil;
  */
 public class DefaultAverageMeter extends AbstractAnalogIO implements AverageMeter {
 
+    private static final int DELAY = 250;
     private final int SIZE = 100;
     private final double[] _measurements = new double[SIZE];
+
+    private int _numMeasurements = 1;
     private TimerTask _updateTask;
     private Meter _meter;
     private int _time = 1000;   // 1 second
 
     public DefaultAverageMeter(@Nonnull String sys) {
-        super(sys, false);
+        this(sys, null);
     }
 
     public DefaultAverageMeter(@Nonnull String sys, String user) {
         super(sys, user, false);
+        DefaultAverageMeter.this.setTime(1000);
     }
 
     /** {@inheritDoc} */
@@ -141,6 +145,7 @@ public class DefaultAverageMeter extends AbstractAnalogIO implements AverageMete
     @Override
     public void setTime(int time) {
         this._time = time;
+        _numMeasurements = (int) Math.round(((double)_time) / DELAY);
     }
 
     @Override
@@ -159,8 +164,19 @@ public class DefaultAverageMeter extends AbstractAnalogIO implements AverageMete
         this._meter = meter;
         if (_meter != null) {
             _updateTask = new MyTimerTask();
-            TimerUtil.scheduleOnGUIThread(_updateTask, 250);
+            TimerUtil.scheduleOnGUIThread(_updateTask, DELAY, DELAY);
         }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public double getKnownAnalogValue() {
+        double sum = 0.0;
+        int start = SIZE - _numMeasurements;
+        for (int i=start; i < SIZE; i++) {
+            sum += _measurements[i];
+        }
+        return sum / _numMeasurements;
     }
 
     /** {@inheritDoc} */

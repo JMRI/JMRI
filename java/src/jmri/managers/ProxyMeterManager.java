@@ -19,8 +19,8 @@ import jmri.*;
  * @author  Daniel Bergqvist  Copyright (C) 2020
  */
 public class ProxyMeterManager extends AbstractProxyManager<Meter>
-        implements MeterManager {
-    
+        implements MeterManager, HasAverageMeter {
+
     private boolean muteUpdates = false;
     private final List<Class<? extends Meter>> registerBeans = new ArrayList<>();
     private final List<Manager<? extends NamedBean>> registerBeanManagers = new ArrayList<>();
@@ -31,7 +31,7 @@ public class ProxyMeterManager extends AbstractProxyManager<Meter>
     }
 
     @Override
-    protected AbstractManager<Meter> makeInternalManager() {
+    protected MeterManager makeInternalManager() {
         return jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class).getMeterManager();
     }
 
@@ -85,17 +85,17 @@ public class ProxyMeterManager extends AbstractProxyManager<Meter>
         InstanceManager.setMeterManager(m);
         return m;
     }
-    
+
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
-        
+
         // When we add or remove the Light to the internal Meter manager,
         // we get a propertyChange for that.
         if (muteUpdates) return;
-        
+
         if ("beans".equals(e.getPropertyName())) {
-            
+
             for (Class<? extends Meter> clazz : registerBeans) {
                 // A NamedBean is added
                 if ((e.getNewValue() != null)
@@ -105,7 +105,7 @@ public class ProxyMeterManager extends AbstractProxyManager<Meter>
                     internalManager.register((Meter) e.getNewValue());
                     muteUpdates = false;
                 }
-                
+
                 // A NamedBean is removed
                 if ((e.getOldValue() != null)
                         && clazz.isAssignableFrom(e.getOldValue().getClass())) {
@@ -124,6 +124,16 @@ public class ProxyMeterManager extends AbstractProxyManager<Meter>
         super.dispose();
         for (Manager<? extends NamedBean> manager : registerBeanManagers) {
             manager.removePropertyChangeListener("beans", this);
+        }
+    }
+
+    @Override
+    public AverageMeter newAverageMeter(String sysName, String userName, Meter m) {
+        MeterManager mm = makeInternalManager();
+        if (mm instanceof HasAverageMeter) {
+            return ((HasAverageMeter)mm).newAverageMeter(sysName, userName, m);
+        } else {
+            throw new UnsupportedOperationException("Internal meter manager does not support AverageMeter");
         }
     }
 
