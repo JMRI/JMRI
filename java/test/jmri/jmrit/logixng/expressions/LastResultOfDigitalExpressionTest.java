@@ -148,7 +148,7 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
 
     @Test
     public void testCategory() {
-        Assert.assertEquals("Category matches", Category.OTHER, _base.getCategory());
+        Assert.assertEquals("Category matches", LogixNG_Category.OTHER, _base.getCategory());
     }
 
     @Test
@@ -262,7 +262,7 @@ public class LastResultOfDigitalExpressionTest extends AbstractDigitalExpression
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         light = InstanceManager.getDefault(LightManager.class).provide("IL1");

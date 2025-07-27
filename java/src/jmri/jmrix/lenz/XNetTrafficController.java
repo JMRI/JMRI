@@ -2,11 +2,15 @@ package jmri.jmrix.lenz;
 
 import java.util.HashMap;
 import java.util.concurrent.LinkedBlockingQueue;
+
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.lenz.XNetProgrammer.XNetConfigurator;
+
 import net.jcip.annotations.GuardedBy;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -220,7 +224,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         if (pm == null) {
             return true;
         }
-        XNetProgrammer p = (XNetProgrammer) pm.getGlobalProgrammer();
+        XNetConfigurator p = (XNetConfigurator) pm.getGlobalProgrammer().getConfigurator();
         if (p == null) {
             return true;
         }

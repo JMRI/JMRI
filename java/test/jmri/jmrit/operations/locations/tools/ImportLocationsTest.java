@@ -105,7 +105,7 @@ public class ImportLocationsTest extends OperationsTestCase {
     @Test
     public void verifyFields() {
         Assert.assertEquals("FIELD_LOCATION", 0, ImportLocations.FIELD_LOCATION);
-        Assert.assertEquals("FIELD_DIVISION", 5, ImportLocations.FIELD_DIVISION);
-        Assert.assertEquals("FIELD_COMMENT_SETOUTS", 41, ImportLocations.FIELD_COMMENT_SETOUTS);
+        Assert.assertEquals("FIELD_DIVISION", 8, ImportLocations.FIELD_DIVISION);
+        Assert.assertEquals("FIELD_COMMENT_SETOUTS", 45, ImportLocations.FIELD_COMMENT_SETOUTS);
     }
 }

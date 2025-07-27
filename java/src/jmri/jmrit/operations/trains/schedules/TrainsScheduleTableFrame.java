@@ -501,6 +501,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (Control.SHOW_PROPERTY)
             log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainScheduleManager.SCHEDULE_ID_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
             updateControlPanel();
         }

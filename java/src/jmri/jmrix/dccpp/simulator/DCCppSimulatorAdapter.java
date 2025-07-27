@@ -622,6 +622,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 reply = DCCppReply.parseDCCppReply("= A MAIN");
                 writeReply(reply);
                 reply = DCCppReply.parseDCCppReply("= B PROG");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= C MAIN");
+                writeReply(reply);
+                reply = DCCppReply.parseDCCppReply("= D MAIN");
                 break;
 
             case DCCppConstants.LCD_TEXT_CMD:
@@ -645,6 +649,15 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 generateReadCSStatusReply(); // Handle this special.
                 break;
 
+            case DCCppConstants.THROTTLE_COMMANDS:
+                log.debug("THROTTLE_COMMANDS detected");
+                if (msg.isCurrentMaxesMessage()) {
+                    reply = DCCppReply.parseDCCppReply("jG 4998 4998 4998 4998");
+                } else if (msg.isCurrentValuesMessage()) {
+                    generateCurrentValuesReply(); // Handle this special.
+                }
+                break;
+                
             case DCCppConstants.FUNCTION_CMD:
             case DCCppConstants.FORGET_CAB_CMD:
             case DCCppConstants.ACCESSORY_CMD:
@@ -702,7 +715,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private void generateReadCSStatusReply() {
         DCCppReply r = new DCCppReply("p" + (trackPowerState ? "1" : "0"));
         writeReply(r);
-        r = DCCppReply.parseDCCppReply("iDCC-EX V-4.0.1 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
+        r = DCCppReply.parseDCCppReply("iDCC-EX V-5.0.4 / MEGA / STANDARD_MOTOR_SHIELD G-9db6d36");
         writeReply(r);
         generateTurnoutStatesReply();
     }
@@ -741,8 +754,19 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         writeReply(r);
         r = new DCCppReply("c VoltageMAIN " + voltageV + " V NoPrefix 0 18.0 0.1 16.0");
         writeReply(r);
-        rs = "a " + (trackPowerState ? Integer.toString((1997/currentmA)*100) : "0");
-        r = DCCppReply.parseDCCppReply(rs);
+    }
+
+    /* 'JI' Current Value List request message returns an array of Current Values */
+    private void generateCurrentValuesReply() {
+        int currentmA_0 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_1 = 0500 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_2 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        int currentmA_3 = 1100 + ThreadLocalRandom.current().nextInt(64);
+        String rs = "jI " + (trackPowerState ? Integer.toString(currentmA_0) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_1) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_2) : "0") + " " +
+                (trackPowerState ? Integer.toString(currentmA_3) : "0");
+        DCCppReply r = new DCCppReply(rs);
         writeReply(r);
     }
 

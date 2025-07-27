@@ -74,7 +74,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void registerListenersForThisClass() {
-        ((StringActionBean)getObject()).registerListeners();
+        getObject().registerListeners();
     }
     
     /**
@@ -82,7 +82,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void unregisterListenersForThisClass() {
-        ((StringActionBean)getObject()).unregisterListeners();
+        getObject().unregisterListeners();
     }
     
     @Override

@@ -884,10 +884,23 @@ public class JUnitUtil {
     }
 
     /**
-     * Creates a new DebugThrottleManager and stores it to InstanceManager.
+     * Creates a new DebugThrottleManager using the default
+     * InternalSystemConnectionMemo.
+     * Stores to both InstanceManager and System Connection.
      */
     public static void initDebugThrottleManager() {
-        jmri.ThrottleManager m = new DebugThrottleManager();
+        var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        initDebugThrottleManager(memo);
+    }
+
+    /**
+     * Creates a new DebugThrottleManager using the supplied SystemConnectionMemo.
+     * Stores to both InstanceManager and System Connection.
+     * @param memo the system connection to use.
+     */
+    public static void initDebugThrottleManager(@Nonnull jmri.jmrix.DefaultSystemConnectionMemo memo) {
+        ThrottleManager m = new DebugThrottleManager(memo);
+        memo.store(m, ThrottleManager.class);
         InstanceManager.store(m, ThrottleManager.class);
     }
 
@@ -1430,6 +1443,7 @@ public class JUnitUtil {
         java.util.Objects.requireNonNull(window, "Window cannot be null");
 
         ThreadingUtil.runOnGUI(() -> {
+            window.setVisible(false);
             window.dispose();
         });
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.11.5plus+jake+20250510T1101Z+R105d58df104 on Sat May 10 07:02:07 EDT 2025-->
-  <decoderIndex version="643">
+  <!--Written by JMRI version 5.13.1plus+jake+20250712T1724Z+Rf31933631ca on Sat Jul 12 13:25:22 EDT 2025-->
+  <decoderIndex version="651">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -12233,6 +12233,17 @@
           <output name="2" label="B - Yellow" />
         </model>
       </family>
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1.xml">
+        <!-- Lionel has no NMRA id, but that's OK -->
+        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+        </outputs>
+        <model model="TMCC 1" maxFnNum="28" numOuts="1" />
+      </family>
       <family name="TMCC Steam" mfg="Lionel" file="Lionel-TMCC-Steam.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
@@ -12243,6 +12254,17 @@
           <output name="4" label="Violet" />
         </outputs>
         <model model="TMCC Steam" maxFnNum="68" numOuts="1" />
+      </family>
+      <family name="TMCC 2 Legacy" mfg="Lionel" file="Lionel-TMCC2-Legacy.xml">
+        <!-- Lionel has no NMRA id, but that's OK -->
+        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+        </outputs>
+        <model model="TMCC 2 Legacy" maxFnNum="68" numOuts="1" />
       </family>
       <family name="mXion" mfg="MD Electronics" file="MDE_HDD.xml">
         <model model="HDD" lowVersionID="10" highVersionID="10" />
@@ -15610,6 +15632,18 @@
           <output name="3" label="FC " />
           <output name="4" label="FD " />
           <output name="5" label="FE " />
+        </model>
+      </family>
+      <family name="Rokuhan A05x" mfg="Public-domain and DIY" file="Public_Domain_Rokuhan_A05x.xml">
+        <model model="A053" numOuts="2" numFns="2">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+        </model>
+        <model model="A059" numOuts="4" numFns="4">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
         </model>
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" modes="OPSACCEXTBYTEMODE" file="Public_Domain_dccdoma_ARD_4SERVO.xml">

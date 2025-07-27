@@ -27,6 +27,7 @@ import jmri.util.ThreadingUtil.ThreadAction;
 @ThreadSafe
 public class LogixNG_Thread {
 
+    public static final int ERROR_HANDLING_LOGIXNG_THREAD = Integer.MIN_VALUE;
     public static final int DEFAULT_LOGIXNG_THREAD = 0;
     public static final int DEFAULT_LOGIXNG_DEBUG_THREAD = 1;
 
@@ -88,6 +89,9 @@ public class LogixNG_Thread {
             LogixNG_Thread thread = _threads.get(threadID);
             if (thread == null) {
                 switch (threadID) {
+                    case ERROR_HANDLING_LOGIXNG_THREAD:
+                        thread = createNewThread(ERROR_HANDLING_LOGIXNG_THREAD, "Error handling thread");
+                        break;
                     case DEFAULT_LOGIXNG_THREAD:
                         thread = createNewThread(DEFAULT_LOGIXNG_THREAD, Bundle.getMessage("LogixNG_Thread"));
                         break;
@@ -125,7 +129,9 @@ public class LogixNG_Thread {
     }
 
     public static Collection<LogixNG_Thread> getThreads() {
-        return Collections.unmodifiableCollection(_threads.values());
+        var threadsCopy = new HashMap<>(_threads);
+        threadsCopy.remove(ERROR_HANDLING_LOGIXNG_THREAD);
+        return Collections.unmodifiableCollection(threadsCopy.values());
     }
 
     private LogixNG_Thread(int threadID, String name) {

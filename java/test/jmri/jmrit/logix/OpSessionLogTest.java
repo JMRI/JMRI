@@ -18,23 +18,25 @@ public class OpSessionLogTest {
     @jmri.util.junit.annotations.DisabledIfHeadless
     public void openAndClose() {
 
+        // create a thread that waits to close the dialog box opened later
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("logSession"));
+            jdo.requestClose();
+            jdo.waitClosed();
+        });
+        t.setName("OpSessionLog File Chooser Dialog Close Thread");
+        t.start();
+
         // create the window and make the log file on Swing thread
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             f = new jmri.util.JmriJFrame("OpSessionLog Chooser Test");
 
-            // create a thread that waits to close the dialog box opened later
-            Thread t = new Thread(() -> {
-                // constructor for jdo will wait until the dialog is visible
-                JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("logSession"));
-                jdo.requestClose();
-                jdo.waitClosed();
-            });
-            t.setName("OpSessionLog File Chooser Dialog Close Thread");
-            t.start();
-
             // get the result of closing
             retval = OpSessionLog.makeLogFile(f);
         });
+
+        JUnitUtil.waitFor( () -> !t.isAlive(), "OpSessionLog File Chooser Dialog Close Thread complete");
 
         // check results
         Assertions.assertFalse(retval);
@@ -54,7 +56,7 @@ public class OpSessionLogTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach

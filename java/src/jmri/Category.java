@@ -1,58 +1,32 @@
-package jmri.jmrit.logixng;
+package jmri;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * The category of expressions and actions.
+ * A category of something.
  * <P>
- * It's used to group expressions or actions then the user creates a new
- * expression or action.
+ * Category was created for LogixNG actions and expressions but it can be used
+ * for everything in JMRI that needs "extendable enums".
  * <P>
  * This class is intended to be an Enum, but implemented as an abstract class
  * to allow adding more categories later without needing to change this class.
  * For example, external programs using JMRI as a lib might want to add their
  * own categories.
  *
- * @author Daniel Bergqvist Copyright 2018
+ * @author Daniel Bergqvist Copyright 2025
  */
 public abstract class Category implements Comparable<Category> {
-
-    /**
-     * A item on the layout, for example turnout, sensor and signal mast.
-     */
-    public static final Item ITEM = new Item();
-
-    /**
-     * Common.
-     */
-    public static final Common COMMON = new Common();
-
-    /**
-     * Flow Control.
-     */
-    public static final FlowControl FLOW_CONTROL = new FlowControl();
 
     /**
      * Other things.
      */
     public static final Other OTHER = new Other();
 
-    /**
-     * Linux specific things.
-     */
-    public static final Linux LINUX = new Linux();
-
     static {
         // It's not often any item is added to this list so we use CopyOnWriteArrayList
         _categories = new CopyOnWriteArrayList<>();
-        registerCategory(ITEM);
-        registerCategory(COMMON);
-        registerCategory(FLOW_CONTROL);
         registerCategory(OTHER);
-        if (jmri.util.SystemType.isLinux()) {
-            registerCategory(LINUX);
-        }
     }
 
     /**
@@ -64,11 +38,28 @@ public abstract class Category implements Comparable<Category> {
     }
 
     /**
-     * Register a category
+     * Register a category.
+     * There must not exist any category with either the name or the description
+     * of this category. Otherwise an IllegalArgumentException will be thrown.
      * @param category the category
+     * @return the new category
+     * @throws IllegalArgumentException if the category already is registered.
      */
-    public static void registerCategory(Category category) {
+    public static Category registerCategory(Category category)
+            throws IllegalArgumentException {
+        for (Category c : _categories) {
+            if (c == category) {
+                // Don't register category twice. This can happen during tests.
+                return c;
+            }
+            if (c.equals(category)) {
+                throw new IllegalArgumentException(String.format(
+                        "Category '%s' with description '%s' is already registered",
+                        category._name, category._description));
+            }
+        }
         _categories.add(category);
+        return category;
     }
 
 
@@ -85,7 +76,7 @@ public abstract class Category implements Comparable<Category> {
         _order = order;
     }
 
-    public String name() {
+    public final String name() {
         return _name;
     }
 
@@ -94,61 +85,30 @@ public abstract class Category implements Comparable<Category> {
         return _description;
     }
 
-    public int order() {
+    public final int order() {
         return _order;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public final boolean equals(Object o) {
         if (o instanceof Category) {
             Category c = (Category)o;
-            return _description.equals(c._description) && _name.equals(c._name);
+            // We check during initialization that two categories isn't equal.
+            return _name.equals(c._name) || _description.equals(c._description);
         }
         return false;
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return _description.hashCode();
     }
 
     @Override
-    public int compareTo(Category c) {
+    public final int compareTo(Category c) {
         if (_order < c.order()) return -1;
         if (_order > c.order()) return 1;
-        return 0;
-    }
-
-
-    public static final class Item extends Category {
-
-        public Item() {
-            super("ITEM", Bundle.getMessage("CategoryItem"), 100);
-        }
-    }
-
-
-    public static final class Common extends Category {
-
-        public Common() {
-            super("COMMON", Bundle.getMessage("CategoryCommon"), 200);
-        }
-    }
-
-
-    public static final class FlowControl extends Category {
-
-        public FlowControl() {
-            super("FLOW_CONTROL", Bundle.getMessage("CategoryFlowControl"), 210);
-        }
-    }
-
-
-    public static final class Linux extends Category {
-
-        public Linux() {
-            super("LINUX", Bundle.getMessage("CategoryLinux"), 2000);
-        }
+        return toString().compareTo(c.toString());
     }
 
 

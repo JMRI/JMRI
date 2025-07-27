@@ -26,7 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Node Manager highlights duplicate CAN IDs.</li>
+                <li>Improved Node Manager CANCMDB support.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>Create and update Meters for newer Current messages <JI>, <JG>, etc.</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -81,13 +81,13 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
+                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 
         <h4>LocoNet</h4>
             <ul>
-                <li>The FollowSE*c.py script was broken at some unknown point in the past.
-                    The script is updated in this release to fix that.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -127,8 +127,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Added a power manager (which activates e.g. the power control)
-                    for use with LCC command stations<>/li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -143,6 +142,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
+                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 
@@ -233,8 +233,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Updated the Digitrax BDL716's "Roster Entry" with better 
-                    information on its "Notes" page.</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -405,7 +404,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that would cause Markers to be created in random locations.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -427,7 +426,11 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>There are two new columns in the DecoderPro main
+                display:  "Decoder Manufacturer" and "Decoder Family".
+                These start out hidden.  To display them,
+                right or control click in the header of any column,
+                and then put a check next to the column name.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -451,7 +454,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that would cause Markers to be created in random locations.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -474,14 +477,7 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The LogixNG action <strong>Send MERG CBUS event</strong> has
-              been added. It's available in the category <strong>Merg Cbus</strong>
-              if there is a Merg Cbus connection.</li>
-          <li>The semicolon has been added as field delimiter for CSV files used to create
-          LogixNG Tables.</li>
-          <li>Where Used support has been added to the Formula actions and expressions.  This
-          is a text based search using the item's system and user names.  False positive matches are
-          possible.</li>
+          <li></li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -493,16 +489,15 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>The train icon now shows the number of local moves in the train's route.</li>
-            <li>New feature, a turn can now drop and pull the same car on a turn.</li>
-            <li>Added local moves enabled to route export and printing.</li>
-            <li>Header lines are now optional for Manifests and switch lists.
+            <li>New feature, a non-lead car in a kernel departing staging or spur can now have a custom load that doesn't match the lead car</li>
+            <li>Added "hyphen" feature to the train name.  The program will drop "-(something)" from the train's name on Manifests and switch lists</li>
+            <li>New enhancement, you can now set the maximum length for a track in a pool</li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that would cause Markers to be created in random locations.</li>
         </ul>
 
     <h3>Permissions</h3>
@@ -514,7 +509,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
         </ul>
 
     <h3>Resources</h3>
@@ -526,7 +521,11 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>There are two new columns in the DecoderPro display of the
+                roster:  "Decoder Manufacturer" and "Decoder Family".
+                These start out hidden.  To display them,
+                right or control click in the header of any column,
+                and then put a check next to the column name.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -538,20 +537,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>The script <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
-                has been added.<br />
-                <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
-                sets "Unknown" hardware states to default values for sensors
-                (Inactive) and turnouts (Closed). This prevents overriding
-                known states.<br />
-                The existing script <strong>InitAllTurnoutsSensors.py</strong>
-                would override sensor Active and turnout Thrown states.</li>
-            <li>Upgrade YetAnotherAutoTrain.py (YAAT) to version 3.3.  There are two new statements.
-                <ul>
-                    <li>Wait for memory &lt;memory name&gt; value to change</li>
-                    <li>If value for memory &lt;memory name&gt; is &lt;eq | ne | lt | gt | le | ge&gt; &lt;value&gt;</li>
-                </ul>
-            </li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -561,13 +547,15 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The aspect mapping in the Italian FS-1987
-                    signal system has been updated.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
             <ul>
-                <li></li>
+                <li>For signal heads using the DCC Signal Decoder, an option has been added to the
+                Add/Edit dialog to copy the set of appearance numbers from another signal head.  This
+                can be used to create a custom set of appearance numbers that can be easily applied
+                to new and existing signal heads.</li>
             </ul>
 
         <h4>Signal Masts</h4>
@@ -598,13 +586,13 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li></li>
+            <li>Adds check to prevent a duplicate Turnout / Sensor / Light UserName being set.</li>
         </ul>
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Uses correct connection for non-default Throttle release / dispatch requests.</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -628,7 +616,10 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>The <strong>getWarrantSpeedMessage()</strong> method has been added to the Warrant class.
+            This is a public class that can be used by scripts and LogixNG formulas to get the current
+            Warrant speed message.  The message format depends on the <strong>Interpretation</strong>
+            selection in <strong>Preferences &rArr; Warrants</strong>.</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -652,7 +643,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -670,7 +661,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The PlantUML library we use for various documentation images
-                has been updated to the current 1.2025.2 version.</li>
-            <li>Fixed a bug where Dark Mode would fail due to a missing library.</li>
+            <li>Fixed a formating problem in "Report Issue" tool</li>
+            <li>Added a link to the JMRI users group in the Help menu</li>
         </ul>
+

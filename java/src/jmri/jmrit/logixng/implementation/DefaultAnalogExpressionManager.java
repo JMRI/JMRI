@@ -8,15 +8,13 @@ import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.InstanceManagerAutoDefault;
-import jmri.InvokeOnGuiThread;
+import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.util.*;
 
 /**
  * Class providing the basic logic of the ExpressionManager interface.
- * 
+ *
  * @author Dave Duchamp       Copyright (C) 2007
  * @author Daniel Bergqvist   Copyright (C) 2018
  */
@@ -26,18 +24,18 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     private final Map<Category, List<Class<? extends Base>>> expressionClassList = new HashMap<>();
     private MaleSocket _lastRegisteredBean;
 
-    
+
     public DefaultAnalogExpressionManager() {
         InstanceManager.getDefault(LogixNG_Manager.class).registerManager(this);
-        
+
         for (AnalogExpressionFactory expressionFactory : ServiceLoader.load(AnalogExpressionFactory.class)) {
             expressionFactory.init();
         }
-        
+
         for (Category category : Category.values()) {
             expressionClassList.put(category, new ArrayList<>());
         }
-        
+
 //        System.out.format("Read expressions%n");
         for (AnalogExpressionFactory expressionFactory : ServiceLoader.load(AnalogExpressionFactory.class)) {
             expressionFactory.getClasses().forEach((entry) -> {
@@ -45,7 +43,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
                 expressionClassList.get(entry.getKey()).add(entry.getValue());
             });
         }
-        
+
         for (MaleAnalogExpressionSocketFactory maleSocketFactory : ServiceLoader.load(MaleAnalogExpressionSocketFactory.class)) {
             _maleSocketFactories.add(maleSocketFactory);
         }
@@ -68,7 +66,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     public MaleSocket getLastRegisteredMaleSocket() {
         return _lastRegisteredBean;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public MaleAnalogExpressionSocket registerBean(MaleAnalogExpressionSocket maleSocket) {
@@ -76,7 +74,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
         _lastRegisteredBean = maleSocket;
         return bean;
     }
-    
+
     /**
      * Remember a NamedBean Object created outside the manager.
      * This method creates a MaleActionSocket for the action.
@@ -86,25 +84,25 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     @Override
     public MaleAnalogExpressionSocket registerExpression(@Nonnull AnalogExpressionBean expression)
             throws IllegalArgumentException {
-        
+
         if (expression instanceof MaleAnalogExpressionSocket) {
             throw new IllegalArgumentException("registerExpression() cannot register a MaleAnalogExpressionSocket. Use the method register() instead.");
         }
-        
+
         // Check if system name is valid
         if (this.validSystemNameFormat(expression.getSystemName()) != NameValidity.VALID) {
             log.warn("SystemName {} is not in the correct format", expression.getSystemName());
             throw new IllegalArgumentException(String.format("System name is invalid: %s", expression.getSystemName()));
         }
-        
+
         // Keep track of the last created auto system name
         updateAutoNumber(expression.getSystemName());
-        
+
         // save in the maps
         MaleAnalogExpressionSocket maleSocket = createMaleAnalogExpressionSocket(expression);
         return registerBean(maleSocket);
     }
-    
+
     @Override
     public int getXMLOrder() {
         return LOGIXNG_ANALOG_EXPRESSIONS;
@@ -143,10 +141,10 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     @Override
     public FemaleAnalogExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
-        
+
         return new DefaultFemaleAnalogExpressionSocket(parent, listener, socketName);
     }
-    
+
     @Override
     public Map<Category, List<Class<? extends Base>>> getExpressionClasses() {
         return expressionClassList;
@@ -157,7 +155,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameAnalogExpressions" : "BeanNameAnalogExpression");
     }
-    
+
     static volatile DefaultAnalogExpressionManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
@@ -165,7 +163,7 @@ public class DefaultAnalogExpressionManager extends AbstractBaseManager<MaleAnal
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
-        
+
         if (_instance == null) {
             _instance = new DefaultAnalogExpressionManager();
         }

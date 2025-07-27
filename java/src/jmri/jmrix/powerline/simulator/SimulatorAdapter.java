@@ -7,8 +7,6 @@ import java.io.PipedOutputStream;
 
 import jmri.jmrix.powerline.SerialPortController;
 import jmri.util.ImmediatePipedOutputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement simulator for Powerline serial systems.
@@ -43,18 +41,18 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     @Override
     public String openPort(String portName, String appName) {
-        try {
-            PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
+        try (PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
+            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream()) {
+
             pout = new DataOutputStream(tempPipeI);
-            //inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
-            //outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));
+            opened = true;
+            return null; // indicates OK return
         } catch (java.io.IOException e) {
-            log.error("init (pipe): Exception: {}", e.toString());
+            log.error("init (pipe): Exception: ", e);
+            opened = false;
+            return e.toString();
         }
-        opened = true;
-        return null; // indicates OK return
     }
 
     /**
@@ -133,12 +131,9 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
     @Override
     public void run() { // start a new thread
         // Simulator thread just reports start and ends
-        if (log.isInfoEnabled()) {
-            log.info("Powerline Simulator Started");
-        }
+        log.info("Powerline Simulator Started");
     }
 
-    private final static Logger log = LoggerFactory
-            .getLogger(SimulatorAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SimulatorAdapter.class);
 
 }

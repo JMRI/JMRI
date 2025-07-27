@@ -171,8 +171,6 @@ public class TrainCsvManifest extends TrainCsvCommon {
             // Are there any cars that need to be found?
             listCarsLocationUnknown(fileOut);
 
-            fileOut.flush();
-            fileOut.close();
         } catch (IOException e) {
             log.error("Can not open CSV manifest file: {}", e.getLocalizedMessage());
             throw new BuildFailedException(e);

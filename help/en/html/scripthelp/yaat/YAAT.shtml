@@ -121,6 +121,12 @@
           possible to start a train using Logix, LogixNG, scripting or even a YAAT train using
           the <strong><em>Set &lt;memory name&gt; to &lt;value&gt;</em></strong> YAAT action.
         </dd>
+
+        <dt>enableIncludes<span class="since">since YAAT 3.4</span></dt>
+
+        <dd>
+          Set to True to enable the <em>@include filename</em> statement.  See <a href="#includes">Includes</a>.
+        </dd>
       </dl>
 
       <h3>Trains</h3>
@@ -427,6 +433,33 @@
       directory. When YAAT is started, the date/time for each train source file is checked when it
       is loaded. If it is greater than the compiled train, if any, the compile will occur. Otherwise
       the compiled version will be loaded.</p>
+
+      <h3 id="includes">Includes<span class="since">since YAAT 3.4</span></h3>
+
+      <p>The <strong>Includes</strong> feature inserts blocks of YAAT code while a program file is
+      being loaded.  This is enabled by setting <strong>enableIncludes</strong> to <strong>True</strong>
+      in the <strong>config.txt</strong> global settings file.  The included files are located in
+      the <strong>includes</strong> sub-directory within the <strong>yaat</strong> directory.  The
+      <strong>@include some file name.txt</strong> line is replaced by the YAAT text located in the
+      indicated file name. The included file cannot have includes.</p>
+
+      <p>Here is an example.</p>
+      <pre>
+# Move 2019 from SCS 1A to SCS 1
+
+Assign long address 2019 as 2019 in SCS-1A
+Set direction to forward
+
+@include SCS1A-SCS1.txt
+
+Set sensor 2019-SCS1A-SCS1 inactive
+Release throttle
+Halt
+
+@include _sub_SCS-Turnout-Locks.txt
+@include _sub_SCS-Signals.txt
+@include _sub_SCS-XO-Locks.txt
+      </pre>
 
       <h3>Custom Extensions</h3>
 

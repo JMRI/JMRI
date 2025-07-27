@@ -287,7 +287,7 @@ public class PointDetails {
                     setSensor((Sensor) refObj);
                 }
             } else if (refObj instanceof SignalHead) {
-                String signal = ((SignalHead) refObj).getDisplayName();
+                String signal = refObj.getDisplayName();
                 refLoc = pnl.getFinder().findPositionablePointByEastBoundSignal(signal);
                 if (refLoc == null) {
                     refLoc = pnl.getFinder().findPositionablePointByWestBoundSignal(signal);
@@ -333,11 +333,11 @@ public class PointDetails {
         }
 
         if (refObj instanceof SignalMast) {
-            return ((SignalMast) refObj).getDisplayName();
+            return refObj.getDisplayName();
         } else if (refObj instanceof Sensor) {
-            return ((Sensor) refObj).getDisplayName();
+            return refObj.getDisplayName();
         } else if (refObj instanceof SignalHead) {
-            return ((SignalHead) refObj).getDisplayName();
+            return refObj.getDisplayName();
         }
         return "no display name";  // NOI18N
     }

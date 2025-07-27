@@ -1,7 +1,11 @@
 package jmri.jmrit.revhistory.configurexml;
 
 import java.util.ArrayList;
+
+import jmri.InstanceManager;
+import jmri.configurexml.LoadAndStorePreferences;
 import jmri.jmrit.revhistory.FileHistory;
+
 import org.jdom2.Element;
 
 /**
@@ -123,6 +127,10 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         final FileHistory r = (FileHistory) o;
         if (r == null) {
             return null;  // no file history object, not recording
+        }
+        var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
+        if (loadAndStorePreferences.isExcludeFileHistory()) {
+            return null;  // writing of file history is suppressed
         }
         Element e = historyElement(r, defaultDepth);
 

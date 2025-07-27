@@ -32,19 +32,18 @@ public enum CbusFilterType {
     CFEVENTMIN(Bundle.getMessage("MinEvent"),CFEVENT) {
         @Override
         public int action(AbstractMessage m, CbusFilter cf) {
-        if ( CbusMessage.getEvent(m) < cf.getEvMin()) {
-            return super.action(m,cf);
+            if ( CbusMessage.getEvent(m) < cf.getEvMin()) {
+                return super.action(m,cf);
+            }
+            return -1;
         }
-        CbusFilter.incrementCount(ordinal(),cf);
-        return -1;
-    } },
+    },
     CFEVENTMAX(Bundle.getMessage("MaxEvent"),CFEVENT) {
         @Override
         public int action(AbstractMessage m, CbusFilter cf) {
-            if ( CbusMessage.getEvent(m) > cf.getEvMax()){ 
+            if ( CbusMessage.getEvent(m) > cf.getEvMax()){
                 return super.action(m,cf);
             }
-            CbusFilter.incrementCount(ordinal(),cf);
             return -1;
         } },
     CFON(Bundle.getMessage("CbusOnEvents"),CFEVENT),
@@ -58,35 +57,6 @@ public enum CbusFilterType {
     CFED1(Bundle.getMessage("EVD1"),CFEVENT),
     CFED2(Bundle.getMessage("EVD2"),CFEVENT),
     CFED3(Bundle.getMessage("EVD3"),CFEVENT),
-
-    CFNODE(Bundle.getMessage("CbusNodes"),null) {
-        @Override
-        public int action(AbstractMessage m, CbusFilter cf) {
-            return CbusFilter.checknode(CbusMessage.getNodeNumber(m),cf);
-        } },
-    CFNODEMIN(Bundle.getMessage("MinNode"),CFNODE) {
-        @Override
-        public int action(AbstractMessage m, CbusFilter cf) {
-            if ( CbusMessage.getNodeNumber(m) < cf.getNdMin()){ 
-                return super.action(m, cf);
-            }
-            CbusFilter.incrementCount(ordinal(),cf);
-            return -1;
-        } },
-    CFNODEMAX(Bundle.getMessage("MaxNode"),CFNODE) {
-        @Override 
-        public int action(AbstractMessage m, CbusFilter cf) {
-            if ( CbusMessage.getNodeNumber(m) > cf.getNdMax()){ 
-                return super.action(m, cf);
-            }
-            CbusFilter.incrementCount(ordinal(),cf);
-            return -1;
-        } },
-    CFNODES(Bundle.getMessage("CbusNodes"),CFNODE) {
-        @Override 
-        public int action(AbstractMessage m, CbusFilter cf) {
-            return -1;
-        } },
 
     CFDATA(Bundle.getMessage("OPC_DA"),null),
     CFACDAT("ACDAT",CFDATA),
@@ -117,10 +87,9 @@ public enum CbusFilterType {
         @Override 
         public int action(AbstractMessage m, CbusFilter cf) {
         if (m instanceof CanFrame && ((CanFrame) m).extendedOrRtr() ) {
-            if ( cf.getActiveFilters().get(ordinal()) ){
+            if ( cf.isFilterActive(ordinal()) ){
                 return ordinal();
             } else {
-                CbusFilter.incrementCount(ordinal(),cf);
                 return -2; // special return as unable to contiinue filtering if extended or rtr
             }
         }
@@ -129,7 +98,32 @@ public enum CbusFilterType {
     CFNETWK(Bundle.getMessage("NetworkCommands"),CFMISC),
     CFCLOCK(Bundle.getMessage("CBUS_FCLK"),CFMISC),
     CFOTHER(Bundle.getMessage("Others"),CFMISC),
-    CFUNKNOWN(Bundle.getMessage("Unknown"),CFMISC);
+    CFUNKNOWN(Bundle.getMessage("Unknown"),CFMISC),
+
+    CFNODE(Bundle.getMessage("CbusNodes"),null) {
+        @Override
+        public String getToolTip(){
+            return null;
+        }
+
+    },
+    CFNODEMIN(Bundle.getMessage("MinNode"),CFNODE) {
+        @Override
+        public int action(AbstractMessage m, CbusFilter cf) {
+            if ( CbusMessage.getNodeNumber(m) < cf.getNdMin()){
+                return super.action(m, cf);
+            }
+            return -1;
+        }
+    },
+    CFNODEMAX(Bundle.getMessage("MaxNode"),CFNODE) {
+        @Override
+        public int action(AbstractMessage m, CbusFilter cf) {
+            if ( CbusMessage.getNodeNumber(m) > cf.getNdMax()){
+                return super.action(m, cf);
+            }
+            return -1;
+        } };
 
     /**
      * Perform Filter check for a particular message.
@@ -139,11 +133,10 @@ public enum CbusFilterType {
      * @param cf main CbusFilter instance
      * @return Filter category which blocked, else -1 or -2 if passed 
      */
-    public int action(AbstractMessage m, CbusFilter cf){
-        if ( cf.getActiveFilters().get(ordinal()) ){
+    public int action(AbstractMessage m, @Nonnull CbusFilter cf){
+        if ( cf.isFilterActive(ordinal()) ){
             return ordinal();
         } else {
-            CbusFilter.incrementCount(ordinal(),cf);
             return -1;
         }
     }
@@ -180,7 +173,7 @@ public enum CbusFilterType {
      * Get an EnumSet of Category Heads
      * @return set
      */
-    public final static EnumSet<CbusFilterType> getCatHeads() {
+    public static final java.util.Set<CbusFilterType> getCatHeads() {
         EnumSet<CbusFilterType> catSet = EnumSet.noneOf(CbusFilterType.class);
         catSet.add(CFEVENT);
         catSet.add(CFNODE);
@@ -204,7 +197,7 @@ public enum CbusFilterType {
      * @return true if category head or in / out filter.
      */
     public final boolean alwaysDisplay() {
-        EnumSet<CbusFilterType> alwaysDisplay = getCatHeads();
+        java.util.Set<CbusFilterType> alwaysDisplay = getCatHeads();
         alwaysDisplay.add(CFIN);
         alwaysDisplay.add(CFOUT);
         return alwaysDisplay.contains(this);
@@ -226,7 +219,7 @@ public enum CbusFilterType {
      * @return set of Filters to use for the OPC.
      */
     @Nonnull
-    public final static EnumSet<CbusFilterType> allFilters(int opc) {
+    public static final EnumSet<CbusFilterType> allFilters(int opc) {
         EnumSet<CbusFilterType> mergedSet = EnumSet.noneOf(CbusFilterType.class);
         mergedSet.addAll(EnumSet.of(CFIN,CFOUT,CFEXTRTR));
         mergedSet.addAll(CbusOpCodes.getOpcFilters(opc));
@@ -244,7 +237,7 @@ public enum CbusFilterType {
      * @return HMTL list of OPCs with description, may be null if no ToolTip
      */
     @CheckForNull
-    public final String getToolTip(){
+    public String getToolTip(){
         StringBuilder t = new StringBuilder();
         for ( int i=0 ; (i < 257) ; i++) {
             if (CbusOpCodes.getOpcFilters(i).contains(this) 
@@ -259,9 +252,25 @@ public enum CbusFilterType {
         }
         if (!t.toString().isEmpty()){
             t.insert(0,"<html>");
-            t.append("<html>");
+            t.append("</html>");
             return t.toString();
         }
         return null;
     }
+
+    /**
+     * Get Filter Type by name.
+     * @param name the #getName string to search for.
+     * @return Filter Type, or null if not found.
+     */
+    @CheckForNull
+    public static CbusFilterType getFilterByName(String name) {
+        for ( CbusFilterType type : CbusFilterType.values() ) {
+            if ( type.getName().equals(name) ) {
+                return type;
+            }
+        }
+        return null;
+    }
+
 }

@@ -163,8 +163,6 @@ public class ExportCars extends XmlFile {
                         car.getLastTrackName(),
                         car.getLastTrainName());
             }
-            fileOut.flush();
-            fileOut.close();
             log.info("Exported {} cars to file {}", _carList.size(), defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ExportedCarsToFile",
                 _carList.size(), defaultOperationsFilename()), Bundle.getMessage("ExportComplete"),

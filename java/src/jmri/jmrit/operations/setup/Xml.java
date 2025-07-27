@@ -51,6 +51,8 @@ public class Xml {
 
     static final String SPEED_HPT = "speedHpt";
     static final String MPH = "MPH";
+    
+    static final String SHOW_CLONES = "showClones";
 
     // Setup.java
     static final String OPERATIONS = "operations"; // NOI18N
@@ -100,6 +102,7 @@ public class Xml {
     static final String SORT_BY_TRACK = "sortByTrack"; // NOI18N
     static final String PRINT_PAGE_HEADER = "printPageHeader"; // NOI18N
     static final String PRINT_HEADERS = "printHeaders"; // NOI18N
+    static final String PRINT_NO_PAGE_BREAKS = "printNoPageBreaks"; // NOI18N
     static final String PRINT_CABOOSE_LOAD = "printCabooseLoad"; // NOI18N
     static final String PRINT_PASSENGER_LOAD = "printPassengerLoad"; // NOI18N
     static final String GROUP_MOVES = "groupCarMoves"; // NOI18N

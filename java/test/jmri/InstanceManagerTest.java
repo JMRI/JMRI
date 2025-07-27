@@ -87,7 +87,7 @@ public class InstanceManagerTest {
         // initialize the system
         Programmer p = new jmri.progdebugger.ProgDebugger();
         InstanceManager.store(new jmri.managers.DefaultProgrammerManager(p), GlobalProgrammerManager.class);
-        Assert.assertEquals(p, InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer());
+        Assert.assertEquals(p.getConfigurator(),InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer().getConfigurator());
     }
 
     // Testing new load store
@@ -154,7 +154,7 @@ public class InstanceManagerTest {
         InstanceManager.store(t1, TurnoutManager.class);
 
         var set = InstanceManager.getInstanceClasses();
-        
+
         Assert.assertTrue("PowerManager", set.contains(PowerManager.class));
         Assert.assertTrue("TurnoutManager", set.contains(TurnoutManager.class));
     }
@@ -217,7 +217,7 @@ public class InstanceManagerTest {
     static synchronized void setavoidLoopAutoCreateCycle( boolean newVal) {
         avoidLoopAutoCreateCycle = newVal;
     }
-    
+
     public static class AutoCreateCycle implements InstanceManagerAutoDefault {
 
         public AutoCreateCycle() {
