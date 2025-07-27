@@ -49,7 +49,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
     private final JRadioButton scaleS = new JRadioButton("S"); // NOI18N
     private final JRadioButton scaleOn3 = new JRadioButton("On3"); // NOI18N
     private final JRadioButton scaleO = new JRadioButton("O"); // NOI18N
-    private final JRadioButton scaleG = new JRadioButton("G"); // NOI18N
+    private final JRadioButton scaleG1 = new JRadioButton("Gauge 1"); // NOI18N
+    private final JRadioButton scaleG_24 = new JRadioButton("G 1/24"); // NOI18N
 
     private final JRadioButton typeDesc = new JRadioButton(Bundle.getMessage("Descriptive"));
     private final JRadioButton typeAAR = new JRadioButton(Bundle.getMessage("AAR"));
@@ -203,7 +204,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         scaleGroup.add(scaleS);
         scaleGroup.add(scaleOn3);
         scaleGroup.add(scaleO);
-        scaleGroup.add(scaleG);
+        scaleGroup.add(scaleG1);
+        scaleGroup.add(scaleG_24);
 
         pScale.add(scaleZ);
         pScale.add(scaleN);
@@ -215,7 +217,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         pScale.add(scaleS);
         pScale.add(scaleOn3);
         pScale.add(scaleO);
-        pScale.add(scaleG);
+        pScale.add(scaleG1);
+        pScale.add(scaleG_24);
         setScale();
 
         // row 4a
@@ -653,8 +656,11 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             case Setup.O_SCALE:
                 scaleO.setSelected(true);
                 break;
-            case Setup.G_SCALE:
-                scaleG.setSelected(true);
+            case Setup.Gauge1_SCALE:
+                scaleG1.setSelected(true);
+                break;
+            case Setup.G_24_SCALE:
+                scaleG_24.setSelected(true);
                 break;
             default:
                 log.error("Unknown scale");
@@ -693,8 +699,11 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         if (scaleO.isSelected()) {
             scale = Setup.O_SCALE;
         }
-        if (scaleG.isSelected()) {
-            scale = Setup.G_SCALE;
+        if (scaleG1.isSelected()) {
+            scale = Setup.Gauge1_SCALE;
+        }
+        if (scaleG_24.isSelected()) {
+            scale = Setup.G_24_SCALE;
         }
         return scale;
     }
