@@ -492,6 +492,7 @@
             <li>New feature, a non-lead car in a kernel departing staging or spur can now have a custom load that doesn't match the lead car</li>
             <li>Added "hyphen" feature to the train name.  The program will drop "-(something)" from the train's name on Manifests and switch lists</li>
             <li>New enhancement, you can now set the maximum length for a track in a pool</li>
+            <li>Added G scale 1:24 ratio option in the Setting window, renamed G scale 1:32 ratio "Gauge 1"</li>
         </ul>
 
    <h3>Panel Editor</h3>

@@ -2240,9 +2240,60 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         division. However the <a href="#TrainLocalMoveOption">train build option</a> to allow local
         moves for cars with a custom load or final destination (FD) does apply. It is recommended
         that you leave this option for a train enabled when dealing with cars that have been
-        assigned a division.
+        assigned a division. Note that a loaded division car is never routed to it's division yard.
       </p>
 
+      <p>The program when trying to determine where to send a division car considers the car's
+        load type, where the car is, and if the train terminates into staging. For example, if the
+        car has an empty load type, the train terminates into staging, and the car was at the
+        divison's yard, the program would first try to send the car to it's division staging tracks,
+        then division spurs. The table below provides a summary.</p>
+
+      <table>
+        <tr>
+          <td>Car Load Type</td>
+          <td>Train Terminates into Staging</td>
+          <td>Car at Division Yard</td>
+          <td>Priority</td>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>no</td>
+          <td>no</td>
+          <td>yards, staging, spurs</td>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>no</td>
+          <td>yes</td>
+          <td>spurs, staging</td>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>yes</td>
+          <td>no</td>
+          <td>staging, yards, spurs</td>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>yes</td>
+          <td>yes</td>
+          <td>staging, spurs</td>
+        </tr>
+        <tr>
+          <td>load</td>
+          <td>no</td>
+          <td></td>
+          <td>spurs, staging</td>
+        </tr>
+        <tr>
+          <td>load</td>
+          <td>yes</td>
+          <td></td>
+          <td>staging, spurs</td>
+        </tr>
+      </table>
+      
       <p>Adding divisions to locations and home divisions to cars creates prototypical movement,
         but it can also reduce car movement since the rules for car movement have to be enforced by
         the program. It is recommended that you start off by only providing a home division to a
