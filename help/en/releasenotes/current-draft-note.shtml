@@ -431,6 +431,10 @@
                 These start out hidden.  To display them,
                 right or control click in the header of any column,
                 and then put a check next to the column name.</li>
+            <li>The individual DecoderPro tab panes can now be detached
+                and independently positioned on the screen.  To detach
+                a pane, click on the "two pages" icon on the tab.
+                To reattach, just close the detached window.<li>
         </ul>
 
    <h3>Dispatcher</h3>

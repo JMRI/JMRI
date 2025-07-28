@@ -86,7 +86,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     String suppressRosterMedia = "";
 
     // GUI member declarations
-    JTabbedPane tabPane = new JTabbedPane();
+    JTabbedPane tabPane = new jmri.util.org.mitre.jawb.swing.DetachableTabbedPane();
     JToggleButton readChangesButton = new JToggleButton(Bundle.getMessage("ButtonReadChangesAllSheets"));
     JToggleButton writeChangesButton = new JToggleButton(Bundle.getMessage("ButtonWriteChangesAllSheets"));
     JToggleButton readAllButton = new JToggleButton(Bundle.getMessage("ButtonReadAllSheets"));
@@ -1933,6 +1933,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < paneList.size(); i++) {
             PaneProgPane p = (PaneProgPane) paneList.get(i);
+            tabPane.remove(p);
             p.dispose();
         }
         paneList.clear();
