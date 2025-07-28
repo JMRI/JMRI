@@ -21,7 +21,7 @@ import jmri.web.server.WebServerPreferences;
 /**
  * Frame for user edit of operation parameters
  *
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2025
  */
 public class OperationsSettingsPanel extends OperationsPreferencesPanel implements PropertyChangeListener {
 
@@ -198,8 +198,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         scaleGroup.add(scaleN);
         scaleGroup.add(scaleTT);
         scaleGroup.add(scaleHOn3);
-        scaleGroup.add(scaleOO);
         scaleGroup.add(scaleHO);
+        scaleGroup.add(scaleOO);
         scaleGroup.add(scaleSn3);
         scaleGroup.add(scaleS);
         scaleGroup.add(scaleOn3);
@@ -207,12 +207,25 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
         scaleGroup.add(scaleG1);
         scaleGroup.add(scaleG_24);
 
+        scaleZ.setToolTipText(Bundle.getMessage("Ratio") + Setup.Z_RATIO);
+        scaleN.setToolTipText(Bundle.getMessage("Ratio") + Setup.N_RATIO);
+        scaleTT.setToolTipText(Bundle.getMessage("Ratio") + Setup.TT_RATIO);
+        scaleHOn3.setToolTipText(Bundle.getMessage("Ratio") + Setup.HO_RATIO);
+        scaleHO.setToolTipText(Bundle.getMessage("Ratio") + Setup.HO_RATIO);
+        scaleOO.setToolTipText(Bundle.getMessage("Ratio") + Setup.OO_RATIO);
+        scaleSn3.setToolTipText(Bundle.getMessage("Ratio") + Setup.S_RATIO);
+        scaleS.setToolTipText(Bundle.getMessage("Ratio") + Setup.S_RATIO);
+        scaleOn3.setToolTipText(Bundle.getMessage("Ratio") + Setup.O_RATIO);
+        scaleO.setToolTipText(Bundle.getMessage("Ratio") + Setup.O_RATIO);
+        scaleG1.setToolTipText(Bundle.getMessage("Ratio") + Setup.Gauge1_RATIO);
+        scaleG_24.setToolTipText(Bundle.getMessage("Ratio") + Setup.G_24_RATIO);
+
         pScale.add(scaleZ);
         pScale.add(scaleN);
         pScale.add(scaleTT);
         pScale.add(scaleHOn3);
-        pScale.add(scaleOO);
         pScale.add(scaleHO);
+        pScale.add(scaleOO);
         pScale.add(scaleSn3);
         pScale.add(scaleS);
         pScale.add(scaleOn3);
@@ -638,11 +651,11 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
             case Setup.HOn3_SCALE:
                 scaleHOn3.setSelected(true);
                 break;
-            case Setup.OO_SCALE:
-                scaleOO.setSelected(true);
-                break;
             case Setup.HO_SCALE:
                 scaleHO.setSelected(true);
+                break;
+            case Setup.OO_SCALE:
+                scaleOO.setSelected(true);
                 break;
             case Setup.Sn3_SCALE:
                 scaleSn3.setSelected(true);

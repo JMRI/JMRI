@@ -33,15 +33,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String NONE = "";
 
     // scale ratios from NMRA
-    private static final int Z_RATIO = 220;
-    private static final int N_RATIO = 160;
-    private static final int TT_RATIO = 120;
-    private static final int OO_RATIO = 76; // actual ratio 76.2
-    private static final int HO_RATIO = 87;
-    private static final int S_RATIO = 64;
-    private static final int O_RATIO = 48;
-    private static final int Gauge1_RATIO = 32; // NMRA #1
-    private static final int G_24_RATIO = 24;
+    public static final int Z_RATIO = 220;
+    public static final int N_RATIO = 160;
+    public static final int TT_RATIO = 120;
+    public static final int OO_RATIO = 76; // actual ratio 76.2
+    public static final int HO_RATIO = 87;
+    public static final int S_RATIO = 64;
+    public static final int O_RATIO = 48;
+    public static final int Gauge1_RATIO = 32; // NMRA #1
+    public static final int G_24_RATIO = 24;
 
     // initial weight in milli ounces from NMRA
     private static final int Z_INITIAL_WEIGHT = 364; // not specified by NMRA
