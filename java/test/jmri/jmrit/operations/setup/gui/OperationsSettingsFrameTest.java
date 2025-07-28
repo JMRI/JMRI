@@ -133,8 +133,8 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
         Assert.assertFalse("Sn3 scale", (new JRadioButtonOperator(jfo2,"Sn3")).isSelected());
         Assert.assertFalse("S scale", (new JRadioButtonOperator(jfo2,"S",1)).isSelected());
         Assert.assertFalse("On3 scale", (new JRadioButtonOperator(jfo2,"On3")).isSelected());
-        Assert.assertFalse("O scale", (new JRadioButtonOperator(jfo2,"O",1)).isSelected());
-        Assert.assertFalse("G scale", (new JRadioButtonOperator(jfo2,"G")).isSelected());
+        Assert.assertFalse("O scale", (new JRadioButtonOperator(jfo2, "O", 2)).isSelected());
+        Assert.assertFalse("G scale", (new JRadioButtonOperator(jfo2, "G 1/24")).isSelected());
 
         Assert.assertTrue("descriptive", (new JRadioButtonOperator(jfo2,Bundle.getMessage("Descriptive"))).isSelected());
         Assert.assertFalse("AAR", (new JRadioButtonOperator(jfo2,Bundle.getMessage("AAR"))).isSelected());
