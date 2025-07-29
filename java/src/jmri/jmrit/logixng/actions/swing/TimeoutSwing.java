@@ -10,7 +10,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Timeout;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectIntegerSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 

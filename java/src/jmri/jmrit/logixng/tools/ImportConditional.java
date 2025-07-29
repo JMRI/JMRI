@@ -14,7 +14,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.Logix;
 import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.expressions.*;
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 
 /**
  * Imports Logixs to LogixNG

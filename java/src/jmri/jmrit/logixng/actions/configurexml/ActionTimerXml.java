@@ -8,7 +8,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ActionTimer;
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 
 import org.jdom2.Element;
 
