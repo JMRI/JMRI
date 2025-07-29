@@ -2,7 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.util.*;
 
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 
 import javax.annotation.Nonnull;
 
