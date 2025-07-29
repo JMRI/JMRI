@@ -83,7 +83,7 @@ import org.slf4j.LoggerFactory;
  * Instead, it delegates BiDiB handling to a BiDiB controller instance (serial, simulation, etc.) using BiDiBInterface.
  * 
  * @author Bob Jacobsen Copyright (C) 2002
- * @author Eckart Meyer Copyright (C) 2019-2024
+ * @author Eckart Meyer Copyright (C) 2019-2025
  *
  */
 
@@ -98,6 +98,7 @@ public class BiDiBTrafficController implements CommandStation {
     
     public static final String ASYNCCONNECTIONINIT = "jmri-async-init";
     public static final String ISNETBIDIB = "jmri-is-netbidib";
+    public static final String USELOCALPING = "jmri-use-local-ping";
 
     private final BidibInterface bidib;
     private final Set<TransferListener> transferListeners = new LinkedHashSet<>();
@@ -111,6 +112,7 @@ public class BiDiBTrafficController implements CommandStation {
     private PairingResult curPairingResult = PairingResult.UNPAIRED;
     private boolean isAsyncInit = false;
     private boolean isNetBiDiB = false;
+    private boolean useLocalPing = true;
     private boolean connectionIsReady = false;
     private final BiDiBNodeInitializer nodeInitializer;
     private BiDiBPortController portController;
@@ -167,6 +169,7 @@ public class BiDiBTrafficController implements CommandStation {
         // there is currently no difference between "use async init" and "this is a netBiDiB device"...
         isAsyncInit = context.get(ASYNCCONNECTIONINIT, Boolean.class, false);
         isNetBiDiB = context.get(ISNETBIDIB, Boolean.class, false);
+        useLocalPing = context.get(USELOCALPING, Boolean.class, true);
         
         stallLock.set(false); //not stalled
         
@@ -734,22 +737,27 @@ public class BiDiBTrafficController implements CommandStation {
      * If there is no response from the device, the connection will be closed.
      */
     public void startLocalPing() {
-        log.debug("Start the netBiDiB local ping worker on the rootNode.");
-        try {
+        if (useLocalPing) {
+            log.debug("Start the netBiDiB local ping worker on the rootNode.");
+            try {
 
-            if (bidib != null) {
-                bidib.getRootNode().setLocalPingEnabled(true);
+                if (bidib != null) {
+                    bidib.getRootNode().setLocalPingEnabled(true);
 
-                bidib.getRootNode().startLocalPingWorker(true, localPingResult -> {
-                    if (localPingResult.equals(Boolean.FALSE)) {
-                        log.warn("The local pong was not received! Close connection");
-                        delayedCloseTimer.start();
-                    }
-                });
+                    bidib.getRootNode().startLocalPingWorker(true, localPingResult -> {
+                        if (localPingResult.equals(Boolean.FALSE)) {
+                            log.warn("The local pong was not received! Close connection");
+                            delayedCloseTimer.start();
+                        }
+                    });
+                }
+            }
+            catch (Exception ex) {
+                log.warn("Start the local ping worker failed.", ex);
             }
         }
-        catch (Exception ex) {
-            log.warn("Start the local ping worker failed.", ex);
+        else {
+            log.debug("local ping is disabled.");
         }
     }
  
