@@ -171,19 +171,19 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
     private String getTrackCarLoadOptions(Track track) {
         StringBuffer options = new StringBuffer();
         if (track.isLoadSwapEnabled()) {
-            options.append(Bundle.getMessage("ABV_SwapDefaultLoads") + ", ");
+            options.append(Bundle.getMessage("ABV_SwapDefaultLoads") + " ");
         }
         if (track.isLoadEmptyEnabled()) {
-            options.append(Bundle.getMessage("ABV_EmptyDefaultLoads") + ", ");
+            options.append(Bundle.getMessage("ABV_EmptyDefaultLoads") + " ");
         }
         if (track.isRemoveCustomLoadsEnabled()) {
-            options.append(Bundle.getMessage("ABV_EmptyCustomLoads") + ", ");
+            options.append(Bundle.getMessage("ABV_EmptyCustomLoads") + " ");
         }
         if (track.isAddCustomLoadsEnabled()) {
-            options.append(Bundle.getMessage("ABV_GenerateCustomLoad") + ", ");
+            options.append(Bundle.getMessage("ABV_GenerateCustomLoad") + " ");
         }
         if (track.isAddCustomLoadsAnySpurEnabled()) {
-            options.append(Bundle.getMessage("ABV_GenerateCustomLoadAnySpur") + ", ");
+            options.append(Bundle.getMessage("ABV_GenerateCustomLoadAnySpur") + " ");
         }
         if (track.isAddCustomLoadsAnyStagingTrackEnabled()) {
             options.append(Bundle.getMessage("ABV_GereateCustomLoadStaging"));
