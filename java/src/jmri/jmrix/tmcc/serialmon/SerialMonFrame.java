@@ -103,9 +103,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             return "Engine " + A + " - Forward Direction";
                         case 1:
                             return "Engine " + A + " - Toggle Direction";
-                        case 2:
-						
-						case 3:
+                        case 3:
                             return "Engine " + A + " - Reverse Direction";
                         case 4:
                             return "Engine " + A + " - Boost";
@@ -115,47 +113,31 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             return "Engine " + A + " - Open Rear Coupler";
                         case 7:
                             return "Engine " + A + " - Brake";
-						case 8:
-						
-						case 9:
+			case 9:
                             return "Engine " + A + " - AUX1 Option 1 (CAB AUX1 button)";
-                        case 10:
-						
-						case 11:
-						
-						case 12:
-						
-						case 13:
+                        case 13:
                             return "Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On/Off";
-                        case 14:
-						
-						case 15:
-						
-						case 16:
+                        case 16:
                             return "Engine " + A + " - Num 0 - Trigger for Options (Needed to toggle ERR 100 Speed Steps)";
-						case 17:
+			case 17:
                             return "Engine " + A + " - Num 1 - Sound Volume Increase";
-						case 18:
+			case 18:
                             return "Engine " + A + " - Num 2 - Crew Talk";
-						case 19:
+			case 19:
                             return "Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence";
-						case 20:
+			case 20:
                             return "Engine " + A + " - Num 4 - Sound Volume Decrease";
-						case 21:
+			case 21:
                             return "Engine " + A + " - Num 5 - Sound Off w/Shut-Down Sequence";
-						case 22:
+			case 22:
                             return "Engine " + A + " - Num 6 - Steam Release/RPM Decrease";
-						case 23:
+			case 23:
                             return "Engine " + A + " - Num 7 - Tower Com Announcement";
-						case 24:
+			case 24:
                             return "Engine " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting)";
-						case 25:
+			case 25:
                             return "Engine " + A + " - Num 9 - Feature On (Smoke/Aux Lighting)";
-						case 26:
-						
-						case 27:
-						
-						case 28:
+			case 28:
                             return "Engine " + A + " - Blow Whistle/Horn 1";
                         case 29:
                             return "Engine " + A + " - Ring Bell";
@@ -169,16 +151,16 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
                 case 1:
                     //return "Engine " + A + " - extended command (C=1) with D=" + D;
-					if ((D & 0x17) == 0) {
+			if ((D & 0x17) == 0) {
                         return "Engine " + A + " - Momentum Low";
                     }
-					if ((D & 0x17) == 1) {
+			if ((D & 0x17) == 1) {
                         return "Engine " + A + " - Momentum Medium";
                     }
-					if ((D & 0x17) == 2) {
+			if ((D & 0x17) == 2) {
                         return "Engine " + A + " - Momentum High";
                     }
-					if ((D & 0x17) == 3) {
+			if ((D & 0x17) == 3) {
                         return "Engine " + A + " - Set";
                     }
                 case 2:
