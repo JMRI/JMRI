@@ -431,6 +431,9 @@
                 These start out hidden.  To display them,
                 right or control click in the header of any column,
                 and then put a check next to the column name.</li>
+            <li>Fixed a bug where changes to the speed table sliders
+                would not remind you if they had not been saved to the
+                roster file.</li>
         </ul>
 
    <h3>Dispatcher</h3>
