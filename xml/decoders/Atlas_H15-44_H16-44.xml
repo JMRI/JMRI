@@ -69,7 +69,7 @@
       </variable>
       <!-- CV=19 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-     <!-- CV=29 -->`
+     <!-- CV=29 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
@@ -199,7 +199,6 @@
           </enumVal>
           <label>Marker Lights Controlled By</label>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
     </variables>
     <resets>
