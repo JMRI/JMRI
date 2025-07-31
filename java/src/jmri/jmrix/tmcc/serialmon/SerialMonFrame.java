@@ -94,60 +94,80 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             int D = val & 0x1F;
             switch (C) {
                 case 0:
-                    if (((D & 0x70) == 0x10) && ((D & 0x0F) < 10)) {
-                        return "engine " + A + " numeric action command " + (D & 0x0F);
-                    }
+                    //if (((D & 0x70) == 0x10) && ((D & 0x0F) < 10)) {
+                    //    return "engine " + A + " numeric action command " + (D & 0x0F);
+                    //}
 
                     switch (D) {
                         case 0:
-                            return "engine " + A + " forward direction";
+                            return "Engine " + A + " - Forward Direction";
                         case 1:
-                            return "engine " + A + " toggle direction";
+                            return "Engine " + A + " - Toggle Direction";
                         case 3:
-                            return "engine " + A + " reverse direction";
-                        case 7:
-                            return "engine " + A + " brake";
+                            return "Engine " + A + " - Reverse Direction";
                         case 4:
-                            return "engine " + A + " boost";
+                            return "Engine " + A + " - Boost";
                         case 5:
-                            return "engine " + A + " open front coupler";
+                            return "Engine " + A + " - Open Front Coupler";
                         case 6:
-                            return "engine " + A + " open rear coupler";
-                        case 28:
-                            return "engine " + A + " blow horn 1";
-                        case 29:
-                            return "engine " + A + " ring bell";
-                        case 30:
-                            return "engine " + A + " letoff sound";
-                        case 31:
-                            return "engine " + A + " blow horn 2";
-                        case 8:
-                            return "engine " + A + " AUX1 off";
-                        case 9:
-                            return "engine " + A + " AUX1 option 1 (CAB AUX1 button)";
-                        case 10:
-                            return "engine " + A + " AUX1 option 2";
-                        case 11:
-                            return "engine " + A + " AUX1 on";
-                        case 12:
-                            return "engine " + A + " AUX2 off";
+                            return "Engine " + A + " - Open Rear Coupler";
+                        case 7:
+                            return "Engine " + A + " - Brake";
+						case 9:
+                            return "Engine " + A + " - AUX1 Option 1 (CAB AUX1 button)";
                         case 13:
-                            return "engine " + A + " AUX2 option 1 (CAB AUX2 button)";
-                        case 14:
-                            return "engine " + A + " AUX2 option 2";
-                        case 15:
-                            return "engine " + A + " AUX2 on";
+                            return "Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On/Off";
+                        case 16:
+                            return "Engine " + A + " - Num 0 - Trigger for Options (Needed to toggle ERR 100 Speed Steps)";
+						case 17:
+                            return "Engine " + A + " - Num 1 - Sound Volume Increase";
+						case 18:
+                            return "Engine " + A + " - Num 2 - Crew Talk";
+						case 19:
+                            return "Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence";
+						case 20:
+                            return "Engine " + A + " - Num 4 - Sound Volume Decrease";
+						case 21:
+                            return "Engine " + A + " - Num 5 - Sound Off w/Shut-Down Sequence";
+						case 22:
+                            return "Engine " + A + " - Num 6 - Steam Release/RPM Decrease";
+						case 23:
+                            return "Engine " + A + " - Num 7 - Tower Com Announcement";
+						case 24:
+                            return "Engine " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting)";
+						case 25:
+                            return "Engine " + A + " - Num 9 - Feature On (Smoke/Aux Lighting)";
+						case 28:
+                            return "Engine " + A + " - Blow Whistle/Horn 1";
+                        case 29:
+                            return "Engine " + A + " - Ring Bell";
+                        case 30:
+                            return "Engine " + A + " - Letoff Sound";
+                        case 31:
+                            return "Engine " + A + " - Blow Horn 2";
                         default:
-                            return "engine " + A + " action command D=" + D;
+                            return "Engine " + A + " - action command D=" + D;
                     }
 
                 case 1:
-                    return "engine " + A + " extended command (C=1) with D=" + D;
+                    //return "Engine " + A + " - extended command (C=1) with D=" + D;
+					if ((D & 0x17) == 0) {
+                        return "Engine " + A + " - Momentum Low";
+                    }
+					if ((D & 0x17) == 1) {
+                        return "Engine " + A + " - Momentum Medium";
+                    }
+					if ((D & 0x17) == 2) {
+                        return "Engine " + A + " - Momentum High";
+                    }
+					if ((D & 0x17) == 3) {
+                        return "Engine " + A + " - Set";
+                    }
                 case 2:
-                    return "change engine " + A + " speed (relative) by " + (D - 5);
+                    return "Change Engine " + A + " - Speed (Relative) by " + (D - 5);
                 case 3:
                 default:    // to let the compiler know there are only 3 cases
-                    return "set engine " + A + " speed (absolute) to " + D;
+                    return "Set Engine " + A + " - Speed (Absolute) to " + D;
             }
         } else if ((val & 0xF800) == 0xC800) {
             // train command
