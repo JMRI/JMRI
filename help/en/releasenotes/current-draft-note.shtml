@@ -493,6 +493,7 @@
             <li>Added "hyphen" feature to the train name.  The program will drop "-(something)" from the train's name on Manifests and switch lists</li>
             <li>New enhancement, you can now set the maximum length for a track in a pool</li>
             <li>Added G scale 1:24 ratio option in the Setting window, renamed G scale 1:32 ratio "Gauge 1"</li>
+            <li>Fix a bug with RWE or RWL and no track assignment, along with using a schedule that doesn't specify car's load</li>
         </ul>
 
    <h3>Panel Editor</h3>
