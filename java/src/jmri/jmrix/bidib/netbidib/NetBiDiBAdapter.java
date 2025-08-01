@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
  * Implements BiDiBPortController for the netBiDiB system network
  * connection.
  *
- * @author Eckart Meyer Copyright (C) 2024
+ * @author Eckart Meyer Copyright (C) 2024-2025
  *
  * mDNS code based on LIUSBEthernetAdapter.
  */
@@ -195,6 +195,9 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
             log.warn("pairing store file is invalid: {}", ex.getMessage());
         }
         //deviceListAddFromPairingStore();
+        
+        options.put("ConnectionKeepAlive", new Option(Bundle.getMessage("KeepAlive"),
+                new String[]{Bundle.getMessage("KeepAliveLocalPing"),Bundle.getMessage("KeepAliveNone")} )); // NOI18N
     }
     
     public void deviceListAddFromPairingStore() {
@@ -324,6 +327,7 @@ public class NetBiDiBAdapter extends BiDiBNetworkPortController {
         
         ctx.register(BiDiBTrafficController.ASYNCCONNECTIONINIT, true); //netBiDiB uses asynchroneous initialization
         ctx.register(BiDiBTrafficController.ISNETBIDIB, true);
+        ctx.register(BiDiBTrafficController.USELOCALPING, getOptionState("ConnectionKeepAlive").equals(Bundle.getMessage("KeepAliveLocalPing")));
 
         log.debug("Context: {}", ctx);
         
