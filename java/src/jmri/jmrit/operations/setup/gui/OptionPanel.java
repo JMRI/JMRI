@@ -111,6 +111,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         }
 
         numberPassesComboBox.setSelectedItem(Setup.getNumberPasses());
+        padComboBox(numberPassesComboBox, 2);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 

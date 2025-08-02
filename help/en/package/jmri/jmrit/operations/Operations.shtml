@@ -2287,13 +2287,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         division. However the <a href="#TrainLocalMoveOption">train build option</a> to allow local
         moves for cars with a custom load or final destination (FD) does apply. It is recommended
         that you leave this option for a train enabled when dealing with cars that have been
-        assigned a division. Note that a loaded division car is never routed to it's division yard.
+        assigned a division. Note that a loaded division car is never routed to its division yard.
       </p>
 
       <p>The program when trying to determine where to send a division car considers the car's
         load type, where the car is, and if the train terminates into staging. For example, if the
         car has an empty load type, the train terminates into staging, and the car was at the
-        divison's yard, the program would first try to send the car to it's division staging tracks,
+        divison's yard, the program would first try to send the car to its division staging tracks,
         then division spurs. The table below provides a summary.</p>
 
       <table>
@@ -3284,14 +3284,31 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         the order trains arrived into staging.</p>
 
       <h3 id="StagingAndCarLoads">Staging and Car loads</h3>
-      Staging tracks can optionally swap the car
-      <a href="#CarLoad">default loads</a> from empty to loaded, and loaded to empty. Select the
-      "Swap default loads and empties" if you want your cars loads to change when arriving at the
-      staging track. You can if you want, ask the program to empty cars as they enter staging.
-      Select the "Empty cars with default loads" to change a car's load status to default empty. If
-      you're using custom loads, you can remove the custom load when the cars arrive at the staging
-      track. Select the "Empty cars with custom loads" box if you want to replace your custom loads
-      with the default empty.
+
+      <p>
+        Staging tracks can optionally swap the car <a href="#CarLoad">default loads</a> from empty
+        to loaded, and loaded to empty. Select the "Swap default loads and empties" if you want your
+        cars loads to change when arriving at the staging track. You can if you want, ask the
+        program to empty cars as they enter staging. Select the "Empty cars with default loads" to
+        change a car's load status to default empty. If you're using custom loads, you can remove
+        the custom load when the cars arrive at the staging track. Select the "Empty cars with
+        custom loads" box if you want to replace your custom loads with the default empty.
+      </p>
+
+      <table>
+        <tr>
+          <th>Default Car Loads</th>
+          <th>Function</th>
+        </tr>
+        <tr>
+          <td>SWP</td>
+          <td>Swap default loads and empties</td>
+        </tr>
+        <tr>
+          <td>EDL</td>
+          <td>Empty cars with default loads</td>
+        </tr>
+      </table>
 
       <p>
         OperationsPro&trade; provides three options for placing custom loads into default empty cars
@@ -3329,6 +3346,29 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         destination staging track using the assigned custom load. If the staging track is reachable,
         the program will in addition to placing the custom load in the car, set the car's final
         destination to the location where the staging track resides.</p>
+
+      <table>
+        <tr>
+          <th>Custom Car Loads</th>
+          <th>Function</th>
+        </tr>
+        <tr>
+          <td>ECL</td>
+          <td>Empty cars with custom loads</td>
+        </tr>
+        <tr>
+          <td>GEN</td>
+          <td>Generate custom loads for spurs serviced by this train</td>
+        </tr>
+        <tr>
+          <td>ANY</td>
+          <td>Generate custom loads for any spur (multiple trains)</td>
+        </tr>
+        <tr>
+          <td>STG</td>
+          <td>Generate custom loads for any staging track</td>
+        </tr>
+      </table>
 
       <p>
         To restrict which car loads the program will generate for you when departing staging, use

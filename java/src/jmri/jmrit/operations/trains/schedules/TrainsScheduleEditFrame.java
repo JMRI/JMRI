@@ -79,7 +79,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         addButtonAction(restoreButton);
 
         setTitle(Bundle.getMessage("MenuItemEditSchedule"));
-        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight200));
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
 
     }
 
