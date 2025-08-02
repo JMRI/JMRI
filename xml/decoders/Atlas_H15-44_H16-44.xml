@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2015 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Paul Bender (paul.bender@acm.org)" version="2" lastUpdated="20250411"/>
+  <!-- Version 1 - Copied from Atlas VO1000 and added options for H15/H16 decoder-->
+  <decoder>
+    <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46">
+        <model model="H15/H16-44 (Part #520099)" numOuts="3" numFns="8" lowVersionID="46" highVersionID="46">
+		</model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" item="Vstart" default="8" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>Range 0-31</comment>
+      </variable>
+      <variable item="Accel" CV="3" default="1" comment="Range 1-255">
+        <decVal min="1" max="255"/>
+        <label>Accel</label>
+        <label xml:lang="it">Accellerazione (1-255)</label>
+        <label xml:lang="fr">Accelération (1-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (1-255)</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <variable item="Decel" CV="4" default="1" comment="Range 1-255">
+        <decVal min="1" max="255"/>
+        <label>Decel</label>
+        <label xml:lang="it">Decellerazione (1-255)</label>
+        <label xml:lang="fr">Décélération (1-255)</label>
+        <label xml:lang="de">Bremszeit (1-255)</label>
+        <comment>Range 1-255</comment>
+      </variable>
+      <variable CV="7" item="Decoder Version" readOnly="yes">
+        <decVal/>
+        <label>Version ID</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="127">
+        <decVal/>
+        <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="8" item="Reset" comment="Writing a value of 33 will reset decoder to factory defaults">
+        <decVal/>
+        <label>Manufacturer ID - Reset</label>
+        <label xml:lang="it">Reset ai valori di fabbrica: </label>
+        <comment>Writing a value of 33 will reset decoder to factory defaults</comment>
+        <comment xml:lang="it">Scrivere un valore di 33 per ripristinare i valori originali delle CV</comment>
+      </variable>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+     <!-- CV=29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <!-- CV=50 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv50_DCbrake.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/lenz/motorControl_cv50.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+     <!-- CV=51 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv51_DirectionalHeadlights.xml"/>
+     <!-- Function Ouptut A - Front Headlight -->
+     <variable CV="51" mask="XXXXXXVX" item="Function F0F behavior" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+        <enumVal>
+          <enumChoice choice="Dimming Disabled">
+            <choice>Dimming Disabled</choice>
+            <choice xml:lang="it">Smorzamento Luci disabilitato</choice>
+          </enumChoice>
+          <enumChoice choice="Dimming Enabled">
+            <choice>Dimming Enabled</choice>
+            <choice xml:lang="it">Smorzamento Luci abilitato</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Functional Headlight Dimming (F1 if directional, F4 if not)</label>
+        <label xml:lang="it">Smorzamento Luci (F1 per direzionali, F4 altrimenti)</label>
+      </variable>
+      <variable CV="51" mask="XXXXXVXX" item="Function F0F options" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Enable Front light dimming</label>
+        <label xml:lang="it">Abilita Smorzamento Luci Frontali</label>
+      </variable>
+      <variable CV="51" mask="VVVVXXXX" item="Function F0F effect generated">
+          <enumVal>
+              <enumChoice choice="Normal on/off" value="0">
+                  <choice>Normal on/off</choice>
+              </enumChoice>
+              <enumChoice choice="Gyro Light" value="1">
+                  <choice>Gyro Light</choice>
+              </enumChoice>
+              <enumChoice choice="Mars Light" value="2">
+                  <choice>Mars Light</choice>
+              </enumChoice>
+              <enumChoice choice="Single Pulse Strobe" value="4">
+                  <choice>Single Pulse Strobe Light</choice>
+              </enumChoice>
+              <enumChoice choice= "Double Pulse Strobe" value="8">
+                  <choice>Double Pulse Strobe Light</choice>
+              </enumChoice>
+          </enumVal>
+          <label>Front Headlight Lighting Effect</label>
+      </variable>
+      <variable item="Function F0F option 1" CV="52" default="64" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+        <label>Dimming for Front Headlight</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <!-- Function Ouptut B - Rear Headlight -->
+      <variable CV="57" mask="XXXXXXVX" item="Function F0R behavior" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+        <enumVal>
+          <enumChoice choice="Dimming Disabled">
+            <choice>Dimming Disabled</choice>
+            <choice xml:lang="it">Smorzamento Luci disabilitato</choice>
+          </enumChoice>
+          <enumChoice choice="Dimming Enabled">
+            <choice>Dimming Enabled</choice>
+            <choice xml:lang="it">Smorzamento Luci abilitato</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Functional Headlight Dimming (F1 if directional, F4 if not)</label>
+        <label xml:lang="it">Smorzamento Luci (F1 per direzionali, F4 altrimenti)</label>
+      </variable>
+      <variable CV="57" mask="XXXXXVXX" item="Function F0R options" tooltip="If headlights are directional, F1 dims headlight - If headlights are non directional, F4 dims headlights">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Enable Rear light dimming</label>
+        <label xml:lang="it">Abilita Smorzamento Luci Frontali</label>
+      </variable>
+      <variable CV="57" mask="VVVVXXXX" item="Function F0R effect generated">
+          <enumVal>
+              <enumChoice choice="Normal on/off" value="0">
+                  <choice>Normal on/off</choice>
+              </enumChoice>
+              <enumChoice choice="Gyro Light" value="1">
+                  <choice>Gyro Light</choice>
+              </enumChoice>
+              <enumChoice choice="Mars Light" value="2">
+                  <choice>Mars Light</choice>
+              </enumChoice>
+              <enumChoice choice="Single Pulse Strobe" value="4">
+                  <choice>Single Pulse Strobe Light</choice>
+              </enumChoice>
+              <enumChoice choice= "Double Pulse Strobe" value="8">
+                  <choice>Double Pulse Strobe Light</choice>
+              </enumChoice>
+          </enumVal>
+          <label>Rear Headlight Lighting Effect</label>
+      </variable>
+      <variable item="Function F0R option 2" CV="58" default="64" comment="Range 0-255">
+        <decVal min="0" max="255"/>
+        <label>Dimming for Rear Headlight</label>
+        <comment>Range 0-255</comment>
+      </variable>
+      <!-- Function Ouptuts C and D - Marker Lights -->
+      <variable CV="54"  item="Function 3 options" default="2">
+          <enumVal>
+              <enumChoice choice="F1" value="0">
+                  <choice>F1</choice>
+              </enumChoice>
+              <enumChoice choice="F2" value="2">
+                  <choice>F2</choice>
+              </enumChoice>
+              <enumChoice choice="F3" value="4">
+                  <choice>F3</choice>
+              </enumChoice>
+              <enumChoice choice="F4" value="8">
+                  <choice>F4</choice>
+              </enumChoice>
+              <enumChoice choice= "F5" value="16">
+                  <choice>F5</choice>
+              </enumChoice>
+              <enumChoice choice= "F6" value="32">
+                  <choice>F6</choice>
+              </enumChoice>
+              <enumChoice choice= "F7" value="64">
+                  <choice>F7</choice>
+              </enumChoice>
+              <enumChoice choice= "F8" value="128">
+                  <choice>F8</choice>
+              </enumChoice>
+          </enumVal>
+          <label>Marker Lights Controlled By</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/serviceNo_cv128.xml"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33">
+         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>
