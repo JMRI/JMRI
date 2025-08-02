@@ -35,7 +35,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        SpeedStepMode expResult = SpeedStepMode.TMCC_32;
+        SpeedStepMode expResult = SpeedStepMode.TMCC1_32;
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
@@ -46,7 +46,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedIncrement() {
-        float expResult = SpeedStepMode.TMCC_32.increment;
+        float expResult = SpeedStepMode.TMCC1_32.increment;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
