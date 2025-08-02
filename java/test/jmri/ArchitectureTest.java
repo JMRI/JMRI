@@ -117,6 +117,7 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.util.table.JTableWithColumnToolTips$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.table.ButtonEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.table.ToggleButtonEditor").and()
+                                .doNotHaveFullyQualifiedName("jmri.util.org.mitre.jawb.swing.DetachableTabbedPane").and()
                                 .doNotHaveFullyQualifiedName("jmri.web.servlet.frameimage.JmriJFrameServlet")
 
                             .should()
