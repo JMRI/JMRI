@@ -117,6 +117,9 @@ import javax.swing.event.MouseInputAdapter;
 import java.util.HashMap;
 import java.util.Iterator;
 
+// added as part of migration to JMRI
+import jmri.util.JmriJFrame;
+
 /**
  * JTabbedPane implementation which allows tabbs to be 'torn off' as their own
  * window. When the DetachableTabbedPane is set not visible using the
@@ -476,7 +479,7 @@ public class DetachableTabbedPane extends JTabbedPane {
     
     //DetachButton button = null; // displayed in tab for detaching
     protected LocatedIcon button = null; // displayed in tab for detaching
-    protected JFrame frame = null; // detached container
+    protected JmriJFrame frame = null; // detached container
     protected boolean detached = false; // keeps detached state if not visible
     
     public Detachable (String title, Icon icon,
@@ -489,7 +492,7 @@ public class DetachableTabbedPane extends JTabbedPane {
       this.index = index;
 
       /* frame to display component when detached. */
-      this.frame = new JFrame (title!=null?title:comp.getName());
+      this.frame = new JmriJFrame (title!=null?title:comp.getName());
       frame.addWindowListener (new WindowAdapter () {
           @Override
           public void windowClosing (WindowEvent e) {
