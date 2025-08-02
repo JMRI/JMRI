@@ -163,6 +163,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 					if ((D & 0x17) == 3) {
                         return "Engine " + A + " - Set";
                     }
+					//$FALL-THROUGH$
                 case 2:
                     return "Change Engine " + A + " - Speed (Relative) by " + (D - 5);
                 case 3:
