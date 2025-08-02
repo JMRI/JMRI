@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 
 import org.slf4j.Logger;
@@ -29,11 +30,13 @@ public class AbstractThrottleTest {
 
     protected AbstractThrottle instance = null;
     protected int maxFns = 29;
+    private InternalSystemConnectionMemo memo;
 
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        InstanceManager.setThrottleManager(new AbstractThrottleManager() {
+        memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        var tm = new AbstractThrottleManager(memo) {
 
             @Override
             public void requestThrottleSetup(LocoAddress a, boolean control) {
@@ -53,12 +56,17 @@ public class AbstractThrottleTest {
             public boolean addressTypeUnique() {
                 return true;
             }
-        });
-        instance = new AbstractThrottleImpl();
+        };
+        InstanceManager.setThrottleManager(tm);
+        memo.store(tm, jmri.ThrottleManager.class);
+        instance = new AbstractThrottleImpl(memo);
     }
 
     @AfterEach
     public void tearDown() throws Exception {
+        memo.dispose();
+        memo = null;
+        instance = null;
         JUnitUtil.tearDown();
     }
 
@@ -1648,12 +1656,12 @@ public class AbstractThrottleTest {
         Assertions.assertFalse(instance.getFunctionMomentaryNoWarn(999999));
     }
 
-    public static final class AbstractThrottleImpl extends AbstractThrottle {
+    private static final class AbstractThrottleImpl extends AbstractThrottle {
 
         private LocoAddress locoAddress;
 
-        public AbstractThrottleImpl() {
-            super(null);
+        AbstractThrottleImpl(InternalSystemConnectionMemo memo) {
+            super(memo);
             this.setLocoAddress(new DccLocoAddress(3, LocoAddress.Protocol.DCC_SHORT));
         }
 

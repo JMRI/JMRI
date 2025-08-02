@@ -21,7 +21,7 @@
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li></li>
+                <li>Add "keep-alive" setting for netBiDiB connections.</li>
             </ul>
 
         <h4>CBUS</h4>
@@ -435,6 +435,9 @@
                 and independently positioned on the screen.  To detach
                 a pane, click on the "two pages" icon on the tab.
                 To reattach, just close the detached window.<li>
+            <li>Fixed a bug where changes to the speed table sliders
+                would not remind you if they had not been saved to the
+                roster file.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -496,6 +499,7 @@
             <li>New feature, a non-lead car in a kernel departing staging or spur can now have a custom load that doesn't match the lead car</li>
             <li>Added "hyphen" feature to the train name.  The program will drop "-(something)" from the train's name on Manifests and switch lists</li>
             <li>New enhancement, you can now set the maximum length for a track in a pool</li>
+            <li>Added G scale 1:24 ratio option in the Setting window, renamed G scale 1:32 ratio "Gauge 1"</li>
         </ul>
 
    <h3>Panel Editor</h3>

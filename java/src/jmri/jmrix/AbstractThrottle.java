@@ -86,11 +86,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * All function and momentary functions set to Off.
      * @param memo System Connection.
      */
-    public AbstractThrottle(SystemConnectionMemo memo) {
-        active = true;
-        adapterMemo = memo;
-        FUNCTION_BOOLEAN_ARRAY = new boolean[29];
-        FUNCTION_MOMENTARY_BOOLEAN_ARRAY = new boolean[29];
+    public AbstractThrottle(@Nonnull SystemConnectionMemo memo) {
+        this( memo, 29);
     }
 
     /**
@@ -100,7 +97,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @param memo System Connection this throttle is on
      * @param totalFunctions total number of functions available, including 0
      */
-    public AbstractThrottle(SystemConnectionMemo memo, int totalFunctions) {
+    public AbstractThrottle(@Nonnull SystemConnectionMemo memo, int totalFunctions) {
         active = true;
         adapterMemo = memo;
         FUNCTION_BOOLEAN_ARRAY = new boolean[totalFunctions];
@@ -108,9 +105,15 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * System Connection this throttle is on
+     * Get the System Connection this throttle is on.
+     * @return non-null system connection.
      */
-    protected SystemConnectionMemo adapterMemo;
+    @Nonnull
+    protected SystemConnectionMemo getMemo() {
+        return adapterMemo;
+    }
+
+    protected final SystemConnectionMemo adapterMemo;
 
     /**
      * speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
@@ -399,7 +402,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         if (adapterMemo != null && adapterMemo.get(ThrottleManager.class) !=null) {
             return adapterMemo.get(ThrottleManager.class);
         }
-        log.warn("No {} Throttle Manager for {}", adapterMemo, this.getClass());
+        log.error("No {} Throttle Manager for {}", adapterMemo, this.getClass());
         return InstanceManager.getDefault(ThrottleManager.class);
     }
 
@@ -936,6 +939,6 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
 
 }

@@ -566,8 +566,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <table>
         <tr>
-          <td>File Name</td>
-          <td>Contains</td>
+          <th>File Name</th>
+          <th>Contains</th>
         </tr>
 
         <tr>
@@ -1076,8 +1076,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <table>
         <tr>
-          <td>File Type</td>
-          <td>Directory</td>
+          <th>File Type</th>
+          <th>Directory</th>
         </tr>
 
         <tr>
@@ -1399,9 +1399,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <table>
         <tr>
-          <td>Code</td>
-          <td>Description</td>
-          <td>Parameters</td>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Parameters</th>
         </tr>
 
         <tr>
@@ -1650,9 +1650,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <table>
         <tr>
-          <td>Code</td>
-          <td>Description</td>
-          <td>Parameters</td>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Parameters</th>
         </tr>
 
         <tr>
@@ -2201,6 +2201,53 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Therefore a positive value means that track space is going to be consumed by set outs, and a
         negative number means that track space is going to be freed up by pick ups.</p>
 
+      <p>The table will also show if there are any track road or load restrictions. For road or
+        load restrictions, an "A" followed by a number is the number roads or loads allowed. And an
+        "E" followed by a number is the number road or loads excluded.</p>
+
+      <p>For staging locations, the table also includes the car load options for the various
+        tracks. Details below.</p>
+
+      <table>
+        <tr>
+          <th>Default Car Loads</th>
+          <th>Function</th>
+        </tr>
+        <tr>
+          <td>SWP</td>
+          <td>Swap default loads and empties</td>
+        </tr>
+        <tr>
+          <td>EDL</td>
+          <td>Empty cars with default loads</td>
+        </tr>
+      </table>
+
+      <p></p>
+
+      <table>
+        <tr>
+          <th>Custom Car Loads</th>
+          <th>Function</th>
+        </tr>
+        <tr>
+          <td>ECL</td>
+          <td>Empty cars with custom loads</td>
+        </tr>
+        <tr>
+          <td>GEN</td>
+          <td>Generate custom loads for spurs serviced by this train</td>
+        </tr>
+        <tr>
+          <td>ANY</td>
+          <td>Generate custom loads for any spur (multiple trains)</td>
+        </tr>
+        <tr>
+          <td>STG</td>
+          <td>Generate custom loads for any staging track</td>
+        </tr>
+      </table>
+
       <h4 id="LocationServiceDirection">Train Direction Serviced</h4>
       You can decide which train directions the location can service. For example, if only east
       bound trains can access the location select "East" and deselect the other directions. This can
@@ -2240,9 +2287,60 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         division. However the <a href="#TrainLocalMoveOption">train build option</a> to allow local
         moves for cars with a custom load or final destination (FD) does apply. It is recommended
         that you leave this option for a train enabled when dealing with cars that have been
-        assigned a division.
+        assigned a division. Note that a loaded division car is never routed to it's division yard.
       </p>
 
+      <p>The program when trying to determine where to send a division car considers the car's
+        load type, where the car is, and if the train terminates into staging. For example, if the
+        car has an empty load type, the train terminates into staging, and the car was at the
+        divison's yard, the program would first try to send the car to it's division staging tracks,
+        then division spurs. The table below provides a summary.</p>
+
+      <table>
+        <tr>
+          <th>Car Load Type</th>
+          <th>Train Terminates into Staging</th>
+          <th>Car at Division Yard</th>
+          <th>Priority</th>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>no</td>
+          <td>no</td>
+          <td>yards, staging, spurs</td>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>no</td>
+          <td>yes</td>
+          <td>spurs, staging</td>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>yes</td>
+          <td>no</td>
+          <td>staging, yards, spurs</td>
+        </tr>
+        <tr>
+          <td>empty</td>
+          <td>yes</td>
+          <td>yes</td>
+          <td>staging, spurs</td>
+        </tr>
+        <tr>
+          <td>load</td>
+          <td>no</td>
+          <td></td>
+          <td>spurs, staging</td>
+        </tr>
+        <tr>
+          <td>load</td>
+          <td>yes</td>
+          <td></td>
+          <td>staging, spurs</td>
+        </tr>
+      </table>
+      
       <p>Adding divisions to locations and home divisions to cars creates prototypical movement,
         but it can also reduce car movement since the rules for car movement have to be enforced by
         the program. It is recommended that you start off by only providing a home division to a
@@ -2872,11 +2970,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         "All Loads" checkbox will show you every schedule for the car type selected.</p>
 
       <p>
-        The tool also show which <a href="#StagingAndCarLoads">car load options</a> have been
+        The window also show which <a href="#StagingAndCarLoads">car load options</a> have been
         selected for the staging tracks. The abbreviations are listed below:
       </p>
 
-      <table>
+       <table>
+        <tr>
+          <th>Default Car Loads</th>
+          <th>Function</th>
+        </tr>
         <tr>
           <td>SWP</td>
           <td>Swap default loads and empties</td>
@@ -2884,6 +2986,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         <tr>
           <td>EDL</td>
           <td>Empty cars with default loads</td>
+        </tr>
+      </table>
+
+      <p></p>
+
+      <table>
+        <tr>
+          <th>Custom Car Loads</th>
+          <th>Function</th>
         </tr>
         <tr>
           <td>ECL</td>
@@ -2902,6 +3013,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           <td>Generate custom loads for any staging track</td>
         </tr>
       </table>
+
 
       <p>If you want a list of custom car loads for each of your car types, you can use the
         "Print Car Loads" or "Preview Car Loads" found under the "Tools" menu. You can create or
@@ -4794,10 +4906,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <table>
         <tr>
-          <td>Pick up?</td>
-          <td>Set outs?</td>
-          <td>Local moves?</td>
-          <td>Operation</td>
+          <th>Pick up?</th>
+          <th>Set outs?</th>
+          <th>Local moves?</th>
+          <th>Operation</th>
         </tr>
         <tr>
           <td>Yes</td>
@@ -4837,10 +4949,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <table>
         <tr>
-          <td>Pick up?</td>
-          <td>Set outs?</td>
-          <td>Local moves?</td>
-          <td>Operation</td>
+          <th>Pick up?</th>
+          <th>Set outs?</th>
+          <th>Local moves?</th>
+          <th>Operation</th>
         </tr>
         <tr>
           <td>Yes</td>
