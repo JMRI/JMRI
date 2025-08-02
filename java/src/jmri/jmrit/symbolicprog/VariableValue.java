@@ -235,7 +235,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * Default implementation for subclasses to tell if a CV meets a common
      * definition of "changed". This implementation will only consider a
      * variable to be changed if the underlying CV(s) state is EDITED, e.g. if
-     * the CV(s) has been manually edited.
+     * the CV(s) has been manually edited, or UNKNOWN.
      *
      * @param c CV to be examined
      * @return true if to be considered changed
