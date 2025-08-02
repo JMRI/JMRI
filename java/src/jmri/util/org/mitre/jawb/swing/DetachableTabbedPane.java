@@ -147,6 +147,8 @@ public class DetachableTabbedPane extends JTabbedPane {
   /** Prettify the detached tabbs */
   protected Image detachedIconImage = null;
   
+  String titleSuffix = ": Foon";
+  
   /**
    * Creates an empty <code>DetachableTabbedPane</code> with a default tab
    * placement of <code>JTabbedPane.TOP</code> and detachability on.
@@ -154,6 +156,12 @@ public class DetachableTabbedPane extends JTabbedPane {
   public DetachableTabbedPane () {
     super ();
     init ();
+  }
+
+  public DetachableTabbedPane (String titleSuffix) {
+    super ();
+    init ();
+    this.titleSuffix = titleSuffix;
   }
   
   /**
@@ -292,8 +300,8 @@ public class DetachableTabbedPane extends JTabbedPane {
    */
   protected Detachable createDetachable (String title, Icon icon,
                                          Component comp,
-                                         String tip, int index) {
-    return new Detachable (title, icon, comp, tip, index);
+                                         String tip, int index, String titleSuffix) {
+    return new Detachable (title, icon, comp, tip, index, titleSuffix);
   }
 
   /**
@@ -323,7 +331,7 @@ public class DetachableTabbedPane extends JTabbedPane {
     // components, so to remain consistent create the Detachable with an index
     // based on the number of detachables we have
     Detachable d = createDetachable (title, icon, comp, tip,
-                                     panelToDetMap.size());
+                                     panelToDetMap.size(), titleSuffix);
     d.getFrame ().setIconImage (detachedIconImage);
     
     shiftDetachables (true, d);
@@ -474,6 +482,7 @@ public class DetachableTabbedPane extends JTabbedPane {
     protected Component component = null; // component to display
     protected String tip = null;
     protected int index = 0;
+    protected String titleSuffix;
 
     //transient Icon cachedIcon = null;
     
@@ -483,16 +492,17 @@ public class DetachableTabbedPane extends JTabbedPane {
     protected boolean detached = false; // keeps detached state if not visible
     
     public Detachable (String title, Icon icon,
-                       Component comp, String tip, int index) {
+                       Component comp, String tip, int index, String titleSuffix) {
 
       this.title = title;
       this.userIcon = icon;
       this.component = comp;
       this.tip = tip;
       this.index = index;
+      this.titleSuffix = titleSuffix;
 
       /* frame to display component when detached. */
-      this.frame = new JmriJFrame (title!=null?title:comp.getName());
+      this.frame = new JmriJFrame ( (title!=null?title:comp.getName())+titleSuffix);
       frame.addWindowListener (new WindowAdapter () {
           @Override
           public void windowClosing (WindowEvent e) {

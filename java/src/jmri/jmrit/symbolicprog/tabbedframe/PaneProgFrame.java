@@ -86,7 +86,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     String suppressRosterMedia = "";
 
     // GUI member declarations
-    JTabbedPane tabPane = new jmri.util.org.mitre.jawb.swing.DetachableTabbedPane();
+    JTabbedPane tabPane;
     JToggleButton readChangesButton = new JToggleButton(Bundle.getMessage("ButtonReadChangesAllSheets"));
     JToggleButton writeChangesButton = new JToggleButton(Bundle.getMessage("ButtonWriteChangesAllSheets"));
     JToggleButton readAllButton = new JToggleButton(Bundle.getMessage("ButtonReadAllSheets"));
@@ -113,6 +113,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     abstract protected JPanel getModePane();
 
     protected void installComponents() {
+    
+        tabPane = new jmri.util.org.mitre.jawb.swing.DetachableTabbedPane(" : "+_frameEntryId);
 
         // create ShutDownTasks
         if (decoderDirtyTask == null) {
