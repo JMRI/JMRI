@@ -482,7 +482,6 @@ public class DetachableTabbedPane extends JTabbedPane {
     protected Component component = null; // component to display
     protected String tip = null;
     protected int index = 0;
-    protected String titleSuffix;
 
     //transient Icon cachedIcon = null;
     
@@ -499,7 +498,6 @@ public class DetachableTabbedPane extends JTabbedPane {
       this.component = comp;
       this.tip = tip;
       this.index = index;
-      this.titleSuffix = titleSuffix;
 
       /* frame to display component when detached. */
       this.frame = new JmriJFrame ( (title!=null?title:comp.getName())+titleSuffix);
