@@ -1980,7 +1980,6 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
         private int _fastMinutes = 0;
-        private float _savedTargetSpeed = 0.0f;
         private int _savedRampRate = RAMP_NONE;
     }
 
