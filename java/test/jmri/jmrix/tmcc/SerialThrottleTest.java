@@ -347,7 +347,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         instance.setFunction(-1, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
 
-        instance.setFunction(68, true);
+        instance.setFunction(69, true);
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 69");
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 69");
     }
