@@ -51,11 +51,21 @@ public class SerialThrottle extends AbstractThrottle {
     //    and SERIAL_FUNCTION_CODES_TMCC2 to SpeedStepMode.TMCC2_32 and TMCC2_200.
 	private long getFnValue(int number) {
                 if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC1_32 || getSpeedStepMode() == jmri.SpeedStepMode.TMCC1_100) {
-                        return SERIAL_FUNCTION_CODES_TMCC1[number];
-                } else {
-                        return SERIAL_FUNCTION_CODES_TMCC2[number];
-                }
-        }
+                    if (number < SERIAL_FUNCTION_CODES_TMCC1.length) {
+						return SERIAL_FUNCTION_CODES_TMCC1[number];
+					} else {
+						return 0;
+					}
+				} else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_32 || getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_200) {
+                     if (number < SERIAL_FUNCTION_CODES_TMCC2.length) {
+						return SERIAL_FUNCTION_CODES_TMCC2[number];
+					} else {
+						return 0;
+					}
+				}
+			return 0;
+		}
+		
 
     /**
      * {@inheritDoc}
