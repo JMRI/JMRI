@@ -252,6 +252,7 @@ public class CTCMain {
                     break;
             }
             JmriJOptionPane.showMessageDialog(null, _mCTCExceptionBuffer.getAllMessages(), Bundle.getMessage("CTCMainRuntimeStartupIssues"), messageType);  // NOI18N
+            _mCTCExceptionBuffer.clear();
         }
         log.info("CTC {} {}", OtherData.CTC_VERSION, Bundle.getMessage("CTCMainStarted"));   // NOI18N
     }
