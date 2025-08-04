@@ -62,7 +62,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         // TMCC 2 parsing		
         if (opCode != 0xFE) {
         
-            //if ((val & 0xC000) == 0x0000) {
             // TMCC2 Engine Commands
             int A = (val / 512) & 0x7F;
             int C = (val / 32) & 0x03;
@@ -153,29 +152,14 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     if ((D & 0x17) == 3) {
                         return "Engine " + A + " - Set";
                     }
-                    if ((D & 0x17) == 5) {
-                        return "Engine " + A + " - Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)";
-                    }
-                    if ((D & 0x17) == 6) {
-                        return "Engine " + A + " - Start Up Sequence 2 (Immediate Start Up)";
-                    }
-                    if ((D & 0x17) == 7) {
-                        return "Engine " + A + " - Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)";
-                    }
-                    if ((D & 0x17) == 8) {
-                        return "Engine " + A + " - Shut down Sequence 2 (Immediate Shut Down)";
-                    }
+                    
                     //$FALL-THROUGH$
                 case 2:
                     return "Change Engine " + A + " - Speed (Relative) by " + (D - 5);
                 case 3:
                 default:    // to let the compiler know there are only 3 cases
-                    return "Set Engine " + A + " - Speed (Absolute) to " + D;
+                    return "TMCC 2 msg 0x"+Integer.toHexString(opCode)+" 0x"+Integer.toHexString(val);
             }
-
-            //} else {
-            //    return "TMCC 2 msg 0x"+Integer.toHexString(opCode)+" 0x"+Integer.toHexString(val);
-            //}
         }
 
         // TMCC 1 parsing
@@ -299,7 +283,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     return "Change Engine " + A + " - Speed (Relative) by " + (D - 5);
                 case 3:
                 default:    // to let the compiler know there are only 3 cases
-                    return "Set Engine " + A + " - Speed (Absolute) to " + D;
+                    return "TMCC 2 msg 0x"+Integer.toHexString(opCode)+" 0x"+Integer.toHexString(val);
             }
         } else if ((val & 0xF800) == 0xC800) {
             // TMCC1 Train Commands

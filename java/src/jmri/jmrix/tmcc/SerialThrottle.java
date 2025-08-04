@@ -110,6 +110,47 @@ public class SerialThrottle extends AbstractThrottle {
         0x000009, 0x00001E, 0x000000, 0x000003, 0x000001, /* Fn15-19 */
         0x000004, 0x000007, 0x000047, 0x000042, 0x000028, /* Fn20-24 */
         0x000029, 0x00002A, 0x00002B, 0x00001F, /* 25-28 */
+        
+        0xF901FF, // Fn29
+        0xF901FF, // Fn30
+        0xF901FF, // Fn31
+        0xF901FF, // Fn32
+        0xF901FF, // Fn33
+        0xF901FF, // Fn34
+        0xF901FF, // Fn35
+        0xF901FF, // Fn36
+        0xF901FF, // Fn37
+        0xF901FF, // Fn38
+        0xF901FF, // Fn39
+        0xF901FF, // Fn40
+        0xF901FF, // Fn41
+        0xF901FF, // Fn42
+        0xF901FF, // Fn43
+        0xF901FF, // Fn44
+        0xF901FF, // Fn45
+        0xF901FF, // Fn46
+        0xF901FF, // Fn47
+        0xF901FF, // Fn48
+        0xF901FF, // Fn49
+        0xF901FF, // Fn50
+        0xF901FF, // Fn51
+        0xF901FF, // Fn52
+        0xF901FF, // Fn53
+        0xF901FF, // Fn54
+        0xF901FF, // Fn55
+        0xF901FF, // Fn56
+        0xF901FF, // Fn57
+        0xF901FF, // Fn58
+        0xF901FF, // Fn59
+        0xF901FF, // Fn60
+        0xF901FF, // Fn61
+        0xF901FF, // Fn62
+        0xF901FF, // Fn63
+        0xF901FF, // Fn64
+        0xF901FF, // Fn65
+        0xF901FF, // Fn66
+        0xF901FF, // Fn67
+        0xF901FF, // Fn68
     };
 
     // Translate TMCC1 function numbers to line characters.
@@ -129,46 +170,49 @@ public class SerialThrottle extends AbstractThrottle {
         0xF80109, 0xF8011E, 0xF80100, 0xF80103, 0xF80101, /* Fn15-19 */
         0xF80104, 0xF80107, 0xF80147, 0xF80142, 0xF80128, /* Fn20-24 */
         0xF80129, 0xF8012A, 0xF8012B, 0xF8011F, /* 25-28 */
-        0xF801FBF801FCL, // Fn29 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
-        0xF801FC, // Fn30 Start Up Sequence 2 (Immediate Start Up)
-        0xF801FDF801FEL, // Fn31 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
-        0xF801FE, // Fn32 Shut down Sequence 2 (Immediate Shut Down)
-        0xF80108, // Fn33
-        0xF8010A, // Fn34
-        0xF8010B, // Fn35
-        0xF8010C, // Fn36
-        0xF8010E, // Fn37
-        0xF8010F, // Fn38
+        
+        0xF80108, // Fn29
+        0xF8010A, // Fn30
+        0xF8010B, // Fn31
+        0xF8010C, // Fn32
+        0xF8010E, // Fn33
+        0xF8010F, // Fn34
+        
+        0xF801FBF801FCL, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
+        0xF801FC, // Fn36 Start Up Sequence 2 (Immediate Start Up)
+        0xF801FDF801FEL, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
+        0xF801FE, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
 
-        0xF90000, // Fn39
-        0xF90000, // Fn40
-        0xF90000, // Fn41
-        0xF90000, // Fn42
-        0xF90000, // Fn43
-        0xF90000, // Fn44
-        0xF90000, // Fn45
-        0xF90000, // Fn46
-        0xF90000, // Fn47
-        0xF90000, // Fn48
-        0xF90000, // Fn49
-        0xF90000, // Fn50
-        0xF90000, // Fn51
-        0xF90000, // Fn52
-        0xF90000, // Fn53
-        0xF90000, // Fn54
-        0xF90000, // Fn55
-        0xF90000, // Fn56
-        0xF90000, // Fn57
-        0xF90000, // Fn58
-        0xF90000, // Fn59
-        0xF90000, // Fn60
-        0xF90000, // Fn61
-        0xF90000, // Fn62
-        0xF90000, // Fn63
-        0xF90000, // Fn64
-        0xF90000, // Fn65
-        0xF90000, // Fn66
-        0xF90000, // Fn67
+        0xF901FF, // Fn39
+        0xF901FF, // Fn40
+        0xF901FF, // Fn41
+        0xF901FF, // Fn42
+        0xF901FF, // Fn43
+        0xF901FF, // Fn44
+        0xF901FF, // Fn45
+        0xF901FF, // Fn46
+        0xF901FF, // Fn47
+        0xF901FF, // Fn48
+        0xF901FF, // Fn49
+        0xF901FF, // Fn50
+        0xF901FF, // Fn51
+        0xF901FF, // Fn52
+        0xF901FF, // Fn53
+        0xF901FF, // Fn54
+        0xF901FF, // Fn55
+        0xF901FF, // Fn56
+        0xF901FF, // Fn57
+        0xF901FF, // Fn58
+        0xF901FF, // Fn59
+        0xF901FF, // Fn60
+        0xF901FF, // Fn61
+        0xF901FF, // Fn62
+        0xF901FF, // Fn63
+        0xF901FF, // Fn64
+        0xF901FF, // Fn65
+        0xF901FF, // Fn66
+        0xF901FF, // Fn67
+        0xF901FF, // Fn68
     };
 
     /**
