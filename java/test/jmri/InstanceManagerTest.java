@@ -324,6 +324,7 @@ public class InstanceManagerTest {
         Assert.assertNotNull(InstanceManager.getDefault(MemoryManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(AudioManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(RosterIconFactory.class));
+        Assert.assertNotNull(InstanceManager.getDefault(jmri.time.TimeProviderManager.class));
     }
 
     //
