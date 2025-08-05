@@ -73,7 +73,7 @@ public class SerialThrottle extends AbstractThrottle {
     @Override
     public void setFunction(int func, boolean value) {
         updateFunction(func, value);
-        if (func>=0 && func < 0x10000) {
+        if (func>=0 && func < SERIAL_FUNCTION_CODES_TMCC1.length) {
             if ( getFnValue(func) > 0xFFFF ) {
                 // TMCC 2 format
                 if (getFnValue(func) > 0xFFFFFF ) {
