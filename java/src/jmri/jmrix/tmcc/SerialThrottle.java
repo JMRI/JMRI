@@ -250,7 +250,7 @@ public class SerialThrottle extends AbstractThrottle {
             // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
             tc.sendSerialMessage(m, null);
             tc.sendSerialMessage(m, null);
-        }	
+        }
 
         // send to layout option 100 speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC1_100) {

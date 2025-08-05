@@ -59,7 +59,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     }
 
     String parse(int opCode, int val) {
-        // TMCC 2 parsing		
+        // TMCC 2 parsing
         if (opCode != 0xFE) {
         
             // TMCC2 Engine Commands
