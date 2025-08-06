@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb;
 
+import jmri.InstanceManager;
+import jmri.IdTagManager;
 import jmri.util.JUnitUtil;
 
 import org.openlcb.*;
@@ -398,7 +400,9 @@ public class OlcbSignalMastTest {
     public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
+           memo.get(OlcbEventNameStore.class).deregisterShutdownTask();
            memo.dispose();
+           InstanceManager.getDefault(IdTagManager.class).dispose();
         }
         memo = null;
         connection = null;

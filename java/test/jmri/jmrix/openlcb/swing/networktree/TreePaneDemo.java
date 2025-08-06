@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.Assume;
@@ -96,12 +98,13 @@ public class TreePaneDemo {
 
     @AfterEach
     public void tearDown() {
+        pane.release();
+        pane = null;
         if (!GraphicsEnvironment.isHeadless()) {
             frame.setVisible(false);
             frame.dispose();
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
         }
-        jmri.util.JUnitUtil.resetWindows(false,false);
         jmri.util.JUnitUtil.tearDown();
         store = null;
     }
@@ -113,22 +116,22 @@ public class TreePaneDemo {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testPriorMessage() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("Prior Message");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testAfterMessage() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("After Message");
         Message msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
         store.put(msg, null);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testWithProtocolID() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("2nd has protocol id");
         Message msg;
         msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
@@ -137,8 +140,8 @@ public class TreePaneDemo {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testWith1stSNII() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("3rd has PIP && 1st SNII");
         Message msg;
         msg = new ProducerIdentifiedMessage(nid2, eventA, EventState.Unknown);
@@ -152,8 +155,8 @@ public class TreePaneDemo {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testWithSelect() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setTitle("listener test");
 
         pane.addTreeSelectionListener(e -> {
