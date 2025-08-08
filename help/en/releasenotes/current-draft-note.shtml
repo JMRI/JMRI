@@ -21,12 +21,12 @@
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li>Add "keep-alive" setting for netBiDiB connections.</li>
+                <li></li>
             </ul>
 
         <h4>CBUS</h4>
             <ul>
-                <li>Improved Node Manager CANCMDB support.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -81,7 +81,6 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 
@@ -142,7 +141,6 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li>Fixes a bug when programming locos.</li>
                 <li></li>
             </ul>
 
@@ -404,7 +402,7 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li>Fixed a bug that would cause Markers to be created in random locations.</li>
+            <li></li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
@@ -426,24 +424,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>There are two new columns in the DecoderPro main
-                display:  "Decoder Manufacturer" and "Decoder Family".
-                These start out hidden.  To display them,
-                right or control click in the header of any column,
-                and then put a check next to the column name.</li>
-            <li>The individual DecoderPro tab panes can now be detached
-                and independently positioned on the screen.  To detach
-                a pane, click on the "two pages" icon on the tab.
-                To reattach, just close the detached window.<li>
-            <li>Fixed a bug where changes to the speed table sliders
-                would not remind you if they had not been saved to the
-                roster file.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>At the end of a PAUSE transit action, set speedby signal, do not blindly restore pre-pause value.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -461,7 +448,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Fixed a bug that would cause Markers to be created in random locations.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -496,17 +483,13 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, a non-lead car in a kernel departing staging or spur can now have a custom load that doesn't match the lead car</li>
-            <li>Added "hyphen" feature to the train name.  The program will drop "-(something)" from the train's name on Manifests and switch lists</li>
-            <li>New enhancement, you can now set the maximum length for a track in a pool</li>
-            <li>Added G scale 1:24 ratio option in the Setting window, renamed G scale 1:32 ratio "Gauge 1"</li>
-            <li>Fix a bug with RWE or RWL and no track assignment, along with using a schedule that doesn't specify car's load</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
-            <li>Fixed a bug that would cause Markers to be created in random locations.</li>
+            <li></li>
         </ul>
 
     <h3>Permissions</h3>
@@ -518,7 +501,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
+            <li></li>
         </ul>
 
     <h3>Resources</h3>
@@ -530,11 +513,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>There are two new columns in the DecoderPro display of the
-                roster:  "Decoder Manufacturer" and "Decoder Family".
-                These start out hidden.  To display them,
-                right or control click in the header of any column,
-                and then put a check next to the column name.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -561,10 +540,7 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li>For signal heads using the DCC Signal Decoder, an option has been added to the
-                Add/Edit dialog to copy the set of appearance numbers from another signal head.  This
-                can be used to create a custom set of appearance numbers that can be easily applied
-                to new and existing signal heads.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Masts</h4>
@@ -595,13 +571,13 @@
    <h3>Switchboard Editor</h3>
         <a id="SW" name="SW"></a>
         <ul>
-            <li>Adds check to prevent a duplicate Turnout / Sensor / Light UserName being set.</li>
+            <li></li>
         </ul>
 
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Uses correct connection for non-default Throttle release / dispatch requests.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -625,10 +601,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>The <strong>getWarrantSpeedMessage()</strong> method has been added to the Warrant class.
-            This is a public class that can be used by scripts and LogixNG formulas to get the current
-            Warrant speed message.  The message format depends on the <strong>Interpretation</strong>
-            selection in <strong>Preferences &rArr; Warrants</strong>.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>
@@ -652,7 +625,7 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li>Prevent duplicate start up entries when adding a WiThrottle start up action.</li>
+            <li></li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -670,7 +643,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Fixed a formating problem in "Report Issue" tool</li>
-            <li>Added a link to the JMRI users group in the Help menu</li>
+            <li></li>
         </ul>
 
