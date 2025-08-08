@@ -325,12 +325,12 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.13.1-SNAPSHOT/5.13.3-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.13.2-SNAPSHOT/5.13.3-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=1/release.build=2/g release.properties
+        sed -i.bak s/release.build=2/release.build=3/g release.properties
 ```
  - Check that both those edits left 5.13.3 defined in the two files
  
@@ -564,15 +564,16 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```
+
 [Release notes](https://jmri.org/releasenotes/jmri5.13.3.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.13.3+Rc2ecdaf40b.dmg](https://github.com/JMRI/JMRI/releases/download/v5.13.3/JMRI.5.13.3+Rc2ecdaf40b.dmg) | 39cb7f1d9eda23e3fc0225c1714b87449516868b10f0e4068cf8aa8bff6d1e7e
-[JMRI.5.13.3+Rc2ecdaf40b.exe](https://github.com/JMRI/JMRI/releases/download/v5.13.3/JMRI.5.13.3+Rc2ecdaf40b.exe) | e2f9ca152b69bfe9442a2b499efef5f0e0589b263e4e9792d3fd7f806495d351
-[JMRI.5.13.3+Rc2ecdaf40b.tgz](https://github.com/JMRI/JMRI/releases/download/v5.13.3/JMRI.5.13.3+Rc2ecdaf40b.tgz) | 15e4d76e5a23533b209ba69c26c2195334d669451b17b827bc589cdec2057fd3
+[JMRI.5.13.3+Rf64a88e8b8.dmg](https://github.com/JMRI/JMRI/releases/download/v5.13.3/JMRI.5.13.3+Rf64a88e8b8.dmg) | eb8908bc0bb1c7af8c0a8c7011de9b2b472c2bccd230e1203a223e29c127e0c9
+[JMRI.5.13.3+Rf64a88e8b8.exe](https://github.com/JMRI/JMRI/releases/download/v5.13.3/JMRI.5.13.3+Rf64a88e8b8.exe) | e4fdd49cdda20ca3fa4f9f0add3b8420d9fdf298d47d51fd34f0479a0d782d33
+[JMRI.5.13.3+Rf64a88e8b8.tgz](https://github.com/JMRI/JMRI/releases/download/v5.13.3/JMRI.5.13.3+Rf64a88e8b8.tgz) | 6b25d5491bb10b4a9e52d839556c7c10f6b73592618aa99f5febb7de00b94320
 ```
 
 - Attach files by selecting them or dragging them in from the release/ subdirectory. Make sure that the Linux one is .tgz, not .tar.
