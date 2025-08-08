@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.13.1plus+jake+20250712T1724Z+Rf31933631ca on Sat Jul 12 13:25:22 EDT 2025-->
-  <decoderIndex version="651">
+  <!--Written by JMRI version 5.13.2plus+jake+20250808T1025Z+R3ce3892a5b4 on Fri Aug 08 06:25:45 EDT 2025-->
+  <decoderIndex version="653">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -431,6 +431,9 @@
       <family name="Dual Mode" mfg="Atlas" lowVersionID="45" highVersionID="45" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="2" numFns="0" />
       </family>
+      <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46" file="Atlas_H15-44_H16-44.xml">
+        <model model="H15/H16-44 (Part #520099)" numOuts="3" numFns="8" lowVersionID="46" highVersionID="46" />
+      </family>
       <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="45" highVersionID="45" comment="Factory installed decoders in Atlas N scale locomotives. NCE and Lenz rebranded by Atlas (changed Manufucturer ID to Atlas) http://www.atlasrr.com/pdf/Atlas_N-Scale_Decoder_Applications.pdf" file="Atlas_Lenz_N.xml">
         <model model="LE062XF by Lenz (Part #490299)" numOuts="2">
           <output name="1" label="A - White" />
@@ -545,6 +548,14 @@
         <model model="Dash 8-40C (Part #518299)" numOuts="4" numFns="8">
           <output name="1" label="LED 1" />
           <output name="2" label="LED 2" />
+        </model>
+        <model model="NH15-44" numOuts="6" numFns="8" comment="for Atlas H15-44,H16-44">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+          <output name="3" label="Pad 3" />
+          <output name="4" label="Pad 4" />
+          <output name="5" label="Pad 5" />
+          <output name="6" label="Pad 6" />
         </model>
       </family>
       <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46" file="Atlas_VO1000.xml">
@@ -14253,6 +14264,9 @@
       </family>
       <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_sounder1909.xml">
         <model model="Diesel Sound Decoder 1909 EMD 567/645/645E/710 Alco 244/539T" numOuts="2" numFns="28" />
+      </family>
+      <family name="Function Decoders" mfg="MTB Model" file="MTB_PCB_16.xml">
+        <model model="PCB-16" lowVersionID="16" highVersionID="16" />
       </family>
       <family name="MTH HO PS3" mfg="MTH Electric Trains, Inc." file="MTH.xml">
         <model model="MTH HO PS3" />
