@@ -111,37 +111,37 @@
 		<label xml:lang="de">Lautstärke</label>
         <label xml:lang="nl">Volume &amp; Mute</label>
     </output>
-    <output name="3,17" label="|">
+    <output name="3,17" label="Shift Mode 1">
         <label xml:lang="ca">Mode de Canvi 1</label>
         <label xml:lang="cs">Režim posunu 1</label>
         <label xml:lang="da">Shift Mode 1</label>
         <label xml:lang="nl">Shift Mode 1</label>
     </output>
-    <output name="3,18" label="|">
+    <output name="3,18" label="Shift Mode 2">
         <label xml:lang="ca">Mode de Canvi 2</label>
         <label xml:lang="cs">Režim posunu 2</label>
         <label xml:lang="da">Shift Mode 2</label>
         <label xml:lang="nl">Shift Mode 2</label>
     </output>
-    <output name="3,19" label="|">
+    <output name="3,19" label="Shift Mode 3">
         <label xml:lang="ca">Mode de Canvi 3</label>
         <label xml:lang="cs">Režim posunu 3</label>
         <label xml:lang="da">Shift Mode 3</label>
         <label xml:lang="nl">Shift Mode 3</label>
     </output>
-    <output name="3,20" label="|">
+    <output name="3,20" label="Shift Mode 4">
         <label xml:lang="ca">Mode de Canvi 4</label>
         <label xml:lang="cs">Režim posunu 4</label>
         <label xml:lang="da">Shift Mode 4</label>
         <label xml:lang="nl">Shift Mode 4</label>
     </output>
-    <output name="3,21" label="|">
+    <output name="3,21" label="Shift Mode 5">
         <label xml:lang="ca">Mode de Canvi 5</label>
         <label xml:lang="cs">Režim posunu 5</label>
         <label xml:lang="da">Shift Mode 5</label>
         <label xml:lang="nl">Shift Mode 5</label>
     </output>
-    <output name="3,22" label="|">
+    <output name="3,22" label="Shift Mode 6">
         <label xml:lang="ca">Mode de Canvi 6</label>
         <label xml:lang="cs">Režim posunu 6</label>
         <label xml:lang="da">Shift Mode 6</label>
