@@ -14,7 +14,7 @@
     <div id="mainContent" class="no-sidebar">
       <h1>Voltage / Current Meter</h1>
 
-      <p>Some hardware types can report back to JMRI the track volatage and current being consumed.</p>
+      <p>Some hardware types can report back to JMRI the track voltage and current being consumed.</p>
 
       <p>The displayed Meter is selectable via the Voltage meters and Current meters menus.</p>
 
