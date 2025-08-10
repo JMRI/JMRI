@@ -482,7 +482,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (!componentList.contains(layoutEditorComponent)) {
                 try {
                     _targetPanel.remove(layoutEditorComponent);
-                    _targetPanel.add(layoutEditorComponent, 3);
+                    // Note that Integer.valueOf(3) must not be replaced with 3 in the line below.
+                    // add(c, Integer.valueOf(3)) means adding at depth 3 in the JLayeredPane, while add(c, 3) means adding att index 3.
+                    _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
                     _targetPanel.moveToFront(layoutEditorComponent);
                 } catch (Exception e) {
                     log.warn("paintTargetPanelBefore: ", e);
