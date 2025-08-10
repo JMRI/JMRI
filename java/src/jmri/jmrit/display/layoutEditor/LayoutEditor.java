@@ -483,7 +483,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 try {
                     _targetPanel.remove(layoutEditorComponent);
                     // Note that Integer.valueOf(3) must not be replaced with 3 in the line below.
-                    // add(c, Integer.valueOf(3)) means adding at depth 3 in the JLayeredPane, while add(c, 3) means adding att index 3 in the container.
+                    // add(c, Integer.valueOf(3)) means adding at depth 3 in the JLayeredPane, while add(c, 3) means adding at index 3 in the container.
                     _targetPanel.add(layoutEditorComponent, Integer.valueOf(3));
                     _targetPanel.moveToFront(layoutEditorComponent);
                 } catch (Exception e) {
