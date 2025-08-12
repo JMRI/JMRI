@@ -424,7 +424,12 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>When working with a single roster entry, there's a 
+                new "Comments" page. You can pop that off (using the 
+                page icon in the tab) and enter your comments there 
+                as you configure the values in the other panes.
+                What you type there will appear in the comment field
+                on the Roster Entry pane and vice versa.</li>
         </ul>
 
    <h3>Dispatcher</h3>
