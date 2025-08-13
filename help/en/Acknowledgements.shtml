@@ -1202,6 +1202,9 @@
         <li>Mike Yawn, who provided the instructions for building under Eclipse <a id="Z"></a>
         </li>
 
+        <li>Lim Sim Yee, <!-- simei2k -->
+        who fixed a security vulnerability.
+
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aicklesteve+">Steve Young</a>,
         <!-- icklesteve -->
         who helped with CBUS documentation and the Groups.io migration</li>

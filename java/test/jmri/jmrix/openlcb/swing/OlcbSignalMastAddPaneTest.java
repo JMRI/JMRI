@@ -13,13 +13,13 @@ import javax.swing.*;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.openlcb.*;
 
 /**
  * @author Bob Jacobsen Copyright 2018
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase {
 
     /** {@inheritDoc} */
@@ -29,13 +29,11 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     // parent test that needs to be disabled if headless
     @Test
     @Override
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testInfoMethods() {
         super.testInfoMethods();
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testSetMast() {
         OlcbSignalMast s1 = new OlcbSignalMast("MF$olm:basic:one-searchlight($0001)", "user name");
         OlcbSignalMast s2 = new OlcbSignalMast("SF$olm:basic:one-low($0002)", "user name");
@@ -70,7 +68,6 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCanHandleMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         SignalMast mast = new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
@@ -83,7 +80,6 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCreateMast() {
         OlcbSignalMastAddPane vp = new OlcbSignalMastAddPane();
         new OlcbSignalMast("MF$olm:basic:one-searchlight($1)", "no user name"){
@@ -102,7 +98,6 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCreateAndDisableViaGui() throws java.beans.PropertyVetoException {
 
         SignalMastManager mgr = InstanceManager.getDefault(SignalMastManager.class);
@@ -179,7 +174,6 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testEditAndDisableViaGui() {
 
         Assert.assertEquals(0, InstanceManager.getDefault(SignalMastManager.class).getObjectCount());
@@ -350,12 +344,15 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     public static void postClassTearDown() {
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
+           memo.get(OlcbEventNameStore.class).deregisterShutdownTask();
         }
         if(memo1 != null && memo1.getInterface() !=null ) {
            memo1.getInterface().dispose();
+           memo1.get(OlcbEventNameStore.class).deregisterShutdownTask();
         }
         if(memo2 != null && memo2.getInterface() !=null ) {
            memo2.getInterface().dispose();
+           memo2.get(OlcbEventNameStore.class).deregisterShutdownTask();
         }
         memo = null;
         memo1 = null;
@@ -364,6 +361,9 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         nodeID = null;
         nodeID1 = null;
         nodeID2 = null;
+
+        InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
+
         JUnitUtil.tearDown();
     }
 }
