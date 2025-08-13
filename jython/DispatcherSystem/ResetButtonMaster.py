@@ -7,6 +7,7 @@ from javax.swing.event import TableModelListener, TableModelEvent
 from javax.swing.filechooser import FileNameExtensionFilter
 from org.apache.commons.io import FilenameUtils
 from java.io import File
+import os
 
 global g
 class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
@@ -145,43 +146,14 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "returning"
         return True
 
-    # def view_all_transit_restrictions(self):
-    #     list = self.transit_restrictions()
-    #     msg = ""
-    #     for [filename,transit_block_name] in list:
-    #         msg = msg + filename + "  " + transit_block_name +"\n"
-    #     self.od.displayMessage(msg)
-
     def transit_restrictions(self, null_text):
-        global g
-        my_list = []
-        for edge in g.g_express.edgeSet():
-            # do for fwd
-            filename_fwd = self.get_filename(edge, "fwd")
-            trainInfo_fwd = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_fwd)
-            transit_name = str(trainInfo_fwd.getTransitName())
-            if self.logLevel > 0: print "transit name", transit_name
-            #[transit_name, transit_id] = MoveTrain().get_transit(filename_fwd)
-            transit_block_name = str(trainInfo_fwd.getBlockName())
-            if transit_block_name != "":
-                if self.logLevel > 0: print [filename_fwd, transit_name, transit_block_name]
-                #list.append([filename_fwd, transit_block_name])
-                my_list.append([transit_name, transit_block_name])
-                if self.logLevel > 0: print "appended list"
-            else:
-                pass
-                if self.logLevel > 0: print [filename_fwd, transit_name, transit_block_name]
-                if self.logLevel > 0: print "did not append list"
-            # # do same with reverse
-            # filename_rvs = self.get_filename(edge, "rvs")
-            # trainInfo_rvs = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(filename_rvs)
-            # # [transit_name, transit_id] = MoveTrain().get_transit(filename_rvs)
-            # transit_block_name = trainInfo_rvs.getBlockName()
-            # if transit_block_name != "":
-            #     list.append([filename_rvs, transit_block_name])
-        # if list == []:
-        #     list.append(null_text)
-        return my_list
+        folder = "restrictTransits"
+        filename = "restrictTransits.txt"
+        restricted_transits = DispatchMaster().read_list(folder,filename)
+        if restricted_transits == ["",""]:
+            restricted_transits = []
+        print "restricted_transits", restricted_transits
+        return restricted_transits
 
     def switch_sensors_requiring_station_buttons(self, sensor, mode):
 
@@ -293,22 +265,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
                     #stopping_sensor_choice = "setNoStoppingSensors"
                     self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
                 else:
-                    # # ensure that the station buttons in RunDispatch work correctly
-                    # sensors.getSensor("StoppingDistanceActionSensor").setKnownState(ACTIVE)
-                    # #above sensor is turned off in RunDispatch
-                    # # ensure that the station buttons in RunDispatch work correctly
-                    # sensor_changed.setKnownState(ACTIVE)
-                    #
-                    # # self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
-                    #
-                    # stopping_distance_action_active_sensor = \
-                    #     [sensors.getSensor(sensorName) for sensorName in ["StoppingDistanceActionSensor"]]
-                    # print "stopping_distance_action_active_sensor", stopping_distance_action_active_sensor
-                    # sensor_to_watch = java.util.Arrays.asList(stopping_distance_action_active_sensor)
-                    # self.waitSensorState(sensor_to_watch, INACTIVE)
                     self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_on")
-
-
 
         elif sensor_changed == sensors.getSensor("setStationWaitTimeSensor"):
 
@@ -343,7 +300,9 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             title = "Restrict Trains to run in only one direction in Stations or Blocks"
             msg = "modify station directions?"
             try:
-                list_items1 = self.dm.read_list()
+                folder = "blockDirections"
+                filename = "blockDirections.txt"
+                list_items1 = self.dm.read_list(folder, filename)
                 list_items = [ "from " + l[1] + " to " + l[0] for l in list_items1]
             except:
                 list_items = []
@@ -497,7 +456,9 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         #stopping_sensor_choice = "Reset All"
         self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
         title = "travel only in directions (when poss.)"
-        list_items1 = self.dm.read_list()
+        folder = "blockDirections"
+        filename = "blockDirections.txt"
+        list_items1 = self.dm.read_list(folder, filename)
         list_items = [ "from " + l[1] + " to " + l[0] for l in list_items1]
         if list_items == []:
             list_items = ["no inhibited directions"]
@@ -565,10 +526,13 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             if s_list != null_text:
                 index = list_items.index(s_list)
                 [transit_name, transit_block_name] = list_items1[index]
-                if self.logLevel > 0: print s_list, [transit_name, transit_block_name]
-                edge = self.get_graph_edge(transit_name)
-                transit_block_name = ""
-                self.dm.write_to_TrainInfo(edge, transit_block_name)
+                item_to_remove = list_items1[index]
+                folder = "restrictTransits"
+                filename = "restrictTransits.txt"
+                restricted_transits = DispatchMaster().read_list(folder,filename)
+                filtered_restricted_transits = [ t for t in restricted_transits if t != item_to_remove]
+                DispatchMaster().write_list(filtered_restricted_transits, folder, filename)
+
                 self.od.displayMessage("Deleted block for transit: " + transit_name)
 
                 self.switch_sensors_requiring_station_buttons(sensor_changed, "sensor_off")
@@ -594,10 +558,27 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 
     def reset_all_transit_restrictions(self):
-        # check all edges and remove corresponding blocks
-        for edge in g.g_express.edgeSet():
-            transit_block_name = ""
-            self.dm.write_to_TrainInfo(edge, transit_block_name)
+
+
+        folder = "restrictTransits"
+        folder = "restrictTransits"
+        filename = "restrictTransits.txt"
+        file_path = DispatchMaster().directory(folder) + filename
+        # print "filepath", filepath
+        try:
+            os.remove(file_path)
+            # print(file_path + " has been deleted. The individual stopping distances have been zeroed")
+        except FileNotFoundError:
+            print(file_path + " not found, cannot delete the individual stopping distances")
+        except PermissionError:
+            print("Permission denied to delete"  + file_path)
+        except Exception as e:
+            print("An error occurred: ", e)
+
+        # # check all edges and remove corresponding blocks
+        # for edge in g.g_express.edgeSet():
+        #     transit_block_name = ""
+        #     self.dm.write_to_TrainInfo(edge, transit_block_name)
 
 
     def set_block_direction(self):
@@ -681,24 +662,76 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         if self.od.CLOSED_OPTION == True:
             return #if one has cancelled
         #s is used in a little bit
-        new_stopping_position = self.get_new_stopping_position()
+        previous_overall_stopping_distance = self.get_overall_stopping_distance()
+        new_stopping_position = self.set_overall_stopping_distance(previous_overall_stopping_distance)
         if new_stopping_position == None:
             return  # if one has cancelled
-        for e in g.g_express.edgeSet():
-            from_station_name = g.g_stopping.getEdgeSource(e)
-            to_station_name = g.g_stopping.getEdgeTarget(e)
-            found_edge = e
-            length_of_last_section = self.get_length_of_last_section(found_edge)
-            old_stopping_position = self.get_existing_stopping_position(found_edge, length_of_last_section)
-            if s == opt2:
-                combined_stopping_position = new_stopping_position
-            else:
-                combined_stopping_position = new_stopping_position + old_stopping_position
-            combined_stopping_fraction = self.get_new_stopping_fraction(combined_stopping_position, length_of_last_section)
-            filename_fwd = self.get_filename(found_edge, "fwd")
-            self.modify_stopping_distance(found_edge, combined_stopping_fraction, filename_fwd)
-            filename_rvs = self.get_filename(found_edge, "rvs")
-            self.modify_stopping_distance(found_edge, combined_stopping_fraction, filename_rvs)
+        if s == opt1:
+            # Increase/decrease all existing stopping distances
+            previous_overall_stopping_distance = self.get_overall_stopping_distance()
+            # print "previous_overall_stopping_distance", previous_overall_stopping_distance
+            self.set_overall_stopping_distance(previous_overall_stopping_distance)
+
+            title = "Stopping train before end of section"
+            msg = "all stop distances reduced by " + str(new_stopping_position) + " in addition to individual stop distances"
+            self.od.displayMessage(msg,title)
+
+        elif s == opt2:
+            # Set all stopping distances to the same value
+            # delete the individual stopping distances
+            folder = "stopping_positions"
+            filename = "stopping_positions.txt"
+            file_path = DispatchMaster().directory(folder) + filename
+            # print "filepath", filepath
+            try:
+                os.remove(file_path)
+                # print(file_path + " has been deleted. The individual stopping distances have been zeroed")
+            except FileNotFoundError:
+                print(file_path + " not found, cannot delete the individual stopping distances")
+            except PermissionError:
+                print("Permission denied to delete"  + file_path)
+            except Exception as e:
+                print("An error occurred: ", e)
+
+            # set the overall stopping distance to the set value
+            previous_overall_stopping_distance = self.get_overall_stopping_distance()
+            # print "previous_overall_stopping_distance", previous_overall_stopping_distance
+            self.set_overall_stopping_distance(previous_overall_stopping_distance)
+
+            title = "Stopping train before end of section"
+            msg = "all stop distances reduced by " + str(new_stopping_position) + " individual stop distances deleted"
+            self.od.displayMessage(msg,title)
+
+    def set_overall_stopping_distance(self, overall_stopping_distance):
+        # print "set_overall_stopping_distance"
+        folder = "stopping_positions"
+        filename = "overall_stopping_offset.txt"
+        file_path = DispatchMaster().directory(folder) + filename
+        self.write_float(overall_stopping_distance, file_path)
+
+    def get_overall_stopping_distance(self):
+        folder = "stopping_positions"
+        filename = "overall_stopping_offset.txt"
+        # print "A8"
+        file_path = DispatchMaster().directory(folder) + filename
+        # print "a9"
+        overall_stopping_distance = self.read_float(file_path) # use a tuple cos we are set up for that
+        # print "overall_stopping_distance", overall_stopping_distance
+
+        return overall_stopping_distance
+
+    def write_float(self, value, filename):
+        with open(filename, "w") as f:
+            f.write("%s" % value)  # or f.write(str(value))
+
+    def read_float(self, filename):
+        try:
+            with open(filename, "r") as f:
+                return float(f.read().strip())
+        except:
+            return 0
+
+
 
     def directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "blockDirections"
@@ -823,29 +856,27 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
         else:
             return float(n).is_integer()
 
-    def get_new_stopping_position(self):
+    def get_new_stopping_position(self, previous_overall_stopping_distance):
         s = "redo"
         while s == "redo":
             #modify stopping fraction in traininfo
             title = "Stop train before end of section"
-            msg ="enter how many cm to reduce the stopping distance by (-ve increase)"
-            default_value = 0
-            new_stopping_position = self.od.input(msg, title, default_value)
+            msg ="enter how many cm to reduce all stopping distances by (-ve increase), current value shown"
+            new_stopping_position = self.od.input(msg, title, previous_overall_stopping_distance)
             if not self.is_integer(new_stopping_position): return
             # print "new_stopping_position",  new_stopping_position
             # print "new_stopping_fraction", new_stopping_fraction
             if float(new_stopping_position) > 0:
-                msg = "new stopping position: " + str(round(float(new_stopping_position),1)) + " cm (" + \
-                      str(round(float(new_stopping_position)/2.54,1)) + " inches) before calculated position."
+                sp = float(new_stopping_position)
             else:
                 sp =  0 - float(new_stopping_position)
-                msg = "new stopping position: " + str(round(float(sp),1)) + " cm (" + \
-                      str(round(float(new_stopping_position)/2.54,1)) + " inches) after calculated position"
+            msg = "new stopping position: " + str(round(float(sp),1)) + " cm (" + \
+                  str(round(float(sp)/2.54,1)) + " inches) after calculated position"
             opt1 = "OK"
             opt2 = "redo"
             s = self.od.customQuestionMessage2str(msg, title, opt1, opt2)
-        msg = "stop position = " + str(new_stopping_position)
-        self.od.displayMessage(msg,title)
+            previous_overall_stopping_distance = str(float(new_stopping_position))
+
         return float(new_stopping_position)
 
     def get_new_station_wait_time(self):
@@ -1043,7 +1074,7 @@ class ResetButtonMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "i", i
             # activeTrain = activeTrainsList.get(i)
             if self.logLevel > 0: print ("active train", activeTrain)
-            DF.terminateActiveTrain(activeTrain)
+            DF.terminateActiveTrain(activeTrain, True, False)
         DF = None
 
     def get_list_of_engines_to_move(self):

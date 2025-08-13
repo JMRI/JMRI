@@ -24,6 +24,11 @@ from org.python.core.util import StringUtil
 from threading import Thread
 from collections import Counter
 
+# from javax.swing import JFrame
+# from java.awt.event import WindowAdapter
+from java.util.concurrent import CountDownLatch
+
+
 CreateSchedulerPanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/SchedulerPanel.py')
 execfile(CreateSchedulerPanel)
 
@@ -36,8 +41,17 @@ execfile(CreateEditRoutePanel)
 CreateEditRoutePanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Timetable.py')
 execfile(CreateEditRoutePanel)
 
+try:
+    basestring
+except NameError:
+    basestring = str
 
-# fast_clock_rate = 12
+if "list" in globals() and type(globals()["list"]).__name__ != "type":
+    print(" Detected shadowed 'list' type: ", type(globals()["list"]))
+    del globals()["list"]
+
+CreateEditRoutePanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/DisplayMqttTimetable.py')
+execfile(CreateEditRoutePanel)
 
 trains_to_be_scheduled = []
 run_train_dict = {}
@@ -49,13 +63,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self):
         global scheduling_in_operation_gbl
-        # print "class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):"
         self.logLevel = 0
         self.frame = None
         self.f = None
         scheduling_in_operation_gbl = False
         self.od = OptionDialog()
-        # print "scheduling_in_operation_gbl 5", scheduling_in_operation_gbl
 
     def exit(self):       # called explicitly when scheduler thread is killed to stop multiple frames being visible
         try:
@@ -180,159 +192,186 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                             # print "type station_group", type(station_group.strip())
                         station_group_location_list.append([station_group.strip(), location_name])
                     station_group_location_list.append(["All Stations", location_name])
-                # station_group_location_list.append("All Stations")
-                # station_group_list.sort()
-                # station_group_list.append("All Stations")
-
-                if self.logLevel > 0: print "station list", station_list
-                # LocationsManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
-                # locations_list = LocationsManager.getLocationsByNameList()
-                # station_list = [str(location.getName()) for location in locations_list \
-                #                 if ".py" not in location.getName()]
-                msg = "timetables can be shown locally on this computer or\n" + \
-                      "on remote computers/tablets communicating by mqtt\n\n" + \
-                      "scheduler needs to be on and clock running"
-                if run_local_timetable_gbl == True:
-                    opt1 = "hide timetable"
-                else:
-                    opt1 = "show timetable"
-                opt4 = "set platforms and station groups"
-                opt2 = "select station for local timetable"
-                opt3 = "select station for mqtt timetable"
-                if 'timetable_triggered_gbl' not in globals():
-                    reply = OptionDialog().customQuestionMessage3str(msg, title, opt4, opt2, opt3)
-                else:
-                    reply = OptionDialog().customQuestionMessage4str(msg, title, opt1, opt4, opt2, opt3)
-                # print "reply", reply
-                if self.logLevel > 0: print "timetable_sensor active"
-                if reply == JOptionPane.CANCEL_OPTION:
-                    pass
-                elif reply == opt1:
+                repeat = True
+                while repeat:
+                    if self.logLevel > 0: print "station list", station_list
+                    msg = "timetables can be shown locally on this computer or\n" + \
+                          "on remote computers/tablets communicating by mqtt\n\n" + \
+                          "scheduler needs to be on and clock running"
+                    opt0 = "Cancel"
                     if run_local_timetable_gbl == True:
-                        run_local_timetable_gbl = False
+                        opt1 = "hide local timetable"
                     else:
-                        run_local_timetable_gbl = True
-                    # OptionDialog().displayMessage("turned timetabling off")
-                    # timetable_gbl = None
-
-                elif reply == opt4:
-                    # print "opt4"
-                    CreateAndShowGUI7()
-
-                elif reply == opt2:
-                    repeat = True
-                    select_from_stations = True
-                    while repeat == True:
-                        if "station_name_list_gbl" not in globals():
-                            station_name_list_gbl = ""
-                        list_items_no_trains = self.get_scheduled_routes("no_train")
-                        list_items_with_trains = self.get_scheduled_routes("with_train")
-                        if select_from_stations:
-                            title = "select station(s) for timetable"
-                            options = ["Cancel", "Select from Station Groups", "Show Timetable"]
-                            result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
-                        else:
-                            title = "select station_group for timetable"
-                            options = ["Cancel", "Select from Stations", "Show Timetable"]
-                            result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
-                        option = result[1]
-                        if option == "Cancel" or self.od.CLOSED_OPTION == True:
+                        opt1 = "show local timetable"
+                    opt4 = "set platforms and station groups"
+                    opt2 = "select station for local timetable"
+                    opt3 = "mqtt timetables"
+                    if 'timetable_triggered_gbl' not in globals():
+                        reply = OptionDialog().customQuestionMessage4str(msg, title, opt0, opt4, opt2, opt3)
+                    else:
+                        reply = OptionDialog().customQuestionMessage5str(msg, title, opt0, opt1, opt4, opt2, opt3)
+                    # print "reply", reply
+                    if self.logLevel > 0: print "timetable_sensor active"
+                    if reply == OptionDialog().CLOSED_OPTION or reply == opt0:
+                        repeat = False
+                    elif reply == opt1:
+                        if run_local_timetable_gbl == True:
                             run_local_timetable_gbl = False
-                            self.timetable_sensor.setKnownState(INACTIVE)
-                            repeat = False
-                        elif option == "Show Timetable":
-                            if select_from_stations:
-                                station_name_list_gbl = result[0]
-                                # get group_station_name
-                                if len(station_name_list_gbl) == 1:
-                                    group_location_gbl = station_name_list_gbl[0]   # the first and only station  station1
-                                else:
-                                    group_location_gbl = self.get_group_station_name(station_name_list_gbl)
-                            else:
-                                group_location_gbl = result[0]
-                                # get station list
-                                station_name_list = []
-                                for l in station_group_location_list:
-                                    if l[0] == group_location_gbl:
-                                        station_name_list.append(l[1])
-                                station_name_list_gbl = station_name_list
-
+                        else:
                             run_local_timetable_gbl = True
-                            self.ensure_conditions_for_timetable_to_show_are_met()
-                            repeat = False
-                        else:
-                            if select_from_stations == True:
-                                select_from_stations = False
-                            else:
-                                select_from_stations = True
-                            repeat = True
 
-                elif reply == opt3:
-                    repeat = True
-                    select_from_stations = True
-                    while repeat == True:
-                        if "station_name_list_gbl" not in globals():
-                            station_name_list_gbl = ""
-                        list_items_no_trains = self.get_scheduled_routes("no_train")
-                        list_items_with_trains = self.get_scheduled_routes("with_train")
-                        if select_from_stations:
-                            title = "select station(s) for timetable"
-                            options = ["Cancel", "Select from Station Groups", "Generate Timetable"]
-                            result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
-                        else:
-                            title = "select station_group for timetable"
-                            options = ["Cancel", "Select from Stations", "Generate Timetable"]
-                            result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
-                        option = result[1]
-                        if option == "Cancel" or self.od.CLOSED_OPTION == True:
-                            run_local_timetable_gbl = False
-                            self.timetable_sensor.setKnownState(INACTIVE)
-                            repeat = False
-                        elif option == "Generate Timetable":
+                    elif reply == opt4:
+                        gui7 = CreateAndShowGUI7()
+                        # Create a latch that waits for CreateAndShowGUI7 frame to be closed
+                        # In CreateAndShowGUI7 the latch is decremented whe  the frame is closed
+                        global latch
+                        latch = CountDownLatch(1)
+                        # Wait until the frame is closed
+                        latch.await()
+                        reply = True
+
+                    elif reply == opt2:
+                        repeat1 = True
+                        select_from_stations = True
+                        while repeat1 == True:
+                            if "station_name_list_gbl" not in globals():
+                                station_name_list_gbl = ""
+                            list_items_no_trains = self.get_scheduled_routes("no_train")
+                            list_items_with_trains = self.get_scheduled_routes("with_train")
                             if select_from_stations:
-                                station_name_list_mqtt_gbl = result[0]
-                                # get group_station_name
-                                if len(station_name_list_gbl) == 1:
-                                    group_location_mqtt_gbl = station_name_list_gbl[0]   # the first and only station  station1
-                                else:
-                                    group_location_mqtt_gbl = self.get_group_station_name(station_name_list_mqtt_gbl)
-                                    print "group_location_mqtt_gbl", group_location_mqtt_gbl
+                                title = "select station(s) for timetable"
+                                options = ["Cancel", "Select from Station Groups", "Show Timetable"]
+                                result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
                             else:
-                                group_location_mqtt_gbl = result[0]
-                                print "group_location_mqtt_gbl", group_location_mqtt_gbl
-                                # get station list
-                                station_name_list = []
-                                for l in station_group_location_list:
-                                    if l[0] == group_location_mqtt_gbl:
-                                        station_name_list.append(l[1])
-                                station_name_list_mqtt_gbl = station_name_list
-                                print "station_name_list_mqtt_gbl", station_name_list_mqtt_gbl
-
-                            # get emblem
-                            title = "Display Train Operator Emblem?"
-                            emblem_list = ["GB (British Rail)", "Germany (DB)", "No Emblem"]
-                            options = ["Cancel", "Generate Timetable"]
-                            result = self.od.ListOptions(emblem_list, title, options, preferred_size = "default")
-                            # print "result", result
-                            train_operator_emblem = result[0]
-                            option1 = result[1]
-                            if option1 == "Cancel" or self.od.CLOSED_OPTION == True:
-                                # run_local_timetable_gbl = False
+                                title = "select station_group for timetable"
+                                options = ["Cancel", "Select from Stations", "Show Timetable"]
+                                result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
+                            option = result[1]
+                            if option == "Cancel" or self.od.CLOSED_OPTION == True:
+                                run_local_timetable_gbl = False
                                 self.timetable_sensor.setKnownState(INACTIVE)
-                            else:
-                                self.generate_node_red_code(station_name_list_mqtt_gbl, group_location_mqtt_gbl, train_operator_emblem)
-                                # file = self.directory() + "train_operator_emblem.txt"
-                                self.write_list2([train_operator_emblem])
+                                repeat1 = False
+                            elif option == "Show Timetable":
+                                if select_from_stations:
+                                    station_name_list_gbl = result[0]
+                                    # get group_station_name
+                                    if len(station_name_list_gbl) == 1:
+                                        group_location_gbl = station_name_list_gbl[0]   # the first and only station  station1
+                                    else:
+                                        group_location_gbl = self.get_group_station_name(station_name_list_gbl)
+                                else:
+                                    group_location_gbl = result[0]
+                                    # get station list
+                                    station_name_list = []
+                                    for l in station_group_location_list:
+                                        if l[0] == group_location_gbl:
+                                            station_name_list.append(l[1])
+                                    station_name_list_gbl = station_name_list
 
-                            repeat = False
-                        else:
-                            if select_from_stations == True:
-                                select_from_stations = False
+                                run_local_timetable_gbl = True
+                                self.ensure_conditions_for_timetable_to_show_are_met()
+                                repeat1 = True
                             else:
+                                if select_from_stations == True:
+                                    select_from_stations = False
+                                else:
+                                    select_from_stations = True
+                                repeat1 = True
+                        repeat = True
+                    elif reply == opt3:
+                        repeat = True
+                        while repeat:
+                            title = "MQTT timetables"
+                            msg = "timetables can be shown on remote computers/tablets communicating by mqtt\n\n" + \
+                                  "scheduler needs to be on and clock running"
+                            opt0 = "Cancel"
+                            opt1 = "Generate mqtt timetable"
+                            opt2 = "View/delete mqtt timetables"
+                            opt3 = "Display mqtt timetables"
+
+                            reply = OptionDialog().customQuestionMessage4str(msg, title, opt0, opt1, opt2, opt3)
+                            if self.od.CLOSED_OPTION == True or reply == opt0:
+                                repeat = False
+                            elif reply == opt1:
                                 select_from_stations = True
-                            repeat = True
+                                if "station_name_list_gbl" not in globals():
+                                    station_name_list_gbl = ""
+                                list_items_no_trains = self.get_scheduled_routes("no_train")
+                                list_items_with_trains = self.get_scheduled_routes("with_train")
+                                if select_from_stations:
+                                    title = "select station(s) for timetable"
+                                    options = ["Cancel", "Select from Station Groups", "Generate Timetable"]
+                                    result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
+                                else:
+                                    title = "select station_group for timetable"
+                                    options = ["Cancel", "Select from Stations", "Generate Timetable"]
+                                    result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
+                                option = result[1]
+                                if option == "Cancel" or self.od.CLOSED_OPTION == True:
+                                    run_local_timetable_gbl = False
+                                    self.timetable_sensor.setKnownState(INACTIVE)
+                                    repeat = False
+                                elif option == "Generate Timetable":
+                                    if select_from_stations:
+                                        station_name_list_mqtt_gbl = result[0]
+                                        # get group_station_name
+                                        if len(station_name_list_gbl) == 1:
+                                            group_location_mqtt_gbl = station_name_list_gbl[0]   # the first and only station  station1
+                                        else:
+                                            group_location_mqtt_gbl = self.get_group_station_name(station_name_list_mqtt_gbl)
+                                            print "group_location_mqtt_gbl", group_location_mqtt_gbl
+                                    else:
+                                        group_location_mqtt_gbl = result[0]
+                                        # print "group_location_mqtt_gbl", group_location_mqtt_gbl
+                                        # get station list
+                                        station_name_list = []
+                                        for l in station_group_location_list:
+                                            if l[0] == group_location_mqtt_gbl:
+                                                station_name_list.append(l[1])
+                                        station_name_list_mqtt_gbl = station_name_list
+                                        # print "station_name_list_mqtt_gbl", station_name_list_mqtt_gbl
 
-            self.timetable_sensor.setKnownState(INACTIVE)
+                                    # get emblem
+                                    title = "Display Train Operator Emblem?"
+                                    emblem_list = ["GB (British Rail)", "Germany (DB)", "No Emblem"]
+                                    options = ["Cancel", "Generate Timetable"]
+                                    result = self.od.ListOptions(emblem_list, title, options, preferred_size = "default")
+                                    # print "result", result
+                                    train_operator_emblem = result[0]
+                                    option1 = result[1]
+                                    if option1 == "Cancel" or self.od.CLOSED_OPTION == True:
+                                        # run_local_timetable_gbl = False
+                                        self.timetable_sensor.setKnownState(INACTIVE)
+                                    else:
+                                        self.generate_node_red_code(station_name_list_mqtt_gbl, group_location_mqtt_gbl, train_operator_emblem)
+                                        self.write_list2([train_operator_emblem])
+                                    repeat = True
+                                else:
+                                    if select_from_stations == True:
+                                        select_from_stations = False
+                                    else:
+                                        select_from_stations = True
+                                    repeat = True
+                            elif reply == opt2: # view/delete mqtt timetables
+
+                                msg = "The generated timetables are saved in the following directory \n" +\
+                                    "Delete any that are not required"
+                                OptionDialog().displayMessage(msg)
+
+                                self.view_delete_mqtt_timetables()
+                                repeat = True
+
+                            elif reply == opt3: # display mqtt timetables
+                                msg = "Will attempt to display all generated timetables in default browser \n" +\
+                                    "If Node Red is installed the timetables will be displayed \n" + \
+                                    "If MQTT is set up in jmri and mosquitto is running the timetables will work \n" +\
+                                    " when the scheduler is running"
+                                OptionDialog().displayMessage(msg)
+
+                                dmt = DisplayMqttTimetable()
+                                repeat = True
+                        repeat = True
+                self.timetable_sensor.setKnownState(INACTIVE)
 
         if self.scheduler_master_sensor.getKnownState() == ACTIVE:   # pause processing if we turn the sensor off
 
@@ -381,6 +420,36 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         # print "scheduling_in_operation_gbl 7 handle end", scheduling_in_operation_gbl
         # print "F"
         return True
+
+    def mqtt_timetable_directory(self):
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "mqtt_timetables"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+
+    def view_delete_mqtt_timetables(self):
+
+        dir = self.mqtt_timetable_directory()
+        j = JFileChooser(dir);
+        j.setAcceptAllFileFilterUsed(False)
+        filter = FileNameExtensionFilter("json files json", ["json"])
+        j.addChoosableFileFilter(filter);
+
+        j.setDialogTitle("Delete not wanted mqtt timetables");
+
+        ret = j.showDialog(None, "Delete");
+        if ret == JFileChooser.APPROVE_OPTION:
+            file = j.getSelectedFile()
+            if file == "" or file == None:
+                return
+            if file.exists():
+                os.remove(file.getAbsolutePath())
+                # print("File " + file.getName() + " has been deleted successfully.")
+            else:
+                print("The selected file does not exist.")
+        else:
+            print("File selection cancelled.")
+            return
 
     def get_group_station_name(self, station_name_list_gbl):
 

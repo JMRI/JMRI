@@ -214,7 +214,7 @@ class createandshowGUI3(TableModelListener):
             # (found need to do this as train went off in wrong direction after setting new trainsit)
             train_name = activeTrain.getTrainName()
             MyModelListener3(self, self.class_StopMaster).swap_direction(train_name)
-            DF.terminateActiveTrain(activeTrain)
+            DF.terminateActiveTrain(activeTrain, True, False)
         DF = None
         self.model.populate()
         self.completeTablePanel()
@@ -417,7 +417,7 @@ class MyModelListener3(TableModelListener):
         if self.logLevel > 0: print ("active_train", active_train[0].getActiveTrainName())
         if len(active_train) > 0:
             transit_name = active_train[0].getTransitName()
-            DF.terminateActiveTrain(active_train[0])
+            DF.terminateActiveTrain(active_train[0, True, True])
             # train train_name needs its direction swapped
             # (found need to do this as train went off in wrong direction after setting new transit)
             self.swap_direction(train_name)
