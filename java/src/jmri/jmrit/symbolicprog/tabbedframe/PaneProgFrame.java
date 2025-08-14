@@ -1194,6 +1194,14 @@ abstract public class PaneProgFrame extends JmriJFrame
             makeMediaPane(r);
         }
 
+        // add the comment tab
+        JPanel commentTab = new JPanel();
+        var comment = new JTextArea(_rPane.getCommentDocument());
+        JScrollPane commentScroller = new JScrollPane(comment, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        commentTab.add(commentScroller);
+        commentTab.setLayout(new BoxLayout(commentTab, BoxLayout.Y_AXIS));
+        tabPane.addTab(Bundle.getMessage("COMMENT PANE"), commentTab);
+
         // for all "pane" elements in the programmer
         List<Element> progPaneList = base.getChildren("pane");
         if (log.isDebugEnabled()) {
