@@ -932,7 +932,8 @@ public class RosterSpeedProfile {
                 calculatedDistance = 0;
             }
             if (calculatedDistance <= 0 && !calculated) {
-                log.warn("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
+                //removed as overflows logs on the big test
+                //log.warn("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
                 ss = new SpeedSetting(desiredSpeedStep, 10, andStop);
                 synchronized (this) {
                     stepQueue.addLast(ss);

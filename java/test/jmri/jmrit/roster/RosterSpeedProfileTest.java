@@ -269,36 +269,6 @@ public class RosterSpeedProfileTest {
         Assertions.assertEquals(0, resultSummary.failedTestEndSpeed,msg);
     }
 
-    private static org.jdom2.Element getLocoElement200() {
-        return new org.jdom2.Element("locomotive")
-            .setAttribute("id", "id info")
-            .setAttribute("fileName", "file here")
-            .setAttribute("roadNumber", "431")
-            .setAttribute("roadName", "SP")
-            .setAttribute("mfg", "Athearn")
-            .setAttribute("dccAddress", "1234")
-            .addContent(new org.jdom2.Element("decoder")
-                .setAttribute("family", "91")
-                .setAttribute("model", "33")
-            )
-            .addContent(new org.jdom2.Element("locoaddress")
-                .addContent(new org.jdom2.Element("number").addContent("1234"))
-                //As there is no throttle manager available all protocols default to dcc short
-                .addContent(new org.jdom2.Element("protocol").addContent("dcc_short"))
-            )
-            .addContent(new org.jdom2.Element("speedprofile")
-                .addContent(new org.jdom2.Element("overRunTimeForward").addContent("0.0"))
-                .addContent(new org.jdom2.Element("overRunTimeReverse").addContent("0.0"))
-                .addContent(new org.jdom2.Element("speeds")
-                    .addContent(new org.jdom2.Element("speed")
-                        .addContent(new org.jdom2.Element("step").addContent("1000"))
-                        .addContent(new org.jdom2.Element("forward").addContent("200.00"))
-                        .addContent(new org.jdom2.Element("reverse").addContent("200.00"))
-                    )
-                )
-            );
-    }
-
     @Test
     public void testSpeedProfileFromFiftyPercentToTwentyShortBlock() throws Exception {
         // statics for test objects
