@@ -111,46 +111,46 @@ public class SerialThrottle extends AbstractThrottle {
         0x000004, 0x000007, 0x000047, 0x000042, 0x000028, /* Fn20-24 */
         0x000029, 0x00002A, 0x00002B, 0x00001F, /* 25-28 */
         
-        0xF901FF, // Fn29
-        0xF901FF, // Fn30
-        0xF901FF, // Fn31
-        0xF901FF, // Fn32
-        0xF901FF, // Fn33
-        0xF901FF, // Fn34
-        0xF901FF, // Fn35
-        0xF901FF, // Fn36
-        0xF901FF, // Fn37
-        0xF901FF, // Fn38
-        0xF901FF, // Fn39
-        0xF901FF, // Fn40
-        0xF901FF, // Fn41
-        0xF901FF, // Fn42
-        0xF901FF, // Fn43
-        0xF901FF, // Fn44
-        0xF901FF, // Fn45
-        0xF901FF, // Fn46
-        0xF901FF, // Fn47
-        0xF901FF, // Fn48
-        0xF901FF, // Fn49
-        0xF901FF, // Fn50
-        0xF901FF, // Fn51
-        0xF901FF, // Fn52
-        0xF901FF, // Fn53
-        0xF901FF, // Fn54
-        0xF901FF, // Fn55
-        0xF901FF, // Fn56
-        0xF901FF, // Fn57
-        0xF901FF, // Fn58
-        0xF901FF, // Fn59
-        0xF901FF, // Fn60
-        0xF901FF, // Fn61
-        0xF901FF, // Fn62
-        0xF901FF, // Fn63
-        0xF901FF, // Fn64
-        0xF901FF, // Fn65
-        0xF901FF, // Fn66
-        0xF901FF, // Fn67
-        0xF901FF, // Fn68
+        0xF8012E, // Fn29
+        0xF8012E, // Fn30
+        0xF8012E, // Fn31
+        0xF8012E, // Fn32
+        0xF8012E, // Fn33
+        0xF8012E, // Fn34
+        0xF8012E, // Fn35
+        0xF8012E, // Fn36
+        0xF8012E, // Fn37
+        0xF8012E, // Fn38
+        0xF8012E, // Fn39
+        0xF8012E, // Fn40
+        0xF8012E, // Fn41
+        0xF8012E, // Fn42
+        0xF8012E, // Fn43
+        0xF8012E, // Fn44
+        0xF8012E, // Fn45
+        0xF8012E, // Fn46
+        0xF8012E, // Fn47
+        0xF8012E, // Fn48
+        0xF8012E, // Fn49
+        0xF8012E, // Fn50
+        0xF8012E, // Fn51
+        0xF8012E, // Fn52
+        0xF8012E, // Fn53
+        0xF8012E, // Fn54
+        0xF8012E, // Fn55
+        0xF8012E, // Fn56
+        0xF8012E, // Fn57
+        0xF8012E, // Fn58
+        0xF8012E, // Fn59
+        0xF8012E, // Fn60
+        0xF8012E, // Fn61
+        0xF8012E, // Fn62
+        0xF8012E, // Fn63
+        0xF8012E, // Fn64
+        0xF8012E, // Fn65
+        0xF8012E, // Fn66
+        0xF8012E, // Fn67
+        0xF8012E, // Fn68
     };
 
     // Translate TMCC1 function numbers to line characters.
@@ -178,41 +178,45 @@ public class SerialThrottle extends AbstractThrottle {
         0xF8010E, // Fn33
         0xF8010F, // Fn34
         
-        0xF801FBF801FCL, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
-        0xF801FC, // Fn36 Start Up Sequence 2 (Immediate Start Up)
-        0xF801FDF801FEL, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
-        0xF801FE, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
+        //0xF801FBF801FCL, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
+        //0xF801FC, // Fn36 Start Up Sequence 2 (Immediate Start Up)
+        //0xF801FDF801FEL, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
+        //0xF801FE, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
 
-        0xF901FF, // Fn39
-        0xF901FF, // Fn40
-        0xF901FF, // Fn41
-        0xF901FF, // Fn42
-        0xF901FF, // Fn43
-        0xF901FF, // Fn44
-        0xF901FF, // Fn45
-        0xF901FF, // Fn46
-        0xF901FF, // Fn47
-        0xF901FF, // Fn48
-        0xF901FF, // Fn49
-        0xF901FF, // Fn50
-        0xF901FF, // Fn51
-        0xF901FF, // Fn52
-        0xF901FF, // Fn53
-        0xF901FF, // Fn54
-        0xF901FF, // Fn55
-        0xF901FF, // Fn56
-        0xF901FF, // Fn57
-        0xF901FF, // Fn58
-        0xF901FF, // Fn59
-        0xF901FF, // Fn60
-        0xF901FF, // Fn61
-        0xF901FF, // Fn62
-        0xF901FF, // Fn63
-        0xF901FF, // Fn64
-        0xF901FF, // Fn65
-        0xF901FF, // Fn66
-        0xF901FF, // Fn67
-        0xF901FF, // Fn68
+        0xF8012E, // Fn35
+        0xF8012E, // Fn36
+        0xF8012E, // Fn37
+        0xF8012E, // Fn38
+        0xF8012E, // Fn39
+        0xF8012E, // Fn40
+        0xF8012E, // Fn41
+        0xF8012E, // Fn42
+        0xF8012E, // Fn43
+        0xF8012E, // Fn44
+        0xF8012E, // Fn45
+        0xF8012E, // Fn46
+        0xF8012E, // Fn47
+        0xF8012E, // Fn48
+        0xF8012E, // Fn49
+        0xF8012E, // Fn50
+        0xF8012E, // Fn51
+        0xF8012E, // Fn52
+        0xF8012E, // Fn53
+        0xF8012E, // Fn54
+        0xF8012E, // Fn55
+        0xF8012E, // Fn56
+        0xF8012E, // Fn57
+        0xF8012E, // Fn58
+        0xF8012E, // Fn59
+        0xF8012E, // Fn60
+        0xF8012E, // Fn61
+        0xF8012E, // Fn62
+        0xF8012E, // Fn63
+        0xF8012E, // Fn64
+        0xF8012E, // Fn65
+        0xF8012E, // Fn66
+        0xF8012E, // Fn67
+        0xF8012E, // Fn68
     };
 
     /**
@@ -296,10 +300,10 @@ public class SerialThrottle extends AbstractThrottle {
     
             if (value < 1) {
                 // immediate stop
-                m.putAsWord(0x0060 + address.getNumber() * 128 + 0);
+                m.putAsWord(0x0160 + address.getNumber() * 512 + 0);
             } else {
                 // normal speed setting
-                m.putAsWord(0x0060 + address.getNumber() * 128 + value);
+                m.putAsWord(0x0160 + address.getNumber() * 512 + value);
             }
     
             // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
