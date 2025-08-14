@@ -297,11 +297,9 @@ public class RosterSpeedProfileTest {
         // Note it must be a perfect 0.20
         JUnitUtil.waitFor(()->(throttle.getSpeedSetting() == 0.20f),"Failed to reach requested speed");
 
-        JUnitAppender.assertWarnMessageStartsWith("distance remaining is now 0, but we have not reached desired speed setting 0.2 v 0.3");
-        //JUnitAppender.assertWarnMessageStartsWith("There is insufficient distance");
-        // as the calc goes wrong we immediatly set speed to final speed. The entries are rubbish so dont bother checking
-        Assert.assertEquals("SpeedStep Table has incorrect number of entries.", 1, sp.getSpeedStepTrace().size() ) ;
-        //Assert.assertEquals("SpeedStep Table has incorrect number of entries.", 0, sp.getSpeedStepTrace().size() ) ;
+        JUnitAppender.assertWarnMessageStartsWith("There is insufficient distance");
+        // as the calc goes wrong we immediately set speed to final speed. The entries are rubbish so dont bother checking
+        Assert.assertEquals("SpeedStep Table has incorrect number of entries.", 0, sp.getSpeedStepTrace().size() ) ;
 
         sp.cancelSpeedChange();
     }
