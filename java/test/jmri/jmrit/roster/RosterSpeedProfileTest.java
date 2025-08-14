@@ -165,15 +165,18 @@ public class RosterSpeedProfileTest {
                             if (maxPercentSpeed < expectedSpeed) {
                                 expectedSpeed = maxPercentSpeed;
                             }
-                            if (Math.abs(expectedSpeed - returnValues.finalSpeed) > (1.0f / stmLimit)) {
+                            // If number of elements is 0 then
+                            // speed was not altered from the input and final speed is unset
+                            if (returnValues.numberOfElements > 0 && Math.abs(expectedSpeed - returnValues.finalSpeed) > (1.0f / stmLimit)) {
                                 resultSummary.failedTestEndSpeed += 1;
                             }
-                            if (returnValues.totalDistance == 0.0f &&
+                            if (returnValues.numberOfElements == 0 && returnValues.totalDistance == 0.0f &&
                                     Math.abs(expectedSpeed - (currentSpeedStep / stmLimit)) < (1.0f /
                                             stmLimit)) {
                                 // no speed change expected so no distance
                                 resultSummary.zeroTests++;
                                 resultSummary.lengthError[0] += 1;
+                                // speed test will have always failed so dont add.
                             } else if ((Math.abs(testDistance - returnValues.totalDistance) /
                                     testDistance) < globalTotalDistanceTolerance) {
                                 // within tolerance
