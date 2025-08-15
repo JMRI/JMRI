@@ -101,8 +101,8 @@ public class JmriJOptionPane {
             pane.addPropertyChangeListener(JOptionPane.VALUE_PROPERTY, unused -> callback.run());
         }
         //setDialogLocation(parentComponent, dialog);
-        dialog.setModal(false);
-        dialog.setAlwaysOnTop(true);
+        //dialog.setModal(false);
+        //dialog.setAlwaysOnTop(true);
         dialog.toFront();
         dialog.setVisible(true);
 }
