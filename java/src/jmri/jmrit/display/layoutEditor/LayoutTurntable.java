@@ -253,16 +253,28 @@ public class LayoutTurntable extends LayoutTrack {
 
     public void setPosition(int index) {
         if (isTurnoutControlled()) {
+            boolean rayExists = false;
             for (RayTrack rt : rayTrackList) {
                 if (rt.getConnectionIndex() == index) {
-                    lastKnownIndex = index;
-                    rt.setPosition();
-                    models.redrawPanel();
-                    models.setDirty();
-                    return;
+                    rayExists = true;
+                }
+                Turnout t = rt.getTurnout();
+                if (t != null) {
+                    if (rt.getConnectionIndex() == index) {
+                        t.setCommandedState(Turnout.THROWN);
+                    } else {
+                        t.setCommandedState(Turnout.CLOSED);
+                    }
                 }
             }
-            log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track", getName(), index);
+
+            if (rayExists) {
+                lastKnownIndex = index;
+                models.redrawPanel();
+                models.setDirty();
+            } else {
+                log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track", getName(), index);
+            }
         }
     }
 
