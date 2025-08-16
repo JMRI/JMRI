@@ -177,14 +177,33 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         for (LayoutTrackView lv : p.getPositionablePointViews())    {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getLevelXingViews())            {storeOne(panel, lv); }
         for (LayoutTrackView lv : p.getLayoutSlipViews())           {storeOne(panel, lv); }
-        for (LayoutTrackView lv : p.getLayoutTurntableViews())      {storeOne(panel, lv); }
-
+        for (LayoutTrackView lv : p.getLayoutTurntableViews())      {
+            storeOne(panel, lv);
+            // Correctly get the LayoutTurntable model from the view
+            if (lv instanceof LayoutTurntableView) {
+                storeSignalMastLogic(panel, ((LayoutTurntableView)lv).getTurntable());
+            }
+        }
         // include Layout Shapes
         for (LayoutShape ls : p.getLayoutShapes()) {storeOne(panel, ls); }
 
         return panel;
     }   // store
 
+    private void storeSignalMastLogic(Element panel, LayoutTurntable turntable) {
+        jmri.SignalMastLogic sml = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(turntable.getVirtualSignalMast());
+        if (sml != null) {
+            try {
+                // Correctly use the ConfigXmlManager to get the XML element
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sml);
+                if (e != null) {
+                    panel.addContent(e);
+                }
+            } catch (Exception ex) {
+                log.error("Error storing signal mast logic for turntable: {}", turntable.getName(), ex);
+            }
+        }
+    }
 
     private void storeOne(Element panel, Object item) {
         try {

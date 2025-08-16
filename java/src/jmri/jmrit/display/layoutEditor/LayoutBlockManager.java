@@ -2199,6 +2199,21 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
+     * Get the facing LayoutBlock for a given SignalMast by searching all LayoutEditor panels.
+     * @param signalMast The signal mast to find the block for.
+     * @return The facing LayoutBlock, or null if not found.
+     */
+    public LayoutBlock getFacingBlockByMast(@Nonnull SignalMast signalMast) {
+        for (LayoutEditor panel : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) {
+            LayoutBlock block = getFacingBlockByMast(signalMast, panel);
+            if (block != null) {
+                return block;
+            }
+        }
+        return null;
+    }
+
+    /**
      * If the panel variable is null, search all LE panels. This was added to
      * support multi panel entry/exit.
      *

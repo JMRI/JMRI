@@ -403,58 +403,87 @@ public class DefaultSignalMastLogicManager
                 ("Found " + validPaths.size() + " masts as sources for logic"));
         InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach(nb ->
                 nb.removeProperty(PROPERTY_INTERMEDIATE_SIGNAL));
+
         for (Entry<NamedBean, List<NamedBean>> e : validPaths.entrySet()) {
-            SignalMast key = (SignalMast) e.getKey();
+            SignalMast sourceMast = (SignalMast) e.getKey();
 
-            log.info("DIAGNOSTIC - Processing source mast: {}", key.getDisplayName());
+            if (sourceMast instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
+                // This is a turntable mast. Handle it with special logic to avoid the pathfinding crash.
+                log.info("DIAGNOSTIC - Found turntable mast {}, applying special logic.", sourceMast.getDisplayName());
 
-            SignalMastLogic sml = getSignalMastLogic(key);
-            if (sml == null) {
-                sml = newSignalMastLogic(key);
-            }
+                SignalMastLogic sml = getSignalMastLogic(sourceMast);
+                if (sml == null) {
+                    sml = newSignalMastLogic(sourceMast);
+                }
 
-            List<NamedBean> validDestMast = validPaths.get(key);
-            for (NamedBean nb : validDestMast) {
-                if (!sml.isDestinationValid((SignalMast) nb)) {
-                    try {
-                        sml.setDestinationMast((SignalMast) nb);
-                        sml.useLayoutEditorDetails(true, true, (SignalMast) nb);
-                        sml.useLayoutEditor(true, (SignalMast) nb);
+                // Find the LayoutTurntable that owns this mast by iterating through all turntables
+                LayoutTurntable owner = null;
+                for (LayoutEditor editor : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) {
+                    for (LayoutTurntable turntable : editor.getLayoutTurntables()) {
+                        if (turntable.getVirtualSignalMast() == sourceMast) {
+                            owner = turntable;
+                            break;
+                        }
+                    }
+                    if (owner != null) break;
+                }
 
-                        // START: New Turntable Logic
-                        LayoutBlockConnectivityTools lbct = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools();
-                        List<LayoutBlock> pathBlocks = lbct.getLayoutBlocks(key, (NamedBean) nb, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+                if (owner == null) {
+                    log.error("Could not find the parent LayoutTurntable for virtual mast {}", sourceMast.getDisplayName());
+                    continue; // Skip to the next mast
+                }
 
-                        for (int i = 0; i < pathBlocks.size() - 1; i++) {
-                            LayoutBlock b1 = pathBlocks.get(i);
-                            LayoutBlock b2 = pathBlocks.get(i + 1);
+                // For each destination mast (on a ray), find the corresponding ray and add the controlling turnout.
+                List<NamedBean> validDestMasts = e.getValue();
+                for (NamedBean destBean : validDestMasts) {
+                    SignalMast destMast = (SignalMast) destBean;
+                    if (!sml.isDestinationValid(destMast)) {
+                        try {
+                            sml.setDestinationMast(destMast);
+                            sml.useLayoutEditor(true, destMast);
 
-                            for (LayoutEditor editor : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) {
-                                for (LayoutTurntable turntable : editor.getLayoutTurntables()) {
-                                    LayoutBlock turntableBlock = turntable.getLayoutBlock();
-                                    if (turntableBlock == null) continue;
-
-                                    // Check if this path segment crosses from the turntable to a ray block
-                                    if ((b1 == turntableBlock && turntable.isRayBlock(b2)) || (b2 == turntableBlock && turntable.isRayBlock(b1))) {
-                                        LayoutBlock rayBlock = turntable.isRayBlock(b1) ? b1 : b2;
-                                        int rayIndex = turntable.getRayIndexForBlock(rayBlock);
-                                        if (rayIndex != -1) {
-                                            Turnout positionTurnout = turntable.getTurnoutForRay(rayIndex);
-                                            if (positionTurnout != null) {
-                                                sml.addAutoTurnout(positionTurnout.getSystemName(), Turnout.THROWN, (SignalMast) nb);
-                                                log.info("Added Turntable position turnout {} for ray {} to logic for path {} -> {}",
-                                                        positionTurnout.getDisplayName(), rayBlock.getDisplayName(), key.getDisplayName(), nb.getDisplayName());
-                                            }
-                                        }
+                            // Find the block for the destination mast to identify the ray
+                            LayoutBlock destBlock = InstanceManager.getDefault(LayoutBlockManager.class).getFacingBlockByMast(destMast);
+                            if (destBlock != null) {
+                                int rayIndex = owner.getRayIndexForBlock(destBlock);
+                                if (rayIndex != -1) {
+                                    Turnout positionTurnout = owner.getTurnoutForRay(rayIndex);
+                                    if (positionTurnout != null) {
+                                        sml.addAutoTurnout(positionTurnout.getSystemName(), Turnout.THROWN, destMast);
+                                        log.info("Added Turntable position turnout {} for ray {} to logic for path {} -> {}",
+                                                positionTurnout.getDisplayName(), destBlock.getDisplayName(), sourceMast.getDisplayName(), destMast.getDisplayName());
                                     }
                                 }
                             }
+                        } catch (JmriException ex) {
+                            log.warn("Unexpected exception setting mast for turntable", ex);
                         }
-                        // END: New Turntable Logic
+                    }
+                }
 
-                    } catch (JmriException ex) {
-                        //log.debug("we shouldn't get an exception here!");
-                        log.warn("Unexpected exception setting mast", ex);
+            } else {
+                // This is a normal mast. Use the original logic.
+                log.info("DIAGNOSTIC - Processing source mast: {}", sourceMast.getDisplayName());
+
+                SignalMastLogic sml = getSignalMastLogic(sourceMast);
+                if (sml == null) {
+                    sml = newSignalMastLogic(sourceMast);
+                }
+
+                List<NamedBean> validDestMast = e.getValue();
+                for (NamedBean nb : validDestMast) {
+                    if (!sml.isDestinationValid((SignalMast) nb)) {
+                        try {
+                            sml.setDestinationMast((SignalMast) nb);
+                            sml.useLayoutEditorDetails(true, true, (SignalMast) nb);
+                            sml.useLayoutEditor(true, (SignalMast) nb);
+
+                            // This helper handles cases where a turntable is PART of a path between two other signals
+                            addTurntableLogic(sml, sourceMast, (SignalMast) nb);
+
+                        } catch (JmriException ex) {
+                            log.warn("Unexpected exception setting mast", ex);
+                        }
                     }
                 }
             }
