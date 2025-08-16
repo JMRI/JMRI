@@ -589,11 +589,41 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
      * {@inheritDoc }
      */
     @Override
+    public void addTurnout(String turnoutName, int state, SignalMast destination) {
+        if (!destList.containsKey(destination)) {
+            return;
+        }
+        Turnout turn = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+        if (turn != null) {
+            NamedBeanHandle<Turnout> namedTurnout = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(turnoutName, turn);
+            destList.get(destination).addTurnout(namedTurnout, state);
+        }
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
     public void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts, SignalMast destination) {
         if (!destList.containsKey(destination)) {
             return;
         }
         destList.get(destination).setAutoTurnouts(turnouts);
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void addAutoTurnout(String turnoutName, int state, SignalMast destination) {
+        if (!destList.containsKey(destination)) {
+            return;
+        }
+        Turnout turn = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+        if (turn != null) {
+            destList.get(destination).addAutoTurnout(turn, state);
+        }
     }
 
     /**
@@ -1526,6 +1556,19 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             firePropertyChange(PROPERTY_TURNOUTS, null, this.destinationSignalMast);
         }
 
+        void addTurnout(NamedBeanHandle<Turnout> turn, int state) {
+            for (NamedBeanSetting nbh : userSetTurnouts) {
+                if (nbh.getBean().equals(turn.getBean())) {
+                    return; // Already present
+                }
+            }
+            turn.getBean().addPropertyChangeListener(propertyTurnoutListener, turn.getName(),
+                    "Signal Mast Logic:" + source.getDisplayName() + " to " + destinationSignalMast.getDisplayName());
+            NamedBeanSetting nbs = new NamedBeanSetting(turn, state);
+            userSetTurnouts.add(nbs);
+            firePropertyChange(PROPERTY_TURNOUTS, null, this.destinationSignalMast);
+        }
+
         void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts) {
             log.debug("{} called setAutoTurnouts with {}", destinationSignalMast.getDisplayName(),
                 (turnouts != null ? "" + turnouts.size() + " turnouts in hash table" : "null hash table reference"));
@@ -1543,6 +1586,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             } else {
                 this.autoTurnouts = new Hashtable<>(turnouts);
             }
+            firePropertyChange(PROPERTY_AUTO_TURNOUTS, null, this.destinationSignalMast);
+        }
+
+        void addAutoTurnout(Turnout turnout, int state) {
+            if (this.autoTurnouts.containsKey(turnout)) {
+                return;
+            }
+            // Add the listener so the logic re-evaluates when the turnout changes.
+            turnout.addPropertyChangeListener(propertyTurnoutListener);
+
+            this.autoTurnouts.put(turnout, state);
             firePropertyChange(PROPERTY_AUTO_TURNOUTS, null, this.destinationSignalMast);
         }
 

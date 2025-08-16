@@ -149,6 +149,54 @@ public class LayoutTurntable extends LayoutTrack {
         return 0.0;
     }
 
+    /**
+     * Check if a given LayoutBlock is connected to one of the turntable rays.
+     * @param block The LayoutBlock to check.
+     * @return true if the block is a ray block, false otherwise.
+     */
+    public boolean isRayBlock(LayoutBlock block) {
+        if (block == null) {
+            return false;
+        }
+        for (int i = 0; i < getNumberRays(); i++) {
+            TrackSegment rayConnect = getRayConnectOrdered(i);
+            if (rayConnect != null && rayConnect.getLayoutBlock() == block) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Get the connection index for a given LayoutBlock that is a ray track.
+     * @param block The LayoutBlock to check.
+     * @return the connection index, or -1 if not found.
+     */
+    public int getRayIndexForBlock(LayoutBlock block) {
+        if (block == null) {
+            return -1;
+        }
+        for (RayTrack rt : rayTrackList) {
+            TrackSegment rayConnect = rt.getConnect();
+            if (rayConnect != null && rayConnect.getLayoutBlock() == block) {
+                return rt.getConnectionIndex();
+            }
+        }
+        return -1;
+    }
+    /**
+     * Get the position control Turnout for a specific ray index.
+     * @param index The connection index of the ray.
+     * @return The associated Turnout, or null if none exists.
+     */
+    public Turnout getTurnoutForRay(int index) {
+        for (RayTrack rt : rayTrackList) {
+            if (rt.getConnectionIndex() == index) {
+                return rt.getTurnout();
+            }
+        }
+        return null;
+    }
+
     public boolean isRayDisabled(int index) {
         for (RayTrack rt : rayTrackList) {
             if (rt.getConnectionIndex() == index) {
