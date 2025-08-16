@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.HashSet;
 import jmri.*;
 import jmri.jmrit.display.EditorManager;
 import org.slf4j.Logger;
@@ -255,6 +256,8 @@ final public class LayoutBlockConnectivityTools {
 
     }
 
+
+
     /**
      * Determines if one set of blocks is reachable from another set of blocks
      * based upon the directions of the set of blocks.
@@ -290,33 +293,67 @@ final public class LayoutBlockConnectivityTools {
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
         }
 
-        if (log.isDebugEnabled()) {
-            try {
-                log.debug("faci {}", currentBlock.getDisplayName());
-                log.debug("next {}", nextBlock.getDisplayName());
-                log.debug("dest {}", destBlock.getDisplayName());
-                for (LayoutBlock dp : destBlockn1) {
-                    log.debug("dest + 1 {}", dp.getDisplayName());
+        // Check if the source block is a turntable
+        boolean isSourceTurntable = false;
+        for (LayoutEditor editor : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) {
+            for (LayoutTurntable turntable : editor.getLayoutTurntables()) {
+                if (turntable.getLayoutBlock() == currentBlock) { // currentBlock is the source facing block
+                    isSourceTurntable = true;
+                    break;
                 }
-            } catch (java.lang.NullPointerException e) {
-
             }
+            if (isSourceTurntable) break;
         }
+
+        if (isSourceTurntable) {
+            log.info("DIAGNOSTIC - Logic branch: Source is a turntable.");
+            // For a turntable source, the "protecting block" (nextBlock) is ill-defined and should be ignored.
+            // We check for a direct route from the turntable block itself to the destination.
+            boolean valid = currentBlock.isRouteToDestValid(currentBlock.getBlock(), destBlock.getBlock());
+            log.info("DIAGNOSTIC - isRouteToDestValid(from:{}, to:{}) returned: {}. Path is {}.",
+                    currentBlock.getDisplayName(), destBlock.getDisplayName(), valid, (valid ? "VALID" : "INVALID"));
+            return valid;
+        }
+
+        // Check if the destination block is a turntable
+        boolean isDestTurntable = false;
+        for (LayoutEditor editor : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) {
+            for (LayoutTurntable turntable : editor.getLayoutTurntables()) {
+                if (turntable.getLayoutBlock() == destBlock) {
+                    isDestTurntable = true;
+                    break;
+                }
+            }
+            if (isDestTurntable) break;
+        }
+
+        if (isDestTurntable) {
+            log.info("DIAGNOSTIC - Logic branch: Destination is a turntable.");
+            // For a turntable destination, we check for a route from the block the source signal protects (nextBlock)
+            // to the turntable block (destBlock).
+            boolean valid = currentBlock.isRouteToDestValid(nextBlock.getBlock(), destBlock.getBlock());
+            log.info("DIAGNOSTIC - isRouteToDestValid(from:{}, to:{}) returned: {}. Path is {}.",
+                    nextBlock.getDisplayName(), destBlock.getDisplayName(), valid, (valid ? "VALID" : "INVALID"));
+            return valid;
+        }
+
+        log.info("DIAGNOSTIC - Logic branch: Normal path.");
+        // Original validation logic for non-turntable paths
         if ((destBlock != null) && (currentBlock != null) && (nextBlock != null)) {
             if (!currentBlock.isRouteToDestValid(nextBlock.getBlock(), destBlock.getBlock())) {
-                log.debug("Route to dest not valid");
+                log.info("DIAGNOSTIC - REJECTED: currentBlock.isRouteToDestValid returned false.");
                 return false;
             }
+
             if (log.isDebugEnabled()) {
                 log.debug("dest {}", destBlock.getDisplayName());
-                /*if(destBlockn1!=null)
-                 log.debug("remote prot " + destBlockn1.getDisplayName());*/
             }
             if (!destBlockn1.isEmpty() && currentBlock == destBlockn1.get(0) && nextBlock == destBlock) {
                 log.debug("Our dest protecting block is our current block and our protecting block is the same as our destination block");
+                log.info("DIAGNOSTIC - REJECTED: Source and destination protecting blocks are the same.");
                 return false;
             }
-            // Do a simple test to see if one is reachable from the other.
+
             int proCount = 0;
             int desCount = 0;
             if (!destBlockn1.isEmpty()) {
@@ -328,46 +365,30 @@ final public class LayoutBlockConnectivityTools {
             }
 
             if ((proCount == -1) && (desCount == -1)) {
-                // The destination block and destBlock+1 are both directly connected
                 log.debug("Dest and dest+1 are directly connected");
+                log.info("DIAGNOSTIC - REJECTED: Dest and dest+1 are directly connected.");
                 return false;
             }
 
             if (proCount > desCount && (proCount - 1) == desCount) {
-                // The block that we are protecting should be one hop greater than the destination count.
                 log.debug("Protecting is one hop away from destination and therefore valid.");
+                log.info("DIAGNOSTIC - ACCEPTED: Hop count is valid.");
                 return true;
             }
 
-            /*Need to do a more advanced check in this case as the destBlockn1
-             could be reached via a different route and therefore have a smaller
-             hop count we need to therefore step through each block until we reach
-             the end.
-             The advanced check also covers cases where the route table is inconsistent.
-             We also need to perform a more advanced check if the destBlockn1
-             is null as this indicates that the destination signal mast is assigned
-             on an end bumper*/
-
             if (pathMethod == Routing.SENSORTOSENSOR && destBlockn1.size() == 0) {
-                // Change the pathMethod to accept the NX sensor at the end bumper.
                 pathMethod = Routing.NONE;
             }
 
-            List<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod); // Was MASTTOMAST
-            if (log.isDebugEnabled()) {
-                log.debug("checkValidDest blockList for {}", destBlock.getDisplayName());
-                blockList.forEach(blk -> log.debug("  block = {}", blk.getDisplayName()));
-            }
+            List<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod);
+
             for (LayoutBlock dp : destBlockn1) {
-                log.debug("dp = {}", dp.getDisplayName());
                 if (blockList.contains(dp) && currentBlock != dp) {
-                    log.debug("Signal mast in the wrong direction");
+                    log.info("DIAGNOSTIC - REJECTED: Destination protecting block {} is in the path.", dp.getDisplayName());
                     return false;
                 }
             }
-                /*Work on the basis that if you get the blocks from source to dest
-                 then the dest+1 block should not be included*/
-            log.debug("Signal mast in the correct direction");
+            log.info("DIAGNOSTIC - ACCEPTED: Path is valid.");
             return true;
 
         } else if (destBlock == null) {
@@ -379,7 +400,6 @@ final public class LayoutBlockConnectivityTools {
         }
         throw new jmri.JmriException("BlockIsNull");
     }
-
     /**
      * This uses the layout editor to check if the destination location is
      * reachable from the source location.<br>
@@ -790,7 +810,7 @@ final public class LayoutBlockConnectivityTools {
             fp.getProtectingBlocks().stream().map((block) -> {
                 if (log.isDebugEnabled()) {
                     try {
-                        log.debug("\nSource {}", fp.getBean().getDisplayName());
+                        log.debug("\\nSource {}", fp.getBean().getDisplayName());
                         log.debug("facing {}", fp.getFacing().getDisplayName());
                         log.debug("protecting {}", block.getDisplayName());
                     } catch (java.lang.NullPointerException e) {
@@ -803,7 +823,15 @@ final public class LayoutBlockConnectivityTools {
                 LayoutBlock lProtecting = lbm.getLayoutBlock(block);
                 NamedBean source = fp.getBean();
                 try {
-                    retPairs.put(source, discoverPairDest(source, lProtecting, lFacing, beanList, pathMethod));
+                    // Get the list of destinations already found for this source
+                    List<NamedBean> destinations = retPairs.get(source);
+                    if (destinations == null) {
+                        destinations = new ArrayList<>();
+                    }
+                    // Add the new destinations found for the current protecting block (ray)
+                    destinations.addAll(discoverPairDest(source, lProtecting, lFacing, beanList, pathMethod));
+                    // Put the updated list back in the map
+                    retPairs.put(source, destinations);
                 } catch (JmriException ex) {
                     log.error("exception in retPairs.put", ex);
                 }
@@ -828,15 +856,56 @@ final public class LayoutBlockConnectivityTools {
      * @throws jmri.JmriException occurring during nested readAll operation
      */
     public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T, Routing pathMethod) throws JmriException {
+        log.info("discoverPairDest");
         if (log.isDebugEnabled()) {
             log.debug("discover pairs from source {}", source.getDisplayName());
         }
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+
+        // Check if the source is a turntable mast
+        LayoutTurntable sourceTurntable = null;
+        Set<LayoutEditor> editors;
+        if (editor != null) {
+            editors = new HashSet<>();
+            editors.add(editor);
+        } else {
+            editors = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
+        }
+
+        for (LayoutEditor ed : editors) {
+            for (LayoutTurntable tt : ed.getLayoutTurntables()) {
+                if (tt.getVirtualSignalMast() == source) {
+                    sourceTurntable = tt;
+                    break;
+                }
+            }
+            if (sourceTurntable != null) break;
+        }
+
         LayoutBlock lFacing = lbm.getFacingBlockByNamedBean(source, editor);
-        List<LayoutBlock> lProtecting = lbm.getProtectingBlocksByNamedBean(source, editor);
+        List<LayoutBlock> lProtecting;
+
+        if (sourceTurntable != null) {
+            // It's a turntable! Build the list of all ray blocks.
+            log.info("DIAGNOSTIC - Source is a turntable mast. Discovering destinations for all rays.");
+            lProtecting = new ArrayList<>();
+            for (int i = 0; i < sourceTurntable.getNumberRays(); i++) {
+                TrackSegment rayConnect = sourceTurntable.getRayConnectOrdered(i);
+                if (rayConnect != null) {
+                    LayoutBlock protectingLBlock = rayConnect.getLayoutBlock();
+                    if (protectingLBlock != null && protectingLBlock != lFacing) {
+                        lProtecting.add(protectingLBlock);
+                    }
+                }
+            }
+        } else {
+            // Not a turntable, use the standard logic.
+            lProtecting = lbm.getProtectingBlocksByNamedBean(source, editor);
+        }
+
         List<NamedBean> ret = new ArrayList<>();
         List<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
-        
+
         // may throw JmriException here
         for (LayoutBlock lb : lProtecting) {
             ret.addAll(discoverPairDest(source, lb, lFacing, beanList, pathMethod));
@@ -970,6 +1039,50 @@ final public class LayoutBlockConnectivityTools {
                         }
                         if (!found) {
                             beanList.add(toadd);
+                        }
+                    }
+                }
+            }
+        }
+        // Add Turntables to the list of beans
+        Set<LayoutEditor> editors;
+        if (editor != null) {
+            editors = new HashSet<>();
+            editors.add(editor);
+        } else {
+            // If no specific editor is provided, we must get all of them.
+            editors = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
+        }
+
+        if (T == null || T.equals(SignalMast.class)) {
+            for (LayoutEditor useEdit : editors) {
+                for (LayoutTurntable turntable : useEdit.getLayoutTurntables()) {
+                    SignalMast mast = turntable.getVirtualSignalMast();
+                    if (mast != null) {
+                        LayoutBlock facingLBlock = turntable.getLayoutBlock();
+                        if (facingLBlock != null) {
+                            Block facingBlock = facingLBlock.getBlock();
+                            List<Block> protectingBlocks = new ArrayList<>();
+                            for (int i = 0; i < turntable.getNumberRays(); i++) {
+                                TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
+                                if (rayConnect != null) {
+                                    LayoutBlock protectingLBlock = rayConnect.getLayoutBlock();
+                                    if (protectingLBlock != null && protectingLBlock.getBlock() != facingBlock) {
+                                        protectingBlocks.add(protectingLBlock.getBlock());
+                                    }
+                                }
+                            }
+                            FacingProtecting toadd = new FacingProtecting(facingBlock, protectingBlocks, mast);
+                            boolean found = false;
+                            for (FacingProtecting fp : beanList) {
+                                if (fp.equals(toadd)) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found) {
+                                beanList.add(toadd);
+                            }
                         }
                     }
                 }

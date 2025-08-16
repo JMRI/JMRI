@@ -718,12 +718,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         return result;
     }
 
-    /**
-     * Check/Update Path objects for the attached Block
-     * <p>
-     * If multiple panels are present, Paths are set according to the panel with
-     * the highest connectivity (most LayoutConnectivity objects).
-     */
     public void updatePaths() {
         // Update paths is called by the panel, turnouts, xings, track segments etc
         if ((block != null) && !panels.isEmpty()) {
@@ -755,8 +749,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                                 && (!compareConnectivity(c, tPanel.getLEAuxTools().getConnectivityList(this)))) {
                             // send user an error message
                             int response = JmriJOptionPane.showOptionDialog(null,
-                                java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
-                                    new Object[]{getUserName(), tPanel.getLayoutName(), panel.getLayoutName()}),
+                                    java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
+                                            new Object[]{getUserName(), tPanel.getLayoutName(), panel.getLayoutName()}),
                                     Bundle.getMessage("WarningTitle"),
                                     JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
                                     null,
@@ -770,17 +764,55 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                 }
             }
+
+            // Add turntable connectivity to the list
+            for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+                LayoutBlock turntableBlock = turntable.getLayoutBlock();
+                if (turntableBlock == null) continue;
+
+                if (this == turntableBlock) {
+                    // This is the turntable's block. Add connections to all valid ray blocks.
+                    for (int i = 0; i < turntable.getNumberRays(); i++) {
+                        TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
+                        if (rayConnect != null) {
+                            LayoutBlock rayBlock = rayConnect.getLayoutBlock();
+                            if (rayBlock != null && rayBlock != this) {
+                                c.add(new LayoutConnectivity(this, rayBlock));
+                            }
+                        }
+                    }
+                } else {
+                    // This might be a ray block. Check if it connects to this turntable.
+                    for (int i = 0; i < turntable.getNumberRays(); i++) {
+                        TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
+                        if (rayConnect != null && rayConnect.getLayoutBlock() == this) {
+                            // This is a ray block for this turntable. Add a connection to the turntable block.
+                            c.add(new LayoutConnectivity(this, turntableBlock));
+                            break; // Found our turntable, no need to check other rays
+                        }
+                    }
+                }
+            }
+
             // update block Paths to reflect connectivity as needed
             updateBlockPaths(c, panel);
+
+            // DIAGNOSTIC LOGGING: Print the details of all paths found for this block
+            if (block != null) {
+                List<jmri.Path> paths = block.getPaths();
+                log.info("DIAGNOSTIC - Paths for block: " + getDisplayName() + " - Number of paths: " + paths.size());
+                for (jmri.Path p : paths) {
+                    Block destBlock = p.getBlock();
+                    if (destBlock != null) {
+                        log.info("    -> Path to: " + destBlock.getDisplayName());
+                    } else {
+                        log.info("    -> Path to: null");
+                    }
+                }
+            }
         }
     }
 
-    /**
-     * Check/Update Path objects for the attached Block using the connectivity
-     * in the specified Layout Editor panel.
-     *
-     * @param panel to extract paths
-     */
     public void updatePathsUsingPanel(LayoutEditor panel) {
         if (panel == null) {
             log.error("Null panel in call to updatePathsUsingPanel");
@@ -1351,7 +1383,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         return metric;
     }
 
-    // re work this so that is makes beter us of existing code.
+    // re work this so that is makes better use of existing code.
     // This is no longer required currently, but might be used at a later date.
     public void addAllThroughPaths() {
         addRouteLog.debug("Add all ThroughPaths {}", getDisplayName());
@@ -1376,13 +1408,13 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 for (LayoutEditor tPanel : panels) {
                     if ((tPanel != panel)
                             && InstanceManager.getDefault(LayoutBlockManager.class).
-                                    warn() && (!compareConnectivity(c, tPanel.getLEAuxTools().getConnectivityList(this)))) {
+                            warn() && (!compareConnectivity(c, tPanel.getLEAuxTools().getConnectivityList(this)))) {
 
                         // send user an error message
                         int response = JmriJOptionPane.showOptionDialog(null,
                                 java.text.MessageFormat.format(Bundle.getMessage("Warn1"),
                                         new Object[]{getUserName(), tPanel.getLayoutName(),
-                                            panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
+                                                panel.getLayoutName()}), Bundle.getMessage("WarningTitle"),
                                 JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE,
                                 null,
                                 new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonOKPlus")},
@@ -1414,7 +1446,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             }
         }
     }
-
     // TODO: if the block already exists, we still may want to re-work the through paths
     // With this bit we need to get our neighbour to send new routes
     private void addNeighbour(Block addBlock, int direction, int workingDirection) {
@@ -2168,6 +2199,26 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     private void addThroughPath( @Nonnull Adjacencies adj) {
+        // Check if this block is a turntable block on ANY panel it belongs to.
+        // If so, do not create through paths.
+        boolean isTurntableBlock = false;
+        for (LayoutEditor p : panels) {
+            for (LayoutTurntable turntable : p.getLayoutTurntables()) {
+                if (turntable.getLayoutBlock() == this) {
+                    isTurntableBlock = true;
+                    break;
+                }
+            }
+            if (isTurntableBlock) {
+                break;
+            }
+        }
+
+        if (isTurntableBlock) {
+            addRouteLog.debug("Block {} is a turntable block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
+            return; // Do not create through paths for a turntable
+        }
+
         Block newAdj = adj.getBlock();
         int packetFlow = adj.getPacketFlow();
 

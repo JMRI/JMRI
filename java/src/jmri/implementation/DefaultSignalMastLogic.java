@@ -18,7 +18,10 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
+import jmri.jmrit.display.layoutEditor.TurntableSignalMast;
 import jmri.jmrit.display.layoutEditor.LevelXing;
+import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -38,24 +41,62 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     LayoutBlock facingBlock = null;
     LayoutBlock remoteProtectingBlock = null;
 
+    protected LayoutBlock facing;
+    protected final List<LayoutBlock> protecting = new ArrayList<>();
+
     boolean disposing = false;
 
-    /**
-     * Initialise a Signal Mast Logic for a given source Signal Mast.
-     *
-     * @param source  The Signal Mast we are configuring an SML for
-     */
     public DefaultSignalMastLogic(@Nonnull SignalMast source) {
-        super(source.toString()); // default system name
+        super(source.getSystemName());
         this.source = source;
-        try {
-            this.stopAspect = source.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
-            this.source.addPropertyChangeListener(propertySourceMastListener);
-            if (source.getAspect() == null) {
-                source.setAspect(stopAspect);
+
+        if (source instanceof TurntableSignalMast) {
+            LayoutTurntable turntable = ((TurntableSignalMast) source).getTurntable();
+            if (turntable != null) {
+                this.facing = turntable.getLayoutBlock();
+                // For a turntable, the protecting blocks are all the blocks connected to the rays.
+                for (int i = 0; i < turntable.getNumberRays(); i++) {
+                    TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
+                    if (rayConnect != null) {
+                        LayoutBlock protectingLBlock = rayConnect.getLayoutBlock();
+                        if (protectingLBlock != null && protectingLBlock != this.facing) {
+                            if (!this.protecting.contains(protectingLBlock)) {
+                                this.protecting.add(protectingLBlock);
+                            }
+                        }
+                    }
+                }
             }
-        } catch (Exception ex) {
-            log.error("Error while creating Signal Logic", ex);
+        } else {
+            LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+            // We need to iterate through the editors to find the one that contains the mast
+            Set<LayoutEditor> editors = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
+            for (LayoutEditor editor : editors) {
+                if (this.facing == null) {
+                    this.facing = lbm.getFacingBlockByNamedBean(source, editor);
+                }
+                // getProtectingBlocksByNamedBean returns a new list, so we can add all
+                List<LayoutBlock> protectingBlocks = lbm.getProtectingBlocksByNamedBean(source, editor);
+                for(LayoutBlock pBlock : protectingBlocks){
+                    if(!this.protecting.contains(pBlock)){
+                        this.protecting.add(pBlock);
+                    }
+                }
+            }
+        }
+
+        if (this.protecting.isEmpty()) {
+            log.debug("No protecting block found for signal mast {}", source.getDisplayName());
+        }
+        if (this.facing == null) {
+            log.error("No facing block found for signal mast {}", source.getDisplayName());
+            //This can be considered a fatal error.
+        }
+
+        this.stopAspect = source.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+        this.source.addPropertyChangeListener(propertySourceMastListener);
+        if (source.getAspect() == null) {
+            source.setAspect(stopAspect);
         }
     }
 

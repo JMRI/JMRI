@@ -337,34 +337,51 @@ public class DefaultSignalMastLogicManager
      */
     @Override
     public void automaticallyDiscoverSignallingPairs() throws JmriException {
+        log.info("DIAGNOSTIC - automaticallyDiscoverSignallingPairs() called.");
         runWhenStablised = false;
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
+            log.warn("DIAGNOSTIC - Advanced routing not enabled.");
             throw new JmriException("advanced routing not enabled");
         }
         if (!lbm.routingStablised()) {
+            log.warn("DIAGNOSTIC - Routing not stabilised, will run later.");
             runWhenStablised = true;
             return;
         }
+        log.info("DIAGNOSTIC - Discovering valid bean pairs...");
         HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools()
-            .discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+                .discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+
+        log.info("DIAGNOSTIC - Found {} source masts with valid paths.", validPaths.size());
+
         firePropertyChange(PROPERTY_AUTO_GENERATE_UPDATE, null,
-            ("Found " + validPaths.size() + " masts as sources for logic"));
+                ("Found " + validPaths.size() + " masts as sources for logic"));
         InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach(nb ->
-            nb.removeProperty(PROPERTY_INTERMEDIATE_SIGNAL));
+                nb.removeProperty(PROPERTY_INTERMEDIATE_SIGNAL));
         for (Entry<NamedBean, List<NamedBean>> e : validPaths.entrySet()) {
             SignalMast key = (SignalMast) e.getKey();
+
+            log.info("DIAGNOSTIC - Processing source mast: {}", key.getDisplayName());
+
             SignalMastLogic sml = getSignalMastLogic(key);
             if (sml == null) {
                 sml = newSignalMastLogic(key);
             }
             List<NamedBean> validDestMast = validPaths.get(key);
+
+            log.info("DIAGNOSTIC - Found {} destination(s) for {}:", validDestMast.size(), key.getDisplayName());
+            for (NamedBean dest : validDestMast) {
+                log.info("    -> {}", dest.getDisplayName());
+            }
+
             for (NamedBean nb : validDestMast) {
                 if (!sml.isDestinationValid((SignalMast) nb)) {
                     try {
                         sml.setDestinationMast((SignalMast) nb);
                         sml.useLayoutEditorDetails(true, true, (SignalMast) nb);
                         sml.useLayoutEditor(true, (SignalMast) nb);
+                        log.info("DIAGNOSTIC - Created logic from {} to {}", key.getDisplayName(), nb.getDisplayName());
                     }
                     catch (JmriException ex) {
                         //log.debug("we shouldn't get an exception here!");

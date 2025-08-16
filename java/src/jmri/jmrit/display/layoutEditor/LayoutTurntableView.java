@@ -31,6 +31,14 @@ public class LayoutTurntableView extends LayoutTrackView {
         this.turntable = track;
     }
 
+    /**
+     * Provide access to the underlying model, required for saving.
+     * @return The LayoutTurntable model object.
+     */
+    public LayoutTurntable getTurntable() {
+        return turntable;
+    }
+
     // --- Overridden abstract methods from LayoutTrackView ---
 
     @Override

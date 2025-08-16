@@ -1929,6 +1929,24 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull LayoutEditor panel) {
         List<LayoutBlock> protectingBlocks = new ArrayList<>();
 
+        // Check if the bean is a virtual signal mast on a turntable
+        for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+            if (turntable.getVirtualSignalMast() == bean) {
+                for (int i = 0; i < turntable.getNumberRays(); i++) {
+                    TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
+                    if (rayConnect != null) {
+                        LayoutBlock protectingLBlock = rayConnect.getLayoutBlock();
+                        if (protectingLBlock != null && protectingLBlock != turntable.getLayoutBlock()) {
+                            if (!protectingBlocks.contains(protectingLBlock)) {
+                                protectingBlocks.add(protectingLBlock);
+                            }
+                        }
+                    }
+                }
+                return protectingBlocks; // Return immediately after finding the turntable
+            }
+        }
+
         if (!(bean instanceof SignalMast) && !(bean instanceof Sensor)) {
             log.error("Incorrect class type called, must be either SignalMast or Sensor");
 
@@ -2213,6 +2231,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     private LayoutBlock getFacingBlockByBeanByPanel(
             @Nonnull NamedBean bean,
             @Nonnull LayoutEditor panel) {
+        // Check if the bean is a virtual signal mast on a turntable
+        for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+            if (turntable.getVirtualSignalMast() == bean) {
+                return turntable.getLayoutBlock();
+            }
+        }
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
         TrackSegment tr;
         boolean east = true;

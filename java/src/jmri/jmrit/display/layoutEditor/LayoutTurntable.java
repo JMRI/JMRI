@@ -22,7 +22,7 @@ public class LayoutTurntable extends LayoutTrack {
     public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor models) {
         super(id, models);
         radius = 25.0;
-        String mastSystemName = "IV-LT:" + id;
+        String mastSystemName = "IF$vsm:BR-2003:3($0999)";
         this.virtualSignalMast = new TurntableSignalMast(mastSystemName);
         jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).register(this.virtualSignalMast);
         String mastUserName = "Turntable Mast " + id;
@@ -56,7 +56,7 @@ public class LayoutTurntable extends LayoutTrack {
             if (oldBlock != null) { oldBlock.decrementUse(); }
             if (newLayoutBlock != null) {
                 namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)
-                                    .getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+                        .getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
                 newLayoutBlock.incrementUse();
             } else {
                 namedLayoutBlock = null;
@@ -327,7 +327,7 @@ public class LayoutTurntable extends LayoutTrack {
         public void setRayDisabled(boolean boo) { rayDisabled = boo; }
         public boolean isRayDisabledWhenOccupied() { return rayDisabledWhenOccupied; }
         public void setRayDisabledWhenOccupied(boolean boo) { rayDisabledWhenOccupied = boo; }
-        
+
         public void setTurnout(@CheckForNull String turnoutName, int state) {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
@@ -382,7 +382,6 @@ public class LayoutTurntable extends LayoutTrack {
         LayoutBlock block = getLayoutBlock();
         if (block != null) {
             block.updatePaths();
-            block.addAllThroughPaths();
         }
         for (RayTrack ray : rayTrackList) {
             TrackSegment segment = ray.getConnect();
@@ -398,7 +397,34 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     @CheckForNull
     protected List<LayoutConnectivity> getLayoutConnectivity() {
-        return java.util.Collections.emptyList();
+        final List<LayoutConnectivity> c = new ArrayList<>();
+        LayoutBlock turntableBlock = getLayoutBlock();
+        log.error("TURNTABLE_CONNECTIVITY for " + getName() + ": Turntable block is '" + (turntableBlock != null ? turntableBlock.getDisplayName() : "null") + "'");
+
+        if (turntableBlock == null) {
+            log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": No turntable block, returning empty list.");
+            return c;
+        }
+
+        for (RayTrack ray : rayTrackList) {
+            TrackSegment connectedSegment = ray.getConnect();
+            log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Processing ray " + ray.getConnectionIndex());
+            if (connectedSegment != null) {
+                LayoutBlock connectedBlock = connectedSegment.getLayoutBlock();
+                log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Ray " + ray.getConnectionIndex() + " connects to block " + (connectedBlock != null ? connectedBlock.getDisplayName() : "null"));
+                if (connectedBlock != null && connectedBlock != turntableBlock) {
+                    log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Adding connection between " + connectedBlock.getDisplayName() + " and " + turntableBlock.getDisplayName());
+                    c.add(new LayoutConnectivity(connectedBlock, turntableBlock));
+                    c.add(new LayoutConnectivity(turntableBlock, connectedBlock));
+                } else {
+                    log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Skipping connection for ray " + ray.getConnectionIndex() + " because connected block is null or same as turntable block.");
+                }
+            } else {
+                log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Ray " + ray.getConnectionIndex() + " has no connected segment.");
+            }
+        }
+        log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Returning " + c.size() + " connectivity items.");
+        return c;
     }
 
     @Override
