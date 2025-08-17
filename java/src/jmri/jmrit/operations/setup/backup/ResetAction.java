@@ -8,9 +8,7 @@ import javax.swing.AbstractAction;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.util.swing.ExceptionDisplayFrame;
-import jmri.util.swing.JmriJOptionPane;
-import jmri.util.swing.UnexpectedExceptionContext;
+import jmri.util.swing.*;
 
 /**
  * Swing action to load the operation demo files.
@@ -41,7 +39,7 @@ public class ResetAction extends AbstractAction {
             return;
         }
 
-        AutoBackup backup = new AutoBackup();
+        AutoBackup backup = InstanceManager.getDefault(AutoBackup.class);
 
         try {
             backup.autoBackup();
