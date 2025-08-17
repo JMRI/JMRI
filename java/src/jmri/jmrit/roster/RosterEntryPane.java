@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.text.*;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -43,7 +44,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JTextArea comment = new JTextArea(3, 50);
     public String getComment() {return comment.getText();}
     public void setComment(String text) {comment.setText(text);}
-
+    public Document getCommentDocument() {return comment.getDocument();}
+    
     // JScrollPanes are defined with scroll bars on always to avoid undesirable resizing behavior
     // Without this the field will shrink to minimum size any time the scroll bars become needed and
     // the scroll bars are inside, not outside the field area, obscuring their contents.
