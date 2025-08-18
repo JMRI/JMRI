@@ -36,7 +36,7 @@ public class XNetCommandStationRequestFormatterTest {
     }
 
     @Test
-    void testServiceModeResultsRequestMessage() {
+    void testOpsModeResultsRequestMessage() {
         XNetCommandStationRequestFormatter formatter = new XNetCommandStationRequestFormatter();
         XNetMessage msg = XNetMessage.getOpsModeResultsMsg();
         Assertions.assertTrue(formatter.handlesMessage(msg), "Formatter Handles Message");
