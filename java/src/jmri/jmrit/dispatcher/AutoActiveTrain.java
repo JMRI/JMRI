@@ -1922,7 +1922,7 @@ public class AutoActiveTrain implements ThrottleListener {
         public void run() {
             // set to pause at a fast ramp rate
             _pausingActive = true;
-            _savedTargetSpeed = getTargetSpeed();
+            // TODO: use stop in section or block?
             _savedRampRate = getRampRate();
             setCurrentRampRate(RAMP_FAST);
             stopInCurrentSection(NO_TASK);
@@ -1973,13 +1973,13 @@ public class AutoActiveTrain implements ThrottleListener {
                 // this thread was not interrupted
                 //   resume running - restore speed, status, and ramp rate
                 setCurrentRampRate(_savedRampRate);
-                setTargetSpeed(_savedTargetSpeed);
+                // Set speed by signal also works if signal missing
+                // so we dont need to restore a previous value.
                 _activeTrain.setStatus(ActiveTrain.RUNNING);
                 setSpeedBySignal();
             }
         }
         private int _fastMinutes = 0;
-        private float _savedTargetSpeed = 0.0f;
         private int _savedRampRate = RAMP_NONE;
     }
 

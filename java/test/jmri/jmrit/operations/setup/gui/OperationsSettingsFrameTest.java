@@ -82,12 +82,13 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
 
         p.railroadNameTextField.setText("Test Railroad Name");
         p.maxLengthTextField.setText("1234");
-        p.maxEngineSizeTextField.setText("6");
-        p.switchTimeTextField.setText("3");
-        p.travelTimeTextField.setText("4");
+        p.maxEngineSizeTextField.setText("5");
+        p.hptTextField.setText("2.1");
+        p.switchTimeTextField.setText("4");
+        p.travelTimeTextField.setText("3");
         p.yearTextField.setText(" 1956 ");
 
-        (new JRadioButtonOperator(jfo,"HO",1)).push(); // Match 0 is HOn3.
+        (new JRadioButtonOperator(jfo, "Sn3")).push();
         (new JRadioButtonOperator(jfo,Bundle.getMessage("Descriptive"))).push();
 
         p.panelTextField.setText("Test Panel Name");
@@ -119,22 +120,23 @@ public class OperationsSettingsFrameTest extends OperationsTestCase {
 
         Assert.assertEquals("railroad name", "Test Railroad Name", panelRead.railroadNameTextField.getText());
         Assert.assertEquals("max length", "1234", panelRead.maxLengthTextField.getText());
-        Assert.assertEquals("max engines", "6", panelRead.maxEngineSizeTextField.getText());
-        Assert.assertEquals("switch time", "3", panelRead.switchTimeTextField.getText());
-        Assert.assertEquals("travel time", "4", panelRead.travelTimeTextField.getText());
+        Assert.assertEquals("max engines", "5", panelRead.maxEngineSizeTextField.getText());
+        Assert.assertEquals("HPT", "2.1", panelRead.hptTextField.getText());
+        Assert.assertEquals("switch time", "4", panelRead.switchTimeTextField.getText());
+        Assert.assertEquals("travel time", "3", panelRead.travelTimeTextField.getText());
         Assert.assertEquals("year", "1956", panelRead.yearTextField.getText());
 
-        Assert.assertTrue("HO scale", (new JRadioButtonOperator(jfo2,"HO",1)).isSelected());
         Assert.assertFalse("N scale", (new JRadioButtonOperator(jfo2,"N")).isSelected());
         Assert.assertFalse("Z scale", (new JRadioButtonOperator(jfo2,"Z")).isSelected());
         Assert.assertFalse("TT scale", (new JRadioButtonOperator(jfo2,"TT")).isSelected());
         Assert.assertFalse("HOn3 scale", (new JRadioButtonOperator(jfo2,"HOn3")).isSelected());
+        Assert.assertFalse("HO scale", (new JRadioButtonOperator(jfo2, "HO", 1)).isSelected());
         Assert.assertFalse("OO scale", (new JRadioButtonOperator(jfo2,"OO")).isSelected());
-        Assert.assertFalse("Sn3 scale", (new JRadioButtonOperator(jfo2,"Sn3")).isSelected());
+        Assert.assertTrue("Sn3 scale", (new JRadioButtonOperator(jfo2, "Sn3")).isSelected());
         Assert.assertFalse("S scale", (new JRadioButtonOperator(jfo2,"S",1)).isSelected());
         Assert.assertFalse("On3 scale", (new JRadioButtonOperator(jfo2,"On3")).isSelected());
-        Assert.assertFalse("O scale", (new JRadioButtonOperator(jfo2,"O",1)).isSelected());
-        Assert.assertFalse("G scale", (new JRadioButtonOperator(jfo2,"G")).isSelected());
+        Assert.assertFalse("O scale", (new JRadioButtonOperator(jfo2, "O", 4)).isSelected());
+        Assert.assertFalse("G scale", (new JRadioButtonOperator(jfo2, "G 1/24")).isSelected());
 
         Assert.assertTrue("descriptive", (new JRadioButtonOperator(jfo2,Bundle.getMessage("Descriptive"))).isSelected());
         Assert.assertFalse("AAR", (new JRadioButtonOperator(jfo2,Bundle.getMessage("AAR"))).isSelected());

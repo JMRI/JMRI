@@ -36,6 +36,7 @@ public class ThrottleManager extends AbstractThrottleManager {
 
     /**
      * Create throttle data structures.
+     * {@inheritDoc }
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
@@ -45,7 +46,7 @@ public class ThrottleManager extends AbstractThrottleManager {
             return;
         }
         if (address instanceof DccLocoAddress) {
-            currentThrottle = new Throttle(((DccLocoAddress) address), tc); // uses address object
+            currentThrottle = new Throttle(((DccLocoAddress) address), tc, adapterMemo); // uses address object
             notifyThrottleKnown(currentThrottle, currentThrottle.getLocoAddress());
         }
         else {

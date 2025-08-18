@@ -12,9 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.divisions.Division;
 import jmri.jmrit.operations.locations.divisions.DivisionManager;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleItem;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
@@ -106,9 +104,11 @@ public class XmlTest extends OperationsTestCase {
         // test pool features
         Pool pool = l1.addPool("Test Pool");
         t1.setPool(pool);
-        t1.setMinimumLength(321);
+        t1.setPoolMinimumLength(321);
+        t1.setPoolMaximumLength(54321);
         t2.setPool(pool);
-        t2.setMinimumLength(123);
+        t2.setPoolMinimumLength(123);
+        t2.setPoolMaximumLength(12345);
 
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("Boxcar");
@@ -366,7 +366,8 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertNotNull("Location 2 track 1 pool exists", t.getPool());
                 Assert.assertEquals("Location 2 track 1 pool name", "Test Pool", t.getPool().getName());
                 Assert.assertEquals("Location 2 track 1 pool name", "Test Pool", t.getPoolName());
-                Assert.assertEquals("Location 2 track 1 min track length", 123, t.getMinimumLength());
+                Assert.assertEquals("Location 2 track 1 min track length", 123, t.getPoolMinimumLength());
+                Assert.assertEquals("Location 2 track 1 max track length", 12345, t.getPoolMaximumLength());
                 Assert.assertNotNull("Location 2 track 1 schedule", t.getSchedule());
                 Assert.assertEquals("Location 2 track 1 schedule name", "Schedule 1 Name", t.getSchedule().getName());
                 Assert.assertEquals("Location 2 track 1 schedule name", "Schedule 1 Name", t.getScheduleName());
@@ -389,7 +390,8 @@ public class XmlTest extends OperationsTestCase {
                 Assert.assertEquals("Location 2 track 2 type", false, t.isTypeNameAccepted("Track 4 Type"));
                 Assert.assertNotNull("Location 2 track 2 pool exists", t.getPool());
                 Assert.assertEquals("Location 2 track 2 pool name", "Test Pool", t.getPool().getName());
-                Assert.assertEquals("Location 2 track 2 min track length", 321, t.getMinimumLength());
+                Assert.assertEquals("Location 2 track 2 min track length", 321, t.getPoolMinimumLength());
+                Assert.assertEquals("Location 2 track 2 max track length", 54321, t.getPoolMaximumLength());
                 Assert.assertEquals("Location 2 track 2 comment", "", t.getCommentBoth());
                 Assert.assertEquals("Location 2 track 2 print manifests", false, t.isPrintManifestCommentEnabled());
                 Assert.assertEquals("Location 2 print switch lists", false, t.isPrintSwitchListCommentEnabled());

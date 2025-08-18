@@ -1,14 +1,19 @@
 package jmri.managers;
 
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.beans.PropertyChangeSupport;
+import jmri.implementation.PermissionProgrammer;
+import jmri.implementation.PermissionAddressedProgrammer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +48,8 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
     //     public static final ProgrammingMode OPSACCEXTBYTEMODE = new ProgrammingMode("OPSACCEXTBYTEMODE", 121);
     //     public static final ProgrammingMode OPSACCEXTBITMODE  = new ProgrammingMode("OPSACCEXTBITMODE", 122);
     private Programmer programmer;
+    Map<Programmer, PermissionProgrammer> permissionProgrammers = new HashMap<>();
+    Map<AddressedProgrammer, PermissionAddressedProgrammer> permissionAddressedProgrammers = new HashMap<>();
 
     /**
      * Constructor when no global programmer is available.
@@ -97,7 +104,13 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
 
     @Override
     public final Programmer getGlobalProgrammer() {
-        return getConcreteGlobalProgrammer();
+        Programmer p = getConcreteGlobalProgrammer();
+        if (p != null) {
+            return permissionProgrammers.computeIfAbsent(p,
+                    v -> new PermissionProgrammer(v));
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -114,7 +127,13 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
 
     @Override
     public final AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return getConcreteAddressedProgrammer(pLongAddress, pAddress);
+        AddressedProgrammer p = getConcreteAddressedProgrammer(pLongAddress, pAddress);
+        if (p != null) {
+            return permissionAddressedProgrammers.computeIfAbsent(p,
+                    v -> new PermissionAddressedProgrammer(v));
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -131,7 +150,13 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
 
     @Override
     public final Programmer reserveGlobalProgrammer() {
-        return reserveConcreteGlobalProgrammer();
+        Programmer p = reserveConcreteGlobalProgrammer();
+        if (p != null) {
+            return permissionProgrammers.computeIfAbsent(p,
+                    v -> new PermissionProgrammer(v));
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -150,7 +175,13 @@ public class DefaultProgrammerManager extends PropertyChangeSupport implements A
 
     @Override
     public final AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return reserveConcreteAddressedProgrammer(pLongAddress, pAddress);
+        AddressedProgrammer p = reserveConcreteAddressedProgrammer(pLongAddress, pAddress);
+        if (p != null) {
+            return permissionAddressedProgrammers.computeIfAbsent(p,
+                    v -> new PermissionAddressedProgrammer(v));
+        } else {
+            return null;
+        }
     }
 
     /**

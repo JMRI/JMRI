@@ -254,6 +254,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _name;
     }
 
+    public String getSplitName() {
+        return TrainCommon.splitStringLeftParenthesis(getName());
+    }
+
     /**
      * @return The name of the color when highlighting the train's row
      */
@@ -3375,7 +3379,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // Set up to process the CSV file by the external Manifest program
         InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(file);
         if (!InstanceManager.getDefault(TrainCustomManifest.class).process()) {
-            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).doesExcelFileExist()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LoadDirectoryNameFileName",
                                 InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),

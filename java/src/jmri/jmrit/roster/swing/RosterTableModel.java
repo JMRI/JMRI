@@ -33,17 +33,19 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
  */
 public class RosterTableModel extends DefaultTableModel implements PropertyChangeListener {
 
-    public static final int IDCOL = 0;
-    static final int ADDRESSCOL = 1;
-    static final int ICONCOL = 2;
-    static final int DECODERCOL = 3;
-    static final int ROADNAMECOL = 4;
-    static final int ROADNUMBERCOL = 5;
-    static final int MFGCOL = 6;
-    static final int MODELCOL = 7;
-    static final int OWNERCOL = 8;
-    static final int DATEUPDATECOL = 9;
-    public static final int PROTOCOL = 10;
+    public static final int IDCOL       = 0;
+    static final int ADDRESSCOL         = 1;
+    static final int ICONCOL            = 2;
+    static final int DECODERMFGCOL      = 3;
+    static final int DECODERFAMILYCOL   = 4;
+    static final int DECODERMODELCOL    = 5;
+    static final int ROADNAMECOL        = 6;
+    static final int ROADNUMBERCOL      = 7;
+    static final int MFGCOL             = 8;
+    static final int MODELCOL           = 9;
+    static final int OWNERCOL           = 10;
+    static final int DATEUPDATECOL      = 11;
+    public static final int PROTOCOL    = 12;
     public static final int NUMCOL = PROTOCOL + 1;
     private String rosterGroup = null;
     boolean editable = false;
@@ -113,7 +115,11 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return Bundle.getMessage("FieldID");
             case ADDRESSCOL:
                 return Bundle.getMessage("FieldDCCAddress");
-            case DECODERCOL:
+            case DECODERMFGCOL:
+                return Bundle.getMessage("FieldDecoderMfg");
+            case DECODERFAMILYCOL:
+                return Bundle.getMessage("FieldDecoderFamily");
+            case DECODERMODELCOL:
                 return Bundle.getMessage("FieldDecoderModel");
             case MODELCOL:
                 return Bundle.getMessage("FieldModel");
@@ -196,7 +202,13 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         if (col == PROTOCOL) {
             return false;
         }
-        if (col == DECODERCOL) {
+        if (col == DECODERMFGCOL) {
+            return false;
+        }
+        if (col == DECODERFAMILYCOL) {
+            return false;
+        }
+        if (col == DECODERMODELCOL) {
             return false;
         }
         if (col == ICONCOL) {
@@ -243,7 +255,18 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return re.getId();
             case ADDRESSCOL:
                 return re.getDccLocoAddress().getNumber();
-            case DECODERCOL:
+            case DECODERMFGCOL:
+                var index = jmri.InstanceManager.getDefault(jmri.jmrit.decoderdefn.DecoderIndexFile.class);
+                var matches = index.matchingDecoderList(
+                        null, re.getDecoderFamily(),
+                        null, null, null,
+                        re.getDecoderModel()
+                        );
+                if (matches.size() == 0) return "";
+                return matches.get(0).getMfg();
+            case DECODERFAMILYCOL:
+                return re.getDecoderFamily();
+            case DECODERMODELCOL:
                 return re.getDecoderModel();
             case MODELCOL:
                 return re.getModel();

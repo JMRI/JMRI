@@ -58,6 +58,10 @@
             </li>
 
             <li>
+              <a href="#digital_action_opspro">OperationsPro <span class="since">since 5.13.2</span></a>
+            </li>
+
+            <li>
               <a href="#digital_action_other">Other</a>
             </li>
           </ul>
@@ -1646,6 +1650,28 @@ LogixNG: IQ:AUTO:0001
 
       <p>The Connection defaults to the first MERG connection.  If there is more than one, other
       connections can be selected.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h2 id="digital_action_opspro">Digital action :: OperationsPro <span class="since">since 5.13.2</span></h2>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_opsrunauto.png"><img class="image-border" src=
+        "images/chapter5/digital_action_opsrunauto.png" alt="Chapter 5 digital action operations"></a>
+      </div>
+
+      <h4>Run automation</h4>
+
+      <p>This action is used to run an OperationsPro Automation.  These are defined using the
+      <strong>Automation</strong> tool in <strong>Trains &rArr; Tools &rArr; Automation</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/opspro-run-automation.png">
+        <img src="images/chapter5/opspro-run-automation.png"
+        alt="Chapter 5 ops run automation"></a>
+      </div>
+
+      <p>Select an <strong>Automation</strong> from the list.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

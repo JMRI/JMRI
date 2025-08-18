@@ -263,7 +263,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (ae.getSource() == runFileButton) {
             // Processes the CSV Manifest files using an external custom program.
-            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).doesExcelFileExist()) {
                 log.warn("Manifest creator file not found!, directory path: {}, file name: {}",
                         InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),
                         InstanceManager.getDefault(TrainCustomManifest.class).getFileName()); // NOI18N
@@ -501,6 +501,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         if (Control.SHOW_PROPERTY)
             log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(TrainScheduleManager.SCHEDULE_ID_CHANGED_PROPERTY) ||
                 e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
             updateControlPanel();
         }

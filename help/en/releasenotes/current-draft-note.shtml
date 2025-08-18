@@ -126,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Added a column to the LccPro main window for the node's user-entered description.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -361,7 +361,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Fix for Brake function key selection (F0-F28), including "no active" value. (Lokommander II decoders)</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -424,7 +424,12 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>When working with a single roster entry, there's a 
+                new "Comments" page. You can pop that off (using the 
+                page icon in the tab) and enter your comments there 
+                as you configure the values in the other panes.
+                What you type there will appear in the comment field
+                on the Roster Entry pane and vice versa.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -448,6 +453,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+            <li>A problem with LE track drawing and background images from 5.11.6 thru 5.13.3 including 5.12 has been fixed.
+                The problem appears if you have a background image in the Layout Editor. If so, the track disappears behind
+                the background image.</li>
             <li></li>
         </ul>
 
@@ -471,16 +479,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>It's now possible to execute some LogixNG commands when a LogixNG error occurs.
-              It's useful if JMRI run without a display and you want a notification for
-              example by a sensor. To use it, select menu item
-              <strong>Tools -> LogixNG -> Edit error handling module</strong>.</li>
-          <li><strong>Preferences -> LogixNG -> Default error handling</strong>
-              has the new option <strong>Abort without error</strong>. If it
-              is selected and there is an error in the CondtionalNG, the
-              ConditionalNG will be aborted but there will be no logging to the
-              system console. This might be useful together with the
-              <strong>Error handling module</strong>.</li>
           <li></li>
         </ul>
 
@@ -493,10 +491,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Additional improvements to quick service tracks</li>
-            <li>Fixed a bug with alternate tracks in FIFO or LIFO mode</li>
-            <li>Printing Manifests or switch list will no longer have a page break in the middle of a locations work</li>
-            <li>Fixed the text header in the export routes tool</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -614,7 +609,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Fix OBlock java.util.MissingResourceException: Resource 'BlockUnknown' not found exception.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>

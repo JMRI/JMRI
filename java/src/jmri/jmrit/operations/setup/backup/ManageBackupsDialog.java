@@ -1,27 +1,16 @@
 package jmri.jmrit.operations.setup.backup;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import jmri.InstanceManager;
 import jmri.util.swing.JmriJOptionPane;
 
 public class ManageBackupsDialog extends JDialog {
@@ -50,7 +39,7 @@ public class ManageBackupsDialog extends JDialog {
     public ManageBackupsDialog() {
         // For now we only support Autobackups, but this can be updated later if
         // needed.
-        backup = new AutoBackup();
+        backup = InstanceManager.getDefault(AutoBackup.class);
 
         initComponents();
     }

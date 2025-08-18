@@ -34,7 +34,7 @@ public class XpaThrottleManager extends AbstractThrottleManager {
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        XpaThrottle throttle = new XpaThrottle(address, tc);
+        XpaThrottle throttle = new XpaThrottle(address, tc, adapterMemo);
         notifyThrottleKnown(throttle, address);
     }
 
@@ -84,8 +84,8 @@ public class XpaThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface
+     * What speed modes are supported by this system?
+     * {@inheritDoc}
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {

@@ -104,7 +104,7 @@ public class RunSwitchListActionTest extends OperationsTestCase {
         }
 
         // confirm file exists
-        Assert.assertTrue(InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists());
+        Assert.assertTrue(InstanceManager.getDefault(TrainCustomSwitchList.class).doesExcelFileExist());
         
         JUnitOperationsUtil.checkOperationsShutDownTask();
 

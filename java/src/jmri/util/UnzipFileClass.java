@@ -58,6 +58,12 @@ public class UnzipFileClass {
                 String entryName = entry.getName();
                 File file = new File(destinationFolder + File.separator + entryName);
 
+                // Security check: Validate that the resolved path is within the target directory
+                if (!file.toPath().normalize().startsWith(directory.toPath().normalize())) {
+                    throw new IOException("Zip Slip vulnerability detected: " + entryName + 
+                                        " would extract outside target directory");
+                }
+
                 log.info("Unzip file {} to {}", entryName, file.getAbsolutePath());
 
                 // create the directories of the zip directory

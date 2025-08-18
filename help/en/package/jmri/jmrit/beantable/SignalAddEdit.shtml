@@ -14,7 +14,7 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1>Adding & Editing Signal Heads</h1>
+      <h1>Adding &amp; Editing Signal Heads</h1>
 
       <p>JMRI needs to know how a Signal Head on the layout is connected to the electrical
       hardware. Once JMRI knows that, it can send the right DCC commands to control the Appearance
@@ -62,35 +62,47 @@
         <dt>DCC Signal Decoder</dt>
 
         <dd>
-          This type controls Signal Heads attached to a decoder that uses the DCC signal packets
+          <p>This type controls Signal Heads attached to a decoder that uses the DCC signal packets
           defined by the <a href="http://www.nmra.org/standards/DCC/DCCHome.html">NMRA DCC Working
           Group</a> for control. (You might be able to find information on those DCC packets on
           page 9 at <a href="http://www.nmra.org/sites/default/files/s-9.2.1_2012_07.pdf">this
           link</a>; the NMRA website is difficult to link into, so if that doesn't work, search
           for "NMRA 9.2.1 Extended Accessory Decoder Control Packet Format"). This is a special
           protocol defined for driving Signal Heads, and is different from how "accessory decoders"
-          (e.g. Turnout outputs) are controlled.
-          <p>Enter the DCC address as a number. The Offset Address check box uses an alternative
-          interpretation of the addressing scheme that might be in use.<br>
+          (e.g. Turnout outputs) are controlled.</p>
+
+          <p>The <strong>Signal Head ID</strong> is the DCC address as a number. The
+          <strong>Offset Address</strong> check box uses an alternative interpretation of the
+          addressing scheme that might be in use.</p>
           <!-- from JMRI user group 5/4/2014 thanks to Suzie Tall and Ken Cameron-->
-           Each possible Appearance of the Signal Head is assigned a different number; from here
-          you can assign different numbers for each Aspect to suit the hardware being used.<br>
-          The <a href="http://www.teamdigital1.com/prod_catalogue/shd2_product/shd2.html">Team
+
+          <p> Each possible Appearance of the Signal Head is assigned a different number; from here
+          you can assign different numbers for each Appearance to suit the hardware being used.  A
+          key difference between a Signal Head and a Signal Mast is the number of different states
+          each might have. A Signal Head only has 8 Appearance entries, but a Signal Mast can have
+          up to 32 (0-31) possible states, called Aspects in that case. The command going out is the
+          same but the number of <em>possible</em> values differs.</p>
+
+          <p> <span class="since">since 5.13.3</span>The <strong>Copy appearance numbers from</strong>
+          option is used to copy the appearance numbers from another signal head.  When the signal
+          head hardware is using different numbers, each signal head needs to be modified. Creating
+          a model signal head makes it easy to apply the custom appearance numbers to the signal
+          heads.  For example, the NCE Light-It does not have lunar appearances, so the red/yellow/green
+          flashing appearance numbers are 3, 4 and 5.  Dark is 31.</p>
+
+          <p>The <a href="http://www.teamdigital1.com/prod_catalogue/shd2_product/shd2.html">Team
           Digital SHD2</a> Signal Decoder is a Signal Head decoder using a different address for
           each Signal Head. A Signal Mast attached to the SHD2 must be configured as one or more
           Signal Head controlled masts using the DCC Signal connection type. Instructions can be
           found on the Team Digital website under the <a href=
           "http://www.teamdigital1.com/applications/shd2_apps/shd2_jmri_application.html">Applications
-          &gt; SHD2</a> menu.<br>
-          Note: The Signalist SC1 can also be configured as individual Signal Heads (searchlight
+          &gt; SHD2</a> menu.</p>
+
+          <p>Note: The Signalist SC1 can also be configured as individual Signal Heads (searchlight
           with bicolor, tricolor or RGB LEDs or multi-lamp with individual LEDs), but is much
           easier to use when configured as a complete Signal Mast with all Signal Heads on a single
           DCC address using the <a href="SignalMastTable.shtml#dccsmd">DCC Signal Mast driver</a>.
-          In that case you don't need to add Signal Heads for your signal. Key difference between a
-          Signal Head and a Signal Mast is the number of different states each might have. A Signal
-          Head only has (up to) 8 Appearance entries, but a Signal Mast can have up to 32 (0-31)
-          possible states, called Aspects in that case. The command going out is the same but the
-          number of <em>possible</em> values differs.</p>
+          In that case you don't need to add Signal Heads for your signal.</p>
         </dd>
 
         <dd>

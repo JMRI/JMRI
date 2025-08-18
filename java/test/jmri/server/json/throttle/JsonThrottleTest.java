@@ -16,6 +16,8 @@ import jmri.util.JUnitUtil;
 import java.io.DataOutputStream;
 import java.util.Locale;
 
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
@@ -102,7 +104,8 @@ public class JsonThrottleTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugCommandStation();
-        InstanceManager.store(new TestThrottleManager(), ThrottleManager.class);
+        var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        InstanceManager.store(new TestThrottleManager(memo), ThrottleManager.class);
     }
 
     @AfterEach
@@ -115,6 +118,10 @@ public class JsonThrottleTest {
      * and that addresses greater than 127 be long.
      */
     private static class TestThrottleManager extends DebugThrottleManager {
+
+        private TestThrottleManager(jmri.SystemConnectionMemo memo) {
+            super(memo);
+        }
 
         /**
          * {@inheritDoc}

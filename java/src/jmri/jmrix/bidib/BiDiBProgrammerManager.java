@@ -73,7 +73,7 @@ public class BiDiBProgrammerManager extends DefaultProgrammerManager {
         if (!isGlobalProgrammerAvailable()) {
             return null;
         }
-        return super.getGlobalProgrammer();
+        return super.getConcreteGlobalProgrammer();
     }
 
     /**

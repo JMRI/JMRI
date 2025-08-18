@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.SystemConnectionMemo;
 import jmri.Throttle;
 import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import jmri.beans.PropertyChangeSupport;
 
 import jmri.jmrit.roster.RosterEntry;
@@ -85,11 +86,8 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * All function and momentary functions set to Off.
      * @param memo System Connection.
      */
-    public AbstractThrottle(SystemConnectionMemo memo) {
-        active = true;
-        adapterMemo = memo;
-        FUNCTION_BOOLEAN_ARRAY = new boolean[29];
-        FUNCTION_MOMENTARY_BOOLEAN_ARRAY = new boolean[29];
+    public AbstractThrottle(@Nonnull SystemConnectionMemo memo) {
+        this( memo, 29);
     }
 
     /**
@@ -99,7 +97,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @param memo System Connection this throttle is on
      * @param totalFunctions total number of functions available, including 0
      */
-    public AbstractThrottle(SystemConnectionMemo memo, int totalFunctions) {
+    public AbstractThrottle(@Nonnull SystemConnectionMemo memo, int totalFunctions) {
         active = true;
         adapterMemo = memo;
         FUNCTION_BOOLEAN_ARRAY = new boolean[totalFunctions];
@@ -107,9 +105,15 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * System Connection this throttle is on
+     * Get the System Connection this throttle is on.
+     * @return non-null system connection.
      */
-    protected SystemConnectionMemo adapterMemo;
+    @Nonnull
+    protected SystemConnectionMemo getMemo() {
+        return adapterMemo;
+    }
+
+    protected final SystemConnectionMemo adapterMemo;
 
     /**
      * speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means
@@ -270,7 +274,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * normal release / dispose is not possible.
      */
     protected void notifyThrottleDisconnect() {
-        firePropertyChange("ThrottleConnected", true, false); // NOI18N
+        firePropertyChange(CONNECTED, true, false);
     }
 
     // set initial values purely for changelistener following
@@ -290,7 +294,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public void notifyThrottleDispatchEnabled(boolean newVal) {
-        firePropertyChange("DispatchEnabled", _dispatchEnabled, _dispatchEnabled = newVal); // NOI18N
+        firePropertyChange(DISPATCH_ENABLED, _dispatchEnabled, _dispatchEnabled = newVal); // NOI18N
     }
 
     /**
@@ -305,7 +309,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      */
     @Override
     public void notifyThrottleReleaseEnabled(boolean newVal) {
-        firePropertyChange("ReleaseEnabled", _releaseEnabled, _releaseEnabled = newVal); // NOI18N
+        firePropertyChange(RELEASE_ENABLED, _releaseEnabled, _releaseEnabled = newVal); // NOI18N
     }
 
     /**
@@ -342,7 +346,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         log.debug("removePropertyChangeListener(): throttle: {} listeners size is {}", getLocoAddress(), getPropertyChangeListeners().length);
         if (getPropertyChangeListeners().length == 0) {
             log.debug("No listeners so calling ThrottleManager.dispose with an empty ThrottleListener for {}",getLocoAddress());
-            InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
+            getThrottleManager().disposeThrottle(this, new ThrottleListener() {
                 @Override
                 public void notifyFailedThrottleRequest(LocoAddress address, String reason) {
                 }
@@ -369,7 +373,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         if (!active) {
             log.error("Dispose called when not active {}", this.getClass().getName());
         }
-        InstanceManager.throttleManagerInstance().disposeThrottle(this, l);
+        getThrottleManager().disposeThrottle(this, l);
     }
 
     /**
@@ -380,7 +384,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         if (!active) {
             log.warn("dispatch called when not active {}", this.getClass().getName());
         }
-        InstanceManager.throttleManagerInstance().dispatchThrottle(this, l);
+        getThrottleManager().dispatchThrottle(this, l);
     }
 
     /**
@@ -391,7 +395,15 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
         if (!active) {
             log.warn("release called when not active {}",this.getClass().getName());
         }
-        InstanceManager.throttleManagerInstance().releaseThrottle(this, l);
+        getThrottleManager().releaseThrottle(this, l);
+    }
+
+    private ThrottleManager getThrottleManager(){
+        if (adapterMemo != null && adapterMemo.get(ThrottleManager.class) !=null) {
+            return adapterMemo.get(ThrottleManager.class);
+        }
+        log.error("No {} Throttle Manager for {}", adapterMemo, this.getClass());
+        return InstanceManager.getDefault(ThrottleManager.class);
     }
 
     /**
@@ -927,6 +939,6 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
 
 }

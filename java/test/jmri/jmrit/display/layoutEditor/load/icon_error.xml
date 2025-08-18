@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
+  <jmriversion>
+    <major>5</major>
+    <minor>10</minor>
+    <test>0</test>
+    <modifier />
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="9:52 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Aug 11 09:29:26 CDT 2025" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="574" y="152" windowheight="181" windowwidth="343" panelheight="126" panelwidth="330" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="no" snaponmove="no" antialiasing="yes" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="My Layout" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <positionablelabel x="138" y="63" level="2" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+      <icon url="program:resources/icons/whiteSquare.png" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </icon>
+    </positionablelabel>
+    <tracksegment ident="T1" connect1name="EB1" type1="POS_POINT" connect2name="EB2" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="EB1" type="END_BUMPER" x="60.0" y="70.0" connect1name="T1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="END_BUMPER" x="280.0" y="70.0" connect1name="T1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Mon Aug 11 09:48:01 CDT 2025</date>
+      <filename>PanelPro (v5.10.0)</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Mon Aug 11 09:48:09 CDT 2025</date>
+      <filename>/Users/das/JMRI/_Profiles/LogixNG.jmri/icon error.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Mon Aug 11 09:34:46 CDT 2025</date>
+          <filename>PanelPro (v5.10.0)</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Mon Aug 11 09:35:06 CDT 2025</date>
+          <filename>/Users/das/JMRI/_Profiles/LogixNG.jmri/icon error.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Mon Aug 11 09:29:26 CDT 2025</date>
+              <filename>PanelPro (v5.12.0)</filename>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Mon Aug 11 09:34:32 CDT 2025</date>
+              <filename>/Users/das/JMRI/_Profiles/LogixNG.jmri/icon error.xml</filename>
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Mon Aug 11 09:35:58 CDT 2025</date>
+          <filename>/Users/das/JMRI/_Profiles/LogixNG.jmri/icon error.xml</filename>
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Mon Aug 11 09:52:02 CDT 2025</date>
+      <filename>/Users/das/JMRI/_Profiles/LogixNG.jmri/icon error.xml</filename>
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 5.10+Rca461bd266 on Mon Aug 11 09:52:02 CDT 2025-->
+</layout-config>

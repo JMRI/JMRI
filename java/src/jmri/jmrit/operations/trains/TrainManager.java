@@ -14,8 +14,8 @@ import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
+import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -1277,6 +1277,8 @@ public class TrainManager extends PropertyChangeSupport
     @Override
     public void initialize() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load setup
+        InstanceManager.getDefault(CarManagerXml.class); // load cars
+        InstanceManager.getDefault(EngineManagerXml.class); // load engines
         InstanceManager.getDefault(TrainManagerXml.class); // load trains
     }
 

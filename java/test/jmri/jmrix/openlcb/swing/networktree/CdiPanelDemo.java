@@ -3,19 +3,25 @@ package jmri.jmrix.openlcb.swing.networktree;
 import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromFile;
 import static org.openlcb.cdi.impl.DemoReadWriteAccess.demoRepFromSample;
 
-import java.awt.GraphicsEnvironment;
 import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import jmri.InstanceManager;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 import jmri.jmrix.openlcb.SampleFactory;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+
+import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.operators.JFrameOperator;
+
 import org.openlcb.cdi.swing.CdiPanel;
 
 /**
@@ -26,20 +32,27 @@ import org.openlcb.cdi.swing.CdiPanel;
  */
 public class CdiPanelDemo {
 
+    private CdiPanel m;
+    private OlcbEventNameStore ens;
+
     @Test
     public void testCtor() {
-        CdiPanel m = new CdiPanel();
+        m = new CdiPanel();
         Assert.assertNotNull(m);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testDisplay() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.setTitle("Configuration Demonstration");
-        CdiPanel m = new CdiPanel();
+        m = new CdiPanel();
 
-        m.initComponents(demoRepFromSample(SampleFactory.getBasicSample()),
+        var rep = demoRepFromSample(SampleFactory.getBasicSample());
+        ens = new OlcbEventNameStore();
+        rep.eventNameStore = ens;
+
+        m.initComponents( rep,
                 new CdiPanel.GuiItemFactory() {
             @Override
             public JButton handleReadButton(JButton button) {
@@ -53,43 +66,66 @@ public class CdiPanelDemo {
         f.add(m);
 
         // show
-        f.pack();
-        f.setVisible(true);
-        f.dispose();
+        ThreadingUtil.runOnGUI( () -> {
+            f.pack();
+            f.setVisible(true);
+        });
+        new QueueTool().waitEmpty(100); // pause for CDI to render
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());
+        Assertions.assertNotNull(jfo);
+
+        JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testDisplaySample1() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample1.xml");
         f.setTitle("Sample1 XML");
-        f.setVisible(true);
-        f.dispose();
+        ThreadingUtil.runOnGUI( () -> {
+            f.setVisible(true);
+        });
+        new QueueTool().waitEmpty(100); // pause for CDI to render
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());
+        Assertions.assertNotNull(jfo);
+        JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testDisplaySample2() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/sample2.xml");
         f.setTitle("Sample 2 XML");
-        f.setVisible(true);
-        f.dispose();
+        ThreadingUtil.runOnGUI( () -> {
+            f.setVisible(true);
+        });
+        new QueueTool().waitEmpty(100); // pause for CDI to render
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());
+        Assertions.assertNotNull(jfo);
+        JUnitUtil.dispose(f);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testLocoCdiDisplay() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml");
         f.setTitle("Locomotive CDI Demonstration");
-        f.setVisible(true);
-        f.dispose();
+        ThreadingUtil.runOnGUI( () -> f.setVisible(true));
+        new QueueTool().waitEmpty(100); // pause for CDI to render
+        JFrameOperator jfo = new JFrameOperator(f.getTitle());
+        Assertions.assertNotNull(jfo);
+        JUnitUtil.dispose(f);
     }
 
     JFrame makeFrameFromFile(String fileName) {
         JFrame f = new JFrame();
-        CdiPanel m = new CdiPanel();
+        m = new CdiPanel();
 
-        m.initComponents(demoRepFromFile(new File(fileName)),
+        var rep = demoRepFromFile(new File(fileName));
+        ens = new OlcbEventNameStore();
+        rep.eventNameStore = ens;
+
+        m.initComponents( rep,
                 new CdiPanel.GuiItemFactory() {
             @Override
             public JButton handleReadButton(JButton button) {
@@ -118,7 +154,15 @@ public class CdiPanelDemo {
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.resetWindows(false, false);
+        if ( ens != null ) {
+            ens.deregisterShutdownTask();
+            ens = null;
+        }
+        if ( m != null ) {
+            m.release();
+        }
+        m = null;
+        InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         JUnitUtil.tearDown();
     }
 

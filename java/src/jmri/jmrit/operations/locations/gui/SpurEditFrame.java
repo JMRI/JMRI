@@ -20,15 +20,17 @@ import jmri.util.swing.JmriJOptionPane;
 /**
  * Frame for user edit of a spur.
  *
- * @author Dan Boudreau Copyright (C) 2008, 2011, 2023
+ * @author Dan Boudreau Copyright (C) 2008, 2011, 2023, 2025
  */
 public class SpurEditFrame extends TrackEditFrame {
+
+    ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
 
     // labels, buttons, etc. for spurs
     JLabel textSchedule = new JLabel(Bundle.getMessage("DeliverySchedule"));
     JLabel textSchError = new JLabel();
     JButton editScheduleButton = new JButton();
-    JComboBox<Schedule> comboBoxSchedules = InstanceManager.getDefault(ScheduleManager.class).getComboBox();
+    JComboBox<Schedule> comboBoxSchedules = scheduleManager.getComboBox();
 
     JPanel panelSchedule = panelOpt4;
 
@@ -79,7 +81,7 @@ public class SpurEditFrame extends TrackEditFrame {
         // Select the spur's Schedule
         updateScheduleComboBox();
 
-        InstanceManager.getDefault(ScheduleManager.class).addPropertyChangeListener(this);
+        scheduleManager.addPropertyChangeListener(this);
         
         // finish
         panelOrder.setVisible(false); // Car order out of spurs is not available
@@ -174,9 +176,9 @@ public class SpurEditFrame extends TrackEditFrame {
     }
 
     private void updateScheduleComboBox() {
-        InstanceManager.getDefault(ScheduleManager.class).updateComboBox(comboBoxSchedules);
+        scheduleManager.updateComboBox(comboBoxSchedules);
         if (_track != null) {
-            Schedule sch = InstanceManager.getDefault(ScheduleManager.class).getScheduleById(_track.getScheduleId());
+            Schedule sch = scheduleManager.getScheduleById(_track.getScheduleId());
             comboBoxSchedules.setSelectedItem(sch);
             textSchError.setText(_track.checkScheduleValid());
             if (sch != null) {
@@ -188,14 +190,14 @@ public class SpurEditFrame extends TrackEditFrame {
 
     @Override
     public void dispose() {
+        scheduleManager.removePropertyChangeListener(this);
         removeSchedulePropertyListener();
         super.dispose();
     }
     
     private void removeSchedulePropertyListener() {
-        InstanceManager.getDefault(ScheduleManager.class).removePropertyChangeListener(this);
         if (_track != null) {
-            Schedule sch = InstanceManager.getDefault(ScheduleManager.class).getScheduleById(_track.getScheduleId());
+            Schedule sch = scheduleManager.getScheduleById(_track.getScheduleId());
             if (sch != null)
                 sch.removePropertyChangeListener(this);
         }

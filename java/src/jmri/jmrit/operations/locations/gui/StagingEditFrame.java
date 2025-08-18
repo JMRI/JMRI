@@ -4,7 +4,8 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.tools.SchedulesAndStagingAction;
 import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
 import jmri.jmrit.operations.routes.Route;
@@ -110,6 +111,13 @@ public class StagingEditFrame extends TrackEditFrame {
         addCheckBoxAction(loadCheckBox);
         addCheckBoxAction(loadAnyCheckBox);
         addCheckBoxAction(loadAnyStagingCheckBox);
+
+        swapLoadsCheckBox.setToolTipText(Bundle.getMessage("ABV_SwapDefaultLoads"));
+        emptyCheckBox.setToolTipText(Bundle.getMessage("ABV_EmptyDefaultLoads"));
+        emptyCustomCheckBox.setToolTipText(Bundle.getMessage("ABV_EmptyCustomLoads"));
+        loadCheckBox.setToolTipText(Bundle.getMessage("ABV_GenerateCustomLoad"));
+        loadAnyCheckBox.setToolTipText(Bundle.getMessage("ABV_GenerateCustomLoadAnySpur"));
+        loadAnyStagingCheckBox.setToolTipText(Bundle.getMessage("ABV_GereateCustomLoadStaging"));
 
         // finish
         panelOrder.setVisible(false); // Car order out of staging isn't necessary

@@ -134,11 +134,11 @@ public class OperationsPoolTest extends OperationsTestCase {
         // This could be generalized if need be.
         t1 = new Track("Id1", "Track1", "Type1", null);
         t1.setLength(100);
-        t1.setMinimumLength(50);
+        t1.setPoolMinimumLength(50);
 
         t2 = new Track("Id2", "Track2", "Type2", null);
         t2.setLength(120);
-        t2.setMinimumLength(40);
+        t2.setPoolMinimumLength(40);
 
         p = new Pool("P1", "Pool1");
 
@@ -279,8 +279,8 @@ public class OperationsPoolTest extends OperationsTestCase {
         t5.setLength(200);
 
         // set minimums
-        t2.setMinimumLength(50);
-        t5.setMinimumLength(100);
+        t2.setPoolMinimumLength(50);
+        t5.setPoolMinimumLength(100);
 
         Car c1 = new Car("C", "1");
         c1.setLength("40");

@@ -25,7 +25,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     protected int progState = NOTPROGRAMMING;
     protected int value;
     protected jmri.ProgListener progListener = null;
-  
+
     // possible states.
     static protected final int NOTPROGRAMMING = 0; // is notProgramming
     static protected final int REQUESTSENT = 1; // read/write command sent, waiting reply
@@ -47,7 +47,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         tc.addXNetListener(XNetInterface.COMMINFO | XNetInterface.CS_INFO, this);
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Send an ops-mode write request to the Xpressnet.
@@ -57,7 +57,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         final int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
-        /* we need to save the programer and value so we can send messages 
+        /* we need to save the programer and value so we can send messages
          back to the screen when the programming screen when we receive
          something from the command station */
         progListener = p;
@@ -66,7 +66,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         restartTimer(msg.getTimeout());
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -82,7 +82,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         restartTimer(msg.getTimeout());
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -99,7 +99,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         restartTimer(msg.getTimeout());
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Types implemented here.
@@ -112,25 +112,25 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         return ret;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Can this ops-mode programmer read back values?
-     * Indirectly we can, though this requires an external display 
+     * Indirectly we can, though this requires an external display
      * (a Lenz LRC120) and enabling railcom.
      *
      * @return true to allow us to trigger an ops mode read
      */
     @Override
     public boolean getCanRead() {
-        // An operations mode read can be triggered on command 
+        // An operations mode read can be triggered on command
         // stations which support Operations Mode Writes (LZ100,
         // LZV100, MultiMouse).  Whether or not the operation produces
         // a result depends on additional external hardware (a booster 
         // with an enabled  RailCom cutout (LV102 or similar) and a 
         // RailCom receiver circuit (LRC120 or similar)).
-        // We have no way of determining if the required external 
-        // hardware is present, so we return true for all command 
+        // We have no way of determining if the required external
+        // hardware is present, so we return true for all command
         // stations on which the Operations Mode Programmer is enabled.
 
         // yes, we just call the superclass method.  Leave this in place
@@ -139,18 +139,18 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     synchronized public void message(XNetReply l) {
         if (progState == NOTPROGRAMMING) {
-            // We really don't care about any messages unless we send a 
+            // We really don't care about any messages unless we send a
             // request, so just ignore anything that comes in
         } else if (progState == REQUESTSENT) {
             if (l.isOkMessage()) {
-                // Before we set the programmer state to not programming, 
-                // delay for a short time to give the decoder a chance to 
+                // Before we set the programmer state to not programming,
+                // delay for a short time to give the decoder a chance to
                 // process the request.
                 new jmri.util.WaitHandler(this,250);
                 progState = NOTPROGRAMMING;
@@ -176,7 +176,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -184,7 +184,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         return true;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -192,7 +192,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         return mAddress;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -200,14 +200,14 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public synchronized void message(XNetMessage l) {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      *
      * Handle a timeout notification
@@ -219,7 +219,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -237,6 +237,17 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                notifyProgListenerEnd(progListener,value,jmri.ProgListener.OK);
             }
         }
+    }
+
+    @Override
+    public Configurator getConfigurator() {
+        return new XNetOpsConfigurator();
+    }
+
+    /**
+     * This class is used by tests.
+     */
+    public static class XNetOpsConfigurator implements Configurator {
     }
 
     // initialize logging
