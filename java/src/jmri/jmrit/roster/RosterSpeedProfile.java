@@ -743,7 +743,7 @@ public class RosterSpeedProfile {
             speed = requestedSpeed;
         }
         if (Float.compare(speed, desiredSpeedStep) == 0) {
-            // eliminate the obvious.before min/max
+            // This requires no checks for min/max.
             log.debug("Already setting to desired speed step");
             return;
         }

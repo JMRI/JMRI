@@ -430,7 +430,9 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>The RosterSpeedProfile has been corrected to improve calculations for stopping.
+                 If you have manually compensated for those errors you may want to re-evaluate
+                 the Min/Max throttle settings and stopping distance percentage.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -516,7 +518,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>RosterSpeedProfile. Improve accuracy of calculations for stopping.</li>
         </ul>
 
     <h3>Routes</h3>
