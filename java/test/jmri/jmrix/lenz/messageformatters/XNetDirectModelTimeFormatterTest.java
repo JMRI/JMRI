@@ -14,7 +14,7 @@ public class XNetDirectModelTimeFormatterTest {
 
     @Test
     public void testFormatMessage() {
-        XNetBCModelTimeFormatter formatter = new XNetDirectModelTimeFormatter();
+        XNetDirectModelTimeFormatter formatter = new XNetDirectModelTimeFormatter();
         XNetReply reply = new XNetReply("64 25 95 36 02 C3");
         assertThat(formatter.handlesMessage(reply)).isTrue();
         assertThat(formatter.formatMessage(reply)).isEqualTo("Ops Mode: Programming Response: Address: 0 Value:0");
