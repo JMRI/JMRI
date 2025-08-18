@@ -524,6 +524,15 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         return m;
     }
 
+    public static XNetMessage getOpsModeResultsMsg() {
+        XNetMessage m = new XNetMessage(3);
+        m.setNeededMode(jmri.jmrix.AbstractMRTrafficController.PROGRAMINGMODE);
+        m.setTimeout(XNetProgrammingTimeout);
+        m.setElement(0, XNetConstants.CS_REQUEST);
+        m.setElement(1, XNetConstants.OPS_MODE_CSRESULT);
+        m.setParity(); // Set the parity bit
+        return m;
+    }
     /*
      * Next, we have routines to generate XpressNet Messages for building
      * and tearing down a consist or a double header.
