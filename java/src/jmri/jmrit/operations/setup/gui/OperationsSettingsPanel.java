@@ -471,7 +471,7 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
                 typeAAR.isSelected() && !Setup.getCarTypes().equals(Setup.AAR)) {
 
             // backup files before changing car type descriptions
-            AutoBackup backup = new AutoBackup();
+            AutoBackup backup = InstanceManager.getDefault(AutoBackup.class);
             try {
                 backup.autoBackup();
             } catch (IOException ex) {

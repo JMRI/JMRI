@@ -397,7 +397,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         // true.
         if (enabled && !getDefault().autoBackup) {
             try {
-                new AutoBackup().autoBackup();
+                InstanceManager.getDefault(AutoBackup.class).autoBackup();
             } catch (IOException ex) {
                 log.debug("Autobackup after setting AutoBackup flag true", ex);
             }

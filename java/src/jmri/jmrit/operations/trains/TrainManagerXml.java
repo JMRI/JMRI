@@ -111,7 +111,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
         InstanceManager.getDefault(TrainManager.class).loadTrainIcons();
 
         log.debug("Trains have been loaded!");
-        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
+        //        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
         
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
