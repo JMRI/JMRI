@@ -172,47 +172,55 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                     tc.sendXNetMessage(msg, this);
                     restartTimer(msg.getTimeout());
                 }
+            } else {
+                handleXNetError(l);
             }
-        } else if(l.isOpsModeResultMessage()) {
-            // We got a result message, so we can stop the timer
-            int address = l.getOpsModeResultAddress();
-            if (address != mAddress && address != 0) {
-                // This is not the address we are looking for, so ignore it
-                if (log.isDebugEnabled()) {
-                    log.debug("Received result message for address {}, expected {}", address, mAddress);
+        } else if(progState == RESULTREQUESTED) {
+            if (l.isOpsModeResultMessage()) {
+                // We got a result message, so we can stop the timer
+                int address = l.getOpsModeResultAddress();
+                if (address != mAddress && address != 0) {
+                    // This is not the address we are looking for, so ignore it
+                    if (log.isDebugEnabled()) {
+                        log.debug("Received result message for address {}, expected {}", address, mAddress);
+                    }
+                    return;
                 }
-                return;
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("Received result message: {}", l);
-            }
-            if (address == 0) {
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                // this indicates that there was no result from the read, so notify the programmer listener of that
-                notifyProgListenerEnd(progListener, value, ProgListener.NoAck);
+                if (log.isDebugEnabled()) {
+                    log.debug("Received result message: {}", l);
+                }
+                if (address == 0) {
+                    progState = NOTPROGRAMMING;
+                    stopTimer();
+                    // this indicates that there was no result from the read, so notify the programmer listener of that
+                    notifyProgListenerEnd(progListener, value, ProgListener.NoAck);
+                } else {
+                    progState = NOTPROGRAMMING;
+                    stopTimer();
+                    // Notify the listener of the result
+                    notifyProgListenerEnd(progListener, l.getOpsModeResultValue(), jmri.ProgListener.OK);
+                }
             } else {
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                // Notify the listener of the result
-                notifyProgListenerEnd(progListener, l.getOpsModeResultValue(), jmri.ProgListener.OK);
+                handleXNetError(l);
             }
+        }
+    }
+
+    private void handleXNetError(XNetReply l) {
+        /* this is an error */
+        if (l.isRetransmittableErrorMsg()) {
+            // just ignore this, since we are retransmitting
+            // the message.
+        } else if (l.getElement(0) == XNetConstants.CS_INFO
+                    && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
+            progState = NOTPROGRAMMING;
+            stopTimer();
+            notifyProgListenerEnd(progListener,value, ProgListener.NotImplemented);
         } else {
-            /* this is an error */
-            if (l.isRetransmittableErrorMsg()) {
-                // just ignore this, since we are retransmitting
-                // the message.
-            } else if (l.getElement(0) == XNetConstants.CS_INFO
-                        && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(progListener,value,jmri.ProgListener.NotImplemented);
-            } else {
-                /* this is an unknown error */
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(progListener,value,jmri.ProgListener.UnknownError);
-            }
+            /* this is an unknown error */
+            progState = NOTPROGRAMMING;
+            stopTimer();
+            notifyProgListenerEnd(progListener,value, ProgListener.UnknownError);
         }
     }
 
