@@ -1557,19 +1557,19 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
      * Tests for XNetOpsModeReply helpers
      */
 
-    @Override
-    public void testIsXNetOpsModeReply() {
+    @Test
+    public void testIsOpsModeResultMessage() {
         XNetReply r = new XNetReply("64 24 00 00 00 40");
-        assertTrue(r.isXNetOpsModeReply());
+        assertTrue(r.isOpsModeResultMessage());
     }
 
-    @Override
+    @Test
     public void testGetOpsModeResultAddress() {
         XNetReply r = new XNetReply("64 24 00 00 00 40");
         assertEquals("address",0,r.getOpsModeResultAddress());
     }
 
-    @Override
+    @Test
     public void testGetOpsModeResultValue() {
         XNetReply r = new XNetReply("64 24 00 00 00 40");
         assertEquals("address",0,r.getOpsModeResultValue());
