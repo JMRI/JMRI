@@ -61,6 +61,13 @@ public class Z21XNetOpsModeProgrammerTest extends jmri.jmrix.lenz.XNetOpsModePro
         Assert.assertEquals("status",jmri.ProgListener.OK,lastStatus);
     }
 
+    @Override
+    @Test
+    public void testConfirmCVWithNotSupported() throws jmri.ProgrammerException {
+        // the z21 doesn't support POM read the same way Lenz does, so we're overriding
+        // this test that doesn't apply to the z21.
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
