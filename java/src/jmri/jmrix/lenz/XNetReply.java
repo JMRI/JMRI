@@ -725,6 +725,30 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
         return new FeedbackItem(this, n, d);
     }
 
+
+    /**
+     * XPressNet Ops Mode Reply message handling routines
+     */
+
+    boolean isOpsModeResultMessage() {
+        return (getElement(0) == XNetConstants.CS_ADVANCED_INFO_RESPONSE
+                && getElement(1) == XNetConstants.POM_RESULTS);
+    }
+
+    int getOpsModeResultAddress() {
+        if (isOpsModeResultMessage()) {
+            return LenzCommandStation.calcLocoAddress(getElement(2), getElement(3));
+        }
+        throw new IllegalArgumentException("Message is not an Ops Mode Result message");
+    }
+
+    int getOpsModeResultValue() {
+        if (isOpsModeResultMessage()) {
+            return getElement(4) & 0xFF;
+        }
+        throw new IllegalArgumentException("Message is not an Ops Mode Result message");
+    }
+
     private static final List<XPressNetMessageFormatter> formatterList = new ArrayList<>();
     /**
      * @return a string representation of the reply suitable for display in the

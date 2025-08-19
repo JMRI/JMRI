@@ -17,7 +17,7 @@ public class XNetDirectModelTimeFormatterTest {
         XNetDirectModelTimeFormatter formatter = new XNetDirectModelTimeFormatter();
         XNetReply reply = new XNetReply("64 25 95 36 02 C3");
         assertThat(formatter.handlesMessage(reply)).isTrue();
-        assertThat(formatter.formatMessage(reply)).isEqualTo("Ops Mode: Programming Response: Address: 0 Value:0");
+        assertThat(formatter.formatMessage(reply)).isEqualTo("Fast Clock Broadcast: Day 4 time 21:54 Rate: 2");
     }
 
 }

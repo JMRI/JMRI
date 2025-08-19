@@ -17,7 +17,7 @@ public class XNetOpsModeReadResultFormatterTest {
         XNetOpsModeReadResultFormatter formatter = new XNetOpsModeReadResultFormatter();
         XNetReply reply = new XNetReply("64 24 00 00 00 40");
         assertThat(formatter.handlesMessage(reply)).isTrue();
-        assertThat(formatter.formatMessage(reply)).isEqualTo("Fast Clock Broadcast: Day 4 time 21:54 Rate: 2");
+        assertThat(formatter.formatMessage(reply)).isEqualTo("Ops Mode: Programming Response: Address: 0 Value:0");
     }
 
 }
