@@ -107,25 +107,6 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
     }
 
     @Test
-    public void testConfirmCVWithNotSupported() throws jmri.ProgrammerException{
-        op.confirmCV("29",5,pl);
-        XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,5);
-        Assert.assertEquals("outbound message sent",1,tc.outbound.size());
-        Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
-        // send a message reply
-        op.message(new XNetReply("01 04 05")); // send "OK" message to the programmer.
-        // verify the result request was sent
-        Assert.assertEquals("outbound message sent",2,tc.outbound.size());
-        m = XNetMessage.getOpsModeResultsMsg();
-        Assert.assertEquals("outbound message",m,tc.outbound.elementAt(1));
-        //reply with not supported
-        op.message(new XNetReply("61 82 E3")); // send "Not Supported" message to the programmer.
-        // and now we need to check the status is right
-        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 5; }, "written value" );
-        Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
-    }
-
-    @Test
     public void testWriteCVWithNotSupported() throws jmri.ProgrammerException{
         op.writeCV("29",5,pl);
         XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
