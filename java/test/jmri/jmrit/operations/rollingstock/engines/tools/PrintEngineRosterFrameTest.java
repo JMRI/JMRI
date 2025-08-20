@@ -23,7 +23,7 @@ public class PrintEngineRosterFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JUnitOperationsUtil.initOperationsData();
-        EnginesTableFrame ctf = new EnginesTableFrame();
+        EnginesTableFrame ctf = new EnginesTableFrame(true, null, null);
 
         PrintEngineRosterFrame f = new PrintEngineRosterFrame(true, ctf);
         Assert.assertNotNull("exists", f);

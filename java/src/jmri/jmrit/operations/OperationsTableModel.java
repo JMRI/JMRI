@@ -94,6 +94,35 @@ public abstract class OperationsTableModel extends javax.swing.table.AbstractTab
         return -1;
     }
 
+    public boolean showAll = true; // when true show all rolling stock
+    public String locationName = null; // only show rolling stock at this location
+    public String trackName = null; // only show rolling stock using this track
+
+    protected void filterList(List<?> list) {
+        if (showAll) {
+            return;
+        }
+        for (int i = 0; i < list.size(); i++) {
+            RollingStock rs = (RollingStock) list.get(i);
+            if (rs.getLocation() == null) {
+                list.remove(i--);
+                continue;
+            }
+            // filter out cars that don't have a location name that matches
+            if (locationName != null) {
+                if (!rs.getLocationName().equals(locationName)) {
+                    list.remove(i--);
+                    continue;
+                }
+                if (trackName != null) {
+                    if (!rs.getTrackName().equals(trackName)) {
+                        list.remove(i--);
+                    }
+                }
+            }
+        }
+    }
+
     public class MyTableCellRenderer extends DefaultTableCellRenderer {
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
