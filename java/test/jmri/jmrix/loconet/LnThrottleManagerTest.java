@@ -384,7 +384,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 0xe7, 0x0e, 0x9, 0x30, 0x04, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x00, 0x00, 0x53});  // slot is in-use no throttle ID
         lnis.sendTestMessage(cmdStationReply);
 
-        // BB 79 01 00 may appear before this one
         JUnitUtil.waitFor( () -> "EF 0E 09 30 04 00 00 07 00 02 00 71 02 00".equals(
             (lnis.outbound.elementAt(lnis.outbound.size()-1).toString())),
             "Write Throttle ID");
@@ -414,17 +413,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         tm.releaseThrottle(throtListen.getThrottle(), throtListen);
         assertFalse(InstanceManager.throttleManagerInstance().addressStillRequired(
             new DccLocoAddress(260, true)), "Address no longer required");
-        // Wait for 2 messages, the set slot common and then the get slot refresh
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.isEmpty();
-        },"wait for message");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("B5 09 10 00");
-        }, "COMMON");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("BB 09 00 00");
-        }, "Slot read");
 
+        // Wait for the set slot common message
+        JUnitUtil.waitFor(() -> lnis.outbound.size()==1, "wait for 1 slot COMMON message, was " + lnis.outbound);
+
+        Assertions.assertEquals("B5 09 10 00", lnis.outbound.elementAt(0).toString()
+            , "COMMON , was " + lnis.outbound);
     }
 
     @Test
@@ -509,19 +503,20 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         // Wait for 3 messages, the set slot common and then the get slot refresh
         JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.isEmpty();
-        },"wait for message");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("B5 09 10 00");
-        }, "COMMON");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("BA 09 00 00");
-        }, "DISPATCH");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("BB 09 00 00");
-        }, "Slot read");
+            return lnis.outbound.size()==3;
+        },"wait for 3 messages");
 
-        assertEquals(3, lnis.outbound.size()-1, "No more loconet messages sent at throttle release");
+        assertEquals("B5 09 10 00", lnis.outbound.get(0).toString(),"Slot set to COMMON");
+        assertEquals("BA 09 00 00", lnis.outbound.get(1).toString(),"Slot set to DISPATCH");
+
+        // when LnPredefinedMeters is running
+        // assertEquals("BB 09 00 00", lnis.outbound.get(2).toString(), "Slot read");
+
+        // when LnPredefinedMeters is NOT running the 3rd message is a repeat of set to common
+        assertEquals("B5 09 10 00", lnis.outbound.get(2).toString(),"Slot set to COMMON again");
+
+        JUnitUtil.waitFor(150);
+        assertEquals(3, lnis.outbound.size(), "No more loconet messages sent at throttle release, was "+lnis.outbound);
 
     }
 
@@ -547,7 +542,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "address request message");
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
-        // BB 79 01 00 may appear shortly after this in tcis.outbound
         // for long delays, BF 02 05 00 is re-sent 10 times before halting attempt.
 
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
@@ -765,7 +759,6 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         JUnitUtil.waitFor(()->{return 4 < lnis.outbound.size();},"didn't get the 6th LocoNet message");
 
-        // BB 79 01 00 may appear before this one
         JUnitUtil.waitFor( () -> "B5 04 13 00".equals(
             (lnis.outbound.elementAt(lnis.outbound.size()-1).toString())),
             "slot is set to 'common' status");
@@ -788,7 +781,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         tm = memo.get(ThrottleManager.class);
         assertTrue(tm == InstanceManager.getDefault(ThrottleManager.class),"tm is Instance tm");
         assertInstanceOf(LnThrottleManager.class, tm, "tm is ln tm and not null");
-        log.debug("new throttle manager is {}", tm.toString());
+        log.debug("new throttle manager is {}", tm);
         memo.getSensorManager().dispose(); // get rid of sensor manager to prevent it from sending interrogation messages
         memo.getPowerManager().dispose(); // get rid of power manager to prevent it from sending slot 0 read message
         memo.getPredefinedMeters().dispose(); // get rid of meter to prevent it reading slots
