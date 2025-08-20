@@ -1,9 +1,5 @@
 package jmri.jmrix.lenz;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
