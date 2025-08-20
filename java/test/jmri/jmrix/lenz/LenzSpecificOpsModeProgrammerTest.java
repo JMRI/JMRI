@@ -20,6 +20,12 @@ import org.junit.jupiter.api.*;
 
 public class LenzSpecificOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
+    protected XNetOpsModeProgrammer op = null;
+    protected XNetInterfaceScaffold tc = null;
+    protected jmri.ProgListener pl = null;
+    protected int lastValue;
+    protected int lastStatus;
+
     @Test
     public void testConfirmCVWithNotSupported() throws jmri.ProgrammerException{
         op.confirmCV("29",5,pl);
