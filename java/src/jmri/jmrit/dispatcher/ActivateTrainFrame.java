@@ -861,11 +861,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleAutoRunClick() {
-        if (autoRunBox.isSelected()) {
-            showAutoRunItems();
-        } else {
-            hideAutoRunItems();
-        }
+        showHideAutoRunItems(autoRunBox.isSelected());
         initiateFrame.pack();
     }
 
@@ -1696,7 +1692,13 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
     private final JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));
     private final JPanel pa4 = new JPanel();
-
+    private final JLabel fNumberBellLabel = new JLabel(Bundle.getMessage("fnumberbelllabel"));
+    private final JSpinner fNumberBellSpinner = new JSpinner();
+    private final JLabel fNumberHornLabel = new JLabel(Bundle.getMessage("fnumberhornlabel"));
+    private final JSpinner fNumberHornSpinner = new JSpinner();
+    private final JLabel fNumberLightLabel = new JLabel(Bundle.getMessage("fnumberlightlabel"));
+    private final JSpinner fNumberLightSpinner = new JSpinner();
+    private final JPanel pa5_FNumbers = new JPanel();
     protected static class TrainDetectionJCombo extends JComboBox<TrainDetectionItem> {
         public void setSelectedItemByValue(TrainDetection trainDetVar) {
             for ( int ix = 0; ix < getItemCount() ; ix ++ ) {
@@ -1785,7 +1787,22 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa4.add(trainLengthUnitsComboBox);
         pa4.add(trainLengthAltLengthLabel);
         initiatePane.add(pa4);
-        hideAutoRunItems();   // initialize with auto run items hidden
+        pa5_FNumbers.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("fnumbers")));
+        pa5_FNumbers.setLayout(new FlowLayout());
+        fNumberLightSpinner.setModel(new SpinnerNumberModel(0,0,100,1));
+        fNumberLightSpinner.setToolTipText(Bundle.getMessage("fnumberlighthint"));
+        pa5_FNumbers.add(fNumberLightLabel);
+        pa5_FNumbers.add(fNumberLightSpinner);
+        fNumberBellSpinner.setModel(new SpinnerNumberModel(0,0,100,1));
+        fNumberBellSpinner.setToolTipText(Bundle.getMessage("fnumberbellhint"));
+        pa5_FNumbers.add(fNumberBellLabel);
+        pa5_FNumbers.add(fNumberBellSpinner);
+        fNumberHornSpinner.setModel(new SpinnerNumberModel(0,0,100,1));
+        fNumberHornSpinner.setToolTipText(Bundle.getMessage("fnumberhornhint"));
+        pa5_FNumbers.add(fNumberHornLabel);
+        pa5_FNumbers.add(fNumberHornSpinner);
+        initiatePane.add(pa5_FNumbers);
+        showHideAutoRunItems(autoRunBox.isSelected());   // initialize with auto run items hidden
     }
 
     private void handlemaxTrainLengthChangeUnitsLength() {
@@ -1868,20 +1885,13 @@ public class ActivateTrainFrame extends JmriJFrame {
         return 0;
     }
 
-    private void hideAutoRunItems() {
-        pa1.setVisible(false);
-        pa2.setVisible(false);
-        pa2a.setVisible(false);
-        pa3.setVisible(false);
-        pa4.setVisible(false);
-    }
-
-    private void showAutoRunItems() {
-        pa1.setVisible(true);
-        pa2.setVisible(true);
-        pa2a.setVisible(true);
-        pa3.setVisible(true);
-        pa4.setVisible(true);
+    private void showHideAutoRunItems(boolean value) {
+        pa1.setVisible(value);
+        pa2.setVisible(value);
+        pa2a.setVisible(value);
+        pa3.setVisible(value);
+        pa4.setVisible(value);
+        pa5_FNumbers.setVisible(value);
     }
 
     private void autoTrainInfoToDialog(TrainInfo info) {
@@ -1912,11 +1922,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
         stopBySpeedProfileCheckBox.setSelected(info.getStopBySpeedProfile());
         stopBySpeedProfileAdjustSpinner.setValue(info.getStopBySpeedProfileAdjust());
-        if (autoRunBox.isSelected()) {
-            showAutoRunItems();
-        } else {
-            hideAutoRunItems();
-        }
+        fNumberLightSpinner.setValue(info.getFNumberLight());
+        fNumberBellSpinner.setValue(info.getFNumberBell());
+        fNumberHornSpinner.setValue(info.getFNumberHorn());
+         showHideAutoRunItems(autoRunBox.isSelected());
         initiateFrame.pack();
     }
 
@@ -1940,6 +1949,9 @@ public class ActivateTrainFrame extends JmriJFrame {
             info.setStopBySpeedProfile(false);
             info.setStopBySpeedProfileAdjust(1.0f);
         }
+        info.setFNumberLight((int)fNumberLightSpinner.getValue());
+        info.setFNumberBell((int)fNumberBellSpinner.getValue());
+        info.setFNumberHorn((int)fNumberHornSpinner.getValue());
     }
 
    private void initializeRampCombo() {
