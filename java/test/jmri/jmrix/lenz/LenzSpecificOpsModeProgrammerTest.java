@@ -14,7 +14,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender
  */
 
-public class LenzSpecificOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
+public class LenzSpecificOpsModeProgrammerTest {
 
     protected XNetOpsModeProgrammer op = null;
     protected XNetInterfaceScaffold tc = null;
@@ -42,7 +42,6 @@ public class LenzSpecificOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsMod
     }
 
     @BeforeEach
-    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
@@ -57,17 +56,14 @@ public class LenzSpecificOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsMod
 
         lastValue = -1;
         lastStatus = -1;
-        programmer = op;
 
     }
 
     @AfterEach
-    @Override
     public void tearDown() {
         tc = null;
         op = null;
         pl = null;
-        programmer = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
