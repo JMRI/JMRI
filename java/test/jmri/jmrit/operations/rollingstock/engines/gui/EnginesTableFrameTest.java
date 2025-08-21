@@ -4,14 +4,12 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -36,7 +34,7 @@ public class EnginesTableFrameTest extends OperationsTestCase {
         // enable rfid field
         Setup.setRfidEnabled(true);
 
-        EnginesTableFrame etf = new EnginesTableFrame();
+        EnginesTableFrame etf = new EnginesTableFrame(true, null, null);
         Assert.assertEquals("number of Engines 1", "5", etf.numEngines.getText());
 
         EngineManager eManager = InstanceManager.getDefault(EngineManager.class);

@@ -99,6 +99,8 @@ public class LocationsTableFrame extends OperationsFrame {
         }
         toolMenu.addSeparator();
         toolMenu.add(new ShowCarsByLocationAction(false, null, null));
+        toolMenu.add(new ShowLocosByLocationAction(false, null, null));
+        toolMenu.addSeparator();
         toolMenu.add(new ShowTrainsServingLocationAction(null, null));
         toolMenu.add(new ShowRoutesServingLocationAction(null));
         toolMenu.addSeparator();

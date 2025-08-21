@@ -17,7 +17,8 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.swing.JmriJOptionPane;
@@ -357,6 +358,8 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         _toolMenu.add(new TrackCopyAction(_track, _location));
         _toolMenu.addSeparator();
         _toolMenu.add(new ShowCarsByLocationAction(false, _location, _track));
+        _toolMenu.add(new ShowLocosByLocationAction(false, _location, _track));
+        _toolMenu.addSeparator();
         _toolMenu.add(new ShowTrainsServingLocationAction(_location, _track));
 
         menuBar.add(_toolMenu);

@@ -288,7 +288,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                     <li><a href="#CarRoster">Import from file</a></li>
                     <li><a href="#CarRoster">Export to file</a></li>
                     <li><a href="#CarRoster">Delete all cars</a></li>
-                    <li><a href="#CarRoster">Reset car move count</a></li>
+                    <li><a href="#CarRoster">Reset car move counts</a></li>
                     <li><a href="#CarRoster">Print</a></li>
                     <li><a href="#CarRoster">Preview</a></li>
                   </uL></li>
@@ -2462,11 +2462,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       enabled.
 
       <h4 id="ShowCars">Show Cars</h4>
-      If you only want to see cars for a location or track, select "Show Cars" from the "Tools"
+      If you only want to view cars for a location or track, select "Show Cars" from the "Tools"
       menu. This tool is also useful when you want to print out cars for a specific location or
       track. Note that the Export Cars tool will only export cars for a location or track, and the
       delete cars tool, when showing cars at a location or track, will only delete those cars. The
-      "Reset car move count" tool also behaves the same way.
+      "Reset car move counts" tool also behaves the same way.
 
       <h4 id="LocationReporter">
         Id Tag Reader at this Location [only if <a href="#EnableIdentificationTagFields">Enable
@@ -3798,7 +3798,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h4>Show Cars</h4>
       This will open a "Cars" window displaying only the cars for the track selected. Note that the
       Export Cars tool will only export cars for the track selected, and the delete cars tool will
-      only delete the cars for the track selected.
+      only delete the cars for the track selected. Same restriction for the reseting car move
+      counts, printing and previewing.
 
       <h4 id="ShowTrainsServicingThisTrack">Show Trains Servicing this Track</h4>
       This tool will show which trains can service the track being editing. If you only want to see
@@ -3850,8 +3851,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       type are enabled.
 
       <h4 id="ShowCarsLocations">Show Cars</h4>
-      To only see cars that have a location assigned to them, select "Show Cars" from the "Tools"
-      menu.
+      To only view cars that have a location assigned to them, select "Show Cars" from the "Tools"
+      menu. Note that the Car Roster tools, Export to file, Delete cars, Reset car move counts,
+      Print, and Preview will only affect the cars shown in the Cars table.
 
       <h4 id="ExportLocations">Export Locations</h4>
 
@@ -4512,8 +4514,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       when only viewing cars for a track, the tool changes to "Delete cars on Track track name", and
       will only delete the cars on the track being viewed.
 
-      <h4>Car Roster&rArr;Reset car move count</h4>
-      The "Reset car move count" will zero out the move counts for the cars displayed in the "Cars"
+      <h4>Car Roster&rArr;Reset car move counts</h4>
+      The "Reset car move counts" will zero out the move counts for the cars displayed in the "Cars"
       window. In normal use you should never reset the car move counts. The program uses the move
       counts to determine which cars have difficulty finding valid destination tracks. Cars with low
       move counts eventually get higher priority over cars with larger move counts. By servicing the
