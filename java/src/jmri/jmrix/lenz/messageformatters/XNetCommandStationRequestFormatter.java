@@ -23,6 +23,8 @@ public class XNetCommandStationRequestFormatter implements XPressNetMessageForma
                 return Bundle.getMessage("XNetMessageRequestNormalOps");
             case XNetConstants.SERVICE_MODE_CSRESULT:
                 return Bundle.getMessage("XNetMessageRequestServiceModeResult");
+            case XNetConstants.OPS_MODE_CSRESULT:
+                return Bundle.getMessage("XNetMessageRequestOpsModeResult");
             case XNetConstants.CS_VERSION:
                 return Bundle.getMessage("XNetMessageRequestCSVersion");
             case XNetConstants.CS_STATUS:
