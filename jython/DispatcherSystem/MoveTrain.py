@@ -637,10 +637,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         folder = "restrictTransits"
         filename = "restrictTransits.txt"
         restricted_transits = DispatchMaster().read_list(folder,filename)
-        filtered_restricted_transits = [ t for t in restricted_transits if t[0] == transit_name]
-        if filtered_restricted_transits != []:
-            [transit_name1, transit_block_name] = filtered_restricted_transits
-            trainInfo_fwd.setBlockName(new_transit_block_name)
+        if restricted_transits[0] != "":
+            filtered_restricted_transits = [ t for t in restricted_transits if t[0] == transit_name]
+            if filtered_restricted_transits != []:
+                [transit_name1, transit_block_name] = filtered_restricted_transits
+                trainInfo_fwd.setBlockName(new_transit_block_name)
 
         if self.logLevel > 0: print "self.forward_stopping_sensor_exists(self.trainInfo)",self.forward_stopping_sensor_exists(self.trainInfo)
         # print "sensors.getSensor('stopAtStopSensor').getKnownState()", sensors.getSensor("stopAtStopSensor").getKnownState(), ACTIVE
