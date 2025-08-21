@@ -142,16 +142,33 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public synchronized void setTargetSpeedByPass(float speed) {
-         _autoEngineer.setTargetSpeed(speed);
+         _autoEngineer.setTargetSpeed(-1.0f, speed);
     }
+
+    public synchronized void setTargetSpeedByPass(float distance, float speed) {
+        if (distance < 0.0f) {
+            _autoEngineer.setTargetSpeed(speed);
+        } else {
+            _autoEngineer.setTargetSpeed(distance, speed);
+        }
+   }
 
     public synchronized void setTargetSpeed(float speed) {
         if (_autoEngineer.isStopped() && getTargetSpeed() == 0.0f && speed > 0.0f) {
-            if (_autoTrainAction.isDelayedStart(speed)) {
+            if (_autoTrainAction.isDelayedStart(-1.0f, speed)) {
                 return;
             }
         }
         _autoEngineer.setTargetSpeed(speed);
+    }
+
+    public synchronized void setTargetSpeed(float distance, float speed) {
+        if (_autoEngineer.isStopped() && getTargetSpeed() == 0.0f && speed > 0.0f) {
+            if (_autoTrainAction.isDelayedStart(distance, speed)) {
+                return;
+            }
+        }
+        _autoEngineer.setTargetSpeed(distance, speed);
     }
 
     public int getSavedStatus() {
@@ -1748,7 +1765,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     setTargetSpeed(throttleSetting); // apply speed factor and max
                 } else if (throttleSetting > 0.009) {
                     if (cancelStopping) {cancelStopInCurrentSection();}
-                    _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)  * stopBySpeedProfileAdjust , throttleSetting);
+                    setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)  * stopBySpeedProfileAdjust , throttleSetting);
                 } else if (useSpeedProfile && _stopBySpeedProfile) {
                     setTargetSpeed(0.0f);
                     _stoppingUsingSpeedProfile = true;

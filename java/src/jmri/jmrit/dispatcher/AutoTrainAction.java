@@ -63,7 +63,7 @@ public class AutoTrainAction {
 
     // this method is called by AutoActiveTrain when target speed goes from 0 to
     // a greater value.and the train is currently stopped
-    protected synchronized boolean isDelayedStart(float speed) {
+    protected synchronized boolean isDelayedStart(float distance, float speed) {
         for (TransitSectionAction t: _activeActionList) {
             if (t.getWhenCode() == TransitSectionAction.PRESTARTDELAY
                     && t.getTargetTransitSection().getSection() == _autoActiveTrain.getCurrentAllocatedSection().getSection()) {
@@ -72,6 +72,7 @@ public class AutoTrainAction {
                 if (t.getWaitingThread() == null) {
                     log.trace("Adding actions");
                     t.setDataWhat1Float(speed);
+                    t.setDataWhat2Float(distance);
                     checkDelay(t);
                     // now
                     Iterator<TransitSectionAction> itrA = _activeActionList.iterator();
@@ -430,7 +431,7 @@ public class AutoTrainAction {
             case TransitSectionAction.PRESTARTRESUME:
                 // set current speed either higher or lower than current value
                 log.trace("Resume After Prestart Setting Target[{}] Section:[{}]",tsa.getDataWhat1Float(),tsa.getTargetTransitSection().getSectionName());
-                _autoActiveTrain.setTargetSpeedByPass (tsa.getDataWhat1Float());
+                _autoActiveTrain.setTargetSpeedByPass (tsa.getDataWhat2Float(),tsa.getDataWhat1Float());
                 completedAction(tsa);
                 break;
             case TransitSectionAction.SETCURRENTSPEED:
