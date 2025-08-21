@@ -61,104 +61,110 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     String parse(int opCode, int val) {
         // TMCC 2 parsing
         if (opCode != 0xFE) {
-        
             // TMCC2 Engine Commands
             int A = (val / 512) & 0x7F;
             int C = (val / 32) & 0x03;
             int D = val & 0x1F;
-            switch (C) {
-                case 0:
+            if ((val & 0x0100) == 0x0100) {
+                switch (C) {
+                    case 0:
                     
-                    switch (D) {
-                        case 0:
-                            return "Engine " + A + " - Forward Direction";
-                        case 1:
-                            return "Engine " + A + " - Toggle Direction";
-                        case 2:
-                            
-                        case 3:
-                            return "Engine " + A + " - Reverse Direction";
-                        case 4:
-                            return "Engine " + A + " - Boost";
-                        case 5:
-                            return "Engine " + A + " - Open Front Coupler";
-                        case 6:
-                            return "Engine " + A + " - Open Rear Coupler";
-                        case 7:
-                            return "Engine " + A + " - Brake";
-                        case 8:
-                            return "Engine " + A + " - AUX1 Off";
-                        case 9:
-                            return "Engine " + A + " - AUX1 Option 1 (CAB AUX1 button)";
-                        case 10:
-                            return "Engine " + A + " - AUX1 Option 2";
-                        case 11:
-                            return "Engine " + A + " - AUX1 On";
-                        case 12:
-                            return "Engine " + A + " - AUX2 Off";
-                        case 13:
-                            return "Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On/Off";
-                        case 14:
-                            return "Engine " + A + " - AUX2 Option 2";
-                        case 15:
-                            return "Engine " + A + " - AUX2 On";
-                        case 16:
-                            return "Engine " + A + " - Num 0 - Trigger for Options (Needed to toggle ERR 100 Speed Steps)";
-                        case 17:
-                            return "Engine " + A + " - Num 1 - Sound Volume Increase";
-                        case 18:
-                            return "Engine " + A + " - Num 2 - Crew Talk";
-                        case 19:
-                            return "Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence";
-                        case 20:
-                            return "Engine " + A + " - Num 4 - Sound Volume Decrease";
-                        case 21:
-                            return "Engine " + A + " - Num 5 - Sound Off w/Shut-Down Sequence";
-                        case 22:
-                            return "Engine " + A + " - Num 6 - Steam Release/RPM Decrease";
-                        case 23:
-                            return "Engine " + A + " - Num 7 - Tower Com Announcement";
-                        case 24:
-                            return "Engine " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting)";
-                        case 25:
-                            return "Engine " + A + " - Num 9 - Feature On (Smoke/Aux Lighting)";
-                        case 26:
-                            
-                        case 27:
-                            
-                        case 28:
-                            return "Engine " + A + " - Blow Whistle/Horn 1";
-                        case 29:
-                            return "Engine " + A + " - Ring Bell";
-                        case 30:
-                            return "Engine " + A + " - Letoff Sound";
-                        case 31:
-                            return "Engine " + A + " - Blow Horn 2";
-                        default:
-                            return "Engine " + A + " - action command D=" + D;
-                    }
+                        switch (D) {
+                            case 0:
+                                return "Engine " + A + " - Forward Direction";
+                            case 1:
+                                return "Engine " + A + " - Toggle Direction";
+                            case 2:
+                                
+                            case 3:
+                                return "Engine " + A + " - Reverse Direction";
+                            case 4:
+                                return "Engine " + A + " - Boost";
+                            case 5:
+                                return "Engine " + A + " - Open Front Coupler";
+                            case 6:
+                                return "Engine " + A + " - Open Rear Coupler";
+                            case 7:
+                                return "Engine " + A + " - Brake";
+                            case 8:
+                                return "Engine " + A + " - AUX1 Off";
+                            case 9:
+                                return "Engine " + A + " - AUX1 Option 1 (CAB AUX1 button)";
+                            case 10:
+                                return "Engine " + A + " - AUX1 Option 2";
+                            case 11:
+                                return "Engine " + A + " - AUX1 On";
+                            case 12:
+                                return "Engine " + A + " - AUX2 Off";
+                            case 13:
+                                return "Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On/Off";
+                            case 14:
+                                return "Engine " + A + " - AUX2 Option 2";
+                            case 15:
+                                return "Engine " + A + " - AUX2 On";
+                            case 16:
+                                return "Engine " + A + " - Num 0 - Engine Reset (Needed to toggle ERR 100 Speed Steps)";
+                            case 17:
+                                return "Engine " + A + " - Num 1 - Sound Volume Increase";
+                            case 18:
+                                return "Engine " + A + " - Num 2 - Crew Talk";
+                            case 19:
+                                return "Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence";
+                            case 20:
+                                return "Engine " + A + " - Num 4 - Sound Volume Decrease";
+                            case 21:
+                                return "Engine " + A + " - Num 5 - Sound Off w/Shut-Down Sequence";
+                            case 22:
+                                return "Engine " + A + " - Num 6 - Steam Release/RPM Decrease";
+                            case 23:
+                                return "Engine " + A + " - Num 7 - Tower Com Announcement";
+                            case 24:
+                                return "Engine " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting)";
+                            case 25:
+                                return "Engine " + A + " - Num 9 - Feature On (Smoke/Aux Lighting)";
+                            case 26:
+                                
+                            case 27:
+                                
+                            case 28:
+                                return "Engine " + A + " - Blow Whistle/Horn 1";
+                            case 29:
+                                return "Engine " + A + " - Ring Bell";
+                            case 30:
+                                return "Engine " + A + " - Letoff Sound";
+                            case 31:
+                                return "Engine " + A + " - Blow Horn 2";
+                            default:
+                                return "Engine " + A + " - action command D=" + D;
+                        }
 
-                case 1:
-                    //return "Engine " + A + " - extended command (C=1) with D=" + D;
-                    if ((D & 0x17) == 0) {
-                        return "Engine " + A + " - Momentum Low";
-                    }
-                    if ((D & 0x17) == 1) {
-                        return "Engine " + A + " - Momentum Medium";
-                    }
-                    if ((D & 0x17) == 2) {
-                        return "Engine " + A + " - Momentum High";
-                    }
-                    if ((D & 0x17) == 3) {
-                        return "Engine " + A + " - Set";
-                    }
+                    case 1:
+                        //return "Engine " + A + " - extended command (C=1) with D=" + D;
+                        if ((D & 0x17) == 0) {
+                            return "Engine " + A + " - Momentum Low";
+                        }
+                        if ((D & 0x17) == 1) {
+                            return "Engine " + A + " - Momentum Medium";
+                        }
+                        if ((D & 0x17) == 2) {
+                            return "Engine " + A + " - Momentum High";
+                        }
+                        if ((D & 0x17) == 3) {
+                            return "Engine " + A + " - Set";
+                        }
+                        if ((D & 0x17) == 6) {
+                            return "Engine " + A + " - Unassigned FnKey";
+                        }
                     
-                    //$FALL-THROUGH$
-                case 2:
-                    return "Change Engine " + A + " - Speed (Relative) by " + (D - 5);
-                case 3:
-                default:    // to let the compiler know there are only 3 cases
-                    return "TMCC 2 msg 0x"+Integer.toHexString(opCode)+" 0x"+Integer.toHexString(val);
+                        //$FALL-THROUGH$
+                    case 2:
+                        return "Engine " + A + " - Change Speed (Relative) by " + (D - 5);
+                    case 3:
+                    default:    // to let the compiler know there are only 3 cases
+                        return "Engine " + A + " - Speed (Absolute) = " + D;
+                }
+            } else {
+                return "Engine " + A + " - Speed (Absolute) = " + (val & 0x00FF);
             }
         }
 
@@ -229,7 +235,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                         case 15:
                             
                         case 16:
-                            return "Engine " + A + " - Num 0 - Trigger for Options (Needed to toggle ERR 100 Speed Steps)";
+                            return "Engine " + A + " - Num 0 - Engine Reset (Needed to toggle ERR 100 Speed Steps)";
                         case 17:
                             return "Engine " + A + " - Num 1 - Sound Volume Increase";
                         case 18:
@@ -278,13 +284,18 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     if ((D & 0x17) == 3) {
                         return "Engine " + A + " - Set";
                     }
+                    if ((D & 0x17) == 6) {
+                        return "Engine " + A + " - Unassigned FnKey";
+                    }
+                    
                     //$FALL-THROUGH$
                 case 2:
-                    return "Change Engine " + A + " - Speed (Relative) by " + (D - 5);
+                    return "Engine " + A + " - Change Speed (Relative) by " + (D - 5);
                 case 3:
                 default:    // to let the compiler know there are only 3 cases
-                    return "TMCC 2 msg 0x"+Integer.toHexString(opCode)+" 0x"+Integer.toHexString(val);
+                    return "Engine " + A + " - Speed (Absolute) = " + D;
             }
+
         } else if ((val & 0xF800) == 0xC800) {
             // TMCC1 Train Commands
             int A = (val / 128) & 0x0F;
