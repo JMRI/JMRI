@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -17,13 +16,13 @@ public class HtmlTrainCommonTest {
     public void testCTor() throws java.io.IOException {
         HtmlTrainCommon t = new HtmlTrainCommon(java.util.Locale.US,
                      (InstanceManager.getDefault(TrainManager.class)).getTrainById("2"));
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initIdTagManager();
+        JUnitUtil.initIdTagManager();
         jmri.util.JUnitOperationsUtil.setupOperationsTests();
         jmri.util.JUnitOperationsUtil.initOperationsData();     
     }
