@@ -7,10 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests for the jmri.web.servlet.RedirectionServlet class
@@ -22,7 +25,7 @@ public class RedirectionServletTest {
     @Test
     public void testCtor() {
         RedirectionServlet a = new RedirectionServlet();
-        Assert.assertNotNull(a);
+        assertNotNull(a);
     }
 
     @Test
@@ -33,19 +36,17 @@ public class RedirectionServletTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
         request.setContextPath("foo");
         instance.doGet(request, response);
-        Assert.assertEquals("Temporary redirection", HttpServletResponse.SC_MOVED_TEMPORARILY, response.getStatus());
-        Assert.assertEquals("Redirection URL", "bar", response.getRedirectedUrl());
+        assertEquals( HttpServletResponse.SC_MOVED_TEMPORARILY, response.getStatus(), "Temporary redirection");
+        assertEquals( "bar", response.getRedirectedUrl(), "Redirection URL");
+
         // test with unexpected path
         // (note web server is seriously broken if this occurs in the wild)
-        request = new MockHttpServletRequest();
-        response = new MockHttpServletResponse();
-        request.setContextPath("baz");
-        try {
-            instance.doGet(request, response);
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("null URL", "Redirect URL must not be null", ex.getMessage());
-        }
+        MockHttpServletRequest errorRequest = new MockHttpServletRequest();
+        MockHttpServletResponse errorResponse = new MockHttpServletResponse();
+        errorRequest.setContextPath("baz");
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+            () -> instance.doGet(errorRequest, errorResponse));
+        assertEquals( "Redirect URL must not be null", ex.getMessage(), "null URL");
     }
 
     @Test
@@ -55,8 +56,8 @@ public class RedirectionServletTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
         RedirectionServlet instance = new RedirectionServlet("foo", "bar");
         instance.doGet(request, response);
-        Assert.assertEquals("Temporary redirection", HttpServletResponse.SC_MOVED_TEMPORARILY, response.getStatus());
-        Assert.assertEquals("Redirection URL", "bar", response.getRedirectedUrl());
+        assertEquals( HttpServletResponse.SC_MOVED_TEMPORARILY, response.getStatus(), "Temporary redirection");
+        assertEquals( "bar", response.getRedirectedUrl(), "Redirection URL");
     }
 
     @BeforeEach

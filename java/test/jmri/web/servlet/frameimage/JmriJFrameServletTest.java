@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import jmri.util.JUnitUtil;
 
-import static org.assertj.core.api.Assertions.*;
-
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Invokes complete set of tests for the jmri.web.servlet.frameimage.JmriJFrameServlet class
@@ -25,7 +29,7 @@ public class JmriJFrameServletTest {
     @Test
     public void testAccess() {
         JmriJFrameServlet_ut out = new JmriJFrameServlet_ut();
-        Assert.assertNotNull(out.populateParameterMap(new HashMap<>()));
+        assertNotNull(out.populateParameterMap(new HashMap<>()));
     }
 
     @Test
@@ -37,10 +41,10 @@ public class JmriJFrameServletTest {
 
         out.populateParameterMap(map);
 
-        Assert.assertNotNull(map);
-        Assert.assertEquals("parameters length", 1, map.size());
-        Assert.assertTrue("key1 present", map.containsKey("key1"));
-        Assert.assertEquals("value[0]", "value1-0", map.get("key1")[0]);
+        assertNotNull(map);
+        assertEquals( 1, map.size(), "parameters length");
+        assertTrue( map.containsKey("key1"), "key1 present");
+        assertEquals( "value1-0", map.get("key1")[0], "value[0]");
 
     }
 
@@ -54,12 +58,12 @@ public class JmriJFrameServletTest {
 
         map = out.populateParameterMap(map);
 
-        Assert.assertNotNull(map);
-        Assert.assertEquals("parameters length", 2, map.size());
-        Assert.assertTrue("key2 present", map.containsKey("key2"));
-        Assert.assertEquals("value2[0]", "value2-0", map.get("key2")[0]);
-        Assert.assertTrue("key1 present", map.containsKey("key1"));
-        Assert.assertEquals("value1[0]", "value1-0", map.get("key1")[0]);
+        assertNotNull(map);
+        assertEquals( 2, map.size(), "parameters length");
+        assertTrue( map.containsKey("key2"), "key2 present");
+        assertEquals( "value2-0", map.get("key2")[0], "value2[0]");
+        assertTrue( map.containsKey("key1"), "key1 present");
+        assertEquals( "value1-0", map.get("key1")[0], "value1[0]");
 
     }
 
@@ -75,11 +79,7 @@ public class JmriJFrameServletTest {
             }
         };
         // should not throw, so just invoke
-        try {
-            out1.test_doGet();
-        } catch (Exception ex) {
-            Assert.fail(ex.toString());
-        }
+        assertDoesNotThrow( () -> out1.test_doGet() );
         
         // create testable object that throws IOException
         JmriJFrameServlet_ut out2 = new JmriJFrameServlet_ut() {
@@ -90,9 +90,8 @@ public class JmriJFrameServletTest {
             }
         };
         // invoke and check
-        thrown = catchThrowable(() -> { out2.test_doGet(); });
-        assertThat(thrown).isInstanceOf(IOException.class)
-                            .hasNoCause();
+        thrown = assertThrows( IOException.class, () -> out2.test_doGet() );
+        assertNull(thrown.getCause());
 
         
         // create testable object that throws ServletException
@@ -104,9 +103,8 @@ public class JmriJFrameServletTest {
             }
         };
         // invoke and check
-        thrown = catchThrowable(() -> { out3.test_doGet(); });
-        assertThat(thrown).isInstanceOf(ServletException.class)
-                            .hasNoCause();
+        thrown = assertThrows( ServletException.class, () -> out3.test_doGet() );
+        assertNull(thrown.getCause());
     }
     
     

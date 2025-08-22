@@ -8,10 +8,11 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for the jmri.web.servlet.panel.ControlPanelServlet class
@@ -24,7 +25,7 @@ public class ControlPanelServletTest {
     @Test
     public void testCtor() {
         ControlPanelServlet a = new ControlPanelServlet();
-        Assert.assertNotNull(a);
+        assertNotNull(a);
     }
 
     @Test
