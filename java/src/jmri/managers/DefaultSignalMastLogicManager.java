@@ -433,30 +433,58 @@ public class DefaultSignalMastLogicManager
                     continue; // Skip to the next mast
                 }
 
-                // For each destination mast (on a ray), find the corresponding ray and add the controlling turnout.
+                // For each destination mast, find the ray block used in the path and add the controlling turnout.
                 List<NamedBean> validDestMasts = e.getValue();
+                LayoutBlockConnectivityTools tools = lbm.getLayoutBlockConnectivityTools();
+
                 for (NamedBean destBean : validDestMasts) {
                     SignalMast destMast = (SignalMast) destBean;
                     if (!sml.isDestinationValid(destMast)) {
                         try {
+                            // First, set up the basic destination and layout editor details
                             sml.setDestinationMast(destMast);
                             sml.useLayoutEditor(true, destMast);
+                            sml.useLayoutEditorDetails(true, true, destMast);
 
-                            // Find the block for the destination mast to identify the ray
-                            LayoutBlock destBlock = InstanceManager.getDefault(LayoutBlockManager.class).getFacingBlockByMast(destMast);
-                            if (destBlock != null) {
-                                int rayIndex = owner.getRayIndexForBlock(destBlock);
-                                if (rayIndex != -1) {
-                                    Turnout positionTurnout = owner.getTurnoutForRay(rayIndex);
-                                    if (positionTurnout != null) {
-                                        sml.addAutoTurnout(positionTurnout.getSystemName(), Turnout.THROWN, destMast);
-                                        log.info("Added Turntable position turnout {} for ray {} to logic for path {} -> {}",
-                                                positionTurnout.getDisplayName(), destBlock.getDisplayName(), sourceMast.getDisplayName(), destMast.getDisplayName());
+                            // Now, find the specific ray that leads to this destination
+                            LayoutBlock sourceLBlock = lbm.getFacingBlockByMast(sourceMast);
+                            LayoutBlock destLBlock = lbm.getFacingBlockByMast(destMast);
+
+                            if (sourceLBlock == null || destLBlock == null) {
+                                log.warn("Could not find facing block for source {} or destination {}", sourceMast.getDisplayName(), destMast.getDisplayName());
+                                continue;
+                            }
+
+                            // Iterate through all rays of the turntable to find the one that creates a valid path.
+                            for (int i = 0; i < owner.getNumberRays(); i++) {
+                                TrackSegment rayConnect = owner.getRayConnectOrdered(i);
+                                if (rayConnect != null) {
+                                    LayoutBlock rayBlock = rayConnect.getLayoutBlock();
+                                    if (rayBlock != null && rayBlock != sourceLBlock) {
+                                        try {
+                                            // Try to find a path through this specific ray
+                                            List<LayoutBlock> path = tools.getLayoutBlocks(sourceLBlock, destLBlock, rayBlock, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+
+                                            // If a path is found, this must be the correct ray
+                                            if (!path.isEmpty()) {
+                                                Turnout positionTurnout = owner.getTurnoutForRay(i);
+                                                if (positionTurnout != null) {
+                                                    sml.addAutoTurnout(positionTurnout.getSystemName(), Turnout.THROWN, destMast);
+                                                    log.info("Added Turntable position turnout {} for ray {} to logic for path {} -> {}",
+                                                            positionTurnout.getDisplayName(), rayBlock.getDisplayName(), sourceMast.getDisplayName(), destMast.getDisplayName());
+                                                }
+                                                // We found the path, so we can stop checking other rays for this destination
+                                                break;
+                                            }
+                                        } catch (JmriException ex) {
+                                            // This is expected if this ray doesn't lead to the destination. Continue to the next ray.
+                                            log.trace("No path from {} to {} via ray {}", sourceMast.getDisplayName(), destMast.getDisplayName(), rayBlock.getDisplayName());
+                                        }
                                     }
                                 }
                             }
                         } catch (JmriException ex) {
-                            log.warn("Unexpected exception setting mast for turntable", ex);
+                            log.warn("Unexpected exception setting mast for turntable path to {}", destMast.getDisplayName(), ex);
                         }
                     }
                 }

@@ -306,14 +306,29 @@ final public class LayoutBlockConnectivityTools {
         }
 
         if (isSourceTurntable) {
-            log.info("DIAGNOSTIC - Logic branch: Source is a turntable.");
-            // For a turntable source, the "protecting block" (nextBlock) is ill-defined and should be ignored.
-            // We check for a direct route from the turntable block itself to the destination.
-            boolean valid = currentBlock.isRouteToDestValid(currentBlock.getBlock(), destBlock.getBlock());
-            log.info("DIAGNOSTIC - isRouteToDestValid(from:{}, to:{}) returned: {}. Path is {}.",
-                    currentBlock.getDisplayName(), destBlock.getDisplayName(), valid, (valid ? "VALID" : "INVALID"));
-            return valid;
+            log.debug("DIAGNOSTIC - Logic branch: Source is a turntable. Validating by attempting to find a path.");
+            // For a turntable source, the only reliable validation is to confirm a full path can be found.
+            try {
+                // We ask getLayoutBlocks to find the path. If it succeeds, the destination is valid.
+                // This requires that getLayoutBlocks is able to handle a path starting from a turntable.
+                List<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod);
+                return !blockList.isEmpty();
+            } catch (JmriException e) {
+                // If getLayoutBlocks throws an exception, it means no valid path was found.
+                log.debug("Validation failed for turntable path: getLayoutBlocks could not find a route: {}", e.getMessage());
+                return false;
+            }
         }
+
+//        if (isSourceTurntable) {
+//            log.info("DIAGNOSTIC - Logic branch: Source is a turntable.");
+//            // For a turntable source, the "protecting block" (nextBlock) is ill-defined and should be ignored.
+//            // We check for a direct route from the turntable block itself to the destination.
+//            boolean valid = currentBlock.isRouteToDestValid(currentBlock.getBlock(), destBlock.getBlock());
+//            log.info("DIAGNOSTIC - isRouteToDestValid(from:{}, to:{}) returned: {}. Path is {}.",
+//                    currentBlock.getDisplayName(), destBlock.getDisplayName(), valid, (valid ? "VALID" : "INVALID"));
+//            return valid;
+//        }
 
         // Check if the destination block is a turntable
         boolean isDestTurntable = false;
