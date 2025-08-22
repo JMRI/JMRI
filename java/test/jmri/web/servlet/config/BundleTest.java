@@ -1,8 +1,11 @@
 package jmri.web.servlet.config;
 
 import java.util.Locale;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests for the Bundle class
@@ -11,32 +14,36 @@ import org.junit.jupiter.api.*;
  */
 public class BundleTest  {
 
-    @Test public void testGoodKeyMessage() {
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
+    @Test
+    public void testGoodKeyMessage() {
+        assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));
     }
 
     @Test
     public void testBadKeyMessage() {
-        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
+        assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT"));
     }
 
-    @Test public void testGoodKeyMessageArg() {
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
-        Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
+    @Test
+    public void testGoodKeyMessageArg() {
+        assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));
+        assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));
     }
 
     @Test
     public void testBadKeyMessageArg() {
-        Assert.assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
+        assertThrows(java.util.MissingResourceException.class, () -> Bundle.getMessage("FFFFFTTTTTTT", new Object[]{}));
     }
 
-    @Test public void testLocaleMessage() {
-        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
+    @Test
+    public void testLocaleMessage() {
+        assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout"));
     }
 
-    @Test public void testLocaleMessageArg() {
-        Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
-        Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
+    @Test
+    public void testLocaleMessageArg() {
+        assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
+        assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
     }
 
 }
