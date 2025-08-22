@@ -108,6 +108,9 @@ public class AutoActiveTrain implements ThrottleListener {
     private float _stopBySpeedProfileAdjust = 1.0f;
     private boolean _stopBySpeedProfile = false;
     private boolean _useSpeedProfileRequested = true;
+    private int _functionLight = 0;
+    private int _functionBell = 1;
+    private int _functionHorn = 2;
 
     // accessor functions
     public ActiveTrain getActiveTrain() {
@@ -273,6 +276,48 @@ public class AutoActiveTrain implements ThrottleListener {
 
     public float getStopBySpeedProfileAdjust() {
         return _stopBySpeedProfileAdjust;
+    }
+    /**
+     * Set the F-Number for the light
+     * @param value F-Number
+     */
+    public void setFunctionLight(int value) {
+        _functionLight = value;
+    }
+    /**
+     * Returns the F-Number for the light.
+     * @return F-Number
+     */
+    public int getFunctionLight() {
+        return _functionLight;
+    }
+    /**
+     * Set the F-Number for the Bell
+     * @param value F-Number
+     */
+    public void setFunctionBell(int value) {
+        _functionBell = value;
+    }
+    /**
+     * Returns the F-Number for the Bell.
+     * @return F-Number
+     */
+    public int getFunctionBell() {
+        return _functionBell;
+    }
+    /**
+     * Set the F-Number for the Horn
+     * @param value F-Number
+     */
+    public void setFunctionHorn(int value) {
+        _functionHorn = value;
+    }
+    /**
+     * Returns the F-Number for the Horn.
+     * @return F-Number
+     */
+    public int getFunctionHorn() {
+        return _functionHorn;
     }
 
     /**
