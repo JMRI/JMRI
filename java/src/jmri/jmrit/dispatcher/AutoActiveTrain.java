@@ -604,6 +604,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     b.getDisplayName(USERSYS), getBlockLength(b));
             if (b == _nextBlock || _nextBlock == null) {
                 _currentBlock = b;
+                _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
                 // defer setting the next/previous blocks until we know if its required and in what fashion
                 // for stopping blocks that action happens after the train has stopped.
                 // first check for entering the end point
@@ -620,7 +621,6 @@ public class AutoActiveTrain implements ThrottleListener {
                         _activeTrain.setTransitReversed(false);
                         _activeTrain.resetAllAllocatedSections();
                         _previousBlock = null;
-                        _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
                         setEngineDirection();
                         if ((_nextSection != null) && !_activeTrain.isInAllocatedList(_nextSection)) {
                             // we need to get a next section
