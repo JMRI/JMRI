@@ -635,6 +635,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     else if ( _activeTrain.getResetWhenDone()) {
                         // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
                         removeCurrentSignal();
+                        _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
                         stopInCurrentSection(BEGINNING_RESET);
                     }
                     // else we are ending here
