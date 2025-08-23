@@ -67,7 +67,7 @@ public class DefaultSignalMastLogicManager
                                 if (positionTurnout != null) {
                                     // *** CORRECTED LINE ***
                                     // Pass the turnout's system name (String) to the method.
-                                    sml.addTurnout(positionTurnout.getSystemName(), Turnout.THROWN, destination);
+                                    sml.addAutoTurnout(positionTurnout.getSystemName(), Turnout.THROWN, destination);
                                     log.info("Added Turntable position turnout {} for ray {} to logic for path {} -> {}",
                                             positionTurnout.getDisplayName(), rayBlock.getDisplayName(), source.getDisplayName(), destination.getDisplayName());
                                 }
