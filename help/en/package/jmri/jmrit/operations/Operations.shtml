@@ -297,7 +297,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car
                     Type</a></li>
                 <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
-                <li>Print or Preview Car Loads</li>
+                <li><a href="#PrintCarLoads">Print or Preview Car Loads</a></li>
                 <li><a href="#SetCars">Set Cars (Modify Multiple Cars)</a></li>
               </ul></li>
           </ul></li>
@@ -2952,10 +2952,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         both checkboxes will list all of the schedules by car types, along with the loads received
         and shipped.</p>
 
-      <p>If you want a list of custom car loads for each of your car types, you can use the
-        "Print Car Loads" or "Preview Car Loads" found under the "Tools" menu in the "Show Schedules
-        by Car Type and Load" window. You can create or edit any car load using the "Edit Car Loads"
-        tool.</p>
+      <p>
+        If you want a list of custom car loads for each of your car types, you can use the <a
+          href="#PrintCarLoads">Print or Preview Car Loads</a> found under the "Tools" menu in the
+        "Show Schedules by Car Type and Load" window. You can create or edit any car load using the
+        "Edit Car Loads" tool.
+      </p>
 
       <h3 id="ShowStagingAndSchedulesByCarTypeAndLoad">Show Staging and Schedules by Car Type
         and Load</h3>
@@ -3020,9 +3022,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       </table>
 
 
-      <p>If you want a list of custom car loads for each of your car types, you can use the
-        "Print Car Loads" or "Preview Car Loads" found under the "Tools" menu. You can create or
-        edit any car load using the "Edit Car Loads" tool.</p>
+      <p>
+        If you want a list of custom car loads for each of your car types, you can use the <a
+          href="#PrintCarLoads">Print or Preview Car Loads</a> found under the "Tools" menu. You can
+        create or edit any car load using the "Edit Car Loads" tool.
+      </p>
 
       <h3 id="Interchange">Classification/Interchange Tracks</h3>
       The easiest way to create the exchange of cars between trains is to use a
@@ -4561,6 +4565,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       service can be found under Trains&rArr;Tools or Cars&rArr;Tools. Very useful when adding a new
       car type to your roster. See <a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a>
       for more info.
+
+      <h4 id="PrintCarLoads">Print or Preview Car Loads</h4>
+      This tool will print or preview custom car loads by car type. It will also list default loads
+      that have been modified.
 
       <h4 id="SetCars">Set Cars (Modify Multiple Cars)</h4>
 
