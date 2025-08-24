@@ -1306,8 +1306,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3>Car Routing Options</h3>
 
       <h4>Enable Car Routing</h4>
-      When car routing is enabled, the program will use multiple trains to deliver a car to its
-      final destination. It is recommended that you leave this option enabled. The
+      When car routing is enabled, the program can use multiple trains to deliver a car to its final
+      destination. When car routing is disabled, the program will attempt to route the car using a
+      single train. If it's not possible to route the car with a single train, the program will
+      remove the car's final destination, and eventually send the car to a location/track that is
+      configured to accept the car. The
       <a href="#LocationDivision">railroad division</a> feature, <a
         href="#ReturnWhenEmpty">RWE</a>, <a href="#ReturnWhenLoaded">RWL</a>, and schedules use
       routing to move cars. With car routing enabled, you can use a
@@ -1320,12 +1323,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       and find a route using a maximum of seven trains to complete the car move. Note that the
       program never gives up trying to route a car. If a car has been assigned a
       <a href="#CarsSet">Final Destination</a> or <a href="#EditCarLoads">custom load</a> the
-      program will try and route the car during every train build that has access to the car.
+      program will try and route the car during every train build that has access to the car. It is
+      recommended that you leave car routing enabled.
 
       <h4 id="EnableRoutingYards">Enable Car Routing via Yards</h4>
       The program when routing a car will first try to find classification/interchange tracks to
       move the car to its final destination. If you want the program to also consider using yard
-      tracks when routing, select this option.
+      tracks when routing, select this option. It is recommended that you only use
+      classification/interchange tracks when routing cars, and leave this option disabled.
 
       <h4 id="EnableRoutingStaging">Enable Car Routing through Staging</h4>
       Routing through staging is disabled by default. This is considered to be an advanced feature
