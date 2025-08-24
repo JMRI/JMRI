@@ -439,6 +439,7 @@
                  If you have manually compensated for those errors you may want to re-evaluate
                  the Min/Max throttle settings and stopping distance percentage.</li>
              <li>The F-Numbers for Transit Section Actions for Light, Bell and Horn can be set on a per train basis.</li>
+             <li>Fix bug delayed start actions not working when using speed profile ramping</li>
         </ul>
 
     <h3>Dispatcher System</h3>

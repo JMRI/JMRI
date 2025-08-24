@@ -150,7 +150,8 @@ public class TransitSectionAction {
     private int mDataWhen = -1; // negative number signified no data 
     private int mDataWhat1 = -1;    // negative number signified no data 
     private float mDataWhat1Float = -1.0f;
-    private int mDataWhat2 = -1;    // negative number signified no data 
+    private int mDataWhat2 = -1;    // negative number signified no data
+    private float mDataWhat2Float = -1.0f;
     private String mStringWhen = "";
     private String mStringWhat = "";
     private String mStringWhat2 = "";
@@ -195,6 +196,14 @@ public class TransitSectionAction {
 
     public void setDataWhat1Float(float n) {
         mDataWhat1Float = n;
+    }
+
+    public float getDataWhat2Float() {
+        return mDataWhat2Float;
+    }
+
+    public void setDataWhat2Float(float n) {
+        mDataWhat2Float = n;
     }
 
     public int getDataWhat1() {
