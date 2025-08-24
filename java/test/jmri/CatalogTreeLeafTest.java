@@ -1,7 +1,6 @@
 package jmri;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -12,7 +11,7 @@ public class CatalogTreeLeafTest {
     @Test
     public void testCTor() {
         CatalogTreeLeaf t = new CatalogTreeLeaf("testleaf","testpath",1);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
