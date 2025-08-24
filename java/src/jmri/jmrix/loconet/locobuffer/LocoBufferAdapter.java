@@ -140,6 +140,9 @@ public class LocoBufferAdapter extends LnPortController {
      */
     @Override
     public boolean okToSend() {
+        if (mPort.startsWith("pipe:") || mPort.startsWith("iopipe:")) {
+            return true;
+        }
         return currentSerialPort.getCTS();
     }
 
