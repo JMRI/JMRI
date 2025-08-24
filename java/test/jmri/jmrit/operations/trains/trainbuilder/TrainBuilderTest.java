@@ -20637,5 +20637,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // use all of the engine attributes when creating Manifests
         Setup.setDropEngineMessageFormat(Setup.getEngineAttributes());
         Setup.setPickupEngineMessageFormat(Setup.getEngineAttributes());
+        // allow routing through yard
+        Setup.setCarRoutingViaYardsEnabled(true);
     }
 }
