@@ -3,36 +3,36 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for TimebaseRateException class.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class TimebaseRateExceptionTest {
 
-   @Test
-   public void testConstructor(){
-      Assert.assertNotNull("TimebaseRateException constructor",new TimebaseRateException());
-   }
+    @Test
+    public void testConstructor(){
+        assertNotNull( new TimebaseRateException(), "TimebaseRateException constructor");
+    }
 
-   @Test
-   public void testStringConstructor(){
-      Assert.assertNotNull("TimebaseRateException string constructor",new TimebaseRateException("test exception"));
-   }
+    @Test
+    public void testStringConstructor(){
+        assertNotNull( new TimebaseRateException("test exception"), "TimebaseRateException string constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }
