@@ -5,8 +5,10 @@ import javax.annotation.Nonnull;
 import jmri.util.JUnitUtil;
 import jmri.util.PreferNumericComparator;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Test default method
@@ -39,7 +41,7 @@ public class NameIncrementingManagerTest {
         };
 
         String next = testManager.getNextValidSystemName(start);
-        Assert.assertEquals("IS13", next);
+        assertEquals("IS13", next);
     }
 
     @Test
@@ -59,8 +61,8 @@ public class NameIncrementingManagerTest {
             }
         };
 
-        JmriException assertThrows = Assertions.assertThrows(JmriException.class, () -> testManager.getNextValidSystemName(start));
-        Assertions.assertEquals("No existing number found when incrementing ISFOO", assertThrows.getMessage());
+        JmriException assertThrows = assertThrows(JmriException.class, () -> testManager.getNextValidSystemName(start));
+        assertEquals("No existing number found when incrementing ISFOO", assertThrows.getMessage());
 
     }
 
@@ -97,7 +99,7 @@ public class NameIncrementingManagerTest {
         };
 
         String next = testManager.getNextValidSystemName(start);
-        Assert.assertEquals("IT14", next);
+        assertEquals("IT14", next);
     }
 
     @BeforeEach
