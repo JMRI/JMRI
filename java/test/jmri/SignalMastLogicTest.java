@@ -2,9 +2,13 @@ package jmri;
 
 import java.util.Hashtable;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the jmri.SignalMastLogic class
@@ -24,58 +28,58 @@ public class SignalMastLogicTest {
         Sensor is2 = InstanceManager.sensorManagerInstance().provideSensor("IS2");
         // provide 3 virtual signal masts:
         SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
-        Assert.assertNotNull("SignalMast is null!", sm1);
+        assertNotNull( sm1, "SignalMast is null!");
         SignalMast sm2 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
-        Assert.assertNotNull("SignalMast is null!", sm2);
+        assertNotNull( sm2, "SignalMast is null!");
         SignalMast sm3 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0003)");
-        Assert.assertNotNull("SignalMast is null!", sm3);
+        assertNotNull( sm3, "SignalMast is null!");
         // provide a signal mast logic:
         SignalMastLogic sml = InstanceManager.getDefault(SignalMastLogicManager.class).newSignalMastLogic(sm1);
         sml.setDestinationMast(sm2);
-        Assert.assertNotNull("SignalMastLogic is null!", sml);
+        assertNotNull( sml, "SignalMastLogic is null!");
         sml.allowAutoMaticSignalMastGeneration(false, sm2);
         // add a control sensor
         sml.addSensor("IS1", 1, sm2); // Active
         // check config
-        Assert.assertEquals("IS1 included", true, sml.isSensorIncluded(is1, sm2));
-        Assert.assertEquals("IS2 not included", false, sml.isSensorIncluded(is2, sm2));
-        Assert.assertEquals("IS1 state", 1, sml.getSensorState(is1, sm2));
+        assertTrue( sml.isSensorIncluded(is1, sm2), "IS1 included");
+        assertFalse( sml.isSensorIncluded(is2, sm2), "IS2 not included");
+        assertEquals( 1, sml.getSensorState(is1, sm2), "IS1 state");
         // add 1 control turnout
         Hashtable<NamedBeanHandle<Turnout>, Integer> hashTurnouts = new Hashtable<>();
         NamedBeanHandle<Turnout> namedTurnout1 = nbhm.getNamedBeanHandle("IT1", it1);
         hashTurnouts.put(namedTurnout1, 1); // 1 = Closed
         sml.setTurnouts(hashTurnouts, sm2);
         // check config
-        Assert.assertTrue("IT1 included", sml.isTurnoutIncluded(it1, sm2));
-        Assert.assertFalse("IT2 before", sml.isTurnoutIncluded(it2, sm2));
+        assertTrue( sml.isTurnoutIncluded(it1, sm2), "IT1 included");
+        assertFalse( sml.isTurnoutIncluded(it2, sm2), "IT2 before");
         // add another control turnout
         NamedBeanHandle<Turnout> namedTurnout2 = nbhm.getNamedBeanHandle("IT2", it2);
         hashTurnouts.put(namedTurnout2, 2); // 2 = Thrown
         sml.setTurnouts(hashTurnouts, sm2);
-        Assert.assertEquals("IT2 after", true, sml.isTurnoutIncluded(it2, sm2));
-        Assert.assertEquals("IT1 state", 1, sml.getTurnoutState(it1, sm2));
+        assertTrue( sml.isTurnoutIncluded(it2, sm2), "IT2 after");
+        assertEquals( 1, sml.getTurnoutState(it1, sm2), "IT1 state");
         // add a control signal mast
         Hashtable<SignalMast, String> hashSignalMast = new Hashtable<>();
         hashSignalMast.put(sm3, "Stop");
         sml.setMasts(hashSignalMast, sm2);
         // check config
-        Assert.assertEquals("SM3 included", true, sml.isSignalMastIncluded(sm3, sm2));
-        Assert.assertEquals("SM3 aspect before", "Stop", sml.getSignalMastState(sm3, sm2));
+        assertTrue( sml.isSignalMastIncluded(sm3, sm2), "SM3 included");
+        assertEquals( "Stop", sml.getSignalMastState(sm3, sm2), "SM3 aspect before");
         // set aspect to Proceed
         hashSignalMast.put(sm3, "Proceed");
         sml.setMasts(hashSignalMast, sm2);
-        Assert.assertEquals("SM3 aspect after", "Proceed", sml.getSignalMastState(sm3, sm2));
+        assertEquals( "Proceed", sml.getSignalMastState(sm3, sm2), "SM3 aspect after");
         // set comment
         sml.setComment("SMLTest", sm2);
-        Assert.assertEquals("comment", "SMLTest", sml.getComment(sm2));
+        assertEquals( "SMLTest", sml.getComment(sm2), "comment");
         sml.initialise(sm2);
         // set SML disabled
         sml.setDisabled(sm2);
-        Assert.assertEquals("disabled", false, sml.isEnabled(sm2));
+        assertFalse( sml.isEnabled(sm2), "disabled");
         // change source mast and check
         sml.replaceSourceMast(sm1, sm3);
-        Assert.assertFalse("sourcemast", sml.getSourceMast() == sm1);
-        Assert.assertTrue("sourcemast", sml.getSourceMast() == sm3);
+        assertFalse( sml.getSourceMast() == sm1, "sourcemast");
+        assertTrue( sml.getSourceMast() == sm3, "sourcemast");
         // clean up
         sml.dispose();
     }
@@ -85,13 +89,13 @@ public class SignalMastLogicTest {
      */
     @Test
     public void testRename() {
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assumptions.assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
 
         // provide 2 virtual signal masts:
         SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
-        Assert.assertNotNull("SignalMast sm1 is null!", sm1);
+        assertNotNull( sm1, "SignalMast sm1 is null!");
         SignalMast sm2 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
-        Assert.assertNotNull("SignalMast sm2 is null!", sm2);
+        assertNotNull( sm2, "SignalMast sm2 is null!");
 
         // Change logic delay from 500ms to 20ms to speed tests:
         InstanceManager.getDefault(SignalMastLogicManager.class).setSignalLogicDelay(20);
@@ -99,7 +103,7 @@ public class SignalMastLogicTest {
         // provide a signal mast logic:
         SignalMastLogic sml = InstanceManager.getDefault(SignalMastLogicManager.class).newSignalMastLogic(sm1);
         sml.setDestinationMast(sm2);
-        Assert.assertNotNull("SignalMastLogic is null!", sml);
+        assertNotNull( sml, "SignalMastLogic is null!");
 
         sml.initialise();
         JUnitUtil.waitFor( ()-> "Medium Approach".equals(sm1.getAspect()), "sm1 aspect (1)" );
