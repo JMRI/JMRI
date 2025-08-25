@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+
 import javax.swing.*;
 
 import org.slf4j.Logger;
@@ -91,6 +92,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new CarLoadEditFrameAction());
+        toolMenu.addSeparator();
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);

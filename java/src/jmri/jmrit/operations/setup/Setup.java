@@ -301,7 +301,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private String labelRfid = Bundle.getMessage("RFID");
 
     private boolean carRoutingEnabled = true; // when true enable car routing
-    private boolean carRoutingYards = true; // when true enable car routing via yard tracks
+    private boolean carRoutingYards = false; // when true enable car routing via yard tracks
     private boolean carRoutingStaging = false; // when true staging tracks can be used for car routing
     private boolean forwardToYardEnabled = true; // when true forward car to yard if track is full
     private boolean onlyActiveTrains = false; // when true only active trains are used for routing

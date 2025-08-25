@@ -177,6 +177,11 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             repaint();
             return;
         }
+        // header
+        addItemLeft(pRoute, new JLabel(Bundle.getMessage("Location")), 0, y);
+        addItemLeft(pRoute, new JLabel(Bundle.getMessage("Track")), 1, y);
+        addItemLeft(pRoute, new JLabel(Bundle.getMessage("Status")), 2, y++);
+
         List<RouteLocation> routeList = route.getLocationsBySequenceList();
         for (RouteLocation rl : routeList) {
             JLabel loc = new JLabel();

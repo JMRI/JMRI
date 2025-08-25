@@ -97,6 +97,7 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new CarLoadEditFrameAction());
+        toolMenu.addSeparator();
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
