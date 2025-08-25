@@ -1,7 +1,8 @@
 package jmri;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the Light class
@@ -13,22 +14,22 @@ public class LightTest {
     @Test
     @SuppressWarnings("all")
     public void testStateConstants() {
-        Assert.assertTrue("On and Off differ", (Light.ON & Light.OFF) == 0);
-        Assert.assertTrue("On and Unknown differ", (Light.ON & Light.UNKNOWN) == 0);
-        Assert.assertTrue("Off and Unknown differ", (Light.OFF & Light.UNKNOWN) == 0);
-        Assert.assertTrue("On and Inconsistent differ", (Light.ON & Light.INCONSISTENT) == 0);
-        Assert.assertTrue("Off and Inconsistent differ", (Light.OFF & Light.INCONSISTENT) == 0);
+        assertTrue( (Light.ON & Light.OFF) == 0, "On and Off differ");
+        assertTrue( (Light.ON & Light.UNKNOWN) == 0, "On and Unknown differ");
+        assertTrue( (Light.OFF & Light.UNKNOWN) == 0, "Off and Unknown differ");
+        assertTrue( (Light.ON & Light.INCONSISTENT) == 0, "On and Inconsistent differ");
+        assertTrue( (Light.OFF & Light.INCONSISTENT) == 0, "Off and Inconsistent differ");
     }
 
     @Test
     @SuppressWarnings("all")
     public void testTransitionConstants() {
-        Assert.assertTrue("On and INTERMEDIATE are bits", (Light.ON & Light.INTERMEDIATE) == 0);
+        assertTrue( (Light.ON & Light.INTERMEDIATE) == 0, "On and INTERMEDIATE are bits");
 
-        Assert.assertTrue("TRANSITIONINGTOFULLON overlap", (Light.TRANSITIONINGTOFULLON & Light.TRANSITIONING) != 0);
-        Assert.assertTrue("TRANSITIONINGHIGHER overlap", (Light.TRANSITIONINGHIGHER & Light.TRANSITIONING) != 0);
-        Assert.assertTrue("TRANSITIONINGLOWER overlap", (Light.TRANSITIONINGLOWER & Light.TRANSITIONING) != 0);
-        Assert.assertTrue("TRANSITIONINGTOFULLOFF overlap", (Light.TRANSITIONINGTOFULLOFF & Light.TRANSITIONING) != 0);
+        assertTrue( (Light.TRANSITIONINGTOFULLON & Light.TRANSITIONING) != 0, "TRANSITIONINGTOFULLON overlap");
+        assertTrue( (Light.TRANSITIONINGHIGHER & Light.TRANSITIONING) != 0, "TRANSITIONINGHIGHER overlap");
+        assertTrue( (Light.TRANSITIONINGLOWER & Light.TRANSITIONING) != 0, "TRANSITIONINGLOWER overlap");
+        assertTrue( (Light.TRANSITIONINGTOFULLOFF & Light.TRANSITIONING) != 0, "TRANSITIONINGTOFULLOFF overlap");
     }
     
     @BeforeEach

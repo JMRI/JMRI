@@ -3,7 +3,6 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -16,7 +15,7 @@ public class EntryPointTest {
         Block a = new Block("a");
         Block b = new Block("b");
         EntryPoint t = new EntryPoint(a,b,"forward");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
