@@ -1403,7 +1403,7 @@ public class AutoActiveTrain implements ThrottleListener {
             setStopNow();
             return;
         }
-        //log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(), _currentAllocatedSection.getSection().getDisplayName(USERSYS),task,getTargetSpeed());
+        log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(), _currentAllocatedSection.getSection().getDisplayName(USERSYS),task,getTargetSpeed());
         if (getTargetSpeed() == 0.0f || isStopping()) {
             log.debug("{}: train is already stopped or stopping.", _activeTrain.getTrainName());
             // ignore if train is already stopped or if stopping is in progress
