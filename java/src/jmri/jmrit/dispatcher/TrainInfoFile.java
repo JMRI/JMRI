@@ -679,6 +679,8 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                 summaries.add(new TrainInfoFileSummary(fileName));
             } catch (IOException ex) {
                 summaries.add(new TrainInfoFileSummary(fileName));
+            } catch (Exception ex) {
+                log.error("Traininfo File [{}] unexplained error, currupted?",fileName);
             }
         }
         return summaries;
