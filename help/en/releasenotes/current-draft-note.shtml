@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Change DCC-EX heartbeat from <s> to <#>, requested by DCC-EX team</li>
             </ul>
 
         <h4>DCC4pc</h4>
