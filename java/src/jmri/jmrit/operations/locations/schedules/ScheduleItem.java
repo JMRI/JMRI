@@ -8,6 +8,7 @@ import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
@@ -95,7 +96,11 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
     public boolean doRandom() {
         // make an adjustment based on the number of cars of a given type
         int numberOfCars = InstanceManager.getDefault(CarManager.class).getByTypeList(getTypeName()).size();
-        int adjustment = 100 + numberOfCars;
+        int passes = 1;
+        if (Setup.isBuildAggressive()) {
+            passes = Setup.getNumberPasses();
+        }
+        int adjustment = (100 + numberOfCars) * passes;
         _calculatedRandom = adjustment * Math.random();
         try {
             int value = Integer.parseInt(getRandom());
