@@ -49,14 +49,31 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
         if self.logLevel > 0: print "Block", BlockManager.getNamedBeanSet()
         for block in BlockManager.getNamedBeanSet():
-            #blocks with the word stop in the comment are stations
+            # blocks with the word stop in the comment are stations
             comment = block.getComment()
             if comment != None:
                 if "stop" in comment.lower():
                     station_block_name = block.getUserName()
-                    self.station_block_list.append(station_block_name)
-                    self.station_blk_list.append(self.get_layout_block(station_block_name))
-        if self.logLevel > 0: print 'self.station_block_list' , self.station_block_list
+                    # Add if not already present
+                    if station_block_name not in self.station_block_list:
+                        self.station_block_list.append(station_block_name)
+                        self.station_blk_list.append(self.get_layout_block(station_block_name))
+
+        # Also add all turntable blocks as stations, as they are valid start/end points for paths.
+        EditorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+        for panel in EditorManager.getList():
+            if type(panel) == jmri.jmrit.display.layoutEditor.LayoutEditor:
+                for turntable in panel.getLayoutTurntables():
+                    turntable_block = turntable.getLayoutBlock()
+                    if turntable_block is not None:
+                        station_block_name = turntable_block.getUserName()
+                        # Add if not already present
+                        if station_block_name not in self.station_block_list:
+                            self.station_block_list.append(station_block_name)
+                            self.station_blk_list.append(turntable_block)
+                            if self.logLevel > 0: print "Added turntable block to stations:", station_block_name
+
+        if self.logLevel > 0: print 'self.station_block_list', self.station_block_list
         
     def get_layout_block(self, block_name):
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -636,4 +653,3 @@ class LabelledEdge(DefaultWeightedEdge):
         if self.logLevel > 0: print item_list    
     
         return "*****to_string*****(\n" + self.getSource() + " : " + self.getTarget()  + " : " + item_list.rstrip(": ") + ")*****to_string end*******"
-        

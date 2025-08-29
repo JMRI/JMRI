@@ -321,11 +321,11 @@ final public class LayoutBlockConnectivityTools {
         }
 
 //        if (isSourceTurntable) {
-//            log.info("DIAGNOSTIC - Logic branch: Source is a turntable.");
+//            log.debug("DIAGNOSTIC - Logic branch: Source is a turntable.");
 //            // For a turntable source, the "protecting block" (nextBlock) is ill-defined and should be ignored.
 //            // We check for a direct route from the turntable block itself to the destination.
 //            boolean valid = currentBlock.isRouteToDestValid(currentBlock.getBlock(), destBlock.getBlock());
-//            log.info("DIAGNOSTIC - isRouteToDestValid(from:{}, to:{}) returned: {}. Path is {}.",
+//            log.debug("DIAGNOSTIC - isRouteToDestValid(from:{}, to:{}) returned: {}. Path is {}.",
 //                    currentBlock.getDisplayName(), destBlock.getDisplayName(), valid, (valid ? "VALID" : "INVALID"));
 //            return valid;
 //        }
@@ -343,20 +343,20 @@ final public class LayoutBlockConnectivityTools {
         }
 
         if (isDestTurntable) {
-            log.info("DIAGNOSTIC - Logic branch: Destination is a turntable.");
+            log.debug("DIAGNOSTIC - Logic branch: Destination is a turntable.");
             // For a turntable destination, we check for a route from the block the source signal protects (nextBlock)
             // to the turntable block (destBlock).
             boolean valid = currentBlock.isRouteToDestValid(nextBlock.getBlock(), destBlock.getBlock());
-            log.info("DIAGNOSTIC - isRouteToDestValid(from:{}, to:{}) returned: {}. Path is {}.",
+            log.debug("DIAGNOSTIC - isRouteToDestValid(from:{}, to:{}) returned: {}. Path is {}.",
                     nextBlock.getDisplayName(), destBlock.getDisplayName(), valid, (valid ? "VALID" : "INVALID"));
             return valid;
         }
 
-        log.info("DIAGNOSTIC - Logic branch: Normal path.");
+        log.debug("DIAGNOSTIC - Logic branch: Normal path.");
         // Original validation logic for non-turntable paths
         if ((destBlock != null) && (currentBlock != null) && (nextBlock != null)) {
             if (!currentBlock.isRouteToDestValid(nextBlock.getBlock(), destBlock.getBlock())) {
-                log.info("DIAGNOSTIC - REJECTED: currentBlock.isRouteToDestValid returned false.");
+                log.debug("DIAGNOSTIC - REJECTED: currentBlock.isRouteToDestValid returned false.");
                 return false;
             }
 
@@ -365,7 +365,7 @@ final public class LayoutBlockConnectivityTools {
             }
             if (!destBlockn1.isEmpty() && currentBlock == destBlockn1.get(0) && nextBlock == destBlock) {
                 log.debug("Our dest protecting block is our current block and our protecting block is the same as our destination block");
-                log.info("DIAGNOSTIC - REJECTED: Source and destination protecting blocks are the same.");
+                log.debug("DIAGNOSTIC - REJECTED: Source and destination protecting blocks are the same.");
                 return false;
             }
 
@@ -381,13 +381,13 @@ final public class LayoutBlockConnectivityTools {
 
             if ((proCount == -1) && (desCount == -1)) {
                 log.debug("Dest and dest+1 are directly connected");
-                log.info("DIAGNOSTIC - REJECTED: Dest and dest+1 are directly connected.");
+                log.debug("DIAGNOSTIC - REJECTED: Dest and dest+1 are directly connected.");
                 return false;
             }
 
             if (proCount > desCount && (proCount - 1) == desCount) {
                 log.debug("Protecting is one hop away from destination and therefore valid.");
-                log.info("DIAGNOSTIC - ACCEPTED: Hop count is valid.");
+                log.debug("DIAGNOSTIC - ACCEPTED: Hop count is valid.");
                 return true;
             }
 
@@ -399,11 +399,11 @@ final public class LayoutBlockConnectivityTools {
 
             for (LayoutBlock dp : destBlockn1) {
                 if (blockList.contains(dp) && currentBlock != dp) {
-                    log.info("DIAGNOSTIC - REJECTED: Destination protecting block {} is in the path.", dp.getDisplayName());
+                    log.debug("DIAGNOSTIC - REJECTED: Destination protecting block {} is in the path.", dp.getDisplayName());
                     return false;
                 }
             }
-            log.info("DIAGNOSTIC - ACCEPTED: Path is valid.");
+            log.debug("DIAGNOSTIC - ACCEPTED: Path is valid.");
             return true;
 
         } else if (destBlock == null) {
@@ -902,7 +902,7 @@ final public class LayoutBlockConnectivityTools {
 
         if (sourceTurntable != null) {
             // It's a turntable! Build the list of all ray blocks.
-            log.info("DIAGNOSTIC - Source is a turntable mast. Discovering destinations for all rays.");
+            log.debug("DIAGNOSTIC - Source is a turntable mast. Discovering destinations for all rays.");
             lProtecting = new ArrayList<>();
             for (int i = 0; i < sourceTurntable.getNumberRays(); i++) {
                 TrackSegment rayConnect = sourceTurntable.getRayConnectOrdered(i);

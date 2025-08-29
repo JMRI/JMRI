@@ -42,17 +42,25 @@ final public class TransitCreationTool {
             }
             //Run through a series of checks that this bean is reachable from the previous
             if ((nb instanceof SignalMast) && (list.get(list.size() - 1) instanceof SignalMast)) {
-                SignalMastLogicManager smlm = InstanceManager.getDefault(SignalMastLogicManager.class);
-                SignalMastLogic sml = smlm.getSignalMastLogic(((SignalMast) list.get(list.size() - 1)));
-                if (sml == null || !sml.isDestinationValid((SignalMast) nb)) {
-                    String error = Bundle.getMessage("TCTErrorMastPairsNotValid", nb.getDisplayName(), list.get(list.size() - 1).getDisplayName());
-                    log.error("will throw {}", error);
-                    throw new JmriException(error);
-                }
-                if (sml.getAssociatedSection((SignalMast) nb) == null) {
-                    String error = Bundle.getMessage("TCTErrorMastPairsNoSection", list.get(list.size() - 1).getDisplayName(), nb.getDisplayName());
-                    log.error("will throw {}", error);
-                    throw new JmriException(error);
+                SignalMast previousMast = (SignalMast) list.get(list.size() - 1);
+
+                // If the previous mast is a turntable mast, we trust the higher-level script
+                // that the path is valid, as the simple reachability check here will fail.
+                if (previousMast instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
+                    log.debug("Skipping reachability check for Turntable Mast {}", previousMast.getDisplayName());
+                } else {
+                    SignalMastLogicManager smlm = InstanceManager.getDefault(SignalMastLogicManager.class);
+                    SignalMastLogic sml = smlm.getSignalMastLogic(previousMast);
+                    if (sml == null || !sml.isDestinationValid((SignalMast) nb)) {
+                        String error = Bundle.getMessage("TCTErrorMastPairsNotValid", nb.getDisplayName(), previousMast.getDisplayName());
+                        log.error("will throw {}", error);
+                        throw new JmriException(error);
+                    }
+                    if (sml.getAssociatedSection((SignalMast) nb) == null) {
+                        String error = Bundle.getMessage("TCTErrorMastPairsNoSection", previousMast.getDisplayName(), nb.getDisplayName());
+                        log.error("will throw {}", error);
+                        throw new JmriException(error);
+                    }
                 }
             } else {
                 //Need to add the method to get layout block connectivity.  Also work checking that the Layout Block routing has been initialised.

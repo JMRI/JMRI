@@ -292,7 +292,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             some_checks_OK = True
 
         if some_checks_OK:
-            msg = "Performed some prelimiary checks to ensure the trains run correctly\n\nAll Checks OK"
+            msg = "Performed some preliminary checks to ensure the trains run correctly\n\nAll Checks OK"
             title = "Checks"
             opt1 = "Continue"
             opt2 = "Look in more detail"
