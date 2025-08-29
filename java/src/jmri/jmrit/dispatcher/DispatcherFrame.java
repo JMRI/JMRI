@@ -345,7 +345,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 info.getStartBlockId(), info.getStartBlockSeq(), info.getDestinationBlockId(),
                 info.getDestinationBlockSeq(),
                 info.getAutoRun(), dccAddressToUse, info.getPriority(),
-                info.getResetWhenDone(), info.getReverseAtEnd(), true, null, info.getAllocationMethod());
+                info.getResetWhenDone(), info.getReverseAtEnd(), true, this, info.getAllocationMethod());
         if (at != null) {
             if (tSource == ActiveTrain.ROSTER) {
             RosterEntry re = Roster.getDefault().getEntryForId(rosterIDToUse);

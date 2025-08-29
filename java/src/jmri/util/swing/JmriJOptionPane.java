@@ -87,7 +87,7 @@ public class JmriJOptionPane {
      */
     public static void showMessageDialogNonModal(@CheckForNull Component parentComponent,
         Object message, String title, int messageType, @CheckForNull final Runnable callback ) {
-
+        log.info("Called with parent[{} title[{}]", parentComponent, title);
         JOptionPane pane = new JOptionPane(message, messageType);
         JDialog dialog = pane.createDialog(parentComponent, title);
         Window w = findWindowForComponent(parentComponent);
@@ -161,6 +161,7 @@ public class JmriJOptionPane {
         Icon icon, Object[] options, Object initialValue)
         throws HeadlessException {
         log.debug("showOptionDialog comp {} ", parentComponent);
+        log.info("showOptionDialog parent[{}] title[{}]", parentComponent, title);
 
         JOptionPane pane = new JOptionPane(message, messageType,
             optionType, icon, options, initialValue);
@@ -270,8 +271,13 @@ public class JmriJOptionPane {
     }
 
     private static void displayDialog(JOptionPane pane, Component parentComponent, String title){
+        log.info("Display with Parent title [{}]",title);
         pane.setComponentOrientation(JOptionPane.getRootFrame().getComponentOrientation());
-        Window w = findWindowForComponent(parentComponent);
+        Window w = null;
+        //if (parentComponent == null) {
+        //    w = jmri.util.JmriJFrame.getFrameList().get(0);
+        //}
+        w = findWindowForComponent(parentComponent);
         JDialog dialog = pane.createDialog(parentComponent, title);
         JDialogListener pcl = new JDialogListener(dialog);
         if ( w != null ) {
