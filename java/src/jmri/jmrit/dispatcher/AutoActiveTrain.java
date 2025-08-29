@@ -650,10 +650,20 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                     // are we restarting later
                     else if ( _activeTrain.getResetWhenDone()) {
-                        // entered start block of Transit, must stop and reset for continuing - ignore signal changes till train stopped.
-                        removeCurrentSignal();
-                        _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
-                        stopInCurrentSection(BEGINNING_RESET);
+                        // We enter this code for each block in the section.
+                        // If we stop in the farthest block eg Block 3 in a 3 Block Section
+                        // nothing special is required when starting.
+                        // If we stop in Block 1 of a 3 block section, and enter this code 
+                        // when starting off again, so its just an advance of the _nextBlock.
+                        // we can tell which situation it is by looking
+                        // whether the _nextSection is not null and allocated to us.
+                        if ( _nextSection == null || !_activeTrain.isInAllocatedList(_nextSection)) {
+                            removeCurrentSignal();
+                            _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
+                            stopInCurrentSection(BEGINNING_RESET);
+                        } else {
+                            _nextBlock = getNextBlock(_currentBlock, _currentAllocatedSection);
+                        }
                     }
                     // else we are ending here
                     else {
