@@ -2357,7 +2357,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             // We don't care which Layout Editor panel the signal mast is on, just so long as
             // the routing is done via layout blocks.
             remoteProtectingBlock = null;
-            for (int i = 0; i < layout.size(); i++) {
+            for (LayoutEditor editor : layout) {
                 log.debug("{} Layout name {}", destinationSignalMast.getDisplayName(), editor );
                 if (facingBlock == null) {
                     facingBlock = lbm.getFacingBlockByNamedBean(getSourceMast(), editor);
@@ -2387,39 +2387,55 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 throw new JmriException("No facing block found for destination mast " + destinationSignalMast.getDisplayName());
             }
             List<LayoutBlock> lblks = new ArrayList<>();
-            if (protectingBlock == null) {
-                log.debug("protecting block is null");
-                String pBlkNames = "";
-                StringBuffer lBlksNamesBuf = new StringBuffer();
-                for (LayoutBlock pBlk : protectingBlocks) {
-                    log.debug("checking layoutBlock {}", pBlk.getDisplayName());
-                    pBlkNames = pBlkNames + pBlk.getDisplayName() + " (" + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST) + "), ";
-                    if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
-                        try {
-                            lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, pBlk, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
-                            protectingBlock = pBlk;
-                            log.debug("building path names...");
-                            for (LayoutBlock lBlk : lblks) {
-                                lBlksNamesBuf.append(" ");
-                                lBlksNamesBuf.append(lBlk.getDisplayName());
+
+            // **** START OF MODIFIED LOGIC ****
+            if (source instanceof TurntableSignalMast) {
+                // This is a turntable. The "protecting block" is simply the destination block of the ray.
+                // We bypass the through-path validation which would otherwise fail.
+                if (DefaultSignalMastLogic.this.protecting.contains(destinationBlock)) {
+                    protectingBlock = destinationBlock;
+                } else {
+                    // This should not happen if the turntable and its rays are configured with blocks.
+                    throw new JmriException("Destination block " + destinationBlock.getDisplayName() + " is not a valid protecting block for turntable " + source.getDisplayName());
+                }
+            } else {
+                // This is the original logic for all non-turntable masts.
+                if (protectingBlock == null) {
+                    log.debug("protecting block is null");
+                    String pBlkNames = "";
+                    StringBuilder lBlksNamesBuf = new StringBuilder();
+                    for (LayoutBlock pBlk : protectingBlocks) {
+                        log.debug("checking layoutBlock {}", pBlk.getDisplayName());
+                        pBlkNames = pBlkNames + pBlk.getDisplayName() + " (" + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST) + "), ";
+                        if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
+                            try {
+                                lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, pBlk, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+                                protectingBlock = pBlk;
+                                log.debug("building path names...");
+                                for (LayoutBlock lBlk : lblks) {
+                                    lBlksNamesBuf.append(" ");
+                                    lBlksNamesBuf.append(lBlk.getDisplayName());
+                                }
+                                break;
+                            } catch (JmriException ee) {
+                                log.debug("path not found this time");
                             }
-                            break;
-                        } catch (JmriException ee) {
-                            log.debug("path not found this time");
                         }
                     }
-                }
-                String lBlksNames = new String(lBlksNamesBuf);
+                    String lBlksNames = new String(lBlksNamesBuf);
 
-                if (protectingBlock == null) {
-                    throw new JmriException("Path not valid, protecting block is null. Protecting block: " + pBlkNames
-                        + " not connected to " + facingBlock.getDisplayName() + ". Layout block names: " + lBlksNames);
+                    if (protectingBlock == null) {
+                        throw new JmriException("Path not valid, protecting block is null. Protecting block: " + pBlkNames
+                                + " not connected to " + facingBlock.getDisplayName() + ". Layout block names: " + lBlksNames);
+                    }
+                }
+                if (!lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock,protectingBlock,
+                        destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
+                    throw new JmriException("Path not valid, destination check failed.");
                 }
             }
-            if (!lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock,protectingBlock,
-                destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
-                throw new JmriException("Path not valid, destination check failed.");
-            }
+            // **** END OF MODIFIED LOGIC ****
+
             if (log.isDebugEnabled()) {
                 log.debug("{} face {}", destinationSignalMast.getDisplayName(), facingBlock);
                 log.debug("{} prot {}", destinationSignalMast.getDisplayName(), protectingBlock);
@@ -2436,11 +2452,11 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
 
                 try {
                     lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(
-                        facingBlock, destinationBlock, protectingBlock,
+                            facingBlock, destinationBlock, protectingBlock,
                             true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                 } catch (JmriException ee) {
                     log.error("No blocks found by the layout editor for pair {}-{}",
-                        source.getDisplayName(), destinationSignalMast.getDisplayName());
+                            source.getDisplayName(), destinationSignalMast.getDisplayName());
                 }
                 LinkedHashMap<Block, Integer> block = setupLayoutEditorTurnoutDetails(lblks);
 
