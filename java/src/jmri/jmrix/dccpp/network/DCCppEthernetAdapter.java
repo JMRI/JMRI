@@ -89,9 +89,14 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         keepAliveTimer = new java.util.TimerTask(){
                 @Override
                 public void run() {
-                    // If the timer times out, send a request for status
-                    DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController()
-                        .sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                    // When the timer times out, send a heartbeat (status request on DCC++, max num slots request on DCC-EX
+                    DCCppTrafficController tc = DCCppEthernetAdapter.this.getSystemConnectionMemo().getDCCppTrafficController();
+                    DCCppCommandStation cs = tc.getCommandStation();
+                    if (cs.isMaxNumSlotsMsgSupported()) {
+                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSMaxNumSlotsMsg(), null);                        
+                    } else {
+                        tc.sendDCCppMessage(jmri.jmrix.dccpp.DCCppMessage.makeCSStatusMsg(), null);
+                    }
                 }
             };
         jmri.util.TimerUtil.schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
