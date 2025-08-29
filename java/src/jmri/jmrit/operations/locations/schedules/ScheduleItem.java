@@ -96,11 +96,7 @@ public class ScheduleItem extends PropertyChangeSupport implements java.beans.Pr
     public boolean doRandom() {
         // make an adjustment based on the number of cars of a given type
         int numberOfCars = InstanceManager.getDefault(CarManager.class).getByTypeList(getTypeName()).size();
-        int passes = 1;
-        if (Setup.isBuildAggressive()) {
-            passes = Setup.getNumberPasses();
-        }
-        int adjustment = (100 + numberOfCars) * passes;
+        int adjustment = 100 + numberOfCars;
         _calculatedRandom = adjustment * Math.random();
         try {
             int value = Integer.parseInt(getRandom());
