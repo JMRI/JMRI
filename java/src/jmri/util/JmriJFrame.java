@@ -183,7 +183,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     /**
-     * Add this window tp the Windows Menu by adding it from the list of
+     * Add this window to the Windows Menu by adding it to the list of
      * active JmriJFrames.
      */
     public void makePublicWindow() {
