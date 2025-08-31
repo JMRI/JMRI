@@ -728,12 +728,18 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
             [x1,y1] = [pt1.getX(), pt1.getY()]
             [x2,y2] = [pt2.getX(), pt2.getY()]
-            if abs(float(y1)-float(y2)) < 15.0:     # East-West place icon to right of circle
-                x_reqd = int((float(x1)+float(x2))/2.0)+25  # to put to right of circle
-                y_reqd = int((float(y1)+float(y2))/2.0)     # to put just under track
-            else:                                   # North south place icon under circle
-                x_reqd = int((float(x1)+float(x2))/2.0)-20  #  to centralise
-                y_reqd = int((float(y1)+float(y2))/2.0)+15  #  to put under circle
+
+
+            if blk in self.list_of_stopping_points:
+                if abs(float(y1)-float(y2)) < 15.0:     # East-West place icon to right of circle
+                    x_reqd = int((float(x1)+float(x2))/2.0)+25  # to put to right of circle
+                    y_reqd = int((float(y1)+float(y2))/2.0)     # to put just under track
+                else:                                   # North south place icon under circle
+                    x_reqd = int((float(x1)+float(x2))/2.0)-20  #  to centralise
+                    y_reqd = int((float(y1)+float(y2))/2.0)+15  #  to put under circle
+            else:
+                x_reqd = int((float(x1)+float(x2))/2.0)  # to put to right of circle
+                y_reqd = int((float(y1)+float(y2))/2.0)
 
             pt_to_try = Point2D.Double(x_reqd, y_reqd)
             if blk in self.blockPoints1:
@@ -750,8 +756,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                     pt_mid = self.blockPoints1[blk]
                     # For a turntable, the icon position is calculated relative to its own center
                     turntable_center = turntableView.getCoordsCenter()
-                    x_reqd = int(turntable_center.getX()) - 20
-                    y_reqd = int(turntable_center.getY()) + 15
+                    x_reqd = int(turntable_center.getX()) - 20 + 50
+                    y_reqd = int(turntable_center.getY()) + 15 + 10
                     pt_to_try = Point2D.Double(x_reqd, y_reqd)
                     self.updateCoords1(blk, pt_to_try, pt_mid)
 
@@ -826,10 +832,15 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         # place the stations at the block nearest the mid-point
 
         self.getCenterPointOfNearestBlockToMid(panel)
+        print "aself.blockPoints1", self.blockPoints1
+        print "bself.blockPoints", self.blockPoints
+        # for blk in self.blockPoints1:
+        #     print "C", blk
+        #     # if blk not in self.blockPoints:
+        #     #     print "D", blk
+        #     self.blockPoints[blk] = self.blockPoints1[blk]
+        # print "self.blockPoints", self.blockPoints
 
-        for blk in self.blockPoints1:
-            if blk not in self.blockPoints:
-                self.blockPoints[blk] = self.blockPoints1[blk]
 
 
     # **************************************************

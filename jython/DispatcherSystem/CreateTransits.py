@@ -129,7 +129,15 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             except Exception as e:
                 if self.logLevel > 1: print('Failed to delete %s. Reason: %s' % (file_path, e))
 
-    def get_first_signal_mast(self,signal_mast,layout_block):
+    def get_first_signal_mast(self,signal_mast,layout_block,layoutPanels):
+
+        # Check if the signal mast is a virtual mast for a turntable.
+        # If so, there is no "first" signal mast before it.
+        for panel in layoutPanels:
+            for turntable in panel.getLayoutTurntables():
+                if turntable.getVirtualSignalMast() == signal_mast:
+                    if self.logLevel > 0: print "Signal mast", signal_mast.getUserName(), "is a turntable virtual mast. No preceding mast."
+                    return None
 
         # 1) get_sections containing_block_with_second_signal_mast
         if self.logLevel > 1: print "block - ", layout_block.getUserName(), layout_block
@@ -404,7 +412,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print "---------------------"
             first_block = layout_block_list[0]
             second_signal_mast = signal_mast_list[0]
-            first_signal_mast = self.get_first_signal_mast(second_signal_mast, first_block)
+            first_signal_mast = self.get_first_signal_mast(second_signal_mast, first_block, layoutPanels)
             if self.logLevel > 0: print "first_signal_mast", first_signal_mast
 
             if self.logLevel > 0: print "signal_mast_list",[sm.getUserName() for sm in signal_mast_list]
