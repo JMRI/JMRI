@@ -25,18 +25,41 @@ public class TurntableSignalMast extends VirtualSignalMast {
      * @return the LayoutTurntable, or null if not found.
      */
     public LayoutTurntable getTurntable() {
-        // The system name is "IV-LT:" + turntable ID
-        String turntableId = getSystemName().substring(6);
-
-        // We need to find the turntable with this ID in the layout editors.
-        Set<LayoutEditor> editors = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
-        for (LayoutEditor editor : editors) {
-            for (LayoutTurntable tt : editor.getLayoutTurntables()) {
-                if (tt.getName().equals(turntableId)) {
-                    return tt;
+        // Iterate through all LayoutTurntables in all editors to find which one owns this mast.
+        // This is more robust than relying on system name parsing.
+        EditorManager editorManager = InstanceManager.getDefault(EditorManager.class);
+        if (editorManager != null) {
+            for (LayoutEditor editor : editorManager.getAll(LayoutEditor.class)) {
+                for (LayoutTurntable turntable : editor.getLayoutTurntables()) {
+                    // getVirtualSignalMast() returns the mast associated with the turntable.
+                    // We check if that mast is this exact object.
+                    if (turntable.getVirtualSignalMast() == this) {
+                        return turntable;
+                    }
                 }
             }
         }
         return null;
     }
+//
+//    /**
+//     * Get the LayoutTurntable associated with this signal mast.
+//     *
+//     * @return the LayoutTurntable, or null if not found.
+//     */
+//    public LayoutTurntable getTurntable() {
+//        // The system name is "IV-LT:" + turntable ID
+//        String turntableId = getSystemName().substring(6);
+//
+//        // We need to find the turntable with this ID in the layout editors.
+//        Set<LayoutEditor> editors = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
+//        for (LayoutEditor editor : editors) {
+//            for (LayoutTurntable tt : editor.getLayoutTurntables()) {
+//                if (tt.getName().equals(turntableId)) {
+//                    return tt;
+//                }
+//            }
+//        }
+//        return null;
+//    }
 }

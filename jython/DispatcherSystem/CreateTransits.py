@@ -249,12 +249,12 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                 # 1) get the signal mast list excluding the last signal mast
 
                 #if self.logLevel > 1: print "stopping",g.dict_path_stopping
-                if self.logLevel > 1: print "edge = " , e.to_string()
+                if self.logLevel > 0: print "edge = " , e.to_string()
                 #layout_block_list = g.dict_path_stopping[e]
                 layout_block_list = e.getItem("path")
                 if self.logLevel > 1: print "layout_block_list",layout_block_list
                 layout_block_list_name = e.getItem("path_name")
-                if self.logLevel > 1: print "layout_block_list_name",layout_block_list_name
+                if self.logLevel > -1: print "layout_block_list_name",layout_block_list_name
                 #get the list of signal masts
                 #panel = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager).get('My Layout')
                 signal_mast_class = jmri.SignalMast
@@ -278,10 +278,10 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                                 # when the multi-panel sorting logic is skipped.
                                 if layout_block == layout_block_list[0]:
                                     signal_mast_list_for_panel.add(0, virtual_mast)
-                                    if self.logLevel > 0: print "Found and PREPENDED turntable virtual mast:", virtual_mast.getUserName()
+                                    if self.logLevel > -1: print "Found and PREPENDED turntable virtual mast:", virtual_mast.getUserName()
                                 else:
                                     signal_mast_list_for_panel.add(virtual_mast)
-                                    if self.logLevel > 0: print "Found and APPENDED turntable virtual mast:", virtual_mast.getUserName()
+                                    if self.logLevel > -1: print "Found and APPENDED turntable virtual mast:", virtual_mast.getUserName()
 
                 if self.logLevel > -1: print "signal_mast_list_for_panel",[sm.getUserName() for sm in signal_mast_list_for_panel]
                 if signal_mast_list_for_panel == [] :
@@ -723,8 +723,10 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_last_signal_mast(self,signal_mast,layout_block):
         self.logLevel = 0
-        if self.logLevel > 2: print "********************"
-        if self.logLevel > 1: print "get_last_signal_mast"
+        if self.logLevel > -1: print "********************"
+        if self.logLevel > -1: print "get_last_signal_mast"
+        if self.logLevel > -1: print "********************"
+
 
         # 1) get_sections containing_block_with_previous_signal_mast
 

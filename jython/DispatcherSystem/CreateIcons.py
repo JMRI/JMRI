@@ -673,10 +673,13 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     def generateSections(self):
         print "Generating Sections"
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
+        # generate sections()
         smlManager.generateSection()
         print "Sections Generated"
         self.show_progress(80)
+        print "+++++++++++++++++++++++ generate block sections ++++++++++++++++++++++++++++++"
         sections.generateBlockSections()
+        print "+++++++++++++++++++++++ end generate block sections ++++++++++++++++++++++++++++++"
 
     # **************************************************
     # add Logix

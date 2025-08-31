@@ -267,6 +267,37 @@ final public class ConnectivityUtil {
                 notFound = false;
             }
         }
+        // Special check for turntable connectivity, which is not handled by the standard connectivity list.
+        if (notFound && prevLayoutBlock != null) {
+            for (LayoutTurntable turntable : layoutEditor.getLayoutTurntables()) {
+                // Case 1: Path is from a ray (prevBlock) into the turntable's main block (currBlock)
+                if (turntable.getLayoutBlock() == currLayoutBlock && turntable.isRayBlock(prevLayoutBlock)) {
+                    // We found the connection. The path continues from the turntable.
+                    // The "previous track" for the next search step is the turntable itself.
+                    prevConnectTrack = turntable;
+                    // The "previous connection type" is the ray we entered from.
+                    prevConnectType = HitPointType.turntableTrackIndexedValue(turntable.getRayIndexForBlock(prevLayoutBlock));
+                    // The "track segment" to start searching from is null, because there are no segments *inside* the turntable block.
+                    // The while loop will terminate, and the method will return the list of turnouts found so far (which is none, correctly).
+                    // The calling method needs to handle the turntable logic itself (e.g., which exit ray to take).
+                    trackSegment = null;
+                    notFound = false;
+                    break; // Exit turntable loop
+                }
+                // Case 2: Path is from the turntable's main block (prevBlock) into a ray's block (currBlock)
+                else if (turntable.getLayoutBlock() == prevLayoutBlock && turntable.isRayBlock(currLayoutBlock)) {
+                    // We found the connection. The path is now inside the ray block.
+                    // The "previous track" is the turntable.
+                    prevConnectTrack = turntable;
+                    // The "previous connection type" is the ray we are on.
+                    prevConnectType = HitPointType.turntableTrackIndexedValue(turntable.getRayIndexForBlock(currLayoutBlock));
+                    // The "track segment" to start searching from is the one connected to this ray.
+                    trackSegment = turntable.getRayConnectIndexed(turntable.getRayIndexForBlock(currLayoutBlock));
+                    notFound = false;
+                    break; // Exit turntable loop
+                }
+            }
+        }
         if (notFound) {
             if (prevBlock != null) {    // could not initialize the connectivity search
                 if (!suppress) {

@@ -444,7 +444,9 @@ public class DefaultSignalMastLogicManager
                             // First, set up the basic destination and layout editor details
                             sml.setDestinationMast(destMast);
                             sml.useLayoutEditor(true, destMast);
+                            log.info("about to useLayoutEditorDetails:sourceMast {} destMast {}", sourceMast.getDisplayName(), destMast.getDisplayName());
                             sml.useLayoutEditorDetails(true, true, destMast);
+                            log.info("got useLayoutEditorDetails: sourceMast {} destMast {}", sourceMast.getDisplayName(), destMast.getDisplayName());
 
                             // Now, find the specific ray that leads to this destination
                             LayoutBlock sourceLBlock = lbm.getFacingBlockByMast(sourceMast);
@@ -532,7 +534,16 @@ public class DefaultSignalMastLogicManager
             }
             return nb;
         }).forEachOrdered( nb -> nb.removeProperty("forwardMast"));
+        log.info("DIAGNOSTIC - generateSection() getSignalMastLogicList() {}", getSignalMastLogicList());
         for (SignalMastLogic sml : getSignalMastLogicList()) {
+            log.info("generateSection() sml source mast {} sml.getDestinationList() {}", sml.getSourceMast().getDisplayName(), sml.getDestinationList());
+            // Defer all turntable section creation to the generateBlockSections method.
+            log.warn("A sml.getSourceMast() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast {}", sml.getSourceMast() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast);
+            if (sml.getSourceMast() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
+                log.warn("not creating section for turntable");
+//                continue;
+            }
+            log.warn("B");
             LayoutBlock faceLBlock = sml.getFacingBlock();
             if (faceLBlock != null) {
                 boolean sourceIntermediate = false;
@@ -550,6 +561,7 @@ public class DefaultSignalMastLogicManager
                     if (!sml.getAutoBlocksBetweenMasts(destMast).isEmpty() ||
                             (destMast instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) ||
                             (sml.getSourceMast() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast)) {
+                        log.info("D");
                         String secUserName = sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName();
                         Section sec = sm.getSection(secUserName);
                         if (sec != null) {
@@ -560,6 +572,8 @@ public class DefaultSignalMastLogicManager
                         } else {
                             try {
                                 sec = sm.createNewSection(secUserName);
+                                // **** ADD THIS LINE FOR DIAGNOSTICS ****
+                                log.warn("generateSection() created Section: " + secUserName);
                             } catch(IllegalArgumentException ex){
                                 log.warn("Unable to create section for {} {}",secUserName,ex.getMessage());
                                 continue;

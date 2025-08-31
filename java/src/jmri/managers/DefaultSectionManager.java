@@ -293,8 +293,23 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
 
         for (LayoutBlock layoutBlock : layoutBlockManager.getNamedBeanSet()){
-            if (layoutBlock.getNumberOfThroughPaths() == 0){
+            boolean isTurntable = false;
+            EditorManager editorManager = InstanceManager.getDefault(EditorManager.class);
+            if (editorManager != null) {
+                for (LayoutEditor editor : editorManager.getAll(LayoutEditor.class)) {
+                    for (jmri.jmrit.display.layoutEditor.LayoutTurntable turntable : editor.getLayoutTurntables()) {
+                        if (turntable.getLayoutBlock() == layoutBlock) {
+                            isTurntable = true;
+                            break;
+                        }
+                    }
+                    if (isTurntable) break;
+                }
+            }
+
+            if (layoutBlock.getNumberOfThroughPaths() == 0 || isTurntable) {
                 if (!blockSectionExists(layoutBlock)){
+                    log.warn("generateBlockSections() created Section for stub: " + layoutBlock.getDisplayName());
                     createBlockSection(layoutBlock);
                 }
             }

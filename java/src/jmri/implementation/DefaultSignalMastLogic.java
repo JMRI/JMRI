@@ -49,11 +49,15 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     public DefaultSignalMastLogic(@Nonnull SignalMast source) {
         super(source.getSystemName());
         this.source = source;
+        log.warn("source {}", source.getDisplayName());
 
         if (source instanceof TurntableSignalMast) {
+            log.warn("source instanceof TurntableSignalMast");
             LayoutTurntable turntable = ((TurntableSignalMast) source).getTurntable();
+            log.warn("turntable {}", turntable);
             if (turntable != null) {
                 this.facing = turntable.getLayoutBlock();
+                log.warn("this.facing {}", this.facing);
                 // For a turntable, the protecting blocks are all the blocks connected to the rays.
                 for (int i = 0; i < turntable.getNumberRays(); i++) {
                     TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
@@ -67,6 +71,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     }
                 }
             }
+            log.warn("this.protecting {}", this.protecting);
         } else {
             LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
             // We need to iterate through the editors to find the one that contains the mast
@@ -2364,7 +2369,20 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 }
                 if (protectingBlock == null && protectingBlocks.isEmpty()) {
                     //This is wrong
-                    protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), editor);
+                    if (source instanceof TurntableSignalMast) {
+                        // For a path originating from a turntable, the "protecting block" is always
+                        // the block of the destination mast (the ray track).
+                        // We trust that the SignalMastLogicManager has already discovered a valid
+                        // path, so we do not need to re-validate it here, which avoids
+                        // timing issues with block assignment.
+                        protectingBlock = destinationBlock;
+                        // old code
+                        // For a turntable, the protecting blocks are pre-calculated in the SML constructor.
+                        // protectingBlocks = DefaultSignalMastLogic.this.protecting;
+                    } else {
+                        // For a normal mast, discover the protecting blocks using the original method.
+                        protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), editor);
+                    }
                 }
                 if (destinationBlock == null) {
                     destinationBlock = lbm.getFacingBlockByNamedBean(destinationSignalMast, editor);
@@ -2392,6 +2410,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             if (source instanceof TurntableSignalMast) {
                 // This is a turntable. The "protecting block" is simply the destination block of the ray.
                 // We bypass the through-path validation which would otherwise fail.
+                log.warn("DefaultSignalMastLogic.this.protecting {}", DefaultSignalMastLogic.this.protecting);
                 if (DefaultSignalMastLogic.this.protecting.contains(destinationBlock)) {
                     protectingBlock = destinationBlock;
                 } else {
