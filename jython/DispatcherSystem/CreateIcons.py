@@ -5,6 +5,7 @@
 
 from javax.swing import JOptionPane
 from java.awt.geom import Point2D
+from java.awt import Color
 
 
 # from jython.DispatcherSystem.Startup import OptionDialog
@@ -628,7 +629,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             if comment != None:
                 if "stop" in comment.lower():
                     self.list_of_stopping_points.append(block.getUserName())
-
+        print "stopping points"  , self.list_of_stopping_points
     # **************************************************
     # add sensors
     # **************************************************
@@ -735,10 +736,24 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 y_reqd = int((float(y1)+float(y2))/2.0)+15  #  to put under circle
 
             pt_to_try = Point2D.Double(x_reqd, y_reqd)
-            pt_mid =  self.blockPoints1[blk]
+            if blk in self.blockPoints1:
+                pt_mid =  self.blockPoints1[blk]
+                self.updateCoords1(blk, pt_to_try, pt_mid)
 
-            self.updateCoords1(blk, pt_to_try, pt_mid)
-
+        # Handle turntables
+        for turntableView in panel.getLayoutTurntableViews():
+            turntable = turntableView.getTurntable()
+            layoutBlock = turntable.getLayoutBlock()
+            if layoutBlock is not None:
+                blk = layoutBlock.getUserName()
+                if blk in self.blockPoints1:
+                    pt_mid = self.blockPoints1[blk]
+                    # For a turntable, the icon position is calculated relative to its own center
+                    turntable_center = turntableView.getCoordsCenter()
+                    x_reqd = int(turntable_center.getX()) - 20
+                    y_reqd = int(turntable_center.getY()) + 15
+                    pt_to_try = Point2D.Double(x_reqd, y_reqd)
+                    self.updateCoords1(blk, pt_to_try, pt_mid)
 
 
     def updateCoords1(self, blk, pt_to_try, pt_mid):
@@ -762,7 +777,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         self.blockPoints1.clear()
         for tsv in panel.getTrackSegmentViews():
             blk = tsv.getBlockName()
-
+            #print "blk", blk
             pt1 = panel.getCoords(tsv.getConnect1(), tsv.getType1())
             pt2 = panel.getCoords(tsv.getConnect2(), tsv.getType2())
 
@@ -798,6 +813,16 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.updateCoords(blkAC, xyA)
             self.updateCoords(blkBD, xyD)
 
+        # Handle turntables
+        for turntableView in panel.getLayoutTurntableViews():
+            turntable = turntableView.getTurntable()
+            layoutBlock = turntable.getLayoutBlock()
+            if layoutBlock is not None:
+                blockName = layoutBlock.getUserName()
+                # The center of the turntable is its main coordinate, get it from the View
+                centerCoords = turntableView.getCoordsCenter()
+                self.updateCoords(blockName, centerCoords)
+
         # place the stations at the block nearest the mid-point
 
         self.getCenterPointOfNearestBlockToMid(panel)
@@ -813,6 +838,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     def addStopIcons(self, panel):
         for blockName in self.list_of_stopping_points:
             if blockName in self.blockPoints.keys():
+                print "addStopIcons blockName", blockName
                 x = self.blockPoints[blockName].getX()
                 y = self.blockPoints[blockName].getY()
 

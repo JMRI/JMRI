@@ -44,7 +44,7 @@ import jmri.util.MathUtil;
  */
 public class LayoutTurntable extends LayoutTrack {
 
-    /**
+     /**
      * Constructor method
      *
      * @param id           the name for the turntable
@@ -54,11 +54,32 @@ public class LayoutTurntable extends LayoutTrack {
         super(id, models);
 
         radius = 25.0; // initial default, change asap.
-        String mastSystemName = "IF$vsm:BR-2003:3($0999)";
-        this.virtualSignalMast = new TurntableSignalMast(mastSystemName);
-        jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).register(this.virtualSignalMast);
+        
+        SignalMastManager smm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+
+        // Define the signal system to use, arbitrary use BR-2003
+        String signalSystem = "BR-2003:3";
+
+        // Get the next available unique number for a VirtualSignalMast, following the pattern in TurnoutSignalMastAddPane.
+        java.text.DecimalFormat paddedNumber = new java.text.DecimalFormat("0000");
+        int nextMastNum = jmri.implementation.VirtualSignalMast.getLastRef() + 1;
+
+        // Construct the valid, unique system name in the required format.
+        String mastSystemName = "IF$vsm:" + signalSystem + "($" + paddedNumber.format(nextMastNum) + ")";
+        try {
+            // Use provideCustomSignalMast to create and register an instance of our specific class.
+            this.virtualSignalMast = smm.provideCustomSignalMast(mastSystemName,
+                    jmri.jmrit.display.layoutEditor.TurntableSignalMast.class);
+        } catch (JmriException e) {
+            log.error("Failed to create virtual signal mast for turntable {}", id, e);
+            // This is a serious error, so we'll stop here.
+            return;
+        }
+
+        // Set the user-friendly name for the new mast.
         String mastUserName = "Turntable Mast " + id;
-        this.virtualSignalMast.setUserName(mastUserName);																 
+        this.virtualSignalMast.setUserName(mastUserName);
+
     }
 
     // defined constants
