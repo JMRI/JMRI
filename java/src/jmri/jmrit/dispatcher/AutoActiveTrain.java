@@ -225,7 +225,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
 /**
- * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse 
+ * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse
  * @param set True if entire train is detectable
  */
     @Deprecated (since="5.7.6",forRemoval=true)
@@ -254,7 +254,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * 
+     *
      * @return train length in MM.
      */
     public long getMaxTrainLengthMM() {
@@ -653,7 +653,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         // We enter this code for each block in the section.
                         // If we stop in the farthest block eg Block 3 in a 3 Block Section
                         // nothing special is required when starting.
-                        // If we stop in Block 1 of a 3 block section, and enter this code 
+                        // If we stop in Block 1 of a 3 block section, and enter this code
                         // when starting off again, so its just an advance of the _nextBlock.
                         // we can tell which situation it is by looking
                         // whether the _nextSection is not null and allocated to us.
@@ -1045,7 +1045,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
     }
-    
+
     private void checkForGhost() {
         if ( !(getTargetSpeed() == 0.0f || isStopping())
                 && _nextBlock != null
@@ -1267,7 +1267,6 @@ public class AutoActiveTrain implements ThrottleListener {
             stopInCurrentSection(NO_TASK);
             return;
         }
-        
 
         if (useSpeedProfile) {
             // find speed from signal.
@@ -1744,18 +1743,24 @@ public class AutoActiveTrain implements ThrottleListener {
     private synchronized void setTargetSpeedState(int speedState,boolean stopBySpeedProfile) {
         log.trace("{}: setTargetSpeedState:({})",_activeTrain.getTrainName(),speedState);
         _autoEngineer.slowToStop(false);
+        float stoppingDistanceAdjust =  _stopBySpeedProfileAdjust *
+                ( _activeTrain.isTransitReversed() ?
+                _currentAllocatedSection.getTransitSection().getRevStopPerCent() :
+                    _currentAllocatedSection.getTransitSection().getFwdStopPerCent()) ;
         if (speedState > STOP_SPEED) {
             cancelStopInCurrentSection();
             if (_currentRampRate == RAMP_SPEEDPROFILE && useSpeedProfile) {
                 // we are going to ramp up  / down using section length and speed profile
-                _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock) * _stopBySpeedProfileAdjust, speedState);
+                _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)
+                        * stoppingDistanceAdjust, speedState);
             } else {
                 setTargetSpeed(_speedRatio[speedState]);
             }
         } else if (stopBySpeedProfile) {
             // we are going to stop by profile
             _stoppingUsingSpeedProfile = true;
-            _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock) * _stopBySpeedProfileAdjust, 0.0f);
+            _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)
+                    * stoppingDistanceAdjust, 0.0f);
         } else {
             _autoEngineer.setHalt(true);
             setTargetSpeed(0.0f);
