@@ -183,6 +183,19 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     /**
+     * Add this window to the Windows Menu by adding it to the list of
+     * active JmriJFrames.
+     */
+    public void makePublicWindow() {
+        JmriJFrameManager m = getJmriJFrameManager();
+        synchronized (m) {
+            if (! m.contains(this)) {
+                m.add(this);
+            }
+        }
+    }
+
+    /**
       * Reset frame location and size to stored preference value
       */
     public void setFrameLocation() {
@@ -496,7 +509,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      *
      * Final because it defines the content of a standard help menu, not to be messed with individually
      *
-     * @param ref    JHelp reference for the desired window-specific help page
+     * @param ref    JHelp reference for the desired window-specific help page; null means no page
      * @param direct true if the help main-menu item goes directly to the help system,
      *               such as when there are no items in the help menu
      */
