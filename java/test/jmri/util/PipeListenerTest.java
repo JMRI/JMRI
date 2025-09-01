@@ -5,7 +5,6 @@ import java.io.PipedWriter;
 
 import javax.swing.JTextArea;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,7 +19,7 @@ public class PipeListenerTest {
         JTextArea jta = new JTextArea();
         PipedReader pr = new PipedReader();
         PipeListener t = new PipeListener(pr,jta);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull(t, "exists");
     }
 
     @SuppressWarnings("deprecation")        // Thread.stop()
