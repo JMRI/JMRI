@@ -1747,6 +1747,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 ( _activeTrain.isTransitReversed() ?
                 _currentAllocatedSection.getTransitSection().getRevStopPerCent() :
                     _currentAllocatedSection.getTransitSection().getFwdStopPerCent()) ;
+        log.debug("stoppingDistanceAdjust[{}] isReversed[{}] stopBySpeedProfileAdjust[{}]",stoppingDistanceAdjust,
+                _activeTrain.isTransitReversed(),_stopBySpeedProfileAdjust );
         if (speedState > STOP_SPEED) {
             cancelStopInCurrentSection();
             if (_currentRampRate == RAMP_SPEEDPROFILE && useSpeedProfile) {

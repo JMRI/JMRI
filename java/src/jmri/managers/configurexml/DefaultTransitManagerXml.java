@@ -86,8 +86,8 @@ public class DefaultTransitManagerXml extends jmri.managers.configurexml.Abstrac
                         tsElem.setAttribute("alternate", "" + (ts.isAlternate() ? "yes" : "no"));
                         tsElem.setAttribute("safe", "" + (ts.isSafe() ? "yes" : "no"));
                         tsElem.setAttribute("stopallocatingsensor", ts.getStopAllocatingSensor());
-                        tsElem.setAttribute("fwdstoppinglength", Float.toString(ts.getFwdStopPerCent()));
-                        tsElem.setAttribute("revstoppinglength", Float.toString(ts.getRevStopPerCent()));
+                        tsElem.setAttribute("fwdstoppercent", Float.toString(ts.getFwdStopPerCent()));
+                        tsElem.setAttribute("revstoppercent", Float.toString(ts.getRevStopPerCent()));
                         // save child TransitSectionAction entries if any
                         ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
                         if (!tsaList.isEmpty()) {

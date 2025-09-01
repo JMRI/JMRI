@@ -2916,12 +2916,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     cb.setSelectedItem(name);
                     return cb;
                 case FWD_STOPPING_LENGTH:
-                    JSpinner jf = new JSpinner(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
+                    JSpinner jf = new JSpinner(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(2.0f), Float.valueOf(0.05f)));
                     jf.setEditor(new JSpinner.NumberEditor(jf, "##0.0# %"));
                     jf.setValue(fwdStopPerCent.get(rx));
                     return jf;
                 case REV_STOPPING_LENGTH:
-                    JSpinner jr = new JSpinner(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(1.0f), Float.valueOf(0.1f)));
+                    JSpinner jr = new JSpinner(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(2.0f), Float.valueOf(0.05f)));
                     jr.setEditor(new JSpinner.NumberEditor(jr, "##0.0# %"));
                     jr.setValue(revStopPerCent.get(rx));
                     return jr;
