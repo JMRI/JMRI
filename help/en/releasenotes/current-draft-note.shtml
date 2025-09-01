@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Change DCC-EX heartbeat from &lt;s&gt; to &lt;#&gt;, requested by DCC-EX team</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -430,6 +430,9 @@
                 as you configure the values in the other panes.
                 What you type there will appear in the comment field
                 on the Roster Entry pane and vice versa.</li>
+            <li>Detachable panes no longer appear in the Windows menu
+                <i>unless</i> they are actually detached.</li>
+            <li>Added Help and Windows menus to the detached panes.</li>
         </ul>
 
    <h3>Dispatcher</h3>

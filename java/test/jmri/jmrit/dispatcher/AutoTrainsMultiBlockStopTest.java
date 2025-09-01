@@ -772,6 +772,776 @@ public class AutoTrainsMultiBlockStopTest {
 
     }
 
+    @Test
+    public void testRoundAndRound40() {
+         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
+        };
+        // THe train is 40 long and fits in furthers block..
+        // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
+        // load layout file
+        File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
+        Assertions.assertDoesNotThrow(() -> {
+            cm.load(f);
+        });
+
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+
+        // load dispatcher, with all the correct options
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+        // running with no signals
+        checkAndSetSpeedsSML();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+
+        // trains fills one block
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+
+        // *******************************************************************************
+        //  Here start Round And Round train starts block 3 stops at block 3 and goes again.
+        // TRain fits in one block stops on block 2 inactive.
+        // *******************************************************************************
+        d.loadTrainFromTrainInfo("RNDRND3BLK40.xml");
+
+        assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
+
+        ActiveTrain at = d.getActiveTrainsList().get(0);
+        aat = at.getAutoActiveTrain();
+
+        // trains loads and runs, 3 as we are allocating as far as we can
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Slowing in Block 1");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2, 3 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 2, 3 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
+       // JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
+            }, "Should have stop on Block 2 inactive.");
+        JUnitUtil.waitFor(waitInterval);
+        
+        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Slowing in Block 1");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2, 3 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 2, 3 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
+        // JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
+            }, "Should have stop on Block 2 inactive.");
+
+        JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        bo.push();
+        
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval);
+
+        assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
+
+        JFrameOperator aw = new JFrameOperator("AutoTrains");
+        aw.requestClose();
+        dw.requestClose();
+
+        // cleanup window
+        JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
+    }
+
+    @Test
+    public void testRoundAndRound80() {
+         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
+        };
+        // THe train is 40 long and fits in furthers block..
+        // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
+        // load layout file
+        File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
+        Assertions.assertDoesNotThrow(() -> {
+            cm.load(f);
+        });
+
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+
+        // load dispatcher, with all the correct options
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+        // running with no signals
+        checkAndSetSpeedsSML();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+
+        // trains fills one block
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+
+        // *******************************************************************************
+        //  Here start Round And Round train starts block 3 stops at block 3 and goes again.
+        //  Train fits in 2 blocks stops on block 1 going inactive.
+        // *******************************************************************************
+        d.loadTrainFromTrainInfo("RNDRND3BLK80.xml");
+
+        assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
+
+        ActiveTrain at = d.getActiveTrainsList().get(0);
+        aat = at.getAutoActiveTrain();
+
+        // trains loads and runs, 3 as we are allocating as far as we can
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Slowing in Block 1");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2, 3 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
+            }, "Still stop on block 1 inactive,  block 2, 3 still active");
+        JUnitUtil.waitFor(waitInterval);
+        
+        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // only one section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedMedium  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Slowing in Block 1");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2, 3 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
+            }, "Still stop on block 1 inactive,  block 2, 3 still active");
+
+        JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        bo.push();
+        
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval);
+
+        assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
+
+        JFrameOperator aw = new JFrameOperator("AutoTrains");
+        aw.requestClose();
+        dw.requestClose();
+
+        // cleanup window
+        JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
+    }
+
+    @Test
+    public void testRoundAndRound120() {
+         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
+        };
+        // THe train is 40 long and fits in furthers block..
+        // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
+        // load layout file
+        File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
+        Assertions.assertDoesNotThrow(() -> {
+            cm.load(f);
+        });
+
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+
+        // load dispatcher, with all the correct options
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+        // running with no signals
+        checkAndSetSpeedsSML();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+
+        // trains fills one block
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+
+        // *******************************************************************************
+        //  Here start Round And Round train starts block 3 stops at block 3 and goes again.
+        //  Train fits in 3 blocks stops on block 4-1 going inactive.
+        // *******************************************************************************
+        d.loadTrainFromTrainInfo("RNDRND3BLK120.xml");
+
+        assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
+
+        ActiveTrain at = d.getActiveTrainsList().get(0);
+        aat = at.getAutoActiveTrain();
+
+        // trains loads and runs, 3 as we are allocating as far as we can
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Slowing in Block 1");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2, 3 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
+            }, "Still stop on block 1 inactive,  block 2, 3 still active");
+        JUnitUtil.waitFor(waitInterval);
+        
+        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // only one section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // only one section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // now can allocate Section1-3 again.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "2 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Slowing in Block 1");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still going in block 1,2, 3 still active");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
+            }, "Still stop on block 4-1 inactive,  block 1, 2, 3 still active");
+
+        JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        bo.push();
+        
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval);
+
+        assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
+
+        JFrameOperator aw = new JFrameOperator("AutoTrains");
+        aw.requestClose();
+        dw.requestClose();
+
+        // cleanup window
+        JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
+    }
+
+    @Test
+    public void testRoundAndRound120_NoDelay() {
+         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
+        };
+        // THe train is 120 long and and doesnt fit in the section (2 blocks)..
+        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
+        // load layout file
+        File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
+        Assertions.assertDoesNotThrow(() -> {
+            cm.load(f);
+        });
+
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+
+        // load dispatcher, with all the correct options
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+        // running with no signals
+        checkAndSetSpeedsSML();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+
+        // *******************************************************************************
+        //  Here start Round And Round train starts block 2 stops at block 1 and goes again.
+        //  Train does not fit in section stops on block 1 going active.
+        // *******************************************************************************
+        d.loadTrainFromTrainInfo("RNDRND2BLK120NoDelay.xml");
+
+        assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
+
+        ActiveTrain at = d.getActiveTrainsList().get(0);
+        aat = at.getAutoActiveTrain();
+
+        // trains loads and runs, 2 ahead.
+        JUnitUtil.waitFor(() -> {
+            return(getSectionsClearAhead(at)==2);
+        },"Allocated sections clear ahead should be 2");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // Section 1 know available
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        
+        // no delay keep going into loop2 we in 1 and 4 -1 not released and one (4) clear ahead. 
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+        JUnitUtil.waitFor(() -> {
+            return(getSectionsClearAhead(at)==1);
+        },"Allocated sections clear ahead should be 1");
+        
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "Still stop on block 1 active,  block 2, 3 not active");
+        JUnitUtil.waitFor(waitInterval);
+        
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // only one section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // only one section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+                JUnitUtil.waitFor(waitInterval);
+        // only one section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // 2 section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // now can allocate Section1-3 again.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "2 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        // begin 3rd loop keep going...done terminate test.        
+        JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        bo.push();
+        
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval);
+
+        assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
+
+        JFrameOperator aw = new JFrameOperator("AutoTrains");
+        aw.requestClose();
+        dw.requestClose();
+
+        // cleanup window
+        JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
+    }
+
+    @Test
+    public void testRoundAndRound120_ShortSection() {
+         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
+        };
+        // THe train is 120 long and and doesnt fit in the section (2 blocks)..
+        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
+        // load layout file
+        File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
+        Assertions.assertDoesNotThrow(() -> {
+            cm.load(f);
+        });
+
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+
+        // load dispatcher, with all the correct options
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+        // running with no signals
+        checkAndSetSpeedsSML();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+
+        // *******************************************************************************
+        //  Here start Round And Round train starts block 2 stops at block 1 and goes again.
+        //  Train does not fit in section stops on block 1 going active.
+        // *******************************************************************************
+        d.loadTrainFromTrainInfo("RNDRND2BLK120.xml");
+
+        assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
+
+        ActiveTrain at = d.getActiveTrainsList().get(0);
+        aat = at.getAutoActiveTrain();
+
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // Section 2 know available
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting()) < TOLERANCE );
+            }, "Failed To Stop and wait for sensor");
+
+        assertEquals(0,getSectionsClearAhead(at),"No sections allocated ahead");
+        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.ACTIVE);
+
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // only one section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        
+        // manually reset restart sensor.
+        JUnitUtil.setBeanStateAndWait(sm.getSensor("TrainRestart"), Sensor.INACTIVE);
+
+        // only one section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 1"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.getSensor("Block 4"), Sensor.ACTIVE);
+                JUnitUtil.waitFor(waitInterval);
+        // only one section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 2"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // 2 section ahead.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 3"), Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // now can allocate Section1-3 again.
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "2 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4-1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed medium "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 4"), Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Block 1"), Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        // and stopped at end of second loop
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
+            }, "And going again failed.");
+
+        JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        bo.push();
+        
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval);
+
+        assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
+
+        JFrameOperator aw = new JFrameOperator("AutoTrains");
+        aw.requestClose();
+        dw.requestClose();
+
+        // cleanup window
+        JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+
+    }
     // reset to inactive all sensors except clock.
     private void resetSensors(SensorManager sm) {
         for (Sensor sensor:sm.getNamedBeanSet()) {
@@ -779,6 +1549,17 @@ public class AutoTrainsMultiBlockStopTest {
                 JUnitUtil.setBeanState(sensor, Sensor.INACTIVE);
             }
         }
+    }
+
+    // count sections allocated but not yet entered
+    private int getSectionsClearAhead(ActiveTrain at) {
+        int sectionsAhead = 0;
+        for (AllocatedSection allocatedSection : at.getAllocatedSectionList()) {
+            if (!allocatedSection.getEntered()) {
+                sectionsAhead++;
+            }
+        }
+        return sectionsAhead;
     }
 
     private float speedMedium = 0.0f;
@@ -853,6 +1634,26 @@ public class AutoTrainsMultiBlockStopTest {
                 inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
                         "REVFWD120.xml").toPath();
                 outPathTrainInfo1 = new File(outBaseTrainInfo, "REVFWD120.xml").toPath();
+                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                        "RNDRND3BLK40.xml").toPath();
+                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND3BLK40.xml").toPath();
+                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                        "RNDRND3BLK80.xml").toPath();
+                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND3BLK80.xml").toPath();
+                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                        "RNDRND3BLK120.xml").toPath();
+                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND3BLK120.xml").toPath();
+                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                        "RNDRND2BLK120.xml").toPath();
+                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND2BLK120.xml").toPath();
+                Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
+                inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/jmrit/dispatcher/traininfo"),
+                        "RNDRND2BLK120NoDelay.xml").toPath();
+                outPathTrainInfo1 = new File(outBaseTrainInfo, "RNDRND2BLK120NoDelay.xml").toPath();
                 Files.copy(inPath, outPathTrainInfo1, StandardCopyOption.REPLACE_EXISTING);
 
             }

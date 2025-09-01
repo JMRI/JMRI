@@ -500,7 +500,9 @@ public class DetachableTabbedPane extends JTabbedPane {
       this.index = index;
 
       /* frame to display component when detached. */
-      this.frame = new JmriJFrame ( (title!=null?title:comp.getName())+titleSuffix);
+      frame = new JmriJFrame ( (title!=null?title:comp.getName())+titleSuffix);
+      frame.makePrivateWindow();
+      frame.addHelpMenu(null,true);
       frame.addWindowListener (new WindowAdapter () {
           @Override
           public void windowClosing (WindowEvent e) {
@@ -563,6 +565,8 @@ public class DetachableTabbedPane extends JTabbedPane {
         component.setVisible (true);
         frame.getContentPane().add (component, BorderLayout.CENTER);
         
+        frame.makePublicWindow();
+        
         // some window managers like to reposition windows. Don't let 'em
         Rectangle bounds = frame.getBounds();
         
@@ -574,6 +578,7 @@ public class DetachableTabbedPane extends JTabbedPane {
       } else if (! detached && frame.isVisible()) {
         frame.setVisible (false);
         frame.getContentPane().removeAll ();
+        frame.makePrivateWindow();
       } 
     }
 
