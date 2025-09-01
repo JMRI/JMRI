@@ -443,6 +443,11 @@
                  the Min/Max throttle settings and stopping distance percentage.</li>
              <li>The F-Numbers for Transit Section Actions for Light, Bell and Horn can be set on a per train basis.</li>
              <li>Fix bug delayed start actions not working when using speed profile ramping</li>
+             <li>When creating/editing a transit you may now set the forward and reverse stopping distances
+                 for individual sections. The forward and reverse refer to the direction thru the transit not
+                 the direction thru the section (this differs from fwd/rev stopping sensors).
+                 These are expressed in per cent and are in addition to the adjustment
+                 specified when defining a train.</li>li>
         </ul>
 
     <h3>Dispatcher System</h3>
