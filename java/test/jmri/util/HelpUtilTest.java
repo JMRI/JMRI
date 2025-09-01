@@ -1,6 +1,7 @@
 package jmri.util;
 
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 import javax.swing.*;
@@ -14,8 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class HelpUtilTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(java.awt.GraphicsEnvironment.isHeadless());
 
         JMenuBar menuBar = new JMenuBar();
         int initialMenuCount = menuBar.getMenuCount();
