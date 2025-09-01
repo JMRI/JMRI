@@ -1,10 +1,10 @@
 package jmri.util;
 
-import java.awt.GraphicsEnvironment;
+import java.util.ArrayList;
 
-import org.junit.Assert;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -13,12 +13,12 @@ import org.junit.Assume;
 public class BusyGlassPaneTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame f = new JmriJFrame("BusyGlassPane ConstructorTest");
         java.awt.Component comp[] = f.getComponents();
-        java.util.ArrayList<javax.swing.JComponent> cal = new java.util.ArrayList<javax.swing.JComponent>();
-        java.util.ArrayList<java.awt.Rectangle> ral = new java.util.ArrayList<java.awt.Rectangle>();
+        ArrayList<javax.swing.JComponent> cal = new ArrayList<>();
+        ArrayList<java.awt.Rectangle> ral = new ArrayList<>();
         java.util.Arrays.stream(comp).forEach(i -> { 
                if(i instanceof javax.swing.JComponent ) {
                   ral.add(i.getBounds(null));
@@ -26,19 +26,19 @@ public class BusyGlassPaneTest {
                }
         });
         BusyGlassPane t = new BusyGlassPane(cal,ral,f.getContentPane(),f);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
         JUnitUtil.dispose(f);
     }
 
     @BeforeEach
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
     @AfterEach
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(BusyGlassPaneTest.class.getName());
