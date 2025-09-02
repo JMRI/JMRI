@@ -3,11 +3,15 @@ package jmri.util;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.ShutDownTask;
 import jmri.implementation.AbstractShutDownTask;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -19,25 +23,25 @@ public class MockShutDownManagerTest {
     @Test
     public void testCTor() {
         MockShutDownManager dsdm = new MockShutDownManager();
-        Assert.assertNotNull("exists", dsdm);
+        assertNotNull( dsdm, "exists");
     }
 
     @Test
     public void testRegister() {
         MockShutDownManager dsdm = new MockShutDownManager();
-        Assert.assertEquals(0, dsdm.getCallables().size());
-        Assert.assertEquals(0, dsdm.getRunnables().size());
+        assertEquals(0, dsdm.getCallables().size());
+        assertEquals(0, dsdm.getRunnables().size());
         ShutDownTask task = new AbstractShutDownTask("task") {
             @Override
             public void run() {
             }
         };
         dsdm.register(task);
-        Assert.assertEquals(1, dsdm.getCallables().size());
-        Assert.assertEquals(1, dsdm.getRunnables().size());
+        assertEquals(1, dsdm.getCallables().size());
+        assertEquals(1, dsdm.getRunnables().size());
         dsdm.register(task);
-        Assert.assertEquals(1, dsdm.getCallables().size());
-        Assert.assertEquals(1, dsdm.getRunnables().size());
+        assertEquals(1, dsdm.getCallables().size());
+        assertEquals(1, dsdm.getRunnables().size());
 
         Exception ex = Assertions.assertThrows(NullPointerException.class, () -> {
             registerNull(dsdm);
@@ -55,20 +59,20 @@ public class MockShutDownManagerTest {
     @Test
     public void testDeregister() {
         MockShutDownManager dsdm = new MockShutDownManager();
-        Assert.assertEquals(0, dsdm.getCallables().size());
-        Assert.assertEquals(0, dsdm.getRunnables().size());
+        assertEquals(0, dsdm.getCallables().size());
+        assertEquals(0, dsdm.getRunnables().size());
         ShutDownTask task = new AbstractShutDownTask("task") {
             @Override
             public void run() {
             }
         };
         dsdm.register(task);
-        Assert.assertEquals(1, dsdm.getCallables().size());
-        Assert.assertEquals(1, dsdm.getRunnables().size());
-        Assert.assertTrue(dsdm.getRunnables().contains(task));
+        assertEquals(1, dsdm.getCallables().size());
+        assertEquals(1, dsdm.getRunnables().size());
+        assertTrue(dsdm.getRunnables().contains(task));
         dsdm.deregister(task);
-        Assert.assertEquals(0, dsdm.getCallables().size());
-        Assert.assertEquals(0, dsdm.getRunnables().size());
+        assertEquals(0, dsdm.getCallables().size());
+        assertEquals(0, dsdm.getRunnables().size());
     }
 
     /**
@@ -86,9 +90,9 @@ public class MockShutDownManagerTest {
         if (!GraphicsEnvironment.isHeadless()) {
             frame = new Frame("Shutdown test frame");
         }
-        Assert.assertFalse(dsdm.isShuttingDown());
+        assertFalse(dsdm.isShuttingDown());
         dsdm.shutdown();
-        Assert.assertTrue(dsdm.isShuttingDown());
+        assertTrue(dsdm.isShuttingDown());
         if (frame != null) {
             JUnitUtil.dispose(frame);
         }
