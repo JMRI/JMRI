@@ -480,7 +480,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         String puny = null;
         String name = string.toLowerCase(Locale.ROOT);
         name = name.replaceFirst("^[_\\.\\s]+", "");
-        if (string.isEmpty()) {
+        if (string.isBlank()) {
             name = NodeIdentity.networkIdentity();
         }
         if (name.length() > 63) {
