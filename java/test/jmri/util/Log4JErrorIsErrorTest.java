@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,8 +13,8 @@ public class Log4JErrorIsErrorTest {
 
     @Test
     public void testNoLog4JMessages() {
-        Assert.assertFalse("Unexpected ERROR or FATAL messages emitted", 
-            jmri.util.JUnitAppender.unexpectedMessageSeen(org.slf4j.event.Level.ERROR));
+        Assertions.assertFalse( jmri.util.JUnitAppender.unexpectedMessageSeen(org.slf4j.event.Level.ERROR),
+            "Unexpected ERROR or FATAL messages emitted");
     }
 
     @BeforeEach

@@ -8,9 +8,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractButton;
 
-import org.junit.Assert;
 import org.netbeans.jemmy.operators.AbstractButtonOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Utilities for GUI unit testing.
@@ -115,7 +117,7 @@ public final class JUnitSwingUtil {
      * @param pixel ARGB piel value being tested
      */
     public static void assertPixel(String name, Pixel value, int pixel) {
-        Assert.assertEquals(name, value.toString(), formatPixel(pixel));
+        assertEquals( value.toString(), formatPixel(pixel), name);
     }
 
     /**
@@ -143,7 +145,7 @@ public final class JUnitSwingUtil {
         int rows = size.height;
         int cols = size.width;
 
-        Assert.assertEquals("size consistency", pixels.length, rows * cols);
+        assertEquals( pixels.length, rows * cols, "size consistency");
 
         assertPixel(name + " upper left", upperLeft, pixels[0]);
         assertPixel(name + " upper middle", upperCenter, pixels[0 + cols / 2]);
@@ -169,7 +171,7 @@ public final class JUnitSwingUtil {
      */
     public static AbstractButton pressButton(Container frame, String text) {
         AbstractButton button = JButtonOperator.findAbstractButton(frame, text, true, true);
-        Assert.assertNotNull(text + " Button not found", button);
+        assertNotNull( button, text + " Button not found");
         AbstractButtonOperator abo = new AbstractButtonOperator(button);
         abo.doClick();
         return button;
