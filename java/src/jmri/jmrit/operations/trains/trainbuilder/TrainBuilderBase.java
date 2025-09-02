@@ -2492,36 +2492,44 @@ public class TrainBuilderBase extends TrainCommon {
      * @throws BuildFailedException if coding issue
      */
     protected boolean checkForLaterPickUp(Car car, RouteLocation rl, RouteLocation rld) throws BuildFailedException {
-        if (rl != rld && rld.getName().equals(car.getLocationName())) {
-            // don't delay adding a caboose, passenger car, or car with FRED
-            if (car.isCaboose() || car.isPassenger() || car.hasFred()) {
-                return false;
-            }
-            // no later pick up if car is departing staging
-            if (car.getLocation().isStaging()) {
-                return false;
-            }
-            if (!checkPickUpTrainDirection(car, rld)) {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildNoPickupLaterDirection", car.toString(), rld.getName(), rld.getId()));
-                return false;
-            }
-            if (!rld.isPickUpAllowed() && !rld.isLocalMovesAllowed() ||
-                    !rld.isPickUpAllowed() && rld.isLocalMovesAllowed() && !car.isLocalMove()) {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildNoPickupLater", car.toString(), rld.getName(), rld.getId()));
-                return false;
-            }
-            if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildNoPickupLaterMoves", car.toString(), rld.getName(), rld.getId()));
-                return false;
-            }
-            addLine(_buildReport, SEVEN,
-                    Bundle.getMessage("buildPickupLaterOkay", car.toString(), rld.getName(), rld.getId()));
-            return true;
+        // is there another pick up location in the route?
+        if (rl == rld || !rld.getName().equals(car.getLocationName())) {
+            return false;
         }
-        return false;
+        // don't delay adding a caboose, passenger car, or car with FRED
+        if (car.isCaboose() || car.isPassenger() || car.hasFred()) {
+            return false;
+        }
+        // no later pick up if car is departing staging
+        if (car.getLocation().isStaging()) {
+            return false;
+        }
+        if (!checkPickUpTrainDirection(car, rld)) {
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("buildNoPickupLaterDirection", car.toString(), rld.getName(), rld.getId()));
+            return false;
+        }
+        if (!rld.isPickUpAllowed() && !rld.isLocalMovesAllowed() ||
+                !rld.isPickUpAllowed() && rld.isLocalMovesAllowed() && !car.isLocalMove()) {
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("buildNoPickupLater", car.toString(), rld.getName(), rld.getId()));
+            return false;
+        }
+        if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("buildNoPickupLaterMoves", car.toString(), rld.getName(), rld.getId()));
+            return false;
+        }
+        // is the track full? If so, pull immediately, prevents overloading
+        if (car.getTrack().getLength() - car.getTrack().getUsedLength() < car.getTotalKernelLength()) {
+            addLine(_buildReport, SEVEN, Bundle.getMessage("buildNoPickupLaterTrack", car.toString(), rld.getName(),
+                    car.getTrackName(), rld.getId(), car.getTrack().getLength() - car.getTrack().getUsedLength(),
+                    Setup.getLengthUnit().toLowerCase()));
+            return false;
+        }
+        addLine(_buildReport, SEVEN,
+                Bundle.getMessage("buildPickupLaterOkay", car.toString(), rld.getName(), rld.getId()));
+        return true;
     }
 
     /**
@@ -2739,7 +2747,7 @@ public class TrainBuilderBase extends TrainCommon {
     }
 
     private boolean isLoadRestrictionsTrain() {
-        for (Train train : trainManager.getTrainsByIdList()) {
+        for (Train train : trainManager.getList()) {
             if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
                 return true;
             }

@@ -115,8 +115,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     addLine(_buildReport, SEVEN,
                             Bundle.getMessage("buildExcludeCarTypeAtLoc", car.toString(), car.getTypeName(),
                                     car.getTypeExtensions(), car.getLocationName(), car.getTrackName()));
-                    _carList.remove(car); // remove this car from the list
-                    _carIndex--;
+                    remove(car); // remove this car from the list
                     continue;
                 }
                 // first pass, find a caboose that matches the engine road
@@ -131,8 +130,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         foundCaboose = true;
                     }
                     if (!foundCaboose) {
-                        _carList.remove(car); // remove this car from the list
-                        _carIndex--;
+                        remove(car); // remove this car from the list
                         continue;
                     }
                 }
@@ -270,8 +268,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             else if (!road.equals(Train.NONE) && !road.equals(car.getRoadName())) {
                 addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarWrongRoad", car.toString(),
                         car.getLocationName(), car.getTrackName(), car.getTypeName(), car.getRoadName()));
-                _carList.remove(car); // remove this car from the list
-                _carIndex--;
+                remove(car); // remove this car from the list
                 continue;
             } else if (!foundCarWithFred && car.getLocationName().equals(rl.getName())) {
                 // remove cars that can't be picked up due to train and track
@@ -279,8 +276,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 if (!checkPickUpTrainDirection(car, rl)) {
                     addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarTypeAtLoc", car.toString(),
                             car.getTypeName(), car.getTypeExtensions(), car.getLocationName(), car.getTrackName()));
-                    _carList.remove(car); // remove this car from the list
-                    _carIndex--;
+                    remove(car); // remove this car from the list
                     continue;
                 }
                 if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
@@ -508,8 +504,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             // can this car be pulled from an interchange or spur?
             if (!checkPickupInterchangeOrSpur(car)) {
-                _carList.remove(car);
-                _carIndex--; // removed car from list, so backup pointer
+                remove(car);
                 addLine(_buildReport, FIVE, BLANK_LINE);
                 continue; // no
             }
@@ -1363,8 +1358,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             car.getFinalDestinationName(), _train.getName()));
             addLine(_buildReport, FIVE, BLANK_LINE);
             log.debug("Removing car ({}) from list", car.toString());
-            _carList.remove(car);
-            _carIndex--;
+            remove(car);
             return true; // car has a final destination, but no local moves by
                          // this train
         }
@@ -1375,8 +1369,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 addLine(_buildReport, ONE, Bundle.getMessage("buildErrorCarStageDest", car.toString()));
             } else {
                 log.debug("Removing car ({}) from list", car.toString());
-                _carList.remove(car);
-                _carIndex--;
+                remove(car);
             }
             return true; // car has a final destination, but through traffic not
                          // allowed by this train
@@ -1965,9 +1958,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         _completedMoves++; // bump number of car pick up moves for the location
         _reqNumOfMoves--; // decrement number of moves left for the location
 
-        if (_carList.remove(car)) {
-            _carIndex--; // removed car from list, so backup pointer
-        }
+        remove(car); // remove car from list
 
         rl.setCarMoves(rl.getCarMoves() + 1);
         if (rl != rld) {
@@ -2214,6 +2205,12 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
         }
         return null; // no clone for this car
+    }
+
+    private void remove(Car car) {
+        if (_carList.remove(car)) { // remove this car from the list
+            _carIndex--;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(TrainBuilderCars.class);

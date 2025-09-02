@@ -173,7 +173,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         if (Setup.isTrainLoggerEnabled() && !_trainLog) {
             log.debug("Train Logger adding train listerners");
             _trainLog = true;
-            List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
+            List<Train> trains = InstanceManager.getDefault(TrainManager.class).getList();
             trains.forEach(train -> train.addPropertyChangeListener(this));
             // listen for new trains being added
             InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(this);
@@ -186,7 +186,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
     private void removeTrainListeners() {
         log.debug("Train Logger removing train listerners");
         if (_trainLog) {
-            List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
+            List<Train> trains = InstanceManager.getDefault(TrainManager.class).getList();
             trains.forEach(train -> train.removePropertyChangeListener(this));
             InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(this);
             InstanceManager.getDefault(DefaultBackup.class).removePropertyChangeListener(this);

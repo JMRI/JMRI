@@ -2647,7 +2647,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         RouteLocation rlBoston = route.getRouteLocationBySequenceNumber(5);
         // only allow 4 car to be pulled
-        rlBoston.setMaxCarMoves(4); // causes one car to be stranded at Boston
+        rlBoston.setMaxCarMoves(1); // causes one car to be stranded at Boston
 
         Location boston = rlBoston.getLocation();
         Track bostonSpur1 = boston.getTrackByName("Boston Spur 1", Track.SPUR); // delete
