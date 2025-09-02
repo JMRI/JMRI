@@ -2796,7 +2796,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     return JComboBox.class;
                 case FWD_STOPPING_LENGTH:
                 case REV_STOPPING_LENGTH:
-                    return Integer.class;
+                    return JSpinner.class;
                 default:
                     return super.getColumnClass(c);
             }
