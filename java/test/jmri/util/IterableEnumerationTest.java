@@ -2,8 +2,10 @@ package jmri.util;
 
 import java.util.Vector;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -15,7 +17,7 @@ public class IterableEnumerationTest {
     public void testCTor() {
         Vector<String> v = new Vector<>();
         IterableEnumeration<String> t = new IterableEnumeration<>(v.elements());
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
@@ -25,10 +27,10 @@ public class IterableEnumerationTest {
         v.addElement("World");
         v.addElement("From");
         v.addElement("JMRI");
-        IterableEnumeration<String> t = new IterableEnumeration<String>(v.elements());
+        IterableEnumeration<String> t = new IterableEnumeration<>(v.elements());
         int x = 0;
         for(String s:t) {
-           Assert.assertEquals("Element " + x,v.elementAt(x),s);
+           assertEquals( v.elementAt(x),s, "Element " + x);
            x++;
         }
     }
