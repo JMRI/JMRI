@@ -2,8 +2,11 @@ package jmri.util;
 
 import java.awt.Color;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests for the jmri.util.ColorUtil class.
@@ -14,199 +17,196 @@ public class ColorUtilTest {
 
     @Test
     public void testBlackFromString() {
-        Assert.assertEquals("Black from string", Color.black, ColorUtil.stringToColor(ColorUtil.ColorBlack));
+        assertEquals( Color.black, ColorUtil.stringToColor(ColorUtil.ColorBlack), "Black from string");
     }
 
     @Test
     public void testStringFromBlack() {
-        Assert.assertEquals("Black to string", ColorUtil.ColorBlack, ColorUtil.colorToString(Color.black));
+        assertEquals( ColorUtil.ColorBlack, ColorUtil.colorToString(Color.black), "Black to string");
     }
 
     @Test
     public void testDarkGrayFromString() {
-        Assert.assertEquals("DarkGray from string", Color.darkGray, ColorUtil.stringToColor(ColorUtil.ColorDarkGray));
+        assertEquals( Color.darkGray, ColorUtil.stringToColor(ColorUtil.ColorDarkGray), "DarkGray from string");
     }
 
     @Test
     public void testGrayFromString() {
-        Assert.assertEquals("Gray from string", Color.gray, ColorUtil.stringToColor(ColorUtil.ColorGray));
+        assertEquals( Color.gray, ColorUtil.stringToColor(ColorUtil.ColorGray), "Gray from string");
     }
 
     @Test
     public void testStringFromGray() {
-        Assert.assertEquals("Gray to string",ColorUtil.ColorGray, ColorUtil.colorToString(Color.gray));
+        assertEquals( ColorUtil.ColorGray, ColorUtil.colorToString(Color.gray), "Gray to string");
     }
 
     @Test
     public void testLightGrayFromString() {
-        Assert.assertEquals("LightGray from string", Color.lightGray, ColorUtil.stringToColor(ColorUtil.ColorLightGray));
+        assertEquals( Color.lightGray, ColorUtil.stringToColor(ColorUtil.ColorLightGray), "LightGray from string");
     }
 
     @Test
     public void testStringFromLightGray() {
-        Assert.assertEquals("LightGray to string",ColorUtil.ColorLightGray, ColorUtil.colorToString(Color.lightGray));
+        assertEquals( ColorUtil.ColorLightGray, ColorUtil.colorToString(Color.lightGray), "LightGray to string");
     }
 
     @Test
     public void testStringFromDarkGray() {
-        Assert.assertEquals("DarkGray to string",ColorUtil.ColorDarkGray, ColorUtil.colorToString(Color.darkGray));
+        assertEquals( ColorUtil.ColorDarkGray, ColorUtil.colorToString(Color.darkGray), "DarkGray to string");
     }
 
     @Test
     public void testWhiteFromString() {
-        Assert.assertEquals("White from string", Color.white, ColorUtil.stringToColor(ColorUtil.ColorWhite));
+        assertEquals( Color.white, ColorUtil.stringToColor(ColorUtil.ColorWhite), "White from string");
     }
 
     @Test
     public void testStringFromWhite() {
-        Assert.assertEquals("White to string",ColorUtil.ColorWhite, ColorUtil.colorToString(Color.white));
+        assertEquals( ColorUtil.ColorWhite, ColorUtil.colorToString(Color.white), "White to string");
     }
 
     @Test
     public void testStringFromRed() {
-        Assert.assertEquals("Red to String",ColorUtil.ColorRed, ColorUtil.colorToString(Color.red));
+        assertEquals( ColorUtil.ColorRed, ColorUtil.colorToString(Color.red), "Red to String");
     }
 
     @Test
     public void testRedFromString() {
-        Assert.assertEquals("Red from string",Color.red, ColorUtil.stringToColor(ColorUtil.ColorRed));
+        assertEquals( Color.red, ColorUtil.stringToColor(ColorUtil.ColorRed), "Red from string");
     }
 
     @Test
     public void testStringFromPink() {
-        Assert.assertEquals("Pink to string",ColorUtil.ColorPink, ColorUtil.colorToString(Color.pink));
+        assertEquals( ColorUtil.ColorPink, ColorUtil.colorToString(Color.pink), "Pink to string");
     }
 
     @Test
     public void testPinkFromString() {
-        Assert.assertEquals("Pink from string", Color.pink, ColorUtil.stringToColor(ColorUtil.ColorPink));
+        assertEquals( Color.pink, ColorUtil.stringToColor(ColorUtil.ColorPink), "Pink from string");
     }
 
     @Test
     public void testStringFromOrange() {
-        Assert.assertEquals("Orange to string",ColorUtil.ColorOrange, ColorUtil.colorToString(Color.orange));
+        assertEquals( ColorUtil.ColorOrange, ColorUtil.colorToString(Color.orange), "Orange to string");
     }
 
     @Test
     public void testOrangeFromString() {
-        Assert.assertEquals("Orange from string", Color.orange, ColorUtil.stringToColor(ColorUtil.ColorOrange));
+        assertEquals( Color.orange, ColorUtil.stringToColor(ColorUtil.ColorOrange), "Orange from string");
     }
 
     @Test
     public void testYellowFromString() {
-        Assert.assertEquals("Yellow from string", Color.yellow, ColorUtil.stringToColor(ColorUtil.ColorYellow));
+        assertEquals( Color.yellow, ColorUtil.stringToColor(ColorUtil.ColorYellow), "Yellow from string");
     }
 
     @Test
     public void testStringFromYellow() {
-        Assert.assertEquals("Yellow to string",ColorUtil.ColorYellow, ColorUtil.colorToString(Color.yellow));
+        assertEquals( ColorUtil.ColorYellow, ColorUtil.colorToString(Color.yellow), "Yellow to string");
     }
 
     @Test
     public void testStringFromGreen() {
-        Assert.assertEquals("Green to String",ColorUtil.ColorGreen, ColorUtil.colorToString(Color.green));
+        assertEquals( ColorUtil.ColorGreen, ColorUtil.colorToString(Color.green), "Green to String");
     }
 
     @Test
     public void testGreenFromString() {
-        Assert.assertEquals("Green from string", Color.green, ColorUtil.stringToColor(ColorUtil.ColorGreen));
+        assertEquals( Color.green, ColorUtil.stringToColor(ColorUtil.ColorGreen), "Green from string");
     }
 
     @Test
     public void testStringFromBlue() {
-        Assert.assertEquals("Blue to string",ColorUtil.ColorBlue,ColorUtil.colorToString(Color.blue));
+        assertEquals( ColorUtil.ColorBlue,ColorUtil.colorToString(Color.blue), "Blue to string");
     }
 
     @Test
     public void testBlueFromString() {
-        Assert.assertEquals("Blue from string", Color.blue, ColorUtil.stringToColor(ColorUtil.ColorBlue));
+        assertEquals( Color.blue, ColorUtil.stringToColor(ColorUtil.ColorBlue), "Blue from string");
     }
 
     @Test
     public void testStringFromMagenta() {
-        Assert.assertEquals("Magenta to string",ColorUtil.ColorMagenta, ColorUtil.colorToString(Color.magenta));
+        assertEquals( ColorUtil.ColorMagenta, ColorUtil.colorToString(Color.magenta), "Magenta to string");
     }
 
     @Test
     public void testMagentaFromString() {
-        Assert.assertEquals("Magenta to string", Color.magenta, ColorUtil.stringToColor(ColorUtil.ColorMagenta));
+        assertEquals( Color.magenta, ColorUtil.stringToColor(ColorUtil.ColorMagenta), "Magenta to string");
     }
 
     @Test
     public void testStringFromCyan() {
-        Assert.assertEquals("Cyan to string",ColorUtil.ColorCyan, ColorUtil.colorToString(Color.cyan));
+        assertEquals( ColorUtil.ColorCyan, ColorUtil.colorToString(Color.cyan), "Cyan to string");
     }
 
     @Test
     public void testCyanFromString() {
-        Assert.assertEquals("Cyan to string", Color.cyan, ColorUtil.stringToColor(ColorUtil.ColorCyan));
+        assertEquals( Color.cyan, ColorUtil.stringToColor(ColorUtil.ColorCyan), "Cyan to string");
     }
 
     @Test
     public void testDefaultStringFromColor() {
-        Assert.assertEquals("other to string",ColorUtil.ColorBlack, ColorUtil.colorToString(new Color(42,42,42)));
-        jmri.util.JUnitAppender.assertErrorMessage("unknown color sent to colorToString");
+        assertEquals( ColorUtil.ColorBlack, ColorUtil.colorToString(new Color(42,42,42)), "other to string");
+        JUnitAppender.assertErrorMessage("unknown color sent to colorToString");
     }
 
     @Test
     public void testDefaultColorFromString() {
-        try {
-            ColorUtil.stringToColor("other"); // NOI18N
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException ex) {
-            Assert.assertEquals("unknown color text 'other'", ex.getMessage());
-        }
-        jmri.util.JUnitAppender.assertErrorMessage("unknown color text 'other' sent to stringToColor");
+        Exception ex = assertThrows( IllegalArgumentException.class, () ->
+            ColorUtil.stringToColor("other"));
+        assertEquals("unknown color text 'other'", ex.getMessage());
+        JUnitAppender.assertErrorMessage("unknown color text 'other' sent to stringToColor");
     }
 
     @Test
     public void testStringFromNull() {
-        Assert.assertEquals("null to string",ColorUtil.ColorTrack, ColorUtil.colorToString(null));
+        assertEquals( ColorUtil.ColorTrack, ColorUtil.colorToString(null), "null to string");
     }
 
     @Test
     public void testColorFromTrack() {
-        Assert.assertNull("track from null", ColorUtil.stringToColor(ColorUtil.ColorTrack));
+        assertNull( ColorUtil.stringToColor(ColorUtil.ColorTrack), "track from null");
     }
 
     @Test
     public void testHexStringFromMagenta() {
-        Assert.assertEquals("hex string from magenta", ColorUtil.colorToHexString(Color.MAGENTA), "#FF00FF");
+        assertEquals( ColorUtil.colorToHexString(Color.MAGENTA), "#FF00FF", "hex string from magenta");
     }
 
     @Test
     public void testHexStringFromNull() {
-        Assert.assertNull("hex string from null", ColorUtil.colorToHexString(null));
+        assertNull( ColorUtil.colorToHexString(null), "hex string from null");
     }
 
     @Test
     public void testColorNameForMagenta() {
-        Assert.assertEquals("color name for magenta", ColorUtil.colorToColorName(Color.MAGENTA),ColorUtil.ColorMagenta);
+        assertEquals( ColorUtil.colorToColorName(Color.MAGENTA),ColorUtil.ColorMagenta, "color name for magenta");
     }
 
     @Test
     public void testColorNameForFFCCFF() {
-        Assert.assertEquals("color name for #FFCCFF", ColorUtil.colorToColorName(new Color(255, 204, 255)), "#FFCCFF");
+        assertEquals( "#FFCCFF", ColorUtil.colorToColorName(new Color(255, 204, 255)), "color name for #FFCCFF");
     }
 
     @Test
     public void testColorNameForFF00FF() {
-        Assert.assertEquals("color name for #FF00FF", ColorUtil.colorToColorName(new Color(255, 0, 255)), ColorUtil.ColorMagenta);
+        assertEquals( ColorUtil.colorToColorName(new Color(255, 0, 255)), ColorUtil.ColorMagenta, "color name for #FF00FF");
     }
 
     @Test
     public void testColorNameFromNull() {
-        Assert.assertNull("color name from null", ColorUtil.colorToColorName(null));
+        assertNull( ColorUtil.colorToColorName(null), "color name from null");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
-       jmri.util.JUnitUtil.setUp();
+    public void setUp() {
+       JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
-       jmri.util.JUnitUtil.tearDown();
+    public void tearDown() {
+       JUnitUtil.tearDown();
     }
 
 }
