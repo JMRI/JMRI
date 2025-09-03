@@ -12,8 +12,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.*;
-import jmri.jmrit.operations.locations.tools.AlternateTrackAction;
-import jmri.jmrit.operations.locations.tools.ChangeTrackTypeAction;
+import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -60,7 +59,8 @@ public class SpurEditFrame extends TrackEditFrame {
         super.initComponents(location, track);
 
         _toolMenu.insert(new AlternateTrackAction(this), 0);
-        _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 1);
+        _toolMenu.insert(new TrackPriorityAction(_track), 1);
+        _toolMenu.insert(new ChangeTrackTypeAction(this), TOOL_MENU_OFFSET + 2);
         addHelpMenu("package.jmri.jmrit.operations.Operations_Spurs", true); // NOI18N
 
         // override text strings for tracks

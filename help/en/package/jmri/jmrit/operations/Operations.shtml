@@ -210,6 +210,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#TrackTools">Track Tools</a>
               <ul>
+              <li><a href="#TrackPriority">Track Priority</a>
                 <li><a href="#LoadOptions">Load Options</a>
                   <ul>
                     <li><a href="#DisableLoadChange">Disable Load Change</a></li>
@@ -3489,6 +3490,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h3 id="TrackTools">Track Tools</h3>
       You can access some very useful tools for your tracks from the "Tools" menu when editing a
       track.
+
+      <h4 id="TrackPriority">Track Priority</h4>
+      Normally when the program assigns cars to a train it is sorted by the car's load priority and
+      move count. If you find that cars on a certain track need a higher or lower priority, use the
+      "Track Priority" tool to change the order cars are processed at a location. "High" priority
+      tracks are processed first, with "Medium", "Normal", and finally "Low" priority processed in
+      the respective order. Track priority supersedes the car's load priority.
 
       <h4 id="LoadOptions">Load Options</h4>
       You can restrict which car loads a track can service. Under "Tools" in the menu, Select "Load

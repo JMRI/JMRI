@@ -98,7 +98,7 @@ public class Track extends PropertyChangeSupport {
     protected int _mode = MATCH; // default is match mode
     protected boolean _holdCustomLoads = false; // hold cars with custom loads
 
-    // drop options
+    // drop & pick up options
     protected String _dropOption = ANY; // controls which route or train can set
                                         // out cars
     protected String _pickupOption = ANY; // controls which route or train can
@@ -133,6 +133,13 @@ public class Track extends PropertyChangeSupport {
     public static final String NORMAL = Bundle.getMessage("Normal");
     public static final String FIFO = Bundle.getMessage("FIFO");
     public static final String LIFO = Bundle.getMessage("LIFO");
+
+    // Priority
+    protected String _trackPriority = PRIORITY_NORMAL;
+    public static final String PRIORITY_HIGH = Bundle.getMessage("High");
+    public static final String PRIORITY_MEDIUM = Bundle.getMessage("Medium");
+    public static final String PRIORITY_NORMAL = Bundle.getMessage("Normal");
+    public static final String PRIORITY_LOW = Bundle.getMessage("Low");
 
     // the four types of tracks
     public static final String STAGING = "Staging";
@@ -222,6 +229,7 @@ public class Track extends PropertyChangeSupport {
     public static final String HOLD_CARS_CHANGED_PROPERTY = "trackHoldCarsWithCustomLoads"; // NOI18N
     public static final String TRACK_COMMENT_CHANGED_PROPERTY = "trackComments"; // NOI18N
     public static final String TRACK_FACTOR_CHANGED_PROPERTY = "trackReservationFactor"; // NOI18N
+    public static final String PRIORITY_CHANGED_PROPERTY = "trackPriority"; // NOI18N
 
     // IdTag reader associated with this track.
     protected Reporter _reader = null;
@@ -304,6 +312,7 @@ public class Track extends PropertyChangeSupport {
         newTrack.setDisableLoadChangeEnabled(isDisableLoadChangeEnabled());
         newTrack.setQuickServiceEnabled(isQuickServiceEnabled());
         newTrack.setHoldCarsWithCustomLoadsEnabled(isHoldCarsWithCustomLoadsEnabled());
+        newTrack.setTrackPriority(getTrackPriority());
         return newTrack;
     }
 
@@ -1523,6 +1532,23 @@ public class Track extends PropertyChangeSupport {
     }
 
     /**
+     * A track has four priorities: PRIORITY_HIGH, PRIORITY_MEDIUM,
+     * PRIORITY_NORMAL, and PRIORITY_LOW. Cars are serviced from a location
+     * based on the track priority. Default is normal.
+     * 
+     * @return track priority
+     */
+    public String getTrackPriority() {
+        return _trackPriority;
+    }
+
+    public void setTrackPriority(String priority) {
+        String old = _trackPriority;
+        _trackPriority = priority;
+        setDirtyAndFirePropertyChange(PRIORITY_CHANGED_PROPERTY, old, priority);
+    }
+
+    /**
      * Used to determine if track can service the rolling stock.
      *
      * @param rs the car or loco to be tested
@@ -2412,6 +2438,9 @@ public class Track extends PropertyChangeSupport {
             }
 
         }
+        if ((a = e.getAttribute(Xml.TRACK_PRIORITY)) != null) {
+            _trackPriority = a.getValue();
+        }
         if ((a = e.getAttribute(Xml.BLOCKING_ORDER)) != null) {
             try {
                 _blockingOrder = Integer.parseInt(a.getValue());
@@ -2702,6 +2731,9 @@ public class Track extends PropertyChangeSupport {
         e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
         e.setAttribute(Xml.LENGTH, Integer.toString(getLength()));
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves() - getDropRS()));
+        if (!getTrackPriority().equals(PRIORITY_NORMAL)) {
+            e.setAttribute(Xml.TRACK_PRIORITY, getTrackPriority());
+        }
         if (getBlockingOrder() != 0) {
             e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));
         }
