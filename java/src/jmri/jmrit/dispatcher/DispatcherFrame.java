@@ -3239,7 +3239,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         public static final int CURRENTSIGNAL_COLUMN = 14;
         public static final int CURRENTSIGNAL_COLUMN_U = 15;
         public static final int DCC_ADDRESS = 16;
-        public static final int MAX_COLUMN = 16;
+        public static final int ISHELDCHECKBOX_COLUMN = 17;
+        public static final int MAX_COLUMN = 17;
         public ActiveTrainsTableModel() {
             super();
         }
@@ -3259,6 +3260,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return JButton.class;
                 case RESTARTCHECKBOX_COLUMN:
                 case ISAUTO_COLUMN:
+                case ISHELDCHECKBOX_COLUMN:
                     return Boolean.class;
                 default:
                     return String.class;
@@ -3281,6 +3283,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case ALLOCATEBUTTON_COLUMN:
                 case TERMINATEBUTTON_COLUMN:
                 case RESTARTCHECKBOX_COLUMN:
+                case ISHELDCHECKBOX_COLUMN:
                     return (true);
                 default:
                     return (false);
@@ -3312,6 +3315,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return Bundle.getMessage("NextSectionColumnTitle");
                 case RESTARTCHECKBOX_COLUMN:
                     return(Bundle.getMessage("AutoRestartColumnTitle"));
+                case ISHELDCHECKBOX_COLUMN:
+                    return(Bundle.getMessage("IsHeldColumnTitle"));
                 case ALLOCATEBUTTON_COLUMN:
                     return(Bundle.getMessage("AllocateButton"));
                 case TERMINATEBUTTON_COLUMN:
@@ -3352,6 +3357,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 case ALLOCATEBUTTON_COLUMN:
                 case TERMINATEBUTTON_COLUMN:
                 case RESTARTCHECKBOX_COLUMN:
+                case ISHELDCHECKBOX_COLUMN:
                 case ISAUTO_COLUMN:
                 case CURRENTSIGNAL_COLUMN:
                 case CURRENTSIGNAL_COLUMN_U:
@@ -3418,6 +3424,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     return Bundle.getMessage("TerminateTrain");
                 case RESTARTCHECKBOX_COLUMN:
                     return at.getResetWhenDone();
+                case ISHELDCHECKBOX_COLUMN:
+                    return at.holdAllocation();
                 case ISAUTO_COLUMN:
                     return at.getAutoRun();
                 case CURRENTSIGNAL_COLUMN:
@@ -3471,6 +3479,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     }
                 }
             }
+            if (col == ISHELDCHECKBOX_COLUMN) {
+                ActiveTrain at = null;
+                at = activeTrainsList.get(row);
+                if (activeTrainsList.get(row) != null) {
+                    if (!at.holdAllocation()) {
+                        at.holdAllocation(true);
+                        return;
+                    }
+                    at.holdAllocation(false);
+                }
+            }
+
         }
     }
 
