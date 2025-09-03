@@ -490,7 +490,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
     }
 
     private void addTrainListeners() {
-        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getList()) {
             if (train.getRoute() == this) {
                 train.addPropertyChangeListener(this);
             }
@@ -498,7 +498,7 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
     }
 
     private void removeTrainListeners() {
-        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getList()) {
             train.removePropertyChangeListener(this);
         }
     }

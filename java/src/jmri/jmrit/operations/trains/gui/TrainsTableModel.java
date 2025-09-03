@@ -13,9 +13,11 @@ import javax.swing.table.TableCellEditor;
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -613,14 +615,16 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 updateList();
                 fireTableDataChanged();
             });
-        } else if (e.getSource().getClass().equals(Train.class)) {
+        } else if (e.getSource().getClass().equals(Train.class) &&
+                !e.getPropertyName().equals(Route.ROUTE_STATUS_CHANGED_PROPERTY)) {
             Train train = ((Train) e.getSource());
             SwingUtilities.invokeLater(() -> {
                 int row = sysList.indexOf(train);
                 if (row >= 0 && _table != null) {
                     fireTableRowsUpdated(row, row);
                     int viewRow = _table.convertRowIndexToView(row);
-                    log.debug("Scroll table to row: {}, property: {}", viewRow, e.getPropertyName());
+                    log.debug("Scroll table to row: {}, train: {}, property: {}", viewRow, train.getName(),
+                            e.getPropertyName());
                     _table.scrollRectToVisible(_table.getCellRect(viewRow, 0, true));
                 }
             });
@@ -628,13 +632,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     private void removePropertyChangeTrains() {
-        for (Train train : trainManager.getTrainsByIdList()) {
+        for (Train train : trainManager.getList()) {
             train.removePropertyChangeListener(this);
         }
     }
 
     private void addPropertyChangeTrains() {
-        for (Train train : trainManager.getTrainsByIdList()) {
+        for (Train train : trainManager.getList()) {
             train.addPropertyChangeListener(this);
         }
     }
