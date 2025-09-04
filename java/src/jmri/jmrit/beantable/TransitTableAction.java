@@ -1863,7 +1863,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 switch (tWhatData2) {
                     case TransitSectionAction.LOCOADDRESSTYPEROSTER:
                         locoAddressRoster.setSelected(true);
-                        rosterComboBox.setSelectedItem(tWhatString2);
+                        setRosterComboBox(rosterComboBox, tWhatString2);
                         rosterComboBox.setVisible(true);
                         locoAddress.setVisible(false);
                         break;
@@ -1999,6 +1999,21 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         addEditActionFrame.pack();
         addEditActionFrame.setVisible(true);
+    }
+
+    private boolean setRosterComboBox(RosterEntryComboBox box, String txt) {
+        boolean found = false;
+        for (int i = 1; i < box.getItemCount(); i++) {
+            if (txt.equals(((RosterEntry) box.getItemAt(i)).getId())) {
+                box.setSelectedIndex(i);
+                found = true;
+                break;
+            }
+        }
+        if (!found && box.getItemCount() > 0) {
+            box.setSelectedIndex(0);
+        }
+        return found;
     }
 
     private void updateTrainInfoAddressFields(ActionEvent e) {
