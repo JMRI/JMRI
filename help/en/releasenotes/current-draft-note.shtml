@@ -447,7 +447,7 @@
                  for individual sections. The forward and reverse refer to the direction thru the transit not
                  the direction thru the section (this differs from fwd/rev stopping sensors).
                  These are expressed in per cent and are in addition to the adjustment
-                 specified when defining a train.</li>li>
+                 specified when defining a train.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
