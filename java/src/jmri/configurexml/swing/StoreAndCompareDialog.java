@@ -80,7 +80,7 @@ public class StoreAndCompareDialog {
         AtomicBoolean cancelShutdown = new AtomicBoolean(false);
         try {
             // Provide option to invoke the store process before the shutdown.
-            final JDialog dialog = new JDialog(jmri.util.JmriJFrame.getFrameList().get(0));
+            final JDialog dialog = new JDialog(jmri.util.JmriJFrame.getFrameList().get(1));
             dialog.setTitle(Bundle.getMessage("QuestionTitle"));     // NOI18N
             dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
             JPanel container = new JPanel();

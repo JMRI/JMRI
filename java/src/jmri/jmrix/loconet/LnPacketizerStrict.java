@@ -3,6 +3,8 @@ package jmri.jmrix.loconet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.PowerManager;
+
 /**
  * Converts Stream-based I/O to/from LocoNet messages. The "LocoNetInterface"
  * side sends/receives LocoNetMessage objects. The connection to a
@@ -156,7 +158,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                             if (msg.getOpCode() == LnConstants.OPC_LONG_ACK) {
                                 waitingOnLack = false;
                                 // check bad IMM
-                                if ((msg.getElement(1) & 0xff) == 0x6d && (msg.getElement(2) & 0xff) == 0) {
+                                if ((msg.getElement(1) & 0xff) == 0x6d && (msg.getElement(2) & 0xff) == 0 ) {
                                     reTryRequired = true;
                                     waitBusy = 100;
                                     log.warn("IMM Back off");  // NOI18N
@@ -241,7 +243,10 @@ public class LnPacketizerStrict extends LnPacketizer {
                     log.trace("check for input"); // NOI18N
 
                     byte msg[] = xmtList.take();
-
+                    if ( (msg[0] & 0xff)  == LnConstants.OPC_IMM_PACKET && memo.getPowerManager().getPower() != PowerManager.ON) {
+                        log.warn("TrackPower off, cannot send IMMPacket");
+                        continue;
+                    }
                     // input - now send
                     try {
                         if (ostream != null) {
