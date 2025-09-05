@@ -1015,7 +1015,8 @@ public class TrainBuilderBase extends TrainCommon {
                 // only print out the first DISPLAY_CAR_LIMIT cars for each
                 // location
                 if (carCount < DISPLAY_CAR_LIMIT_50 && (car.getKernel() == null || car.isLead())) {
-                    if (car.getLoadPriority().equals(CarLoad.PRIORITY_LOW)) {
+                    if (car.getLoadPriority().equals(CarLoad.PRIORITY_LOW) &&
+                            car.getTrack().getTrackPriority().equals(Track.PRIORITY_NORMAL)) {
                         addLine(_buildReport, SEVEN,
                                 Bundle.getMessage("buildCarAtLocWithMoves", car.toString(), car.getTypeName(),
                                         car.getTypeExtensions(), car.getLocationName(), car.getTrackName(),
@@ -1024,7 +1025,8 @@ public class TrainBuilderBase extends TrainCommon {
                         addLine(_buildReport, SEVEN,
                                 Bundle.getMessage("buildCarAtLocWithMovesPriority", car.toString(), car.getTypeName(),
                                         car.getTypeExtensions(), car.getLocationName(), car.getTrackName(),
-                                        car.getMoves(), car.getLoadType().toLowerCase(), car.getLoadName(),
+                                        car.getTrack().getTrackPriority(), car.getMoves(),
+                                        car.getLoadType().toLowerCase(), car.getLoadName(),
                                         car.getLoadPriority()));
                     }
                     if (car.isLead()) {

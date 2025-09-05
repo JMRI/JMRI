@@ -214,6 +214,37 @@ public class TrainBuilderGuiTest extends OperationsTestCase {
     }
 
     /**
+     * Test warning message when cars don't have a track assignment.
+     */
+    @Test
+    public void testWarningMessageCarsNoTrack() {
+
+        JUnitOperationsUtil.initOperationsData();
+        tmanager.setBuildMessagesEnabled(true);
+
+        // remove car's track assignments, should cause warning message
+        Car c1 = cmanager.getByRoadAndNumber("CP", "777");
+        c1.setTrack(null);
+        Car c2 = cmanager.getByRoadAndNumber("CP", "888");
+        c2.setTrack(null);
+
+        // Route Northend-NI-Southend
+        Train train2 = tmanager.getTrainById("2");
+        
+        // there should be 2 warnings
+        JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("buildWarningMsg", train2.getName(), 2),
+        Bundle.getMessage("ButtonOK"));
+
+        boolean buildCompleteOk = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new TrainBuilder().build(train2);
+        });
+
+        Assert.assertTrue("build Completed Ok", buildCompleteOk);
+        Assert.assertTrue("Train status", train2.isBuilt());
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
+    /**
      * Test failure message when cars in staging are stuck there.
      */
     @Test

@@ -474,6 +474,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Dest")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Ship")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("AbbrevationDirection")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Priority")));
         
         // confirm comment column is visible
         Assert.assertEquals("Column exists", 12, tbl.findColumn(Bundle.getMessage("Comment")));
@@ -668,6 +669,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("AbbrevationDirection")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("AlternateTrack")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("QuickService")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Priority")));
         
         // add track moves column
         Setup.setShowTrackMovesEnabled(true);
@@ -765,6 +767,11 @@ public class LocationEditFrameTest extends OperationsTestCase {
         track3.setLength(124);
         Assert.assertEquals("new length", 124, tbl.getValueAt(2, tbl.findColumn(Bundle.getMessage("Length"))));
         
+        // test track priority
+        track.setTrackPriority(Track.PRIORITY_HIGH);
+        Assert.assertEquals("Confirm number of columns", 18, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 15, tbl.findColumn(Bundle.getMessage("Priority")));
+
         // test adding a new track
         loc.addTrack("Test Location Spur 4", Track.SPUR);
         Assert.assertEquals("Confirm number of rows", 4, tbl.getRowCount());
@@ -842,6 +849,7 @@ public class LocationEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("PlanPickUp")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Dest")));
         Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("AbbrevationDirection")));
+        Assert.assertEquals("Column doesn't exist", -1, tbl.findColumn(Bundle.getMessage("Priority")));
                
         // add track moves column
         Setup.setShowTrackMovesEnabled(true);
@@ -897,6 +905,11 @@ public class LocationEditFrameTest extends OperationsTestCase {
         track.setDestinationOption(Track.EXCLUDE_DESTINATIONS);
         Assert.assertEquals("Confirm number of columns", 19, tbl.getColumnCount());
         Assert.assertEquals("Column exists", 13, tbl.findColumn(Bundle.getMessage("Dest")));
+
+        // test track priority
+        track.setTrackPriority(Track.PRIORITY_HIGH);
+        Assert.assertEquals("Confirm number of columns", 20, tbl.getColumnCount());
+        Assert.assertEquals("Column exists", 17, tbl.findColumn(Bundle.getMessage("Priority")));
 
         JUnitUtil.dispose(f);
     }

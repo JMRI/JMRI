@@ -31,7 +31,7 @@ import jmri.util.swing.JmriJOptionPane;
 public abstract class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     // where in the tool menu new items are inserted
-    protected static final int TOOL_MENU_OFFSET = 6;
+    protected static final int TOOL_MENU_OFFSET = 7;
 
     // Managers
     TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
@@ -352,6 +352,7 @@ public abstract class TrackEditFrame extends OperationsFrame implements java.bea
         _toolMenu.add(new TrackRoadEditAction(this));
         _toolMenu.add(new PoolTrackAction(this));
         _toolMenu.add(new IgnoreUsedTrackAction(this));
+        _toolMenu.addSeparator();
         _toolMenu.add(new TrackEditCommentsAction(this));
         _toolMenu.addSeparator();
         // spurs, interchanges, and yards insert menu items here
