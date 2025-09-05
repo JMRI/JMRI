@@ -9251,24 +9251,24 @@
     <transit systemName="IZ1" userName="MS-VE">
       <systemName>IZ1</systemName>
       <userName>MS-VE</userName>
-      <transitsection sectionname="IY8" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY1" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY2" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY3" sequence="3" direction="8" alternate="yes" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY4" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY5" sequence="5" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY6" sequence="5" direction="8" alternate="yes" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY7" sequence="6" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY10" sequence="7" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY12" sequence="7" direction="8" alternate="yes" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY11" sequence="8" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY14" sequence="9" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY15" sequence="10" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY16" sequence="10" direction="8" alternate="yes" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY17" sequence="11" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY18" sequence="12" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY19" sequence="12" direction="8" alternate="yes" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY20" sequence="13" direction="8" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY8" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY1" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY2" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY3" sequence="3" direction="8" alternate="yes" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY4" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY5" sequence="5" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY6" sequence="5" direction="8" alternate="yes" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY7" sequence="6" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY10" sequence="7" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY12" sequence="7" direction="8" alternate="yes" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY11" sequence="8" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY14" sequence="9" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY15" sequence="10" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY16" sequence="10" direction="8" alternate="yes" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY17" sequence="11" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY18" sequence="12" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY19" sequence="12" direction="8" alternate="yes" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY20" sequence="13" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
     </transit>
   </transits>
   <signalelements class="jmri.jmrit.blockboss.configurexml.BlockBossLogicProviderXml">
