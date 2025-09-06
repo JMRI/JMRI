@@ -1157,6 +1157,32 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             getSourceMast().setAspect(stopAspect);
             return;
         }
+
+
+        // **** START OF CORRECTED FIX ****
+        // This logic should only apply to a standard mast that is FACING a turntable.
+        // It should NOT apply when the turntable mast is the SOURCE.
+        String destAspect = destination.getAspect();
+        log.debug("destination {}", destination.getDisplayName());
+        if (!(source instanceof TurntableSignalMast) && (destination instanceof TurntableSignalMast)) {
+            log.debug("Source is facing a Turntable Mast. Forcing 'Danger' aspect for this calculation, overriding destination's actual state of '{}'.", destAspect);
+            destAspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+        }
+        // **** END OF CORRECTED FIX ****
+
+        // **** START OF CORRECTED DIAGNOSTIC ****
+        SignalAppearanceMap appearanceMap = getSourceMast().getAppearanceMap();
+        log.warn("DIAGNOSTIC for SML '{}' to '{}':", getSourceMast().getDisplayName(), destination.getDisplayName());
+        if (appearanceMap == null) {
+            log.warn("  - AppearanceMap is NULL!");
+        } else {
+            // Correctly count the items in the enumeration
+            int aspectCount = Collections.list(appearanceMap.getAspects()).size();
+            log.warn("  - AppearanceMap class: {}", appearanceMap.getClass().getName());
+            log.warn("  - AppearanceMap has {} aspects defined.", aspectCount);
+        }
+        // **** END OF CORRECTED DIAGNOSTIC ****
+
         String[] advancedAspect;
         if (destination.getHeld()) {
             if (destination.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.HELD) != null) {
@@ -1165,8 +1191,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER));
             }
         } else {
-            advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAspect());
+            // Use our local destAspect variable which is now guaranteed to be correct for the turntable case.
+            advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destAspect);
         }
+
+        log.warn("  - Destination Aspect (used for calc): {}", destAspect);
+        log.warn("  - Advanced Aspects Found: {}", (advancedAspect != null ? String.join(", ", advancedAspect) : "null"));
 
         log.debug("distant aspect is {}", destination.getAspect());
         log.debug("advanced aspect is {}", advancedAspect != null ? advancedAspect : "<null>");
@@ -1252,7 +1282,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                                             speed = InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(strSpeed);
                                         } catch (IllegalArgumentException ex) {
                                             // not a name either
-                                            log.warn("Using speed = 0.0 because could not understand \"{}\"", strSpeed);
+                                            log.warn("Using speed = 0.0 because could not understand '{}'", strSpeed);
                                         }
                                     }
                                     //Integer state = Integer.parseInt(strSpeed);
@@ -1301,8 +1331,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 }
             }
             if ((aspect != null) && (!aspect.isEmpty())) {
-                log.debug("setMastAppearance setting aspect \"{}\"", aspect);
-                String aspectSet = aspect; // for lambda
+                log.debug("setMastAppearance setting aspect '{}'", aspect);
+                        String aspectSet = aspect; // for lambda
                 try {
                     ThreadingUtil.runOnLayout(() -> {
                         getSourceMast().setAspect(aspectSet);
