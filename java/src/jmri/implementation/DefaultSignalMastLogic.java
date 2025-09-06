@@ -51,6 +51,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         this.source = source;
         log.warn("source {}", source.getDisplayName());
 
+        // Only perform block discovery here for Turntable Masts, as it does not depend on editor panels.
+        // Block discovery for standard masts is deferred to a later stage.
         if (source instanceof TurntableSignalMast) {
             log.warn("source instanceof TurntableSignalMast");
             LayoutTurntable turntable = ((TurntableSignalMast) source).getTurntable();
@@ -72,32 +74,9 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 }
             }
             log.warn("this.protecting {}", this.protecting);
-        } else {
-            LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-            // We need to iterate through the editors to find the one that contains the mast
-            Set<LayoutEditor> editors = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
-            for (LayoutEditor editor : editors) {
-                if (this.facing == null) {
-                    this.facing = lbm.getFacingBlockByNamedBean(source, editor);
-                }
-                // getProtectingBlocksByNamedBean returns a new list, so we can add all
-                List<LayoutBlock> protectingBlocks = lbm.getProtectingBlocksByNamedBean(source, editor);
-                for(LayoutBlock pBlock : protectingBlocks){
-                    if(!this.protecting.contains(pBlock)){
-                        this.protecting.add(pBlock);
-                    }
-                }
-            }
         }
 
-        if (this.protecting.isEmpty()) {
-            log.debug("No protecting block found for signal mast {}", source.getDisplayName());
-        }
-        if (this.facing == null) {
-            log.error("No facing block found for signal mast {}", source.getDisplayName());
-            //This can be considered a fatal error.
-        }
-
+        // Note: Error logging for missing blocks is removed from here, as discovery for standard masts is now deferred.
         this.stopAspect = source.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
         this.source.addPropertyChangeListener(propertySourceMastListener);
         if (source.getAspect() == null) {
@@ -216,11 +195,38 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             log.debug("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
             return;
         }
+
+        // If the source mast's blocks haven't been found yet (e.g., due to loading from XML before panels were ready),
+        // try to find them now. This is the deferred initialization.
+        if (this.facing == null && !(source instanceof TurntableSignalMast)) {
+            log.debug("Facing block for source mast '{}' is null. Attempting to discover it now.", getSourceMast().getDisplayName());
+            LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+            Set<LayoutEditor> editors = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
+            if (editors.isEmpty()) {
+                log.warn("Cannot discover blocks for source mast '{}' because no LayoutEditor panels are open.", getSourceMast().getDisplayName());
+            } else {
+                for (LayoutEditor editor : editors) {
+                    if (this.facing == null) {
+                        this.facing = lbm.getFacingBlockByNamedBean(getSourceMast(), editor);
+                    }
+                    // getProtectingBlocksByNamedBean returns a new list, so we can add all
+                    List<LayoutBlock> protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), editor);
+                    for(LayoutBlock pBlock : protectingBlocks){
+                        if(!this.protecting.contains(pBlock)){
+                            this.protecting.add(pBlock);
+                        }
+                    }
+                }
+            }
+            // Log an error if discovery still fails, as this is now a fatal condition for this path.
+            if (this.facing == null) {
+                log.error("Failed to discover facing block for source mast '{}'. Logic may not function correctly.", getSourceMast().getDisplayName());
+            }
+        }
+
         int oldSize = destList.size();
         destList.put(dest, new DestinationMast(dest));
-        //InstanceManager.getDefault(SignalMastLogicManager.class).addDestinationMastToLogic(this, dest);
         firePropertyChange(PROPERTY_LENGTH, oldSize, destList.size());
-        // make new dest mast appear in (update of) SignallingSourcePanel Table by having that table listen to PropertyChange Events from SML TODO
     }
 
     /**
