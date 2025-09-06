@@ -2,11 +2,7 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,7 +14,7 @@ public class StayOpenCheckBoxItemTest {
     @Test
     public void testCTor() {
         StayOpenCheckBoxItem t = new StayOpenCheckBoxItem("Test Menu Item");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -31,6 +27,6 @@ public class StayOpenCheckBoxItemTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StayOpenCheckBoxItemTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StayOpenCheckBoxItemTest.class);
 
 }
