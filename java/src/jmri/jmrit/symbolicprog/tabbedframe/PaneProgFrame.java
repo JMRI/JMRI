@@ -113,7 +113,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     abstract protected JPanel getModePane();
 
     protected void installComponents() {
-    
+
         tabPane = new jmri.util.org.mitre.jawb.swing.DetachableTabbedPane(" : "+_frameEntryId);
 
         // create ShutDownTasks
@@ -1613,7 +1613,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         writeChangesButton.setEnabled(stat);
         writeAllButton.setEnabled(stat);
-        
+
         var tempModePane = getModePane();
         if (tempModePane != null) {
             tempModePane.setEnabled(stat);
@@ -2057,6 +2057,28 @@ abstract public class PaneProgFrame extends JmriJFrame
     public static boolean getDoConfirmRead() {
         return InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ||
                 InstanceManager.getDefault(ProgrammerConfigManager.class).isDoConfirmRead();
+    }
+
+    public static void setDisableProgrammingTrack(boolean yes) {
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null) {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDisableProgrammingTrack(yes);
+        }
+    }
+
+    public static boolean getDisableProgrammingTrack() {
+        return InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ||
+                InstanceManager.getDefault(ProgrammerConfigManager.class).isDisableProgrammingTrack();
+    }
+
+    public static void setDisableProgrammingOnMain(boolean yes) {
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null) {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDisableProgrammingOnMain(yes);
+        }
+    }
+
+    public static boolean getDisableProgrammingOnMain() {
+        return InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ||
+                InstanceManager.getDefault(ProgrammerConfigManager.class).isDisableProgrammingOnMain();
     }
 
     public RosterEntry getRosterEntry() {
