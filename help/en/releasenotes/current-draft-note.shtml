@@ -433,6 +433,9 @@
             <li>Detachable panes no longer appear in the Windows menu
                 <i>unless</i> they are actually detached.</li>
             <li>Added Help and Windows menus to the detached panes.</li>
+            <li>It's now possible to disable Programming Track and/or
+                Programming On Main. See Preferences -> Roster ->
+                Programmer.</li>
         </ul>
 
    <h3>Dispatcher</h3>
