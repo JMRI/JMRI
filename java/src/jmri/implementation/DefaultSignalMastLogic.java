@@ -1158,30 +1158,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             return;
         }
 
-
-        // **** START OF CORRECTED FIX ****
-        // This logic should only apply to a standard mast that is FACING a turntable.
-        // It should NOT apply when the turntable mast is the SOURCE.
-        String destAspect = destination.getAspect();
-        log.debug("destination {}", destination.getDisplayName());
-        if (!(source instanceof TurntableSignalMast) && (destination instanceof TurntableSignalMast)) {
-            log.debug("Source is facing a Turntable Mast. Forcing 'Danger' aspect for this calculation, overriding destination's actual state of '{}'.", destAspect);
+        // Use the static helper method to identify a turntable mast.
+        String destAspect = destination.getAspect(); // Get the real aspect first.
+        if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(destination)) {
+            log.debug("Destination is a Turntable Mast. Forcing 'Danger' aspect for this calculation, overriding its actual state of '{}'.", destAspect);
             destAspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
         }
-        // **** END OF CORRECTED FIX ****
-
-        // **** START OF CORRECTED DIAGNOSTIC ****
-        SignalAppearanceMap appearanceMap = getSourceMast().getAppearanceMap();
-        log.warn("DIAGNOSTIC for SML '{}' to '{}':", getSourceMast().getDisplayName(), destination.getDisplayName());
-        if (appearanceMap == null) {
-            log.warn("  - AppearanceMap is NULL!");
-        } else {
-            // Correctly count the items in the enumeration
-            int aspectCount = Collections.list(appearanceMap.getAspects()).size();
-            log.warn("  - AppearanceMap class: {}", appearanceMap.getClass().getName());
-            log.warn("  - AppearanceMap has {} aspects defined.", aspectCount);
-        }
-        // **** END OF CORRECTED DIAGNOSTIC ****
 
         String[] advancedAspect;
         if (destination.getHeld()) {

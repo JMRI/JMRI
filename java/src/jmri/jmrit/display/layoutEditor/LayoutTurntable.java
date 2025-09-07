@@ -50,36 +50,52 @@ public class LayoutTurntable extends LayoutTrack {
      * @param id           the name for the turntable
      * @param models what layout editor panel to put it in
      */
-    public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor models) {
-        super(id, models);
+     public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor models) {
+         super(id, models);
 
-        radius = 25.0; // initial default, change asap.
-        
-        SignalMastManager smm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+         radius = 25.0; // initial default, change asap.
 
-        // Define the signal system to use, arbitrary use BR-2003
-        String signalSystem = "BR-2003:3";
+         SignalMastManager smm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
 
-        // Get the next available unique number for a VirtualSignalMast, following the pattern in TurnoutSignalMastAddPane.
-        java.text.DecimalFormat paddedNumber = new java.text.DecimalFormat("0000");
-        int nextMastNum = jmri.implementation.VirtualSignalMast.getLastRef() + 1;
+         // Define the signal system to use, arbitrary use BR-2003
+         String signalSystem = "BR-2003:3";
 
-        // Construct the valid, unique system name in the required format.
-        String mastSystemName = "IF$vsm:" + signalSystem + "($" + paddedNumber.format(nextMastNum) + ")";
-        try {
-            // Use provideCustomSignalMast to create and register an instance of our specific class.
-            this.virtualSignalMast = smm.provideCustomSignalMast(mastSystemName,
-                    jmri.jmrit.display.layoutEditor.TurntableSignalMast.class);
-        } catch (JmriException e) {
-            log.error("Failed to create virtual signal mast for turntable {}", id, e);
-            // This is a serious error, so we'll stop here.
-            return;
+         // Get the next available unique number for a VirtualSignalMast, following the pattern in TurnoutSignalMastAddPane.
+         java.text.DecimalFormat paddedNumber = new java.text.DecimalFormat("0000");
+         int nextMastNum = jmri.implementation.VirtualSignalMast.getLastRef() + 1;
+
+         // Construct the valid, unique system name in the required format.
+         String mastSystemName = "IF$vsm:" + signalSystem + "($" + paddedNumber.format(nextMastNum) + ")";
+
+         // Create a standard VirtualSignalMast. This ensures it will be stored correctly.
+         this.virtualSignalMast = smm.provideSignalMast(mastSystemName);
+
+         // Check for successful creation
+         if (this.virtualSignalMast == null) {
+             log.error("Failed to create virtual signal mast for turntable {}", id);
+             // This is a serious error, so we'll stop here.
+             return;
+         }
+
+         // Set the user-friendly name for the new mast.
+         String mastUserName = "Turntable Mast " + id;
+         this.virtualSignalMast.setUserName(mastUserName);
+
+     }
+
+    /**
+     * Static method to identify a SignalMast that is a turntable mast
+     * based on its user name.
+     * @param mast The signal mast to check.
+     * @return true if the mast's user name indicates it belongs to a turntable.
+     */
+    public static boolean isTurntableMast(jmri.SignalMast mast) {
+        if (mast == null) {
+            return false;
         }
-
-        // Set the user-friendly name for the new mast.
-        String mastUserName = "Turntable Mast " + id;
-        this.virtualSignalMast.setUserName(mastUserName);
-
+        // Identify a turntable mast by its user name, which is set reliably
+        // by the LayoutTurntable constructor.
+        return mast.getUserName() != null && mast.getUserName().contains("Turntable Mast");
     }
 
     // defined constants

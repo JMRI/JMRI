@@ -15,6 +15,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriJOptionPane;
+import jmri.SignalMastManager;
 
 import org.jdom2.*;
 
@@ -133,6 +134,16 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         // note: moving zoom attribute into per-window user preference
         //panel.setAttribute("zoom", Double.toString(p.getZoom()));
         int num;
+
+        // **** START OF DIAGNOSTIC ****
+        log.warn("DIAGNOSTIC: Storing panel '{}'. Checking Signal Masts.", p.getLayoutName());
+        SignalMastManager smm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+        java.util.Set<jmri.SignalMast>mastSet = smm.getNamedBeanSet();
+        log.warn("  - SignalMastManager contains {} masts.", mastSet.size());
+        for (jmri.SignalMast mast : mastSet) {
+            log.warn("    - Found mast: '{}' of class {}", mast.getSystemName(), mast.getClass().getName());
+        }
+        // **** END OF DIAGNOSTIC ****
 
         // include contents (Icons and Labels)
         List<Positionable> contents = p.getContents();

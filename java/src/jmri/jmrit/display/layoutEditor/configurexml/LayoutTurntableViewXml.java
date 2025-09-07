@@ -43,6 +43,10 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
         if (!p.getBlockName().isEmpty()) {
             element.setAttribute("blockname", p.getBlockName());
         }
+//        // set turntable signal mast name
+//        if (p.getVirtualSignalMast() != null) {
+//            element.setAttribute("signalmastname", p.getVirtualSignalMast().getSystemName());
+//        }
         element.setAttribute("radius", "" + p.getRadius());
         Point2D coords = pv.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
