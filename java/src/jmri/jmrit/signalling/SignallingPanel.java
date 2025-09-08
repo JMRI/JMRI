@@ -178,6 +178,7 @@ public class SignallingPanel extends JmriPanel {
         destMastBox.addActionListener(e -> {
             if (useLayoutEditor.isSelected()) {
                 SignalMast selectedSource = sourceMastBox.getSelectedItem(); // Renamed variable
+                log.warn("selectedSource = {}", selectedSource.getSystemName());
                 if (selectedSource instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
                     return; // Skip UI validation for turntable paths, which are validated during discovery
                 }
@@ -185,6 +186,7 @@ public class SignallingPanel extends JmriPanel {
                     boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(selectedSource, // Use renamed variable
                             destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                     if (!valid) {
+                        log.warn("1");
                         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorUnReachableDestination"));
                     }
                 } catch (jmri.JmriException je) {
@@ -832,6 +834,7 @@ public class SignallingPanel extends JmriPanel {
                     valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,
                             destMast, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                     if (!valid) {
+                        log.warn("2");
                         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorUnReachableDestination"));
                         return;
                     }

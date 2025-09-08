@@ -2246,9 +2246,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     private LayoutBlock getFacingBlockByBeanByPanel(
             @Nonnull NamedBean bean,
             @Nonnull LayoutEditor panel) {
+        log.warn("getFacingBlockByBeanByPanel bean {}", bean);
         // Check if the bean is a virtual signal mast on a turntable
         for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+            log.warn("turntable {} mast {}", turntable, turntable.getVirtualSignalMast());
             if (turntable.getVirtualSignalMast() == bean) {
+                log.warn("got layout block {} from turntable", turntable.getLayoutBlock());
                 return turntable.getLayoutBlock();
             }
         }
