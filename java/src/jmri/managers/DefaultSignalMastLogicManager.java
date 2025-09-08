@@ -407,7 +407,7 @@ public class DefaultSignalMastLogicManager
         for (Entry<NamedBean, List<NamedBean>> e : validPaths.entrySet()) {
             SignalMast sourceMast = (SignalMast) e.getKey();
 
-            if (sourceMast instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
+            if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sourceMast)) {
                 // This is a turntable mast. Handle it with special logic to avoid the pathfinding crash.
                 log.debug("DIAGNOSTIC - Found turntable mast {}, applying special logic.", sourceMast.getDisplayName());
 
@@ -512,7 +512,7 @@ public class DefaultSignalMastLogicManager
                             addTurntableLogic(sml, sourceMast, (SignalMast) nb);
 
                         } catch (JmriException ex) {
-                            log.warn("Unexpected exception setting mast", ex);
+                            log.debug("Unexpected exception setting mast", ex);
                         }
                     }
                 }
@@ -534,16 +534,13 @@ public class DefaultSignalMastLogicManager
             }
             return nb;
         }).forEachOrdered( nb -> nb.removeProperty("forwardMast"));
-        log.info("DIAGNOSTIC - generateSection() getSignalMastLogicList() {}", getSignalMastLogicList());
         for (SignalMastLogic sml : getSignalMastLogicList()) {
             log.info("generateSection() sml source mast {} sml.getDestinationList() {}", sml.getSourceMast().getDisplayName(), sml.getDestinationList());
             // Defer all turntable section creation to the generateBlockSections method.
-            log.warn("A sml.getSourceMast() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast {}", sml.getSourceMast() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast);
-            if (sml.getSourceMast() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
-                log.warn("not creating section for turntable");
+            if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sml.getSourceMast())) {
+                log.debug("not creating section for turntable");
 //                continue;
             }
-            log.warn("B");
             LayoutBlock faceLBlock = sml.getFacingBlock();
             if (faceLBlock != null) {
                 boolean sourceIntermediate = false;
@@ -559,9 +556,8 @@ public class DefaultSignalMastLogicManager
                                     .collect(java.util.stream.Collectors.toList())
                     );
                     if (!sml.getAutoBlocksBetweenMasts(destMast).isEmpty() ||
-                            (destMast instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) ||
-                            (sml.getSourceMast() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast)) {
-                        log.info("D");
+                            (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(destMast)) ||
+                            (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sml.getSourceMast()))) {
                         String secUserName = sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName();
                         Section sec = sm.getSection(secUserName);
                         if (sec != null) {
@@ -572,10 +568,9 @@ public class DefaultSignalMastLogicManager
                         } else {
                             try {
                                 sec = sm.createNewSection(secUserName);
-                                // **** ADD THIS LINE FOR DIAGNOSTICS ****
-                                log.warn("generateSection() created Section: " + secUserName);
+                                log.debug("generateSection() created Section: " + secUserName);
                             } catch(IllegalArgumentException ex){
-                                log.warn("Unable to create section for {} {}",secUserName,ex.getMessage());
+                                log.debug("Unable to create section for {} {}",secUserName,ex.getMessage());
                                 continue;
                             }
                             // new mast
@@ -597,9 +592,9 @@ public class DefaultSignalMastLogicManager
 
                         // Manually add turntable block if it's part of the path
                         LayoutTurntable turntable = null;
-                        if (sml.getSourceMast() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
+                        if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sml.getSourceMast())) {
                             turntable = ((jmri.jmrit.display.layoutEditor.TurntableSignalMast) sml.getSourceMast()).getTurntable();
-                        } else if (destMast instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
+                        } else if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(destMast)) {
                             turntable = ((jmri.jmrit.display.layoutEditor.TurntableSignalMast) destMast).getTurntable();
                         }
 
@@ -625,7 +620,7 @@ public class DefaultSignalMastLogicManager
                     }
                 }
             } else {
-                log.info("No facing block found {}", sml.getSourceMast().getDisplayName());
+                log.debug("No facing block found {}", sml.getSourceMast().getDisplayName());
             }
         }
     }

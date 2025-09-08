@@ -46,7 +46,7 @@ final public class TransitCreationTool {
 
                 // If the previous mast is a turntable mast, we trust the higher-level script
                 // that the path is valid, as the simple reachability check here will fail.
-                if (previousMast instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
+                if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(previousMast)) {
                     log.debug("Skipping reachability check for Turntable Mast {}", previousMast.getDisplayName());
                 } else {
                     SignalMastLogicManager smlm = InstanceManager.getDefault(SignalMastLogicManager.class);

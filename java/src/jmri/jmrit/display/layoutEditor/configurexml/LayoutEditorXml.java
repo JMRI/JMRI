@@ -135,16 +135,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         //panel.setAttribute("zoom", Double.toString(p.getZoom()));
         int num;
 
-        // **** START OF DIAGNOSTIC ****
-        log.warn("DIAGNOSTIC: Storing panel '{}'. Checking Signal Masts.", p.getLayoutName());
-        SignalMastManager smm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
-        java.util.Set<jmri.SignalMast>mastSet = smm.getNamedBeanSet();
-        log.warn("  - SignalMastManager contains {} masts.", mastSet.size());
-        for (jmri.SignalMast mast : mastSet) {
-            log.warn("    - Found mast: '{}' of class {}", mast.getSystemName(), mast.getClass().getName());
-        }
-        // **** END OF DIAGNOSTIC ****
-
         // include contents (Icons and Labels)
         List<Positionable> contents = p.getContents();
         for (Positionable sub : contents) {
@@ -732,24 +722,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 log.debug("missing openDispatcher attribute");
             }
         }
-//        // **** START OF CALLING CODE ****
-//        // Force SignalMastLogics to re-discover their layout editor details
-//        // if this panel contains any turntables. This resolves a race condition
-//        // where the SML is initialized before the LayoutEditor panel is fully loaded.
-//        if (!panel.getLayoutTurntables().isEmpty()) {
-//            log.info("Panel '{}' contains turntables. Forcing re-discovery of layout details for all Signal Mast Logics.", name);
-//            jmri.SignalMastLogicManager smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
-//            for (jmri.SignalMastLogic sml : smlManager.getNamedBeanSet()) {
-//                if (sml instanceof jmri.implementation.DefaultSignalMastLogic) {
-//                    ((jmri.implementation.DefaultSignalMastLogic) sml).discoverLayoutEditorDetails();
-//                }
-//            }
-//            log.info("Finished SignalMastLogic re-discovery for panel '{}'", name);
-//        } else {
-//            log.debug("Panel '{}' does not contain any turntables. Skipping SML re-discovery.", name);
-//        }
-//        // **** END OF CALLING CODE ****
-
         return result;
     }   // load
 

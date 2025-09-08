@@ -179,7 +179,7 @@ public class SignallingPanel extends JmriPanel {
             if (useLayoutEditor.isSelected()) {
                 SignalMast selectedSource = sourceMastBox.getSelectedItem(); // Renamed variable
                 log.warn("selectedSource = {}", selectedSource.getSystemName());
-                if (selectedSource instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast) {
+                if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(selectedSource)) {
                     return; // Skip UI validation for turntable paths, which are validated during discovery
                 }
                 try {
@@ -237,7 +237,7 @@ public class SignallingPanel extends JmriPanel {
                     }
                     // We only perform the UI validation check if the source is NOT a turntable mast.
                     // Turntable paths are complex and validated during discovery.
-                    if (!(sourceMastBox.getSelectedItem() instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast)) {
+                    if (!(jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sourceMastBox.getSelectedItem()))) {
                         try {
                             valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
                                     destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
@@ -828,7 +828,7 @@ public class SignallingPanel extends JmriPanel {
         if ((sml == null) && (useLayoutEditor.isSelected())) {
             // We only perform the UI validation check if the source is NOT a turntable mast.
             // Turntable paths are complex and validated during discovery.
-            if (!(sourceMast instanceof jmri.jmrit.display.layoutEditor.TurntableSignalMast)) {
+            if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sourceMast)) {
                 boolean valid;
                 try {
                     valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,

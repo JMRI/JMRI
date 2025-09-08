@@ -1624,7 +1624,7 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         #go to this bit when complete == True
 
         # new code
-        # write aquired information to file
+        # write acquired information to file
 
 
         # # set transit block

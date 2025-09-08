@@ -221,13 +221,9 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                 List<Element> destList = sml.getChildren("destinationMast");
                 for (Element d : destList) {
                     String destination = d.getChild("destinationSignalMast").getText();
-                    log.warn("getting signal mast for destination {}", destination);
                     SignalMast dest = sm.getSignalMast(destination);
-                    log.warn("got signal mast dest {}", dest);
                     if (dest != null) {
-                        log.warn("setting destination mast {}", dest);
                         logic.setDestinationMast(dest);
-                        log.warn("set destination mast {}", dest);
                         if (d.getChild("comment") != null) {
                             logic.setComment(d.getChild("comment").getText(), dest);
                         }
@@ -283,15 +279,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                             logic.setAssociatedSection(sect, dest);
                         }
 
-                        // ---- START OF DIAGNOSTIC ----
-                        // Print the raw XML content of the <destinationMast> element
-                        org.jdom2.output.XMLOutputter xmlOut = new org.jdom2.output.XMLOutputter();
-                        xmlOut.setFormat(org.jdom2.output.Format.getPrettyFormat());
-                        log.warn("Processing destinationMast XML:\n" + xmlOut.outputString(d));
-                        // ---- END OF DIAGNOSTIC ----
-
                         Element turnoutElem = d.getChild("turnouts");
-                        log.warn("turnoutElem from getChild is: {}", turnoutElem);
                         if (turnoutElem != null) {
                             List<Element> turnoutList = turnoutElem.getChildren("turnout");
                             if (turnoutList.size() > 0) {
