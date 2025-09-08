@@ -2523,7 +2523,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 if (rayTurnout != null) {
                     log.debug("Found matching ray {}. Adding virtual turnout '{}' to logic.", rayIndex, rayTurnout.getSystemName());
                     // Add the virtual turnout to the list of automatically discovered ones.
-                    addAutoTurnout(rayTurnout, Turnout.CLOSED);
+                    addAutoTurnout(rayTurnout, Turnout.THROWN);
                 }
             }
         }

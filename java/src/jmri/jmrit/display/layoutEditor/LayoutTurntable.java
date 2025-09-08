@@ -947,11 +947,13 @@ public class LayoutTurntable extends LayoutTrack {
         public void setTurnout(@Nonnull String turnoutName, int state) {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
-                mTurnoutListener = (PropertyChangeEvent e) -> {
-                    if (getTurnout().getKnownState() == turnoutState) {
-                        lastKnownIndex = connectionIndex;
-                        models.redrawPanel();
-                        models.setDirty();
+                mTurnoutListener = (PropertyChangeEvent e) -> { // if a ray turnout is thrown, set all others to closed
+                    if (e.getPropertyName().equals(Turnout.PROPERTY_KNOWN_STATE)) {
+                        // If this ray's turnout has been thrown, it means the user wants to align to this ray.
+                        // We call setPosition() on the parent LayoutTurntable to enforce the interlocking.
+                        if ((Integer) e.getNewValue() == turnoutState) { // turnoutState is THROWN
+                            LayoutTurntable.this.setPosition(connectionIndex);
+                        }
                     }
                 };
             }

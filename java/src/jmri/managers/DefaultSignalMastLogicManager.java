@@ -31,6 +31,29 @@ public class DefaultSignalMastLogicManager
         addListeners();
     }
 
+    /**
+     * Finds the LayoutTurntable that "owns" a given SignalMast.
+     * <p>
+     * This is necessary because turntable masts are standard VirtualSignalMasts
+     * identified by a naming convention, not by their class type.
+     *
+     * @param mast The SignalMast to check.
+     * @return The owning LayoutTurntable, or null if none is found.
+     */
+    private LayoutTurntable findOwnerTurntable(SignalMast mast) {
+        if (mast == null || !LayoutTurntable.isTurntableMast(mast)) {
+            return null;
+        }
+        for (LayoutEditor editor : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) {
+            for (LayoutTurntable turntable : editor.getLayoutTurntables()) {
+                if (turntable.getVirtualSignalMast() == mast) {
+                    return turntable;
+                }
+            }
+        }
+        return null;
+    }
+
     final void addListeners(){
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
         InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
@@ -68,7 +91,7 @@ public class DefaultSignalMastLogicManager
                                     // *** CORRECTED LINE ***
                                     // Pass the turnout's system name (String) to the method.
                                     sml.addAutoTurnout(positionTurnout.getSystemName(), Turnout.THROWN, destination);
-                                    log.debug("Added Turntable position turnout {} for ray {} to logic for path {} -> {}",
+                                    log.warn("Added Turntable position turnout {} for ray {} to logic for path {} -> {}",
                                             positionTurnout.getDisplayName(), rayBlock.getDisplayName(), source.getDisplayName(), destination.getDisplayName());
                                 }
                             }
@@ -407,25 +430,13 @@ public class DefaultSignalMastLogicManager
         for (Entry<NamedBean, List<NamedBean>> e : validPaths.entrySet()) {
             SignalMast sourceMast = (SignalMast) e.getKey();
 
-            if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sourceMast)) {
-                // This is a turntable mast. Handle it with special logic to avoid the pathfinding crash.
-                log.debug("DIAGNOSTIC - Found turntable mast {}, applying special logic.", sourceMast.getDisplayName());
+            LayoutTurntable owner = findOwnerTurntable(sourceMast);
+            if (owner != null) {
+                log.debug("Found turntable mast {}, applying special logic.", sourceMast.getDisplayName());
 
                 SignalMastLogic sml = getSignalMastLogic(sourceMast);
                 if (sml == null) {
                     sml = newSignalMastLogic(sourceMast);
-                }
-
-                // Find the LayoutTurntable that owns this mast by iterating through all turntables
-                LayoutTurntable owner = null;
-                for (LayoutEditor editor : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) {
-                    for (LayoutTurntable turntable : editor.getLayoutTurntables()) {
-                        if (turntable.getVirtualSignalMast() == sourceMast) {
-                            owner = turntable;
-                            break;
-                        }
-                    }
-                    if (owner != null) break;
                 }
 
                 if (owner == null) {
@@ -459,17 +470,20 @@ public class DefaultSignalMastLogicManager
 
                             // Iterate through all rays of the turntable to find the one that creates a valid path.
                             for (int i = 0; i < owner.getNumberRays(); i++) {
-                                TrackSegment rayConnect = owner.getRayConnectOrdered(i);
+                                LayoutTurntable.RayTrack rayTrack = owner.getRayTrackList().get(i);
+                                TrackSegment rayConnect = rayTrack.getConnect();
                                 if (rayConnect != null) {
                                     LayoutBlock rayBlock = rayConnect.getLayoutBlock();
                                     if (rayBlock != null && rayBlock != sourceLBlock) {
                                         try {
                                             // Try to find a path through this specific ray
                                             List<LayoutBlock> path = tools.getLayoutBlocks(sourceLBlock, destLBlock, rayBlock, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
-
                                             // If a path is found, this must be the correct ray
                                             if (!path.isEmpty()) {
-                                                Turnout positionTurnout = owner.getTurnoutForRay(i);
+                                                // The loop counter 'i' is not the same as the ray's connection index.
+                                                // We must get the RayTrack object to find its actual connection index.
+                                                int connectionIndex = rayTrack.getConnectionIndex();
+                                                Turnout positionTurnout = owner.getTurnoutForRay(connectionIndex);
                                                 if (positionTurnout != null) {
                                                     sml.addAutoTurnout(positionTurnout.getSystemName(), Turnout.THROWN, destMast);
                                                     log.debug("Added Turntable position turnout {} for ray {} to logic for path {} -> {}",
@@ -490,7 +504,6 @@ public class DefaultSignalMastLogicManager
                         }
                     }
                 }
-
             } else {
                 // This is a normal mast. Use the original logic.
                 log.debug("DIAGNOSTIC - Processing source mast: {}", sourceMast.getDisplayName());
@@ -535,11 +548,11 @@ public class DefaultSignalMastLogicManager
             return nb;
         }).forEachOrdered( nb -> nb.removeProperty("forwardMast"));
         for (SignalMastLogic sml : getSignalMastLogicList()) {
-            log.info("generateSection() sml source mast {} sml.getDestinationList() {}", sml.getSourceMast().getDisplayName(), sml.getDestinationList());
+            log.debug("generateSection() sml source mast {} sml.getDestinationList() {}", sml.getSourceMast().getDisplayName(), sml.getDestinationList());
             // Defer all turntable section creation to the generateBlockSections method.
             if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sml.getSourceMast())) {
                 log.debug("not creating section for turntable");
-//                continue;
+                continue;
             }
             LayoutBlock faceLBlock = sml.getFacingBlock();
             if (faceLBlock != null) {
@@ -549,8 +562,8 @@ public class DefaultSignalMastLogicManager
                     sourceIntermediate = ((Boolean) intermSigProp);
                 }
                 for (SignalMast destMast : sml.getDestinationList()) {
-                    log.info("generate section: source {} dest {}", sml.getSourceMast().getDisplayName(), destMast.getDisplayName());
-                    log.info("sml.getAutoBlocksBetweenMasts({}}) {}",destMast.getDisplayName(),
+                    log.debug("generate section: source {} dest {}", sml.getSourceMast().getDisplayName(), destMast.getDisplayName());
+                    log.debug("sml.getAutoBlocksBetweenMasts({}}) {}",destMast.getDisplayName(),
                             sml.getAutoBlocksBetweenMasts(destMast).stream()
                                     .map(Block::getDisplayName)
                                     .collect(java.util.stream.Collectors.toList())
@@ -568,7 +581,7 @@ public class DefaultSignalMastLogicManager
                         } else {
                             try {
                                 sec = sm.createNewSection(secUserName);
-                                log.debug("generateSection() created Section: " + secUserName);
+                                log.trace("generateSection() created Section: " + secUserName);
                             } catch(IllegalArgumentException ex){
                                 log.debug("Unable to create section for {} {}",secUserName,ex.getMessage());
                                 continue;
@@ -591,17 +604,12 @@ public class DefaultSignalMastLogicManager
                         sml.setAssociatedSection(sec, destMast);
 
                         // Manually add turntable block if it's part of the path
-                        LayoutTurntable turntable = null;
-                        if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sml.getSourceMast())) {
-                            turntable = ((jmri.jmrit.display.layoutEditor.TurntableSignalMast) sml.getSourceMast()).getTurntable();
-                        } else if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(destMast)) {
-                            turntable = ((jmri.jmrit.display.layoutEditor.TurntableSignalMast) destMast).getTurntable();
-                        }
+                        LayoutTurntable turntable = findOwnerTurntable(destMast);
 
                         if (turntable != null && turntable.getLayoutBlock() != null) {
                             if (!sec.getBlockList().contains(turntable.getLayoutBlock().getBlock())) {
                                 sec.addBlock(turntable.getLayoutBlock().getBlock());
-                                log.info("Manually added turntable block {} to section {}", turntable.getLayoutBlock().getDisplayName(), sec.getDisplayName());
+                                log.debug("Manually added turntable block {} to section {}", turntable.getLayoutBlock().getDisplayName(), sec.getDisplayName());
                             }
                         }
 
@@ -620,7 +628,7 @@ public class DefaultSignalMastLogicManager
                     }
                 }
             } else {
-                log.debug("No facing block found {}", sml.getSourceMast().getDisplayName());
+                log.warn("No facing block found for SML source: {}", sml.getSourceMast().getDisplayName());
             }
         }
     }
