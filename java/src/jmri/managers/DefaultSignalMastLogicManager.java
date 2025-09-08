@@ -549,11 +549,6 @@ public class DefaultSignalMastLogicManager
         }).forEachOrdered( nb -> nb.removeProperty("forwardMast"));
         for (SignalMastLogic sml : getSignalMastLogicList()) {
             log.debug("generateSection() sml source mast {} sml.getDestinationList() {}", sml.getSourceMast().getDisplayName(), sml.getDestinationList());
-            // Defer all turntable section creation to the generateBlockSections method.
-            if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sml.getSourceMast())) {
-                log.debug("not creating section for turntable");
-                continue;
-            }
             LayoutBlock faceLBlock = sml.getFacingBlock();
             if (faceLBlock != null) {
                 boolean sourceIntermediate = false;
@@ -604,8 +599,12 @@ public class DefaultSignalMastLogicManager
                         sml.setAssociatedSection(sec, destMast);
 
                         // Manually add turntable block if it's part of the path
-                        LayoutTurntable turntable = findOwnerTurntable(destMast);
-
+                        LayoutTurntable turntable = findOwnerTurntable(sml.getSourceMast());
+                        if (turntable == null) {
+                            // If the source isn't a turntable, check if the destination is.
+                            turntable = findOwnerTurntable(destMast);
+                        }
+                        
                         if (turntable != null && turntable.getLayoutBlock() != null) {
                             if (!sec.getBlockList().contains(turntable.getLayoutBlock().getBlock())) {
                                 sec.addBlock(turntable.getLayoutBlock().getBlock());

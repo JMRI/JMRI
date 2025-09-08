@@ -70,7 +70,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                         # Add if not already present
                         if station_block_name not in self.station_block_list:
                             self.station_block_list.append(station_block_name)
-                            self.station_blk_list.append(turntable_block)
+                            self.station_blk_list.append(self.get_layout_block(station_block_name))
                             if self.logLevel > 0: print "Added turntable block to stations:", station_block_name
 
         if self.logLevel > 0: print 'self.station_block_list', self.station_block_list

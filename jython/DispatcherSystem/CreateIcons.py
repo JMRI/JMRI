@@ -629,6 +629,19 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             if comment != None:
                 if "stop" in comment.lower():
                     self.list_of_stopping_points.append(block.getUserName())
+        # Also add all turntable blocks as stopping points, as they are valid start/end points for paths.
+        EditorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+        for panel in EditorManager.getList():
+            if type(panel) == jmri.jmrit.display.layoutEditor.LayoutEditor:
+                for turntable in panel.getLayoutTurntables():
+                    turntable_block = turntable.getLayoutBlock()
+                    if turntable_block is not None:
+                        station_block_name = turntable_block.getUserName()
+                        # Add if not already present
+                        if station_block_name not in self.list_of_stopping_points:
+                            self.list_of_stopping_points.append(station_block_name)
+                            if self.logLevel > 0: print "Added turntable block to stopping points:", station_block_name
+
         print "stopping points"  , self.list_of_stopping_points
     # **************************************************
     # add sensors
