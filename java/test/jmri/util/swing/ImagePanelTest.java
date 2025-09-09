@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +15,7 @@ public class ImagePanelTest {
     @Test
     public void testCall() {
         ImagePanel ip = new ImagePanel();
-        Assert.assertNotNull("exists", ip);
+        Assertions.assertNotNull( ip, "exists");
     }
 
     @Test

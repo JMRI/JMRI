@@ -1,12 +1,9 @@
 package jmri.util.swing.mdi;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -15,12 +12,12 @@ import org.junit.Assume;
 public class JmriJInternalFrameInterfaceTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Internal Frame Interface Test");
         javax.swing.JDesktopPane jd = new javax.swing.JDesktopPane();
         JmriJInternalFrameInterface t = new JmriJInternalFrameInterface(jf,jd);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
         JUnitUtil.dispose(jf);
     }
 

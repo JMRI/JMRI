@@ -5,12 +5,13 @@ import java.awt.Component;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import org.junit.Assert;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 import jmri.util.JmriJFrame;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Utility Methods for Jemmy Tests.
@@ -220,7 +221,7 @@ public class JemmyUtil {
             count--;
             f.requestFocusInWindow();
         }
-        Assert.assertTrue("frame should be active", f.isActive());
+        assertTrue( f.isActive(), "frame should be active");
     }
 
 }

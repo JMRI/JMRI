@@ -1,12 +1,9 @@
 package jmri.util.swing;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  *
@@ -15,10 +12,10 @@ import org.junit.Assume;
 public class ComboBoxToolTipRendererTest {
 
     @Test
+    @DisabledIfHeadless
     public void testSensorCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ComboBoxToolTipRenderer t = new ComboBoxToolTipRenderer();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

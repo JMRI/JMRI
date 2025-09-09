@@ -4,7 +4,6 @@ import javax.swing.JButton;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +15,7 @@ public class ButtonEditorTest {
     @Test
     public void testCTor() {
         ButtonEditor t = new ButtonEditor(new JButton("Test"));
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
