@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import jmri.util.swing.WrapLayout;
-
 /**
  Class representing a JPanel that can contain and display N items in a WrapLayout.
  If N is greater than a "tabMax" parameter, the display is automatically done
