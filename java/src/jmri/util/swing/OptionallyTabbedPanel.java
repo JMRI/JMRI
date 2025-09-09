@@ -55,7 +55,7 @@ public class OptionallyTabbedPanel extends JPanel {
             singlePane.add(component);
             components.add(component);
         } else {
-            // are we in tabbed mode, or starting tabbed mode?
+            // are we in tabbed mode already, or starting tabbed mode now?
             if (!currentlyTabbed) {
                 // just starting tabbed mode
                 currentlyTabbed = true;
@@ -84,6 +84,7 @@ public class OptionallyTabbedPanel extends JPanel {
                 updateTabLabel();
                 
             } else {
+                // already in tabbed mode
                 int paneCount = currentTab.getComponentCount();
                 if (paneCount >= tabMax) {
                     // create a new pane in the tabbed pane, make it current tab
