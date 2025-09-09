@@ -35,7 +35,7 @@ public class OptionallyTabbedPanel extends JPanel {
         singlePane.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
     }
 
-    private int tabMax;  // must be provided in ctor
+    final private int tabMax;  // must be provided in ctor
     private ArrayList<Component> components = new ArrayList<>(); // to allow re-layout
     
     private boolean currentlyTabbed;
@@ -63,7 +63,7 @@ public class OptionallyTabbedPanel extends JPanel {
                 tabbedPane.setVisible(true);        
                 singlePane.removeAll();
                 
-                // move existing contents to a 1st pane here
+                // move existing contents to a 1st pane in the JTabbedPane
                 currentTab = new JPanel();
                 currentTab.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
                 tabbedPane.add(currentTab, "0-"+(tabMax-1));
@@ -71,12 +71,13 @@ public class OptionallyTabbedPanel extends JPanel {
                     currentTab.add(item);
                 }
                 
-                // create a new tab
+                // create a new (2nd) tab
                 currentTab = new JPanel();
                 currentTab.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
-                tabbedPane.add(currentTab, ""+fullCount+"-"+(fullCount+1));
+                // Add that tab; label will be overridden in updateTabLabel below
+                tabbedPane.add(currentTab, ""+fullCount+"-"+(fullCount+1)); 
                 
-                // and add to that new tab
+                // and add component to that new tab
                 currentTab.add(component);
                 components.add(component);
                 
@@ -85,23 +86,16 @@ public class OptionallyTabbedPanel extends JPanel {
             } else {
                 int paneCount = currentTab.getComponentCount();
                 if (paneCount >= tabMax) {
-                    // create a new tabbedPane
+                    // create a new pane in the tabbed pane, make it current tab
                     currentTab = new JPanel();
                     currentTab.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
                     tabbedPane.add(currentTab, ""+fullCount+"-"+(fullCount+1));
-                    // and add to that new tab
-                    currentTab.add(component);
-                    components.add(component);
-
-                    updateTabLabel();
-
-                } else {
-                    // stay in tab for now
-                    currentTab.add(component);
-                    components.add(component);
-
-                    updateTabLabel();
                 }
+                // add the component
+                currentTab.add(component);
+                components.add(component);
+
+                updateTabLabel();
             }
         }
         
