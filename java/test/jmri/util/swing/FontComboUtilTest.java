@@ -1,13 +1,14 @@
 package jmri.util.swing;
 
-import java.awt.GraphicsEnvironment;
 import java.util.List;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the jmri.util.swing.FontComboUtil class.
@@ -19,69 +20,69 @@ public class FontComboUtilTest {
     // test constants
     @Test
     public void testFontComboUtilConstants() {
-        Assert.assertTrue("All and Character differ", (FontComboUtil.ALL != FontComboUtil.CHARACTER));
-        Assert.assertTrue("All and Monospaced differ", (FontComboUtil.ALL != FontComboUtil.MONOSPACED));
-        Assert.assertTrue("All and Proportional differ", (FontComboUtil.ALL != FontComboUtil.PROPORTIONAL));
-        Assert.assertTrue("All and Symbol differ", (FontComboUtil.ALL != FontComboUtil.SYMBOL));
+        assertTrue( (FontComboUtil.ALL != FontComboUtil.CHARACTER), "All and Character differ");
+        assertTrue( (FontComboUtil.ALL != FontComboUtil.MONOSPACED), "All and Monospaced differ");
+        assertTrue( (FontComboUtil.ALL != FontComboUtil.PROPORTIONAL), "All and Proportional differ");
+        assertTrue( (FontComboUtil.ALL != FontComboUtil.SYMBOL), "All and Symbol differ");
 
-        Assert.assertTrue("Character and Monospaced differ", (FontComboUtil.CHARACTER != FontComboUtil.MONOSPACED));
-        Assert.assertTrue("Character and Proportional differ", (FontComboUtil.CHARACTER != FontComboUtil.PROPORTIONAL));
-        Assert.assertTrue("Character and Symbol differ", (FontComboUtil.CHARACTER != FontComboUtil.SYMBOL));
+        assertTrue( (FontComboUtil.CHARACTER != FontComboUtil.MONOSPACED), "Character and Monospaced differ");
+        assertTrue( (FontComboUtil.CHARACTER != FontComboUtil.PROPORTIONAL), "Character and Proportional differ");
+        assertTrue( (FontComboUtil.CHARACTER != FontComboUtil.SYMBOL), "Character and Symbol differ");
 
-        Assert.assertTrue("Monospaced and Proportional differ", (FontComboUtil.MONOSPACED != FontComboUtil.PROPORTIONAL));
-        Assert.assertTrue("Monospaced and Symbol differ", (FontComboUtil.MONOSPACED != FontComboUtil.SYMBOL));
+        assertTrue( (FontComboUtil.MONOSPACED != FontComboUtil.PROPORTIONAL), "Monospaced and Proportional differ");
+        assertTrue( (FontComboUtil.MONOSPACED != FontComboUtil.SYMBOL), "Monospaced and Symbol differ");
 
-        Assert.assertTrue("Proportional and Symbol differ", (FontComboUtil.PROPORTIONAL != FontComboUtil.SYMBOL));
+        assertTrue( (FontComboUtil.PROPORTIONAL != FontComboUtil.SYMBOL), "Proportional and Symbol differ");
     }
 
     // test monospaced font list
     @Test
+    @DisabledIfHeadless("On some completely headless Linuxes, this fails")
     public void testMonoSpacedFontList() {
-        Assume.assumeFalse("On some completely headless Linuxes, this fails", GraphicsEnvironment.isHeadless());
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.MONOSPACED);
-        Assert.assertFalse("Monospaced font list is not empty", fonts.isEmpty());
+        assertFalse( fonts.isEmpty(), "Monospaced font list is not empty");
         // We can only guarantee the cross-platform fonts
         // so only these are referenced in the test.
-        Assert.assertTrue("List contains 'Monospaced'", fonts.contains("Monospaced"));
-        Assert.assertFalse("List does not contain 'Serif'", fonts.contains("Serif"));
-        Assert.assertFalse("List does not contain 'SansSerif'", fonts.contains("SansSerif"));
+        assertTrue( fonts.contains("Monospaced"), "List contains 'Monospaced'");
+        assertFalse( fonts.contains("Serif"), "List does not contain 'Serif'");
+        assertFalse( fonts.contains("SansSerif"), "List does not contain 'SansSerif'");
     }
 
     // test proportional font list
     @Test
+    @DisabledIfHeadless("On some completely headless Linuxes, this fails")
     public void testProportionalFontList() {
-        Assume.assumeFalse("On some completely headless Linuxes, this fails", GraphicsEnvironment.isHeadless());
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.PROPORTIONAL);
-        Assert.assertFalse("Proportional font list is not empty", fonts.isEmpty());
+        assertFalse( fonts.isEmpty(), "Proportional font list is not empty");
         // We can only guarantee the cross-platform fonts
         // so only these are referenced in the test.
-        Assert.assertFalse("List does not contain 'Monospaced'", fonts.contains("Monospaced"));
-        Assert.assertTrue("List contains 'Serif'", fonts.contains("Serif"));
-        Assert.assertTrue("List contains 'SansSerif'", fonts.contains("SansSerif"));
+        assertFalse( fonts.contains("Monospaced"), "List does not contain 'Monospaced'");
+        assertTrue( fonts.contains("Serif"), "List contains 'Serif'");
+        assertTrue( fonts.contains("SansSerif"), "List contains 'SansSerif'");
     }
 
     // test character font list
     @Test
     public void testCharacterFontList() {
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.CHARACTER);
-        Assert.assertFalse("Character font list is not empty", fonts.isEmpty());
+        assertFalse( fonts.isEmpty(), "Character font list is not empty");
         // We can only guarantee the cross-platform fonts
         // so only these are referenced in the test.
-        Assert.assertTrue("List contains 'Monospaced'", fonts.contains("Monospaced"));
-        Assert.assertTrue("List contains 'Serif'", fonts.contains("Serif"));
-        Assert.assertTrue("List contains 'SansSerif'", fonts.contains("SansSerif"));
+        assertTrue( fonts.contains("Monospaced"), "List contains 'Monospaced'");
+        assertTrue( fonts.contains("Serif"), "List contains 'Serif'");
+        assertTrue( fonts.contains("SansSerif"), "List contains 'SansSerif'");
     }
 
     // test all font list
     @Test
     public void testAllFontList() {
         List<String> fonts = FontComboUtil.getFonts(FontComboUtil.ALL);
-        Assert.assertFalse("All font list is not empty", fonts.isEmpty());
+        assertFalse( fonts.isEmpty(), "All font list is not empty");
         // We can only guarantee the cross-platform fonts
         // so only these are referenced in the test.
-        Assert.assertTrue("List contains 'Monospaced'", fonts.contains("Monospaced"));
-        Assert.assertTrue("List contains 'Serif'", fonts.contains("Serif"));
-        Assert.assertTrue("List contains 'SansSerif'", fonts.contains("SansSerif"));
+        assertTrue( fonts.contains("Monospaced"), "List contains 'Monospaced'");
+        assertTrue( fonts.contains("Serif"), "List contains 'Serif'");
+        assertTrue( fonts.contains("SansSerif"), "List contains 'SansSerif'");
     }
 
     @BeforeEach

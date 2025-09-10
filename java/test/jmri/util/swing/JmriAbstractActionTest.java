@@ -2,8 +2,9 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
@@ -21,7 +22,7 @@ public class JmriAbstractActionTest {
             }
         };
 
-        Assert.assertEquals("foo", a.getValue(javax.swing.Action.NAME));
+        assertEquals("foo", a.getValue(javax.swing.Action.NAME));
 
         javax.swing.Icon i = new javax.swing.ImageIcon("resources/icons/throttles/power_red.png");
         Assertions.assertTrue(i.getIconHeight() > 0, "an Icon exists" );
@@ -32,8 +33,8 @@ public class JmriAbstractActionTest {
             }
         };
 
-        Assert.assertEquals("foo", a.getValue(javax.swing.Action.NAME));
-        Assert.assertEquals(i, a.getValue(javax.swing.Action.SMALL_ICON));
+        assertEquals("foo", a.getValue(javax.swing.Action.NAME));
+        assertEquals(i, a.getValue(javax.swing.Action.SMALL_ICON));
     }
 
     @BeforeEach
