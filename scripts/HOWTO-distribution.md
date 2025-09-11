@@ -94,7 +94,7 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.13.4 5.13.5 5.13.5
+  ./scripts/update-HOWTO.sh 5.13.4 5.13.5 5.13.6
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
@@ -325,12 +325,12 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.13.2-SNAPSHOT/5.13.4-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.13.3-SNAPSHOT/5.13.4-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=2/release.build=3/g release.properties
+        sed -i.bak s/release.build=3/release.build=4/g release.properties
 ```
  - Check that both those edits left 5.13.4 defined in the two files
  
