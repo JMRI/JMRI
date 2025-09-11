@@ -2,11 +2,14 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import java.text.ParseException;
 import java.util.regex.Pattern;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -17,13 +20,13 @@ public class RegexFormatterTest {
     @Test
     public void testCTor() {
         RegexFormatter t = new RegexFormatter();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testStringCTor() {
         RegexFormatter t = new RegexFormatter("[A-Za-z]\\d*");
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
    
@@ -31,14 +34,14 @@ public class RegexFormatterTest {
     public void testPatternCTor() {
         Pattern p = Pattern.compile("[A-Za-z]\\d*");
         RegexFormatter t = new RegexFormatter(p);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testGetPattern() {
         Pattern p = Pattern.compile("[A-Za-z]\\d*");
         RegexFormatter t = new RegexFormatter(p);
-        Assert.assertEquals("patterns match",p,t.getPattern());
+        assertEquals( p, t.getPattern(), "patterns match");
     }
 
     @Test
@@ -46,19 +49,20 @@ public class RegexFormatterTest {
         Pattern p = Pattern.compile("[A-Za-z]\\d*");
         RegexFormatter t = new RegexFormatter();
         t.setPattern(p);
-        Assert.assertEquals("patterns match",p,t.getPattern());
+        assertEquals( p, t.getPattern(), "patterns match");
     }
 
     @Test
     public void testStringToValue() throws ParseException {
         RegexFormatter t = new RegexFormatter("[A-Za-z]\\d*");
-        Assert.assertNotNull("exists",t.stringToValue("A1234"));
+        assertNotNull( t.stringToValue("A1234"), "exists");
     }
 
     @Test
     public void testStringToValueFailure() throws ParseException {
         RegexFormatter t = new RegexFormatter("[A-Za-z]\\d*");
-        Assert.assertThrows(ParseException.class, () -> t.stringToValue("AB1234"));
+        Exception ex = assertThrows(ParseException.class, () -> t.stringToValue("AB1234"));
+        assertNotNull(ex);
     }
 
 

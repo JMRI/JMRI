@@ -2,8 +2,9 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
@@ -14,13 +15,13 @@ public class UnexpectedExceptionContextTest extends ExceptionContextTest {
     @Test
     @Override
     public void testGetHint() {
-        Assert.assertEquals("Hint",Bundle.getMessage("UnexpectedExceptionOperationHint"),ec.getHint());
+        assertEquals( Bundle.getMessage("UnexpectedExceptionOperationHint"),ec.getHint(), "Hint");
     }
 
     @Test
     @Override
     public void testGetTitle() {
-        Assertions.assertEquals(Bundle.getMessage("UnexpectedExceptionOperationTitle","Test"),ec.getTitle());
+        assertEquals(Bundle.getMessage("UnexpectedExceptionOperationTitle","Test"),ec.getTitle());
     }
 
     @BeforeEach
