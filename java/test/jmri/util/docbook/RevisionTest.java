@@ -2,7 +2,6 @@ package jmri.util.docbook;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class RevisionTest {
     @Test
     public void testCTor() {
         Revision t = new Revision();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

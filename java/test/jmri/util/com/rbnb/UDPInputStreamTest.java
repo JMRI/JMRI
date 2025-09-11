@@ -1,6 +1,7 @@
 package jmri.util.com.rbnb;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -10,9 +11,19 @@ import org.junit.jupiter.api.*;
  */
 public class UDPInputStreamTest  {
 
-   @Test
-   public void testCtor(){
-      Assert.assertNotNull(new UDPInputStream());
-   }
+    @Test
+    public void testCtor(){
+        Assertions.assertNotNull(new UDPInputStream());
+    }
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 }
