@@ -4,8 +4,10 @@ import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
 import org.jdom2.Namespace;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests for the jmri.util.LocaleSelector class.
@@ -28,7 +30,7 @@ public class LocaleSelectorTest {
                 );
 
         String result = LocaleSelector.getAttribute(el, "temp");
-        Assert.assertEquals("find default", "a", result);
+        assertEquals( "a", result, "find default");
     }
 
     @Test
@@ -55,7 +57,7 @@ public class LocaleSelectorTest {
                 );
 
         String result = LocaleSelector.getAttribute(el, "temp");
-        Assert.assertEquals("find default", "c", result);
+        assertEquals( "c", result, "find default");
     }
 
     @Test
@@ -82,7 +84,7 @@ public class LocaleSelectorTest {
                 );
 
         String result = LocaleSelector.getAttribute(el, "temp");
-        Assert.assertEquals("find default", "c", result);
+        assertEquals( "c", result, "find default");
     }
 
     @Test
@@ -93,7 +95,7 @@ public class LocaleSelectorTest {
                 .setAttribute("temp", "a");
 
         String result = LocaleSelector.getAttribute(el, "temp");
-        Assert.assertEquals("find default", "a", result);
+        assertEquals( "a", result, "find default");
     }
 
     @Test
@@ -107,7 +109,7 @@ public class LocaleSelectorTest {
                 );
 
         String result = LocaleSelector.getAttribute(el, "temp");
-        Assert.assertEquals("find default", "b", result);
+        assertEquals( "b", result, "find default");
     }
 
     @Test
@@ -133,7 +135,7 @@ public class LocaleSelectorTest {
                 );
 
         String result = LocaleSelector.getAttribute(el, "temp");
-        Assert.assertEquals("find default", "c", result);
+        assertEquals( "c", result, "find default");
     }
 
     @Test
@@ -159,7 +161,7 @@ public class LocaleSelectorTest {
                 );
 
         String result = LocaleSelector.getAttribute(el, "temp");
-        Assert.assertEquals("find default", "c", result);
+        assertEquals( "c", result, "find default");
     }
 
     @BeforeEach

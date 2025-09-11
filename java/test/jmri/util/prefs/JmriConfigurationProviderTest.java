@@ -14,10 +14,13 @@ import jmri.profile.Profile;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  *
@@ -52,7 +55,7 @@ public class JmriConfigurationProviderTest {
         String id = Long.toString((new Date()).getTime());
         Profile p = new Profile(info.getTestMethod().get().getName(), id, new File(this.workspace.toFile(), id));
         JmriConfigurationProvider config = JmriConfigurationProvider.findProvider(p);
-        Assert.assertNotNull(config);
+        assertNotNull(config);
         FileUtil.delete(p.getPath());
     }
 
@@ -67,7 +70,7 @@ public class JmriConfigurationProviderTest {
         String id = Long.toString((new Date()).getTime());
         Profile project = new Profile(info.getTestMethod().get().getName(), id, new File(this.workspace.toFile(), id));
         AuxiliaryConfiguration config = JmriConfigurationProvider.getConfiguration(project);
-        Assert.assertNotNull(config);
+        assertNotNull(config);
         FileUtil.delete(project.getPath());
     }
 
@@ -79,8 +82,8 @@ public class JmriConfigurationProviderTest {
         Profile project = new Profile(info.getTestMethod().get().getName(), id, new File(this.workspace.toFile(), id));
         AuxiliaryConfiguration config = JmriConfigurationProvider.getConfiguration(project);
         Element e = config.getConfigurationFragment(elementName, namespace, true);
-        Assert.assertNull(e);
-        Assert.assertNotNull(document);
+        assertNull(e);
+        assertNotNull(document);
         e = document.createElementNS(namespace, elementName);
         config.putConfigurationFragment(e, true);
         FileUtil.delete(project.getPath());
