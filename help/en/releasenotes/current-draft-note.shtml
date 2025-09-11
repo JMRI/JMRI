@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>Change DCC-EX heartbeat from &lt;s&gt; to &lt;#&gt;, requested by DCC-EX team</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -424,33 +424,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>When working with a single roster entry, there's a 
-                new "Comments" page. You can pop that off (using the 
-                page icon in the tab) and enter your comments there 
-                as you configure the values in the other panes.
-                What you type there will appear in the comment field
-                on the Roster Entry pane and vice versa.</li>
-            <li>Detachable panes no longer appear in the Windows menu
-                <i>unless</i> they are actually detached.</li>
-            <li>Added Help and Windows menus to the detached panes.</li>
-            <li>It's now possible to disable Programming Track and/or
-                Programming On Main. See Preferences -> Roster ->
-                Programmer.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>The RosterSpeedProfile has been corrected to improve calculations for stopping.
-                 If you have manually compensated for those errors you may want to re-evaluate
-                 the Min/Max throttle settings and stopping distance percentage.</li>
-             <li>The F-Numbers for Transit Section Actions for Light, Bell and Horn can be set on a per train basis.</li>
-             <li>Fix bug delayed start actions not working when using speed profile ramping</li>
-             <li>When creating/editing a transit you may now set the forward and reverse stopping distances
-                 for individual sections. The forward and reverse refer to the direction thru the transit not
-                 the direction thru the section (this differs from fwd/rev stopping sensors).
-                 These are expressed in per cent and are in addition to the adjustment
-                 specified when defining a train.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -468,9 +448,6 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>A problem with LE track drawing and background images from 5.11.6 thru 5.13.3 including 5.12 has been fixed.
-                The problem appears if you have a background image in the Layout Editor. If so, the track disappears behind
-                the background image.</li>
             <li></li>
         </ul>
 
@@ -506,8 +483,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Added "Show Locomotives" to edit locations and tracks tools</li>
-            <li>New feature, Track Priority. Cars on a higher priority track get serviced first when building trains.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -537,7 +513,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>RosterSpeedProfile. Improve accuracy of calculations for stopping.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -601,9 +577,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>If the selected locomotive has more than 33 functions defined,
-                the Function Panel will switch to a tabbed layout to make 
-                the functions easier to locate.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
@@ -669,7 +643,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Updated OpenLCB_Java library to version 0.8.6, which is 
-                just a bookkeeping update without functional changes.</li>
+            <li></li>
         </ul>
 
