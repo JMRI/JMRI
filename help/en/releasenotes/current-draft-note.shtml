@@ -667,6 +667,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Updated OpenLCB_Java library to version 0.8.6, which is 
+                just a bookkeeping update without functional changes.</li>
         </ul>
 
