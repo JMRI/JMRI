@@ -20458,6 +20458,60 @@ public class TrainBuilderTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
+    @Test
+    public void testTrackPriority() {
+
+        // Route Acton-Boston-Chelmsford-Danvers-Essex
+        Route route1 = JUnitOperationsUtil.createFiveLocationRoute();
+
+        RouteLocation rlActon = route1.getDepartsRouteLocation();
+        Location acton = rlActon.getLocation();
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+        Track actonSpur2 = acton.getTrackByName("Acton Spur 2", null);
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        Track actonYard2 = acton.getTrackByName("Acton Yard 2", null);
+
+        Car c3 = JUnitOperationsUtil.createAndPlaceCar("CP", "30", "Boxcar", "40", actonSpur1, 10);
+        Car c4 = JUnitOperationsUtil.createAndPlaceCar("CP", "40", "Boxcar", "40", actonYard1, 20);
+        Car c5 = JUnitOperationsUtil.createAndPlaceCar("CP", "50", "Boxcar", "40", actonSpur2, 30);
+        Car c6 = JUnitOperationsUtil.createAndPlaceCar("CP", "60", "Boxcar", "40", actonYard2, 40);
+        Car c7 = JUnitOperationsUtil.createAndPlaceCar("CP", "70", "Boxcar", "40", actonSpur1, 50);
+
+        // define the trains
+        Train train1 = tmanager.newTrain("TestTrackPriority");
+        train1.setRoute(route1);
+
+        TrainBuilder tb = new TrainBuilder();
+
+        tb.build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+
+        // confirm car destinations, normal track priority
+        Assert.assertEquals("destination track", "Essex Spur 1", c3.getDestinationTrackName());
+        Assert.assertEquals("destination track", "Danvers Spur 1", c4.getDestinationTrackName());
+        Assert.assertEquals("destination track", "Chelmsford Spur 1", c5.getDestinationTrackName());
+        Assert.assertEquals("destination track", "Boston Spur 1", c6.getDestinationTrackName());
+        Assert.assertEquals("destination track", "Essex Spur 1", c7.getDestinationTrackName());
+
+        // Now test track priority
+        actonSpur1.setTrackPriority(Track.PRIORITY_LOW);
+        actonSpur2.setTrackPriority(Track.PRIORITY_MEDIUM);
+        actonYard2.setTrackPriority(Track.PRIORITY_HIGH);
+
+        train1.reset();
+        tb.build(train1);
+        Assert.assertTrue("train status", train1.isBuilt());
+
+        // confirm car destinations, order changed due to track priorities
+        Assert.assertEquals("destination track", "Boston Spur 1", c3.getDestinationTrackName());
+        Assert.assertEquals("destination track", "Chelmsford Spur 1", c4.getDestinationTrackName());
+        Assert.assertEquals("destination track", "Danvers Spur 1", c5.getDestinationTrackName());
+        Assert.assertEquals("destination track", "Essex Spur 1", c6.getDestinationTrackName());
+        Assert.assertEquals("destination track", "Essex Spur 1", c7.getDestinationTrackName());
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
     private void setupCustomCarLoad() {
 
         // register the car loads used

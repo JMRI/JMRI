@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.util.JUnitUtil;
@@ -38,7 +39,12 @@ public class ScheduleCopyFrameTest extends OperationsTestCase {
         sch.addItem("Boxcar");
         sch.addItem("Tank car");
 
-        ScheduleCopyFrame scf = new ScheduleCopyFrame(sch);
+        // create a track for the schedule
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
+        Location location = lManager.newLocation("Test Schedule");
+        Track track = location.addTrack("TestSpur", Track.SPUR);
+
+        ScheduleCopyFrame scf = new ScheduleCopyFrame(sch, track);
         Assert.assertNotNull("exists", scf);
 
         // no new schedule name

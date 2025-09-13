@@ -179,7 +179,8 @@ public class TrainCsvCommon extends TrainCommon {
                 car.getReturnWhenLoadedDestinationName(),
                 car.getReturnWhenLoadedDestTrackName(),
                 car.getRoutePath(),
-                car.getDivisionName());
+                car.getDivisionName(),
+                car.getBlocking());
     }
 
     protected void printEngine(CSVPrinter fileOut, Engine engine, String code, String message) throws IOException {
@@ -200,7 +201,8 @@ public class TrainCsvCommon extends TrainCommon {
                 engine.isLead() ? "Lead loco" : "", // NOI18N
                 engine.getComment(),
                 engine.getRfid(),
-                engine.getDccAddress());
+                engine.getDccAddress(),
+                engine.getBlocking());
     }
 
     protected final void checkForEngineOrCabooseChange(CSVPrinter fileOut, Train train, RouteLocation rl)

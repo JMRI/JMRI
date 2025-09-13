@@ -7,8 +7,8 @@ import javax.swing.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.schedules.Schedule;
-import jmri.jmrit.operations.locations.schedules.ScheduleManager;
+import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.schedules.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -16,7 +16,7 @@ import jmri.util.swing.JmriJOptionPane;
  * Frame for copying a schedule for operations.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2015
+ * @author Daniel Boudreau Copyright (C) 2015, 2025
  */
 public class ScheduleCopyFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -31,12 +31,16 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
     // combo boxes
     JComboBox<Schedule> scheduleBox = scheduleManager.getComboBox();
     
+    Track _track = null;
+
     public ScheduleCopyFrame() {
-        this(null);
+        this(null, null);
     }
 
-    public ScheduleCopyFrame(Schedule schedule) {
+    public ScheduleCopyFrame(Schedule schedule, Track track) {
         super(Bundle.getMessage("MenuItemCopySchedule"));
+
+        _track = track;
 
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -94,7 +98,8 @@ public class ScheduleCopyFrame extends OperationsFrame implements java.beans.Pro
             }
 
             Schedule schedule = (Schedule) scheduleBox.getSelectedItem();
-            scheduleManager.copySchedule(schedule, scheduleNameTextField.getText());
+            Schedule copiedSchedule = scheduleManager.copySchedule(schedule, scheduleNameTextField.getText());
+            new ScheduleEditFrame(copiedSchedule, _track);
         }
     }
 

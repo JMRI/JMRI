@@ -375,14 +375,17 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     private void loadToolMenu(JMenu toolMenu) {
         toolMenu.removeAll();
-        // first 5 menu items will also close when the edit train window closes
+        // first 4 menu items will also close when the edit train window closes
         toolMenu.add(new TrainEditBuildOptionsAction(this));
         toolMenu.add(new TrainLoadOptionsAction(this));
         toolMenu.add(new TrainRoadOptionsAction(this));
         toolMenu.add(new TrainManifestOptionAction(this));
+        toolMenu.addSeparator();
         toolMenu.add(new TrainCopyAction(_train));
         toolMenu.addSeparator();
+        // scripts window closes when the edit train window closes
         toolMenu.add(new TrainScriptAction(this));
+        toolMenu.addSeparator();
         toolMenu.add(new TrainConductorAction(_train));
         toolMenu.addSeparator();
         toolMenu.add(new TrainByCarTypeAction(_train));
