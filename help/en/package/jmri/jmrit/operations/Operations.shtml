@@ -1631,7 +1631,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         owner name, kernel name, car comment, pick up comment, set out comment, C, F, H, IDTag, RWE
         location name, RWE track name, U, utility car count, final destination name, final
         destination track name, load type, RWL location name, RWL track name, route path, division
-        name.</p>
+        name, blocking order.</p>
 
       <p>Where C = Caboose, F = FRED, H = Hazardous, and U = Utility.</p>
 
@@ -1640,7 +1640,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>The loco parameters for pick up loco (PL) and set out loco (SL) are: road, number,
         model, length, type, hp, location name, track name, destination name, destination track
-        name, owner name, consist name, is lead loco in consist, loco comment, IDTag, DCC address.</p>
+        name, owner name, consist name, is lead loco in consist, loco comment, IDTag, DCC address, 
+        blocking order.</p>
 
       <p>
         The program will include "Hold Car" for spurs and C/I tracks that are only serviced by one
@@ -3529,13 +3530,17 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       for Repair In Place (RIP) tracks.
 
       <h5 id="QuickLoadService">Spur Option (Quick Load Service)</h5>
-      If you want to drop and pull the same car using a
-      <a href="#TrainTurnRoute">train turn</a>, select this option. On the outbound leg of the
-      train's route, OperationsPro will drop off the car to the spur. On the inbound leg of the
-      train's route the car will be pulled and eventually dropped off by the train to the car's
-      destination and track. The Manifest below shows boxcars APOX 554 and 556 being dropped off at
-      Bedford Packaging on the eastbound leg, and later pulled on the westbound leg of the train's
-      route.
+      This feature allows you to create a Manifest that shows a car being spotted and then later pulled
+      from the same location using the train that delivered the car, or another train. Useful for
+      train turns and "Less than a car load" or LCL service.
+
+      <p>
+        For a <a href="#TrainTurnRoute">turn</a>, on the outbound leg of the train's route,
+        OperationsPro will drop off the car to the spur. On the inbound leg of the train's route the
+        car will be pulled and eventually dropped off by the train to the car's destination and
+        track. The Manifest below shows boxcars APOX 554 and 556 being dropped off at Bedford
+        Packaging on the eastbound leg, and later pulled on the westbound leg of the train's route.
+      </p>
 
       <p>
         <img src="images/Turn.png" alt="">
@@ -3555,6 +3560,21 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         with enough time between each departure to allow the previous trains to complete their
         deliveries to the quick load service spurs.
       </p>
+
+      <p>This feature can also be used for scenarios where you need a car to be spotted and
+        before departing the location, show in the Manifest the car being returned to the train. A
+        good example is "Less than a car load" or LCL service. In the image below car VN 13 departs
+        empty and will service Bedford and Chelmsford before arriving fully loaded at Danvers.</p>
+
+      <p>
+        <img src="images/LCL manifest.png" alt="">
+      </p>
+      <p>The train's route services Bedford and Chelmsford twice. The first is to spot the LCL
+        boxcar, and the second is to pull the boxcar.</p>
+      <p>
+        <img src="images/LCL route.png" alt="">
+      </p>
+
 
       <p>When using this feature, you need to be careful in the order you reset trains if you
         allow two or more trains to carry the same car. Always reset the last train built, and work
@@ -4722,6 +4742,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Consists are shown on Manifests and switch lists in the order they are entered, with the
         lead locomotive being the first one entered. The lead locomotive in a consist will have an
         asterisk appended to the consist name in the <a href="#Locomotives">Locomotives</a> window.
+        The blocking order for engines in a consists starts at one and can't be changed in the edit
+        Locomotive window.
       </p>
 
       <p>
