@@ -1114,6 +1114,7 @@ public class Car extends RollingStock {
                 car.setPreviousFinalDestinationTrack(getPreviousFinalDestinationTrack());
                 car.setScheduleItemId(getPreviousScheduleId());
                 car.setWait(0);
+                car.setMoves(getMoves());
                 // remember the last clone destroyed
                 car.setCloneOrder(cloneCreationNumber);
             }
