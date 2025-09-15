@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,7 +17,7 @@ public class RosterEntrySelectionTest {
     public void testCtor(){
       ArrayList<String> selection = new ArrayList<String>();
       RosterEntrySelection res = new RosterEntrySelection(selection);
-      Assert.assertNotNull("RosterEntrySelection constructor",res);
+      Assertions.assertNotNull( res, "RosterEntrySelection constructor");
     }
 
     @BeforeEach
