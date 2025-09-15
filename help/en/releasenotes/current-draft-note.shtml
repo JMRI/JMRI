@@ -483,10 +483,11 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+          <li>Added car blocking to CSV Manifest and switch list files.</li>
+          <li>Minor improvement to the "Show Schedules by Car Type and Load" tool.</li>
         </ul>
 
-   <h3>Panel Editor</h3>
+<h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>

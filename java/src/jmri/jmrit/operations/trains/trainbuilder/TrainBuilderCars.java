@@ -2099,6 +2099,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         cloneCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
         cloneCar.setPreviousScheduleId(car.getScheduleItemId());
         cloneCar.setLastRouteId(car.getLastRouteId());
+        cloneCar.setMoves(car.getMoves());
         // for timing, use arrival times for the train that is building
         // other trains will use their departure time, loaded when creating the Manifest
         String expectedArrivalTime = _train.getExpectedArrivalTime(rld, true);
@@ -2136,6 +2137,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         car.setLastRouteId(_train.getRoute().getId());
         // this car was moved during the build process
         car.setLastDate(_startTime);
+        car.setMoves(car.getMoves() + 1); // bump count
         car.setCloneOrder(cloneCreationOrder); // for reset
         car.setDestination(null, null);
         track.scheduleNext(car); // apply schedule to car
