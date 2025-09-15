@@ -585,15 +585,19 @@ class CreateAndShowGUI4(TableModelListener):
         train.setComment(comment)
 
     def set_skip(self, train, dont_schedule_name):
-
-        if dont_schedule_name == "True":
-            comment = "skip"
-        else:
-            comment = ""
-        # print "dont_schedule_name", dont_schedule_name, "comment", comment
-
+        comment = train.getComment()
+        if comment == None: comment = ""
+        # print "retrieved comment", comment
+        # print "dont_schedule_name", dont_schedule_name
         # print "type", type(dont_schedule_name)
-        train.setComment(comment)
+        if dont_schedule_name == "True":
+            print "A"
+            print "comment before" , comment
+            comment = "skip *" + comment
+            print "comment" , comment
+            # print "comment1", comment
+            train.setComment(comment)
+
     def delete_between(self, string, delim1, delim2):
         first, _, rest = string.partition(delim1)
         _, _, rest = rest.partition(delim2)

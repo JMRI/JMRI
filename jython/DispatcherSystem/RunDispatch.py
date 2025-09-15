@@ -260,7 +260,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         for train in trains_dispatched:
             trains_dispatched_list.add(train)
         for train in trains_dispatched_list:
-            #print "train in trains_alloceted", train, ": trains_allocated", trains_allocated
+            #print "train in trains_allocated", train, ": trains_allocated", trains_allocated
             trains_dispatched.remove(train)
 
         trains_allocated_list = java.util.concurrent.CopyOnWriteArrayList()
@@ -456,7 +456,7 @@ class OffActionMaster(jmri.jmrit.automat.AbstractAutomaton):
 
 class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
 
-    # Monitors the Station buttons and perforns actins dependent upon what mode one is in e.g.:
+    # Monitors the Station buttons and performs actions dependent upon what mode one is in e.g.:
     # Run Dispatch
     # Setup Route
     # Set stopping Length
@@ -470,7 +470,8 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         self.logLevel = 0
         global trains_dispatched
-        trains_dispatched = []
+        if "trains_dispatched" not in globals():
+            trains_dispatched = []
         #initialise all block_value variables
         # for block in blocks.getNamedBeanSet():
         #     LayoutBlockManagerdispa=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -1959,17 +1960,18 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         all_trains = self.get_all_roster_entries_with_speed_profile()
         #trains to choose from are the allocated - dispatched
         trains_to_choose = copy.copy(trains_allocated)
-        if self.logLevel > 0: print "trains_dispatched", trains_dispatched
+        if self.logLevel > -1: print "trains_dispatched", trains_dispatched
         if self.logLevel > 0: print "trains_allocated",trains_allocated
         if self.logLevel > 0: print "trains_to_choose",trains_to_choose
         if trains_dispatched != []:
             for train in trains_dispatched:
                 if self.logLevel > 0: print "removing" ,train
                 trains_to_choose.remove(train)
-                if self.logLevel > 0: print "trains_to_choose",trains_to_choose
+                if self.logLevel > -1: print "trains_to_choose",trains_to_choose
         if trains_to_choose == []:
             str_trains_dispatched= (' '.join(trains_dispatched))
-            msg = "There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched+"\nYou have to wait 20 secs after a train has stopped\nbefore dispatching it again"
+            msg = ("There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched + \
+                   "\nYou have to wait until a train has stopped\nbefore dispatching it again")
             title = "Cannot move train"
             opt1 = "continue"
             opt2 = "reset all allocations"
