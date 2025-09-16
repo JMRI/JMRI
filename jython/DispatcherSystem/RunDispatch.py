@@ -147,6 +147,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             # print "self.delete_active_transits()"
             self.stop_all_threads()
             # print "self.stop_all_threads()"
+            self.remove_all_trains_from_trains_dispatched()
             self.remove_all_trains_from_trains_allocated()
             glb_reset_all_trains = True
             # print "set glb_reset_all_trains", glb_reset_all_trains
@@ -154,8 +155,12 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.delete_active_transits()
             # print "self.delete_active_transits()"
             self.stop_all_threads()
+
+            self.remove_all_trains_from_trains_dispatched()
             # print "self.stop_all_threads()"
             glb_reset_all_trains = False
+        global MoveTrain_index
+        MoveTrain_index = 0   # reset the indexing of trains moving in print statements in MoveTrain()
 
     def stop_via_table(self):
         global CreateAndShowGUI3_frame
@@ -253,15 +258,7 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def remove_all_trains_from_trains_allocated(self):
         global trains_allocated
-        global trains_dispatched
         if self.logLevel > 0: print "train to remove", train_name
-
-        trains_dispatched_list = java.util.concurrent.CopyOnWriteArrayList()
-        for train in trains_dispatched:
-            trains_dispatched_list.add(train)
-        for train in trains_dispatched_list:
-            #print "train in trains_allocated", train, ": trains_allocated", trains_allocated
-            trains_dispatched.remove(train)
 
         trains_allocated_list = java.util.concurrent.CopyOnWriteArrayList()
         for train in trains_allocated:
@@ -269,6 +266,16 @@ class StopMaster(jmri.jmrit.automat.AbstractAutomaton):
         for train in trains_allocated_list:
             if self.logLevel > 0: print "train in trains_allocated", train, ": trains_allocated", trains_allocated
             trains_allocated.remove(train)
+
+    def remove_all_trains_from_trains_dispatched(self):
+        global trains_dispatched
+        if self.logLevel > 0: print "train to remove", train_name
+
+        trains_dispatched_list = java.util.concurrent.CopyOnWriteArrayList()
+        for train in trains_dispatched:
+            trains_dispatched_list.add(train)
+        for train in trains_dispatched_list:
+            trains_dispatched.remove(train)
 
     def stop_all_threads(self):
 
@@ -1960,14 +1967,14 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         all_trains = self.get_all_roster_entries_with_speed_profile()
         #trains to choose from are the allocated - dispatched
         trains_to_choose = copy.copy(trains_allocated)
-        if self.logLevel > -1: print "trains_dispatched", trains_dispatched
+        if self.logLevel > 0: print "trains_dispatched", trains_dispatched
         if self.logLevel > 0: print "trains_allocated",trains_allocated
         if self.logLevel > 0: print "trains_to_choose",trains_to_choose
         if trains_dispatched != []:
             for train in trains_dispatched:
                 if self.logLevel > 0: print "removing" ,train
                 trains_to_choose.remove(train)
-                if self.logLevel > -1: print "trains_to_choose",trains_to_choose
+                if self.logLevel > 0: print "trains_to_choose",trains_to_choose
         if trains_to_choose == []:
             str_trains_dispatched= (' '.join(trains_dispatched))
             msg = ("There are no trains available for dispatch\nTrains dispatched are:\n"+str_trains_dispatched + \

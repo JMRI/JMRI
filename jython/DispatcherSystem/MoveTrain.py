@@ -88,13 +88,13 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         MoveTrain_index += 1
         self.index = MoveTrain_index
         strindex = str(self.index) + " " * 5  #make debugging easier to understand by indenting and prefixing by the train index
-        print ""
-        print ""
-        print strindex + "&&&&&&&&&&&&&&&&& start move_between_stations &&&&&&&&&&&&&&&&&" , strindex
-        print strindex + "*********************************************"
-        if self.logLevel > -1: print strindex + "move_between_stations"
-        if self.logLevel > -1: print strindex + "Moving from " + station_from_name + " to " + station_to_name
-        print strindex + "*********************************************"
+        if self.logLevel > 0: print ""
+        if self.logLevel > 0: print ""
+        if self.logLevel > 0: print strindex + "&&&&&&&&&&&&&&&&& start move_between_stations &&&&&&&&&&&&&&&&&" , strindex
+        if self.logLevel > 0: print strindex + "*********************************************"
+        if self.logLevel > 0: print strindex + "move_between_stations"
+        if self.logLevel > 0: print strindex + "Moving from " + station_from_name + " to " + station_to_name
+        if self.logLevel > 0: print strindex + "*********************************************"
         i = 0
         if self.logLevel > 0: print strindex + "checking train in start block"
 
@@ -109,7 +109,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         paths = DijkstraShortestPath.findPathBetween(graph, StateVertex_start, StateVertex_end)
         # print strindex + "move_between_stations b"
         if paths == None:
-            # print strindex + "cannot find shortest path, paths found is empty"
+            if self.logLevel > 0: print strindex + "cannot find shortest path, paths found is empty"
             # print strindex + "end of move between ", station_from_name, station_to_name
             return
 
@@ -121,10 +121,10 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         if train_name in trains:
             train = trains[train_name]
         else:
-            print strindex + "in case of key error: trains", trains
-            print strindex + "******"
-            print strindex + "train_name", train_name, "trains", trains
-            print strindex + "************Not Moving Train************"
+            if self.logLevel > 0: print strindex + "in case of key error: trains", trains
+            if self.logLevel > 0: print strindex + "******"
+            if self.logLevel > 0: print strindex + "train_name", train_name, "trains", trains
+            if self.logLevel > 0: print strindex + "************Not Moving Train************"
             return
         if self.logLevel > 1: print strindex + "train" , train
         penultimate_block_name = train["penultimate_block_name"]
@@ -137,7 +137,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         count_path = 0
         # print strindex + "move_between_stations c"
         if paths == None or paths == []:
-            print strindex + "1Error cannot find shortest path. restart the system. " + \
+            if self.logLevel > 0: print strindex + "1Error cannot find shortest path. restart the system. " + \
                   "The stop dispatcher system routine does not work properly with multiple layout panels. Sorry"
             return
 
@@ -156,7 +156,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             # if the same the train must change direction. as we are going in and out the same path
             #
 
-            if self.logLevel > -1: print strindex + "********************************"
+            if self.logLevel > 0: print strindex + "********************************"
 
             previous_edge = train["edge"]
             penultimate_block_name = train["penultimate_block_name"]
@@ -165,7 +165,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             neighbor_name = e.getItem("neighbor_name")
             if self.logLevel > 0: print train
             if self.logLevel > 0: print strindex + "neighbor_name = ", neighbor_name
-            if self.logLevel > -1: print strindex + "train penultimate_block_name" , penultimate_block_name
+            if self.logLevel > 0: print strindex + "train penultimate_block_name" , penultimate_block_name
 
             BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
 
@@ -201,7 +201,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 #     print strindex + "train is not dispatching continuing"
                 train = trains[train_name]
                 previous_edge = train["edge"]
-                print strindex + "previous_edge " + str(previous_edge)
+                if self.logLevel > 0: print strindex + "previous_edge " + str(previous_edge)
                 penultimate_block_name = train["penultimate_block_name"]
 
                 previous_block = BlockManager.getBlock(previous_edge.getItem("penultimate_block_name"))
@@ -214,8 +214,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 previous_direction_from = train["direction"]
                 transit_direction = previous_direction_from
                 # move_between_stations
-                if self.logLevel > -1: print strindex + "previous transit_direction ", transit_direction
-                print strindex + "setting direction iterno", iter
+                if self.logLevel > 0: print strindex + "previous transit_direction ", transit_direction
+                if self.logLevel > 0: print strindex + "setting direction iterno", iter
                 [train["direction"], transit_instruction] = self.set_direction(previous_block, current_block, next_block, transit_direction, self.index)    # get the new train_direction_from
                 transit_direction = train["direction"]
                 # need to store if we change direction in case we have to redo the command
@@ -223,12 +223,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                     stored_transit_instruction = "change"
                 else:
                     stored_transit_instruction = "no_change"
-                if self.logLevel > -1: print strindex + "new transit_direction " + transit_direction
+                if self.logLevel > 0: print strindex + "new transit_direction " + transit_direction
 
-                print strindex + "+++++++++++++++++++++++++++"
-                print strindex + "calling self.move iterno", iter
+                if self.logLevel > 0: print strindex + "+++++++++++++++++++++++++++"
+                if self.logLevel > 0: print strindex + "calling self.move iterno", iter
                 result = self.move(e, transit_direction, transit_instruction,  train_name, mode, self.index)
-                print strindex + "called self.move iterno", iter, "result", result
+                if self.logLevel > 0: print strindex + "called self.move iterno", iter, "result", result
 
                 # result is True (success) or False (failure)
                 # if result is false we will try again as we are in a loop
@@ -240,12 +240,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                 if result == False:
                     # we will repeat, sot put everything back to original state
                     if stored_transit_instruction == "change":
-                        print strindex + "reverting changed direction iterno", iter
+                        if self.logLevel > 0: print strindex + "reverting changed direction iterno", iter
                         if train["direction"] == "forward":
                             train["direction"] = "reverse"
                         else:
                             train["direction"] = "forward"
-                    print strindex + "mode", mode
+                    if self.logLevel > 0: print strindex + "mode", mode
                     if mode == "not_scheduling":
                         if iter >= 1: #allow one retry without prompting
                             msg = "Failure1 to dispatch train " + train_name + " retrying moving from " + station_from_name + " to " + station_to_name
@@ -265,17 +265,17 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
                             scheduling_margin_sec = int((float(scheduling_margin_gbl) / float(str(fast_clock_rate))) * 60.0)  # fast minutes
                             # print strindex + "scheduling_margin_sec", scheduling_margin_sec
                             if iter > scheduling_margin_sec:
-                                print strindex + "waited", iter+1, "secs, could not schedule train and gave up"
+                                if self.logLevel > 0: print strindex + "waited", iter+1, "secs, could not schedule train and gave up"
                                 result = True # break from while loop
                                 # we do not want to call the next edge in the paths
                                 call_next_edge_in_paths = False
                             else:
-                                print strindex + "waited", iter+1, "secs but could not schedule train", train
+                                if self.logLevel > 0: print strindex + "waited", iter+1, "secs but could not schedule train", train
 
 
                 # end of while. repeat again if result is false and call dispatch again
-                print strindex + "called self.move iterno", iter
-                print strindex + "++++++++++++++++++++++++++++++++++"
+                if self.logLevel > 0: print strindex + "called self.move iterno", iter
+                if self.logLevel > 0: print strindex + "++++++++++++++++++++++++++++++++++"
 
             # store the current edge for next move
             #store current edge information in train
@@ -283,13 +283,14 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             train["penultimate_block_name"] = e.getItem("penultimate_block_name")
             # count the paths in
             count_path +=1
-        if self.logLevel > -1: print strindex + "transit finished, removing train from dispatch list" + str(trains_dispatched)
+        if self.logLevel > 0: print strindex + "transit finished, removing train from dispatch list" + str(trains_dispatched)
 
         if str(train_name) in trains_dispatched:
+            # print "str(train_name) in trains_dispatched"
             trains_dispatched.remove(str(train_name))
 
-        if self.logLevel > -1: print strindex + "removed from trains_dispatched", str(trains_dispatched)
-        print strindex + "&&&&&&&&&&&&&&&&& end move_between_stations &&&&&&&&&&&&&&&&&", self.index
+        if self.logLevel > 0: print strindex + "removed from trains_dispatched", str(trains_dispatched)
+        if self.logLevel > 0: print strindex + "&&&&&&&&&&&&&&&&& end move_between_stations &&&&&&&&&&&&&&&&&", self.index
 
     def set_direction(self, previous_block, current_block, next_block, previous_direction_from, index = 0):
         global train
@@ -304,9 +305,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
         # print "set_direction"
         transit_instruction = "same"
-        print strindex + "previous_block", previous_block.getUserName(),  "current", current_block.getUserName(), "next", next_block.getUserName()
+        if self.logLevel > 0: print strindex + "previous_block", previous_block.getUserName(),  "current", current_block.getUserName(), "next", next_block.getUserName()
         if previous_block == next_block:
-            print strindex + "previous_block == next_block", previous_block == next_block, "so changing direction"
+            if self.logLevel > 0: print strindex + "previous_block == next_block", previous_block == next_block, "so changing direction"
             transit_instruction = "change"
 
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -415,10 +416,10 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
     def move(self, e, direction, instruction, train_name, mode="not_scheduling" , index = 0):
         strindex = str(index) + " " * 10   # make debugging easier to understand by indenting
         # print strindex +"move"
-        if self.logLevel > -1: print strindex +"++++++++++++++++++++++++"
-        if self.logLevel > -1: print strindex +"path" , e
-        if self.logLevel > -1: print strindex +"calling move: Target", e.getTarget(), "Source", e.getSource(),"Train", train_name
-        if self.logLevel > -1: print strindex +"++++++++++++++++++++++++"
+        if self.logLevel > 0: print strindex +"++++++++++++++++++++++++"
+        if self.logLevel > 0: print strindex +"path" , e
+        if self.logLevel > 0: print strindex +"calling move: Target", e.getTarget(), "Source", e.getSource(),"Train", train_name
+        if self.logLevel > 0: print strindex +"++++++++++++++++++++++++"
         to_name = e.getTarget()
         from_name = e.getSource()
         sensor_move_name = "MoveInProgress"+to_name.replace(" ","_")
@@ -426,21 +427,20 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         self.set_sensor(sensor_move_name, "active")
         speech_reqd = self.speech_required_flag()
         #self.announce( from_name, to_name, speech_reqd, direction, instruction)  # now done when train arrives in platfor instead of when leaving
-        if self.logLevel > 1: print strindex +"*************calling move**************"
-        print strindex +"calling move", train, from_name, to_name
+        if self.logLevel > 0: print strindex +"calling move", train, from_name, to_name
 
         if mode == "not_scheduling":
             self.waitMsec(1000)  # wait for train to stop dispatching we don't want to start another train before it has stopped properly
             if self.train_is_dispatching(train_name, index):
                 self.wait_till_train_stops_dispatching(train_name, index)
-                print strindex + "waited till train stops dispatching, trying again with new position"
+                if self.logLevel > 0: print strindex + "waited till train stops dispatching, trying again with new position"
                 # print strindex + "train is dispatching, trying again with new position"
                 # self.waitMsec(500)
                 return False
             else:
-                print strindex + "train is not dispatching"
+                if self.logLevel > 0: print strindex + "train is not dispatching"
         else:
-            print "train is scheduling"
+            if self.logLevel > 0: print "train is scheduling"
 
         # if mode == "scheduling":
         # waited_till_train_stops_dispatching = self.wait_till_train_stops_dispatching(train_name, index)  #it might be already doing a dispatch
@@ -449,12 +449,12 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         #     print strindex +"waited_till_train_stops_dispatching not calling dispatch"
         #     return False
 
-        print strindex +"calling dispatch"
-        print strindex + "trains_dispatched", trains_dispatched
+        if self.logLevel > 0: print strindex +"calling dispatch"
+        if self.logLevel > 0: print strindex + "trains_dispatched", trains_dispatched
 
         result = self.call_dispatch(e, direction, train_name, mode, index)
-        print strindex +"exit call_dispatch" , result
-        print strindex + "trains_dispatched", trains_dispatched
+        if self.logLevel > 0: print strindex +"exit call_dispatch" , result
+        if self.logLevel > 0: print strindex + "trains_dispatched", trains_dispatched
         self.set_sensor(sensor_move_name, "inactive")
         if result == True:
             # print strindex +"result from calling move is True!!", train, from_name, to_name
@@ -462,11 +462,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             self.wait_till_train_stops_dispatching(train_name, index)
             self.set_sensor(sensor_move_name, "inactive")
             self.report_train_state(train_name)  # just for debugging
-            if self.logLevel > -1: print strindex +("+++++ sensor " + sensor_move_name + " inactive")
+            if self.logLevel > 0: print strindex +("+++++ sensor " + sensor_move_name + " inactive")
         else:
             # print strindex +"result from calling move is False!!", train, from_name, to_name
             self.set_sensor(sensor_move_name, "inactive")
-        print strindex +"****** finished moving train: called move *******"
+        if self.logLevel > 0: print strindex +"****** finished moving train: called move *******"
         return result
 
     def report_train_state(self, train_name):
@@ -477,7 +477,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
     def train_is_dispatching(self, train_name, index):
         strindex = str(index) + " " * 10   #make debugging easier to understand by indenting
-        print strindex + "checking if train is dispatching", train_name
+        if self.logLevel > 0: print strindex + "checking if train is dispatching", train_name
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         java_active_trains_list = DF.getActiveTrainsList()
         java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
@@ -502,7 +502,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             java_active_trains_list = DF.getActiveTrainsList()
             java_active_trains_Arraylist= java.util.ArrayList(java_active_trains_list)
             active_train_names_list = [str(t.getTrainName()) for t in java_active_trains_Arraylist]
-        if self.logLevel > -1: print (strindex + "+++++ train " + train_name + " stopped dispatching" )
+        if self.logLevel > 0: print (strindex + "+++++ train " + train_name + " stopped dispatching" )
         return
 
     def speech_required_flag(self):
@@ -526,7 +526,7 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         global trains_dispatched
 
         strindex = str(index) + " " * 15   #make debugging easier to understand by indenting
-        print strindex + "+++++++++++++++call_dispatch++++++++++++++++ mode:", train, mode
+        if self.logLevel > 0: print strindex + "+++++++++++++++call_dispatch++++++++++++++++ mode:", train, mode
         # for information only
         if self.logLevel > 1: print strindex + "          in dispatch"
         to_name = e.getTarget()
@@ -560,14 +560,15 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
 
         if self.logLevel > 0: print self.train_name, "route", filename, "is clear"
 
-        print strindex + "appending trains_dispatched", trains_dispatched
-        trains_dispatched.append(str(train))
-        print strindex + "trains_dispatched", trains_dispatched
+        if self.logLevel > 0: print strindex + "appending trains_dispatched", trains_dispatched
+        if str(train) not in trains_dispatched:    #have to checl because added each transit of route
+            trains_dispatched.append(str(train))
+        if self.logLevel > 0: print strindex + "trains_dispatched", trains_dispatched
         # run dispatch
-        print strindex + "%%%%%%%%%calling doDispatch"
+        if self.logLevel > 0: print strindex + "%%%%%%%%%calling doDispatch"
         result = self.doDispatch(filename, "ROSTER", train, mode, index)
-        print strindex + "%%%%%%%%%exiting doDispatch A"
-        print strindex + "trains_dispatched", trains_dispatched
+        if self.logLevel > 0: print strindex + "%%%%%%%%%exiting doDispatch A"
+        if self.logLevel > 0: print strindex + "trains_dispatched", trains_dispatched
 
         # # when scheduling the dispatch is normally not called until the previous dispatch is complete
         # # we will keep this in for now even though better in calling routine
@@ -586,18 +587,18 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         #         scheduling_margin_sec = int((float(scheduling_margin_gbl) / float(str(fast_clock_rate))) * 60.0)  # fast minutes
         #         # print strindex + "scheduling_margin_sec", scheduling_margin_sec
         #         if iter > scheduling_margin_sec:
-        #             print strindex + "waited", iter+1, "secs, could not schedule train and gave up"
+        #             if self.logLevel > 0: print strindex + "waited", iter+1, "secs, could not schedule train and gave up"
         #             return result
         #         else:
-        #             print strindex + "waited", iter+1, "secs but could not schedule train", train
+        #             if self.logLevel > 0: print strindex + "waited", iter+1, "secs but could not schedule train", train
         #
         #         result = self.doDispatch(filename, "ROSTER", train, mode, index)
-        #         print strindex + "exiting doDispatch B"
+        #         if self.logLevel > 0: print strindex + "exiting doDispatch B"
         #         iter += 1
 
         #return result
-        if self.logLevel > -1: print strindex + "+++++++++++++exit call_dispatch+++++++++++++++++ result", result
-        print strindex + "trains_dispatched", trains_dispatched
+        if self.logLevel > 0: print strindex + "+++++++++++++exit call_dispatch+++++++++++++++++ result", result
+        if self.logLevel > 0: print strindex + "trains_dispatched", trains_dispatched
         return result
 
     def initialise_if_not_set(self, global_name, state):
@@ -628,19 +629,20 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         global trains_dispatched
         strindex = str(index) + " " * 20   #make debugging easier to understand by indenting
 
-        print strindex + "doDispatch"
-        print strindex + "trains_dispatched", trains_dispatched
+        if self.logLevel > 0: print strindex + "doDispatch"
+        if self.logLevel > 0: print strindex + "trains_dispatched", trains_dispatched
 
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
         if self.logLevel > 1: print strindex + "traininfoFileName",traininfoFileName
         if train_name in trains:
             train = trains[train_name]
         else:
-            print strindex + "train", train_name , "cannot be dispatched", "trains", trains
+            if self.logLevel > 0: print strindex + "train", train_name , "cannot be dispatched", "trains", trains
             return False
         self.trainInfo = jmri.jmrit.dispatcher.TrainInfoFile().readTrainInfo(traininfoFileName)
         self.modify_trainInfo(train_name)  # sets the speed factor and other train dependent factors
         transit_name = self.trainInfo.getTransitName()
+        self.transit_name = transit_name  # allow calling routine to use transit_name
         #print strindex + "traininfoFileName", traininfoFileName
         jmri.jmrit.dispatcher.TrainInfoFile().writeTrainInfo(self.trainInfo, traininfoFileName)
         # print strindex + "__" + train_name + " calling loadTrainFromTrainInfo"
@@ -648,21 +650,22 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         DF.dispatcherSystemSchedulingInOperation = True  # to inhibit error message when train started but not in station
         # print strindex + "DF.dispatcherSystemSchedulingInOperation", DF.dispatcherSystemSchedulingInOperation
         if mode != "not_scheduling":  # == scheduling
-            print strindex + "__________________________Start__" + self.train_name + "__transit: " + transit_name
+            # if self.logLevel > 0: print strindex + "__________________________Start__" + self.train_name + "__transit: " + transit_name
+            if self.logLevel > -1: print "__________________________Start__" + self.train_name + "__transit: " + transit_name
         else:
-            print strindex + "_Start__" + self.train_name + "__transit: " + transit_name
+            if self.logLevel > 0: print strindex + "_Start__" + self.train_name + "__transit: " + transit_name
 
 
         # run the train, setting the flag that the train is doing a dispatch
         result = DF.loadTrainFromTrainInfo(self.trainInfo, type, train_name)
-        print strindex + "loaded returning with code ", result
-        print strindex + "trains_dispatched", trains_dispatched
+        if self.logLevel > 0: print strindex + "loaded returning with code ", result
+        if self.logLevel > 0: print strindex + "trains_dispatched", trains_dispatched
         if result == 0:
             # print strindex + "--" + self.train_name + " called doDispatch; transit name: " + transit_name
             self.set_whether_to_stop_at_sensor(DF)
             train["allocating"] = False   # this flag is used when checking to see whether path for dispatch is clear
         if result == -1:
-            print strindex + "did not run train ", train_name , "aborting: result from loading train:" , result
+            if self.logLevel > 0: print strindex + "did not run train ", train_name , "aborting: result from loading train:" , result
 
             # did not work properly
 
@@ -683,9 +686,9 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         else:
             DF = None
             if mode != "not_scheduling":  # == scheduling
-                print strindex + "__________________________End____" + self.train_name + "__transit: " + transit_name
+                if self.logLevel > 0: print strindex + "__________________________End____" + self.train_name + "__transit: " + transit_name
             else:
-                print strindex + "_End____" + self.train_name + "__transit: " + transit_name
+                if self.logLevel > 0: print strindex + "_End____" + self.train_name + "__transit: " + transit_name
             return True
 
     def get_train_length(self, new_train_name):
@@ -1532,12 +1535,12 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
             # highlight the penultimate block
             penultimate_layout_block.setUseExtraColor(True)
         penultimate_layout_block.setUseExtraColor(True)
-        print "set train direction"
+        # print "set train direction"
         [train_direction,result] = self.set_train_direction(station_block_name, in_siding)
-        print "finished set train direction"
+        # print "finished set train direction"
         #check the condition set in set_train_direction
         train["direction"] = train_direction
-        print "train['direction']", train["direction"]
+        # print "train['direction']", train["direction"]
         penultimate_layout_block.setUseExtraColor(saved_state)
         # print "edge" , edge
         if self.logLevel > 3: print "penultimate_block_name", penultimate_block_name

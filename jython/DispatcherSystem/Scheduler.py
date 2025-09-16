@@ -10,11 +10,12 @@
 # in SchedulerMaster handle we process trains_to_be_scheduled by running run_trains(trains_to_be_scheduled)
 # run_trains sets up a thread which moves the train, and removed the train from the trains_to_be_scheduled list
 
-from javax.swing import JFrame, JPanel, JButton, BoxLayout, Box, JComponent
+from javax.swing import JFrame, JPanel, JButton, BoxLayout, Box, JComponent, BorderFactory, JLabel, JTextField
+from java.awt import GridLayout
 from java.awt import Color, Font
-from java.awt import Dimension
+from java.awt import Dimension, FlowLayout
 from java.beans import PropertyChangeEvent
-from java.awt.event import FocusAdapter
+from java.awt.event import FocusAdapter, ActionListener
 from javax.swing import SwingWorker, SwingUtilities
 import os
 import copy
@@ -48,7 +49,7 @@ except NameError:
     basestring = str
 
 if "list" in globals() and type(globals()["list"]).__name__ != "type":
-    print(" Detected shadowed 'list' type: ", type(globals()["list"]))
+    # print(" Detected shadowed 'list' type: ", type(globals()["list"]))  # list is being used in JMRI. This enables us to use list in Jython
     del globals()["list"]
 
 CreateEditRoutePanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/DisplayMqttTimetable.py')
@@ -466,7 +467,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             print "station_name", station_name, "station_group", station_group.replace(" ", "*")
             if station_group != "" and station_group != " ":
                 station_groups.append(station_group)
-                print "appending station_groups", station_groups
+                # print "appending station_groups", station_groups
         counter = Counter(station_groups)
         print "counter", counter
         print "counter.most_common(1)", counter.most_common(1)
@@ -1325,11 +1326,12 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.scheduling_in_operation = "False"
 
         # Create and set up the window.
-        self.params_frame = JFrame("Set Schedule Parameters")
-        self.params_frame.setPreferredSize(Dimension(400, 250))
+        self.params_frame = JFrame("Set Schedule Parameters") #NOI18N
+        self.params_frame.setPreferredSize(Dimension(550, 250))
 
         # Create and set up the panel using a simple grid layout.
-        self.params_panel = JPanel(GridLayout(0, 2))
+        self.params_panel = JPanel(GridLayout(0, 2, 10, 5)) # hgap, vgap
+        self.params_panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)) # top, left, bottom, right
 
         # Add the widgets to the panel.
         self.add_schedule_parameter_widgets()
@@ -1341,9 +1343,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.params_frame.pack()
         self.params_frame.setVisible(True)
 
-    class MyFocusListener(FocusAdapter):
+    class FieldValidator(FocusAdapter, ActionListener):
         """
-        A focus listener to trigger validation when a field loses focus.
+        A listener that validates a text field when focus is lost or Enter is pressed.
         If validation fails, it reverts the field to its previous value.
         """
         def __init__(self, validation_function, field):
@@ -1355,14 +1357,20 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             """Store the current value when the field gains focus."""
             self.old_value = self.field.getText()
 
-        def focusLost(self, event):
-            """Validate the new value. If invalid, show an error and revert."""
+        def _validate_and_revert(self):
+            """Helper method to run validation and revert on failure."""
             if not self.validation_function(self.field):
                 # The validation function already shows the error message.
                 # Now, revert the text field to the last known good value.
                 self.field.setText(self.old_value)
 
+        def focusLost(self, event):
+            """Validate when focus is lost."""
+            self._validate_and_revert()
 
+        def actionPerformed(self, event):
+            """Validate when Enter is pressed."""
+            self._validate_and_revert()
 
     def add_schedule_parameter_widgets(self):
         """Adds labels, fields, and buttons to the parameters panel."""
@@ -1371,23 +1379,23 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                      scheduling_margin_gbl, scheduling_in_operation_gbl
 
         # --- Create Widgets ---
-        start_hour_label = JLabel("Start Hour (0-23):")
-        self.start_hour_field = JTextField(5)
+        start_hour_label = JLabel("Start Hour (0-23):") #NOI18N
+        self.start_hour_field = JTextField(4)
 
-        end_hour_label = JLabel("End Hour (0-23):")
-        self.end_hour_field = JTextField(5)
+        end_hour_label = JLabel("End Hour (0-23):") #NOI18N
+        self.end_hour_field = JTextField(4)
 
-        fast_clock_label = JLabel("Fast Clock Rate (Running):")
-        self.fast_clock_field = JTextField(5)
+        fast_clock_label = JLabel("Fast Clock Rate (Running Period):") #NOI18N
+        self.fast_clock_field = JTextField(4)
 
-        fast_clock_off_label = JLabel("Fast Clock Rate (Outside, 1-100):")
-        self.fast_clock_off_field = JTextField(5)
+        fast_clock_off_label = JLabel("Fast Clock Rate (Non Running Period) (1-100):") #NOI18N
+        self.fast_clock_off_field = JTextField(4)
 
-        margin_label = JLabel("Scheduling Margin (Fast Mins, 0-20):")
-        self.margin_field = JTextField(5)
+        margin_label = JLabel("Scheduling Margin (Fast Mins, 0-20):") #NOI18N
+        self.margin_field = JTextField(4)
 
-        save_button = JButton("Save")
-        cancel_button = JButton("Cancel")
+        save_button = JButton("Save") #NOI18N
+        cancel_button = JButton("Cancel") #NOI18N
 
         # --- Pre-fill fields with existing values ---
         # This assumes the values are stored as attributes of your class.
@@ -1398,35 +1406,66 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         self.fast_clock_off_field.setText(str(self.speed_not_operational))
         self.margin_field.setText(str(self.scheduling_margin))
 
-        # --- Add Focus Listeners for real-time validation ---
-        self.start_hour_field.addFocusListener(self.MyFocusListener(self.validate_start_hour, self.start_hour_field))
-        self.end_hour_field.addFocusListener(self.MyFocusListener(self.validate_end_hour, self.end_hour_field))
-        self.fast_clock_field.addFocusListener(self.MyFocusListener(self.validate_fast_clock_rate, self.fast_clock_field))
-        self.fast_clock_off_field.addFocusListener(self.MyFocusListener(self.validate_fast_clock_off_rate, self.fast_clock_off_field))
-        self.margin_field.addFocusListener(self.MyFocusListener(self.validate_margin, self.margin_field))
+        # --- Add Listeners for real-time validation (on focus loss or Enter key) ---
+        start_hour_validator = self.FieldValidator(self.validate_start_hour, self.start_hour_field)
+        self.start_hour_field.addFocusListener(start_hour_validator)
+        self.start_hour_field.addActionListener(start_hour_validator)
+
+        end_hour_validator = self.FieldValidator(self.validate_end_hour, self.end_hour_field)
+        self.end_hour_field.addFocusListener(end_hour_validator)
+        self.end_hour_field.addActionListener(end_hour_validator)
+
+        fast_clock_validator = self.FieldValidator(self.validate_fast_clock_rate, self.fast_clock_field)
+        self.fast_clock_field.addFocusListener(fast_clock_validator)
+        self.fast_clock_field.addActionListener(fast_clock_validator)
+
+        fast_clock_off_validator = self.FieldValidator(self.validate_fast_clock_off_rate, self.fast_clock_off_field)
+        self.fast_clock_off_field.addFocusListener(fast_clock_off_validator)
+        self.fast_clock_off_field.addActionListener(fast_clock_off_validator)
+
+        margin_validator = self.FieldValidator(self.validate_margin, self.margin_field)
+        self.margin_field.addFocusListener(margin_validator)
+        self.margin_field.addActionListener(margin_validator)
 
         # --- Add Action Listeners ---
         save_button.actionPerformed = self.save_schedule_parameters_action
         cancel_button.actionPerformed = self.cancel_schedule_parameters_action
 
-        # --- Add Widgets to Panel in Order ---
+        # --- Add Widgets to Panel in Order, wrapping fields to control size ---
         self.params_panel.add(start_hour_label)
-        self.params_panel.add(self.start_hour_field)
+        field_panel1 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel1.add(self.start_hour_field)
+        self.params_panel.add(field_panel1)
 
         self.params_panel.add(end_hour_label)
-        self.params_panel.add(self.end_hour_field)
+        field_panel2 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel2.add(self.end_hour_field)
+        self.params_panel.add(field_panel2)
 
         self.params_panel.add(fast_clock_label)
-        self.params_panel.add(self.fast_clock_field)
+        field_panel3 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel3.add(self.fast_clock_field)
+        self.params_panel.add(field_panel3)
 
         self.params_panel.add(fast_clock_off_label)
-        self.params_panel.add(self.fast_clock_off_field)
+        field_panel4 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel4.add(self.fast_clock_off_field)
+        self.params_panel.add(field_panel4)
 
         self.params_panel.add(margin_label)
-        self.params_panel.add(self.margin_field)
+        field_panel5 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel5.add(self.margin_field)
+        self.params_panel.add(field_panel5)
 
-        self.params_panel.add(save_button)
-        self.params_panel.add(cancel_button)
+        # --- Add Buttons ---
+        # Create a panel to hold both buttons, so they can be centered together.
+        button_panel = JPanel(FlowLayout(FlowLayout.CENTER, 10, 5)) # hgap=10, vgap=5
+        button_panel.add(save_button)
+        button_panel.add(cancel_button)
+
+        # Add an empty label to the first column of the last row to push the button panel to the right.
+        self.params_panel.add(JLabel(""))
+        self.params_panel.add(button_panel)
 
 
     def save_schedule_parameters_action(self, event):
@@ -2562,15 +2601,16 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                         if success:
                             move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, mode = "scheduling", route = self.route)
                             move_train.move_between_stations(station_from, station_to, train_to_move, self.graph, mode = "scheduling")
-                            print "__________________________End____" + train_to_move + "___________________________________"
+                            transit_name = move_train.transit_name
+                            print "__________________________End____" + train_to_move + "__transit: " + transit_name
                         else:
                             print "failed to move train - no train in block - have waited for scheduling margin"
-                            print "__________________________End____" + train_to_move + "___________________________________"
-                    else:
-                        success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
-                        if success:
-                            move_train = MoveTrain(station_from, station_to, self.train_name, self.graph, route = self.route)
-                            move_train.move_between_stations(station_from, station_to, self.train_name, self.graph)
+                            transit_name = move_train.transit_name
+                            print "__________________________End____" + train_to_move + "__transit: " + transit_name
+                        # success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
+                        # if success:
+                        #     move_train = MoveTrain(station_from, station_to, self.train_name, self.graph, route = self.route)
+                        #     move_train.move_between_stations(station_from, station_to, self.train_name, self.graph)
                     # move_train = None
 
                     # train has moved, if we are in departure_time_setting mode, store the journey time
@@ -2655,7 +2695,7 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             train_in_block = self.blockOccupied(start_block)
             train_block_name = start_block.getValue()
             if train_in_block and (train_block_name == train_to_move):
-                print strpad + "--" + str(train_to_move) + " train in start block" + str(start_block.getUserName())
+                # print strpad + "--" + str(train_to_move) + " train in start block " + str(start_block.getUserName())
                 return True
             else:
                 print (strpad + "--" + str(train_to_move) + " not in start_block: " + str(start_block.getUserName()) \
