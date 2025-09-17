@@ -2,11 +2,7 @@ package jmri.util.com.sun;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -18,7 +14,7 @@ public class ToggleOrPressButtonModelTest {
     @Test
     public void testCTor() {
         ToggleOrPressButtonModel t = new ToggleOrPressButtonModel(null,true);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -31,6 +27,6 @@ public class ToggleOrPressButtonModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ToggleOrPressButtonModelTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ToggleOrPressButtonModelTest.class);
 
 }
