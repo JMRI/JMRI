@@ -87,6 +87,12 @@ public class LayoutTurntable extends LayoutTrack {
          } else {
              log.debug("Found existing mast '{}' for turntable '{}'.", this.virtualSignalMast.getSystemName(), id);
          }
+
+        // Store a direct reference to this turntable object on the mast itself.
+        // This allows other parts of the system (like SignalMastLogic) to easily find the owner.
+        if (this.virtualSignalMast != null) {
+            this.virtualSignalMast.setProperty("ownerTurntable", this);
+        }
      }
 
     /**
@@ -674,6 +680,8 @@ public class LayoutTurntable extends LayoutTrack {
      * @param index the index
      */
     public void setPosition(int index) {
+        log.warn("DIAGNOSTIC: Turntable '{}' setPosition({}) called.", getName(), index);
+
         if (isTurnoutControlled()) {
             boolean rayExists = false;
             for (RayTrack rt : rayTrackList) {
@@ -683,8 +691,11 @@ public class LayoutTurntable extends LayoutTrack {
                 Turnout t = rt.getTurnout();
                 if (t != null) {
                     if (rt.getConnectionIndex() == index) {
+                        log.warn("DIAGNOSTIC:   - Commanding turnout '{}' for ray {} to THROWN.", t.getSystemName(), index);
                         t.setCommandedState(Turnout.THROWN);
                     } else {
+                        // Only log this if we are actively changing it, to reduce log spam.
+                        if (t.getCommandedState() != Turnout.CLOSED) log.warn("DIAGNOSTIC:   - Commanding turnout '{}' to CLOSED.", t.getSystemName());
                         t.setCommandedState(Turnout.CLOSED);
                     }
                 }
@@ -696,8 +707,10 @@ public class LayoutTurntable extends LayoutTrack {
                 models.setDirty();
             } else {
                 log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track", getName(), index);
-										  
+
             }
+        } else {
+            log.warn("DIAGNOSTIC: Turntable '{}' setPosition({}) ignored because it is not turnout-controlled.", getName(), index);
         }
     }
 
@@ -918,8 +931,11 @@ public class LayoutTurntable extends LayoutTrack {
                 mTurnoutListener = (PropertyChangeEvent e) -> { // if a ray turnout is thrown, set all others to closed
                     if (e.getPropertyName().equals(Turnout.PROPERTY_KNOWN_STATE)) {
                         // If this ray's turnout has been thrown, it means the user wants to align to this ray.
+                        log.warn("DIAGNOSTIC: RayTrack listener for turnout '{}' (ray {}) detected property change to {}.",
+                                getTurnoutName(), connectionIndex, e.getNewValue());
                         // We call setPosition() on the parent LayoutTurntable to enforce the interlocking.
                         if ((Integer) e.getNewValue() == turnoutState) { // turnoutState is THROWN
+                            log.warn("DIAGNOSTIC:   - State matches target (THROWN). Calling setPosition({}).", connectionIndex);
                             LayoutTurntable.this.setPosition(connectionIndex);
                         }
                     }

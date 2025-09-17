@@ -809,21 +809,46 @@ public class AutoActiveTrain implements ThrottleListener {
             if (as == null) {
                 as = _currentAllocatedSection;
             }
+
+            // *** Turntable Mast Logic ***
+            // A turntable's virtual mast is not on a block boundary, so it can't be found
+            // by getFacingSignalMast. We must check if the current block is a turntable
+            // and get the mast directly from the LayoutTurntable object.
+            if (cB != null) {
+                jmri.jmrit.display.layoutEditor.LayoutBlock currentLBlock = _lbManager.getLayoutBlock(cB);
+                if (currentLBlock != null) {
+                    for (jmri.jmrit.display.layoutEditor.LayoutEditor editor : jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(jmri.jmrit.display.layoutEditor.LayoutEditor.class)) {
+                        for (jmri.jmrit.display.layoutEditor.LayoutTurntable turntable : editor.getLayoutTurntables()) {
+                            if (turntable.getLayoutBlock() == currentLBlock) {
+                                sm = turntable.getVirtualSignalMast();
+                                break;
+                            }
+                        }
+                        if (sm != null) break;
+                    }
+                }
+            }
+
             // get signal mast at current block change, if there is no signal mast we will proceed with no change in speed
             // unless forceSpeedChange is true, such as beginning, resets of transit.
             // previous signal mast speed unless the mast is held.
             boolean weAreAtSpeedChangingMast=forceSpeedChange;
-            if ( !forceSpeedChange  && nB != null ) {
-                sm  = _lbManager.getFacingSignalMast(cB, nB);
-                if (sm != null) {weAreAtSpeedChangingMast=true;}
-            }
-
-            while (sm == null && nB != null) {
-                sm = _lbManager.getFacingSignalMast(cB, nB);
-                if (sm == null) {
-                    cB = nB;
-                    nB = getNextBlock(nB, as);
+            if (sm == null) { // Only run standard search if turntable mast not found
+                if ( !forceSpeedChange  && nB != null ) {
+                    sm  = _lbManager.getFacingSignalMast(cB, nB);
+                    if (sm != null) {weAreAtSpeedChangingMast=true;}
                 }
+
+                while (sm == null && nB != null) {
+                    sm = _lbManager.getFacingSignalMast(cB, nB);
+                    if (sm == null) {
+                        cB = nB;
+                        nB = getNextBlock(nB, as);
+                    }
+                }
+            } else {
+                // A turntable mast was found, so we are at a speed-changing boundary.
+                weAreAtSpeedChangingMast = true;
             }
             if (sm != null) {
                 _controllingSignalMast = sm;
