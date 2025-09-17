@@ -119,9 +119,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#BuildReportDetails">Build Report Options</a></li>
                 <li><a href="#BackupDirectory">Backup to Directory</a></li>
                 <li><a href="#RestoreDirectory">Restore from Directory</a></li>
+                <li><a href="#ManageAutoBackups">Manage Auto Backups</a></li>
                 <li><a href="#demo">Load Demo Files</a></li>
                 <li><a href="#ResetDatabase">Reset Database</a></li>
-                <li><a href="#ManageAutoBackups">Manage Auto Backups</a></li>
               </ul></li>
           </ul></li>
 
@@ -2112,6 +2112,11 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       From the "Tools" menu in the <a href="#Settings">Settings</a> window, the restore option
       allows you to navigate to any directory to restore the operations files. See <a
         href="#Restore">Restore</a> for more information.
+        
+      <h3 id="ManageAutoBackups">Manage Auto Backups</h3>
+      When "Auto Backup" in the <a href="#Settings">Settings</a> window is enabled,
+      OperationsPro&trade; will create a backup of the operations files each time the program is
+      started. To delete older obsolete files, use this tool.
 
       <h3>Load Demo files</h3>
       See <a href="#demo">Operations Demo Files</a>.
@@ -2127,11 +2132,6 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       previous backup. To do this, open the Operations Settings page by selecting the "Settings"
       option in the Tools&rArr;Operations menu of the main page. From there you can do either a
       restore or a load of the demo files in the usual way.
-
-      <h3 id="ManageAutoBackups">Manage Auto Backups</h3>
-      When "Auto Backup" in the <a href="#Settings">Settings</a> window is enabled,
-      OperationsPro&trade; will create a backup of the operations files each time the program is
-      started. To delete older obsolete files, use this tool.
 
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
