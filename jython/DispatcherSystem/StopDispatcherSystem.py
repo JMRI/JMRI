@@ -402,7 +402,6 @@ class MyModelListener3(TableModelListener):
             if train == train_name:
                 trains_dispatched.remove(train)
 
-
     def delete_transit(self, train_name):
         if self.logLevel > 0: print "delete_transit: train_name", train_name
         DF = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame)
