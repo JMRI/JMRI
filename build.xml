@@ -138,7 +138,7 @@
         <pathelement location="${libdir}/xercesImpl-2.12.2.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
         <pathelement location="${libdir}/commons-csv-1.9.0.jar"/>
-        <pathelement location="${libdir}/jdom2-2.0.6.jar"/>
+        <pathelement location="${libdir}/jdom2-2.0.6.1.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput-2.0.9-natives-all.jar"/>
         <pathelement location="${libdir}/jinput-2.0.9.jar"/>
