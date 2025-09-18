@@ -408,9 +408,34 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
                 // create value object
                 Object value = null;
                 if (e.getChild(STR_VALUE) != null) {
-                    cl = Class.forName(e.getChild(STR_VALUE).getAttributeValue(STR_CLASS));
-                    ctor = cl.getConstructor(String.class);
-                    value = ctor.newInstance(e.getChild(STR_VALUE).getText());
+                    String className = e.getChild(STR_VALUE).getAttributeValue(STR_CLASS);
+
+                    // Special case for LayoutTurntable, which is not a NamedBean and cannot be
+                    // instantiated from a string. This handles cases where a LayoutTurntable
+                    // object was incorrectly stored as a property on another bean.
+                    if ("jmri.jmrit.display.layoutEditor.LayoutTurntable".equals(className)) { // NOI18N
+                        String turntableName = e.getChild(STR_VALUE).getText();
+                        // Find the existing turntable on the panel instead of trying to create a new one.
+                        for (jmri.jmrit.display.layoutEditor.LayoutEditor editor : jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(jmri.jmrit.display.layoutEditor.LayoutEditor.class)) {
+                            for (jmri.jmrit.display.layoutEditor.LayoutTurntable turntable : editor.getLayoutTurntables()) {
+                                if (turntable.getName().equals(turntableName)) {
+                                    value = turntable;
+                                    break; // found it in this editor
+                                }
+                            }
+                            if (value != null) {
+                                break; // found it, no need to check other editors
+                            }
+                        }
+                        if (value == null) {
+                            log.error("Could not find existing LayoutTurntable '{}' while loading properties for bean '{}'.", turntableName, t.getDisplayName());
+                        }
+                    } else {
+                        // Default behavior for all other property types
+                        cl = Class.forName(className);
+                        ctor = cl.getConstructor(String.class);
+                        value = ctor.newInstance(e.getChild(STR_VALUE).getText());
+                    }
                 }
 
                 // store

@@ -408,11 +408,11 @@ public class DefaultSignalMastLogicManager
         runWhenStablised = false;
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
-            log.warn("DIAGNOSTIC - Advanced routing not enabled.");
+            log.debug("DIAGNOSTIC:: - Advanced routing not enabled.");
             throw new JmriException("advanced routing not enabled");
         }
         if (!lbm.routingStablised()) {
-            log.warn("DIAGNOSTIC - Routing not stabilised, will run later.");
+            log.debug("DIAGNOSTIC:: - Routing not stabilised, will run later.");
             runWhenStablised = true;
             return;
         }

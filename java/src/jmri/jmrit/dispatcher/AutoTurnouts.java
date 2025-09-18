@@ -151,15 +151,15 @@ public class AutoTurnouts {
 
         // DIAGNOSTIC: Dump the transit structure the first time we process a section for this train.
         if (prevSection == null) {
-            log.warn("DIAGNOSTIC (turnoutUtil): Dumping Transit structure for train '{}'", at.getTrainName());
+            log.debug("DIAGNOSTIC:: (turnoutUtil): Dumping Transit structure for train '{}'", at.getTrainName());
             List<TransitSection> transitSections = tran.getTransitSectionList();
             for (int i = 0; i < transitSections.size(); i++) {
                 Section transitSection = transitSections.get(i).getSection();
-                log.warn("DIAGNOSTIC (turnoutUtil):   - Transit Section {}: '{}'", i, transitSection.getDisplayName(USERSYS));
+                log.debug("DIAGNOSTIC:: (turnoutUtil):   - Transit Section {}: '{}'", i, transitSection.getDisplayName(USERSYS));
                 List<Block> blocks = transitSection.getBlockList();
                 for (int j = 0; j < blocks.size(); j++) {
                     Block transitBlock = blocks.get(j);
-                    log.warn("DIAGNOSTIC (turnoutUtil):     - Block {}: '{}'", j, transitBlock.getDisplayName(USERSYS));
+                    log.debug("DIAGNOSTIC:: (turnoutUtil):     - Block {}: '{}'", j, transitBlock.getDisplayName(USERSYS));
                 }
             }
         }
@@ -254,15 +254,15 @@ public class AutoTurnouts {
             return turnoutListForAllocatedSection;
         }
 
-        log.warn("DIAGNOSTIC (turnoutUtil): For train '{}', in Section '{}'", at.getTrainName(), s.getDisplayName(USERSYS));
-        log.warn("DIAGNOSTIC (turnoutUtil):   - Direction: {}", (direction == Section.FORWARD ? "FORWARD" : "REVERSE"));
-        log.warn("DIAGNOSTIC (turnoutUtil):   - PrevBlock: {}", (prevBlock != null ? prevBlock.getDisplayName(USERSYS) : "null"));
-        log.warn("DIAGNOSTIC (turnoutUtil):   - CurBlock: {}", (curBlock != null ? curBlock.getDisplayName(USERSYS) : "null"));
-        log.warn("DIAGNOSTIC (turnoutUtil):   - CurBlockSeqNum in Section: {}", curBlockSeqNum);
-        log.warn("DIAGNOSTIC (turnoutUtil):   - ExitPt: {}", (exitPt != null ? exitPt.getBlock().getDisplayName(USERSYS) : "null"));
-        log.warn("DIAGNOSTIC (turnoutUtil):   - Train StartBlock: {}", (at.getStartBlock() != null ? at.getStartBlock().getDisplayName(USERSYS) : "null"));
-        log.warn("DIAGNOSTIC (turnoutUtil):   - Train EndBlock: {}", (at.getEndBlock() != null ? at.getEndBlock().getDisplayName(USERSYS) : "null"));
-        log.warn("DIAGNOSTIC (turnoutUtil):   - Allocation Reversed: {}", at.isAllocationReversed());
+        log.debug("DIAGNOSTIC:: (turnoutUtil): For train '{}', in Section '{}'", at.getTrainName(), s.getDisplayName(USERSYS));
+        log.debug("DIAGNOSTIC:: (turnoutUtil):   - Direction: {}", (direction == Section.FORWARD ? "FORWARD" : "REVERSE"));
+        log.debug("DIAGNOSTIC:: (turnoutUtil):   - PrevBlock: {}", (prevBlock != null ? prevBlock.getDisplayName(USERSYS) : "null"));
+        log.debug("DIAGNOSTIC:: (turnoutUtil):   - CurBlock: {}", (curBlock != null ? curBlock.getDisplayName(USERSYS) : "null"));
+        log.debug("DIAGNOSTIC:: (turnoutUtil):   - CurBlockSeqNum in Section: {}", curBlockSeqNum);
+        log.debug("DIAGNOSTIC:: (turnoutUtil):   - ExitPt: {}", (exitPt != null ? exitPt.getBlock().getDisplayName(USERSYS) : "null"));
+        log.debug("DIAGNOSTIC:: (turnoutUtil):   - Train StartBlock: {}", (at.getStartBlock() != null ? at.getStartBlock().getDisplayName(USERSYS) : "null"));
+        log.debug("DIAGNOSTIC:: (turnoutUtil):   - Train EndBlock: {}", (at.getEndBlock() != null ? at.getEndBlock().getDisplayName(USERSYS) : "null"));
+        log.debug("DIAGNOSTIC:: (turnoutUtil):   - Allocation Reversed: {}", at.isAllocationReversed());
 
         Block nextBlock = null;
         int nextBlockSeqNum = -1;   // sequence number of nextBlock in Section (-1 indicates outside Section)
@@ -271,7 +271,7 @@ public class AutoTurnouts {
         if (isTurntableStart && exitPt != null) {
             nextBlock = exitPt.getBlock();
             nextBlockSeqNum = s.getBlockSequenceNumber(nextBlock);
-            log.warn("DIAGNOSTIC (turnoutUtil):   - Turntable start detected. Setting nextBlock to exit point: '{}'", nextBlock.getDisplayName(USERSYS));
+            log.debug("DIAGNOSTIC:: (turnoutUtil):   - Turntable start detected. Setting nextBlock to exit point: '{}'", nextBlock.getDisplayName(USERSYS));
         } else if (exitPt != null && curBlock == exitPt.getBlock()) {
             // next Block is outside of the Section
             nextBlock = exitPt.getFromBlock();
@@ -287,8 +287,8 @@ public class AutoTurnouts {
             if ((nextBlock == null &&
                     ((!at.isAllocationReversed() && curBlock != at.getEndBlock()) ||
                             (at.isAllocationReversed() && curBlock != at.getStartBlock())))) {
-                log.warn("DIAGNOSTIC (turnoutUtil):   - FAILED. nextBlock is null.");
-                log.warn("DIAGNOSTIC (turnoutUtil):   - Section '{}' has {} blocks.", s.getDisplayName(USERSYS), s.getBlockList().size());
+                log.debug("DIAGNOSTIC:: (turnoutUtil):   - FAILED. nextBlock is null.");
+                log.debug("DIAGNOSTIC:: (turnoutUtil):   - Section '{}' has {} blocks.", s.getDisplayName(USERSYS), s.getBlockList().size());
                 log.error("[{}]Error in block sequence numbers when setting/checking turnouts.",
                         curBlock.getDisplayName(USERSYS));
                 return null;
@@ -422,18 +422,18 @@ public class AutoTurnouts {
                         for (LayoutTurntable turntable : editor.getLayoutTurntables()) { // NOI18N
                             int rayIndex = -1;
                             
-                            log.warn("DIAGNOSTIC: Checking turntable '{}'. Previous block: '{}', Current block: '{}'",
+                            log.debug("DIAGNOSTIC: Checking turntable '{}'. Previous block: '{}', Current block: '{}'",
                                     turntable.getName(),
                                     prevLBlock.getDisplayName(),
                                     curLBlock.getDisplayName());
 
                             // Case 1: Exiting turntable (previous is turntable, current is ray)
                             if (turntable.getLayoutBlock() == prevLBlock && turntable.isRayBlock(curLBlock)) {
-                                log.warn("DIAGNOSTIC:   - Matched Case 1 (Exiting Turntable).");
+                                log.debug("DIAGNOSTIC:   - Matched Case 1 (Exiting Turntable).");
                                 rayIndex = turntable.getRayIndexForBlock(curLBlock);
                             } // Case 2: Entering turntable (previous is ray, current is turntable)
                             else if (turntable.getLayoutBlock() == curLBlock && turntable.isRayBlock(prevLBlock)) {
-                                log.warn("DIAGNOSTIC:   - Matched Case 2 (Entering Turntable).");
+                                log.debug("DIAGNOSTIC:   - Matched Case 2 (Entering Turntable).");
                                 rayIndex = turntable.getRayIndexForBlock(prevLBlock);
                             }
 

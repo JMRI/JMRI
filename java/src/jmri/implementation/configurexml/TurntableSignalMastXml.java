@@ -23,9 +23,13 @@ public class TurntableSignalMastXml extends AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-        // TurntableSignalMasts are stored as part of the LayoutTurntable, so we don't need to do anything here.
-        // The class needs to exist to prevent a ClassNotFoundException, but it doesn't need to store anything.
-        return null;
+        // TurntableSignalMasts are stored as part of the LayoutTurntable.
+        // We must return a non-null element here to prevent the XmlAdapter mechanism
+        // from falling back to a superclass adapter (like VirtualSignalMastXml) which
+        // would incorrectly save properties and cause loading errors.
+        Element e = new Element("signalmast");
+        e.setAttribute("class", this.getClass().getName());
+        return e;
     }
 
     @Override

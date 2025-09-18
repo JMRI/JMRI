@@ -170,11 +170,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             result = False
             while result == False:
                 # move_between_stations
-                if self.logLevel > -1: print "********************************"
-                if self.logLevel > -1: print "previous transit_direction ", transit_direction
+                if self.logLevel > 0: print "********************************"
+                if self.logLevel > 0: print "previous transit_direction ", transit_direction
                 [train["direction"], transit_instruction] = self.set_direction(previous_block, current_block, next_block, transit_direction)    # get the new train_direction_from
                 transit_direction = train["direction"]
-                if self.logLevel > -1: print 'new transit_direction', train["direction"]
+                if self.logLevel > 0: print 'new transit_direction', train["direction"]
                 result = self.move(e, transit_direction, transit_instruction,  train_name, mode)
                 # result is True (success) or False (failure)
                 if self.logLevel > 0: print "returned from self.move, result = ", result

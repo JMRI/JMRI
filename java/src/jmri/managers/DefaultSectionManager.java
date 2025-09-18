@@ -309,7 +309,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
 
             if (layoutBlock.getNumberOfThroughPaths() == 0 || isTurntable) {
                 if (!blockSectionExists(layoutBlock)){
-                    log.warn("generateBlockSections() created Section for stub: " + layoutBlock.getDisplayName());
+                    log.debug("generateBlockSections() created Section for stub: " + layoutBlock.getDisplayName());
                     createBlockSection(layoutBlock);
                 }
             }
