@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.locations.gui.TrackEditFrame;
@@ -13,6 +14,7 @@ import jmri.jmrit.operations.locations.gui.TrackEditFrame;
 public class TrackEditCommentsAction extends AbstractAction {
 
     private TrackEditFrame _tef;
+    private TrackEditCommentsFrame _tecf;
 
     public TrackEditCommentsAction(TrackEditFrame tef) {
         super(Bundle.getMessage("MenuItemComments"));
@@ -21,6 +23,9 @@ public class TrackEditCommentsAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new TrackEditCommentsFrame(_tef._track);
+        if (_tecf != null) {
+            _tecf.dispose();
+        }
+        _tecf = new TrackEditCommentsFrame(_tef._track);
     }
 }
