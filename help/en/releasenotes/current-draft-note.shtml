@@ -644,6 +644,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Updated the JDOM2 library from 2.0.6 to 2.0.6.1 to 
+                resolve a security issue.</li>
         </ul>
 
