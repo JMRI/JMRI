@@ -28,7 +28,7 @@ import jmri.util.swing.JmriJOptionPane;
 public class EnginesTableFrame extends OperationsFrame implements TableModelListener {
 
     public EnginesTableModel enginesTableModel;
-    JTable enginesTable;
+    public JTable enginesTable;
     boolean showAllLocos = true;
     JScrollPane enginesPane;
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
