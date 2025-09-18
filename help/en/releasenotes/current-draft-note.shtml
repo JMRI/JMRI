@@ -424,7 +424,12 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>DecoderPro now shows a "No Group" choice in the Roster Groups selector.
+                This contains all those roster entries that have not been 
+                assigned to a specific group.  You can delete roster entries
+                from the roster when displaying the "No Group" by selecting
+                the roster entry, then ctrl-clicking / right-clicking on it
+                and selecting "Delete from Roster".</li>
         </ul>
 
    <h3>Dispatcher</h3>
