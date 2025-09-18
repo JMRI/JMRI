@@ -5,7 +5,12 @@ import java.util.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests the static methods of the interface.
@@ -19,73 +24,64 @@ public class ManagerTest {
 
     @Test
     public void testGetSystemPrefixLengthOK() {
-        Assert.assertEquals("LT1", 1, Manager.getSystemPrefixLength("LT1"));
-        Assert.assertEquals("L2T1", 2, Manager.getSystemPrefixLength("L2T1"));
-        Assert.assertEquals("L21T1", 3, Manager.getSystemPrefixLength("L21T1"));
+        assertEquals( 1, Manager.getSystemPrefixLength("LT1"), "LT1");
+        assertEquals( 2, Manager.getSystemPrefixLength("L2T1"), "L2T1");
+        assertEquals( 3, Manager.getSystemPrefixLength("L21T1"), "L21T1");
     }
 
     @Test
     public void testGetSystemPrefixLengthThrow1() {
-        try {
-            Manager.getSystemPrefixLength(".T1");
-        } catch (NamedBean.BadSystemNameException e) {
-            return; // OK
-        }
-        Assert.fail("Should have thrown");
+        Exception ex = assertThrows( NamedBean.BadSystemNameException.class,
+            () -> Manager.getSystemPrefixLength(".T1"),
+            "Should have thrown");
+        assertNotNull(ex);
     }
 
     @Test
     public void testGetSystemPrefixLengthThrow2() {
-        try {
-            Manager.getSystemPrefixLength("1T1");
-        } catch (NamedBean.BadSystemNameException e) {
-            return; // OK
-        }
-        Assert.fail("Should have thrown");
+        Exception ex = assertThrows( NamedBean.BadSystemNameException.class,
+            () -> Manager.getSystemPrefixLength("1T1"),
+            "Should have thrown");
+        assertNotNull(ex);
     }
 
 
     @Test
     public void testGetSystemPrefixLengthBad() {
-        try {
-            Assert.assertEquals("LT1", 0, Manager.getSystemPrefixLength(""));
-        } catch (NamedBean.BadSystemNameException e) {
-            return; // OK
-        }
-        Assert.fail("should have thrown");
+        Exception ex = assertThrows( NamedBean.BadSystemNameException.class,
+            () -> Manager.getSystemPrefixLength(""),
+            "Should have thrown");
+        assertNotNull(ex);
     }
 
     @Test
     public void testGetSystemPrefixOK() {
-        Assert.assertEquals("LT1", "L", Manager.getSystemPrefix("LT1"));
-        Assert.assertEquals("L2T1", "L2", Manager.getSystemPrefix("L2T1"));
-        Assert.assertEquals("L21T1", "L21", Manager.getSystemPrefix("L21T1"));
+        assertEquals( "L", Manager.getSystemPrefix("LT1"), "LT1");
+        assertEquals( "L2", Manager.getSystemPrefix("L2T1"), "L2T1");
+        assertEquals( "L21", Manager.getSystemPrefix("L21T1"), "L21T1");
     }
 
     @Test
     public void testGetSystemSuffixOK() {
-        Assert.assertEquals("LT12", "12", Manager.getSystemSuffix("LT12"));
-        Assert.assertEquals("L2T12", "12", Manager.getSystemSuffix("L2T12"));
-        Assert.assertEquals("L21T12", "12", Manager.getSystemSuffix("L21T12"));
+        assertEquals( "12", Manager.getSystemSuffix("LT12"), "LT12");
+        assertEquals( "12", Manager.getSystemSuffix("L2T12"), "L2T12");
+        assertEquals( "12", Manager.getSystemSuffix("L21T12"), "L21T12");
     }
-
 
     @Test
     public void testGetSystemPrefixBad() {
-        try {
-            Assert.assertEquals("LT1", "L", Manager.getSystemPrefix(""));
-        } catch (NamedBean.BadSystemNameException e) {
-            return; // OK
-        }
-        Assert.fail("should have thrown");
+        Exception ex = assertThrows( NamedBean.BadSystemNameException.class,
+            () -> Manager.getSystemPrefix(""),
+            "Should have thrown");
+        assertNotNull(ex);
     }
 
     // test proper coding of constants
     @Test
     public void checkAgainstSwingConstants() {
-        Assert.assertEquals(javax.swing.event.ListDataEvent.CONTENTS_CHANGED, Manager.ManagerDataEvent.CONTENTS_CHANGED);
-        Assert.assertEquals(javax.swing.event.ListDataEvent.INTERVAL_ADDED, Manager.ManagerDataEvent.INTERVAL_ADDED);
-        Assert.assertEquals(javax.swing.event.ListDataEvent.INTERVAL_REMOVED, Manager.ManagerDataEvent.INTERVAL_REMOVED);
+        assertEquals(javax.swing.event.ListDataEvent.CONTENTS_CHANGED, Manager.ManagerDataEvent.CONTENTS_CHANGED);
+        assertEquals(javax.swing.event.ListDataEvent.INTERVAL_ADDED, Manager.ManagerDataEvent.INTERVAL_ADDED);
+        assertEquals(javax.swing.event.ListDataEvent.INTERVAL_REMOVED, Manager.ManagerDataEvent.INTERVAL_REMOVED);
     }
 
     // test semantics of various collections
@@ -110,30 +106,30 @@ public class ManagerTest {
         set1.add(n5);
 
         // check order
-        Assert.assertTrue(checkOrderNamedBeans(set1.iterator()));
+        assertTrue(checkOrderNamedBeans(set1.iterator()));
 
-        Assert.assertTrue(checkOrderNamedBeans(set1s.iterator()));
+        assertTrue(checkOrderNamedBeans(set1s.iterator()));
 
-        Assert.assertTrue(checkOrderNamedBeans(set1u.iterator()));
+        assertTrue(checkOrderNamedBeans(set1u.iterator()));
 
         // to check for liveness, add a couple more and test length, first entry
         set1.add(n4);
         set1.add(n1);
 
-        Assert.assertEquals(5, set1.size());
-        Assert.assertEquals(5, set1.size());
-        Assert.assertEquals(5, set1.size());
+        assertEquals(5, set1.size());
+        assertEquals(5, set1.size());
+        assertEquals(5, set1.size());
 
-        Assert.assertEquals(n1, set1.iterator().next());
-        Assert.assertEquals(n1, set1s.iterator().next());
-        Assert.assertEquals(n1, set1u.iterator().next());
+        assertEquals(n1, set1.iterator().next());
+        assertEquals(n1, set1s.iterator().next());
+        assertEquals(n1, set1u.iterator().next());
 
         // check order
-        Assert.assertTrue(checkOrderNamedBeans(set1.iterator()));
+        assertTrue(checkOrderNamedBeans(set1.iterator()));
 
-        Assert.assertTrue(checkOrderNamedBeans(set1s.iterator()));
+        assertTrue(checkOrderNamedBeans(set1s.iterator()));
 
-        Assert.assertTrue(checkOrderNamedBeans(set1u.iterator()));
+        assertTrue(checkOrderNamedBeans(set1u.iterator()));
     }
 
     /**
@@ -144,20 +140,20 @@ public class ManagerTest {
         ArrayList<NamedBean> test = new ArrayList<>();
         test.add(new BogusBean("BB2"));
         test.add(new BogusBean("BB3"));
-        Assert.assertTrue(checkOrderNamedBeans(test.iterator()));
+        assertTrue(checkOrderNamedBeans(test.iterator()));
 
         test.add(new BogusBean("BB5"));
         test.add(new BogusBean("BB1"));
-        Assert.assertFalse(checkOrderNamedBeans(test.iterator()));
+        assertFalse(checkOrderNamedBeans(test.iterator()));
 
         ArrayList<String> strings = new ArrayList<>();
         strings.add("2");
         strings.add("3");
-        Assert.assertTrue(checkOrderStrings(strings.iterator()));
+        assertTrue(checkOrderStrings(strings.iterator()));
 
         strings.add("5");
         strings.add("1");
-        Assert.assertFalse(checkOrderStrings(strings.iterator()));
+        assertFalse(checkOrderStrings(strings.iterator()));
     }
 
     /**

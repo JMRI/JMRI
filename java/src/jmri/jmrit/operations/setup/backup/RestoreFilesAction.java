@@ -47,7 +47,7 @@ public class RestoreFilesAction extends AbstractAction {
         }
 
         // first backup the users data in case they forgot
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         // get file to write to
         JFileChooser fc = new jmri.util.swing.JmriJFileChooser(backup.getBackupRoot());
@@ -62,7 +62,7 @@ public class RestoreFilesAction extends AbstractAction {
             return; // Canceled
         }
         // now backup files
-        AutoBackup autoBackup = new AutoBackup();
+        AutoBackup autoBackup = InstanceManager.getDefault(AutoBackup.class);
 
         try {
             autoBackup.autoBackup();

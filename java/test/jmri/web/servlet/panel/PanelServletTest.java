@@ -2,7 +2,6 @@ package jmri.web.servlet.panel;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class PanelServletTest {
     @Test
     public void testCtor() {
         PanelServlet a = new PanelServlet();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach

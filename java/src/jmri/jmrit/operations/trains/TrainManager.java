@@ -447,7 +447,7 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
-        for (Train train : getTrainsByIdList()) {
+        for (Train train : getList()) {
             for (String loadName : train.getLoadNames()) {
                 if (loadName.equals(oldLoadName)) {
                     train.deleteLoadName(oldLoadName);
@@ -474,7 +474,7 @@ public class TrainManager extends PropertyChangeSupport
      * @return true if there's a built train
      */
     public boolean isAnyTrainBuilt() {
-        for (Train train : getTrainsByIdList()) {
+        for (Train train : getList()) {
             if (train.isBuilt()) {
                 return true;
             }
@@ -487,7 +487,7 @@ public class TrainManager extends PropertyChangeSupport
      * @return true if there's a train being built
      */
     public boolean isAnyTrainBuilding() {
-        for (Train train : getTrainsByIdList()) {
+        for (Train train : getList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
                 log.debug("Train {} is currently building", train.getName());
                 return true;
@@ -689,7 +689,7 @@ public class TrainManager extends PropertyChangeSupport
         }
     }
 
-    private List<Train> getList() {
+    public List<Train> getList() {
         if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getList called before trains completely loaded!");
         }

@@ -2,8 +2,10 @@ package jmri;
 
 import jmri.implementation.AbstractVariableLight;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the VariableLight class
@@ -17,28 +19,28 @@ public class VariableLightTest {
         MyVariableLight light = new MyVariableLight("IL1");
 
         light.setState(VariableLight.ON);
-        Assert.assertTrue("State is consistent", light.isConsistentState());
+        assertTrue( light.isConsistentState(), "State is consistent");
 
         light.setState(VariableLight.OFF);
-        Assert.assertTrue("State is consistent", light.isConsistentState());
+        assertTrue( light.isConsistentState(), "State is consistent");
 
         light.setState(VariableLight.INTERMEDIATE);
-        Assert.assertTrue("State is consistent", light.isConsistentState());
+        assertTrue( light.isConsistentState(), "State is consistent");
 
         light.setState(VariableLight.TRANSITIONINGTOFULLON);
-        Assert.assertFalse("State is not consistent", light.isConsistentState());
+        assertFalse( light.isConsistentState(), "State is not consistent");
 
         light.setState(VariableLight.TRANSITIONINGHIGHER);
-        Assert.assertFalse("State is not consistent", light.isConsistentState());
+        assertFalse( light.isConsistentState(), "State is not consistent");
 
         light.setState(VariableLight.TRANSITIONINGLOWER);
-        Assert.assertFalse("State is not consistent", light.isConsistentState());
+        assertFalse( light.isConsistentState(), "State is not consistent");
 
         light.setState(VariableLight.TRANSITIONINGTOFULLOFF);
-        Assert.assertFalse("State is not consistent", light.isConsistentState());
+        assertFalse( light.isConsistentState(), "State is not consistent");
 
         light.setState(VariableLight.TRANSITIONING);
-        Assert.assertFalse("State is not consistent", light.isConsistentState());
+        assertFalse( light.isConsistentState(), "State is not consistent");
     }
 
 
@@ -67,7 +69,7 @@ public class VariableLightTest {
 
     private static class MyVariableLight extends AbstractVariableLight {
 
-        public MyVariableLight(String systemName) {
+        MyVariableLight(String systemName) {
             super(systemName);
         }
 

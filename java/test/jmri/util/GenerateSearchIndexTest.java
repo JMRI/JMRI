@@ -7,8 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.Assume;
-
 import org.jsoup.*;
 import org.jsoup.nodes.*;
 import org.junit.jupiter.api.*;
@@ -310,7 +308,7 @@ public class GenerateSearchIndexTest {
 
     @Test
     public void testGenerateSearchIndex() throws IOException {
-        Assume.assumeFalse("Ignoring GenerateSearchIndexTest", Boolean.getBoolean("jmri.skipBuildHelpFilesTest"));
+        Assumptions.assumeFalse( Boolean.getBoolean("jmri.skipBuildHelpFilesTest"), "Ignoring GenerateSearchIndexTest");
         generateSearchIndex();
     }
 

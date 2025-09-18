@@ -1552,7 +1552,29 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         // encoder 7
         assertNull(r.selectModuleFeedback(7 * 8 + 4 + 1));
     }
-    
+
+    /*
+     * Tests for XNetOpsModeReply helpers
+     */
+
+    @Test
+    public void testIsOpsModeResultMessage() {
+        XNetReply r = new XNetReply("64 24 00 00 00 40");
+        assertTrue(r.isOpsModeResultMessage());
+    }
+
+    @Test
+    public void testGetOpsModeResultAddress() {
+        XNetReply r = new XNetReply("64 24 00 00 00 40");
+        assertEquals("address",0,r.getOpsModeResultAddress());
+    }
+
+    @Test
+    public void testGetOpsModeResultValue() {
+        XNetReply r = new XNetReply("64 24 00 00 00 40");
+        assertEquals("address",0,r.getOpsModeResultValue());
+    }
+
     // The minimal setup for log4J
     @BeforeEach
     @Override

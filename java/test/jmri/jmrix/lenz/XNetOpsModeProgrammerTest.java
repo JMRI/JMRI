@@ -74,14 +74,17 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,0);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
-        // and now we need to check the status is right
-        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 29; }, "written value" );
-        Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
         // send a message reply
         op.message(new XNetReply("01 04 05")); // send "OK" message to the programmer.
-        // and verify the status is the same.
+        // verify the result request was sent
+        Assert.assertEquals("outbound message sent",2,tc.outbound.size());
+        m = XNetMessage.getOpsModeResultsMsg();
+        Assert.assertEquals("outbound message",m,tc.outbound.elementAt(1));
+        // reply with a result
+        op.message(new XNetReply("64 24 00 05 1D 58"));
+        // and now we need to check the status is right
         jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 29; }, "written value" );
-        Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
+        Assert.assertEquals("status",jmri.ProgListener.OK,lastStatus);
     }
 
     @Test
@@ -90,14 +93,17 @@ public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
         XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
-        // and now we need to check the status is right
-        jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 5; }, "written value" );
-        Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
         // send a message reply
         op.message(new XNetReply("01 04 05")); // send "OK" message to the programmer.
-        // and verify the status is the same.
+        // verify the result request was sent
+        Assert.assertEquals("outbound message sent",2,tc.outbound.size());
+        m = XNetMessage.getOpsModeResultsMsg();
+        Assert.assertEquals("outbound message",m,tc.outbound.elementAt(1));
+        // reply with a result
+        op.message(new XNetReply("64 24 00 05 05 40"));
+        // and now we need to check the status is right
         jmri.util.JUnitUtil.waitFor( ()->{ return lastValue == 5; }, "written value" );
-        Assert.assertEquals("status",jmri.ProgListener.NotImplemented,lastStatus);
+        Assert.assertEquals("status",jmri.ProgListener.OK,lastStatus);
     }
 
     @Test

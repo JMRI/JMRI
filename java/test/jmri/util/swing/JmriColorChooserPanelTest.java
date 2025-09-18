@@ -6,8 +6,10 @@ import javax.swing.JButton;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -19,18 +21,18 @@ public class JmriColorChooserPanelTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists", panel);
+        assertNotNull( panel, "exists");
     }
 
     @Test
     public void testCreateColorButton() {
         JButton button = panel.createColorButton(Color.RED, true);
-        Assert.assertNotNull("exists", button);
+        assertNotNull( button, "exists");
     }
 
     @Test
     public void testGetDisplayName() {
-        Assert.assertEquals("display name", "JMRI", panel.getDisplayName());
+        assertEquals( "JMRI", panel.getDisplayName(), "display name");
     }
 
     @BeforeEach

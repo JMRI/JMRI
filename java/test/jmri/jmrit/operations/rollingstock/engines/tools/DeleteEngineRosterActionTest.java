@@ -10,6 +10,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -22,14 +23,17 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testCTor() {
-        DeleteEngineRosterAction t = new DeleteEngineRosterAction();
+        EnginesTableFrame etf = new EnginesTableFrame(true, null, null);
+        DeleteEngineRosterAction t = new DeleteEngineRosterAction(etf);
         assertThat(t).withFailMessage("exists").isNotNull();
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     @Test
     @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     public void testDelete() {
-        DeleteEngineRosterAction deleteRosterAction = new DeleteEngineRosterAction();
+        EnginesTableFrame etf = new EnginesTableFrame(true, null, null);
+        DeleteEngineRosterAction deleteRosterAction = new DeleteEngineRosterAction(etf);
         assertThat(deleteRosterAction).withFailMessage("exists").isNotNull();
 
         JUnitOperationsUtil.initOperationsData();
@@ -57,6 +61,7 @@ public class DeleteEngineRosterActionTest extends OperationsTestCase {
         }
 
         assertThat(InstanceManager.getDefault(EngineManager.class).getNumEntries()).withFailMessage("Number of engines").isEqualTo(0);
+        JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DeleteEngineRosterActionTest.class);

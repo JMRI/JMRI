@@ -424,12 +424,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>When working with a single roster entry, there's a 
-                new "Comments" page. You can pop that off (using the 
-                page icon in the tab) and enter your comments there 
-                as you configure the values in the other panes.
-                What you type there will appear in the comment field
-                on the Roster Entry pane and vice versa.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -453,9 +448,6 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>A problem with LE track drawing and background images from 5.11.6 thru 5.13.3 including 5.12 has been fixed.
-                The problem appears if you have a background image in the Layout Editor. If so, the track disappears behind
-                the background image.</li>
             <li></li>
         </ul>
 
@@ -491,10 +483,11 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+          <li>Added car blocking to CSV Manifest and switch list files.</li>
+          <li>Minor improvement to the "Show Schedules by Car Type and Load" tool.</li>
         </ul>
 
-   <h3>Panel Editor</h3>
+<h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
             <li></li>

@@ -1504,6 +1504,15 @@ public class XNetMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testgetOpsModeResultsMsg() {
+        msg = XNetMessage.getOpsModeResultsMsg();
+        Assert.assertEquals(0x21,msg.getElement(0));
+        Assert.assertEquals(0x27,msg.getElement(1));
+        Assert.assertEquals(0x06,msg.getElement(2));
+    }
+
+
+    @Test
     public void testToMonitorStringLISpeedRequestMessage(){
        msg = XNetMessage.getLISpeedRequestMsg(1);
        Assert.assertEquals("Monitor String","REQUEST LI101 Baud Rate 19,200 bps (default)",msg.toMonitorString());

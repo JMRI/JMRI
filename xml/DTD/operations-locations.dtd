@@ -90,6 +90,7 @@
 <!ATTLIST track blockingOrder	CDATA #IMPLIED>
 <!ATTLIST track holdCustomLoads	(true | false) "false">
 <!ATTLIST track onlyCarWithFD	(true | false) "false">
+<!ATTLIST track trackPriority	CDATA #IMPLIED>
 
 <!ATTLIST destination id			CDATA #REQUIRED>          
 <!ATTLIST destination name			CDATA #IMPLIED>

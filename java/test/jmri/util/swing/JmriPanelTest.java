@@ -1,10 +1,12 @@
 package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -18,7 +20,7 @@ public class JmriPanelTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists", panel);
+        assertNotNull( panel, "exists");
     }
 
     @Test
@@ -27,7 +29,7 @@ public class JmriPanelTest {
         panel.initComponents();
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     @Test
     public void testAccessibility() throws Exception{
         panel.initComponents();
@@ -36,18 +38,18 @@ public class JmriPanelTest {
 
     @Test
     public void testGetHelpTarget(){
-        Assert.assertEquals("help target", helpTarget, panel.getHelpTarget());
+        assertEquals( helpTarget, panel.getHelpTarget(), "help target");
     }
 
     @Test
     public void testGetTitle(){
-        Assert.assertEquals("title", title, panel.getTitle());
+        assertEquals( title, panel.getTitle(), "title");
     }
 
     @Test
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     public void testGetMenus() {
-        Assertions.assertNotNull(panel.getMenus());
+        assertNotNull(panel.getMenus());
     }
 
     @BeforeEach

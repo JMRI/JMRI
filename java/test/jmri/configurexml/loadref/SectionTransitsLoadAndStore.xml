@@ -217,7 +217,7 @@
     <transit systemName="IZ:AUTO:0001" userName="TRAN1">
       <systemName>IZ:AUTO:0001</systemName>
       <userName>TRAN1</userName>
-      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="">
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0">
         <transitsectionaction whencode="1" whatcode="1" whendata="0" whenstring="" whatdata1="1" whatdata2="0" whatstring="" whatstring2="" />
         <transitsectionaction whencode="1" whatcode="2" whendata="1000" whenstring="" whatdata1="11" whatdata2="0" whatstring="" whatstring2="" />
         <transitsectionaction whencode="1" whatcode="3" whendata="2000" whenstring="" whatdata1="17" whatdata2="0" whatstring="" whatstring2="" />
@@ -240,7 +240,7 @@
         <transitsectionaction whencode="1" whatcode="19" whendata="0" whenstring="" whatdata1="0" whatdata2="1" whatstring="0.xml" whatstring2="11-CP1413-FWD" />
         <transitsectionaction whencode="0" whatcode="20" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="" whatstring2="11-CP1413-FWD" />
       </transitsection>
-      <transitsection sectionname="IY:AUTO:0003" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="">
+      <transitsection sectionname="IY:AUTO:0003" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0">
         <transitsectionaction whencode="2" whatcode="1" whendata="0" whenstring="" whatdata1="1" whatdata2="0" whatstring="" whatstring2="" />
         <transitsectionaction whencode="2" whatcode="2" whendata="1000" whenstring="" whatdata1="11" whatdata2="0" whatstring="" whatstring2="" />
         <transitsectionaction whencode="2" whatcode="3" whendata="2000" whenstring="" whatdata1="17" whatdata2="0" whatstring="" whatstring2="" />
@@ -257,7 +257,7 @@
         <transitsectionaction whencode="2" whatcode="12" whendata="1300" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS18" whatstring2="" />
         <transitsectionaction whencode="2" whatcode="13" whendata="1400" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS17" whatstring2="" />
       </transitsection>
-      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="">
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0">
         <transitsectionaction whencode="3" whatcode="1" whendata="0" whenstring="" whatdata1="1" whatdata2="0" whatstring="" whatstring2="" />
         <transitsectionaction whencode="3" whatcode="2" whendata="1000" whenstring="" whatdata1="11" whatdata2="0" whatstring="" whatstring2="" />
         <transitsectionaction whencode="3" whatcode="3" whendata="2000" whenstring="" whatdata1="17" whatdata2="0" whatstring="" whatstring2="" />

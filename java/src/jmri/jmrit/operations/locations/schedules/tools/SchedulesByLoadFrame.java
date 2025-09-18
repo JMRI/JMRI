@@ -2,6 +2,7 @@ package jmri.jmrit.operations.locations.schedules.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+
 import javax.swing.*;
 
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Frame to display spurs with schedules and their loads
  *
- * @author Dan Boudreau Copyright (C) 2012, 2015, 2021
+ * @author Dan Boudreau Copyright (C) 2012, 2015, 2021, 2025
  */
 public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -71,7 +72,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         locationsPanel.setLayout(new GridBagLayout());
         JScrollPane locationsPane = new JScrollPane(locationsPanel);
         locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        locationsPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Locations")));
+        locationsPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
 
         getContentPane().add(p1);
         getContentPane().add(locationsPane);
@@ -91,6 +92,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new CarLoadEditFrameAction());
+        toolMenu.addSeparator();
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
         menuBar.add(toolMenu);
@@ -137,10 +139,11 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         log.debug("Update locations for type ({}) load ({})", type, load);
         locationsPanel.removeAll();
         int x = 0;
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("trackSchedule")), 1, x);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("receiveTypeLoad")), 2, x);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("shipLoad")), 3, x);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 4, x++);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Spur")), 1, x);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 2, x);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("receiveTypeLoad")), 3, x);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("shipLoad")), 4, x);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 5, x++);
 
         // determine if load is default empty or load
         boolean defaultLoad = carLoads.getDefaultLoadName().equals(load) || carLoads.getDefaultEmptyName().equals(load);
@@ -161,7 +164,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                 spur.addPropertyChangeListener(this);
                 sch.removePropertyChangeListener(this);
                 sch.addPropertyChangeListener(this);
-                
+
                 // determine if schedule is requesting car type and load
                 for (ScheduleItem si : sch.getItemsBySequenceList()) {
                     // skip if car type doesn't carry load name
@@ -181,8 +184,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         if (!status.equals(Schedule.SCHEDULE_OKAY)) {
                             addItemLeft(locationsPanel, new JLabel("  " + status), 0, x);
                         }
-                        addItemLeft(locationsPanel, new JLabel(spur.getName() + " (" + spur.getScheduleName() + ")"), 1,
-                                x);
+                        addItemLeft(locationsPanel, new JLabel(spur.getName()), 1, x);
+                        addItemLeft(locationsPanel, new JLabel(spur.getScheduleName()), 2, x);
                         // create string Receive(type, delivery, road, load)
                         String s = si.getTypeName() +
                                 ", " +
@@ -191,15 +194,15 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                                 si.getRoadName() +
                                 ", " +
                                 si.getReceiveLoadName();
-                        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive") + " (" + s + ")"), 2, x);
+                        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive") + " (" + s + ")"), 3, x);
                         // create string Ship(load, pickup)
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage(
                                 "Ship") + " (" + si.getShipLoadName() + ", " + si.getPickupTrainScheduleName() + ")"),
-                                3, x++);
+                                4, x++);
                         // now the destination and track
                         if (si.getDestination() != null) {
                             addItemLeft(locationsPanel,
-                                    new JLabel(si.getDestinationName() + " (" + si.getDestinationTrackName() + ")"), 4,
+                                    new JLabel(si.getDestinationName() + " (" + si.getDestinationTrackName() + ")"), 5,
                                     x - 1);
                         }
                         // report if spur can't service the selected load
@@ -207,9 +210,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                                 si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                                 !spur.isLoadNameAndCarTypeAccepted(load, type)) {
                             addItemLeft(locationsPanel,
-                                    new JLabel (Bundle.getMessage("spurNotTypeLoad",
-                                            spur.getName(), type, load )),
-                                    2, x++);
+                                    new JLabel(Bundle.getMessage("spurNotTypeLoad", spur.getName(), type, load)), 3,
+                                    x++);
                         }
                     }
                 }

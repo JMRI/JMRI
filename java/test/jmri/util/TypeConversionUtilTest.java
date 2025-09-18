@@ -8,8 +8,12 @@ import java.util.Map;
 import java.util.Set;
 import jmri.Reportable;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the jmri.util.TypeConversionUtil class.
@@ -19,10 +23,10 @@ import org.junit.jupiter.api.*;
 public class TypeConversionUtilTest {
 
     private void assertIAE(String message, Runnable r) {
-        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             r.run();
         });
-        Assertions.assertEquals(message, thrown.getMessage());
+        assertEquals(message, thrown.getMessage());
     }
 
     @Test
@@ -31,49 +35,49 @@ public class TypeConversionUtilTest {
         Set<Integer> set = new HashSet<>();
         Map<Integer, Integer> map = new HashMap<>();
 
-        IllegalArgumentException thrown = Assertions.assertThrows(IllegalArgumentException.class, () -> {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             TypeConversionUtil.convertToBoolean(null, false);
         });
-        Assertions.assertEquals("Value is null", thrown.getMessage());
+        assertEquals("Value is null", thrown.getMessage());
 
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(false, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(true, false));
+        assertFalse( TypeConversionUtil.convertToBoolean(false, false), "value is false");
+        assertTrue( TypeConversionUtil.convertToBoolean(true, false), "value is true");
         assertIAE("Value is null", () -> {TypeConversionUtil.convertToBoolean(null, false);});
         assertIAE("Value \"\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean("", false);});
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("0", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("0.000", false));
+        assertFalse( TypeConversionUtil.convertToBoolean("0", false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean("0.000", false), "value is false");
         assertIAE("Value \"[]\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(list, false);});
         assertIAE("Value \"[]\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(set, false);});
         assertIAE("Value \"{}\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(map, false);});
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(0, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(-0.499999, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(0.499999, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(0.0, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(-0.0, false));
+        assertFalse( TypeConversionUtil.convertToBoolean(0, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean(-0.499999, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean(0.499999, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean(0.0, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean(-0.0, false), "value is false");
         assertIAE("Value \"Abc\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean("Abc", false);});
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("123", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("-32", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("-0.4999", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("0.4999", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("-0.5", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("0.5", false));
+        assertTrue( TypeConversionUtil.convertToBoolean("123", false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean("-32", false), "value is true");
+        assertFalse( TypeConversionUtil.convertToBoolean("-0.4999", false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean("0.4999", false), "value is false");
+        assertTrue( TypeConversionUtil.convertToBoolean("-0.5", false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean("0.5", false), "value is true");
         list.add(0);    // A list that contains at least one element can't still not be converted to a boolean
         assertIAE("Value \"[0]\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(list, false);});
         set.add(0);     // A set that contains at least one element can't still not be converted to a boolean
         assertIAE("Value \"[0]\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(set, false);});
         map.put(0,0);   // A map that contains at least one key can't still not be converted to a boolean
         assertIAE("Value \"{0=0}\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean(map, false);});
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(-0.5, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(0.5, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(123.56, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(-123.56, false));
+        assertTrue( TypeConversionUtil.convertToBoolean(-0.5, false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean(0.5, false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean(123.56, false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean(-123.56, false), "value is true");
         assertIAE("Value \"0abc\" can't be converted to a boolean", () -> {TypeConversionUtil.convertToBoolean("0abc", false);});
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("false", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("faLSe", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean("false", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("true", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("tRUe", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean("TRUE", false));
+        assertFalse( TypeConversionUtil.convertToBoolean("false", false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean("faLSe", false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean("false", false), "value is false");
+        assertTrue( TypeConversionUtil.convertToBoolean("true", false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean("tRUe", false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean("TRUE", false), "value is true");
 
         // Test report
         Reportable reportableFalse = new Reportable() {
@@ -87,7 +91,7 @@ public class TypeConversionUtilTest {
             }
         };
         // Test that the method toReportString() is used for Reportable objects
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean(reportableFalse, false));
+        assertFalse( TypeConversionUtil.convertToBoolean(reportableFalse, false), "value is false");
 
         // Test report
         Reportable reportableTrue = new Reportable() {
@@ -101,7 +105,7 @@ public class TypeConversionUtilTest {
             }
         };
         // Test that the method toReportString() is used for Reportable objects
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean(reportableTrue, false));
+        assertTrue( TypeConversionUtil.convertToBoolean(reportableTrue, false), "value is true");
     }
 
     @Test
@@ -109,36 +113,36 @@ public class TypeConversionUtilTest {
         List<Integer> list = new ArrayList<>();
         Set<Integer> set = new HashSet<>();
         Map<Integer, Integer> map = new HashMap<>();
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(null, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules("", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules("0", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules("0.000", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(list, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(set, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(map, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(0, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(-0.499999, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(0.499999, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(0.0, false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(-0.0, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules("Abc", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules("123", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules("-32", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules("-0.4999", false));
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules("0.4999", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules("-0.5", false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules("0.5", false));
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(null, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules("", false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules("0", false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules("0.000", false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(list, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(set, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(map, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(0, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(-0.499999, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(0.499999, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(0.0, false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(-0.0, false), "value is false");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules("Abc", false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules("123", false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules("-32", false), "value is true");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules("-0.4999", false), "value is false");
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules("0.4999", false), "value is false");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules("-0.5", false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules("0.5", false), "value is true");
         list.add(0);    // A list that contains at least one element is converted to true
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules(list, false));
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules(list, false), "value is true");
         set.add(0);     // A set that contains at least one element is converted to true
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules(set, false));
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules(set, false), "value is true");
         map.put(0,0);   // A map that contains at least one key is converted to true
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules(map, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules(-0.5, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules(0.5, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules(123.56, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules(-123.56, false));
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules("0abc", false));
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules(map, false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules(-0.5, false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules(0.5, false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules(123.56, false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules(-123.56, false), "value is true");
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules("0abc", false), "value is true");
 
         // Test report
         Reportable reportableFalse = new Reportable() {
@@ -152,7 +156,7 @@ public class TypeConversionUtilTest {
             }
         };
         // Test that the method toReportString() is used for Reportable objects
-        Assert.assertFalse("value is false", TypeConversionUtil.convertToBoolean_JythonRules(reportableFalse, false));
+        assertFalse( TypeConversionUtil.convertToBoolean_JythonRules(reportableFalse, false), "value is false");
 
         // Test report
         Reportable reportableTrue = new Reportable() {
@@ -166,36 +170,40 @@ public class TypeConversionUtilTest {
             }
         };
         // Test that the method toReportString() is used for Reportable objects
-        Assert.assertTrue("value is true", TypeConversionUtil.convertToBoolean_JythonRules(reportableTrue, false));
+        assertTrue( TypeConversionUtil.convertToBoolean_JythonRules(reportableTrue, false), "value is true");
     }
 
     @Test
     public void testConvertToDouble() {
-        Assert.assertTrue("doubles are equal", 0.0 == TypeConversionUtil.convertToDouble(null, false));
+        assertTrue( 0.0 == TypeConversionUtil.convertToDouble(null, false), "doubles are equal");
         JUnitAppender.suppressWarnMessage("the object is null and the returned number is therefore 0.0");
-        Assert.assertTrue("doubles are equal", 0.0 == TypeConversionUtil.convertToDouble("", false));
+        assertTrue( 0.0 == TypeConversionUtil.convertToDouble("", false), "doubles are equal");
         JUnitAppender.suppressWarnMessage("the string \"\" cannot be converted to a number");
-        Assert.assertTrue("doubles are equal", 123 == TypeConversionUtil.convertToDouble(123, false));         // Integer
-        Assert.assertTrue("doubles are equal", 123 == TypeConversionUtil.convertToDouble(123L, false));        // Long
-        Assert.assertTrue("doubles are equal", 123.523f == TypeConversionUtil.convertToDouble(123.523f, false));  // Float
-        Assert.assertTrue("doubles are equal", 123.523 == TypeConversionUtil.convertToDouble(123.523d, false));  // Double
-        Assert.assertTrue("doubles are equal", 12352.3 == TypeConversionUtil.convertToDouble(123.523e2, false));
-        Assert.assertTrue("doubles are equal", 1.23523 == TypeConversionUtil.convertToDouble(123.523e-2, false));
-        Assert.assertTrue("doubles are equal", 1 == TypeConversionUtil.convertToDouble(true, false));     // true is autoboxed to a Boolean and converted to 1
-        Assert.assertTrue("doubles are equal", 0 == TypeConversionUtil.convertToDouble(false, false));    // false is autoboxed to a Boolean and converted to 0
-        Assert.assertTrue("doubles are equal", 0.0 == TypeConversionUtil.convertToDouble("Abc", false));
-        Assert.assertTrue("doubles are equal", 0.0 == TypeConversionUtil.convertToDouble("Ab12.32c", false));
-        Assert.assertTrue("doubles are equal", 0.0 == TypeConversionUtil.convertToDouble("Abc12.34", false));
-        Assert.assertTrue("doubles are equal", 123 == TypeConversionUtil.convertToDouble("123", false));
-        Assert.assertTrue("doubles are equal", 123.523 == TypeConversionUtil.convertToDouble("123.523", false));
-        Assert.assertTrue("doubles are equal", 12352.3 == TypeConversionUtil.convertToDouble("123.523e2", false));
-        Assert.assertTrue("doubles are equal", 1.23523 == TypeConversionUtil.convertToDouble("123.523e-2", false));
-        Assert.assertTrue("doubles are equal", 123 == TypeConversionUtil.convertToDouble("123abc", false));
-        Assert.assertTrue("doubles are equal", 123.523 == TypeConversionUtil.convertToDouble("123.523abc", false));
-        Assert.assertTrue("doubles are equal", 12352.3 == TypeConversionUtil.convertToDouble("123.523e2abc", false));
-        Assert.assertTrue("doubles are equal", 1.23523 == TypeConversionUtil.convertToDouble("123.523e-2abc", false));
-        Assert.assertTrue("doubles are equal", 0 == TypeConversionUtil.convertToDouble("true", false));   // "true" is treated as a string, not as a boolean
-        Assert.assertTrue("doubles are equal", 0 == TypeConversionUtil.convertToDouble("false", false));  // "false" is treated as a string, not as a boolean
+        assertTrue( 123 == TypeConversionUtil.convertToDouble(123, false), "doubles are equal Integer");
+        assertTrue( 123 == TypeConversionUtil.convertToDouble(123L, false), "doubles are equal Long");
+        assertTrue( 123.523f == TypeConversionUtil.convertToDouble(123.523f, false), "doubles are equal Float");
+        assertTrue( 123.523 == TypeConversionUtil.convertToDouble(123.523d, false), "doubles are equal Double");
+        assertTrue( 12352.3 == TypeConversionUtil.convertToDouble(123.523e2, false), "doubles are equal");
+        assertTrue( 1.23523 == TypeConversionUtil.convertToDouble(123.523e-2, false), "doubles are equal");
+        assertTrue( 1 == TypeConversionUtil.convertToDouble(true, false),
+            "doubles are equal true is autoboxed to a Boolean and converted to 1");
+        assertTrue( 0 == TypeConversionUtil.convertToDouble(false, false),
+            "doubles are equal false is autoboxed to a Boolean and converted to 0");
+        assertTrue( 0.0 == TypeConversionUtil.convertToDouble("Abc", false), "doubles are equal");
+        assertTrue( 0.0 == TypeConversionUtil.convertToDouble("Ab12.32c", false), "doubles are equal");
+        assertTrue( 0.0 == TypeConversionUtil.convertToDouble("Abc12.34", false), "doubles are equal");
+        assertTrue( 123 == TypeConversionUtil.convertToDouble("123", false), "doubles are equal");
+        assertTrue( 123.523 == TypeConversionUtil.convertToDouble("123.523", false), "doubles are equal");
+        assertTrue( 12352.3 == TypeConversionUtil.convertToDouble("123.523e2", false), "doubles are equal");
+        assertTrue( 1.23523 == TypeConversionUtil.convertToDouble("123.523e-2", false), "doubles are equal");
+        assertTrue( 123 == TypeConversionUtil.convertToDouble("123abc", false), "doubles are equal");
+        assertTrue( 123.523 == TypeConversionUtil.convertToDouble("123.523abc", false), "doubles are equal");
+        assertTrue( 12352.3 == TypeConversionUtil.convertToDouble("123.523e2abc", false), "doubles are equal");
+        assertTrue( 1.23523 == TypeConversionUtil.convertToDouble("123.523e-2abc", false), "doubles are equal");
+        assertTrue( 0 == TypeConversionUtil.convertToDouble("true", false),
+            "doubles are equal \"true\" is treated as a string, not as a boolean");
+        assertTrue( 0 == TypeConversionUtil.convertToDouble("false", false),
+            "doubles are equal \"false\" is treated as a string, not as a boolean");
         JUnitAppender.suppressWarnMessage("the string \"Abc\" cannot be converted to a number");
 
         // Test report
@@ -210,20 +218,20 @@ public class TypeConversionUtilTest {
             }
         };
         // Test that the method toReportString() is used for Reportable objects
-        Assert.assertTrue("doubles are equal", 12.34 == TypeConversionUtil.convertToDouble(reportable, false));
+        assertTrue( 12.34 == TypeConversionUtil.convertToDouble(reportable, false), "doubles are equal");
     }
 
     @Test
     public void testConvertToString() {
-        Assert.assertTrue("strings are equal", "".equals(TypeConversionUtil.convertToString(null, false)));
-        Assert.assertTrue("strings are equal", "".equals(TypeConversionUtil.convertToString("", false)));
-        Assert.assertTrue("strings are equal", "123".equals(TypeConversionUtil.convertToString(123, false)));     // Integer
-        Assert.assertTrue("strings are equal", "123".equals(TypeConversionUtil.convertToString(123L, false)));    // Long
-        Assert.assertTrue("strings are equal", "123.523".equals(TypeConversionUtil.convertToString(123.523f, false)));    // Float
-        Assert.assertTrue("strings are equal", "123.523".equals(TypeConversionUtil.convertToString(123.523d, false)));    // Double
-        Assert.assertTrue("strings are equal", "true".equals(TypeConversionUtil.convertToString(true, false)));
-        Assert.assertTrue("strings are equal", "false".equals(TypeConversionUtil.convertToString(false, false)));
-        Assert.assertTrue("strings are equal", "Abc".equals(TypeConversionUtil.convertToString("Abc", false)));
+        assertEquals( "", TypeConversionUtil.convertToString(null, false), "strings are equal");
+        assertEquals( "", TypeConversionUtil.convertToString("", false), "strings are equal");
+        assertEquals( "123", TypeConversionUtil.convertToString(123, false), "strings are equal Integer");
+        assertEquals( "123", TypeConversionUtil.convertToString(123L, false), "strings are equal Long");
+        assertEquals( "123.523", TypeConversionUtil.convertToString(123.523f, false), "strings are equal Float");
+        assertEquals( "123.523", TypeConversionUtil.convertToString(123.523d, false), "strings are equal Double");
+        assertEquals( "true", TypeConversionUtil.convertToString(true, false), "strings are equal");
+        assertEquals( "false", TypeConversionUtil.convertToString(false, false), "strings are equal");
+        assertEquals( "Abc", TypeConversionUtil.convertToString("Abc", false), "strings are equal");
 
         // Test report
         Reportable reportable = new Reportable() {
@@ -237,7 +245,7 @@ public class TypeConversionUtilTest {
             }
         };
         // Test that the method toReportString() is used for Reportable objects
-        Assert.assertTrue("strings are equal", "Something".equals(TypeConversionUtil.convertToString(reportable, false)));
+        assertEquals( "Something", TypeConversionUtil.convertToString(reportable, false), "strings are equal");
     }
 
     // The minimal setup for log4J

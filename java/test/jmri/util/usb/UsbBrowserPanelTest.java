@@ -2,7 +2,6 @@ package jmri.util.usb;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import javax.usb.*;
@@ -29,7 +28,7 @@ public class UsbBrowserPanelTest {
               return retval;
            }
         };
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

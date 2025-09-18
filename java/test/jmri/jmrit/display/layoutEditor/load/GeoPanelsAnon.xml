@@ -3185,9 +3185,9 @@
     <transit systemName="IZ1" userName="SF-Pocket to Main 1">
       <systemName>IZ1</systemName>
       <userName>SF-Pocket to Main 1</userName>
-      <transitsection sectionname="IY3" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY6" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY5" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY3" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY6" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY5" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
     </transit>
   </transits>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">

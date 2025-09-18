@@ -7,8 +7,12 @@ import jmri.util.JmriJFrame;
 
 import org.netbeans.jemmy.operators.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit Tests for TriStateJCheckBox.
@@ -20,14 +24,14 @@ public class TriStateJCheckBoxTest {
     @Test
     public void testCTor() {
         TriStateJCheckBox t = new TriStateJCheckBox();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testInitialState() {
         TriStateJCheckBox t = new TriStateJCheckBox();
-        Assert.assertEquals("start not selected", false, t.isSelected());
-        Assert.assertEquals("start unchecked", TriStateJCheckBox.State.UNCHECKED, t.getState());
+        assertFalse( t.isSelected(), "start not selected");
+        assertEquals( TriStateJCheckBox.State.UNCHECKED, t.getState(), "start unchecked");
     }
 
     @Test
@@ -36,16 +40,16 @@ public class TriStateJCheckBoxTest {
         TriStateJCheckBox t = new TriStateJCheckBox();
 
         t.setState(TriStateJCheckBox.State.CHECKED);
-        Assert.assertEquals("selected", true, t.isSelected());
-        Assert.assertEquals("checked", TriStateJCheckBox.State.CHECKED, t.getState());
+        assertTrue( t.isSelected(), "selected");
+        assertEquals( TriStateJCheckBox.State.CHECKED, t.getState(), "checked");
 
         t.setState(TriStateJCheckBox.State.UNCHECKED);
-        Assert.assertEquals("not selected", false, t.isSelected());
-        Assert.assertEquals("unchecked", TriStateJCheckBox.State.UNCHECKED, t.getState());
+        assertFalse( t.isSelected(), "not selected");
+        assertEquals( TriStateJCheckBox.State.UNCHECKED, t.getState(), "unchecked");
 
         t.setState(TriStateJCheckBox.State.PARTIAL);
-        Assert.assertEquals("not selected partial", false, t.isSelected());
-        Assert.assertEquals("partial", TriStateJCheckBox.State.PARTIAL, t.getState());
+        assertFalse( t.isSelected(), "not selected partial");
+        assertEquals( TriStateJCheckBox.State.PARTIAL, t.getState(), "partial");
 
     }
 
@@ -55,28 +59,28 @@ public class TriStateJCheckBoxTest {
         TriStateJCheckBox t = new TriStateJCheckBox();
 
         t.setState(new boolean[]{true});
-        Assert.assertEquals("bool selected", true, t.isSelected());
-        Assert.assertEquals("bool checked", TriStateJCheckBox.State.CHECKED, t.getState());
+        assertTrue( t.isSelected(), "bool selected");
+        assertEquals( TriStateJCheckBox.State.CHECKED, t.getState(), "bool checked");
 
         t.setState(new boolean[]{false});
-        Assert.assertEquals("bool not selected", false, t.isSelected());
-        Assert.assertEquals("bool unchecked", TriStateJCheckBox.State.UNCHECKED, t.getState());
+        assertFalse( t.isSelected(), "bool not selected");
+        assertEquals( TriStateJCheckBox.State.UNCHECKED, t.getState(), "bool unchecked");
 
         t.setState(new boolean[]{true, false});
-        Assert.assertEquals("bool not selected partial", false, t.isSelected());
-        Assert.assertEquals("bool partial", TriStateJCheckBox.State.PARTIAL, t.getState());
+        assertFalse( t.isSelected(), "bool not selected partial");
+        assertEquals( TriStateJCheckBox.State.PARTIAL, t.getState(), "bool partial");
 
         t.setState(new boolean[]{false, true, false});
-        Assert.assertEquals("bool not selected partial", false, t.isSelected());
-        Assert.assertEquals("bool partial", TriStateJCheckBox.State.PARTIAL, t.getState());
+        assertFalse( t.isSelected(), "bool not selected partial");
+        assertEquals( TriStateJCheckBox.State.PARTIAL, t.getState(), "bool partial");
 
         t.setState(new boolean[]{true,true,true,true,true,true,true,true,true,true,true,true,true,true});
-        Assert.assertEquals("bool selected", true, t.isSelected());
-        Assert.assertEquals("bool checked", TriStateJCheckBox.State.CHECKED, t.getState());
+        assertTrue( t.isSelected(), "bool selected");
+        assertEquals( TriStateJCheckBox.State.CHECKED, t.getState(), "bool checked");
 
         t.setState(new boolean[]{false,true,true,true,true,true,true,true,true,true,true,true,true,true});
-        Assert.assertEquals("bool selected", false, t.isSelected());
-        Assert.assertEquals("bool partial", TriStateJCheckBox.State.PARTIAL, t.getState());
+        assertFalse( t.isSelected(), "bool selected");
+        assertEquals( TriStateJCheckBox.State.PARTIAL, t.getState(), "bool partial");
 
     }
 
@@ -86,12 +90,12 @@ public class TriStateJCheckBoxTest {
         TriStateJCheckBox t = new TriStateJCheckBox("");
 
         t.setSelected(true);
-        Assert.assertEquals("selected", true, t.isSelected());
-        Assert.assertEquals("checked", TriStateJCheckBox.State.CHECKED, t.getState());
+        assertTrue( t.isSelected(), "selected");
+        assertEquals( TriStateJCheckBox.State.CHECKED, t.getState(), "checked");
 
         t.setSelected(false);
-        Assert.assertEquals("not selected", false, t.isSelected());
-        Assert.assertEquals("unchecked", TriStateJCheckBox.State.UNCHECKED, t.getState());
+        assertFalse( t.isSelected(), "not selected");
+        assertEquals( TriStateJCheckBox.State.UNCHECKED, t.getState(), "unchecked");
 
     }
 
@@ -118,62 +122,62 @@ public class TriStateJCheckBoxTest {
 
 
         JCheckBox jcb = (JCheckBox) jlo.getLabelFor();
-        Assert.assertNotNull("tsjcb", jcb);
+        assertNotNull( jcb, "tsjcb");
         JCheckBoxOperator jcbo = new JCheckBoxOperator(jcb);
 
-        Assert.assertTrue("visible", jcbo.isShowing());
-        Assert.assertFalse("Not Selected", jcbo.isSelected());
+        assertTrue( jcbo.isShowing(), "visible");
+        assertFalse( jcbo.isSelected(), "Not Selected");
 
         jcbo.doClick();
-        Assert.assertTrue("Selected", jcbo.isSelected());
+        assertTrue( jcbo.isSelected(), "Selected");
 
         jcbo.doClick();
-        Assert.assertFalse("Back to not Selected", jcbo.isSelected());
+        assertFalse( jcbo.isSelected(), "Back to not Selected");
 
         t.setState( new boolean[]{true, true});
-        Assert.assertTrue("Selected from setState", jcbo.isSelected());
+        assertTrue( jcbo.isSelected(), "Selected from setState");
 
         t.setState( new boolean[]{true, false});
-        Assert.assertFalse("Partial Not Selected from setState", jcbo.isSelected());
+        assertFalse( jcbo.isSelected(), "Partial Not Selected from setState");
 
         jcbo.doClick();
-        Assert.assertFalse("Still not Selected following click from partial", jcbo.isSelected());
+        assertFalse( jcbo.isSelected(), "Still not Selected following click from partial");
 
         t.setState( new boolean[]{true, true});
-        Assert.assertTrue("Selected from setState", jcbo.isSelected());
+        assertTrue( jcbo.isSelected(), "Selected from setState");
 
         t.setState( new boolean[]{false, false});
-        Assert.assertFalse("Not Selected from setState", jcbo.isSelected());
+        assertFalse( jcbo.isSelected(), "Not Selected from setState");
 
 
         jlo.clickMouse();
-        Assert.assertTrue("Selected from click Label", jcbo.isSelected());
+        assertTrue( jcbo.isSelected(), "Selected from click Label");
 
         jlo.clickMouse();
-        Assert.assertFalse("Not Selected from click Label", jcbo.isSelected());
+        assertFalse( jcbo.isSelected(), "Not Selected from click Label");
 
         jlo.enterMouse();
-        Assert.assertTrue(jcbo.isEnabled());
+        assertTrue(jcbo.isEnabled());
 
         jlo.exitMouse();
-        Assert.assertTrue(jcbo.isEnabled());
+        assertTrue(jcbo.isEnabled());
 
         t.setEnabled(false);
         jcbo.doClick();
-        Assert.assertFalse("Still not Selected following click as not Enabled", jcbo.isSelected());
+        assertFalse( jcbo.isSelected(), "Still not Selected following click as not Enabled");
 
 
         t.setState( new boolean[]{true, true});
-        Assert.assertTrue("disabled Selected from setState ", jcbo.isSelected());
+        assertTrue( jcbo.isSelected(), "disabled Selected from setState ");
 
         t.setState( new boolean[]{true, false});
-        Assert.assertFalse("disabled Partial Not Selected from setState", jcbo.isSelected());
+        assertFalse( jcbo.isSelected(), "disabled Partial Not Selected from setState");
 
         t.setSelected( true);
-        Assert.assertTrue("disabled Selected from setSelected ", jcbo.isSelected());
+        assertTrue( jcbo.isSelected(), "disabled Selected from setSelected ");
 
         jlo.clickMouse();
-        Assert.assertTrue("still Selected from setSelected ", jcbo.isSelected());
+        assertTrue( jcbo.isSelected(), "still Selected from setSelected ");
 
         // Ask to close window
         JUnitUtil.dispose(jfo.getWindow());

@@ -20,7 +20,7 @@ public class PrintEngineRosterActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EnginesTableFrame etf = new EnginesTableFrame();
+        EnginesTableFrame etf = new EnginesTableFrame(true, null, null);
         PrintEngineRosterAction t = new PrintEngineRosterAction(true, etf);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(etf);

@@ -2,7 +2,6 @@ package jmri.web.servlet.home;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class HomeServletTest {
     @Test
     public void testCtor() {
         HomeServlet a = new HomeServlet();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach

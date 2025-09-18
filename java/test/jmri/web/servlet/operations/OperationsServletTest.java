@@ -2,7 +2,6 @@ package jmri.web.servlet.operations;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class OperationsServletTest {
     @Test
     public void testCtor() {
         OperationsServlet a = new OperationsServlet();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach

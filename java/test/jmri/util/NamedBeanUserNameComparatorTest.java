@@ -2,10 +2,14 @@ package jmri.util;
 
 import java.util.TreeSet;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.*;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -24,37 +28,35 @@ public class NamedBeanUserNameComparatorTest {
         it10.setUserName(it10.getSystemName());
         it2.setUserName(it2.getSystemName());
 
-        Assert.assertEquals("IT1 == IT1", 0, t.compare(it1, it1));
+        assertEquals( 0, t.compare(it1, it1), "IT1 == IT1");
 
-        Assert.assertEquals("IT1 < IT2", -1, t.compare(it1, it2));
-        Assert.assertEquals("IT2 > IT1", +1, t.compare(it2, it1));
+        assertEquals( -1, t.compare(it1, it2), "IT1 < IT2");
+        assertEquals( +1, t.compare(it2, it1), "IT2 > IT1");
 
-        Assert.assertEquals("IT10 > IT2", +1, t.compare(it10, it2));
-        Assert.assertEquals("IT2 < IT10", -1, t.compare(it2, it10));
+        assertEquals( +1, t.compare(it10, it2), "IT10 > IT2");
+        assertEquals( -1, t.compare(it2, it10), "IT2 < IT10");
 
         TreeSet<Turnout> set = new TreeSet<>(t);
         set.addAll(InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet());
-        Assert.assertArrayEquals(
-                new Turnout[]{it1, it2, it10},
-                set.toArray(new Turnout[set.size()]));
+        assertArrayEquals(new Turnout[]{it1, it2, it10},
+                set.toArray(Turnout[]::new));
 
         it1.setUserName("A");
         it10.setUserName("B");
         it2.setUserName("C");
 
-        Assert.assertEquals("A == A", 0, t.compare(it1, it1));
+        assertEquals( 0, t.compare(it1, it1), "A == A");
 
-        Assert.assertEquals("A < C", -1, t.compare(it1, it2));
-        Assert.assertEquals("C > A", +1, t.compare(it2, it1));
+        assertEquals( -1, t.compare(it1, it2), "A < C");
+        assertEquals( +1, t.compare(it2, it1), "C > A");
 
-        Assert.assertEquals("B < C", -1, t.compare(it10, it2));
-        Assert.assertEquals("C > B", +1, t.compare(it2, it10));
+        assertEquals( -1, t.compare(it10, it2), "B < C");
+        assertEquals( +1, t.compare(it2, it10), "C > B");
 
         set = new TreeSet<>(t);
         set.addAll(InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet());
-        Assert.assertArrayEquals(
-                new Turnout[]{it1, it10, it2},
-                set.toArray(new Turnout[set.size()]));
+        assertArrayEquals(new Turnout[]{it1, it10, it2},
+                set.toArray(Turnout[]::new));
     }
 
     @Test
@@ -65,19 +67,18 @@ public class NamedBeanUserNameComparatorTest {
         Turnout it10 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT10");
         Turnout it2 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2");
 
-        Assert.assertEquals("IT1 == IT1", 0, t.compare(it1, it1));
+        assertEquals( 0, t.compare(it1, it1), "IT1 == IT1");
 
-        Assert.assertEquals("IT1 < IT2", -1, t.compare(it1, it2));
-        Assert.assertEquals("IT2 > IT1", +1, t.compare(it2, it1));
+        assertEquals( -1, t.compare(it1, it2), "IT1 < IT2");
+        assertEquals( +1, t.compare(it2, it1));
 
-        Assert.assertEquals("IT10 > IT2", +1, t.compare(it10, it2));
-        Assert.assertEquals("IT2 < IT10", -1, t.compare(it2, it10));
+        assertEquals( +1, t.compare(it10, it2), "IT10 > IT2");
+        assertEquals( -1, t.compare(it2, it10), "IT2 < IT10");
 
         TreeSet<Turnout> set = new TreeSet<>(t);
         set.addAll(InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet());
-        Assert.assertArrayEquals(
-                new Turnout[]{it1, it2, it10},
-                set.toArray(new Turnout[set.size()]));
+        assertArrayEquals(new Turnout[]{it1, it2, it10},
+                set.toArray(Turnout[]::new));
     }
 
     @Test
@@ -88,13 +89,13 @@ public class NamedBeanUserNameComparatorTest {
         Turnout i2t10 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("I2T10");
         Turnout i2t2 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("I2T2");
 
-        Assert.assertEquals("I2T1 == I2T1", 0, t.compare(i2t1, i2t1));
+        assertEquals( 0, t.compare(i2t1, i2t1), "I2T1 == I2T1");
 
-        Assert.assertEquals("I2T1 < I2T2", -1, t.compare(i2t1, i2t2));
-        Assert.assertEquals("I2T2 > I2T1", +1, t.compare(i2t2, i2t1));
+        assertEquals( -1, t.compare(i2t1, i2t2), "I2T1 < I2T2");
+        assertEquals( +1, t.compare(i2t2, i2t1), "I2T2 > I2T1");
 
-        Assert.assertEquals("I2T10 > I2T2", +1, t.compare(i2t10, i2t2));
-        Assert.assertEquals("I2T2 < I2T10", -1, t.compare(i2t2, i2t10));
+        assertEquals( +1, t.compare(i2t10, i2t2), "I2T10 > I2T2");
+        assertEquals( -1, t.compare(i2t2, i2t10), "I2T2 < I2T10");
     }
 
     @Test
@@ -105,13 +106,13 @@ public class NamedBeanUserNameComparatorTest {
         Turnout i23t10 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("I23T10");
         Turnout i23t2 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("I23T2");
 
-        Assert.assertEquals("I23T1 == I23T1", 0, t.compare(i23t1, i23t1));
+        assertEquals( 0, t.compare(i23t1, i23t1), "I23T1 == I23T1");
 
-        Assert.assertEquals("I23T1 < I23T2", -1, t.compare(i23t1, i23t2));
-        Assert.assertEquals("I23T2 > I23T1", +1, t.compare(i23t2, i23t1));
+        assertEquals( -1, t.compare(i23t1, i23t2), "I23T1 < I23T2");
+        assertEquals( +1, t.compare(i23t2, i23t1), "I23T2 > I23T1");
 
-        Assert.assertEquals("I23T10 > I23T2", +1, t.compare(i23t10, i23t2));
-        Assert.assertEquals("I23T2 < I23T10", -1, t.compare(i23t2, i23t10));
+        assertEquals( +1, t.compare(i23t10, i23t2), "I23T10 > I23T2");
+        assertEquals( -1, t.compare(i23t2, i23t10), "I23T2 < I23T10");
     }
 
     @Test
@@ -132,18 +133,17 @@ public class NamedBeanUserNameComparatorTest {
         it3foo.setUserName("FOO");
         Turnout it4 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT4");
 
-        Assert.assertEquals("IT3 < IT1", -1, t.compare(it3foo, it1xyz));
-        Assert.assertEquals("IT3 < IT2", -1, t.compare(it3foo, it2));
-        Assert.assertEquals("IT3 < IT4", -1, t.compare(it3foo, it4));
-        Assert.assertEquals("IT1 < IT2", -1, t.compare(it1xyz, it2));
-        Assert.assertEquals("IT1 < IT4", -1, t.compare(it1xyz, it4));
-        Assert.assertEquals("IT2 < IT4", -1, t.compare(it2, it4));
+        assertEquals( -1, t.compare(it3foo, it1xyz), "IT3 < IT1");
+        assertEquals( -1, t.compare(it3foo, it2), "IT3 < IT2");
+        assertEquals( -1, t.compare(it3foo, it4), "IT3 < IT4");
+        assertEquals( -1, t.compare(it1xyz, it2), "IT1 < IT2");
+        assertEquals( -1, t.compare(it1xyz, it4), "IT1 < IT4");
+        assertEquals( -1, t.compare(it2, it4), "IT2 < IT4");
 
         TreeSet<Turnout> set = new TreeSet<>(t);
         set.addAll(InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet());
-        Assert.assertArrayEquals(
-                new Turnout[]{it3foo, it1xyz, it2, it4},
-                set.toArray(new Turnout[set.size()]));
+        assertArrayEquals(new Turnout[]{it3foo, it1xyz, it2, it4},
+                set.toArray(Turnout[]::new));
     }
 
     @Test
@@ -177,17 +177,16 @@ public class NamedBeanUserNameComparatorTest {
         Sensor ls102 = InstanceManager.getDefault(SensorManager.class).provideSensor("LS102");
         ls102.setUserName("LS102");
 
-        Assert.assertEquals("LS101", ls101.getSystemName());
-        Assert.assertEquals("IS101", is101.getSystemName()); // checking that no prefixes were added
+        assertEquals("LS101", ls101.getSystemName());
+        assertEquals("IS101", is101.getSystemName(), "checking that no prefixes were added");
 
-        Assert.assertEquals("IS102 < IS101", -1, t.compare(is102, is101));
-        Assert.assertEquals("IS101 < ISCLOCKRUNNING", -1, t.compare(is101, clock));
+        assertEquals( -1, t.compare(is102, is101), "IS102 < IS101");
+        assertEquals( -1, t.compare(is101, clock), "IS101 < ISCLOCKRUNNING");
 
         TreeSet<Sensor> set = new TreeSet<>(t);
         set.addAll(InstanceManager.getDefault(SensorManager.class).getNamedBeanSet());
-        Assert.assertArrayEquals(
-                new Sensor[]{is102, is101, ls102, ls101, clock},  // wrong order - fail
-                set.toArray(new Sensor[set.size()]));
+        assertArrayEquals(new Sensor[]{is102, is101, ls102, ls101, clock},  // wrong order - fail
+            set.toArray(Sensor[]::new));
     }
 
     @Test
@@ -220,37 +219,36 @@ public class NamedBeanUserNameComparatorTest {
         // i23t8
         // i23t9
         // i23t10
-        Assert.assertEquals("I23T1 == I23T1", 0, c.compare(i23t1, i23t1));
-        Assert.assertEquals("I23T2 == I23T2", 0, c.compare(i23t2, i23t2));
-        Assert.assertEquals("I23T3 == I23T3", 0, c.compare(i23t3, i23t3));
-        Assert.assertEquals("I23T4 == I23T4", 0, c.compare(i23t4, i23t4));
-        Assert.assertEquals("I23T5 == I23T5", 0, c.compare(i23t5, i23t5));
-        Assert.assertEquals("I23T6 == I23T6", 0, c.compare(i23t6, i23t6));
-        Assert.assertEquals("I23T7 == I23T7", 0, c.compare(i23t7, i23t7));
-        Assert.assertEquals("I23T8 == I23T8", 0, c.compare(i23t8, i23t8));
-        Assert.assertEquals("I23T9 == I23T9", 0, c.compare(i23t9, i23t9));
-        Assert.assertEquals("I23T10 == I23T10", 0, c.compare(i23t10, i23t10));
+        assertEquals( 0, c.compare(i23t1, i23t1), "I23T1 == I23T1");
+        assertEquals( 0, c.compare(i23t2, i23t2), "I23T2 == I23T2");
+        assertEquals( 0, c.compare(i23t3, i23t3), "I23T3 == I23T3");
+        assertEquals( 0, c.compare(i23t4, i23t4), "I23T4 == I23T4");
+        assertEquals( 0, c.compare(i23t5, i23t5), "I23T5 == I23T5");
+        assertEquals( 0, c.compare(i23t6, i23t6), "I23T6 == I23T6");
+        assertEquals( 0, c.compare(i23t7, i23t7), "I23T7 == I23T7");
+        assertEquals( 0, c.compare(i23t8, i23t8), "I23T8 == I23T8");
+        assertEquals( 0, c.compare(i23t9, i23t9), "I23T9 == I23T9");
+        assertEquals( 0, c.compare(i23t10, i23t10), "I23T10 == I23T10");
 
-        Assert.assertEquals("I23T1 < I23T2", -1, c.compare(i23t1, i23t2));
-        Assert.assertEquals("I23T2 > I23T1", +1, c.compare(i23t2, i23t1));
+        assertEquals( -1, c.compare(i23t1, i23t2), "I23T1 < I23T2");
+        assertEquals( +1, c.compare(i23t2, i23t1), "I23T2 > I23T1");
 
-        Assert.assertEquals("I23T10 > I23T2", +1, c.compare(i23t10, i23t2));
-        Assert.assertEquals("I23T2 < I23T10", -1, c.compare(i23t2, i23t10));
+        assertEquals( +1, c.compare(i23t10, i23t2), "I23T10 > I23T2");
+        assertEquals( -1, c.compare(i23t2, i23t10), "I23T2 < I23T10");
 
-        Assert.assertEquals("I23T4 < I23T3", -1, c.compare(i23t4, i23t3));
-        Assert.assertEquals("I23T3 > I23T4", +1, c.compare(i23t3, i23t4));
+        assertEquals( -1, c.compare(i23t4, i23t3), "I23T4 < I23T3");
+        assertEquals( +1, c.compare(i23t3, i23t4), "I23T3 > I23T4");
 
-        Assert.assertEquals("I23T5 < I23T1", -1, c.compare(i23t5, i23t1));
-        Assert.assertEquals("I23T1 > I23T5", +1, c.compare(i23t1, i23t5));
+        assertEquals( -1, c.compare(i23t5, i23t1), "I23T5 < I23T1");
+        assertEquals( +1, c.compare(i23t1, i23t5), "I23T1 > I23T5");
 
         TreeSet<Turnout> set = new TreeSet<>(c);
         set.addAll(InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet());
-        Assert.assertArrayEquals(
-                new Turnout[]{i23t5, i23t4, i23t3, i23t1, i23t2, i23t6, i23t7, i23t8, i23t9, i23t10},
-                set.toArray(new Turnout[set.size()]));
+        assertArrayEquals(new Turnout[]{i23t5, i23t4, i23t3, i23t1, i23t2, i23t6, i23t7, i23t8, i23t9, i23t10},
+            set.toArray(Turnout[]::new));
     }
 
-    boolean hit = false;
+    private boolean hit = false;
 
     @Test
     public void testSystemSpecificCase() {
@@ -276,12 +274,12 @@ public class NamedBeanUserNameComparatorTest {
         };
 
         hit = false;
-        Assert.assertEquals("IT1 < IT2", -1, t.compare(it1, it2));
-        Assert.assertFalse(hit);
+        assertEquals( -1, t.compare(it1, it2), "IT1 < IT2");
+        assertFalse(hit);
 
         hit = false;
-        Assert.assertEquals("IT2 < IT1", +1, t.compare(it2, it1));
-        Assert.assertTrue(hit);
+        assertEquals( +1, t.compare(it2, it1), "IT2 < IT1");
+        assertTrue(hit);
     }
 
     @BeforeEach

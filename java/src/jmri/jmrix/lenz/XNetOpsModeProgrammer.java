@@ -23,12 +23,16 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     protected final int mAddressLow;
     protected final int mAddress;
     protected int progState = NOTPROGRAMMING;
+    protected int progMethod = WRITE;
     protected int value;
     protected jmri.ProgListener progListener = null;
 
     // possible states.
     static protected final int NOTPROGRAMMING = 0; // is notProgramming
     static protected final int REQUESTSENT = 1; // read/write command sent, waiting reply
+    static protected final int RESULTREQUESTED = 2; // result request sent, waiting reply
+    static protected final int WRITE = 0; // write mode
+    static protected final int READ = 1; // read mode
 
     protected XNetTrafficController tc;
 
@@ -63,6 +67,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         progListener = p;
         value = val;
         progState = REQUESTSENT;
+        progMethod = WRITE;
         restartTimer(msg.getTimeout());
     }
 
@@ -74,9 +79,13 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         final int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         tc.sendXNetMessage(msg, this);
-        /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XpressNet */
-        notifyProgListenerEnd(p,CV,jmri.ProgListener.NotImplemented);
+        /* we need to save the programer and value so we can send messages 
+         back to the screen when the programming screen when we receive
+         something from the command station */
+        progListener = p;
+        progState = REQUESTSENT;
+        progMethod = READ;
+        restartTimer(msg.getTimeout());
     }
 
     /**
@@ -87,9 +96,14 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
         int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         tc.sendXNetMessage(msg, this);
-        /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XpressNet */
-        notifyProgListenerEnd(p,val,jmri.ProgListener.NotImplemented);
+        /* we need to save the programer and value so we can send messages 
+         back to the screen when the programming screen when we receive
+         something from the command station */
+        progListener = p;
+        value = val;
+        progState = REQUESTSENT;
+        progMethod = READ;
+        restartTimer(msg.getTimeout());
     }
 
     /**
@@ -118,9 +132,9 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     public boolean getCanRead() {
         // An operations mode read can be triggered on command
         // stations which support Operations Mode Writes (LZ100,
-        // LZV100,MultiMouse).  Whether or not the operation produces
-        // a result depends on additional external hardware (a booster
-        // with an enabled  RailCom cutout (LV102 or similar) and a
+        // LZV100, MultiMouse).  Whether or not the operation produces
+        // a result depends on additional external hardware (a booster 
+        // with an enabled  RailCom cutout (LV102 or similar) and a 
         // RailCom receiver circuit (LRC120 or similar)).
         // We have no way of determining if the required external
         // hardware is present, so we return true for all command
@@ -145,27 +159,68 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
                 // Before we set the programmer state to not programming,
                 // delay for a short time to give the decoder a chance to
                 // process the request.
-                new jmri.util.WaitHandler(this,250);
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(progListener,value,jmri.ProgListener.OK);
-            } else {
-                /* this is an error */
-                if (l.isRetransmittableErrorMsg()) {
-                    // just ignore this, since we are retransmitting
-                    // the message.
-                } else if (l.getElement(0) == XNetConstants.CS_INFO
-                        && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
+                if (progMethod == WRITE) {
+                    new jmri.util.WaitHandler(this, 250);
                     progState = NOTPROGRAMMING;
                     stopTimer();
-                    notifyProgListenerEnd(progListener,value,jmri.ProgListener.NotImplemented);
-                } else {
-                    /* this is an unknown error */
-                    progState = NOTPROGRAMMING;
+                    notifyProgListenerEnd(progListener, value, jmri.ProgListener.OK);
+                } else if (progMethod == READ) {
                     stopTimer();
-                    notifyProgListenerEnd(progListener,value,jmri.ProgListener.UnknownError);
+                    new jmri.util.WaitHandler(this, 1000); // XPressNet documentations say to wait up to 0.5 to 1 second before requesting the result
+                    progState = RESULTREQUESTED;
+                    XNetMessage msg = XNetMessage.getOpsModeResultsMsg();
+                    tc.sendXNetMessage(msg, this);
+                    restartTimer(msg.getTimeout());
                 }
+            } else {
+                handleXNetError(l);
             }
+        } else if(progState == RESULTREQUESTED) {
+            if (l.isOpsModeResultMessage()) {
+                // We got a result message, so we can stop the timer
+                int address = l.getOpsModeResultAddress();
+                if (address != mAddress && address != 0) {
+                    // This is not the address we are looking for, so ignore it
+                    if (log.isDebugEnabled()) {
+                        log.debug("Received result message for address {}, expected {}", address, mAddress);
+                    }
+                    return;
+                }
+                if (log.isDebugEnabled()) {
+                    log.debug("Received result message: {}", l);
+                }
+                if (address == 0) {
+                    progState = NOTPROGRAMMING;
+                    stopTimer();
+                    // this indicates that there was no result from the read, so notify the programmer listener of that
+                    notifyProgListenerEnd(progListener, value, ProgListener.NoAck);
+                } else {
+                    progState = NOTPROGRAMMING;
+                    stopTimer();
+                    // Notify the listener of the result
+                    notifyProgListenerEnd(progListener, l.getOpsModeResultValue(), jmri.ProgListener.OK);
+                }
+            } else {
+                handleXNetError(l);
+            }
+        }
+    }
+
+    private void handleXNetError(XNetReply l) {
+        /* this is an error */
+        if (l.isRetransmittableErrorMsg()) {
+            // just ignore this, since we are retransmitting
+            // the message.
+        } else if (l.getElement(0) == XNetConstants.CS_INFO
+                    && l.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
+            progState = NOTPROGRAMMING;
+            stopTimer();
+            notifyProgListenerEnd(progListener,value, ProgListener.NotImplemented);
+        } else {
+            /* this is an unknown error */
+            progState = NOTPROGRAMMING;
+            stopTimer();
+            notifyProgListenerEnd(progListener,value, ProgListener.UnknownError);
         }
     }
 

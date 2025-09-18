@@ -1,9 +1,11 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -14,7 +16,7 @@ public class LocoAddressComparatorTest {
     @Test
     public void testCTor() {
         LocoAddressComparator t = new LocoAddressComparator();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
@@ -27,12 +29,12 @@ public class LocoAddressComparatorTest {
         LocoAddress l4 = new DccLocoAddress(30, true);
         LocoAddress l5 = new DccLocoAddress(30, false);
         
-        Assert.assertEquals("200, true == 200, true", 0, t.compare(l1, l2));
-        Assert.assertEquals("200, true < 300, true", -1, t.compare(l1, l3));
-        Assert.assertEquals("300, true > 200, true", +1, t.compare(l3, l2));
-        
-        Assert.assertEquals("30, true < 30, false", -1, t.compare(l4, l5));
-        Assert.assertEquals("30, false > 30, true", +1, t.compare(l5, l4));
+        assertEquals( 0, t.compare(l1, l2), "200, true == 200, true");
+        assertEquals( -1, t.compare(l1, l3), "200, true < 300, true");
+        assertEquals( +1, t.compare(l3, l2), "300, true > 200, true");
+
+        assertEquals( -1, t.compare(l4, l5), "30, true < 30, false");
+        assertEquals( +1, t.compare(l5, l4), "30, false > 30, true");
     }
     
     @BeforeEach

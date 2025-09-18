@@ -12,7 +12,8 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -141,7 +142,7 @@ public class ImportCars extends ImportCommon {
         }
 
         while (true) {
-            lineNumber.setText(Bundle.getMessage("LineNumber") + " " + Integer.toString(++lineNum));
+            lineNumber.setText(Bundle.getMessage("LineNumber", Integer.toString(++lineNum)));
             try {
                 line = in.readLine();
             } catch (IOException e) {

@@ -1,7 +1,6 @@
 package jmri;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for the NamedBean interface
@@ -17,7 +16,7 @@ public class NamedBeanTest {
         String testString = "  foo ";
         String normalForm = NamedBean.normalizeUserName(testString);
         //note: normalizeUserName now .trim()'s;
-        Assert.assertEquals("foo", normalForm);
+        Assertions.assertEquals("foo", normalForm);
     }
 
     @BeforeEach

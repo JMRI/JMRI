@@ -3,7 +3,9 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  *
@@ -14,21 +16,21 @@ public class TurnoutOperationManagerTest {
     @Test
     public void testCTor() {
         TurnoutOperationManager t = new TurnoutOperationManager();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testDefaultObjectCreation() {
         TurnoutOperationManager t = jmri.InstanceManager.getDefault(TurnoutOperationManager.class);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testToolTips() {
         TurnoutOperationManager t = new TurnoutOperationManager();
-        Assertions.assertNull(t.getTooltipForOperator("Not an operator", null));
-        Assertions.assertNull(t.getTooltipForOperator(null, null));
-        Assertions.assertNotNull(t.getTooltipForOperator(Bundle.getMessage("TurnoutOperationOff"), null));
+        assertNull(t.getTooltipForOperator("Not an operator", null));
+        assertNull(t.getTooltipForOperator(null, null));
+        assertNotNull(t.getTooltipForOperator(Bundle.getMessage("TurnoutOperationOff"), null));
     }
 
     @BeforeEach

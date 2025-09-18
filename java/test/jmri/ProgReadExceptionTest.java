@@ -3,36 +3,35 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for ProgReadException class.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class ProgReadExceptionTest {
 
-   @Test
-   public void testConstructor(){
-      Assert.assertNotNull("ProgReadException constructor",new ProgReadException());
-   }
+    @Test
+    public void testConstructor(){
+        assertNotNull( new ProgReadException(), "ProgReadException constructor");
+    }
 
-   @Test
-   public void testStringConstructor(){
-      Assert.assertNotNull("ProgReadException string constructor",new ProgReadException("test exception"));
-   }
+    @Test
+    public void testStringConstructor(){
+        assertNotNull( new ProgReadException("test exception"), "ProgReadException string constructor");
+    }
 
-   @BeforeEach
-   public void setUp() {
+    @BeforeEach
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
+    }
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-   }
-
-   @AfterEach
-   public void tearDown(){
+    @AfterEach
+    public void tearDown(){
         JUnitUtil.tearDown();
-   }
+    }
 
 }

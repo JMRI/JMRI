@@ -4,20 +4,25 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 
+import jmri.jmrit.operations.rollingstock.engines.gui.EnginesTableFrame;
+
 /**
  * Starts the ImportEngines thread
  *
- * @author Dan Boudreau Copyright (C) 2008
+ * @author Dan Boudreau Copyright (C) 2008, 2025
  */
 public class ExportEngineRosterAction extends AbstractAction {
 
-    public ExportEngineRosterAction() {
+    EnginesTableFrame _enginesTableFrame;
+
+    public ExportEngineRosterAction(EnginesTableFrame enginesTableFrame) {
         super(Bundle.getMessage("MenuItemExport"));
+        _enginesTableFrame = enginesTableFrame;
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        ExportEngines ex = new ExportEngines();
+        ExportEngines ex = new ExportEngines(_enginesTableFrame.enginesTableModel.getSelectedEngineList());
         ex.writeOperationsEngineFile();
     }
 

@@ -1,17 +1,14 @@
 package jmri.util.swing.sdi;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.ButtonTestAction;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Invokes complete set of tests in the jmri.util.swing.sdi tree
@@ -21,8 +18,8 @@ import org.junit.Assume;
 public class SdiWindowTest {
 
     @Test
+    @DisabledIfHeadless
     public void testAction() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriJFrame f = new JmriJFrame("SDI test");
         JButton b = new JButton(new ButtonTestAction(
                 "new frame", new jmri.util.swing.sdi.JmriJFrameInterface()));
@@ -30,7 +27,7 @@ public class SdiWindowTest {
         f.pack();
         f.setVisible(true);
         JFrame f2 = jmri.util.JmriJFrame.getFrame("SDI test");
-        Assert.assertTrue("found frame", f2 != null);
+        Assertions.assertNotNull( f2, "found frame");
         JUnitUtil.dispose(f2);
     }
 
