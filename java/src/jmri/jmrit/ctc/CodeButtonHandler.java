@@ -173,6 +173,15 @@ public class CodeButtonHandler {
 
     private void codeButtonStateChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.ACTIVE) {
+            
+//  NO MATTER what else happens, IF the dispatcher has Signals Indicator Normal lit, Signal Direction Lever Normal,
+//  and has press the Code Button, we DELETE any active routes FIRST, ALWAYS without question!
+//    private final SignalDirectionIndicatorsInterface _mSignalDirectionIndicators;
+//    private final SignalDirectionLever _mSignalDirectionLever;
+    if (_mSignalDirectionIndicators.signalsNormal() && getCurrentSignalDirectionLever(false) == CTCConstants.SIGNALSNORMAL) {
+      cancelLockedRoute();
+    }
+            
 //  NOTE: If the primary O.S. section is occupied, you CANT DO ANYTHING via a CTC machine, except:
 //  Preconditioning: IF the O.S. section is occupied, then it is a pre-conditioning request:
             if (isPrimaryOSSectionOccupied()) {
