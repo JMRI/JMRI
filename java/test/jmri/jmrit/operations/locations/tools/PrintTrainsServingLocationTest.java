@@ -19,13 +19,6 @@ import jmri.util.*;
 public class PrintTrainsServingLocationTest extends OperationsTestCase {
 
     @Test
-    public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PrintTrainsServingLocation t = new PrintTrainsServingLocation(true, null, null, "");
-        Assert.assertNotNull("exists", t);
-    }
-
-    @Test
     public void testPreview() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
