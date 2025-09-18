@@ -20,6 +20,7 @@ public class PrintTrainsServingLocationTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PrintTrainsServingLocation t = new PrintTrainsServingLocation(true, null, null, "");
         Assert.assertNotNull("exists", t);
     }
