@@ -14,7 +14,6 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.*;
 
 /**
- *
  * @author Daniel Boudreau Copyright (C) 2025
  */
 public class PrintTrainsServingLocationTest extends OperationsTestCase {
@@ -24,17 +23,17 @@ public class PrintTrainsServingLocationTest extends OperationsTestCase {
         PrintTrainsServingLocation t = new PrintTrainsServingLocation(true, null, null, "");
         Assert.assertNotNull("exists", t);
     }
-    
+
     @Test
     public void testPreview() {
-    	Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JUnitOperationsUtil.initOperationsData();
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location location = lmanager.getLocationByName("North Industries");
-        
+
         PrintTrainsServingLocation f = new PrintTrainsServingLocation(true, location, null, "");
         Assert.assertNotNull("exists", f);
-        
+
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle
                 .getBundle("jmri.util.UtilBundle");
