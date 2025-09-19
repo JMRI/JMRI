@@ -268,7 +268,7 @@ final public class ConnectivityUtil {
             }
         }
         // Special check for turntable connectivity, which is not handled by the standard connectivity list.
-        if (notFound && prevLayoutBlock != null) {
+        if (notFound) {
             for (LayoutTurntable turntable : layoutEditor.getLayoutTurntables()) {
                 // Case 1: Path is from a ray (prevBlock) into the turntable's main block (currBlock)
                 if (turntable.getLayoutBlock() == currLayoutBlock && turntable.isRayBlock(prevLayoutBlock)) {
