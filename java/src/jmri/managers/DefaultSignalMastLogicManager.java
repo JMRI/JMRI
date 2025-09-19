@@ -439,11 +439,6 @@ public class DefaultSignalMastLogicManager
                     sml = newSignalMastLogic(sourceMast);
                 }
 
-                if (owner == null) {
-                    log.error("Could not find the parent LayoutTurntable for virtual mast {}", sourceMast.getDisplayName());
-                    continue; // Skip to the next mast
-                }
-
                 // For each destination mast, find the ray block used in the path and add the controlling turnout.
                 List<NamedBean> validDestMasts = e.getValue();
 

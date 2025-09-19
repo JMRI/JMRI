@@ -588,7 +588,7 @@ class CreateAndShowGUI4(TableModelListener):
         comment = train.getComment()
         if comment == None: comment = ""
         if dont_schedule_name == "True":
-            comment = "skip *" + comment
+            comment = "skip " + comment
             train.setComment(comment)
 
     def delete_between(self, string, delim1, delim2):

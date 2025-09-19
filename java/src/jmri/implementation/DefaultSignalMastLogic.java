@@ -2421,6 +2421,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             List<LayoutBlock> lblks;
             LinkedHashMap<Block, Integer> block;
 
+            lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
             if (LayoutTurntable.isTurntableMast(source)) {
                 // This is an OUTBOUND path.
                 log.debug("DIAGNOSTIC:   - Path is OUTBOUND from a turntable.");
@@ -2447,8 +2448,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     throw new JmriException("DIAGNOSTIC: Path not valid, no protecting ray found for turntable path from " + facingBlock.getDisplayName() + " to " + destinationBlock.getDisplayName());
                 }
 
-                // 2. Find the full path of blocks.
-                lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+                // 2. Examine the full path of blocks.
 
                 // DIAGNOSTIC: Log the raw path returned by the connectivity tools.
                 if (lblks != null) {
@@ -2489,7 +2489,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     log.debug("DIAGNOSTIC:   - Path not valid, no protecting block found for path from '{}'", facingBlock.getDisplayName());
                     throw new JmriException("Path not valid, no protecting block found for path from " + facingBlock.getDisplayName());
                 }
-                lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+
 
                 // DIAGNOSTIC: Log the raw path returned by the connectivity tools.
                 if (lblks != null) {

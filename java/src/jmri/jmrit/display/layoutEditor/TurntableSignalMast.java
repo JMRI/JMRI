@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import jmri.InstanceManager;
 import jmri.implementation.VirtualSignalMast;
-import java.util.Set;
 import jmri.jmrit.display.EditorManager;
 
 /**

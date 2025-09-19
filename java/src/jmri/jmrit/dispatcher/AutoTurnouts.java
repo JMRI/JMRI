@@ -6,7 +6,6 @@ import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.Section;
-import jmri.SignalMast;
 import jmri.Transit;
 import jmri.Turnout;
 import jmri.TransitSection;
@@ -218,7 +217,7 @@ public class AutoTurnouts {
 
             if (isTurntableStart) {
                 // A train starting on a turntable spur has no previous block.
-                prevBlock = null;
+                // prevBlock = null;   // null by default
             } else {
                 // Standard logic for trains starting in a regular section.
                 if (direction == Section.FORWARD) {
@@ -412,7 +411,8 @@ public class AutoTurnouts {
             // *** Turntable Alignment Logic ***
             // This logic handles aligning a turntable when a train is entering or exiting it.
             // It checks the transition from the previous block to the current block.
-            if (turnoutsOK && curBlock != null && prevBlock != null) {
+            //if (turnoutsOK && curBlock != null && prevBlock != null) {     // curBlock cannot be null here
+            if (turnoutsOK && prevBlock != null) {
                 var lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
                 LayoutBlock curLBlock = lbm.getLayoutBlock(curBlock);
                 LayoutBlock prevLBlock = lbm.getLayoutBlock(prevBlock);

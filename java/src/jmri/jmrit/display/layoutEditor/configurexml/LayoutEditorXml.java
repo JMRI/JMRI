@@ -15,7 +15,6 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriJOptionPane;
-import jmri.SignalMastManager;
 
 import org.jdom2.*;
 
