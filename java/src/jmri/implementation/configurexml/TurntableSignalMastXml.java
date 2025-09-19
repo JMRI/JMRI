@@ -1,4 +1,4 @@
-package jmri.jmrit.display.layoutEditor.configurexml;
+package jmri.jmrit.implementation.configurexml;
 
 import jmri.configurexml.AbstractXmlAdapter;
 import org.jdom2.Element;

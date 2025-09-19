@@ -1410,7 +1410,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
             boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd,
             boolean showErrorMessages, JmriJFrame frame, int allocateMethod) {
-        log.info("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
+        log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
                 trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);
         // validate input
         Transit t = transitManager.getTransit(transitID);
@@ -1563,8 +1563,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             // check/set Transit specific items for automatic running
             // validate connectivity for all Sections in this transit
             int numErrors = validateConnectivity(t);
-            log.info("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-            log.info ("called validateconnectivity numErrors {}", numErrors);
+            log.trace ("called validateconnectivity numErrors {}", numErrors);
             if (numErrors != 0) {
                 if (showErrorMessages) {
                     JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
@@ -1646,9 +1645,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         at.setAllocateMethod(allocateMethod);
         at.setPriority(priority);
         at.setDccAddress(dccAddress);
-        log.info ("about to set autorun");
         at.setAutoRun(autoRun);
-        log.info ("set autorun");
         return at;
     }
 

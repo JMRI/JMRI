@@ -797,16 +797,18 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             // update block Paths to reflect connectivity as needed
             updateBlockPaths(c, panel);
 
-            // DIAGNOSTIC LOGGING: Print the details of all paths found for this block
-            if (block != null) {
-                List<jmri.Path> paths = block.getPaths();
-                log.debug("DIAGNOSTIC - Paths for block: " + getDisplayName() + " - Number of paths: " + paths.size());
-                for (jmri.Path p : paths) {
-                    Block destBlock = p.getBlock();
-                    if (destBlock != null) {
-                        log.debug("    -> Path to: " + destBlock.getDisplayName());
-                    } else {
-                        log.debug("    -> Path to: null");
+            if (log.isTraceEnabled()) {
+                // DIAGNOSTIC LOGGING: Print the details of all paths found for this block
+                if (block != null) {
+                    List<jmri.Path> paths = block.getPaths();
+                    log.debug("DIAGNOSTIC - Paths for block: " + getDisplayName() + " - Number of paths: " + paths.size());
+                    for (jmri.Path p : paths) {
+                        Block destBlock = p.getBlock();
+                        if (destBlock != null) {
+                            log.trace("    -> Path to: " + destBlock.getDisplayName());
+                        } else {
+                            log.trace("    -> Path to: null");
+                        }
                     }
                 }
             }

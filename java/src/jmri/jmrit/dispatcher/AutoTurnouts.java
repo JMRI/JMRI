@@ -253,18 +253,20 @@ public class AutoTurnouts {
             }
             return turnoutListForAllocatedSection;
         }
-
-        log.debug("DIAGNOSTIC:: (turnoutUtil): For train '{}', in Section '{}'", at.getTrainName(), s.getDisplayName(USERSYS));
-        log.debug("DIAGNOSTIC:: (turnoutUtil):   - Direction: {}", (direction == Section.FORWARD ? "FORWARD" : "REVERSE"));
-        log.debug("DIAGNOSTIC:: (turnoutUtil):   - PrevBlock: {}", (prevBlock != null ? prevBlock.getDisplayName(USERSYS) : "null"));
-        log.debug("DIAGNOSTIC:: (turnoutUtil):   - CurBlock: {}", (curBlock != null ? curBlock.getDisplayName(USERSYS) : "null"));
-        log.debug("DIAGNOSTIC:: (turnoutUtil):   - CurBlockSeqNum in Section: {}", curBlockSeqNum);
-        log.debug("DIAGNOSTIC:: (turnoutUtil):   - ExitPt: {}", (exitPt != null ? exitPt.getBlock().getDisplayName(USERSYS) : "null"));
-        log.debug("DIAGNOSTIC:: (turnoutUtil):   - Train StartBlock: {}", (at.getStartBlock() != null ? at.getStartBlock().getDisplayName(USERSYS) : "null"));
-        log.debug("DIAGNOSTIC:: (turnoutUtil):   - Train EndBlock: {}", (at.getEndBlock() != null ? at.getEndBlock().getDisplayName(USERSYS) : "null"));
-        log.debug("DIAGNOSTIC:: (turnoutUtil):   - Allocation Reversed: {}", at.isAllocationReversed());
+        if (log.isTraceEnabled()){
+            log.trace("DIAGNOSTIC:: (turnoutUtil): For train '{}', in Section '{}'", at.getTrainName(), s.getDisplayName(USERSYS));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - Direction: {}", (direction == Section.FORWARD ? "FORWARD" : "REVERSE"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - PrevBlock: {}", (prevBlock != null ? prevBlock.getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - CurBlock: {}", (curBlock != null ? curBlock.getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - CurBlockSeqNum in Section: {}", curBlockSeqNum);
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - ExitPt: {}", (exitPt != null ? exitPt.getBlock().getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - Train StartBlock: {}", (at.getStartBlock() != null ? at.getStartBlock().getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - Train EndBlock: {}", (at.getEndBlock() != null ? at.getEndBlock().getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - Allocation Reversed: {}", at.isAllocationReversed());
+        }
 
         Block nextBlock = null;
+        // may be either in the section or the first block in the next section
         int nextBlockSeqNum = -1;   // sequence number of nextBlock in Section (-1 indicates outside Section)
 
         // Special handling for a train starting on a turntable.
@@ -287,8 +289,6 @@ public class AutoTurnouts {
             if ((nextBlock == null &&
                     ((!at.isAllocationReversed() && curBlock != at.getEndBlock()) ||
                             (at.isAllocationReversed() && curBlock != at.getStartBlock())))) {
-                log.debug("DIAGNOSTIC:: (turnoutUtil):   - FAILED. nextBlock is null.");
-                log.debug("DIAGNOSTIC:: (turnoutUtil):   - Section '{}' has {} blocks.", s.getDisplayName(USERSYS), s.getBlockList().size());
                 log.error("[{}]Error in block sequence numbers when setting/checking turnouts.",
                         curBlock.getDisplayName(USERSYS));
                 return null;
