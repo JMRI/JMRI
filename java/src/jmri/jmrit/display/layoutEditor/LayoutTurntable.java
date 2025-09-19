@@ -53,6 +53,16 @@ public class LayoutTurntable extends LayoutTrack {
      public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor models) {
          super(id, models);
 
+        // Check Dispatcher options to see if we should create a virtual signal mast.
+        // A mast is only needed if the user has configured Dispatcher to use Signal Masts.
+        jmri.jmrit.dispatcher.OptionsFile optionsFile = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.OptionsFile.class);
+        log.info("signaltype {}", String.valueOf(optionsFile.getSignalType()));
+        // The integer '1' corresponds to the "Signal Masts" selection in the Dispatcher options.
+        if (optionsFile == null || optionsFile.getSignalType() != 1) {
+            log.debug("Skipping virtual signal mast creation for turntable '{}' as Dispatcher is not configured for Signal Masts.", getName());
+            return; // Do not create a mast
+        }
+
          radius = 25.0; // initial default, change asap.
 
          SignalMastManager smm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);

@@ -44,6 +44,42 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         super();
     }
 
+    /**
+     * Get the persisted signal type from the dispatcher options file.
+     * <p>
+     * This method directly reads the XML file to determine the setting,
+     * allowing other parts of the application to respect this option without
+     * needing an active DispatcherFrame instance.
+     *
+     * @return The signal type index: 1 for SignalMasts, 2 for SignalHeads, 0 for
+     *         No Signals. Returns 0 (No Signals) if the file or setting is not
+     *         found.
+     */
+    public int getSignalType() {
+        try {
+            Element root = rootFromName(defaultFileName);
+            if (root == null) {
+                return 0; // No file, default to "No Signals"
+            }
+            Element options = root.getChild("options");
+            if (options == null) {
+                return 0; // No options, default to "No Signals"
+            }
+            if (options.getAttribute("usesignaltype") != null) {
+                String signalType = options.getAttribute("usesignaltype").getValue();
+                switch (signalType) {
+                    case "signalmast": return 1; // Index 1 is "Signal Masts"
+                    case "signalhead": return 2; // Index 2 is "Signal Heads"
+                    case "sectionsallocated": default: return 0; // Index 0 is "No Signals"
+                }
+            }
+        } catch (Exception e) {
+            log.error("Exception while reading dispatcher signaling option from " + defaultFileName, e);
+        }
+        // Default to "No Signals" if attribute not found or on error
+        return 0;
+    }
+
     static final EnumIO<DispatcherFrame.TrainsFrom> trainsFromEnumMap = new EnumIoNamesNumbers<>(DispatcherFrame.TrainsFrom.class);
 
     // operational variables
