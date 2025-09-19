@@ -13473,6 +13473,248 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    /**
+     *  Program allows engines to be removed from the train.
+     */
+    @Test
+    public void testEngineRemove() {
+
+        et.addName("Diesel");
+
+        // create 5 locations with tracks
+        Location harvard = lmanager.newLocation("Harvard");
+        Track loc1trk1 = harvard.addTrack("Harvard Yard 1", Track.YARD);
+        loc1trk1.setLength(1000);
+        Track loc1trk2 = harvard.addTrack("Harvard Yard 2", Track.YARD);
+        loc1trk2.setLength(1000);
+
+        Location acton = lmanager.newLocation("Acton");
+        Track loc2trk1 = acton.addTrack("Acton Yard", Track.YARD);
+        loc2trk1.setLength(1000);
+
+        Location boston = lmanager.newLocation("Boston");
+        Track loc3trk1 = boston.addTrack("Boston Yard 1", Track.YARD);
+        loc3trk1.setLength(1000);
+        Track loc3trk2 = boston.addTrack("Boston Yard 2", Track.YARD);
+        loc3trk2.setLength(1000);
+
+        Location chelmsford = lmanager.newLocation("Chelmsford");
+        Track loc4trk1 = chelmsford.addTrack("Chelmsford Yard 1", Track.YARD);
+        loc4trk1.setLength(1000);
+        Track loc4trk2 = chelmsford.addTrack("Chelmsford Yard 2", Track.YARD);
+        loc4trk2.setLength(1000);
+
+        Location westford = lmanager.newLocation("Westford");
+        Track loc5trk1 = westford.addTrack("Westford Yard", Track.YARD);
+        loc5trk1.setLength(1000);
+
+        // create a 2 engine consists for departure
+        Consist con1 = InstanceManager.getDefault(ConsistManager.class).newConsist("C1");
+        Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
+        Consist con3 = InstanceManager.getDefault(ConsistManager.class).newConsist("C3");
+
+        Engine e1 = emanager.newRS("UP", "1");
+        e1.setModel("GP30");
+        e1.setConsist(con1);
+        e1.setMoves(1);
+
+        Engine e2 = emanager.newRS("SP", "2");
+        e2.setModel("GP30");
+        e2.setConsist(con1);
+        e2.setMoves(1);
+
+        // single engine
+        Engine e3 = emanager.newRS("SP", "30");
+        e3.setModel("GP40");
+        e3.setBuilt("1957");
+
+        Engine e4 = emanager.newRS("UP", "40");
+        e4.setModel("GP40");
+        e4.setConsist(con2);
+        e4.setMoves(20);
+
+        Engine e5 = emanager.newRS("SP", "50");
+        e5.setModel("GP40");
+        e5.setConsist(con2);
+        e5.setMoves(20);
+
+        Engine e6 = emanager.newRS("UP", "60");
+        e6.setModel("GP40");
+        e6.setConsist(con3);
+        e6.setMoves(2);
+
+        Engine e7 = emanager.newRS("SP", "70");
+        e7.setModel("GP40");
+        e7.setConsist(con3);
+        e7.setMoves(2);
+
+        Engine e8 = emanager.newRS("UP", "80");
+        e8.setModel("GP30");
+        e8.setMoves(30);
+
+        Engine e9 = emanager.newRS("SP", "90");
+        e9.setModel("GP30");
+        e9.setMoves(2);
+
+        // Place engines
+        Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e6", Track.OKAY, e6.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e7", Track.OKAY, e7.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e8", Track.OKAY, e8.setLocation(harvard, loc1trk1));
+        Assert.assertEquals("Place e9", Track.OKAY, e9.setLocation(harvard, loc1trk1));
+
+        Route rte1 = rmanager.newRoute("Route Harvard-Acton-Boston-Chelmsford-Westford");
+        rte1.addLocation(harvard);
+        RouteLocation rlActon = rte1.addLocation(acton);
+        rte1.addLocation(boston);
+        RouteLocation rlChelmsford = rte1.addLocation(chelmsford);
+        rte1.addLocation(westford);
+
+        // Create train
+        Train train1 = tmanager.newTrain("TestEngineRemove");
+        train1.setRoute(rte1);
+
+        // depart with 2 engines plus one drop at Acton
+        train1.setNumberEngines("2");
+        train1.setEngineRoad("UP");
+
+        // remove 1 engine at Acton
+        train1.setSecondLegOptions(Train.REMOVE_ENGINES);
+        train1.setSecondLegNumberEngines("1");
+        train1.setSecondLegStartRouteLocation(rlActon);
+        train1.setSecondLegEngineRoad("UP");
+        train1.setSecondLegEngineModel("GP30");
+        
+        // remove 1 engine at Chelmsford
+        train1.setThirdLegOptions(Train.REMOVE_ENGINES);
+        train1.setThirdLegNumberEngines("1");
+        train1.setThirdLegStartRouteLocation(rlChelmsford);
+        train1.setThirdLegEngineRoad("SP");
+        train1.setThirdLegEngineModel("GP40");
+
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 assigned to train", westford, e1.getDestination());
+        Assert.assertEquals("e2 assigned to train", westford, e2.getDestination());
+        Assert.assertEquals("e3 assigned to train road SP", chelmsford, e3.getDestination());
+        Assert.assertEquals("e4 not assigned to train", null, e4.getDestination());
+        Assert.assertEquals("e5 not assigned to train", null, e5.getDestination());
+        Assert.assertEquals("e6 not assigned to train due to road name", null, e6.getDestination());
+        Assert.assertEquals("e7 not assigned to train", null, e7.getDestination());
+        Assert.assertEquals("e8 assigned to train", acton, e8.getDestination());
+        Assert.assertEquals("e9 not assigned to train due to model type", null, e9.getDestination());
+        
+        // now test removing consists
+        // remove 2 engines at Acton
+        train1.setSecondLegOptions(Train.REMOVE_ENGINES);
+        train1.setSecondLegNumberEngines("2");
+        train1.setSecondLegStartRouteLocation(rlActon);
+        train1.setSecondLegEngineRoad("UP");
+        train1.setSecondLegEngineModel("GP40");
+        
+        // remove 2 engines at Chelmsford
+        train1.setThirdLegOptions(Train.REMOVE_ENGINES);
+        train1.setThirdLegNumberEngines("2");
+        train1.setThirdLegStartRouteLocation(rlChelmsford);
+        train1.setThirdLegEngineRoad("UP");
+        train1.setThirdLegEngineModel("GP40");
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 assigned to train", westford, e1.getDestination());
+        Assert.assertEquals("e2 assigned to train", westford, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", chelmsford, e4.getDestination());
+        Assert.assertEquals("e5 assigned to train", chelmsford, e5.getDestination());
+        Assert.assertEquals("e6 assigned to train", acton, e6.getDestination());
+        Assert.assertEquals("e7 assigned to train", acton, e7.getDestination());
+        Assert.assertEquals("e8 assigned to train", null, e8.getDestination());
+        Assert.assertEquals("e9 not assigned to train", null, e9.getDestination());
+        
+        // now test removing consists
+        // remove 2 engines at Acton using auto HPT
+        // Auto HPT will remove any consist available
+        train1.setSecondLegOptions(Train.REMOVE_ENGINES);
+        train1.setSecondLegNumberEngines(Train.AUTO_HPT);
+        train1.setSecondLegStartRouteLocation(rlActon);
+        train1.setSecondLegEngineRoad("UP");
+        train1.setSecondLegEngineModel("GP40");
+        
+        // remove 2 engines at Chelmsford using auto HPT
+        train1.setThirdLegOptions(Train.REMOVE_ENGINES);
+        train1.setThirdLegNumberEngines(Train.AUTO_HPT);
+        train1.setThirdLegStartRouteLocation(rlChelmsford);
+        train1.setThirdLegEngineRoad("UP");
+        train1.setThirdLegEngineModel("GP40");
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", true, train1.isBuilt());
+
+        // confirm that the specified engines were assigned to the train
+        Assert.assertEquals("e1 assigned to train", westford, e1.getDestination());
+        Assert.assertEquals("e2 assigned to train", westford, e2.getDestination());
+        Assert.assertEquals("e3 not assigned to train", null, e3.getDestination());
+        Assert.assertEquals("e4 assigned to train", chelmsford, e4.getDestination());
+        Assert.assertEquals("e5 assigned to train", chelmsford, e5.getDestination());
+        Assert.assertEquals("e6 assigned to train", acton, e6.getDestination());
+        Assert.assertEquals("e7 assigned to train", acton, e7.getDestination());
+        Assert.assertEquals("e8 assigned to train", null, e8.getDestination());
+        Assert.assertEquals("e9 not assigned to train", null, e9.getDestination());
+        
+        // now test build failures
+        // remove 3 engines at Acton
+        train1.setSecondLegOptions(Train.REMOVE_ENGINES);
+        train1.setSecondLegNumberEngines("3");
+        train1.setSecondLegStartRouteLocation(rlActon);
+        train1.setSecondLegEngineRoad("UP");
+        train1.setSecondLegEngineModel("GP40");
+        
+        // remove 2 engines at Chelmsford
+        train1.setThirdLegOptions(Train.REMOVE_ENGINES);
+        train1.setThirdLegNumberEngines("2");
+        train1.setThirdLegStartRouteLocation(rlChelmsford);
+        train1.setThirdLegEngineRoad("UP");
+        train1.setThirdLegEngineModel("GP40");
+
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", false, train1.isBuilt());
+        
+        // now test build failures
+        // ignore remove engines at Acton
+        train1.setSecondLegOptions(Train.NO_CABOOSE_OR_FRED);
+   
+        // remove 3 engines at Chelmsford
+        train1.setThirdLegOptions(Train.REMOVE_ENGINES);
+        train1.setThirdLegNumberEngines("3");
+        train1.setThirdLegStartRouteLocation(rlChelmsford);
+        train1.setThirdLegEngineRoad("UP");
+        train1.setThirdLegEngineModel("GP40");
+
+        train1.reset();
+        Assert.assertFalse(new TrainBuilder().build(train1));
+        Assert.assertEquals("Train should build", false, train1.isBuilt());
+        
+        // ignore remove engines at Chelmsford, should build
+        train1.setThirdLegOptions(Train.NO_CABOOSE_OR_FRED);
+
+        train1.reset();
+        Assert.assertTrue(new TrainBuilder().build(train1));
+
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
+
 
     @Test
     public void testEngineInterchangeTracks() {
