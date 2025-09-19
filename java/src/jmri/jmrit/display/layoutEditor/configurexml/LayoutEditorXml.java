@@ -158,8 +158,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             log.debug("N LayoutTrack elements: {}", num);
         }
 
-
-
         // Previous write order was
         //   LayoutTurnout) && !(item instanceof LayoutSlip)
         //   TrackSegment
@@ -184,7 +182,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 
         return panel;
     }   // store
-
 
     private void storeOne(Element panel, Object item) {
         try {
@@ -647,8 +644,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                     result = false;
                 }
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException
-                    | jmri.configurexml.JmriConfigureXmlException
-                    | java.lang.reflect.InvocationTargetException e) {
+                     | jmri.configurexml.JmriConfigureXmlException
+                     | java.lang.reflect.InvocationTargetException e) {
                 log.error("Exception while loading {}", item.getName(), e);
                 result = false;
             }

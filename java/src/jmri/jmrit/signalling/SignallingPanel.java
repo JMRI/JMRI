@@ -177,10 +177,16 @@ public class SignallingPanel extends JmriPanel {
 
         destMastBox.addActionListener(e -> {
             if (useLayoutEditor.isSelected()) {
+                SignalMast selectedSource = sourceMastBox.getSelectedItem(); // Renamed variable
+                log.warn("selectedSource = {}", selectedSource.getSystemName());
+                if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(selectedSource)) {
+                    return; // Skip UI validation for turntable paths, which are validated during discovery
+                }
                 try {
-                    boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
+                    boolean valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(selectedSource, // Use renamed variable
                             destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
                     if (!valid) {
+                        log.warn("1");
                         JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorUnReachableDestination"));
                     }
                 } catch (jmri.JmriException je) {
@@ -229,14 +235,18 @@ public class SignallingPanel extends JmriPanel {
                     } catch (jmri.JmriException je) {
                         JmriJOptionPane.showMessageDialog(this, je.toString());
                     }
-                    try {
-                        valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
-                                destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
-                        if (!valid) {
-                            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorUnReachableDestination"));
+                    // We only perform the UI validation check if the source is NOT a turntable mast.
+                    // Turntable paths are complex and validated during discovery.
+                    if (!(jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sourceMastBox.getSelectedItem()))) {
+                        try {
+                            valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedItem(),
+                                    destMastBox.getSelectedItem(), LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+                            if (!valid) {
+                                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorUnReachableDestination"));
+                            }
+                        } catch (jmri.JmriException je) {
+                            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("WarningUnableToValidate"));
                         }
-                    } catch (jmri.JmriException je) {
-                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("WarningUnableToValidate"));
                     }
                 }
             }
@@ -816,16 +826,21 @@ public class SignallingPanel extends JmriPanel {
             return;
         }
         if ((sml == null) && (useLayoutEditor.isSelected())) {
-            boolean valid;
-            try {
-                valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,
-                        destMast, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
-                if (!valid) {
-                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorUnReachableDestination"));
-                    return;
+            // We only perform the UI validation check if the source is NOT a turntable mast.
+            // Turntable paths are complex and validated during discovery.
+            if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(sourceMast)) {
+                boolean valid;
+                try {
+                    valid = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(sourceMast,
+                            destMast, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+                    if (!valid) {
+                        log.warn("2");
+                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorUnReachableDestination"));
+                        return;
+                    }
+                } catch (jmri.JmriException je) {
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("WarningUnableToValidate"));
                 }
-            } catch (jmri.JmriException je) {
-                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("WarningUnableToValidate"));
             }
         }
 

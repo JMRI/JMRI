@@ -295,8 +295,9 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                                     if (turn != null) {
                                         NamedBeanHandle<Turnout> namedTurnout = nbhm.getNamedBeanHandle(turnout, turn);
                                         list.put(namedTurnout, value);
+                                    } else {
+                                        log.warn("Signal Mast Logic for source '{}' references turnout '{}' which was not found. It will be ignored.", source, turnout);
                                     }
-                                    log.debug("Unable to add Turnout {} as it does not exist in the panel file", turnout);
                                 }
                                 logic.setTurnouts(list, dest);
                             }

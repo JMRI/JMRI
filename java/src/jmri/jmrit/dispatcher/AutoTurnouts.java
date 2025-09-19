@@ -8,8 +8,12 @@ import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Transit;
 import jmri.Turnout;
+import jmri.TransitSection;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
+import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LayoutDoubleXOver;
 import jmri.jmrit.display.layoutEditor.LayoutLHXOver;
 import jmri.jmrit.display.layoutEditor.LayoutRHXOver;
@@ -143,6 +147,22 @@ public class AutoTurnouts {
             log.error("Invalid argument when checking or setting turnouts in Section.");
             return null;
         }
+
+        // DIAGNOSTIC: Dump the transit structure the first time we process a section for this train.
+        if (prevSection == null) {
+            log.debug("DIAGNOSTIC:: (turnoutUtil): Dumping Transit structure for train '{}'", at.getTrainName());
+            List<TransitSection> transitSections = tran.getTransitSectionList();
+            for (int i = 0; i < transitSections.size(); i++) {
+                Section transitSection = transitSections.get(i).getSection();
+                log.debug("DIAGNOSTIC:: (turnoutUtil):   - Transit Section {}: '{}'", i, transitSection.getDisplayName(USERSYS));
+                List<Block> blocks = transitSection.getBlockList();
+                for (int j = 0; j < blocks.size(); j++) {
+                    Block transitBlock = blocks.get(j);
+                    log.debug("DIAGNOSTIC:: (turnoutUtil):     - Block {}: '{}'", j, transitBlock.getDisplayName(USERSYS));
+                }
+            }
+        }
+
         int direction = at.getAllocationDirectionFromSectionAndSeq(s, seqNum);
         if (direction == 0) {
             log.error("Invalid Section/sequence arguments when checking or setting turnouts");
@@ -170,6 +190,7 @@ public class AutoTurnouts {
         Block curBlock;         // must be in the section
         Block prevBlock = null; // must start outside the section or be null
         int curBlockSeqNum;     // sequence number of curBlock in Section
+        boolean isTurntableStart = false;
         if (entryPt != null) {
             curBlock = entryPt.getBlock();
             prevBlock = entryPt.getFromBlock();
@@ -178,10 +199,32 @@ public class AutoTurnouts {
             curBlock = at.getStartBlock();
             curBlockSeqNum = s.getBlockSequenceNumber(curBlock);
             //Get the previous block so that we can set the turnouts in the current block correctly.
-            if (direction == Section.FORWARD) {
-                prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
-            } else if (direction == Section.REVERSE) {
-                prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+
+            // Isolate special handling for a train starting on a turntable.
+            var lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+            LayoutBlock curLBlock = lbm.getLayoutBlock(curBlock);
+            if (curLBlock != null) {
+                for (LayoutEditor editor : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) { // NOI18N
+                    for (LayoutTurntable turntable : editor.getLayoutTurntables()) { // NOI18N
+                        if (turntable.getLayoutBlock() == curLBlock) {
+                            isTurntableStart = true;
+                            break;
+                        }
+                    }
+                    if (isTurntableStart) break;
+                }
+            }
+
+            if (isTurntableStart) {
+                // A train starting on a turntable spur has no previous block.
+                // prevBlock = null;   // null by default
+            } else {
+                // Standard logic for trains starting in a regular section.
+                if (direction == Section.FORWARD) {
+                    prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum - 1);
+                } else if (direction == Section.REVERSE) {
+                    prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum + 1);
+                }
             }
         } else if (at.isAllocationReversed() && s.containsBlock(at.getEndBlock())) {
             curBlock = at.getEndBlock();
@@ -209,11 +252,28 @@ public class AutoTurnouts {
             }
             return turnoutListForAllocatedSection;
         }
+        if (log.isTraceEnabled()){
+            log.trace("DIAGNOSTIC:: (turnoutUtil): For train '{}', in Section '{}'", at.getTrainName(), s.getDisplayName(USERSYS));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - Direction: {}", (direction == Section.FORWARD ? "FORWARD" : "REVERSE"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - PrevBlock: {}", (prevBlock != null ? prevBlock.getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - CurBlock: {}", (curBlock != null ? curBlock.getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - CurBlockSeqNum in Section: {}", curBlockSeqNum);
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - ExitPt: {}", (exitPt != null ? exitPt.getBlock().getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - Train StartBlock: {}", (at.getStartBlock() != null ? at.getStartBlock().getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - Train EndBlock: {}", (at.getEndBlock() != null ? at.getEndBlock().getDisplayName(USERSYS) : "null"));
+            log.trace("DIAGNOSTIC:: (turnoutUtil):   - Allocation Reversed: {}", at.isAllocationReversed());
+        }
 
         Block nextBlock = null;
         // may be either in the section or the first block in the next section
         int nextBlockSeqNum = -1;   // sequence number of nextBlock in Section (-1 indicates outside Section)
-        if (exitPt != null && curBlock == exitPt.getBlock()) {
+
+        // Special handling for a train starting on a turntable.
+        if (isTurntableStart && exitPt != null) {
+            nextBlock = exitPt.getBlock();
+            nextBlockSeqNum = s.getBlockSequenceNumber(nextBlock);
+            log.debug("DIAGNOSTIC:: (turnoutUtil):   - Turntable start detected. Setting nextBlock to exit point: '{}'", nextBlock.getDisplayName(USERSYS));
+        } else if (exitPt != null && curBlock == exitPt.getBlock()) {
             // next Block is outside of the Section
             nextBlock = exitPt.getFromBlock();
         } else {
@@ -228,8 +288,7 @@ public class AutoTurnouts {
             if ((nextBlock == null &&
                     ((!at.isAllocationReversed() && curBlock != at.getEndBlock()) ||
                             (at.isAllocationReversed() && curBlock != at.getStartBlock())))) {
-                log.error("[{}]Error in block sequence numbers when setting/checking turnouts.",
-                        curBlock.getDisplayName(USERSYS));
+                log.error("[{}]Error in block sequence numbers when setting/checking turnouts.", (curBlock != null ? curBlock.getDisplayName(USERSYS) : "null"));
                 return null;
             }
         }
@@ -345,6 +404,82 @@ public class AutoTurnouts {
                         } else {
                             turnoutsOK = false;
                         }
+                    }
+                }
+            }
+            // *** Turntable Alignment Logic ***
+            // This logic handles aligning a turntable when a train is entering or exiting it.
+            // It checks the transition from the previous block to the current block.
+            //if (turnoutsOK && curBlock != null && prevBlock != null) {     // curBlock cannot be null here
+            if (turnoutsOK && prevBlock != null) {
+                var lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+                LayoutBlock curLBlock = lbm.getLayoutBlock(curBlock);
+                LayoutBlock prevLBlock = lbm.getLayoutBlock(prevBlock);
+
+                if (curLBlock != null && prevLBlock != null) {
+                    for (LayoutEditor editor : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) { // NOI18N
+                        for (LayoutTurntable turntable : editor.getLayoutTurntables()) { // NOI18N
+                            int rayIndex = -1;
+                            
+                            log.debug("DIAGNOSTIC: Checking turntable '{}'. Previous block: '{}', Current block: '{}'",
+                                    turntable.getName(),
+                                    prevLBlock.getDisplayName(),
+                                    curLBlock.getDisplayName());
+
+                            // Case 1: Exiting turntable (previous is turntable, current is ray)
+                            if (turntable.getLayoutBlock() == prevLBlock && turntable.isRayBlock(curLBlock)) {
+                                log.debug("DIAGNOSTIC:   - Matched Case 1 (Exiting Turntable).");
+                                rayIndex = turntable.getRayIndexForBlock(curLBlock);
+                            } // Case 2: Entering turntable (previous is ray, current is turntable)
+                            else if (turntable.getLayoutBlock() == curLBlock && turntable.isRayBlock(prevLBlock)) {
+                                log.debug("DIAGNOSTIC:   - Matched Case 2 (Entering Turntable).");
+                                rayIndex = turntable.getRayIndexForBlock(prevLBlock);
+                            }
+
+                            if (rayIndex != -1) {
+                                Turnout positionTurnout = turntable.getTurnoutForRay(rayIndex);
+                                // Determine if we are exiting the turntable. This is true for Case 1.
+                                boolean isExiting = (turntable.getLayoutBlock() == prevLBlock);
+
+                                if (positionTurnout != null) {
+                                    log.debug("{}: Path requires turntable {} to be set for ray {}", at.getTrainName(), turntable.getName(), rayIndex); // NOI18N
+                                    if (!trustKnownTurnouts || positionTurnout.getKnownState() != Turnout.THROWN) {
+                                        if (set) {
+                                            // The condition to check before setting the turntable.
+                                            // The section being allocated must be FREE.
+                                            boolean canSetTurntable = (s.getState() == Section.FREE);
+                                            if (!isExiting) {
+                                                // When entering, the turntable block must also be unoccupied.
+                                                canSetTurntable = canSetTurntable && (turntable.getLayoutBlock().getBlock().getState() != Block.OCCUPIED);
+                                            }
+                                            // When exiting, we allow the turntable block to be occupied by the current train.
+                                            if (canSetTurntable) {
+                                                log.debug("{}: Setting turntable {} position via turnout {}", // NOI18N
+                                                        at.getTrainName(), turntable.getName(), positionTurnout.getSystemName()); // NOI18N
+                                                if (useTurnoutConnectionDelay) {
+                                                    positionTurnout.setCommandedStateAtInterval(Turnout.THROWN);
+                                                } else {
+                                                    positionTurnout.setCommandedState(Turnout.THROWN);
+                                                }
+                                            } else {
+                                                log.warn("{}: Cannot set turntable {} because section is not FREE or turntable block is OCCUPIED.", at.getTrainName(), turntable.getName());
+                                                turnoutsOK = false; // NOI18N
+                                            }
+                                        } else { // just checking, not setting
+                                            log.debug("{}: Turntable {} is not aligned correctly.", at.getTrainName(), turntable.getName());
+                                            turnoutsOK = false; // NOI18N
+                                        }
+                                    }
+                                } else {
+                                    // This is an error. A turntable is on the path but has no configured turnout for this ray.
+                                    log.error("{}: Turntable '{}' is on the path, but no virtual turnout is configured for ray index {}. Dispatch cannot proceed.", // NOI18N
+                                            at.getTrainName(), turntable.getName(), rayIndex); // NOI18N
+                                    turnoutsOK = false; // NOI18N
+                                }
+                                break; // Found the turntable for this path, no need to check others in this editor.
+                            }
+                        }
+                        if (!turnoutsOK) break; // Exit editor loop if something failed
                     }
                 }
             }

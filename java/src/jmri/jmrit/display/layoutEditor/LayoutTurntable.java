@@ -44,16 +44,80 @@ import jmri.util.MathUtil;
  */
 public class LayoutTurntable extends LayoutTrack {
 
-    /**
+     /**
      * Constructor method
      *
      * @param id           the name for the turntable
      * @param models what layout editor panel to put it in
      */
-    public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor models) {
-        super(id, models);
+     public LayoutTurntable(@Nonnull String id, @Nonnull LayoutEditor models) {
+         super(id, models);
 
-        radius = 25.0; // initial default, change asap.
+        // Check Dispatcher options to see if we should create a virtual signal mast.
+        // A mast is only needed if the user has configured Dispatcher to use Signal Masts.
+        jmri.jmrit.dispatcher.OptionsFile optionsFile = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.OptionsFile.class);
+        log.info("signaltype {}", String.valueOf(optionsFile.getSignalType()));
+        // The integer '1' corresponds to the "Signal Masts" selection in the Dispatcher options.
+        if (optionsFile.getSignalType() != 1) {
+            log.debug("Skipping virtual signal mast creation for turntable '{}' as Dispatcher is not configured for Signal Masts.", getName());
+            return; // Do not create a mast
+        }
+
+         radius = 25.0; // initial default, change asap.
+
+         SignalMastManager smm = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+         String mastUserName = "Turntable Mast " + id;
+
+         // First, check if a mast for this turntable already exists.
+         // This handles the case where the panel is being loaded from a file.
+         this.virtualSignalMast = smm.getByUserName(mastUserName);
+
+         // If no mast was found, create a new one.
+         // This handles the case where a new turntable is being created in the editor.
+         if (this.virtualSignalMast == null) {
+             log.debug("No existing mast found for turntable '{}', creating a new one.", id);
+             // Define the signal system to use, arbitrary use BR-2003
+             String signalSystem = "BR-2003:3";
+
+             // Get the next available unique number for a VirtualSignalMast
+             java.text.DecimalFormat paddedNumber = new java.text.DecimalFormat("0000");
+             int nextMastNum = jmri.implementation.VirtualSignalMast.getLastRef() + 1;
+
+             // Construct the valid, unique system name in the required format.
+             String mastSystemName = "IF$vsm:" + signalSystem + "($" + paddedNumber.format(nextMastNum) + ")";
+
+             this.virtualSignalMast = smm.provideSignalMast(mastSystemName);
+
+             // Check for successful creation
+             if (this.virtualSignalMast == null) {
+                 log.error("Failed to create virtual signal mast for turntable {}", id);
+                 return; // Stop here if creation failed.
+             }
+             this.virtualSignalMast.setUserName(mastUserName);
+         } else {
+             log.debug("Found existing mast '{}' for turntable '{}'.", this.virtualSignalMast.getSystemName(), id);
+         }
+
+        // Store a direct reference to this turntable object on the mast itself.
+        // This allows other parts of the system (like SignalMastLogic) to easily find the owner.
+        if (this.virtualSignalMast != null) {
+            this.virtualSignalMast.setProperty("ownerTurntable", this);
+        }
+     }
+
+    /**
+     * Static method to identify a SignalMast that is a turntable mast
+     * based on its user name.
+     * @param mast The signal mast to check.
+     * @return true if the mast's user name indicates it belongs to a turntable.
+     */
+    public static boolean isTurntableMast(jmri.SignalMast mast) {
+        if (mast == null) {
+            return false;
+        }
+        // Identify a turntable mast by its user name, which is set reliably
+        // by the LayoutTurntable constructor.
+        return mast.getUserName() != null && mast.getUserName().contains("Turntable Mast");
     }
 
     // defined constants
@@ -63,6 +127,7 @@ public class LayoutTurntable extends LayoutTrack {
     private boolean turnoutControlled = false;
     private double radius = 25.0;
     private int lastKnownIndex = -1;
+	private SignalMast virtualSignalMast = null;
 
     // persistent instance variables (saved between sessions)
 
@@ -139,12 +204,24 @@ public class LayoutTurntable extends LayoutTrack {
                 String newName = newLayoutBlock.getUserName();
                 if ((newName != null) && !newName.isEmpty()) {
                     namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newName, newLayoutBlock);
+					newLayoutBlock.incrementUse();
                 } else {
                     namedLayoutBlock = null;
                 }
             } else {
                 namedLayoutBlock = null;
             }
+			if (layoutBlock != null) { layoutBlock.updatePaths(); }
+            if (newLayoutBlock != null) { newLayoutBlock.updatePaths(); }
+            for (RayTrack ray : rayTrackList) {
+                TrackSegment segment = ray.getConnect();
+                if (segment != null) {
+                    LayoutBlock rayBlock = segment.getLayoutBlock();
+                    if (rayBlock != null && rayBlock != layoutBlock && rayBlock != newLayoutBlock) {
+                        rayBlock.updatePaths();
+                    }
+                }
+            }												 
         }
     }
 
@@ -294,6 +371,54 @@ public class LayoutTurntable extends LayoutTrack {
             result = rt.getAngle();
         }
         return result;
+    }
+
+    /**
+     * Check if a given LayoutBlock is connected to one of the turntable rays.
+     * @param block The LayoutBlock to check.
+     * @return true if the block is a ray block, false otherwise.
+     */
+    public boolean isRayBlock(LayoutBlock block) {
+        if (block == null) {
+            return false;
+        }
+        for (int i = 0; i < getNumberRays(); i++) {
+            TrackSegment rayConnect = getRayConnectOrdered(i);
+            if (rayConnect != null && rayConnect.getLayoutBlock() == block) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /**
+     * Get the connection index for a given LayoutBlock that is a ray track.
+     * @param block The LayoutBlock to check.
+     * @return the connection index, or -1 if not found.
+     */
+    public int getRayIndexForBlock(LayoutBlock block) {
+        if (block == null) {
+            return -1;
+        }
+        for (RayTrack rt : rayTrackList) {
+            TrackSegment rayConnect = rt.getConnect();
+            if (rayConnect != null && rayConnect.getLayoutBlock() == block) {
+                return rt.getConnectionIndex();
+            }
+        }
+        return -1;
+    }
+    /**
+     * Get the position control Turnout for a specific ray index.
+     * @param index The connection index of the ray.
+     * @return The associated Turnout, or null if none exists.
+     */
+    public Turnout getTurnoutForRay(int index) {
+        for (RayTrack rt : rayTrackList) {
+            if (rt.getConnectionIndex() == index) {
+                return rt.getTurnout();
+            }
+        }
+        return null;
     }
 
     /**
@@ -560,26 +685,42 @@ public class LayoutTurntable extends LayoutTrack {
 
     /**
      * Set turntable position to the ray with this index.
+	 * Set the turnout to thrown if at the ray with this index else closed
      *
      * @param index the index
      */
     public void setPosition(int index) {
+        log.debug("DIAGNOSTIC: Turntable '{}' setPosition({}) called.", getName(), index);
+
         if (isTurnoutControlled()) {
-            boolean found = false; // assume failure (pessimist!)
+            boolean rayExists = false;
             for (RayTrack rt : rayTrackList) {
                 if (rt.getConnectionIndex() == index) {
-                    lastKnownIndex = index;
-                    rt.setPosition();
-                    models.redrawPanel();
-                    models.setDirty();
-                    found = true;
-                    break;
+                    rayExists = true;
+                }
+                Turnout t = rt.getTurnout();
+                if (t != null) {
+                    if (rt.getConnectionIndex() == index) {
+                        log.debug("DIAGNOSTIC:   - Commanding turnout '{}' for ray {} to THROWN.", t.getSystemName(), index);
+                        t.setCommandedState(Turnout.THROWN);
+                    } else {
+                        // Only log this if we are actively changing it, to reduce log spam.
+                        if (t.getCommandedState() != Turnout.CLOSED) log.debug("DIAGNOSTIC:   - Commanding turnout '{}' to CLOSED.", t.getSystemName());
+                        t.setCommandedState(Turnout.CLOSED);
+                    }
                 }
             }
-            if (!found) {
-                log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track",
-                        getName(), index);
+
+            if (rayExists) {
+                lastKnownIndex = index;
+                models.redrawPanel();
+                models.setDirty();
+            } else {
+                log.error("{}.setPosition({}); Attempt to set the position on a non-existant ray track", getName(), index);
+
             }
+        } else {
+            log.debug("DIAGNOSTIC: Turntable '{}' setPosition({}) ignored because it is not turnout-controlled.", getName(), index);
         }
     }
 
@@ -621,6 +762,10 @@ public class LayoutTurntable extends LayoutTrack {
     public void remove() {
         // remove from persistance by flagging inactive
         active = false;
+        if (virtualSignalMast != null) {
+            jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).deregister(virtualSignalMast);
+            virtualSignalMast = null;
+        }
     }
 
     private boolean active = true;
@@ -633,6 +778,9 @@ public class LayoutTurntable extends LayoutTrack {
     public boolean isActive() {
         return active;
     }
+	
+	@CheckForNull
+    public SignalMast getVirtualSignalMast() { return virtualSignalMast; }
 
     public class RayTrack {
 
@@ -790,11 +938,16 @@ public class LayoutTurntable extends LayoutTrack {
         public void setTurnout(@Nonnull String turnoutName, int state) {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
-                mTurnoutListener = (PropertyChangeEvent e) -> {
-                    if (getTurnout().getKnownState() == turnoutState) {
-                        lastKnownIndex = connectionIndex;
-                        models.redrawPanel();
-                        models.setDirty();
+                mTurnoutListener = (PropertyChangeEvent e) -> { // if a ray turnout is thrown, set all others to closed
+                    if (e.getPropertyName().equals(Turnout.PROPERTY_KNOWN_STATE)) {
+                        // If this ray's turnout has been thrown, it means the user wants to align to this ray.
+                        log.debug("DIAGNOSTIC: RayTrack listener for turnout '{}' (ray {}) detected property change to {}.",
+                                getTurnoutName(), connectionIndex, e.getNewValue());
+                        // We call setPosition() on the parent LayoutTurntable to enforce the interlocking.
+                        if ((Integer) e.getNewValue() == turnoutState) { // turnoutState is THROWN
+                            log.debug("DIAGNOSTIC:   - State matches target (THROWN). Calling setPosition({}).", connectionIndex);
+                            LayoutTurntable.this.setPosition(connectionIndex);
+                        }
                     }
                 };
             }
@@ -837,7 +990,7 @@ public class LayoutTurntable extends LayoutTrack {
          *
          * @return the turnout or null
          */
-       // @CheckForNull temporary until we have central paradigm for null
+        // @CheckForNull temporary until we have central paradigm for null
         public Turnout getTurnout() {
             if (namedTurnout == null) {
                 return null;
@@ -885,7 +1038,19 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     protected void reCheckBlockBoundary() {
-        // nothing to see here... move along...
+                LayoutBlock block = getLayoutBlock();
+        if (block != null) {
+            block.updatePaths();
+        }
+        for (RayTrack ray : rayTrackList) {
+            TrackSegment segment = ray.getConnect();
+            if (segment != null) {
+                LayoutBlock rayBlock = segment.getLayoutBlock();
+                if (rayBlock != null && rayBlock != block) {
+                    rayBlock.updatePaths();
+                }
+            }
+        }
     }
 
     /**
@@ -894,8 +1059,34 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     @CheckForNull
     protected List<LayoutConnectivity> getLayoutConnectivity() {
-        // nothing to see here... move along...
-        return null;
+        final List<LayoutConnectivity> c = new ArrayList<>();
+        LayoutBlock turntableBlock = getLayoutBlock();
+        log.error("TURNTABLE_CONNECTIVITY for " + getName() + ": Turntable block is '" + (turntableBlock != null ? turntableBlock.getDisplayName() : "null") + "'");
+
+        if (turntableBlock == null) {
+            log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": No turntable block, returning empty list.");
+            return c;
+        }
+
+        for (RayTrack ray : rayTrackList) {
+            TrackSegment connectedSegment = ray.getConnect();
+            log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Processing ray " + ray.getConnectionIndex());
+            if (connectedSegment != null) {
+                LayoutBlock connectedBlock = connectedSegment.getLayoutBlock();
+                log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Ray " + ray.getConnectionIndex() + " connects to block " + (connectedBlock != null ? connectedBlock.getDisplayName() : "null"));
+                if (connectedBlock != null && connectedBlock != turntableBlock) {
+                    log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Adding connection between " + connectedBlock.getDisplayName() + " and " + turntableBlock.getDisplayName());
+                    c.add(new LayoutConnectivity(connectedBlock, turntableBlock));
+                    c.add(new LayoutConnectivity(turntableBlock, connectedBlock));
+                } else {
+                    log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Skipping connection for ray " + ray.getConnectionIndex() + " because connected block is null or same as turntable block.");
+                }
+            } else {
+                log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Ray " + ray.getConnectionIndex() + " has no connected segment.");
+            }
+        }
+        log.info("TURNTABLE_CONNECTIVITY for " + getName() + ": Returning " + c.size() + " connectivity items.");
+        return c;
     }
 
     /**
@@ -1021,8 +1212,7 @@ public class LayoutTurntable extends LayoutTrack {
      */
     @Override
     public void setAllLayoutBlocks(LayoutBlock layoutBlock) {
-        // turntables don't have blocks...
-        // nothing to see here, move along...
+        setLayoutBlock(layoutBlock);
     }
 
     /**

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="5">
+<project version="4">
   <component name="AntConfiguration">
     <buildFile url="file://$PROJECT_DIR$/help/en/build.xml" />
     <buildFile url="file://$PROJECT_DIR$/help/fr/build.xml" />

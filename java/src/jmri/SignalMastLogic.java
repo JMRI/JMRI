@@ -536,6 +536,15 @@ public interface SignalMastLogic extends NamedBean {
     void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts, SignalMast destination);
 
     /**
+     * Add a single turnout to the list of automatically discovered turnouts.
+     *
+     * @param turnoutName The system name of the Turnout to add.
+     * @param state       The required state of the Turnout.
+     * @param destination The destination mast for this logic path.
+     */
+    void addAutoTurnout(String turnoutName, int state, SignalMast destination);
+
+    /**
      * Set which blocks must be in a given state for the signal mast not to be
      * set to a Stop aspect.
      *
@@ -663,6 +672,17 @@ public interface SignalMastLogic extends NamedBean {
      * @param destination controlled signal mast
      */
     void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts, SignalMast destination);
+
+    /**
+     * Add an individual control Turnout and its set to state to the Signal Mast
+     * Logic. This is intended for use by automated tools.
+     *
+     * @param turnoutName The name of the turnout to be added
+     * @param state       Integer representing the state the control Turnout
+     *                    should be in
+     * @param destination The destination mast for this logic path
+     */
+    void addTurnout(String turnoutName, int state, SignalMast destination);
 
     /**
      * Set up a Signal Mast Logic from the Layout Editor panel where its source

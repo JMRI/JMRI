@@ -18,7 +18,10 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
+import jmri.jmrit.display.layoutEditor.TurntableSignalMast;
 import jmri.jmrit.display.layoutEditor.LevelXing;
+import jmri.jmrit.display.layoutEditor.TrackSegment;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -38,26 +41,70 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     LayoutBlock facingBlock = null;
     LayoutBlock remoteProtectingBlock = null;
 
+    protected LayoutBlock facing;
+    protected final List<LayoutBlock> protecting = new ArrayList<>();
+
     boolean disposing = false;
 
-    /**
-     * Initialise a Signal Mast Logic for a given source Signal Mast.
-     *
-     * @param source  The Signal Mast we are configuring an SML for
-     */
     public DefaultSignalMastLogic(@Nonnull SignalMast source) {
-        super(source.toString()); // default system name
+        super(source.getSystemName());
         this.source = source;
-        try {
-            this.stopAspect = source.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
-            this.source.addPropertyChangeListener(propertySourceMastListener);
-            if (source.getAspect() == null) {
-                source.setAspect(stopAspect);
+        log.debug("source {}", source.getDisplayName());
+
+        // Only perform block discovery here for Turntable Masts, as it does not depend on editor panels.
+        // Block discovery for standard masts is deferred to a later stage.
+        if (source instanceof TurntableSignalMast) {
+            log.debug("source instanceof TurntableSignalMast");
+            LayoutTurntable turntable = ((TurntableSignalMast) source).getTurntable();
+            log.debug("turntable {}", turntable);
+            if (turntable != null) {
+                this.facing = turntable.getLayoutBlock();
+                log.debug("this.facing {}", this.facing);
+                // For a turntable, the protecting blocks are all the blocks connected to the rays.
+                for (int i = 0; i < turntable.getNumberRays(); i++) {
+                    TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
+                    if (rayConnect != null) {
+                        LayoutBlock protectingLBlock = rayConnect.getLayoutBlock();
+                        if (protectingLBlock != null && protectingLBlock != this.facing) {
+                            if (!this.protecting.contains(protectingLBlock)) {
+                                this.protecting.add(protectingLBlock);
+                            }
+                        }
+                    }
+                }
             }
-        } catch (Exception ex) {
-            log.error("Error while creating Signal Logic", ex);
+        }
+
+        // Note: Error logging for missing blocks is removed from here, as discovery for standard masts is now deferred.
+        this.stopAspect = source.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+        this.source.addPropertyChangeListener(propertySourceMastListener);
+        if (source.getAspect() == null) {
+            source.setAspect(stopAspect);
         }
     }
+
+//    /**
+//     * Force this SignalMastLogic to discover or re-discover the details
+//     * from the LayoutEditor. This is intended to be called after a panel
+//     * has finished loading to resolve any race conditions during startup.
+//     */
+//    public void discoverLayoutEditorDetails() {
+//        // Iterate through all configured destinations for this signal mast logic.
+//        log.debug("SML '{}': Forcing re-discovery of layout details.", getDisplayName());
+//        for (SignalMast dest : getDestinationList()) {
+//            DestinationMast destMast = destList.get(dest);
+//            // Check if this specific destination is configured to use the editor.
+//            if (destMast != null && destMast.useLayoutEditor()) {
+//                log.debug("  - SML '{}', re-discovering for destination: {}", getDisplayName(), dest.getDisplayName());
+//                try {
+//                    destMast.setupLayoutEditorDetails();
+//                } catch (JmriException e) {
+//                    // This exception is often expected if a valid path isn't found, so log at debug level.
+//                    log.debug("Error during forced re-discovery for destination mast '{}' in SML '{}'", dest.getDisplayName(), getDisplayName(), e);
+//                }
+//            }
+//        }
+//    }
 
     // Most of the following methods will inherit Javadoc from SignalMastLogic.java
     /**
@@ -170,11 +217,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             log.debug("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
             return;
         }
+
         int oldSize = destList.size();
         destList.put(dest, new DestinationMast(dest));
-        //InstanceManager.getDefault(SignalMastLogicManager.class).addDestinationMastToLogic(this, dest);
         firePropertyChange(PROPERTY_LENGTH, oldSize, destList.size());
-        // make new dest mast appear in (update of) SignallingSourcePanel Table by having that table listen to PropertyChange Events from SML TODO
     }
 
     /**
@@ -548,11 +594,41 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
      * {@inheritDoc }
      */
     @Override
+    public void addTurnout(String turnoutName, int state, SignalMast destination) {
+        if (!destList.containsKey(destination)) {
+            return;
+        }
+        Turnout turn = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+        if (turn != null) {
+            NamedBeanHandle<Turnout> namedTurnout = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                .getNamedBeanHandle(turnoutName, turn);
+            destList.get(destination).addTurnout(namedTurnout, state);
+        }
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
     public void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts, SignalMast destination) {
         if (!destList.containsKey(destination)) {
             return;
         }
         destList.get(destination).setAutoTurnouts(turnouts);
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public void addAutoTurnout(String turnoutName, int state, SignalMast destination) {
+        if (!destList.containsKey(destination)) {
+            return;
+        }
+        Turnout turn = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+        if (turn != null) {
+            destList.get(destination).addAutoTurnout(turn, state);
+        }
     }
 
     /**
@@ -714,10 +790,20 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
      */
     @Override
     public List<Turnout> getAutoTurnouts(SignalMast destination) {
-        if (!destList.containsKey(destination)) {
+        if (destination == null || !destList.containsKey(destination)) {
             return new ArrayList<>();
         }
-        return destList.get(destination).getAutoTurnouts();
+        List<Turnout> turnouts = destList.get(destination).getAutoTurnouts();
+        // This diagnostic will fire when the dispatcher asks for the list of turnouts to set for a route.
+        log.debug("DIAGNOSTIC: getAutoTurnouts called for route {} -> {}. Returning {} turnouts.",
+                getSourceMast().getDisplayName(),
+                destination.getDisplayName(),
+                turnouts.size());
+        for (Turnout t : turnouts) {
+            log.debug("DIAGNOSTIC:   - Turnout: '{}' with required state: {}",
+                    t.getSystemName(), getAutoTurnoutState(t, destination));
+        }
+        return turnouts;
     }
 
     /**
@@ -1075,6 +1161,14 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             getSourceMast().setAspect(stopAspect);
             return;
         }
+
+        // Use the static helper method to identify a turntable mast.
+        String destAspect = destination.getAspect(); // Get the real aspect first.
+        if (jmri.jmrit.display.layoutEditor.LayoutTurntable.isTurntableMast(destination)) {
+            log.debug("Destination is a Turntable Mast. Forcing 'Danger' aspect for this calculation, overriding its actual state of '{}'.", destAspect);
+            destAspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+        }
+
         String[] advancedAspect;
         if (destination.getHeld()) {
             if (destination.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.HELD) != null) {
@@ -1083,8 +1177,12 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER));
             }
         } else {
-            advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destination.getAspect());
+            // Use our local destAspect variable which is now guaranteed to be correct for the turntable case.
+            advancedAspect = getSourceMast().getAppearanceMap().getValidAspectsForAdvancedAspect(destAspect);
         }
+
+        log.debug("  - Destination Aspect (used for calc): {}", destAspect);
+        log.debug("  - Advanced Aspects Found: {}", (advancedAspect != null ? String.join(", ", advancedAspect) : "null"));
 
         log.debug("distant aspect is {}", destination.getAspect());
         log.debug("advanced aspect is {}", advancedAspect != null ? advancedAspect : "<null>");
@@ -1170,7 +1268,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                                             speed = InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(strSpeed);
                                         } catch (IllegalArgumentException ex) {
                                             // not a name either
-                                            log.warn("Using speed = 0.0 because could not understand \"{}\"", strSpeed);
+                                            log.warn("Using speed = 0.0 because could not understand '{}'", strSpeed);
                                         }
                                     }
                                     //Integer state = Integer.parseInt(strSpeed);
@@ -1219,8 +1317,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 }
             }
             if ((aspect != null) && (!aspect.isEmpty())) {
-                log.debug("setMastAppearance setting aspect \"{}\"", aspect);
-                String aspectSet = aspect; // for lambda
+                log.debug("setMastAppearance setting aspect '{}'", aspect);
+                        String aspectSet = aspect; // for lambda
                 try {
                     ThreadingUtil.runOnLayout(() -> {
                         getSourceMast().setAspect(aspectSet);
@@ -1485,6 +1583,19 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             firePropertyChange(PROPERTY_TURNOUTS, null, this.destinationSignalMast);
         }
 
+        void addTurnout(NamedBeanHandle<Turnout> turn, int state) {
+            for (NamedBeanSetting nbh : userSetTurnouts) {
+                if (nbh.getBean().equals(turn.getBean())) {
+                    return; // Already present
+                }
+            }
+            turn.getBean().addPropertyChangeListener(propertyTurnoutListener, turn.getName(),
+                    "Signal Mast Logic:" + source.getDisplayName() + " to " + destinationSignalMast.getDisplayName());
+            NamedBeanSetting nbs = new NamedBeanSetting(turn, state);
+            userSetTurnouts.add(nbs);
+            firePropertyChange(PROPERTY_TURNOUTS, null, this.destinationSignalMast);
+        }
+
         void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts) {
             log.debug("{} called setAutoTurnouts with {}", destinationSignalMast.getDisplayName(),
                 (turnouts != null ? "" + turnouts.size() + " turnouts in hash table" : "null hash table reference"));
@@ -1502,6 +1613,19 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             } else {
                 this.autoTurnouts = new Hashtable<>(turnouts);
             }
+            firePropertyChange(PROPERTY_AUTO_TURNOUTS, null, this.destinationSignalMast);
+        }
+
+        void addAutoTurnout(Turnout turnout, int state) {
+            if (this.autoTurnouts.containsKey(turnout)) {
+                return;
+            }
+            // Add the listener so the logic re-evaluates when the turnout changes.
+            turnout.addPropertyChangeListener(propertyTurnoutListener);
+            log.debug("DIAGNOSTIC:       - Adding turnout '{}' with state {} to autoTurnouts list for path to '{}'.",
+                    turnout.getSystemName(), state, destinationSignalMast.getDisplayName());
+
+            this.autoTurnouts.put(turnout, state);
             firePropertyChange(PROPERTY_AUTO_TURNOUTS, null, this.destinationSignalMast);
         }
 
@@ -1542,9 +1666,18 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
 
             } else {
                 this.autoBlocks = new LinkedHashMap<>(blocks);
+                // DIAGNOSTIC: Log what setAutoBlocks receives and what it does with the
+                // facing block.
+                log.debug("DIAGNOSTIC:: (setAutoBlocks): For path to '{}', received {} blocks. FacingBlock is '{}'.",
+                        destinationSignalMast.getDisplayName(), this.autoBlocks.size(), (facingBlock != null ? facingBlock.getDisplayName() : "null"));
+
                 //We shall remove the facing block in the list.
                 if (facingBlock != null && autoBlocks.containsKey(facingBlock.getBlock())) {
+                    log.debug("DIAGNOSTIC:: (setAutoBlocks):   - FacingBlock '{}' is in the list. Removing it.", facingBlock.getDisplayName());
                     autoBlocks.remove(facingBlock.getBlock());
+                    log.debug("DIAGNOSTIC:: (setAutoBlocks):   - List now has {} blocks.", autoBlocks.size());
+                } else {
+                    log.debug("DIAGNOSTIC:: (setAutoBlocks):   - FacingBlock '{}' is NOT in the list. No block removed.", (facingBlock != null ? facingBlock.getDisplayName() : "null"));
                 }
                 if (getAssociatedSection() != null) {
                     createSectionDetails();
@@ -2249,27 +2382,19 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
 
         void setupLayoutEditorDetails() throws JmriException {
-            log.debug("setupLayoutEditorDetails: useLayoutEditor={} disposed={}", useLayoutEditor, disposed);
+            log.debug("DIAGNOSTIC: SML '{}' to '{}': setupLayoutEditorDetails called.",
+                    getSourceMast().getDisplayName(), destinationSignalMast.getDisplayName());
+
             if ((!useLayoutEditor) || (disposed)) {
                 return;
             }
             LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-            if ( destinationBlock != null) {
-                log.debug("{} Set use layout editor", destinationSignalMast.getDisplayName());
-            }
             Set<LayoutEditor> layout = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
-            List<LayoutBlock> protectingBlocks = new ArrayList<>();
-            // We don't care which Layout Editor panel the signal mast is on, just so long as
-            // the routing is done via layout blocks.
-            remoteProtectingBlock = null;
-            for (int i = 0; i < layout.size(); i++) {
-                log.debug("{} Layout name {}", destinationSignalMast.getDisplayName(), editor );
+
+            // Discover all the necessary blocks from the layout panels
+            for (LayoutEditor editor : layout) {
                 if (facingBlock == null) {
                     facingBlock = lbm.getFacingBlockByNamedBean(getSourceMast(), editor);
-                }
-                if (protectingBlock == null && protectingBlocks.isEmpty()) {
-                    //This is wrong
-                    protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), editor);
                 }
                 if (destinationBlock == null) {
                     destinationBlock = lbm.getFacingBlockByNamedBean(destinationSignalMast, editor);
@@ -2278,77 +2403,117 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     remoteProtectingBlock = lbm.getProtectedBlockByNamedBean(destinationSignalMast, editor);
                 }
             }
-            // At this point, if we are not using the Layout Editor turnout or block
-            // details then there is no point in trying to gather them.
+
+            log.debug("DIAGNOSTIC:   - Facing Block: '{}', Destination Block: '{}'",
+                    (facingBlock != null ? facingBlock.getDisplayName() : "null"),
+                    (destinationBlock != null ? destinationBlock.getDisplayName() : "null"));
+
             if ((!useLayoutEditorTurnouts) && (!useLayoutEditorBlocks)) {
                 return;
             }
             if (facingBlock == null) {
-                log.error("No facing block found for source mast {}", getSourceMast().getDisplayName());
-                throw new JmriException("No facing block found for source mast " + getSourceMast().getDisplayName());
+                throw new JmriException("DIAGNOSTIC: No facing block found for source mast " + getSourceMast().getDisplayName());
             }
             if (destinationBlock == null) {
-                log.error("No facing block found for destination mast {}", destinationSignalMast.getDisplayName());
-                throw new JmriException("No facing block found for destination mast " + destinationSignalMast.getDisplayName());
+                throw new JmriException("DIAGNOSTIC: No facing block found for destination mast " + destinationSignalMast.getDisplayName());
             }
-            List<LayoutBlock> lblks = new ArrayList<>();
-            if (protectingBlock == null) {
-                log.debug("protecting block is null");
-                String pBlkNames = "";
-                StringBuffer lBlksNamesBuf = new StringBuffer();
-                for (LayoutBlock pBlk : protectingBlocks) {
-                    log.debug("checking layoutBlock {}", pBlk.getDisplayName());
-                    pBlkNames = pBlkNames + pBlk.getDisplayName() + " (" + lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST) + "), ";
-                    if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
-                        try {
-                            lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, pBlk, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
-                            protectingBlock = pBlk;
-                            log.debug("building path names...");
-                            for (LayoutBlock lBlk : lblks) {
-                                lBlksNamesBuf.append(" ");
-                                lBlksNamesBuf.append(lBlk.getDisplayName());
+
+            List<LayoutBlock> lblks;
+            LinkedHashMap<Block, Integer> block;
+
+            lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
+            if (LayoutTurntable.isTurntableMast(source)) {
+                // This is an OUTBOUND path.
+                log.debug("DIAGNOSTIC:   - Path is OUTBOUND from a turntable.");
+                // 1. Find the correct protecting block (the ray) by testing each one for a valid path.
+                LayoutTurntable turntable = findTurntableForMast(source, layout);
+                if (turntable == null) {
+                    throw new JmriException("Could not find LayoutTurntable for mast " + source.getDisplayName());
+                }
+                log.debug("DIAGNOSTIC:   - Searching for a valid ray to destination...");
+                for (int i = 0; i < turntable.getNumberRays(); i++) {
+                    TrackSegment ray = turntable.getRayConnectOrdered(i);
+                    if (ray != null) {
+                        LayoutBlock pBlk = ray.getLayoutBlock();
+                        if (pBlk != null) {
+                            if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
+                                protectingBlock = pBlk;
+                                log.debug("DIAGNOSTIC:   - Found valid protecting ray block: '{}'", protectingBlock.getDisplayName());
+                                break;
                             }
-                            break;
-                        } catch (JmriException ee) {
-                            log.debug("path not found this time");
                         }
                     }
                 }
-                String lBlksNames = new String(lBlksNamesBuf);
-
                 if (protectingBlock == null) {
-                    throw new JmriException("Path not valid, protecting block is null. Protecting block: " + pBlkNames
-                        + " not connected to " + facingBlock.getDisplayName() + ". Layout block names: " + lBlksNames);
+                    throw new JmriException("DIAGNOSTIC: Path not valid, no protecting ray found for turntable path from " + facingBlock.getDisplayName() + " to " + destinationBlock.getDisplayName());
                 }
-            }
-            if (!lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock,protectingBlock,
-                destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
-                throw new JmriException("Path not valid, destination check failed.");
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("{} face {}", destinationSignalMast.getDisplayName(), facingBlock);
-                log.debug("{} prot {}", destinationSignalMast.getDisplayName(), protectingBlock);
-                log.debug("{} dest {}", destinationSignalMast.getDisplayName(), destinationBlock);
+
+                // 2. Examine the full path of blocks.
+
+                // DIAGNOSTIC: Log the raw path returned by the connectivity tools.
+                if (lblks != null) {
+                    StringBuilder path = new StringBuilder();
+                    for (LayoutBlock lb : lblks) {
+                        path.append(lb.getDisplayName()).append(" -> ");
+                    }
+                    log.debug("DIAGNOSTIC:: (setupLayoutEditorDetails): For OUTBOUND path from '{}', getLayoutBlocks returned: {}", source.getDisplayName(), path.toString());
+                } else {
+                    log.debug("DIAGNOSTIC:: (setupLayoutEditorDetails): For OUTBOUND path from '{}', getLayoutBlocks returned null.", source.getDisplayName());
+                }
+
+                // 3. Call the method that finds physical turnouts and creates the block list.
+                // This will temporarily wipe out the turnouts, which we will fix in the next step.
+                block = setupLayoutEditorTurnoutDetails(lblks);
+
+                // 4. ADD the virtual turnout back to the logic. This is the crucial step.
+                int rayIndex = turntable.getRayIndexForBlock(protectingBlock);
+                addRayTurnoutToLogic(turntable, rayIndex);
+
+            } else {
+                // This is an INBOUND or normal path. This logic is correct.
+                log.debug("DIAGNOSTIC:   - Path is INBOUND to a turntable or a normal path.");
+                List<LayoutBlock> protectingBlocks = new ArrayList<>();
+                for (LayoutEditor editor : layout) {
+                    protectingBlocks.addAll(lbm.getProtectingBlocksByNamedBean(getSourceMast(), editor));
+                }
+                if (protectingBlock == null) {
+                    for (LayoutBlock pBlk : protectingBlocks) {
+                        if (lbm.getLayoutBlockConnectivityTools().checkValidDest(facingBlock, pBlk, destinationBlock, remoteProtectingBlock, LayoutBlockConnectivityTools.Routing.MASTTOMAST)) {
+                            protectingBlock = pBlk;
+                            log.debug("DIAGNOSTIC:   - Found valid protecting block: '{}'", protectingBlock.getDisplayName());
+                            break;
+                        }
+                    }
+                }
+                if (protectingBlock == null) {
+                    log.debug("DIAGNOSTIC:   - Path not valid, no protecting block found for path from '{}'", facingBlock.getDisplayName());
+                    throw new JmriException("Path not valid, no protecting block found for path from " + facingBlock.getDisplayName());
+                }
+
+
+                // DIAGNOSTIC: Log the raw path returned by the connectivity tools.
+                if (lblks != null) {
+                    StringBuilder path = new StringBuilder();
+                    for (LayoutBlock lb : lblks) {
+                        path.append(lb.getDisplayName()).append(" -> ");
+                    }
+                    log.debug("DIAGNOSTIC:: (setupLayoutEditorDetails): For INBOUND/NORMAL path to '{}', getLayoutBlocks returned: {}", destinationSignalMast.getDisplayName(), path.toString());
+                } else {
+                    log.debug("DIAGNOSTIC:: (setupLayoutEditorDetails): For INBOUND/NORMAL path to '{}', getLayoutBlocks returned null.", destinationSignalMast.getDisplayName());
+                }
+
+                block = setupLayoutEditorTurnoutDetails(lblks);
+                if (LayoutTurntable.isTurntableMast(destinationSignalMast)) {
+                    LayoutTurntable turntable = findTurntableForMast(destinationSignalMast, layout);
+                    if (turntable != null) {
+                        int rayIndex = turntable.getRayIndexForBlock(protectingBlock);
+                        addRayTurnoutToLogic(turntable, rayIndex);
+                    }
+                }
             }
 
             if (destinationBlock != null && protectingBlock != null && facingBlock != null) {
                 setAutoMasts(null, true);
-                if (log.isDebugEnabled()) {
-                    log.debug("{} face {}", destinationSignalMast.getDisplayName(), facingBlock.getDisplayName());
-                    log.debug("{} prot {}", destinationSignalMast.getDisplayName(), protectingBlock.getDisplayName());
-                    log.debug("{} dest {}", destinationSignalMast.getDisplayName(), destinationBlock.getDisplayName());
-                }
-
-                try {
-                    lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(
-                        facingBlock, destinationBlock, protectingBlock,
-                            true, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
-                } catch (JmriException ee) {
-                    log.error("No blocks found by the layout editor for pair {}-{}",
-                        source.getDisplayName(), destinationSignalMast.getDisplayName());
-                }
-                LinkedHashMap<Block, Integer> block = setupLayoutEditorTurnoutDetails(lblks);
-
                 for (int i = 0; i < blockInXings.size(); i++) {
                     blockInXings.get(i).removeSignalMastLogic(source);
                 }
@@ -2356,20 +2521,17 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 xingAutoBlocks = new ArrayList<>(0);
                 for (LayoutEditor lay : layout) {
                     for (LevelXing levelXing : lay.getLevelXings()) {
-                        //Looking for a crossing that both layout blocks defined and they are individual.
-                        if ((levelXing.getLayoutBlockAC() != null)
-                                && (levelXing.getLayoutBlockBD() != null)
-                                && (levelXing.getLayoutBlockAC() != levelXing.getLayoutBlockBD())) {
-                            if (lblks.contains(levelXing.getLayoutBlockAC()) &&
-                                    levelXing.getLayoutBlockAC() != facingBlock) {  // Don't include the facing xing blocks
-                                block.put(levelXing.getLayoutBlockBD().getBlock(), Block.UNOCCUPIED);
-                                xingAutoBlocks.add(levelXing.getLayoutBlockBD().getBlock());
-                                blockInXings.add(levelXing);
-                            } else if (lblks.contains(levelXing.getLayoutBlockBD()) &&
-                                    levelXing.getLayoutBlockBD() != facingBlock) {  // Don't include the facing xing blocks
-                                block.put(levelXing.getLayoutBlockAC().getBlock(), Block.UNOCCUPIED);
-                                xingAutoBlocks.add(levelXing.getLayoutBlockAC().getBlock());
-                                blockInXings.add(levelXing);
+                        if ((levelXing.getLayoutBlockAC() != null) && (levelXing.getLayoutBlockBD() != null) && (levelXing.getLayoutBlockAC() != levelXing.getLayoutBlockBD())) {
+                            if (lblks != null) {
+                                if (lblks.contains(levelXing.getLayoutBlockAC()) && levelXing.getLayoutBlockAC() != facingBlock) {
+                                    block.put(levelXing.getLayoutBlockBD().getBlock(), Block.UNOCCUPIED);
+                                    xingAutoBlocks.add(levelXing.getLayoutBlockBD().getBlock());
+                                    blockInXings.add(levelXing);
+                                } else if (lblks.contains(levelXing.getLayoutBlockBD()) && levelXing.getLayoutBlockBD() != facingBlock) {
+                                    block.put(levelXing.getLayoutBlockAC().getBlock(), Block.UNOCCUPIED);
+                                    xingAutoBlocks.add(levelXing.getLayoutBlockAC().getBlock());
+                                    blockInXings.add(levelXing);
+                                }
                             }
                         }
                     }
@@ -2382,10 +2544,48 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 if (!useLayoutEditorTurnouts) {
                     setAutoTurnouts(null);
                 }
-
                 setupAutoSignalMast(null, false);
             }
             initialise();
+
+        }
+
+
+        /**
+         * Helper method to find the LayoutTurntable object associated with a given SignalMast.
+         * @param mast The SignalMast to find the turntable for.
+         * @param layout A Set of all available LayoutEditor panels to search.
+         * @return The found LayoutTurntable, or null.
+         */
+        private LayoutTurntable findTurntableForMast(SignalMast mast, Set<LayoutEditor> layout) {
+            for (LayoutEditor editor : layout) {
+                for (LayoutTurntable tt : editor.getLayoutTurntables()) {
+                    if (tt.getVirtualSignalMast() == mast) {
+                        return tt;
+                    }
+                }
+            }
+            log.error("Could not find the LayoutTurntable object for mast '{}'", mast.getDisplayName());
+            return null;
+        }
+
+        /**
+         * Helper method to add a turntable's virtual ray turnout to the logic's dependencies.
+         * @param turntable The LayoutTurntable object.
+         * @param rayIndex The connection index of the ray to add.
+         */
+        private void addRayTurnoutToLogic(LayoutTurntable turntable, int rayIndex) {
+            if (rayIndex != -1) {
+                log.debug("DIAGNOSTIC:   - Calling addRayTurnoutToLogic for ray index: {}", rayIndex);
+                Turnout rayTurnout = turntable.getTurnoutForRay(rayIndex);
+                if (rayTurnout != null) {
+                    log.debug("DIAGNOSTIC:     - Found virtual turnout '{}' for ray index {}.", rayTurnout.getSystemName(), rayIndex);
+                    // Add the virtual turnout to the list of automatically discovered ones.
+                    addAutoTurnout(rayTurnout, Turnout.THROWN);
+                } else {
+                    log.debug("DIAGNOSTIC:     - ERROR: No virtual turnout found for ray index {}.", rayIndex);
+                }
+            }
         }
 
         /**
@@ -2396,6 +2596,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
          * @return a list of block - turnout state pairs
          */
         LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> lblks) {
+
             ConnectivityUtil connection;
             List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList;
             Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<>();
@@ -2409,15 +2610,23 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     if (i == lblks.size() - 1) {
                         nxtBlk = i;
                     }
+
                     //We use the best connectivity for the current block.
-                    connection = new ConnectivityUtil(lblks.get(i).getMaxConnectedPanel());
+                    LayoutEditor panel = lblks.get(i).getMaxConnectedPanel();
+                    if (panel == null) {
+                        log.warn("Could not find a LayoutEditor panel for LayoutBlock '{}', cannot determine turnout connectivity for this part of the path.", lblks.get(i).getDisplayName());
+                        continue; // Skip to the next block in the path
+                    }
+                    connection = new ConnectivityUtil(panel);
+
                     if (i == lblks.size() - 1 && remoteProtectingBlock != null) {
                         turnoutList = connection.getTurnoutList(lblks.get(i)
-                            .getBlock(), lblks.get(preBlk).getBlock(), remoteProtectingBlock.getBlock());
+                                .getBlock(), lblks.get(preBlk).getBlock(), remoteProtectingBlock.getBlock());
                     }else{
                         turnoutList = connection.getTurnoutList(lblks.get(i)
-                            .getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
+                                .getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
                     }
+
                     for (int x = 0; x < turnoutList.size(); x++) {
                         LayoutTurnout lt = turnoutList.get(x).getObject();
                         if (lt instanceof LayoutSlip) {
@@ -2438,8 +2647,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
                             if (log.isDebugEnabled()) {
                                 if (    (lt.getTurnoutType() == LayoutTurnout.TurnoutType.RH_TURNOUT ||
-                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT ||
-                                         lt.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT)
+                                        lt.getTurnoutType() == LayoutTurnout.TurnoutType.LH_TURNOUT ||
+                                        lt.getTurnoutType() == LayoutTurnout.TurnoutType.WYE_TURNOUT)
                                         && (!lt.getBlockName().isEmpty())) {
                                     log.debug("turnout in list is straight left/right wye");
                                     log.debug("turnout block Name {}", lt.getBlockName());

@@ -211,7 +211,7 @@ def CreateTransits():
     global logLevel
     global dpg
 
-    print( "in createTransits")
+    # print( "in createTransits")
     #the displayProgress is in CreateTransits
     # CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
     # exec(open (CreateTransits).read())

@@ -1929,6 +1929,24 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             @Nonnull LayoutEditor panel) {
         List<LayoutBlock> protectingBlocks = new ArrayList<>();
 
+        // Check if the bean is a virtual signal mast on a turntable
+        for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+            if (turntable.getVirtualSignalMast() == bean) {
+                for (int i = 0; i < turntable.getNumberRays(); i++) {
+                    TrackSegment rayConnect = turntable.getRayConnectOrdered(i);
+                    if (rayConnect != null) {
+                        LayoutBlock protectingLBlock = rayConnect.getLayoutBlock();
+                        if (protectingLBlock != null && protectingLBlock != turntable.getLayoutBlock()) {
+                            if (!protectingBlocks.contains(protectingLBlock)) {
+                                protectingBlocks.add(protectingLBlock);
+                            }
+                        }
+                    }
+                }
+                return protectingBlocks; // Return immediately after finding the turntable
+            }
+        }
+
         if (!(bean instanceof SignalMast) && !(bean instanceof Sensor)) {
             log.error("Incorrect class type called, must be either SignalMast or Sensor");
 
@@ -2181,6 +2199,21 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     }
 
     /**
+     * Get the facing LayoutBlock for a given SignalMast by searching all LayoutEditor panels.
+     * @param signalMast The signal mast to find the block for.
+     * @return The facing LayoutBlock, or null if not found.
+     */
+    public LayoutBlock getFacingBlockByMast(@Nonnull SignalMast signalMast) {
+        for (LayoutEditor panel : InstanceManager.getDefault(jmri.jmrit.display.EditorManager.class).getAll(LayoutEditor.class)) {
+            LayoutBlock block = getFacingBlockByMast(signalMast, panel);
+            if (block != null) {
+                return block;
+            }
+        }
+        return null;
+    }
+
+    /**
      * If the panel variable is null, search all LE panels. This was added to
      * support multi panel entry/exit.
      *
@@ -2213,6 +2246,15 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     private LayoutBlock getFacingBlockByBeanByPanel(
             @Nonnull NamedBean bean,
             @Nonnull LayoutEditor panel) {
+        log.debug("getFacingBlockByBeanByPanel bean {}", bean);
+        // Check if the bean is a virtual signal mast on a turntable
+        for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+            log.debug("turntable {} mast {}", turntable, turntable.getVirtualSignalMast());
+            if (turntable.getVirtualSignalMast() == bean) {
+                log.debug("got layout block {} from turntable", turntable.getLayoutBlock());
+                return turntable.getLayoutBlock();
+            }
+        }
         PositionablePoint pp = panel.getFinder().findPositionablePointByEastBoundBean(bean);
         TrackSegment tr;
         boolean east = true;

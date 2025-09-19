@@ -36,8 +36,8 @@ public class LayoutTurntableView extends LayoutTrackView {
      * @param layoutEditor what layout editor panel to put it in
      */
     public LayoutTurntableView(@Nonnull LayoutTurntable turntable,
-                @Nonnull Point2D c,
-                @Nonnull LayoutEditor layoutEditor) {
+                               @Nonnull Point2D c,
+                               @Nonnull LayoutEditor layoutEditor) {
         super(turntable, c, layoutEditor);
         this.turntable = turntable;
 
@@ -665,7 +665,7 @@ public class LayoutTurntableView extends LayoutTrackView {
                 rayPopup.add(new AbstractAction(
                         Bundle.getMessage("MakeLabel",
                                 Bundle.getMessage("Connected"))
-                        + rt.getConnect().getName()) {
+                                + rt.getConnect().getName()) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorFindItems lf = layoutEditor.getFinder();
@@ -792,7 +792,7 @@ public class LayoutTurntableView extends LayoutTrackView {
         // persistant instance variables
         private double rayAngle = 0.0;
 
-       /**
+        /**
          * Get the angle for this ray.
          *
          * @return the angle for this ray
@@ -884,7 +884,7 @@ public class LayoutTurntableView extends LayoutTrackView {
                         g2.setColor(layoutEditor.getDefaultTrackColorColor());
                     }
                 }
-                delta = MathUtil.normalize(delta, getRadius() - halfTrackWidth);
+                delta = MathUtil.normalize(delta, 0.75F * getRadius() - halfTrackWidth);
                 pt1 = MathUtil.subtract(getCoordsCenter(), delta);
                 g2.draw(new Line2D.Double(pt1, pt2));
             }
@@ -907,15 +907,15 @@ public class LayoutTurntableView extends LayoutTrackView {
         // draw ray tracks
         for (int j = 0; j < getNumberRays(); j++) {
             boolean main = false;
-//            Color c = null;
+            //            Color c = null;
             TrackSegment ts = getRayConnectOrdered(j);
             if (ts != null) {
                 main = ts.isMainline();
-//                LayoutBlock lb = ts.getLayoutBlock();
-//                if (lb != null) {
-//                    c = g2.getColor();
-//                    setColorForTrackBlock(g2, lb);
-//                }
+                //                LayoutBlock lb = ts.getLayoutBlock();
+                //                if (lb != null) {
+                //                    c = g2.getColor();
+                //                    setColorForTrackBlock(g2, lb);
+                //                }
             }
             Point2D pt2 = getRayCoordsOrdered(j);
             Point2D vDelta = MathUtil.normalize(MathUtil.subtract(pt2, getCoordsCenter()), getRadius());
@@ -931,13 +931,13 @@ public class LayoutTurntableView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(pt1R, pt2R));
             }
             if (isMain && isTurnoutControlled() && (getPosition() == j)) {
-//                LayoutBlock lb = getLayoutBlock();
-//                if (lb != null) {
-//                    c = g2.getColor();
-//                    setColorForTrackBlock(g2, lb);
-//                } else {
-//                    g2.setColor(layoutEditor.getDefaultTrackColorColor());
-//                }
+                //                LayoutBlock lb = getLayoutBlock();
+                //                if (lb != null) {
+                //                    c = g2.getColor();
+                //                    setColorForTrackBlock(g2, lb);
+                //                } else {
+                //                    g2.setColor(layoutEditor.getDefaultTrackColorColor());
+                //                }
                 vDelta = MathUtil.normalize(vDelta, getRadius() - halfTrackWidth);
                 pt1 = MathUtil.subtract(getCoordsCenter(), vDelta);
                 pt1L = MathUtil.subtract(pt1, vDeltaO);
@@ -946,9 +946,9 @@ public class LayoutTurntableView extends LayoutTrackView {
                 g2.draw(new Line2D.Double(pt1L, pt2L));
                 g2.draw(new Line2D.Double(pt1R, pt2R));
             }
-//            if (c != null) {
-//                g2.setColor(c); /// restore previous color
-//            }
+            //            if (c != null) {
+            //                g2.setColor(c); /// restore previous color
+            //            }
         }
     }
 
@@ -961,7 +961,7 @@ public class LayoutTurntableView extends LayoutTrackView {
         for (int j = 0; j < getNumberRays(); j++) {
             if (  (specificType == HitPointType.NONE)
                     || (specificType == (HitPointType.turntableTrackIndexedValue(j)))
-                )
+            )
             {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
@@ -1056,7 +1056,7 @@ public class LayoutTurntableView extends LayoutTrackView {
     public boolean checkForUnAssignedBlocks() {
         // Layout turnouts get their block information from the
         // track segments attached to their rays so...
-        // nothing to see here... move along...
+        // nothing to see here, move along...
         return true;
     }
 
@@ -1067,16 +1067,16 @@ public class LayoutTurntableView extends LayoutTrackView {
     public void checkForNonContiguousBlocks(
             @Nonnull HashMap<String, List<Set<String>>> blockNamesToTrackNameSetsMap) {
         /*
-        * For each (non-null) blocks of this track do:
-        * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-        * #2) If this track is already in the TrackNameSet for this block
-        *     then return (done!)
-        * #3) else add a new set (with this block// track) to
-        *     blockNamesToTrackNameSetMap and check all the connections in this
-        *     block (by calling the 2nd method below)
-        * <p>
-        *     Basically, we're maintaining contiguous track sets for each block found
-        *     (in blockNamesToTrackNameSetMap)
+         * For each (non-null) blocks of this track do:
+         * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
+         * #2) If this track is already in the TrackNameSet for this block
+         *     then return (done!)
+         * #3) else add a new set (with this block// track) to
+         *     blockNamesToTrackNameSetMap and check all the connections in this
+         *     block (by calling the 2nd method below)
+         * <p>
+         *     Basically, we're maintaining contiguous track sets for each block found
+         *     (in blockNamesToTrackNameSetMap)
          */
 
         // We're using a map here because it is convient to
@@ -1126,7 +1126,7 @@ public class LayoutTurntableView extends LayoutTrackView {
      */
     @Override
     public void collectContiguousTracksNamesInBlockNamed(@Nonnull String blockName,
-            @Nonnull Set<String> TrackNameSet) {
+                                                         @Nonnull Set<String> TrackNameSet) {
         if (!TrackNameSet.contains(getName())) {
             // for all the rays with matching blocks in this turnout
             //  #1) if its track segment's block is in this block

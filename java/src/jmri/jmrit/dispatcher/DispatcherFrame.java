@@ -1563,7 +1563,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             // check/set Transit specific items for automatic running
             // validate connectivity for all Sections in this transit
             int numErrors = validateConnectivity(t);
-
+            log.trace ("called validateconnectivity numErrors {}", numErrors);
             if (numErrors != 0) {
                 if (showErrorMessages) {
                     JmriJOptionPane.showMessageDialog(frame, java.text.MessageFormat.format(Bundle.getMessage(
