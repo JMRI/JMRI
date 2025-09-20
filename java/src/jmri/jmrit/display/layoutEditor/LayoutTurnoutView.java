@@ -259,6 +259,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
     public Point2D pointC = new Point2D.Double(60, 20);
     public Point2D pointD = new Point2D.Double(20, 20);
 
+    public boolean showUnknown = false; // if true, show "?" when state is UNKNOWN
+    
     private int version = 1;
 
     private final boolean useBlockSpeed = false;
@@ -462,6 +464,14 @@ public class LayoutTurnoutView extends LayoutTrackView {
         turnout.removeBeanReference(nb);
     }
 
+    public void setShowUnknown(boolean show) {
+        showUnknown = show;
+    }
+    
+    public boolean getShowUnknown() {
+        return showUnknown;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -1695,6 +1705,14 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 setHidden(o.isSelected());
             });
 
+            JCheckBoxMenuItem showUnknownCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowUnknown"));
+            hiddenCheckBoxMenuItem.setSelected(getShowUnknown());
+            popup.add(showUnknownCheckBoxMenuItem);
+            showUnknownCheckBoxMenuItem.addActionListener( e1 -> {
+                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
+                setShowUnknown(o.isSelected());
+            });
+            
             JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             cbmi.setSelected(isDisabled());
             popup.add(cbmi);
@@ -2035,6 +2053,13 @@ public class LayoutTurnoutView extends LayoutTrackView {
         }
 
         TurnoutType type = getTurnoutType();
+
+        // Just "?" if UNKNOWN and showUnknown requesting
+        if (showUnknown && state == UNKNOWN) {
+            g2.drawString("?", (float) pM.getX(), (float) pM.getY());
+            return;
+        }    
+
         if (type == TurnoutType.DOUBLE_XOVER) {
             if (state != Turnout.THROWN && state != INCONSISTENT) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
@@ -2272,6 +2297,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         } else if (isTurnoutTypeSlip()) {
             log.error("{}.draw1(...); slips should be being drawn by LayoutSlip sub-class", getName());
         } else {    // LH, RH, or WYE Turnouts
+                            
             // draw A<===>center
             if (isMain == mainlineA) {
                 g2.setColor(colorA);
