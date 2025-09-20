@@ -620,7 +620,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       down to <a href="#Trains">Trains</a>.
       <p>
         So let's begin with the <a href="#Settings">Settings</a> window. Enter a name for your
-        railroad, the scale that you're modeling, and decide of you're are going to use <a
+        railroad, select the scale that you're modeling, and decide of you're are going to use <a
           href="#CarTypes">descriptive names</a> or AAR codes for your rolling stock. You can also
         optionally select which <a href="#LocationServiceDirection">directions</a> your railroad
         travels. You also have the option to add the OperationsPro&trade; menu to the main window.
@@ -640,26 +640,35 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         tracks. You only need to specify tracks that will be worked by your crew. For example you
         might start with tracks that service your industries, this type of track is called a <a
           href="#Spurs">spur</a>. The spur's length determines how many cars can be spotted there.
-        For example a 44 foot long spur can hold one 40 foot car. Keep things simple and don't
-        modify the location and track defaults by making them restrictive with regards to the type
-        of cars or locomotives that they will service. Also, the track and location default is to
-        allow a train to service the location and track by trains traveling in any direction. Don't
-        change the defaults until you can successfully build trains to your liking. We also
-        recommend that when creating your locations that you first use <a href="#Spurs">spur</a> and
-        <a href="#Yards">yard</a> tracks, and try <a href="#Staging">staging</a> and <a
+        For example a 44 foot long spur can hold one 40 foot car, due to car body size and couplers.
+      </p>
+      <p>
+        To add a location, press the "Add Location" button at the bottom of the Locations window. A
+        new window should appear, enter the location's name and press "Add Location". Once you've
+        created a location, you can select which type of track to add to the location. We recommend
+        that when creating your locations that you first use <a href="#Spurs">spur</a> and <a
+          href="#Yards">yard</a> tracks, and try <a href="#Staging">staging</a> and <a
           href="#Interchange">classification/interchange</a> tracks when you're more comfortable
-        with how the program operates.
+        with how the program operates. Try to keep things simple and don't modify the location and
+        track defaults by making them restrictive with regards to the type of cars or locomotives
+        that they will service. Also, the track and location default is to allow a train to service
+        the location and track by trains traveling in any direction. Don't change the defaults until
+        you can successfully build trains to your liking.
       </p>
 
       <p>
         The next window to try is the <a href="#Cars">cars</a> window. This is where you enter or <a
           href="#ImportingCars">import from a file</a> the non-powered rolling stock for your
-        railroad. Press the "Add" button at the bottom of the <a href="#Cars">cars</a> window and
-        the <a href="#CarsEdit">add car</a> window will allow you to enter cars into your operations
-        database. Be sure to place the cars on a track using the "Location and Track" field found in
-        either the <a href="#CarsEdit">add / edit car</a> or <a href="#CarsSet">set car</a> window.
-        The program works best if you keep at least 20% of your tracks empty, so don't place too
-        many cars on tracks until you understand how the program builds trains.
+        railroad. Press the "Add Car" button at the bottom left of the <a href="#Cars">cars</a>
+        window and the <a href="#CarsEdit">Add Car</a> window will appear. This window will allow
+        you to enter cars into your operations database. Select the car's road name and enter the
+        car's road number. Then select the car's type and body size under length. Press the "Add
+        Car" button to create a new car, or to copy an existing one. Use the "Save" button to make
+        changes to an existing car. Be sure to place the cars on a track using the "Location and
+        Track" field found in either the <a href="#CarsEdit">add / edit car</a> or <a
+          href="#CarsSet">set car</a> window. The program works best if you keep at least 20% of
+        your tracks empty, so don't place too many cars on tracks until you understand how the
+        program builds trains.
       </p>
 
       <p>
@@ -673,29 +682,34 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>
         Now create a simple <a href="#Routes">route</a> for your first train to follow by pressing
-        the "Add" button in the <a href="#Routes">Routes</a> window. Enter each of your locations in
-        the route by selecting them from the menu and pressing the "Add Location" button in the <a
-          href="#AddRoute">Add Route</a> window. Try and keep it simple by only entering each of
-        your locations once in the route. For now don't modify the route in any way, later you can
-        come back and modify how many cars are serviced at each location by adjusting the <a
-          href="#EditRoute">move</a> count.
+        the "Add Route" button at the bottom of the <a href="#Routes">Routes</a> window. A new
+        window called <a href="#AddRoute">Add Route</a> should appear. Enter a name for your route,
+        and then press the "Add Route" button to enable the other fields. The first location you
+        enter will be the departure location for your train, and the last will where the the train's
+        terminates. Select a location from the lower left menu and then press the "Add Location"
+        button in the window. Now select and add the next location your train will visit. Try and
+        keep it simple by only entering each of your locations once in the route. And for now, don't
+        modify the route in any way, later you can come back and modify how many cars are serviced
+        at each location by adjusting the <a href="#EditRoute">move</a> count.
       </p>
 
       <p>
-        Now you're ready to create your first train by pressing the <a href="#TrainEdit">Add</a>
-        button at the bottom left of the <a href="#Trains">Trains</a> window. Be sure to select the
-        route you created for your first train. Leave all of the train checkboxes alone which means
-        the train will service all car and locomotive types. Leave the <a href="#TrainRequires">Optional
+        Now you're ready to create your first train by pressing the <a href="#TrainEdit">Add
+          Train</a> button at the bottom left of the <a href="#Trains">Trains</a> window. In the add
+        train window, enter the train's name, followed by pressing the "Add Train" button. This will enable
+        the other fields. Be sure to select the route you created for your first train, and press
+        the "Save Train" button. Leave all of the train checkboxes alone which means the train will
+        service all car and locomotive types. Leave the <a href="#TrainRequires">Optional
           locomotive requirements</a> and <a href="#OptionalLastCar">Optional last car in train
-          requirements</a> for locomotives and caboose area alone for now. Save the train, close the
-        window, and return to the Trains window. Press the <a href="#BuildingTrains">Build</a>
-        button for the train. It should build. Now pressing the "Print" or "Preview" button will
-        produce a <a href="#PrintingManifests">Manifest</a> for your train depending on the state of
-        "Preview" checkbox at the bottom of the <a href="#Trains">Trains</a> window. Review the
-        Manifest and you should see that the train serviced all car types. If you examine the <a
-          href="#Cars">Cars</a> window you can see that cars are now assigned to your train. Once
-        cars are assigned to a train, they are no longer available to other trains until the cars
-        are delivered to their new location.
+          requirements</a> for locomotives and caboose area alone for now. Close the add train window,
+        and return to the Trains window. Press the <a href="#BuildingTrains">Build</a> button for
+        the train. It should build. Now pressing the "Print" or "Preview" button will produce a <a
+          href="#PrintingManifests">Manifest</a> for your train depending on the state of "Preview"
+        checkbox at the bottom of the <a href="#Trains">Trains</a> window. Review the Manifest and
+        you should see that the train serviced all car types. If you examine the <a href="#Cars">Cars</a>
+        window you can see that cars are now assigned to your train. Once cars are assigned to a
+        train, they are no longer available to other trains until the cars are delivered to their
+        new location.
       </p>
 
       <p>
@@ -4994,7 +5008,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           <th>Pick up?</th>
           <th>Set outs?</th>
           <th>Local moves?</th>
-          <th>Operation</th>
+          <th>Train Operation</th>
         </tr>
         <tr>
           <td>Yes</td>
@@ -5037,7 +5051,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           <th>Pick up?</th>
           <th>Set outs?</th>
           <th>Local moves?</th>
-          <th>Operation</th>
+          <th>Local Switcher Operation</th>
         </tr>
         <tr>
           <td>Yes</td>
