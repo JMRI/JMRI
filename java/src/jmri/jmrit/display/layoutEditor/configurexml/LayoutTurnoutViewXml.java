@@ -51,7 +51,7 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
 
         if (pv.getShowUnknown()) {
-            // only write if set for background compatibility
+            // only write if set to help with backward compatibility
             element.setAttribute("showunknown", "yes");
         }
         
