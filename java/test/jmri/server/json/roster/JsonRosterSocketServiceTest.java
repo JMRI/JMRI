@@ -105,7 +105,7 @@ public class JsonRosterSocketServiceTest {
         // add a roster group and verify message sent by listener
         this.connection.sendMessage(null, 0);
         Roster.getDefault().addRosterGroup("NewRosterGroup");
-        Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
+        Assert.assertEquals("Two replies sent", 2, this.connection.getMessages().size());
         message = this.connection.getMessage();
         Assert.assertNotNull("Message was sent", message);
         Assert.assertEquals("Three groups exist", 3, message.size());
