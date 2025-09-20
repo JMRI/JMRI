@@ -847,7 +847,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     /**
      * Stop the Engineer run.
      * @param abort true to abort, else false.
-     * @param turnOffFunctions true to set Functions 0, 1, 2 and 3 to off ( if speed is > 0 ).
+     * @param turnOffFunctions true to set Functions 0, 1, 2 and 3 to off ( if speed is &gt; 0 ).
      */
     @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="quit is called another thread to clear all ramp waits")
     public void stopRun(boolean abort, boolean turnOffFunctions) {
