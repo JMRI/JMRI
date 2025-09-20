@@ -1,8 +1,9 @@
 package jmri.util;
 
-import org.junit.Assert;
+
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -15,13 +16,13 @@ abstract public class JmriJFrameTestBase {
 
     protected JmriJFrame frame = null;
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",frame);
+        Assertions.assertNotNull( frame, "exists");
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     @Test
     public void testShowAndClose() {
         frame.initComponents();
@@ -35,7 +36,7 @@ abstract public class JmriJFrameTestBase {
         fo.waitClosed();
     }
 
-    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @DisabledIfHeadless
     @Test
     public void testAccessibleContent() {
         frame.initComponents();

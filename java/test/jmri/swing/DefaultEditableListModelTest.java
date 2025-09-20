@@ -2,7 +2,6 @@ package jmri.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,8 +12,8 @@ public class DefaultEditableListModelTest {
 
     @Test
     public void testCTor() {
-        DefaultEditableListModel t = new DefaultEditableListModel();
-        Assert.assertNotNull("exists",t);
+        DefaultEditableListModel<?> t = new DefaultEditableListModel<>();
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
