@@ -2057,7 +2057,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
         // Just "?" if UNKNOWN and showUnknown requesting
         if (showUnknown && state == UNKNOWN) {
-            drawForShowUnknown(g2, pM, g2.getColor());
+            drawForShowUnknown(g2, pM, g2.getColor(), false);
             return;
         }    
 
@@ -2335,17 +2335,32 @@ public class LayoutTurnoutView extends LayoutTrackView {
         }
     }   // draw1
 
-    private void drawForShowUnknown(Graphics2D g2, Point2D center, Color color) {
+    /** 
+     * Draw a "?" for the UNKNOWN state.
+     *
+     * To be invoked if getShowUnknown() is true
+     * 
+     * @param g2 the graphics context to draw in
+     * @param center where to center the "?"
+     * @param color the base color for drawing
+     * @param complement true means select black or white to complement the base color
+     */
+    private void drawForShowUnknown(Graphics2D g2, Point2D center, Color color, boolean complement) {
         var originalFont = g2.getFont();
         var originalColor = g2.getColor();
                 
         // convert color to HSV to get intensity
         int v = Math.max(Math.max(color.getBlue(), color.getGreen()), color.getRed());
         
-        Color drawColor = Color.BLACK;
-        if ( v < 255*0.5) { 
-            drawColor = Color.WHITE;
+        Color drawColor = color; 
+        
+        if (complement) {
+            drawColor = Color.BLACK;
+            if ( v < 255*0.5) { 
+                drawColor = Color.WHITE;
+            }
         }
+            
         g2.setColor(drawColor);
         
         int size = (int) layoutEditor.circleDiameter;
@@ -3084,7 +3099,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 g2.fill(trackControlCircleAt(getCoordsCenter()));
                 // do we need to draw a ? for unknown over the circle?
                 if (showUnknown && getState() == UNKNOWN) {
-                    drawForShowUnknown(g2, getCoordsCenter(), g2.getBackground());
+                    drawForShowUnknown(g2, getCoordsCenter(), g2.getBackground(), true);
                     return;
                 }    
             } else {
