@@ -2354,7 +2354,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         
         var metrics = g2.getFontMetrics();
         double x = center.getX() - ((double) metrics.charWidth('?'))/2; // - to move left
-        double y = center.getY() + ((double) metrics.getAscent()*0.9)/2;    // + to move down
+        double y = center.getY() + (metrics.getAscent()*0.9)/2;    // + to move down
         
         g2.drawString("?", (float) x, (float) y);
         
