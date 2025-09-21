@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.geom.*;
@@ -2056,7 +2057,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
         // Just "?" if UNKNOWN and showUnknown requesting
         if (showUnknown && state == UNKNOWN) {
-            g2.drawString("?", (float) pM.getX(), (float) pM.getY());
+            drawForShowUnknown(g2, pM, g2.getColor());
             return;
         }    
 
@@ -2334,6 +2335,33 @@ public class LayoutTurnoutView extends LayoutTrackView {
         }
     }   // draw1
 
+    private void drawForShowUnknown(Graphics2D g2, Point2D center, Color color) {
+        var originalFont = g2.getFont();
+        var originalColor = g2.getColor();
+                
+        // convert color to HSV to get intensity
+        int v = Math.max(Math.max(color.getBlue(), color.getGreen()), color.getRed());
+        
+        Color drawColor = Color.BLACK;
+        if ( v < 255*0.5) { 
+            drawColor = Color.WHITE;
+        }
+        g2.setColor(drawColor);
+        
+        int size = (int) layoutEditor.circleDiameter;
+        
+        g2.setFont(new Font("SansSerif", Font.BOLD, size));
+        
+        var metrics = g2.getFontMetrics();
+        double x = center.getX() - ((double) metrics.charWidth('?'))/2; // - to move left
+        double y = center.getY() + ((double) metrics.getAscent()*0.9)/2;    // + to move down
+        
+        g2.drawString("?", (float) x, (float) y);
+        
+        g2.setColor(originalColor);
+        g2.setFont(originalFont);
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -3054,6 +3082,11 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
             if (layoutEditor.isTurnoutFillControlCircles()) {
                 g2.fill(trackControlCircleAt(getCoordsCenter()));
+                // do we need to draw a ? for unknown over the circle?
+                if (showUnknown && getState() == UNKNOWN) {
+                    drawForShowUnknown(g2, getCoordsCenter(), g2.getBackground());
+                    return;
+                }    
             } else {
                 g2.draw(trackControlCircleAt(getCoordsCenter()));
             }
@@ -3062,6 +3095,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 // then restore foreground color
                 g2.setColor(foregroundColor);
             }
+            
+            
         }
     }
 
