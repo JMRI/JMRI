@@ -2,8 +2,10 @@ package jmri.server.web;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -17,8 +19,8 @@ public class AbstractWebServerConfigurationTest {
     @Test
     public void testGetFilePaths() {
         AbstractWebServerConfiguration instance = new AbstractWebServerConfigurationImpl();
-        Assert.assertNotNull("Empty Map", instance.getFilePaths());
-        Assert.assertTrue("Empty Map", instance.getFilePaths().isEmpty());
+        assertNotNull( instance.getFilePaths(), "Empty Map");
+        assertTrue( instance.getFilePaths().isEmpty(), "Empty Map");
     }
 
     /**
@@ -27,8 +29,8 @@ public class AbstractWebServerConfigurationTest {
     @Test
     public void testGetRedirectedPaths() {
         AbstractWebServerConfiguration instance = new AbstractWebServerConfigurationImpl();
-        Assert.assertNotNull("Empty Map", instance.getRedirectedPaths());
-        Assert.assertTrue("Empty Map", instance.getRedirectedPaths().isEmpty());
+        assertNotNull( instance.getRedirectedPaths(), "Empty Map");
+        assertTrue( instance.getRedirectedPaths().isEmpty(), "Empty Map");
     }
 
     /**
@@ -37,8 +39,8 @@ public class AbstractWebServerConfigurationTest {
     @Test
     public void testGetForbiddenPaths() {
         AbstractWebServerConfiguration instance = new AbstractWebServerConfigurationImpl();
-        Assert.assertNotNull("Empty List", instance.getForbiddenPaths());
-        Assert.assertTrue("Empty List", instance.getForbiddenPaths().isEmpty());
+        assertNotNull( instance.getForbiddenPaths(), "Empty List");
+        assertTrue( instance.getForbiddenPaths().isEmpty(), "Empty List");
     }
 
     private static class AbstractWebServerConfigurationImpl extends AbstractWebServerConfiguration {

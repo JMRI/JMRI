@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -14,26 +16,14 @@ import org.junit.jupiter.api.*;
  */
 public class WebServerConfigurationTest {
 
-    @BeforeEach
-    public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-
-    }
-
-    @AfterEach
-    public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
-
-    }
-
     /**
      * Test of getFilePaths method, of class WebServerConfiguration.
      */
     @Test
     public void testGetFilePaths() {
         WebServerConfiguration instance = new WebServerConfigurationImpl();
-        Assert.assertNotNull("Empty Map", instance.getFilePaths());
-        Assert.assertTrue("Empty Map", instance.getFilePaths().isEmpty());
+        assertNotNull( instance.getFilePaths(), "Empty Map");
+        assertTrue( instance.getFilePaths().isEmpty(), "Empty Map");
     }
 
     /**
@@ -42,8 +32,8 @@ public class WebServerConfigurationTest {
     @Test
     public void testGetRedirectedPaths() {
         WebServerConfiguration instance = new WebServerConfigurationImpl();
-        Assert.assertNotNull("Empty Map", instance.getRedirectedPaths());
-        Assert.assertTrue("Empty Map", instance.getRedirectedPaths().isEmpty());
+        assertNotNull( instance.getRedirectedPaths(), "Empty Map");
+        assertTrue( instance.getRedirectedPaths().isEmpty(), "Empty Map");
     }
 
     /**
@@ -52,8 +42,8 @@ public class WebServerConfigurationTest {
     @Test
     public void testGetForbiddenPaths() {
         WebServerConfiguration instance = new WebServerConfigurationImpl();
-        Assert.assertNotNull("Empty List", instance.getForbiddenPaths());
-        Assert.assertTrue("Empty List", instance.getForbiddenPaths().isEmpty());
+        assertNotNull( instance.getForbiddenPaths(), "Empty List");
+        assertTrue( instance.getForbiddenPaths().isEmpty(), "Empty List");
     }
 
     private static class WebServerConfigurationImpl implements WebServerConfiguration {
@@ -72,6 +62,17 @@ public class WebServerConfigurationTest {
         public List<String> getForbiddenPaths() {
             return new ArrayList<>();
         }
+    }
+
+    @BeforeEach
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+
+    }
+
+    @AfterEach
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }
