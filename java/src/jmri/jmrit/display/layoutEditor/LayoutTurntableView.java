@@ -884,9 +884,12 @@ public class LayoutTurntableView extends LayoutTrackView {
                         g2.setColor(layoutEditor.getDefaultTrackColorColor());
                     }
                 }
-                delta = MathUtil.normalize(delta, getRadius() - halfTrackWidth);
-                pt1 = MathUtil.subtract(getCoordsCenter(), delta);
-                g2.draw(new Line2D.Double(pt1, pt2));
+                // Draw an asymmetric bridge to act as a pointer.
+                // The long end (pt2) points toward the selected ray.
+                // The short end (short_pt1) points away from it, at 0.8 * radius.
+                Point2D short_delta = MathUtil.normalize(delta, getRadius() * 0.8);
+                Point2D short_pt1 = MathUtil.subtract(getCoordsCenter(), short_delta);
+                g2.draw(new Line2D.Double(short_pt1, pt2));
             }
             if (color != null) {
                 g2.setColor(color); /// restore previous color
