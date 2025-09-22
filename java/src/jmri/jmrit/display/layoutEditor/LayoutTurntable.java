@@ -791,10 +791,24 @@ public class LayoutTurntable extends LayoutTrack {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
                 mTurnoutListener = (PropertyChangeEvent e) -> {
-                    if (getTurnout().getKnownState() == turnoutState) {
-                        lastKnownIndex = connectionIndex;
-                        models.redrawPanel();
-                        models.setDirty();
+                    if (getTurnout().getKnownState() == Turnout.THROWN) {
+                        // This ray is now the active one.
+                        // Update the turntable's position indicator.
+                        if (lastKnownIndex != connectionIndex) {
+                            lastKnownIndex = connectionIndex;
+                            models.redrawPanel();
+                            models.setDirty();
+                        }
+
+                        // Command all other ray turnouts to CLOSED.
+                        for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
+                            if (otherRay != this && otherRay.getTurnout() != null) {
+                                // Check state before commanding to prevent potential listener loops
+                                if (otherRay.getTurnout().getCommandedState() != Turnout.CLOSED) {
+                                    otherRay.getTurnout().setCommandedState(Turnout.CLOSED);
+                                }
+                            }
+                        }
                     }
                 };
             }
@@ -824,10 +838,12 @@ public class LayoutTurntable extends LayoutTrack {
          */
         public void setPosition() {
             if (namedTurnout != null) {
-                if (disableWhenOccupied && isOccupied()) {
+                if (disableWhenOccupied && isOccupied()) { // isOccupied is on RayTrack, so check must be here
                     log.debug("Can not setPosition of turntable ray when it is occupied");
                 } else {
-                    getTurnout().setCommandedState(turnoutState);
+                    // The listener attached to the turnout will handle de-selecting other rays
+                    // by setting their turnouts to CLOSED.
+                    getTurnout().setCommandedState(Turnout.THROWN);
                 }
             }
         }
