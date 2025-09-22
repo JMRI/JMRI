@@ -453,7 +453,11 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Normally, Layout Editor turnouts in UNKNOWN state are indicated
+                by drawing both legs of the turnout, instead of showing just one
+                as for CLOSED and THROWN.  There's a new option 'Show ? When Unknown'
+                in the turnout's contextual menu that will make the UNKNOWN state
+                more visible.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
