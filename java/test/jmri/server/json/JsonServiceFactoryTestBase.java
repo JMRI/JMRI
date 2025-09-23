@@ -3,11 +3,6 @@ package jmri.server.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assume.assumeNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.DataOutputStream;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +17,12 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Common methods for JMRI JSON Service HTTP provider tests.
@@ -64,23 +65,23 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
 
     @Test
     public void testGetReceivedTypesV5() {
-        assertThat(factory.getReceivedTypes(JSON.V5)).isEmpty();
+        assertEquals( 0, factory.getReceivedTypes(JSON.V5).length);
     }
 
     @Test
     public void testGetSentTypesV5() {
-        assertThat(factory.getSentTypes(JSON.V5)).isEmpty();
+        assertEquals( 0, factory.getSentTypes(JSON.V5).length);
     }
 
     @Test
     public void testGetHttpService() {
-        JSON.VERSIONS.forEach(version -> assertThat(factory.getHttpService(mapper, version)).isNotNull());
+        JSON.VERSIONS.forEach(version -> assertNotNull(factory.getHttpService(mapper, version)));
     }
 
     @Test
     public void testGetSocketService() {
         JsonConnection connection = new JsonMockConnection((DataOutputStream) null);
-        JSON.VERSIONS.forEach(version -> assertThat(factory.getSocketService(connection, version)).isNotNull());
+        JSON.VERSIONS.forEach(version -> assertNotNull(factory.getSocketService(connection, version)));
     }
 
     @Test
@@ -91,14 +92,12 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
             testDoSchema(factory.getReceivedTypes(version), service, false);
             testDoSchema(factory.getSentTypes(version), service, true);
             // test an invalid schema
-            try {
-                service.doSchema("non-existant-type", false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-                fail("Expected exception not thrown");
-            } catch (JsonException ex) {
-                assertThat(ex.getCode()).isEqualTo(500);
-                assertThat(ex.getMessage()).isEqualTo("Unknown object type non-existant-type was requested.");
-                assertThat(ex.getId()).isEqualTo(42);
-            }
+            JsonException ex = Assertions.assertThrows(JsonException.class, () ->
+                service.doSchema("non-existant-type", false, new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
+
+            assertEquals( 500, ex.getCode());
+            assertEquals( "Unknown object type non-existant-type was requested.", ex.getMessage());
+            assertEquals( 42, ex.getId());
         }
     }
 
@@ -124,18 +123,21 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
      * @throws JsonException if an error occurs
      */
     public final void testDoSchema(String type, H service, Boolean server) throws JsonException {
-        // protect against JUnit tests in Eclipse that test this class directly
-        assumeNotNull(service);
+        assumeTrue(service != null, "protect against JUnit tests in Eclipse that test this class directly");
         JsonNode schema;
         if (server == null || !server) {
             schema = service.doSchema(type, false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             validate(type, schema);
-            assertEquals("Type is in client schema", "jmri-json-" + type + "-client-message", schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText());
+            assertEquals( "jmri-json-" + type + "-client-message",
+                schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText(),
+                "Type is in client schema");
         }
         if (server == null || server) {
             schema = service.doSchema(type, true, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             validate(type, schema);
-            assertEquals("Type is in server schema", "jmri-json-" + type + "-server-message", schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText());
+            assertEquals( "jmri-json-" + type + "-server-message",
+                schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText(),
+                "Type is in server schema");
         }
         // Suppress a warning message (see networknt/json-schema-validator#79)
         JUnitAppender.checkForMessageStartingWith(
@@ -153,8 +155,7 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
      * @throws JsonException if an error occurs
      */
     public final void testDoSchema(String type1, String type2, H service, Boolean server) throws JsonException {
-        // protect against JUnit tests in Eclipse that test this class directly
-        assumeNotNull(service);
+        assumeTrue(service != null, "protect against JUnit tests in Eclipse that test this class directly");
         JsonNode schema1;
         JsonNode schema2;
         if (server == null || !server) {
@@ -162,14 +163,18 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
             validate(type1, schema1);
             schema2 = service.doSchema(type2, false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             validate(type2, schema2);
-            assertEquals("Client schema objects are the same", schema1.path(JSON.DATA).path(JSON.SCHEMA), schema1.path(JSON.DATA).path(JSON.SCHEMA));
+            assertEquals( schema1.path(JSON.DATA).path(JSON.SCHEMA),
+                schema1.path(JSON.DATA).path(JSON.SCHEMA),
+                "Client schema objects are the same");
         }
         if (server == null || server) {
             schema1 = service.doSchema(type1, true, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             validate(type1, schema1);
             schema2 = service.doSchema(type2, true, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
             validate(type2, schema2);
-            assertEquals("Server schema objects are the same", schema1.path(JSON.DATA).path(JSON.SCHEMA), schema1.path(JSON.DATA).path(JSON.SCHEMA));
+            assertEquals( schema1.path(JSON.DATA).path(JSON.SCHEMA),
+                schema1.path(JSON.DATA).path(JSON.SCHEMA),
+                "Server schema objects are the same");
         }
         // Suppress a warning message (see networknt/json-schema-validator#79)
         JUnitAppender.checkForMessageStartingWith(
@@ -198,9 +203,10 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
      *               a client node
      */
     public final void validate(String type, JsonNode node, boolean server) {
-        assertThat(node).isNotNull();
+        assertNotNull(node);
         try {
-            InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(node, server, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+            InstanceManager.getDefault(JsonSchemaServiceCache.class)
+                .validateMessage(node, server, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         } catch (JsonException ex) {
             fail("Unable to validate " + ((server) ? "server" : "client") + " schema for " + type + ".");
         }
