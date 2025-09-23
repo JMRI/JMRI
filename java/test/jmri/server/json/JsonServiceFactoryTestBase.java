@@ -124,6 +124,7 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
      */
     public final void testDoSchema(String type, H service, Boolean server) throws JsonException {
         assumeTrue(service != null, "protect against JUnit tests in Eclipse that test this class directly");
+        assertNotNull( service);
         JsonNode schema;
         if (server == null || !server) {
             schema = service.doSchema(type, false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
@@ -156,6 +157,7 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
      */
     public final void testDoSchema(String type1, String type2, H service, Boolean server) throws JsonException {
         assumeTrue(service != null, "protect against JUnit tests in Eclipse that test this class directly");
+        assertNotNull( service);
         JsonNode schema1;
         JsonNode schema2;
         if (server == null || !server) {
