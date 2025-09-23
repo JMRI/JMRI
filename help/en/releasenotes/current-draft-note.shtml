@@ -494,6 +494,7 @@
         <ul>
           <li>Added car blocking to CSV Manifest and switch list files.</li>
           <li>Minor improvement to the "Show Schedules by Car Type and Load" tool.</li>
+          <li>Improvements to the Cars print and preview, added car's "Last Location", "Last Train", and "Set out" time.</li>
         </ul>
 
 <h3>Panel Editor</h3>
