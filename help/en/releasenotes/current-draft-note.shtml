@@ -435,7 +435,7 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Fix Create New Transit caused by bad initialization of stopping distance arrays. Fix crash when transit has no sections.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
