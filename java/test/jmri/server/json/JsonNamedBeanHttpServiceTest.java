@@ -10,10 +10,13 @@ import jmri.server.json.turnout.JsonTurnout;
 import jmri.server.json.turnout.JsonTurnoutHttpService;
 import jmri.util.JUnitUtil;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Test handling of null, or non-existent Named Beans. Testing of existent, or
@@ -23,8 +26,6 @@ import org.junit.jupiter.api.*;
  */
 public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<Turnout, JsonNamedBeanHttpService<Turnout>> {
 
-    public JsonNamedBeanHttpServiceTest() {
-    }
 
     @BeforeEach
     @Override
@@ -53,15 +54,16 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
     public void testDoGet() throws Exception {
         String name = "non-existant";
         String type = "non-existant";
-        try {
-            service.doGet(type, name, service.getObjectMapper().createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            Assert.fail("Expected JsonException not thrown.");
-        } catch (JsonException ex) {
-            this.validate(ex.getJsonMessage());
-            Assert.assertEquals("Error code is HTTP \"internal error\"", 500, ex.getCode());
-            Assert.assertEquals("Error message is HTTP \"not found\"", "There was an error; see the JMRI application logs for details.", ex.getLocalizedMessage());
-            Assert.assertEquals("Message Id", 42, ex.getId());
-        }
+
+        JsonException ex = assertThrows( JsonException.class,
+            () -> service.doGet(type, name, service.getObjectMapper().createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
+
+        this.validate(ex.getJsonMessage());
+        assertEquals( 500, ex.getCode(), "Error code is HTTP \"internal error\"");
+        assertEquals( "There was an error; see the JMRI application logs for details.", ex.getLocalizedMessage(),
+            "Error message is HTTP \"not found\"");
+        assertEquals( 42, ex.getId(), "Message Id");
     }
 
     /**
@@ -76,15 +78,14 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
     public void testGetNamedBean() throws Exception {
         String name = "non-existant";
         String type = "non-existant";
-        try {
-            service.getNamedBean(bean, name, type, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            Assert.fail("Expected JsonException not thrown.");
-        } catch (JsonException ex) {
-            this.validate(ex.getJsonMessage());
-            Assert.assertEquals("Error code is HTTP \"not found\"", 404, ex.getCode());
-            Assert.assertEquals("Error message is HTTP \"not found\"", "Object type non-existant named \"non-existant\" not found.", ex.getLocalizedMessage());
-            Assert.assertEquals("Message Id", 0, ex.getId());
-        }
+        JsonException ex = assertThrows( JsonException.class,
+            () -> service.getNamedBean(bean, name, type, new JsonRequest(locale, JSON.V5, JSON.GET, 0)));
+
+        this.validate(ex.getJsonMessage());
+        assertEquals( 404, ex.getCode(), "Error code is HTTP \"not found\"");
+        assertEquals( "Object type non-existant named \"non-existant\" not found.", ex.getLocalizedMessage(),
+            "Error message is HTTP \"not found\"");
+        assertEquals( 0, ex.getId(), "Message Id");
     }
 
     /**
@@ -106,22 +107,22 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
         bean.setProperty("bar", null);
         JsonNode root = service.getNamedBean(bean, name, JsonTurnout.TURNOUT, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         JsonNode data = root.path(JSON.DATA);
-        Assert.assertEquals("Correct system name", bean.getSystemName(), data.path(JSON.NAME).asText());
-        Assert.assertEquals("Correct user name", bean.getUserName(), data.path(JSON.USERNAME).asText());
-        Assert.assertEquals("Correct comment", bean.getComment(), data.path(JSON.COMMENT).asText());
-        Assert.assertTrue("Has properties", data.path(JSON.PROPERTIES).isArray());
-        Assert.assertEquals("Has 2 properties", 2, data.path(JSON.PROPERTIES).size());
-        Assert.assertEquals("Message ID", 42, root.path(JSON.ID).asInt());
+        assertEquals( bean.getSystemName(), data.path(JSON.NAME).asText(), "Correct system name");
+        assertEquals( bean.getUserName(), data.path(JSON.USERNAME).asText(), "Correct user name");
+        assertEquals( bean.getComment(), data.path(JSON.COMMENT).asText(), "Correct comment");
+        assertTrue( data.path(JSON.PROPERTIES).isArray(), "Has properties");
+        assertEquals( 2, data.path(JSON.PROPERTIES).size(), "Has 2 properties");
+        assertEquals( 42, root.path(JSON.ID).asInt(), "Message ID");
         data.path(JSON.PROPERTIES).fields().forEachRemaining((property) ->{
             switch (property.getKey()) {
                 case "foo":
-                    Assert.assertEquals("Foo value", "bar", property.getValue().asText());
+                    assertEquals( "bar", property.getValue().asText(), "Foo value");
                     break;
                 case "bar":
-                    Assert.assertTrue("Bar is null", property.getValue().isNull());
+                    assertNull( property.getValue(), "Bar is null");
                     break;
                 default:
-                    Assert.fail("Unexpected property present.");
+                    fail("Unexpected property present.");
             }
         });
     }
@@ -138,27 +139,25 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
     public void testPostNamedBean() throws Exception {
         String name = "non-existant";
         String type = "non-existant";
-        try {
-            service.postNamedBean(bean, this.mapper.createObjectNode(), name, type, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            Assert.fail("Expected JsonException not thrown.");
-        } catch (JsonException ex) {
-            this.validate(ex.getJsonMessage());
-            Assert.assertEquals("Error code is HTTP \"not found\"", 404, ex.getCode());
-            Assert.assertEquals("Error message is HTTP \"not found\"", "Object type non-existant named \"non-existant\" not found.", ex.getLocalizedMessage());
-            Assert.assertEquals("Message Id", 42, ex.getId());
-        }
+        JsonException ex = assertThrows( JsonException.class,
+            () -> service.postNamedBean(bean, this.mapper.createObjectNode(), name, type,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42)));
+        this.validate(ex.getJsonMessage());
+        assertEquals( 404, ex.getCode(), "Error code is HTTP \"not found\"");
+        assertEquals( "Object type non-existant named \"non-existant\" not found.",
+            ex.getLocalizedMessage(), "Error message is HTTP \"not found\"");
+        assertEquals( 42, ex.getId(), "Message Id");
     }
     
     @Test
     @Override
     public void testDoDelete() {
-        try {
-            service.doDelete(service.getType(), "non-existant", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
-            assertEquals("Error message is HTTP \"not found\"", "Object type turnout named \"non-existant\" not found.", ex.getLocalizedMessage());
-            assertEquals("ID is 42", 42, ex.getId());
-        }
+        JsonException ex = assertThrows( JsonException.class,
+            () -> service.doDelete(service.getType(), "non-existant", NullNode.getInstance(),
+                new JsonRequest(locale, JSON.V5, JSON.DELETE, 42)));
+        assertEquals( 404, ex.getCode(), "Code is HTTP NOT FOUND");
+        assertEquals( "Object type turnout named \"non-existant\" not found.",
+            ex.getLocalizedMessage(), "Error message is HTTP \"not found\"");
+        assertEquals( 42, ex.getId(), "ID is 42");
     }
 }
