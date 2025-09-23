@@ -23,10 +23,13 @@ import jmri.util.JUnitUtil;
 import jmri.util.prefs.InitializationException;
 import jmri.web.servlet.ServletUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -37,30 +40,15 @@ public class WebAppServletTest {
     @Test
     public void testCTor() {
         WebAppServlet t = new WebAppServlet();
-        Assert.assertNotNull("exists",t);
-    }
-
-    @BeforeEach
-    public void setUp() throws InitializationException {
-        JUnitUtil.setUp();
-        JUnitUtil.initConnectionConfigManager();
-        JUnitUtil.resetProfileManager();
-        WebAppManager wam = new WebAppManager();
-        wam.initialize(ProfileManager.getDefault().getActiveProfile());
-        InstanceManager.setDefault(WebAppManager.class, wam);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        JUnitUtil.tearDown();
+        assertNotNull( t, "exists");
     }
 
     public void validateAbout(MockHttpServletResponse response) throws UnsupportedEncodingException, IOException {
-        Assert.assertEquals("Response connection header", "Keep-Alive", response.getHeader("Connection"));
-        Assert.assertEquals("Response type", UTF8_APPLICATION_JSON, response.getContentType());
+        assertEquals( "Keep-Alive", response.getHeader("Connection"), "Response connection header");
+        assertEquals( UTF8_APPLICATION_JSON, response.getContentType(), "Response type");
         JsonNode json = (new ObjectMapper()).readTree(response.getContentAsString());
-        Assert.assertEquals("copyright is correct", Version.getCopyright(), json.get("copyright").asText());
-        Assert.assertTrue("productInfo->JMRI object is array", json.get("productInfo").isArray());
+        assertEquals( Version.getCopyright(), json.get("copyright").asText(), "copyright is correct");
+        assertTrue( json.get("productInfo").isArray(), "productInfo->JMRI object is array");
     }
 
     @Test
@@ -110,14 +98,15 @@ public class WebAppServletTest {
         request.setContextPath("/app");
         request.setPathInfo("");
         instance.processRequest(request, response);
-        Assert.assertEquals("Response connection header", "Keep-Alive", response.getHeader("Connection"));
-        Assert.assertEquals("Response type", UTF8_TEXT_HTML, response.getContentType());
+        assertEquals( "Keep-Alive", response.getHeader("Connection"), "Response connection header");
+        assertEquals( UTF8_TEXT_HTML, response.getContentType(), "Response type");
         String body = response.getContentAsString();
         // test for some built, and some not built artifacts in response
-        Assert.assertTrue("Is HTML", body.startsWith("<!DOCTYPE html>\n"));
-        Assert.assertTrue("Contains RR Name", body.contains(InstanceManager.getDefault(ServletUtil.class).getRailroadName(false)));
-        Assert.assertTrue("Contains local script", body.contains("<script src=\"/app/script\"></script>"));
-        Assert.assertTrue("Is Angular app", body.contains("<body ng-app=\"jmri.app\">"));
+        assertTrue( body.startsWith("<!DOCTYPE html>\n"), "Is HTML");
+        assertTrue( body.contains(InstanceManager.getDefault(ServletUtil.class).getRailroadName(false)),
+            "Contains RR Name");
+        assertTrue( body.contains("<script src=\"/app/script\"></script>"), "Contains local script");
+        assertTrue( body.contains("<body ng-app=\"jmri.app\">"), "Is Angular app");
     }
 
     @Test
@@ -131,16 +120,16 @@ public class WebAppServletTest {
         request.setContextPath("/app");
         request.setPathInfo("/locale-en.json");
         instance.processRequest(request, response);
-        Assert.assertEquals("Response connection header", "Keep-Alive", response.getHeader("Connection"));
-        Assert.assertEquals("Response type", UTF8_APPLICATION_JSON, response.getContentType());
+        assertEquals( "Keep-Alive", response.getHeader("Connection"), "Response connection header");
+        assertEquals( UTF8_APPLICATION_JSON, response.getContentType(), "Response type");
         JsonNode json = (new ObjectMapper()).readTree(response.getContentAsString());
-        Assert.assertTrue("Is JSON object", json.isObject());
-        Assert.assertTrue("Contains POWER object", json.hasNonNull("POWER"));
-        Assert.assertTrue("POWER object has POWER object", json.get("POWER").hasNonNull("POWER"));
-        Assert.assertEquals("Inner POWER object is \"Power\"", "Power", json.get("POWER").get("POWER").asText());
-        Assert.assertTrue("Contains HELP object", json.hasNonNull("HELP"));
-        Assert.assertTrue("HELP object has ABOUT object", json.get("HELP").hasNonNull("ABOUT"));
-        Assert.assertEquals("Inner ABOUT object is \"About\"", "About", json.get("HELP").get("ABOUT").asText());
+        assertTrue( json.isObject(), "Is JSON object");
+        assertTrue( json.hasNonNull("POWER"), "Contains POWER object");
+        assertTrue( json.get("POWER").hasNonNull("POWER"), "POWER object has POWER object");
+        assertEquals( "Power", json.get("POWER").get("POWER").asText(), "Inner POWER object is \"Power\"");
+        assertTrue( json.hasNonNull("HELP"), "Contains HELP object");
+        assertTrue( json.get("HELP").hasNonNull("ABOUT"), "HELP object has ABOUT object");
+        assertEquals( "About", json.get("HELP").get("ABOUT").asText(), "Inner ABOUT object is \"About\"");
         // test German locale - can't reuse request and response objects 
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
@@ -148,13 +137,14 @@ public class WebAppServletTest {
         request.setContextPath("/app");
         request.setPathInfo("/locale-de.json");
         instance.processRequest(request, response);
-        Assert.assertEquals("Response connection header", "Keep-Alive", response.getHeader("Connection"));
-        Assert.assertEquals("Response type", UTF8_APPLICATION_JSON, response.getContentType());
+        assertEquals( "Keep-Alive", response.getHeader("Connection"), "Response connection header");
+        assertEquals( UTF8_APPLICATION_JSON, response.getContentType(), "Response type");
         json = (new ObjectMapper()).readTree(response.getContentAsString());
-        Assert.assertTrue("Is JSON object", json.isObject());
-        Assert.assertTrue("Contains POWER object", json.hasNonNull("POWER"));
-        Assert.assertTrue("POWER object has POWER object", json.get("POWER").hasNonNull("POWER"));
-        Assert.assertEquals("Inner POWER object is \"Bahnspannung\"", "Bahnspannung", json.get("POWER").get("POWER").asText());
+        assertTrue( json.isObject(), "Is JSON object");
+        assertTrue( json.hasNonNull("POWER"), "Contains POWER object");
+        assertTrue( json.get("POWER").hasNonNull("POWER"), "POWER object has POWER object");
+        assertEquals( "Bahnspannung", json.get("POWER").get("POWER").asText(),
+            "Inner POWER object is \"Bahnspannung\"");
     }
 
     @Test
@@ -166,16 +156,32 @@ public class WebAppServletTest {
         request.setContextPath("/app/script");
         WebAppServlet instance = new WebAppServlet();
         instance.processRequest(request, response);
-        Assert.assertEquals("Response connection header", "Keep-Alive", response.getHeader("Connection"));
-        Assert.assertEquals("Response type", UTF8_APPLICATION_JAVASCRIPT, response.getContentType());
+        assertEquals( "Keep-Alive", response.getHeader("Connection"), "Response connection header");
+        assertEquals( UTF8_APPLICATION_JAVASCRIPT, response.getContentType(), "Response type");
         String body = response.getContentAsString();
-        Assert.assertTrue("Starts with comment", body.startsWith("/*\n"));
+        assertTrue( body.startsWith("/*\n"), "Starts with comment");
     }
     
     @Test
     public void testGetServletInfo() {
-        Assert.assertEquals("JMRI Web App support", new WebAppServlet().getServletInfo());
+        assertEquals("JMRI Web App support", new WebAppServlet().getServletInfo());
     }
+
+    @BeforeEach
+    public void setUp() throws InitializationException {
+        JUnitUtil.setUp();
+        JUnitUtil.initConnectionConfigManager();
+        JUnitUtil.resetProfileManager();
+        WebAppManager wam = new WebAppManager();
+        wam.initialize(ProfileManager.getDefault().getActiveProfile());
+        InstanceManager.setDefault(WebAppManager.class, wam);
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
     // private final static Logger log = LoggerFactory.getLogger(WebAppServletTest.class);
 
 }
