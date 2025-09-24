@@ -60,9 +60,13 @@ public class LayoutTurntable extends LayoutTrack {
     // operational instance variables (not saved between sessions)
     private NamedBeanHandle<LayoutBlock> namedLayoutBlock = null;
 
+    private boolean dispatcherManaged = false;
     private boolean turnoutControlled = false;
     private double radius = 25.0;
     private int lastKnownIndex = -1;
+
+    private NamedBeanHandle<SignalMast> bufferSignalMast;
+    private NamedBeanHandle<SignalMast> exitSignalMast;
 
     // persistent instance variables (saved between sessions)
 
@@ -101,6 +105,68 @@ public class LayoutTurntable extends LayoutTrack {
      */
     public void setRadius(double r) {
         radius = r;
+    }
+
+    public boolean isDispatcherManaged() {
+        return dispatcherManaged;
+    }
+
+    public void setDispatcherManaged(boolean managed) {
+        dispatcherManaged = managed;
+    }
+
+    public SignalMast getBufferMast() {
+        if (bufferSignalMast == null) {
+            return null;
+        }
+        return bufferSignalMast.getBean();
+    }
+
+    public String getBufferSignalMastName() {
+        if (bufferSignalMast == null) {
+            return "";
+        }
+        return bufferSignalMast.getName();
+    }
+
+    public void setBufferSignalMast(String name) {
+        if (name == null || name.isEmpty()) {
+            bufferSignalMast = null;
+            return;
+        }
+        SignalMast mast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+        if (mast != null) {
+            bufferSignalMast = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, mast);
+        } else {
+            bufferSignalMast = null;
+        }
+    }
+
+    public SignalMast getExitSignalMast() {
+        if (exitSignalMast == null) {
+            return null;
+        }
+        return exitSignalMast.getBean();
+    }
+
+    public String getExitSignalMastName() {
+        if (exitSignalMast == null) {
+            return "";
+        }
+        return exitSignalMast.getName();
+    }
+
+    public void setExitSignalMast(String name) {
+        if (name == null || name.isEmpty()) {
+            exitSignalMast = null;
+            return;
+        }
+        SignalMast mast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+        if (mast != null) {
+            exitSignalMast = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, mast);
+        } else {
+            exitSignalMast = null;
+        }
     }
 
     /**
@@ -634,6 +700,23 @@ public class LayoutTurntable extends LayoutTrack {
         return active;
     }
 
+    /**
+     * Checks if the given mast is an approach mast for any ray on this turntable.
+     * @param mast The SignalMast to check.
+     * @return true if it is an approach mast for one of the rays.
+     */
+    public boolean isApproachMast(SignalMast mast) {
+        if (mast == null) {
+            return false;
+        }
+        for (RayTrack ray : rayTrackList) {
+            if (mast.equals(ray.getApproachMast())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public class RayTrack {
 
         /**
@@ -658,6 +741,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         private boolean disabled = false;
         private boolean disableWhenOccupied = false;
+        private NamedBeanHandle<SignalMast> approachMast;
 
         //
         // Accessor routines
@@ -752,6 +836,41 @@ public class LayoutTurntable extends LayoutTrack {
          */
         public int getConnectionIndex() {
             return connectionIndex;
+        }
+
+        /**
+         * Get the approach signal mast for this ray.
+         * @return The signal mast, or null.
+         */
+        public SignalMast getApproachMast() {
+            if (approachMast == null) {
+                return null;
+            }
+            return approachMast.getBean();
+        }
+
+        public String getApproachMastName() {
+            if (approachMast == null) {
+                return "";
+            }
+            return approachMast.getName();
+        }
+
+        /**
+         * Set the approach signal mast for this ray by name.
+         * @param name The name of the signal mast.
+         */
+        public void setApproachMast(String name) {
+            if (name == null || name.isEmpty()) {
+                approachMast = null;
+                return;
+            }
+            SignalMast mast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+            if (mast != null) {
+                approachMast = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, mast);
+            } else {
+                approachMast = null;
+            }
         }
 
         /**

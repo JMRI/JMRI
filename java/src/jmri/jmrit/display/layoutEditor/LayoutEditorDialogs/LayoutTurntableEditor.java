@@ -51,12 +51,18 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     private JPanel editLayoutTurntableRayPanel;
     private JButton editLayoutTurntableAddRayTrackButton;
     private JCheckBox editLayoutTurntableDccControlledCheckBox;
+    private JCheckBox editLayoutTurntableUseSignalMastsCheckBox;
+    private JPanel signalMastParametersPanel;
+    private NamedBeanComboBox<SignalMast> exitMastComboBox;
+    private NamedBeanComboBox<SignalMast> bufferMastComboBox;
 
     private String editLayoutTurntableOldRadius = "";
+    private final List<NamedBeanComboBox<SignalMast>> approachMastComboBoxes = new ArrayList<>();
     private boolean editLayoutTurntableOpen = false;
     private boolean editLayoutTurntableNeedsRedraw = false;
 
     private final List<Turnout> turntableTurnouts = new ArrayList<>();
+    private final List<SignalMast> turntableMasts = new ArrayList<>();
 
     /**
      * Edit a Turntable.
@@ -137,6 +143,25 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             panel3.add(editLayoutTurntableDccControlledCheckBox = new JCheckBox(Bundle.getMessage("TurntableDCCControlled")));  // NOI18N
             headerPane.add(panel3);
 
+            JPanel panel4 = new JPanel();
+            panel4.setLayout(new FlowLayout());
+            panel4.add(editLayoutTurntableUseSignalMastsCheckBox = new JCheckBox(Bundle.getMessage("TurntableUseSignalMasts"))); // NOI18N
+            headerPane.add(panel4);
+
+            // setup signal mast parameters panel
+            signalMastParametersPanel = new JPanel();
+            signalMastParametersPanel.setBorder(BorderFactory.createTitledBorder("Signal Mast Assignments")); // NOI18N
+            exitMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
+            bufferMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
+            exitMastComboBox.addActionListener(e -> {
+                layoutTurntable.setExitSignalMast(exitMastComboBox.getSelectedItemDisplayName());
+                refreshTurntableMastComboBoxes();
+            });
+            bufferMastComboBox.addActionListener(e -> {
+                layoutTurntable.setBufferSignalMast(bufferMastComboBox.getSelectedItemDisplayName());
+                refreshTurntableMastComboBoxes();
+            });
+
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
@@ -160,6 +185,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         }
 
         editLayoutTurntableDccControlledCheckBox.setSelected(layoutTurntable.isTurnoutControlled());
+        editLayoutTurntableUseSignalMastsCheckBox.setSelected(layoutTurntable.isDispatcherManaged());
         editLayoutTurntableDccControlledCheckBox.addActionListener((ActionEvent e) -> {
             layoutTurntable.setTurnoutControlled(editLayoutTurntableDccControlledCheckBox.isSelected());
 
@@ -171,7 +197,21 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             }
             editLayoutTurntableFrame.pack();
         });
+
+        signalMastParametersPanel.setVisible(layoutTurntable.isDispatcherManaged());
+        editLayoutTurntableUseSignalMastsCheckBox.addActionListener((ActionEvent e) -> {
+            boolean isSelected = editLayoutTurntableUseSignalMastsCheckBox.isSelected();
+            layoutTurntable.setDispatcherManaged(isSelected); // Update the model
+            signalMastParametersPanel.setVisible(isSelected); // Make the panel visible
+            updateRayPanel(); // Rebuild to show/hide mast details
+            editLayoutTurntableFrame.pack();
+        });
+
+        exitMastComboBox.setSelectedItem(layoutTurntable.getExitSignalMast());
+        bufferMastComboBox.setSelectedItem(layoutTurntable.getBufferMast());
+
         updateRayPanel();
+        refreshTurntableMastComboBoxes();
         // Set up for Edit
         editLayoutTurntableRadiusTextField.setText(" " + layoutTurntable.getRadius());
         editLayoutTurntableOldRadius = editLayoutTurntableRadiusTextField.getText();
@@ -186,6 +226,16 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         editLayoutTurntableFrame.setVisible(true);
         editLayoutTurntableOpen = true;
     }   // editLayoutTurntable
+
+    private void refreshTurntableMastComboBoxes() {
+        // The approachMastComboBoxes list is now a class member and populated in updateRayPanel
+
+        layoutEditor.getLETools().refreshSignalMastsAtTurntable(
+                layoutTurntable,
+                exitMastComboBox,
+                bufferMastComboBox,
+                approachMastComboBoxes);
+    }
 
     @InvokeOnGuiThread
     private void editLayoutTurntableEditBlockPressed(ActionEvent a) {
@@ -231,6 +281,48 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
             editLayoutTurntableRayPanel.add(new TurntableRayPanel(rt));
         }
+
+        // Rebuild signal mast panel
+        signalMastParametersPanel.removeAll();
+        approachMastComboBoxes.clear();
+
+        if (layoutTurntable.isDispatcherManaged()) {
+            signalMastParametersPanel.setLayout(new BoxLayout(signalMastParametersPanel, BoxLayout.Y_AXIS));
+
+            // Add approach masts for each ray
+            for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
+                JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
+                p.add(new JLabel(Bundle.getMessage("MakeLabel", "Approach Mast Ray " + rt.getConnectionIndex())));
+                NamedBeanComboBox<SignalMast> combo = new NamedBeanComboBox<>(
+                        InstanceManager.getDefault(SignalMastManager.class), rt.getApproachMast(), DisplayOptions.DISPLAYNAME);
+                LayoutEditor.setupComboBox(combo, false, true, true);
+                final LayoutTurntable.RayTrack currentRay = rt; // Create effectively final variable for the lambda
+                combo.addActionListener(e -> {
+                    // The combo box is for the ray track 'currentRay'
+                    currentRay.setApproachMast(combo.getSelectedItemDisplayName());
+                    refreshTurntableMastComboBoxes();
+                });
+                p.add(combo);
+                signalMastParametersPanel.add(p);
+                approachMastComboBoxes.add(combo);
+            }
+            if (!approachMastComboBoxes.isEmpty()) {
+                signalMastParametersPanel.add(new JSeparator());
+            }
+
+            JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            exitPanel.add(new JLabel("Turntable Exit Mast:     "));
+            exitPanel.add(exitMastComboBox);
+            signalMastParametersPanel.add(exitPanel);
+
+            JPanel bufferPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            bufferPanel.add(new JLabel("Turntable Buffer Mast:"));
+            bufferPanel.add(bufferMastComboBox);
+            signalMastParametersPanel.add(bufferPanel);
+
+            refreshTurntableMastComboBoxes();
+            editLayoutTurntableRayPanel.add(signalMastParametersPanel);
+        }
         editLayoutTurntableRayPanel.revalidate();
         editLayoutTurntableRayPanel.repaint();
         editLayoutTurntableFrame.pack();
@@ -274,6 +366,17 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             editLayoutTurntableNeedsRedraw = true;
             ///layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             ///layoutTurntable.updateBlockInfo();
+        }
+
+        layoutTurntable.setDispatcherManaged(editLayoutTurntableUseSignalMastsCheckBox.isSelected());
+        if (editLayoutTurntableUseSignalMastsCheckBox.isSelected()) {
+            layoutTurntable.setExitSignalMast(exitMastComboBox.getSelectedItemDisplayName());
+            layoutTurntable.setBufferSignalMast(bufferMastComboBox.getSelectedItemDisplayName());
+            for (int i = 0; i < approachMastComboBoxes.size(); i++) {
+                LayoutTurntable.RayTrack ray = layoutTurntable.getRayTrackList().get(i);
+                NamedBeanComboBox<SignalMast> combo = approachMastComboBoxes.get(i);
+                ray.setApproachMast(combo.getSelectedItemDisplayName());
+            }
         }
 
         // check if new radius was entered

@@ -2037,6 +2037,7 @@
       <xs:attribute name="xcen" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="ycen" type="xs:float" use="required"></xs:attribute>
       <xs:attribute name="turnoutControlled" type="yesNoType"></xs:attribute>
+      <xs:attribute name="dispatcherManaged" type="yesNoType" use="optional"></xs:attribute>
 
     </xs:complexType>
 
