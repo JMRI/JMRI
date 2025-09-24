@@ -9637,10 +9637,10 @@ final public class LayoutEditorTools {
     }   //setSignalMastsDonePressed
 
 
-    Set<SignalMast> usedMasts = new HashSet<>();
+    public final Set<SignalMast> usedMasts = new HashSet<>();
 
-    void createListUsedSignalMasts() {
-        usedMasts = new HashSet<>();
+    public void createListUsedSignalMasts() {
+        usedMasts.clear();
         for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             //We allow the same sensor to be allocated in both directions.
             if (po != boundary) {
@@ -9722,7 +9722,6 @@ final public class LayoutEditorTools {
         for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
             if (ray.getApproachMast() != null) usedMasts.remove(ray.getApproachMast());
         }
-
         if (exitMast != null) exitMast.setExcludedItems(usedMasts);
         if (bufferMast != null) bufferMast.setExcludedItems(usedMasts);
         if (approachMasts != null) {

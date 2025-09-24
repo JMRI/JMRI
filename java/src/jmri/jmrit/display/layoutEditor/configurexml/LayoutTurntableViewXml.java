@@ -50,6 +50,16 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
         element.setAttribute("turnoutControlled", "" + (turnoutControl ? "yes" : "no"));
         boolean dispatcherManaged = p.isDispatcherManaged();
         element.setAttribute("dispatcherManaged", dispatcherManaged ? "yes" : "no");
+        if (dispatcherManaged) {
+            String exitMastName = p.getExitSignalMastName();
+            if (exitMastName != null && !exitMastName.isEmpty()) {
+                element.setAttribute("exitmast", exitMastName);
+            }
+            String bufferMastName = p.getBufferSignalMastName();
+            if (bufferMastName != null && !bufferMastName.isEmpty()) {
+                element.setAttribute("buffermast", bufferMastName);
+            }
+        }
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml");  // temporary until storage split
         // add ray tracks
         for (int i = 0; i < p.getNumberRays(); i++) {
@@ -58,6 +68,10 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
             TrackSegment t = p.getRayConnectOrdered(i);
             if (t != null) {
                 rElem.setAttribute("connectname", t.getId());
+            }
+            String mastName = p.getRayTrackList().get(i).getApproachMastName();
+            if (mastName != null && !mastName.isEmpty()) {
+                rElem.setAttribute("approachmast", mastName);
             }
             rElem.setAttribute("index", "" + p.getRayIndex(i));
             if (turnoutControl && p.getRayTurnoutName(i) != null) {
@@ -75,34 +89,6 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
                 }
             }
             element.addContent(rElem);
-        }
-        if (dispatcherManaged) {
-            Element properties = new Element("properties");
-            if (p.getBufferSignalMastName() != null && !p.getBufferSignalMastName().isEmpty()) {
-                Element pElem = new Element("property");
-                pElem.addContent(new Element("key").addContent("bufferMast"));
-                pElem.addContent(new Element("value").addContent(p.getBufferSignalMastName()));
-                properties.addContent(pElem);
-            }
-            if (p.getExitSignalMastName() != null && !p.getExitSignalMastName().isEmpty()) {
-                Element pElem = new Element("property");
-                pElem.addContent(new Element("key").addContent("exitMast"));
-                pElem.addContent(new Element("value").addContent(p.getExitSignalMastName()));
-                properties.addContent(pElem);
-            }
-            for (int i = 0; i < p.getNumberRays(); i++) {
-                LayoutTurntable.RayTrack ray = p.getRayTrackList().get(i);
-                String mastName = ray.getApproachMastName();
-                if (mastName != null && !mastName.isEmpty()) {
-                    Element pElem = new Element("property");
-                    pElem.addContent(new Element("key").addContent("approachMast_ray_" + ray.getConnectionIndex()));
-                    pElem.addContent(new Element("value").addContent(mastName));
-                    properties.addContent(pElem);
-                }
-            }
-            if (!properties.getContent().isEmpty()) {
-                element.addContent(properties);
-            }
         }
         storeLogixNG_Data(pv, element);
         return element;
@@ -162,6 +148,16 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
         a = element.getAttribute("dispatcherManaged");
         if (a != null) {
             lt.setDispatcherManaged("yes".equalsIgnoreCase(a.getValue()));
+            if (lt.isDispatcherManaged()) {
+                a = element.getAttribute("exitmast");
+                if (a != null) {
+                    lt.tExitSignalMastName = a.getValue();
+                }
+                a = element.getAttribute("buffermast");
+                if (a != null) {
+                    lt.tBufferSignalMastName = a.getValue();
+                }
+            }
         }
 
         // load ray tracks
@@ -181,7 +177,12 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
                 if (a != null) {
                     connectName = a.getValue();
                 }
-                lt.addRayTrack(angle, index, connectName);
+                LayoutTurntable.RayTrack ray = lt.addRay(angle);
+                ray.connectName = connectName;
+                a = value.getAttribute("approachmast");
+                if (a != null) {
+                    ray.approachMastName = a.getValue();
+                }
                 if (lt.isTurnoutControlled() && value.getAttribute("turnout") != null) {
                     if (value.getAttribute("turnoutstate").getValue().equals("thrown")) {
                         lt.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.THROWN);
@@ -200,34 +201,6 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
             }
         }
 
-        if (lt.isDispatcherManaged()) {
-            Element properties = element.getChild("properties");
-            if (properties != null) {
-                for (Element property : properties.getChildren("property")) {
-                    String key = property.getChildText("key");
-                    String value = property.getChildText("value");
-                    if (key != null && value != null) {
-                        if (key.equals("bufferMast")) {
-                            lt.setBufferSignalMast(value);
-                        } else if (key.equals("exitMast")) {
-                            lt.setExitSignalMast(value);
-                        } else if (key.startsWith("approachMast_ray_")) {
-                            try {
-                                int rayIndex = Integer.parseInt(key.substring("approachMast_ray_".length()));
-                                for (LayoutTurntable.RayTrack ray : lt.getRayTrackList()) {
-                                    if (ray.getConnectionIndex() == rayIndex) {
-                                        ray.setApproachMast(value);
-                                        break;
-                                    }
-                                }
-                            } catch (NumberFormatException e) {
-                                log.warn("Could not parse ray index from property key: {}", key);
-                            }
-                        }
-                    }
-                }
-            }
-        }
         loadLogixNG_Data(lv, element);
     }
 

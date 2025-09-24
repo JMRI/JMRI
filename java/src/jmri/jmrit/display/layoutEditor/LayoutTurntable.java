@@ -585,6 +585,8 @@ public class LayoutTurntable extends LayoutTrack {
 
 
     public String tLayoutBlockName = "";
+    public String tExitSignalMastName = "";
+    public String tBufferSignalMastName = "";
 
     /**
      * Initialization method The name of each track segment connected to a ray
@@ -601,8 +603,20 @@ public class LayoutTurntable extends LayoutTrack {
         }
         tLayoutBlockName = null; /// release this memory
 
+        if (tBufferSignalMastName != null && !tBufferSignalMastName.isEmpty()) {
+            setBufferSignalMast(tBufferSignalMastName);
+        }
+        tBufferSignalMastName = null;
+        if (tExitSignalMastName != null && !tExitSignalMastName.isEmpty()) {
+            setExitSignalMast(tExitSignalMastName);
+        }
+        tExitSignalMastName = null;
+
         rayTrackList.forEach((rt) -> {
             rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
+            if (rt.approachMastName != null && !rt.approachMastName.isEmpty()) {
+                rt.setApproachMast(rt.approachMastName);
+            }
         });
     }
 
@@ -669,7 +683,7 @@ public class LayoutTurntable extends LayoutTrack {
             log.error("{}.deleteRay(null); rayTrack is null", getName());
         } else {
             t = rayTrack.getConnect();
-            getRayTrackList().remove(rayTrack.getConnectionIndex());
+            getRayTrackList().remove(rayTrack);
             rayTrack.dispose();
         }
         if (t != null) {
@@ -892,6 +906,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         // initialization instance variable (used when loading a LayoutEditor)
         public String connectName = "";
+        public String approachMastName = "";
 
         private NamedBeanHandle<Turnout> namedTurnout;
         // Turnout t;

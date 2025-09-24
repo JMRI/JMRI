@@ -59,6 +59,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
 
     private String editLayoutTurntableOldRadius = "";
     private final List<NamedBeanComboBox<SignalMast>> approachMastComboBoxes = new ArrayList<>();
+    private final java.util.Set<SignalMast> mastsUsedElsewhere = new java.util.HashSet<>();
     private boolean editLayoutTurntableOpen = false;
     private boolean editLayoutTurntableNeedsRedraw = false;
 
@@ -157,13 +158,19 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
 
             // setup signal mast parameters panel
             signalMastParametersPanel = new JPanel();
-            signalMastParametersPanel.setBorder(BorderFactory.createTitledBorder("Signal Mast Assignments")); // NOI18N
+            signalMastParametersPanel.setBorder(BorderFactory.createTitledBorder("Signal Mast Assignments (Approach masts at junction Ray and Turntable Bridge)")); // NOI18N
             exitMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(exitMastComboBox, false, true, true);
             bufferMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(bufferMastComboBox, false, true, true);
-            exitMastComboBox.addActionListener(this::mastComboBoxActionPerformed);
-            bufferMastComboBox.addActionListener(this::mastComboBoxActionPerformed);
+            exitMastComboBox.addActionListener(e -> {
+                layoutTurntable.setExitSignalMast(exitMastComboBox.getSelectedItemDisplayName());
+                refreshAllMastComboBoxes();
+            });
+            bufferMastComboBox.addActionListener(e -> {
+                layoutTurntable.setBufferSignalMast(bufferMastComboBox.getSelectedItemDisplayName());
+                refreshAllMastComboBoxes();
+            });
 
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
@@ -205,15 +212,29 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         editLayoutTurntableUseSignalMastsCheckBox.addActionListener((ActionEvent e) -> {
             boolean isSelected = editLayoutTurntableUseSignalMastsCheckBox.isSelected();
             layoutTurntable.setDispatcherManaged(isSelected); // Update the model
-            signalMastParametersPanel.setVisible(isSelected); // Make the panel visible
-            updateRayPanel(); // Rebuild to show/hide mast details
+            updateRayPanel(); // Rebuild to show/hide mast details, which also handles visibility
             editLayoutTurntableFrame.pack();
         });
 
-        exitMastComboBox.setSelectedItem(layoutTurntable.getExitSignalMast());
-        bufferMastComboBox.setSelectedItem(layoutTurntable.getBufferMast());
+        // Cache the list of masts used on other parts of the layout.
+        // This is the performance-critical change, preventing a full layout scan on every click.
+        mastsUsedElsewhere.clear();
+        layoutEditor.getLETools().createListUsedSignalMasts();
+        mastsUsedElsewhere.addAll(layoutEditor.getLETools().usedMasts);
 
-        updateRayPanel();
+        // Remove masts assigned to the current turntable from the "used elsewhere" list
+        if (layoutTurntable.getBufferMast() != null) {
+            mastsUsedElsewhere.remove(layoutTurntable.getBufferMast());
+        }
+        if (layoutTurntable.getExitSignalMast() != null) {
+            mastsUsedElsewhere.remove(layoutTurntable.getExitSignalMast());
+        }
+        for (LayoutTurntable.RayTrack ray : layoutTurntable.getRayTrackList()) {
+            if (ray.getApproachMast() != null) {
+                mastsUsedElsewhere.remove(ray.getApproachMast());
+            }
+        }
+
         // Set up for Edit
         editLayoutTurntableRadiusTextField.setText(" " + layoutTurntable.getRadius());
         editLayoutTurntableOldRadius = editLayoutTurntableRadiusTextField.getText();
@@ -224,6 +245,9 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                 turntableEditCancelPressed(null);
             }
         });
+        updateRayPanel();
+        exitMastComboBox.setSelectedItem(layoutTurntable.getExitSignalMast());
+        bufferMastComboBox.setSelectedItem(layoutTurntable.getBufferMast());
         editLayoutTurntableFrame.pack();
         editLayoutTurntableFrame.setVisible(true);
         editLayoutTurntableOpen = true;
@@ -279,7 +303,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             // Add approach masts for each ray
             for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
                 JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                p.add(new JLabel(Bundle.getMessage("MakeLabel", "Approach Mast Ray " + rt.getConnectionIndex())));
+                p.add(new JLabel(Bundle.getMessage("MakeLabel", "Approach Mast Ray " + (rt.getConnectionIndex() + 1))));
                 NamedBeanComboBox<SignalMast> combo = new NamedBeanComboBox<>(
                         InstanceManager.getDefault(SignalMastManager.class), rt.getApproachMast(), DisplayOptions.DISPLAYNAME);
                 LayoutEditor.setupComboBox(combo, false, true, true);
@@ -290,8 +314,10 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
 
             // Add action listeners now that the list is complete
             for (int i = 0; i < approachMastComboBoxes.size(); i++) {
+                final int index = i; // final variable for use in lambda
                 approachMastComboBoxes.get(i).addActionListener(e -> {
-                    mastComboBoxActionPerformed(e);
+                    layoutTurntable.getRayTrackList().get(index).setApproachMast(approachMastComboBoxes.get(index).getSelectedItemDisplayName());
+                    refreshAllMastComboBoxes();
                 });
             }
             if (!approachMastComboBoxes.isEmpty()) {
@@ -338,8 +364,6 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             bufferPanel.add(new JLabel("Turntable Buffer Mast:")); // NOI18N
             bufferPanel.add(bufferMastComboBox);
             signalMastParametersPanel.add(bufferPanel);
-
-            refreshAllMastComboBoxes();
             editLayoutTurntableRayPanel.add(signalMastParametersPanel);
         }
         editLayoutTurntableRayPanel.revalidate();
@@ -347,12 +371,42 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         editLayoutTurntableFrame.pack();
     }
     
-    private void mastComboBoxActionPerformed(ActionEvent e) {
-        refreshAllMastComboBoxes();
-    }
-
     private void refreshAllMastComboBoxes() {
-        layoutEditor.getLETools().refreshSignalMastsAtTurntable(layoutTurntable, exitMastComboBox, bufferMastComboBox, approachMastComboBoxes);
+        // Get all masts currently selected in this dialog.
+        SignalMast exitSelection = exitMastComboBox.getSelectedItem();
+        SignalMast bufferSelection = bufferMastComboBox.getSelectedItem();
+
+        List<SignalMast> approachSelections = new ArrayList<>();
+        for (NamedBeanComboBox<SignalMast> combo : approachMastComboBoxes) {
+            if (combo.getSelectedItem() != null) {
+                approachSelections.add(combo.getSelectedItem());
+            }
+        }
+
+        // For exitMastComboBox: exclude masts used elsewhere, the buffer, and all approach masts.
+        java.util.Set<SignalMast> exclusions = new java.util.HashSet<>(mastsUsedElsewhere);
+        if (bufferSelection != null) exclusions.add(bufferSelection);
+        exclusions.addAll(approachSelections);
+        // Don't exclude the item that is currently selected in this combo box
+        if (exitSelection != null) exclusions.remove(exitSelection);
+        exitMastComboBox.setExcludedItems(exclusions);
+
+        // For bufferMastComboBox: exclude masts used elsewhere, the exit, and all approach masts.
+        exclusions = new java.util.HashSet<>(mastsUsedElsewhere);
+        if (exitSelection != null) exclusions.add(exitSelection);
+        exclusions.addAll(approachSelections);
+        if (bufferSelection != null) exclusions.remove(bufferSelection);
+        bufferMastComboBox.setExcludedItems(exclusions);
+
+        // For each approachMastComboBox: exclude masts used elsewhere, exit, buffer, and all *other* approach masts.
+        for (NamedBeanComboBox<SignalMast> currentCombo : approachMastComboBoxes) {
+            exclusions = new java.util.HashSet<>(mastsUsedElsewhere);
+            if (exitSelection != null) exclusions.add(exitSelection);
+            if (bufferSelection != null) exclusions.add(bufferSelection);
+            exclusions.addAll(approachSelections);
+            if (currentCombo.getSelectedItem() != null) exclusions.remove(currentCombo.getSelectedItem());
+            currentCombo.setExcludedItems(exclusions);
+        }
     }
 
     private void saveRayPanelDetail() {
@@ -449,11 +503,11 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             editLayoutTurntableNeedsRedraw = true;
         }
         // clean up
+        saveRayPanelDetail();
         editLayoutTurntableOpen = false;
         editLayoutTurntableFrame.setVisible(false);
         editLayoutTurntableFrame.dispose();
         editLayoutTurntableFrame = null;
-        saveRayPanelDetail();
         if (editLayoutTurntableNeedsRedraw) {
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
@@ -563,15 +617,17 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             showTurnoutDetails();
 
             rayAngleTextField.setText(twoDForm.format(rayTrack.getAngle()));
-            rayTitledBorder.setTitle(Bundle.getMessage("Ray") + " : " + rayTrack.getConnectionIndex());  // NOI18N
+            int rayNumber = rayTrack.getConnectionIndex() + 1;
+            rayTitledBorder.setTitle(Bundle.getMessage("Ray") + " : " + rayNumber);  // NOI18N
             if (rayTrack.getConnect() == null) {
                 rayTitledBorder.setTitle(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("Unconnected")) + " "
-                        + rayTrack.getConnectionIndex());  // NOI18N
+                        + rayNumber);  // NOI18N
             } else if (rayTrack.getConnect().getLayoutBlock() != null) {
                 rayTitledBorder.setTitle(Bundle.getMessage("MakeLabel",
                         Bundle.getMessage("Connected")) + " "
-                        + rayTrack.getConnect().getLayoutBlock().getDisplayName());  // NOI18N
+                        + rayTrack.getConnect().getLayoutBlock().getDisplayName()
+                        + " (" + Bundle.getMessage("Ray") + " " + rayNumber + ")");  // NOI18N
             }
         }
 
