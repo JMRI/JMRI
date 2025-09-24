@@ -18,11 +18,9 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.fail;
-
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Common methods for JMRI JSON Service HTTP provider tests.
@@ -123,8 +121,13 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
      * @throws JsonException if an error occurs
      */
     public final void testDoSchema(String type, H service, Boolean server) throws JsonException {
-        assumeTrue(service != null, "protect against JUnit tests in Eclipse that test this class directly");
-        assertNotNull( service);
+        if (service == null) {
+            // protect against JUnit tests in Eclipse that test this class directly
+            // Compilers may complain about a potential null pointer if
+            // Assumptions.assumeTrue( service != null ) is used.
+            // TODO - check this with JUnit > 5.9.1
+            return;
+        }
         JsonNode schema;
         if (server == null || !server) {
             schema = service.doSchema(type, false, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
@@ -141,7 +144,7 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
                 "Type is in server schema");
         }
         // Suppress a warning message (see networknt/json-schema-validator#79)
-        JUnitAppender.checkForMessageStartingWith(
+        JUnitAppender.suppressWarnMessageStartsWith(
                 "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
     }
 
@@ -156,8 +159,13 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
      * @throws JsonException if an error occurs
      */
     public final void testDoSchema(String type1, String type2, H service, Boolean server) throws JsonException {
-        assumeTrue(service != null, "protect against JUnit tests in Eclipse that test this class directly");
-        assertNotNull( service);
+        if (service == null) {
+            // protect against JUnit tests in Eclipse that test this class directly
+            // Compilers may complain about a potential null pointer if
+            // Assumptions.assumeTrue( service != null ) is used.
+            // TODO - check this with JUnit > 5.9.1
+            return;
+        }
         JsonNode schema1;
         JsonNode schema2;
         if (server == null || !server) {
@@ -179,7 +187,7 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
                 "Server schema objects are the same");
         }
         // Suppress a warning message (see networknt/json-schema-validator#79)
-        JUnitAppender.checkForMessageStartingWith(
+        JUnitAppender.suppressWarnMessageStartsWith(
                 "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
     }
 
@@ -206,12 +214,10 @@ public abstract class JsonServiceFactoryTestBase<H extends JsonHttpService, I ex
      */
     public final void validate(String type, JsonNode node, boolean server) {
         assertNotNull(node);
-        try {
+        assertDoesNotThrow( () ->
             InstanceManager.getDefault(JsonSchemaServiceCache.class)
-                .validateMessage(node, server, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-        } catch (JsonException ex) {
-            fail("Unable to validate " + ((server) ? "server" : "client") + " schema for " + type + ".");
-        }
+                .validateMessage(node, server, new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "Unable to validate " + ((server) ? "server" : "client") + " schema for " + type + ".");
     }
 
 }
