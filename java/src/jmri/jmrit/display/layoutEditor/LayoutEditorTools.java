@@ -9843,7 +9843,7 @@ final public class LayoutEditorTools {
         return true;
     }
 
-    private void placingBlock(PositionableIcon icon, boolean isRightSide,
+    public void placingBlock(PositionableIcon icon, boolean isRightSide,
             double fromPoint, Object obj, Point2D p) {
         if (obj instanceof TrackSegment) {
             TrackSegment ts = (TrackSegment) obj;

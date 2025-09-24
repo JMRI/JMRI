@@ -14,6 +14,7 @@ import javax.swing.border.TitledBorder;
 import jmri.NamedBean.DisplayOptions;
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
+import jmri.jmrit.display.SignalMastIcon;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
@@ -60,6 +61,12 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     private final List<NamedBeanComboBox<SignalMast>> approachMastComboBoxes = new ArrayList<>();
     private boolean editLayoutTurntableOpen = false;
     private boolean editLayoutTurntableNeedsRedraw = false;
+
+    private JRadioButton doNotPlaceIcons;
+    private JRadioButton placeIconsLeft;
+    private JRadioButton placeIconsRight;
+
+    private int placementSelection = 0; // 0: Do Not Place, 1: Left, 2: Right
 
     private final List<Turnout> turntableTurnouts = new ArrayList<>();
     private final List<SignalMast> turntableMasts = new ArrayList<>();
@@ -152,15 +159,11 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             signalMastParametersPanel = new JPanel();
             signalMastParametersPanel.setBorder(BorderFactory.createTitledBorder("Signal Mast Assignments")); // NOI18N
             exitMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
+            LayoutEditor.setupComboBox(exitMastComboBox, false, true, true);
             bufferMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
-            exitMastComboBox.addActionListener(e -> {
-                layoutTurntable.setExitSignalMast(exitMastComboBox.getSelectedItemDisplayName());
-                refreshTurntableMastComboBoxes();
-            });
-            bufferMastComboBox.addActionListener(e -> {
-                layoutTurntable.setBufferSignalMast(bufferMastComboBox.getSelectedItemDisplayName());
-                refreshTurntableMastComboBoxes();
-            });
+            LayoutEditor.setupComboBox(bufferMastComboBox, false, true, true);
+            exitMastComboBox.addActionListener(this::mastComboBoxActionPerformed);
+            bufferMastComboBox.addActionListener(this::mastComboBoxActionPerformed);
 
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
@@ -211,7 +214,6 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         bufferMastComboBox.setSelectedItem(layoutTurntable.getBufferMast());
 
         updateRayPanel();
-        refreshTurntableMastComboBoxes();
         // Set up for Edit
         editLayoutTurntableRadiusTextField.setText(" " + layoutTurntable.getRadius());
         editLayoutTurntableOldRadius = editLayoutTurntableRadiusTextField.getText();
@@ -226,16 +228,6 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         editLayoutTurntableFrame.setVisible(true);
         editLayoutTurntableOpen = true;
     }   // editLayoutTurntable
-
-    private void refreshTurntableMastComboBoxes() {
-        // The approachMastComboBoxes list is now a class member and populated in updateRayPanel
-
-        layoutEditor.getLETools().refreshSignalMastsAtTurntable(
-                layoutTurntable,
-                exitMastComboBox,
-                bufferMastComboBox,
-                approachMastComboBoxes);
-    }
 
     @InvokeOnGuiThread
     private void editLayoutTurntableEditBlockPressed(ActionEvent a) {
@@ -267,16 +259,11 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
 
     // Remove old rays and add them back in
     private void updateRayPanel() {
-        for (Component comp : editLayoutTurntableRayPanel.getComponents()) {
-            editLayoutTurntableRayPanel.remove(comp);
-        }
-
         // Create list of turnouts to be retained in the NamedBeanComboBox
         turntableTurnouts.clear();
-        for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
-            turntableTurnouts.add(rt.getTurnout());
-        }
+        layoutTurntable.getRayTrackList().forEach(rt -> turntableTurnouts.add(rt.getTurnout()));
 
+        editLayoutTurntableRayPanel.removeAll();
         editLayoutTurntableRayPanel.setLayout(new BoxLayout(editLayoutTurntableRayPanel, BoxLayout.Y_AXIS));
         for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
             editLayoutTurntableRayPanel.add(new TurntableRayPanel(rt));
@@ -296,36 +283,76 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                 NamedBeanComboBox<SignalMast> combo = new NamedBeanComboBox<>(
                         InstanceManager.getDefault(SignalMastManager.class), rt.getApproachMast(), DisplayOptions.DISPLAYNAME);
                 LayoutEditor.setupComboBox(combo, false, true, true);
-                final LayoutTurntable.RayTrack currentRay = rt; // Create effectively final variable for the lambda
-                combo.addActionListener(e -> {
-                    // The combo box is for the ray track 'currentRay'
-                    currentRay.setApproachMast(combo.getSelectedItemDisplayName());
-                    refreshTurntableMastComboBoxes();
-                });
                 p.add(combo);
                 signalMastParametersPanel.add(p);
                 approachMastComboBoxes.add(combo);
+            }
+
+            // Add action listeners now that the list is complete
+            for (int i = 0; i < approachMastComboBoxes.size(); i++) {
+                approachMastComboBoxes.get(i).addActionListener(e -> {
+                    mastComboBoxActionPerformed(e);
+                });
             }
             if (!approachMastComboBoxes.isEmpty()) {
                 signalMastParametersPanel.add(new JSeparator());
             }
 
+            // Add shared icon placement controls
+            JPanel placementPanel = new JPanel();
+            placementPanel.setLayout(new BoxLayout(placementPanel, BoxLayout.Y_AXIS));
+            placementPanel.setBorder(BorderFactory.createTitledBorder("Add Approach Signal Mast Icons to Panel")); // NOI18N
+
+            doNotPlaceIcons = new JRadioButton(Bundle.getMessage("DoNotPlace")); // NOI18N
+            placeIconsLeft = new JRadioButton(Bundle.getMessage("LeftHandSide")); // NOI18N
+            placeIconsRight = new JRadioButton(Bundle.getMessage("RightHandSide")); // NOI18N
+            ButtonGroup bg = new ButtonGroup();
+            bg.add(doNotPlaceIcons);
+            bg.add(placeIconsLeft);
+            bg.add(placeIconsRight);
+            switch (placementSelection) {
+                case 1:
+                    placeIconsLeft.setSelected(true);
+                    break;
+                case 2:
+                    placeIconsRight.setSelected(true);
+                    break;
+                default: doNotPlaceIcons.setSelected(true);
+            }
+
+            JPanel radioPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            radioPanel.add(doNotPlaceIcons);
+            radioPanel.add(placeIconsLeft);
+            radioPanel.add(placeIconsRight);
+            placementPanel.add(radioPanel);
+            signalMastParametersPanel.add(placementPanel);
+
+            signalMastParametersPanel.add(new JSeparator());
+
             JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            exitPanel.add(new JLabel("Turntable Exit Mast:     "));
+            exitPanel.add(new JLabel("Turntable Exit Mast:     ")); // NOI18N
             exitPanel.add(exitMastComboBox);
             signalMastParametersPanel.add(exitPanel);
 
             JPanel bufferPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            bufferPanel.add(new JLabel("Turntable Buffer Mast:"));
+            bufferPanel.add(new JLabel("Turntable Buffer Mast:")); // NOI18N
             bufferPanel.add(bufferMastComboBox);
             signalMastParametersPanel.add(bufferPanel);
 
-            refreshTurntableMastComboBoxes();
+            refreshAllMastComboBoxes();
             editLayoutTurntableRayPanel.add(signalMastParametersPanel);
         }
         editLayoutTurntableRayPanel.revalidate();
         editLayoutTurntableRayPanel.repaint();
         editLayoutTurntableFrame.pack();
+    }
+    
+    private void mastComboBoxActionPerformed(ActionEvent e) {
+        refreshAllMastComboBoxes();
+    }
+
+    private void refreshAllMastComboBoxes() {
+        layoutEditor.getLETools().refreshSignalMastsAtTurntable(layoutTurntable, exitMastComboBox, bufferMastComboBox, approachMastComboBoxes);
     }
 
     private void saveRayPanelDetail() {
@@ -376,6 +403,33 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                 LayoutTurntable.RayTrack ray = layoutTurntable.getRayTrackList().get(i);
                 NamedBeanComboBox<SignalMast> combo = approachMastComboBoxes.get(i);
                 ray.setApproachMast(combo.getSelectedItemDisplayName());
+            }
+
+            if (!doNotPlaceIcons.isSelected()) {
+                for (int i = 0; i < approachMastComboBoxes.size(); i++) {
+                    LayoutTurntable.RayTrack ray = layoutTurntable.getRayTrackList().get(i);
+                    SignalMast mast = approachMastComboBoxes.get(i).getSelectedItem();
+                    if (mast != null) {
+                        if (layoutEditor.getLETools().isSignalMastOnPanel(mast)) {
+                            log.warn("SignalMast icon for {} is already on the panel. Will not place a second icon.", mast.getDisplayName());
+                        } else if (ray.getConnect() != null) {
+                            SignalMastIcon icon = new SignalMastIcon(layoutEditor);
+                            icon.setSignalMast(mast.getDisplayName());
+                            layoutEditor.getLETools().placingBlock(icon, placeIconsRight.isSelected(), 0.0,
+                                    ray.getConnect(), layoutTurntableView.getRayCoordsIndexed(ray.getConnectionIndex()));
+                            editLayoutTurntableNeedsRedraw = true;
+                        }
+                    }
+                }
+            }
+
+            // Save placement selection
+            if (placeIconsLeft.isSelected()) {
+                placementSelection = 1;
+            } else if (placeIconsRight.isSelected()) {
+                placementSelection = 2;
+            } else {
+                placementSelection = 0;
             }
         }
 
