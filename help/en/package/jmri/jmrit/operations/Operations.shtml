@@ -2782,7 +2782,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       "Count" to the number that you wish. The maximum count is 100 and the minimum is 1. For
       example, a count of 3 is equal to entering the exact same schedule item three times in a row.
 
-      <h5>Wait</h5>
+      <h5 id="ScheduleWait">Wait</h5>
       The "Wait" field allows you determine how many trains will try to service the spur before
       picking up the car. Useful if you want a car to remain still for several operating sessions.
       Note that the car's load won't change immediately if there's a wait count. Once the wait count
@@ -3993,17 +3993,29 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         car loads</a>. In the Cars table, a car's final destination has the prefix "->" in the
       "Destination" or "Final Destination" columns.
 
-      <h4>Moves, Wait and Last Time Moved</h4>
-      You can edit the number of times a car has been moved by the program and the car's wait count
-      directly from the "Cars" window. Double click on the cell in the Cars window to change. The
-      built and owner fields can be found in the <a href="#CarsEdit">Edit Car</a> window. The last
-      time moved is set when the program delivers a car to a track.
+      <h4>Moves and Wait</h4>
+      A car's move count is incremented by the program when a car is delivered to a new track by a
+      train. A car's wait count is set by a spur's schedule. A car with a
+      <a href="#ScheduleWait">wait</a> count greater than zero will not be assigned to a train. You
+      can edit the number of times a car has been moved by the program and the car's wait count
+      directly from the "Cars" window. Double click on the cell in the Cars window to change.
+
+      <h4>Built and Owner</h4>
+      The "Built" and "Owner" radio buttons allow you to sort by the car's built date and owner names
+      respectively. The built and owner fields can be found in the
+      <a href="#CarsEdit">Edit Car</a> window.
 
       <h4>Pick up</h4>
       The "Pick up" column shows if a car has been scheduled for a pick up using a
       <a href="#Schedules">schedule</a> and <a href="#TrainSchedules">Train Schedules</a>. After a
       car is assigned to a train by the program, the car's estimated pick up time can be viewed in
-      the "Pick up" column. The format for pick up time is day:hour:minute.
+      the "Pick up" column. The format for pick up time is day:hour:minute. The "Pick up" radio
+      button also shows the car's "Set out" day and time.
+
+      <h4>Last</h4>
+      The "Last" radio button displays the date and time a car was delivered to a track by a train.
+      It also shows the "Last Train" that delivered the car, and under "Last Location" where the
+      car was pulled.
 
       <h4>Add, Find, Save Buttons</h4>
       There are three buttons located at the bottom of the Cars window. The
