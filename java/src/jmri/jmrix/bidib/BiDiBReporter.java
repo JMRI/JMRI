@@ -88,12 +88,9 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
      * 
      * @param tag found tag
      */
-    public void notify_loco(RailCom tag){
+    public void notify_loco(RailCom tag) {
         //log.trace("tag: {}", tag);
         super.notify(tag);
-//        for (Object id : getCollection()) {
-//        	log.debug("  tag: {}", (RailCom)id);
-//        }
     }
 
     private void createReporterListener() {
