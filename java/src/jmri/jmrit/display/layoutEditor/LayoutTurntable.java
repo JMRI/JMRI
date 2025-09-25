@@ -65,6 +65,8 @@ public class LayoutTurntable extends LayoutTrack {
     private double radius = 25.0;
     private int lastKnownIndex = -1;
 
+    private int signalIconPlacement = 0; // 0: Do Not Place, 1: Left, 2: Right
+
     private NamedBeanHandle<SignalMast> bufferSignalMast;
     private NamedBeanHandle<SignalMast> exitSignalMast;
 
@@ -113,6 +115,14 @@ public class LayoutTurntable extends LayoutTrack {
 
     public void setDispatcherManaged(boolean managed) {
         dispatcherManaged = managed;
+    }
+
+    public int getSignalIconPlacement() {
+        return signalIconPlacement;
+    }
+
+    public void setSignalIconPlacement(int placement) {
+        this.signalIconPlacement = placement;
     }
 
     public SignalMast getBufferMast() {

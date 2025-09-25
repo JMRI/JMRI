@@ -2041,6 +2041,7 @@
       <xs:attribute name="dispatcherManaged" type="yesNoType" use="optional"></xs:attribute>
       <xs:attribute name="exitmast" type="xs:string" use="optional"></xs:attribute>
       <xs:attribute name="buffermast" type="xs:string" use="optional"></xs:attribute>
+      <xs:attribute name="signalIconPlacement" type="xs:string" use="optional"></xs:attribute>
 
     </xs:complexType>
 

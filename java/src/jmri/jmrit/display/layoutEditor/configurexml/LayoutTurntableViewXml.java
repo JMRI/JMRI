@@ -59,6 +59,7 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
             if (bufferMastName != null && !bufferMastName.isEmpty()) {
                 element.setAttribute("buffermast", bufferMastName);
             }
+            element.setAttribute("signalIconPlacement", "" + p.getSignalIconPlacement());
         }
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml");  // temporary until storage split
         // add ray tracks
@@ -156,6 +157,14 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
                 a = element.getAttribute("buffermast");
                 if (a != null) {
                     lt.tBufferSignalMastName = a.getValue();
+                }
+                a = element.getAttribute("signalIconPlacement");
+                if (a != null) {
+                    try {
+                        lt.setSignalIconPlacement(a.getIntValue());
+                    } catch (DataConversionException e) {
+                        log.error("failed to convert signalIconPlacement attribute");
+                    }
                 }
             }
         }
