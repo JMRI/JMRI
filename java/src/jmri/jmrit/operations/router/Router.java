@@ -1293,7 +1293,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 train = tmanager.getTrainForCar(testCar, null);
             }
             // Can specified train carry this car out of staging?
-            if (car.getTrack().isStaging() && !specified.equals(YES)) {
+            if (car.getTrack().isStaging() && specified.equals(NO)) {
                 train = null;
             }
             // is the option carry all cars with a final destination enabled?
