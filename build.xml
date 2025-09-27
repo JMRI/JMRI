@@ -908,6 +908,7 @@
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
@@ -948,6 +949,7 @@
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
@@ -1651,6 +1653,7 @@
             <sysproperty key="java.awt.headless" value="true"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
@@ -1800,6 +1803,7 @@
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
