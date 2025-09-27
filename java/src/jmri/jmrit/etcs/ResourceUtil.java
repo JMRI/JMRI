@@ -10,11 +10,11 @@ import javax.annotation.Nonnull;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
+import org.apiguardian.api.API;
+
 import jmri.jmrit.Sound;
 import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
-
-import org.apiguardian.api.API;
 
 /**
  * Class to locate ERTMS Graphical and Audio resources.
@@ -137,6 +137,7 @@ public class ResourceUtil {
      * 3 - S_info.wav - 1 sec
      * 4 - click.wav - 1 sec
      * @param sound which Sound, plays once.
+     * @throws IllegalArgumentException when needed
      */
     public static void playDmiSound(int sound) throws IllegalArgumentException {
 

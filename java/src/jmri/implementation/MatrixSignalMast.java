@@ -1,10 +1,10 @@
 package jmri.implementation;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.util.ThreadingUtil;
@@ -487,6 +487,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      * @param number int for the number of outputs defined for this mast
      * @see #mastBitNum
      */
+    @SuppressWarnings("javadoc")
     public void setBitNum(int number) {
             mastBitNum = number;
     }
@@ -497,6 +498,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      * @param bits char[] for outputs defined for this mast
      * @see #mastBitNum
      */
+    @SuppressWarnings("javadoc")
     public void setBitNum(char[] bits) {
         mastBitNum = bits.length;
     }

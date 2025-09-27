@@ -110,8 +110,11 @@
 
 package jmri.util.org.mitre.jawb.swing;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Component;
+import java.awt.Graphics;
+
+import javax.swing.Icon;
+import javax.swing.SwingConstants;
 
 /**
  * CompositeIcon is an Icon implementation which draws two icons with a
@@ -210,6 +213,15 @@ public class CompositeIcon implements Icon, SwingConstants {
   }
     
   /** Paints one icon in the specified rectangle with the given orientations
+ * @param c component
+ * @param g 
+ * @param icon icon
+ * @param x 
+ * @param y 
+ * @param width 
+ * @param height 
+ * @param horizontalOrientation 
+ * @param verticalOrientation 
    */
   void paintIcon(Component c, Graphics g, Icon icon, int x, int y,
                  int width, int height,

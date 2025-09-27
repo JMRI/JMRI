@@ -1,16 +1,12 @@
 package jmri.jmrit.logixng.expressions;
 
-import static jmri.Conditional.OPERATOR_AND;
-import static jmri.Conditional.OPERATOR_NONE;
-import static jmri.Conditional.OPERATOR_OR;
+import static jmri.Conditional.*;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Locale;
-import java.util.Map;
-import javax.annotation.Nonnull;
+import java.util.*;
+
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.logixng.*;
@@ -46,6 +42,8 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
      * @param user the user name
      * @param expressionSystemNames a list of system names for the expressions
      * this antecedent uses
+     * @throws BadUserNameException when needed
+     * @throws BadSystemNameException when needed
      */
     public Antecedent(@Nonnull String sys, @CheckForNull String user,
             List<Map.Entry<String, String>> expressionSystemNames)

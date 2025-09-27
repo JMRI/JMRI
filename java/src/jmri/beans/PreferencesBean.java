@@ -1,7 +1,9 @@
 package jmri.beans;
 
 import java.beans.PropertyChangeEvent;
+
 import javax.annotation.Nonnull;
+
 import jmri.profile.Profile;
 
 /**
@@ -94,6 +96,7 @@ public abstract class PreferencesBean extends Bean {
      * As a side effect, calls to {@link #isDirty} will return {@code true} if
      * oldValue and newValue differ or are null.
      */
+    @SuppressWarnings("javadoc")
     @Override
     public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         if (oldValue == null || newValue == null || !oldValue.equals(newValue)) {
@@ -108,6 +111,7 @@ public abstract class PreferencesBean extends Bean {
      * As a side effect, calls to {@link #isDirty} will return {@code true} if
      * oldValue and newValue differ and propertyName is not {@value #DIRTY}.
      */
+    @SuppressWarnings("javadoc")
     @Override
     public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
         if (oldValue != newValue) {
@@ -125,6 +129,7 @@ public abstract class PreferencesBean extends Bean {
      * As a side effect, calls to {@link #isDirty} will return {@code true} if
      * oldValue and newValue differ.
      */
+    @SuppressWarnings("javadoc")
     @Override
     public void firePropertyChange(String propertyName, int oldValue, int newValue) {
         if (oldValue != newValue) {
@@ -141,6 +146,7 @@ public abstract class PreferencesBean extends Bean {
      * {@link PropertyChangeSupport#firePropertyChange(java.beans.PropertyChangeEvent)}
      * on {@link #propertyChangeSupport} directly.
      */
+    @SuppressWarnings("javadoc")
     @Override
     public void firePropertyChange(PropertyChangeEvent evt) {
         this.propertyChangeSupport.firePropertyChange(evt);

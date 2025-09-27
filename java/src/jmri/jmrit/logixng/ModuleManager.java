@@ -4,10 +4,10 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
 
+import org.apache.commons.lang3.mutable.MutableInt;
+
 import jmri.Manager;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
-
-import org.apache.commons.lang3.mutable.MutableInt;
 
 /**
  * Manager for LogixNG modules
@@ -24,6 +24,7 @@ public interface ModuleManager extends Manager<Module> {
      * @param userName   the user name
      * @param socketType the socket type
      * @return a new Module or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     Module createModule(String systemName, String userName,
             FemaleSocketManager.SocketType socketType)
@@ -36,6 +37,7 @@ public interface ModuleManager extends Manager<Module> {
      * @param userName the user name
      * @param socketType the socket type
      * @return a new Module or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     Module createModule(String userName, FemaleSocketManager.SocketType socketType)
             throws IllegalArgumentException;

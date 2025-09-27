@@ -1,13 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
-import jmri.JmriException;
-import jmri.util.*;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
 import org.netbeans.jemmy.operators.Operator;
+
+import jmri.JmriException;
+import jmri.util.JUnitAppender;
 
 /**
  * Test simple functioning of TrackSegment.
@@ -140,7 +139,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
     /**
      * This is called once before all tests
      *
-     * @throws Exception
+     * @throws Exception when needed
      */
     @BeforeAll
     public static void setUpClass() throws Exception {
@@ -155,7 +154,7 @@ public class TrackSegmentTest extends LayoutTrackTest {
     /**
      * This is called once after all tests
      *
-     * @throws Exception
+     * @throws Exception when needed
      */
     @AfterAll
     public static void tearDownClass() throws Exception {
