@@ -214,14 +214,14 @@ public class CompositeIcon implements Icon, SwingConstants {
     
   /** Paints one icon in the specified rectangle with the given orientations
  * @param c component
- * @param g 
+ * @param g graphic
  * @param icon icon
- * @param x 
- * @param y 
- * @param width 
- * @param height 
- * @param horizontalOrientation 
- * @param verticalOrientation 
+ * @param x x location
+ * @param y y location
+ * @param width width of icon
+ * @param height height of icon
+ * @param horizontalOrientation horizontal orientation
+ * @param verticalOrientation vertical orientation
    */
   void paintIcon(Component c, Graphics g, Icon icon, int x, int y,
                  int width, int height,
@@ -258,7 +258,8 @@ public class CompositeIcon implements Icon, SwingConstants {
    *
    * @return an int specifying the fixed width of the icon.
    */
-  public int getIconWidth() {
+  @Override
+public int getIconWidth() {
     if (fPosition == LEFT || fPosition == RIGHT)
       return fIcon1.getIconWidth() + fIcon2.getIconWidth();
                                 
@@ -270,7 +271,8 @@ public class CompositeIcon implements Icon, SwingConstants {
    *
    * @return an int specifying the fixed height of the icon.
    */
-  public int getIconHeight() {
+  @Override
+public int getIconHeight() {
     if (fPosition == TOP || fPosition == BOTTOM)
       return fIcon1.getIconHeight() + fIcon2.getIconHeight();
                                 

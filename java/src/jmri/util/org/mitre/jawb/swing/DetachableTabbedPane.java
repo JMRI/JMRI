@@ -170,8 +170,8 @@ public class DetachableTabbedPane extends JTabbedPane {
    * placement of either: <code>JTabbedPane.TOP</code>,
    * <code>JTabbedPane.BOTTOM</code>, <code>JTabbedPane.LEFT</code>, or
    * <code>JTabbedPane.RIGHT</code>, and specified detachability.
- * @param tabPlacement 
- * @param detachable 
+ * @param tabPlacement tab placement
+ * @param detachable true if detachable
    */
   public DetachableTabbedPane (int tabPlacement, boolean detachable) {
     super (tabPlacement);
