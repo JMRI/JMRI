@@ -612,7 +612,9 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json">
+                <exclude name="**/junit-platform.properties"/><!-- Only required for tests -->
+            </fileset>
         </copy>
     </target>
 
