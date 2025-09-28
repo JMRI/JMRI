@@ -32,6 +32,7 @@ public final class OlcbEventNameStore implements EventNameStore {
      * @param eventID The EventID being searched for
      * @return The name associated with that EventID or the event ID in dotted hex
      */
+    @Override
     public String getEventName(EventID eventID) {
         var name = idToName.get(eventID);
         if (name == null || name.isEmpty()) return eventID.toShortString();

@@ -13,10 +13,12 @@ public class XNetTurnoutCommandMessageFormatter implements XPressNetMessageForma
     public XNetTurnoutCommandMessageFormatter() {
     }
 
+    @Override
     public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.lenz.XNetMessage && ((XNetMessage) m).getElement(0)==XNetConstants.ACC_OPER_REQ;
     }
 
+    @Override
     public String formatMessage(jmri.jmrix.Message m) {
         String messageKey =(((m.getElement(2) & 0x08) == 0x08) ? "XNetMessageAccessoryDecoderOnRequest" : "XNetMessageAccessoryDecoderOffRequest");
         int baseaddress = m.getElement(1);
