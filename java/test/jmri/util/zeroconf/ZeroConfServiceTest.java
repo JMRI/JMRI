@@ -36,7 +36,7 @@ public class ZeroConfServiceTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.resetZeroConfServiceManager();
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         
         // wait for dns threads to end
         Thread.getAllStackTraces().keySet().forEach((t) -> 
