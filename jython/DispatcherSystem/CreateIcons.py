@@ -77,7 +77,8 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     controlSensors.append([i, 'helpSensor', 'Help', 0, 5]); i += 1
 
 
-    def __str__(self):
+    def __init__(self):
+        print "processPanels2"
         self.result = "Success"    #value is returned in __str__ and set to "Failure" in self.tryme()
         self.define_DisplayProgress_global()
         if self.perform_initial_checks():
@@ -94,6 +95,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.tryme(self.updatePanels, "Cannot update Panels: Contact Developer")
             self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
             self.addSensors()
+            print "generate SML"
             self.tryme(self.generateSML, "Cannot generate Signal Mast Logic: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(60)
             self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
@@ -107,7 +109,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         else:
             self.result = "Failure"
+
+    def __str__(self):
         return self.result
+
 
     def setVersionNo(self):
         memory = memories.provideMemory('IS:ISMEM:' + "versionNo")
@@ -663,20 +668,20 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # **************************************************
     def generateSML(self):
         layoutblocks.enableAdvancedRouting(True)
-        print "Generating Signal Mast Logic"
+        # print "Generating Signal Mast Logic"
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
         smlManager.automaticallyDiscoverSignallingPairs()
-        print "Signal Mast Logic Generated"
+        # print "Signal Mast Logic Generated"
 
     # **************************************************
     # generate sections
     # **************************************************
     def generateSections(self):
-        print "Generating Sections"
+        # print "Generating Sections"
         smlManager = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager)
         # generate sections()
         smlManager.generateSection()
-        print "Sections Generated"
+        # print "Sections Generated"
         self.show_progress(80)
         print "+++++++++++++++++++++++ generate block sections ++++++++++++++++++++++++++++++"
         sections.generateBlockSections()

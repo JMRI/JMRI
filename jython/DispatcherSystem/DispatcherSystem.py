@@ -70,7 +70,9 @@ def CreateIcons_action(event):
     global f1
     initialPanelFilename = start_file
     finalPanelFilename = icons_file
+    print "save panel"
     saveOrigPanel()
+    print "process panels"
     result = processPanels()    # result is "Success" or "Failure"
     # stage2
     if str(result) == "Success":
@@ -79,7 +81,7 @@ def CreateIcons_action(event):
         title = "Error in Routine"
         msg = "Not creating Transits as failure in earlier routine"
         Query().displayMessage(msg,title)
-    #print "Created Transits"
+    print "Created Transits"
 
 def saveOrigPanel():
     global backup_file
@@ -213,8 +215,6 @@ def CreateTransits():
 
     print( "in createTransits")
     #the displayProgress is in CreateTransits
-    # CreateTransits = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/CreateTransits.py')
-    # exec(open (CreateTransits).read())
     #DisplayProgress_global = DisplayProgress
     # progress = 5
     # DisplayProgress()
