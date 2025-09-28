@@ -2,7 +2,6 @@ package jmri.server.json;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class JsonServerPreferencesTest {
     @Test
     public void testCTor() {
         JsonServerPreferences t = new JsonServerPreferences();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

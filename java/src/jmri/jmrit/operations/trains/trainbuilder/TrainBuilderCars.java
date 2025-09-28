@@ -1758,6 +1758,25 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     continue;
                 }
             }
+            // don't allow local moves for a car with a final destination
+            if (rl.getSplitName().equals(rld.getSplitName()) &&
+                    car.getFinalDestination() != null &&
+                    !car.isPassenger() &&
+                    !car.isCaboose() &&
+                    !car.hasFred()) {
+                if (!rld.isLocalMovesAllowed()) {
+                    addLine(_buildReport, FIVE,
+                            Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
+                                    rld.getId(), rld.getName()));
+                    continue;
+                }
+                if (!rl.isLocalMovesAllowed()) {
+                    addLine(_buildReport, FIVE,
+                            Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
+                                    rl.getId(), rl.getName()));
+                    continue;
+                }
+            }
 
             // check to see if departure track has any restrictions
             if (!car.getTrack().isDestinationAccepted(testDestination)) {

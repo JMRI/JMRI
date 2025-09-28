@@ -691,6 +691,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             if (prevSection != null) {
                 curSectionDirection = direction.get(j);
             }
+            fwdStopPerCent.add(0, Float.valueOf(1.0f));
+            revStopPerCent.add(0, Float.valueOf(1.0f));
             initializeSectionCombos();
         }
         updateSeqNum();
@@ -745,7 +747,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             safe.add(0, addAsSafe.isSelected());
             sensorStopAllocation.add(0, "");
             action.add(0, new ArrayList<>());
-            fwdStopPerCent.add(0, Float.valueOf(0.0f));
+            fwdStopPerCent.add(0, Float.valueOf(1.0f));
+            revStopPerCent.add(0, Float.valueOf(1.0f));
             if (curSequenceNum == 2) {
                 prevSectionDirection = direction.get(0);
                 prevSection = s;
@@ -1088,6 +1091,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         } else {
             sensorStopAllocation.add(index, (String) stopAllocatingSensorBox.getSelectedItem());
         }
+        fwdStopPerCent.add(index, Float.valueOf(1.0f));
+        revStopPerCent.add(index, Float.valueOf(1.0f));
         action.add(index, new ArrayList<>());
         initializeSectionCombos();
         updateSeqNum();
@@ -1111,6 +1116,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             alternate.add(true);
             safe.add(addAsSafe.isSelected());
             sensorStopAllocation.add((String)stopAllocatingSensorBox.getSelectedItem());
+            fwdStopPerCent.add( Float.valueOf(1.0f));
+            revStopPerCent.add( Float.valueOf(1.0f));
             initializeSectionCombos();
         }
         updateSeqNum();
@@ -1196,14 +1203,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private boolean checkTransitInformation() {
         //transits can now be of length 1 segmant.
         //With these the route has to start outside the transit
-        /*
-        if ((sectionList.size() <= 1) || (curSequenceNum <= 1)) {
+        if ((sectionList.size() < 1) || (curSequenceNum < 1)) {
             JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message26"), Bundle.getMessage("ErrorTitle"),
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
-        }   */
-
+        }
         return true;
     }
 

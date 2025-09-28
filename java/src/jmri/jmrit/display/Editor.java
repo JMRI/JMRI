@@ -3528,7 +3528,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
                 x = 1;
                 break;
             default:
-                log.warn("Unexpected e.getKeyCode() of {}", e.getKeyCode());
+                log.debug("Unexpected e.getKeyCode() of {}", e.getKeyCode());
                 break;
         }
         //A cheat if the shift key isn't pressed then we move 5 pixels at a time.
