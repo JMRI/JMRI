@@ -10,10 +10,7 @@ import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.MockShutDownManager;
+import jmri.util.*;
 
 /**
  * Base implementation for a test that launches and tests complete JMRI apps
@@ -26,11 +23,13 @@ abstract public class LaunchJmriAppBase {
 
     /**
      * Run one application.
+     * @param tempFolder  temp folder
      *
      * @param profileName       Name of the Profile folder to copy from
      *                          java/test/apps/PanelPro/profiles/
      * @param frameName         Application (frame) title
      * @param startMessageStart Start of the "we're up!" message as seen in System Console
+     * @throws IOException when needed
      */
     protected void runOne(File tempFolder, String profileName, String frameName, String startMessageStart) throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());

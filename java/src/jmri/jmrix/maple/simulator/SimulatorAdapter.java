@@ -1,17 +1,13 @@
 package jmri.jmrix.maple.simulator;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import jmri.jmrix.maple.SerialMessage;
-import jmri.jmrix.maple.SerialPortController; // no special xSimulatorController
-import jmri.jmrix.maple.SerialReply;
-import jmri.jmrix.maple.MapleSystemConnectionMemo;
-import jmri.util.ImmediatePipedOutputStream;
+import java.io.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+// no special xSimulatorController
+import jmri.jmrix.maple.*;
+import jmri.util.ImmediatePipedOutputStream;
 
 /**
  * Provide access to a simulated Maple system.
@@ -32,6 +28,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2018
  */
+@SuppressWarnings("javadoc")
 public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members
