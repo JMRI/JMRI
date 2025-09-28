@@ -3,12 +3,6 @@ package jmri.server.json.signalmast;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHeadManager;
@@ -22,6 +16,12 @@ import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -94,21 +94,20 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
         assertEquals("Clear", result.path(JSON.DATA).path(JSON.ASPECT).asText());
 
         // try to set to UNKNOWN, which should not be allowed, so state should not change
-        try {
-            message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
-            result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            assertNotNull(result);
-            fail("Expected exceiton not thrown");
-        } catch (JsonException ex) {
-            assertEquals("Error code is HTTP 400", 400, ex.getCode());
-            assertEquals("Error message", "Attempting to set object type signalMast to unknown state Unknown.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () -> {
+            JsonNode messageEx = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
+            JsonNode resultEx = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, messageEx, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+            assertNotNull(resultEx);
+        });
+        assertEquals( 400, ex.getCode(), "Error code is HTTP 400");
+        assertEquals( "Attempting to set object type signalMast to unknown state Unknown.",
+            ex.getMessage(), "Error message");
 
         // set to HELD and verify change
         message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_HELD);
         result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
-        assertTrue("Signalmast is held", s.getHeld());
+        assertTrue( s.getHeld(), "Signalmast is held");
         assertEquals("Clear", s.getAspect());
         assertEquals(JSON.ASPECT_HELD, result.path(JSON.DATA).path(JSON.STATE).asText());
         assertEquals("Clear", result.path(JSON.DATA).path(JSON.ASPECT).asText());
@@ -117,7 +116,7 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
         message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Stop");
         result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
-        assertFalse("Signalmast is not held", s.getHeld());
+        assertFalse( s.getHeld(), "Signalmast is not held");
         assertEquals("Stop", s.getAspect());
         assertEquals("Stop", result.path(JSON.DATA).path(JSON.STATE).asText());
         assertEquals("Stop", result.path(JSON.DATA).path(JSON.ASPECT).asText());
