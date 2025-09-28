@@ -182,9 +182,9 @@ public class DetachableTabbedPane extends JTabbedPane {
   /**
    * Creates an empty <code>DetachableTabbedPane</code> with the specified tab
    * placement and tab layout policy.
- * @param tabPlacement 
- * @param tabLayoutPolicy 
- * @param detachable 
+ * @param tabPlacement tab placement
+ * @param tabLayoutPolicy tab layout policy
+ * @param detachable true if detachable
    */
   public DetachableTabbedPane (int tabPlacement, int tabLayoutPolicy,
                                boolean detachable) {
@@ -303,12 +303,12 @@ public class DetachableTabbedPane extends JTabbedPane {
 
   /**
    * Returns the default Detachable.
- * @param title 
- * @param icon 
- * @param comp 
- * @param tip 
- * @param index 
- * @param titleSuffix 
+ * @param title title
+ * @param icon icon
+ * @param comp component
+ * @param tip tool tip
+ * @param index index
+ * @param titleSuffix title suffix
  * @return default Detachable
    */
   protected Detachable createDetachable (String title, Icon icon,
@@ -330,6 +330,7 @@ public class DetachableTabbedPane extends JTabbedPane {
   /**
    * Return Detachables which have been added as Tabs or Detached Frames. TODO:
    * Currently, order is not accurate.
+ * @return Detachables
    */
   protected Detachable[] getDetachables() {
     return panelToDetMap.values().toArray(new Detachable[0]);
@@ -472,12 +473,15 @@ public class DetachableTabbedPane extends JTabbedPane {
       return (x <= cx) && (cx <= x+icon.getIconWidth()) &&
         (y <= cy) && (cy <= y+icon.getIconHeight());
     }
+    @Override
     public int getIconHeight () {
       return icon.getIconHeight();
     }
+    @Override
     public int getIconWidth () {
       return icon.getIconWidth();
     }
+    @Override
     public void paintIcon (Component c, Graphics g, int px, int py) {
       x = px;
       y = py;
