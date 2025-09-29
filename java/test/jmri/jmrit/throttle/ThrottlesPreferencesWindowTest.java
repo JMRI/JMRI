@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
@@ -14,27 +15,25 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author Lionel Jeanson
  */
+@DisabledIfHeadless
 public class ThrottlesPreferencesWindowTest {
 
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
     @Test
     public void testCtor() {
-        try {
-            ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
-            Assertions.assertNotNull(w, "exists");
-            w.pack();
-            ThreadingUtil.runOnGUI(() -> {
-                w.setVisible(true);
-            });
 
-            JFrameOperator jfo = new JFrameOperator(w.getTitle());
-            Assertions.assertNotNull(jfo);
-            new JButtonOperator(jfo,Bundle.getMessage("ButtonCancel")).doClick();
-            jfo.waitClosed();
+        ThrottlesPreferencesWindow w = new ThrottlesPreferencesWindow("ThrottlesPreferencesWindowTest");
+        Assertions.assertNotNull(w, "exists");
+        ThreadingUtil.runOnGUI(() -> {
+            w.pack();
+            w.setVisible(true);
+        });
+
+        JFrameOperator jfo = new JFrameOperator(w.getTitle());
+        Assertions.assertNotNull(jfo);
+        new JButtonOperator(jfo,Bundle.getMessage("ButtonCancel")).doClick();
+        jfo.waitClosed();
+        JUnitUtil.dispose(jfo.getWindow());
             
-        } catch (IndexOutOfBoundsException e) {
-            Assertions.fail("IndexOutOfBoundsException\n",e);
-        }
     }
 
     @BeforeEach
