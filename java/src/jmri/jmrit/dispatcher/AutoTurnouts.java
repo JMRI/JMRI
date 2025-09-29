@@ -16,6 +16,7 @@ import jmri.jmrit.display.layoutEditor.LayoutRHXOver;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -254,6 +255,16 @@ public class AutoTurnouts {
                         if (panel != null) {
                             var connection = new ConnectivityUtil(panel);
                             turnoutList = connection.getTurnoutList(curBlock, prevBlock, nextBlock, true);
+                            // Also check for and set any turntables at this boundary
+                            LayoutTurntable turntable = connection.getTurntable(curBlock, prevBlock);
+                            if (turntable != null) {
+                                int position = connection.getTurntableRay(curBlock, prevBlock);
+                                if (position != -1 && turntable.getPosition() != position) {
+                                    log.debug("{}: Auto-setting turntable '{}' to position '{}'",
+                                            at.getTrainName(), turntable.getName(), position);
+                                    turntable.setPosition(position);
+                                }
+                            }
                         }
                     }
                 }

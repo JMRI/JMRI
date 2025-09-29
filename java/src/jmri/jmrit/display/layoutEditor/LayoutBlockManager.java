@@ -1516,18 +1516,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                                     return ray.getApproachMast();
                                 }
                             } else { // turntableBlock.getBlock() == facingBlock
-                                // Path 1: Moving FROM Turntable out to Ray block. The facing mast is the one at the far end of the ray block.
-                                // This is complex. The logic in discoverValidBeanPairs is better suited to find this.
-                                // However, we can find the mast protecting the *next* block after the ray.
-                                LayoutBlock rayLayoutBlock = connectedTrack.getLayoutBlock();
-                                for (int i = 0; i < rayLayoutBlock.getNumberOfNeighbours(); i++) {
-                                    Block neighbor = rayLayoutBlock.getNeighbourAtIndex(i);
-                                    if (neighbor != turntableBlock.getBlock()) {
-                                        // This is the block after the ray. Find the mast facing it.
-                                        NamedBean mast = getFacingBean(rayLayoutBlock.getBlock(), neighbor, panel, T);
-                                        log.info("getFacingBean: Found turntable boundary for Path 1. Returning remote mast '{}'", (mast != null ? mast.getDisplayName() : "null"));
-                                        return mast;
-                                    }
+                                // Path 1: Moving FROM Turntable out to Ray block. The facing mast is the exit mast for that ray.
+                                if (T.equals(SignalMast.class)) {
+                                    SignalMast exitMast = turntable.getExitSignalMast();
+                                    log.info("getFacingBean: Found turntable boundary for Path 1. Returning exit mast '{}'", (exitMast != null ? exitMast.getDisplayName() : "null"));
+                                    // This is the mast protecting the path from the turntable to the ray.
+                                    return exitMast;
                                 }
                             }
                         }
