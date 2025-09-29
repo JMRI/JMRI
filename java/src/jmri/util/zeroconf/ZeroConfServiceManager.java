@@ -317,7 +317,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                 }
                 nsLatch.countDown();
             });
-            t.setName(DNS_CLOSE_THREAD_NAME + ":" + dns.getHostName());
+            t.setName(DNS_CLOSE_THREAD_NAME + ":" + dns.toString());
             t.start();
         });
         try {
