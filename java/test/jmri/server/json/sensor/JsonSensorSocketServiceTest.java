@@ -16,8 +16,11 @@ import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -26,82 +29,75 @@ import org.junit.jupiter.api.*;
  */
 public class JsonSensorSocketServiceTest {
 
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @Test
-    public void testSensorChange() {
-        try {
-            JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-            JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1");
-            JsonSensorSocketService service = new JsonSensorSocketService(connection);
-            SensorManager manager = InstanceManager.getDefault(SensorManager.class);
-            Sensor sensor1 = manager.provideSensor("IS1");
-            service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            // TODO: test that service is listener in SensorManager
-            message = connection.getMessage();
-            Assert.assertNotNull("Message is not null", message);
-            Assert.assertEquals(JSON.UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asInt(-1)); // -1 not possible value
-            sensor1.setKnownState(Sensor.ACTIVE);
-            JUnitUtil.waitFor(() -> {
-                return sensor1.getKnownState() == Sensor.ACTIVE;
-            }, "Sensor ACTIVE");
-            message = connection.getMessage();
-            Assert.assertNotNull("Message is not null", message);
-            Assert.assertEquals(JSON.ACTIVE, message.path(JSON.DATA).path(JSON.STATE).asInt(-1));
-            sensor1.setKnownState(Sensor.INACTIVE);
-            JUnitUtil.waitFor(() -> {
-                return sensor1.getKnownState() == Sensor.INACTIVE;
-            }, "Sensor INACTIVE");
-            message = connection.getMessage();
-            Assert.assertNotNull("Message is not null", message);
-            Assert.assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
-            Assert.assertEquals(JSON.INACTIVE, message.path(JSON.DATA).path(JSON.STATE).asInt(-1));
-            service.onClose();
-            // TODO: test that service is no longer a listener in SensorManager
-        } catch (IOException | JmriException | JsonException ex) {
-            Assert.fail(ex.getMessage());
-        }
+    public void testSensorChange() throws IOException, JmriException, JsonException {
+
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1");
+        JsonSensorSocketService service = new JsonSensorSocketService(connection);
+        SensorManager manager = InstanceManager.getDefault(SensorManager.class);
+        Sensor sensor1 = manager.provideSensor("IS1");
+        service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        // TODO: test that service is listener in SensorManager
+        message = connection.getMessage();
+        assertNotNull( message, "Message is not null");
+        assertEquals(JSON.UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asInt(-1),
+            "-1 not possible value");
+        sensor1.setKnownState(Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return sensor1.getKnownState() == Sensor.ACTIVE;
+        }, "Sensor ACTIVE");
+        message = connection.getMessage();
+        assertNotNull( message, "Message is not null");
+        assertEquals(JSON.ACTIVE, message.path(JSON.DATA).path(JSON.STATE).asInt(-1));
+        sensor1.setKnownState(Sensor.INACTIVE);
+        JUnitUtil.waitFor(() -> {
+            return sensor1.getKnownState() == Sensor.INACTIVE;
+        }, "Sensor INACTIVE");
+        message = connection.getMessage();
+        assertNotNull( message, "Message is not null");
+        assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
+        assertEquals(JSON.INACTIVE, message.path(JSON.DATA).path(JSON.STATE).asInt(-1));
+        service.onClose();
+        // TODO: test that service is no longer a listener in SensorManager
+
     }
 
     @Test
-    public void testOnMessageChange() {
-        try {
-            JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
-            JsonNode message;
-            JsonSensorSocketService service = new JsonSensorSocketService(connection);
-            SensorManager manager = InstanceManager.getDefault(SensorManager.class);
-            Sensor sensor1 = manager.provideSensor("IS1");
-            // Sensor INACTIVE
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INACTIVE);
-            service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            Assert.assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
-            // Sensor ACTIVE
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.ACTIVE);
-            service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
-            // Sensor UNKNOWN - remains ACTIVE
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
-            service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
-            sensor1.setKnownState(Sensor.ACTIVE);
-            // Sensor INCONSISTENT - remains ACTIVE
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INCONSISTENT);
-            service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
-            sensor1.setKnownState(Sensor.ACTIVE);
-            // Sensor no value
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1");
-            JsonException exception = null;
-            try {
-                service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            } catch (JsonException ex) {
-                exception = ex;
-            }
-            Assert.assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
-            Assert.assertNull(exception);
-        } catch (IOException | JmriException | JsonException ex) {
-            Assert.fail(ex.getMessage());
-        }
+    public void testOnMessageChange() throws IOException, JmriException, JsonException {
+
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode message;
+        JsonSensorSocketService service = new JsonSensorSocketService(connection);
+        SensorManager manager = InstanceManager.getDefault(SensorManager.class);
+        Sensor sensor1 = manager.provideSensor("IS1");
+        // Sensor INACTIVE
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INACTIVE);
+        service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
+        // Sensor ACTIVE
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.ACTIVE);
+        service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
+        // Sensor UNKNOWN - remains ACTIVE
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.UNKNOWN);
+        service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
+        sensor1.setKnownState(Sensor.ACTIVE);
+        // Sensor INCONSISTENT - remains ACTIVE
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, JSON.INCONSISTENT);
+        service.onMessage(JsonSensor.SENSOR, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
+        sensor1.setKnownState(Sensor.ACTIVE);
+        // Sensor no value
+        JsonNode messageNoEx = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IS1");
+        assertDoesNotThrow( () ->
+            service.onMessage(JsonSensor.SENSOR, messageNoEx,
+                new JsonRequest(locale, JSON.V5, JSON.POST, 42)));
+        assertEquals(Sensor.ACTIVE, sensor1.getKnownState());
+
     }
 
     @BeforeEach
