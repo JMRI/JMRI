@@ -550,7 +550,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * warrant.cancelDelayRamp()  called for immediate Stop commands
      * When die==true for ending the warrant run.
      * @param die true for ending the warrant run
-     * @return true if _ramp != null & die false & _isRamping
+     * @return true if _ramp not null and die is false and _isRamping
      */
     protected synchronized boolean cancelRamp(boolean die) {
         // _ramp.quit sets "stop" and notifies "waits"
