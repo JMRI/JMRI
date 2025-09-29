@@ -1,18 +1,19 @@
 package jmri.jmrix.can.cbus.swing.modules.merg;
 
-import java.awt.*;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.*;
+import javax.swing.event.TableModelEvent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.jmrix.can.cbus.swing.modules.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Node Variable edit frame for a MERG CANACC8 CBUS module
@@ -261,7 +262,7 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         /**
          * Set Initial pulse type button states to reflect pulse width from initial NV value
          * 
-         * @param pulseWidth 
+         * @param pulseWidth pulse width
          */
         protected void setButtonsInit(int pulseWidth) {
             if ((pulseWidth == 0) || (pulseWidth == 128)) {
