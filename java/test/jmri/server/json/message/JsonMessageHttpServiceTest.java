@@ -1,10 +1,5 @@
 package jmri.server.json.message;
 
-import org.junit.jupiter.api.*;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import com.fasterxml.jackson.databind.node.NullNode;
 
 import jmri.server.json.JSON;
@@ -13,62 +8,62 @@ import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMessageHttpService> {
 
     @Test
     public void testDoGet() {
-        try {
-            service.doGet(JsonMessage.MESSAGE, "", mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
-            assertEquals("Error message", "Getting message is not allowed.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doGet(JsonMessage.MESSAGE, "", mapper.createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals( 405, ex.getCode(), "Error code is HTTP Method Not Allowed");
+        assertEquals( "Getting message is not allowed.", ex.getMessage(), "Error message");
     }
 
     @Test
     public void testDoPut() {
-        try {
-            service.doPut(JsonMessage.MESSAGE, "", mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
-            assertEquals("Error message", "Putting message is not allowed.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doPut(JsonMessage.MESSAGE, "", mapper.createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals( 405, ex.getCode(), "Error code is HTTP Method Not Allowed");
+        assertEquals( "Putting message is not allowed.", ex.getMessage(), "Error message");
     }
 
     @Test
     public void testDoPost() {
-        try {
-            service.doPost(JsonMessage.MESSAGE, "", mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
-            assertEquals("Error message", "Posting message is not allowed.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doPost(JsonMessage.MESSAGE, "", mapper.createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals( 405, ex.getCode(), "Error code is HTTP Method Not Allowed");
+        assertEquals( "Posting message is not allowed.", ex.getMessage(), "Error message");
     }
 
     @Test
     @Override
     public void testDoDelete() {
-        try {
-            service.doDelete(JsonMessage.MESSAGE, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
-            assertEquals("Error message", "Deleting message is not allowed.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doDelete(JsonMessage.MESSAGE, "", NullNode.getInstance(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals( 405, ex.getCode(), "Error code is HTTP Method Not Allowed");
+        assertEquals( "Deleting message is not allowed.", ex.getMessage(), "Error message");
     }
 
     @Test
     public void testDoGetList() {
-        try {
-            service.doGetList(JsonMessage.MESSAGE, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals("Error code is HTTP Bad Request", 400, ex.getCode());
-            assertEquals("Error message", "message cannot be listed.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doGetList(JsonMessage.MESSAGE, mapper.createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals( 400, ex.getCode(), "Error code is HTTP Bad Request");
+        assertEquals( "message cannot be listed.", ex.getMessage(), "Error message");
     }
 
     @BeforeEach
