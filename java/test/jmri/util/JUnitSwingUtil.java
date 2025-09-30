@@ -53,7 +53,7 @@ public final class JUnitSwingUtil {
      * @param component Typically a JComponent, could be a JFrame, the item to
      *                      be returned
      * @param size      dimension of image to capture
-     * @param upLeft 
+     * @param upLeft    point (ignored)
      * @param file      file to write
      * @throws java.io.IOException when needed
      */

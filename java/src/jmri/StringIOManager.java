@@ -1,7 +1,7 @@
 package jmri;
 
-import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 /**
  * Interface for obtaining StringIOs.
@@ -10,6 +10,7 @@ import javax.annotation.CheckForNull;
  */
 public interface StringIOManager extends ProvidingManager<StringIO>, NameIncrementingManager {
 
+    @Override
     @Nonnull
     StringIO provide(@Nonnull String name) throws IllegalArgumentException;
 

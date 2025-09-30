@@ -12,11 +12,13 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
  * @author Paul Bender Copyright (C) 2024
  */
 public class XNetEstopLocoRequestMessageFormatter implements XPressNetMessageFormatter {
+    @Override
     public boolean handlesMessage(Message m) {
         return m instanceof XNetMessage &&
                 m.getElement(0) == XNetConstants.EMERGENCY_STOP;
     }
 
+    @Override
     public String formatMessage(Message m) {
         return Bundle.getMessage("XNetMessageAddressedEmergencyStopRequest",
                 LenzCommandStation.calcLocoAddress(m.getElement(1), m.getElement(2)));

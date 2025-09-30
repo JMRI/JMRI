@@ -63,7 +63,7 @@ public interface SwingConfiguratorInterface extends Comparable<SwingConfigurator
      * @throws IllegalArgumentException if this class does not support the class
      * with the name given in parameter 'className'
      */
-    public JPanel getConfigPanel(JPanel buttonPanel) throws IllegalArgumentException;
+    public JPanel getConfigPanel(@Nonnull JPanel buttonPanel) throws IllegalArgumentException;
 
     /**
      * Get a configuration panel for an object.
@@ -74,7 +74,7 @@ public interface SwingConfiguratorInterface extends Comparable<SwingConfigurator
      * @return a panel that configures this object
      * @throws IllegalArgumentException when needed
      */
-    public JPanel getConfigPanel(@Nonnull Base object, JPanel buttonPanel) throws IllegalArgumentException;
+    public JPanel getConfigPanel(@Nonnull Base object, @Nonnull JPanel buttonPanel) throws IllegalArgumentException;
 
     /**
      * Validate the form.

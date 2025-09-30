@@ -2,20 +2,15 @@ package jmri.jmrit.progsupport;
 
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
+
 import javax.annotation.Nonnull;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JComboBox;
-import javax.swing.JRadioButton;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.Programmer;
-import jmri.ProgrammingMode;
+import javax.swing.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.*;
 
 /**
  * Provide a JPanel to configure the service mode (Global) programmer.
@@ -187,7 +182,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
      * Listen to buttons for mode changes
      */
     @Override
-    public void actionPerformed(@Nonnull java.awt.event.ActionEvent e) {
+    public void actionPerformed(java.awt.event.ActionEvent e) {
         // find selected button
         log.debug("Selected button: {}", e.getActionCommand());
         for (ProgrammingMode mode : buttonMap.keySet()) {
@@ -203,7 +198,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
      * Listen to programmer for mode changes
      */
     @Override
-    public void propertyChange(@Nonnull java.beans.PropertyChangeEvent e) {
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ("Mode".equals(e.getPropertyName()) && getProgrammer().equals(e.getSource())) {
             // mode changed in programmer, change GUI here if needed
             log.debug("Mode propertyChange with {}", isSelected());

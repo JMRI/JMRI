@@ -4,16 +4,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.geom.*;
 import java.beans.PropertyVetoException;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 
 import javax.annotation.*;
 import javax.swing.*;
 
 import jmri.*;
-import jmri.jmrit.logixng.InlineLogixNG;
-import jmri.jmrit.logixng.LogixNG;
-import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.tools.swing.DeleteBean;
 import jmri.jmrit.logixng.tools.swing.LogixNGEditor;
 import jmri.util.*;
@@ -151,7 +149,7 @@ abstract public class LayoutTrackView implements InlineLogixNG {
      *                    perhaps including multiple values separated by
      *                    semicolons.
      */
-    public void setDecorations(Map<String, String> decorations) {
+    public void setDecorations(@Nonnull Map<String, String> decorations) {
         this.decorations = decorations;
     }
     protected Map<String, String> decorations = null;
