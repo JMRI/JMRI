@@ -18,8 +18,6 @@ from org.jgrapht.graph import DefaultEdge
 from org.jgrapht.graph import DefaultWeightedEdge
 from org.jgrapht.graph import DirectedWeightedMultigraph
 
-
-
 class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         self.g = DirectedWeightedMultigraph(DefaultWeightedEdge)
@@ -31,7 +29,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         self.dict_path_express = {}
         self.dict_path_name_stopping= {}
         self.dict_path_name_express= {}
-        self.logLevel = 1
+        self.logLevel = 0
         if self.logLevel > 0: print "graph block list"
         self.setup_station_block_list()
         if self.logLevel > 0: print "graph vertices"

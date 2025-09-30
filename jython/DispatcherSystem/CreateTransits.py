@@ -55,7 +55,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             if type(panel) == jmri.jmrit.display.layoutEditor.LayoutEditor:
                 #self.create_transits_and_trainTrainInfos(panel)
                 LayoutPanels.append(panel)
-        self.displayMessage("about to call create_transits_and_trainTrainInfos");
+        # self.displayMessage("about to call create_transits_and_trainTrainInfos");
         self.create_transits_and_trainTrainInfos(LayoutPanels)
 
     def displayMessage(self, msg):

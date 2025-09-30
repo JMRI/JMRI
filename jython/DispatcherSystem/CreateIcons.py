@@ -78,7 +78,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
 
     def __init__(self):
-        print "processPanels2"
         self.result = "Success"    #value is returned in __str__ and set to "Failure" in self.tryme()
         self.define_DisplayProgress_global()
         if self.perform_initial_checks():
@@ -95,7 +94,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.tryme(self.updatePanels, "Cannot update Panels: Contact Developer")
             self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
             self.addSensors()
-            print "generate SML"
             self.tryme(self.generateSML, "Cannot generate Signal Mast Logic: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(60)
             self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
@@ -129,7 +127,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             # print "version_no changed", "memory:", memory.getValue(), "version", self.version_no
             return True
         else:
-            print "version_no not changed", "memory:", memory.getValue(), "version", self.version_no
+            # print "version_no not changed", "memory:", memory.getValue(), "version", self.version_no
             return False
 
 
@@ -634,7 +632,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             if comment != None:
                 if "stop" in comment.lower():
                     self.list_of_stopping_points.append(block.getUserName())
-        print "stopping points"  , self.list_of_stopping_points
+        # print "stopping points"  , self.list_of_stopping_points
     # **************************************************
     # add sensors
     # **************************************************
@@ -683,9 +681,9 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         smlManager.generateSection()
         # print "Sections Generated"
         self.show_progress(80)
-        print "+++++++++++++++++++++++ generate block sections ++++++++++++++++++++++++++++++"
+        # print "+++++++++++++++++++++++ generate block sections ++++++++++++++++++++++++++++++"
         sections.generateBlockSections()
-        print "+++++++++++++++++++++++ end generate block sections ++++++++++++++++++++++++++++++"
+        # print "+++++++++++++++++++++++ end generate block sections ++++++++++++++++++++++++++++++"
 
     # **************************************************
     # add Logix
@@ -837,16 +835,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         # place the stations at the block nearest the mid-point
 
         self.getCenterPointOfNearestBlockToMid(panel)
-        print "aself.blockPoints1", self.blockPoints1
-        print "bself.blockPoints", self.blockPoints
-        # for blk in self.blockPoints1:
-        #     print "C", blk
-        #     # if blk not in self.blockPoints:
-        #     #     print "D", blk
-        #     self.blockPoints[blk] = self.blockPoints1[blk]
-        # print "self.blockPoints", self.blockPoints
-
-
 
     # **************************************************
     # stop icons
@@ -854,7 +842,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     def addStopIcons(self, panel):
         for blockName in self.list_of_stopping_points:
             if blockName in self.blockPoints.keys():
-                print "addStopIcons blockName", blockName
+                # print "addStopIcons blockName", blockName
                 x = self.blockPoints[blockName].getX()
                 y = self.blockPoints[blockName].getY()
 

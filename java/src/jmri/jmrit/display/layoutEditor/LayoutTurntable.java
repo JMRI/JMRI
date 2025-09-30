@@ -741,6 +741,25 @@ public class LayoutTurntable extends LayoutTrack {
         return false;
     }
 
+    /**
+     * Checks if the given block is one of the ray blocks for this turntable.
+     * @param block The Block to check.
+     * @return true if it is a block for one of the rays.
+     */
+    public boolean isRayBlock(Block block) {
+        if (block == null) {
+            return false;
+        }
+        for (RayTrack ray : rayTrackList) {
+            TrackSegment ts = ray.getConnect();
+            if (ts != null && ts.getLayoutBlock() != null && block.equals(ts.getLayoutBlock().getBlock())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public class RayTrack {
 
         /**

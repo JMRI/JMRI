@@ -349,14 +349,6 @@ public class DefaultSignalMastLogicManager
         HashMap<NamedBean, List<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools()
             .discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.Routing.MASTTOMAST);
 
-        if (log.isInfoEnabled()) {
-            log.info("Discovered valid signal mast pairs:");
-            for (Map.Entry<NamedBean, List<NamedBean>> entry : validPaths.entrySet()) {
-                log.info("  From source mast: {}", entry.getKey().getDisplayName());
-                entry.getValue().forEach(dest -> log.info("    To destination mast: {}", dest.getDisplayName()));
-            }
-        }
-
         firePropertyChange(PROPERTY_AUTO_GENERATE_UPDATE, null,
             ("Found " + validPaths.size() + " masts as sources for logic"));
         InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach(nb ->
@@ -373,7 +365,7 @@ public class DefaultSignalMastLogicManager
                     try {
                         sml.setDestinationMast((SignalMast) nb);
                         sml.useLayoutEditorDetails(true, true, (SignalMast) nb);
-                        log.info("SML Manager: Setting up logic for source '{}' to destination '{}'", key.getDisplayName(), nb.getDisplayName());
+                        log.debug("SML Manager: Setting up logic for source '{}' to destination '{}'", key.getDisplayName(), nb.getDisplayName());
                         sml.useLayoutEditor(true, (SignalMast) nb);
                     }
                     catch (JmriException ex) {
@@ -413,9 +405,9 @@ public class DefaultSignalMastLogicManager
                 }
                 for (SignalMast destMast : sml.getDestinationList()) {
                     java.util.List<Block> autoBlocks = sml.getAutoBlocksBetweenMasts(destMast);
-                    log.info("generateSection: Considering SML path for section creation: {} -> {}", 
+                    log.debug("generateSection: Considering SML path for section creation: {} -> {}",
                                 sml.getSourceMast().getDisplayName(), destMast.getDisplayName());
-                    log.info("generateSection: Found {} auto-blocks for this path: {}", autoBlocks.size(), autoBlocks);
+                    log.debug("generateSection: Found {} auto-blocks for this path: {}", autoBlocks.size(), autoBlocks);
                     if (!autoBlocks.isEmpty()) {
                         String secUserName = sml.getSourceMast().getDisplayName() + ":" + destMast.getDisplayName();
                         Section sec = sm.getSection(secUserName);
@@ -446,7 +438,7 @@ public class DefaultSignalMastLogicManager
                                 log.warn("Failed to provide Sensor in generateSection");
                             }
                         }
-                        log.info("generateSection: Using/Creating section '{}' for path {} -> {}", 
+                        log.debug("generateSection: Using/Creating section '{}' for path {} -> {}",
                                 sec.getDisplayName(), sml.getSourceMast().getDisplayName(), destMast.getDisplayName());
                         sml.setAssociatedSection(sec, destMast);
                         sec.setProperty("forwardMast", destMast.getDisplayName());
@@ -463,7 +455,7 @@ public class DefaultSignalMastLogicManager
                     }
                 }
             } else {
-                log.info("No facing block found {}", sml.getSourceMast().getDisplayName());
+                log.debug("No facing block found {}", sml.getSourceMast().getDisplayName());
             }
         }
     }

@@ -295,7 +295,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         for (LayoutBlock layoutBlock : layoutBlockManager.getNamedBeanSet()){
             if (layoutBlock.getNumberOfThroughPaths() == 0){
                 if (!blockSectionExists(layoutBlock)){
-                    log.info("creating block section for layout block '{}'", layoutBlock.getDisplayName());
+                    log.debug("creating block section for layout block '{}'", layoutBlock.getDisplayName());
                     createBlockSection(layoutBlock);
                 }
             }
@@ -328,7 +328,6 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
      * @param layoutBlock The starting layout block.
      */
     private void createBlockSection(LayoutBlock layoutBlock){
-        // ----- Begin Turntable Block Section Skip -----
         // Do not generate block sections for turntable components (the turntable block or ray blocks)
         // as these are not standard stub-end sidings.
         boolean isTurntableComponent = false;
@@ -351,7 +350,6 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         if (isTurntableComponent) {
             return; // Skip creating a section for this block
         }
-        // ----- End Turntable Block Section Skip -----
         blockList = new ArrayList<>();
         var block = layoutBlock.getBlock();
         createSectionBlockList(block);
@@ -370,7 +368,7 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         Section section;
         try {
             section = createNewSection(sectionName);
-            log.info("created section '{}' for layout block '{}'", sectionName, layoutBlock.getDisplayName());
+            log.debug("created section '{}' for layout block '{}'", sectionName, layoutBlock.getDisplayName());
         }
         catch (IllegalArgumentException ex){
             log.error("Could not create Section for layout block '{}'",layoutBlock.getDisplayName());

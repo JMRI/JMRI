@@ -1512,14 +1512,12 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                             if (turntableBlock.getBlock() == protectedBlock) {
                                 // Path 2: Moving from Ray block INTO Turntable. The facing mast is the Approach Mast.
                                 if (T.equals(SignalMast.class)) {
-                                    log.info("getFacingBean: Found turntable boundary for Path 2. Returning approach mast '{}'", (ray.getApproachMast() != null ? ray.getApproachMast().getDisplayName() : "null"));
                                     return ray.getApproachMast();
                                 }
                             } else { // turntableBlock.getBlock() == facingBlock
                                 // Path 1: Moving FROM Turntable out to Ray block. The facing mast is the exit mast for that ray.
                                 if (T.equals(SignalMast.class)) {
                                     SignalMast exitMast = turntable.getExitSignalMast();
-                                    log.info("getFacingBean: Found turntable boundary for Path 1. Returning exit mast '{}'", (exitMast != null ? exitMast.getDisplayName() : "null"));
                                     // This is the mast protecting the path from the turntable to the ray.
                                     return exitMast;
                                 }

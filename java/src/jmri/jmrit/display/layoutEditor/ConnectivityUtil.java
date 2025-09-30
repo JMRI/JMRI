@@ -121,6 +121,29 @@ final public class ConnectivityUtil {
             @CheckForNull Block nextBlock,
             boolean suppress) {
         List<LayoutTrackExpectedState<LayoutTurnout>> result = new ArrayList<>();
+        
+        // If this is a turntable boundary, there are no standard turnouts to find. Return an empty list to prevent warnings.
+        for (LayoutTurntable turntable : layoutEditor.getLayoutTurntables()) {
+            if (turntable.getLayoutBlock() != null) {
+                Block turntableBlock = turntable.getLayoutBlock().getBlock();
+                // Case 1: Moving to/from the turntable block itself.
+                if ((currBlock == turntableBlock && turntable.isRayBlock(prevBlock)) ||
+                        (prevBlock == turntableBlock && turntable.isRayBlock(currBlock))) {
+                    log.debug("getTurnoutList: Detected direct turntable boundary, returning empty list.");
+                    return result;
+                }
+                // Case 2: Moving from a ray block to a block on the other side (away from the turntable).
+                // The routing logic might call getTurnoutList with (cur=Other, prev=Ray) or (cur=Ray, prev=Other).
+                if (turntable.isRayBlock(prevBlock) && currBlock != turntableBlock) {
+                    log.debug("getTurnoutList: Detected path starting from a ray block (prevBlock), returning empty list.");
+                    return result;
+                }
+                if (turntable.isRayBlock(currBlock) && prevBlock != turntableBlock) {
+                    log.debug("getTurnoutList: Detected path starting from a ray block (currBlock), returning empty list.");
+                    return result;
+                }
+            }
+        }
 
         // initialize
         currLayoutBlock = null;
