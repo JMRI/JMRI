@@ -2263,7 +2263,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             // We don't care which Layout Editor panel the signal mast is on, just so long as
             // the routing is done via layout blocks.
             remoteProtectingBlock = null;
-            log.info("SML setup for {} to {}: Starting block discovery. Number of panels: {}. Using editor: {}", source.getDisplayName(), destinationSignalMast.getDisplayName(), layout.size(), editor);
             for (int i = 0; i < layout.size(); i++) {
                 log.debug("{} Layout name {}", destinationSignalMast.getDisplayName(), editor );
                 if (facingBlock == null) {
@@ -2274,13 +2273,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), editor);
                 }
                 if (destinationBlock == null) {
-                    log.info("SML setup: Calling getFacingBlockByNamedBean for dest mast '{}' using editor '{}'", destinationSignalMast.getDisplayName(), editor);
                     destinationBlock = lbm.getFacingBlockByNamedBean(destinationSignalMast, editor);
-                    if (destinationBlock != null) {
-                        log.info("SML setup: Found destination facing block '{}'", destinationBlock.getDisplayName());
-                    } else {
-                        log.info("SML setup: Did NOT find destination facing block with this editor.");
-                    }
                 }
                 if (remoteProtectingBlock == null) {
                     remoteProtectingBlock = lbm.getProtectedBlockByNamedBean(destinationSignalMast, editor);
@@ -2291,12 +2284,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             if ((!useLayoutEditorTurnouts) && (!useLayoutEditorBlocks)) {
                 return;
             }
-            log.info("SML setup: Final blocks found for path {} -> {}:", getSourceMast().getDisplayName(), destinationSignalMast.getDisplayName());
-            log.info("SML setup:   - Source Facing Block: {}", (facingBlock != null ? facingBlock.getDisplayName() : "null"));
-            for (LayoutBlock pBlock : protectingBlocks) {
-                 log.info("SML setup:   - Source Protecting Block: {}", (pBlock != null ? pBlock.getDisplayName() : "null"));
-            }
-            log.info("SML setup:   - Destination Facing Block: {}", (destinationBlock != null ? destinationBlock.getDisplayName() : "null"));
             if (facingBlock == null) {
                 log.error("No facing block found for source mast {}", getSourceMast().getDisplayName());
                 throw new JmriException("No facing block found for source mast " + getSourceMast().getDisplayName());
@@ -2534,8 +2521,22 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                                 Turnout rayTurnout = ray.getTurnout();
                                 int requiredState = ray.getTurnoutState();
                                 if (rayTurnout != null) {
-                                    log.info("SML setup: Adding ray turnout '{}' with required state '{}' to logic for path {} -> {}",
-                                            rayTurnout.getDisplayName(), (requiredState == Turnout.THROWN ? "THROWN" : "CLOSED"), getSourceMast().getDisplayName(), destinationSignalMast.getDisplayName());
+                                    turnoutSettings.put(rayTurnout, requiredState);
+                                }
+                                break; // Found the ray, no need to check others.
+                            }
+                        }
+                    }
+                    // Check for a path from the Exit Mast to a remote mast (Path 1).
+                    // The source mast is the turntable's exit mast.
+                    if (turntable.getExitSignalMast() == getSourceMast()) {
+                        // The protecting block is the ray block for this path.
+                        for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                            if (ray.getConnect() != null && ray.getConnect().getLayoutBlock() == protectingBlock) {
+                                // This is the correct ray. Get its control turnout and required state.
+                                Turnout rayTurnout = ray.getTurnout();
+                                int requiredState = ray.getTurnoutState();
+                                if (rayTurnout != null) {
                                     turnoutSettings.put(rayTurnout, requiredState);
                                 }
                                 break; // Found the ray, no need to check others.

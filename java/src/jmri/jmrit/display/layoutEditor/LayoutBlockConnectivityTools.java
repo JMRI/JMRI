@@ -291,7 +291,6 @@ final public class LayoutBlockConnectivityTools {
             for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
                 if (turntable.getLayoutBlock() == currentBlock) {
                     if (nextBlock == destBlock) {
-                        log.info("checkValidDest: Detected valid turntable exit path from '{}' via '{}' to dest facing '{}'", currentBlock.getDisplayName(), nextBlock.getDisplayName(), destBlock.getDisplayName());
                         return true;
                     }
                 }
@@ -303,7 +302,6 @@ final public class LayoutBlockConnectivityTools {
         for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
             for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
                 if (turntable.getLayoutBlock() == destBlock) {
-                    log.info("checkValidDest: Detected valid turntable siding path to '{}'", destBlock.getDisplayName());
                     return true;
                 }
             }
@@ -429,7 +427,6 @@ final public class LayoutBlockConnectivityTools {
         /*LayoutBlock destProt = null;
          if(!dest.getProtectingBlocks().isEmpty()){
          destProt = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getProtectingBlocks().get(0));
-         // log.info(dest.getProtectingBlocks());
          }*/
          
         List<LayoutBlock> destList = new ArrayList<>();
@@ -828,8 +825,6 @@ final public class LayoutBlockConnectivityTools {
                     // Path 1: From turntable's Exit Mast to the next mast on a ray's track
                     SignalMast exitMast = turntable.getExitSignalMast();
                     if (exitMast != null) {
-                        log.info("Path 1 check: Found exit mast '{}'. Turntable block is '{}'", exitMast.getDisplayName(), (turntableBlock != null ? turntableBlock.getDisplayName() : "null"));
-
                         for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
                             TrackSegment track = ray.getConnect();
                             if (track != null && track.getLayoutBlock() != null) {
@@ -841,9 +836,6 @@ final public class LayoutBlockConnectivityTools {
                                         SignalMast nextMast = lbm.getFacingSignalMast(rayBlock.getBlock(), neighbor, panel);
                                         if (nextMast != null) {
                                             retPairs.computeIfAbsent(exitMast, k -> new ArrayList<>()).add(nextMast);
-                                            log.info("Found turntable path (1): from exit mast {} to remote mast {}", exitMast.getDisplayName(), nextMast.getDisplayName());
-                                        } else {
-                                            log.info("Path 1 check: No remote mast found from '{}' to neighbor '{}'", rayBlock.getDisplayName(), neighbor.getDisplayName());
                                         }
                                         break; // Assume only one exit from the ray block
                                     }
@@ -872,7 +864,6 @@ final public class LayoutBlockConnectivityTools {
                                     SignalMast remoteMast = lbm.getFacingSignalMast(neighbor, rayBlock.getBlock(), panel);
                                     if (remoteMast != null) {
                                         retPairs.computeIfAbsent(remoteMast, k -> new ArrayList<>()).add(approachMast);
-                                        log.info("Found turntable path (2): from remote mast {} to approach mast {}", remoteMast.getDisplayName(), approachMast.getDisplayName());
                                     }
                                     // Assume only one entry to the ray block
                                     break;
@@ -884,7 +875,6 @@ final public class LayoutBlockConnectivityTools {
                         SignalMast bufferMast = turntable.getBufferMast();
                         if (bufferMast != null && approachMast != null) {
                             retPairs.computeIfAbsent(approachMast, k -> new ArrayList<>()).add(bufferMast);
-                            log.info("Found turntable path (3): from approach mast {} to buffer mast {}", approachMast.getDisplayName(), bufferMast.getDisplayName());
                         }
                     }
                 }

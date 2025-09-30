@@ -255,7 +255,7 @@ public class AutoTurnouts {
                         if (panel != null) {
                             var connection = new ConnectivityUtil(panel);
                             turnoutList = connection.getTurnoutList(curBlock, prevBlock, nextBlock, true);
-                            // Also check for and set any turntables at this boundary
+                            // Check for train entering a turntable
                             LayoutTurntable turntable = connection.getTurntable(curBlock, prevBlock);
                             if (turntable != null) {
                                 int position = connection.getTurntableRay(curBlock, prevBlock);
@@ -263,6 +263,17 @@ public class AutoTurnouts {
                                     log.debug("{}: Auto-setting turntable '{}' to position '{}'",
                                             at.getTrainName(), turntable.getName(), position);
                                     turntable.setPosition(position);
+                                }
+                            } else {
+                                // Check for train exiting a turntable
+                                turntable = connection.getTurntable(prevBlock, curBlock);
+                                if (turntable != null) {
+                                    int position = connection.getTurntableRay(prevBlock, curBlock);
+                                    if (position != -1 && turntable.getPosition() != position) {
+                                        log.debug("{}: Auto-setting turntable '{}' to position '{}' for exit",
+                                                at.getTrainName(), turntable.getName(), position);
+                                        turntable.setPosition(position);
+                                    }
                                 }
                             }
                         }

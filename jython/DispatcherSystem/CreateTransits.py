@@ -12,7 +12,7 @@ from javax.swing import JButton, JFrame, JPanel, JProgressBar, \
 
 class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
-    logLevel = 1
+    logLevel = 0
 
     def __init__(self):
         pass
@@ -879,7 +879,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         #iterate through the signalmasts
         signal_mast_list = e.getItem("signal_mast_list")
         if self.logLevel > 0: print "signal_mast_list", [str(sm.getUserName()) for sm in signal_mast_list]
-        self.displayMessage("create_transit" + str([str(sm.getUserName()) for sm in signal_mast_list]))
+        # self.displayMessage("create_transit" + str([str(sm.getUserName()) for sm in signal_mast_list]))
         for signal_mast in signal_mast_list:
             if self.logLevel > 1: print "adding ", signal_mast.getUserName()
             TransitCreationTool.addNamedBean(signal_mast)
