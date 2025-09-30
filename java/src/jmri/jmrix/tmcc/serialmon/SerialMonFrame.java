@@ -109,7 +109,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 18:
                                 return "Engine " + A + " - Num 2 - Crew Talk";
                             case 19:
-                                return "Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence";
+                                return "Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence/RPM Increase";
                             case 20:
                                 return "Engine " + A + " - Num 4 - Sound Volume Decrease";
                             case 21:
