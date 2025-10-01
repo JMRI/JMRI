@@ -1,8 +1,9 @@
 package jmri.jmrix.roco.z21;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,21 +19,21 @@ public class Z21XPressNetTunnelTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(tunnel);
+        assertNotNull(tunnel);
     }
 
     @Test
     public void testGetStreamPortController() {
-        Assert.assertNotNull(tunnel.getStreamPortController());
+        assertNotNull(tunnel.getStreamPortController());
     }
 
-    jmri.jmrix.lenz.XNetTrafficController packets;
+    private jmri.jmrix.lenz.XNetTrafficController packets;
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initConfigureManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
 
         memo = new Z21SystemConnectionMemo();
         tc = new Z21InterfaceScaffold() {
@@ -60,7 +61,10 @@ public class Z21XPressNetTunnelTest {
 
     @AfterEach
     public void tearDown() {
-        packets.terminateThreads();
+        if ( packets != null ) {
+            packets.terminateThreads();
+        }
+        packets = null;
         tunnel.dispose();
         tunnel = null;
         tc.terminateThreads();
