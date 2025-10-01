@@ -37,6 +37,10 @@ from java.awt import Color
 
 class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
+    if "list" in globals() and type(globals()["list"]).__name__ != "type":
+        # print(" Detected shadowed 'list' type: ", type(globals()["list"]))  # list is being used in JMRI. This enables us to use list in Jython
+        del globals()["list"]
+
     logLevel = 0
     version_no = 0.2    #used to delete DispatcherPanel for new versions if the number of controlsensors/icons has changed
 
@@ -75,6 +79,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     controlSensors.append([i, 'timetableSensor', 'Show Timetable', 10, 5]); i += 1
     controlSensors.append([i, 'departureTimeSensor', 'Setup Departure Times', 10, 5]); i += 1
     controlSensors.append([i, 'helpSensor', 'Help', 0, 5]); i += 1
+
 
 
     def __init__(self):
@@ -627,12 +632,28 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # gets the list of stopping points (stations, sidings etc.)
     # ***********************************************************
     def get_list_of_stopping_points(self):
+        stopping_points_set = set()
+
+        # First, get stopping points from block comments
         for block in blocks.getNamedBeanSet():
             comment = block.getComment()
             if comment != None:
                 if "stop" in comment.lower():
-                    self.list_of_stopping_points.append(block.getUserName())
-        # print "stopping points"  , self.list_of_stopping_points
+                    stopping_points_set.add(block.getUserName())
+
+        # Second, automatically add blocks associated with LayoutTurntables
+        editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+        turntables = []
+        for editor in editorManager.getAll():
+            if isinstance(editor, jmri.jmrit.display.layoutEditor.LayoutEditor):
+                turntables = editor.getLayoutTurntables()
+                for turntable in turntables:
+                    layout_block = turntable.getLayoutBlock()
+                    if layout_block is not None and layout_block.getUserName() is not None:
+                        stopping_points_set.add(layout_block.getUserName())
+
+        self.list_of_stopping_points = sorted(stopping_points_set)
+
     # **************************************************
     # add sensors
     # **************************************************
@@ -758,12 +779,80 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 if blk in self.blockPoints1:
                     pt_mid = self.blockPoints1[blk]
                     # For a turntable, the icon position is calculated relative to its own center
-                    turntable_center = turntableView.getCoordsCenter()
-                    x_reqd = int(turntable_center.getX()) - 20 + 50
-                    y_reqd = int(turntable_center.getY()) + 15 + 10
+                    [x_reqd, y_reqd] = self.get_icon_position(turntable, turntableView)
                     pt_to_try = Point2D.Double(x_reqd, y_reqd)
                     self.updateCoords1(blk, pt_to_try, pt_mid)
 
+    def get_icon_position(self, turntable, turntableView):
+        import math
+        # print "--- Calculating icon position for turntable:", turntable.getName(), "---"
+        turntable_center = turntableView.getCoordsCenter()
+        radius = turntable.getRadius()
+        rays = turntable.getRayTrackList()
+
+        if len(rays) < 2:
+            # Fallback for turntables with 0 or 1 ray: place icon bottom-right
+            # print "  Fewer than 2 rays, using fallback position."
+            x_reqd = int(turntable_center.getX()) + 30
+            y_reqd = int(turntable_center.getY()) + 25
+            return [x_reqd, y_reqd]
+
+        # Get all ray angles in degrees and sort them
+        angles = sorted([ray.getAngle() for ray in rays])
+        # print "  Sorted ray angles (degrees):", angles
+
+        # Calculate angular gaps between adjacent rays
+        gaps = []
+        for i in range(len(angles) - 1):
+            gap = angles[i+1] - angles[i]
+            gaps.append(gap)
+
+        # Add the wrap-around gap between the last and first ray
+        wrap_around_gap = (360.0 - angles[-1]) + angles[0]
+        gaps.append(wrap_around_gap)
+        # print "  Calculated gaps:", gaps
+
+        max_gap = max(gaps)
+        # print "  Max gap found:", max_gap
+
+        # Find all gaps that are the largest
+        best_mid_angle = -1
+        min_angle_diff = 361 # Larger than any possible angle difference
+
+        # Define a preferred angle for tie-breaking (bottom-right quadrant)
+        preferred_angle = math.degrees(math.atan2(25, 30)) # atan2(y, x)
+        # print "  Preferred angle for tie-breaking:", preferred_angle
+
+        for i in range(len(gaps)):
+            if abs(gaps[i] - max_gap) < 1e-6: # Compare floats with a tolerance
+                # print "  Found a max gap at index", i
+                if i < len(angles) - 1:
+                    mid_angle = angles[i] + max_gap / 2.0
+                else: # Wrap-around case
+                    mid_angle = (angles[-1] + max_gap / 2.0) % 360.0
+                # print "    Mid-angle of this gap:", mid_angle
+
+                # Normalize angle difference for tie-breaking
+                angle_diff = abs(mid_angle - preferred_angle)
+                # print "    Difference from preferred angle:", angle_diff
+                if angle_diff < min_angle_diff:
+                    # print "    This is the new best candidate."
+                    min_angle_diff = angle_diff
+                    best_mid_angle = mid_angle
+
+        # print "  Final chosen mid-angle:", best_mid_angle
+        # Convert the final angle to radians for trig functions
+        final_angle_rad = math.radians(best_mid_angle)
+        if best_mid_angle > 180.0 and best_mid_angle < 360.0:
+            icon_distance = radius + 70 # Place icon 20 pixels out from the turntable radius plus a bit to allow for the icon length
+        else:
+            icon_distance = radius - 20 # Place icon 20 pixels out from the turntable radius
+        x_reqd = int(turntable_center.getX() + icon_distance * math.sin(final_angle_rad))
+        y_reqd = int(turntable_center.getY() - icon_distance * math.cos(final_angle_rad))
+        # print "  Turntable Centre (x, y):", int(turntable_center.getX()), ",", int(turntable_center.getY())
+        # print "  Calculated position (x, y):", x_reqd, ",", y_reqd
+        # print "----------------------------------------------------"
+        return [x_reqd, y_reqd]
 
     def updateCoords1(self, blk, pt_to_try, pt_mid):
         if blk is not None:
