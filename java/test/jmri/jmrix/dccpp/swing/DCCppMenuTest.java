@@ -1,11 +1,12 @@
 package jmri.jmrix.dccpp.swing;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppInterfaceScaffold;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -21,14 +22,14 @@ public class DCCppMenuTest {
     public void testCTor() {
         // infrastructure objects
         DCCppMenu t = new DCCppMenu(memo);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
-    public void test2ParamCTor() {
+    public void test2ParamDCCppMenuCTor() {
         // infrastructure objects
         DCCppMenu t = new DCCppMenu("DCc++ test",memo);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @BeforeEach
@@ -40,7 +41,10 @@ public class DCCppMenuTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        memo.getDCCppTrafficController().terminateThreads();
+        memo.dispose();
+        memo = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
 
     }
