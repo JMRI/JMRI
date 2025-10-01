@@ -11,11 +11,13 @@ import jmri.jmrix.roco.z21.Z21XNetReply;
  */
 public class Z21XNetLocoReplyFormatter implements XPressNetMessageFormatter {
 
+    @Override
     public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof Z21XNetReply &&
         (m.getElement(0)&0xE0)==0xE0 && ((m.getElement(0)&0x0f) >= 7 && (m.getElement(0)&0x0f) <=15 );
     }
 
+    @Override
     public String formatMessage(jmri.jmrix.Message m) {
         if (!handlesMessage(m)) {
             throw new IllegalArgumentException("Message is not a Z21XNetReply");

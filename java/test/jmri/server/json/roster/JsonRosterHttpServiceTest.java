@@ -16,8 +16,11 @@ import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  *
@@ -56,15 +59,14 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
     @Test
     public void testDoGet() throws JsonException {
         // call with valid first argument
-        Assert.assertEquals(Roster.getDefault().numEntries(), service.doGet(JsonRoster.ROSTER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0)).size());
-        Assert.assertEquals(2, service.doGet(JsonRoster.ROSTER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0)).size());
+        assertEquals(Roster.getDefault().numEntries(), service.doGet(JsonRoster.ROSTER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0)).size());
+        assertEquals(2, service.doGet(JsonRoster.ROSTER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0)).size());
         // call with invalid first argument
-        try {
-            service.doGet(TEST_GROUP1, TEST_GROUP1, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            Assert.fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getCode());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doGet(TEST_GROUP1, TEST_GROUP1, NullNode.getInstance(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown");
+        assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getCode());
     }
 
     /**
@@ -72,22 +74,18 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
      */
     @Test
     public void testDoPost() {
-        JsonException exception = null;
-        try {
-            service.doPost(JsonRoster.ROSTER, "", this.mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-        } catch (JsonException ex) {
-            exception = ex;
-        }
-        Assert.assertNotNull(exception);
-        Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, exception.getCode());
+        JsonException exception = assertThrows( JsonException.class, () ->
+            service.doPost(JsonRoster.ROSTER, "", this.mapper.createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
+        assertNotNull(exception);
+        assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, exception.getCode());
+
         // rewrite following to provide meaningful test
-        try {
-            service.doPost(TEST_GROUP1, "", this.mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-        } catch (JsonException ex) {
-            exception = ex;
-        }
-        Assert.assertNotNull(exception);
-        Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
+        exception = assertThrows( JsonException.class, () ->
+            service.doPost(TEST_GROUP1, "", this.mapper.createObjectNode(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
+        assertNotNull(exception);
+        assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, exception.getCode());
     }
 
     /**
@@ -101,14 +99,15 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
     @Test
     public void testDoGetList() throws JsonException {
         // call with valid first argument
-        Assert.assertEquals(Roster.getDefault().numEntries(), service.doGet(JsonRoster.ROSTER, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0)).size());
+        assertEquals(Roster.getDefault().numEntries(),
+            service.doGet(JsonRoster.ROSTER, "", NullNode.getInstance(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0)).size());
         // call with invalid first argument
-        try {
-            service.doGet(TEST_GROUP1, TEST_GROUP1, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            Assert.fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            Assert.assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getCode());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doGet(TEST_GROUP1, TEST_GROUP1, NullNode.getInstance(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown");
+        assertEquals(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getCode());
     }
 
     /**
@@ -120,13 +119,13 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
     @Test
     public void testGetRoster() throws JsonException {
         // no group name - check only size - it should contain all entries in Roster
-        Assert.assertEquals(Roster.getDefault().numEntries(),
+        assertEquals(Roster.getDefault().numEntries(),
                 service.getRoster(locale, this.mapper.createObjectNode(), 0).size());
         // existent group name - check only size - it should contain all entries in named RosterGroup
-        Assert.assertEquals(Roster.getDefault().numGroupEntries(TEST_GROUP1),
+        assertEquals(Roster.getDefault().numGroupEntries(TEST_GROUP1),
                 service.getRoster(locale, this.mapper.createObjectNode().put(JSON.GROUP, TEST_GROUP1), 0).size());
         // non-existent group name - check only size - it should be empty
-        Assert.assertEquals(0,
+        assertEquals(0,
                 service.getRoster(locale, this.mapper.createObjectNode().put(JSON.GROUP, TEST_ENTRY1), 0).size());
     }
 
@@ -138,14 +137,12 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
     @Test
     public void testGetRosterEntry_Locale_String() throws JsonException {
         // existent entry
-        Assert.assertEquals(TEST_ENTRY1, service.getRosterEntry(locale, TEST_ENTRY1, 42).path(JSON.DATA).path(JSON.NAME).asText());
+        assertEquals(TEST_ENTRY1, service.getRosterEntry(locale, TEST_ENTRY1, 42).path(JSON.DATA).path(JSON.NAME).asText());
         // non-existent entry
-        try {
-            service.getRosterEntry(locale, TEST_GROUP1, 42);
-            Assert.fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            Assert.assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.getRosterEntry(locale, TEST_GROUP1, 42),
+            "Expected exception not thrown");
+        assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
     }
 
     /**
@@ -157,8 +154,8 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
     @Test
     public void testGetRosterEntry_Locale_RosterEntry() throws JsonException {
         RosterEntry entry = Roster.getDefault().getEntryForId(TEST_ENTRY1);
-        Assert.assertNotNull(entry);
-        Assert.assertEquals(TEST_ENTRY1, service.getRosterEntry(locale, entry, 42).path(JSON.DATA).path(JSON.NAME).asText());
+        assertNotNull(entry);
+        assertEquals(TEST_ENTRY1, service.getRosterEntry(locale, entry, 42).path(JSON.DATA).path(JSON.NAME).asText());
     }
 
     /**
@@ -168,7 +165,7 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
      */
     @Test
     public void testGetRosterGroups() throws JsonException {
-        Assert.assertEquals(Roster.getDefault().getRosterGroups().size() + 1, service.getRosterGroups(new JsonRequest(locale, JSON.V5, JSON.GET, 0)).size());
+        assertEquals(Roster.getDefault().getRosterGroups().size() + 1, service.getRosterGroups(new JsonRequest(locale, JSON.V5, JSON.GET, 0)).size());
     }
 
     /**
@@ -181,17 +178,16 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
         // test valid existing group
         JsonNode result = service.getRosterGroup(locale, TEST_GROUP1, 42);
         this.validate(result);
-        Assert.assertEquals(Roster.getDefault().getEntriesInGroup(TEST_GROUP1).size(),
+        assertEquals(Roster.getDefault().getEntriesInGroup(TEST_GROUP1).size(),
                 result.path(JSON.DATA).path(JSON.LENGTH).asInt());
         // test non-existent group
-        try {
-            service.getRosterGroup(locale, "non-existant-group", 42);
-            Assert.fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            this.validate(ex.getJsonMessage());
-            Assert.assertEquals("Error code is HTTP \"not found\"", 404, ex.getCode());
-            Assert.assertEquals("Error message is \"not found\"", "Object type rosterGroup named \"non-existant-group\" not found.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.getRosterGroup(locale, "non-existant-group", 42),
+            "Expected exception not thrown");
+        this.validate(ex.getJsonMessage());
+        assertEquals( 404, ex.getCode(), "Error code is HTTP \"not found\"");
+        assertEquals( "Object type rosterGroup named \"non-existant-group\" not found.",
+            ex.getMessage(), "Error message is \"not found\"");
     }
 
 }

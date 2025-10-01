@@ -167,6 +167,46 @@
         <label>Op15</label>
     </variable>
 
+    <variable item="XF{$index} Op16" CV="{$CVindex}.232" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"><choice>No</choice></enumChoice>
+          <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
+        </enumVal>
+        <label>Op16</label>
+    </variable>
+
+    <variable item="XF{$index} Op17" CV="{$CVindex}.232" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"><choice>No</choice></enumChoice>
+          <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
+        </enumVal>
+        <label>Op17</label>
+    </variable>
+
+    <variable item="XF{$index} Op18" CV="{$CVindex}.232" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"><choice>No</choice></enumChoice>
+          <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
+        </enumVal>
+        <label>Op18</label>
+    </variable>
+
+    <variable item="XF{$index} Op19" CV="{$CVindex}.232" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"><choice>No</choice></enumChoice>
+          <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
+        </enumVal>
+        <label>Op19</label>
+    </variable>
+
+    <variable item="XF{$index} Op20" CV="{$CVindex}.232" mask="VXXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="No"><choice>No</choice></enumChoice>
+          <enumChoice choice="Yes"><choice>Yes</choice></enumChoice>
+        </enumVal>
+        <label>Op20</label>
+    </variable>
+
     <variable item="XF{$index} Snd" CV="{$CVindex}.236" mask="XXVVVVVV" default="0">
         <enumVal>
           <enumChoice choice="0"/>

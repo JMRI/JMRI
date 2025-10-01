@@ -1,27 +1,21 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.implementation.AbstractNamedBean;
-import jmri.jmrit.logixng.AnonymousTable;
-import jmri.jmrit.logixng.NamedTable;
-import jmri.jmrit.logixng.NamedTableManager;
-import jmri.util.FileUtil;
+import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.BOMInputStream;
-import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.io.input.CharSequenceReader;
+
+import jmri.*;
+import jmri.implementation.AbstractNamedBean;
+import jmri.jmrit.logixng.*;
+import jmri.util.FileUtil;
 
 /**
  * The default implementation of a NamedTable
@@ -41,6 +35,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
      * @param user       the user name or null if no user name
      * @param numRows    the number or rows in the table
      * @param numColumns the number of columns in the table
+     * @throws BadUserNameException when needed
+     * @throws BadSystemNameException when needed
      */
     public AbstractNamedTable(@Nonnull String sys,
                               @CheckForNull String user,
@@ -59,6 +55,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
      * @param userName   the user name
      * @param data       the data in the table. Note that this data is not
      *                   copied to a new array but used by the table as is.
+     * @throws BadUserNameException when needed
+     * @throws BadSystemNameException when needed
      */
     public AbstractNamedTable(@Nonnull String systemName,
                               @CheckForNull String userName,
@@ -83,6 +81,8 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
      * @param fileName   the file name of the CSV table
      * @param data       the data in the table. Note that this data is not
      *                   copied to a new array but used by the table as is.
+     * @throws BadUserNameException when needed
+     * @throws BadSystemNameException when needed
      */
     public AbstractNamedTable(@Nonnull String systemName,
                               @CheckForNull String userName,

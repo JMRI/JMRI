@@ -164,9 +164,10 @@ which checks the dates of the control files to make sure they've been updated wh
 ##### security.policy
 - (JMRI file)
 
-##### jdom2-2.0.6.jar
-- version 2.0.6
-- from <jdom.org>
+##### jdom2-2.0.6.1jar
+- version 2.0.6.1
+- see <jdom.org>
+- from Maven Central https://mvnrepository.com/artifact/org.jdom/jdom2/2.0.6.1
 
 ##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.2.jar
 - JSON processing library com.fasterxml.jackson
@@ -390,8 +391,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 3.3
 - Mockito dependency
 
-##### opentest4j-1.2.0.jar
-- version 1.2.0
+##### opentest4j-1.3.0.jar
+- version 1.3.0
+- Downloaded from Maven 2025-09-25
+- Used with JUnit ant
 
 ##### tag-expressions-1.1.1.jar
 - version 1.1.1
@@ -489,12 +492,21 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From https://mvnrepository.com/artifact/org.netbeans.external/jemmy-2.3.1.1/RELEASE125
 
 ##### junit-jupiter-*
-- version 5.9.1
+- version 5.13.4
+- Downloaded from Maven Central 2025-09-25
+
 
 ##### junit-platform-*
-- version 1.9.1
+- version 1.13.4
+- Downloaded from Maven Central 2025-09-25
 
-##### junit-vintage-engine-5.9.1.jar
+##### junit-vintage-engine-5.13.4.jar
+- Downloaded from Maven Central 2025-09-25
+
+##### junit-platform-console-standalone
+- version 5.13.4
+- for ant builds
+- Downloaded from Maven Central 2025-09-25
 
 ##### mockito-core mockito-junit-jupiter
 - version 5.12.0

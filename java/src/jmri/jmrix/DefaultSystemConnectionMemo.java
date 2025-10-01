@@ -6,12 +6,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import jmri.*;
-import jmri.SystemConnectionMemo;
 import jmri.beans.Bean;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
 import jmri.util.NamedBeanComparator;
-
 import jmri.util.startup.StartupActionFactory;
 
 /**
@@ -340,7 +338,7 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
         return null;
     }
 
-    public void setConsistManager(ConsistManager c) {
+    public void setConsistManager(@Nonnull ConsistManager c) {
         store(c, ConsistManager.class);
         jmri.InstanceManager.store(c, ConsistManager.class);
     }

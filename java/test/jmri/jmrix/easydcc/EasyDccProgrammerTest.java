@@ -5,13 +5,11 @@
  */
 package jmri.jmrix.easydcc;
 
-import jmri.JmriException;
-import jmri.ProgListener;
-import jmri.ProgrammingMode;
-import jmri.util.JUnitUtil;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import jmri.*;
+import jmri.util.JUnitUtil;
 
 public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         
@@ -116,7 +114,7 @@ public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
      * The command station will return a CV001-- format message if programming
      * fails. Test handling of that.
      *
-     * @throws JmriException
+     * @throws JmriException when needed
      */
     @Test
     public void testReadFailSequence() throws JmriException {

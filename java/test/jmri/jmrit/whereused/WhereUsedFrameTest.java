@@ -42,7 +42,7 @@ public class WhereUsedFrameTest {
         // For each item type, create the bean combo box and verify it.  Build the report using a direct call.
         String typeComboBoxLabel = Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType"));
         JLabelOperator typeLabelOperator = new JLabelOperator(jfo, typeComboBoxLabel);
-        JComboBoxOperator jcoType = new JComboBoxOperator((JComboBox) typeLabelOperator.getLabelFor());
+        JComboBoxOperator jcoType = new JComboBoxOperator((JComboBox<?>) typeLabelOperator.getLabelFor());
 
         // Turnout
         jcoType.setSelectedItem(WhereUsedFrame.ItemType.TURNOUT);
@@ -132,12 +132,12 @@ public class WhereUsedFrameTest {
 
         String typeComboBoxLabel = Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemType"));
         JLabelOperator typeLabelOperator = new JLabelOperator(jfo, typeComboBoxLabel);
-        JComboBoxOperator jcoType = new JComboBoxOperator((JComboBox) typeLabelOperator.getLabelFor());
+        JComboBoxOperator jcoType = new JComboBoxOperator((JComboBox<?>) typeLabelOperator.getLabelFor());
         jcoType.setSelectedItem(WhereUsedFrame.ItemType.TURNOUT);
 
         String nameComboBoxLabel = Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelItemName"));
         JLabelOperator nameLabelOperator = new JLabelOperator(jfo, nameComboBoxLabel);
-        JComboBoxOperator jcoName = new JComboBoxOperator((JComboBox) nameLabelOperator.getLabelFor());
+        JComboBoxOperator jcoName = new JComboBoxOperator((JComboBox<?>) nameLabelOperator.getLabelFor());
         jcoName.setSelectedItem(turnout);
         new JButtonOperator(jfo, Bundle.getMessage("ButtonCreate"));
     }

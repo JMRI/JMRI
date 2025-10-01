@@ -206,6 +206,9 @@ public class AutoActiveTrain implements ThrottleListener {
 
     public void setMaxSpeed(float speed) {
         _maxSpeed = speed;
+        if (_autoEngineer != null ) {
+            _autoEngineer.setSpeedLimits(_minReliableOperatingSpeed, _maxSpeed, _speedFactor);
+        }
     }
 
     /**
@@ -222,6 +225,9 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     public void setMinReliableOperatingSpeed(float speed) {
         _minReliableOperatingSpeed = speed;
+        if (_autoEngineer != null ) {
+            _autoEngineer.setSpeedLimits(_minReliableOperatingSpeed, _maxSpeed, _speedFactor);
+        }
     }
 
 /**

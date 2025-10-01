@@ -8,6 +8,7 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -35,7 +36,7 @@ public class ZeroConfServiceEventTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.resetZeroConfServiceManager();
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         
         // wait for dns threads to end
         Thread.getAllStackTraces().keySet().forEach((t) -> 

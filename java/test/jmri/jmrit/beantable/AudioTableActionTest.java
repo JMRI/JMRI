@@ -2,10 +2,17 @@ package jmri.jmrit.beantable;
 
 import jmri.Audio;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -15,7 +22,7 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",a);
+        assertNotNull( a, "exists");
     }
 
     @Override
@@ -36,13 +43,13 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
     @Override
     @Test
     public void testGetPanel(){
-         Assert.assertNotNull("AudioTableAction getPanel returns null",a.getPanel());
+        assertNotNull( a.getPanel(), "AudioTableAction getPanel returns null");
     }
 
     @Override
     @Test
     public void testGetClassDescription(){
-         Assert.assertEquals("Turnout Table Action class description","Audio Table",a.getClassDescription());
+        assertEquals( "Audio Table",a.getClassDescription(), "Turnout Table Action class description");
     }
 
     /**
@@ -52,7 +59,7 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
     @Override
     @Test
     public void testIncludeAddButton(){
-         Assert.assertTrue("Default include add button",a.includeAddButton());
+        assertTrue( a.includeAddButton(), "Default include add button");
     }
 
     @Test
@@ -79,12 +86,45 @@ public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
     public void testEditButton() {
     }
 
+    @Test
+    @Override
+    @DisabledIfHeadless
+    public void testExecute() {
+        super.testExecute();
+        jmri.AudioManager audioManager = jmri.InstanceManager.getNullableDefault(jmri.AudioManager.class);
+        if ( audioManager != null ) {
+            audioManager.cleanup();
+        }
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testLaunchAddBufferAddSourceButtons() {
+        ThreadingUtil.runOnGUI( () -> a.actionPerformed(null));
+        JFrameOperator jfo = new JFrameOperator(getTableFrameName());
+        assertNotNull( jfo, "failed to find frame");
+
+        JButtonOperator jbo = new JButtonOperator( jfo, Bundle.getMessage("ButtonAddAudioBuffer"));
+        jbo.doClick();
+        JFrameOperator jfoBuffer = new JFrameOperator(Bundle.getMessage("TitleAddAudioBuffer"));
+        assertNotNull( jfoBuffer, "failed to find Buffer frame");
+        JUnitUtil.dispose(jfoBuffer.getWindow());
+
+        jbo = new JButtonOperator( jfo, Bundle.getMessage("ButtonAddAudioSource"));
+        jbo.doClick();
+        JFrameOperator jfoSource = new JFrameOperator(Bundle.getMessage("TitleAddAudioSource"));
+        assertNotNull( jfoSource, "failed to find Source frame");
+        JUnitUtil.dispose(jfoSource.getWindow());
+
+        JUnitUtil.dispose(jfo.getWindow());
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         helpTarget = "package.jmri.jmrit.beantable.AudioTable";
         a = new AudioTableAction();
     }

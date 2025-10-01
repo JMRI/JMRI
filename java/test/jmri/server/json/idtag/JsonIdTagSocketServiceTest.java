@@ -2,11 +2,6 @@ package jmri.server.json.idtag;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
@@ -26,13 +21,18 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  *
  * @author Randall Wood Copyright 2019
  */
 public class JsonIdTagSocketServiceTest {
 
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @Test
     public void testIdTagChange() throws IOException, JmriException, JsonException {
@@ -42,10 +42,10 @@ public class JsonIdTagSocketServiceTest {
         // of idTags when creating idTag for test
         IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
         IdTag idTag1 = manager.provideIdTag("ID1");
-        assertEquals("IdTag has only one listener", 1, idTag1.getNumPropertyChangeListeners());
+        assertEquals( 1, idTag1.getNumPropertyChangeListeners(), "IdTag has only one listener");
         JsonIdTagSocketService service = new JsonIdTagSocketService(connection);
         service.onMessage(JsonIdTag.IDTAG, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        assertEquals("IdTag is being listened to by service", 2, idTag1.getNumPropertyChangeListeners());
+        assertEquals( 2, idTag1.getNumPropertyChangeListeners(), "IdTag is being listened to by service");
         JsonNode result = connection.getMessage();
         assertNotNull(result);
         assertEquals(IdTag.UNSEEN, result.path(JSON.DATA).path(JSON.STATE).asInt());
@@ -75,11 +75,11 @@ public class JsonIdTagSocketServiceTest {
             return idTag1.getState() == IdTag.SEEN;
         }, "IdTag to close");
         assertEquals(IdTag.SEEN, idTag1.getState());
-        assertEquals("IdTag is no longer listened to by service", 1, idTag1.getNumPropertyChangeListeners());
+        assertEquals( 1, idTag1.getNumPropertyChangeListeners(), "IdTag is no longer listened to by service");
         service.onMessage(JsonIdTag.IDTAG, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        assertEquals("IdTag is being listened to by service", 2, idTag1.getNumPropertyChangeListeners());
+        assertEquals( 2, idTag1.getNumPropertyChangeListeners(), "IdTag is being listened to by service");
         service.onClose();
-        assertEquals("IdTag is no longer listened to by service", 1, idTag1.getNumPropertyChangeListeners());
+        assertEquals( 1, idTag1.getNumPropertyChangeListeners(), "IdTag is no longer listened to by service");
     }
 
     @Test
@@ -100,13 +100,11 @@ public class JsonIdTagSocketServiceTest {
         assertEquals(IdTag.SEEN, idTag1.getState());
         assertEquals(reporter1, idTag1.getWhereLastSeen());
         // IdTag Invalid Reporter
-        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "ID1").put(JsonReporter.REPORTER, "IR2"); // invalid reporter
-        try {
-            service.onMessage(JsonIdTag.IDTAG, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals(404, ex.getCode());
-        }
+        JsonNode message2 = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "ID1").put(JsonReporter.REPORTER, "IR2"); // invalid reporter
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.onMessage(JsonIdTag.IDTAG, message2, new JsonRequest(locale, JSON.V5, JSON.POST, 42)),
+            "Expected exception not thrown");
+        assertEquals(404, ex.getCode());
         assertEquals(reporter1, idTag1.getWhereLastSeen());
     }
 
@@ -120,7 +118,7 @@ public class JsonIdTagSocketServiceTest {
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "ID1");
         service.onMessage(JsonIdTag.IDTAG, message, new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
         IdTag idTag1 = manager.getBySystemName("ID1");
-        assertNotNull("IdTag was created by PUT", idTag1);
+        assertNotNull( idTag1, "IdTag was created by PUT");
         assertEquals(IdTag.UNSEEN, idTag1.getState());
     }
 
@@ -131,7 +129,7 @@ public class JsonIdTagSocketServiceTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

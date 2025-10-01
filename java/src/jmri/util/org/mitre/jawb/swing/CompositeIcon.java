@@ -110,8 +110,11 @@
 
 package jmri.util.org.mitre.jawb.swing;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.Component;
+import java.awt.Graphics;
+
+import javax.swing.Icon;
+import javax.swing.SwingConstants;
 
 /**
  * CompositeIcon is an Icon implementation which draws two icons with a
@@ -134,9 +137,13 @@ public class CompositeIcon implements Icon, SwingConstants {
   int fPosition, fHorizontalOrientation, fVerticalOrientation;
         
   /**
-   * Create a CompositeIcon from the specified Icons, using the default
-   * relative position (icon1 above icon2) and orientations (centered
-   * horizontally and vertically) */
+   * Create a CompositeIcon from the specified Icons, using the default relative
+   * position (icon1 above icon2) and orientations (centered horizontally and
+   * vertically)
+   * 
+   * @param icon1 icon 1
+   * @param icon2 icon 2
+   */
   public CompositeIcon(Icon icon1, Icon icon2) {
     this(icon1, icon2, TOP);
   }
@@ -144,16 +151,28 @@ public class CompositeIcon implements Icon, SwingConstants {
   /**
    * Create a CompositeIcon from the specified Icons, using the specified
    * relative position and default orientations (centered horizontally and
-   * vertically) */
+   * vertically)
+   * 
+   * @param icon1    icon 1
+   * @param icon2    icon 2
+   * @param position icon position
+   */
   public CompositeIcon(Icon icon1, Icon icon2, int position) {
-    this(icon1, icon2, position, CENTER, CENTER);
+      this(icon1, icon2, position, CENTER, CENTER);
   }
         
   /**
    * Create a CompositeIcon from the specified Icons, using the specified
-   * relative position and orientations */
+   * relative position and orientations
+   * 
+   * @param icon1                 icon 1
+   * @param icon2                 icon 2
+   * @param position              icon positin
+   * @param horizontalOrientation horizontal orientation
+   * @param verticalOrientation   vertical orientation
+   */
   public CompositeIcon(Icon icon1, Icon icon2, int position,
-                       int horizontalOrientation, int verticalOrientation) {
+          int horizontalOrientation, int verticalOrientation) {
     fIcon1 = icon1;
     fIcon2 = icon2;
     fPosition = position;
@@ -166,7 +185,8 @@ public class CompositeIcon implements Icon, SwingConstants {
    * may use the Component argument to get properties useful for 
    * painting, e.g. the foreground or background color.
    */
-  public void paintIcon(Component c, Graphics g, int x, int y) {
+  @Override
+public void paintIcon(Component c, Graphics g, int x, int y) {
     int width = getIconWidth();
     int height = getIconHeight();
     if (fPosition == LEFT || fPosition == RIGHT) {
@@ -210,6 +230,15 @@ public class CompositeIcon implements Icon, SwingConstants {
   }
     
   /** Paints one icon in the specified rectangle with the given orientations
+ * @param c component
+ * @param g graphic
+ * @param icon icon
+ * @param x x location
+ * @param y y location
+ * @param width width of icon
+ * @param height height of icon
+ * @param horizontalOrientation horizontal orientation
+ * @param verticalOrientation vertical orientation
    */
   void paintIcon(Component c, Graphics g, Icon icon, int x, int y,
                  int width, int height,
@@ -246,7 +275,8 @@ public class CompositeIcon implements Icon, SwingConstants {
    *
    * @return an int specifying the fixed width of the icon.
    */
-  public int getIconWidth() {
+  @Override
+public int getIconWidth() {
     if (fPosition == LEFT || fPosition == RIGHT)
       return fIcon1.getIconWidth() + fIcon2.getIconWidth();
                                 
@@ -258,7 +288,8 @@ public class CompositeIcon implements Icon, SwingConstants {
    *
    * @return an int specifying the fixed height of the icon.
    */
-  public int getIconHeight() {
+  @Override
+public int getIconHeight() {
     if (fPosition == TOP || fPosition == BOTTOM)
       return fIcon1.getIconHeight() + fIcon2.getIconHeight();
                                 

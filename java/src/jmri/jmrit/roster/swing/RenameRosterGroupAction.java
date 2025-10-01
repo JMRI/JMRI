@@ -68,7 +68,7 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
         }
         // null might be valid output from getting the selectedRosterGroup,
         // so we have to check for null again.
-        if (group == null) {
+        if (group == null || group.equals(Roster.NOGROUP)) {
             group = (String) JmriJOptionPane.showInputDialog(_who,
                     Bundle.getMessage("RenameRosterGroupDialog"),
                     Bundle.getMessage("RenameRosterGroupTitle", ""),
@@ -78,7 +78,7 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
                     null);
         }
         // can't rename the groups that represent the entire roster 
-        if (group == null || group.equals(Roster.ALLENTRIES)) {
+        if (group == null || group.equals(Roster.ALLENTRIES) || group.equals(Roster.NOGROUP)) {
             return;
         }
 

@@ -3,10 +3,8 @@ package jmri.util;
 import java.awt.Component;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+
+import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -17,6 +15,7 @@ import javax.swing.event.DocumentListener;
  * 
  * @author Svata Dedic Copyright (c) 2019
  */
+@SuppressWarnings("javadoc")
 final class ValidatingInputPane<T> extends javax.swing.JPanel  {
     private final Function<String, T> convertor;
     private final DocumentListener l = new DocumentListener() {

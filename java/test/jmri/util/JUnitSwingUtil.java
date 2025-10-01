@@ -1,18 +1,15 @@
 package jmri.util;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import javax.swing.AbstractButton;
 
 import org.netbeans.jemmy.operators.AbstractButtonOperator;
 import org.netbeans.jemmy.operators.JButtonOperator;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Utilities for GUI unit testing.
@@ -56,7 +53,9 @@ public final class JUnitSwingUtil {
      * @param component Typically a JComponent, could be a JFrame, the item to
      *                      be returned
      * @param size      dimension of image to capture
+     * @param upLeft    point (ignored)
      * @param file      file to write
+     * @throws java.io.IOException when needed
      */
     public static void writeDisplayedContentToFile(java.awt.Container component, 
                                                     Dimension size, Point upLeft, java.io.File file)

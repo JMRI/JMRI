@@ -62,7 +62,7 @@ public class UsbBrowserPanelTest {
         }
 
         @Override
-        public List getUsbPorts() {
+        public List<?> getUsbPorts() {
             return null;
         }
 
@@ -72,7 +72,7 @@ public class UsbBrowserPanelTest {
         }
 
         @Override
-        public List getAttachedUsbDevices() {
+        public List<UsbDevice> getAttachedUsbDevices() {
             return new ArrayList<UsbDevice>();
         }
 

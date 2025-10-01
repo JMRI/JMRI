@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 
 import jmri.jmrit.operations.locations.gui.TrackEditFrame;
@@ -12,6 +13,7 @@ import jmri.jmrit.operations.locations.gui.TrackEditFrame;
  */
 public class AlternateTrackAction extends AbstractAction {
 
+    private AlternateTrackFrame _atf;
     private TrackEditFrame _tef;
 
     public AlternateTrackAction(TrackEditFrame tef) {
@@ -21,7 +23,10 @@ public class AlternateTrackAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        new AlternateTrackFrame(_tef);
+        if (_atf != null) {
+            _atf.dispose();
+        }
+        _atf = new AlternateTrackFrame(_tef);
     }
 
 }

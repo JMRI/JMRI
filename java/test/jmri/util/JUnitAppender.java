@@ -2,25 +2,19 @@ package jmri.util;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import org.apache.commons.lang3.StringUtils;
-
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.Layout;
-import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.*;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.appender.AppenderLoggingException;
+import org.apache.logging.log4j.core.config.Property;
 import org.apache.logging.log4j.core.config.plugins.*;
 import org.apache.logging.log4j.core.layout.PatternLayout;
-import org.apache.logging.log4j.core.config.Property;
-
 import org.junit.jupiter.api.Assertions;
 
 /**
@@ -355,6 +349,7 @@ public class JUnitAppender extends AbstractAppender {
      * @return count of skipped messages of WARN or more specific level
      * @see #clearBacklog(Level)
      */
+    @SuppressWarnings("javadoc")
     public static int clearBacklog() {
         return clearBacklog(Level.WARN);
     }
