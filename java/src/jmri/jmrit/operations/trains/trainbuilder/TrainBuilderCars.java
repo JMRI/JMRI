@@ -1758,6 +1758,25 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     continue;
                 }
             }
+            // don't allow local moves for a car with a final destination
+            if (rl.getSplitName().equals(rld.getSplitName()) &&
+                    car.getFinalDestination() != null &&
+                    !car.isPassenger() &&
+                    !car.isCaboose() &&
+                    !car.hasFred()) {
+                if (!rld.isLocalMovesAllowed()) {
+                    addLine(_buildReport, FIVE,
+                            Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
+                                    rld.getId(), rld.getName()));
+                    continue;
+                }
+                if (!rl.isLocalMovesAllowed()) {
+                    addLine(_buildReport, FIVE,
+                            Bundle.getMessage("buildRouteNoLocalLocation", _train.getRoute().getName(),
+                                    rl.getId(), rl.getName()));
+                    continue;
+                }
+            }
 
             // check to see if departure track has any restrictions
             if (!car.getTrack().isDestinationAccepted(testDestination)) {
@@ -2099,6 +2118,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         cloneCar.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
         cloneCar.setPreviousScheduleId(car.getScheduleItemId());
         cloneCar.setLastRouteId(car.getLastRouteId());
+        cloneCar.setMoves(car.getMoves());
         // for timing, use arrival times for the train that is building
         // other trains will use their departure time, loaded when creating the Manifest
         String expectedArrivalTime = _train.getExpectedArrivalTime(rld, true);
@@ -2136,6 +2156,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         car.setLastRouteId(_train.getRoute().getId());
         // this car was moved during the build process
         car.setLastDate(_startTime);
+        car.setMoves(car.getMoves() + 1); // bump count
         car.setCloneOrder(cloneCreationOrder); // for reset
         car.setDestination(null, null);
         track.scheduleNext(car); // apply schedule to car

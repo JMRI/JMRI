@@ -1,6 +1,11 @@
 package jmri.jmrix.bidib;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
+import java.util.Collections;
+
+import jmri.CollectingReporter;
 import jmri.InstanceManager;
 import jmri.RailCom;
 import jmri.RailComManager;
@@ -21,16 +26,17 @@ import org.slf4j.LoggerFactory;
  * Reports from this reporter are of the type jmri.RailCom.
  *
  * @author Paul Bender Copyright (C) 2016
- * @author Eckart Meyer Copyright (C) 2019-2023
+ * @author Eckart Meyer Copyright (C) 2019-2025
  * 
- * based on jmri.jmrix.z21.Z21reporter
+ * based on jmri.jmrix.z21.Z21reporter and others
  */
-public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter implements BiDiBNamedBeanInterface {
+public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter implements BiDiBNamedBeanInterface, CollectingReporter {
 
     BiDiBAddress addr;
     private final char typeLetter;
     private BiDiBTrafficController tc = null;
     MessageListener messageListener = null;
+    private final Set<Object> entrySet = Collections.synchronizedSet(new HashSet<>());
     
     /**  
      * Create a reporter instance. 
@@ -82,7 +88,7 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
      * 
      * @param tag found tag
      */
-    public void notify_loco(RailCom tag){
+    public void notify_loco(RailCom tag) {
         //log.trace("tag: {}", tag);
         super.notify(tag);
     }
@@ -95,21 +101,25 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
                 //log.trace("address: node UID: {}, node addr: {}, address: {}, detectorNumber: {}, addressData: {}", addr.getNodeUID(), addr.getNodeAddr(), address, detectorNumber, addressData);
                 if (NodeUtils.isAddressEqual(addr.getNodeAddr(), address)  &&  addr.getAddr() == detectorNumber) {
                     log.info("REPORTER address was signalled, locos: {}, BM Number: {}, node: {}", addressData, detectorNumber, addr);
-                    if (addressData.size() > 0) {
-                        for (AddressData l : addressData) {
-                            log.debug("loco addr: {}", l);
-                            if (l.getAddress() > 0) {
-                                RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getAddress());
-                                //tag.setActualSpeed(msg.getRailComSpeed(i));                        
-                                notify_loco(tag);
-                            }
-                            else {
-                                notify_loco(null);
+                    synchronized(entrySet) {
+                        entrySet.clear();
+                        if (addressData.size() > 0) {
+                            for (AddressData l : addressData) {
+                                log.trace("loco addr: {}", l);
+                                if (l.getAddress() > 0) {
+                                    RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getAddress());
+                                    //tag.setActualSpeed(msg.getRailComSpeed(i));   
+                                    entrySet.add(tag);
+                                    notify_loco(tag);
+                                }
+                                else {
+                                    notify_loco(null);
+                                }
                             }
                         }
-                    }
-                    else {
-                        notify_loco(null);
+                        else {
+                            notify_loco(null);
+                        }
                     }
                 }
             }
@@ -119,7 +129,10 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
                 //log.trace("occupation: node UID: {}, node addr: {}, address: {}, detectorNumber: {}, occ state: {}, timestamp: {}", addr.getNodeUID(), addr.getNodeAddr(), address, detectorNumber, occupationState, timestamp);
                 if (NodeUtils.isAddressEqual(addr.getNodeAddr(), address)  &&  addr.getAddr() == detectorNumber) {
                     if (occupationState == OccupationState.FREE) {
-                        log.info("REPORTER occupation free signalled, state: {}, BM Number: {}, node: {}", occupationState, detectorNumber, addr);
+                        log.debug("REPORTER occupation free signalled, state: {}, BM Number: {}, node: {}", occupationState, detectorNumber, addr);
+                        synchronized(entrySet) {
+                            entrySet.clear();
+                        }
                         notify_loco(null);
                     }
                 }
@@ -136,8 +149,11 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
                     int relAddr = addr.getAddr() - baseAddress;
                     byte b = detectorData[ relAddr / 8];
                     boolean isOccupied = (b & (1 << (relAddr % 8))) != 0;
-                    log.info("REPORTER multi occupation was signalled, state: {}, BM addr: {}, node: {}", isOccupied ? "OCCUPIED" : "FREE", addr.getAddr(), addr);
+                    log.debug("REPORTER multi occupation was signalled, state: {}, BM addr: {}, node: {}", isOccupied ? "OCCUPIED" : "FREE", addr.getAddr(), addr);
                     if (!isOccupied) {
+                        synchronized(entrySet) {
+                            entrySet.clear();
+                        }
                         notify_loco(null);
                     }
                 }
@@ -146,6 +162,15 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
         tc.addMessageListener(messageListener);        
     }
     
+    // Collecting Reporter Interface methods
+    /**
+      * {@inheritDoc}
+      */
+     @Override
+     public java.util.Collection<Object> getCollection(){
+        return entrySet;
+     }
+
     /**
      * {@inheritDoc}
      * 

@@ -5,22 +5,21 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.regex.*;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
-import javax.annotation.Nonnull;
-
-import jmri.*;
-import jmri.util.JmriJFrame;
+import javax.swing.table.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.*;
+import jmri.util.JmriJFrame;
 
 /**
  * This class handles the turnout number mapping window.
@@ -277,7 +276,7 @@ public class NumberMapFrame extends JmriJFrame implements TableModelListener {
 /**
  * Set the corresponding JTable object, so we can reset the tables field values.
  * 
- * @param table 
+ * @param table table
  */
         public void setTable(JTable table) {
             this.table = table; //used to rollback invalid map values

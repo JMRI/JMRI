@@ -1,17 +1,13 @@
 package jmri.jmrix.secsi.simulator;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import jmri.jmrix.secsi.SerialMessage;
-import jmri.jmrix.secsi.SerialPortController; // no special xSimulatorController
-import jmri.jmrix.secsi.SerialReply;
-import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
-import jmri.util.ImmediatePipedOutputStream;
+import java.io.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+// no special xSimulatorController
+import jmri.jmrix.secsi.*;
+import jmri.util.ImmediatePipedOutputStream;
 
 /**
  * Provide access to a simulated SECSI system.
@@ -31,6 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2018
  */
+@SuppressWarnings("javadoc")
 public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members

@@ -19,6 +19,7 @@ public interface GlobalVariableManager extends Manager<GlobalVariable> {
      * @param systemName the system name
      * @param userName   the user name
      * @return a new GlobalVariable or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     GlobalVariable createGlobalVariable(String systemName, String userName)
             throws IllegalArgumentException;
@@ -29,6 +30,7 @@ public interface GlobalVariableManager extends Manager<GlobalVariable> {
      *
      * @param userName the user name
      * @return a new GlobalVariable or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     GlobalVariable createGlobalVariable(String userName)
             throws IllegalArgumentException;

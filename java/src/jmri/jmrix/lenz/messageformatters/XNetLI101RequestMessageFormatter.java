@@ -11,10 +11,12 @@ public class XNetLI101RequestMessageFormatter implements XPressNetMessageFormatt
 
     private static final String X_NET_MESSAGE_REQUEST_LI_BAUD = "XNetMessageRequestLIBaud";
 
+    @Override
     public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.lenz.XNetMessage && ((jmri.jmrix.lenz.XNetMessage) m).getElement(0) == XNetConstants.LI101_REQUEST;
     }
 
+    @Override
     public String formatMessage(jmri.jmrix.Message m) {
         if(m.getElement(1) == XNetConstants.LI101_REQUEST_ADDRESS) {
             return Bundle.getMessage("XNetMessageRequestLIAddress", m.getElement(2));

@@ -1,5 +1,7 @@
 package jmri.util.swing;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.Component;
 
 import javax.annotation.Nonnull;
@@ -10,8 +12,6 @@ import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 import jmri.util.JmriJFrame;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Utility Methods for Jemmy Tests.
@@ -147,7 +147,7 @@ public class JemmyUtil {
                 if(comp == null){
                     return false;
                 } else if (comp instanceof JLabel ) {
-                    return name.equals(((JLabel)comp).getName());
+                    return name.equals(comp.getName());
                 } else {
                     return false;
                 }
@@ -173,7 +173,7 @@ public class JemmyUtil {
                 if(comp == null){
                     return false;
                 } else if (comp instanceof JButton ) {
-                    return name.equals(((JButton)comp).getName());
+                    return name.equals(comp.getName());
                 } else {
                     return false;
                 }

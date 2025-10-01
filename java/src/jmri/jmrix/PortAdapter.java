@@ -1,8 +1,8 @@
 package jmri.jmrix;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
+
+import javax.annotation.Nonnull;
 
 import jmri.SystemConnectionMemo;
 
@@ -225,7 +225,7 @@ public interface PortAdapter {
      *                                  of SystemConnectionMemo
      * @throws NullPointerException     if connectionMemo is null
      */
-    void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
+    void setSystemConnectionMemo(@Nonnull SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
 
     /**
      * This is called when a connection is to be disposed.

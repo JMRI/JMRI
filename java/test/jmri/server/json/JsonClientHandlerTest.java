@@ -2,12 +2,6 @@ package jmri.server.json;
 
 import static jmri.server.json.JsonTestServiceFactory.TEST;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.*;
@@ -21,6 +15,12 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -68,30 +68,30 @@ public class JsonClientHandlerTest {
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         instance.onMessage(string);
         JsonNode message = connection.getMessage();
-        assertNotNull("Response provided", message);
-        assertTrue("Response is an array", message.isArray());
-        assertEquals("Response array contains two elements", 2, message.size());
-        assertTrue("Response array element 0 is an object", message.get(0).isObject());
-        assertEquals("Response array element 0 is a JSON message", 2, message.get(0).size());
-        assertTrue("Response array element 1 is an object", message.get(1).isObject());
-        assertEquals("Response array element 1 is a JSON message", 2, message.get(1).size());
+        assertNotNull( message, "Response provided");
+        assertTrue( message.isArray(), "Response is an array");
+        assertEquals( 2, message.size(), "Response array contains two elements");
+        assertTrue( message.get(0).isObject(), "Response array element 0 is an object");
+        assertEquals( 2, message.get(0).size(), "Response array element 0 is a JSON message");
+        assertTrue( message.get(1).isObject(), "Response array element 1 is an object");
+        assertEquals( 2, message.get(1).size(), "Response array element 1 is a JSON message");
         // non-JSON request
         instance.onMessage("not a JSON object");
         message = connection.getMessage();
-        assertNotNull("Response provided", message);
-        assertNotNull("Expected warning not shown",
-                JUnitAppender.checkForMessageStartingWith("Exception processing \"not a JSON object\""));
-        assertTrue("Error response is an object", message.isObject());
-        assertEquals("Error response is an ERROR", JsonException.ERROR, message.path(JSON.TYPE).asText());
-        assertEquals("Error response is type 500", 500,
-                message.path(JSON.DATA).path(JsonException.CODE).asInt());
+        assertNotNull( message, "Response provided");
+        JUnitAppender.assertWarnMessageStartsWith("Exception processing \"not a JSON object\"");
+        assertTrue( message.isObject(), "Error response is an object");
+        assertEquals( JsonException.ERROR, message.path(JSON.TYPE).asText(), "Error response is an ERROR");
+        assertEquals( 500,
+            message.path(JSON.DATA).path(JsonException.CODE).asInt(),
+            "Error response is type 500");
         // ping request (triggers special paths in JsonClientHandler)
         instance.onMessage("{\"type\":\"ping\"}");
         message = connection.getMessage();
-        assertNotNull("Response provided", message);
-        assertTrue("Response is an object", message.isObject());
-        assertEquals("Response array contains one elements", 1, message.size());
-        assertEquals("Response type is pong", JSON.PONG, message.path(JSON.TYPE).asText());
+        assertNotNull( message, "Response provided");
+        assertTrue( message.isObject(), "Response is an object");
+        assertEquals( 1, message.size(), "Response array contains one elements");
+        assertEquals( JSON.PONG, message.path(JSON.TYPE).asText(), "Response type is pong");
     }
 
     /**
@@ -112,13 +112,13 @@ public class JsonClientHandlerTest {
         JsonNode node = connection.getObjectMapper().readTree(message);
         instance.onMessage(node);
         JsonNode response = connection.getMessage();
-        assertNotNull("Response provided", response);
-        assertTrue("Response is an array", response.isArray());
-        assertEquals("Response array contains two elements", 2, response.size());
-        assertTrue("Response array element 0 is an object", response.get(0).isObject());
-        assertEquals("Response array element 0 is a JSON message", 2, response.get(0).size());
-        assertTrue("Response array element 1 is an object", response.get(1).isObject());
-        assertEquals("Response array element 1 is a JSON message", 2, response.get(1).size());
+        assertNotNull( response, "Response provided");
+        assertTrue( response.isArray(), "Response is an array");
+        assertEquals( 2, response.size(), "Response array contains two elements");
+        assertTrue( response.get(0).isObject(), "Response array element 0 is an object");
+        assertEquals( 2, response.get(0).size(), "Response array element 0 is a JSON message");
+        assertTrue( response.get(1).isObject(), "Response array element 1 is an object");
+        assertEquals( 2, response.get(1).size(), "Response array element 1 is a JSON message");
     }
 
     /**
@@ -135,10 +135,10 @@ public class JsonClientHandlerTest {
         instance.onMessage(node);
         JUnitAppender.assertWarnMessage("Requested list type 'non-existant-type' unknown.");
         JsonNode message = connection.getMessage();
-        assertNotNull("Response provided", message);
-        assertTrue("Response is an object", message.isObject());
-        assertEquals("Response contains error code 404", 404,
-                message.path(JSON.DATA).path(JsonException.CODE).asInt());
+        assertNotNull( message, "Response provided");
+        assertTrue( message.isObject(), "Response is an object");
+        assertEquals( 404, message.path(JSON.DATA).path(JsonException.CODE).asInt(),
+            "Response contains error code 404");
     }
 
     /**
@@ -155,10 +155,10 @@ public class JsonClientHandlerTest {
         instance.onMessage(node);
         JUnitAppender.assertWarnMessage("Requested type 'non-existant-type' unknown.");
         JsonNode message = connection.getMessage();
-        assertNotNull("Response provided", message);
-        assertTrue("Response is an object", message.isObject());
-        assertEquals("Response contains error code 404", 404,
-                message.path(JSON.DATA).path(JsonException.CODE).asInt());
+        assertNotNull( message, "Response provided");
+        assertTrue( message.isObject(), "Response is an object");
+        assertEquals( 404, message.path(JSON.DATA).path(JsonException.CODE).asInt(),
+            "Response contains error code 404");
     }
 
     /**
@@ -174,14 +174,15 @@ public class JsonClientHandlerTest {
         JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"test\", \"method\":\"post\"}");
         instance.onMessage(node);
         JsonNode message = connection.getMessage();
-        assertNotNull("Response provided", message);
+        assertNotNull( message, "Response provided");
         JsonNode data = message.path(JSON.DATA);
-        assertTrue("Response is an object", message.isObject());
-        assertEquals("Response is an error", JsonException.ERROR,
-                message.path(JSON.TYPE).asText());
-        assertEquals("Response contains error code 400", 400, data.path(JsonException.CODE).asInt());
-        assertEquals("Response contains error message", "Data property of JSON message missing.",
-                data.path(JsonException.MESSAGE).asText());
+        assertTrue( message.isObject(), "Response is an object");
+        assertEquals( JsonException.ERROR, message.path(JSON.TYPE).asText(),
+            "Response is an error");
+        assertEquals( 400, data.path(JsonException.CODE).asInt(), "Response contains error code 400");
+        assertEquals( "Data property of JSON message missing.",
+            data.path(JsonException.MESSAGE).asText(),
+            "Response contains error message");
     }
 
     /**
@@ -200,14 +201,15 @@ public class JsonClientHandlerTest {
                 connection.getObjectMapper().readTree("{\"type\":\"test\", \"data\":{\"throws\":\"JmriException\"}}");
         instance.onMessage(node);
         JsonNode message = connection.getMessage();
-        assertNotNull("Response provided", message);
+        assertNotNull( message, "Response provided");
         JsonNode data = message.path(JSON.DATA);
-        assertTrue("Response is an object", message.isObject());
-        assertEquals("Response is an error", JsonException.ERROR,
-                message.path(JSON.TYPE).asText());
-        assertEquals("Response contains error code 500", 500, data.path(JsonException.CODE).asInt());
-        assertEquals("Response contains error message", "Unsupported operation attempted: null.",
-                data.path(JsonException.MESSAGE).asText());
+        assertTrue( message.isObject(), "Response is an object");
+        assertEquals( JsonException.ERROR, message.path(JSON.TYPE).asText(),
+            "Response is an error");
+        assertEquals( 500, data.path(JsonException.CODE).asInt(), "Response contains error code 500");
+        assertEquals( "Unsupported operation attempted: null.",
+            data.path(JsonException.MESSAGE).asText(),
+            "Response contains error message");
         JUnitAppender.assertWarnMessage("Unsupported operation attempted {\"type\":\"test\",\"data\":{\"throws\":\"JmriException\"}}");
     }
 
@@ -228,13 +230,13 @@ public class JsonClientHandlerTest {
         JsonNode node = connection.getObjectMapper().readTree(message);
         instance.onMessage(node);
         JsonNode root = connection.getMessage();
-        assertNotNull("Response provided", root);
+        assertNotNull( root, "Response provided");
         JsonNode data = root.path(JSON.DATA);
-        assertTrue("Response is an object", root.isObject());
-        assertEquals("Response object contains two elements", 2, root.size());
-        assertEquals("Response object type is test", TEST, root.path(JSON.TYPE).asText());
-        assertEquals("Response object data name is test", TEST, data.path(JSON.NAME).asText());
-        assertEquals("Response object data size is 1", 1, data.size());
+        assertTrue( root.isObject(), "Response is an object");
+        assertEquals( 2, root.size(), "Response object contains two elements");
+        assertEquals( TEST, root.path(JSON.TYPE).asText(), "Response object type is test");
+        assertEquals( TEST, data.path(JSON.NAME).asText(), "Response object data name is test");
+        assertEquals( 1, data.size(), "Response object data size is 1");
     }
 
     @Test
@@ -245,11 +247,11 @@ public class JsonClientHandlerTest {
                 .readTree("{\"type\":\"test\",\"data\":{\"name\":\"JsonException\"},\"method\":\"get\"}");
         instance.onMessage(node);
         JsonNode root = connection.getMessage();
-        assertNotNull("Response provided", root);
+        assertNotNull( root, "Response provided");
         JsonNode data = root.path(JSON.DATA);
-        assertTrue("Error response is an object", root.isObject());
-        assertEquals("Error response is an ERROR", JsonException.ERROR, root.path(JSON.TYPE).asText());
-        assertEquals("Error response is type 499", 499, data.path(JsonException.CODE).asInt());
+        assertTrue( root.isObject(), "Error response is an object");
+        assertEquals( JsonException.ERROR, root.path(JSON.TYPE).asText(), "Error response is an ERROR");
+        assertEquals( 499, data.path(JsonException.CODE).asInt(), "Error response is type 499");
     }
 
     @Test
@@ -260,10 +262,10 @@ public class JsonClientHandlerTest {
         assertTrue(connection.isOpen());
         instance.onMessage(node);
         JsonNode root = connection.getMessage();
-        assertNotNull("Response provided", root);
+        assertNotNull( root, "Response provided");
         JsonNode data = root.path(JSON.DATA);
-        assertTrue("Response is an object", root.isObject());
-        assertEquals("Response is a Goodbye message", JSON.GOODBYE, root.path(JSON.TYPE).asText());
+        assertTrue( root.isObject(), "Response is an object");
+        assertEquals( JSON.GOODBYE, root.path(JSON.TYPE).asText(), "Response is a Goodbye message");
         assertTrue(data.isMissingNode());
         assertFalse(connection.isOpen());
     }
@@ -288,11 +290,11 @@ public class JsonClientHandlerTest {
         JsonNode node = connection.getObjectMapper().readTree(message);
         instance.onMessage(node);
         JsonNode root = connection.getMessage();
-        assertNotNull("Response provided", root);
+        assertNotNull( root, "Response provided");
         JsonNode data = root.path(JSON.DATA);
-        assertTrue("Error response is an object", root.isObject());
-        assertEquals("Error response is an ERROR", JsonException.ERROR, root.path(JSON.TYPE).asText());
-        assertEquals("Error response is type 400", 400, data.path(JsonException.CODE).asInt());
+        assertTrue( root.isObject(), "Error response is an object");
+        assertEquals( JsonException.ERROR, root.path(JSON.TYPE).asText(), "Error response is an ERROR");
+        assertEquals( 400, data.path(JsonException.CODE).asInt(), "Error response is type 400");
     }
 
     /**
@@ -305,9 +307,9 @@ public class JsonClientHandlerTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         connection.setLocale(Locale.ITALY);
-        assertEquals("Connection is IT Italian", Locale.ITALY, connection.getLocale());
+        assertEquals( Locale.ITALY, connection.getLocale(), "Connection is IT Italian");
         instance.onMessage("{\"type\":\"locale\", \"data\":{\"locale\":\"en-US\"}}");
-        assertEquals("Connection is US English", Locale.US, connection.getLocale());
+        assertEquals( Locale.US, connection.getLocale(), "Connection is US English");
     }
 
     /**
@@ -317,22 +319,19 @@ public class JsonClientHandlerTest {
     public void testSetInvalidVersion() {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         connection.setVersion("v4"); // not valid
-        try {
-            new TestJsonClientHandler(connection);
-            fail("Expected exception not thrown.");
-        } catch (IllegalArgumentException ex) {
-            // passes at this point
-        }
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+            () -> new TestJsonClientHandler(connection).getServices());
+        assertNotNull(ex);
         JUnitAppender.assertErrorMessage("Unable to create handler for version v4");
     }
 
     private static class TestJsonClientHandler extends JsonClientHandler {
 
-        public TestJsonClientHandler(JsonConnection connection) {
+        TestJsonClientHandler(JsonConnection connection) {
             super(connection);
         }
 
-        public TestJsonClientHandler() {
+        TestJsonClientHandler() {
             this(new JsonMockConnection((DataOutputStream) null));
         }
 

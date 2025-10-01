@@ -60,6 +60,7 @@ public class EngineRosterMenu extends JMenu {
         add(importRosterAction);
         add(importAction);
         add(exportAction);
+        addSeparator();
         add(deleteAction);
         add(resetMovesAction);
         addSeparator();

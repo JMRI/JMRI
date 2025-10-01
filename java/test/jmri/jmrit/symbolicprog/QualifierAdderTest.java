@@ -4,14 +4,12 @@ import java.util.HashMap;
 
 import javax.swing.JLabel;
 
-import jmri.progdebugger.ProgDebugger;
-import jmri.util.JUnitUtil;
-
-import org.jdom2.DocType;
-import org.jdom2.Document;
-import org.jdom2.Element;
+import org.jdom2.*;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import jmri.progdebugger.ProgDebugger;
+import jmri.util.JUnitUtil;
 
 /**
  *
@@ -59,6 +57,9 @@ public class QualifierAdderTest {
     /**
      * If there are any modifier elements, process them by e.g. setting
      * attributes on the VariableValue
+     * @param e Element
+     * @param v VariableValue
+     * @return QualifierAdder
      */
     protected QualifierAdder processModifierElements(final Element e, final VariableValue v) {
         QualifierAdder qa = new QualifierAdder() {

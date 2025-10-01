@@ -138,7 +138,7 @@
         <pathelement location="${libdir}/xercesImpl-2.12.2.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
         <pathelement location="${libdir}/commons-csv-1.9.0.jar"/>
-        <pathelement location="${libdir}/jdom2-2.0.6.jar"/>
+        <pathelement location="${libdir}/jdom2-2.0.6.1.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput-2.0.9-natives-all.jar"/>
         <pathelement location="${libdir}/jinput-2.0.9.jar"/>
@@ -280,18 +280,18 @@
     <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
-        <pathelement location="${libdir}/junit-jupiter-5.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-console-standalone-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-commons-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-engine-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-launcher-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-runner-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-platform-suite-api-1.9.1.jar"/>
-        <pathelement location="${libdir}/junit-vintage-engine-5.9.1.jar"/>
-        <pathelement location="${libdir}/junit-jupiter-api-5.9.1.jar"/>
-        <pathelement location="${libdir}/junit-jupiter-engine-5.9.1.jar"/>
-        <pathelement location="${libdir}/junit-jupiter-params-5.9.1.jar"/>
-        <pathelement location="${libdir}/opentest4j-1.2.0.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-5.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-console-standalone-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-commons-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-engine-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-launcher-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-runner-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-platform-suite-api-1.13.4.jar"/>
+        <pathelement location="${libdir}/junit-vintage-engine-5.13.4.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-api-5.13.4.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-engine-5.13.4.jar"/>
+        <pathelement location="${libdir}/junit-jupiter-params-5.13.4.jar"/>
+        <pathelement location="${libdir}/opentest4j-1.3.0.jar"/>
         <pathelement location="${libdir}/apiguardian-api-1.1.0.jar"/>
         <pathelement location="${libdir}/archunit-1.0.0-rc1.jar"/>
         <pathelement location="${libdir}/archunit-junit5-api-1.0.0-rc1.jar"/>
@@ -612,7 +612,9 @@
             <fileset dir="${resourcedir}" includes="*.gif"/>
         </copy>
         <copy todir="${target}">
-            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json"/>
+            <fileset dir="${source}" includes="**/*.properties,**/*.js,**/*.png,**/*.json">
+                <exclude name="**/junit-platform.properties"/><!-- Only required for tests -->
+            </fileset>
         </copy>
     </target>
 
@@ -908,6 +910,7 @@
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
@@ -948,6 +951,7 @@
             <sysproperty key="user.country" value="US"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @webtest'"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
@@ -1651,6 +1655,7 @@
             <sysproperty key="java.awt.headless" value="true"/>
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore' --tags 'not @Headed' --tags 'not @webtest'"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>
@@ -1800,6 +1805,7 @@
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
+            <arg value="execute" />
             <arg value="--scan-classpath"/>
             <arg value="--details=none"/>
             <arg value="--include-engine=junit-jupiter"/>

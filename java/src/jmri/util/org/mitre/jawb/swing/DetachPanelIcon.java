@@ -151,7 +151,8 @@ public class DetachPanelIcon implements Icon {
     this.fill = fill;
   }
 
-  public void paintIcon(Component c, Graphics g, int x, int y) {
+  @Override
+public void paintIcon(Component c, Graphics g, int x, int y) {
     if (pressed)
       g.setColor(highlight);
     else
@@ -177,11 +178,13 @@ public class DetachPanelIcon implements Icon {
     g.drawLine(x+5,y+3,x+10,y+3); // aux frame
   }
 
-  public int getIconWidth() {
+  @Override
+public int getIconWidth() {
     return WIDTH;
   }
 
-  public int getIconHeight() {
+  @Override
+public int getIconHeight() {
     return HEIGHT;
   }
  

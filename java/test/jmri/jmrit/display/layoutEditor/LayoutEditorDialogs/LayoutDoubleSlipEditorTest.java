@@ -2,16 +2,18 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.geom.Point2D;
 
-import javax.swing.*;
-
-import jmri.jmrit.display.layoutEditor.*;
-import jmri.util.*;
-import jmri.util.swing.JemmyUtil;
+import javax.swing.JComboBox;
 
 import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
+
+import jmri.jmrit.display.layoutEditor.LayoutDoubleSlip;
+import jmri.jmrit.display.layoutEditor.LayoutDoubleSlipView;
+import jmri.util.JUnitUtil;
+import jmri.util.MathUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
  * Test simple functioning of LayoutDoubleSlipEditor.
@@ -46,14 +48,14 @@ public class LayoutDoubleSlipEditorTest extends LayoutSlipEditorTest {
         JLabelOperator firstTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("BeanNameTurnout") + " A");
         JComboBoxOperator firstTurnoutComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) firstTurnoutLabelOperator.getLabelFor());
+                (JComboBox<?>) firstTurnoutLabelOperator.getLabelFor());
         firstTurnoutComboBoxOperator.selectItem(1); //TODO: fix hardcoded index
 
         // Select turnout B
         JLabelOperator secondTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("BeanNameTurnout") + " B");
         JComboBoxOperator secondTurnoutComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) secondTurnoutLabelOperator.getLabelFor());
+                (JComboBox<?>) secondTurnoutLabelOperator.getLabelFor());
         secondTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
         // Create a (new) block

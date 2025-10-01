@@ -109,6 +109,7 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
         return true; // no validity checking performed
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         String newRrName = evt.getNewValue().toString();
         if (evt.getPropertyName().equals(WebServerPreferences.RAILROAD_NAME) && !this.railroadName.getText().equals(newRrName)) {
