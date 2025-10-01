@@ -112,6 +112,7 @@ public class Z21SimulatorAdapterTest {
             method = a.getClass().getDeclaredMethod(methodName);
         } catch ( NoSuchMethodException nsm) {
             fail("Could not find method " + methodName + "in Z21SimulatorAdapter class");
+            return;
         }
 
         // override the default permissions.
