@@ -3,6 +3,7 @@ package jmri.jmrix.tmcc;
 import jmri.AddressedProgrammer;
 import jmri.Programmer;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.ProgrammingMode;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers for TMCC
@@ -22,6 +23,9 @@ public class TmccProgrammerManager extends DefaultProgrammerManager {
         super(serviceModeProgrammer, memo);
         _memo = memo;
     }
+    
+    static final ProgrammingMode TMCCMODE1 = new ProgrammingMode("TMCCMODE1", Bundle.getMessage("TMCCMODE1"));
+    static final ProgrammingMode TMCCMODE2 = new ProgrammingMode("TMCCMODE2", Bundle.getMessage("TMCCMODE2"));
 
     /**
      * Does TMCC have the equivalent of Ops Mode?
@@ -42,5 +46,6 @@ public class TmccProgrammerManager extends DefaultProgrammerManager {
     protected AddressedProgrammer reserveConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
+
 
 }
