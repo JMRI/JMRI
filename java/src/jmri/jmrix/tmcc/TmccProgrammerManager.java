@@ -16,12 +16,8 @@ import jmri.ProgrammingMode;
  */
 public class TmccProgrammerManager extends DefaultProgrammerManager {
 
-    private TmccSystemConnectionMemo _memo = null;
-    //private Programmer localProgrammer;
-
     public TmccProgrammerManager(Programmer serviceModeProgrammer, TmccSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
-        _memo = memo;
     }
     
     static final ProgrammingMode TMCCMODE1 = new ProgrammingMode("TMCCMODE1", Bundle.getMessage("TMCCMODE1"));
