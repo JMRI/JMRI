@@ -74,7 +74,7 @@ public class TmccProgrammer extends AbstractProgrammer {
                 if  (getMode() == TmccProgrammerManager.TMCCMODE2) {
                     SerialMessage m = new SerialMessage();
                     m.setOpCode(0xF8); // set the first byte/TMCC2 opcode to 0xF8
-                    m.putAsWord((val * 512) + _func); // set the second/third byte (address/SET command for TMCC2)
+                    m.putAsWord(((val * 512) + 256) + _func); // set the second/third byte (address/SET command for TMCC2)
                     tc.sendSerialMessage(m, null);
                 }
 
