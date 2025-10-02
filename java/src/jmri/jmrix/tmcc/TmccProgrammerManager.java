@@ -18,8 +18,11 @@ public class TmccProgrammerManager extends DefaultProgrammerManager {
 
     public TmccProgrammerManager(Programmer serviceModeProgrammer, TmccSystemConnectionMemo memo) {
         super(serviceModeProgrammer, memo);
+        _memo = memo;
     }
     
+    TmccSystemConnectionMemo _memo;
+
     static final ProgrammingMode TMCCMODE1 = new ProgrammingMode("TMCCMODE1", Bundle.getMessage("TMCCMODE1"));
     static final ProgrammingMode TMCCMODE2 = new ProgrammingMode("TMCCMODE2", Bundle.getMessage("TMCCMODE2"));
 
@@ -30,12 +33,12 @@ public class TmccProgrammerManager extends DefaultProgrammerManager {
      */
     @Override
     public boolean isAddressedModePossible() {
-        return false;
+        return true;
     }
 
     @Override
     protected AddressedProgrammer getConcreteAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return null;
+        return new TmccOpsModeProgrammer(pAddress, pLongAddress, _memo);
     }
 
     @Override
