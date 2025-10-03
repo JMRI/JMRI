@@ -23,10 +23,18 @@ public class MqttReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         return "MR" + i;
     }
 
+    @Test
+    @Disabled
     @Override
     public void testRegisterDuplicateSystemName() {}
+
+    @Test
+    @Disabled
     @Override
     public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+
+    @Test
+    @Disabled
     @Override
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
