@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.powerline.simulator.SpecificSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 
 import org.junit.jupiter.api.*;
 
@@ -38,13 +37,13 @@ public class SerialAddressTest {
     }
 
     @Test
-    @ToDo("Investigate failed assertion")
     public void testIsX10False() {
         assertFalse( tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PL4007", 'L'), "invalid config PL4007");
         assertFalse( tc.getAdapterMemo().getSerialAddress().validSystemNameConfig("PL10033", 'L'), "invalid config PL10033");
 
-        // JU4 > JU5 5.13.5 the following assertion fails NameValidity.VALID
-        // assertEquals( NameValidity.INVALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2", 'L'), "invalid format - PL2");
+        // 5.13.5 the following assertion changed to match actual behaviour
+        assertEquals( NameValidity.VALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL2", 'L'), "invalid format - PL2");
+
         assertEquals( NameValidity.INVALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL0B2", 'L'), "invalid format - PL0B2");
         assertEquals( NameValidity.INVALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PL", 'L'), "invalid format - PL");
         assertEquals( NameValidity.INVALID, tc.getAdapterMemo().getSerialAddress().validSystemNameFormat("PLB", 'L'), "invalid format - PLB");
