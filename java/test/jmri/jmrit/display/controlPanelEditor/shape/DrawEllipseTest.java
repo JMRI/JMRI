@@ -1,59 +1,58 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import jmri.jmrit.display.EditorScaffold;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
-import org.junit.Assume;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@DisabledIfHeadless
 public class DrawEllipseTest {
 
     EditorScaffold editor;
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor();
-        frame.pack();
-        frame.setVisible(true);
-        DrawEllipse t = new DrawEllipse("newShape", "Ellipse", null, frame, false);
+        ThreadingUtil.runOnGUI( () -> {
+            editor.pack();
+            editor.setVisible(true);
+        });
+        DrawEllipse t = new DrawEllipse("newShape", "Ellipse", null, editor, false);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(t);
-        JUnitUtil.dispose(frame);
     }
 
+    @Test
     public void testCTorEdit() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ControlPanelEditor frame = new ControlPanelEditor();
-        frame.pack();
-        frame.setVisible(true);
-        PositionableEllipse ps =  new PositionableEllipse(frame);
-        DrawEllipse t = new DrawEllipse("editShape", "Ellipse", ps, frame, true);
-        Assert.assertNotNull("exists", t);
+        ThreadingUtil.runOnGUI( () -> {
+            editor.pack();
+            editor.setVisible(true);
+        });
+        PositionableEllipse ps =  new PositionableEllipse(editor);
+        DrawEllipse t = new DrawEllipse("editShape", "Ellipse", ps, editor, true);
+        assertNotNull( t, "exists");
         JUnitUtil.dispose(t);
-        JUnitUtil.dispose(frame);
     }
 
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         editor = new EditorScaffold();
     }
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.dispose(editor);
         editor = null;
-        jmri.util.JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
