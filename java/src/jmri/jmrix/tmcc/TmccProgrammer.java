@@ -40,8 +40,8 @@ public class TmccProgrammer extends AbstractProgrammer {
     }
 
 
+    int _cv; // points to "CV" input from Simple Programmer
     int _val; // points to "Value" input from Simple Programmer
-//    int _cv; // points to "CV" input from Simple Programmer
     int _func; // points to "SET" command for TMCC1 and TMCC2 loco ID numbers
 
 
@@ -50,33 +50,54 @@ public class TmccProgrammer extends AbstractProgrammer {
      */
     @Override
     public synchronized void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-
+        final int CV = Integer.parseInt(CVname);
+        
+        _cv = CV;
         _val = val; // Value from Simple Programmer "Value" input
-//        _cv = CV;
         _func = 0x00002B; // SET command for both TMCC1 and TMCC2
 
-        // format and send the write message
-        // the argument is long containing 3 bytes 
+        // validate CV == 1 for TMCC loco ID programming
+        // format and send the TMCC loco ID write message
+        // note: the argument is long containing 3 bytes 
 
-        if (getMode() == TmccProgrammerManager.TMCCMODE1 ) {
-            SerialMessage m = new SerialMessage();
-            m.setOpCode(0xFE); // set the first byte/TMCC1 opcode to 0xFE
-            m.putAsWord((val * 128) + _func); // set the second/third byte (address/SET command for TMCC1)
-            tc.sendSerialMessage(m, null);
+        if (CV == 1) {
             
-        } else {
+            if (val > 0 && val < 99) {
+
+                if (getMode() == TmccProgrammerManager.TMCCMODE1) {
+                    SerialMessage m = new SerialMessage();
+                    m.setOpCode(0xFE); // set the first byte/TMCC1 opcode to 0xFE
+                    m.putAsWord((val * 128) + _func); // set the second/third byte (address/SET command for TMCC1)
+                    tc.sendSerialMessage(m, null);
+                }
+
+                if  (getMode() == TmccProgrammerManager.TMCCMODE2) {
+                    SerialMessage m = new SerialMessage();
+                    m.setOpCode(0xF8); // set the first byte/TMCC2 opcode to 0xF8
+                    m.putAsWord(((val * 512) + 256) + _func); // set the second/third byte (address/SET command for TMCC2)
+                    tc.sendSerialMessage(m, null);
+                }
+
+            } else {
+                SerialMessage m = new SerialMessage();
+                m.setOpCode(0x00);
+                m.putAsWord(00000);
+                tc.sendSerialMessage(m, null);
+            }
+
+
+        } else if (CV > 1) {
             SerialMessage m = new SerialMessage();
-            m.setOpCode(0xF8); // set the first byte/TMCC2 opcode to 0xF8
-            m.putAsWord((val * 512) + _func); // set the second/third byte (address/SET command for TMCC2)
+            m.setOpCode(0x00);
+            m.putAsWord(00000);
             tc.sendSerialMessage(m, null);
-            
+
         }
 
         // End the "writing..." process in SimpleProgrammer
         notifyProgListenerEnd(p, _val, jmri.ProgListener.OK);
  
     }
-
 
 
     /** 
