@@ -289,9 +289,25 @@ final public class LayoutBlockConnectivityTools {
         // can be the same as the destination's facing block.
         for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
             for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+                // Check if the path starts from this turntable's block
                 if (turntable.getLayoutBlock() == currentBlock) {
-                    if (nextBlock == destBlock) {
-                        return true;
+                    // A path from a turntable is valid if the destination is a ray block or a neighbor of a ray block.
+                    for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                        TrackSegment track = ray.getConnect();
+                        if (track != null && track.getLayoutBlock() != null) {
+                            LayoutBlock rayBlock = track.getLayoutBlock();
+                            // First, check if the ray block itself is the destination.
+                            if (rayBlock == destBlock) {
+                                return true;
+                            }
+                            // Next, check if the destination block is a valid neighbor of this ray block.
+                            for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
+                                Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                                if (neighbor != null && neighbor == destBlock.getBlock()) {
+                                    return true;
+                                }
+                            }
+                        }
                     }
                 }
             }

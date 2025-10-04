@@ -295,7 +295,6 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         for (LayoutBlock layoutBlock : layoutBlockManager.getNamedBeanSet()){
             if (layoutBlock.getNumberOfThroughPaths() == 0){
                 if (!blockSectionExists(layoutBlock)){
-                    log.debug("creating block section for layout block '{}'", layoutBlock.getDisplayName());
                     createBlockSection(layoutBlock);
                 }
             }
@@ -436,8 +435,11 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
 
         // If the current block is a SML facing block, the next block is not needed.
         for (jmri.SignalMastLogic sml : smlManager.getSignalMastLogicList()) {
-            if (sml.getFacingBlock().equals(layoutBlock)) {
-                return null;
+            // should not occur, but sometimes a sml has a null entry point (does not show up in sml table)
+            if (sml.getFacingBlock() != null) {
+                if (sml.getFacingBlock().equals(layoutBlock)) {
+                    return null;
+                }
             }
         }
 

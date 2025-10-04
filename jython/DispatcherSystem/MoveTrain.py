@@ -1725,16 +1725,12 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         default = "forward"
         self.od.CLOSED_OPTION = True
         while self.od.CLOSED_OPTION == True:
-            # if in_siding:
-            #     msg = "In block: " + block_name + "\n" +'What way is train facing\ntowards buffer?'
-            # else:
             msg = "In block: " + block_name + "\n" +'What way is train facing\ntowards highlighted block?'
             title = "Set Train Facing Direction"
             type = JOptionPane.QUESTION_MESSAGE
             result = self.od.customQuestionMessage2str(msg, title, "forward", "reverse")
             if self.od.CLOSED_OPTION == True:
-                self.od.displayMessage("Sorry Can't Cancel at this point")
-
+                OptionDialog().displayMessage("Sorry Can't Cancel at this point")
         if result == "reverse":
             train_direction = "forward"
         else:

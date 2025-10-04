@@ -172,11 +172,10 @@ class RunDispatcherMaster(jmri.jmrit.automat.AbstractAutomaton ):
 
         # Second, automatically add blocks associated with LayoutTurntables
         editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
-        turntables = []
         for editor in editorManager.getAll():
             if isinstance(editor, jmri.jmrit.display.layoutEditor.LayoutEditor):
-                turntables = editor.getLayoutTurntables()
-                for turntable in turntables:
+                # The returned object is a Java Set, which needs to be converted to a list for safe iteration in Jython
+                for turntable in list(editor.getLayoutTurntables()):
                     layout_block = turntable.getLayoutBlock()
                     if layout_block is not None and layout_block.getUserName() is not None:
                         stopping_points_set.add(layout_block.getUserName())

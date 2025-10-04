@@ -99,9 +99,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.tryme(self.updatePanels, "Cannot update Panels: Contact Developer")
             self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
             self.addSensors()
-            self.tryme(self.generateSML, "Cannot generate Signal Mast Logic: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
+            self.generateSML()
             self.show_progress(60)
-            self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
+            self.generateSections()   # if it fails need a better fail message
+            # self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(80)
             self.tryme(self.addLogix, "Cannot generate startup Logix: Contact Developer")
             self.addIcons()
@@ -114,6 +115,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.result = "Failure"
 
     def __str__(self):
+        print "self.result", self.result
         return self.result
 
 
@@ -643,16 +645,15 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
         # Second, automatically add blocks associated with LayoutTurntables
         editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
-        turntables = []
         for editor in editorManager.getAll():
             if isinstance(editor, jmri.jmrit.display.layoutEditor.LayoutEditor):
-                turntables = editor.getLayoutTurntables()
-                for turntable in turntables:
+                # The returned object is a Java Set, which needs to be converted to a list for safe iteration in Jython
+                for turntable in list(editor.getLayoutTurntables()):
                     layout_block = turntable.getLayoutBlock()
                     if layout_block is not None and layout_block.getUserName() is not None:
                         stopping_points_set.add(layout_block.getUserName())
 
-        self.list_of_stopping_points = sorted(stopping_points_set)
+        self.list_of_stopping_points = sorted(list(stopping_points_set))
 
     # **************************************************
     # add sensors
