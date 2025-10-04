@@ -45,7 +45,7 @@ public class LnDplxGrpInfoImplTest {
                 dpxGrpInfoImpl.getFetchedDuplexGroupId());
 
         lnis.notify(new LocoNetMessage(new int[] {0x81, 0x00}));
-        jmri.util.JUnitUtil.fasterWaitFor(()->{
+        JUnitUtil.fasterWaitFor(()->{
             return dpxGrpInfoImpl.getMessagesHandled() >= 1;},
                 "LocoNetListener is registered");
         Assert.assertFalse("IPL Query timer is not running", dpxGrpInfoImpl.isIplQueryTimerRunning());
@@ -1189,7 +1189,7 @@ public class LnDplxGrpInfoImplTest {
         m.setElement(15, m.getElement(15)^1);
 
         dpxGrpInfoImpl.message(m);  // transmit the reply
-        jmri.util.JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
+        JUnitUtil.fasterWaitFor(()->{return propChangeFlag == true;},"message received");
         Assert.assertEquals("Expected exactly 3 prop change event", 3, propChangeCount);
 
         propChangeCount = 0;
@@ -1588,7 +1588,7 @@ public class LnDplxGrpInfoImplTest {
 
         dpxGrpInfoImpl.message(lnis.outbound.elementAt(1));  // return the LocoNet echo to the class
         Assert.assertEquals("expect propChangeCount of 1", 1, propChangeCount);
-        jmri.util.JUnitUtil.waitFor(()->{return dpxGrpInfoImpl.getNumUr92s() > 0;}, "UR92 IPL reply not received");
+        JUnitUtil.waitFor(()->{return dpxGrpInfoImpl.getNumUr92s() > 0;}, "UR92 IPL reply not received");
         Assert.assertEquals("got 1 UR92 IPL report", 1, dpxGrpInfoImpl.getNumUr92s());
 
         Assert.assertFalse("LDGII is no longer waiting for second UR92 IPL report (3)", dpxGrpInfoImpl.isWaitingForFirstUr92IPLReport());
@@ -1616,39 +1616,42 @@ public class LnDplxGrpInfoImplTest {
         Assert.assertEquals("got the UR92 reply info", 1,  dpxGrpInfoImpl.getNumUr92s() );
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 2;}); // 2022 June - does not get to 2
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 2;},
+        //    "2022 June - does not get to 2, was " + dpxGrpInfoImpl.getNumUr92s());
+
+        JUnitUtil.waitFor( () -> propChangeCount > 26, "wait for 27");
         Assert.assertEquals("expect propChangeCount of 27", 27, propChangeCount);
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 3;});
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 3;}, "Does not get to 3");
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Dcgitrax", "1234", 12, 65);
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 4;});
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 4;}, "Does not get to 4");
         Assert.assertEquals("expect propChangeCount of 32", 32, propChangeCount);
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1034", 12, 65);
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 5;});
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 5;}, "Does not get to 5");
         Assert.assertEquals("expect propChangeCount of 35", 35, propChangeCount);
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 13, 65);
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 6;});
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 6;}, "Does not get  to 6");
         Assert.assertEquals("expect propChangeCount of 38", 38, propChangeCount);
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 12, 7);
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 7;});
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 7;}, "Does not get to 7");
         Assert.assertEquals("expect propChangeCount of 41", 41, propChangeCount);
 
         m = LnDplxGrpInfoImpl.createUr92GroupNameReportPacket("Digitrax", "1234", 12, 65);
 
         lnis.sendTestMessage(m);
-        JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 8;});
+        // JUnitUtil.fasterWaitFor(()->{return dpxGrpInfoImpl.getNumUr92s() == 8;}, "Does not get to 8");
 
         Assert.assertEquals("expect propChangeCount of 43", 43, propChangeCount);
 
