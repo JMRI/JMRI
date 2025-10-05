@@ -185,6 +185,8 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final String nameOfTemplateFile="TrainInfoDefaultTemplate.xml";
     // to be added and removed.
     private final ActionListener viaBlockBoxListener = e -> handleViaBlockSelectionChanged();
+    // roster entries excluded due to already in use.
+    private ArrayList<RosterEntry> excludedRosterEntries;
 
     /**
      * Open up a new train window for a given roster entry located in a specific
@@ -330,9 +332,8 @@ public class ActivateTrainFrame extends JmriJFrame {
             // Roster combo box
             rosterComboBox = new RosterEntrySelectorPanel(null,upm.getComboBoxLastSelection(upmGroupName));
             rosterComboBox.getRosterGroupComboBox().addActionListener( e3 -> {
-                    String s = (String) ((RosterGroupComboBox) e3.getSource()).getSelectedItem();
+                    String s =((RosterGroupComboBox) e3.getSource()).getSelectedItem();
                     upm.setComboBoxLastSelection(upmGroupName, s);
-                    initializeFreeRosterEntriesCombo();
             });
             initializeFreeRosterEntriesCombo();
             rosterComboBox.getRosterEntryComboBox().addActionListener(this::handleRosterSelectionChanged);
@@ -767,7 +768,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         RosterEntry r ;
         int ix = rosterComboBox.getRosterEntryComboBox().getSelectedIndex();
         if (ix > 0) { // first item is "Select Loco" string
-             r = (RosterEntry) (RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+             r = (RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem();
             // check to see if speed profile exists and is not empty
             if (r.getSpeedProfile() == null || r.getSpeedProfile().getProfileSize() < 1) {
                 // disable profile boxes etc.
@@ -1033,13 +1034,15 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void initializeFreeRosterEntriesCombo() {
-        rosterComboBox.getRosterEntryComboBox().update();
+        excludedRosterEntries = new ArrayList<RosterEntry>();
         // remove used entries
         for (int ix = rosterComboBox.getRosterEntryComboBox().getItemCount() - 1; ix > 1; ix--) {  // remove from back first item is the "select loco" message
             if ( !_dispatcher.isAddressFree( ((RosterEntry)rosterComboBox.getRosterEntryComboBox().getItemAt(ix)).getDccLocoAddress().getNumber() ) ) {
-                rosterComboBox.getRosterEntryComboBox().removeItemAt(ix);
+                excludedRosterEntries.add((RosterEntry)rosterComboBox.getRosterEntryComboBox().getItemAt(ix));
             }
         }
+        rosterComboBox.getRosterEntryComboBox().setExcludeItems(excludedRosterEntries);
+        rosterComboBox.getRosterEntryComboBox().update();
     }
 
     private void initializeFreeTrainsCombo() {
