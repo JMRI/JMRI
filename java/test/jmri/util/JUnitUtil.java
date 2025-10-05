@@ -48,8 +48,9 @@ import jmri.util.zeroconf.MockZeroConfServiceManager;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
 import org.slf4j.event.Level;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.Assertions;
+
 import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -439,7 +440,8 @@ public class JUnitUtil {
         String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
-        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
+        Assertions.assertFalse( unexpectedMessageSeen,
+            () -> "Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent);
 
         // check for hanging shutdown tasks - after test for ERROR so it can complain
         checkShutDownManager();
@@ -511,7 +513,7 @@ public class JUnitUtil {
      * than WAITFOR_MAX_DELAY
      * <p>
      * Typical use:
-     * <code>Assume.assumeTrue("reply not received", JUnitUtil.waitForTrue(()->{return replyVariable != null;}));</code>
+     * <code>Assumptions.assumeTrue("reply not received", JUnitUtil.waitFor(()->{return replyVariable != null;}));</code>
      *
      * @param condition condition to wait for
      * @return true if condition is met before WAITFOR_MAX_DELAY, false
@@ -1073,7 +1075,7 @@ public class JUnitUtil {
      * stopped all services it is managing.
      */
     public static void initZeroConfServiceManager() {
-        resetZeroConfServiceManager();
+        Assertions.assertTrue(JUnitUtil.resetZeroConfServiceManager());
         InstanceManager.setDefault(ZeroConfServiceManager.class, new MockZeroConfServiceManager());
     }
 
@@ -1083,6 +1085,7 @@ public class JUnitUtil {
      * stopped all services it is managing.
      * @return true when complete.
      */
+    @CheckReturnValue
     public static boolean resetZeroConfServiceManager() {
         if (! InstanceManager.containsDefault(ZeroConfServiceManager.class)) {
             return true; // not present, don't create one by asking for it.
@@ -1094,10 +1097,11 @@ public class JUnitUtil {
         waitFor( () -> manager.allServices().isEmpty(), "Stopping all ZeroConf Services");
 
         manager.dispose();
-
-        Thread t = getThreadByName( ZeroConfServiceManager.DNS_CLOSE_THREAD_NAME );
-        if ( t != null ) {
-            waitFor( () -> !t.isAlive(), "dns.close thread did not complete");
+        var threads = Thread.getAllStackTraces().keySet();
+        for (Thread t : threads) {
+            if (t.getName().startsWith(ZeroConfServiceManager.DNS_CLOSE_THREAD_NAME)) {
+                waitThreadTerminated(t);
+            }
         }
         return true;
     }
@@ -1697,7 +1701,7 @@ public class JUnitUtil {
      */
     public static AbstractButton pressButton(Container frame, String text) {
         AbstractButton button = JButtonOperator.findAbstractButton(frame, text, true, true);
-        Assert.assertNotNull(text + " Button not found", button);
+        Assertions.assertNotNull( button, () -> text + " Button not found");
         AbstractButtonOperator abo = new AbstractButtonOperator(button);
         abo.doClick();
         return button;

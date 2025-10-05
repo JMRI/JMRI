@@ -3,10 +3,11 @@ package jmri.jmrit.throttle;
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
@@ -17,18 +18,19 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class ThrottlesPreferencesPaneTest {
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testCtor() {
         ThrottlesPreferencesPane panel = new ThrottlesPreferencesPane();
         Assertions.assertNotNull(panel, "exists");
         JFrame f = new JFrame(panel.getPreferencesItemText());
         f.add(panel);
-        f.pack();
+        
         ThreadingUtil.runOnGUI(() -> {
+            f.pack();
             f.setVisible(true);
         });
         JFrameOperator jfo = new JFrameOperator(panel.getPreferencesItemText());
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
 
     }

@@ -1,8 +1,11 @@
 package jmri.jmrix.grapevine;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,60 +17,67 @@ public class SerialReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     private SerialReply msg = null;
 
+    @Test
     public void testBytesToString() {
         msg.setOpCode(0x81);
         msg.setElement(1, (byte) 0x02);
         msg.setElement(2, (byte) 0xA2);
         msg.setElement(3, (byte) 0x00);
-        Assert.assertEquals("string compare ", "81 02 A2 00", msg.toString());
+        assertEquals( "81 02 A2 00", msg.toString(), "string compare ");
     }
 
+    @Test
     public void testFormat1() {
         msg.setElement(0, (byte) 0x00);
         msg.setElement(1, (byte) 0x62);
         msg.setElement(2, (byte) 0x00);
         msg.setElement(3, (byte) 0x10);
-        Assert.assertEquals("string compare ", "Error report from node 98: Parity Error", msg.format());
+        assertEquals( "Error report from node 98: Parity Error", msg.format(), "string compare ");
     }
 
+    @Test
     public void testFormat2() {
         msg.setElement(0, (byte) 0xE2);
         msg.setElement(1, (byte) 0x06);
         msg.setNumDataElements(2);
-        Assert.assertEquals("string compare ", "Node 98 reports software version 6", msg.format());
+        assertEquals( "Node 98 reports software version 6", msg.format(), "string compare ");
     }
 
+    @Test
     public void testParallel() {
         msg.setElement(0, 128 + 98);
         msg.setElement(1, 0x0E);
         msg.setElement(2, 128 + 98);
         msg.setElement(3, 0x56);
-        Assert.assertEquals("parallel ", true, msg.isFromParallelSensor());
-        Assert.assertEquals("old serial ", false, msg.isFromOldSerialSensor());
-        Assert.assertEquals("new serial ", false, msg.isFromNewSerialSensor());
+        assertTrue( msg.isFromParallelSensor(), "parallel ");
+        assertFalse( msg.isFromOldSerialSensor(), "old serial ");
+        assertFalse( msg.isFromNewSerialSensor(), "new serial ");
     }
 
+    @Test
     public void testOldSerial() {
         msg.setElement(0, 0x81); // sensor 1-4 (from 0) inactive
         msg.setElement(1, 0x6F);
         msg.setElement(2, 0x81);
         msg.setElement(3, 0x50);
-        Assert.assertEquals("parallel ", false, msg.isFromParallelSensor());
-        Assert.assertEquals("old serial ", true, msg.isFromOldSerialSensor());
-        Assert.assertEquals("new serial ", false, msg.isFromNewSerialSensor());
+        assertFalse( msg.isFromParallelSensor(), "parallel ");
+        assertTrue( msg.isFromOldSerialSensor(), "old serial ");
+        assertFalse( msg.isFromNewSerialSensor(), "new serial ");
     }
 
     @Override
     @BeforeEach
     public void setUp(){
        JUnitUtil.setUp();
-       m = msg = new SerialReply();
+       msg = new SerialReply();
+       m = msg;
     }
 
     @Override
     @AfterEach
     public void tearDown(){
-       m = msg = null;
+       m = null;
+       msg = null;
        JUnitUtil.tearDown();
     }
 

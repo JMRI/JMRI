@@ -6,6 +6,8 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.AnalogExpressionBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.implementation.DefaultMaleAnalogExpressionSocket.AnalogExpressionDebugConfig;
+import jmri.util.JUnitAppender;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,14 +44,17 @@ public abstract class AbstractAnalogExpressionTestBase extends AbstractBaseTestB
     public void testState() throws JmriException {
         AnalogExpressionBean _expression = (AnalogExpressionBean)_base;
         _expression.setState(AnalogIO.INCONSISTENT);
+        JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractAnalogExpression.");
         Assert.assertTrue("State matches", AnalogIO.INCONSISTENT == _expression.getState());
-        jmri.util.JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogExpression.");
+        JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogExpression.");
         _expression.setState(AnalogIO.UNKNOWN);
+        JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractAnalogExpression.");
         Assert.assertTrue("State matches", AnalogIO.UNKNOWN == _expression.getState());
-        jmri.util.JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogExpression.");
+        JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogExpression.");
         _expression.setState(AnalogIO.INCONSISTENT);
+        JUnitAppender.assertWarnMessage("Unexpected call to setState in AbstractAnalogExpression.");
         Assert.assertTrue("State matches", AnalogIO.INCONSISTENT == _expression.getState());
-        jmri.util.JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogExpression.");
+        JUnitAppender.assertWarnMessage("Unexpected call to getState in AbstractAnalogExpression.");
     }
     
     @Test

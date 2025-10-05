@@ -17,12 +17,14 @@ import jmri.jmrix.loconet.logixng.ActionClearSlots;
 import jmri.jmrix.loconet.logixng.ActionUpdateSlots;
 import jmri.jmrix.loconet.logixng.ExpressionSlotUsage;
 import jmri.util.*;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Creates a LogixNG with all actions and expressions to test store and load.
@@ -39,7 +41,7 @@ public class StoreAndLoadTest {
     private LocoNetSystemConnectionMemo memo1;
     private LocoNetSystemConnectionMemo memo2;
 
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     @Test
     public void testLogixNGs() throws PropertyVetoException, Exception {
 
@@ -162,8 +164,8 @@ public class StoreAndLoadTest {
             FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
             File firstFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG_temp.xml");
             File secondFile = new File(FileUtil.getUserFilesPath() + "temp/" + "LogixNG.xml");
-            log.info("Temporary first file: %s%n", firstFile.getAbsoluteFile());
-            log.info("Temporary second file: %s%n", secondFile.getAbsoluteFile());
+            log.info("Temporary first file: {}", firstFile.getAbsoluteFile());
+            log.info("Temporary second file: {}", secondFile.getAbsoluteFile());
 
             final String treeIndent = "   ";
             StringWriter stringWriter = new StringWriter();
@@ -175,7 +177,8 @@ public class StoreAndLoadTest {
             log.debug(results ? "store was successful" : "store failed");
             if (!results) {
                 log.error("Failed to store panel");
-                throw new RuntimeException("Failed to store panel");
+                // throw new RuntimeException("Failed to store panel");
+                fail("Failed to store panel", new Exception());
             }
 
             // Add the header comment to the xml file
@@ -206,10 +209,10 @@ public class StoreAndLoadTest {
                 digitalExpressionManager.deleteDigitalExpression(aDigitalExpression);
             }
 
-            Assert.assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
-            Assert.assertEquals(0, conditionalNGManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, digitalActionManager.getNamedBeanSet().size());
-            Assert.assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
+            assertEquals(0, logixNG_Manager.getNamedBeanSet().size());
+            assertEquals(0, conditionalNGManager.getNamedBeanSet().size());
+            assertEquals(0, digitalActionManager.getNamedBeanSet().size());
+            assertEquals(0, digitalExpressionManager.getNamedBeanSet().size());
 
             LogixNG_Thread.stopAllLogixNGThreads();
             LogixNG_Thread.assertLogixNGThreadNotRunning();
@@ -263,11 +266,11 @@ public class StoreAndLoadTest {
 */
 //                    log.error(conditionalNGManager.getBySystemName(originalTree).getChild(0).getConnectedSocket().getSystemName());
 
-                    Assert.fail("tree has changed");
+                    fail("tree has changed");
 //                    throw new RuntimeException("tree has changed");
                 }
             } else {
-                Assert.fail("Failed to load panel");
+                fail("Failed to load panel");
 //                throw new RuntimeException("Failed to load panel");
             }
         }
@@ -341,12 +344,16 @@ public class StoreAndLoadTest {
     @AfterEach
     public void tearDown() {
         // JUnitAppender.clearBacklog();    // REMOVE THIS!!!
+        lnis1.dispose();
+        lnis2.dispose();
+        memo1.dispose();
+        memo2.dispose();
 
         JUnitUtil.removeMatchingThreads("LnPowerManager LnTrackStatusUpdateThread");
         JUnitUtil.removeMatchingThreads("LnSensorUpdateThread");
         JUnitUtil.removeMatchingThreads("LocoNetThrottledTransmitter");
 
-        jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
+        LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
