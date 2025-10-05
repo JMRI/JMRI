@@ -11,12 +11,15 @@ import java.util.List;
 
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.symbolicprog.ValueEditor;
+import jmri.jmrit.symbolicprog.ValueRenderer;
 import jmri.util.swing.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -37,13 +40,13 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     private static final int PICKUP_COLUMN = RANDOM_CONTROL_COLUMN + 1;
     private static final int DROP_COLUMN = PICKUP_COLUMN + 1;
     private static final int LOCAL_COLUMN = DROP_COLUMN + 1;
-    private static final int TIME_COLUMN = LOCAL_COLUMN + 1;
-    private static final int TRAVEL_COLUMN = TIME_COLUMN + 1;
+    private static final int DEPARTURE_TIME_COLUMN = LOCAL_COLUMN + 1;
+    private static final int TRAVEL_COLUMN = DEPARTURE_TIME_COLUMN + 1;
     private static final int MAXLENGTH_COLUMN = TRAVEL_COLUMN + 1;
-    private static final int GRADE = MAXLENGTH_COLUMN + 1;
-    private static final int TRAINICONX = GRADE + 1;
-    private static final int TRAINICONY = TRAINICONX + 1;
-    private static final int COMMENT_COLUMN = TRAINICONY + 1;
+    private static final int GRADE_COLUMN = MAXLENGTH_COLUMN + 1;
+    private static final int TRAINICONX_COLUMN = GRADE_COLUMN + 1;
+    private static final int TRAINICONY_COLUMN = TRAINICONX_COLUMN + 1;
+    private static final int COMMENT_COLUMN = TRAINICONY_COLUMN + 1;
     private static final int UP_COLUMN = COMMENT_COLUMN + 1;
     private static final int DOWN_COLUMN = UP_COLUMN + 1;
     private static final int DELETE_COLUMN = DOWN_COLUMN + 1;
@@ -90,7 +93,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         _table.createDefaultColumnsFromModel();
         // Install the button handlers
         ButtonRenderer buttonRenderer = new ButtonRenderer();
-        TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
+        TableCellEditor buttonEditor = new ButtonEditor(new JButton());
         tcm.getColumn(COMMENT_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(COMMENT_COLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(UP_COLUMN).setCellRenderer(buttonRenderer);
@@ -99,8 +102,17 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         tcm.getColumn(DOWN_COLUMN).setCellEditor(buttonEditor);
         tcm.getColumn(DELETE_COLUMN).setCellRenderer(buttonRenderer);
         tcm.getColumn(DELETE_COLUMN).setCellEditor(buttonEditor);
-        table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
-        table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+        
+        // for tool tips
+        DefaultTableCellRenderer defaultRenderer = new DefaultTableCellRenderer();
+        tcm.getColumn(NAME_COLUMN).setCellRenderer(defaultRenderer);
+        tcm.getColumn(MAXMOVES_COLUMN).setCellRenderer(defaultRenderer);
+        tcm.getColumn(TRAVEL_COLUMN).setCellRenderer(defaultRenderer);
+        tcm.getColumn(MAXLENGTH_COLUMN).setCellRenderer(defaultRenderer);
+        tcm.getColumn(GRADE_COLUMN).setCellRenderer(defaultRenderer);
+        
+        table.setDefaultRenderer(JComboBox.class, new ValueRenderer());
+        table.setDefaultEditor(JComboBox.class, new ValueEditor());
 
         // set column preferred widths
         table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
@@ -112,11 +124,11 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(DROP_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(LOCAL_COLUMN).setPreferredWidth(75);
         table.getColumnModel().getColumn(TRAVEL_COLUMN).setPreferredWidth(65);
-        table.getColumnModel().getColumn(TIME_COLUMN).setPreferredWidth(65);
+        table.getColumnModel().getColumn(DEPARTURE_TIME_COLUMN).setPreferredWidth(65);
         table.getColumnModel().getColumn(MAXLENGTH_COLUMN).setPreferredWidth(75);
-        table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
-        table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(35);
-        table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(35);
+        table.getColumnModel().getColumn(GRADE_COLUMN).setPreferredWidth(50);
+        table.getColumnModel().getColumn(TRAINICONX_COLUMN).setPreferredWidth(35);
+        table.getColumnModel().getColumn(TRAINICONY_COLUMN).setPreferredWidth(35);
         table.getColumnModel().getColumn(COMMENT_COLUMN).setPreferredWidth(70);
         table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
         table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
@@ -127,7 +139,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         table.setRowSorter(null);
 
         // turn on column that on earlier versions was off
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(TIME_COLUMN), true);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DEPARTURE_TIME_COLUMN), true);
 
         updateList();
     }
@@ -163,15 +175,15 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 return Bundle.getMessage("LocalMoves");
             case TRAVEL_COLUMN:
                 return Bundle.getMessage("Travel");
-            case TIME_COLUMN:
+            case DEPARTURE_TIME_COLUMN:
                 return Bundle.getMessage("Time");
             case MAXLENGTH_COLUMN:
                 return Bundle.getMessage("MaxLength");
-            case GRADE:
+            case GRADE_COLUMN:
                 return Bundle.getMessage("Grade");
-            case TRAINICONX:
+            case TRAINICONX_COLUMN:
                 return Bundle.getMessage("X");
-            case TRAINICONY:
+            case TRAINICONY_COLUMN:
                 return Bundle.getMessage("Y");
             case COMMENT_COLUMN:
                 return Bundle.getMessage("Comment");
@@ -195,17 +207,17 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case TRAVEL_COLUMN:
             case MAXLENGTH_COLUMN:
             case MAXMOVES_COLUMN:
-            case TRAINICONX:
-            case TRAINICONY:
+            case TRAINICONX_COLUMN:
+            case TRAINICONY_COLUMN:
                 return Integer.class;
-            case GRADE:
+            case GRADE_COLUMN:
                 return Double.class;
             case TRAIN_DIRECTION_COLUMN:
             case RANDOM_CONTROL_COLUMN:
             case PICKUP_COLUMN:
             case DROP_COLUMN:
             case LOCAL_COLUMN:
-            case TIME_COLUMN:
+            case DEPARTURE_TIME_COLUMN:
                 return JComboBox.class;
             case COMMENT_COLUMN:
             case UP_COLUMN:
@@ -228,11 +240,11 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case DROP_COLUMN:
             case LOCAL_COLUMN:
             case TRAVEL_COLUMN:
-            case TIME_COLUMN:
+            case DEPARTURE_TIME_COLUMN:
             case MAXLENGTH_COLUMN:
-            case GRADE:
-            case TRAINICONX:
-            case TRAINICONY:
+            case GRADE_COLUMN:
+            case TRAINICONX_COLUMN:
+            case TRAINICONY_COLUMN:
             case COMMENT_COLUMN:
             case UP_COLUMN:
             case DOWN_COLUMN:
@@ -255,6 +267,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case ID_COLUMN:
                 return rl.getId();
             case NAME_COLUMN:
+                setLocationToolTip(rl);
                 return rl.getName();
             case TRAIN_DIRECTION_COLUMN: {
                 JComboBox<String> cb = Setup.getTrainDirectionComboBox();
@@ -262,9 +275,11 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 return cb;
             }
             case MAXMOVES_COLUMN:
+                setToolTip(Bundle.getMessage("TipColMaxMoves", rl.getName()), col);
                 return rl.getMaxCarMoves();
             case RANDOM_CONTROL_COLUMN: {
                 JComboBox<String> cb = getRandomControlComboBox();
+                cb.setToolTipText(Bundle.getMessage("TipRandomReduce", rl.getRandomControl()));
                 cb.setSelectedItem(rl.getRandomControl());
                 return cb;
             }
@@ -284,20 +299,24 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
                 return cb;
             }
             case TRAVEL_COLUMN: {
+                setToolTip(Bundle.getMessage("TipColTravelTime"), col);
                 return rl.getWait() + Setup.getTravelTime();
             }
-            case TIME_COLUMN: {
+            case DEPARTURE_TIME_COLUMN: {
                 JComboBox<String> cb = getTimeComboBox();
+                cb.setToolTipText(Bundle.getMessage("TipDepartureTime", rl.getName()));
                 cb.setSelectedItem(rl.getDepartureTime());
                 return cb;
             }
             case MAXLENGTH_COLUMN:
+                setToolTip(Bundle.getMessage("TipColMaxLength", rl.getName(), Setup.getLengthUnit().toLowerCase()), col);
                 return rl.getMaxTrainLength();
-            case GRADE:
+            case GRADE_COLUMN:
+                setToolTip(Bundle.getMessage("TipColGrade", rl.getName()), col);
                 return rl.getGrade();
-            case TRAINICONX:
+            case TRAINICONX_COLUMN:
                 return rl.getTrainIconX();
-            case TRAINICONY:
+            case TRAINICONY_COLUMN:
                 return rl.getTrainIconY();
             case COMMENT_COLUMN: {
                 if (rl.getComment().equals(RouteLocation.NONE)) {
@@ -361,19 +380,19 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case TRAVEL_COLUMN:
                 setTravel(value, rl);
                 break;
-            case TIME_COLUMN:
+            case DEPARTURE_TIME_COLUMN:
                 setDepartureTime(value, rl);
                 break;
             case MAXLENGTH_COLUMN:
                 setMaxTrainLength(value, rl);
                 break;
-            case GRADE:
+            case GRADE_COLUMN:
                 setGrade(value, rl);
                 break;
-            case TRAINICONX:
+            case TRAINICONX_COLUMN:
                 setTrainIconX(value, rl);
                 break;
-            case TRAINICONY:
+            case TRAINICONY_COLUMN:
                 setTrainIconY(value, rl);
                 break;
             default:
@@ -439,7 +458,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         rl.setPickUpAllowed(
                 ((String) ((JComboBox<?>) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
     }
-    
+
     private void setLocal(Object value, RouteLocation rl) {
         rl.setLocalMovesAllowed(
                 ((String) ((JComboBox<?>) value).getSelectedItem()).equals(Bundle.getMessage("yes")));
@@ -600,6 +619,22 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             }
         }
         return timeBox;
+    }
+
+    private void setLocationToolTip(RouteLocation rl) {
+        String text = Bundle.getMessage("TipTrainDirection", rl.getName(), rl.getTrainDirectionString());
+        if (rl == _route.getTerminatesRouteLocation()) {
+            text = Bundle.getMessage("TipTrainTerminates", rl.getName());
+        }
+        setToolTip(text, NAME_COLUMN);
+    }
+    
+    private void setToolTip(String text, int col) {
+        XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        JComponent jC = (JComponent) tcm.getColumnByModelIndex(col).getCellRenderer();
+        if (jC != null) {
+            jC.setToolTipText(text);
+        }
     }
 
     // this table listens for changes to a route and it's locations
