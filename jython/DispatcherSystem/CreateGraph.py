@@ -64,15 +64,26 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
     def setup_graph_vertices(self):
 
         for station_block_name in self.station_block_list:
-            if self.logLevel > 1: print "station_block_name",station_block_name
+            if self.logLevel > -1: print "station_block_name",station_block_name
             lblk = self.get_layout_block(station_block_name)
-            if self.logLevel > 1: print "lblk",lblk
-            self.g.addVertex(lblk)
-            self.g_express.addVertex(station_block_name)
-            if self.logLevel > 0: print station_block_name , ",",
-            self.g_stopping.addVertex(station_block_name)
+            if self.logLevel > -1: print "lblk",lblk
+            if lblk != None:
+                self.g.addVertex(lblk)
+                self.g_express.addVertex(station_block_name)
+                if self.logLevel > 0: print station_block_name , ",",
+                self.g_stopping.addVertex(station_block_name)
+            else:
+                self.displayMessage("Probably trying to set a station for non-existant block. Examine the stop comments in the blocks")
+                xxxxstopxxxxx   # stop the program with non-python statement
+
         if self.logLevel > 0: print
         if self.logLevel > 1: print 'end setup_graph_vertices"
+        # except Exception, e:
+        #     print "help"
+        #     print("Probably trying to set a station (look at stop comments in the blocks) for non-existant block")
+        # finally:
+        #     pass
+
 
     def setup_graph_edges(self):
         global le
@@ -561,10 +572,21 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         else:
             return True
 
-
-                          
-
-# r.Setup_station_block_list
+    def displayMessage(self, msg, title = ""):
+        self.CLOSED_OPTION = False
+        s = JOptionPane.showOptionDialog(None,
+                                         msg,
+                                         title,
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.PLAIN_MESSAGE,
+                                         None,
+                                         ["OK"],
+                                         None)
+        #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
+        if s == JOptionPane.CLOSED_OPTION:
+            self.CLOSED_OPTION = True
+            return
+        return s
 
 # /**
  # * Custom edge class labeled with relationship type.
@@ -636,4 +658,4 @@ class LabelledEdge(DefaultWeightedEdge):
         if self.logLevel > 1: print item_list    
     
         return "*****to_string*****(\n" + self.getSource() + " : " + self.getTarget()  + " : " + item_list.rstrip(": ") + ")*****to_string end*******"
-        
+
