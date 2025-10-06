@@ -23,8 +23,11 @@ public class TmccProgrammerManager extends DefaultProgrammerManager {
     
     TmccSystemConnectionMemo _memo;
 
-    static final ProgrammingMode TMCCMODE1 = new ProgrammingMode("TMCCMODE1", Bundle.getMessage("TMCCMODE1"));
-    static final ProgrammingMode TMCCMODE2 = new ProgrammingMode("TMCCMODE2", Bundle.getMessage("TMCCMODE2"));
+    static final ProgrammingMode TMCCMODE1_ID = new ProgrammingMode("TMCCMODE1_ID", Bundle.getMessage("TMCCMODE1_ID"));
+    static final ProgrammingMode TMCCMODE2_ID = new ProgrammingMode("TMCCMODE2_ID", Bundle.getMessage("TMCCMODE2_ID"));
+
+    static final ProgrammingMode TMCCMODE1_FEATURE = new ProgrammingMode("TMCCMODE1_FEATURE", Bundle.getMessage("TMCCMODE1_FEATURE"));
+    static final ProgrammingMode TMCCMODE2_FEATURE = new ProgrammingMode("TMCCMODE2_FEATURE", Bundle.getMessage("TMCCMODE2_FEATURE"));
 
     /**
      * Does TMCC have the equivalent of Ops Mode?
