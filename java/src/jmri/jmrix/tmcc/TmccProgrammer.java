@@ -52,11 +52,12 @@ public class TmccProgrammer extends AbstractProgrammer {
     public synchronized void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
 
-        _cv = CV;
+        _cv = CV;  // Value from Simple Programmer "CV" input
         _val = val; // Value from Simple Programmer "Value" input
         _func = 0x00002B; // SET command for both TMCC1 and TMCC2
 
         // validate CV == 1 for TMCC loco ID programming
+        // validate ID#/address for TMCC is between 1-98
         // format and send the TMCC loco ID write message
         // note: the argument is long containing 3 bytes
 
@@ -83,6 +84,7 @@ public class TmccProgrammer extends AbstractProgrammer {
                 m.setOpCode(0x00);
                 m.putAsWord(00000);
                 tc.sendSerialMessage(m, null);
+                log.warn("Address Must be Between 1-98 for TMCC");
             }
 
 
@@ -91,6 +93,7 @@ public class TmccProgrammer extends AbstractProgrammer {
             m.setOpCode(0x00);
             m.putAsWord(00000);
             tc.sendSerialMessage(m, null);
+            log.warn("CV Must Equal 1 for Programming TMCC Loco/Engine ID#s");
 
         }
 
@@ -121,5 +124,7 @@ public class TmccProgrammer extends AbstractProgrammer {
     @Override
     synchronized protected void timeout() {
     }
+    
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TmccProgrammer.class);
 
 }
