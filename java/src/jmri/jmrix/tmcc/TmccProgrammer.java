@@ -32,8 +32,8 @@ public class TmccProgrammer extends AbstractProgrammer {
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
 
-        ret.add(TmccProgrammerManager.TMCCMODE1);
-        ret.add(TmccProgrammerManager.TMCCMODE2);
+        ret.add(TmccProgrammerManager.TMCCMODE1_ID);
+        ret.add(TmccProgrammerManager.TMCCMODE2_ID);
 
         return ret;
 
@@ -51,27 +51,27 @@ public class TmccProgrammer extends AbstractProgrammer {
     @Override
     public synchronized void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         final int CV = Integer.parseInt(CVname);
-        
+
         _cv = CV;
         _val = val; // Value from Simple Programmer "Value" input
         _func = 0x00002B; // SET command for both TMCC1 and TMCC2
 
         // validate CV == 1 for TMCC loco ID programming
         // format and send the TMCC loco ID write message
-        // note: the argument is long containing 3 bytes 
+        // note: the argument is long containing 3 bytes
 
         if (CV == 1) {
             
             if (val > 0 && val < 99) {
 
-                if (getMode() == TmccProgrammerManager.TMCCMODE1) {
+                if (getMode() == TmccProgrammerManager.TMCCMODE1_ID) {
                     SerialMessage m = new SerialMessage();
                     m.setOpCode(0xFE); // set the first byte/TMCC1 opcode to 0xFE
                     m.putAsWord((val * 128) + _func); // set the second/third byte (address/SET command for TMCC1)
                     tc.sendSerialMessage(m, null);
                 }
 
-                if  (getMode() == TmccProgrammerManager.TMCCMODE2) {
+                if  (getMode() == TmccProgrammerManager.TMCCMODE2_ID) {
                     SerialMessage m = new SerialMessage();
                     m.setOpCode(0xF8); // set the first byte/TMCC2 opcode to 0xF8
                     m.putAsWord(((val * 512) + 256) + _func); // set the second/third byte (address/SET command for TMCC2)
@@ -86,7 +86,7 @@ public class TmccProgrammer extends AbstractProgrammer {
             }
 
 
-        } else if (CV > 1) {
+        } else if (CV != 1) {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0x00);
             m.putAsWord(00000);
