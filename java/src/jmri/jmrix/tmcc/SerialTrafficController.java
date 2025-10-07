@@ -195,6 +195,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /** 
      * Skip warning message, as timeouts are routine in this protocol
      */
+    @Override
     protected void warnOnTimeout(AbstractMRMessage msg, AbstractMRListener l) {
     }
 
