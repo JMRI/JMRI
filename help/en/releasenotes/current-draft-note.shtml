@@ -166,7 +166,7 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>Added programming support for the locomotive address and mode</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>

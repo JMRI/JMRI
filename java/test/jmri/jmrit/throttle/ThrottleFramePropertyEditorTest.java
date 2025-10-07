@@ -1,33 +1,31 @@
 package jmri.jmrit.throttle;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.InstanceManager;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
 
 /**
  * Test simple functioning of ThrottleFramePropertyEditor
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfHeadless
 public class ThrottleFramePropertyEditorTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // this will disable svg icons, batik randomly crashes JUnit tests
         InstanceManager.getDefault(ThrottlesPreferences.class).setUseLargeSpeedSlider(false);
         ThrottleWindow frame = new ThrottleWindow();
-        frame.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> frame.setVisible(true) );
         ThrottleFramePropertyEditor dialog = new ThrottleFramePropertyEditor(frame);
-        Assert.assertNotNull("exists", dialog);        
+        Assertions.assertNotNull( dialog, "exists");
         JUnitUtil.dispose(dialog);
         JUnitUtil.dispose(frame);
-     }
+    }
 
     @BeforeEach
     public void setUp() {
@@ -39,7 +37,10 @@ public class ThrottleFramePropertyEditorTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.resetWindows(false,false);
+        JmriJFrame throttleListFrame = JmriJFrame.getFrame(Bundle.getMessage("ThrottleListFrameTile"));
+        if ( throttleListFrame != null ) {
+            JUnitUtil.dispose(throttleListFrame);
+        }
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
