@@ -331,7 +331,6 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             for (int i = 0; i < approachMastComboBoxes.size(); i++) {
                 final int index = i; // final variable for use in lambda
                 approachMastComboBoxes.get(i).addActionListener(e -> {
-                    SignalMast oldMast = layoutTurntable.getRayTrackList().get(index).getApproachMast();
                     SignalMast newMast = approachMastComboBoxes.get(index).getSelectedItem();
                     layoutTurntable.getRayTrackList().get(index).setApproachMast( (newMast != null) ? newMast.getSystemName() : null );
                     refreshAllMastComboBoxes();
