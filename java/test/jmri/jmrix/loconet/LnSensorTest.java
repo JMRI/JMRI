@@ -1,11 +1,11 @@
 package jmri.jmrix.loconet;
 
-import jmri.util.JUnitUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.NotApplicable;
+
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
@@ -30,12 +30,13 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         // doesn't send a message right now, pending figuring out what
         // to send.
     }
-    
+
+    @Test
     @Override
+    @NotApplicable("status not currently updated when set UNKNOWN / INCONSISTENT")
     public void testSensorSetKnownState() {
-        // status not currently updated when set UNKNOWN / INCONSISTENT
     }
-    
+
     // LnSensor test for incoming status message
     @Test
     public void testLnSensorStatusMsg() {
@@ -50,7 +51,7 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setElement(2, 0x60);     // Aux (low addr bit high), sensor low
         m.setElement(3, 0x38);
         s.messageFromManager(m);
-        Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, s.getKnownState());
+        assertEquals( jmri.Sensor.INACTIVE, s.getKnownState(), "Known state after inactivate ");
 
         m = new LocoNetMessage(4);
         m.setOpCode(0xb2);         // OPC_INPUT_REP
@@ -58,7 +59,7 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setElement(2, 0x70);     // Aux (low addr bit high), sensor high
         m.setElement(3, 0x78);
         s.messageFromManager(m);
-        Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, s.getKnownState());
+        assertEquals( jmri.Sensor.ACTIVE, s.getKnownState(), "Known state after activate ");
     }
 
     @BeforeEach
@@ -70,9 +71,8 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         lnis = new LocoNetInterfaceScaffold() {
             @Override
             public void sendLocoNetMessage(LocoNetMessage m) {
-                log.debug("sendLocoNetMessage [{}]", m);
-                // save a copy
-                outbound.addElement(m);
+                // super logs to debug and saves a copy to outbound.
+                super.sendLocoNetMessage(m);
                 ((LnSensor)t).messageFromManager(m);
             }
         };
@@ -83,10 +83,11 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     public void tearDown() {
         t.dispose();
+        t = null;
         lnis = null;
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnSensorTest.class);
     
 }
