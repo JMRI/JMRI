@@ -324,10 +324,8 @@
         <pathelement path="${cp.append}"/>    <!-- appended by user -->
     </path>
 
-    <!-- path to run tests -->
-    <path id="test.class.path">
-        <pathelement location="${jartarget}"/>
-        <path refid="compile.class.path"/>
+    <!-- path containing jar files required while running tests -->
+    <path id="test.jars.path">
         <pathelement location="${libdir}/mockito-core-5.12.0.jar"/>
         <pathelement location="${libdir}/mockito-junit-jupiter-5.12.0.jar"/>
         <pathelement location="${libdir}/byte-buddy-1.14.15.jar"/>
@@ -364,6 +362,13 @@
         <pathelement location="${libdir}/assertj-core-3.12.0.jar"/>
         <pathelement location="${libdir}/assertj-swing-3.9.2.jar"/>
         <pathelement location="${libdir}/assertj-swing-junit-3.9.2.jar"/>
+    </path>
+
+    <!-- path to run tests -->
+    <path id="test.class.path">
+        <pathelement location="${jartarget}"/>
+        <path refid="compile.class.path"/>
+        <path refid="test.jars.path"/>
         <!-- include JMRI classes last -->
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
@@ -2374,6 +2379,11 @@
         </spotbugs>
     </target>
 
+    <path id="tests.spotbugs.aux.class.path">
+        <path refid="compile.class.path"/>
+        <path refid="test.jars.path"/>
+    </path>
+
     <target name="tests-spotbugs" depends="dist-tests" description="generate SpotBugs (HTML) report over test code. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
@@ -2387,7 +2397,7 @@
                   >
             <sourcePath path="${test}/"/>
             <class location="${jartarget}/jmri-tests.jar"/>
-            <auxClasspath refid="test.class.path" />
+            <auxClasspath refid="tests.spotbugs.aux.class.path"/>
         </spotbugs>
     </target>
 
@@ -2421,7 +2431,7 @@
                   >
             <sourcePath path="${test}/"/>
             <class location="${jartarget}/jmri-tests.jar"/>
-            <auxClasspath refid="test.class.path" />
+            <auxClasspath refid="tests.spotbugs.aux.class.path"/>
         </spotbugs>
     </target>
 
@@ -2453,7 +2463,7 @@
                   >
             <sourcePath path="${test}/"/>
             <class location="${jartarget}/jmri-tests.jar"/>
-            <auxClasspath refid="test.class.path" />
+            <auxClasspath refid="tests.spotbugs.aux.class.path"/>
         </spotbugs>
     </target>
 
@@ -2487,7 +2497,7 @@
                   >
             <sourcePath path="${test}/"/>
             <class location="${jartarget}/jmri-tests.jar"/>
-            <auxClasspath refid="test.class.path" />
+            <auxClasspath refid="tests.spotbugs.aux.class.path"/>
         </spotbugs>
     </target>
 
