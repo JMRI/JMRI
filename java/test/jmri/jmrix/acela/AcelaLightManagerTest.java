@@ -1,9 +1,11 @@
 package jmri.jmrix.acela;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.Light;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -24,20 +26,20 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
     @Test
     public void testConstructor(){
         AcelaLightManager alm = new AcelaLightManager(_memo);
-        Assert.assertNotNull("Light Manager Creation",alm);
+        assertNotNull( alm, "Light Manager Creation");
     }
 
     @Test
     public void testAsAbstractFactory() {
         Light tl = l.newLight("AL21", "my name");
 
-        Assert.assertNotNull( tl);
-        Assert.assertTrue(tl instanceof AcelaLight);
+        assertNotNull( tl);
+        assertInstanceOf( AcelaLight.class, tl);
 
         // make sure loaded into tables
 
-        Assert.assertNotNull( l.getBySystemName("AL21"));
-        Assert.assertNotNull( l.getByUserName("my name"));
+        assertNotNull( l.getBySystemName("AL21"));
+        assertNotNull( l.getByUserName("my name"));
 
     }
 
@@ -46,7 +48,7 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
     public void setUp() {
         JUnitUtil.setUp();
         tcis = new AcelaTrafficControlScaffold();
-        _memo = new jmri.jmrix.acela.AcelaSystemConnectionMemo(tcis);
+        _memo = new AcelaSystemConnectionMemo(tcis);
         // create and register the manager object
         l = new AcelaLightManager(_memo);
         jmri.InstanceManager.setLightManager(l);
@@ -64,7 +66,13 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+
+        tcis.terminateThreads();
+        tcis = null;
+        _memo.dispose();
+        _memo = null;
+
+        //JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
 
     }

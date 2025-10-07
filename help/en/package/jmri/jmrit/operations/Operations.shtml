@@ -143,6 +143,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ModifyLocationByCarType">Modify Location by Car Type</a></li>
                 <li><a href="#ModifyLocationByCarLoad">Modify Location by Car Load</a></li>
                 <li><a href="#ShowCars">Show Cars</a></li>
+                <li><a href="#ShowLocomotives">Show Locomotives</a></li>
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this Location</a></li>
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
@@ -228,6 +229,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ChangeTrackType">Change Track Type</a></li>
                 <li><a href="#CopyTrack">Copy Track</a></li>
                 <li><a href="#ShowCars">Show Cars</a></li>
+                <li><a href="#ShowLocomotives">Show Locomotives</a></li>
                 <li><a href="#ShowTrainsServicingThisTrack">Show Trains Servicing this track</a></li>
               </ul></li>
 
@@ -243,6 +245,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ExportLocations">Export Locations</a></li>
                 <li><a href="#ImportLocations">Import Locations</a></li>
                 <li><a href="#ShowCarsLocations">Show Cars</a></li>
+                <li><a href="#ShowLocomotivesLocations">Show Locomotives</a></li>
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing
                     Location and Track</a></li>
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
@@ -2409,7 +2412,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           href="#SwitchList">Real Time</a>.
       <h3 id="LocationTools">Location Tools</h3>
       From the "Tools" menu found in "Edit Location" window you can access several useful functions.
-      The first is "Copy Track".
+      The first is "Copy Location".
+      
+      <h4 id="CopyLocation">Copy Location</h4>
+      This tool allows you to make a copy of an existing location and all of the tracks at that
+      location. Enter a new location name, select the location to be copied, and then press the
+      "Copy" button. If you want to move all of the rolling stock at the location being copied to
+      your new location's tracks, select the checkbox "Move Rolling Stock to New Track". You can
+      also delete all of the tracks at the location being copied, but you must also select the "Move
+      Rolling Stock to New Track" option.
 
       <h4 id="CopyTrack">Copy Track</h4>
       The copy track tool allows you to select an existing track and create a new track with the
@@ -2488,6 +2499,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       track. Note that the Export Cars tool will only export cars for a location or track, and the
       delete cars tool, when showing cars at a location or track, will only delete those cars. The
       "Reset car move counts" tool also behaves the same way.
+
+      <h4 id="ShowLocomotives">Show Locomotives</h4>
+      If you only want to view locomotives for a location or track, select "Show Locomotives" from
+      the "Tools" menu. This tool is also useful when you want to print out Locomotives for a
+      specific location or track. Note that the Export Locomotives tool will only export Locomotives
+      for a location or track, and the delete Locomotives tool, when showing Locomotives at a
+      location or track, will only delete those Locomotives. The "Reset Locomotive move counts" tool
+      also behaves the same way.
 
       <h4 id="LocationReporter">
         Id Tag Reader at this Location [only if <a href="#EnableIdentificationTagFields">Enable
@@ -3679,6 +3698,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         industry. Note that the maximum number of cars in all cases is four. It is only how the cars
         are distributed that changes when entering a minimum.</p>
 
+      <p>Setting a user specified maximum track length for a track in a pool will limit the
+        track to that length. However, the program will not immediately reduce the track's length to
+        the specified maximum. When other tracks in the pool request track space, tracks with a
+        specified maximum length will reduce their lengths if possible. Once a track length is less
+        than its user specified maximum, the program will not allow the track to exceed the user
+        specified maximum length.</p>
+
       <p>
         Pooling staging tracks allows you to have <a href="#StagingMultipleTrains">multiple
           trains per physical staging track</a>. The program only allows one train per staging track,
@@ -3905,6 +3931,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       To only view cars that have a location assigned to them, select "Show Cars" from the "Tools"
       menu. Note that the Car Roster tools, Export to file, Delete cars, Reset car move counts,
       Print, and Preview will only affect the cars shown in the Cars table.
+
+      <h4 id="ShowLocomotivesLocations">Show Locomotives</h4>
+      To only view Locomotives that have a location assigned to them, select "Show Locomotives" from
+      the "Tools" menu. Note that the Locomotive Roster tools, Export to file, Delete Locomotives,
+      Reset Locomotive move counts, Print, and Preview will only affect the Locomotives shown in the
+      Locomotives table.
 
       <h4 id="ExportLocations">Export Locations</h4>
 

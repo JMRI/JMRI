@@ -1,16 +1,18 @@
 package jmri.jmrix.mqtt;
 
-import jmri.util.JUnitUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.ThrottleListener;
+import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test for the jmri.jmrix.mqtt.MqttThrottleManager class
@@ -24,16 +26,20 @@ public class MqttThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @Test
     public void testCreateLnThrottleRunAndRelease() {
-        ThrottleListener throtListen = new ThrottleListener() {
+
+        var throtListen = new ThrottleListener() {
+
+            private String status = "";
+
             @Override
             public void notifyThrottleFound(DccThrottle t) {
                 throttle = t;
-                log.error("created a throttle");
+                status = "created a throttle";
             }
 
             @Override
             public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
-                log.error("Throttle request failed for {} because {}", address, reason);
+                status = "Throttle request failed for " + address + " because "+ reason;
                 failedThrottleRequest = true;
             }
 
@@ -46,20 +52,21 @@ public class MqttThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         DccLocoAddress locoAddress = new DccLocoAddress(1203,true);
         tm.requestThrottle(1203, throtListen,true);
 
-        Assert.assertNotNull("have created a throttle", throttle);
-        Assert.assertEquals("is MqttThrottle", throttle.getClass(), jmri.jmrix.mqtt.MqttThrottle.class);
-        Assert.assertEquals(true, (((MqttThrottleManager)tm).throttles.containsKey(locoAddress))); // now you see it
-        Assert.assertEquals(1,tm.getThrottleUsageCount(locoAddress));
-        jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
+        assertNotNull( throttle, "have created a throttle");
+        assertInstanceOf(MqttThrottle.class , throttle);
+        assertTrue( (((MqttThrottleManager)tm).throttles.containsKey(locoAddress))); // now you see it
+        assertEquals(1,tm.getThrottleUsageCount(locoAddress));
+        assertEquals( "created a throttle", throtListen.status);
+        assertFalse(failedThrottleRequest);
 
         tm.releaseThrottle(throttle, throtListen);
-        Assert.assertEquals(0,tm.getThrottleUsageCount(locoAddress));
-        Assert.assertEquals(false, (((MqttThrottleManager)tm).throttles.containsKey(locoAddress))); //now you dont
+        assertEquals(0,tm.getThrottleUsageCount(locoAddress));
+        assertFalse( (((MqttThrottleManager)tm).throttles.containsKey(locoAddress))); //now you dont
     }
 
     private MqttSystemConnectionMemo memo;
     private DccThrottle throttle;
-    boolean failedThrottleRequest = false;
+    private boolean failedThrottleRequest = false;
     private MqttConsistManager cm;
     private MqttAdapterScaffold a;
 
@@ -90,6 +97,6 @@ public class MqttThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MqttThrottleManagerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttThrottleManagerTest.class);
 
 }
