@@ -2197,7 +2197,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     private void addThroughPath( @Nonnull Adjacencies adj) {
-	        // Check if this block is a turntable block on ANY panel it belongs to.
+        // Check if this block is a turntable block on ANY panel it belongs to.
         // If so, do not create through paths.
         boolean isTurntableBlock = false;
         for (LayoutEditor p : panels) {
@@ -2216,7 +2216,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             addRouteLog.debug("Block {} is a turntable block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
             return; // Do not create through paths for a turntable
         }
-																		   
+        
         Block newAdj = adj.getBlock();
         int packetFlow = adj.getPacketFlow();
 
