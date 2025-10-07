@@ -2,7 +2,6 @@ package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,8 +19,9 @@ public class SRCPSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         return "A1S" + i;
     }
 
+    @Test
     public void testCtor() {
-        Assert.assertNotNull(l);
+        Assertions.assertNotNull(l);
     }
 
     @Override

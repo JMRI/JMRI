@@ -1,10 +1,14 @@
 package jmri.jmrix.rps;
 
-import jmri.util.JUnitUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.beans.PropertyVetoException;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.NotApplicable;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -28,11 +32,13 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
         return "(0,1,0);(1,0,1);(0,1,0);(0,1,0)";
     }
 
+    @Test
     @Override
+    @NotApplicable("not possible on RPS so do nothing")
     public void testReporterProvideByNumber() {
-        // not possible on RPS so do nothing
     }
 
+    @Test
     @Override
     public void testRegisterDuplicateSystemName()
             throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, PropertyVetoException {
@@ -43,15 +49,15 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists", l);
+        assertNotNull( l, "exists");
     }
 
     @Override
     @Test
     public void testMakeSystemName() {
         String s = l.makeSystemName(getNameToTest1());
-        Assert.assertNotNull(s);
-        Assert.assertFalse(s.isEmpty());
+        assertNotNull(s);
+        assertFalse(s.isEmpty());
     }
     
     @Override
@@ -61,7 +67,7 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
 
     @Test
     public void testGetSystemPrefix() {
-        Assert.assertEquals("R", l.getSystemPrefix());
+        assertEquals("R", l.getSystemPrefix());
     }
 
     @BeforeEach
@@ -74,6 +80,7 @@ public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
     @AfterEach
     public void tearDown() {
         l.dispose();
+        l = null;
         JUnitUtil.tearDown();
     }
 
