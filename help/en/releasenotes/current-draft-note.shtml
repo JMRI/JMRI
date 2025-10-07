@@ -438,6 +438,7 @@
         <ul>
              <li>Fix Create New Transit caused by bad initialization of stopping distance arrays. Fix crash when transit has no sections.</li>
 			 <li>Fix TransitAction SetMaxSpeed</li>
+             <li>Add RosterGroup selection combo to Activate New Train. Remembers selection across sessions.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
