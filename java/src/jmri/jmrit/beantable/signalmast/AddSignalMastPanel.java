@@ -52,6 +52,12 @@ public class AddSignalMastPanel extends JPanel {
     // connection to preferences
     private UserPreferencesManager prefs = InstanceManager.getDefault(UserPreferencesManager.class);
     private String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected"; // NOI18N
+
+    private SignalMast mast = null;
+    private String originalUserName = null;
+    private String originalSigSys = null;
+    private String originalMastType = null;
+    private String originalMastDriver = null;
     private String mastSelectionCombo = this.getClass().getName() + ".SignallingMastSelected"; // NOI18N
     private String driverSelectionCombo = this.getClass().getName() + ".SignallingDriverSelected"; // NOI18N
 
@@ -208,22 +214,20 @@ public class AddSignalMastPanel extends JPanel {
     public AddSignalMastPanel(SignalMast mast) {
         this(); // calls the above method to build the base for an edit panel
         log.debug("AddSignalMastPanel({}) start", mast);
+        this.mast = mast;
 
         // switch buttons
         apply.setVisible(true);
         create.setVisible(false);
 
-        // can't change some things from original settings
-        sigSysBox.setEnabled(false);
-        mastBox.setEnabled(false);
-        signalMastDriver.setEnabled(false);
-        userName.setEnabled(false);
-
         //load prior content
         userName.setText(mast.getUserName());
+        originalUserName = mast.getUserName();
+
         log.trace("Prior content system name: {}  mast type: {}", mast.getSignalSystem().getUserName(), mast.getMastType());
         if (mast.getMastType() == null) log.error("MastType was null, and never should be");
         sigSysBox.setSelectedItem(mast.getSignalSystem().getUserName());  // signal system
+        originalSigSys = (String) sigSysBox.getSelectedItem();
 
         // select and show
         for (SignalMastAddPane pane : panes) {
@@ -231,6 +235,7 @@ public class AddSignalMastPanel extends JPanel {
                 currentPane = pane;
                 // set the driver combobox
                 signalMastDriver.setSelectedItem(pane.getPaneName());
+                originalMastDriver = pane.getPaneName();
                 log.trace("About to call selection() from SignalMastAddPane loop in AddSignalMastPanel(SignalMast mast)");
                 selection(pane.getPaneName());
 
@@ -242,6 +247,7 @@ public class AddSignalMastPanel extends JPanel {
                 }
                 log.trace("set mastBox to \"{}\" from \"{}\"", mapTypeToName.get(mast.getMastType()), mast.getMastType()); // NOI18N
                 mastBox.setSelectedItem(mapTypeToName.get(mast.getMastType()));
+                originalMastType = (String) mastBox.getSelectedItem();
 
                 pane.setMast(mast);
                 break;
@@ -470,7 +476,6 @@ public class AddSignalMastPanel extends JPanel {
      * Invoked from Apply/Create button.
      */
     private void okPressed() {
-        log.trace(" okPressed() start");
         boolean success;
 
         // get and validate entered global information
@@ -490,6 +495,29 @@ public class AddSignalMastPanel extends JPanel {
             }
         }
 
+        // If we are editing, check what has changed
+        if (mast != null) {
+            String newSigSys = (String) sigSysBox.getSelectedItem();
+            String newMastType = (String) mastBox.getSelectedItem();
+            String newMastDriver = (String) signalMastDriver.getSelectedItem();
+
+            boolean recreate = !newSigSys.equals(originalSigSys)
+                    || !newMastType.equals(originalMastType)
+                    || !newMastDriver.equals(originalMastDriver);
+
+            if (recreate) {
+                log.debug("Recreating mast {} ({}) due to definition change.", mast.getSystemName(), mast.getUserName());
+                // Deregister the old mast. The createMast call below will make a new one with the same system name.
+                InstanceManager.getDefault(SignalMastManager.class).deregister(mast);
+                mast.dispose();
+            } else if (!user.equals(originalUserName)) {
+                // Only the username has changed, so just update it.
+                mast.setUserName(user);
+                clearPanel();
+                return;
+            }
+        }
+
         // ask top-most pane to make a signal
         try {
             success = currentPane.createMast(sigsysname, mastname, user);
@@ -503,7 +531,6 @@ public class AddSignalMastPanel extends JPanel {
         }
 
         clearPanel();
-        log.trace(" okPressed() end");
     }
 
     int issueNoUserNameGiven() {
