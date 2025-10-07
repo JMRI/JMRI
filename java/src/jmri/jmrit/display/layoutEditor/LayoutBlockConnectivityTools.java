@@ -889,7 +889,7 @@ final public class LayoutBlockConnectivityTools {
 
                         // Path 3: From this ray's Approach Mast to the turntable's Buffer Mast (a siding path)
                         SignalMast bufferMast = turntable.getBufferMast();
-                        if (bufferMast != null && approachMast != null) {
+                        if (bufferMast != null) {
                             retPairs.computeIfAbsent(approachMast, k -> new ArrayList<>()).add(bufferMast);
                         }
                     }

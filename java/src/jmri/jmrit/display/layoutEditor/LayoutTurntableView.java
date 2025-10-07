@@ -830,7 +830,6 @@ public class LayoutTurntableView extends LayoutTrackView {
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         log.trace("LayoutTurntable:draw1 at {}", getCoordsCenter());
         float trackWidth = 2.F;
-        float halfTrackWidth = trackWidth / 2.f;
         double diameter = 2.f * getRadius();
 
         if (isBlock && isMain) {

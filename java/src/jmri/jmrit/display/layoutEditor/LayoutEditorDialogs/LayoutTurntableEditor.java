@@ -71,7 +71,6 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     private JRadioButton placeIconsRight;
 
     private final List<Turnout> turntableTurnouts = new ArrayList<>();
-    private final List<SignalMast> turntableMasts = new ArrayList<>();
 
     /**
      * Edit a Turntable.
@@ -169,13 +168,11 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             bufferMastComboBox.setEditable(false);
             bufferMastComboBox.setAllowNull(true);
             exitMastComboBox.addActionListener(e -> {
-                SignalMast oldMast = layoutTurntable.getExitSignalMast();
                 SignalMast newMast = exitMastComboBox.getSelectedItem();
                 layoutTurntable.setExitSignalMast( (newMast != null) ? newMast.getSystemName() : null );
                 refreshAllMastComboBoxes();
             });
             bufferMastComboBox.addActionListener(e -> {
-                SignalMast oldMast = layoutTurntable.getBufferMast();
                 SignalMast newMast = bufferMastComboBox.getSelectedItem();
                 layoutTurntable.setBufferSignalMast( (newMast != null) ? newMast.getSystemName() : null );
                 refreshAllMastComboBoxes();
