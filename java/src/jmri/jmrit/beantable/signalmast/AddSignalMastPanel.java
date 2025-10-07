@@ -489,7 +489,7 @@ public class AddSignalMastPanel extends JPanel {
         // if we are editing, and the username has been changed, we need to do a rename.
         if (mast != null && !user.equals(originalUserName)) {
             // This is a rename operation. Validate the new user name.
-            if (user != null && !user.isEmpty()) {
+            if (!user.isEmpty()) {
                 SignalMastManager manager = InstanceManager.getDefault(SignalMastManager.class);
                 NamedBean conflict = manager.getByUserName(user);
                 if (conflict != null && conflict != mast) {
