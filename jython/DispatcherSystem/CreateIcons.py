@@ -115,7 +115,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.result = "Failure"
 
     def __str__(self):
-        print "self.result", self.result
         return self.result
 
 

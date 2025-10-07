@@ -106,6 +106,11 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         for e in graph.edgeSet():
             if self.logLevel > 1: print (graph.getEdgeSource(e) + " --> " + graph.getEdgeTarget(e))
         if self.logLevel > 0: print strindex + "calling shortest path", StateVertex_start, StateVertex_end
+        # List all vertices
+        if self.logLevel > 0:
+            for vertex in graph.vertexSet():
+                print("Vertex:", vertex)
+
         paths = DijkstraShortestPath.findPathBetween(graph, StateVertex_start, StateVertex_end)
         # print strindex + "move_between_stations b"
         if paths == None:
