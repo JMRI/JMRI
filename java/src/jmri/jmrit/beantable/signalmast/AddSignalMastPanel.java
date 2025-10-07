@@ -217,7 +217,6 @@ public class AddSignalMastPanel extends JPanel {
         sigSysBox.setEnabled(false);
         mastBox.setEnabled(false);
         signalMastDriver.setEnabled(false);
-        userName.setEnabled(false);
 
         //load prior content
         userName.setText(mast.getUserName());
