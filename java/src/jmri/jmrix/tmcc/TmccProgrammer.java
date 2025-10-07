@@ -88,7 +88,7 @@ public class TmccProgrammer extends AbstractProgrammer {
             }
 
 
-        } else if (CV != 1) {
+        } else {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0x00);
             m.putAsWord(00000);
