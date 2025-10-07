@@ -59,9 +59,8 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
     public synchronized void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         log.debug("write CV={} val={}", CV, val);
-        
-        
-        
+
+
         _cv = CV; // Value from Simple Programmer "CV" input
         _val = val; // Value from Simple Programmer "Value" input
 
@@ -202,7 +201,7 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
                 log.warn("Address Must be Between 1-98 for TMCC");
             }
 
-        } else if (CV != 2) {
+        } else {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0x00);
             m.putAsWord(00000);
@@ -222,10 +221,10 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
      */
     @Override
     public synchronized void readCV(String CVname, ProgListener p) throws ProgrammerException {
-//        final int CV = Integer.parseInt(CVname);
-//        log.debug("read CV={}", CV);
-//        log.error("readCV not available in this protocol");
-//        throw new ProgrammerException();
+        final int CV = Integer.parseInt(CVname);
+        log.debug("read CV={}", CV);
+        log.error("readCV not available in this protocol");
+        throw new ProgrammerException();
     }
 
     /** 
@@ -233,9 +232,9 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
      */
     @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-//        log.debug("confirm CV={}", CV);
-//        log.error("confirmCV not available in this protocol");
-//        throw new ProgrammerException();
+        log.debug("confirm CV={}", CV);
+        log.error("confirmCV not available in this protocol");
+        throw new ProgrammerException();
     }
 
     /** 

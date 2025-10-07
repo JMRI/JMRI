@@ -29,9 +29,8 @@ public class TmccProgrammerManager extends DefaultProgrammerManager {
     static final ProgrammingMode TMCCMODE1_FEATURE = new ProgrammingMode("TMCCMODE1_FEATURE", Bundle.getMessage("TMCCMODE1_FEATURE"));
     static final ProgrammingMode TMCCMODE2_FEATURE = new ProgrammingMode("TMCCMODE2_FEATURE", Bundle.getMessage("TMCCMODE2_FEATURE"));
 
-
     /**
-     * Does TMCC have the equivalent of Ops Mode?
+     * For Implementing TMCCOpsModeProgrammer
      *
      * @return always false until Ops Mode implemented
      */
