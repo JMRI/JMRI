@@ -14,11 +14,12 @@ import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseMotionListener;
 
 /**
+ * Frame to create/edit a Control Panel shape Circle object.
  * @author Pete Cressman Copyright (c) 2012
  */
 public class DrawCircle extends DrawFrame {
 
-    JTextField _diameterText;
+    private JTextField _diameterText;
 
     public DrawCircle(String which, String title, PositionableShape ps, Editor ed, boolean create) {
         super(which, title, ps, ed, create);
