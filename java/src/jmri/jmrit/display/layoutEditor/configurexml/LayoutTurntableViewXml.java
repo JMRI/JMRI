@@ -59,7 +59,7 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
                 element.setAttribute("buffermast", bufferMastName);
             }
             element.setAttribute("signalIconPlacement", "" + p.getSignalIconPlacement());
-            element.setAttribute("dispatcherManaged", dispatcherManaged ? "yes" : "no");
+            element.setAttribute("dispatcherManaged", "yes");
         }
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml");  // temporary until storage split
         // add ray tracks
