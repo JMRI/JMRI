@@ -2555,7 +2555,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // time is to the millisecond, need to wait a bit on a fast machine
         JUnitUtil.waitFor(() -> {
             return java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate());
-        });
+        }, "time after last moved");
         Assert.assertTrue(java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate()));
 
         // now deliver the second set of cars
