@@ -344,10 +344,10 @@ public class TrainCommon {
                         !car.isCaboose() &&
                         !car.hasFred() &&
                         !car.isPassenger() ||
-                        rld == train.getTrainDepartsRouteLocation() &&
+                        rld == train.getRoute().getBlockingLocationFrontOfTrain() &&
                                 car.isPassenger() &&
                                 car.getBlocking() < 0 ||
-                        rld == train.getTrainTerminatesRouteLocation() &&
+                        rld == train.getRoute().getBlockingLocationRearOfTrain() &&
                                 (car.isCaboose() && !car.isPassenger() ||
                                         car.hasFred() && !car.isPassenger() ||
                                         car.isPassenger() && car.getBlocking() >= 0))) {
