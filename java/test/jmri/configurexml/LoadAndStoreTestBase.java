@@ -199,11 +199,6 @@ public class LoadAndStoreTestBase {
                         String windowwidth_regexe = "( windowwidth=\"[^\"]*\")";
                         line1 = filterLineUsingRegEx(line1, windowwidth_regexe);
                         line2 = filterLineUsingRegEx(line2, windowwidth_regexe);
-
-                        // dispatcherManaged attribute may be added to turntable editor
-                        String dispatcherManaged_regexe = "( dispatcherManaged=\"[^\"]*\")";
-                        line1 = filterLineUsingRegEx(line1, dispatcherManaged_regexe);
-                        line2 = filterLineUsingRegEx(line2, dispatcherManaged_regexe);
                     }
                 }
                 
