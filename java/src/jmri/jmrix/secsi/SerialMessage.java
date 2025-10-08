@@ -37,7 +37,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * This ctor interprets the byte array as a sequence of characters to send.
-     * @deprected 5.13.5, unused, requires further development.
+     * @deprecated 5.13.5, unused, requires further development.
      * @param a Array of bytes to send
      * @param l response length
      */
