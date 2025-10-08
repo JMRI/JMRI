@@ -488,26 +488,44 @@ public class AddSignalMastPanel extends JPanel {
 
         // if we are editing, and the username has been changed, we need to do a rename.
         if (mast != null && !user.equals(originalUserName)) {
-            // This is a rename operation. Validate the new user name.
-            if (!user.isEmpty()) {
-                SignalMastManager manager = InstanceManager.getDefault(SignalMastManager.class);
-                NamedBean conflict = manager.getByUserName(user);
-                if (conflict != null && conflict != mast) {
-                    issueWarningUserName(user); // "User Name is already in use"
-                    return;
-                }
-                conflict = manager.getBySystemName(user);
-                if (conflict != null && conflict != mast) {
-                    issueWarningUserNameAsSystem(user); // "User Name exists as a System Name"
-                    return;
-                }
-            }
-            // Validation passed, set the new name.
-            mast.setUserName(user);
+            try {
+                NamedBeanHandleManager nbMan = InstanceManager.getDefault(NamedBeanHandleManager.class);
 
-            // Update all references from the old user name to the new one.
-            if (originalUserName != null && !originalUserName.isEmpty()) {
-                InstanceManager.getDefault(NamedBeanHandleManager.class).renameBean(originalUserName, user, mast);
+                // Case 1: New user name is not empty.
+                if (!user.isEmpty()) {
+                    // This is a rename or add-user-name operation. Validate the new user name.
+                    SignalMastManager manager = InstanceManager.getDefault(SignalMastManager.class);
+                    NamedBean conflict = manager.getByUserName(user);
+                    if (conflict != null && conflict != mast) {
+                        issueWarningUserName(user); // "User Name is already in use"
+                        return;
+                    }
+                    conflict = manager.getBySystemName(user);
+                    if (conflict != null && conflict != mast) {
+                        issueWarningUserNameAsSystem(user); // "User Name exists as a System Name"
+                        return;
+                    }
+
+                    // Validation passed. Now, perform the correct update.
+                    mast.setUserName(user);
+
+                    if (originalUserName == null || originalUserName.isEmpty()) {
+                        // Was empty, now has a name.
+                        nbMan.updateBeanFromSystemToUser(mast);
+                    } else {
+                        // Was not empty, is now a different non-empty name.
+                        nbMan.renameBean(originalUserName, user, mast);
+                    }
+                } else { // user.isEmpty() is true
+                    // This is a remove-user-name operation.
+                    mast.setUserName(null);
+                    nbMan.updateBeanFromUserToSystem(mast);
+                }
+            } catch (JmriException e) {
+                log.error("Error while renaming Signal Mast", e);
+                JmriJOptionPane.showMessageDialog(this, e.getMessage(),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                return;
             }
         }
 
