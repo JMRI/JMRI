@@ -49,7 +49,6 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
         element.setAttribute("ycen", "" + coords.getY());
         element.setAttribute("turnoutControlled", "" + (turnoutControl ? "yes" : "no"));
         boolean dispatcherManaged = p.isDispatcherManaged();
-        element.setAttribute("dispatcherManaged", dispatcherManaged ? "yes" : "no");
         if (dispatcherManaged) {
             String exitMastName = p.getExitSignalMastName();
             if (exitMastName != null && !exitMastName.isEmpty()) {
@@ -60,6 +59,7 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
                 element.setAttribute("buffermast", bufferMastName);
             }
             element.setAttribute("signalIconPlacement", "" + p.getSignalIconPlacement());
+            element.setAttribute("dispatcherManaged", dispatcherManaged ? "yes" : "no");
         }
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml");  // temporary until storage split
         // add ray tracks
