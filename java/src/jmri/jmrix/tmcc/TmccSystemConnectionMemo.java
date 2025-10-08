@@ -98,6 +98,7 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
     public void configureManagers() {
         log.debug("configureManagers");
         InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        InstanceManager.store(getProgrammerManager(), AddressedProgrammerManager.class);
         TurnoutManager turnoutManager = getTurnoutManager();
         store(turnoutManager,TurnoutManager.class);
         InstanceManager.setTurnoutManager(getTurnoutManager());

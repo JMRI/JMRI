@@ -103,11 +103,11 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 15:
                                 return "TMCC2 - Engine " + A + " - AUX2 On";
                             case 16:
-                                return "TMCC2 - Engine " + A + " - Num 0 - Engine Reset (Needed to toggle ERR 100 Speed Steps)";
+                                return "TMCC2 - Engine " + A + " - Num 0 - Engine Reset - TMCC2 Feature Type 0 - Needed to toggle ERR 100 Speed Steps";
                             case 17:
-                                return "TMCC2 - Engine " + A + " - Num 1 - Sound Volume Increase";
+                                return "TMCC2 - Engine " + A + " - Num 1 - Sound Volume Increase - TMCC2 Feature Type 1";
                             case 18:
-                                return "TMCC2 - Engine " + A + " - Num 2 - Crew Talk";
+                                return "TMCC2 - Engine " + A + " - Num 2 - Crew Talk - TMCC2 Feature Type 2";
                             case 19:
                                 return "TMCC2 - Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence/RPM Increase";
                             case 20:
@@ -161,7 +161,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                         return "TMCC2 - Engine " + A + " - Change Speed (Relative) by " + (D - 5);
                     case 3:
                     default:    // to let the compiler know there are only 3 cases
-                        return "TMCC2 - Engine " + A + " - Speed (Absolute) = " + D;
+                        return "TMCC2 - Engine " + A + " - Unassigned FnKey";
                 }
 
             }
@@ -244,15 +244,15 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 19:
                                 return "TMCC1 - Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence";
                             case 20:
-                                return "TMCC1 - Engine " + A + " - Num 4 - Sound Volume Decrease";
+                                return "TMCC1 - Engine " + A + " - Num 4 - Sound Volume Decrease - TMCC1 Feature Type 4";
                             case 21:
-                                return "TMCC1 - Engine " + A + " - Num 5 - Sound Off w/Shut-Down Sequence";
+                                return "TMCC1 - Engine " + A + " - Num 5 - Sound Off w/Shut-Down Sequence - TMCC1 Feature Type 5";
                             case 22:
-                                return "TMCC1 - Engine " + A + " - Num 6 - Steam Release/RPM Decrease";
+                                return "TMCC1 - Engine " + A + " - Num 6 - Steam Release/RPM Decrease - TMCC1 Feature Type 6";
                             case 23:
                                 return "TMCC1 - Engine " + A + " - Num 7 - Tower Com Announcement";
                             case 24:
-                                return "TMCC1 - Engine " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting)";
+                                return "TMCC1 - Engine " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting) - TMCC1 Feature Type 8";
                             case 25:
                                 return "TMCC1 - Engine " + A + " - Num 9 - Feature On (Smoke/Aux Lighting)";
                             case 26:
@@ -294,7 +294,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                         return "TMCC1 - Engine " + A + " - Change Speed (Relative) by " + (D - 5);
                     case 3:
                     default:    // to let the compiler know there are only 3 cases
-                        return "TMCC1 - Engine " + A + " - Speed (Absolute) = " + D;
+                        return "TMCC1 - Engine " + A + " - Unassigned FnKey";
                 }
 
             } else if ((val & 0xF800) == 0xC800) {
@@ -318,6 +318,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
             }
         }
-        return "TMCC - CV# and/or Loco ID# - Out of Range";
+        return "TMCC - CV#, Loco ID#/Address/Feature Value - Out of Range";
     }
 }
