@@ -594,15 +594,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 ##### servlet.jar:
 - jakarta-servletapi-3.2.3-src/lib/servlet.jar but no longer included
 
-##### RXTXcomm.jar, librxtxSerial.jnilib
-- From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
-- The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
-- The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
-- For MacOS X:
-    macosx/librxtxSerial.jnilib     169488  from rxtx-2.2pre2-bins distribution
-    macosx/ppc/librxtxSerial.jnilib 301908  built for MacOS X 10.4 by John Plocher 2010-02-04
-- No longer used as of JMRI 4.7.X
-
 ##### Serialio.jar
 - from <http://serialio.com>
 - No longer used as of JMRI 4.7.X
