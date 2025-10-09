@@ -84,14 +84,14 @@ public class TmccProgrammer extends AbstractProgrammer {
                 
                 if  (getMode() == TmccProgrammerManager.TMCCMODE1_SWID) {
                     SerialMessage m = new SerialMessage();
-                    m.setOpCode(0xFE); // set the first byte/TMCC2 opcode to 0xF8
+                    m.setOpCode(0xFE); // set the first byte/TMCC1 opcode to 0xF8
                     m.putAsWord(((val * 128) + 16384) + _func); // set the second/third byte (address/SET command for TMCC2)
                     tc.sendSerialMessage(m, null);
                 }
                 
                 if  (getMode() == TmccProgrammerManager.TMCCMODE1_ACCID) {
                     SerialMessage m = new SerialMessage();
-                    m.setOpCode(0xFE); // set the first byte/TMCC2 opcode to 0xF8
+                    m.setOpCode(0xFE); // set the first byte/TMCC1 opcode to 0xF8
                     m.putAsWord(((val * 128) + 32768) + _func); // set the second/third byte (address/SET command for TMCC2)
                     tc.sendSerialMessage(m, null);
                 }              
