@@ -43,22 +43,22 @@ public class AccessoryOpsModeProgrammerFacadeTest {
 
     @Test
     public void testWriteAddr123long1cv234val14delay200signal() throws jmri.ProgrammerException, InterruptedException {
-        testMethod();
+        assertMethod();
     }
 
     @Test
     public void testWriteAddr3long0cv12val0delay500accessory() throws jmri.ProgrammerException, InterruptedException {
-        testMethod();
+        assertMethod();
     }
 
     @Test
     public void testWriteAddr511long1cv1024val255delay0decoder() throws jmri.ProgrammerException, InterruptedException {
-        testMethod();
+        assertMethod();
     }
 
     // from here down is testing infrastructure
     // Perform tests with parameters parsed from the name of the calling method.
-    synchronized void testMethod() throws jmri.ProgrammerException, InterruptedException {
+    synchronized void assertMethod() throws jmri.ProgrammerException, InterruptedException {
         String methodName = "";
         int addr = 0;
         boolean isLong = false;
@@ -145,7 +145,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         mockCS = new MockCommandStation();
         InstanceManager.setDefault(CommandStation.class, mockCS);
@@ -155,7 +155,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         mockCS = null;
         JUnitUtil.tearDown();
     }
