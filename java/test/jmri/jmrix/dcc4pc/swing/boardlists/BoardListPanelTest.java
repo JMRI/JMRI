@@ -71,7 +71,7 @@ public class BoardListPanelTest {
         JFrameOperator jfo = new JFrameOperator("Frame for BoardListPanel");
         Assertions.assertNotNull(   jfo);
 
-        jfo.requestClose();
+        JUnitUtil.dispose(jfo.getWindow());
         jfo.waitClosed();
 
         senMan.dispose();

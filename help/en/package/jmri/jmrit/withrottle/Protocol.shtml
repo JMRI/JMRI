@@ -69,7 +69,7 @@
       <a href="#OtherServertoClientMessages">Other Server to Client Messages</a><br>
       <a href="#Commands">Commands (Client to Server)</a><br>
       <a href="#ThrottleCommands">Throttle Commands</a><br>
-      <a href="#ConsistCommands">Consist Commands</a><br>
+      <a href="#ConsistCommands">Decoder Assisted (Advanced) Consist Commands</a><br>
       <a href="#TurnoutCommands">Turnout/Point Commands</a><br>
       <a href="#RouteCommands">Route Commands</a><br>
       <a href="#UnknownCommands">Unknown Commands</a><br>
@@ -1954,14 +1954,15 @@ M0AS3&lt;;&gt;R1
 
       <!-- -------------------------------------------------------- -->
 
-      <h2 id="ConsistCommands">Consist (Multiple Unit) Commands <a class="to-top" href="#top">^Top</a></h2>
+      <h2 id="ConsistCommands">Advanced Consist (Multiple Unit) Commands <a class="to-top" href="#top">^Top</a></h2>
       
       <p class="command">
       <strong>RC</strong>«command»<strong>&lt;;&gt;</strong>«consistAddress»<strong>&lt;;&gt;</strong>«additionalInfo»
       </p>
 
-      <p>The commands in this section are used to work with consists. All the consist commands
-      start with "RC", which stands for Roster Consist.</p>
+      <p>The commands in this section are used to work with NMRA Decoder Assisted (Advanced) Consists (MUs). Consists that work by altering CV19 on the decoder. </p>
+
+      <p>All the advanced consist commands start with "RC", which stands for Roster Consist.</p>
 
       <ul>
         <li>'P' - Change order of locos in the consist (multiple unit)</li>
@@ -2005,10 +2006,21 @@ RC+&lt;;&gt;S74&lt;;&gt;My consist&lt;:&gt;L342&lt;;&gt;true
           <td><strong>RC+</strong></td>
           <td></td>
         </tr>
-
         <tr>
           <td></td>
           <td><strong>&lt;;&gt;</strong></td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Consist Name</td>
+          <td>My Consist</td>
+          <td>The name for the consist (multiple unit)</td>
+        </tr>
+
+        <tr>
+          <td></td>
+          <td><strong>&lt;:&gt;</strong></td>
           <td></td>
         </tr>
 
@@ -2077,7 +2089,6 @@ RC-&lt;;&gt;S74&lt;:&gt;L341
           <td></td>
         </tr>
 
-
         <tr>
           <td></td>
           <td><strong>&lt;;&gt;</strong></td>
@@ -2092,7 +2103,7 @@ RC-&lt;;&gt;S74&lt;:&gt;L341
 
         <tr>
           <td></td>
-          <td><strong>&lt;;&gt;</strong></td>
+          <td><strong>&lt;:&gt;</strong></td>
           <td></td>
         </tr>
 

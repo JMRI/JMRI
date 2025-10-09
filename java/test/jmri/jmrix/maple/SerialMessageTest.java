@@ -1,8 +1,9 @@
 package jmri.jmrix.maple;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,16 +19,19 @@ public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        m = msg = new SerialMessage(1);
+        msg = new SerialMessage(1);
+        m = msg;
     }
 
     @Override
     @AfterEach
     public void tearDown() {
-        m = msg = null;
+        msg = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 
+    @Test
     public void testToBinaryString() {
         msg = new SerialMessage(4);
         msg.setOpCode(0x81);
@@ -35,9 +39,10 @@ public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg.setElement(2, 0xA2);
         msg.setElement(3, 0x00);
         msg.setBinary(true);
-        Assert.assertEquals("string compare ", "81 02 A2 00", msg.toString());
+        assertEquals( "81 02 A2 00", msg.toString(), "string compare ");
     }
 
+    @Test
     public void testBytesToString() {
         msg = new SerialMessage(4);
         msg.setOpCode(0x81);
@@ -45,9 +50,10 @@ public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg.setElement(2, (byte) 0xA2);
         msg.setElement(3, (byte) 0x00);
         msg.setBinary(true);
-        Assert.assertEquals("string compare ", "81 02 A2 00", msg.toString());
+        assertEquals( "81 02 A2 00", msg.toString(), "string compare ");
     }
 
+    @Test
     public void testToASCIIString() {
         msg = new SerialMessage(5);
         msg.setOpCode(0x54);
@@ -56,7 +62,7 @@ public class SerialMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         msg.setElement(3, 0x84);
         msg.setElement(4, 0x05);
         msg.setBinary(false);
-        Assert.assertEquals("string compare ", "54 20 32 84 05", msg.toString());
+        assertEquals( "54 20 32 84 05", msg.toString(), "string compare ");
     }
 
 }
