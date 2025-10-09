@@ -500,6 +500,7 @@
           <li>Improvements to the Cars print and preview, added car's "Last Location", "Last Train", and "Set out" time.</li>
           <li>Fixed a bug regarding the printing of the last line of a Manifest or switch list.</li>
           <li>Improvements to help.</li>
+          <li>Improved passenger car blocking when using custom train blocking.</li>
         </ul>
 
 <h3>Panel Editor</h3>

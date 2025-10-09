@@ -344,13 +344,13 @@ public class TrainCommon {
                         !car.isCaboose() &&
                         !car.hasFred() &&
                         !car.isPassenger() ||
-                        rld == train.getTrainDepartsRouteLocation() &&
-                                car.isPassenger() &&
-                                car.getBlocking() < 0 ||
-                        rld == train.getTrainTerminatesRouteLocation() &&
-                                (car.isCaboose() && !car.isPassenger() ||
-                                        car.hasFred() && !car.isPassenger() ||
-                                        car.isPassenger() && car.getBlocking() >= 0))) {
+                        car.isPassenger() &&
+                                car.getBlocking() < 0 &&
+                                rld == train.getRoute().getBlockingLocationFrontOfTrain() ||
+                        (car.isCaboose() && !car.isPassenger() ||
+                                car.hasFred() && !car.isPassenger() ||
+                                car.isPassenger() && car.getBlocking() >= 0) &&
+                                rld == train.getRoute().getBlockingLocationRearOfTrain())) {
             return true;
         }
         return false;
