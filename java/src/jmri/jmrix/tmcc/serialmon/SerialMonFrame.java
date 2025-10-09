@@ -368,7 +368,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
         // TMCC Error parsing
         if (opCode == 0x00) {
-            int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
+//            int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
             int C = (val / 32) & 0x03; // C is TMCC Command Code
             int D = val & 0x1F; // D is TMCC Data Code
             if ((C == 0) && (D == 0)) {
