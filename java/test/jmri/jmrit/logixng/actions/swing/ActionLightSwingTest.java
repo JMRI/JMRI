@@ -48,8 +48,8 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
             null != new ActionLightSwing(dialog).getConfigPanel(new ActionLight("IQDA1", null), new JPanel()));
     }
 
-    ConditionalNG conditionalNG = null;
-    ActionLight action = null;
+    private ConditionalNG conditionalNG = null;
+    private ActionLight action = null;
 
     @org.junit.Ignore("Fails in Java 11 testing")
     @Test
@@ -79,8 +79,8 @@ public class ActionLightSwingTest extends SwingConfiguratorInterfaceTestBase {
         new JComboBoxOperator(jdo, 1).setSelectedItem(ActionLight.LightState.Off);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;});
-        JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getSelectEnum().getEnum();});
+        JUnitUtil.waitFor(() -> {return action.getSelectNamedBean().getNamedBean() != null;}, "nb not null");
+        JUnitUtil.waitFor(() -> {return ActionLight.LightState.Off == action.getSelectEnum().getEnum();}, "Light off");
 
         Assert.assertEquals("IL1", action.getSelectNamedBean().getNamedBean().getBean().getSystemName());
         Assert.assertEquals(ActionLight.LightState.Off, action.getSelectEnum().getEnum());
