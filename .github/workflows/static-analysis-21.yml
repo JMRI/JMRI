@@ -39,3 +39,5 @@ jobs:
         mvn exec:exec -P travis-scanhelp --file=pom.xml
         # check properties
         mvn antrun:run -Danttarget=checkPropertiesFiles
+        #run Architecture tests
+        mvn -Dtest=jmri.ArchitectureTest,jmri.TestArchitectureTest,jmri.util.FileLineEndingsCheck test --file=pom.xml
