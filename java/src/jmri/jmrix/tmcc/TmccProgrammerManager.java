@@ -23,11 +23,14 @@ public class TmccProgrammerManager extends DefaultProgrammerManager {
 
     TmccSystemConnectionMemo _memo;
 
-    static final ProgrammingMode TMCCMODE1_ID = new ProgrammingMode("TMCCMODE1_ID", Bundle.getMessage("TMCCMODE1_ID"));
-    static final ProgrammingMode TMCCMODE2_ID = new ProgrammingMode("TMCCMODE2_ID", Bundle.getMessage("TMCCMODE2_ID"));
+    static final ProgrammingMode TMCCMODE1_ENGID = new ProgrammingMode("TMCCMODE1_ENGID", Bundle.getMessage("TMCCMODE1_ENGID"));
+    static final ProgrammingMode TMCCMODE2_ENGID = new ProgrammingMode("TMCCMODE2_ENGID", Bundle.getMessage("TMCCMODE2_ENGID"));
+    
+    static final ProgrammingMode TMCCMODE1_SWID = new ProgrammingMode("TMCCMODE1_SWID", Bundle.getMessage("TMCCMODE1_SWID"));
+    static final ProgrammingMode TMCCMODE1_ACCID = new ProgrammingMode("TMCCMODE1_ACCID", Bundle.getMessage("TMCCMODE1_ACCID"));
 
-    static final ProgrammingMode TMCCMODE1_FEATURE = new ProgrammingMode("TMCCMODE1_FEATURE", Bundle.getMessage("TMCCMODE1_FEATURE"));
-    static final ProgrammingMode TMCCMODE2_FEATURE = new ProgrammingMode("TMCCMODE2_FEATURE", Bundle.getMessage("TMCCMODE2_FEATURE"));
+    static final ProgrammingMode TMCCMODE1_ENGFEATURE = new ProgrammingMode("TMCCMODE1_ENGFEATURE", Bundle.getMessage("TMCCMODE1_ENGFEATURE"));
+    static final ProgrammingMode TMCCMODE2_ENGFEATURE = new ProgrammingMode("TMCCMODE2_ENGFEATURE", Bundle.getMessage("TMCCMODE2_ENGFEATURE"));
 
     /**
      * For Implementing TMCCOpsModeProgrammer

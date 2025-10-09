@@ -38,8 +38,8 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
 
-        ret.add(TmccProgrammerManager.TMCCMODE1_FEATURE);
-        ret.add(TmccProgrammerManager.TMCCMODE2_FEATURE);
+        ret.add(TmccProgrammerManager.TMCCMODE1_ENGFEATURE);
+        ret.add(TmccProgrammerManager.TMCCMODE2_ENGFEATURE);
 
         return ret;
     }
@@ -77,7 +77,7 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
             if (mAddress > 0 && mAddress < 99) {
 
                 // TMCC2 Feature Types
-                if  (getMode() == TmccProgrammerManager.TMCCMODE2_FEATURE) {
+                if  (getMode() == TmccProgrammerManager.TMCCMODE2_ENGFEATURE) {
 
                     if (val == 0) {
                         SerialMessage m = new SerialMessage();
@@ -109,7 +109,7 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
 
 
                 // TMCC1 Feature Types
-                if (getMode() == TmccProgrammerManager.TMCCMODE1_FEATURE) {         
+                if (getMode() == TmccProgrammerManager.TMCCMODE1_ENGFEATURE) {         
 
                     if (val == 4) {
                         SerialMessage m = new SerialMessage();
