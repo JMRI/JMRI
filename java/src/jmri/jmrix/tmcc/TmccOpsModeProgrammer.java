@@ -100,7 +100,7 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
                     } else {
                         SerialMessage m = new SerialMessage();
                         m.setOpCode(0x00);
-                        m.putAsWord(00000);
+                        m.putAsWord(00004);
                         tc.sendSerialMessage(m, null);
                         log.warn("Value Entered is Not a TMCC2 Feature Type");
                     }
@@ -186,7 +186,7 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
                     } else {
                         SerialMessage m = new SerialMessage();
                         m.setOpCode(0x00);
-                        m.putAsWord(00000);
+                        m.putAsWord(00003);
                         tc.sendSerialMessage(m, null);
                         log.warn("Value Entered is Not a TMCC1 Feature Type");
                     }
@@ -204,7 +204,7 @@ public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedPr
         } else {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0x00);
-            m.putAsWord(00000);
+            m.putAsWord(00002);
             tc.sendSerialMessage(m, null);
             log.warn("CV Must Equal 2 for Programming TMCC Feature Type");
 

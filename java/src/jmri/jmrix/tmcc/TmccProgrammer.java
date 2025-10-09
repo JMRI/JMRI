@@ -109,7 +109,7 @@ public class TmccProgrammer extends AbstractProgrammer {
         } else {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0x00);
-            m.putAsWord(00000);
+            m.putAsWord(00001);
             tc.sendSerialMessage(m, null);
             log.warn("CV Must Equal 1 for Programming TMCC Loco/Engine, Switch, Accessory ID#s");
 

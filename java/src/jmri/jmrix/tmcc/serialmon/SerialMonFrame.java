@@ -62,9 +62,9 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         // TMCC 2 parsing
         if (opCode == 0xF8 || opCode == 0xF9 || opCode == 0xFB) {
             // TMCC2 Engine Commands
-            int A = (val / 512) & 0x7F;
-            int C = (val / 32) & 0x03;
-            int D = val & 0x1F;
+            int A = (val / 512) & 0x7F; // A is TMCC Adddress Code
+            int C = (val / 32) & 0x03; // C is TMCC Command Code
+            int D = val & 0x1F; // D is TMCC Data Code
             if ((val & 0x0100) == 0x0100) {
                 switch (C) {
                     case 0:
@@ -103,7 +103,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 15:
                                 return "TMCC2 - Engine " + A + " - AUX2 On";
                             case 16:
-                                return "TMCC2 - Engine " + A + " - Num 0 - Engine Reset - TMCC2 Feature Type 0 - Needed to toggle ERR 100 Speed Steps";
+                                return "TMCC2 - Engine " + A + " - Num 0 - Engine Reset - Needed to toggle ERR 100 Speed Steps - TMCC2 Feature Type 0 ";
                             case 17:
                                 return "TMCC2 - Engine " + A + " - Num 1 - Sound Volume Increase - TMCC2 Feature Type 1";
                             case 18:
@@ -150,7 +150,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             return "TMCC2 - Engine " + A + " - Momentum High";
                         }
                         if ((D & 0x17) == 3) {
-                            return "TMCC2 - Engine " + A + " - Set";
+                            return "TMCC2 - Engine ID " + A + " - Set";
                         }
                         if ((D & 0x17) == 6) {
                             return "TMCC2 - Engine " + A + " - Unassigned FnKey";
@@ -163,7 +163,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     default:    // to let the compiler know there are only 3 cases
                         return "TMCC2 - Engine " + A + " - Unassigned FnKey";
                 }
-
             }
         }
         
@@ -172,33 +171,39 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         if (opCode == 0xFE) {
             if ((val & 0xC000) == 0x4000) {
                 // TMCC1 Switch Commands
-                int A = (val / 128) & 0x7F;
-                int C = (val / 32) & 0x03;
-                int D = val & 0x1F;
+                int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
+                int C = (val / 32) & 0x03; // C is TMCC Command Code
+                int D = val & 0x1F; // D is TMCC Data Code
                 if ((C == 0) && (D == 0)) {
-                    return "Throw switch " + A + " THROUGH";
+                    return "Throw switch " + A + " - THROUGH";
                 } else if ((C == 0) && (D == 0x1F)) {
-                    return "Throw switch " + A + " OUT";
-                } else if ((C == 1) && (D == 0x09)) {
-                    return "Switch " + A + " set address";
+                    return "Throw switch " + A + " - OUT";
+                } else if ((C == 1) && (D == 0x0B)) {
+                    return "Switch ID " + A + " - Set";                
                 } else if (C == 2) {
-                    return "Assign switch " + A + " to route " + D + " THROUGH";
+                    return "Assign switch " + A + " to route " + D + " - THROUGH";
                 } else if (C == 3) {
-                    return "Assign switch " + A + " to route " + D + " OUT";
+                    return "Assign switch " + A + " to route " + D + " - OUT";
                 } else {
                     return "unrecognized switch command with A=" + A + " C=" + C + " D=" + D;
                 }
             } else if ((val & 0xF000) == 0xD000) {
                 // TMCC1 Route Commands
-                int A = (val / 128) & 0x1F;
-                int C = (val / 32) & 0x03;
-                int D = val & 0x1F;
-                return "route command with A=" + A + " C=" + C + " D=" + D;
+                int A = (val / 128) & 0x1F; // A is TMCC Adddress Code
+                int C = (val / 32) & 0x03; // C is TMCC Command Code
+                int D = val & 0x1F; // D is TMCC Data Code
+                if ((C == 0) && (D == 0x1F)) {
+                    return "Route " + A + " - THROW";
+                } else if ((C == 1) && (D == 0x0C)) {
+                    return "Route " + A + " - CLEAR";
+                } else {
+                      return "unrecognized route command with A=" + A + " C=" + C + " D=" + D;
+                }
             } else if ((val & 0xC000) == 0x0000) {
                 // TMCC1 Engine Commands
-                int A = (val / 128) & 0x7F;
-                int C = (val / 32) & 0x03;
-                int D = val & 0x1F;
+                int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
+                int C = (val / 32) & 0x03; // C is TMCC Command Code
+                int D = val & 0x1F; // D is TMCC Data Code
                 switch (C) {
                     case 0:
                     
@@ -283,7 +288,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             return "TMCC1 - Engine " + A + " - Momentum High";
                         }
                         if ((D & 0x17) == 3) {
-                            return "TMCC1 - Engine " + A + " - Set";
+                            return "TMCC1 - Engine ID " + A + " - Set";
                         }
                         if ((D & 0x17) == 6) {
                             return "TMCC1 - Engine " + A + " - Unassigned FnKey";
@@ -299,25 +304,86 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
             } else if ((val & 0xF800) == 0xC800) {
                 // TMCC1 Train Commands
-                int A = (val / 128) & 0x0F;
-                int C = (val / 32) & 0x03;
-                int D = val & 0x1F;
-                return "train command with A=" + A + " C=" + C + " D=" + D;
+                int A = (val / 128) & 0x0F; // A is TMCC Adddress Code
+                int C = (val / 32) & 0x03; // C is TMCC Command Code
+                int D = val & 0x1F; // D is TMCC Data Code
+                return "unrecognized train command with A=" + A + " C=" + C + " D=" + D;
             } else if ((val & 0xC000) == 0x8000) {
                 // TMCC1 Accessory Commands
-                int A = (val / 128) & 0x7F;
-                int C = (val / 32) & 0x03;
-                int D = val & 0x1F;
-                return "accessory command with A=" + A + " C=" + C + " D=" + D;
+                int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
+                int C = (val / 32) & 0x03; // C is TMCC Command Code
+                int D = val & 0x1F; // D is TMCC Data Code
+                if ((C == 0) && (D == 0x08)) {
+                    return "Aux 1 - ACC " + A + " - OFF";
+                } else if ((C == 0) && (D == 0x09)) {
+                    return "Aux 1 - ACC " + A + " - OPTION 1";
+                } else if ((C == 0) && (D == 0x0A)) {
+                    return "Aux 1 - ACC " + A + " - OPTION 2";
+                } else if ((C == 0) && (D == 0x0B)) {
+                    return "Aux 1 - ACC " + A + " - ON";
+                } else if ((C == 0) && (D == 0x0C)) {
+                    return "Aux 2 - ACC " + A + " - OFF";
+                } else if ((C == 0) && (D == 0x0D)) {
+                    return "Aux 2 - ACC " + A + " - OPTION 1";
+                } else if ((C == 0) && (D == 0x0E)) {
+                    return "Aux 2 - ACC " + A + " - OPTION 2";
+                } else if ((C == 0) && (D == 0x0F)) {
+                    return "Aux 2 - ACC " + A + " - ON";
+//                } else if ((C == 0) && (D == 0x??)) {
+//                    return "Numeric Command - ACC " + A + " - 0-9";
+                } else if ((C == 1) && (D == 0x00)) {
+                    return "ALL ACC OFF";
+                } else if ((C == 1) && (D == 0x1F)) {
+                    return "ALL ACC ON";
+                } else if ((C == 1) && (D == 0x0B)) {
+                    return "Accessory ID " + A + " - Set";
+//                } else if ((C == 1) && (D == 0x??)) {
+//                    return "Assign Aux 1 to Group D " + A + " - 0-9";
+//                } else if ((C == 1) && (D == 0x??)) {
+//                    return "Assign Aux 2 to Group D " + A + " - 0-9"";
+                } else {
+                    return "unrecognized accessory command with A=" + A + " C=" + C + " D=" + D;
+                }
             } else if ((val & 0xF800) == 0xC000) {
                 // TMCC1 Group Commands
-                int A = (val / 128) & 0x0F;
-                int C = (val / 32) & 0x03;
-                int D = val & 0x1F;
-                return "group command with A=" + A + " C=" + C + " D=" + D;
+                int A = (val / 128) & 0x0F; // A is TMCC Adddress Code
+                int C = (val / 32) & 0x03; // C is TMCC Command Code
+                int D = val & 0x1F; // D is TMCC Data Code
+                if ((C == 0) && (D == 0x08)) {
+                    return "GROUP - ACC " + A + " - OFF";
+                } else if ((C == 0) && (D == 0x09)) {
+                    return "GROUP - ACC " + A + " - OPTION 1";
+                } else if ((C == 0) && (D == 0x0A)) {
+                    return "GROUP - ACC " + A + " - OPTION 2";
+                } else if ((C == 0) && (D == 0x0B)) {
+                    return "GROUP - ACC " + A + " - ON";
+                } else if ((C == 1) && (D == 0x0C)) {
+                    return "GROUP - ACC " + A + " - CLEAR";
+                } else {
+                    return "unrecognized group command with A=" + A + " C=" + C + " D=" + D;
+                }
+            }
+            
+        }
 
+        // TMCC Error parsing
+        if (opCode == 0x00) {
+            int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
+            int C = (val / 32) & 0x03; // C is TMCC Command Code
+            int D = val & 0x1F; // D is TMCC Data Code
+            if ((C == 0) && (D == 0)) {
+                return "Address Must be Between 1-98 for TMCC";
+            } else if ((C == 0) && (D == 0x01)) {
+                return "CV Must Equal 1 for Programming TMCC Loco/Engine, Switch, Accessory ID#s";
+            } else if ((C == 0) && (D == 0x02)) {
+                return "CV Must Equal 2 for Programming TMCC Feature Type";
+            } else if ((C == 0) && (D == 0x03)) {
+                return "Value Entered is Not a TMCC1 Feature Type";
+            } else if ((C == 0) && (D == 0x04)) {
+                return "Value Entered is Not a TMCC2 Feature Type";                
             }
         }
+        
         return "TMCC - CV#, Loco ID#/Address/Feature Value - Out of Range";
+        }
     }
-}
