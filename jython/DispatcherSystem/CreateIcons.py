@@ -846,7 +846,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         if best_mid_angle > 180.0 and best_mid_angle < 360.0:
             icon_distance = radius + 70 # Place icon 20 pixels out from the turntable radius plus a bit to allow for the icon length
         else:
-            icon_distance = radius - 20 # Place icon 20 pixels out from the turntable radius
+            icon_distance = radius + 30 # Place icon 20 pixels out from the turntable radius
         x_reqd = int(turntable_center.getX() + icon_distance * math.sin(final_angle_rad))
         y_reqd = int(turntable_center.getY() - icon_distance * math.cos(final_angle_rad))
         # print "  Turntable Centre (x, y):", int(turntable_center.getX()), ",", int(turntable_center.getY())
