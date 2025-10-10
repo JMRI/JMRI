@@ -16,7 +16,6 @@ import jmri.jmrit.display.layoutEditor.LayoutRHXOver;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
