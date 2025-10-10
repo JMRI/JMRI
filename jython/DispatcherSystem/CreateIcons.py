@@ -785,68 +785,35 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_icon_position(self, turntable, turntableView):
         import math
+        # print "--- Calculating icon position for turntable:", turntable.getName(), "---"
         turntable_center = turntableView.getCoordsCenter()
         radius = turntable.getRadius()
         rays = turntable.getRayTrackList()
 
-        if not rays:
-            # Fallback for turntables with no rays: place icon bottom-right
-            return [int(turntable_center.getX()) + 30, int(turntable_center.getY()) + 25]
+        if len(rays) < 2:
+            # Fallback for turntables with 0 or 1 ray: place icon bottom-right
+            # print "  Fewer than 2 rays, using fallback position."
+            x_reqd = int(turntable_center.getX()) + 30
+            y_reqd = int(turntable_center.getY()) + 25
+            return [x_reqd, y_reqd]
 
+        # Get all ray angles in degrees and sort them
         angles = sorted([ray.getAngle() for ray in rays])
+        # print "  Sorted ray angles (degrees):", angles
 
-        if len(angles) == 1:
-            # If there's only one ray, place the icon 180 degrees opposite to it.
-            best_mid_angle = (angles[0] + 180.0) % 360.0
-        else:
-            # Calculate angular gaps between adjacent rays
-            gaps = []
-            for i in range(len(angles) - 1):
-                gap = angles[i+1] - angles[i]
-                gaps.append(gap)
-
-            # Add the wrap-around gap between the last and first ray
-            wrap_around_gap = (360.0 - angles[-1]) + angles[0]
-            gaps.append(wrap_around_gap)
-
-            max_gap = max(gaps)
-
-            # Find all gaps that are the largest
-            best_mid_angle = -1
-            min_angle_diff = 361 # Larger than any possible angle difference
-
-            # Define a preferred angle for tie-breaking (bottom-right quadrant)
-            preferred_angle = math.degrees(math.atan2(25, 30)) # atan2(y, x)
-
-            for i in range(len(gaps)):
-                if abs(gaps[i] - max_gap) < 1e-6: # Compare floats with a tolerance
-                    if i < len(angles) - 1:
-                        mid_angle = angles[i] + max_gap / 2.0
-                    else: # Wrap-around case
-                        mid_angle = (angles[-1] + max_gap / 2.0) % 360.0
-
-                    # Normalize angle difference for tie-breaking
-                    angle_diff = abs(mid_angle - preferred_angle)
-                    if angle_diff < min_angle_diff:
-                        min_angle_diff = angle_diff
-                        best_mid_angle = mid_angle
-        # Convert the final angle to radians for trig functions
-        final_angle_rad = math.radians(best_mid_angle)
-        # Place icon just outside the turntable radius
-        icon_distance = radius + 25
-        x_reqd = int(turntable_center.getX() + icon_distance * math.sin(final_angle_rad))
-        y_reqd = int(turntable_center.getY() - icon_distance * math.cos(final_angle_rad))
-        # return [x_reqd, y_reqd]
         # Calculate angular gaps between adjacent rays
         gaps = []
         for i in range(len(angles) - 1):
             gap = angles[i+1] - angles[i]
             gaps.append(gap)
+
         # Add the wrap-around gap between the last and first ray
         wrap_around_gap = (360.0 - angles[-1]) + angles[0]
         gaps.append(wrap_around_gap)
+        # print "  Calculated gaps:", gaps
 
         max_gap = max(gaps)
+        # print "  Max gap found:", max_gap
 
         # Find all gaps that are the largest
         best_mid_angle = -1
@@ -855,6 +822,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         # Define a preferred angle for tie-breaking (bottom-right quadrant)
         preferred_angle = math.degrees(math.atan2(25, 30)) # atan2(y, x)
         # print "  Preferred angle for tie-breaking:", preferred_angle
+
         for i in range(len(gaps)):
             if abs(gaps[i] - max_gap) < 1e-6: # Compare floats with a tolerance
                 # print "  Found a max gap at index", i
@@ -871,13 +839,14 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                     # print "    This is the new best candidate."
                     min_angle_diff = angle_diff
                     best_mid_angle = mid_angle
+
         # print "  Final chosen mid-angle:", best_mid_angle
         # Convert the final angle to radians for trig functions
         final_angle_rad = math.radians(best_mid_angle)
         if best_mid_angle > 180.0 and best_mid_angle < 360.0:
             icon_distance = radius + 70 # Place icon 20 pixels out from the turntable radius plus a bit to allow for the icon length
         else:
-            icon_distance = radius + 25 # Place icon 20 pixels out from the turntable radius
+            icon_distance = radius - 20 # Place icon 20 pixels out from the turntable radius
         x_reqd = int(turntable_center.getX() + icon_distance * math.sin(final_angle_rad))
         y_reqd = int(turntable_center.getY() - icon_distance * math.cos(final_angle_rad))
         # print "  Turntable Centre (x, y):", int(turntable_center.getX()), ",", int(turntable_center.getY())
