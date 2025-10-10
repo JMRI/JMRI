@@ -121,6 +121,19 @@ final public class ConnectivityUtil {
             @CheckForNull Block nextBlock,
             boolean suppress) {
         List<LayoutTrackExpectedState<LayoutTurnout>> result = new ArrayList<>();
+        
+        // If this is a turntable boundary, add the required turnouts to position the turntable.
+        for (LayoutTurntable turntable : layoutEditor.getLayoutTurntables()) {
+            if (turntable.isTurntableBoundary(currBlock, prevBlock)) {
+                log.debug("getTurnoutList: Detected turntable boundary between {} and {}.",
+                        (currBlock != null) ? currBlock.getDisplayName() : "null",
+                        (prevBlock != null) ? prevBlock.getDisplayName() : "null");
+                List<LayoutTrackExpectedState<LayoutTurnout>> turntableTurnouts =
+                        turntable.getTurnoutList(currBlock, prevBlock, nextBlock);
+                result.addAll(turntableTurnouts);
+                return result; // This path is handled, no need to check other turnouts.
+            }
+        }
 
         // initialize
         currLayoutBlock = null;
@@ -2830,6 +2843,86 @@ final public class ConnectivityUtil {
                 || (lt.getLayoutBlockD() == currLayoutBlock)))
                 .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    /**
+     * Get the Turntable at the boundary of two blocks.
+     *
+     * @param curBlock  the current block (which should contain the turntable)
+     * @param prevBlock the previous block (which should connect to a ray)
+     * @return the LayoutTurntable at the boundary, or null if none
+     */
+    @CheckReturnValue
+    @CheckForNull
+    public LayoutTurntable getTurntable(
+            @CheckForNull Block curBlock,
+            @CheckForNull Block prevBlock) {
+
+        if (curBlock == null || prevBlock == null) {
+            return null;
+        }
+
+        // Iterate through all turntables on the panel
+        for (LayoutTurntable turntable : layoutEditor.getLayoutTurntables()) {
+            // Check if this turntable is in the current block
+            if (turntable.getLayoutBlock() != null && turntable.getLayoutBlock().getBlock() == curBlock) {
+                // Now check if any of its rays connect to the previous block using the correct method names
+                for (int i = 0; i < turntable.getNumberRays(); i++) {
+                    TrackSegment rayConnection = turntable.getRayConnectOrdered(i);
+                    if (rayConnection != null && rayConnection.getLayoutBlock() != null
+                            && rayConnection.getLayoutBlock().getBlock() == prevBlock) {
+                        // Found the turntable at the boundary
+                        return turntable;
+                    }
+                }
+            }
+        }
+        return null; // No turntable found at this boundary
+    }
+
+    /**
+     * Get the Turntable Ray index at the boundary of two blocks.
+     *
+     * @param curBlock  the current block (which should contain the turntable)
+     * @param prevBlock the previous block (which should connect to a ray)
+     * @return the index of the connecting ray, or -1 if not found
+     */
+    @CheckReturnValue
+    public int getTurntableRay(
+            @CheckForNull Block curBlock,
+            @CheckForNull Block prevBlock) {
+
+        if (curBlock == null || prevBlock == null) {
+            return -1;
+        }
+
+        // Iterate through all turntables on the panel
+        for (LayoutTurntable turntable : layoutEditor.getLayoutTurntables()) {
+            // Check if this turntable is in the current block
+            if (turntable.getLayoutBlock() != null && turntable.getLayoutBlock().getBlock() == curBlock) {
+                // Now check if any of its rays connect to the previous block using the correct method names
+                for (int i = 0; i < turntable.getNumberRays(); i++) {
+                    TrackSegment rayConnection = turntable.getRayConnectOrdered(i);
+                    if (rayConnection != null && rayConnection.getLayoutBlock() != null
+                            && rayConnection.getLayoutBlock().getBlock() == prevBlock) {
+                        // Found the connecting ray, return its index
+                        return i;
+                    }
+                }
+            }
+            // Also check for the case where the train is leaving the turntable using the correct method names
+            if (turntable.getLayoutBlock() != null && turntable.getLayoutBlock().getBlock() == prevBlock) {
+                for (int i = 0; i < turntable.getNumberRays(); i++) {
+                    TrackSegment rayConnection = turntable.getRayConnectOrdered(i);
+                    if (rayConnection != null && rayConnection.getLayoutBlock() != null
+                            && rayConnection.getLayoutBlock().getBlock() == curBlock) {
+                        // Found the connecting ray, return its index
+                        return i;
+                    }
+                }
+            }
+        }
+        return -1; // No connecting ray found
     }
 
     // initialize logging
