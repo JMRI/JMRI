@@ -2144,6 +2144,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     kar.setLastLocationId(car.getLocationId());
                     kar.setLastTrackId(car.getTrackId());
                     kar.setLastDate(_startTime);
+                    kar.setMoves(kar.getMoves() + 1); // bump count
                     kar.setCloneOrder(cloneCreationOrder); // for reset
                 }
             }
