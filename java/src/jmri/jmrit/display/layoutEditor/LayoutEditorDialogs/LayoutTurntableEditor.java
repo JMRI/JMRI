@@ -165,14 +165,6 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             LayoutEditor.setupComboBox(bufferMastComboBox, false, true, true);
             bufferMastComboBox.setEditable(false);
             bufferMastComboBox.setAllowNull(true);
-            exitMastComboBox.addActionListener(e -> {
-                SignalMast newMast = exitMastComboBox.getSelectedItem();
-                layoutTurntable.setExitSignalMast( (newMast != null) ? newMast.getSystemName() : null );
-            });
-            bufferMastComboBox.addActionListener(e -> {
-                SignalMast newMast = bufferMastComboBox.getSelectedItem();
-                layoutTurntable.setBufferSignalMast( (newMast != null) ? newMast.getSystemName() : null );
-            });
 
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
@@ -236,6 +228,18 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                 mastsUsedElsewhere.remove(ray.getApproachMast());
             }
         }
+
+        exitMastComboBox.setExcludedItems(mastsUsedElsewhere);
+        exitMastComboBox.addActionListener(e -> {
+            SignalMast newMast = exitMastComboBox.getSelectedItem();
+            layoutTurntable.setExitSignalMast( (newMast != null) ? newMast.getSystemName() : null );
+        });
+
+        bufferMastComboBox.setExcludedItems(mastsUsedElsewhere);
+        bufferMastComboBox.addActionListener(e -> {
+            SignalMast newMast = bufferMastComboBox.getSelectedItem();
+            layoutTurntable.setBufferSignalMast( (newMast != null) ? newMast.getSystemName() : null );
+        });
 
         // Set up for Edit
         editLayoutTurntableRadiusTextField.setText(" " + layoutTurntable.getRadius());
