@@ -170,12 +170,10 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             exitMastComboBox.addActionListener(e -> {
                 SignalMast newMast = exitMastComboBox.getSelectedItem();
                 layoutTurntable.setExitSignalMast( (newMast != null) ? newMast.getSystemName() : null );
-                refreshAllMastComboBoxes();
             });
             bufferMastComboBox.addActionListener(e -> {
                 SignalMast newMast = bufferMastComboBox.getSelectedItem();
                 layoutTurntable.setBufferSignalMast( (newMast != null) ? newMast.getSystemName() : null );
-                refreshAllMastComboBoxes();
             });
 
             // set up Done and Cancel buttons
@@ -333,7 +331,6 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                 approachMastComboBoxes.get(i).addActionListener(e -> {
                     SignalMast newMast = approachMastComboBoxes.get(index).getSelectedItem();
                     layoutTurntable.getRayTrackList().get(index).setApproachMast( (newMast != null) ? newMast.getSystemName() : null );
-                    refreshAllMastComboBoxes();
                 });
             }
             if (!approachMastComboBoxes.isEmpty()) {
@@ -385,21 +382,6 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         editLayoutTurntableRayPanel.revalidate();
         editLayoutTurntableRayPanel.repaint();
         editLayoutTurntableFrame.pack();
-    }
-    
-    private void refreshAllMastComboBoxes() {
-        // Create a list of all mast combo boxes in this dialog
-        List<NamedBeanComboBox<SignalMast>> allMastComboBoxes = new ArrayList<>();
-        allMastComboBoxes.add(exitMastComboBox);
-        allMastComboBoxes.add(bufferMastComboBox);
-        allMastComboBoxes.addAll(approachMastComboBoxes);
-
-        // The only exclusions are masts used elsewhere on the panel.
-        // This set is initialized once when the editor is opened.
-        Set<SignalMast> exclusions = new HashSet<>(mastsUsedElsewhere);
-
-        // Apply the same exclusion list to all combo boxes.
-        allMastComboBoxes.forEach(combo -> combo.setExcludedItems(exclusions));
     }
 
     private void saveRayPanelDetail() {
