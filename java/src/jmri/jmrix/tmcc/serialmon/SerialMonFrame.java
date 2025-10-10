@@ -67,8 +67,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             int D = val & 0x1F; // D is TMCC Data Code
             if ((val & 0x0100) == 0x0100) {
                 switch (C) {
-                    case 0:
-                    
+                    case 0: // If C (TMCC Command Code) == 0                    
                         switch (D) {
                             case 0:
                                 return "TMCC2 - Engine " + A + " - Forward Direction";
@@ -138,8 +137,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 return "TMCC2 - Engine " + A + " - action command D=" + D;
                         }
 
-                    case 1:
-                        //return "TMCC2 - Engine " + A + " - extended command (C=1) with D=" + D;
+                    case 1: // If C (TMCC Command Code) == 1
                         if ((D & 0x17) == 0) {
                             return "TMCC2 - Engine " + A + " - Momentum Low";
                         }
@@ -153,17 +151,20 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             return "TMCC2 - Engine ID " + A + " - Set";
                         }
                         if ((D & 0x17) == 6) {
-                            return "TMCC2 - Engine " + A + " - Unassigned FnKey";
+                            return "TMCC2 - Engine " + A + " - Unassigned FnKey 111";
                         }
                     
                         //$FALL-THROUGH$
-                    case 2:
-                        return "TMCC2 - Engine " + A + " - Change Speed (Relative) by " + (D - 5);
-                    case 3:
+                    case 2: // If C (TMCC Command Code) == 2
+                        return "TMCC2 - Engine " + A + " - Change Speed (Relative) by +" + (D - 5);
+                        
+                    case 3: // If C (TMCC Command Code) == 3
                     default:    // to let the compiler know there are only 3 cases
-                        return "TMCC2 - Engine " + A + " - Unassigned FnKey";
+                        return "TMCC2 (32 Speed Steps) - Engine " + A + " - Speed (Absolute) = " + D;
                 }
             }
+
+            return "TMCC2 (200 Speed Steps) - Engine " + A + " - Speed (Absolute) = " + (val & 0xFF);
         }
         
         
@@ -205,8 +206,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
                 switch (C) {
-                    case 0:
-                    
+                    case 0: // If C (TMCC Command Code) == 0                    
                         switch (D) {
                             case 0:
                                 return "TMCC1 - Engine " + A + " - Forward Direction";
@@ -276,8 +276,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 return "TMCC1 - Engine " + A + " - action command D=" + D;
                         }
 
-                    case 1:
-                        //return "TMCC1 - Engine " + A + " - extended command (C=1) with D=" + D;
+                    case 1: // If C (TMCC Command Code) == 1
                         if ((D & 0x17) == 0) {
                             return "TMCC1 - Engine " + A + " - Momentum Low";
                         }
@@ -291,15 +290,16 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             return "TMCC1 - Engine ID " + A + " - Set";
                         }
                         if ((D & 0x17) == 6) {
-                            return "TMCC1 - Engine " + A + " - Unassigned FnKey";
+                            return "TMCC1 - Engine " + A + " - Unassigned FnKey 222";
                         }
                     
                     //$FALL-THROUGH$
-                    case 2:
+                    case 2: // If C (TMCC Command Code) == 2
                         return "TMCC1 - Engine " + A + " - Change Speed (Relative) by " + (D - 5);
-                    case 3:
+
+                    case 3: // If C (TMCC Command Code) == 3
                     default:    // to let the compiler know there are only 3 cases
-                        return "TMCC1 - Engine " + A + " - Unassigned FnKey";
+                        return "TMCC1 (32 Speed Steps) - Engine " + A + " - Speed (Absolute) = " + D;
                 }
 
             } else if ((val & 0xF800) == 0xC800) {
@@ -362,13 +362,13 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 } else {
                     return "unrecognized group command with A=" + A + " C=" + C + " D=" + D;
                 }
-            }
-            
+            }            
         }
+
 
         // TMCC Error parsing
         if (opCode == 0x00) {
-            int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
+//            int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
             int C = (val / 32) & 0x03; // C is TMCC Command Code
             int D = val & 0x1F; // D is TMCC Data Code
             if ((C == 0) && (D == 0)) {
@@ -385,5 +385,5 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
         
         return "TMCC - CV#, Loco ID#/Address/Feature Value - Out of Range";
-        }
     }
+}
