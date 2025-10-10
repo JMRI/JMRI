@@ -1105,6 +1105,92 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
+     * Checks if the path represented by the blocks crosses this turntable.
+     * @param block1 A block in the path.
+     * @param block2 Another block in the path.
+     * @return true if the path crosses this turntable.
+     */
+    public boolean isTurntableBoundary(Block block1, Block block2) {
+        if (getLayoutBlock() == null) {
+            return false;
+        }
+        Block turntableBlock = getLayoutBlock().getBlock();
+        if (turntableBlock == null) {
+            return false;
+        }
+
+        // Case 1: Moving to/from the turntable block itself.
+        if ((block1 == turntableBlock && isRayBlock(block2)) ||
+            (block2 == turntableBlock && isRayBlock(block1))) {
+            return true;
+        }
+
+        // Case 2: Moving between two ray blocks (crossing over the turntable).
+        if (isRayBlock(block1) && isRayBlock(block2)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Gets the list of turnouts and their required states to align the turntable
+     * for a path defined by the given blocks.
+     *
+     * @param curBlock  The current block in the train's path.
+     * @param prevBlock The previous block in the train's path.
+     * @param nextBlock The next block in the train's path.
+     * @return A list of LayoutTrackExpectedState objects for the turnouts.
+     */
+    public List<LayoutTrackExpectedState<LayoutTurnout>> getTurnoutList(Block curBlock, Block prevBlock, Block nextBlock) {
+        List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList = new ArrayList<>();
+        if (!isTurnoutControlled()) {
+            return turnoutList;
+        }
+
+        Block turntableBlock = (getLayoutBlock() != null) ? getLayoutBlock().getBlock() : null;
+        if (turntableBlock == null) {
+            return turnoutList;
+        }
+
+        int targetRay = -1;
+
+        // Determine which ray needs to be aligned.
+        if (prevBlock == turntableBlock) {
+            // Train is leaving the turntable, so align to the destination ray.
+            targetRay = getRayForBlock(curBlock);
+        } else if (curBlock == turntableBlock) {
+            // Train is entering the turntable, so align to the approaching ray.
+            targetRay = getRayForBlock(prevBlock);
+        }
+
+        if (targetRay != -1) {
+            Turnout t = getRayTurnout(targetRay);
+            if (t != null) {
+                // Create a temporary LayoutTurnout wrapper for the dispatcher.
+                // This object is not on a panel and is for logic purposes only.
+                LayoutLHTurnout tempLayoutTurnout = new LayoutLHTurnout("TURNTABLE_WRAPPER_" + t.getSystemName(), models);
+                tempLayoutTurnout.setTurnout(t.getSystemName());
+                int requiredState = Turnout.THROWN;
+
+                log.debug("Adding turntable turnout {} to list with required state {}", t.getDisplayName(), requiredState);
+                turnoutList.add(new LayoutTrackExpectedState<>(tempLayoutTurnout, requiredState));
+            }
+        }
+        return turnoutList;
+    }
+
+    private int getRayForBlock(Block block) {
+        if (block == null) return -1;
+        for (int i = 0; i < getNumberRays(); i++) {
+            TrackSegment ts = getRayConnectOrdered(i);
+            if (ts != null && ts.getLayoutBlock() != null && ts.getLayoutBlock().getBlock() == block) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

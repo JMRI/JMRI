@@ -254,28 +254,8 @@ public class AutoTurnouts {
                         var panel = lblock.getMaxConnectedPanel();
                         if (panel != null) {
                             var connection = new ConnectivityUtil(panel);
+                            // note turnouts for turntables are added to the list in getTurnoutList
                             turnoutList = connection.getTurnoutList(curBlock, prevBlock, nextBlock, true);
-                            // Check for train entering a turntable
-                            LayoutTurntable turntable = connection.getTurntable(curBlock, prevBlock);
-                            if (turntable != null) {
-                                int position = connection.getTurntableRay(curBlock, prevBlock);
-                                if (position != -1 && turntable.getPosition() != position) {
-                                    log.debug("{}: Auto-setting turntable '{}' to position '{}'",
-                                            at.getTrainName(), turntable.getName(), position);
-                                    turntable.setPosition(position);
-                                }
-                            } else {
-                                // Check for train exiting a turntable
-                                turntable = connection.getTurntable(prevBlock, curBlock);
-                                if (turntable != null) {
-                                    int position = connection.getTurntableRay(prevBlock, curBlock);
-                                    if (position != -1 && turntable.getPosition() != position) {
-                                        log.debug("{}: Auto-setting turntable '{}' to position '{}' for exit",
-                                                at.getTrainName(), turntable.getName(), position);
-                                        turntable.setPosition(position);
-                                    }
-                                }
-                            }
                         }
                     }
                 }

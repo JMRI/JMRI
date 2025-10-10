@@ -122,26 +122,16 @@ final public class ConnectivityUtil {
             boolean suppress) {
         List<LayoutTrackExpectedState<LayoutTurnout>> result = new ArrayList<>();
         
-        // If this is a turntable boundary, there are no standard turnouts to find. Return an empty list to prevent warnings.
+        // If this is a turntable boundary, add the required turnouts to position the turntable.
         for (LayoutTurntable turntable : layoutEditor.getLayoutTurntables()) {
-            if (turntable.getLayoutBlock() != null) {
-                Block turntableBlock = turntable.getLayoutBlock().getBlock();
-                // Case 1: Moving to/from the turntable block itself.
-                if ((currBlock == turntableBlock && turntable.isRayBlock(prevBlock)) ||
-                        (prevBlock == turntableBlock && turntable.isRayBlock(currBlock))) {
-                    log.debug("getTurnoutList: Detected direct turntable boundary, returning empty list.");
-                    return result;
-                }
-                // Case 2: Moving from a ray block to a block on the other side (away from the turntable).
-                // The routing logic might call getTurnoutList with (cur=Other, prev=Ray) or (cur=Ray, prev=Other).
-                if (turntable.isRayBlock(prevBlock) && currBlock != turntableBlock) {
-                    log.debug("getTurnoutList: Detected path starting from a ray block (prevBlock), returning empty list.");
-                    return result;
-                }
-                if (turntable.isRayBlock(currBlock) && prevBlock != turntableBlock) {
-                    log.debug("getTurnoutList: Detected path starting from a ray block (currBlock), returning empty list.");
-                    return result;
-                }
+            if (turntable.isTurntableBoundary(currBlock, prevBlock)) {
+                log.debug("getTurnoutList: Detected turntable boundary between {} and {}.",
+                        (currBlock != null) ? currBlock.getDisplayName() : "null",
+                        (prevBlock != null) ? prevBlock.getDisplayName() : "null");
+                List<LayoutTrackExpectedState<LayoutTurnout>> turntableTurnouts =
+                        turntable.getTurnoutList(currBlock, prevBlock, nextBlock);
+                result.addAll(turntableTurnouts);
+                return result; // This path is handled, no need to check other turnouts.
             }
         }
 
