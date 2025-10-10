@@ -3828,6 +3828,20 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         return true;
     }
+    
+    /**
+     * Checks to see if the train's staging departure track has been taken by another train.
+     * @return True if track has been allocated to another train.
+     */
+    public boolean checkDepartureTrack() {
+        return (Setup.isStagingTrackImmediatelyAvail() &&
+                !isTrainEnRoute() &&
+                getDepartureTrack() != null &&
+                getDepartureTrack().isStaging() &&
+                getDepartureTrack() != getTerminationTrack() &&
+                getDepartureTrack().getIgnoreUsedLengthPercentage() == Track.IGNORE_0 &&
+                getDepartureTrack().getDropRS() > 0);
+    }
 
     public void dispose() {
         if (getRoute() != null) {

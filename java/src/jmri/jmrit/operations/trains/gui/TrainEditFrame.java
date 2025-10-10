@@ -471,6 +471,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (ae.getSource() == resetButton) {
             if (_train != null) {
+                if (_train.checkDepartureTrack()) {
+                    int results = JmriJOptionPane.showConfirmDialog(null,
+                            Bundle.getMessage("StagingTrackUsed",
+                                    _train.getDepartureTrack().getName()),
+                            Bundle.getMessage("ShouldNotResetTrain"), JmriJOptionPane.OK_CANCEL_OPTION);
+                    if (results == JmriJOptionPane.OK_CANCEL_OPTION) {
+                        return;
+                    }
+                }
                 if (!_train.reset()) {
                     JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("TrainIsInRoute",
