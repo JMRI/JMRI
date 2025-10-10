@@ -32,8 +32,11 @@ public class TmccProgrammer extends AbstractProgrammer {
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
 
-        ret.add(TmccProgrammerManager.TMCCMODE1_ID);
-        ret.add(TmccProgrammerManager.TMCCMODE2_ID);
+        ret.add(TmccProgrammerManager.TMCCMODE1_ENGID);
+        ret.add(TmccProgrammerManager.TMCCMODE2_ENGID);
+        
+        ret.add(TmccProgrammerManager.TMCCMODE1_SWID);
+        ret.add(TmccProgrammerManager.TMCCMODE1_ACCID);
 
         return ret;
 
@@ -65,19 +68,34 @@ public class TmccProgrammer extends AbstractProgrammer {
             
             if (val > 0 && val < 99) {
 
-                if (getMode() == TmccProgrammerManager.TMCCMODE1_ID) {
+                if (getMode() == TmccProgrammerManager.TMCCMODE1_ENGID) {
                     SerialMessage m = new SerialMessage();
                     m.setOpCode(0xFE); // set the first byte/TMCC1 opcode to 0xFE
                     m.putAsWord((val * 128) + _func); // set the second/third byte (address/SET command for TMCC1)
                     tc.sendSerialMessage(m, null);
                 }
 
-                if  (getMode() == TmccProgrammerManager.TMCCMODE2_ID) {
+                if  (getMode() == TmccProgrammerManager.TMCCMODE2_ENGID) {
                     SerialMessage m = new SerialMessage();
                     m.setOpCode(0xF8); // set the first byte/TMCC2 opcode to 0xF8
                     m.putAsWord(((val * 512) + 256) + _func); // set the second/third byte (address/SET command for TMCC2)
                     tc.sendSerialMessage(m, null);
                 }
+                
+                if  (getMode() == TmccProgrammerManager.TMCCMODE1_SWID) {
+                    SerialMessage m = new SerialMessage();
+                    m.setOpCode(0xFE); // set the first byte/TMCC1 opcode to 0xFE
+                    m.putAsWord(((val * 128) + 16384) + _func); // set the second/third byte (address/SET command for TMCC2)
+                    tc.sendSerialMessage(m, null);
+                }
+                
+                if  (getMode() == TmccProgrammerManager.TMCCMODE1_ACCID) {
+                    SerialMessage m = new SerialMessage();
+                    m.setOpCode(0xFE); // set the first byte/TMCC1 opcode to 0xFE
+                    m.putAsWord(((val * 128) + 32768) + _func); // set the second/third byte (address/SET command for TMCC2)
+                    tc.sendSerialMessage(m, null);
+                }              
+
 
             } else {
                 SerialMessage m = new SerialMessage();
@@ -91,9 +109,9 @@ public class TmccProgrammer extends AbstractProgrammer {
         } else {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0x00);
-            m.putAsWord(00000);
+            m.putAsWord(00001);
             tc.sendSerialMessage(m, null);
-            log.warn("CV Must Equal 1 for Programming TMCC Loco/Engine ID#s");
+            log.warn("CV Must Equal 1 for Programming TMCC Loco/Engine, Switch, Accessory ID#s");
 
         }
 
