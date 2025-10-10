@@ -94,7 +94,7 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 
 - Update this note by executing the following line in your JMRI repository directory while you _don't_ have this file open in an editor. There are more details in the update-HOWTO.sh comments; arguments when you run it should be last release, this release you're making, the next release; you may need to update what's below:
 ```
-  ./scripts/update-HOWTO.sh 5.13.5 5.13.6 5.13.6
+  ./scripts/update-HOWTO.sh 5.13.5 5.13.6 5.13.7
 ```
 (if you have this file open in an editor, refresh the contents from disk after running the script)
 then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
@@ -325,12 +325,12 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.13.3-SNAPSHOT/5.13.5-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.13.4-SNAPSHOT/5.13.5-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=3/release.build=4/g release.properties
+        sed -i.bak s/release.build=4/release.build=5/g release.properties
 ```
  - Check that both those edits left 5.13.5 defined in the two files
  
@@ -571,9 +571,10 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.13.5+R7f7a285a4c.dmg](https://github.com/JMRI/JMRI/releases/download/v5.13.5/JMRI.5.13.5+R7f7a285a4c.dmg) | 1a9ad12a924dec7a6482ad5043b664da943e1a1fa80f923f1dd5da41f5953f59
-[JMRI.5.13.5+R7f7a285a4c.exe](https://github.com/JMRI/JMRI/releases/download/v5.13.5/JMRI.5.13.5+R7f7a285a4c.exe) | 2640810ac312109e2136230a1300183a6354813a8f388935cfe5fb54373abcb8
-[JMRI.5.13.5+R7f7a285a4c.tgz](https://github.com/JMRI/JMRI/releases/download/v5.13.5/JMRI.5.13.5+R7f7a285a4c.tgz) | c7420a25231f779e1381525acc0f3475b57eca6cece47b4f3ec4906de9845f3b
+[JMRI.5.13.5+R2d08d13dad.dmg](https://github.com/JMRI/JMRI/releases/download/v5.13.5/JMRI.5.13.5+R2d08d13dad.dmg) | fd2b6be9798789fb5c4078b0cbdc82cc4cb7c7706b283aa393ec912e2b8f3059
+[JMRI.5.13.5+R2d08d13dad.exe](https://github.com/JMRI/JMRI/releases/download/v5.13.5/JMRI.5.13.5+R2d08d13dad.exe) | d0162bdda3b49b75b4e2d20bdff5a910cd110030052adf927bdde6393e5ce34d
+[JMRI.5.13.5+R2d08d13dad.tgz](https://github.com/JMRI/JMRI/releases/download/v5.13.5/JMRI.5.13.5+R2d08d13dad.tgz) | e655bc7d82e050d6867093685b302e97d1c1e867a7358b7c5219c0490566171c
+
 ```
 
 - Attach files by selecting them or dragging them in from the release/ subdirectory. Make sure that the Linux one is .tgz, not .tar.
