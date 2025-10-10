@@ -55,7 +55,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     @org.junit.Ignore // Fails on Java 11
-    //@Test
+    @Test
     @Override
     @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testAddThroughDialog() {
@@ -547,7 +547,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 */
 
     @org.junit.Ignore // Fails on Java 11
-    //@Test
+    @Test
     @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testEditModule() throws JmriException {
 
