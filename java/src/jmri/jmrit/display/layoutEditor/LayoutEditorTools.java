@@ -9711,24 +9711,6 @@ final public class LayoutEditorTools {
         turnoutSignalMastD.getCombo().setExcludedItems(usedMasts);
     }
 
-    public void refreshSignalMastsAtTurntable(LayoutTurntable turntable,
-                                              NamedBeanComboBox<SignalMast> exitMast,
-                                              NamedBeanComboBox<SignalMast> bufferMast,
-                                              List<NamedBeanComboBox<SignalMast>> approachMasts) {
-        createListUsedSignalMasts();
-        // Remove masts assigned to the current turntable from the used list
-        if (turntable.getBufferMast() != null) usedMasts.remove(turntable.getBufferMast());
-        if (turntable.getExitSignalMast() != null) usedMasts.remove(turntable.getExitSignalMast());
-        for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
-            if (ray.getApproachMast() != null) usedMasts.remove(ray.getApproachMast());
-        }
-        if (exitMast != null) exitMast.setExcludedItems(usedMasts);
-        if (bufferMast != null) bufferMast.setExcludedItems(usedMasts);
-        if (approachMasts != null) {
-            for (NamedBeanComboBox<SignalMast> combo : approachMasts) combo.setExcludedItems(usedMasts);
-        }
-    }
-
     private LayoutTurnout.Geometry isMastAssignedHere(
             @CheckForNull SignalMast mast,
             @CheckForNull LayoutTurnout lTurnout) {
