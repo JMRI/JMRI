@@ -98,7 +98,7 @@ public class ExpressionTurnoutSwingTest extends SwingConfiguratorInterfaceTestBa
         new JComboBoxOperator(jdo, 2).setSelectedItem(ExpressionTurnout.TurnoutState.Closed);
         new JButtonOperator(jdo, "OK").push();  // NOI18N
 
-        JUnitUtil.waitFor(() -> {return expression.getSelectNamedBean().getNamedBean() != null;});
+        JUnitUtil.waitFor(() -> {return expression.getSelectNamedBean().getNamedBean() != null;}, "nb not null");
 
         Assert.assertEquals("IT1", expression.getSelectNamedBean().getNamedBean().getBean().getSystemName());
         Assert.assertEquals(ExpressionTurnout.TurnoutState.Closed, expression.getBeanState());

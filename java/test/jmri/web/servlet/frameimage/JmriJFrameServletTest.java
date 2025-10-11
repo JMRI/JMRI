@@ -1,5 +1,12 @@
 package jmri.web.servlet.frameimage;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,12 +19,6 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Invokes complete set of tests for the jmri.web.servlet.frameimage.JmriJFrameServlet class
@@ -79,7 +80,7 @@ public class JmriJFrameServletTest {
             }
         };
         // should not throw, so just invoke
-        assertDoesNotThrow( () -> out1.test_doGet() );
+        assertDoesNotThrow( () -> out1.assert_doGet() );
         
         // create testable object that throws IOException
         JmriJFrameServlet_ut out2 = new JmriJFrameServlet_ut() {
@@ -90,7 +91,7 @@ public class JmriJFrameServletTest {
             }
         };
         // invoke and check
-        thrown = assertThrows( IOException.class, () -> out2.test_doGet() );
+        thrown = assertThrows( IOException.class, () -> out2.assert_doGet() );
         assertNull(thrown.getCause());
 
         
@@ -103,7 +104,7 @@ public class JmriJFrameServletTest {
             }
         };
         // invoke and check
-        thrown = assertThrows( ServletException.class, () -> out3.test_doGet() );
+        thrown = assertThrows( ServletException.class, () -> out3.assert_doGet() );
         assertNull(thrown.getCause());
     }
     
@@ -116,7 +117,7 @@ public class JmriJFrameServletTest {
             return super.populateParameterMap(map);
         }
 
-        public void test_doGet() throws ServletException, IOException {
+        void assert_doGet() throws ServletException, IOException {
             doGet(null, null);
         }
     }

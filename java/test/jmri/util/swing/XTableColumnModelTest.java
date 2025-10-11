@@ -33,7 +33,7 @@ public class XTableColumnModelTest {
      */
     @Test
     public void testSetColumnVisible() {
-        XTableColumnModel instance = testModel();
+        XTableColumnModel instance = getTestModel();
         TableColumn column = instance.getColumn(0);
         assertTrue(instance.isColumnVisible(column));
         instance.setColumnVisible(column, false);
@@ -47,7 +47,7 @@ public class XTableColumnModelTest {
      */
     @Test
     public void testSetAllColumnsVisible() {
-        XTableColumnModel instance = testModel();
+        XTableColumnModel instance = getTestModel();
         TableColumn column1 = instance.getColumn(0);
         TableColumn column2 = instance.getColumn(1);
         TableColumn column3 = instance.getColumn(2);
@@ -69,7 +69,7 @@ public class XTableColumnModelTest {
     public void testGetColumnByModelIndex() {
         // all columns have modelIndex 0 until associated with columns from a
         // data model or explicitly set (as in this test)
-        XTableColumnModel instance = testModel();
+        XTableColumnModel instance = getTestModel();
         TableColumn column1 = instance.getColumn(0);
         TableColumn column2 = instance.getColumn(1);
         TableColumn column3 = instance.getColumn(2);
@@ -156,7 +156,7 @@ public class XTableColumnModelTest {
      */
     @Test
     public void testMoveColumn_int_int() {
-        XTableColumnModel instance = testModel();
+        XTableColumnModel instance = getTestModel();
         TableColumn column1 = instance.getColumn(0);
         TableColumn column2 = instance.getColumn(1);
         TableColumn column3 = instance.getColumn(2);
@@ -193,7 +193,7 @@ public class XTableColumnModelTest {
      */
     @Test
     public void testMoveColumn_3args() {
-        final XTableColumnModel instance = testModel();
+        final XTableColumnModel instance = getTestModel();
         TableColumn column1 = instance.getColumn(0);
         TableColumn column2 = instance.getColumn(1);
         TableColumn column3 = instance.getColumn(2);
@@ -267,7 +267,7 @@ public class XTableColumnModelTest {
      */
     @Test
     public void testGetColumnCount() {
-        XTableColumnModel instance = testModel();
+        XTableColumnModel instance = getTestModel();
         assertEquals(3, instance.getColumnCount(true));
         assertEquals(3, instance.getColumnCount(false));
         instance.setColumnVisible(instance.getColumn(0), false);
@@ -280,7 +280,7 @@ public class XTableColumnModelTest {
      */
     @Test
     public void testGetColumns() {
-        XTableColumnModel instance = testModel();
+        XTableColumnModel instance = getTestModel();
         // all columns visible
         int count = 0;
         Enumeration<TableColumn> e = instance.getColumns(true);
@@ -312,7 +312,7 @@ public class XTableColumnModelTest {
      */
     @Test
     public void testGetColumnIndex() {
-        XTableColumnModel instance = testModel();
+        XTableColumnModel instance = getTestModel();
         TableColumn column1 = instance.getColumn(0);
         assertEquals(0, instance.getColumnIndex(COLUMN1, true));
         assertEquals(0, instance.getColumnIndex(COLUMN1, false));
@@ -333,7 +333,7 @@ public class XTableColumnModelTest {
      */
     @Test
     public void testGetColumn() {
-        XTableColumnModel instance = testModel();
+        XTableColumnModel instance = getTestModel();
         TableColumn column1 = instance.getColumn(0);
         TableColumn column2 = instance.getColumn(0);
         instance.setColumnVisible(column1, false);
@@ -351,7 +351,7 @@ public class XTableColumnModelTest {
      *
      * @return the new model
      */
-    private XTableColumnModel testModel() {
+    private XTableColumnModel getTestModel() {
         XTableColumnModel instance = new XTableColumnModel();
         TableColumn column1 = new TableColumn();
         column1.setIdentifier(COLUMN1);

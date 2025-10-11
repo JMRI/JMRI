@@ -1,6 +1,7 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.AbstractMRMessage;
+
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import jmri.util.StringUtil;
 
 /**
  * Class for messages in the z21/Z21 protocol.
@@ -89,12 +92,15 @@ public class Z21Message extends AbstractMRMessage {
 
     /**
      * This ctor interprets the byte array as a sequence of characters to send.
-     *
+     * @deprecated 5.13.5, unused, requires further development.
      * @param a Array of bytes to send
      * @param l unused.
      */
+    @Deprecated( since="5.13.5", forRemoval=true)
     public Z21Message(byte[] a, int l) {
-        super(String.valueOf(a));
+        // super(String.valueOf(a)); // Spotbug toString on array
+        // requires further development to produce correct values for hardware type.
+        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""));
         setBinary(true);
     }
 

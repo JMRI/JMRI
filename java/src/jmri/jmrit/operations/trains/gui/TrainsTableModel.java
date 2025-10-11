@@ -12,7 +12,6 @@ import javax.swing.table.TableCellEditor;
 
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
-import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -520,7 +519,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
             log.debug("Reset train ({})", train.getName());
             // check to see if departure track was reused
-            if (checkDepartureTrack(train)) {
+            if (train.checkDepartureTrack()) {
                 log.debug("Train is departing staging that already has inbound cars");
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("StagingTrackUsed",
@@ -558,20 +557,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             log.debug("Enable conductor for train ({})", train.getName());
             launchConductor(train);
         }
-    }
-
-    /*
-     * Check to see if the departure track in staging has been taken by another
-     * train. return true if track has been allocated to another train.
-     */
-    private boolean checkDepartureTrack(Train train) {
-        return (Setup.isStagingTrackImmediatelyAvail() &&
-                !train.isTrainEnRoute() &&
-                train.getDepartureTrack() != null &&
-                train.getDepartureTrack().isStaging() &&
-                train.getDepartureTrack() != train.getTerminationTrack() &&
-                train.getDepartureTrack().getIgnoreUsedLengthPercentage() == Track.IGNORE_0 &&
-                train.getDepartureTrack().getDropRS() > 0);
     }
 
     private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<>();

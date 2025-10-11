@@ -177,8 +177,10 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
     }
 
     @Override
+    @Test
+    @NotApplicable("mask is ignored")
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored
+    }
 
     @Override
     @Test
