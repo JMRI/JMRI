@@ -1059,7 +1059,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         temp = (hardgroup.getSelection() != null);
         allIsOk &= temp;
         if (!temp) {
-            log.info("No harware version check radio button is selected.");
+            log.info("No hardware version check radio button is selected.");
         }
         temp = (softgroup.getSelection() != null);
         allIsOk &= temp;
