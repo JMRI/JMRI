@@ -90,8 +90,8 @@
 
         <li>The download will now happen. It might take a while.</li>
 
-        <li>Next select the "Wizard for project import", and use "Import existing Eclipse project"
-          then "Next"</li>
+        <li>After the download completes, select "Import existing Eclipse projects" under the
+          "Wizard for project import", then "Next".</li>
 
         <li>Select "Finish" to complete the import.</li>
       </ol>
@@ -134,8 +134,7 @@
       <p>If during the launch of DecoderPro or PanelPro the program hangs, or errors are
         reported to the console, there's a good chance that the META-INT files weren't created. To
         fix, run the Ant "build.xml" as described below with only two targets selected, "realclean"
-        followed by "panelpro". If the Ant build succeeds, you should see the program launch the
-        main PanelPro panel.</p>
+        followed by "tests".</p>
 
       <p>We also recommend that you deselect "Scrub output folders when cleaning projects" found
         under Window-&gt;Preferences-&gt;Java-&gt;Compiler-&gt;Building Output folder. This keeps
@@ -175,7 +174,7 @@
         and create a jmri.jar file if you wish. Use the "2 Ant Build" and in the window select the
         "Targets" tab, and use the appropriate checkbox to generate what you want. Two targets that
         are worth running if you're experiencing error messages in the Eclipse console window are
-        "realclean" followed by "panelpro".</p>
+        "realclean" followed by "tests".</p>
 
       <h2 id="build">Pushing changes to your GitHub branch</h2>
 
@@ -242,7 +241,7 @@
       </ul>
 
       <h2 id="errors">Compiler Errors and Warnings</h2>
-      <p>As of 9/8/2023 roughly 3100 warnings were being reported by the Eclipse. You can ignore
+      <p>As of 9/14/2025 roughly 2000 warnings were being reported by the Eclipse. You can ignore
         these for now.</p>
 
       <h2>JUnit Testing and Test Coverage</h2>

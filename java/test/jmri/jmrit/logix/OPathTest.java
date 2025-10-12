@@ -1,5 +1,10 @@
 package jmri.jmrit.logix;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 
 import jmri.BeanSetting;
@@ -8,10 +13,7 @@ import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests for the OPath class.
@@ -20,9 +22,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 public class OPathTest {
     
-    OBlockManager _blkMgr;
-    PortalManager _portalMgr;
-    jmri.TurnoutManager _turnoutMgr;
+    private OBlockManager _blkMgr;
+    private PortalManager _portalMgr;
+    private jmri.TurnoutManager _turnoutMgr;
 
     @Test
     public void testCtor() {
@@ -30,8 +32,8 @@ public class OPathTest {
 
         OPath op = new OPath(b, "name");
 
-        assertThat(op.getName()).withFailMessage("name").isEqualTo("name");
-        assertThat(op.getBlock()).withFailMessage("block").isEqualTo(b);
+        assertEquals( "name", op.getName(), "name");
+        assertEquals( b, op.getBlock(),"block");
     }
 
     @Test
@@ -39,8 +41,8 @@ public class OPathTest {
 
         OPath op = new OPath(null, "name");
 
-        assertThat(op.getName()).withFailMessage("name").isEqualTo("name");
-        assertThat(op.getBlock()).withFailMessage("block").isEqualTo(null);
+        assertEquals( "name", op.getName(), "name");
+        assertNull(op.getBlock(), "block");
     }
 
     @Test
@@ -51,7 +53,7 @@ public class OPathTest {
         OPath op = new OPath(b1, "name");
         op.setBlock(b2);
 
-        assertThat(op.getBlock()).withFailMessage("block").isEqualTo(b2);
+        assertEquals( b2, op.getBlock(), "block");
     }
 
     @Test
@@ -61,7 +63,7 @@ public class OPathTest {
         OPath op = new OPath(null, "name");
         op.setBlock(b);
 
-        assertThat(op.getBlock()).withFailMessage("block").isEqualTo(b);
+        assertEquals( b, op.getBlock(), "block");
     }
 
     @Test
@@ -71,20 +73,21 @@ public class OPathTest {
         OPath op = new OPath(b1, "name");
         op.setBlock(null);
 
-        assertThat(op.getBlock()).withFailMessage("block").isEqualTo(null);
+        assertNull( op.getBlock(), "block");
     }
 
+    @Test
     public void testSetOBlockToNull() {
         OBlock b1 = new OBlock("IB1");
 
         OPath op = new OPath(b1, "name");
         op.setBlock(null);
 
-        assertThat(op.getBlock()).withFailMessage("block").isEqualTo(null);
+        assertNull( op.getBlock(), "block");
     }
 
     @Test
-    @SuppressWarnings("unlikely-arg-type") // String seems to be unrelated to OPath
+    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals", "ObjectEqualsNull"}) // String seems to be unrelated to OPath
     public void testEquals() {
         Block b1 = new Block("IB1");
 
@@ -93,11 +96,11 @@ public class OPathTest {
         OPath op2 = new OPath(b1, "name");
         op2.setBlock(null);
         
-        Assert.assertFalse("not equals null", op1.equals(null));
-        Assert.assertFalse("not equals string", op1.equals(""));
+        assertFalse( op1.equals(null), "not equals null");
+        assertFalse( op1.equals(""), "not equals string");
         
-        assertThat(op1.equals(op1)).withFailMessage("equals self").isTrue();
-        assertThat(op1.equals(op2)).withFailMessage("on contents").isTrue();
+        assertTrue( op1.equals(op1), "equals self");
+        assertTrue(op1.equals(op2), "on contents");
     }
     
     @Test
@@ -105,10 +108,10 @@ public class OPathTest {
         Portal entryP = _portalMgr.providePortal("entryP");
         Portal exitP = _portalMgr.providePortal("exitP");
         OBlock blk = _blkMgr.provideOBlock("OB0");
-        ArrayList<BeanSetting> ats = new ArrayList<BeanSetting>();
+        ArrayList<BeanSetting> ats = new ArrayList<>();
         OPath path = new OPath("path", blk, entryP, exitP, ats);
-        assertThat(path.getFromPortal()).withFailMessage("Get entry portal").isEqualTo(entryP);
-        assertThat(path.getToPortal()).withFailMessage("Get exit portal").isEqualTo(exitP);
+        assertEquals( entryP, path.getFromPortal(), "Get entry portal");
+        assertEquals( exitP, path.getToPortal(), "Get exit portal");
     }
     
     @Test
@@ -119,12 +122,12 @@ public class OPathTest {
         OPath path = new OPath("path", blk, null, null, null);
         path.setToPortal(exitP);
         path.addSetting(new jmri.BeanSetting(to, Turnout.CLOSED));
-        assertThat(path.getToPortal()).withFailMessage("Get exit portal").isEqualTo(exitP);
+        assertEquals( exitP, path.getToPortal(), "Get exit portal");
         path.setName("OtherPath");
-        assertThat(path.getName()).withFailMessage("path name change").isEqualTo("OtherPath");
-        assertThat(to.getCommandedState()).withFailMessage("turnout unknown").isEqualTo(Turnout.UNKNOWN);
+        assertEquals( "OtherPath", path.getName(), "path name change");
+        assertEquals( Turnout.UNKNOWN, to.getCommandedState(), "turnout unknown");
         path.setTurnouts(0, true, 0, false);
-        assertThat(to.getCommandedState()).withFailMessage("path name change").isEqualTo(Turnout.CLOSED);
+        assertEquals( Turnout.CLOSED, to.getCommandedState(), "path name change");
     }
     
     // from here down is testing infrastructure

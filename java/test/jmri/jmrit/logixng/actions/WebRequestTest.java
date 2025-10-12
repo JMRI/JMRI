@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 import jmri.*;
+import jmri.configurexml.LoadAndStorePreferences;
 import jmri.configurexml.ShutdownPreferences;
 import static jmri.configurexml.StoreAndCompare.checkFile;
 import jmri.jmrit.logixng.*;
@@ -301,7 +302,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Green is set. Cookies from client: ", _replyVariable.getValue());
         String cookies = _cookiesVariable.getValue().toString();
-        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d.\\w\\w\\w.\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
         Assert.assertEquals("{Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
@@ -321,7 +322,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Yellow is set. Cookies from client: Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
-        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d.\\w\\w\\w.\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
         Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
@@ -341,7 +342,7 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals(200, (int)_responseCodeVariable.getValue());
         Assert.assertEquals("Cookie Blue is set. Cookies from client: Yellow=YellowYellow!, Green=GreenGreen!", _replyVariable.getValue());
         cookies = _cookiesVariable.getValue().toString();
-        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d-\\w\\w\\w-\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
+        cookies = cookies.replaceAll("expires=\\w\\w\\w, \\d\\d.\\w\\w\\w.\\d\\d\\d\\d \\d\\d:\\d\\d:\\d\\d", "expires=???, ??-???-???? ??:??:??");
         Assert.assertEquals("{Yellow=Yellow=YellowYellow%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Blue=Blue=BlueBlue%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000, Green=Green=GreenGreen%21; expires=???, ??-???-???? ??:??:?? GMT; Max-Age=1296000}", cookies);
 
         JUnitAppender.assertWarnMessageStartsWith("Log local variables:");
@@ -583,7 +584,13 @@ public class WebRequestTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initLogixNGManager();
         jmri.jmrit.logixng.NamedBeanType.reset();
 
-        _category = Category.ITEM;
+        // Exclude dynamic content in the tables and panels file
+        var loadAndStorePreferences = InstanceManager.getDefault(LoadAndStorePreferences.class);
+        loadAndStorePreferences.setExcludeMemoryIMCURRENTTIME(true);
+        loadAndStorePreferences.setExcludeJmriVersion(true);
+        loadAndStorePreferences.setExcludeFileHistory(true);
+
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");

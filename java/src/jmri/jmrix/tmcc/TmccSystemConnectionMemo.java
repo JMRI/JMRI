@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
+import jmri.managers.DefaultProgrammerManager;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -96,6 +97,8 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
     @Override
     public void configureManagers() {
         log.debug("configureManagers");
+        InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+        InstanceManager.store(getProgrammerManager(), AddressedProgrammerManager.class);
         TurnoutManager turnoutManager = getTurnoutManager();
         store(turnoutManager,TurnoutManager.class);
         InstanceManager.setTurnoutManager(getTurnoutManager());
@@ -123,6 +126,14 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         return (SerialTurnoutManager) classObjectMap.computeIfAbsent(TurnoutManager.class,(Class<?> c) -> new SerialTurnoutManager(this));
     }
 
+    public TmccProgrammerManager getProgrammerManager() {
+         return (TmccProgrammerManager) classObjectMap.computeIfAbsent(DefaultProgrammerManager.class,
+                 (Class<?> c) -> new TmccProgrammerManager(new TmccProgrammer(this), this));
+    }
+
+    public void setProgrammerManager(TmccProgrammerManager p) {
+        store(p, DefaultProgrammerManager.class);
+    }
 
     @Override
     public void dispose() {

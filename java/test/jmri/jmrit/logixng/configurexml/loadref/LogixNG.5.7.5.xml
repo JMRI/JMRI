@@ -132,8 +132,8 @@
     <transit systemName="IZ:AUTO:0001" userName="Transit_1">
       <systemName>IZ:AUTO:0001</systemName>
       <userName>Transit_1</userName>
-      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
-      <transitsection sectionname="IY:AUTO:0002" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0002" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
     </transit>
   </transits>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">

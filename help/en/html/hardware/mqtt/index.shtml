@@ -27,10 +27,7 @@
       "https://en.wikipedia.org/wiki/Internet_of_things" target="_blank">IOT devices</a> as well as
       <a href="../arduino/index.shtml">arduinos</a> and other microcontrollers.</p>
 
-      <p><a href=
-      "images/MQTTSchematic.jpg"><img src="images/MQTTSchematic.jpg" alt="MQTT schematic"></a></p>
-
-      <p>MQTT messages consist of two parts: topic and contents.  JMRI provides three mechanisms for
+      <p>MQTT messages consist of two parts: <em>topic</em> and <em>contents</em>.  JMRI provides three mechanisms for
       creating and processing MQTT messages, the specifics of each are provided in sections below:
 
       <ul>
@@ -45,10 +42,12 @@
         <li><a href="#scripts">Scripting</a>: <em>Advanced Usage</em>: For other objects and devices, you can
       use a provided <a href="#scripts">script</a> or write your own using JMRI's MQTT Adapter
       object and methods.</li>
-
       </ul>
 
-      <p id="top"><strong>Contents:</strong></p>
+      <p><a href=
+      "images/MQTTSchematic.jpg"><img src="images/MQTTSchematic.jpg" alt="MQTT schematic"></a></p>
+
+      <p id="top"><strong>Help Page Contents:</strong></p>
       <div class="toc">
 
        <ul>
@@ -71,7 +70,7 @@
           <li><a href="#objects">MQTT-connected Objects</a>
             <ul>
               <li>Available Objects</li>
-              <li>MQTT-connected Object Names</li>
+              <li><a href="#objnames">MQTT-connected Object Names</a></li>
               <li>Topics for MQTT-connected Objects</li>
             </ul>
           </li>
@@ -293,7 +292,8 @@
       
       <p>Message "contents" for JMRI standard objects are typically single words that represent the state of
       the object.  Specifics are discussed following.
-      <em>Advanced Usage</em>: It is also possible to replace the standard message contents by using a <a href=
+      
+			<em>Advanced Usage</em>: It is also possible to replace the standard message contents by using a <a href=
       "#scripts">custom version of the message parser</a> (including using <a href=
       "https://www.json.org/json-en.html" target="_blank">JSON messages</a>).</p>
 
@@ -375,7 +375,7 @@
       <p>All other messages on these defined topics are ignored by the standard JMRI processing.</p>
       
 
-      <h3>MQTT-connected Object Names</h3>
+      <h3 id="objnames">MQTT-connected Object Names</h3>
 
       <p>As with all objects within JMRI, MQTT-connected layout objects (turnouts, sensors,
       lights, and signal masts) have a <a href="../../doc/Technical/Names.shtml">"system name"</a>
@@ -388,6 +388,10 @@
       "123" or ".X$42". JMRI will prefix that string with the MQTT Connection Prefix and Object Type,
       creating System Names in this example of "MTabcd", "MT123", or "MT.X$42".</p>
 
+      <em>Advanced Usage</em>: System Names may also include one or more "/" (slash) characters, causing MQTT to
+			see this as defining another level in the full topic.  For example, if sensor "abc" is attached to 
+			microcontroller "Ard01", you could name it "Ard01/abc".  This allows easy identification of which hardware
+      controls which sensors, turnouts, or other devices.			
 
       <h3>Topics for MQTT-connected objects</h3>
 
@@ -400,8 +404,11 @@
        (<em>Advanced Usage</em>: may be different for publishing and subscribing),</li>
        <li>followed by the hardware name portion of the object's system name (system name stripped of the connection
        and object type characters).
+	 <!-- Following line removed as confusing 2025-07-04 jerryg2003:
        [<em>Advanced Usage</em>: the object's hardware name may be inserted in the middle of the object type topic if
-        so defined in Preferences, <a href="#prefs">as discussed above.</a></li>
+        so defined in Preferences, <a href="#prefs">as discussed above.</a>
+		-->		
+				</li>
       </ol>
 
       <p>An example of MQTT-connected objects: Using the example entries in the JMRI Preferences Connection pane
@@ -418,11 +425,15 @@
 
       <p>yielding the complete MQTT message topic: "<em>trains/jSend/to/abcd1</em>".</p>
 
-      <p><em>Advanced Usage</em>: If you want the object's system name suffix to be in the topic string at some place other
-      than at the end, you can use a placeholder of "{0}" within the string to put the object's
-      system name suffix at that place. This allows you to set up topics like
+      <p><em>Advanced Usage</em>: If the object's system name include a "/" (perhaps to separate a hardware designator),
+			say "MTArd01/abcd1", the topic would include that slash and become "<em>trains/jSend/to/Ard01/abcd1</em>"</p>
+
+      <p><em>Advanced Usage</em>: If you want the object's system name suffix to be placed in the topic string other
+      than at the end, you can use a placeholder of "{0}" within the preference string to put the object's
+      system name suffix at that place (see Preference pane diagram <a href="#prefs">above</a>). This allows you to set up topics like
       "jSend/to/{0}/state" so JMRI will generate "<em>trains/jSend/to/abcd1/state</em>" for
-      turnout "MTabcd1".</p>
+      turnout "MTabcd1" or "<em>trains/jSend/to/Ard01/abcd1/state</em>" for
+      turnout "MTArd01/abcd1".</p>
 
       <p><a href="images/MQTTPrefs_example_rel5_5_6.jpg"><img src="images/MQTTPrefs_example_rel5_5_6.jpg" alt=
       "MQTT preferences example"></a></p>
@@ -663,18 +674,26 @@
 
    Now enter "localhost" as the Host Name on the MQTT JMRI Connection Preferences page. You are now connected!
 
-   <p>To subscribe and print all JMRI messages as they are published to JMRI's MQTT Channel "/trains/", enter
-    this from the directory where you have the mosquitto tools: </p>
+   <p>To <em>subscribe and print</em> all JMRI messages as they are published to JMRI's MQTT Channel "trains/", enter
+    this from the directory where you have the mosquitto tools:
 
       <pre>
-    mosquitto_sub -h test.mosquitto.org -v -t '/trains/#'
+    mosquitto_sub -h test.mosquitto.org -v -t 'trains/#'
       </pre>
+			
+	 <p>To <em>remove all retained messages</em>, add the parameter "--remove-retained".  
+	 
+	 <p>To <em>get a nicely formatted output</em>, add a format string like this following the "-F" parameter:
+	 
+	   <pre>
+    mosquitto_sub" -i LocalMonitor -t "trains/# -F "%I  %-38.38t %q %r %l  %-25.25p" 
+		 </pre>
 
-   To publish messages for JMRI to subscribe to:
+   To <em>publish messages</em> for JMRI to subscribe to:
 
       <pre>
-    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "CLOSED"
-    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "THROWN"
+    mosquitto_pub -h test.mosquitto.org -t trains/track/turnout/123 -r -m "CLOSED"
+    mosquitto_pub -h test.mosquitto.org -t trains/track/turnout/123 -r -m "THROWN"
       </pre>
     These commands can be run on the same machine as JMRI, or from a separate machine.
 

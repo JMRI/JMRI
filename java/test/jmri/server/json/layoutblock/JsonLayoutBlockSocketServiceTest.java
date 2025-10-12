@@ -4,12 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.DataOutputStream;
@@ -28,12 +22,18 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * @author Randall Wood Copyright 2018
  */
 public class JsonLayoutBlockSocketServiceTest {
 
-    private Locale locale = Locale.ENGLISH;
+    private final Locale locale = Locale.ENGLISH;
 
     @BeforeEach
     public void setUp() {
@@ -63,25 +63,26 @@ public class JsonLayoutBlockSocketServiceTest {
         JsonLayoutBlockSocketService instance = new JsonLayoutBlockSocketService(connection);
         LayoutBlock lb =
                 InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, "LayoutBlock1");
-        assertNotNull("Required LayoutBlock not created", lb);
+        assertNotNull( lb, "Required LayoutBlock not created");
         JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, lb.getSystemName());
-        assertEquals("Block has only one listener", 1, lb.getNumPropertyChangeListeners());
+        assertEquals( 1, lb.getNumPropertyChangeListeners(), "Block has only one listener");
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        assertEquals("Block is being listened to by service", 2, lb.getNumPropertyChangeListeners());
+        assertEquals( 2, lb.getNumPropertyChangeListeners(), "Block is being listened to by service");
         connection.sendMessage(null, 0);
         lb.redrawLayoutBlockPanels();
         JsonNode result = connection.getMessage();
         assertNotNull(result);
-        assertEquals("Message is LayoutBlock1", lb.getSystemName(), result.path(JSON.DATA).path(JSON.NAME).asText());
+        assertEquals( lb.getSystemName(), result.path(JSON.DATA).path(JSON.NAME).asText(),
+            "Message is LayoutBlock1");
         // test IOException handling when listening by triggering exception and
         // observing that block1 is no longer being listened to
         connection.setThrowIOException(true);
         lb.redrawLayoutBlockPanels();
-        assertEquals("Block is no longer listened to by service", 1, lb.getNumPropertyChangeListeners());
+        assertEquals( 1, lb.getNumPropertyChangeListeners(), "Block is no longer listened to by service");
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        assertEquals("Block is being listened to by service", 2, lb.getNumPropertyChangeListeners());
+        assertEquals( 2, lb.getNumPropertyChangeListeners(), "Block is being listened to by service");
         instance.onClose();
-        assertEquals("Block is no longer listened to by service", 1, lb.getNumPropertyChangeListeners());
+        assertEquals( 1, lb.getNumPropertyChangeListeners(), "Block is no longer listened to by service");
     }
 
     /**
@@ -94,8 +95,8 @@ public class JsonLayoutBlockSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         LayoutBlockManager manager = InstanceManager.getDefault(LayoutBlockManager.class);
         LayoutBlock lb = manager.createNewLayoutBlock(null, "LayoutBlock1");
-        assertNotNull("LayoutBlock is created", lb);
-        assertEquals("LayoutBlock has 1 listener", 1, lb.getPropertyChangeListeners().length);
+        assertNotNull( lb, "LayoutBlock is created");
+        assertEquals( 1, lb.getPropertyChangeListeners().length, "LayoutBlock has 1 listener");
         // test GETs
         JsonLayoutBlockSocketService instance = new JsonLayoutBlockSocketService(connection);
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
@@ -103,7 +104,7 @@ public class JsonLayoutBlockSocketServiceTest {
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         // onMessage causes a listener to be added to requested LayoutBlocks if
         // not already listening
-        assertEquals("LayoutBlock has 2 listeners", 2, lb.getPropertyChangeListeners().length);
+        assertEquals( 2, lb.getPropertyChangeListeners().length, "LayoutBlock has 2 listeners");
         // test POSTs
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                 instance.getConnection().getObjectMapper()
@@ -111,23 +112,23 @@ public class JsonLayoutBlockSocketServiceTest {
                 new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         // onMessage causes a listener to be added to requested LayoutBlocks if
         // not already listening
-        assertEquals("LayoutBlock has 2 listeners", 2, lb.getPropertyChangeListeners().length);
-        assertEquals("LayoutBlock user name is changed", "LayoutBlock2", lb.getUserName());
+        assertEquals( 2, lb.getPropertyChangeListeners().length, "LayoutBlock has 2 listeners");
+        assertEquals( "LayoutBlock2", lb.getUserName(), "LayoutBlock user name is changed");
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                 instance.getConnection().getObjectMapper()
                         .readTree("{\"name\":\"" + lb.getSystemName() + "\", \"comment\":\"this is a comment\"}"),
                 new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        assertEquals("LayoutBlock has comment", "this is a comment", lb.getComment());
+        assertEquals( "this is a comment", lb.getComment(), "LayoutBlock has comment");
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                 instance.getConnection().getObjectMapper()
                         .readTree("{\"name\":\"" + lb.getSystemName() + "\", \"comment\":null}"),
                 new JsonRequest(locale, JSON.V5, JSON.POST, 42));
-        assertNull("LayoutBlock has no comment", lb.getComment());
+        assertNull( lb.getComment(), "LayoutBlock has no comment");
         // test PUTs
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                 instance.getConnection().getObjectMapper().readTree("{\"name\":null, \"userName\":\"LayoutBlock3\"}"),
                 new JsonRequest(locale, JSON.V5, JSON.PUT, 42));
-        assertNotNull("New LayoutBlock created", manager.getLayoutBlock("LayoutBlock3"));
+        assertNotNull( manager.getLayoutBlock("LayoutBlock3"), "New LayoutBlock created");
         // test DELETEs
         // first add a named reference listener to trigger a deletion conflict
         lb.addPropertyChangeListener(new PropertyChangeListener() {
@@ -139,26 +140,26 @@ public class JsonLayoutBlockSocketServiceTest {
         }, lb.getUserName(), "Test Listener");
         ObjectNode message =
                 instance.getConnection().getObjectMapper().createObjectNode().put(JSON.NAME, lb.getSystemName());
-        try {
-            instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message, new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals(409, ex.getCode());
-            assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
-            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
-            message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
-        }
-        assertNotNull("LayoutBlock not deleted", manager.getBySystemName(lb.getSystemName()));
+        JsonException ex = assertThrows( JsonException.class, () ->
+            instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message,
+                new JsonRequest(locale, JSON.V5, JSON.DELETE, 42)),
+            "Expected exception not thrown");
+        assertEquals(409, ex.getCode());
+        assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
+        assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+        ObjectNode message2 = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
+
+        assertNotNull( manager.getBySystemName(lb.getSystemName()), "LayoutBlock not deleted");
         // will throw if prior catch failed
-        instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message, new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
-        assertNull("LayoutBlock deleted", manager.getBySystemName(lb.getSystemName()));
-        try {
+        instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message2, new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
+        assertNull( manager.getBySystemName(lb.getSystemName()), "LayoutBlock deleted");
+        ex = assertThrows( JsonException.class, () ->
             // deleting again should throw an exception
-            instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message, new JsonRequest(locale, JSON.V5, JSON.DELETE, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(404, ex.getCode());
-        }
+            instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message2,
+                new JsonRequest(locale, JSON.V5, JSON.DELETE, 42)),
+            "Expected exception not thrown.");
+        assertEquals(404, ex.getCode());
+
         instance.onClose(); // clean up
     }
 
@@ -173,17 +174,17 @@ public class JsonLayoutBlockSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         LayoutBlock lb1 = manager.createNewLayoutBlock(null, "LayoutBlock1");
         LayoutBlock lb2 = manager.createNewLayoutBlock(null, "LayoutBlock2");
-        assertNotNull("LayoutBlock1 is created", lb1);
-        assertNotNull("LayoutBlock2 is created", lb2);
-        assertEquals("LayoutBlock1 has 1 listener", 1, lb1.getPropertyChangeListeners().length);
+        assertNotNull( lb1, "LayoutBlock1 is created");
+        assertNotNull( lb2, "LayoutBlock2 is created");
+        assertEquals( 1, lb1.getPropertyChangeListeners().length, "LayoutBlock1 has 1 listener");
         JsonLayoutBlockSocketService instance = new JsonLayoutBlockSocketService(connection);
         instance.onList(JsonLayoutBlock.LAYOUTBLOCK, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         // onList should not add a listener to all LayoutBlocks
-        assertEquals("LayoutBlock1 has 1 listener", 1, lb1.getPropertyChangeListeners().length);
+        assertEquals( 1, lb1.getPropertyChangeListeners().length, "LayoutBlock1 has 1 listener");
         JsonNode message = connection.getMessage();
         assertNotNull(message);
-        assertTrue("Message is an array", message.isArray());
-        assertEquals("All LayoutBlocks are listed", manager.getNamedBeanSet().size(), message.size());
+        assertTrue( message.isArray(), "Message is an array");
+        assertEquals( manager.getNamedBeanSet().size(), message.size(), "All LayoutBlocks are listed");
         instance.onClose(); // clean up
     }
 
@@ -196,18 +197,18 @@ public class JsonLayoutBlockSocketServiceTest {
     public void testOnClose() throws Exception {
         LayoutBlock lb =
                 InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, "LayoutBlock1");
-        assertNotNull("LayoutBlock is created", lb);
-        assertEquals("LayoutBlock has 1 listener", 1, lb.getPropertyChangeListeners().length);
+        assertNotNull( lb, "LayoutBlock is created");
+        assertEquals( 1, lb.getPropertyChangeListeners().length, "LayoutBlock has 1 listener");
         JsonLayoutBlockSocketService instance =
                 new JsonLayoutBlockSocketService(new JsonMockConnection((DataOutputStream) null));
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                 instance.getConnection().getObjectMapper().readTree("{\"name\":\"" + lb.getSystemName() + "\"}"),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         // onMessage causes a listener to be added to requested LayoutBlocks
-        assertEquals("LayoutBlock has 2 listeners", 2, lb.getPropertyChangeListeners().length);
+        assertEquals( 2, lb.getPropertyChangeListeners().length, "LayoutBlock has 2 listeners");
         instance.onClose();
         // onClose removes listeners
-        assertEquals("LayoutBlock has 1 listener", 1, lb.getPropertyChangeListeners().length);
+        assertEquals( 1, lb.getPropertyChangeListeners().length, "LayoutBlock has 1 listener");
     }
 
 }

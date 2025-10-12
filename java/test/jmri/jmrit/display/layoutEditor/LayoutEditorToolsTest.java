@@ -123,7 +123,7 @@ public class LayoutEditorToolsTest {
         JLabelOperator JLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                (JComboBox<?>) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
 
         //pressing "Done" should throw up a "Turnout XXX is not drawn on the panel" (SignalsError3)
@@ -166,7 +166,7 @@ public class LayoutEditorToolsTest {
         JLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("ThroatContinuing")));
         jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                (JComboBox<?>) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
 
         //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
@@ -183,7 +183,7 @@ public class LayoutEditorToolsTest {
         JLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("ThroatDiverging")));
         jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                (JComboBox<?>) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
         //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
@@ -201,7 +201,7 @@ public class LayoutEditorToolsTest {
         JLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")), 1);
         jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                (JComboBox<?>) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
 
         //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
@@ -219,7 +219,7 @@ public class LayoutEditorToolsTest {
         JLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")), 1);
         jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                (JComboBox<?>) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(4); //TODO:fix hardcoded index
 
         testSetupSSL(0);    //test Throat Continuing SSL logic setup
@@ -582,7 +582,7 @@ public class LayoutEditorToolsTest {
         JUnitUtil.initInternalSignalHeadManager();
 
         layoutEditor = new LayoutEditor();
-        layoutEditor.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> layoutEditor.setVisible(true) );
 
         let = layoutEditor.getLETools();
 

@@ -3,12 +3,6 @@ package jmri.server.json.route;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Route;
@@ -26,6 +20,12 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -142,13 +142,12 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         assertEquals(Sensor.ACTIVE, route1.getState());
         validate(result);
         // set invalid state
-        message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, 42); // Invalid value
-        try {
-            service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(400, ex.getCode());
-        }
+        JsonNode messageEx = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, 42); // Invalid value
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", messageEx,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals(400, ex.getCode());
         assertEquals(Sensor.ACTIVE, route1.getState());
     }
 
@@ -178,28 +177,23 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         result = service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         // set invalid state
-        message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, 42); // Invalid value
-        try {
-            service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(400, ex.getCode());
-        }
+        JsonNode messageEx = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, 42); // Invalid value
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doPost(JsonRouteServiceFactory.ROUTE, "IO1", messageEx,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals(400, ex.getCode());
     }
 
     @Test
     public void testDoPut() {
         RouteManager manager = InstanceManager.getDefault(RouteManager.class);
-        JsonNode message;
         assertNull(manager.getRoute("IO1"));
-        try {
-            // add a route
-            message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, Sensor.INACTIVE);
+        JsonException ex = assertThrows( JsonException.class, () -> {
+            JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IO1").put(JSON.STATE, Sensor.INACTIVE);
             service.doPut(JsonRouteServiceFactory.ROUTE, "IO1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(405, ex.getCode());
-        }
+        }, "add a route Expected exception not thrown.");
+        assertEquals(405, ex.getCode());
         assertNull(manager.getRoute("IO1"));
     }
 

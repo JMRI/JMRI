@@ -44,6 +44,7 @@ public class TrafficStatusLabel extends JLabel implements CanListener {
         timer = ThreadingUtil.runOnLayoutDelayed(() -> { active = false; displayActive(); }, INTERVAL);
     }
 
+    @Override
     public synchronized void message(CanMessage l) {
         traffic();
     }

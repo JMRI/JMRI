@@ -28,6 +28,8 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
         tc.addDCCppListener(DCCppInterface.CS_INFO, this);
         // request the current command station status
         tc.sendDCCppMessage(DCCppMessage.makeCSStatusMsg(), this);
+        // request the trackmanager configuration
+        tc.sendDCCppMessage(DCCppMessage.makeTrackManagerRequestMsg(), this);
     }
 
     @Override
@@ -70,10 +72,17 @@ public class DCCppPowerManager extends AbstractPowerManager<DCCppSystemConnectio
                 power = OFF;
             }
             firePowerPropertyChange(old, power);
+
         // if status reply 's', then update the command station info (version, etc.)
         } else if (m.isStatusReply()) {
             log.debug("Version Info Received: {}", m);
             tc.getCommandStation().setCommandStationInfo(m);
+        
+        // store trackmanager mode by index (0-7 for A-H) 
+        } else if (m.isTrackManagerReply()) {
+            log.debug("Track Manager Reply Received: {}", m);
+            int trackNum = m.getTrackManagerLetter() - 'A'; //get track number from track letter
+            tc.getCommandStation().setTrackMode(trackNum, m.getTrackManagerMode());
         }
     }
 

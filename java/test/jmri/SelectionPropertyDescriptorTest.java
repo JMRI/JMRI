@@ -4,11 +4,14 @@ import java.util.Arrays;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
-import static org.junit.Assert.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -19,7 +22,7 @@ public class SelectionPropertyDescriptorTest {
     @Test
     public void testCtor() {
         SelectionPropertyDescriptorImpl t = new SelectionPropertyDescriptorImpl();
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
@@ -37,10 +40,10 @@ public class SelectionPropertyDescriptorTest {
     @Test
     public void testPassThroughSuper() {
         SelectionPropertyDescriptorImpl t = new SelectionPropertyDescriptorImpl();
-        Assert.assertEquals("Default property option","B",t.defaultValue);
-        Assert.assertEquals("property key set","TEST_PROPERTY_KEY",t.propertyKey);
-        Assert.assertEquals("editable set true",true,t.isEditable(null));
-        Assert.assertEquals("column header set","Column Header Text",t.getColumnHeaderText());
+        assertEquals( "B",t.defaultValue, "Default property option");
+        assertEquals( "TEST_PROPERTY_KEY",t.propertyKey, "property key set");
+        assertTrue( t.isEditable(null), "editable set true");
+        assertEquals( "Column Header Text",t.getColumnHeaderText(), "column header set");
     }
 
     private static class SelectionPropertyDescriptorImpl extends SelectionPropertyDescriptor {

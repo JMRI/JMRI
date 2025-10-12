@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -76,7 +77,7 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
      */
     public Schedule newSchedule(String name) {
         Schedule schedule = getScheduleByName(name);
-        if (schedule == null) {
+        if (schedule == null && !name.isBlank()) {
             _id++;
             schedule = new Schedule(Integer.toString(_id), name);
             Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
@@ -200,6 +201,7 @@ public class ScheduleManager extends PropertyChangeSupport implements InstanceMa
      */
     public JComboBox<Schedule> getComboBox() {
         JComboBox<Schedule> box = new JComboBox<>();
+        OperationsPanel.padComboBox(box, Control.max_len_string_location_name);
         updateComboBox(box);
         return box;
     }

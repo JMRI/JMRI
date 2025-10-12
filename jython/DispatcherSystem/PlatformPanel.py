@@ -9,10 +9,19 @@ from javax.swing.event import TableModelListener, TableModelEvent
 from javax.swing.filechooser import FileNameExtensionFilter
 from org.apache.commons.io import FilenameUtils
 from java.io import File
+from java.awt.event import WindowAdapter
+from java.util.concurrent import CountDownLatch
 
 class CreateAndShowGUI7(TableModelListener):
 
     def __init__(self):
+        # Define a listener that counts down when the window is closed
+        class MyWindowListener(WindowAdapter):
+            def windowClosed(self, e):
+                global latch
+                if "latch" in globals():
+                    print "counting down latch"
+                    latch.countDown()
         self.logLevel = 0
 
         # Create and set up the window.
@@ -24,6 +33,8 @@ class CreateAndShowGUI7(TableModelListener):
         self.populate_action(None)
         self.cancel = False
         self.toggle = True
+        self.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE)
+        self.frame.addWindowListener(MyWindowListener())
 
     def completeTablePanel(self):
         self.topPanel= JPanel()
@@ -40,7 +51,7 @@ class CreateAndShowGUI7(TableModelListener):
         self.buttonPane.setLayout(BoxLayout(self.buttonPane, BoxLayout.LINE_AXIS))
         self.buttonPane.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10))
 
-        button_close = JButton("Close", actionPerformed = self.close_action)
+        button_close = JButton("Save and Close", actionPerformed = self.close_action)
         self.buttonPane.add(button_close)
         self.buttonPane.add(Box.createHorizontalGlue())
 
@@ -119,6 +130,7 @@ class CreateAndShowGUI7(TableModelListener):
         return height
 
     def close_action(self, event):
+        self.save()
         self.frame.dispatchEvent(WindowEvent(self.frame, WindowEvent.WINDOW_CLOSING));
 
     def save_action(self, event):

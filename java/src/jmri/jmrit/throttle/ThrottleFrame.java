@@ -640,8 +640,8 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Ad
                 Bundle.getMessage("ThrottleFrameNoRosterItemTitleDialog"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("ThrottleFrameRosterChangeMesageDialog"),
-            Bundle.getMessage("ThrottleFrameRosterChangeTitleDialog"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
+        if ((!InstanceManager.getDefault(ThrottlesPreferences.class).isSavingThrottleOnLayoutSave()) && (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("ThrottleFrameRosterChangeMesageDialog"),
+            Bundle.getMessage("ThrottleFrameRosterChangeTitleDialog"), JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION)) {
             return;
         }
         functionPanel.saveFunctionButtonsToRoster(rosterEntry);

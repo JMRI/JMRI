@@ -17,7 +17,8 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
 /**
@@ -264,7 +265,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     private void addTrainListeners() {
         log.debug("Adding train listerners");
-        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getList();
         trains.stream().forEach((train) -> {
             train.addPropertyChangeListener(this);
         });
@@ -274,7 +275,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
     private void removeTrainListeners() {
         log.debug("Removing train listerners");
-        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
+        List<Train> trains = InstanceManager.getDefault(TrainManager.class).getList();
         trains.stream().forEach((train) -> {
             train.removePropertyChangeListener(this);
         });

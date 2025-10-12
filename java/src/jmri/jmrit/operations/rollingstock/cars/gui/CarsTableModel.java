@@ -17,7 +17,6 @@ import jmri.jmrit.operations.OperationsTableModel;
 import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -25,7 +24,7 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table Model for edit of cars used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2016, 2025
  */
 public class CarsTableModel extends OperationsTableModel implements PropertyChangeListener {
 
@@ -96,15 +95,12 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
     private int _sort = SORTBY_NUMBER;
 
     List<Car> carList = null; // list of cars
-    boolean showAllCars = true; // when true show all cars
-    public String locationName = null; // only show cars with this location
-    public String trackName = null; // only show cars with this track
-    JTable _table;
+    //    JTable _table;
     CarsTableFrame _frame;
 
     public CarsTableModel(boolean showAllCars, String locationName, String trackName) {
         super();
-        this.showAllCars = showAllCars;
+        showAll = showAllCars;
         this.locationName = locationName;
         this.trackName = trackName;
         carManager.addPropertyChangeListener(this);
@@ -266,9 +262,6 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
         }
     }
 
-    String _roadNumber = "";
-    int _index = 0;
-
     /**
      * Search for car by road number
      * 
@@ -276,55 +269,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
      * @return -1 if not found, table row number if found
      */
     public int findCarByRoadNumber(String roadNumber) {
-        if (carList != null) {
-            if (!roadNumber.equals(_roadNumber)) {
-                return getIndex(0, roadNumber);
-            }
-            int index = getIndex(_index, roadNumber);
-            if (index > 0) {
-                return index;
-            }
-            return getIndex(0, roadNumber);
-        }
-        return -1;
-    }
-
-    private int getIndex(int start, String roadNumber) {
-        for (int index = start; index < carList.size(); index++) {
-            Car car = carList.get(index);
-            if (car != null) {
-                String[] number = car.getNumber().split(TrainCommon.HYPHEN);
-                // check for wild card '*'
-                if (roadNumber.startsWith("*") && roadNumber.endsWith("*")) {
-                    String rN = roadNumber.substring(1, roadNumber.length() - 1);
-                    if (car.getNumber().contains(rN)) {
-                        _roadNumber = roadNumber;
-                        _index = index + 1;
-                        return index;
-                    }
-                } else if (roadNumber.startsWith("*")) {
-                    String rN = roadNumber.substring(1);
-                    if (car.getNumber().endsWith(rN) || number[0].endsWith(rN)) {
-                        _roadNumber = roadNumber;
-                        _index = index + 1;
-                        return index;
-                    }
-                } else if (roadNumber.endsWith("*")) {
-                    String rN = roadNumber.substring(0, roadNumber.length() - 1);
-                    if (car.getNumber().startsWith(rN)) {
-                        _roadNumber = roadNumber;
-                        _index = index + 1;
-                        return index;
-                    }
-                } else if (car.getNumber().equals(roadNumber) || number[0].equals(roadNumber)) {
-                    _roadNumber = roadNumber;
-                    _index = index + 1;
-                    return index;
-                }
-            }
-        }
-        _roadNumber = "";
-        return -1;
+        return findRollingStockByRoadNumber(roadNumber, carList);
     }
 
     public Car getCarAtIndex(int index) {
@@ -419,38 +364,25 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
             default:
                 list = carManager.getByNumberList();
         }
-        filterList(list);
+        filterCarList(list);
         return list;
     }
 
-    private void filterList(List<Car> list) {
-        if (showAllCars) {
-            return;
-        }
-        for (int i = 0; i < list.size(); i++) {
-            Car car = list.get(i);
-            if (car.getLocation() == null) {
-                list.remove(i--);
-                continue;
-            }
-            // filter out cars that don't have a location name that matches
-            if (locationName != null) {
-                if (!car.getLocationName().equals(locationName)) {
+    private void filterCarList(List<Car> list) {
+        if (!Control.showCloneCars) {
+            for (int i = 0; i < list.size(); i++) {
+                Car car = list.get(i);
+                if (car.isClone()) {
                     list.remove(i--);
                     continue;
                 }
-                if (trackName != null) {
-                    if (!car.getTrackName().equals(trackName)) {
-                        list.remove(i--);
-                    }
-                }
             }
         }
+        filterList(list);
     }
 
     void initTable(JTable table, CarsTableFrame frame) {
         super.initTable(table);
-        _table = table;
         _frame = frame;
         initTable();
     }

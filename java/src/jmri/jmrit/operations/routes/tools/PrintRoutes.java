@@ -72,7 +72,7 @@ public class PrintRoutes {
                 }
             }
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print routes: {}", e1.getLocalizedMessage());
         }
@@ -88,7 +88,7 @@ public class PrintRoutes {
 
             printRoute(writer, route);
         } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
+            log.debug("Print canceled");
         } catch (IOException e1) {
             log.error("Exception in print routes: {}", e1.getLocalizedMessage());
         }

@@ -58,10 +58,12 @@ class DCCThrottle(Jynstrument, PropertyChangeListener, AddressListener, jmri.Thr
     #Property listener part
     def propertyChange(self, event):
         if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
-            event.oldValue.getAddressPanel().removeAddressListener(self)
-            self.addressPanel = event.newValue.getAddressPanel()
-            self.panelThrottle = self.addressPanel.getThrottle()
-            self.addressPanel.addAddressListener(self)
+            if event.oldValue != None :
+                event.oldValue.getAddressPanel().removeAddressListener(self)
+            if event.newValue != None :
+                self.addressPanel = event.newValue.getAddressPanel()
+                self.panelThrottle = self.addressPanel.getThrottle()
+                self.addressPanel.addAddressListener(self)
             return
         if(self.panelThrottle == None):
             return

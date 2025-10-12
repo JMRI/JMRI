@@ -3,7 +3,9 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the NamedBeanHandleManager class
@@ -18,7 +20,7 @@ public class NamedBeanHandleManagerTest {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         MemoryManager mm = InstanceManager.getDefault(MemoryManager.class);
-        Assertions.assertNotNull(nbhm);
+        assertNotNull(nbhm);
 
         String name = "MyUserName";
         Sensor s1 = sm.provideSensor("IS1");
@@ -36,47 +38,47 @@ public class NamedBeanHandleManagerTest {
         NamedBeanHandle<Memory> nm1 = nbhm.getNamedBeanHandle("IM1", m1);
         NamedBeanHandle<Memory> nm2 = nbhm.getNamedBeanHandle("IM2", m2);
 
-        Assert.assertTrue("Sensor NamedBean1 should equal Sensor 1", ns1.getBean() == s1);
-        Assert.assertTrue("Sensor NamedBean2 should equal Sensor 2", ns2.getBean() == s2);
+        assertTrue( ns1.getBean() == s1, "Sensor NamedBean1 should equal Sensor 1");
+        assertTrue( ns2.getBean() == s2, "Sensor NamedBean2 should equal Sensor 2");
 
-        Assert.assertTrue("Turnout NamedBean1 should equal Turnout 1", nt1.getBean() == t1);
-        Assert.assertTrue("Turnout NamedBean2 should equal Turnout 2", nt2.getBean() == t2);
+        assertTrue( nt1.getBean() == t1, "Turnout NamedBean1 should equal Turnout 1");
+        assertTrue( nt2.getBean() == t2, "Turnout NamedBean2 should equal Turnout 2");
 
-        Assert.assertTrue("Memory NamedBean1 should equal Memory 1", nm1.getBean() == m1);
-        Assert.assertTrue("Memory NamedBean2 should equal Memory 2", nm2.getBean() == m2);
+        assertTrue( nm1.getBean() == m1, "Memory NamedBean1 should equal Memory 1");
+        assertTrue( nm2.getBean() == m2, "Memory NamedBean2 should equal Memory 2");
 
         s1.setUserName(name);
         nbhm.updateBeanFromSystemToUser(s1);
 
-        Assert.assertTrue("Sensor NamedBean1 should have a the user name set against it " + name, ns1.getName().equals(name));
-        Assert.assertTrue("Sensor NamedBean2 should have a the system name IS2 set against it ", ns2.getName().equals("IS2"));
+        assertTrue( ns1.getName().equals(name), "Sensor NamedBean1 should have a the user name set against it " + name);
+        assertTrue( ns2.getName().equals("IS2"), "Sensor NamedBean2 should have a the system name IS2 set against it ");
 
-        Assert.assertTrue("Turnout NamedBean1 should have a the system name IT1 set against it ", nt1.getName().equals("IT1"));
-        Assert.assertTrue("Turnout NamedBean2 should have a the system name IT2 set against it ", nt2.getName().equals("IT2"));
+        assertTrue( nt1.getName().equals("IT1"), "Turnout NamedBean1 should have a the system name IT1 set against it ");
+        assertTrue( nt2.getName().equals("IT2"), "Turnout NamedBean2 should have a the system name IT2 set against it ");
 
-        Assert.assertTrue("Memory NamedBean1 should have a the system name IM1 set against it ", nm1.getName().equals("IM1"));
-        Assert.assertTrue("Memory NamedBean2 should have a the system name IM2 set against it ", nm2.getName().equals("IM2"));
+        assertTrue( nm1.getName().equals("IM1"), "Memory NamedBean1 should have a the system name IM1 set against it ");
+        assertTrue( nm2.getName().equals("IM2"), "Memory NamedBean2 should have a the system name IM2 set against it ");
 
         m1.setUserName(name);
         nbhm.updateBeanFromSystemToUser(m1);
 
-        Assert.assertTrue("Memory NamedBean1 should have a the user name set against it " + name, nm1.getName().equals(name));
+        assertTrue( nm1.getName().equals(name), "Memory NamedBean1 should have a the user name set against it " + name);
 
         s1.setUserName(null);
         s2.setUserName(name);
         nbhm.moveBean(s1, s2, name);
 
-        Assert.assertTrue("Sensor NamedBean1 should both sensor 2", ns1.getBean() == s2);
-        Assert.assertTrue("Sensor NamedBean2 should both sensor 2", ns2.getBean() == s2);
-        Assert.assertTrue("Sensor NamedBean1 should have a the user name set against it " + name, ns1.getName().equals(name));
-        Assert.assertTrue("Sensor NamedBean2 should have a the system name IS2 set against it ", ns2.getName().equals("IS2"));
-        Assert.assertTrue("Memory NamedBean1 should have a the user name set against it " + name, nm1.getName().equals(name));
+        assertTrue( ns1.getBean() == s2, "Sensor NamedBean1 should both sensor 2");
+        assertTrue( ns2.getBean() == s2, "Sensor NamedBean2 should both sensor 2");
+        assertTrue( ns1.getName().equals(name), "Sensor NamedBean1 should have a the user name set against it " + name);
+        assertTrue( ns2.getName().equals("IS2"), "Sensor NamedBean2 should have a the system name IS2 set against it ");
+        assertTrue( nm1.getName().equals(name), "Memory NamedBean1 should have a the user name set against it " + name);
 
         s2.setUserName("NewName");
         nbhm.renameBean(name, "NewName", s2);
-        Assert.assertTrue("Sensor NamedBean1 should have a the user name set against it NewName", ns1.getName().equals("NewName"));
-        Assert.assertTrue("Sensor NamedBean2 should have a the system name IS2 set against it ", ns2.getName().equals("IS2"));
-        Assert.assertTrue("Memory NamedBean1 should have a the user name set against it " + name, nm1.getName().equals(name));
+        assertTrue( ns1.getName().equals("NewName"), "Sensor NamedBean1 should have a the user name set against it NewName");
+        assertTrue( ns2.getName().equals("IS2"), "Sensor NamedBean2 should have a the system name IS2 set against it ");
+        assertTrue( nm1.getName().equals(name), "Memory NamedBean1 should have a the user name set against it " + name);
 
         NamedBeanHandle<Sensor> checkRename = nbhm.getNamedBeanHandle("ISno_user_name", sm.provideSensor("ISno_user_name"));
         nbhm.updateBeanFromUserToSystem(checkRename.getBean());

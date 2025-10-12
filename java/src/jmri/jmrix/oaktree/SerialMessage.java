@@ -1,5 +1,7 @@
 package jmri.jmrix.oaktree;
 
+import jmri.util.StringUtil;
+
 /**
  * Contains the data payload of a serial packet.
  * <p>
@@ -38,12 +40,15 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Interpret the byte array as a sequence of characters to send.
-     *
+     * @deprecated 5.13.5, unused, requires further development.
      * @param a Array of bytes to send
      * @param l response length.
      */
+    @Deprecated( since="5.13.5", forRemoval=true)
     public SerialMessage(byte[] a, int l) {
-        super(String.valueOf(a));
+        // super(String.valueOf(a)); // Spotbug toString on array
+        // requires further development to produce correct values for hardware type.
+        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""));
         setResponseLength(l);
         setBinary(true);
     }

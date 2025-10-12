@@ -228,7 +228,9 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
             JComboBox<InitialValueType> initialValueTypeComboBox = new JComboBox<>();
 
             for (InitialValueType type : InitialValueType.values()) {
-                if (type.isValidAsParameter()) initialValueTypeComboBox.addItem(type);
+                if (type.isValidAsParameter() && type.isVisible()) {
+                    initialValueTypeComboBox.addItem(type);
+                }
             }
             JComboBoxUtil.setupComboBoxMaxRows(initialValueTypeComboBox);
 

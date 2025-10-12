@@ -625,10 +625,16 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
             .provide(CbusNodeTableDataModel.class);
 
         // register a command station in the node table so can be found by the Command Station
-        CbusNode cs = nodemodel.provideNodeByNodeNum(65534);
+        CbusNode cs = new CbusNode(memo, 65534);
         cs.setCsNum(0); // Command Station 0 is master command station
-        cs.getNodeParamManager().setParameters(new int[]{7,165,4,10,0,0,255,4}); // in this test we emulate a CANCMD v4
-        cs.getNodeNvManager().setNV(2, 0b00000110); // steal + share enabled
+        // in this test we emulate a CANCMD v4 but with just 10 NVs
+        cs.getNodeParamManager().setParameters(new int[]{7,165,4,10,0,0,10,4});
+
+        // NV2 = steal + share enabled
+        // set all NVs so Node Manager does not request them from the Node.
+        int[] nVs = {10,1,0b00000110,3,4,5,6,7,8,9,10};
+        cs.getNodeNvManager().setNVs(nVs);
+        nodemodel.addNode(cs);
 
         // set ThrottlesPreferences to steal enabled
         InstanceManager.getDefault(ThrottlesPreferences.class).setSilentSteal(true);

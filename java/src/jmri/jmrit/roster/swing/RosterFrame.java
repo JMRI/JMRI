@@ -379,7 +379,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     boolean checkIfEntrySelected(boolean allowMultiple) {
         if ((re == null && !allowMultiple) || (this.getSelectedRosterEntries().length < 1)) {
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoSelection"));
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoSelection"));
             return false;
         }
         return true;
@@ -1298,7 +1298,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
-        menuItem = new JMenuItem(this.getSelectedRosterGroup() != null ? Bundle.getMessage("DeleteFromGroup") : Bundle.getMessage("DeleteFromRoster")); // NOI18N
+        boolean deleteFromGroup = this.getSelectedRosterGroup() != null && !this.getSelectedRosterGroup().equals(Roster.NOGROUP);
+        menuItem = new JMenuItem(deleteFromGroup ? Bundle.getMessage("DeleteFromGroup") : Bundle.getMessage("DeleteFromRoster")); // NOI18N
         menuItem.addActionListener((ActionEvent e1) -> deleteLoco());
         popupMenu.add(menuItem);
         menuItem.setEnabled(this.getSelectedRosterEntries().length > 0);
@@ -1331,7 +1332,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         // if failed to get programmer, tell user and stop
         if (programmer == null) {
             log.error("Identify loco called when no service mode programmer is available; button should have been disabled");
-            JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("IdentifyError"));
             return;
         }
 
@@ -1440,12 +1441,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             locoImage.setImagePath(null);
             service.setEnabled(false);
             ops.setEnabled(false);
-            edit.setEnabled(false);          
+            edit.setEnabled(false);
             prog1Button.setEnabled(false);
             prog2Button.setEnabled(false);
             throttleLabels.setEnabled(false);
             rosterMedia.setEnabled(false);
-            throttleLaunch.setEnabled(false );            
+            throttleLaunch.setEnabled(false );
         } else {
             filename.setText(re.getFileName());
             dateUpdated.setText((re.getDateModified() != null)
@@ -1466,9 +1467,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             } else {
                 locoImage.setVisible(true);
             }
-            service.setEnabled(true);
-            ops.setEnabled(true);
-            edit.setEnabled(true);                      
+            service.setEnabled(isProgrammingTrackEnabled());
+            ops.setEnabled(isProgrammingOnMainEnabled());
+            edit.setEnabled(true);
             prog1Button.setEnabled(true);
             prog2Button.setEnabled(true);
             throttleLabels.setEnabled(true);
@@ -1566,9 +1567,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
             if (oldServMode == null) {
                 log.debug("Re-enable user interface");
-                contextService.setEnabled(true);
+                contextService.setEnabled(isProgrammingTrackEnabled());
                 contextService.setVisible(true);
-                service.setEnabled(true);
+                service.setEnabled(isProgrammingTrackEnabled());
                 service.setVisible(true);
                 firePropertyChange("setprogservice", "setEnabled", true);
                 getToolBar().getComponents()[1].setEnabled(true);
@@ -1587,9 +1588,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
             if (oldServMode == null) {
                 log.debug("Re-enable user interface");
-                contextService.setEnabled(true);
+                contextService.setEnabled(isProgrammingTrackEnabled());
                 contextService.setVisible(true);
-                service.setEnabled(true);
+                service.setEnabled(isProgrammingTrackEnabled());
                 service.setVisible(true);
                 firePropertyChange("setprogservice", "setEnabled", true);
                 getToolBar().getComponents()[1].setEnabled(true);
@@ -1626,9 +1627,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldOpsMode == null) {
-                contextOps.setEnabled(true);
+                contextOps.setEnabled(isProgrammingOnMainEnabled());
                 contextOps.setVisible(true);
-                ops.setEnabled(true);
+                ops.setEnabled(isProgrammingOnMainEnabled());
                 ops.setVisible(true);
                 firePropertyChange("setprogops", "setEnabled", true);
             }
@@ -1645,9 +1646,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldOpsMode == null) {
-                contextOps.setEnabled(true);
+                contextOps.setEnabled(isProgrammingOnMainEnabled());
                 contextOps.setVisible(true);
-                ops.setEnabled(true);
+                ops.setEnabled(isProgrammingOnMainEnabled());
                 ops.setVisible(true);
                 firePropertyChange("setprogops", "setEnabled", true);
             }
@@ -1683,6 +1684,16 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             strProgMode = "setprogedit";
         }
         firePropertyChange(strProgMode, "setSelected", true);
+    }
+
+    private boolean isProgrammingTrackEnabled() {
+        return InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null &&
+                ! InstanceManager.getDefault(ProgrammerConfigManager.class).isDisableProgrammingTrack();
+    }
+
+    private boolean isProgrammingOnMainEnabled() {
+        return InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null &&
+                ! InstanceManager.getDefault(ProgrammerConfigManager.class).isDisableProgrammingOnMain();
     }
 
     @Override

@@ -32,10 +32,10 @@ public class OperationsSettingsFrame extends OperationsFrame {
         toolMenu.addSeparator();
         toolMenu.add(new BackupFilesAction());
         toolMenu.add(new RestoreFilesAction());
+        toolMenu.add(new ManageBackupsAction());
         toolMenu.addSeparator();
         toolMenu.add(new LoadDemoAction());
         toolMenu.add(new ResetAction());
-        toolMenu.add(new ManageBackupsAction());
 
         menuBar.add(toolMenu);
         menuBar.add(new jmri.jmrit.operations.OperationsMenu());

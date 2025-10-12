@@ -29,6 +29,7 @@ public class NamedBeanFunctionsTest {
     private final ExpressionNode exprMyMemory1 = new ExpressionNodeString(new Token(TokenType.NONE, "My memory 1", 0));
     private final ExpressionNode exprRed = new ExpressionNodeString(new Token(TokenType.NONE, "Red", 0));
     private final ExpressionNode exprGreen = new ExpressionNodeString(new Token(TokenType.NONE, "Green", 0));
+    private final ExpressionNode exprReferenceIM1 = new ExpressionNodeString(new Token(TokenType.NONE, "{IM1}", 0));
 
 
     private List<ExpressionNode> getParameterList(ExpressionNode... exprNodes) {
@@ -206,6 +207,57 @@ public class NamedBeanFunctionsTest {
         memory._value = "{My other memory}";
         Assert.assertEquals("Memory has correct value", "Other memory value",
                 evaluateMemoryFunction.calculate(symbolTable, getParameterList(exprMyMemory1)));
+        Assert.assertNull("Memory is not set", memory._lastValue);
+    }
+
+    @Test
+    public void testEvaluateReferenceFunction() throws Exception {
+        Function evaluateReferenceFunction = InstanceManager.getDefault(FunctionManager.class).get("evaluateReference");
+        Assert.assertEquals("strings matches", "evaluateReference", evaluateReferenceFunction.getName());
+        Assert.assertNotNull("Function has description", evaluateReferenceFunction.getDescription());
+
+        AtomicBoolean hasThrown = new AtomicBoolean(false);
+
+        SymbolTable symbolTable = new DefaultSymbolTable(new DefaultConditionalNG("IQC1", null));
+
+        hasThrown.set(false);
+        try {
+            evaluateReferenceFunction.calculate(symbolTable, getParameterList());
+        } catch (WrongNumberOfParametersException e) {
+            hasThrown.set(true);
+        }
+        Assert.assertTrue("exception is thrown", hasThrown.get());
+
+        MyMemory memory = new MyMemory();
+        InstanceManager.getDefault(MemoryManager.class).register(memory);
+        memory._value = "Some value";
+
+        MyMemory otherMemory = new MyMemory("IM2", "My other memory");
+        otherMemory._value = "Other memory value";
+        InstanceManager.getDefault(MemoryManager.class).register(otherMemory);
+
+        Assert.assertEquals("Reference has correct value", "Some value",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
+
+        memory._lastValue = null;
+        memory._value = "Green";
+        Assert.assertEquals("Reference has correct value", "Green",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
+        Assert.assertNull("Memory is not set", memory._lastValue);
+
+        memory._value = "Green";
+        Assert.assertEquals("Reference has correct value", "Green",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
+        Assert.assertNull("Memory is not set", memory._lastValue);
+
+        memory._value = "Red";
+        Assert.assertEquals("Reference has correct value", "Red",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
+        Assert.assertNull("Memory is not set", memory._lastValue);
+
+        memory._value = "Red";
+        Assert.assertEquals("Reference has correct value", "Red",
+                evaluateReferenceFunction.calculate(symbolTable, getParameterList(exprReferenceIM1)));
         Assert.assertNull("Memory is not set", memory._lastValue);
     }
 

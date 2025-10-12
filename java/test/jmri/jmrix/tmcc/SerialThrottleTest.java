@@ -35,7 +35,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        SpeedStepMode expResult = SpeedStepMode.TMCC_32;
+        SpeedStepMode expResult = SpeedStepMode.TMCC1_32;
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
@@ -46,7 +46,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedIncrement() {
-        float expResult = SpeedStepMode.TMCC_32.increment;
+        float expResult = SpeedStepMode.TMCC1_32.increment;
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
@@ -352,9 +352,9 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 69");
     }
 
-    SerialTrafficController tcis;
-    TmccSystemConnectionMemo memo;
-    SerialThrottleManager tm;
+    private SerialTrafficController tcis;
+    private TmccSystemConnectionMemo memo;
+    private SerialThrottleManager tm;
 
     @BeforeEach
     @Override
@@ -365,6 +365,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = new TmccSystemConnectionMemo(tcis);
         tm = new SerialThrottleManager(memo);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new SerialThrottle(memo, new jmri.DccLocoAddress(1024, true));
         setMaxFns(69);
     }

@@ -89,7 +89,7 @@ public class ImportEngines extends ImportCommon {
         }
 
         while (true) {
-            lineNumber.setText(Bundle.getMessage("LineNumber") + " " + Integer.toString(++lineNum));
+            lineNumber.setText(Bundle.getMessage("LineNumber", Integer.toString(++lineNum)));
             try {
                 line = in.readLine();
             } catch (IOException e) {

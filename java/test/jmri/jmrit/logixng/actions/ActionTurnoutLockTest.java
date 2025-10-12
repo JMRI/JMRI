@@ -470,7 +470,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
     }
 
     @Test
@@ -507,7 +507,7 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
 //        turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");

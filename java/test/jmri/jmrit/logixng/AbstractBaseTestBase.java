@@ -28,7 +28,7 @@ public abstract class AbstractBaseTestBase {
     public final String TREE_INDENT = "   ";
     protected Base _base;
     protected MaleSocket _baseMaleSocket;
-    protected Category _category;
+    protected LogixNG_Category _category;
     protected boolean _isExternal;
 
 
@@ -527,7 +527,7 @@ public abstract class AbstractBaseTestBase {
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
         Assert.assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
         Assert.assertTrue(ar.get().getNewValue() instanceof List);
-        List list = (List)ar.get().getNewValue();
+        List<?> list = (List<?>)ar.get().getNewValue();
         for (Object o : list) {
             Assert.assertTrue(o instanceof FemaleSocket);
         }
@@ -1043,7 +1043,7 @@ public abstract class AbstractBaseTestBase {
         }
 
         @Override
-        public Category getCategory() {
+        public LogixNG_Category getCategory() {
             throw new UnsupportedOperationException("Not supported.");
         }
 

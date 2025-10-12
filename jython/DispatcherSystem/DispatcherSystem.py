@@ -315,8 +315,8 @@ def ChangeOptions_action(event):
     y = threading.Timer(0.1, function = show_options_pane)
     y.start()
 
-    msg = "You need to set the following: \n\n Use connectivity from Layout panels\n Trains from Roster\n Layout has block detection hardware\n Automatically allocate Sections to Active Trains\n Automatically set turnouts when a Section is allocated\n\n You also need to set SignalMasts/SML (top RH)\n and the Layout scale\n\nSave your Options in the Menu in the Dispatcher Frame after checking.\n " + \
-        "\n IMPORTANT: After setting the options above \nyou also need to set the Layout Scale in Preferences:Warrants \nto ensure the trains stop correctly\n"
+    msg = "You need to set the following: \n\n Use connectivity from Layout panels\n Trains from Roster\n Layout has block detection hardware\n Automatically allocate Sections to Active Trains\n Automatically set turnouts when a Section is allocated\n Apply Connections Turnout Delay\n\n The last option will set any turnouts sequentially with a delay between each to stop putting excessive demand on the controllers\n The default delay is 1000ms for most connections, 100ms for CAN connections\n This can be changed in Preferences > Connections > Connection Tab > Additional Connection Settings > Output Interval\n\n You also need to set SignalMasts/SML (top RH)\n and the Layout scale\n\n Save your Options in the Menu in the Dispatcher Frame after checking.\n ---------------------------------------------------------------------\n " + \
+        "\n IMPORTANT: After setting the options above you also need to set the Layout Scale in Preferences:Warrants \n to ensure the trains stop correctly\n"
 
     x = threading.Timer(2.0, function=show_options_message, args=(msg,))
     x.start()

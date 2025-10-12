@@ -171,6 +171,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
         functionImages = Collections.synchronizedMap(new HashMap<>());
         functionLockables = Collections.synchronizedMap(new HashMap<>());
+        functionVisibles = Collections.synchronizedMap(new HashMap<>());
     }
 
     /**
@@ -254,6 +255,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                 }
             });
         }
+        if (pEntry.functionVisibles != null) {
+            pEntry.functionVisibles.forEach((key, value) -> {
+                if (value != null) {
+                    functionVisibles.put(key, value);
+                }
+            });
+        }        
     }
 
     /**
@@ -712,6 +720,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         functionSelectedImages = Collections.synchronizedMap(new HashMap<>());
         functionImages = Collections.synchronizedMap(new HashMap<>());
         functionLockables = Collections.synchronizedMap(new HashMap<>());
+        functionVisibles = Collections.synchronizedMap(new HashMap<>());
         log.debug("ctor from element {}", e);
         Attribute a;
         if ((a = e.getAttribute("id")) != null) {
@@ -916,13 +925,20 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             for (Element fn : l) {
                 int num = Integer.parseInt(fn.getAttribute("num").getValue());
                 String lock = fn.getAttribute("lockable").getValue();
+                String visible = null;
+                if (fn.getAttribute("visible") != null) {
+                    visible = fn.getAttribute("visible").getValue();
+                }
                 String val = LocaleSelector.getAttribute(fn, "text");
                 if (val == null) {
                     val = fn.getText();
                 }
                 if ((this.getFunctionLabel(num) == null) || (source.equalsIgnoreCase("model"))) {
                     this.setFunctionLabel(num, val);
-                    this.setFunctionLockable(num, "true".equals(lock));
+                    this.setFunctionLockable(num, "true".equals(lock));                    
+                    if (visible != null){
+                        this.setFunctionVisible(num, "true".equals(visible));
+                    }
                     Attribute a;
                     if ((a = fn.getAttribute("functionImage")) != null && !a.getValue().isEmpty()) {
                         try {
@@ -1319,6 +1335,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
                     Element fne = new Element(RosterEntry.FUNCTION_LABEL);
                     fne.setAttribute("num", "" + key);
                     fne.setAttribute("lockable", getFunctionLockable(key) ? "true" : "false");
+                    fne.setAttribute("visible", getFunctionVisible(key) ? "true" : "false");
                     fne.setAttribute("functionImage",
                             (getFunctionImage(key) != null) ? FileUtil.getPortableFilename(getFunctionImage(key)) : "");
                     fne.setAttribute("functionImageSelected", (getFunctionSelectedImage(key) != null)

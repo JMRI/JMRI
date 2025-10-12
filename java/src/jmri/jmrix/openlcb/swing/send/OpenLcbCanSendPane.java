@@ -112,6 +112,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         store = memo.get(MimicNodeStore.class);
         nodeSelector = new NodeSelector(store);
         nodeSelector.addActionListener (new ActionListener () {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setCdiButton();
             }

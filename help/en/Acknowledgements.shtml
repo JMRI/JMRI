@@ -291,6 +291,9 @@
         <li>Jeff Collell, <!-- auctionsjeff -->
          who added Light support for OpenLCB.</li>
 
+        <li>Frank Collingwood, <!-- fcollingwood -->
+        who provided a definition for the Rokuhan A053 and A059 decoders.
+        
          <li>John Connelly, <!-- connelly38 -->
          who greatly sped up the decoder and roster indexing steps for large rosters.
 
@@ -606,6 +609,10 @@
         <li>The Jython project, who provided a very powerful scripting engine for us <a id="K"></a>
         </li>
 
+        <li>Timothy Jump,   <!-- E3t1jump -->
+        who worked on the TMCC documentation.
+        </li>
+        
         <li>Georg Kautzsch, who provided a decoder definition for the Uhlenbrock 67800 servo
         decoder.</li>
 
@@ -1194,6 +1201,9 @@
 
         <li>Mike Yawn, who provided the instructions for building under Eclipse <a id="Z"></a>
         </li>
+
+        <li>Lim Sim Yee, <!-- simei2k -->
+        who fixed a security vulnerability.
 
         <li><a href="https://github.com/JMRI/JMRI/pulls?q=author%3Aicklesteve+">Steve Young</a>,
         <!-- icklesteve -->

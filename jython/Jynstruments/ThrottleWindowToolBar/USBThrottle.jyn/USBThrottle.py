@@ -409,12 +409,14 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         # Nothing to customize bellow this point
         if (event.propertyName == "ThrottleFrame") :  # Current throttle frame changed
             self.speedTimer.stop()
-            event.oldValue.getAddressPanel().removeAddressListener(self)
-            self.addressPanel = event.newValue.getAddressPanel()
-            self.throttle = self.addressPanel.getThrottle()
-            self.roster = self.addressPanel.getRosterEntry()
-            self.speedAction.setThrottle( self.throttle )
-            event.newValue.getAddressPanel().addAddressListener(self)
+            if event.oldValue != None :
+                event.oldValue.getAddressPanel().removeAddressListener(self)
+            if event.newValue != None :
+                self.addressPanel = event.newValue.getAddressPanel()
+                self.throttle = self.addressPanel.getThrottle()
+                self.roster = self.addressPanel.getRosterEntry()
+                self.speedAction.setThrottle( self.throttle )
+                event.newValue.getAddressPanel().addAddressListener(self)
 
 #Jynstrument main and mandatory methods
     def getExpectedContextClassName(self):

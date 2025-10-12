@@ -60,12 +60,15 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         
         JPanel pCarCopy = new JPanel();
         pCarCopy.setLayout(new GridBagLayout());
-        addItem(pCarCopy, copyComboBox, 0, 0);
+        addItem(pCarCopy, copyCheckBox, 0, 0);
+        addItem(pCarCopy, new JLabel("  "), 1, 0); // some space
+        addItem(pCarCopy, copyComboBox, 2, 0);
         pCarCopy.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CopyType")));
 
         addItem(pCarType, typeComboBox, 0, 0);
-        addItem(pCarType, copyCheckBox, 1, 0);
+        addItem(pCarType, new JLabel("  "), 1, 0); // some space
         addItem(pCarType, pCarCopy, 2, 0);
+        
         typeComboBox.setSelectedItem(carType);
         copyCheckBox.setToolTipText(Bundle.getMessage("TipCopyCarType"));
 

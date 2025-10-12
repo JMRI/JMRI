@@ -365,7 +365,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     if (obj != null) {
                         return obj;
                     } else if ((b.getState() & OBlock.OCCUPIED) != 0) {
-                        return Bundle.getMessage("BlockUnknown");
+                        return Bundle.getMessage("UnknownValue");
                     } else {
                         return null;
                     }

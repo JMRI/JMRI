@@ -258,6 +258,7 @@ public class CreateLogixNGTreeScaffold {
                 case ScriptExpression:
                 case ScriptFile:
                 case LogixNG_Table:
+                case Object:
                     globalVariable.setInitialValueData("");
                     break;
                 default:
@@ -504,7 +505,7 @@ public class CreateLogixNGTreeScaffold {
         actionBlock.getSelectEnum().setEnum(ActionBlock.DirectOperation.SetOccupied);
 
         maleSocket = digitalActionManager.registerAction(actionBlock);
-        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortExecution);
+        maleSocket.setErrorHandlingType(MaleSocket.ErrorHandlingType.AbortWithoutError);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 // Direct / LocalVariable
@@ -3565,6 +3566,14 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        jmri.jmrit.operations.logixng.OperationsProStartAutomation operationsProStartAutomation =
+                new jmri.jmrit.operations.logixng.OperationsProStartAutomation(digitalActionManager.getAutoSystemName(), null);
+//        operationsProStartAutomation.getSelectEnum().setValue("");
+        maleSocket = digitalActionManager.registerAction(operationsProStartAutomation);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         DigitalMany many = new DigitalMany(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(many);
         maleSocket.setEnabled(false);
@@ -6126,6 +6135,7 @@ public class CreateLogixNGTreeScaffold {
         "sensors.provide(\"mySensor)\"",    // Script expression
         "scripts:InitLogixNGVariable",      // Script file
         "MyTable",      // LogixNG Table
+        "MyObject",     // Object
     };
 
 

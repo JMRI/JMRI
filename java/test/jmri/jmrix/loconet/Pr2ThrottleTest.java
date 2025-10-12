@@ -421,7 +421,9 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         SlotManager slotmanager = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
         memo.store(slotmanager, CommandStation.class);
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new LnPr2ThrottleManager(memo));
+        var tm = new LnPr2ThrottleManager(memo);
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new Pr2Throttle(memo,new jmri.DccLocoAddress(5,false));
     }
 

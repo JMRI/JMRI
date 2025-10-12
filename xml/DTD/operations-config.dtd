@@ -191,6 +191,7 @@
 <!ATTLIST manifest sortByTrack			(true | false ) "false">
 <!ATTLIST manifest printHeaders			(true | false ) "false"> 
 <!ATTLIST manifest printPageHeader		(true | false ) "false"> 
+<!ATTLIST manifest printNoPageBreaks	(true | false ) "true"> 
 <!ATTLIST manifest truncate				(true | false ) "false"> 
 <!ATTLIST manifest useDepartureTime		(true | false ) "false"> 
 <!ATTLIST manifest useEditor			(true | false ) "false"> 
@@ -235,6 +236,7 @@
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
 <!ATTLIST display showTrackMoves		(true | false ) "false">
+<!ATTLIST display showClones			(true | false ) "true">
 
 <!ATTLIST headerLines printHeaderLine1	(true | false ) "true">
 <!ATTLIST headerLines printHeaderLine2	(true | false ) "true">
@@ -387,7 +389,7 @@
 <!ATTLIST switchListTrack text			CDATA #IMPLIED>
 <!ATTLIST holdCar text					CDATA #IMPLIED>
 
-<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt)*>
+<!ELEMENT control (backwardCompatibility | maximumStringLengths | reports | actions | printOptions | speedHpt | display)*>
 
 <!ELEMENT backwardCompatibility EMPTY>
 <!ATTLIST backwardCompatibility saveUsingPre_2013_Format	(true | false ) "false">

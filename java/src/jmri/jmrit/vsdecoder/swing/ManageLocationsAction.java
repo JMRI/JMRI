@@ -87,7 +87,7 @@ public class ManageLocationsAction extends AbstractAction {
                 // NOTE: Unlike Reporters, all Blocks are (now) PhysicalLocationReporters, so no need to do a check here.
                 // We'll keep the explicit cast for now, but it's not actually necessary.
                 if (b != null) {
-                    PhysicalLocation p = ((PhysicalLocationReporter) b).getPhysicalLocation();
+                    PhysicalLocation p = b.getPhysicalLocation();
                     blockTable[i][ManageLocationsTableModel.SYSNAMECOL] = b.getSystemName();
                     blockTable[i][ManageLocationsTableModel.USERNAMECOL] = b.getDisplayName();
                     blockTable[i][ManageLocationsTableModel.USECOL + 1] = true;

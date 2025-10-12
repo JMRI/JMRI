@@ -234,7 +234,12 @@ public class SymbolTableTest {
                     case Array:
                         symbolTable = createLocalVariable(type, null);
                         Assert.assertTrue("variable is a list", symbolTable.getValue("myVar") instanceof List);
-                        Assert.assertTrue("list is empty", ((List)symbolTable.getValue("myVar")).isEmpty());
+                        Assert.assertTrue("list is empty", ((List<?>)symbolTable.getValue("myVar")).isEmpty());
+                        break;
+
+                    case Object:
+                        symbolTable = createLocalVariable(type, null);
+                        Assert.assertNull("variable is null", symbolTable.getValue("myVar"));
                         break;
 
                     default:
@@ -309,7 +314,12 @@ public class SymbolTableTest {
                     case Array:
                         globalVariable.initialize();
                         Assert.assertTrue("variable is a list", globalVariable.getValue() instanceof List);
-                        Assert.assertTrue("list is empty", ((List)globalVariable.getValue()).isEmpty());
+                        Assert.assertTrue("list is empty", ((List<?>)globalVariable.getValue()).isEmpty());
+                        break;
+
+                    case Object:
+                        globalVariable.initialize();
+                        Assert.assertNull("variable is null", globalVariable.getValue());
                         break;
 
                     default:

@@ -29,8 +29,10 @@ public enum SpeedStepMode {
     NMRA_DCC_14("14", 14, "SpeedStep14"),
     // Non-DCC speed step modes.
     MOTOROLA_28("motorola_28", 28, "SpeedStep28Motorola"), // Motorola 28 speed step mode.
-    TMCC_32("tmcc_32", 32, "SpeedStep32TMCC"), // Lionel TMCC 32 speed step mode.
-    TMCC_200("tmcc_200", 200, "SpeedStep200TMCC"), // Lionel TMCC Legacy 200 speed step mode.
+    TMCC1_32("tmcc1_32", 32, "SpeedStep32TMCC1"), // Lionel TMCC 1, 32 speed step mode.
+    TMCC2_32("tmcc2_32", 32, "SpeedStep32TMCC2"), // Lionel TMCC 2 Legacy, 32 speed step mode.
+    TMCC1_100("tmcc1_100", 100, "SpeedStep100TMCC1"), // Lionel TMCC ERR, 100 speed step mode.
+    TMCC2_200("tmcc2_200", 200, "SpeedStep200TMCC2"), // Lionel TMCC 2 Legacy, 200 speed step mode.
     INCREMENTAL("incremental", 1, 1.0f, "SpeedStepIncremental");
 
     SpeedStepMode(String name, int numSteps, String description) {
@@ -117,8 +119,8 @@ public enum SpeedStepMode {
     static public SpeedStepMode bestMode(EnumSet<SpeedStepMode> modes) {
         if(modes.contains(NMRA_DCC_128)) {
             return NMRA_DCC_128;
-        } else if(modes.contains(TMCC_32)) {
-            return TMCC_32;
+        } else if(modes.contains(TMCC1_32)) {
+            return TMCC1_32;
         } else if(modes.contains(NMRA_DCC_28)) {
             return NMRA_DCC_28;
         } else if(modes.contains(MOTOROLA_28)) {
@@ -145,9 +147,9 @@ public enum SpeedStepMode {
                         // Incremental speed step mode, used by LENZ XPA
                         // XpressNet Phone Adapter.
                         SpeedStepMode.INCREMENTAL,
-                        // TMCC mode, since some NMRA decoder models are used
-                        // for TMCC locomotives.
-                        SpeedStepMode.TMCC_32);
+                        // TMCC1 mode, since some NMRA decoder models are used
+                        // for TMCC1 locomotives.
+                        SpeedStepMode.TMCC1_32);
             case MFX:
                 return EnumSet.of(
                         // NMRA Speed step modes.

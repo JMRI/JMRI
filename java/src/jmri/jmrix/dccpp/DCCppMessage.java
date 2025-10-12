@@ -52,7 +52,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     protected static final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
     private static int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
 
-    //private ArrayList<Integer> valueList = new ArrayList<>();
     private StringBuilder myMessage;
     private String myRegex;
     private char opcode;

@@ -35,7 +35,6 @@ import org.openlcb.*;
 
 /**
  * A window for LCC Network management.
- * <p>
  *
  * @author Bob Jacobsen Copyright (C) 2024
  */

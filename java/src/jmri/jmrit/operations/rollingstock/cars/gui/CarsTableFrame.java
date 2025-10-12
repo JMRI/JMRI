@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars.gui;
 
+import java.awt.event.ActionEvent;
 import java.util.List;
 
 import javax.swing.*;
@@ -26,15 +27,13 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- * 2014
+ *         2014, 2025
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
     public CarsTableModel carsTableModel;
     public JTable carsTable;
     boolean showAllCars;
-    String locationName;
-    String trackName;
     CarManager carManager = InstanceManager.getDefault(CarManager.class);
 
     // labels
@@ -78,8 +77,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     public CarsTableFrame(boolean showAllCars, String locationName, String trackName) {
         super(Bundle.getMessage("TitleCarsTable"));
         this.showAllCars = showAllCars;
-        this.locationName = locationName;
-        this.trackName = trackName;
         // general GUI configuration
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -214,6 +211,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         addRadioButtonAction(sortByLast);
         addRadioButtonAction(sortByComment);
 
+        findCarTextBox.addActionListener(this::textBoxActionPerformed);
+
         group.add(sortByNumber);
         group.add(sortByRoad);
         group.add(sortByType);
@@ -279,7 +278,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     }
 
     @Override
-    public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void radioButtonActionPerformed(ActionEvent ae) {
         log.debug("radio button activated");
         // clear any sorts by column
         clearTableSort(carsTable);
@@ -362,19 +361,10 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
     // add, find or save button
     @Override
-    public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+    public void buttonActionPerformed(ActionEvent ae) {
         // log.debug("car button activated");
         if (ae.getSource() == findButton) {
-            int rowindex = carsTableModel.findCarByRoadNumber(findCarTextBox.getText());
-            if (rowindex < 0) {
-                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carWithRoadNumNotFound",
-                        findCarTextBox.getText()), Bundle.getMessage("carCouldNotFind"),
-                        JmriJOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            // clear any sorts by column
-            clearTableSort(carsTable);
-            carsTable.changeSelection(rowindex, 0, false, false);
+            findCar();
             return;
         }
         if (ae.getSource() == addButton) {
@@ -394,6 +384,23 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
                 dispose();
             }
         }
+    }
+
+    public void textBoxActionPerformed(ActionEvent ae) {
+        findCar();
+    }
+
+    private void findCar() {
+        int rowindex = carsTableModel.findCarByRoadNumber(findCarTextBox.getText());
+        if (rowindex < 0) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("carWithRoadNumNotFound",
+                    findCarTextBox.getText()), Bundle.getMessage("carCouldNotFind"),
+                    JmriJOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        // clear any sorts by column
+        clearTableSort(carsTable);
+        carsTable.changeSelection(rowindex, 0, false, false);
     }
 
     protected int[] getCurrentTableColumnWidths() {
@@ -430,10 +437,10 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         String count = filterCarList(InstanceManager.getDefault(CarManager.class).getList());
         if (showAllCars) {
             numCars.setText(count);
-            return;
+        } else {
+            String showCount = filterCarList(getSortByList());
+            numCars.setText(showCount + "/" + count);
         }
-        String showCount = filterCarList(getSortByList());
-        numCars.setText(showCount + "/" + count);
     }
 
     // only count real cars, ignore clones

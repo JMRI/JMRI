@@ -71,12 +71,13 @@ public class StoreAndCompareDialog {
         return result.get();
     }
 
-    static public void showDialog() {
+    static public boolean showDialog() {
         if (_preferences.getDisplayDialog().equals(ShutdownPreferences.DialogDisplayOptions.SkipDialog)) {
             performStore();
-            return;
+            return false;
         }
 
+        AtomicBoolean cancelShutdown = new AtomicBoolean(false);
         try {
             // Provide option to invoke the store process before the shutdown.
             final JDialog dialog = new JDialog();
@@ -91,13 +92,20 @@ public class StoreAndCompareDialog {
 
             JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));    // NOI18N
             JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));      // NOI18N
+            JButton canButton = new JButton(Bundle.getMessage("ButtonCancel"));      // NOI18N
             JPanel button = new JPanel();
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.add(noButton);
             button.add(yesButton);
+            button.add(canButton);
             container.add(button);
 
             noButton.addActionListener((ActionEvent e) -> {
+                dialog.dispose();
+            });
+
+            canButton.addActionListener((ActionEvent e) -> {
+                cancelShutdown.set(true);
                 dialog.dispose();
             });
 
@@ -118,6 +126,7 @@ public class StoreAndCompareDialog {
         } catch (HeadlessException ex) {
             // silently do nothig - we can't display a dialog and shutdown continues without a store.
         }
+        return cancelShutdown.get();
     }
 
     static private void performStore() {

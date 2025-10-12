@@ -1,6 +1,6 @@
 package jmri.jmrit.logixng.actions;
 
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 
 import java.util.*;
 
@@ -105,8 +105,8 @@ public class ActionTimer extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /**

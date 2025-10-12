@@ -41,6 +41,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.TransitManager;
+import jmri.UserPreferencesManager;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainLengthUnits;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
@@ -48,6 +49,8 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
+import jmri.jmrit.roster.swing.RosterGroupComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JComboBoxUtil;
@@ -85,6 +88,8 @@ public class ActivateTrainFrame extends JmriJFrame {
     private TrainInfoFile _tiFile = null;
     private final TransitManager _TransitManager = InstanceManager.getDefault(jmri.TransitManager.class);
     private String _trainInfoName = "";
+    UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
+    String upmGroupName = this.getClass().getName() + ".rosterGroupSelector";
 
     // initiate train window variables
     private Transit selectedTransit = null;
@@ -94,7 +99,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final jmri.swing.NamedBeanComboBox<Transit> transitSelectBox = new jmri.swing.NamedBeanComboBox<>(_TransitManager);
     private final JComboBox<Object> trainSelectBox = new JComboBox<>();
     // private final List<RosterEntry> trainBoxList = new ArrayList<>();
-    private RosterEntryComboBox rosterComboBox = null;
+    private RosterEntrySelectorPanel rosterComboBox = null;
     private final JLabel trainFieldLabel = new JLabel(Bundle.getMessage("TrainBoxLabel") + ":");
     private final JTextField trainNameField = new JTextField(10);
     private final JLabel dccAddressFieldLabel = new JLabel("     " + Bundle.getMessage("DccAddressFieldLabel") + ":");
@@ -180,6 +185,8 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final String nameOfTemplateFile="TrainInfoDefaultTemplate.xml";
     // to be added and removed.
     private final ActionListener viaBlockBoxListener = e -> handleViaBlockSelectionChanged();
+    // roster entries excluded due to already in use.
+    private ArrayList<RosterEntry> excludedRosterEntries;
 
     /**
      * Open up a new train window for a given roster entry located in a specific
@@ -192,7 +199,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     public void initiateTrain(ActionEvent e, RosterEntry re, Block b) {
         initiateTrain(e);
         if (trainInfo.getTrainsFrom() == TrainsFrom.TRAINSFROMROSTER && re != null) {
-            setRosterComboBox(rosterComboBox, re.getId());
+            setRosterEntryBox(rosterComboBox, re.getId());
             //Add in some bits of code as some point to filter down the transits that can be used.
         }
         if (b != null && selectedTransit != null) {
@@ -323,9 +330,13 @@ public class ActivateTrainFrame extends JmriJFrame {
             trainNameField.setToolTipText(Bundle.getMessage("TrainFieldHint"));
 
             // Roster combo box
-            rosterComboBox = new RosterEntryComboBox();
+            rosterComboBox = new RosterEntrySelectorPanel(null,upm.getComboBoxLastSelection(upmGroupName));
+            rosterComboBox.getRosterGroupComboBox().addActionListener( e3 -> {
+                    String s =((RosterGroupComboBox) e3.getSource()).getSelectedItem();
+                    upm.setComboBoxLastSelection(upmGroupName, s);
+            });
             initializeFreeRosterEntriesCombo();
-            rosterComboBox.addActionListener(this::handleRosterSelectionChanged);
+            rosterComboBox.getRosterEntryComboBox().addActionListener(this::handleRosterSelectionChanged);
             p2.add(rosterComboBox);
 
             // Operations combo box
@@ -754,9 +765,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         if (!trainsFromButtonGroup.getSelection().getActionCommand().equals("TRAINSFROMROSTER")) {
             return;
         }
-        int ix = rosterComboBox.getSelectedIndex();
+        RosterEntry r ;
+        int ix = rosterComboBox.getRosterEntryComboBox().getSelectedIndex();
         if (ix > 0) { // first item is "Select Loco" string
-            RosterEntry r = (RosterEntry) rosterComboBox.getItemAt(ix);
+             r = (RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem();
             // check to see if speed profile exists and is not empty
             if (r.getSpeedProfile() == null || r.getSpeedProfile().getProfileSize() < 1) {
                 // disable profile boxes etc.
@@ -861,11 +873,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void handleAutoRunClick() {
-        if (autoRunBox.isSelected()) {
-            showAutoRunItems();
-        } else {
-            hideAutoRunItems();
-        }
+        showHideAutoRunItems(autoRunBox.isSelected());
         initiateFrame.pack();
     }
 
@@ -1026,13 +1034,15 @@ public class ActivateTrainFrame extends JmriJFrame {
     }
 
     private void initializeFreeRosterEntriesCombo() {
-        rosterComboBox.update();
+        excludedRosterEntries = new ArrayList<RosterEntry>();
         // remove used entries
-        for (int ix = rosterComboBox.getItemCount() - 1; ix > 1; ix--) {  // remove from back first item is the "select loco" message
-            if ( !_dispatcher.isAddressFree( ((RosterEntry)rosterComboBox.getItemAt(ix)).getDccLocoAddress().getNumber() ) ) {
-                rosterComboBox.removeItemAt(ix);
+        for (int ix = rosterComboBox.getRosterEntryComboBox().getItemCount() - 1; ix > 1; ix--) {  // remove from back first item is the "select loco" message
+            if ( !_dispatcher.isAddressFree( ((RosterEntry)rosterComboBox.getRosterEntryComboBox().getItemAt(ix)).getDccLocoAddress().getNumber() ) ) {
+                excludedRosterEntries.add((RosterEntry)rosterComboBox.getRosterEntryComboBox().getItemAt(ix));
             }
         }
+        rosterComboBox.getRosterEntryComboBox().setExcludeItems(excludedRosterEntries);
+        rosterComboBox.getRosterEntryComboBox().update();
     }
 
     private void initializeFreeTrainsCombo() {
@@ -1350,7 +1360,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             case TRAINSFROMROSTER:
                 radioTrainsFromRoster.setSelected(true);
                 if (!info.getRosterId().isEmpty()) {
-                    if (!setRosterComboBox(rosterComboBox, info.getRosterId())) {
+                    if (!setRosterEntryBox(rosterComboBox, info.getRosterId())) {
                         log.warn("Roster {} from file not in Roster Combo", info.getRosterId());
                         JmriJOptionPane.showMessageDialog(initiateFrame,
                                 Bundle.getMessage("TrainWarn", info.getRosterId()),
@@ -1440,7 +1450,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         switch (trainsFromButtonGroup.getSelection().getActionCommand()) {
             case "TRAINSFROMROSTER":
-                if (rosterComboBox.getSelectedIndex() < 1 ) {
+                if (rosterComboBox.getRosterEntryComboBox().getSelectedIndex() < 1 ) {
                     throw new IllegalArgumentException(Bundle.getMessage("Error41"));
                 }
                 break;
@@ -1494,8 +1504,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         switch (trainsFromButtonGroup.getSelection().getActionCommand()) {
             case "TRAINSFROMROSTER":
-                info.setRosterId(((RosterEntry) rosterComboBox.getSelectedItem()).getId());
-                info.setDccAddress(((RosterEntry) rosterComboBox.getSelectedItem()).getDccAddress());
+                info.setRosterId(((RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem()).getId());
+                info.setDccAddress(((RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem()).getDccAddress());
                 trainInfo.setTrainsFrom(TrainsFrom.TRAINSFROMROSTER);
                 setTrainsFromOptions(trainInfo.getTrainsFrom());
                 break;
@@ -1571,6 +1581,22 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         autoRunItemsToTrainInfo(info);
         return true;
+    }
+
+    private boolean setRosterEntryBox(RosterEntrySelectorPanel box, String txt) {
+        /*
+         * Due to the different behaviour of GUI comboboxs
+         * we cannot just set the item and catch an exception.
+         * We first inspect the combo items with the current filter,
+         * if found well and good else we remove the filter and try again.
+         */
+        boolean found = false;
+        setRosterComboBox(box.getRosterEntryComboBox(),txt);
+        if (found) {
+            return found;
+        }
+        box.setSelectedRosterGroup(null);
+       return setRosterComboBox(box.getRosterEntryComboBox(),txt);
     }
 
     private boolean setRosterComboBox(RosterEntryComboBox box, String txt) {
@@ -1696,7 +1722,13 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JCheckBox soundDecoderBox = new JCheckBox(Bundle.getMessage("SoundDecoder"));
     private final JCheckBox runInReverseBox = new JCheckBox(Bundle.getMessage("RunInReverse"));
     private final JPanel pa4 = new JPanel();
-
+    private final JLabel fNumberBellLabel = new JLabel(Bundle.getMessage("fnumberbelllabel"));
+    private final JSpinner fNumberBellSpinner = new JSpinner();
+    private final JLabel fNumberHornLabel = new JLabel(Bundle.getMessage("fnumberhornlabel"));
+    private final JSpinner fNumberHornSpinner = new JSpinner();
+    private final JLabel fNumberLightLabel = new JLabel(Bundle.getMessage("fnumberlightlabel"));
+    private final JSpinner fNumberLightSpinner = new JSpinner();
+    private final JPanel pa5_FNumbers = new JPanel();
     protected static class TrainDetectionJCombo extends JComboBox<TrainDetectionItem> {
         public void setSelectedItemByValue(TrainDetection trainDetVar) {
             for ( int ix = 0; ix < getItemCount() ; ix ++ ) {
@@ -1785,7 +1817,22 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa4.add(trainLengthUnitsComboBox);
         pa4.add(trainLengthAltLengthLabel);
         initiatePane.add(pa4);
-        hideAutoRunItems();   // initialize with auto run items hidden
+        pa5_FNumbers.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("fnumbers")));
+        pa5_FNumbers.setLayout(new FlowLayout());
+        fNumberLightSpinner.setModel(new SpinnerNumberModel(0,0,100,1));
+        fNumberLightSpinner.setToolTipText(Bundle.getMessage("fnumberlighthint"));
+        pa5_FNumbers.add(fNumberLightLabel);
+        pa5_FNumbers.add(fNumberLightSpinner);
+        fNumberBellSpinner.setModel(new SpinnerNumberModel(0,0,100,1));
+        fNumberBellSpinner.setToolTipText(Bundle.getMessage("fnumberbellhint"));
+        pa5_FNumbers.add(fNumberBellLabel);
+        pa5_FNumbers.add(fNumberBellSpinner);
+        fNumberHornSpinner.setModel(new SpinnerNumberModel(0,0,100,1));
+        fNumberHornSpinner.setToolTipText(Bundle.getMessage("fnumberhornhint"));
+        pa5_FNumbers.add(fNumberHornLabel);
+        pa5_FNumbers.add(fNumberHornSpinner);
+        initiatePane.add(pa5_FNumbers);
+        showHideAutoRunItems(autoRunBox.isSelected());   // initialize with auto run items hidden
     }
 
     private void handlemaxTrainLengthChangeUnitsLength() {
@@ -1868,20 +1915,13 @@ public class ActivateTrainFrame extends JmriJFrame {
         return 0;
     }
 
-    private void hideAutoRunItems() {
-        pa1.setVisible(false);
-        pa2.setVisible(false);
-        pa2a.setVisible(false);
-        pa3.setVisible(false);
-        pa4.setVisible(false);
-    }
-
-    private void showAutoRunItems() {
-        pa1.setVisible(true);
-        pa2.setVisible(true);
-        pa2a.setVisible(true);
-        pa3.setVisible(true);
-        pa4.setVisible(true);
+    private void showHideAutoRunItems(boolean value) {
+        pa1.setVisible(value);
+        pa2.setVisible(value);
+        pa2a.setVisible(value);
+        pa3.setVisible(value);
+        pa4.setVisible(value);
+        pa5_FNumbers.setVisible(value);
     }
 
     private void autoTrainInfoToDialog(TrainInfo info) {
@@ -1912,11 +1952,10 @@ public class ActivateTrainFrame extends JmriJFrame {
         useSpeedProfileCheckBox.setSelected(info.getUseSpeedProfile());
         stopBySpeedProfileCheckBox.setSelected(info.getStopBySpeedProfile());
         stopBySpeedProfileAdjustSpinner.setValue(info.getStopBySpeedProfileAdjust());
-        if (autoRunBox.isSelected()) {
-            showAutoRunItems();
-        } else {
-            hideAutoRunItems();
-        }
+        fNumberLightSpinner.setValue(info.getFNumberLight());
+        fNumberBellSpinner.setValue(info.getFNumberBell());
+        fNumberHornSpinner.setValue(info.getFNumberHorn());
+         showHideAutoRunItems(autoRunBox.isSelected());
         initiateFrame.pack();
     }
 
@@ -1940,6 +1979,9 @@ public class ActivateTrainFrame extends JmriJFrame {
             info.setStopBySpeedProfile(false);
             info.setStopBySpeedProfileAdjust(1.0f);
         }
+        info.setFNumberLight((int)fNumberLightSpinner.getValue());
+        info.setFNumberBell((int)fNumberBellSpinner.getValue());
+        info.setFNumberHorn((int)fNumberHornSpinner.getValue());
     }
 
    private void initializeRampCombo() {

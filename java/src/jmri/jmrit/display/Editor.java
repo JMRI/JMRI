@@ -1879,6 +1879,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
         l.setHorizontalTextPosition(SwingConstants.CENTER);
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setEditable(isEditable());    // match popup mode to editor mode
+        l.setLocation(75, 75);  // fixed location 
         try {
             putItem(l);
         } catch (Positionable.DuplicateIdException e) {
@@ -3527,7 +3528,7 @@ abstract public class Editor extends JmriJFrameWithPermissions
                 x = 1;
                 break;
             default:
-                log.warn("Unexpected e.getKeyCode() of {}", e.getKeyCode());
+                log.debug("Unexpected e.getKeyCode() of {}", e.getKeyCode());
                 break;
         }
         //A cheat if the shift key isn't pressed then we move 5 pixels at a time.

@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import jmri.Category;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.JUnitUtil;
@@ -20,7 +21,11 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Test that all the action and expression classes are registered and have
@@ -44,8 +49,7 @@ public class ActionsAndExpressionsTest {
     private final Set<String> languages = new HashSet<>();
     private final Set<Locale> locales = new HashSet<>();
 
-
-    @Test
+    // Populates languages and locales fields. Called in test setup.
     private void getLocales() throws IOException {
         Path path = FileSystems.getDefault().getPath("java/src/jmri/jmrit/logixng/");
 
@@ -99,7 +103,8 @@ public class ActionsAndExpressionsTest {
                         isRegistered = true;
                     }
 
-                    Assert.assertFalse(String.format("Class %s is registered more than once in the manager", packageName+"."+c.getName()), setOfClasses.contains(c));
+                    assertFalse( setOfClasses.contains(c),
+                        () -> String.format("Class %s is registered more than once in the manager", packageName+"."+c.getName()));
 
                     setOfClasses.add(c);
 //                    if (setOfClasses.contains(c)) {
@@ -115,7 +120,7 @@ public class ActionsAndExpressionsTest {
 //                System.out.format("Class %s.%s is not registered in the manager%n", packageName, firstPartOfFileName);
 //                errorsFound = true;
 //            }
-            Assert.assertTrue(String.format("Class %s is registred%n", firstPartOfFileName), isRegistered);
+            assertTrue( isRegistered, String.format("Class %s is registred%n", firstPartOfFileName));
 
             String fullConfigName;
 
@@ -150,22 +155,24 @@ public class ActionsAndExpressionsTest {
 
             MaleSocket socket = configureSwing.createNewObject(configureSwing.getAutoSystemName(), null);
             MaleSocket lastMaleSocket = socket;
-            Assert.assertNotNull(lastMaleSocket);
+            assertNotNull(lastMaleSocket);
             Base base = socket;
-            Assert.assertNotNull(base);
+            assertNotNull(base);
 
             while ((base instanceof MaleSocket)) {
                 lastMaleSocket = (MaleSocket) base;
                 base = ((MaleSocket)base).getObject();
             }
-            Assert.assertNotNull(base);
-            Assert.assertEquals("SwingConfiguratorInterface creates an object of correct type", base.getClass().getName(), packageName+"."+firstPartOfFileName);
+            assertNotNull(base);
+            assertEquals( base.getClass().getName(), packageName+"."+firstPartOfFileName,
+                "SwingConfiguratorInterface creates an object of correct type");
 //                System.out.format("Swing: %s, Class: %s, class: %s%n", configureSwing.toString(), socket.getShortDescription(), socket.getObject().getClass().getName());
-            Assert.assertEquals("Swing class has correct name", socket.getShortDescription(), configureSwing.toString());
+            assertEquals( socket.getShortDescription(), configureSwing.toString(),
+                "Swing class has correct name");
 //                System.out.format("MaleSocket class: %s, socket class: %s%n",
 //                        configureSwing.getManager().getMaleSocketClass().getName(),
 //                        socket.getClass().getName());
-            Assert.assertTrue(configureSwing.getManager().getMaleSocketClass().isAssignableFrom(lastMaleSocket.getClass()));
+            assertTrue(configureSwing.getManager().getMaleSocketClass().isAssignableFrom(lastMaleSocket.getClass()));
 
             // Test all locales. This mainly tests that the female socket
             // names are valid for each locale, for example that the name
@@ -180,7 +187,7 @@ public class ActionsAndExpressionsTest {
 //                System.out.format("Class %s.%s has no swing class%n", packageName, firstPartOfFileName);
 //                errorsFound = true;
 //            }
-            Assert.assertNotNull(String.format("Class %s has swing class%n", firstPartOfFileName), configureSwing);
+            assertNotNull( configureSwing, String.format("Class %s has swing class%n", firstPartOfFileName));
 
             // Ignore for now
 /*
@@ -279,7 +286,8 @@ public class ActionsAndExpressionsTest {
                     "AbstractAnalogAction","AnalogFactory",         // Analog
                     "AbstractDigitalAction","ActionAtomicBoolean","AbstractScriptDigitalAction","DigitalFactory",   // Digital
                     "AbstractDigitalBooleanAction","DigitalBooleanFactory",     // Boolean digital
-                    "AbstractStringAction","StringFactory"          // String
+                    "AbstractStringAction","StringFactory",         // String
+                    "SetLocalVariables"
                 });
 
 
@@ -303,7 +311,7 @@ public class ActionsAndExpressionsTest {
                     "ExpressionLinuxLinePower"     // Only exists on Linux
                 });
 
-        Assert.assertFalse("No errors found", errorsFound);
+        assertFalse( errorsFound, "No errors found");
     }
 
     // The minimal setup for log4J

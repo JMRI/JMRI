@@ -1,30 +1,20 @@
 package jmri.jmrit.logixng;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Collections;
+import java.util.*;
 
-import javax.script.Bindings;
-import javax.script.ScriptException;
-import javax.script.SimpleBindings;
+import javax.script.*;
 
+import org.slf4j.Logger;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.*;
-import jmri.JmriException;
 import jmri.jmrit.logixng.Stack.ValueAndType;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.jmrit.logixng.util.parser.ExpressionNode;
-import jmri.jmrit.logixng.util.parser.LocalVariableExpressionVariable;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.TypeConversionUtil;
-
-import org.slf4j.Logger;
 
 /**
  * A symbol table
@@ -153,14 +143,24 @@ public interface SymbolTable {
         Formula(Bundle.getMessage("InitialValueType_Formula"), true),
         ScriptExpression(Bundle.getMessage("InitialValueType_ScriptExpression"), true),
         ScriptFile(Bundle.getMessage("InitialValueType_ScriptFile"), true),
-        LogixNG_Table(Bundle.getMessage("InitialValueType_LogixNGTable"), true);
+        LogixNG_Table(Bundle.getMessage("InitialValueType_LogixNGTable"), true),
+
+        // This can't be selected by the user. It's only used internally.
+        Object(Bundle.getMessage("InitialValueType_None"), false, false);
+
 
         private final String _descr;
         private final boolean _isValidAsParameter;
+        private final boolean _isVisible;
 
         private InitialValueType(String descr, boolean isValidAsParameter) {
+            this(descr, isValidAsParameter, true);
+        }
+
+        private InitialValueType(String descr, boolean isValidAsParameter, boolean isVisible) {
             _descr = descr;
             _isValidAsParameter = isValidAsParameter;
+            _isVisible = isVisible;
         }
 
         @Override
@@ -170,6 +170,10 @@ public interface SymbolTable {
 
         public boolean isValidAsParameter() {
             return _isValidAsParameter;
+        }
+
+        public boolean isVisible() {
+            return _isVisible;
         }
     }
 
@@ -500,6 +504,9 @@ public interface SymbolTable {
                 validateValue(type, name, initialData, "from logixng table");
                 return copyLogixNG_Table(initialData);
 
+            case Object:
+                return initialData;
+
             default:
                 log.error("definition._initialValueType has invalid value: {}", initialType.name());
                 throw new IllegalArgumentException("definition._initialValueType has invalid value: " + initialType.name());
@@ -526,6 +533,7 @@ public interface SymbolTable {
      * @param oldValue the old value
      * @param newValue the new value
      * @return the value to assign. It might be converted if needed.
+     * @throws NumberFormatException when needed
      */
     public static Object validateStrictTyping(InitialValueType type, Object oldValue, Object newValue)
             throws NumberFormatException {

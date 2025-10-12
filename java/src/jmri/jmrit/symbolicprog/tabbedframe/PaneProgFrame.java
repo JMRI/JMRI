@@ -86,7 +86,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     String suppressRosterMedia = "";
 
     // GUI member declarations
-    JTabbedPane tabPane = new JTabbedPane();
+    JTabbedPane tabPane;
     JToggleButton readChangesButton = new JToggleButton(Bundle.getMessage("ButtonReadChangesAllSheets"));
     JToggleButton writeChangesButton = new JToggleButton(Bundle.getMessage("ButtonWriteChangesAllSheets"));
     JToggleButton readAllButton = new JToggleButton(Bundle.getMessage("ButtonReadAllSheets"));
@@ -113,6 +113,8 @@ abstract public class PaneProgFrame extends JmriJFrame
     abstract protected JPanel getModePane();
 
     protected void installComponents() {
+
+        tabPane = new jmri.util.org.mitre.jawb.swing.DetachableTabbedPane(" : "+_frameEntryId);
 
         // create ShutDownTasks
         if (decoderDirtyTask == null) {
@@ -1192,6 +1194,14 @@ abstract public class PaneProgFrame extends JmriJFrame
             makeMediaPane(r);
         }
 
+        // add the comment tab
+        JPanel commentTab = new JPanel();
+        var comment = new JTextArea(_rPane.getCommentDocument());
+        JScrollPane commentScroller = new JScrollPane(comment, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        commentTab.add(commentScroller);
+        commentTab.setLayout(new BoxLayout(commentTab, BoxLayout.Y_AXIS));
+        tabPane.addTab(Bundle.getMessage("COMMENT PANE"), commentTab);
+
         // for all "pane" elements in the programmer
         List<Element> progPaneList = base.getChildren("pane");
         if (log.isDebugEnabled()) {
@@ -1603,7 +1613,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         writeChangesButton.setEnabled(stat);
         writeAllButton.setEnabled(stat);
-        
+
         var tempModePane = getModePane();
         if (tempModePane != null) {
             tempModePane.setEnabled(stat);
@@ -1933,6 +1943,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < paneList.size(); i++) {
             PaneProgPane p = (PaneProgPane) paneList.get(i);
+            tabPane.remove(p);
             p.dispose();
         }
         paneList.clear();
@@ -2046,6 +2057,28 @@ abstract public class PaneProgFrame extends JmriJFrame
     public static boolean getDoConfirmRead() {
         return InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ||
                 InstanceManager.getDefault(ProgrammerConfigManager.class).isDoConfirmRead();
+    }
+
+    public static void setDisableProgrammingTrack(boolean yes) {
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null) {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDisableProgrammingTrack(yes);
+        }
+    }
+
+    public static boolean getDisableProgrammingTrack() {
+        return InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ||
+                InstanceManager.getDefault(ProgrammerConfigManager.class).isDisableProgrammingTrack();
+    }
+
+    public static void setDisableProgrammingOnMain(boolean yes) {
+        if (InstanceManager.getNullableDefault(ProgrammerConfigManager.class) != null) {
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDisableProgrammingOnMain(yes);
+        }
+    }
+
+    public static boolean getDisableProgrammingOnMain() {
+        return InstanceManager.getNullableDefault(ProgrammerConfigManager.class) == null ||
+                InstanceManager.getDefault(ProgrammerConfigManager.class).isDisableProgrammingOnMain();
     }
 
     public RosterEntry getRosterEntry() {

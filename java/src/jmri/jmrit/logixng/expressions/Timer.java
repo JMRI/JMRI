@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.expressions;
 
+import jmri.util.TimerUnit;
+
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -63,8 +65,8 @@ public class Timer extends AbstractDigitalExpression {
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.COMMON;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.COMMON;
     }
 
     /**

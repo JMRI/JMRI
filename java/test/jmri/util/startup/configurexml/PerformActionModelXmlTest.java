@@ -2,7 +2,6 @@ package jmri.util.startup.configurexml;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,7 +15,7 @@ public class PerformActionModelXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("PerformActionModelXml constructor",new PerformActionModelXml());
+      Assertions.assertNotNull( new PerformActionModelXml(), "PerformActionModelXml constructor");
     }
 
     @BeforeEach

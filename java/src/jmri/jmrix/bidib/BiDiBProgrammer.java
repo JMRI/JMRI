@@ -25,7 +25,7 @@ import org.bidib.jbidibc.messages.utils.NodeUtils;
  * from programming mode are now handled in the TrafficController code.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2016
- * @author Eckart Meyer Copyright (C) 2019-2023
+ * @author Eckart Meyer Copyright (C) 2019-2025
  */
 public class BiDiBProgrammer extends AbstractProgrammer {
 
@@ -161,17 +161,20 @@ public class BiDiBProgrammer extends AbstractProgrammer {
     private void sendBiDiBMessage(BidibCommandMessage message) {
         progNode = tc.getCurrentGlobalProgrammerNode(); //the global programmer progNode may have changed TODO: make the progNode user selectable!
         if (progNode != null) {
+            log.debug(" using programmer node {}, isBoosterOn = {}", progNode, isBoosterOn);
             if (isBoosterOn) {
                 startLongTimer();
                 tc.sendBiDiBMessage(message, progNode);
             }
             else {
                 // if the booster of OFF, return immediately without waiting for the timeout.
+                log.warn("BiDiB Booster is switched off!");
                 progState = NOTPROGRAMMING;
                 notifyProgListenerEnd(_val, jmri.ProgListener.NoAck);
             }
         }
         else {
+            log.warn("no prog node available!");
             progState = NOTPROGRAMMING;
             notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
         }

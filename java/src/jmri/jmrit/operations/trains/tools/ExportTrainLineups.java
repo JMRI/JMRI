@@ -116,8 +116,6 @@ public class ExportTrainLineups extends XmlFile {
                 fileOut.println();
             }
 
-            fileOut.flush();
-            fileOut.close();
             log.info("Exported {} trains to file {}", count, defaultOperationsFilename());
             JmriJOptionPane.showMessageDialog(null,
                     Bundle.getMessage("ExportedTrainsToFile",

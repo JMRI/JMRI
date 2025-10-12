@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcher-traininfo.xsl" type="text/xsl"?>
+<!DOCTYPE traininfofile SYSTEM "/xml/DTD/dispatcher-traininfo.dtd">
+<traininfofile>
+  <!--Written by JMRI version 5.13.3-ClubBase-2024-Stopping-202508151251+R69deccc on Mon Aug 25 17:52:40 EDT 2025-->
+  <traininfo version="7" transitname="Section1-2" transitid="Section1-2" dynamictransit="no" trainname="" trainusername="A" rosterid="" dccaddress="3" trainintransit="yes" startblockname="Block2-1" startblockid="Block2" startblockseq="1" endblockname="Block2" endblockid="Block2" endblockseq="4" viablockname="" trainfromroster="no" trainfromtrains="no" trainfromuser="yes" trainfromsetlater="no" priority="5" traindetection="TRAINDETECTION_WHOLETRAIN" resetwhendone="yes" delayedrestart="sensor" delayedrestartsensor="TrainRestart" resetrestartsensor="no" reverseatend="no" reversedelayedrestart="no" terminatewhendone="no" departuretimehr="8" departuretimemin="0" traintype="&lt;none&gt;" autorun="yes" loadatstartup="no" allocatealltheway="no" allocationmethod="3" nexttrain="None" speedfactor="1.0" maxspeed="1.0" minreliableoperatingspeed="0.0" ramprate="None" runinreverse="no" sounddecoder="no" maxtrainlengthscalemeters="192.0" trainlengthunits="TRAINLENGTH_ACTUALCM" usespeedprofile="no" stopbyspeedprofile="no" stopbyspeedprofileadjust="1.0" waittime="3.0" blockname="" fnumberlight="0" fnumberbell="1" fnumberhorn="2" />
+</traininfofile>

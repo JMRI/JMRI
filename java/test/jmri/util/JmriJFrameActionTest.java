@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,7 +11,7 @@ public class JmriJFrameActionTest {
     @Test
     public void testCTor() {
         JmriJFrameAction t = new JmriJFrameAction("Test");
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

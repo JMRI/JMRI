@@ -79,7 +79,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
-        return EnumSet.of(SpeedStepMode.TMCC_32, SpeedStepMode.TMCC_200);
+        return EnumSet.of(SpeedStepMode.TMCC1_32, SpeedStepMode.TMCC2_32, SpeedStepMode.TMCC1_100, SpeedStepMode.TMCC2_200);
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class);

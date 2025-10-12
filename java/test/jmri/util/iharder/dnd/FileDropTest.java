@@ -1,13 +1,12 @@
 package jmri.util.iharder.dnd;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.Assume;
-
 import javax.swing.JPanel;
 
-import java.awt.GraphicsEnvironment;
 import java.net.URI;
+
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -16,8 +15,9 @@ import java.net.URI;
 public class FileDropTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() throws java.io.IOException {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         // this came was modifed from the FileDrop website's example at
         // http://iharder.sourceforge.net/current/java/filedrop/ 
         JPanel myPanel = new JPanel();
@@ -28,7 +28,7 @@ public class FileDropTest {
             }   // end filesDropped
         }); // end URIDrop.Listener
 
-        Assert.assertNotNull("exists", t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

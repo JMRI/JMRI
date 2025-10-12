@@ -254,6 +254,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _name;
     }
 
+    public String getSplitName() {
+        return TrainCommon.splitStringLeftParenthesis(getName());
+    }
+
     /**
      * @return The name of the color when highlighting the train's row
      */
@@ -557,10 +561,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // AM_PM field
         String am_pm = "";
         if (Setup.is12hrFormatEnabled() && !isSortFormat) {
-            am_pm = " " + Bundle.getMessage("AM");
+            am_pm = TrainCommon.SPACE + Bundle.getMessage("AM");
             if (hours >= 12) {
                 hours = hours - 12;
-                am_pm = " " + Bundle.getMessage("PM");
+                am_pm = TrainCommon.SPACE + Bundle.getMessage("PM");
             }
             if (hours == 0) {
                 hours = 12;
@@ -3247,11 +3251,10 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
 
         if (isPreview && Setup.isBuildReportEditorEnabled()) {
-            TrainPrintUtilities.editReport(buildFile, getName());
+            TrainPrintBuildReport.editReport(buildFile, getName());
         } else {
-            TrainPrintUtilities.printReport(buildFile,
-                    Bundle.getMessage("buildReport", getDescription()),
-                    isPreview, NONE, true, NONE, NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize(), true, null);
+            TrainPrintBuildReport.printReport(buildFile,
+                    Bundle.getMessage("buildReport", getDescription()), isPreview);
         }
         return true;
     }
@@ -3348,7 +3351,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (name.length() > TrainCommon.getManifestHeaderLineLength() / 2) {
             name = name.substring(0, TrainCommon.getManifestHeaderLineLength() / 2);
         }
-        TrainPrintUtilities.printReport(file, name, isPreview, Setup.getFontName(), false, logoURL, printerName,
+        TrainPrintManifest.printReport(file, name, isPreview, Setup.getFontName(), logoURL, printerName,
                 Setup.getManifestOrientation(), Setup.getManifestFontSize(), Setup.isPrintPageHeaderEnabled(),
                 Setup.getPrintDuplexSides());
         if (!isPreview) {
@@ -3376,7 +3379,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         // Set up to process the CSV file by the external Manifest program
         InstanceManager.getDefault(TrainCustomManifest.class).addCsvFile(file);
         if (!InstanceManager.getDefault(TrainCustomManifest.class).process()) {
-            if (!InstanceManager.getDefault(TrainCustomManifest.class).excelFileExists()) {
+            if (!InstanceManager.getDefault(TrainCustomManifest.class).doesExcelFileExist()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("LoadDirectoryNameFileName",
                                 InstanceManager.getDefault(TrainCustomManifest.class).getDirectoryPathName(),
@@ -3824,6 +3827,20 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             _trainIcon.remove();
         }
         return true;
+    }
+    
+    /**
+     * Checks to see if the train's staging departure track has been taken by another train.
+     * @return True if track has been allocated to another train.
+     */
+    public boolean checkDepartureTrack() {
+        return (Setup.isStagingTrackImmediatelyAvail() &&
+                !isTrainEnRoute() &&
+                getDepartureTrack() != null &&
+                getDepartureTrack().isStaging() &&
+                getDepartureTrack() != getTerminationTrack() &&
+                getDepartureTrack().getIgnoreUsedLengthPercentage() == Track.IGNORE_0 &&
+                getDepartureTrack().getDropRS() > 0);
     }
 
     public void dispose() {

@@ -4,7 +4,7 @@
   <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
   <title>JMRI: CBUS&reg; Console Tool</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI CBUS help monitor console log logging event long short">
+  <meta name="keywords" content="JMRI CBUS help monitor console log logging event long short filter">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
@@ -259,8 +259,8 @@
         <p>The filter logic works from top-to-bottom, following the order of the list for any
         applicable categories.</p>
         <img src=
-        "../../../../../../../html/hardware/can/cbus/images/swing/filter/filter-426x254.png" width=
-        "426" height="254" alt="CBUS Filter">
+        "../../../../../../../html/hardware/can/cbus/images/swing/filter/filter-539x304.png" width=
+        "539" height="304" alt="CBUS Filter">
         <p>The filter listens for new nodes heard on the network, when a new node is heard it is
         listed under Nodes and is filterable.</p>
 
@@ -277,15 +277,12 @@
         ( You could identify these by filtering short events, passing long events, and then filter
         by node number less than 1 ).</p>
 
-        <p>When a filter is changed between pass and filter, this is displayed in the console
-        log.</p>
-
         <p>Changing the settings takes effect instantly.</p>
 
         <h3>Filter Categories</h3>
         <img src=
-        "../../../../../../../html/hardware/can/cbus/images/swing/filter/events-426x413.png" width=
-        "426" height="413" class="floatRight" alt="CBUS Event Filter">
+        "../../../../../../../html/hardware/can/cbus/images/swing/filter/filter-events-539x717.png" width=
+        "539" height="717" class="floatRight" alt="CBUS Event Filter">
         <ul>
           <li>Incoming</li>
 
@@ -350,8 +347,8 @@
           </li>
 
           <li>Command Station <img src=
-          "../../../../../../../html/hardware/can/cbus/images/swing/filter/nodes-426x247.png"
-            width="426" height="247" class="floatRight" alt="CBUS Node Filter">
+          "../../../../../../../html/hardware/can/cbus/images/swing/filter/filter-nodes-539x553.png"
+            width="539" height="553" class="floatRight" alt="CBUS Node Filter">
             <ul>
               <li>Acquire / Release / Consist</li>
 

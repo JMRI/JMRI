@@ -44,6 +44,7 @@ public class SpecificMessage extends SerialMessage {
      * @param a Array of bytes to send
      * @param l length of expected reply
      */
+    @Deprecated( since="5.13.5", forRemoval=true) // deprecated super
     public SpecificMessage(byte[] a, int l) {
         super(a, l);
     }

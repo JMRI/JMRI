@@ -157,7 +157,7 @@ public class ExpressionBlockTest extends AbstractDigitalExpressionTestBase {
 
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        Assert.assertTrue("Category matches", LogixNG_Category.ITEM == _base.getCategory());
     }
 
     @Test
@@ -414,7 +414,7 @@ public class ExpressionBlockTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initLogixNGManager();
 
-        _category = Category.ITEM;
+        _category = LogixNG_Category.ITEM;
         _isExternal = true;
 
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N

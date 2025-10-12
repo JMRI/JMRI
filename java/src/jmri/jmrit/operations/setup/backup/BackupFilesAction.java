@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -37,7 +38,7 @@ public class BackupFilesAction extends AbstractAction {
                 OperationsXml.save();
             }
         }
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         // get directory to write to
         JFileChooser fc = new jmri.util.swing.JmriJFileChooser(backup.getBackupRoot());

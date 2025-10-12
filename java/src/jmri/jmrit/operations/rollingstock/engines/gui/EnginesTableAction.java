@@ -19,7 +19,7 @@ public class EnginesTableAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         // create a engine table frame
-        new EnginesTableFrame();
+        new EnginesTableFrame(true, null, null);
     }
 }
 

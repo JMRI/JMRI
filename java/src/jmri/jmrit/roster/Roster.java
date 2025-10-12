@@ -147,6 +147,11 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * rely on being able to store this value.
      */
     public static final String ALLENTRIES = Bundle.getMessage("ALLENTRIES"); // NOI18N
+    /**
+     * Title of the "No Group" roster group. As this varies by locale, do not
+     * rely on being able to store this value.
+     */
+    public static final String NOGROUP = Bundle.getMessage("NOGROUP"); // NOI18N
 
     /**
      * Create a roster with default contents.
@@ -287,7 +292,10 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *         group does not exist.
      */
     public int numGroupEntries(String group) {
-        if (group != null
+        log.trace("numGroupEntries for {}", group);
+        if (group != null && group.equals(Roster.NOGROUP)) {
+            return numNoGroupEntries();
+        } else if (group != null
                 && !group.equals(Roster.ALLENTRIES)
                 && !group.equals(Roster.allEntries(Locale.getDefault()))) {
             return (this.rosterGroups.get(group) != null) ? this.rosterGroups.get(group).getEntries().size() : 0;
@@ -296,6 +304,17 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
     }
 
+    int numNoGroupEntries() {
+        int count = 0;
+        for (var entry : _list) {
+            if (entry.getGroups().isEmpty()) {
+                count++;
+            }
+        }
+        log.trace("numNoGroupEntries returns {}", count);
+        return count;
+    }
+    
     /**
      * Return RosterEntry from a "title" string, ala selection in
      * matchingComboBox.
@@ -378,6 +397,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *         group, or the group does not exist.
      */
     public RosterEntry getGroupEntry(String group, int i) {
+        log.trace("getGroupEntry({}, {})", group, i);
         boolean doGroup = (group != null && !group.equals(Roster.ALLENTRIES) && !group.isEmpty());
         if (!doGroup) {
             // if not trying to get a specific group entry, just get the specified
@@ -387,6 +407,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             } catch (IndexOutOfBoundsException e) {
                 return null;
             }
+        } else if (group != null && group.equals(Roster.NOGROUP)) {
+            return getNoGroupEntry(i);
         }
         synchronized (_list) {
             int num = 0;
@@ -403,26 +425,63 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         return null;
     }
 
+    RosterEntry getNoGroupEntry(int i) {
+        log.trace("getNoGroupEntry({})", i);
+        try {
+            return getNoGroupList().get(i);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+    }
+    
+    List<RosterEntry> getNoGroupList() {
+        List<RosterEntry> result = new ArrayList<>();
+
+        getAllEntries().forEach((entry) -> {
+            if (entry.getGroups().isEmpty()) {
+                result.add(entry);
+            }
+        });
+        log.trace("getNoGroupList returns {} items", result.size());
+        return result;
+    }
+    
     public int getGroupIndex(String group, RosterEntry re) {
+        log.trace("getGroupIndex({}, {})", group, re);
         int num = 0;
         boolean doGroup = (group != null && !group.equals(Roster.ALLENTRIES) && !group.isEmpty());
+
         synchronized (_list) {
-        for (RosterEntry r : _list) {
-            if (doGroup) {
-                if ((r.getAttribute(getRosterGroupProperty(group)) != null)
-                        && r.getAttribute(getRosterGroupProperty(group)).equals("yes")) { // NOI18N
-                    if (r == re) {
+
+            if (group != null && group.equals(Roster.NOGROUP)) {
+                var list = getNoGroupList();
+                for (RosterEntry r : list) {
+                    if (re == r) {
+                        log.trace("getGroupIndex of NOGROUP returns {}", num);
                         return num;
                     }
                     num++;
                 }
-            } else {
-                if (re == r) {
-                    return num;
-                }
-                num++;
+                log.trace("getGroupIndex of NOGROUP returns -1");
+                return -1;
             }
-        }
+    
+            for (RosterEntry r : _list) {
+                if (doGroup) {
+                    if ((r.getAttribute(getRosterGroupProperty(group)) != null)
+                            && r.getAttribute(getRosterGroupProperty(group)).equals("yes")) { // NOI18N
+                        if (r == re) {
+                            return num;
+                        }
+                        num++;
+                    }
+                } else {
+                    if (re == r) {
+                        return num;
+                    }
+                    num++;
+                }
+            }
         }
         return -1;
     }
@@ -475,6 +534,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (group == null || group.equals(Roster.ALLENTRIES) || group.isEmpty()) {
             // Return a copy of the list
             return new ArrayList<>(this._list);
+        }  else if (group.equals(Roster.NOGROUP)) {
+            return getNoGroupList();
         } else {
             return this.getEntriesWithAttributeKeyValue(Roster.getRosterGroupProperty(group), "yes"); // NOI18N
         }
@@ -863,7 +924,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             Element rosterGroup = new Element("rosterGroup"); // NOI18N
             rosterGroups.keySet().forEach((name) -> {
                 Element group = new Element("group"); // NOI18N
-                if (!name.equals(Roster.ALLENTRIES)) {
+                if (!name.equals(Roster.ALLENTRIES) && !name.equals(Roster.NOGROUP)) {
                     group.addContent(name);
                     rosterGroup.addContent(group);
                 }
@@ -1352,6 +1413,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             return;
         }
         this.addRosterGroup(new RosterGroup(rg));
+        firePropertyChange(ROSTER_GROUP_ADDED, null, rg);
     }
 
     /**
@@ -1411,7 +1473,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             re.putAttribute(newGroup, "yes"); // NOI18N
         });
         this.addRosterGroup(new RosterGroup(newName));
-        // the firePropertyChange event will be called by addRosterGroup()
+
+        firePropertyChange(ROSTER_GROUP_ADDED, oldName, newName);
     }
 
     public void rosterGroupRenamed(String oldName, String newName) {

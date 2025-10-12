@@ -404,11 +404,11 @@ public class RouteLocation extends PropertyChangeSupport implements java.beans.P
         if (getDepartureTime().equals(NONE) || !Setup.is12hrFormatEnabled()) {
             return _departureTime;
         }
-        String AM_PM = " " + Bundle.getMessage("AM");
+        String AM_PM = TrainCommon.SPACE + Bundle.getMessage("AM");
         String[] time = getDepartureTime().split(":");
         int hour = Integer.parseInt(time[0]);
         if (hour >= 12) {
-            AM_PM = " " + Bundle.getMessage("PM");
+            AM_PM = TrainCommon.SPACE + Bundle.getMessage("PM");
             hour = hour - 12;
         }
         if (hour == 0) {

@@ -60,6 +60,12 @@ public class LogixNGModuleTableAction extends AbstractLogixNGTableAction<jmri.jm
     }
 
     @Override
+    protected void createModel() {
+        m = new LogixNGModuleTableAction.TableModel();
+        m.setFilter((Module t) -> t.isVisible());
+    }
+
+    @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleLogixNGModuleTable"));
     }

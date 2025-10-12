@@ -290,7 +290,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
         Assertions.assertNull(rcvdReply);
         Assertions.assertNull(rcvdMsg);
 
-        SerialMessage msg = new SerialMessage(new byte[]{0,1,2,3});
+        SerialMessage msg = new SerialMessage("010203");
         s.message(msg);
         Assertions.assertEquals(msg, rcvdMsg);
 

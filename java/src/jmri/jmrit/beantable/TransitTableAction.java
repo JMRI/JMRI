@@ -1,7 +1,9 @@
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -286,6 +289,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private final List<Boolean> safe = new ArrayList<>();
     private String[] sensorList;
     private final List<String> sensorStopAllocation = new ArrayList<>();
+    private final List<Float> fwdStopPerCent = new ArrayList<>();
+    private final List<Float> revStopPerCent = new ArrayList<>();
     private final List<Section> primarySectionBoxList = new ArrayList<>();
     private final List<Integer> priSectionDirection = new ArrayList<>();
     private final List<Section> alternateSectionBoxList = new ArrayList<>();
@@ -409,9 +414,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             // initialize table of sections
             sectionTableModel = new SectionTableModel();
             JTable sectionTable = new JTable(sectionTableModel);
+            sectionTable.getTableHeader().setPreferredSize(new Dimension(0, new JLabel("<html>I<br>I</html>").getPreferredSize().height));
+            sectionTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
             sectionTable.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
             sectionTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
             sectionTable.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
+
             sectionTable.setRowSelectionAllowed(false);
             TableColumnModel sectionColumnModel = sectionTable.getColumnModel();
             TableColumn sequenceColumn = sectionColumnModel.getColumn(SectionTableModel.SEQUENCE_COLUMN);
@@ -421,7 +429,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             TableColumn sectionColumn = sectionColumnModel.getColumn(SectionTableModel.SECTIONNAME_COLUMN);
             sectionColumn.setResizable(true);
             sectionColumn.setMinWidth(150);
-            //sectionColumn.setMaxWidth(210);
             TableColumn actionColumn = sectionColumnModel.getColumn(SectionTableModel.ACTION_COLUMN);
             // install button renderer and editor
             ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -442,6 +449,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             s = rbx.getString("AlternateColName");
             alternateColumn.setMinWidth((int)new JLabel(s.substring(1, Math.min(s.length(), 7))).getPreferredSize().getWidth());
             alternateColumn.setMaxWidth((int)new JLabel(rbx.getString("AlternateColName").concat("WW")).getPreferredSize().getWidth());
+            sectionColumnModel.getColumn(SectionTableModel.FWD_STOPPING_LENGTH).setCellEditor(new JSpinnerCellEditor());
+            sectionColumnModel.getColumn(SectionTableModel.FWD_STOPPING_LENGTH).setCellRenderer(new JSpinnerCellRenderer());
+            sectionColumnModel.getColumn(SectionTableModel.REV_STOPPING_LENGTH).setCellEditor(new JSpinnerCellEditor());
+            sectionColumnModel.getColumn(SectionTableModel.REV_STOPPING_LENGTH).setCellRenderer(new JSpinnerCellRenderer());
             JScrollPane sectionTableScrollPane = new JScrollPane(sectionTable);
             p12.add(sectionTableScrollPane, BorderLayout.CENTER);
             p1.add(p12);
@@ -574,6 +585,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         alternate.clear();
         safe.clear();
         sensorStopAllocation.clear();
+        fwdStopPerCent.clear();
+        revStopPerCent.clear();
 
         curSection = null;
         curSectionDirection = 0;
@@ -593,6 +606,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     alternate.add(ts.isAlternate());
                     safe.add(ts.isSafe());
                     sensorStopAllocation.add(ts.getStopAllocatingSensor());
+                    fwdStopPerCent.add(ts.getFwdStopPerCent());
+                    revStopPerCent.add(ts.getRevStopPerCent());
                 }
             }
             int index = sectionList.size() - 1;
@@ -629,6 +644,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         alternate.clear();
         safe.clear();
         sensorStopAllocation.clear();
+        fwdStopPerCent.clear();
+        revStopPerCent.clear();
         curSection = null;
         curSectionDirection = 0;
         prevSection = null;
@@ -674,6 +691,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             if (prevSection != null) {
                 curSectionDirection = direction.get(j);
             }
+            fwdStopPerCent.add(0, Float.valueOf(1.0f));
+            revStopPerCent.add(0, Float.valueOf(1.0f));
             initializeSectionCombos();
         }
         updateSeqNum();
@@ -728,6 +747,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             safe.add(0, addAsSafe.isSelected());
             sensorStopAllocation.add(0, "");
             action.add(0, new ArrayList<>());
+            fwdStopPerCent.add(0, Float.valueOf(1.0f));
+            revStopPerCent.add(0, Float.valueOf(1.0f));
             if (curSequenceNum == 2) {
                 prevSectionDirection = direction.get(0);
                 prevSection = s;
@@ -1065,6 +1086,13 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         } else {
             sensorStopAllocation.add(index, (String) stopAllocatingSensorBox.getSelectedItem());
         }
+        if (stopAllocatingSensorBox.getSelectedIndex() < 0) {
+            sensorStopAllocation.add(index, "");
+        } else {
+            sensorStopAllocation.add(index, (String) stopAllocatingSensorBox.getSelectedItem());
+        }
+        fwdStopPerCent.add(index, Float.valueOf(1.0f));
+        revStopPerCent.add(index, Float.valueOf(1.0f));
         action.add(index, new ArrayList<>());
         initializeSectionCombos();
         updateSeqNum();
@@ -1088,6 +1116,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             alternate.add(true);
             safe.add(addAsSafe.isSelected());
             sensorStopAllocation.add((String)stopAllocatingSensorBox.getSelectedItem());
+            fwdStopPerCent.add( Float.valueOf(1.0f));
+            revStopPerCent.add( Float.valueOf(1.0f));
             initializeSectionCombos();
         }
         updateSeqNum();
@@ -1166,19 +1196,19 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         alternate.remove(index);
         safe.remove(index);
         sensorStopAllocation.remove(index);
+        fwdStopPerCent.remove(index);
+        revStopPerCent.remove(index);
     }
 
     private boolean checkTransitInformation() {
         //transits can now be of length 1 segmant.
         //With these the route has to start outside the transit
-        /*
-        if ((sectionList.size() <= 1) || (curSequenceNum <= 1)) {
+        if ((sectionList.size() < 1) || (curSequenceNum < 1)) {
             JmriJOptionPane.showMessageDialog(addFrame, rbx
                     .getString("Message26"), Bundle.getMessage("ErrorTitle"),
                     JmriJOptionPane.ERROR_MESSAGE);
             return false;
-        }   */
-
+        }
         return true;
     }
 
@@ -1189,7 +1219,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         curTransit.removeAllSections();
         for (int i = 0; i < sectionList.size(); i++) {
             TransitSection ts = new TransitSection(sectionList.get(i),
-                    sequence.get(i), direction.get(i), alternate.get(i), safe.get(i), sensorStopAllocation.get(i));
+                    sequence.get(i), direction.get(i), alternate.get(i), safe.get(i),
+                    sensorStopAllocation.get(i), fwdStopPerCent.get(i), revStopPerCent.get(i));
             List<TransitSectionAction> list = action.get(i);
             if (list != null) {
                 for (int j = 0; j < list.size(); j++) {
@@ -1863,7 +1894,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 switch (tWhatData2) {
                     case TransitSectionAction.LOCOADDRESSTYPEROSTER:
                         locoAddressRoster.setSelected(true);
-                        rosterComboBox.setSelectedItem(tWhatString2);
+                        setRosterComboBox(rosterComboBox, tWhatString2);
                         rosterComboBox.setVisible(true);
                         locoAddress.setVisible(false);
                         break;
@@ -1999,6 +2030,21 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
         addEditActionFrame.pack();
         addEditActionFrame.setVisible(true);
+    }
+
+    private boolean setRosterComboBox(RosterEntryComboBox box, String txt) {
+        boolean found = false;
+        for (int i = 1; i < box.getItemCount(); i++) {
+            if (txt.equals(((RosterEntry) box.getItemAt(i)).getId())) {
+                box.setSelectedIndex(i);
+                found = true;
+                break;
+            }
+        }
+        if (!found && box.getItemCount() > 0) {
+            box.setSelectedIndex(0);
+        }
+        return found;
     }
 
     private void updateTrainInfoAddressFields(ActionEvent e) {
@@ -2734,7 +2780,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         public static final int ALTERNATE_COLUMN = 4;
         public static final int SAFE_COLUMN = 5;
         public static final int STOPALLOCATING_SENSOR = 6;
-        public static final int NUMBER_OF_COLUMNS = 7;
+        public static final int FWD_STOPPING_LENGTH = 7;
+        public static final int REV_STOPPING_LENGTH = 8;
+        public static final int NUMBER_OF_COLUMNS = 9;
 
         public SectionTableModel() {
             super();
@@ -2766,6 +2814,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     return Boolean.class;
                 case STOPALLOCATING_SENSOR:
                     return JComboBox.class;
+                case FWD_STOPPING_LENGTH:
+                case REV_STOPPING_LENGTH:
+                    return JSpinner.class;
                 default:
                     return super.getColumnClass(c);
             }
@@ -2787,6 +2838,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 case ACTION_COLUMN:
                 case SAFE_COLUMN:
                 case STOPALLOCATING_SENSOR:
+                case FWD_STOPPING_LENGTH:
+                case REV_STOPPING_LENGTH:
                     return true;
                 default:
                     return false;
@@ -2810,6 +2863,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     return rbx.getString("SafeColName");
                 case STOPALLOCATING_SENSOR:
                     return rbx.getString("StopAllocationColName");
+                case FWD_STOPPING_LENGTH:
+                    return rbx.getString("FwdStopDistance");
+                case REV_STOPPING_LENGTH:
+                    return rbx.getString("RevStopDistance");
                default:
                     return "";
             }
@@ -2833,7 +2890,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     return new JTextField(4).getPreferredSize().width;
                 case STOPALLOCATING_SENSOR:
                     return new JTextField(12).getPreferredSize().width;
-                default:
+                case FWD_STOPPING_LENGTH:
+                    return new JTextField(12).getPreferredSize().width;
+                case REV_STOPPING_LENGTH:
+                    return new JTextField(12).getPreferredSize().width;
+               default:
                     // fall through
                     break;
             }
@@ -2874,6 +2935,16 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     String name = (sensor != null) ? sensor : "";
                     cb.setSelectedItem(name);
                     return cb;
+                case FWD_STOPPING_LENGTH:
+                    JSpinner jf = new JSpinner(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(2.0f), Float.valueOf(0.05f)));
+                    jf.setEditor(new JSpinner.NumberEditor(jf, "##0.0# %"));
+                    jf.setValue(fwdStopPerCent.get(rx));
+                    return jf;
+                case REV_STOPPING_LENGTH:
+                    JSpinner jr = new JSpinner(new SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(0.0f), Float.valueOf(2.0f), Float.valueOf(0.05f)));
+                    jr.setEditor(new JSpinner.NumberEditor(jr, "##0.0# %"));
+                    jr.setValue(revStopPerCent.get(rx));
+                    return jr;
                 default:
                     return Bundle.getMessage("BeanStateUnknown");
             }
@@ -2896,6 +2967,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     } else {
                         sensorStopAllocation.set(row, (String) cb.getSelectedItem());
                     }
+                    break;
+                case FWD_STOPPING_LENGTH:
+                    fwdStopPerCent.set(row, (Float)value);
+                    break;
+                case REV_STOPPING_LENGTH:
+                    revStopPerCent.set(row, (Float)value);
                     break;
                 default:
                     break;
@@ -3060,6 +3137,61 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         return Bundle.getMessage("TitleTransitTable");
     }
 
+    public class JSpinnerCellRenderer extends DefaultTableCellRenderer {
+
+        public JSpinnerCellRenderer() {
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus,
+                                                       int row, int column) {
+            if (value instanceof JSpinner) {
+                switch (column) {
+                    case SectionTableModel.FWD_STOPPING_LENGTH:
+                        ((JSpinner) value).setValue(fwdStopPerCent.get(row));
+                        break;
+                    case SectionTableModel.REV_STOPPING_LENGTH:
+                        ((JSpinner) value).setValue(revStopPerCent.get(row));
+                        break;
+                    default:
+                        log.error("getTableCellEditorComponent col[{}] is bad.",column);
+                }
+            }
+            return (Component)value;
+        }
+    }
+
+    public class JSpinnerCellEditor extends AbstractCellEditor implements TableCellEditor {
+        private JSpinner spinner;
+
+        public JSpinnerCellEditor() {
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value,
+                                                       boolean isSelected, int row, int column) {
+            spinner = (JSpinner) value;
+            if (value instanceof JSpinner) {
+                switch (column) {
+                    case SectionTableModel.FWD_STOPPING_LENGTH:
+                        ((JSpinner) value).setValue(fwdStopPerCent.get(row));
+                        break;
+                    case SectionTableModel.REV_STOPPING_LENGTH:
+                        ((JSpinner) value).setValue(revStopPerCent.get(row));
+                        break;
+                    default:
+                        log.error("getTableCellEditorComponent col[{}] is bad.",column);
+                }
+            }
+            return (Component)value;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return spinner.getValue();
+        }
+    }
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitTableAction.class);
 
 }

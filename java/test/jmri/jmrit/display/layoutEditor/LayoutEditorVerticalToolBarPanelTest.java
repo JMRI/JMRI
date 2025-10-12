@@ -1,10 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,24 +9,27 @@ import org.junit.jupiter.api.*;
  *
  * @author George Warner Copyright (C) 2019
  */
+@jmri.util.junit.annotations.DisabledIfHeadless
 public class LayoutEditorVerticalToolBarPanelTest {
 
     @Test
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor le = new LayoutEditor();
-        new LayoutEditorVerticalToolBarPanel(le);
+        var t = new LayoutEditorVerticalToolBarPanel(le);
+        Assertions.assertNotNull(t);
+        t.dispose();
+        JUnitUtil.dispose(le);
     }
 
 
     // from here down is testing infrastructure
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

@@ -735,7 +735,6 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
 
 
     def updateCoords1(self, blk, pt_to_try, pt_mid):
-        if blk == "CornerUp": self.index += 1; print self.index
         if blk is not None:
             if blk in self.blockPoints:
                 if (jmri.util.MathUtil.distance(pt_mid, pt_to_try) < \
@@ -745,16 +744,11 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 self.blockPoints[blk] = pt_to_try
 
     def updateCoords(self, blk, xy):
-        if blk == "CornerUp": self.index += 1; print self.index
         if blk is not None:
             if blk in self.blockPoints1:
                 self.blockPoints1[blk] = jmri.util.MathUtil.midPoint(self.blockPoints1[blk], xy)
-                if blk == "CornerUp":
-                    print "self.blockPoints1[blk]", self.blockPoints1[blk]
             else:
                 self.blockPoints1[blk] = xy
-                if blk == "CornerUp":
-                    print "self.blockPoints1[blk]", self.blockPoints1[blk]
 
     def getBlockCenterPoints(self, panel):
         self.index = 0
@@ -969,6 +963,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             [sections.getSection(section_name).setForwardStoppingSensorName(forward_stopping_sensor_name) \
              for [sn_prompt, section_name, fss_prompt, forward_stopping_sensor_name] in forward_stop_sensors \
              if forward_stop_sensors is not [] and sections.getSection(section_name) is not None]
+
     def directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "forwardStoppingSensors"
         if not os.path.exists(path):

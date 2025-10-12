@@ -223,7 +223,7 @@ public class ActionPositionableByClass extends AbstractDigitalAction implements 
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
+    public LogixNG_Category getCategory() {
         return CategoryDisplay.DISPLAY;
     }
 

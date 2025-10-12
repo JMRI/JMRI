@@ -493,9 +493,12 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                 if (!toPd.getProtecting().isEmpty()) {
                     toProt = toPd.getProtecting().get(0);
                 }
+                log.trace("Calling checkValidDest");
                 boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(
                     fromPd.getFacing(), pro, toPd.getFacing(), toProt,
-                        LayoutBlockConnectivityTools.Routing.SENSORTOSENSOR);
+                        LayoutBlockConnectivityTools.Routing.NONE); // Was SENSORTOSENSOR, needs to be consistent with three lines below
+                                                                    // See also around line 353 in LayoutBlockConnectivityTools
+                log.trace("         checkValidDest returned {}", result);
                 if (result) {
                     List<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.Routing.NONE);
                     if (!blkList.isEmpty()) {
@@ -537,6 +540,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
                     }
                 }
             } catch (jmri.JmriException e) {
+                log.trace("setMultiPointRoute catches exception", e);
                 // Can be considered normal if route is blocked
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("MultiPointBlocked"),  // NOI18N

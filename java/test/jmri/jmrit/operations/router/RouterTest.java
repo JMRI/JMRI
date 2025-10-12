@@ -37,7 +37,7 @@ public class RouterTest extends OperationsTestCase {
     public void testCarRoutingDefaults() {
 
         Assert.assertTrue("Default car routing true", Setup.isCarRoutingEnabled());
-        Assert.assertTrue("Default routing using yards", Setup.isCarRoutingViaYardsEnabled());
+        Assert.assertFalse("Default routing using yards", Setup.isCarRoutingViaYardsEnabled());
         Assert.assertFalse("Default routing through staging", Setup.isCarRoutingViaStagingEnabled());
         Assert.assertEquals("default build report level", Setup.BUILD_REPORT_VERY_DETAILED,
                 Setup.getBuildReportLevel());
@@ -829,6 +829,7 @@ public class RouterTest extends OperationsTestCase {
         c3.setFinalDestinationTrack(bostonSpur1); // now specify the actual
                                                   // track
 
+        Setup.setCarRoutingViaYardsEnabled(true);
         Assert.assertTrue("Try routing two trains via yard", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Yard 1", c3.getDestinationTrackName());
@@ -1941,6 +1942,7 @@ public class RouterTest extends OperationsTestCase {
         c3.setFinalDestination(boston); // the final destination for the car
         c3.setFinalDestinationTrack(bostonSpur1);
 
+        Setup.setCarRoutingViaYardsEnabled(true);
         Assert.assertTrue("Try routing two trains via interchange", router.setDestination(c3, null, null));
         Assert.assertEquals("Check car's destination", "Acton", c3.getDestinationName());
         Assert.assertEquals("Check car's destination track", "Acton Interchange 2", c3.getDestinationTrackName());
@@ -2373,6 +2375,7 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's destination track", "Acton Interchange 2", c3.getDestinationTrackName());
 
         // use yard track if interchange tracks are too short
+        Setup.setCarRoutingViaYardsEnabled(true);
         actonInterchange2.setLength(c3.getTotalLength() - 1);
         c3.setDestination(null, null); // clear previous destination
         Assert.assertEquals("car still has final destination", foxboro, c3.getFinalDestination());
@@ -2703,6 +2706,7 @@ public class RouterTest extends OperationsTestCase {
         Assert.assertEquals("Check car's final destination", foxboro, c3.getFinalDestination());
 
         // use yard track if interchange tracks are too short
+        Setup.setCarRoutingViaYardsEnabled(true);
         actonInterchange1.setLength(c3.getTotalLength() - 1);
         c3.setDestination(null, null); // clear previous destination
         Assert.assertEquals("car still has final destination", foxboro, c3.getFinalDestination());
@@ -3360,6 +3364,7 @@ public class RouterTest extends OperationsTestCase {
         // now limit train length
         rlgulf.setMaxTrainLength(80); // only one car can be carried
 
+        Setup.setCarRoutingViaYardsEnabled(true);
         trainStagingToFoxboro2.build();
         Assert.assertTrue(trainStagingToFoxboro2.isBuilt());
 

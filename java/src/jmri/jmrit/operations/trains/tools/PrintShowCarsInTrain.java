@@ -50,7 +50,7 @@ public class PrintShowCarsInTrain extends TrainCommon {
                 printCarsAtLocation(writer, train, train.getCurrentRouteLocation());
 
             } catch (HardcopyWriter.PrintCanceledException ex) {
-                log.debug("Print cancelled");
+                log.debug("Print canceled");
             } catch (IOException ex) {
                 log.error("Error printing car roster: {}", ex.getLocalizedMessage());
             }
@@ -100,7 +100,7 @@ public class PrintShowCarsInTrain extends TrainCommon {
                             .5, .5, .5, isPreview);) {
                 printCarsRoute(writer, train);
             } catch (HardcopyWriter.PrintCanceledException ex) {
-                log.debug("Print cancelled");
+                log.debug("Print canceled");
             } catch (IOException ex) {
                 log.error("Error printing car roster: {}", ex.getLocalizedMessage());
             }

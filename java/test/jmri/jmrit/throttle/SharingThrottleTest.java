@@ -2,8 +2,8 @@ package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
 
-import jmri.InstanceManager;
-import jmri.DccLocoAddress;
+import jmri.*;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -112,7 +112,9 @@ public class SharingThrottleTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
         // these tests use the SharingThrottleManager.
-        jmri.ThrottleManager m = new jmri.managers.SharingThrottleManager();
+        var memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
+        ThrottleManager m = new jmri.managers.SharingThrottleManager(memo);
+        memo.store(m, ThrottleManager.class);
         jmri.InstanceManager.setThrottleManager(m);
 
         if (!GraphicsEnvironment.isHeadless()) {

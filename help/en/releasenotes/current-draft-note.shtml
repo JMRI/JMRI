@@ -26,7 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>Node Manager highlights duplicate CAN IDs.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -36,7 +36,7 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li>Create and update Meters for newer Current messages <JI>, <JG>, etc.</li>
+                <li></li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -86,8 +86,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>The FollowSE*c.py script was broken at some unknown point in the past.
-                    The script is updated in this release to fix that.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -127,8 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Added a power manager (which activates e.g. the power control)
-                    for use with LCC command stations<>/li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -233,8 +231,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li>Updated the Digitrax BDL716's "Roster Entry" with better 
-                    information on its "Notes" page.</li>
+                <li></li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -474,17 +471,10 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li></li>
           <li>The action <strong>Execute program</strong> has been added.
               It lets you execute a program with some parameters. The
               result can be put in a local variable if desired.</li>
-          <li>The LogixNG action <strong>Send MERG CBUS event</strong> has
-              been added. It's available in the category <strong>Merg Cbus</strong>
-              if there is a Merg Cbus connection.</li>
-          <li>The semicolon has been added as field delimiter for CSV files used to create
-          LogixNG Tables.</li>
-          <li>Where Used support has been added to the Formula actions and expressions.  This
-          is a text based search using the item's system and user names.  False positive matches are
-          possible.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -496,10 +486,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>The train icon now shows the number of local moves in the train's route.</li>
-            <li>New feature, a turn can now drop and pull the same car on a turn.</li>
-            <li>Added local moves enabled to route export and printing.</li>
-            <li>Header lines are now optional for Manifests and switch lists.
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -541,20 +528,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>The script <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
-                has been added.<br />
-                <strong>InitUnknownTurnoutsSensorsExceptInternal.py</strong>
-                sets "Unknown" hardware states to default values for sensors
-                (Inactive) and turnouts (Closed). This prevents overriding
-                known states.<br />
-                The existing script <strong>InitAllTurnoutsSensors.py</strong>
-                would override sensor Active and turnout Thrown states.</li>
-            <li>Upgrade YetAnotherAutoTrain.py (YAAT) to version 3.3.  There are two new statements.
-                <ul>
-                    <li>Wait for memory &lt;memory name&gt; value to change</li>
-                    <li>If value for memory &lt;memory name&gt; is &lt;eq | ne | lt | gt | le | ge&gt; &lt;value&gt;</li>
-                </ul>
-            </li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -564,8 +538,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>The aspect mapping in the Italian FS-1987
-                    signal system has been updated.</li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -673,7 +646,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>The PlantUML library we use for various documentation images
-                has been updated to the current 1.2025.2 version.</li>
-            <li>Fixed a bug where Dark Mode would fail due to a missing library.</li>
+            <li></li>
         </ul>
+

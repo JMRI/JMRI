@@ -64,3 +64,6 @@
     <!ATTLIST traininfo stopbyspeedprofileadjust CDATA "1500">
     <!ATTLIST traininfo waittime                CDATA "0">
     <!ATTLIST traininfo blockname               CDATA #IMPLIED>
+    <!ATTLIST traininfo fnumberlight            CDATA "0">
+    <!ATTLIST traininfo fnumberbell             CDATA "1">
+    <!ATTLIST traininfo fnumberhorn             CDATA "2">

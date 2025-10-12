@@ -71,7 +71,7 @@ public class AbstractMaleSocketXml
         if (maleSocketElement.getAttribute("enabled") != null) {  // NOI18N
             enabled = maleSocketElement.getAttribute("enabled").getValue();  // NOI18N
         }
-        ((AbstractMaleSocket)maleSocket).setEnabledFlag("yes".equals(enabled)); // NOI18N
+        maleSocket.setEnabledFlag("yes".equals(enabled)); // NOI18N
 
         String locked = "no";       // NOI18N
         if (maleSocketElement.getAttribute("locked") != null) {  // NOI18N

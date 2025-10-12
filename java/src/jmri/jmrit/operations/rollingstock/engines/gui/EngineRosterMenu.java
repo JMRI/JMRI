@@ -50,16 +50,17 @@ public class EngineRosterMenu extends JMenu {
 
         // create the menu
         AbstractAction importRosterAction = new ImportRosterEngineAction();
-        AbstractAction exportAction = new ExportEngineRosterAction();
+        AbstractAction exportAction = new ExportEngineRosterAction(pWho);
         AbstractAction importAction = new ImportEngineAction();
-        AbstractAction deleteAction = new DeleteEngineRosterAction();
-        AbstractAction resetMovesAction = new ResetEngineMovesAction();
+        AbstractAction deleteAction = new DeleteEngineRosterAction(pWho);
+        AbstractAction resetMovesAction = new ResetEngineMovesAction(pWho);
         AbstractAction printAction = new PrintEngineRosterAction(false, pWho);
         AbstractAction previewAction = new PrintEngineRosterAction(true, pWho);
 
         add(importRosterAction);
         add(importAction);
         add(exportAction);
+        addSeparator();
         add(deleteAction);
         add(resetMovesAction);
         addSeparator();

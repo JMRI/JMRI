@@ -21,7 +21,7 @@ import jmri.util.swing.WindowInterface;
  * posts a dialog box to select the loco to be deleted, and then posts an "are
  * you sure" dialog box before acting.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2002
+ * @author Bob Jacobsen Copyright (C) 2001, 2002, 2025
  * @see jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends JmriAbstractAction {
@@ -88,7 +88,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
 
             // prompt for one last chance
             log.debug("rosterGroup now {}", rosterGroup);
-            if (rosterGroup == null) {
+            if (rosterGroup == null || rosterGroup.equals(Roster.NOGROUP)) {
                 if (!userOK(re.titleString(), filename, fullFilename)) {
                     return;
                 }

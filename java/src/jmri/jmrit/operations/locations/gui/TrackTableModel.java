@@ -25,14 +25,13 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table Model for edit of tracks used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2025
  */
 public abstract class TrackTableModel extends OperationsTableModel implements PropertyChangeListener, TableColumnModelListener {
 
     protected Location _location;
     protected List<Track> _tracksList = new ArrayList<>();
     protected String _trackType;
-    protected JTable _table;
     protected boolean _dirty = false;
 
     // Defines the columns
@@ -61,11 +60,12 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
     protected static final int POOL_COLUMN = 22;
     protected static final int PLANPICKUP_COLUMN = 23;
     protected static final int ALT_TRACK_COLUMN = 24;
-    protected static final int ORDER_COLUMN = 25;
-    protected static final int TRAIN_DIRECTION_COLUMN = 26;
-    protected static final int REPORTER_COLUMN = 27;
-    protected static final int COMMENT_COLUMN = 28;
-    protected static final int EDIT_COLUMN = 29;
+    protected static final int TRACK_PRIORITY_COLUMN = 25;
+    protected static final int ORDER_COLUMN = 26;
+    protected static final int TRAIN_DIRECTION_COLUMN = 27;
+    protected static final int REPORTER_COLUMN = 28;
+    protected static final int COMMENT_COLUMN = 29;
+    protected static final int EDIT_COLUMN = 30;
 
     protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -136,6 +136,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         tcm.getColumn(POOL_COLUMN).setPreferredWidth(70);
         tcm.getColumn(PLANPICKUP_COLUMN).setPreferredWidth(70);
         tcm.getColumn(ALT_TRACK_COLUMN).setPreferredWidth(120);
+        tcm.getColumn(TRACK_PRIORITY_COLUMN).setPreferredWidth(50);
         tcm.getColumn(ORDER_COLUMN)
                 .setPreferredWidth(Math.max(50, new JLabel(getColumnName(ORDER_COLUMN)).getPreferredSize().width + 10));
         tcm.getColumn(TRAIN_DIRECTION_COLUMN).setPreferredWidth(30);
@@ -168,7 +169,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DISABLE_LOAD_CHANGE_COLUMN),
                 _location.hasDisableLoadChange() && _trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(QUICK_SERVICE_COLUMN),
-                _location.hasQuickLoadService() && _trackType.equals(Track.SPUR));
+                _location.hasQuickService() && (_trackType.equals(Track.SPUR) || _trackType.equals(Track.INTERCHANGE)));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ROAD_COLUMN), _location.hasRoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), _location.hasDestinationRestrictions() &&
@@ -180,6 +181,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PLANPICKUP_COLUMN), _location.hasPlannedPickups());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(POOL_COLUMN), _location.hasPools());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ALT_TRACK_COLUMN), _location.hasAlternateTracks());
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(TRACK_PRIORITY_COLUMN), _location.hasTrackPriortyChanges());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(ORDER_COLUMN),
                 _location.hasOrderRestrictions() && !_trackType.equals(Track.SPUR));
         tcm.setColumnVisible(tcm.getColumnByModelIndex(TRAIN_DIRECTION_COLUMN),
@@ -267,7 +269,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
             case DISABLE_LOAD_CHANGE_COLUMN:
                 return Bundle.getMessage("DisableLoadChange");
             case QUICK_SERVICE_COLUMN:
-                return Bundle.getMessage("QuickLoadService");
+                return Bundle.getMessage("QuickService");
             case SHIP_COLUMN:
                 return Bundle.getMessage("Ship");
             case ROAD_COLUMN:
@@ -284,6 +286,8 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                 return Bundle.getMessage("PlanPickUp");
             case ALT_TRACK_COLUMN:
                 return Bundle.getMessage("AlternateTrack");
+            case TRACK_PRIORITY_COLUMN:
+                return Bundle.getMessage("Priority");
             case ORDER_COLUMN:
                 return Bundle.getMessage("ServiceOrder");
             case TRAIN_DIRECTION_COLUMN:
@@ -315,6 +319,7 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
             case POOL_COLUMN:
             case PLANPICKUP_COLUMN:
             case ALT_TRACK_COLUMN:
+            case TRACK_PRIORITY_COLUMN:
             case ORDER_COLUMN:
             case TRAIN_DIRECTION_COLUMN:
             case REPORTER_COLUMN:
@@ -437,6 +442,8 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                     return Bundle.getMessage("ButtonYes");
                 }
                 return "";
+            case TRACK_PRIORITY_COLUMN:
+                return track.getTrackPriority();
             case ORDER_COLUMN:
                 return track.getServiceOrder();
             case TRAIN_DIRECTION_COLUMN:
@@ -674,7 +681,8 @@ public abstract class TrackTableModel extends OperationsTableModel implements Pr
                         e.getPropertyName().equals(Track.LOAD_OPTIONS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.TRAIN_DIRECTION_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.TRACK_COMMENT_CHANGED_PROPERTY) ||
-                        e.getPropertyName().equals(Track.TRACK_REPORTER_CHANGED_PROPERTY))) {
+                        e.getPropertyName().equals(Track.TRACK_REPORTER_CHANGED_PROPERTY) ||
+                        e.getPropertyName().equals(Track.PRIORITY_CHANGED_PROPERTY))) {
             setColumnsVisible();
         }
         if (e.getSource() instanceof TableColumn && e.getPropertyName().equals("preferredWidth")) {

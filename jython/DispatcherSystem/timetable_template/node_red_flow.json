@@ -78,7 +78,7 @@
         "type": "function",
         "z": "b2b17973657164b1",
         "name": "Generate Clock and Schedule Table",
-        "func": "// var station_to_be_displayed = \"My_Station\"\nvar stations_to_be_displayed = \"My_Station_list\"\n\nvar type = msg.payload[0].type\n\n\n/* Variable for content in the text field\n of the timetable \"yes\" or \"no\" */\nvar FPtext = \"yes\";\nvar cancel = \"cancelled\";\nvar max_no_entries = 10000;\nvar FPlength = 0;\n\n/* If you want scrolling text set run to \"yes\" */\nvar run = \"yes\";\nvar stationRR = \"\";\n\n/* Clock */\nif (type == \"clock\") {\n\n    var time = msg.payload[0].time\n    var emblem = msg.payload[0].emblem\n    \n    // console.log(\"emblem ?\", emblem, \"?\", typeof(time), emblem === \"GB (British Rail)\")\n    msg.payload = ({ \"emblem\" : emblem, \"time\" : time});\n    // console.log(msg.payload)\n    return msg;\n}\n\n/* Schedule table */\nvar list = []\n\nvar station = flow.get(\"station\") || \"\";\nvar platform = flow.get(\"platform\") || \"\";\n\n\nif (type == \"schedule\" ){\n \n    \n    var jObj = msg.payload\n    var all_entries = Object.keys(jObj).length;\n    // console.log(\"all entries\" + all_entries)\n    var count = 0;\n    for (var i = 0; i < all_entries; i++) {\n        var station_name = msg.payload[i].station_name\n        var platform = msg.payload[i].platform\n        if (stations_to_be_displayed.includes(station_name)) {\n            count = count + 1;\n        }\n        // console.log(count);\n    }\n    // console.log(count);\n    if (max_no_entries < count) {\n        var no_entries = max_no_entries\n    } else {\n        var no_entries = count\n    }\n    // console.log(\"no_entries\" + no_entries)\n    list = []\n    // var j = 0\n    var j = 0\n    for (var i = 0; i < all_entries; i++) {\n        var station_name = msg.payload[i].station_name\n        // console.log(\"j = \" + j + \" station_name = \" + station_name)\n        if (stations_to_be_displayed.includes(station_name)){\n            // console.log(\"j2 = \" + j + \" station_name = \" + station_name)\n            var train_name = msg.payload[i].train_name\n            var platform = msg.payload[i].platform.substring(0,20)              // limit length of string to 20 chars to fit on display\n            var station_arrival_time = msg.payload[i].station_arrival_time\n            var station_departure_time = msg.payload[i].station_departure_time\n            var first_station = msg.payload[i].first_station.substring(0, 20)   // limit length of string to 20 chars to fit on display\n            var last_station = msg.payload[i].last_station.substring(0, 20)     // limit length of string to 20 chars to fit on display\n            var via = msg.payload[i].via\n\n            var arrival_time = station_departure_time\n    \n            list[j] = ({\n                point: \"\", platform: platform, station_arrival_time: station_arrival_time, station_departure_time: station_departure_time,  \n                train: train_name, first_station: first_station, last_station: last_station, via: via,});\n            j++;\n        }\n        if (j > count) {\n            break;\n        }\n    }\n    msg.payload = list;\n    return msg;\n}",
+        "func": "var stations_to_be_displayed = \"My_Station_List\"\n\nvar type = msg.payload[0].type\n\n\n/* Variable for content in the text field\n of the timetable \"yes\" or \"no\" */\nvar FPtext = \"yes\";\nvar cancel = \"cancelled\";\nvar max_no_entries = 10000;\nvar FPlength = 0;\n\n/* If you want scrolling text set run to \"yes\" */\nvar run = \"yes\";\nvar stationRR = \"\";\n\n/* Clock */\nif (type == \"clock\") {\n\n    var time = msg.payload[0].time\n    var emblem = msg.payload[0].emblem\n    \n    // console.log(\"emblem ?\", emblem, \"?\", typeof(time), emblem === \"GB (British Rail)\")\n    msg.payload = ({ \"emblem\" : emblem, \"time\" : time});\n    // console.log(msg.payload)\n    return msg;\n}\n\n/* Schedule table */\nvar list = []\n\nvar station = flow.get(\"station\") || \"\";\nvar platform = flow.get(\"platform\") || \"\";\n\n\nif (type == \"schedule\" ){\n \n    \n    var jObj = msg.payload\n    var all_entries = Object.keys(jObj).length;\n    // console.log(\"all entries\" + all_entries)\n    var count = 0;\n    for (var i = 0; i < all_entries; i++) {\n        var station_name = msg.payload[i].station_name\n        var platform = msg.payload[i].platform\n        if (stations_to_be_displayed.includes(station_name)) {\n            count = count + 1;\n        }\n        // console.log(count);\n    }\n    // console.log(count);\n    if (max_no_entries < count) {\n        var no_entries = max_no_entries\n    } else {\n        var no_entries = count\n    }\n    // console.log(\"no_entries\" + no_entries)\n    list = []\n    // var j = 0\n    var j = 0\n    for (var i = 0; i < all_entries; i++) {\n        var station_name = msg.payload[i].station_name\n        // console.log(\"j = \" + j + \" station_name = \" + station_name)\n        if (stations_to_be_displayed.includes(station_name)){\n            // console.log(\"j2 = \" + j + \" station_name = \" + station_name)\n            var train_name = msg.payload[i].train_name\n            var platform = msg.payload[i].platform.substring(0,20)              // limit length of string to 20 chars to fit on display\n            var station_arrival_time = msg.payload[i].station_arrival_time\n            var station_departure_time = msg.payload[i].station_departure_time\n            var first_station = msg.payload[i].first_station.substring(0, 20)   // limit length of string to 20 chars to fit on display\n            var last_station = msg.payload[i].last_station.substring(0, 20)     // limit length of string to 20 chars to fit on display\n            var via = msg.payload[i].via\n\n            var arrival_time = station_departure_time\n    \n            list[j] = ({\n                point: \"\", platform: platform, station_arrival_time: station_arrival_time, station_departure_time: station_departure_time,  \n                train: train_name, first_station: first_station, last_station: last_station, via: via,});\n            j++;\n        }\n        if (j > count) {\n            break;\n        }\n    }\n    msg.payload = list;\n    return msg;\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -116,7 +116,7 @@
         "type": "websocket out",
         "z": "b2b17973657164b1",
         "name": "[ws] /ws/My_Station$",
-        "server": "e95e7f3c1d3b3123",
+        "server": "My_Station$_ref",
         "client": "",
         "x": 920,
         "y": 340,
@@ -181,16 +181,6 @@
         "wires": []
     },
     {
-        "id": "ea6fdbba9243fac1",
-        "type": "comment",
-        "z": "b2b17973657164b1",
-        "name": "Open the Websocket out node. Ensure the path corresponds to the name of the node",
-        "info": "",
-        "x": 950,
-        "y": 260,
-        "wires": []
-    },
-    {
         "id": "427c8bf5b8a16f07",
         "type": "comment",
         "z": "b2b17973657164b1",
@@ -240,9 +230,9 @@
         "willPayload": ""
     },
     {
-        "id": "e95e7f3c1d3b3123",
+        "id": "My_Station$_ref",
         "type": "websocket-listener",
-        "path": "/ws/CornerDown-CornerUp",
+        "path": "/ws/My_Station$",
         "wholemsg": "false"
     }
 ]

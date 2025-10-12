@@ -45,14 +45,14 @@ public class LevelXingEditorTest extends LayoutTrackEditorTest {
         JLabelOperator acBlockLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("Block_ID", "AC"));
         JComboBoxOperator acBlockComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) acBlockLabelOperator.getLabelFor());
+                (JComboBox<?>) acBlockLabelOperator.getLabelFor());
         acBlockComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
 
         // Select BD block
         JLabelOperator bdBlockLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("Block_ID", "BD"));
         JComboBoxOperator bdBlockComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) bdBlockLabelOperator.getLabelFor());
+                (JComboBox<?>) bdBlockLabelOperator.getLabelFor());
         bdBlockComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
         // Enable Hide

@@ -4,6 +4,8 @@ import javax.swing.JFrame;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import jmri.util.JUnitUtil;
+
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -31,15 +33,17 @@ public class EditorFrameOperator extends JFrameOperator {
 
     public void closeFrameWithConfirmations(){
         // if OK to here, close window
-        this.requestClose();
 
         dismissClosingDialogs();
+        this.requestClose();
+        JUnitUtil.dispose( getWindow());
+        this.waitClosed();
     }
 
     public void deleteViaFileMenuWithConfirmations(){
         JMenuOperator jmo = new JMenuOperator(this,Bundle.getMessage("MenuFile"));
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuFile") +"/"+ Bundle.getMessage("DeletePanel"), "/");
         dismissClosingDialogs();
+        jmo.pushMenu(Bundle.getMessage("MenuFile") +"/"+ Bundle.getMessage("DeletePanel"), "/");
 
     }
 

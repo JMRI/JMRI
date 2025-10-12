@@ -3,7 +3,6 @@ package jmri.jmrix.anyma;
 import jmri.implementation.AbstractLightTestBase;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -16,10 +15,11 @@ public class AnymaDMX_UsbLightTest extends AbstractLightTestBase {
 
     private AnymaDMX_SystemConnectionMemo _memo = null;
 
+    @Test
     @Override
     public void testCreate() {
         t = new AnymaDMX_UsbLight("DL1", "Test Light", _memo);
-        Assert.assertNotNull("testCreate", t);
+        Assertions.assertNotNull(t, "testCreate");
     }
 
     @Override

@@ -58,6 +58,9 @@ public class DispatcherTrainInfoFileTest {
         Assert.assertFalse("Run In Reverse", ti.getRunInReverse());
         Assert.assertFalse("Sound Decoder", ti.getSoundDecoder());
         Assert.assertEquals("Maximum Train Length", ti.getMaxTrainLengthScaleFeet(), 222.0f, 0.01);
+        Assert.assertEquals("Light Function key", 0, ti.getFNumberLight());
+        Assert.assertEquals("Bell Function key", 1, ti.getFNumberBell());
+        Assert.assertEquals("Horn Function key", 2, ti.getFNumberHorn());
 
     }
 
@@ -241,6 +244,9 @@ public class DispatcherTrainInfoFileTest {
         Assert.assertEquals("Allocation Method", 0, ti.getAllocationMethod());
         Assert.assertTrue("Use Speed Profile", ti.getUseSpeedProfile());
         Assert.assertEquals("Use Speed Profile Adjust block length", 0.5f, ti.getStopBySpeedProfileAdjust(), 0.0f);
+        Assert.assertEquals("Light Function Key", 4, ti.getFNumberLight());
+        Assert.assertEquals("Bell Function Key", 5, ti.getFNumberBell());
+        Assert.assertEquals("Horn Function Key", 6, ti.getFNumberHorn());
     }
 
     @BeforeEach

@@ -17,7 +17,8 @@ import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.routes.gui.RouteEditFrame;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.tools.*;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.JmriJOptionPane;
@@ -374,14 +375,17 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
     private void loadToolMenu(JMenu toolMenu) {
         toolMenu.removeAll();
-        // first 5 menu items will also close when the edit train window closes
+        // first 4 menu items will also close when the edit train window closes
         toolMenu.add(new TrainEditBuildOptionsAction(this));
         toolMenu.add(new TrainLoadOptionsAction(this));
         toolMenu.add(new TrainRoadOptionsAction(this));
         toolMenu.add(new TrainManifestOptionAction(this));
+        toolMenu.addSeparator();
         toolMenu.add(new TrainCopyAction(_train));
         toolMenu.addSeparator();
+        // scripts window closes when the edit train window closes
         toolMenu.add(new TrainScriptAction(this));
+        toolMenu.addSeparator();
         toolMenu.add(new TrainConductorAction(_train));
         toolMenu.addSeparator();
         toolMenu.add(new TrainByCarTypeAction(_train));
@@ -467,6 +471,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (ae.getSource() == resetButton) {
             if (_train != null) {
+                if (_train.checkDepartureTrack()) {
+                    int results = JmriJOptionPane.showConfirmDialog(null,
+                            Bundle.getMessage("StagingTrackUsed",
+                                    _train.getDepartureTrack().getName()),
+                            Bundle.getMessage("ShouldNotResetTrain"), JmriJOptionPane.OK_CANCEL_OPTION);
+                    if (results == JmriJOptionPane.OK_CANCEL_OPTION) {
+                        return;
+                    }
+                }
                 if (!_train.reset()) {
                     JmriJOptionPane.showMessageDialog(this,
                             Bundle.getMessage("TrainIsInRoute",
@@ -1008,8 +1021,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             hourBox.setEnabled(false);
             minuteBox.setEnabled(false);
         } else {
-            hourBox.setEnabled(true);
-            minuteBox.setEnabled(true);
+            hourBox.setEnabled(!_train.isBuilt());
+            minuteBox.setEnabled(!_train.isBuilt());
         }
     }
 
@@ -1141,6 +1154,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             routeBox.setSelectedItem(_train.getRoute());
         }
         if (e.getPropertyName().equals(Route.ROUTE_STATUS_CHANGED_PROPERTY)) {
+            updateDepartureTime();
             enableButtons(_train != null);
             updateRouteStatus();
         }

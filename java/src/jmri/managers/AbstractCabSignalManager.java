@@ -29,10 +29,10 @@ import jmri.LocoAddress;
  *
  * @author Paul Bender Copyright (C) 2019
  */
-abstract public class AbstractCabSignalManager implements CabSignalManager, jmri.Disposable {
+public abstract class AbstractCabSignalManager implements CabSignalManager, jmri.Disposable {
 
-    protected HashMap<LocoAddress, CabSignal> signalList;
-    protected ArrayList<CabSignalListListener> listListeners;
+    private final HashMap<LocoAddress, CabSignal> signalList;
+    private final ArrayList<CabSignalListListener> listListeners;
 
     // keep a list of Blocks with listeners.
     private final ArrayList<Block> _blocksWithListeners;
@@ -41,7 +41,8 @@ abstract public class AbstractCabSignalManager implements CabSignalManager, jmri
         signalList = new HashMap<>();
         listListeners = new ArrayList<>();
         _blocksWithListeners = new ArrayList<>();
-        InstanceManager.getDefault(BlockManager.class).addPropertyChangeListener("beans", this::handleBlockConfigChanged);
+        InstanceManager.getDefault(BlockManager.class)
+            .addPropertyChangeListener(BlockManager.PROPERTY_BEANS, this::handleBlockConfigChanged);
     }
 
     /**
@@ -69,7 +70,7 @@ abstract public class AbstractCabSignalManager implements CabSignalManager, jmri
      * @param address the address the cab signal is for
      * @return a new cab signal
      */
-    abstract protected CabSignal createCabSignal(LocoAddress address);
+    protected abstract CabSignal createCabSignal(LocoAddress address);
 
     /**
      * Remove an old CabSignal.
@@ -160,13 +161,13 @@ abstract public class AbstractCabSignalManager implements CabSignalManager, jmri
      * @param e propChgEvent
      */
     private void handleBlockChange(PropertyChangeEvent e) {
-        log.debug("property {} new value {} old value {}",e.getPropertyName(), e.getNewValue(), e.getOldValue());
-        if (e.getPropertyName().equals("value")){
-            if(e.getOldValue() == null && e.getNewValue() != null){
-                for(CabSignal c : signalList.values()){
-                    if(c.getBlock() == null){
-                        c.setBlock(); // cause this cab signal to look for a block.
-                    }
+        log.debug("property {} new value {} old value {}",
+            e.getPropertyName(), e.getNewValue(), e.getOldValue());
+        if ( Block.PROPERTY_VALUE.equals(e.getPropertyName())
+                && e.getOldValue() == null && e.getNewValue() != null ) {
+            for ( CabSignal c : signalList.values() ) {
+                if ( c.getBlock() == null ){
+                    c.setBlock(); // cause this cab signal to look for a block.
                 }
             }
         }
@@ -182,13 +183,14 @@ abstract public class AbstractCabSignalManager implements CabSignalManager, jmri
 
     @Override
     public void dispose(){
-        InstanceManager.getDefault(BlockManager.class).removePropertyChangeListener("beans", this::handleBlockConfigChanged);
+        InstanceManager.getDefault(BlockManager.class)
+            .removePropertyChangeListener(BlockManager.PROPERTY_BEANS, this::handleBlockConfigChanged);
         for(CabSignal c : signalList.values()){
             c.dispose();
         }
         removeListenerFromBlocks();
     } 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractCabSignalManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractCabSignalManager.class);
 
 }

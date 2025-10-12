@@ -136,8 +136,8 @@ public class ActionReporter extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public Category getCategory() {
-        return Category.ITEM;
+    public LogixNG_Category getCategory() {
+        return LogixNG_Category.ITEM;
     }
 
     Object getReporterData(Reporter reporter) throws JmriException {

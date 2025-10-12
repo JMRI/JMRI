@@ -38,10 +38,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         tc.sendDCCppMessage(DCCppMessage.makeTurnoutListMsg(), this);
         // request list of outputs
         tc.sendDCCppMessage(DCCppMessage.makeOutputListMsg(), this);
-        // request list of Turnout IDs if needed
-        if (tc.getCommandStation().isTurnoutIDsMessageRequired()) {
-            tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
-        }
+        // request list of Turnout IDs
+        tc.sendDCCppMessage(DCCppMessage.makeTurnoutIDsMsg(), this);
     }
 
     /**

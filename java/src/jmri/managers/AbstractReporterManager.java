@@ -1,14 +1,14 @@
 package jmri.managers;
 
 import java.util.Objects;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.Manager;
-import jmri.Reporter;
-import jmri.ReporterManager;
-import jmri.SystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.*;
 
 /**
  * Abstract partial implementation of a ReporterManager.
@@ -136,6 +136,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
      * @param systemName system name.
      * @param userName username.
      * @return never null
+     * @throws IllegalArgumentException when needed
      */
     @Nonnull
     abstract protected Reporter createNewReporter(@Nonnull String systemName, String userName) throws IllegalArgumentException;

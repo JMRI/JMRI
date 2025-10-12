@@ -126,7 +126,7 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
 
     /**
      * Check if this object can handle variable intensity.
-     * <p>
+     *
      * @return true for some LC output types, false for others
      */
     public boolean isIntensityVariable() {

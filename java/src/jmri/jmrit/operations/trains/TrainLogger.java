@@ -17,6 +17,8 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.*;
+import jmri.jmrit.operations.setup.backup.AutoBackup;
+import jmri.jmrit.operations.setup.backup.DefaultBackup;
 
 /**
  * Logs train movements and status to a file.
@@ -85,7 +87,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
                 train.getTrainWeight(),
                 train.getStatus(),
                 train.getBuildFailedMessage(),
-                getTime()});
+                getDateAndTime()});
         fileOut(line);
     }
 
@@ -96,9 +98,6 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
      * Adds a status line to the log file whenever the trains file is saved.
      */
     private void storeFileSaved() {
-        if (_fileLogger == null) {
-            return;
-        }
         List<Object> line = Arrays.asList(new Object[]{
                 Bundle.getMessage("TrainLogger"), // train name
                 "", // train description
@@ -111,7 +110,26 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
                 "", // weight
                 Setup.isAutoSaveEnabled() ? rb.getString("AutoSave") : Bundle.getMessage("Manual"), // status
                 Bundle.getMessage("TrainsSaved"), // build messages
-                getTime()});
+                getDateAndTime()});
+        fileOut(line);
+    }
+
+    private void storeBackupChanged(PropertyChangeEvent e) {
+        // create train file if needed
+        createFile();
+        List<Object> line = Arrays.asList(new Object[]{
+                Bundle.getMessage("TrainLogger"), // train name
+                "", // train description
+                "", // current location
+                "", // next location name
+                "", // cars
+                "", // pulls
+                e.getPropertyName(), // drops
+                "from:", // length
+                e.getOldValue(), // weight
+                "to:", // status
+                e.getNewValue(), // build messages
+                getDateAndTime()});
         fileOut(line);
     }
 
@@ -155,19 +173,24 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         if (Setup.isTrainLoggerEnabled() && !_trainLog) {
             log.debug("Train Logger adding train listerners");
             _trainLog = true;
-            List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
+            List<Train> trains = InstanceManager.getDefault(TrainManager.class).getList();
             trains.forEach(train -> train.addPropertyChangeListener(this));
             // listen for new trains being added
             InstanceManager.getDefault(TrainManager.class).addPropertyChangeListener(this);
+            // listen for backup file changes
+            InstanceManager.getDefault(DefaultBackup.class).addPropertyChangeListener(this);
+            InstanceManager.getDefault(AutoBackup.class).addPropertyChangeListener(this);
         }
     }
 
     private void removeTrainListeners() {
         log.debug("Train Logger removing train listerners");
         if (_trainLog) {
-            List<Train> trains = InstanceManager.getDefault(TrainManager.class).getTrainsByIdList();
+            List<Train> trains = InstanceManager.getDefault(TrainManager.class).getList();
             trains.forEach(train -> train.removePropertyChangeListener(this));
             InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(this);
+            InstanceManager.getDefault(DefaultBackup.class).removePropertyChangeListener(this);
+            InstanceManager.getDefault(AutoBackup.class).removePropertyChangeListener(this);
         }
         _trainLog = false;
     }
@@ -199,6 +222,9 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         }
         if (e.getPropertyName().equals(TrainManager.TRAINS_SAVED_PROPERTY)) {
             storeFileSaved();
+        }
+        if (e.getPropertyName().equals(DefaultBackup.COPY_FILES_CHANGED_PROPERTY)) {
+            storeBackupChanged(e);
         }
     }
 
@@ -237,7 +263,7 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
      * Return the date and time in an MS Excel friendly format yyyy/MM/dd
      * HH:mm:ss
      */
-    private String getTime() {
+    private String getDateAndTime() {
         String time = Calendar.getInstance().getTime().toString();
         SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy"); // NOI18N
         SimpleDateFormat dtout = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // NOI18N

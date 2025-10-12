@@ -78,7 +78,7 @@ public class PrintSavedTrainManifestAction extends AbstractAction implements jav
                 printerName = departs.getDefaultPrinterName();
             }
         }
-        TrainPrintUtilities.printReport(file, file.getName(), _isPreview, Setup.getFontName(), false, logoURL,
+        TrainPrintManifest.printReport(file, file.getName(), _isPreview, Setup.getFontName(), logoURL,
                 printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize(),
                 Setup.isPrintPageHeaderEnabled(), Setup.getPrintDuplexSides());
         return;

@@ -1,10 +1,12 @@
 package jmri.jmrix.roco.z21;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import jmri.implementation.DccConsistManager;
 import jmri.jmrix.lenz.*;
 import jmri.util.JUnitUtil;
 
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,22 +38,20 @@ public class XNetInitializationManagerTest {
                 .consistManager(null)
                 .noCommandStation()
                 .init();
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(memo.getCommandStation()).isNull();
-        softly.assertThat(memo.getPowerManager()).isExactlyInstanceOf((XNetPowerManager.class));
-        softly.assertThat(memo.getThrottleManager()).isExactlyInstanceOf(Z21XNetThrottleManager.class);
-        softly.assertThat(memo.getProgrammerManager()).isExactlyInstanceOf(Z21XNetProgrammerManager.class);
-        softly.assertThat(memo.getProgrammerManager().getGlobalProgrammer()).isExactlyInstanceOf(Z21XNetProgrammer.class);
-        softly.assertThat(memo.getProgrammerManager().getAddressedProgrammer(false,42)).isExactlyInstanceOf(Z21XNetOpsModeProgrammer.class);
-        softly.assertThat(memo.getTurnoutManager()).isExactlyInstanceOf(Z21XNetTurnoutManager.class);
-        softly.assertThat(memo.getSensorManager()).isExactlyInstanceOf(XNetSensorManager.class);
-        softly.assertThat(memo.getLightManager()).isExactlyInstanceOf(XNetLightManager.class);
-        softly.assertThat(memo.getConsistManager()).isExactlyInstanceOf(DccConsistManager.class);
-        softly.assertAll();
+        assertNull( memo.getCommandStation());
+        assertInstanceOf( XNetPowerManager.class, memo.getPowerManager());
+        assertInstanceOf( Z21XNetThrottleManager.class, memo.getThrottleManager());
+        assertInstanceOf( Z21XNetProgrammerManager.class, memo.getProgrammerManager());
+        assertInstanceOf( XNetProgrammer.XNetConfigurator.class, memo.getProgrammerManager().getGlobalProgrammer().getConfigurator());
+        assertInstanceOf( XNetOpsModeProgrammer.XNetOpsConfigurator.class, memo.getProgrammerManager().getAddressedProgrammer(false,42).getConfigurator());
+        assertInstanceOf( Z21XNetTurnoutManager.class, memo.getTurnoutManager());
+        assertInstanceOf( XNetSensorManager.class, memo.getSensorManager());
+        assertInstanceOf( XNetLightManager.class, memo.getLightManager());
+        assertInstanceOf( DccConsistManager.class, memo.getConsistManager());
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initConnectionConfigManager();
         tc = Mockito.mock(XNetTrafficController.class);
@@ -62,7 +62,9 @@ public class XNetInitializationManagerTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 

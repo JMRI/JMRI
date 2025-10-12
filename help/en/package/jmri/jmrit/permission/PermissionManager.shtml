@@ -45,6 +45,7 @@
           <dd>If selected, the permission manager will be active. You need to restart JMRI for the
           login/logout menu items to be available on the <strong>File</strong> menu. By default, the
           permission manager is disabled.</dd>
+          <dd>Enabling the permissions manager will affect all profiles.</dd>
 
         <dt>Allow empty passwords</dt>
           <dd>If selected, empty passwords are allowed. By default, empty passwords are not allowed.</dd>
@@ -54,10 +55,10 @@
 
       <h3>The current default users are</h3>
       <table>
-          <tr><th>User</th><th>Password</th><th>Role</th></tr>
-          <tr><td>admin</td><td>jmri</td><td>Administrator</td></tr>
-          <tr><td>guest</td><td></td><td>Guest</td></tr>
-          <tr><td>remote guest</td><td></td><td>Remote guest</td></tr>
+          <tr><th>User</th><th>Role</th><th>Default Password</th></tr>
+          <tr><td>admin</td><td>Administrator</td><td>jmri</td></tr>
+          <tr><td>guest</td><td>Guest</td><td>n/a</td></tr>
+          <tr><td>remote guest</td><td>Remote guest</td><td>n/a</td></tr>
       </table>
       <p>These three users cannot be deleted. If you don't want to use the <strong>admin</strong> user,
       you can unselect all the roles. It will then not have any permissions at all.</p>
@@ -136,7 +137,7 @@
 
       <p>If an unauthorized user is able to delete or edit files on the computer running
       JMRI, he might be able to disable the permissions and then override them. See the section
-      <strong>I have looked myself out!</strong> above.</p>
+      <strong>I have locked myself out!</strong> above.</p>
 
       <p>If you want to protect from that, you could protect that file from being changed.
       On Linux, it can be done by changing the owner of the file to <strong>root</strong> and to have

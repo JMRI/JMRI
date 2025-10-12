@@ -464,6 +464,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
      */
     private boolean setCarDestinationTwoTrainsStaging(Car car) {
         if (Setup.isCarRoutingViaStagingEnabled()) {
+            addLine(_buildReport, SEVEN, BLANK_LINE);
             addLine(_buildReport, SEVEN, Bundle.getMessage("RouterAttemptStaging", car.toString(),
                     car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
             return setCarDestinationTwoTrains(car, Track.STAGING);
@@ -1293,7 +1294,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 train = tmanager.getTrainForCar(testCar, null);
             }
             // Can specified train carry this car out of staging?
-            if (car.getTrack().isStaging() && !specified.equals(YES)) {
+            if (car.getTrack().isStaging() && specified.equals(NO)) {
                 train = null;
             }
             // is the option carry all cars with a final destination enabled?

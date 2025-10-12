@@ -83,7 +83,7 @@ final public class LayoutBlockConnectivityTools {
      */
     public boolean checkValidDest(NamedBean sourceBean, NamedBean destBean, Routing pathMethod) throws jmri.JmriException {
         if (log.isDebugEnabled()) {
-            log.debug("check valid des with source/dest bean {} {}", sourceBean.getDisplayName(), destBean.getDisplayName());
+            log.debug("checkValidDest with source/dest bean {} {}", sourceBean.getDisplayName(), destBean.getDisplayName());
         }
         LayoutBlock facingBlock = null;
         LayoutBlock protectingBlock = null;
@@ -114,6 +114,7 @@ final public class LayoutBlockConnectivityTools {
                 try {
                     return checkValidDest(facingBlock, protectingBlock, destFacingBlock, destProtectBlock, pathMethod);
                 } catch (JmriException e) {
+                    log.debug("Rethrowing exception from checkValidDest(..)");
                     throw e;
                 }
             } else {
@@ -172,6 +173,7 @@ final public class LayoutBlockConnectivityTools {
                 try {
                     return getLayoutBlocks(facingBlock, destFacingBlock, protectingBlock, validateOnly, pathMethod);
                 } catch (JmriException e) {
+                    log.debug("Rethrowing exception from getLayoutBlocks()");
                     throw e;
                 }
             } else {
@@ -646,11 +648,13 @@ final public class LayoutBlockConnectivityTools {
                 // Basically looking for the connected block, which there should only be one of!
                 log.debug("At get ConnectedBlockRoute");
                 result = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
+                log.trace("getConnectedBlockRouteIndex returns result {} with destBlock {}, direction {}", result, destBlock, direction);
             } else {
                 if (log.isDebugEnabled()) {
                     log.debug("Off Set {}", offSet);
                 }
                 result = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, Metric.METRIC);
+                log.trace("getNextBestBlock returns result {} with preBlock {}, destBlock {}", result, preBlock, destBlock);
             }
             if (result != -1) {
                 block = currentLBlock.getRouteNextBlockAtIndex(result);
@@ -675,6 +679,7 @@ final public class LayoutBlockConnectivityTools {
                     /* We change the logging level to fatal in the layout block manager as we are testing to make sure that no signalhead/mast exists
                      this would generate an error message that is expected.*/
                     MDC.put("loggingDisabled", LayoutBlockManager.class.getName());
+                    log.trace(" current pathMethod is {}", pathMethod, new Exception("traceback"));
                     switch (pathMethod) {
                         case MASTTOMAST:
                             foundBean = InstanceManager.getDefault(LayoutBlockManager.class).getFacingSignalMast(currentBlock, blocktoCheck);

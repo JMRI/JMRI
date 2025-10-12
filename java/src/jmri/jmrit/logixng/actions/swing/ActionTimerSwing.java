@@ -11,7 +11,7 @@ import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionTimer;
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 import jmri.util.swing.JComboBoxUtil;
 
 /**

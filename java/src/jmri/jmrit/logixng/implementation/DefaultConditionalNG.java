@@ -9,7 +9,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
-import jmri.util.*;
+import jmri.util.ThreadingUtil;
 
 /**
  * The default implementation of ConditionalNG.
@@ -145,6 +145,7 @@ public class DefaultConditionalNG extends AbstractBase
      * Executes a LogixNG Module.
      * @param module      The module to be executed
      * @param parameters  The parameters
+     * @throws IllegalArgumentException when needed
      */
     public static void executeModule(Module module, Map<String, Object> parameters)
             throws IllegalArgumentException {
@@ -249,7 +250,8 @@ public class DefaultConditionalNG extends AbstractBase
                 } else {
                     conditionalNG.getFemaleSocket().execute();
                 }
-            } catch (ReturnException | ExitException e) {
+            } catch (AbortConditionalNG_IgnoreException | ReturnException | ExitException e) {
+                // A AbortConditionalNG_IgnoreException should be ignored.
                 // A Return action in a ConditionalNG causes a ReturnException so this is okay.
                 // An Exit action in a ConditionalNG causes a ExitException so this is okay.
             } catch (PassThruException e) {

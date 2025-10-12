@@ -1,19 +1,16 @@
 package jmri.jmrit.conditional;
 
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import jmri.Conditional;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
+
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
-
-import jmri.Conditional;
 
 /*
 * Tests for the ConditionalEditBase Class
@@ -23,25 +20,27 @@ public class ConditionalEditBaseTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("ConditionalEditBase Constructor Return", new ConditionalEditBase());  // NOI18N
+        Assertions.assertNotNull( new ConditionalEditBase(), "ConditionalEditBase Constructor Return");
     }
 
     @Test
     public void testStringCtor() {
-        Assert.assertNotNull("ConditionalEditBase Constructor Return", new ConditionalEditBase("IX101"));  // NOI18N
+        Assertions.assertNotNull( new ConditionalEditBase("IX101"), "ConditionalEditBase Constructor Return");
     }
 
     @Test
     public void testNameBox() {
         ConditionalEditBase cdlBase = new ConditionalEditBase();
 
-        Assert.assertNotNull("ConditionalEditBase createNameBox Return not null", cdlBase.createNameBox(Conditional.ItemType.SENSOR));  // NOI18N
-        Assert.assertNull("ConditionalEditBase createNameBox Return null", cdlBase.createNameBox(Conditional.ItemType.CLOCK));  // NOI18N
+        Assertions.assertNotNull( cdlBase.createNameBox(Conditional.ItemType.SENSOR),
+            "ConditionalEditBase createNameBox Return not null");
+        Assertions.assertNull( cdlBase.createNameBox(Conditional.ItemType.CLOCK),
+            "ConditionalEditBase createNameBox Return null");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testPickListTables() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConditionalEditBase cdlBase = new ConditionalEditBase();
 
         cdlBase.openPickListTable();
@@ -49,36 +48,39 @@ public class ConditionalEditBaseTest {
         cdlBase.setPickListTab(Conditional.ItemType.SENSOR, true);
 
         JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("TitlePickList"), false, false);  // NOI18N
-        Assert.assertNotNull(frame);
+        Assertions.assertNotNull(frame);
         JUnitUtil.dispose(frame);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testSinglePickList() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConditionalEditBase cdlBase = new ConditionalEditBase();
 
         JTextField _actionNameField = new JTextField("");
 
         cdlBase.createSinglePanelPickList(Conditional.ItemType.TURNOUT, cdlBase.new PickSingleListener(_actionNameField, Conditional.ItemType.TURNOUT), true);
         JFrame frame = JFrameOperator.waitJFrame(Bundle.getMessage("SinglePickFrame"), false, false);  // NOI18N
-        Assert.assertNotNull(frame);
+        Assertions.assertNotNull(frame);
 
         JTableOperator tableOp = new JTableOperator(new JFrameOperator(frame));
         tableOp.clickOnCell(2, 1);
-        Assert.assertEquals("Turnout 3", _actionNameField.getText());  // NOI18N
+        Assertions.assertEquals("Turnout 3", _actionNameField.getText());
 
         JUnitUtil.dispose(frame);
     }
 
     @Test
+    @DisabledIfHeadless
     public void testValidators() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ConditionalEditBase cdlBase = new ConditionalEditBase("LX101");  // NOI18N
 
-        Assert.assertNotNull("ConditionalEditBase validateTurnoutReference Return not null", cdlBase.validateTurnoutReference("Turnout 1"));  // NOI18N
-        Assert.assertNotNull("ConditionalEditBase validateSensorReference Return not null", cdlBase.validateSensorReference("Sensor 1"));  // NOI18N
-        Assert.assertNotNull("ConditionalEditBase validateLogixReference Return not null", cdlBase.validateLogixReference("Logix 102"));  // NOI18N
+        Assertions.assertNotNull( cdlBase.validateTurnoutReference("Turnout 1"),
+            "ConditionalEditBase validateTurnoutReference Return not null");
+        Assertions.assertNotNull( cdlBase.validateSensorReference("Sensor 1"),
+            "ConditionalEditBase validateSensorReference Return not null");
+        Assertions.assertNotNull( cdlBase.validateLogixReference("Logix 102"),
+            "ConditionalEditBase validateLogixReference Return not null");
     }
 
     @BeforeEach
@@ -87,8 +89,8 @@ public class ConditionalEditBaseTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.jmrit.conditional.CreateTestObjects.createTestObjects();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        CreateTestObjects.createTestObjects();
     }
 
     @AfterEach

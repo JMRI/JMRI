@@ -48,6 +48,8 @@ import jmri.util.FileUtil;
  */
 public class OperationsBackupTest {
 
+    private String tempDirectoryName = "temp2";
+
     private File operationsRoot;
 
     public File getOperationsRoot() {
@@ -87,7 +89,7 @@ public class OperationsBackupTest {
         jmri.util.JUnitUtil.setUp();
 
         // set the file location to temp (in the root of the build directory).
-        OperationsSetupXml.setFileLocation("temp" + File.separator);
+        OperationsSetupXml.setFileLocation(tempDirectoryName + File.separator);
 
         // Set the static Operations root directory used for tests
         OperationsXml.setOperationsDirectoryName("operations" + File.separator
@@ -108,7 +110,7 @@ public class OperationsBackupTest {
 
         // Build the list of test file names from the regular list.
         // We assume this works, as there is a specific test for it later.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         regularBackupSetFileNames = backup.getBackupSetFileNames();
 
         // testBackupSetFileNames = new
@@ -119,7 +121,7 @@ public class OperationsBackupTest {
         // + regularBackupSetFileNames[i];
         // }
         // set the file location to temp (in the root of the build directory).
-        OperationsSetupXml.setFileLocation("temp" + File.separator);
+        OperationsSetupXml.setFileLocation(tempDirectoryName + File.separator);
 
         // Repoint OperationsSetupXml to JUnitTest subdirectory
         String tempstring = OperationsSetupXml.getOperationsDirectoryName();
@@ -134,26 +136,10 @@ public class OperationsBackupTest {
         InstanceManager.getDefault(LocationManagerXml.class).setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
         InstanceManager.getDefault(TrainManagerXml.class).setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
-        FileUtil.createDirectory("temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName());
+        FileUtil.createDirectory(tempDirectoryName + File.separator + OperationsSetupXml.getOperationsDirectoryName());
 
         // Delete any existing auto or default backup sets
-        if (autoBackupRoot.exists()) {
-            for (File f : autoBackupRoot.listFiles()) {
-                // Delete directories assuming they are backup sets
-                if (f.isDirectory()) {
-                    deleteDirectoryAndFiles(f);
-                }
-            }
-        }
-
-        if (defaultBackupRoot.exists()) {
-            for (File f : defaultBackupRoot.listFiles()) {
-                // Delete directories assuming they are backup sets
-                if (f.isDirectory()) {
-                    deleteDirectoryAndFiles(f);
-                }
-            }
-        }
+        deleteBackupSets();
 
         // Make sure we have a fresh set of file before each test.
         // Clean up our test files, just to be safe.
@@ -164,6 +150,10 @@ public class OperationsBackupTest {
     @AfterEach
     public void tearDown() {
         deleteTestFiles();
+        deleteBackupSets();
+        deleteDirectoryAndFiles(operationsRoot);
+        // delete temp directory
+        deleteDirectoryAndFiles(new File(OperationsXml.getFileLocation()));
         jmri.util.JUnitUtil.tearDown();
     }
 
@@ -218,6 +208,26 @@ public class OperationsBackupTest {
         }
     }
 
+    private void deleteBackupSets() {
+        if (autoBackupRoot.exists()) {
+            for (File f : autoBackupRoot.listFiles()) {
+                // Delete directories assuming they are backup sets
+                if (f.isDirectory()) {
+                    deleteDirectoryAndFiles(f);
+                }
+            }
+        }
+
+        if (defaultBackupRoot.exists()) {
+            for (File f : defaultBackupRoot.listFiles()) {
+                // Delete directories assuming they are backup sets
+                if (f.isDirectory()) {
+                    deleteDirectoryAndFiles(f);
+                }
+            }
+        }
+    }
+
     private void deleteDirectoryAndFiles(File dir) {
         // Deletes all of the files in a directory, and then the directory
         // itself.
@@ -229,7 +239,13 @@ public class OperationsBackupTest {
                 assertTrue(f.delete());
             }
         }
-
+        // now delete directories
+        for (File d : dir.listFiles()) {
+            for (File f : d.listFiles()) {
+                assertTrue(f.delete());
+            }
+            assertTrue(d.delete());
+        }
         assertTrue(dir.delete());
     }
 
@@ -300,7 +316,7 @@ public class OperationsBackupTest {
     // expect.
     @Test
     public void testGetBackupSetFileNames() {
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         String[] names = backup.getBackupSetFileNames();
 
         Assert.assertEquals("Backup set file name count", 6, names.length);
@@ -343,7 +359,7 @@ public class OperationsBackupTest {
         verifyBackupSetAgainst(operationsRoot, "", operationsRoot, "");
 
         // and the getSourceFileCount method as well
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         int count = backup.getSourceFileCount(operationsRoot);
         assertEquals("Test source file count", 6, count);
 
@@ -353,7 +369,7 @@ public class OperationsBackupTest {
     public void testBasicCopyBackupSet() throws IOException {
         // Test that we can actually copy the files of a backup set to a
         // different directory. This is the heart of the Backup class.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         String setName = "NEW Test Backup Set 01";
         File setDir = new File(defaultBackupRoot, setName);
 
@@ -376,7 +392,7 @@ public class OperationsBackupTest {
     public void testBasicCopyBackupSetWithNoFiles() throws IOException {
         // Test copying with none of the files in the source, representing the
         // state after a Reset() operation.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         String setName = "NEW Test Backup Set 02";
         File setDir = new File(defaultBackupRoot, setName);
 
@@ -397,7 +413,7 @@ public class OperationsBackupTest {
     public void testBasicCopyBackupSetWithMissingFiles() throws IOException {
         // Test copying with only some of the files in the source. This MAY be
         // a valid state, so no exception should be thrown.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         String setName = "NEW Test Backup Set 03";
         File setDir = new File(defaultBackupRoot, setName);
 
@@ -417,7 +433,7 @@ public class OperationsBackupTest {
     public void testBasicCopyBackupSetWithExtraFiles() throws IOException {
         // Test copying with all of the Operations files, plus some extra files.
         // SHould only copy the Operations files.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         String setName = "NEW Test Backup Set 04";
         File setDir = new File(defaultBackupRoot, setName);
 
@@ -444,7 +460,7 @@ public class OperationsBackupTest {
         // The backup set directory is given as a File object.
         // This simulates using a FIleChooser to select the destination
         // directory.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         File dir = new File(operationsRoot, "Specific Backup Dir");
 
@@ -452,6 +468,8 @@ public class OperationsBackupTest {
 
         // Check that they got there
         verifyBackupSetAgainst(operationsRoot, "", dir, "");
+
+        deleteDirectoryAndFiles(dir);
     }
 
     // Comment out for now until I can learn what constitutes an invalid
@@ -465,7 +483,7 @@ public class OperationsBackupTest {
         // The backup set directory is given as a File object.
         // This simulates using a FIleChooser to select the destination
         // directory.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         File dir = new File(operationsRoot, "Invalid Name<<>>");
 
@@ -480,7 +498,7 @@ public class OperationsBackupTest {
     @Test
     public void testRestoreFilesFromSpecificDirectory() throws IOException {
         // Simulates using a FileChooser to select a directory to restore from.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         File dir = new File(operationsRoot, "Specific Backup Dir");
 
@@ -496,7 +514,7 @@ public class OperationsBackupTest {
     @Test
     public void testResetFiles() {
 
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         // Now you see them...
         for (String name : regularBackupSetFileNames) {
@@ -517,7 +535,7 @@ public class OperationsBackupTest {
 
     @Test
     public void testLoadDemoFiles() throws IOException {
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         backup.deleteOperationsFiles();
 
@@ -539,7 +557,7 @@ public class OperationsBackupTest {
     @Test
     public void testCreateDefaultBackupInstance() {
         // Basic test to make sure we can instantiate the DefaultBackup class
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         Assert.assertNotNull("Default constructor", backup);
 
         // Make sure default roots got setup OK
@@ -549,7 +567,7 @@ public class OperationsBackupTest {
 
         //String usersDir = FileUtil.getUserFilesPath();
         // we're resetting the root directory used to temp
-        String usersDir = "temp" + File.separator;
+        String usersDir = tempDirectoryName + File.separator;
         String opsDirName = OperationsXml.getOperationsDirectoryName();
         File opsRoot = new File(usersDir, opsDirName);
 
@@ -561,7 +579,7 @@ public class OperationsBackupTest {
     public void testDefaultBackupWithName() throws IOException, IllegalArgumentException {
         // Does a backup to the backups directory
         // The name of the backup set is given.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         String setName = backup.suggestBackupSetName();
         backup.backupFilesToSetName(setName);
@@ -574,7 +592,7 @@ public class OperationsBackupTest {
     public void testDefaultBackupWithName2() throws IOException, IllegalArgumentException {
         // Does a backup to the backups directory
         // The name of the backup set is given.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         String setName = backup.suggestBackupSetName();
         backup.backupFilesToSetName(setName);
@@ -587,7 +605,7 @@ public class OperationsBackupTest {
     public void testDefaultBackupWithNullName() {
         // Tries a backup to the backups directory
         // The name of the backup set is null.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         try {
             backup.backupFilesToSetName( null);
@@ -601,7 +619,7 @@ public class OperationsBackupTest {
     public void testDefaultBackupWithEmptyName() {
         // Tries a backup to the backups directory
         // The name of the backup set is empty ("")
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         // String setName = backup.suggestBackupSetName();
         try {
@@ -631,7 +649,7 @@ public class OperationsBackupTest {
 
         String expected = date2 + "_00";
 
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         suggestedName = backup.suggestBackupSetName();
         Assert.assertEquals("Suggested default backup set name", expected,
@@ -659,7 +677,7 @@ public class OperationsBackupTest {
     // restore and verifying the new source files.
     @Test
     public void testRestoreFilesFromDefault() throws IOException, IllegalArgumentException {
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         String setName = backup.suggestBackupSetName();
         backup.backupFilesToSetName(setName);
 
@@ -679,7 +697,7 @@ public class OperationsBackupTest {
         assertEquals("Confirm auto back up directory is empty", 0, autoBackupRoot.list().length );
 
         // Make three backups and then get the list of set names
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
         assertEquals("Confirm directory is empty", 0, backup.getBackupSetList().length );
 
         String[] expectedList = new String[3];
@@ -706,7 +724,7 @@ public class OperationsBackupTest {
     @Test
     public void testIfDefaultBackupSetExists() throws IOException, IllegalArgumentException {
         // Create a default backup set then see if it exists.
-        BackupBase backup = new DefaultBackup();
+        BackupBase backup = InstanceManager.getDefault(DefaultBackup.class);
 
         String defName = backup.suggestBackupSetName();
 
@@ -724,7 +742,7 @@ public class OperationsBackupTest {
     @Test
     public void testCreateAutoBackupInstance() {
         // Basic test to make sure we can instantiate the DefaultBackup class
-        BackupBase backup = new AutoBackup();
+        BackupBase backup = InstanceManager.getDefault(AutoBackup.class);
         Assert.assertNotNull("Default constructor", backup);
 
         // Make sure default roots got setup OK
@@ -734,7 +752,7 @@ public class OperationsBackupTest {
 
         // String usersDir = FileUtil.getUserFilesPath();
         // we're resetting the root directory used to temp
-        String usersDir = "temp" + File.separator;
+        String usersDir = tempDirectoryName + File.separator;
         String opsDirName = OperationsXml.getOperationsDirectoryName();
         File opsRoot = new File(usersDir, opsDirName);
 
@@ -746,7 +764,7 @@ public class OperationsBackupTest {
     public void testAutoBackupWithName() throws IOException, IllegalArgumentException {
         // Does a backup to the autoBackups directory
         // The name of the backup set is given.
-        BackupBase backup = new AutoBackup();
+        BackupBase backup = InstanceManager.getDefault(AutoBackup.class);
 
         String setName = backup.suggestBackupSetName();
         backup.backupFilesToSetName(setName);
@@ -758,7 +776,7 @@ public class OperationsBackupTest {
     @Test
     public void testAutoBackupAfterResetWithNoFiles() throws IOException {
         // Should not cause a problem if there are no files to autobackup.
-        AutoBackup backup = new AutoBackup();
+        AutoBackup backup = InstanceManager.getDefault(AutoBackup.class);
 
         backup.deleteOperationsFiles();
 
@@ -785,7 +803,7 @@ public class OperationsBackupTest {
 
         String expected = date2 + "_00";
 
-        BackupBase backup = new AutoBackup();
+        BackupBase backup = InstanceManager.getDefault(AutoBackup.class);
 
         suggestedName = backup.suggestBackupSetName();
         Assert.assertEquals("Suggested auto backup set name 00", expected,
@@ -813,7 +831,7 @@ public class OperationsBackupTest {
     // restore and verifying the new source files.
     @Test
     public void testRestoreFilesFromAuto() throws IOException, IllegalArgumentException {
-        BackupBase backup = new AutoBackup();
+        BackupBase backup = InstanceManager.getDefault(AutoBackup.class);
         String setName = backup.suggestBackupSetName();
         backup.backupFilesToSetName(setName);
 
@@ -833,7 +851,7 @@ public class OperationsBackupTest {
         assertEquals("Confirm default backup directory is empty", 0, defaultBackupRoot.list().length );
 
         // Make three backups and then get the list of set names
-        BackupBase backup = new AutoBackup();
+        BackupBase backup = InstanceManager.getDefault(AutoBackup.class);
         assertEquals("Confirm directory is empty", 0, backup.getBackupSetList().length );
 
         String[] expectedList = new String[3];
@@ -862,7 +880,7 @@ public class OperationsBackupTest {
     @Test
     public void testIfAutoBackupSetExists() throws IOException, IllegalArgumentException {
         // Create a auto backup set then see if it exists.
-        BackupBase backup = new AutoBackup();
+        BackupBase backup = InstanceManager.getDefault(AutoBackup.class);
 
         String defName = backup.suggestBackupSetName();
 
@@ -880,7 +898,7 @@ public class OperationsBackupTest {
     public void testAutoBackup() throws IOException {
         // Does a backup to the autoBackups directory.
         // The name of the backup set is generated internally.
-        AutoBackup backup = new AutoBackup();
+        AutoBackup backup = InstanceManager.getDefault(AutoBackup.class);
 
         String setName = backup.suggestBackupSetName();
         backup.autoBackup();

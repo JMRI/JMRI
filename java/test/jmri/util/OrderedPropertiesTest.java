@@ -1,6 +1,5 @@
 package jmri.util;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,7 +11,7 @@ public class OrderedPropertiesTest {
     @Test
     public void testCTor() {
         OrderedProperties t = new OrderedProperties();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

@@ -11,11 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTableModel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -25,7 +25,7 @@ import jmri.util.table.ButtonRenderer;
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2012, 2025
  */
-public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
+public class EnginesTableModel extends OperationsTableModel implements PropertyChangeListener {
 
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class); // There is only one manager
 
@@ -59,8 +59,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
-    public EnginesTableModel() {
+    public EnginesTableModel(boolean showAllLocos, String locationName, String trackName) {
         super();
+        showAll = showAllLocos;
+        this.locationName = locationName;
+        this.trackName = trackName;
         engineManager.addPropertyChangeListener(this);
         updateList();
     }
@@ -173,9 +176,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
-    String _roadNumber = "";
-    int _index = 0;
-
     /**
      * Search for engine by road number
      * 
@@ -184,55 +184,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
      * @return -1 if not found, table row number if found
      */
     public int findEngineByRoadNumber(String roadNumber) {
-        if (engineList != null) {
-            if (!roadNumber.equals(_roadNumber)) {
-                return getIndex(0, roadNumber);
-            }
-            int index = getIndex(_index, roadNumber);
-            if (index > 0) {
-                return index;
-            }
-            return getIndex(0, roadNumber);
-        }
-        return -1;
-    }
-
-    private int getIndex(int start, String roadNumber) {
-        for (int index = start; index < engineList.size(); index++) {
-            Engine e = engineList.get(index);
-            if (e != null) {
-                String[] number = e.getNumber().split(TrainCommon.HYPHEN);
-                // check for wild card '*'
-                if (roadNumber.startsWith("*") && roadNumber.endsWith("*")) {
-                    String rN = roadNumber.substring(1, roadNumber.length() - 1);
-                    if (e.getNumber().contains(rN)) {
-                        _roadNumber = roadNumber;
-                        _index = index + 1;
-                        return index;
-                    }
-                } else if (roadNumber.startsWith("*")) {
-                    String rN = roadNumber.substring(1);
-                    if (e.getNumber().endsWith(rN) || number[0].endsWith(rN)) {
-                        _roadNumber = roadNumber;
-                        _index = index + 1;
-                        return index;
-                    }
-                } else if (roadNumber.endsWith("*")) {
-                    String rN = roadNumber.substring(0, roadNumber.length() - 1);
-                    if (e.getNumber().startsWith(rN)) {
-                        _roadNumber = roadNumber;
-                        _index = index + 1;
-                        return index;
-                    }
-                } else if (e.getNumber().equals(roadNumber) || number[0].equals(roadNumber)) {
-                    _roadNumber = roadNumber;
-                    _index = index + 1;
-                    return index;
-                }
-            }
-        }
-        _roadNumber = "";
-        return -1;
+        return findRollingStockByRoadNumber(roadNumber, engineList);
     }
 
     public Engine getEngineAtIndex(int index) {
@@ -244,9 +196,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         removePropertyChangeEngines();
         engineList = getSelectedEngineList();
         // and add listeners back in
-        for (RollingStock rs : engineList) {
-            rs.addPropertyChangeListener(this);
-        }
+        addPropertyChangeEngines();
     }
 
     public List<Engine> getSelectedEngineList() {
@@ -299,12 +249,12 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             default:
                 list = engineManager.getByNumberList();
         }
+        filterList(list);
         return list;
     }
 
     List<Engine> engineList = null;
 
-    JTable _table;
     EnginesTableFrame _frame;
 
     void initTable(JTable table, EnginesTableFrame frame) {
@@ -625,11 +575,15 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         }
     }
 
+    private void addPropertyChangeEngines() {
+        for (RollingStock rs : engineManager.getList()) {
+            rs.addPropertyChangeListener(this);
+        }
+    }
+
     private void removePropertyChangeEngines() {
-        if (engineList != null) {
-            for (RollingStock rs : engineList) {
-                rs.removePropertyChangeListener(this);
-            }
+        for (RollingStock rs : engineManager.getList()) {
+            rs.removePropertyChangeListener(this);
         }
     }
 
@@ -659,6 +613,10 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             }
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
+                // next is needed when only showing engines at a location or track
+            } else if (e.getPropertyName().equals(Engine.TRACK_CHANGED_PROPERTY)) {
+                updateList();
+                fireTableDataChanged();
             }
         }
     }

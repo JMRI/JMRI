@@ -88,8 +88,11 @@ public class TrainInfo {
     private boolean useSpeedProfile = false;
     private boolean stopBySpeedProfile = false;
     private float stopBySpeedProfileAdjust = 1.0f;
+    private int fNumberLight = 0;
+    private int fNumberBell = 1;
+    private int fNumberHorn = 2;
 
-    private float waitTime = 1.0f; //required only by dispatcher system to pause train at beginning of transit (station)
+    private float waitTime = 3.0f; //seconds:  required only by dispatcher system to pause train at beginning of transit (station)
 
     private String blockName = ""; //required only by Dispatcher System to inhibit running of transit if this block is occupied
 
@@ -645,6 +648,54 @@ public class TrainInfo {
 
     public boolean getSoundDecoder() {
         return soundDecoder;
+    }
+
+    /**
+     * Sets F number for the Light
+     * @param value F Number.
+     */
+    public void setFNumberLight(int value) {
+        fNumberLight = value;
+    }
+
+    /**
+     * returns the F number for the Light
+     * @return F Number
+     */
+    public int getFNumberLight() {
+        return fNumberLight;
+    }
+
+    /**
+     * Sets F number for the Bell
+     * @param value F Number.
+     */
+    public void setFNumberBell(int value) {
+        fNumberBell = value;
+    }
+
+    /**
+     * returns the F number for the Bell
+     * @return F Number
+     */
+    public int getFNumberBell() {
+        return fNumberBell;
+    }
+
+    /**
+     * Sets F number for the Horn
+     * @param value F Number.
+     */
+    public void setFNumberHorn(int value) {
+        fNumberHorn = value;
+    }
+
+    /**
+     * returns the F number for the Horn
+     * @return F Number
+     */
+    public int getFNumberHorn() {
+        return fNumberHorn;
     }
 
     /**

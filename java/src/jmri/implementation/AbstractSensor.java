@@ -167,6 +167,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
      *
      * @param newState the Sensor state command value passed
      * @return true if a Sensor.ACTIVE was requested and Sensor is not set to _inverted
+     * @throws IllegalArgumentException when needed
      */
     protected boolean stateChangeCheck(int newState) throws IllegalArgumentException {
         // sort out states

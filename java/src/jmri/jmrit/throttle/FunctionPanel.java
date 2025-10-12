@@ -16,11 +16,10 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.OptionallyTabbedPanel;
 import jmri.util.swing.WrapLayout;
 
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JInternalFrame that contains buttons for each decoder function.
@@ -28,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener, AddressListener {
 
     private static final int DEFAULT_FUNCTION_BUTTONS = 24; // just enough to fill the initial pane
+    private static final int MAX_FUNCTION_BUTTONS_PER_TAB = 33; 
     private DccThrottle mThrottle;
 
     private JPanel mainPanel;
@@ -202,7 +202,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * Place and initialize all the buttons.
      */
     private void initGUI() {
-        mainPanel = new JPanel();
+        mainPanel = new OptionallyTabbedPanel(MAX_FUNCTION_BUTTONS_PER_TAB);
         mainPanel.setLayout(new WrapLayout(FlowLayout.CENTER, 2, 2));
         resetFnButtons();
         JScrollPane scrollPane = new JScrollPane(mainPanel);
@@ -562,5 +562,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FunctionPanel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FunctionPanel.class);
 }
