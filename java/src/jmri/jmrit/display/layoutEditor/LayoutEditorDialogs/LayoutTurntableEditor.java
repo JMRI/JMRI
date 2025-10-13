@@ -121,20 +121,20 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             headerPane.add(panel2);
 
             // setup block name
-             JPanel panel2a = new JPanel();
-             panel2a.setLayout(new FlowLayout());
-             JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
-             panel2a.add(blockNameLabel);
-             blockNameLabel.setLabelFor(editLayoutTurntableBlockNameComboBox);
-             LayoutEditor.setupComboBox(editLayoutTurntableBlockNameComboBox, false, true, true);
-             editLayoutTurntableBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
-             panel2a.add(editLayoutTurntableBlockNameComboBox);
+            JPanel panel2a = new JPanel();
+            panel2a.setLayout(new FlowLayout());
+            JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
+            panel2a.add(blockNameLabel);
+            blockNameLabel.setLabelFor(editLayoutTurntableBlockNameComboBox);
+            LayoutEditor.setupComboBox(editLayoutTurntableBlockNameComboBox, false, true, true);
+            editLayoutTurntableBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
+            panel2a.add(editLayoutTurntableBlockNameComboBox);
 
-             // Edit Block
-             panel2a.add(editLayoutTurntableSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));  // NOI18N
-             editLayoutTurntableSegmentEditBlockButton.addActionListener(this::editLayoutTurntableEditBlockPressed);
-             editLayoutTurntableSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
-             headerPane.add(panel2a);
+            // Edit Block
+            panel2a.add(editLayoutTurntableSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));  // NOI18N
+            editLayoutTurntableSegmentEditBlockButton.addActionListener(this::editLayoutTurntableEditBlockPressed);
+            editLayoutTurntableSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
+            headerPane.add(panel2a);
 
             // setup add ray track button
             JPanel panel3 = new JPanel();
@@ -156,7 +156,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
 
             // setup signal mast parameters panel
             signalMastParametersPanel = new JPanel();
-            signalMastParametersPanel.setBorder(BorderFactory.createTitledBorder("Signal Mast Assignments (Approach masts at junction Ray and Turntable Bridge)")); // NOI18N
+            signalMastParametersPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TurntableSignalMastAssignmentsTitle"))); // NOI18N
             exitMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
             LayoutEditor.setupComboBox(exitMastComboBox, false, true, true);
             exitMastComboBox.setEditable(false);
@@ -316,7 +316,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             // Add approach masts for each ray
             for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayTrackList()) {
                 JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                p.add(new JLabel(Bundle.getMessage("MakeLabel", "Approach Mast Ray " + (rt.getConnectionIndex() + 1))));
+                p.add(new JLabel(Bundle.getMessage("ApproachMastRay", rt.getConnectionIndex() + 1)));
                 NamedBeanComboBox<SignalMast> combo = new NamedBeanComboBox<>(
                         InstanceManager.getDefault(SignalMastManager.class), rt.getApproachMast(), DisplayOptions.DISPLAYNAME);
                 LayoutEditor.setupComboBox(combo, false, true, true);
@@ -341,8 +341,8 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
 
             // Add shared icon placement controls
             JPanel placementPanel = new JPanel();
-            placementPanel.setLayout(new BoxLayout(placementPanel, BoxLayout.Y_AXIS));
-            placementPanel.setBorder(BorderFactory.createTitledBorder("Add Approach Signal Mast Icons to Panel")); // NOI18N
+            placementPanel.setLayout(new BoxLayout(placementPanel, BoxLayout.Y_AXIS)); // NOI18N
+            placementPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TurntableAddMastIconsTitle")));
 
             doNotPlaceIcons = new JRadioButton(Bundle.getMessage("DoNotPlace")); // NOI18N
             placeIconsLeft = new JRadioButton(Bundle.getMessage("LeftHandSide")); // NOI18N
@@ -370,15 +370,22 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
 
             signalMastParametersPanel.add(new JSeparator());
 
-            JPanel exitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            exitPanel.add(new JLabel("Turntable Exit Mast:     ")); // NOI18N
-            exitPanel.add(exitMastComboBox);
-            signalMastParametersPanel.add(exitPanel);
+            JPanel mastPanel = new JPanel(new GridBagLayout());
+            GridBagConstraints c = new GridBagConstraints();
+            c.gridx = 0;
+            c.gridy = 0;
+            c.anchor = GridBagConstraints.LINE_START;
+            mastPanel.add(new JLabel(Bundle.getMessage("TurntableExitMastLabel")), c);
+            c.gridx = 1;
+            mastPanel.add(exitMastComboBox, c);
 
-            JPanel bufferPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            bufferPanel.add(new JLabel("Turntable Buffer Mast:")); // NOI18N
-            bufferPanel.add(bufferMastComboBox);
-            signalMastParametersPanel.add(bufferPanel);
+            c.gridx = 0;
+            c.gridy = 1;
+            mastPanel.add(new JLabel(Bundle.getMessage("TurntableBufferMastLabel")), c);
+            c.gridx = 1;
+            mastPanel.add(bufferMastComboBox, c);
+
+            signalMastParametersPanel.add(mastPanel);
             editLayoutTurntableRayPanel.add(signalMastParametersPanel);
         }
         editLayoutTurntableRayPanel.revalidate();
