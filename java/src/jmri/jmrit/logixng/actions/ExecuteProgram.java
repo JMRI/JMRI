@@ -8,6 +8,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
+import jmri.util.FileUtil;
 
 /**
  * This action executes a program.
@@ -79,7 +80,8 @@ public class ExecuteProgram extends AbstractDigitalAction
         if (!workingDirectory.isBlank()) {
             workingDirectoryFile = new File(workingDirectory);
         } else {
-            workingDirectoryFile = null;
+            // Ensure the default folder is the preferences folder.
+            workingDirectoryFile = new File(FileUtil.PREFERENCES);
         }
 
         List<String> programAndParameters = new ArrayList<>();
