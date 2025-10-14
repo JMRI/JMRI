@@ -856,6 +856,16 @@ final public class LayoutBlockConnectivityTools {
                                         break; // Assume only one exit from the ray block
                                     }
                                 }
+                                // Also check for a buffer mast at the end of this ray's block
+                                if (rayBlock.getNumberOfNeighbours() == 1) { // Only connected to the turntable block
+                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(rayBlock.getBlock(), panel);
+                                    if (bufferMast != null) {
+                                        if (log.isDebugEnabled()) {
+                                            log.debug("Found turntable exit to buffer mast path: {} -> {}", exitMast.getDisplayName(), bufferMast.getDisplayName());
+                                        }
+                                        retPairs.computeIfAbsent(exitMast, k -> new ArrayList<>()).add(bufferMast);
+                                    }
+                                }
                             }
                         }
                     }

@@ -354,6 +354,9 @@ public class DefaultSignalMastLogicManager
         InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach(nb ->
             nb.removeProperty(PROPERTY_INTERMEDIATE_SIGNAL));
         for (Entry<NamedBean, List<NamedBean>> e : validPaths.entrySet()) {
+            if (log.isDebugEnabled()) {
+                e.getValue().forEach(dest -> log.debug("Found valid mast pair: {} -> {}", e.getKey().getDisplayName(), dest.getDisplayName()));
+            }
             SignalMast key = (SignalMast) e.getKey();
             SignalMastLogic sml = getSignalMastLogic(key);
             if (sml == null) {
