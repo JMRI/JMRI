@@ -959,7 +959,56 @@ final public class LayoutBlockConnectivityTools {
         if (log.isDebugEnabled()) {
             log.debug("discover pairs from source {}", source.getDisplayName());
         }
+
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+
+        // First, check if the source is a turntable mast. If so, handle it specially.
+        if (T == SignalMast.class) {
+            SignalMast sourceMast = (SignalMast) source;
+            for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+                for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+                    if (!turntable.isDispatcherManaged()) {
+                        continue;
+                    }
+
+                    // Case 1: Source is the turntable's Exit Mast
+                    if (sourceMast.equals(turntable.getExitSignalMast())) {
+                        log.debug("Source is an exit mast for turntable {}", turntable.getName());
+                        List<NamedBean> destinations = new ArrayList<>();
+                        LayoutBlock turntableBlock = turntable.getLayoutBlock();
+                        for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                            TrackSegment track = ray.getConnect();
+                            if (track != null && track.getLayoutBlock() != null) {
+                                LayoutBlock rayBlock = track.getLayoutBlock();
+                                for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
+                                    Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                                    if (neighbor != turntableBlock.getBlock()) {
+                                        SignalMast nextMast = lbm.getFacingSignalMast(rayBlock.getBlock(), neighbor, panel);
+                                        if (nextMast != null) destinations.add(nextMast);
+                                    }
+                                }
+                                if (rayBlock.getNumberOfNeighbours() == 1) { // End of line buffer
+                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(rayBlock.getBlock(), panel);
+                                    if (bufferMast != null) destinations.add(bufferMast);
+                                }
+                            }
+                        }
+                        return destinations;
+                    }
+
+                    // Case 2: Source is an Approach Mast for one of the rays
+                    for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                        if (sourceMast.equals(ray.getApproachMast())) {
+                            log.info("Source is an approach mast for turntable {}", turntable.getName());
+                            List<NamedBean> destinations = new ArrayList<>();
+                            if (turntable.getBufferMast() != null) destinations.add(turntable.getBufferMast());
+                            return destinations;
+                        }
+                    }
+                }
+            }
+        }
+
         LayoutBlock lFacing = lbm.getFacingBlockByNamedBean(source, editor);
         List<LayoutBlock> lProtecting = lbm.getProtectingBlocksByNamedBean(source, editor);
         List<NamedBean> ret = new ArrayList<>();
