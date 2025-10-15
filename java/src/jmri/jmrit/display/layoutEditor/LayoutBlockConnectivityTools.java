@@ -964,6 +964,9 @@ final public class LayoutBlockConnectivityTools {
 
         // First, check if the source is a turntable mast. If so, handle it specially.
         if (T == SignalMast.class) {
+            if (! (source instanceof SignalMast)) {
+                throw new IllegalArgumentException("source is not a SignalMast: " + (source != null ? source.getClass().getName() : "null"));
+            }
             SignalMast sourceMast = (SignalMast) source;
             for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
                 for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
