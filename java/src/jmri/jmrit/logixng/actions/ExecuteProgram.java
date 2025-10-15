@@ -81,7 +81,7 @@ public class ExecuteProgram extends AbstractDigitalAction
             workingDirectoryFile = new File(workingDirectory);
         } else {
             // Ensure the default folder is the preferences folder.
-            workingDirectoryFile = new File(FileUtil.PREFERENCES);
+            workingDirectoryFile = new File(FileUtil.getUserFilesPath());
         }
 
         List<String> programAndParameters = new ArrayList<>();
