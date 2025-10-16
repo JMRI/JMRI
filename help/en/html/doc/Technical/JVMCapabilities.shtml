@@ -301,6 +301,15 @@
 
         <tr>
           <td>
+            Instanceof Pattern Matching reduced the need for type casting,
+            making code more readable.
+          </td>
+          <td>16</td>
+          <td>16</td>
+        </tr>
+
+        <tr>
+          <td>
             Improved rendering pipeline on macOS which reduces the
             number of odd display artifacts. First appearance of fully-native
             JDK on Apple Silicon.
