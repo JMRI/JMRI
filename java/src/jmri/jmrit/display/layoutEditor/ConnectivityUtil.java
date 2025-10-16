@@ -70,6 +70,7 @@ final public class ConnectivityUtil {
     private HitPointType prevConnectType = HitPointType.NONE;
     private LayoutTrack prevConnectTrack = null;
     private LayoutBlock currLayoutBlock = null;
+    private LayoutBlock prevLayoutBlock = null;
     private LayoutBlock nextLayoutBlock = null;
 
     /**
@@ -145,7 +146,7 @@ final public class ConnectivityUtil {
             }
         }
 
-        LayoutBlock prevLayoutBlock = null;
+        prevLayoutBlock = null;
         if (prevBlock != null) {
             String prevUserName = prevBlock.getUserName();
             if ((prevUserName != null) && !prevUserName.isEmpty()) {
@@ -2168,7 +2169,10 @@ final public class ConnectivityUtil {
                 trackSegment = null;
             } else if (trackSegment == null) {
                 if (!suppress) {
-                    log.warn("Connectivity not complete at {}", layoutSlip.getDisplayName());
+                    log.warn("Connectivity not complete at {} while searching from {} to {}",
+                            layoutSlip.getDisplayName(),
+                            (prevLayoutBlock != null) ? prevLayoutBlock.getDisplayName() : "null",
+                            (nextLayoutBlock != null) ? nextLayoutBlock.getDisplayName() : "null");
                 }
                 turnoutConnectivity = false;
             }
@@ -2384,7 +2388,10 @@ final public class ConnectivityUtil {
                 trackSegment = null;
             } else if (trackSegment == null) {
                 if (!suppress) {
-                    log.warn("Connectivity not complete at {}", layoutTurnout.getTurnoutName());
+                    log.warn("Connectivity not complete at {} while searching from {} to {}",
+                            layoutTurnout.getTurnoutName(),
+                            (prevLayoutBlock != null) ? prevLayoutBlock.getDisplayName() : "null",
+                            (nextLayoutBlock != null) ? nextLayoutBlock.getDisplayName() : "null");
                 }
                 turnoutConnectivity = false;
             }
