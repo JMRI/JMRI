@@ -41,6 +41,10 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         # print(" Detected shadowed 'list' type: ", type(globals()["list"]))  # list is being used in JMRI. This enables us to use list in Jython
         del globals()["list"]
 
+    if "set" in globals() and type(globals()["set"]).__name__ != "type":
+        print(" Detected shadowed 'set' type: ", type(globals()["set"]))  # set is being used in JMRI. This enables us to use list in Jython
+        del globals()["set"]
+
     logLevel = 0
     version_no = 0.2    #used to delete DispatcherPanel for new versions if the number of controlsensors/icons has changed
 
@@ -378,14 +382,14 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         return success
 
 
-    def get_duplicate_values_in_dict(self, dict):
+    def get_duplicate_values_in_dict(self, input_dict):
 
         # finding duplicate values
         # from dictionary
         # using a naive approach
         rev_dict = {}
 
-        for key, value in dict.items():
+        for key, value in input_dict.items():
             rev_dict.setdefault(value, set()).add(key)
 
         result = ["blocks " +', '.join(values) + " have the same sensor " + str( key) for key, values in rev_dict.items()
