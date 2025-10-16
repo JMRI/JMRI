@@ -42,7 +42,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         del globals()["list"]
 
     if "set" in globals() and type(globals()["set"]).__name__ != "type":
-        print(" Detected shadowed 'set' type: ", type(globals()["set"]))  # set is being used in JMRI. This enables us to use list in Jython
+        print(" Detected shadowed 'set' type: ", type(globals()["set"]))  # set is being used in JMRI. This enables us to use set in Jython
         del globals()["set"]
 
     logLevel = 0
