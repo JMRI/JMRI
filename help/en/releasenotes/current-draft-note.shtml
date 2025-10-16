@@ -452,7 +452,8 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Fix a problem with selecting "Show ? When Unknown"
+                checkbox in turnout pop-up menu.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
