@@ -101,7 +101,9 @@
 
         <h4>MERG</h4>
             <ul>
-                <li></li>
+                <li>If you have multiple CAN-based connections defined
+                    (MERG, LCC, OpenLCB),
+                    you can now specify which one for a start-up action to use.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -126,7 +128,9 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>If you have multiple CAN-based connections defined
+                    (LCC, OpenLCB, MERG),
+                    you can now specify which one for a start-up action to use.</li>
             </ul>
 
         <h4>Powerline</h4>
