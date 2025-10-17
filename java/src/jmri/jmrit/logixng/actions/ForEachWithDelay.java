@@ -412,7 +412,13 @@ public class ForEachWithDelay extends AbstractDigitalAction
     public String getLongDescription(Locale locale) {
         if (_useCommonSource) {
             return Bundle.getMessage(locale, "ForEachWithDelay_Long_Common",
-                    _commonManager.toString(), _variableName, _socket.getName());
+                    _commonManager.toString(), _variableName, _socket.getName(), _unit.getTimeWithUnit(_delay),
+                    _resetIfAlreadyStarted
+                            ? Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_ResetRepeat"))
+                            : Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_IgnoreRepeat")),
+                    _useIndividualTimers
+                            ? Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_UseIndividualTimers"))
+                            : "");
         } else {
             switch (_userSpecifiedSource) {
                 case Variable:
