@@ -1543,6 +1543,23 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ActionRequestUpdateOfTurnout actionRequestUpdateOfTurnout =
+                new ActionRequestUpdateOfTurnout(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionRequestUpdateOfTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionRequestUpdateOfTurnout = new ActionRequestUpdateOfTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionRequestUpdateOfTurnout.setComment("A comment");
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionRequestUpdateOfTurnout);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         ActionScript actionScript = new ActionScript(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionScript);
         maleSocket.setEnabled(false);

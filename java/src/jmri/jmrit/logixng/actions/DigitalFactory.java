@@ -39,6 +39,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionRequestUpdateAllSensors.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionReporter.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionRequestUpdateOfSensor.class),
+                        new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionRequestUpdateOfTurnout.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionScript.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionSensor.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, ActionSetReporter.class),
