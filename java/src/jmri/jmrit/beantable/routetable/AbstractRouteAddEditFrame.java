@@ -468,7 +468,7 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         routeTurnoutTable.setRowSorter(rtSorter);
         routeTurnoutTable.setRowSelectionAllowed(false);
         routeTurnoutTable.setPreferredScrollableViewportSize(
-            new Dimension(400 + (int)turnoutsAlignedSensor.getMinimumSize().getWidth(), 80));
+            new Dimension(400 + (int)cTurnout.getMinimumSize().getWidth(), 80));
 
         setRowHeight(routeTurnoutTable.getRowHeight());
         JComboBox<String> stateTCombo = new JComboBox<>();
