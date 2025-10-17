@@ -206,6 +206,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
         editLayoutTurntableUseSignalMastsCheckBox.addActionListener((ActionEvent e) -> {
             boolean isSelected = editLayoutTurntableUseSignalMastsCheckBox.isSelected();
             layoutTurntable.setDispatcherManaged(isSelected); // Update the model
+            signalMastParametersPanel.setVisible(layoutTurntable.isDispatcherManaged());
             updateRayPanel(); // Rebuild to show/hide mast details, which also handles visibility
             editLayoutTurntableFrame.pack();
         });
