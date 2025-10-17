@@ -61,6 +61,9 @@ public class ForEachWithDelayXml extends jmri.managers.configurexml.AbstractName
 
         element.addContent(new Element("localVariable").addContent(p.getLocalVariableName()));
 
+        element.addContent(new Element("resetIfAlreadyStarted").addContent(p.getResetIfAlreadyStarted() ? "yes" : "no"));  // NOI18N
+        element.addContent(new Element("useIndividualTimers").addContent(p.getUseIndividualTimers() ? "yes" : "no"));  // NOI18N
+
         Element e2 = new Element("Socket");
         e2.addContent(new Element("socketName").addContent(p.getChild(0).getName()));
         MaleSocket socket = p.getSocket().getConnectedSocket();
@@ -140,6 +143,18 @@ public class ForEachWithDelayXml extends jmri.managers.configurexml.AbstractName
         if (localVariable != null) {
             h.setLocalVariableName(localVariable.getTextTrim());
         }
+
+        String resetIfAlreadyStarted = "no";
+        if (shared.getChild("resetIfAlreadyStarted") != null) {  // NOI18N
+            resetIfAlreadyStarted = shared.getChild("resetIfAlreadyStarted").getTextTrim();  // NOI18N
+        }
+        h.setResetIfAlreadyStarted("yes".equals(resetIfAlreadyStarted));
+
+        String useIndividualTimers = "no";
+        if (shared.getChild("useIndividualTimers") != null) {  // NOI18N
+            useIndividualTimers = shared.getChild("useIndividualTimers").getTextTrim();  // NOI18N
+        }
+        h.setUseIndividualTimers("yes".equals(useIndividualTimers));
 
         Element socketName = shared.getChild("Socket").getChild("socketName");
         h.getChild(0).setName(socketName.getTextTrim());

@@ -7,10 +7,10 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
 import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
-import jmri.util.ThreadingUtil;
-import jmri.util.TimerUnit;
+import jmri.util.*;
 
 /**
  * Executes an action when the expression is True.
@@ -35,8 +35,14 @@ public class ForEachWithDelay extends AbstractDigitalAction
     private int _delay;
     private TimerUnit _unit = TimerUnit.MilliSeconds;
     private String _variableName = "";
+    private boolean _resetIfAlreadyStarted;
+    private boolean _useIndividualTimers;
     private String _socketSystemName;
     private final FemaleDigitalActionSocket _socket;
+    private ProtectedTimerTask _defaultTimerTask;
+
+    private final InternalFemaleSocket _defaultInternalSocket = new InternalFemaleSocket();
+
 
     public ForEachWithDelay(String sys, String user) {
         super(sys, user);
@@ -61,6 +67,8 @@ public class ForEachWithDelay extends AbstractDigitalAction
         _selectMemoryNamedBean.copy(copy._selectMemoryNamedBean);
         copy.setFormula(_formula);
         copy.setLocalVariableName(_variableName);
+        copy.setResetIfAlreadyStarted(_resetIfAlreadyStarted);
+        copy.setUseIndividualTimers(_useIndividualTimers);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
@@ -166,6 +174,42 @@ public class ForEachWithDelay extends AbstractDigitalAction
         _variableName = localVariableName;
     }
 
+    /**
+     * Get reset if timer is already started.
+     * @return true if the timer should be reset if this action is executed
+     *         while timer is ticking, false othervise
+     */
+    public boolean getResetIfAlreadyStarted() {
+        return _resetIfAlreadyStarted;
+    }
+
+    /**
+     * Set reset if timer is already started.
+     * @param resetIfAlreadyStarted true if the timer should be reset if this
+     *                              action is executed while timer is ticking,
+     *                              false othervise
+     */
+    public void setResetIfAlreadyStarted(boolean resetIfAlreadyStarted) {
+        _resetIfAlreadyStarted = resetIfAlreadyStarted;
+    }
+
+    /**
+     * Get use individual timers.
+     * @return true if the timer should use individual timers, false othervise
+     */
+    public boolean getUseIndividualTimers() {
+        return _useIndividualTimers;
+    }
+
+    /**
+     * Set reset if timer is already started.
+     * @param useIndividualTimers true if the timer should use individual timers,
+     *                              false othervise
+     */
+    public void setUseIndividualTimers(boolean useIndividualTimers) {
+        _useIndividualTimers = useIndividualTimers;
+    }
+
     /** {@inheritDoc} */
     @Override
     public LogixNG_Category getCategory() {
@@ -176,12 +220,11 @@ public class ForEachWithDelay extends AbstractDigitalAction
     @Override
     @SuppressWarnings("unchecked")
     public void execute() throws JmriException {
-        SymbolTable symbolTable = getConditionalNG().getSymbolTable();
-
-        AtomicReference<Collection<? extends Object>> collectionRef = new AtomicReference<>();
-        AtomicReference<JmriException> ref = new AtomicReference<>();
+        final AtomicReference<Collection<? extends Object>> collectionRef = new AtomicReference<>();
+        final AtomicReference<JmriException> ref = new AtomicReference<>();
 
         final ConditionalNG conditionalNG = getConditionalNG();
+        final SymbolTable symbolTable = getConditionalNG().getSymbolTable();
 
         if (_useCommonSource) {
             collectionRef.set(_commonManager.getManager().getNamedBeanSet());
@@ -193,8 +236,7 @@ public class ForEachWithDelay extends AbstractDigitalAction
                 switch (_userSpecifiedSource) {
                     case Variable:
                         String otherLocalVariable = _selectVariable.evaluateValue(getConditionalNG());
-                        Object variableValue = conditionalNG
-                                        .getSymbolTable().getValue(otherLocalVariable);
+                        Object variableValue = symbolTable.getValue(otherLocalVariable);
 
                         value = variableValue;
                         break;
@@ -238,15 +280,91 @@ public class ForEachWithDelay extends AbstractDigitalAction
 
         if (ref.get() != null) throw ref.get();
 
-        for (Object o : collectionRef.get()) {
-            symbolTable.setValue(_variableName, o);
-            try {
-                _socket.execute();
-            } catch (BreakException e) {
-                break;
-            } catch (ContinueException e) {
-                // Do nothing, just catch it.
+        List<Object> list = new ArrayList<>(collectionRef.get());
+
+        synchronized(this) {
+            if (!_useIndividualTimers && (_defaultTimerTask != null)) {
+                if (_resetIfAlreadyStarted) _defaultTimerTask.stopTimer();
+                else return;
             }
+            long timerDelay = _delay * _unit.getMultiply();
+            long timerStart = System.currentTimeMillis();
+            ConditionalNG conditonalNG = getConditionalNG();
+            scheduleTimer(conditonalNG, conditonalNG.getSymbolTable(), timerDelay, timerStart, list, 0);
+        }
+    }
+
+    /**
+     * Get a new timer task.
+     * @param conditionalNG  the ConditionalNG
+     * @param symbolTable    the symbol table
+     * @param timerDelay     the time the timer should wait
+     * @param timerStart     the time when the timer was started
+     */
+    private ProtectedTimerTask getNewTimerTask(
+            ConditionalNG conditionalNG,
+            SymbolTable symbolTable,
+            long timerDelay,
+            long timerStart,
+            List<? extends Object> list,
+            int nextIndex)
+            throws JmriException {
+
+        DefaultSymbolTable newSymbolTable = new DefaultSymbolTable(symbolTable);
+
+        return new ProtectedTimerTask() {
+            @Override
+            public void execute() {
+                try {
+                    synchronized(ForEachWithDelay.this) {
+                        if (!_useIndividualTimers) _defaultTimerTask = null;
+                        long currentTime = System.currentTimeMillis();
+                        long currentTimerTime = currentTime - timerStart;
+                        if (currentTimerTime < timerDelay) {
+                            scheduleTimer(conditionalNG, newSymbolTable, timerDelay - currentTimerTime, currentTime, list, nextIndex);
+                        } else {
+                            InternalFemaleSocket internalSocket;
+                            if (_useIndividualTimers) {
+                                internalSocket = new InternalFemaleSocket();
+                            } else {
+                                internalSocket = _defaultInternalSocket;
+                            }
+                            internalSocket.conditionalNG = conditionalNG;
+                            internalSocket.newSymbolTable = newSymbolTable;
+                            internalSocket.newSymbolTable.setValue(_variableName, list.get(nextIndex));
+                            conditionalNG.execute(internalSocket);
+
+                            if (nextIndex+1 < list.size()) {
+                                scheduleTimer(conditionalNG, newSymbolTable, timerDelay, currentTime, list, nextIndex+1);
+                            }
+                        }
+                    }
+                } catch (RuntimeException | JmriException e) {
+                    log.error("Exception thrown", e);
+                }
+            }
+        };
+    }
+
+    private void scheduleTimer(
+            ConditionalNG conditionalNG,
+            SymbolTable symbolTable,
+            long timerDelay,
+            long timerStart,
+            List<? extends Object> list,
+            int nextIndex)
+            throws JmriException {
+
+        synchronized(ForEachWithDelay.this) {
+            if (!_useIndividualTimers && (_defaultTimerTask != null)) {
+                _defaultTimerTask.stopTimer();
+            }
+            ProtectedTimerTask timerTask =
+                    getNewTimerTask(conditionalNG, symbolTable, timerDelay, timerStart, list, nextIndex);
+            if (!_useIndividualTimers) {
+                _defaultTimerTask = timerTask;
+            }
+            TimerUtil.schedule(timerTask, timerDelay);
         }
     }
 
@@ -299,15 +417,33 @@ public class ForEachWithDelay extends AbstractDigitalAction
             switch (_userSpecifiedSource) {
                 case Variable:
                     return Bundle.getMessage(locale, "ForEachWithDelay_Long_LocalVariable",
-                            _selectVariable.getDescription(locale), _variableName, _socket.getName(), _unit.getTimeWithUnit(_delay));
+                            _selectVariable.getDescription(locale), _variableName, _socket.getName(), _unit.getTimeWithUnit(_delay),
+                            _resetIfAlreadyStarted
+                                    ? Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_ResetRepeat"))
+                                    : Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_IgnoreRepeat")),
+                            _useIndividualTimers
+                                    ? Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_UseIndividualTimers"))
+                                    : "");
 
                 case Memory:
                     return Bundle.getMessage(locale, "ForEachWithDelay_Long_Memory",
-                            _selectMemoryNamedBean.getDescription(locale), _variableName, _socket.getName(), _unit.getTimeWithUnit(_delay));
+                            _selectMemoryNamedBean.getDescription(locale), _variableName, _socket.getName(), _unit.getTimeWithUnit(_delay),
+                            _resetIfAlreadyStarted
+                                    ? Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_ResetRepeat"))
+                                    : Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_IgnoreRepeat")),
+                            _useIndividualTimers
+                                    ? Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_UseIndividualTimers"))
+                                    : "");
 
                 case Formula:
                     return Bundle.getMessage(locale, "ForEachWithDelay_Long_Formula",
-                            _formula, _variableName, _socket.getName(), _unit.getTimeWithUnit(_delay));
+                            _formula, _variableName, _socket.getName(), _unit.getTimeWithUnit(_delay),
+                            _resetIfAlreadyStarted
+                                    ? Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_ResetRepeat"))
+                                    : Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_IgnoreRepeat")),
+                            _useIndividualTimers
+                                    ? Bundle.getMessage("ForEachWithDelay_Options", Bundle.getMessage("ForEachWithDelay_UseIndividualTimers"))
+                                    : "");
 
                 default:
                     throw new IllegalArgumentException("_variableOperation has invalid value: " + _userSpecifiedSource.name());
@@ -411,6 +547,37 @@ public class ForEachWithDelay extends AbstractDigitalAction
     }
 
 
+    private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
+
+        private ConditionalNG conditionalNG;
+        private SymbolTable newSymbolTable;
+
+        public InternalFemaleSocket() {
+            super(null, new FemaleSocketListener(){
+                @Override
+                public void connected(FemaleSocket socket) {
+                    // Do nothing
+                }
+
+                @Override
+                public void disconnected(FemaleSocket socket) {
+                    // Do nothing
+                }
+            }, "A");
+        }
+
+        @Override
+        public void execute() throws JmriException {
+            if (conditionalNG == null) { throw new NullPointerException("conditionalNG is null"); }
+            if (_socket != null) {
+                SymbolTable oldSymbolTable = conditionalNG.getSymbolTable();
+                conditionalNG.setSymbolTable(newSymbolTable);
+                _socket.execute();
+                conditionalNG.setSymbolTable(oldSymbolTable);
+            }
+        }
+
+    }
 
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ForEachWithDelay.class);

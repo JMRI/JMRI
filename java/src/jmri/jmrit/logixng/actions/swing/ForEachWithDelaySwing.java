@@ -14,6 +14,7 @@ import jmri.jmrit.logixng.actions.ForEachWithDelay.UserSpecifiedSource;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectNamedBeanSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectStringSwing;
+import jmri.util.TimerUnit;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
@@ -37,6 +38,12 @@ public class ForEachWithDelaySwing extends AbstractDigitalActionSwing {
     private JTextField _calculateFormulaTextField;
 
     private JTextField _localVariable;
+
+    private JFormattedTextField _timerDelay;
+    private JComboBox<TimerUnit> _unitComboBox;
+    private JCheckBox _resetIfAlreadyStarted;
+    private JCheckBox _useIndividualTimers;
+
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -93,6 +100,41 @@ public class ForEachWithDelaySwing extends AbstractDigitalActionSwing {
         localVariablePanel.add(_localVariable);
         panel.add(localVariablePanel);
 
+        panel.add(_commonOrUserSpecifiedPane);
+        panel.add(localVariablePanel);
+
+        JPanel panelDelay = new javax.swing.JPanel();
+        panelDelay.add(new JLabel(Bundle.getMessage("ForEachWithDelaySwing_Time")));
+        _timerDelay = new JFormattedTextField("0");
+        _timerDelay.setColumns(7);
+        panelDelay.add(_timerDelay);
+        panel.add(panelDelay);
+
+        JPanel unitPanel = new JPanel();
+        unitPanel.add(new JLabel(Bundle.getMessage("ForEachWithDelaySwing_Unit")));
+        panel.add(unitPanel);
+
+        _unitComboBox = new JComboBox<>();
+        for (TimerUnit u : TimerUnit.values()) _unitComboBox.addItem(u);
+        JComboBoxUtil.setupComboBoxMaxRows(_unitComboBox);
+        if (action != null) _unitComboBox.setSelectedItem(action.getUnit());
+        unitPanel.add(_unitComboBox);
+        panel.add(unitPanel);
+
+        _resetIfAlreadyStarted = new JCheckBox(Bundle.getMessage("ForEachWithDelaySwing_ResetIfAlreadyStarted"));
+        panel.add(_resetIfAlreadyStarted);
+
+        _useIndividualTimers = new JCheckBox(Bundle.getMessage("ForEachWithDelaySwing_UseIndividualTimers"));
+        _useIndividualTimers.addActionListener((evt)->{
+            if (_useIndividualTimers.isSelected()) {
+                _resetIfAlreadyStarted.setEnabled(false);
+                _resetIfAlreadyStarted.setSelected(false);
+            } else {
+                _resetIfAlreadyStarted.setEnabled(true);
+            }
+        });
+        panel.add(_useIndividualTimers);
+
 
         if (action != null) {
             if (!action.isUseCommonSource()) {
@@ -107,13 +149,12 @@ public class ForEachWithDelaySwing extends AbstractDigitalActionSwing {
                 default: throw new IllegalArgumentException("invalid _addressing state: " + action.getUserSpecifiedSource().name());
             }
             _calculateFormulaTextField.setText(action.getFormula());
-
+            _timerDelay.setText(Integer.toString(action.getDelay()));
             _localVariable.setText(action.getLocalVariableName());
+            _resetIfAlreadyStarted.setSelected(action.getResetIfAlreadyStarted());
+            _useIndividualTimers.setSelected(action.getUseIndividualTimers());
+            _resetIfAlreadyStarted.setEnabled(!action.getUseIndividualTimers());
         }
-
-
-        panel.add(_commonOrUserSpecifiedPane);
-        panel.add(localVariablePanel);
     }
 
     /** {@inheritDoc} */
@@ -141,6 +182,12 @@ public class ForEachWithDelaySwing extends AbstractDigitalActionSwing {
                     errorMessages.add(e.getMessage());
                 }
             }
+        }
+
+        try {
+            action.setDelay(Integer.parseInt(_timerDelay.getText()));
+        } catch (NumberFormatException e) {
+            errorMessages.add(e.getLocalizedMessage());
         }
 
         return errorMessages.isEmpty();
@@ -199,6 +246,11 @@ public class ForEachWithDelaySwing extends AbstractDigitalActionSwing {
         }
 
         action.setLocalVariableName(_localVariable.getText());
+
+        action.setDelay(Integer.parseInt(_timerDelay.getText()));
+        action.setUnit(_unitComboBox.getItemAt(_unitComboBox.getSelectedIndex()));
+        action.setResetIfAlreadyStarted(_resetIfAlreadyStarted.isSelected());
+        action.setUseIndividualTimers(_useIndividualTimers.isSelected());
     }
 
     /** {@inheritDoc} */
