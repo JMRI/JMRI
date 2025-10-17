@@ -30,7 +30,6 @@ public class ActionFactory implements DigitalActionFactory {
         if (CategoryLocoNet.hasLocoNet()) {
             actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, ActionClearSlots.class));
             actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, ActionUpdateSlots.class));
-            actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, RequestTurnoutState.class));
             actionClasses.add(new AbstractMap.SimpleEntry<>(CategoryLocoNet.LOCONET, SetSpeedZero.class));
         }
 

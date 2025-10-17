@@ -2990,14 +2990,6 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
-        jmri.jmrix.loconet.logixng.RequestTurnoutState requestTurnoutState =
-                new jmri.jmrix.loconet.logixng.RequestTurnoutState(digitalActionManager.getAutoSystemName(), null, _locoNetMemo);
-        requestTurnoutState.getSelectNamedBean().setNamedBean(this.turnout1);
-        maleSocket = digitalActionManager.registerAction(requestTurnoutState);
-        maleSocket.setEnabled(false);
-        actionManySocket.getChild(indexAction++).connect(maleSocket);
-
-
         jmri.jmrix.mqtt.logixng.Publish publish =
                 new jmri.jmrix.mqtt.logixng.Publish(digitalActionManager.getAutoSystemName(), null, _mqttMemo);
         maleSocket = digitalActionManager.registerAction(publish);
