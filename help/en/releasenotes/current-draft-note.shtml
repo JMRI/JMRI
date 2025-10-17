@@ -477,6 +477,15 @@
         <ul>
           <li>The new action <strong>ExecuteProgram</strong> has been
               added. It lets you launch a program from JMRI.</li>
+          <li>The new action <strong>Request update of turnout</strong>
+              has been added. It's used when you want JMRI to request
+              the state of a turnout from the layout. Note that not all
+              systems support this.</li>
+          <li>The new action <strong>For each with delay</strong> has
+              been added. It's similar to <strong>For each</strong> but
+              has a delay between each item. It's useful when you need
+              to do something for example for every turnout, but where
+              you need to wait some time between each action.</li>
           <li></li>
         </ul>
 
