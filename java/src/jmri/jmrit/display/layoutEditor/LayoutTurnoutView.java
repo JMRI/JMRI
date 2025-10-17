@@ -1707,7 +1707,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
             });
 
             JCheckBoxMenuItem showUnknownCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowUnknown"));
-            hiddenCheckBoxMenuItem.setSelected(getShowUnknown());
+            showUnknownCheckBoxMenuItem.setSelected(getShowUnknown());
             popup.add(showUnknownCheckBoxMenuItem);
             showUnknownCheckBoxMenuItem.addActionListener( e1 -> {
                 JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
