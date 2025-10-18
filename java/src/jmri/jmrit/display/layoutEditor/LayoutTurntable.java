@@ -60,9 +60,15 @@ public class LayoutTurntable extends LayoutTrack {
     // operational instance variables (not saved between sessions)
     private NamedBeanHandle<LayoutBlock> namedLayoutBlock = null;
 
+    private boolean dispatcherManaged = false;
     private boolean turnoutControlled = false;
     private double radius = 25.0;
     private int lastKnownIndex = -1;
+
+    private int signalIconPlacement = 0; // 0: Do Not Place, 1: Left, 2: Right
+
+    private NamedBeanHandle<SignalMast> bufferSignalMast;
+    private NamedBeanHandle<SignalMast> exitSignalMast;
 
     // persistent instance variables (saved between sessions)
 
@@ -101,6 +107,76 @@ public class LayoutTurntable extends LayoutTrack {
      */
     public void setRadius(double r) {
         radius = r;
+    }
+
+    public boolean isDispatcherManaged() {
+        return dispatcherManaged;
+    }
+
+    public void setDispatcherManaged(boolean managed) {
+        dispatcherManaged = managed;
+    }
+
+    public int getSignalIconPlacement() {
+        return signalIconPlacement;
+    }
+
+    public void setSignalIconPlacement(int placement) {
+        this.signalIconPlacement = placement;
+    }
+
+    public SignalMast getBufferMast() {
+        if (bufferSignalMast == null) {
+            return null;
+        }
+        return bufferSignalMast.getBean();
+    }
+
+    public String getBufferSignalMastName() {
+        if (bufferSignalMast == null) {
+            return "";
+        }
+        return bufferSignalMast.getName();
+    }
+
+    public void setBufferSignalMast(String name) {
+        if (name == null || name.isEmpty()) {
+            bufferSignalMast = null;
+            return;
+        }
+        SignalMast mast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+        if (mast != null) {
+            bufferSignalMast = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, mast);
+        } else {
+            bufferSignalMast = null;
+        }
+    }
+
+    public SignalMast getExitSignalMast() {
+        if (exitSignalMast == null) {
+            return null;
+        }
+        return exitSignalMast.getBean();
+    }
+
+    public String getExitSignalMastName() {
+        if (exitSignalMast == null) {
+            return "";
+        }
+        return exitSignalMast.getName();
+    }
+
+    public void setExitSignalMast(String name) {
+        if (name == null || name.isEmpty()) {
+            exitSignalMast = null;
+            return;
+        }
+        SignalMast mast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+        if (mast != null) {
+            exitSignalMast = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, mast);
+        } else {
+            exitSignalMast = null;
+        }
     }
 
     /**
@@ -519,6 +595,8 @@ public class LayoutTurntable extends LayoutTrack {
 
 
     public String tLayoutBlockName = "";
+    public String tExitSignalMastName = "";
+    public String tBufferSignalMastName = "";
 
     /**
      * Initialization method The name of each track segment connected to a ray
@@ -535,8 +613,20 @@ public class LayoutTurntable extends LayoutTrack {
         }
         tLayoutBlockName = null; /// release this memory
 
+        if (tBufferSignalMastName != null && !tBufferSignalMastName.isEmpty()) {
+            setBufferSignalMast(tBufferSignalMastName);
+        }
+        tBufferSignalMastName = null;
+        if (tExitSignalMastName != null && !tExitSignalMastName.isEmpty()) {
+            setExitSignalMast(tExitSignalMastName);
+        }
+        tExitSignalMastName = null;
+
         rayTrackList.forEach((rt) -> {
             rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
+            if (rt.approachMastName != null && !rt.approachMastName.isEmpty()) {
+                rt.setApproachMast(rt.approachMastName);
+            }
         });
     }
 
@@ -603,7 +693,7 @@ public class LayoutTurntable extends LayoutTrack {
             log.error("{}.deleteRay(null); rayTrack is null", getName());
         } else {
             t = rayTrack.getConnect();
-            getRayTrackList().remove(rayTrack.getConnectionIndex());
+            getRayTrackList().remove(rayTrack);
             rayTrack.dispose();
         }
         if (t != null) {
@@ -634,6 +724,42 @@ public class LayoutTurntable extends LayoutTrack {
         return active;
     }
 
+    /**
+     * Checks if the given mast is an approach mast for any ray on this turntable.
+     * @param mast The SignalMast to check.
+     * @return true if it is an approach mast for one of the rays.
+     */
+    public boolean isApproachMast(SignalMast mast) {
+        if (mast == null) {
+            return false;
+        }
+        for (RayTrack ray : rayTrackList) {
+            if (mast.equals(ray.getApproachMast())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the given block is one of the ray blocks for this turntable.
+     * @param block The Block to check.
+     * @return true if it is a block for one of the rays.
+     */
+    public boolean isRayBlock(Block block) {
+        if (block == null) {
+            return false;
+        }
+        for (RayTrack ray : rayTrackList) {
+            TrackSegment ts = ray.getConnect();
+            if (ts != null && ts.getLayoutBlock() != null && block.equals(ts.getLayoutBlock().getBlock())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public class RayTrack {
 
         /**
@@ -658,6 +784,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         private boolean disabled = false;
         private boolean disableWhenOccupied = false;
+        private NamedBeanHandle<SignalMast> approachMast;
 
         //
         // Accessor routines
@@ -755,6 +882,41 @@ public class LayoutTurntable extends LayoutTrack {
         }
 
         /**
+         * Get the approach signal mast for this ray.
+         * @return The signal mast, or null.
+         */
+        public SignalMast getApproachMast() {
+            if (approachMast == null) {
+                return null;
+            }
+            return approachMast.getBean();
+        }
+
+        public String getApproachMastName() {
+            if (approachMast == null) {
+                return "";
+            }
+            return approachMast.getName();
+        }
+
+        /**
+         * Set the approach signal mast for this ray by name.
+         * @param name The name of the signal mast.
+         */
+        public void setApproachMast(String name) {
+            if (name == null || name.isEmpty()) {
+                approachMast = null;
+                return;
+            }
+            SignalMast mast = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+            if (mast != null) {
+                approachMast = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, mast);
+            } else {
+                approachMast = null;
+            }
+        }
+
+        /**
          * Is this ray occupied?
          *
          * @return true if occupied
@@ -773,6 +935,7 @@ public class LayoutTurntable extends LayoutTrack {
 
         // initialization instance variable (used when loading a LayoutEditor)
         public String connectName = "";
+        public String approachMastName = "";
 
         private NamedBeanHandle<Turnout> namedTurnout;
         // Turnout t;
@@ -791,10 +954,24 @@ public class LayoutTurntable extends LayoutTrack {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
                 mTurnoutListener = (PropertyChangeEvent e) -> {
-                    if (getTurnout().getKnownState() == turnoutState) {
-                        lastKnownIndex = connectionIndex;
-                        models.redrawPanel();
-                        models.setDirty();
+                    if (getTurnout().getKnownState() == Turnout.THROWN) {
+                        // This ray is now the active one.
+                        // Update the turntable's position indicator.
+                        if (lastKnownIndex != connectionIndex) {
+                            lastKnownIndex = connectionIndex;
+                            models.redrawPanel();
+                            models.setDirty();
+                        }
+
+                        // Command all other ray turnouts to CLOSED.
+                        for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
+                            if (otherRay != this && otherRay.getTurnout() != null) {
+                                // Check state before commanding to prevent potential listener loops
+                                if (otherRay.getTurnout().getCommandedState() != Turnout.CLOSED) {
+                                    otherRay.getTurnout().setCommandedState(Turnout.CLOSED);
+                                }
+                            }
+                        }
                     }
                 };
             }
@@ -824,10 +1001,12 @@ public class LayoutTurntable extends LayoutTrack {
          */
         public void setPosition() {
             if (namedTurnout != null) {
-                if (disableWhenOccupied && isOccupied()) {
+                if (disableWhenOccupied && isOccupied()) { // isOccupied is on RayTrack, so check must be here
                     log.debug("Can not setPosition of turntable ray when it is occupied");
                 } else {
-                    getTurnout().setCommandedState(turnoutState);
+                    // The listener attached to the turnout will handle de-selecting other rays
+                    // by setting their turnouts to CLOSED.
+                    getTurnout().setCommandedState(Turnout.THROWN);
                 }
             }
         }
@@ -923,6 +1102,92 @@ public class LayoutTurntable extends LayoutTrack {
         // track segments attached to their rays so...
         // nothing to see here... move along...
         return true;
+    }
+
+    /**
+     * Checks if the path represented by the blocks crosses this turntable.
+     * @param block1 A block in the path.
+     * @param block2 Another block in the path.
+     * @return true if the path crosses this turntable.
+     */
+    public boolean isTurntableBoundary(Block block1, Block block2) {
+        if (getLayoutBlock() == null) {
+            return false;
+        }
+        Block turntableBlock = getLayoutBlock().getBlock();
+        if (turntableBlock == null) {
+            return false;
+        }
+
+        // Case 1: Moving to/from the turntable block itself.
+        if ((block1 == turntableBlock && isRayBlock(block2)) ||
+            (block2 == turntableBlock && isRayBlock(block1))) {
+            return true;
+        }
+
+        // Case 2: Moving between two ray blocks (crossing over the turntable).
+        if (isRayBlock(block1) && isRayBlock(block2)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Gets the list of turnouts and their required states to align the turntable
+     * for a path defined by the given blocks.
+     *
+     * @param curBlock  The current block in the train's path.
+     * @param prevBlock The previous block in the train's path.
+     * @param nextBlock The next block in the train's path.
+     * @return A list of LayoutTrackExpectedState objects for the turnouts.
+     */
+    public List<LayoutTrackExpectedState<LayoutTurnout>> getTurnoutList(Block curBlock, Block prevBlock, Block nextBlock) {
+        List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList = new ArrayList<>();
+        if (!isTurnoutControlled()) {
+            return turnoutList;
+        }
+
+        Block turntableBlock = (getLayoutBlock() != null) ? getLayoutBlock().getBlock() : null;
+        if (turntableBlock == null) {
+            return turnoutList;
+        }
+
+        int targetRay = -1;
+
+        // Determine which ray needs to be aligned.
+        if (prevBlock == turntableBlock) {
+            // Train is leaving the turntable, so align to the destination ray.
+            targetRay = getRayForBlock(curBlock);
+        } else if (curBlock == turntableBlock) {
+            // Train is entering the turntable, so align to the approaching ray.
+            targetRay = getRayForBlock(prevBlock);
+        }
+
+        if (targetRay != -1) {
+            Turnout t = getRayTurnout(targetRay);
+            if (t != null) {
+                // Create a temporary LayoutTurnout wrapper for the dispatcher.
+                // This object is not on a panel and is for logic purposes only.
+                LayoutLHTurnout tempLayoutTurnout = new LayoutLHTurnout("TURNTABLE_WRAPPER_" + t.getSystemName(), models);
+                tempLayoutTurnout.setTurnout(t.getSystemName());
+                int requiredState = Turnout.THROWN;
+
+                log.debug("Adding turntable turnout {} to list with required state {}", t.getDisplayName(), requiredState);
+                turnoutList.add(new LayoutTrackExpectedState<>(tempLayoutTurnout, requiredState));
+            }
+        }
+        return turnoutList;
+    }
+
+    private int getRayForBlock(Block block) {
+        if (block == null) return -1;
+        for (int i = 0; i < getNumberRays(); i++) {
+            TrackSegment ts = getRayConnectOrdered(i);
+            if (ts != null && ts.getLayoutBlock() != null && ts.getLayoutBlock().getBlock() == block) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**

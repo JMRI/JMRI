@@ -253,6 +253,7 @@ public class AutoTurnouts {
                         var panel = lblock.getMaxConnectedPanel();
                         if (panel != null) {
                             var connection = new ConnectivityUtil(panel);
+                            // note turnouts for turntables are added to the list in getTurnoutList
                             turnoutList = connection.getTurnoutList(curBlock, prevBlock, nextBlock, true);
                         }
                     }
