@@ -1,9 +1,3 @@
-/**
- * Consist Manager for use with the TmccConsist class for the
- * consists it builds.
- *
- * @author Dean Cording Copyright (C) 2023
- */
 package jmri.jmrix.tmcc;
 
 import jmri.Consist;
@@ -11,9 +5,17 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import javax.annotation.Nonnull;
-
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
+
+
+/**
+ * Consist Manager for use with the TmccConsist class for the
+ * consists it builds.
+ *
+ * @author Dean Cording Copyright (C) 2023
+ * @author Timothy Jump Copyright (C) 2025 
+ */
 
 
 public class TmccConsistManager extends AbstractConsistManager {
@@ -49,6 +51,7 @@ public class TmccConsistManager extends AbstractConsistManager {
         return true;
     }
 
+
     /**
      * Does a CS consist require a separate consist address? CS consist
      * addresses are assigned by the user, so return true.
@@ -59,9 +62,9 @@ public class TmccConsistManager extends AbstractConsistManager {
         return true;
     }
 
+
     /**
-     * Add a new TMCC Consist with the given address to
-     * consistTable/consistList.
+     * Add a new TMCC Consist with the given address to consistTable/consistList.
      */
     @Override
     public Consist addConsist(LocoAddress address) {
@@ -79,6 +82,7 @@ public class TmccConsistManager extends AbstractConsistManager {
         return consist;
     }
 
+
     /* Request an update from the layout, loading
      * Consists from the command station.
      */
@@ -90,6 +94,7 @@ public class TmccConsistManager extends AbstractConsistManager {
     protected boolean shouldRequestUpdateFromLayout() {
         return false;
     }
+
 
     /**
      * Consist is activated on the controller for the specified LocoAddress
@@ -103,19 +108,20 @@ public class TmccConsistManager extends AbstractConsistManager {
 
     }
 
+
     /**
      * If a consist exists with the given address, the consist is deactivated on the controller,
      * otherwise it does nothing.
      * This is used by a throttle in case it is controlling a consist.
      * @param address Consist address to be deactivated
      */
-    public void deactivateConsist(LocoAddress address) {
+//    public void deactivateConsist(LocoAddress address) {
 
-        if (!consistTable.containsKey(address)) return;
+//        if (!consistTable.containsKey(address)) return;
 
 //        ((TmccConsist)consistTable.get(address)).deactivate();
 
-    }
+//    }
 
 
 

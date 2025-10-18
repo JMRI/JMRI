@@ -61,12 +61,12 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
     /**
      * Is this address allowed?
-     * On TMCC systems, all addresses but 0 can be used in a consist.
+     * On TMCC systems, only addresses 0-15 can be used in a consist.
      * {@inheritDoc}
      */
     @Override
     public boolean isAddressAllowed(DccLocoAddress address) {
-        return address.getNumber() != 0;
+        return address.getNumber() < 99;
     }
 
     /**
@@ -151,7 +151,7 @@ public class TmccConsist extends jmri.implementation.DccConsist {
         if (consistType == CS_CONSIST) {
             addToConsistList(locoAddress, directionNormal);
             if (active) {
-//                publish();
+                publish();
             }
         } else {
             log.error("Consist Type Not Supported");
@@ -192,7 +192,7 @@ public class TmccConsist extends jmri.implementation.DccConsist {
         if (consistType == CS_CONSIST) {
             removeFromConsistList(locoAddress);
             if (active) {
-//                publish();
+                publish();
             }
         } else {
             log.error("Consist Type Not Supported");
@@ -207,22 +207,22 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
         log.info("Activating consist {}", consistID);
         active = true;
-//        publish();
+        publish();
     }
 
     /**
      * Deactivates and removes the consist from a throttle
      */
-//     public void deactivate() {
-//
-//        log.info("Deactivating consist {}", consistID);
-//        active = false;
-//        // Clear TMCC message
-//        jmri.util.ThreadingUtil.runOnLayoutEventually(() ->
+     public void deactivate() {
+
+        log.info("Deactivating consist {}", consistID);
+        active = false;
+        // Clear TMCC message
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() ->
 //            tmccAdapter.publish(this.sendTopicPrefix.replaceFirst("\\{0\\}", 
-//                String.valueOf(consistAddress.getNumber())), ""));
-//
-//    }
+                String.valueOf(consistAddress.getNumber())); //, ""));
+
+    }
 
     @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "false positive")
     private String getConsistMakeup() {
@@ -241,13 +241,13 @@ public class TmccConsist extends jmri.implementation.DccConsist {
     /**
      * Publish the consist details to the controller
      */
-//    private void publish(){
-//        // Send TMCC message
-//        jmri.util.ThreadingUtil.runOnLayout(() ->
+    private void publish(){
+        // Send TMCC message
+        jmri.util.ThreadingUtil.runOnLayout(() ->
 //            tmccAdapter.publish(this.sendTopicPrefix.replaceFirst("\\{0\\}", 
-//                String.valueOf(consistAddress.getNumber())), getConsistMakeup()));
-//
-//    }
+                String.valueOf(consistAddress.getNumber())); //, getConsistMakeup()));
+
+    }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TmccConsist.class);
 

@@ -56,9 +56,21 @@ public class SerialThrottle extends AbstractThrottle {
                     } else {
                         return 0;
                     }
+                } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC1TR_32 || getSpeedStepMode() == jmri.SpeedStepMode.TMCC1TR_100) {
+                    if (number < SERIAL_FUNCTION_CODES_TMCC1TR.length) {
+                        return SERIAL_FUNCTION_CODES_TMCC1TR[number];
+                    } else {
+                        return 0;
+                    }
                 } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_32 || getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_200) {
                      if (number < SERIAL_FUNCTION_CODES_TMCC2.length) {
                          return SERIAL_FUNCTION_CODES_TMCC2[number];
+                    } else {
+                        return 0;
+                    }
+                } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2TR_32 || getSpeedStepMode() == jmri.SpeedStepMode.TMCC2TR_200) {
+                     if (number < SERIAL_FUNCTION_CODES_TMCC2TR.length) {
+                         return SERIAL_FUNCTION_CODES_TMCC2TR[number];
                     } else {
                         return 0;
                     }
@@ -102,7 +114,7 @@ public class SerialThrottle extends AbstractThrottle {
         tc.sendSerialMessage(m, null);
     }
 
-    // TMCC 1 Function Keys to trigger with TMCC1_32 and TMCC1_100 speed steps.
+    // TMCC 1 -Engine- Function Keys to trigger with TMCC1_32 and TMCC1_100 speed steps.
     private final static long[] SERIAL_FUNCTION_CODES_TMCC1 = new long[] {
         0x00000D, 0x00001D, 0x00001C, 0x000005, 0x000006, /* Fn0-4 */
         0x000010, 0x000011, 0x000012, 0x000013, 0x000014, /* Fn5-9 */
@@ -111,47 +123,100 @@ public class SerialThrottle extends AbstractThrottle {
         0x000004, 0x000007, 0x000047, 0x000042, 0x000028, /* Fn20-24 */
         0x000029, 0x00002A, 0x00002B, 0x00001F, /* 25-28 */
         
-        0xF8012E, // Fn29
-        0xF8012E, // Fn30
-        0xF8012E, // Fn31
-        0xF8012E, // Fn32
-        0xF8012E, // Fn33
-        0xF8012E, // Fn34
-        0xF8012E, // Fn35
-        0xF8012E, // Fn36
-        0xF8012E, // Fn37
-        0xF8012E, // Fn38
-        0xF8012E, // Fn39
-        0xF8012E, // Fn40
-        0xF8012E, // Fn41
-        0xF8012E, // Fn42
-        0xF8012E, // Fn43
-        0xF8012E, // Fn44
-        0xF8012E, // Fn45
-        0xF8012E, // Fn46
-        0xF8012E, // Fn47
-        0xF8012E, // Fn48
-        0xF8012E, // Fn49
-        0xF8012E, // Fn50
-        0xF8012E, // Fn51
-        0xF8012E, // Fn52
-        0xF8012E, // Fn53
-        0xF8012E, // Fn54
-        0xF8012E, // Fn55
-        0xF8012E, // Fn56
-        0xF8012E, // Fn57
-        0xF8012E, // Fn58
-        0xF8012E, // Fn59
-        0xF8012E, // Fn60
-        0xF8012E, // Fn61
-        0xF8012E, // Fn62
-        0xF8012E, // Fn63
-        0xF8012E, // Fn64
-        0xF8012E, // Fn65
-        0xF8012E, // Fn66
-        0xF8012E, // Fn67
-        0xF8012E, // Fn68
+        0x000036, // Fn29
+        0x000036, // Fn30
+        0x000036, // Fn31
+        0x000036, // Fn32
+        0x000036, // Fn33
+        0x000036, // Fn34
+        0x000036, // Fn35
+        0x000036, // Fn36
+        0x000036, // Fn37
+        0x000036, // Fn38
+        0x000036, // Fn39
+        0x000036, // Fn40
+        0x000036, // Fn41
+        0x000036, // Fn42
+        0x000036, // Fn43
+        0x000036, // Fn44
+        0x000036, // Fn45
+        0x000036, // Fn46
+        0x000036, // Fn47
+        0x000036, // Fn48
+        0x000036, // Fn49
+        0x000036, // Fn50
+        0x000036, // Fn51
+        0x000036, // Fn52
+        0x000036, // Fn53
+        0x000036, // Fn54
+        0x000036, // Fn55
+        0x000036, // Fn56
+        0x000036, // Fn57
+        0x000036, // Fn58
+        0x000036, // Fn59
+        0x000036, // Fn60
+        0x000036, // Fn61
+        0x000036, // Fn62
+        0x000036, // Fn63
+        0x000036, // Fn64
+        0x000036, // Fn65
+        0x000036, // Fn66
+        0x000036, // Fn67
+        0x000036, // Fn68
     };
+
+    // TMCC 1 -Train- Function Keys to trigger with TMCC1TR_32 and TMCC1TR_100 speed steps.
+    private final static long[] SERIAL_FUNCTION_CODES_TMCC1TR = new long[] {
+        0x00C80D, 0x00C81D, 0x00C81C, 0x00C805, 0x00C806, /* Fn0-4 */
+        0x00C810, 0x00C811, 0x00C812, 0x00C813, 0x00C814, /* Fn5-9 */
+        0x00C815, 0x00C816, 0x00C817, 0x00C818, 0x00C819, /* Fn10-14 */
+        0x00C809, 0x00C81E, 0x00C800, 0x00C803, 0x00C801, /* Fn15-19 */
+        0x00C804, 0x00C807, 0x00C847, 0x00C842, 0x00C828, /* Fn20-24 */
+        0x00C829, 0x00C82A, 0x00C82B, 0x00C81F, /* 25-28 */
+        
+        0x00C82E, // Fn29
+        0x00C82E, // Fn30
+        0x00C82E, // Fn31
+        0x00C82E, // Fn32
+        0x00C82E, // Fn33
+        0x00C82E, // Fn34
+        0x00C82E, // Fn35
+        0x00C82E, // Fn36
+        0x00C82E, // Fn37
+        0x00C82E, // Fn38
+        0x00C82E, // Fn39
+        0x00C82E, // Fn40
+        0x00C82E, // Fn41
+        0x00C82E, // Fn42
+        0x00C82E, // Fn43
+        0x00C82E, // Fn44
+        0x00C82E, // Fn45
+        0x00C82E, // Fn46
+        0x00C82E, // Fn47
+        0x00C82E, // Fn48
+        0x00C82E, // Fn49
+        0x00C82E, // Fn50
+        0x00C82E, // Fn51
+        0x00C82E, // Fn52
+        0x00C82E, // Fn53
+        0x00C82E, // Fn54
+        0x00C82E, // Fn55
+        0x00C82E, // Fn56
+        0x00C82E, // Fn57
+        0x00C82E, // Fn58
+        0x00C82E, // Fn59
+        0x00C82E, // Fn60
+        0x00C82E, // Fn61
+        0x00C82E, // Fn62
+        0x00C82E, // Fn63
+        0x00C82E, // Fn64
+        0x00C82E, // Fn65
+        0x00C82E, // Fn66
+        0x00C82E, // Fn67
+        0x00C82E, // Fn68
+    };
+
+
 
     // Translate TMCC1 function numbers to line characters.
     // If the upper byte is zero, it will be replaced by 0xF8
@@ -162,7 +227,7 @@ public class SerialThrottle extends AbstractThrottle {
     //    this will be interpreted as two commands to be sequentially sent,
     //    with the upper bytes sent first.
 
-    // TMCC 2 Legacy Function Keys to trigger with TMCC2_32 and TMCC2_200 speed steps.
+    // TMCC 2 (Legacy) -Engine- Function Keys to trigger with TMCC2_32 and TMCC2_200 speed steps.
     private final static long[] SERIAL_FUNCTION_CODES_TMCC2 = new long[] {
         0xF8010D, 0xF8011D, 0xF8011C, 0xF80105, 0xF80106, /* Fn0-4 */
         0xF80110, 0xF80111, 0xF80112, 0xF80113, 0xF80114, /* Fn5-9 */
@@ -219,6 +284,65 @@ public class SerialThrottle extends AbstractThrottle {
         0xF8012E, // Fn68
     };
 
+    // TMCC 2 (Legacy) -Train- Function Keys to trigger with TMCC2TR_32 and TMCC2TR_200 speed steps.
+    private final static long[] SERIAL_FUNCTION_CODES_TMCC2TR = new long[] {
+        0xF9010D, 0xF9011D, 0xF9011C, 0xF90105, 0xF90106, /* Fn0-4 */
+        0xF90110, 0xF90111, 0xF90112, 0xF90113, 0xF90114, /* Fn5-9 */
+        0xF90115, 0xF90116, 0xF90117, 0xF90118, 0xF90119, /* Fn10-14 */
+        0xF90109, 0xF9011E, 0xF90100, 0xF90103, 0xF90101, /* Fn15-19 */
+        0xF90104, 0xF90107, 0xF90147, 0xF90142, 0xF90128, /* Fn20-24 */
+        0xF90129, 0xF9012A, 0xF9012B, 0xF9011F, /* 25-28 */
+        
+        0xF90108, // Fn29
+        0xF9010A, // Fn30
+        0xF9010B, // Fn31
+        0xF9010C, // Fn32
+        0xF9010E, // Fn33
+        0xF9010F, // Fn34
+        
+        //0xF801FBF801FCL, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
+        //0xF801FC, // Fn36 Start Up Sequence 2 (Immediate Start Up)
+        //0xF801FDF801FEL, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
+        //0xF801FE, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
+
+        0xF9012E, // Fn35
+        0xF9012E, // Fn36
+        0xF9012E, // Fn37
+        0xF9012E, // Fn38
+        0xF9012E, // Fn39
+        0xF9012E, // Fn40
+        0xF9012E, // Fn41
+        0xF9012E, // Fn42
+        0xF9012E, // Fn43
+        0xF9012E, // Fn44
+        0xF9012E, // Fn45
+        0xF9012E, // Fn46
+        0xF9012E, // Fn47
+        0xF9012E, // Fn48
+        0xF9012E, // Fn49
+        0xF9012E, // Fn50
+        0xF9012E, // Fn51
+        0xF9012E, // Fn52
+        0xF9012E, // Fn53
+        0xF9012E, // Fn54
+        0xF9012E, // Fn55
+        0xF9012E, // Fn56
+        0xF9012E, // Fn57
+        0xF9012E, // Fn58
+        0xF9012E, // Fn59
+        0xF9012E, // Fn60
+        0xF9012E, // Fn61
+        0xF9012E, // Fn62
+        0xF9012E, // Fn63
+        0xF9012E, // Fn64
+        0xF9012E, // Fn65
+        0xF9012E, // Fn66
+        0xF9012E, // Fn67
+        0xF9012E, // Fn68
+    };
+
+
+
     /**
      * Set the speed.
      *
@@ -232,7 +356,7 @@ public class SerialThrottle extends AbstractThrottle {
             this.speedSetting = speed;
         }
         
-        // send to layout option 200 speed steps
+        // send to layout option TMCC2 200 speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
 
             // TMCC2 Legacy 200 speed step mode
@@ -256,7 +380,33 @@ public class SerialThrottle extends AbstractThrottle {
             tc.sendSerialMessage(m, null);
         }
 
-        // send to layout option 100 speed steps
+
+        // send to layout option TMCC2TR 200 speed steps
+        if (speedStepMode == jmri.SpeedStepMode.TMCC2TR_200) {
+
+            // TMCC2TR Legacy 200 speed step mode
+            int value = (int) (199 * speed); // max value to send is 199 in 200 step mode
+            if (value > 199) {
+                // max possible speed
+                value = 199;
+            }
+            SerialMessage m = new SerialMessage();
+            m.setOpCode(0xF9);
+    
+            if (value < 1) {
+                // immediate stop
+                m.putAsWord(0x0000 + (address.getNumber() << 9) + 0);
+            } else {
+                // normal speed setting
+                m.putAsWord(0x0000 + (address.getNumber() << 9) + value);
+            }
+            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+            tc.sendSerialMessage(m, null);
+            tc.sendSerialMessage(m, null);
+        }
+
+
+        // send to layout option TMCC1 ERR 100 speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC1_100) {
             
           /** 
@@ -286,6 +436,37 @@ public class SerialThrottle extends AbstractThrottle {
             tc.sendSerialMessage(m, null);
         }
 
+        // send to layout option TMCC1TR ERR 100 speed steps
+        if (speedStepMode == jmri.SpeedStepMode.TMCC1TR_100) {
+            
+          /** 
+            * TMCC1TR ERR 100 speed step mode
+            * purpose is to increase resolution of 32 bits
+            * across 100 throttle 'clicks' by dividing value by 3            
+            * and setting top speed at 32
+          */
+            int value = (int) (99 * speed); // max value to send is 99 in 100 step mode
+            if (value > 93) {
+                // max possible speed step
+                value = 93;
+            }
+            SerialMessage m = new SerialMessage();
+            m.setOpCode(0xFE);
+
+            if (value < 1) {
+                // immediate stop
+                m.putAsWord(0xC860 + address.getNumber() * 128 + 0);
+            }
+            if (value > 0) {
+                // normal speed step setting
+                m.putAsWord(0xC860 + address.getNumber() * 128 + value / 3);
+            }
+                            
+            // send to command station (send once for maximum efficiency; add extra sends if layout not responding with only one send)
+            tc.sendSerialMessage(m, null);
+        }
+
+
         // send to layout option TMCC2 32 speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC2_32) {
 
@@ -311,6 +492,33 @@ public class SerialThrottle extends AbstractThrottle {
             tc.sendSerialMessage(m, null);           
         }
 
+
+        // send to layout option TMCC2TR 32 speed steps
+        if (speedStepMode == jmri.SpeedStepMode.TMCC2TR_32) {
+
+            // TMCC2TR Legacy 32 speed step mode
+            int value = (int) (32 * speed);
+            if (value > 31) {
+                // max possible speed
+                value = 31;
+            }
+            SerialMessage m = new SerialMessage();
+            m.setOpCode(0xF9);
+    
+            if (value < 1) {
+                // immediate stop
+                m.putAsWord(0x0160 + address.getNumber() * 512 + 0);
+            } else {
+                // normal speed setting
+                m.putAsWord(0x0160 + address.getNumber() * 512 + value);
+            }
+    
+            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+            tc.sendSerialMessage(m, null);
+            tc.sendSerialMessage(m, null);           
+        }
+
+
         // send to layout option TMCC1 32 speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC1_32) {
 
@@ -335,12 +543,40 @@ public class SerialThrottle extends AbstractThrottle {
             tc.sendSerialMessage(m, null);
             tc.sendSerialMessage(m, null);           
         }
+
+
+        // send to layout option TMCC1TR 32 speed steps
+        if (speedStepMode == jmri.SpeedStepMode.TMCC1TR_32) {
+
+            // TMCC1TR 32 speed step mode
+            int value = (int) (32 * speed);
+            if (value > 31) {
+                // max possible speed
+                value = 31;
+            }
+            SerialMessage m = new SerialMessage();
+            m.setOpCode(0xFE);
+    
+            if (value < 1) {
+                // immediate stop
+                m.putAsWord(0xC860 + address.getNumber() * 128 + 0);
+            } else {
+                // normal speed setting
+                m.putAsWord(0xC860 + address.getNumber() * 128 + value);
+            }
+    
+            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+            tc.sendSerialMessage(m, null);
+            tc.sendSerialMessage(m, null);           
+        }
+
                   
         synchronized(this) {
             firePropertyChange(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
+
 
     /**
      * {@inheritDoc}
@@ -405,7 +641,9 @@ public class SerialThrottle extends AbstractThrottle {
      */
     @Override
     public void setSpeedStepMode(jmri.SpeedStepMode mode) {
-        if (mode == jmri.SpeedStepMode.TMCC1_32 || mode == jmri.SpeedStepMode.TMCC2_32 || mode == jmri.SpeedStepMode.TMCC1_100 || mode == jmri.SpeedStepMode.TMCC2_200) {
+        if (mode == jmri.SpeedStepMode.TMCC1_32 || mode == jmri.SpeedStepMode.TMCC2_32 || mode == jmri.SpeedStepMode.TMCC1_100 || 
+            mode == jmri.SpeedStepMode.TMCC2_200 || mode == jmri.SpeedStepMode.TMCC1TR_32 || mode == jmri.SpeedStepMode.TMCC2TR_32 || 
+            mode == jmri.SpeedStepMode.TMCC1TR_100 || mode == jmri.SpeedStepMode.TMCC2TR_200) {
             super.setSpeedStepMode(mode);
         }
     }
