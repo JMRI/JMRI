@@ -627,8 +627,10 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
         jpm = jto.callPopupOnPath(tp);
         Assert.assertNotNull(jpm);
-        // Select ExpressionTurnout
-        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add|Item|Turnout", "|");
+        // Select ActionTurnout
+        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add|Item|Turnout", (caption,match)->{
+            return caption.equals(match);
+        });
 
         // We get a dialog that lets us set the system name, user name
         // and configure the action
