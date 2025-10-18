@@ -154,6 +154,10 @@
       have to figure out what somebody's code does (the test documents exactly what should
       happen!), and when you track down a bug (make sure it doesn't come back).</p>
 
+      <p>Alongside the JUnit tests, we also perform static analysis and other types of testing on the code.
+      See <a href="ContinuousIntegration.shtml">JMRI: Continuous Integration</a> for more details.
+      </p>
+
       <h2 id="run">Running the Tests</h2>
       To run the existing tests, say
 
@@ -321,6 +325,7 @@ suite.<br>
       </dl>
       For more on setting these, see the <a href="StartUpScripts.shtml#prop">start-up scripts
       page</a>.
+
       <h3 id="I18N">A Note on Internationalization (I18N)</h3>
       Tests check the correctness of text in GUI elements, warning messages, and other places. Many
       of these are <a href="I8N.shtml">internationalized</a>, varying depending on the computer's
@@ -340,13 +345,23 @@ suite.<br>
 on <a href="StartUpScripts.shtml">startup scripts</a>.
 
       <h2 id="Continuous">Continuous Integration Test Execution</h2>
-      The <a href="ContinuousIntegration.shtml">continuous integration environment</a> senses
+      <p>The <a href="ContinuousIntegration.shtml">continuous integration environment</a> senses
       changes in the code repository, rebuilds the code, performs a variety of checks. If no fatal
       issues are found, the continuous integration process executes the "alltest" ant target
-      against the build to run the tests against the successful build of the code base.
+      against the build to run the tests against the successful build of the code base.</p>
+
+      <p>JMRI uses the <a href="https://docs.junit.org/current/user-guide/#launcher-api"
+      >JUnit Platform Launcher</a> to discover and execute tests.
+      Some launchers ( e.g. for <a href="ContinuousIntegration.shtml#architectureTests">Architecture</a>
+      and <a href="ContinuousIntegration.shtml#cucumberTests">Cucumber</a> tests ) are
+      excluded from some ant test runs.</p>
+
+      <p>Tests will generally return exit code 0 for successful executions,
+        exit code 1 for test failures and exit code 2 for no tests executed.</p>
+
       <h3 id="Reporting">Error Reporting</h3>
-      If a test fails during the continuous integration execution of "alltest", an e-mail is sent
-      to the developers who have checked in code which was included in the build.
+      <p>If a test fails during the continuous integration execution of "alltest", an e-mail is sent
+      to the developers who have checked in code which was included in the build.</p>
 
       <p>You can monitor the "dashboard" at the <a href=
       "ContinuousIntegration.shtml">continuous integration</a> website.</p>
@@ -503,7 +518,7 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       <p>Assertions can be loaded as a static class, eg.</p>
       <pre style="font-family: monospace;">import static org.junit.jupiter.api.Assertions.*;</pre>
 
-      <p>Many tests use the Assertions from
+      <p>Many tests still use the JUnit4 Assertions from
       <pre style="font-family: monospace;">import org.junit.Assert;</pre>
       
       <h3 id="HandlingLogOutput">Handling Logging Output from Tests</h3>
@@ -1119,10 +1134,17 @@ milliseconds can improve the reliability of tests. Also, setting
       <p>Is the Test inheriting objects from other tests?  It may be worth running the tests with a
       completely fresh <a href="#io">JMRI User Profile in a Temporary Directory</a>.</p>
 
+      <p>If GUI elements are unreliable, are they being packed and set visible from the swing thread?</p>
+
+      <p>For tracking down the cause of a flaky test, it may be worth temporarily adding a
+      delay ( e.g. JUnitUtil.waitFor(500); ) to the test.
+      This can often help to catch timing issues which may be present within the test.</p>
+
       <p>Mocking Frameworks can create a more controlled environment for the class under test by simulating
       external dependencies.  JMRI uses <a href="https://site.mockito.org/">Mockito</a>, org.mockito.Mockito.</p>
 
       <p>Spotbugs Static Analysis reports can be generated for the Test classes.
+      tests-spotbugs.html is created witin the root JMRI directory following a call to
       <pre style="font-family: monospace;">    ant tests-spotbugs</pre>
 
       <p>Compile source &amp; tests with CI ECJ warnings on ( this is run as routine CI )
