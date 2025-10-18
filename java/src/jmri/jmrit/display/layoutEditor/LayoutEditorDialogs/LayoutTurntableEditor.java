@@ -472,7 +472,8 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                         if (ray.getConnect() != null) {
                             SignalMastIcon icon = new SignalMastIcon(layoutEditor);
                             icon.setSignalMast(mast.getDisplayName());
-                            layoutEditor.getLETools().placingBlock(icon, placeIconsRight.isSelected(), 0.0,
+                            log.info("Placing mast for turntable ray, connected to track segment: {}", ray.getConnect().getName()); // NOI18N
+                            layoutEditor.getLETools().placingBlockForTurntable(icon, placeIconsRight.isSelected(), 0.0,
                                     ray.getConnect(), layoutTurntableView.getRayCoordsIndexed(ray.getConnectionIndex()));
                             editLayoutTurntableNeedsRedraw = true;
                         }
