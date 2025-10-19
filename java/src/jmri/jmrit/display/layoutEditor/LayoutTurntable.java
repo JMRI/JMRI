@@ -954,7 +954,8 @@ public class LayoutTurntable extends LayoutTrack {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
                 mTurnoutListener = (PropertyChangeEvent e) -> {
-                    if (getTurnout().getKnownState() == Turnout.THROWN) {
+                    int turnoutState = getTurnout().getKnownState();
+                    if (turnoutState == Turnout.THROWN) {
                         // This ray is now the active one.
                         // Update the turntable's position indicator.
                         if (lastKnownIndex != connectionIndex) {
@@ -962,15 +963,19 @@ public class LayoutTurntable extends LayoutTrack {
                             models.redrawPanel();
                             models.setDirty();
                         }
-
-                        // Command all other ray turnouts to CLOSED.
+                    } else if (turnoutState == Turnout.CLOSED) {
+                        // This turnout is now closed. Check if all are closed.
+                        boolean allClosed = true;
                         for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
-                            if (otherRay != this && otherRay.getTurnout() != null) {
-                                // Check state before commanding to prevent potential listener loops
-                                if (otherRay.getTurnout().getCommandedState() != Turnout.CLOSED) {
-                                    otherRay.getTurnout().setCommandedState(Turnout.CLOSED);
-                                }
+                            if (otherRay.getTurnout() != null && otherRay.getTurnout().getKnownState() != Turnout.CLOSED) {
+                                allClosed = false;
+                                break;
                             }
+                        }
+                        if (allClosed && lastKnownIndex != -1) {
+                            lastKnownIndex = -1; // All turnouts are closed, blank the bridge
+                            models.redrawPanel();
+                            models.setDirty();
                         }
                     }
                 };
@@ -1004,9 +1009,15 @@ public class LayoutTurntable extends LayoutTrack {
                 if (disableWhenOccupied && isOccupied()) { // isOccupied is on RayTrack, so check must be here
                     log.debug("Can not setPosition of turntable ray when it is occupied");
                 } else {
-                    // The listener attached to the turnout will handle de-selecting other rays
-                    // by setting their turnouts to CLOSED.
+                    // Command this turnout to THROWN
                     getTurnout().setCommandedState(Turnout.THROWN);
+
+                    // Command all other ray turnouts to CLOSED.
+                    for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
+                        if (otherRay != this && otherRay.getTurnout() != null) {
+                            otherRay.getTurnout().setCommandedState(Turnout.CLOSED);
+                        }
+                    }
                 }
             }
         }

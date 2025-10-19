@@ -376,14 +376,18 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             c.gridx = 0;
             c.gridy = 0;
             c.anchor = GridBagConstraints.LINE_START;
+            c.insets = new Insets(2, 2, 2, 2); // Default insets
             mastPanel.add(new JLabel(Bundle.getMessage("TurntableExitMastLabel")), c);
             c.gridx = 1;
+            c.insets = new Insets(2, 5, 2, 2); // Add left padding
             mastPanel.add(exitMastComboBox, c);
 
             c.gridx = 0;
             c.gridy = 1;
+            c.insets = new Insets(2, 2, 2, 2); // Reset for label
             mastPanel.add(new JLabel(Bundle.getMessage("TurntableBufferMastLabel")), c);
             c.gridx = 1;
+            c.insets = new Insets(2, 5, 2, 2); // Add left padding
             mastPanel.add(bufferMastComboBox, c);
 
             signalMastParametersPanel.add(mastPanel);
@@ -598,6 +602,9 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             rayTurnoutPanel = new JPanel();
 
             rayTurnoutPanel.setBorder(new EtchedBorder());
+            JLabel turnoutLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))); // NOI18N
+            rayTurnoutPanel.add(turnoutLabel);
+            turnoutLabel.setLabelFor(turnoutNameComboBox);
             rayTurnoutPanel.add(turnoutNameComboBox);
             rayTurnoutPanel.add(rayTurnoutStateLabel);
             rayTurnoutStateLabel.setLabelFor(rayTurnoutStateComboBox);
