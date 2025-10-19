@@ -301,7 +301,7 @@
 
         <tr>
           <td>
-            Instanceof Pattern Matching reduced the need for type casting,
+            Instance of Pattern Matching reduced the need for type casting,
             making code more readable.
           </td>
           <td>16</td>
