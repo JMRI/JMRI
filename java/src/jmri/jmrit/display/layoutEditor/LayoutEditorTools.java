@@ -9694,6 +9694,19 @@ final public class LayoutEditorTools {
                 }
             }
         }
+        for (LayoutTraverser lt : layoutEditor.getLayoutTraversers()) {
+            if (lt.getBufferMast() != null) {
+                usedMasts.add(lt.getBufferMast());
+            }
+            if (lt.getExitSignalMast() != null) {
+                usedMasts.add(lt.getExitSignalMast());
+            }
+            for (LayoutTraverser.RayTrack ray : lt.getRayTrackList()) {
+                if (ray.getApproachMast() != null) {
+                    usedMasts.add(ray.getApproachMast());
+                }
+            }
+        }
     }   //createListUsedSignalMasts
 
     void refreshSignalMastAtTurnoutComboBox() {

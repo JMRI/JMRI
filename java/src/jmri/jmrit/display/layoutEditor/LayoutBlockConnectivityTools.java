@@ -322,6 +322,44 @@ final public class LayoutBlockConnectivityTools {
                 }
             }
         }
+        // ----- Begin Traverser Exit Path Check -----
+        // This handles the special case for a path exiting a traverser (Path 1), where the protecting block (a ray)
+        // can be the same as the destination's facing block.
+        for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+            for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
+                // Check if the path starts from this traverser's block
+                if (traverser.getLayoutBlock() == currentBlock) {
+                    // A path from a traverser is valid if the destination is a ray block or a neighbor of a ray block.
+                    for (int i = 0; i < traverser.getNumberRays(); i++) {
+                        TrackSegment track = traverser.getRayConnectOrdered(i);
+                        if (track != null && track.getLayoutBlock() != null) {
+                            LayoutBlock rayBlock = track.getLayoutBlock();
+                            // First, check if the ray block itself is the destination.
+                            if (rayBlock == destBlock) {
+                                return true;
+                            }
+                            // Next, check if the destination block is a valid neighbor of this ray block.
+                            for (int j = 0; j < rayBlock.getNumberOfNeighbours(); j++) {
+                                Block neighbor = rayBlock.getNeighbourAtIndex(j);
+                                if (neighbor != null && neighbor == destBlock.getBlock()) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // ----- Begin Traverser Siding Path Check (Path 3) -----
+        // This handles the special case for a path entering a traverser to a buffer stop,
+        // where the destination block is the traverser itself.
+        for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+            for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
+                if (traverser.getLayoutBlock() == destBlock) {
+                    return true;
+                }
+            }
+        }
         // ----- End Turntable Exit Path Check -----
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
@@ -906,6 +944,89 @@ final public class LayoutBlockConnectivityTools {
                 }
             }
         }
+        // ----- Begin Traverser Path Discovery -----
+//        HashMap<NamedBean, List<NamedBean>> retPairs = new HashMap<>();
+        List<SignalMast> traverserMasts = new ArrayList<>();
+        if (T == SignalMast.class) {
+            for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+                for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
+                    if (!traverser.isDispatcherManaged()) {
+                        continue;
+                    }
+                    LayoutBlock traverserBlock = traverser.getLayoutBlock();
+
+                    // Add all traverser-related masts to a list for exclusion from general discovery
+                    if (traverser.getExitSignalMast() != null) traverserMasts.add(traverser.getExitSignalMast());
+                    if (traverser.getBufferMast() != null) traverserMasts.add(traverser.getBufferMast());
+
+                    // Path 1: From traverser's Exit Mast to the next mast on a ray's track
+                    SignalMast exitMast = traverser.getExitSignalMast();
+                    if (exitMast != null) {
+                        for (LayoutTraverser.RayTrack ray : traverser.getRayTrackList()) {
+                            TrackSegment track = ray.getConnect();
+                            if (track != null && track.getLayoutBlock() != null) {
+                                LayoutBlock rayBlock = track.getLayoutBlock();
+                                // Find the block connected to the ray that is NOT the traverser, then find the mast protecting it.
+                                for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
+                                    Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                                    if (neighbor != traverserBlock.getBlock()) {
+                                        SignalMast nextMast = lbm.getFacingSignalMast(rayBlock.getBlock(), neighbor, panel);
+                                        if (nextMast != null) {
+                                            retPairs.computeIfAbsent(exitMast, k -> new ArrayList<>()).add(nextMast);
+                                        }
+                                        break; // Assume only one exit from the ray block
+                                    }
+                                }
+                                // Also check for a buffer mast at the end of this ray's block
+                                if (rayBlock.getNumberOfNeighbours() == 1) { // Only connected to the traverser block
+                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(rayBlock.getBlock(), panel);
+                                    if (bufferMast != null) {
+                                        if (log.isDebugEnabled()) {
+                                            log.debug("Found traverser exit to buffer mast path: {} -> {}", exitMast.getDisplayName(), bufferMast.getDisplayName());
+                                        }
+                                        retPairs.computeIfAbsent(exitMast, k -> new ArrayList<>()).add(bufferMast);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    // Path 2 & 3: Paths involving Approach and Buffer masts
+                    for (LayoutTraverser.RayTrack ray : traverser.getRayTrackList()) {
+                        SignalMast approachMast = ray.getApproachMast();
+                        if (approachMast == null) { // this is logged elsewhere
+                            continue;
+                        }
+                        traverserMasts.add(approachMast);
+
+                        // Path 2: From a remote mast on the layout to this ray's Approach Mast
+                        TrackSegment track = ray.getConnect();
+                        if (track != null && track.getLayoutBlock() != null && traverserBlock != null) {
+                            LayoutBlock rayBlock = track.getLayoutBlock();
+                            // Find the block connected to the ray that is NOT the traverser, then find the mast protecting the ray from it.
+                            for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
+                                Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                                if (neighbor != traverserBlock.getBlock()) {
+                                    SignalMast remoteMast = lbm.getFacingSignalMast(neighbor, rayBlock.getBlock(), panel);
+                                    if (remoteMast != null) {
+                                        retPairs.computeIfAbsent(remoteMast, k -> new ArrayList<>()).add(approachMast);
+                                    }
+                                    // Assume only one entry to the ray block
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Path 3: From this ray's Approach Mast to the traverser's Buffer Mast (a siding path)
+                        SignalMast bufferMast = traverser.getBufferMast();
+                        if (bufferMast != null) {
+                            retPairs.computeIfAbsent(approachMast, k -> new ArrayList<>()).add(bufferMast);
+                        }
+                    }
+                }
+            }
+        }
         // ----- End Turntable Path Discovery -----
 
         // ----- Begin General Path Discovery (excluding turntable masts) -----
@@ -913,6 +1034,10 @@ final public class LayoutBlockConnectivityTools {
         beanList.forEach((fp) -> {
             // Skip any mast that has already been handled by the turntable-specific logic above
             if (turntableMasts.contains(fp.getBean())) {
+                return; // continue to next fp in forEach
+            }
+            // Skip any mast that has already been handled by the traverser-specific logic above
+            if (traverserMasts.contains(fp.getBean())) {
                 return; // continue to next fp in forEach
             }
             fp.getProtectingBlocks().stream().map((block) -> {
@@ -1007,6 +1132,42 @@ final public class LayoutBlockConnectivityTools {
                             if (turntable.getBufferMast() != null) destinations.add(turntable.getBufferMast());
                             return destinations;
                         }
+                    }
+                }
+            }
+        }
+        // First, check if the source is a traverser mast. If so, handle it specially.
+        if (T == SignalMast.class) {
+            if (! (source instanceof SignalMast)) {
+                throw new IllegalArgumentException("source is not a SignalMast: " + (source != null ? source.getClass().getName() : "null"));
+            }
+            SignalMast sourceMast = (SignalMast) source;
+            for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+                for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
+                    if (!traverser.isDispatcherManaged()) continue;
+
+                    // Case 1: Source is the traverser's Exit Mast
+                    if (sourceMast.equals(traverser.getExitSignalMast())) {
+                        List<NamedBean> destinations = new ArrayList<>();
+                        LayoutBlock traverserBlock = traverser.getLayoutBlock();
+                        for (int i = 0; i < traverser.getNumberRays(); i++) {
+                            TrackSegment track = traverser.getRayConnectOrdered(i);
+                            if (track != null && track.getLayoutBlock() != null) {
+                                LayoutBlock rayBlock = track.getLayoutBlock();
+                                for (int j = 0; j < rayBlock.getNumberOfNeighbours(); j++) {
+                                    Block neighbor = rayBlock.getNeighbourAtIndex(j);
+                                    if (neighbor != traverserBlock.getBlock()) {
+                                        SignalMast nextMast = lbm.getFacingSignalMast(rayBlock.getBlock(), neighbor, panel);
+                                        if (nextMast != null) destinations.add(nextMast);
+                                    }
+                                }
+                                if (rayBlock.getNumberOfNeighbours() == 1) { // End of line buffer
+                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(rayBlock.getBlock(), panel);
+                                    if (bufferMast != null) destinations.add(bufferMast);
+                                }
+                            }
+                        }
+                        return destinations;
                     }
                 }
             }

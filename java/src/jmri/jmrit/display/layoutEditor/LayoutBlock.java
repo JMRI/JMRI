@@ -799,6 +799,34 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     }
                 }
             }
+            // Add traverser connectivity to the list
+            for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
+                LayoutBlock traverserBlock = traverser.getLayoutBlock();
+                if (traverserBlock == null) continue;
+
+                if (this == traverserBlock) {
+                    // This is the traverser's block. Add connections to all valid ray blocks.
+                    for (int i = 0; i < traverser.getNumberRays(); i++) {
+                        TrackSegment rayConnect = traverser.getRayConnectOrdered(i);
+                        if (rayConnect != null) {
+                            LayoutBlock rayBlock = rayConnect.getLayoutBlock();
+                            if (rayBlock != null && rayBlock != this) {
+                                c.add(new LayoutConnectivity(this, rayBlock));
+                            }
+                        }
+                    }
+                } else {
+                    // This might be a ray block. Check if it connects to this traverser.
+                    for (int i = 0; i < traverser.getNumberRays(); i++) {
+                        TrackSegment rayConnect = traverser.getRayConnectOrdered(i);
+                        if (rayConnect != null && rayConnect.getLayoutBlock() == this) {
+                            // This is a ray block for this traverser. Add a connection to the traverser block.
+                            c.add(new LayoutConnectivity(this, traverserBlock));
+                            break; // Found our traverser, no need to check other rays
+                        }
+                    }
+                }
+            }
             // update block Paths to reflect connectivity as needed
             updateBlockPaths(c, panel);
         }

@@ -494,6 +494,19 @@ final public class LayoutEditorFindItems {
         return result;
     }
 
+    public LayoutTraverser findLayoutTraverserByName(String name) {
+        LayoutTraverser result = null;
+        if ((name != null) && !name.isEmpty()) {
+            for (LayoutTraverser x : layoutModels.getLayoutTraversers()) {
+                if (x.getId().equals(name)) {
+                    result = x;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
     public LayoutShape findLayoutShapeByName(String name) {
         LayoutShape result = null;
         if ((name != null) && !name.isEmpty()) {

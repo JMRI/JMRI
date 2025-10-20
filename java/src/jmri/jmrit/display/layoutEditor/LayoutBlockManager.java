@@ -1527,6 +1527,38 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
         }
+        // ----- Begin Traverser Boundary Check -----
+        for (LayoutEditor ed : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+            for (LayoutTraverser traverser : ed.getLayoutTraversers()) {
+                LayoutBlock traverserBlock = traverser.getLayoutBlock();
+                if (traverserBlock == null) continue;
+
+                // Check if one of the blocks is the traverser's block
+                if (traverserBlock.getBlock() == facingBlock || traverserBlock.getBlock() == protectedBlock) {
+                    Block otherBlock = (traverserBlock.getBlock() == facingBlock) ? protectedBlock : facingBlock;
+
+                    for (LayoutTraverser.RayTrack ray : traverser.getRayTrackList()) {
+                        TrackSegment connectedTrack = ray.getConnect();
+                        if (connectedTrack != null && connectedTrack.getLayoutBlock() != null && connectedTrack.getLayoutBlock().getBlock() == otherBlock) {
+                            // We found the correct ray. Now find the mast based on direction.
+                            if (traverserBlock.getBlock() == protectedBlock) {
+                                // Path 2: Moving from Ray block INTO Traverser. The facing mast is the Approach Mast.
+                                if (T.equals(SignalMast.class)) {
+                                    return ray.getApproachMast();
+                                }
+                            } else { // traverserBlock.getBlock() == facingBlock
+                                // Path 1: Moving FROM Traverser out to Ray block. The facing mast is the exit mast for that ray.
+                                if (T.equals(SignalMast.class)) {
+                                    SignalMast exitMast = traverser.getExitSignalMast();
+                                    // This is the mast protecting the path from the traverser to the ray.
+                                    return exitMast;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         // ----- End Turntable Boundary Check -----
 
         if (!T.equals(SignalMast.class) && !T.equals(Sensor.class)) {
@@ -1984,6 +2016,27 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
 
+        // Check for traverser approach masts first, as they are a special case.
+        for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
+            if (traverser.isApproachMast((SignalMast) bean)) {
+                if (traverser.getLayoutBlock() != null) {
+                    protectingBlocks.add(traverser.getLayoutBlock());
+                    return protectingBlocks;
+                }
+            }
+            if (bean.equals(traverser.getExitSignalMast())) {
+                for (int i=0; i < traverser.getNumberRays(); i++) {
+                    TrackSegment connectedTrack = traverser.getRayConnectOrdered(i);
+                    if (connectedTrack != null && connectedTrack.getLayoutBlock() != null) {
+                        if (!protectingBlocks.contains(connectedTrack.getLayoutBlock())) {
+                            protectingBlocks.add(connectedTrack.getLayoutBlock());
+                        }
+                    }
+                }
+                return protectingBlocks;
+            }
+        }
+
         if (!(bean instanceof SignalMast) && !(bean instanceof Sensor)) {
             log.error("Incorrect class type called, must be either SignalMast or Sensor");
 
@@ -2278,6 +2331,25 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
             if (turntable.isApproachMast((SignalMast) bean)) {
                 for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                    if (bean.equals(ray.getApproachMast())) {
+                        TrackSegment connectedTrack = ray.getConnect();
+                        if (connectedTrack != null && connectedTrack.getLayoutBlock() != null) {
+                            return connectedTrack.getLayoutBlock();
+                        }
+                    }
+                }
+            }
+        }
+        // Check for traverser masts, as they are a special case.
+        for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
+            if (bean.equals(traverser.getBufferMast())) {
+                return traverser.getLayoutBlock();
+            }
+            if (bean.equals(traverser.getExitSignalMast())) {
+                return traverser.getLayoutBlock();
+            }
+            if (traverser.isApproachMast((SignalMast) bean)) {
+                for (LayoutTraverser.RayTrack ray : traverser.getRayTrackList()) {
                     if (bean.equals(ray.getApproachMast())) {
                         TrackSegment connectedTrack = ray.getConnect();
                         if (connectedTrack != null && connectedTrack.getLayoutBlock() != null) {

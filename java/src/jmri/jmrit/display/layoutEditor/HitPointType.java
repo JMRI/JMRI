@@ -27,6 +27,7 @@ public enum HitPointType {
     TURNOUT_CENTER,   //     11    non-connection points should be last
     LEVEL_XING_CENTER,  //     12
     TURNTABLE_CENTER,   //     13
+    TRAVERSER_CENTER,   //     14
     LAYOUT_POS_LABEL,   //     14
     LAYOUT_POS_JCOMP,   //     15
     MULTI_SENSOR,   //     16
@@ -127,6 +128,70 @@ public enum HitPointType {
     TURNTABLE_RAY_61,   //     111     /
     TURNTABLE_RAY_62,   //     112    /
     TURNTABLE_RAY_63,   //     113
+    TRAVERSER_RAY_0,   //     114    offset for traverser connection points ,   //     minimum)
+    TRAVERSER_RAY_1,   //     115    \
+    TRAVERSER_RAY_2,   //     116     \
+    TRAVERSER_RAY_3,   //     117      \
+    TRAVERSER_RAY_4,   //     118       \
+    TRAVERSER_RAY_5,   //     119        \
+    TRAVERSER_RAY_6,   //     120         \
+    TRAVERSER_RAY_7,   //     121          |
+    TRAVERSER_RAY_8,   //     122          |
+    TRAVERSER_RAY_9,   //     123          |
+    TRAVERSER_RAY_10,   //     124         |
+    TRAVERSER_RAY_11,   //     125         |
+    TRAVERSER_RAY_12,   //     126         |
+    TRAVERSER_RAY_13,   //     127         |
+    TRAVERSER_RAY_14,   //     128         |
+    TRAVERSER_RAY_15,   //     129         |
+    TRAVERSER_RAY_16,   //     130         |
+    TRAVERSER_RAY_17,   //     131         |
+    TRAVERSER_RAY_18,   //     132         |
+    TRAVERSER_RAY_19,   //     133         |
+    TRAVERSER_RAY_20,   //     134         |
+    TRAVERSER_RAY_21,   //     135         |
+    TRAVERSER_RAY_22,   //     136         |
+    TRAVERSER_RAY_23,   //     137         |
+    TRAVERSER_RAY_24,   //     138         |
+    TRAVERSER_RAY_25,   //     139         |
+    TRAVERSER_RAY_26,   //     140         |
+    TRAVERSER_RAY_27,   //     141         |
+    TRAVERSER_RAY_28,   //     142         |
+    TRAVERSER_RAY_29,   //     143         |
+    TRAVERSER_RAY_30,   //     144         |
+    TRAVERSER_RAY_31,   //     145         |
+    TRAVERSER_RAY_32,   //     146         |
+    TRAVERSER_RAY_33,   //     147         |
+    TRAVERSER_RAY_34,   //     148         |
+    TRAVERSER_RAY_35,   //     149         |
+    TRAVERSER_RAY_36,   //     150         |
+    TRAVERSER_RAY_37,   //     151         |
+    TRAVERSER_RAY_38,   //     152         |
+    TRAVERSER_RAY_39,   //     153         |
+    TRAVERSER_RAY_40,   //     154         |
+    TRAVERSER_RAY_41,   //     155         |
+    TRAVERSER_RAY_42,   //     156         |
+    TRAVERSER_RAY_43,   //     157         |
+    TRAVERSER_RAY_44,   //     158         |
+    TRAVERSER_RAY_45,   //     159         | -- DON'T USE THESE; PLACEHOLDERS ONLY
+    TRAVERSER_RAY_46,   //     160         |
+    TRAVERSER_RAY_47,   //     161         |
+    TRAVERSER_RAY_48,   //     162         |
+    TRAVERSER_RAY_49,   //     163         |
+    TRAVERSER_RAY_50,   //     164         |
+    TRAVERSER_RAY_51,   //     165         |
+    TRAVERSER_RAY_52,   //     166         |
+    TRAVERSER_RAY_53,   //     167         |
+    TRAVERSER_RAY_54,   //     168         |
+    TRAVERSER_RAY_55,   //     169         |
+    TRAVERSER_RAY_56,   //     170         |
+    TRAVERSER_RAY_57,   //     171         |
+    TRAVERSER_RAY_58,   //     172        /
+    TRAVERSER_RAY_59,   //     173       /
+    TRAVERSER_RAY_60,   //     174      /
+    TRAVERSER_RAY_61,   //     175     /
+    TRAVERSER_RAY_62,   //     176    /
+    TRAVERSER_RAY_63;   //     177
     BLOCKCONTENTSICON,
     LAYOUT_POS_JPNL;
 
@@ -155,6 +220,7 @@ public enum HitPointType {
             case TURNOUT_CENTER:
             case LEVEL_XING_CENTER:
             case TURNTABLE_CENTER:
+            case TRAVERSER_CENTER:
             case LAYOUT_POS_LABEL:
             case LAYOUT_POS_JCOMP:
             case LAYOUT_POS_JPNL:
@@ -171,6 +237,8 @@ public enum HitPointType {
         if (isBezierHitType(hitType)) {
             return false; // these are not
         } else if (isTurntableRayHitType(hitType)) {
+            return true; // these are all connection types
+        } else if (isTraverserRayHitType(hitType)) {
             return true; // these are all connection types
         }
         return false; // This is unexpected
@@ -204,6 +272,7 @@ public enum HitPointType {
             case NONE:
             case LEVEL_XING_CENTER:
             case TURNTABLE_CENTER:
+            case TRAVERSER_CENTER:
             case LAYOUT_POS_LABEL:
             case LAYOUT_POS_JCOMP:
             case LAYOUT_POS_JPNL:
@@ -217,6 +286,8 @@ public enum HitPointType {
         if (isBezierHitType(hitType)) {
             return false; // these are not control types
         } else if (isTurntableRayHitType(hitType)) {
+            return true; // these are all control types
+        } else if (isTraverserRayHitType(hitType)) {
             return true; // these are all control types
         }
         return false; // This is unexpected
@@ -242,6 +313,10 @@ public enum HitPointType {
         return (hitType.compareTo(HitPointType.TURNTABLE_RAY_0) >= 0) && (hitType.compareTo(HitPointType.TURNTABLE_RAY_63) <= 0);
     }
 
+    protected static boolean isTraverserRayHitType(HitPointType hitType) {
+        return (hitType.compareTo(HitPointType.TRAVERSER_RAY_0) >= 0) && (hitType.compareTo(HitPointType.TRAVERSER_RAY_63) <= 0);
+    }
+
     /**
      * @param hitType the hit point type
      * @return true if this is for a popup menu
@@ -257,6 +332,7 @@ public enum HitPointType {
             case TRACK_CIRCLE_CENTRE:
             case TURNOUT_CENTER:
             case TURNTABLE_CENTER:
+            case TRAVERSER_CENTER:
                 return true;
             case LAYOUT_POS_JCOMP:
             case LAYOUT_POS_JPNL:
@@ -283,6 +359,8 @@ public enum HitPointType {
         if (isBezierHitType(hitType)) {
             return true; // these are all popup hit types
         } else if (isTurntableRayHitType(hitType)) {
+            return true; // these are all popup hit types
+        } else if (isTraverserRayHitType(hitType)) {
             return true; // these are all popup hit types
         }
         return false;
@@ -338,6 +416,58 @@ public enum HitPointType {
      */
     protected static HitPointType[] turntableValues() {
         return new HitPointType[]{TURNTABLE_RAY_0, TURNTABLE_RAY_1, TURNTABLE_RAY_2, TURNTABLE_RAY_3, TURNTABLE_RAY_4, TURNTABLE_RAY_5, TURNTABLE_RAY_6, TURNTABLE_RAY_7, TURNTABLE_RAY_8, TURNTABLE_RAY_9, TURNTABLE_RAY_10, TURNTABLE_RAY_11, TURNTABLE_RAY_12, TURNTABLE_RAY_13, TURNTABLE_RAY_14, TURNTABLE_RAY_15, TURNTABLE_RAY_16, TURNTABLE_RAY_17, TURNTABLE_RAY_18, TURNTABLE_RAY_19, TURNTABLE_RAY_20, TURNTABLE_RAY_21, TURNTABLE_RAY_22, TURNTABLE_RAY_23, TURNTABLE_RAY_24, TURNTABLE_RAY_25, TURNTABLE_RAY_26, TURNTABLE_RAY_27, TURNTABLE_RAY_28, TURNTABLE_RAY_29, TURNTABLE_RAY_30, TURNTABLE_RAY_31, TURNTABLE_RAY_32, TURNTABLE_RAY_33, TURNTABLE_RAY_34, TURNTABLE_RAY_35, TURNTABLE_RAY_36, TURNTABLE_RAY_37, TURNTABLE_RAY_38, TURNTABLE_RAY_39, TURNTABLE_RAY_40, TURNTABLE_RAY_41, TURNTABLE_RAY_42, TURNTABLE_RAY_43, TURNTABLE_RAY_44, TURNTABLE_RAY_45, TURNTABLE_RAY_46, TURNTABLE_RAY_47, TURNTABLE_RAY_48, TURNTABLE_RAY_49, TURNTABLE_RAY_50, TURNTABLE_RAY_51, TURNTABLE_RAY_52, TURNTABLE_RAY_53, TURNTABLE_RAY_54, TURNTABLE_RAY_55, TURNTABLE_RAY_56, TURNTABLE_RAY_57, TURNTABLE_RAY_58, TURNTABLE_RAY_59, TURNTABLE_RAY_60, TURNTABLE_RAY_61, TURNTABLE_RAY_62, TURNTABLE_RAY_63};
+    }
+
+    // *****************************************************************
+    //    TRAVERSER_RAY support
+    // *****************************************************************
+    /**
+     * Find the 0-63 index with respect to TRAVERSER_RAY_0
+     * of a given enum entry.  Throws {@link IllegalArgumentException} if
+     * the given enum value isn't one of the TRAVERSER_RAY_n entries.
+     * <p>
+     * Ideally, this would be replaced by traverser code that works
+     * directly with the enum values as a step toward using objects
+     * to implement hit points.
+     * @return (Temporary) 0-63 index of the enum element
+     */
+    protected int traverserTrackIndex() {
+        int result = this.ordinal() - HitPointType.TRAVERSER_RAY_0.ordinal();
+        if (result < 0) {
+            throw new IllegalArgumentException(this.toString() + " is not a valid TRAVERSER_RAY");
+        }
+        if (result > 63) {
+            throw new IllegalArgumentException(this.toString() + " is not a valid TRAVERSER_RAY");
+        }
+        return result;
+    }
+
+    /**
+     * Return a specific TRAVERSER_RAY from its 0-63 index.
+     * Throws {@link IllegalArgumentException} if
+     * the given index value isn't valid for the TRAVERSER_RAY entries.
+     * <p>
+     * Ideally, this would be replaced by traverser code that works
+     * directly with the enum values as a step toward using objects
+     * to implement hit points.
+     * @param i (Temporary) 0-63 index of the enum element
+     * @return Requested enum element
+     */
+    protected static HitPointType traverserTrackIndexedValue(int i) {
+        if (i < 0 || i > 63) {
+            throw new IllegalArgumentException(i + " is not a valid TRAVERSER_RAY index");
+        }
+        return HitPointType.values()[(TRAVERSER_RAY_0.ordinal() + i)];
+    }
+
+    /**
+     * Return an array of the valid TRAVERSER_RAY enum values.
+     * Meant for interations over the set of rays.  Order is
+     * from 0 to 63.
+     * @return (Temporary) Array containing TRAVERSER_RAY_0 through TRAVERSER_RAY_63
+     */
+    protected static HitPointType[] traverserValues() {
+        return new HitPointType[]{TRAVERSER_RAY_0, TRAVERSER_RAY_1, TRAVERSER_RAY_2, TRAVERSER_RAY_3, TRAVERSER_RAY_4, TRAVERSER_RAY_5, TRAVERSER_RAY_6, TRAVERSER_RAY_7, TRAVERSER_RAY_8, TRAVERSER_RAY_9, TRAVERSER_RAY_10, TRAVERSER_RAY_11, TRAVERSER_RAY_12, TRAVERSER_RAY_13, TRAVERSER_RAY_14, TRAVERSER_RAY_15, TRAVERSER_RAY_16, TRAVERSER_RAY_17, TRAVERSER_RAY_18, TRAVERSER_RAY_19, TRAVERSER_RAY_20, TRAVERSER_RAY_21, TRAVERSER_RAY_22, TRAVERSER_RAY_23, TRAVERSER_RAY_24, TRAVERSER_RAY_25, TRAVERSER_RAY_26, TRAVERSER_RAY_27, TRAVERSER_RAY_28, TRAVERSER_RAY_29, TRAVERSER_RAY_30, TRAVERSER_RAY_31, TRAVERSER_RAY_32, TRAVERSER_RAY_33, TRAVERSER_RAY_34, TRAVERSER_RAY_35, TRAVERSER_RAY_36, TRAVERSER_RAY_37, TRAVERSER_RAY_38, TRAVERSER_RAY_39, TRAVERSER_RAY_40, TRAVERSER_RAY_41, TRAVERSER_RAY_42, TRAVERSER_RAY_43, TRAVERSER_RAY_44, TRAVERSER_RAY_45, TRAVERSER_RAY_46, TRAVERSER_RAY_47, TRAVERSER_RAY_48, TRAVERSER_RAY_49, TRAVERSER_RAY_50, TRAVERSER_RAY_51, TRAVERSER_RAY_52, TRAVERSER_RAY_53, TRAVERSER_RAY_54, TRAVERSER_RAY_55, TRAVERSER_RAY_56, TRAVERSER_RAY_57, TRAVERSER_RAY_58, TRAVERSER_RAY_59, TRAVERSER_RAY_60, TRAVERSER_RAY_61, TRAVERSER_RAY_62, TRAVERSER_RAY_63};
     }
 
     // *****************************************************************
