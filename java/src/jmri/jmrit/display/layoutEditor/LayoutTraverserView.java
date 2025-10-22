@@ -63,9 +63,6 @@ public class LayoutTraverserView extends LayoutTrackView {
     // Accessor methods
     //
     public double getDeckLength() { return traverser.getDeckLength(); }
-    public void setDeckLength(double l) { traverser.setDeckLength(l); }
-    public double getDeckWidth() { return traverser.getDeckWidth(); }
-    public void setDeckWidth(double w) { traverser.setDeckWidth(w); }
     public int getOrientation() { return traverser.getOrientation(); }
     public void setOrientation(int o) { traverser.setOrientation(o); }
 
@@ -112,16 +109,12 @@ public class LayoutTraverserView extends LayoutTrackView {
     public Rectangle2D getBounds() {
         Point2D center = getCoordsCenter();
         double length = getDeckLength();
-        double width = getDeckWidth();
+        double width = traverser.getDeckWidth();
         if (getOrientation() == LayoutTraverser.HORIZONTAL) {
-            return new Rectangle2D.Double(center.getX() - length / 2, center.getY() - width / 2, length, width);
-        } else {
             return new Rectangle2D.Double(center.getX() - width / 2, center.getY() - length / 2, width, length);
+        } else {
+            return new Rectangle2D.Double(center.getX() - length / 2, center.getY() - width / 2, length, width);
         }
-    }
-
-    public SlotTrack addSlot(double offset) {
-        return traverser.addSlot(offset);
     }
 
     public TrackSegment getSlotConnectIndexed(int index) {
@@ -148,8 +141,8 @@ public class LayoutTraverserView extends LayoutTrackView {
         return traverser.getSlotIndex(i);
     }
 
-    public double getSlotOffset(int i) {
-        return traverser.getSlotOffset(i);
+    public double getSlotOffsetValue(int i) {
+        return traverser.getSlotOffsetValue(i);
     }
 
     public void setSlotTurnout(int index, String turnoutName, int state) {
@@ -294,13 +287,7 @@ public class LayoutTraverserView extends LayoutTrackView {
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         super.setCoordsCenter(MathUtil.granulize(MathUtil.multiply(getCoordsCenter(), factor), 1.0));
-        if (getOrientation() == LayoutTraverser.HORIZONTAL) {
-            setDeckLength(getDeckLength() * xFactor);
-            setDeckWidth(getDeckWidth() * yFactor);
-        } else {
-            setDeckLength(getDeckLength() * yFactor);
-            setDeckWidth(getDeckWidth() * xFactor);
-        }
+        traverser.setSlotOffset(traverser.getSlotOffset() * Math.min(xFactor, yFactor));
     }
 
     @Override
@@ -501,10 +488,6 @@ public class LayoutTraverserView extends LayoutTrackView {
         return traverser.getPosition();
     }
 
-    public void deleteSlot(SlotTrack slotTrack) {
-        traverser.deleteSlot(slotTrack);
-    }
-
     public void dispose() {
         if (popupMenu != null) {
             popupMenu.removeAll();
@@ -547,7 +530,7 @@ public class LayoutTraverserView extends LayoutTrackView {
             g2.draw(getBounds());
 
             // Draw the concentric circles at the center
-            double circleRadius = Math.max(getDeckWidth() / 4.f, trackWidth * 2);
+            double circleRadius = Math.max(traverser.getDeckWidth() / 4.f, trackWidth * 2);
             double circleDiameter = circleRadius * 2.f;
 
             Point2D center = getCoordsCenter();
@@ -572,10 +555,10 @@ public class LayoutTraverserView extends LayoutTrackView {
                 }
             }
 
-            double deckWid = getDeckWidth();
+            double deckWid = traverser.getDeckWidth();
             Point2D center = getCoordsCenter();
             Rectangle2D bridge;
-            double offset = getSlotOffset(currentPositionIndex);
+            double offset = getSlotOffsetValue(currentPositionIndex);
             if (getOrientation() == LayoutTraverser.HORIZONTAL) {
                 bridge = new Rectangle2D.Double(center.getX() + offset - deckWid / 2, center.getY() - deckWid / 2, deckWid, deckWid);
             } else { // VERTICAL

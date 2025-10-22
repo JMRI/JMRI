@@ -2942,8 +2942,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         LayoutTraverserView ltv = new LayoutTraverserView(lt, pt, this);
         addLayoutTrack(lt, ltv);
         // Initialise with a couple of tracks
-        lt.addSlotPair(10.0);
-        lt.addSlotPair(50.0);
+        lt.addSlotPair();
+        lt.addSlotPair();
         setDirty();
     }
 

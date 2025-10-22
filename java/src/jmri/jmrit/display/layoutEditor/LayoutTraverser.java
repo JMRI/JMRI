@@ -43,11 +43,13 @@ public class LayoutTraverser extends LayoutTrack {
      */
     public LayoutTraverser(@Nonnull String id, @Nonnull LayoutEditor models) {
         super(id, models);
+        recalculateDimensions();
     }
 
     // defined constants
     public static final int HORIZONTAL = 0;
     public static final int VERTICAL = 1;
+    private double slotOffset = 25.0;
 
     // operational instance variables (not saved between sessions)
     private NamedBeanHandle<LayoutBlock> namedLayoutBlock = null;
@@ -83,13 +85,24 @@ public class LayoutTraverser extends LayoutTrack {
     //
     // Accessor methods
     //
-    public double getDeckLength() { return deckLength; }
-    public void setDeckLength(double l) { deckLength = l; }
-    public double getDeckWidth() { return deckWidth; }
-    public void setDeckWidth(double w) { deckWidth = w; }
-    public int getOrientation() { return orientation; }
-    public void setOrientation(int o) { orientation = o; }
+    public double getSlotOffset() { return slotOffset; }
+    public void setSlotOffset(double offset) {
+        if (this.slotOffset != offset) {
+            this.slotOffset = offset;
+            renumberSlots();
+        }
+    }
 
+    public double getDeckLength() { return deckLength; }
+    private void setDeckLength(double l) { deckLength = l; }
+    public double getDeckWidth() { return deckWidth; }
+    private void setDeckWidth(double w) { deckWidth = w; }
+    public int getOrientation() { return orientation; }
+    public void setOrientation(int o) {
+        if (orientation != o) {
+            orientation = o;
+        }
+    }
 
     public boolean isDispatcherManaged() {
         return dispatcherManaged;
@@ -217,9 +230,10 @@ public class LayoutTraverser extends LayoutTrack {
         }
     }
 
-    public void addSlotPair(double offset) {
-        addSlot(offset); // Side A
-        addSlot(offset); // Side B
+    public void addSlotPair() {
+        addSlot(0); // Side A
+        addSlot(0); // Side B
+        renumberSlots();
     }
 
     private SlotTrack addSlot(double offset) {
@@ -342,7 +356,7 @@ public class LayoutTraverser extends LayoutTrack {
      * @param i the position in the slotList
      * @return the offset
      */
-    public double getSlotOffset(int i) {
+    public double getSlotOffsetValue(int i) {
         double result = 0.0;
         if (i < slotList.size()) {
             SlotTrack rt = slotList.get(i);
@@ -665,28 +679,50 @@ public class LayoutTraverser extends LayoutTrack {
         if (pairIndex < 0 || (pairIndex * 2 + 1) >= slotList.size()) {
             return;
         }
-        SlotTrack slotA = slotList.get(pairIndex * 2);
         SlotTrack slotB = slotList.get(pairIndex * 2 + 1);
-        deleteSlot(slotA);
-        deleteSlot(slotB);
+        SlotTrack slotA = slotList.get(pairIndex * 2);
+        slotList.remove(slotB);
+        slotList.remove(slotA);
+        slotB.dispose();
+        slotA.dispose();
+        renumberSlots();
     }
 
-    private void deleteSlot(@Nonnull SlotTrack slotTrack) {
-        TrackSegment t = null;
-        if (slotList == null) {
-            log.error("{}.deleteSlot(null); slotTrack is null", getName());
-        } else {
-            t = slotTrack.getConnect();
-            getSlotList().remove(slotTrack);
-            slotTrack.dispose();
-        }
-        if (t != null) {
-            models.removeTrackSegment(t);
-        }
+    private void renumberSlots() {
+        int numPairs = getNumberSlots() / 2;
+        double totalWidth = (numPairs > 1) ? (numPairs - 1) * slotOffset : 0;
+        double firstOffset = -totalWidth / 2.0;
 
-        // update the panel
-        models.redrawPanel();
-        models.setDirty();
+        for (int i = 0; i < numPairs; i++) {
+            double offset = firstOffset + (i * slotOffset);
+            slotList.get(i * 2).setOffset(offset);
+            slotList.get(i * 2 + 1).setOffset(offset);
+        }
+        recalculateDimensions();
+    }
+
+    private void recalculateDimensions() {
+        int numPairs = getNumberSlots() / 2;
+        double newLength = (numPairs > 0) ? slotOffset + (slotOffset * numPairs) : slotOffset;
+        double newWidth = slotOffset;
+        setDeckLength(newLength);
+        setDeckWidth(newWidth);
+    }
+
+    public void moveSlotPairUp(int pairIndex) {
+        if (pairIndex > 0) {
+            Collections.swap(slotList, pairIndex * 2, (pairIndex - 1) * 2);
+            Collections.swap(slotList, pairIndex * 2 + 1, (pairIndex - 1) * 2 + 1);
+            renumberSlots();
+        }
+    }
+
+    public void moveSlotPairDown(int pairIndex) {
+        if (pairIndex < (getNumberSlots() / 2) - 1) {
+            Collections.swap(slotList, pairIndex * 2, (pairIndex + 1) * 2);
+            Collections.swap(slotList, pairIndex * 2 + 1, (pairIndex + 1) * 2 + 1);
+            renumberSlots();
+        }
     }
 
     /**
