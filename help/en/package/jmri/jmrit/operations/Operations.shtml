@@ -2168,8 +2168,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         the window shows the type of tracks at that location, the number of tracks, the total length
         of all tracks at that location, the amount of track used by your rolling stock, the quantity
         of rolling stock, and the number of pick ups and set outs of your rolling stock that are
-        scheduled for that location. The <a href="#Yardmaster">Yardmaster</a> button produces a
-        window <a href="#SwitchList">(Switch List)</a> that allows you to see the scheduled pick ups
+        planned for that location. The <a href="#Yardmaster">Yardmaster</a> button produces a
+        window <a href="#SwitchList">(Switch List)</a> that allows you to see the planned pick ups
         and set outs by train. Only trains that have work for the location are available.
       </p>
       <p>

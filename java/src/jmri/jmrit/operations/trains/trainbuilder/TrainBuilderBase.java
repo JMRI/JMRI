@@ -807,6 +807,13 @@ public class TrainBuilderBase extends TrainCommon {
                 i--;
                 continue;
             }
+            
+            // is car at interchange with destination restrictions?
+            if (!checkPickupInterchangeDestinationRestrictions(car)) {
+                _carList.remove(car);
+                i--;
+                continue;
+            }
             // note that for trains departing staging the engine and car roads,
             // types, owners, and built date were already checked.
 
@@ -1469,6 +1476,30 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         return true;
+    }
+    
+    /**
+     * Checks to see if an interchange track has destination restrictions.
+     * Returns true if there's at least one destination in the train's route
+     * that can service the car departing the interchange.
+     * 
+     * @param car the car being evaluated
+     * @return true if car can be pulled
+     */
+    protected boolean checkPickupInterchangeDestinationRestrictions(Car car) {
+        if (!car.getTrack().isInterchange() ||
+                car.getTrack().getDestinationOption().equals(Track.ALL_DESTINATIONS) ||
+                car.getFinalDestination() != null) {
+            return true;
+        }
+        for (RouteLocation rl : _train.getRoute().getLocationsBySequenceList()) {
+            if (car.getTrack().isDestinationAccepted(rl.getLocation())) {
+                return true;
+            }
+        }
+        addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarByInterchange", car.toString(),
+                car.getTypeName(), car.getTrackType(), car.getLocationName(), car.getTrackName()));
+        return false;
     }
 
     /**
