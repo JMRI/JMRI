@@ -521,6 +521,7 @@ public class AutoActiveTrain implements ThrottleListener {
     private boolean _stoppingBySensor = false;
     private Sensor _stopSensor = null;
     private PropertyChangeListener _stopSensorListener = null;
+    private Turnout _turnoutStateNeeded = null;
     private PropertyChangeListener _turnoutStateListener = null;
     private boolean _stoppingByBlockOccupancy = false;    // if true, stop when _stoppingBlock goes UNOCCUPIED
     private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
@@ -1148,14 +1149,18 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private boolean checkTurn(AllocatedSection as) {
         if (as != null && as.getAutoTurnoutsResponse() != null) {
-            Turnout to = _dispatcher.getAutoTurnoutsHelper().checkStateAgainstList(as.getAutoTurnoutsResponse());
-            if (to != null) {
-                // at least one turnout isnt correctly set
-                to.addPropertyChangeListener(_turnoutStateListener = (PropertyChangeEvent e) -> {
-                    if (e.getPropertyName().equals("KnownState")) {
-                        ((Turnout) e.getSource()).removePropertyChangeListener(_turnoutStateListener);
+            if (_turnoutStateNeeded  != null && _turnoutStateListener != null) {
+                _turnoutStateNeeded.removePropertyChangeListener("KnownState",_turnoutStateListener);
+                _turnoutStateNeeded = null;
+                _turnoutStateListener =null;
+            }
+            _turnoutStateNeeded = _dispatcher.getAutoTurnoutsHelper().checkStateAgainstList(as.getAutoTurnoutsResponse());
+            if (_turnoutStateNeeded != null) {
+                _turnoutStateNeeded.addPropertyChangeListener("KnownState",_turnoutStateListener = (PropertyChangeEvent e) -> {
+                    _turnoutStateNeeded.removePropertyChangeListener("KnownState",_turnoutStateListener);
+                         _turnoutStateListener=null;
+                         _turnoutStateNeeded=null;
                         setSpeedBySignal();
-                    }
                 });
                 return false;
             }
@@ -1949,6 +1954,11 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         _controllingSignalMast = null;
         _conSignalMastListener = null;
+        if (_turnoutStateNeeded != null && _turnoutStateListener != null) {
+            _turnoutStateNeeded.removePropertyChangeListener(_turnoutStateListener);
+        }
+        _turnoutStateNeeded = null;
+        _turnoutStateListener = null;
     }
 
 // _________________________________________________________________________________________

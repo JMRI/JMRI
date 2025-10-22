@@ -135,6 +135,10 @@ public class AutoTurnouts {
      */
     private List<LayoutTrackExpectedState<LayoutTurnout>> turnoutUtil(Section s, int seqNum, Section nextSection,
           ActiveTrain at, boolean trustKnownTurnouts, boolean set, Section prevSection, boolean useTurnoutConnectionDelay ) {
+        log.trace("{}:Checking LayoutTrackExpectedState Section[{}]  NextSection[{}] PrevSection[{}]",
+                at.getTrainName(), s.getDisplayName(),
+                nextSection== null ? "Null" : nextSection.getDisplayName(),
+                prevSection == null ? "Null" : prevSection.getDisplayName());
         // initialize response structure
         List<LayoutTrackExpectedState<LayoutTurnout>> turnoutListForAllocatedSection = new ArrayList<>();
         // validate input and initialize
@@ -244,7 +248,7 @@ public class AutoTurnouts {
              this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of
              been set correctly for the train to have arrived in the first place.
              */
-
+            log.trace("{}:PrevBlock[{}]", prevBlock == null ?   "Null" : prevBlock.getDisplayName());
             if (prevBlock != null) {
                 var blockName = curBlock.getUserName();
                 if (blockName != null) {
@@ -258,6 +262,8 @@ public class AutoTurnouts {
                         }
                     }
                 }
+            } else {
+               log.debug("turnoutUtil - No previous block");
             }
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {
