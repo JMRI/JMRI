@@ -57,7 +57,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
     private JButton editLayoutTraverserAddSlotButton;
     private JCheckBox editLayoutTraverserDccControlledCheckBox;
     private JCheckBox editLayoutTraverserUseSignalMastsCheckBox;
-    private JPanel signalMastParametersPanel;
+    private JPanel signalMastAssignmentsPanel;
     private NamedBeanComboBox<SignalMast> exitMastComboBox;
     private NamedBeanComboBox<SignalMast> bufferMastComboBox;
 
@@ -143,18 +143,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         controlsPanel.add(editLayoutTraverserUseSignalMastsCheckBox);
         headerPane.add(controlsPanel);
 
-        // setup signal mast parameters panel
-        signalMastParametersPanel = new JPanel();
-        signalMastParametersPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TraverserSignalMastAssignmentsTitle"))); // NOI18N
-        exitMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
-        LayoutEditor.setupComboBox(exitMastComboBox, false, true, true);
-        exitMastComboBox.setEditable(false);
-        exitMastComboBox.setAllowNull(true);
-        bufferMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
-        LayoutEditor.setupComboBox(bufferMastComboBox, false, true, true);
-        bufferMastComboBox.setEditable(false);
-        bufferMastComboBox.setAllowNull(true);
-
         // set up Done and Cancel buttons
         JPanel donePanel = new JPanel();
         donePanel.setLayout(new FlowLayout());
@@ -164,7 +152,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
         editLayoutTraverserSlotPanel = new JPanel();
         editLayoutTraverserSlotPanel.setLayout(new BoxLayout(editLayoutTraverserSlotPanel, BoxLayout.Y_AXIS));
-        JScrollPane slotScrollPane = new JScrollPane(editLayoutTraverserSlotPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane slotScrollPane = new JScrollPane(editLayoutTraverserSlotPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         contentPane.add(slotScrollPane, BorderLayout.CENTER);
 
         // Set initial values
@@ -178,6 +166,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         editLayoutTraverserUseSignalMastsCheckBox.setSelected(layoutTraverser.isDispatcherManaged());
 
         // Add listeners
+        editLayoutTraverserAddSlotButton.addActionListener(this::addTrackPairPressed);
         editLayoutTraverserSegmentEditBlockButton.addActionListener(this::editLayoutTraverserEditBlockPressed);
         editLayoutTraverserDccControlledCheckBox.addActionListener(e -> {
             layoutTraverser.setTurnoutControlled(editLayoutTraverserDccControlledCheckBox.isSelected());
@@ -187,8 +176,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             layoutTraverser.setDispatcherManaged(editLayoutTraverserUseSignalMastsCheckBox.isSelected());
             updateSlotPanel();
         });
-
-
 
         updateSlotPanel();
         editLayoutTraverserFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -238,49 +225,73 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
      }
 
     private void updateSlotPanel() {
+        editLayoutTraverserSlotPanel.removeAll();
+
+        JPanel turnoutAssignmentsPanel = new JPanel();
+        turnoutAssignmentsPanel.setLayout(new BoxLayout(turnoutAssignmentsPanel, BoxLayout.Y_AXIS));
+        turnoutAssignmentsPanel.setBorder(new TitledBorder(new EtchedBorder(), Bundle.getMessage("TurnoutAssignments")));
         traverserTurnouts.clear();
         layoutTraverser.getSlotList().forEach(rt -> traverserTurnouts.add(rt.getTurnout()));
-
-        editLayoutTraverserSlotPanel.removeAll();
-        editLayoutTraverserSlotPanel.setLayout(new BoxLayout(editLayoutTraverserSlotPanel, BoxLayout.Y_AXIS));
         for (int i = 0; i < layoutTraverser.getNumberSlots() / 2; i++) {
-            editLayoutTraverserSlotPanel.add(new TraverserPairPanel(i));
+            turnoutAssignmentsPanel.add(new TraverserPairPanel(i));
         }
+        editLayoutTraverserSlotPanel.add(turnoutAssignmentsPanel);
 
-        // Rebuild signal mast panel
-        signalMastParametersPanel.removeAll();
+        signalMastAssignmentsPanel = new JPanel();
         approachMastComboBoxes.clear();
 
         if (layoutTraverser.isDispatcherManaged()) {
-            signalMastParametersPanel.setLayout(new BoxLayout(signalMastParametersPanel, BoxLayout.Y_AXIS));
+            signalMastAssignmentsPanel.setLayout(new BoxLayout(signalMastAssignmentsPanel, BoxLayout.Y_AXIS));
+            signalMastAssignmentsPanel.setBorder(new TitledBorder(new EtchedBorder(), Bundle.getMessage("TraverserSignalMastAssignmentsTitle")));
 
-            // Add approach masts for each Slot
-            for (LayoutTraverser.SlotTrack rt : layoutTraverser.getSlotList()) {
-                JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                p.add(new JLabel(Bundle.getMessage("ApproachMastSlot", rt.getConnectionIndex() + 1)));
-                NamedBeanComboBox<SignalMast> combo = new NamedBeanComboBox<>(
-                        InstanceManager.getDefault(SignalMastManager.class), rt.getApproachMast(), DisplayOptions.DISPLAYNAME);
-                LayoutEditor.setupComboBox(combo, false, true, true);
-                combo.setEditable(false);
-                combo.setAllowNull(true);
-                p.add(combo);
-                signalMastParametersPanel.add(p);
-                approachMastComboBoxes.add(combo);
+            for (int i = 0; i < layoutTraverser.getNumberSlots() / 2; i++) {
+                JPanel p = new JPanel(new GridBagLayout());
+                p.setBorder(new TitledBorder(new EtchedBorder(), Bundle.getMessage("SlotPair") + " " + (i + 1)));
+                GridBagConstraints c = new GridBagConstraints();
+                c.gridx = 0;
+                c.gridy = 0;
+                c.anchor = GridBagConstraints.LINE_START;
+                c.insets = new Insets(2, 2, 2, 2);
+
+                JLabel labelA = new JLabel();
+                JLabel labelB = new JLabel();
+                if (layoutTraverser.getOrientation() == LayoutTraverser.HORIZONTAL) {
+                    labelA.setText(Bundle.getMessage("ApproachMastSlotLeft"));
+                    labelB.setText(Bundle.getMessage("ApproachMastSlotRight"));
+                } else {
+                    labelA.setText(Bundle.getMessage("ApproachMastSlotUp"));
+                    labelB.setText(Bundle.getMessage("ApproachMastSlotDown"));
+                }
+                p.add(labelA, c);
+
+                c.gridy = 1;
+                p.add(labelB, c);
+
+                c.gridx = 1;
+                c.gridy = 0;
+                c.insets = new Insets(2, 5, 2, 2);
+                NamedBeanComboBox<SignalMast> comboA = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), layoutTraverser.getSlotList().get(i * 2).getApproachMast(), DisplayOptions.DISPLAYNAME);
+                LayoutEditor.setupComboBox(comboA, false, true, true);
+                comboA.setEditable(false);
+                comboA.setAllowNull(true);
+                p.add(comboA, c);
+                approachMastComboBoxes.add(comboA);
+
+                c.gridy = 1;
+                NamedBeanComboBox<SignalMast> comboB = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), layoutTraverser.getSlotList().get(i * 2 + 1).getApproachMast(), DisplayOptions.DISPLAYNAME);
+                LayoutEditor.setupComboBox(comboB, false, true, true);
+                comboB.setEditable(false);
+                comboB.setAllowNull(true);
+                p.add(comboB, c);
+                approachMastComboBoxes.add(comboB);
+
+                signalMastAssignmentsPanel.add(p);
             }
 
-            // Add action listeners now that the list is complete
-            for (int i = 0; i < approachMastComboBoxes.size(); i++) {
-                final int index = i; // final variable for use in lambda
-                approachMastComboBoxes.get(i).addActionListener(e -> {
-                    SignalMast newMast = approachMastComboBoxes.get(index).getSelectedItem();
-                    layoutTraverser.getSlotList().get(index).setApproachMast( (newMast != null) ? newMast.getSystemName() : null );
-                });
-            }
             if (!approachMastComboBoxes.isEmpty()) {
-                signalMastParametersPanel.add(new JSeparator());
+                signalMastAssignmentsPanel.add(new JSeparator());
             }
 
-            // Add shared icon placement controls
             JPanel placementPanel = new JPanel();
             placementPanel.setLayout(new BoxLayout(placementPanel, BoxLayout.Y_AXIS)); // NOI18N
             placementPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TraverserAddMastIconsTitle")));
@@ -307,9 +318,9 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             radioPanel.add(placeIconsLeft);
             radioPanel.add(placeIconsRight);
             placementPanel.add(radioPanel);
-            signalMastParametersPanel.add(placementPanel);
+            signalMastAssignmentsPanel.add(placementPanel);
 
-            signalMastParametersPanel.add(new JSeparator());
+            signalMastAssignmentsPanel.add(new JSeparator());
 
             JPanel mastPanel = new JPanel(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
@@ -320,18 +331,22 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             mastPanel.add(new JLabel(Bundle.getMessage("TraverserExitMastLabel")), c);
             c.gridx = 1;
             c.insets = new Insets(2, 5, 2, 2); // Add left padding
+            exitMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), layoutTraverser.getExitSignalMast(), DisplayOptions.DISPLAYNAME);
+            exitMastComboBox.setAllowNull(true);
             mastPanel.add(exitMastComboBox, c);
 
             c.gridx = 0;
             c.gridy = 1;
             c.insets = new Insets(2, 2, 2, 2); // Reset for label
-            mastPanel.add(new JLabel(Bundle.getMessage("TraverserBufferMastLabel")), c);
+            mastPanel.add(new JLabel(Bundle.getMessage("TraverserBufferMastLabel") + ":"), c);
             c.gridx = 1;
             c.insets = new Insets(2, 5, 2, 2); // Add left padding
+            bufferMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), layoutTraverser.getBufferMast(), DisplayOptions.DISPLAYNAME);
+            bufferMastComboBox.setAllowNull(true);
             mastPanel.add(bufferMastComboBox, c);
 
-            signalMastParametersPanel.add(mastPanel);
-            editLayoutTraverserSlotPanel.add(signalMastParametersPanel);
+            signalMastAssignmentsPanel.add(mastPanel);
+            editLayoutTraverserSlotPanel.add(signalMastAssignmentsPanel);
         }
 
         editLayoutTraverserSlotPanel.revalidate();
@@ -340,10 +355,26 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
     }
 
     private void saveSlotPanelDetail() {
-        for (Component comp : editLayoutTraverserSlotPanel.getComponents()) {
+        for (Component comp : ((JPanel)editLayoutTraverserSlotPanel.getComponent(0)).getComponents()) {
             if (comp instanceof TraverserPairPanel) {
                 TraverserPairPanel tpp = (TraverserPairPanel) comp;
                 tpp.updateDetails();
+            }
+        }
+        if (layoutTraverser.isDispatcherManaged()) {
+            layoutTraverser.setExitSignalMast(exitMastComboBox.getSelectedItemDisplayName());
+            layoutTraverser.setBufferSignalMast(bufferMastComboBox.getSelectedItemDisplayName());
+            int placement = 0;
+            if (placeIconsLeft.isSelected()) {
+                placement = 1;
+            } else if (placeIconsRight.isSelected()) {
+                placement = 2;
+            }
+            layoutTraverser.setSignalIconPlacement(placement);
+
+            for (int i = 0; i < approachMastComboBoxes.size(); i++) {
+                SignalMast newMast = approachMastComboBoxes.get(i).getSelectedItem();
+                layoutTraverser.getSlotList().get(i).setApproachMast( (newMast != null) ? newMast.getSystemName() : null );
             }
         }
     }
