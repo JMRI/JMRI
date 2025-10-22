@@ -217,13 +217,12 @@ public class LayoutTraverser extends LayoutTrack {
         }
     }
 
-    /**
-     * Add a slot at the specified offset.
-     *
-     * @param offset the offset
-     * @return the SlotTrack
-     */
-    public SlotTrack addSlot(double offset) {
+    public void addSlotPair(double offset) {
+        addSlot(offset); // Side A
+        addSlot(offset); // Side B
+    }
+
+    private SlotTrack addSlot(double offset) {
         SlotTrack rt = new SlotTrack(offset, getNewIndex());
         slotList.add(rt);
         return rt;
@@ -662,12 +661,17 @@ public class LayoutTraverser extends LayoutTrack {
         return lastKnownIndex;
     }
 
-    /**
-     * Delete this slot track.
-     *
-     * @param slotTrack the slot track
-     */
-    public void deleteSlot(@Nonnull SlotTrack slotTrack) {
+    public void deleteTrackPair(int pairIndex) {
+        if (pairIndex < 0 || (pairIndex * 2 + 1) >= slotList.size()) {
+            return;
+        }
+        SlotTrack slotA = slotList.get(pairIndex * 2);
+        SlotTrack slotB = slotList.get(pairIndex * 2 + 1);
+        deleteSlot(slotA);
+        deleteSlot(slotB);
+    }
+
+    private void deleteSlot(@Nonnull SlotTrack slotTrack) {
         TrackSegment t = null;
         if (slotList == null) {
             log.error("{}.deleteSlot(null); slotTrack is null", getName());

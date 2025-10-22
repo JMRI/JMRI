@@ -120,7 +120,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         slotPanel.setLayout(new FlowLayout());
         slotPanel.add(new JLabel(Bundle.getMessage("SlotOffset")));
         slotPanel.add(slotOffsetTextField);
-        editLayoutTraverserAddSlotButton = new JButton(Bundle.getMessage("AddSlot"));
+        editLayoutTraverserAddSlotButton = new JButton(Bundle.getMessage("AddSlotPair"));
         slotPanel.add(editLayoutTraverserAddSlotButton);
         headerPane.add(slotPanel);
 
@@ -138,7 +138,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         JPanel controlsPanel = new JPanel();
         controlsPanel.setLayout(new FlowLayout());
         editLayoutTraverserDccControlledCheckBox = new JCheckBox(Bundle.getMessage("TraverserDCCControlled"));
-
         controlsPanel.add(editLayoutTraverserDccControlledCheckBox);
         editLayoutTraverserUseSignalMastsCheckBox = new JCheckBox(Bundle.getMessage("TraverserUseSignalMasts"));
         controlsPanel.add(editLayoutTraverserUseSignalMastsCheckBox);
@@ -179,7 +178,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         editLayoutTraverserUseSignalMastsCheckBox.setSelected(layoutTraverser.isDispatcherManaged());
 
         // Add listeners
-        editLayoutTraverserAddSlotButton.addActionListener(this::addSlotTrackPressed);
         editLayoutTraverserSegmentEditBlockButton.addActionListener(this::editLayoutTraverserEditBlockPressed);
         editLayoutTraverserDccControlledCheckBox.addActionListener(e -> {
             layoutTraverser.setTurnoutControlled(editLayoutTraverserDccControlledCheckBox.isSelected());
@@ -189,15 +187,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             layoutTraverser.setDispatcherManaged(editLayoutTraverserUseSignalMastsCheckBox.isSelected());
             updateSlotPanel();
         });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -213,10 +202,10 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         editLayoutTraverserOpen = true;
     }
 
-    private void addSlotTrackPressed(ActionEvent e) {
+    private void addTrackPairPressed(ActionEvent e) {
         try {
             double offset = Double.parseDouble(slotOffsetTextField.getText());
-            layoutTraverser.addSlot(offset);
+            layoutTraverser.addSlotPair(offset);
             updateSlotPanel();
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
@@ -254,8 +243,8 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
         editLayoutTraverserSlotPanel.removeAll();
         editLayoutTraverserSlotPanel.setLayout(new BoxLayout(editLayoutTraverserSlotPanel, BoxLayout.Y_AXIS));
-        for (LayoutTraverser.SlotTrack rt : layoutTraverser.getSlotList()) {
-            editLayoutTraverserSlotPanel.add(new TraverserSlotPanel(rt));
+        for (int i = 0; i < layoutTraverser.getNumberSlots() / 2; i++) {
+            editLayoutTraverserSlotPanel.add(new TraverserPairPanel(i));
         }
 
         // Rebuild signal mast panel
@@ -352,9 +341,9 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
     private void saveSlotPanelDetail() {
         for (Component comp : editLayoutTraverserSlotPanel.getComponents()) {
-            if (comp instanceof TraverserSlotPanel) {
-                TraverserSlotPanel tsp = (TraverserSlotPanel) comp;
-                tsp.updateDetails();
+            if (comp instanceof TraverserPairPanel) {
+                TraverserPairPanel tpp = (TraverserPairPanel) comp;
+                tpp.updateDetails();
             }
         }
     }
@@ -399,20 +388,31 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         }
     }
 
-    public class TraverserSlotPanel extends JPanel {
+    public class TraverserPairPanel extends JPanel {
 
-        private LayoutTraverser.SlotTrack slotTrack;
-        private final JPanel slotTurnoutPanel;
-        private final NamedBeanComboBox<Turnout> turnoutNameComboBox;
+        private final LayoutTraverser.SlotTrack slotA;
+        private final LayoutTraverser.SlotTrack slotB;
+        private final int pairIndex;
+
+        private final JPanel slotTurnoutPanelA;
+        private final JPanel slotTurnoutPanelB;
+        private final NamedBeanComboBox<Turnout> turnoutNameComboBoxA;
+        private final NamedBeanComboBox<Turnout> turnoutNameComboBoxB;
         private final TitledBorder slotTitledBorder;
-        private final JComboBox<String> slotTurnoutStateComboBox;
-        private final JLabel slotTurnoutStateLabel;
+        private final JComboBox<String> slotTurnoutStateComboBoxA;
+        private final JComboBox<String> slotTurnoutStateComboBoxB;
+        private final JLabel slotTurnoutLabelA;
+        private final JLabel slotTurnoutLabelB;
         private final JTextField slotOffsetTextField;
+        private final JCheckBox disabledCheckBoxA;
+        private final JCheckBox disabledCheckBoxB;
         private final int[] slotTurnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
         private final DecimalFormat twoDForm = new DecimalFormat("#.00");
 
-        public TraverserSlotPanel(@Nonnull LayoutTraverser.SlotTrack slotTrack) {
-            this.slotTrack = slotTrack;
+        public TraverserPairPanel(int pairIndex) {
+            this.pairIndex = pairIndex;
+            this.slotA = layoutTraverser.getSlotList().get(pairIndex * 2);
+            this.slotB = layoutTraverser.getSlotList().get(pairIndex * 2 + 1);
 
             JPanel top = new JPanel();
             top.add(new JLabel(Bundle.getMessage("SlotOffset")));
@@ -420,32 +420,61 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             this.add(top);
 
-            turnoutNameComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class));
-            LayoutEditor.setupComboBox(turnoutNameComboBox, false, true, false);
-            turnoutNameComboBox.setSelectedItem(slotTrack.getTurnout());
-            turnoutNameComboBox.addPopupMenuListener(
-                    layoutEditor.newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox, traverserTurnouts));
             String turnoutStateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
             String turnoutStateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
             String[] turnoutStates = new String[]{turnoutStateClosed, turnoutStateThrown};
 
-            slotTurnoutStateComboBox = new JComboBox<>(turnoutStates);
-            slotTurnoutStateLabel = new JLabel(Bundle.getMessage("TurnoutState"));
-            slotTurnoutPanel = new JPanel();
-
-            slotTurnoutPanel.setBorder(new EtchedBorder());
-            slotTurnoutPanel.add(new JLabel(Bundle.getMessage("BeanNameTurnout")));
-            slotTurnoutPanel.add(turnoutNameComboBox);
-            slotTurnoutPanel.add(slotTurnoutStateLabel);
-            slotTurnoutPanel.add(slotTurnoutStateComboBox);
-            if (slotTrack.getTurnoutState() == Turnout.CLOSED) {
-                slotTurnoutStateComboBox.setSelectedItem(turnoutStateClosed);
+            // Side A
+            slotTurnoutPanelA = new JPanel();
+            slotTurnoutPanelA.setBorder(new EtchedBorder());
+            turnoutNameComboBoxA = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class));
+            LayoutEditor.setupComboBox(turnoutNameComboBoxA, false, true, false);
+            turnoutNameComboBoxA.setSelectedItem(slotA.getTurnout());
+            turnoutNameComboBoxA.addPopupMenuListener(
+                    layoutEditor.newTurnoutComboBoxPopupMenuListener(turnoutNameComboBoxA, traverserTurnouts));
+            slotTurnoutStateComboBoxA = new JComboBox<>(turnoutStates);
+            slotTurnoutLabelA = new JLabel();
+            slotTurnoutPanelA.add(slotTurnoutLabelA);
+            slotTurnoutPanelA.add(turnoutNameComboBoxA);
+            slotTurnoutPanelA.add(new JLabel(Bundle.getMessage("TurnoutState")));
+            slotTurnoutPanelA.add(slotTurnoutStateComboBoxA);
+            disabledCheckBoxA = new JCheckBox(Bundle.getMessage("Disabled"));
+            disabledCheckBoxA.setSelected(slotA.isDisabled());
+            slotTurnoutPanelA.add(disabledCheckBoxA);
+            if (slotA.getTurnoutState() == Turnout.CLOSED) {
+                slotTurnoutStateComboBoxA.setSelectedItem(turnoutStateClosed);
             } else {
-                slotTurnoutStateComboBox.setSelectedItem(turnoutStateThrown);
+                slotTurnoutStateComboBoxA.setSelectedItem(turnoutStateThrown);
             }
-            this.add(slotTurnoutPanel);
+            this.add(slotTurnoutPanelA);
 
-            JButton deleteSlotButton = new JButton(Bundle.getMessage("ButtonDelete"));
+            // Side B
+            slotTurnoutPanelB = new JPanel();
+            slotTurnoutPanelB.setBorder(new EtchedBorder());
+            turnoutNameComboBoxB = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class));
+            LayoutEditor.setupComboBox(turnoutNameComboBoxB, false, true, false);
+            turnoutNameComboBoxB.setSelectedItem(slotB.getTurnout());
+            turnoutNameComboBoxB.addPopupMenuListener(
+                    layoutEditor.newTurnoutComboBoxPopupMenuListener(turnoutNameComboBoxB, traverserTurnouts));
+            slotTurnoutStateComboBoxB = new JComboBox<>(turnoutStates);
+            slotTurnoutLabelB = new JLabel();
+            slotTurnoutPanelB.add(slotTurnoutLabelB);
+            slotTurnoutPanelB.add(turnoutNameComboBoxB);
+            slotTurnoutPanelB.add(new JLabel(Bundle.getMessage("TurnoutState")));
+            slotTurnoutPanelB.add(slotTurnoutStateComboBoxB);
+            disabledCheckBoxB = new JCheckBox(Bundle.getMessage("Disabled"));
+            disabledCheckBoxB.setSelected(slotB.isDisabled());
+            slotTurnoutPanelB.add(disabledCheckBoxB);
+            if (slotB.getTurnoutState() == Turnout.CLOSED) {
+                slotTurnoutStateComboBoxB.setSelectedItem(turnoutStateClosed);
+            } else {
+                slotTurnoutStateComboBoxB.setSelectedItem(turnoutStateThrown);
+            }
+            this.add(slotTurnoutPanelB);
+
+            setTurnoutLabels();
+
+            JButton deleteSlotButton = new JButton(Bundle.getMessage("Delete"));
             top.add(deleteSlotButton);
             deleteSlotButton.addActionListener((ActionEvent e) -> {
                 delete();
@@ -456,9 +485,18 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
             showTurnoutDetails();
 
-            slotOffsetTextField.setText(twoDForm.format(slotTrack.getOffset()));
-            int slotNumber = slotTrack.getConnectionIndex() + 1;
-            slotTitledBorder.setTitle(Bundle.getMessage("Slot") + " : " + slotNumber);
+            slotOffsetTextField.setText(twoDForm.format(slotA.getOffset()));
+            slotTitledBorder.setTitle(Bundle.getMessage("SlotPair") + " : " + (pairIndex + 1));
+        }
+
+        private void setTurnoutLabels() {
+            if (layoutTraverser.getOrientation() == LayoutTraverser.HORIZONTAL) {
+                slotTurnoutLabelA.setText(Bundle.getMessage("TurnoutLeft"));
+                slotTurnoutLabelB.setText(Bundle.getMessage("TurnoutRight"));
+            } else {
+                slotTurnoutLabelA.setText(Bundle.getMessage("TurnoutUp"));
+                slotTurnoutLabelB.setText(Bundle.getMessage("TurnoutDown"));
+            }
         }
 
         private void delete() {
@@ -467,27 +505,35 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                     Bundle.getMessage("WarningTitle"),
                     JmriJOptionPane.YES_NO_OPTION);
             if (n == JmriJOptionPane.YES_OPTION) {
-                layoutTraverser.deleteSlot(slotTrack);
+                layoutTraverser.deleteTrackPair(pairIndex);
             }
         }
 
         private void updateDetails() {
             try {
-                slotTrack.setOffset(Double.parseDouble(slotOffsetTextField.getText()));
+                double offset = Double.parseDouble(slotOffsetTextField.getText());
+                slotA.setOffset(offset);
+                slotB.setOffset(offset);
             } catch (NumberFormatException e) {
                 // ignore
             }
             if (layoutTraverser.isTurnoutControlled()) {
-                String turnoutName = turnoutNameComboBox.getSelectedItemDisplayName();
-                if (turnoutName == null) {
-                    turnoutName = "";
-                }
-                slotTrack.setTurnout(turnoutName, slotTurnoutStateValues[slotTurnoutStateComboBox.getSelectedIndex()]);
+                String turnoutNameA = turnoutNameComboBoxA.getSelectedItemDisplayName();
+                if (turnoutNameA == null) turnoutNameA = "";
+                slotA.setTurnout(turnoutNameA, slotTurnoutStateValues[slotTurnoutStateComboBoxA.getSelectedIndex()]);
+
+                String turnoutNameB = turnoutNameComboBoxB.getSelectedItemDisplayName();
+                if (turnoutNameB == null) turnoutNameB = "";
+                slotB.setTurnout(turnoutNameB, slotTurnoutStateValues[slotTurnoutStateComboBoxB.getSelectedIndex()]);
             }
+            slotA.setDisabled(disabledCheckBoxA.isSelected());
+            slotB.setDisabled(disabledCheckBoxB.isSelected());
         }
 
         private void showTurnoutDetails() {
-            slotTurnoutPanel.setVisible(layoutTraverser.isTurnoutControlled());
+            boolean visible = layoutTraverser.isTurnoutControlled();
+            slotTurnoutPanelA.setVisible(visible);
+            slotTurnoutPanelB.setVisible(visible);
         }
     }
 
