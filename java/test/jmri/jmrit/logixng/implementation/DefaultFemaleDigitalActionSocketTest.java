@@ -102,6 +102,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.ActionPower.class);
         classes.add(jmri.jmrit.logixng.actions.ActionRequestUpdateAllSensors.class);
         classes.add(jmri.jmrit.logixng.actions.ActionRequestUpdateOfSensor.class);
+        classes.add(jmri.jmrit.logixng.actions.ActionRequestUpdateOfTurnout.class);
         classes.add(jmri.jmrit.logixng.actions.ActionReporter.class);
         classes.add(jmri.jmrit.logixng.actions.ActionScript.class);
         classes.add(jmri.jmrit.logixng.actions.ActionSensor.class);
@@ -138,6 +139,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.Exit.class);
         classes.add(jmri.jmrit.logixng.actions.For.class);
         classes.add(jmri.jmrit.logixng.actions.ForEach.class);
+        classes.add(jmri.jmrit.logixng.actions.ForEachWithDelay.class);
         classes.add(jmri.jmrit.logixng.actions.IfThenElse.class);
         classes.add(jmri.jmrit.logixng.actions.Return.class);
         classes.add(jmri.jmrit.logixng.actions.RunOnce.class);
