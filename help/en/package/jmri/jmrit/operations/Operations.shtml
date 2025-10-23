@@ -5453,6 +5453,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       "Boxcar" for the special cars. You can use this feature to control any type of car including
       Cabooses, Passenger, Buffer and MOW cars.
 
+      <p>The "Auto Select" button will deselect car types that aren't serviced by locations in
+        the train's route.</p>
+
       <h4 id="TrainRequires">Optional locomotive requirements</h4>
       You can control the number of locomotives that will be assigned to this train, and optionally,
       the locomotive's model and road. If you don't want the program assigning locomotives to your
