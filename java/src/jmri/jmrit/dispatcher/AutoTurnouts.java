@@ -143,7 +143,7 @@ public class AutoTurnouts {
         List<LayoutTrackExpectedState<LayoutTurnout>> turnoutListForAllocatedSection = new ArrayList<>();
         // validate input and initialize
         Transit tran = at.getTransit();
-        if ((s == null) || (seqNum > tran.getMaxSequence()) || (!tran.containsSection(s))) {
+        if ((seqNum > tran.getMaxSequence()) || (!tran.containsSection(s))) {
             log.error("Invalid argument when checking or setting turnouts in Section.");
             return null;
         }
