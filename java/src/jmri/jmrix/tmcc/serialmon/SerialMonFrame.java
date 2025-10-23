@@ -333,8 +333,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 int A = (val / 128) & 0x0F; // A is TMCC Adddress Code
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
-                default:
-                    return "Unrecognized Train(TR) Command with A= " + A + " C= " + C + " D= " + D;
+                return "Unrecognized Train(TR) Command with A= " + A + " C= " + C + " D= " + D;
 
 
             } else if ((val & 0xC000) == 0x8000) {
