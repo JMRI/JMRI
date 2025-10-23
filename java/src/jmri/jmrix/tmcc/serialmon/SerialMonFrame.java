@@ -136,7 +136,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 31:
                                 return "TMCC2 - Engine " + A + " - Blow Horn 2";
                             default:
-                                return "TMCC2 - Engine " + A + " - action command D=" + D;
+                                return "TMCC2 - Engine " + A + " - Unassigned FnKey TMCC2 (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
 
                     case 1: // If C (TMCC Command Code) == 1
@@ -149,11 +149,11 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 return "TMCC2 - Engine " + A + " - Momentum High";
                             case 3:
                                 return "TMCC2 - Engine ID " + A + " - Set";
-                            case 6:
-                                return "TMCC2 - Engine " + A + " - Unassigned FnKey TMCC2";
+                            default:
+                                return "TMCC2 - Engine " + A + " - Unassigned FnKey TMCC2 (Case C=1) - with A= " + A + " C= " + C + " D= " + D;
                         }
                     
-                        //$FALL-THROUGH$
+                    //$FALL-THROUGH$
                     case 2: // If C (TMCC Command Code) == 2
                         return "TMCC2 - Engine " + A + " - Change Speed (Relative) by " + (D - 5);
                         
@@ -181,18 +181,25 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 return "Throw Switch " + A + " - THROUGH/CLOSED";
                             case 31:
                                 return "Throw Switch " + A + " - OUT/THROWN";
+                            default:
+                                return "Unrecognized Switch(SW) Command (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
+
+                    //$FALL-THROUGH$
                     case 1: // If C (TMCC Command Code) == 1
                         switch (D) {
                             case 11:
                                 return "Switch ID " + A + " - Set";                
                         }
+
+                    //$FALL-THROUGH$
                     case 2: // If C (TMCC Command Code) == 2
                         return "Assign switch " + A + " to route " + D + " - THROUGH";
+
                     case 3: // If C (TMCC Command Code) == 3
                         return "Assign switch " + A + " to route " + D + " - OUT";
                     default:
-                        return "unrecognized switch command with A=" + A + " C=" + C + " D=" + D;
+                        return "Unrecognized Switch(SW) Command (Cases C= 1-3) - with A= " + A + " C= " + C + " D= " + D;
                 }
 
 
@@ -202,18 +209,23 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
                 switch (C) {
+
+                    //$FALL-THROUGH$
                     case 0: // If C (TMCC Command Code) == 0
                         switch (D) {
                             case 15:
                                 return "Route " + A + " - THROW";
                         }
+
+                    //$FALL-THROUGH$
                     case 1: // If C (TMCC Command Code) == 0
                         switch (D) {
                             case 12:
                                 return "Route " + A + " - CLEAR";
                         }
-                    default:
-                      return "unrecognized route command with A=" + A + " C=" + C + " D=" + D;
+
+                default:
+                    return "Unrecognized Route(RTE) Command (Cases C= 0-1) - with A= " + A + " C= " + C + " D= " + D;
                 }
 
             } else if ((val & 0xC000) == 0x0000) {
@@ -289,7 +301,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 31:
                                 return "TMCC1 - Engine " + A + " - Blow Horn 2";
                             default:
-                                return "TMCC1 - Engine " + A + " - action command D=" + D;
+                                return "TMCC1 - Engine " + A + " - Unassigned FnKey TMCC1 (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
 
                     case 1: // If C (TMCC Command Code) == 1
@@ -302,8 +314,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 return "TMCC1 - Engine " + A + " - Momentum High";
                             case 3:
                                 return "TMCC1 - Engine ID " + A + " - Set";
-                            case 6:
-                                return "TMCC1 - Engine " + A + " - Unassigned FnKey TMCC1";
+                            default:
+                                return "TMCC1 - Engine " + A + " - Unassigned FnKey TMCC1 (Case C=1) - with A= " + A + " C= " + C + " D= " + D;
                         }
                     
                     //$FALL-THROUGH$
@@ -321,7 +333,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 int A = (val / 128) & 0x0F; // A is TMCC Adddress Code
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
-                return "unrecognized train command with A=" + A + " C=" + C + " D=" + D;
+                default:
+                    return "Unrecognized Train(TR) Command with A= " + A + " C= " + C + " D= " + D;
 
 
             } else if ((val & 0xC000) == 0x8000) {
@@ -356,8 +369,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 return "Aux 2 - ACC " + A + " - OPTION 2";
                             case 15:
                                 return "Aux 2 - ACC " + A + " - ON";
-//                } else if ((C == 0) && (D == 0x??)) {
-//                    return "Numeric Command - ACC " + A + " - 0-9";
+                            default:
+                                return "Unrecognized Accessory(ACC) Command (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
                         
                     case 1: // If C (TMCC Command Code) == 1
@@ -373,7 +386,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 //                } else if ((C == 1) && (D == 0x??)) {
 //                    return "Assign Aux 2 to Group D " + A + " - 0-9"";
                             default:
-                                return "unrecognized accessory command with A=" + A + " C=" + C + " D=" + D;
+                                return "Unrecognized Accessory(ACC) Command (Case C=1) - with A= " + A + " C= " + C + " D= " + D;
                         }
                 }
 
@@ -402,14 +415,18 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 return "GROUP - ACC " + A + " - OPTION 2";
                             case 11:
                                 return "GROUP - ACC " + A + " - ON";
+                            default:
+                                return "Unrecognized Group(GR) Command (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
+
+                    //$FALL-THROUGH$
                     case 1: // If C (TMCC Command Code) == 1
                         switch (D) {
                             case 12:
                                 return "GROUP - ACC " + A + " - CLEAR";
                         }
                 default:
-                    return "unrecognized group command with A=" + A + " C=" + C + " D=" + D;
+                    return "Unrecognized Group(GR) Command (Case C=1) - with A= " + A + " C= " + C + " D= " + D;
                 }
             }            
         }
@@ -432,6 +449,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             return "Value Entered is Not a TMCC1 Feature Type";
                         case 4:
                             return "Value Entered is Not a TMCC2 Feature Type";
+                        default:
+                            return "Unrecognized TMCC Error (Case C=0) - with C= " + C + " D= " + D;
                     }
             }
         }
