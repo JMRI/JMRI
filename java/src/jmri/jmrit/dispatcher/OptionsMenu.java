@@ -411,7 +411,7 @@ public class OptionsMenu extends JMenu {
         optionsFrame = null;
         // display save options reminder
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveOptions"),
+                showInfoMessage(this,Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveOptions"),
                         OptionsMenu.class.getName(),
                         "remindSaveDispatcherOptions"); // NOI18N
         initializeMenu();
