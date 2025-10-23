@@ -185,11 +185,12 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 return "Unrecognized Switch(SW) Command (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
 
-                    //$FALL-THROUGH$
                     case 1: // If C (TMCC Command Code) == 1
                         switch (D) {
                             case 11:
-                                return "Switch ID " + A + " - Set";                
+                                return "Switch ID " + A + " - Set";
+                            default:
+                                return "Unrecognized Switch(SW) Command (Cases C=1) - with A= " + A + " C= " + C + " D= " + D;                                
                         }
 
                     //$FALL-THROUGH$
@@ -199,7 +200,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     case 3: // If C (TMCC Command Code) == 3
                         return "Assign switch " + A + " to route " + D + " - OUT";
                     default:
-                        return "Unrecognized Switch(SW) Command (Cases C= 1-3) - with A= " + A + " C= " + C + " D= " + D;
+                        return "Unrecognized Switch(SW) Command (Cases C= 2-3) - with A= " + A + " C= " + C + " D= " + D;
                 }
 
 
@@ -209,23 +210,25 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
                 switch (C) {
-
-                    //$FALL-THROUGH$
                     case 0: // If C (TMCC Command Code) == 0
                         switch (D) {
                             case 15:
                                 return "Route " + A + " - THROW";
+                            default:
+                                return "Unrecognized Route(RTE) Command (Cases C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
 
-                    //$FALL-THROUGH$
                     case 1: // If C (TMCC Command Code) == 0
                         switch (D) {
                             case 12:
                                 return "Route " + A + " - CLEAR";
+                            default:
+                                return "Unrecognized Route(RTE) Command (Cases C=1) - with A= " + A + " C= " + C + " D= " + D;
+                           
                         }
 
                 default:
-                    return "Unrecognized Route(RTE) Command (Cases C= 0-1) - with A= " + A + " C= " + C + " D= " + D;
+                    return "Unrecognized Route(RTE) Command (Cases C) - with A= " + A + " C= " + C + " D= " + D;
                 }
 
             } else if ((val & 0xC000) == 0x0000) {
@@ -387,6 +390,9 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             default:
                                 return "Unrecognized Accessory(ACC) Command (Case C=1) - with A= " + A + " C= " + C + " D= " + D;
                         }
+
+               default:
+                    return "Unrecognized Accessory(ACC) Command (Case C) - with A= " + A + " C= " + C + " D= " + D;
                 }
 
 
@@ -418,14 +424,16 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 return "Unrecognized Group(GR) Command (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
 
-                    //$FALL-THROUGH$
                     case 1: // If C (TMCC Command Code) == 1
                         switch (D) {
                             case 12:
                                 return "GROUP - ACC " + A + " - CLEAR";
+                            default:
+                                return "Unrecognized Group(GR) Command (Case C=1) - with A= " + A + " C= " + C + " D= " + D;                              
                         }
+
                 default:
-                    return "Unrecognized Group(GR) Command (Case C=1) - with A= " + A + " C= " + C + " D= " + D;
+                    return "Unrecognized Group(GR) Command (Case C) - with A= " + A + " C= " + C + " D= " + D;
                 }
             }            
         }
@@ -451,6 +459,8 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                         default:
                             return "Unrecognized TMCC Error (Case C=0) - with C= " + C + " D= " + D;
                     }
+            default:
+                return "Unrecognized TMCC Error (Case C) - with C= " + C + " D= " + D;
             }
         }
         
