@@ -3868,6 +3868,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 // controlling turntable, in edit mode
                 LayoutTurntable t = (LayoutTurntable) selectedObject;
                 t.setPosition(selectedHitPointType.turntableTrackIndex());
+            } else if ((selectedObject != null) && (HitPointType.isTraverserSlotHitType(selectedHitPointType))
+                    && allControlling() && (!event.isMetaDown() && !event.isAltDown()) && !event.isPopupTrigger()
+                    && !event.isShiftDown() && !event.isControlDown()) {
+                // controlling Traverser, in edit mode
+                LayoutTraverser t = (LayoutTraverser) selectedObject;
+                t.setPosition(selectedHitPointType.traverserTrackIndex());
             } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.TURNOUT_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_CENTER)
                     || (selectedHitPointType == HitPointType.SLIP_LEFT)
@@ -3932,6 +3938,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // controlling turntable out of edit mode
             LayoutTurntable t = (LayoutTurntable) selectedObject;
             t.setPosition(selectedHitPointType.turntableTrackIndex());
+        } else if ((selectedObject != null) && (HitPointType.isTraverserSlotHitType(selectedHitPointType))
+                && allControlling() && !event.isMetaDown() && !event.isAltDown() && !event.isPopupTrigger()
+                && !event.isShiftDown() && (!delayedPopupTrigger)) {
+            // controlling traverser out of edit mode
+            LayoutTraverser t = (LayoutTraverser) selectedObject;
+            t.setPosition(selectedHitPointType.traverserTrackIndex());
         } else if ((selectedObject != null) && ((selectedHitPointType == HitPointType.BLOCKCONTENTSICON))
                 && allControlling()  && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
@@ -4079,6 +4091,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 if (t.isTurnoutControlled()) {
                     LayoutTurntableView ltview = getLayoutTurntableView((LayoutTurntable) foundTrack);
                     ltview.showRayPopUp(event, foundHitPointType.turntableTrackIndex());
+                }
+            }else if (HitPointType.isTraverserSlotHitType(foundHitPointType)) {
+                LayoutTraverser t = (LayoutTraverser) foundTrack;
+                if (t.isTurnoutControlled()) {
+                    LayoutTraverserView ltview = getLayoutTraverserView((LayoutTraverser) foundTrack);
+                    ltview.showSlotPopUp(event, foundHitPointType.traverserTrackIndex());
                 }
             } else if (HitPointType.isPopupHitType(foundHitPointType)) {
                 foundTrackView.showPopup(event);
@@ -4452,6 +4470,24 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                         if (tt.getRayConnectIndexed(ray) == null) {
                             tt.setRayConnect(t, ray);
+
+                            if (t.getConnect1() == p) {
+                                t.setNewConnect1(tt, foundHitPointType);
+                            } else {
+                                t.setNewConnect2(tt, foundHitPointType);
+                            }
+                            p.removeTrackConnection(t);
+
+                            if ((p.getConnect1() == null) && (p.getConnect2() == null)) {
+                                removePositionablePoint(p);
+                            }
+                        }
+                    } else if (HitPointType.isTraverserSlotHitType(foundHitPointType)) {
+                        LayoutTraverser tt = (LayoutTraverser) foundTrack;
+                        int slot = foundHitPointType.traverserTrackIndex();
+
+                        if (tt.getSlotConnectIndexed(slot) == null) {
+                            tt.setSlotConnect(t, slot);
 
                             if (t.getConnect1() == p) {
                                 t.setNewConnect1(tt, foundHitPointType);
@@ -5341,6 +5377,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 LayoutTurntableView turnView = getLayoutTurntableView(turn);
                                 turnView.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
                                         selectedHitPointType.turntableTrackIndex());
+                            } else if (HitPointType.isTraverserSlotHitType(selectedHitPointType)) {
+                                LayoutTraverser turn = (LayoutTraverser) selectedObject;
+                                LayoutTraverserView turnView = getLayoutTraverserView(turn);
+                                turnView.setSlotCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
+                                        selectedHitPointType.traverserTrackIndex());
                             }
                             break;
                         }
@@ -5886,6 +5927,25 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
 
+        if (result) {   // only need to test Traverser turnouts if we haven't failed yet...
+            // ensure that this traverser turnout is unique among turnouts in this Layout
+            for (LayoutTraverser tt : getLayoutTraversers()) {
+                for (LayoutTraverser.SlotTrack ray : tt.getSlotList()) {
+                    t = ray.getTurnout();
+                    if (t != null) {
+                        String sname = t.getSystemName();
+                        String uname = t.getUserName();
+                        log.debug("{}: Traverser turnout tested '{}' and '{}'.", ray.getTurnoutName(), sname, uname);
+                        if ((sname.equals(inTurnoutName))
+                                || ((uname != null) && (uname.equals(inTurnoutName)))) {
+                            result = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         if (!result && (inOpenPane != null)) {
             JmriJOptionPane.showMessageDialog(inOpenPane,
                     MessageFormat.format(Bundle.getMessage("Error4"), inTurnoutName),
@@ -5946,6 +6006,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     if (toObject instanceof TrackSegment) {
                         ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
                                 fromPointType.turntableTrackIndex());
+                    } else {
+                        log.warn("setLink found expected toObject type {} with fromPointType {} fromObject type {}",
+                                toObject.getClass(), fromPointType, fromObject.getClass(), new Exception("traceback"));
+                    }
+                } else if (HitPointType.isTraverserSlotHitType(fromPointType) && (fromObject instanceof LayoutTraverser)) {
+                    if (toObject instanceof TrackSegment) {
+                        ((LayoutTraverser) fromObject).setSlotConnect((TrackSegment) toObject,
+                                fromPointType.traverserTrackIndex());
                     } else {
                         log.warn("setLink found expected toObject type {} with fromPointType {} fromObject type {}",
                                 toObject.getClass(), fromPointType, fromObject.getClass(), new Exception("traceback"));
@@ -6728,7 +6796,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         // First verify with the user that this is really wanted
         if (!noWarnTraverser) {
             int selectedValue = JmriJOptionPane.showOptionDialog(this,
-                    Bundle.getMessage("Question4r"), Bundle.getMessage("WarningTitle"), // Using turntable message for now
+                    Bundle.getMessage("Question8r"), Bundle.getMessage("WarningTitle"),
                     JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
                     new Object[]{Bundle.getMessage("ButtonYes"),
                             Bundle.getMessage("ButtonNo"),
@@ -6865,7 +6933,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 if (HitPointType.isTurntableRayHitType(type)) {
                     ((LayoutTurntable) o).setRayConnect(null, type.turntableTrackIndex());
                 }
-                if (HitPointType.isTraverserRayHitType(type)) {
+                if (HitPointType.isTraverserSlotHitType(type)) {
                     ((LayoutTraverser) o).setSlotConnect(null, type.traverserTrackIndex());
                 }
                 break;

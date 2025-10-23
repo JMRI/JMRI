@@ -262,7 +262,7 @@ public class LayoutTraverser extends LayoutTrack {
     }
 
     // the following method is only for use in loading layout traversers
-    public void addSlotTrack(double offset, int index, String name) {
+    public void addSlotTrack(double offset, int index, String name) { // Note: This was likely private or package-private
         SlotTrack rt = new SlotTrack(offset, index);
         slotList.add(rt);
         rt.connectName = name;
@@ -496,7 +496,7 @@ public class LayoutTraverser extends LayoutTrack {
     @Override
     public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
-        if (HitPointType.isTraverserRayHitType(connectionType)) { // Keep using Ray for now
+        if (HitPointType.isTraverserSlotHitType(connectionType)) { // Keep using Ray for now
             result = getSlotConnectIndexed(connectionType.traverserTrackIndex());
         } else {
             String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
@@ -518,7 +518,7 @@ public class LayoutTraverser extends LayoutTrack {
             log.error("will throw {}", errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
-        if (HitPointType.isTraverserRayHitType(connectionType)) { // Keep using Ray for now
+        if (HitPointType.isTraverserSlotHitType(connectionType)) { // Keep using Ray for now
             if ((o == null) || (o instanceof TrackSegment)) {
                 setSlotConnect((TrackSegment) o, connectionType.traverserTrackIndex());
             } else {
@@ -704,7 +704,7 @@ public class LayoutTraverser extends LayoutTrack {
     private void recalculateDimensions() {
         int numPairs = getNumberSlots() / 2;
         double newLength = (numPairs > 0) ? slotOffset + (slotOffset * numPairs) : slotOffset;
-        double newWidth = slotOffset;
+        double newWidth = slotOffset * 2.0;
         setDeckLength(newLength);
         setDeckWidth(newWidth);
     }

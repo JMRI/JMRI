@@ -179,12 +179,21 @@ public class LayoutTraverserView extends LayoutTrackView {
 
     public Point2D getSlotCoordsIndexed(int index) {
         Point2D center = getCoordsCenter();
-        for (SlotTrack st : traverser.slotList) {
+        double deckWidth = traverser.getDeckWidth();
+        double anchorOffset = traverser.getSlotOffset() * 0.5;
+        for (int i=0; i<traverser.slotList.size(); i++) {
+            SlotTrack st = traverser.slotList.get(i);
             if (st.getConnectionIndex() == index) {
-                if (getOrientation() == LayoutTraverser.HORIZONTAL) {
-                    return new Point2D.Double(center.getX() + st.getOffset(), center.getY());
-                } else {
-                    return new Point2D.Double(center.getX(), center.getY() + st.getOffset());
+                double offset = st.getOffset();
+                boolean sideA = (i % 2 == 0);
+                if (getOrientation() == LayoutTraverser.HORIZONTAL) { // Tall
+                    double y = center.getY() + offset;
+                    double x = center.getX() + (sideA ? (-deckWidth / 2.0) - anchorOffset : (deckWidth / 2.0) + anchorOffset);
+                    return new Point2D.Double(x, y);
+                } else { // Wide
+                    double x = center.getX() + offset;
+                    double y = center.getY() + (sideA ? (-deckWidth / 2.0) - anchorOffset : (deckWidth / 2.0) + anchorOffset);
+                    return new Point2D.Double(x, y);
                 }
             }
         }
@@ -196,10 +205,42 @@ public class LayoutTraverserView extends LayoutTrackView {
             SlotTrack st = traverser.slotList.get(i);
             if (st != null) {
                 Point2D center = getCoordsCenter();
-                if (getOrientation() == LayoutTraverser.HORIZONTAL) {
-                    return new Point2D.Double(center.getX() + st.getOffset(), center.getY());
-                } else {
-                    return new Point2D.Double(center.getX(), center.getY() + st.getOffset());
+                double deckWidth = traverser.getDeckWidth();
+                double anchorOffset = traverser.getSlotOffset() * 0.5;
+                double offset = st.getOffset();
+                boolean sideA = (i % 2 == 0);
+
+                if (getOrientation() == LayoutTraverser.HORIZONTAL) { // Tall
+                    double y = center.getY() + offset;
+                    double x = center.getX() + (sideA ? (-deckWidth / 2.0) - anchorOffset : (deckWidth / 2.0) + anchorOffset);
+                    return new Point2D.Double(x, y);
+                } else { // Wide
+                    double x = center.getX() + offset;
+                    double y = center.getY() + (sideA ? (-deckWidth / 2.0) - anchorOffset : (deckWidth / 2.0) + anchorOffset);
+                    return new Point2D.Double(x, y);
+                }
+            }
+        }
+        return MathUtil.zeroPoint2D;
+    }
+
+    private Point2D getSlotEdgePointOrdered(int i) {
+        if (i < traverser.slotList.size()) {
+            SlotTrack st = traverser.slotList.get(i);
+            if (st != null) {
+                Point2D center = getCoordsCenter();
+                double deckWidth = traverser.getDeckWidth();
+                double offset = st.getOffset();
+                boolean sideA = (i % 2 == 0);
+
+                if (getOrientation() == LayoutTraverser.HORIZONTAL) { // Tall
+                    double y = center.getY() + offset;
+                    double x = center.getX() + (sideA ? -deckWidth / 2.0 : deckWidth / 2.0);
+                    return new Point2D.Double(x, y);
+                } else { // Wide
+                    double x = center.getX() + offset;
+                    double y = center.getY() + (sideA ? -deckWidth / 2.0 : deckWidth / 2.0);
+                    return new Point2D.Double(x, y);
                 }
             }
         }
@@ -228,7 +269,7 @@ public class LayoutTraverserView extends LayoutTrackView {
         Point2D result = getCoordsCenter();
         if (HitPointType.TRAVERSER_CENTER == connectionType) {
             // This is correct
-        } else if (HitPointType.isTraverserRayHitType(connectionType)) {
+        } else if (HitPointType.isTraverserSlotHitType(connectionType)) {
             result = getSlotCoordsIndexed(connectionType.traverserTrackIndex());
         } else {
             log.error("{}.getCoordsForConnectionType({}); Invalid connection type",
@@ -239,7 +280,7 @@ public class LayoutTraverserView extends LayoutTrackView {
 
     @Override
     public LayoutTrack getConnection(HitPointType connectionType) throws jmri.JmriException {
-        if (HitPointType.isTraverserRayHitType(connectionType)) {
+        if (HitPointType.isTraverserSlotHitType(connectionType)) {
             return getSlotConnectIndexed(connectionType.traverserTrackIndex());
         } else {
             String errString = MessageFormat.format("{0}.getCoordsForConnectionType({1}); Invalid connection type",
@@ -257,7 +298,7 @@ public class LayoutTraverserView extends LayoutTrackView {
             log.error("will throw {}", errString); // NOI18N
             throw new jmri.JmriException(errString);
         }
-        if (HitPointType.isTraverserRayHitType(connectionType)) {
+        if (HitPointType.isTraverserSlotHitType(connectionType)) {
             if ((o == null) || (o instanceof TrackSegment)) {
                 setSlotConnect((TrackSegment) o, connectionType.traverserTrackIndex());
             } else {
@@ -314,29 +355,41 @@ public class LayoutTraverserView extends LayoutTrackView {
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
+        double slotControlRadius = traverser.getSlotOffset() * 0.25;
         double distance, minDistance = POSITIVE_INFINITY;
 
         // check the center point
-        p = getCoordsCenter();
-        distance = MathUtil.distance(p, hitPoint);
-        if (distance < minDistance) {
-            minDistance = distance;
-            minPoint = p;
-            result = HitPointType.TRAVERSER_CENTER;
+        if (!requireUnconnected) {
+            p = getCoordsCenter();
+            distance = MathUtil.distance(p, hitPoint);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = p;
+                result = HitPointType.TRAVERSER_CENTER;
+            }
         }
 
         for (int k = 0; k < getNumberSlots(); k++) {
-            if (!requireUnconnected || (getSlotConnectOrdered(k) == null)) {
+            if (!isSlotDisabled(k) && (!requireUnconnected || (getSlotConnectOrdered(k) == null))) {
                 p = getSlotCoordsOrdered(k);
                 distance = MathUtil.distance(p, hitPoint);
                 if (distance < minDistance) {
                     minDistance = distance;
                     minPoint = p;
-                    result = HitPointType.traverserTrackIndexedValue(k);
+                    result = HitPointType.traverserTrackIndexedValue(getSlotIndex(k));
                 }
             }
         }
-        if (minDistance > circleRadius) {
+
+        if (result == HitPointType.TRAVERSER_CENTER) {
+            if (minDistance > circleRadius) {
+                result = HitPointType.NONE;
+            }
+        } else if (HitPointType.isTraverserSlotHitType(result)) {
+            if (minDistance > slotControlRadius) {
+                result = HitPointType.NONE;
+            }
+        } else {
             result = HitPointType.NONE;
         }
         return result;
@@ -537,14 +590,40 @@ public class LayoutTraverserView extends LayoutTrackView {
             g2.draw(new Ellipse2D.Double(center.getX() - circleRadius, center.getY() - circleRadius, circleDiameter, circleDiameter));
             g2.draw(trackControlCircleAt(center));
 
+            // Draw the slot tracks
+            if (isBlock) {
+                g2.setColor(layoutEditor.getDefaultTrackColorColor());
+                g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+                for (int i = 0; i < getNumberSlots(); i++) {
+                    if (!isSlotDisabled(i)) {
+                        Point2D edgePoint = getSlotEdgePointOrdered(i);
+                        Point2D anchorPoint = getSlotCoordsOrdered(i);
+                        g2.draw(new Line2D.Double(edgePoint, anchorPoint));
+                    }
+                }
+            }
+
             // Restore original stroke and color
             g2.setStroke(originalStroke);
             g2.setColor(originalColor);
         }
 
         // Draw the sliding bridge
-        int currentPositionIndex = getPosition();
-        if (currentPositionIndex != -1) {
+        int currentPositionConnectionIndex = getPosition();
+        int orderedIndex = -1;
+
+        if (currentPositionConnectionIndex != -1) {
+            for (int i = 0; i < getNumberSlots(); i++) {
+                if (getSlotIndex(i) == currentPositionConnectionIndex) {
+                    orderedIndex = i;
+                    break;
+                }
+            }
+        } else if (getNumberSlots() > 0) {
+            orderedIndex = 0; // Default to the first slot
+        }
+
+        if (orderedIndex != -1) {
             // Set color for bridge block
             if (isBlock) {
                 LayoutBlock lb = getLayoutBlock();
@@ -555,16 +634,30 @@ public class LayoutTraverserView extends LayoutTrackView {
                 }
             }
 
-            double deckWid = traverser.getDeckWidth();
             Point2D center = getCoordsCenter();
-            Rectangle2D bridge;
-            double offset = getSlotOffsetValue(currentPositionIndex);
+            Rectangle2D pit = getBounds();
+            double offset = getSlotOffsetValue(orderedIndex);
+            double gap = traverser.getDeckWidth() * 0.2;
+            boolean sideA = (orderedIndex % 2 == 0);
+
             if (getOrientation() == LayoutTraverser.HORIZONTAL) {
-                bridge = new Rectangle2D.Double(center.getX() + offset - deckWid / 2, center.getY() - deckWid / 2, deckWid, deckWid);
+                double y = center.getY() + offset;
+                if (sideA) {
+                    g2.draw(new Line2D.Double(pit.getMinX(), y, pit.getMaxX() - gap, y));
+                } else {
+                    g2.draw(new Line2D.Double(pit.getMinX() + gap, y, pit.getMaxX(), y));
+                }
             } else { // VERTICAL
-                bridge = new Rectangle2D.Double(center.getX() - deckWid / 2, center.getY() + offset - deckWid / 2, deckWid, deckWid);
+                double x = center.getX() + offset;
+                if (sideA) {
+                    g2.draw(new Line2D.Double(x, pit.getMinY(), x, pit.getMaxY() - gap));
+                } else {
+                    g2.draw(new Line2D.Double(x, pit.getMinY() + gap, x, pit.getMaxY()));
+                }
             }
-            g2.draw(bridge);
+        }
+        if (!layoutEditor.isEditable()) {
+            drawTurnoutControls(g2);
         }
     }
 
@@ -586,7 +679,7 @@ public class LayoutTraverserView extends LayoutTrackView {
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
         for (int j = 0; j < getNumberSlots(); j++) {
-            if ((specificType == HitPointType.NONE) || (specificType == (HitPointType.traverserTrackIndexedValue(j)))) {
+            if (!isSlotDisabled(j) && ((specificType == HitPointType.NONE) || (specificType == (HitPointType.traverserTrackIndexedValue(j))))) {
                 if (getSlotConnectOrdered(j) == null) {
                     Point2D pt = getSlotCoordsOrdered(j);
                     g2.fill(trackControlCircleAt(pt));
@@ -599,7 +692,7 @@ public class LayoutTraverserView extends LayoutTrackView {
     protected void drawTurnoutControls(Graphics2D g2) {
         if (isTurnoutControlled()) {
             for (int j = 0; j < getNumberSlots(); j++) {
-                if (getPosition() != j) {
+                if (getPosition() != getSlotIndex(j)) {
                     SlotTrack rt = traverser.slotList.get(j);
                     if (!rt.isDisabled() && !(rt.isDisabledWhenOccupied() && rt.isOccupied())) {
                         Point2D pt = getSlotCoordsOrdered(j);
@@ -613,14 +706,16 @@ public class LayoutTraverserView extends LayoutTrackView {
     @Override
     protected void drawEditControls(Graphics2D g2) {
         for (int j = 0; j < getNumberSlots(); j++) {
-            Point2D pt = getSlotCoordsOrdered(j);
+            if (!isSlotDisabled(j)) {
+                Point2D pt = getSlotCoordsOrdered(j);
 
-            if (getSlotConnectOrdered(j) == null) {
-                g2.setColor(Color.red);
-            } else {
-                g2.setColor(Color.green);
+                if (getSlotConnectOrdered(j) == null) {
+                    g2.setColor(Color.red);
+                } else {
+                    g2.setColor(Color.green);
+                }
+                g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
             }
-            g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
         }
     }
 

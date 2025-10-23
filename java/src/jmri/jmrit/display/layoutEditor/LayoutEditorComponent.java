@@ -562,8 +562,14 @@ class LayoutEditorComponent extends JComponent {
                 if (editable || !lt.isHidden()) {
                     lt.drawTurnoutControls(g2);
                 }
+            }else if (tr instanceof LayoutTraverserView) {
+                LayoutTraverserView lt = (LayoutTraverserView) tr;
+                if (editable || !lt.isHidden()) {
+                    lt.drawTurnoutControls(g2);
+                }
             }
         });
+
     }
 
     private void drawSelectionRect(Graphics2D g2) {

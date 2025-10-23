@@ -489,6 +489,15 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             slotTurnoutLabelA = new JLabel();
             disabledCheckBoxA = new JCheckBox(Bundle.getMessage("Disabled"));
             disabledCheckBoxA.setSelected(slotA.isDisabled());
+            disabledCheckBoxA.addActionListener((ActionEvent e) -> {
+                if (disabledCheckBoxA.isSelected() && (slotA.getConnect() != null)) {
+                    JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
+                            Bundle.getMessage("ErrorTraverserSlotConnected"),
+                            Bundle.getMessage("ErrorTitle"),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    disabledCheckBoxA.setSelected(false);
+                }
+            });
 
             c.gridy = 0;
             c.gridx = 0;
@@ -518,6 +527,15 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             slotTurnoutLabelB = new JLabel();
             disabledCheckBoxB = new JCheckBox(Bundle.getMessage("Disabled"));
             disabledCheckBoxB.setSelected(slotB.isDisabled());
+            disabledCheckBoxB.addActionListener((ActionEvent e) -> {
+                if (disabledCheckBoxB.isSelected() && (slotB.getConnect() != null)) {
+                    JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
+                            Bundle.getMessage("ErrorTraverserSlotConnected"),
+                            Bundle.getMessage("ErrorTitle"),
+                            JmriJOptionPane.ERROR_MESSAGE);
+                    disabledCheckBoxB.setSelected(false);
+                }
+            });
 
             c.gridy = 1;
             c.gridx = 0;
