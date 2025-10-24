@@ -52,6 +52,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
     private final NamedBeanComboBox<Block> editLayoutTraverserBlockNameComboBox = new NamedBeanComboBox<>(
              InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JButton editLayoutTraverserSegmentEditBlockButton;
+    private final JComboBox<String> editLayoutTraverserMainlineComboBox = new JComboBox<>();
 
     private JPanel editLayoutTraverserSlotPanel;
     private JButton editLayoutTraverserAddSlotButton;
@@ -134,6 +135,10 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         blockPanel.add(editLayoutTraverserBlockNameComboBox);
         editLayoutTraverserSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", ""));
         blockPanel.add(editLayoutTraverserSegmentEditBlockButton);
+        editLayoutTraverserMainlineComboBox.removeAllItems();
+        editLayoutTraverserMainlineComboBox.addItem(Bundle.getMessage("Mainline"));
+        editLayoutTraverserMainlineComboBox.addItem(Bundle.getMessage("NotMainline"));
+        blockPanel.add(editLayoutTraverserMainlineComboBox);
         headerPane.add(blockPanel);
 
         // Controls Panel
@@ -166,6 +171,11 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         editLayoutTraverserBlockNameComboBox.setSelectedItem(layoutTraverser.getLayoutBlock() != null ? layoutTraverser.getLayoutBlock().getBlock() : null);
         editLayoutTraverserDccControlledCheckBox.setSelected(layoutTraverser.isTurnoutControlled());
         editLayoutTraverserUseSignalMastsCheckBox.setSelected(layoutTraverser.isDispatcherManaged());
+        if (layoutTraverser.isMainline()) {
+            editLayoutTraverserMainlineComboBox.setSelectedIndex(0);
+        } else {
+            editLayoutTraverserMainlineComboBox.setSelectedIndex(1);
+        }
 
         // Add listeners
         editLayoutTraverserAddSlotButton.addActionListener(this::addTrackPairPressed);
@@ -420,6 +430,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             layoutTraverser.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutTraverserNeedsRedraw = true;
         }
+        layoutTraverser.setMainline(editLayoutTraverserMainlineComboBox.getSelectedIndex() == 0);
 
         saveSlotPanelDetail();
         editLayoutTraverserOpen = false;
