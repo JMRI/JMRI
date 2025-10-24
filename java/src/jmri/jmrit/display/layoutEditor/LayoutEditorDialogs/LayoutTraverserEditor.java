@@ -176,6 +176,11 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         } else {
             editLayoutTraverserMainlineComboBox.setSelectedIndex(1);
         }
+        editLayoutTraverserMainlineComboBox.addActionListener((java.awt.event.ActionEvent e) -> {
+            if (layoutTraverser != null) {
+                layoutTraverser.setMainline(editLayoutTraverserMainlineComboBox.getSelectedIndex() == 0);
+            }
+        });
 
         // Add listeners
         editLayoutTraverserAddSlotButton.addActionListener(this::addTrackPairPressed);

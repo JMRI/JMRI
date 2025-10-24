@@ -35,12 +35,6 @@ import jmri.util.MathUtil;
  */
 public class LayoutTraverser extends LayoutTrack {
 
-    /**
-     * Constructor method
-     *
-     * @param id           the name for the traverser
-     * @param models what layout editor panel to put it in
-     */
     public LayoutTraverser(@Nonnull String id, @Nonnull LayoutEditor models) {
         super(id, models);
         recalculateDimensions();
@@ -59,6 +53,7 @@ public class LayoutTraverser extends LayoutTrack {
     private double deckLength = 100.0;
     private double deckWidth = 20.0;
     private int orientation = HORIZONTAL;
+    private boolean mainline = false;
     private int lastKnownIndex = -1;
 
     private int signalIconPlacement = 0; // 0: Do Not Place, 1: Left, 2: Right
@@ -200,7 +195,7 @@ public class LayoutTraverser extends LayoutTrack {
      * @param newLayoutBlock the LayoutBlock to set
      */
     public void setLayoutBlock(@CheckForNull LayoutBlock newLayoutBlock) {
-        LayoutBlock layoutBlock = getLayoutBlock();
+        LayoutBlock layoutBlock = getLayoutBlock(); // This is for the traverser itself
         if (layoutBlock != newLayoutBlock) {
             /// block has changed, if old block exists, decrement use
             if (layoutBlock != null) {
@@ -583,9 +578,20 @@ public class LayoutTraverser extends LayoutTrack {
 
     @Override
     public boolean isMainline() {
-        return false;
+        return mainline;
     }
 
+    /**
+     * Set the mainline status of the traverser bridge itself.
+     * @param main true if the bridge is mainline, false otherwise.
+     */
+    public void setMainline(boolean main) {
+        if (mainline != main) {
+            mainline = main;
+            models.redrawPanel();
+            models.setDirty();
+        }
+    }
 
     public String tLayoutBlockName = "";
     public String tExitSignalMastName = "";
@@ -621,6 +627,9 @@ public class LayoutTraverser extends LayoutTrack {
                 rt.setApproachMast(rt.approachMastName);
             }
         });
+
+        // Recalculate dimensions now that all slots are loaded
+        recalculateDimensions();
     }
 
     /**

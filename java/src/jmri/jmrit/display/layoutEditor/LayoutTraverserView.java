@@ -566,7 +566,10 @@ public class LayoutTraverserView extends LayoutTrackView {
 
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        if (!isMain) return; // Traversers are always mainline
+        // Only draw in the appropriate pass (mainline or sideline)
+        if (isMain != traverser.isMainline()) {
+            return;
+        }
 
         float trackWidth = 2.F;
 
