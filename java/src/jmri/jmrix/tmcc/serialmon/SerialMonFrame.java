@@ -9,6 +9,8 @@ import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
  * Frame displaying (and logging) TMCC serial command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
+ * with additions and edits by
+ * @author Timothy Jump Copyright (C) 2025
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
@@ -134,29 +136,26 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 31:
                                 return "TMCC2 - Engine " + A + " - Blow Horn 2";
                             default:
-                                return "TMCC2 - Engine " + A + " - action command D=" + D;
+                                return "TMCC2 - Engine " + A + " - Unassigned FnKey TMCC2 (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
 
                     case 1: // If C (TMCC Command Code) == 1
-                        if ((D & 0x17) == 0) {
-                            return "TMCC2 - Engine " + A + " - Momentum Low";
-                        }
-                        if ((D & 0x17) == 1) {
-                            return "TMCC2 - Engine " + A + " - Momentum Medium";
-                        }
-                        if ((D & 0x17) == 2) {
-                            return "TMCC2 - Engine " + A + " - Momentum High";
-                        }
-                        if ((D & 0x17) == 3) {
-                            return "TMCC2 - Engine ID " + A + " - Set";
-                        }
-                        if ((D & 0x17) == 6) {
-                            return "TMCC2 - Engine " + A + " - Unassigned FnKey 111";
+                        switch (D & 0x17) {
+                            case 0:
+                                return "TMCC2 - Engine " + A + " - Momentum Low";
+                            case 1:
+                                return "TMCC2 - Engine " + A + " - Momentum Medium";
+                            case 2:
+                                return "TMCC2 - Engine " + A + " - Momentum High";
+                            case 3:
+                                return "TMCC2 - Engine ID " + A + " - Set";
+                            default:
+                                return "TMCC2 - Engine " + A + " - Unassigned FnKey TMCC2 (Case C=1) - with A= " + A + " C= " + C + " D= " + D;
                         }
                     
-                        //$FALL-THROUGH$
+                    //$FALL-THROUGH$
                     case 2: // If C (TMCC Command Code) == 2
-                        return "TMCC2 - Engine " + A + " - Change Speed (Relative) by +" + (D - 5);
+                        return "TMCC2 - Engine " + A + " - Change Speed (Relative) by " + (D - 5);
                         
                     case 3: // If C (TMCC Command Code) == 3
                     default:    // to let the compiler know there are only 3 cases
@@ -175,38 +174,70 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
-                if ((C == 0) && (D == 0)) {
-                    return "Throw switch " + A + " - THROUGH";
-                } else if ((C == 0) && (D == 0x1F)) {
-                    return "Throw switch " + A + " - OUT";
-                } else if ((C == 1) && (D == 0x0B)) {
-                    return "Switch ID " + A + " - Set";                
-                } else if (C == 2) {
-                    return "Assign switch " + A + " to route " + D + " - THROUGH";
-                } else if (C == 3) {
-                    return "Assign switch " + A + " to route " + D + " - OUT";
-                } else {
-                    return "unrecognized switch command with A=" + A + " C=" + C + " D=" + D;
+                switch (C) {
+                    case 0: // If C (TMCC Command Code) == 0
+                        switch (D) {
+                            case 0:
+                                return "Throw Switch " + A + " - THROUGH/CLOSED";
+                            case 31:
+                                return "Throw Switch " + A + " - OUT/THROWN";
+                            default:
+                                return "Unrecognized Switch(SW) Command (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
+                        }
+
+                    case 1: // If C (TMCC Command Code) == 1
+                        switch (D) {
+                            case 11:
+                                return "Switch ID " + A + " - Set";
+                            default:
+                                return "Unrecognized Switch(SW) Command (Cases C=1) - with A= " + A + " C= " + C + " D= " + D;                                
+                        }
+
+                    //$FALL-THROUGH$
+                    case 2: // If C (TMCC Command Code) == 2
+                        return "Assign switch " + A + " to route " + D + " - THROUGH";
+
+                    case 3: // If C (TMCC Command Code) == 3
+                        return "Assign switch " + A + " to route " + D + " - OUT";
+                    default:
+                        return "Unrecognized Switch(SW) Command (Cases C= 2-3) - with A= " + A + " C= " + C + " D= " + D;
                 }
+
+
             } else if ((val & 0xF000) == 0xD000) {
                 // TMCC1 Route Commands
                 int A = (val / 128) & 0x1F; // A is TMCC Adddress Code
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
-                if ((C == 0) && (D == 0x1F)) {
-                    return "Route " + A + " - THROW";
-                } else if ((C == 1) && (D == 0x0C)) {
-                    return "Route " + A + " - CLEAR";
-                } else {
-                      return "unrecognized route command with A=" + A + " C=" + C + " D=" + D;
+                switch (C) {
+                    case 0: // If C (TMCC Command Code) == 0
+                        switch (D) {
+                            case 15:
+                                return "Route " + A + " - THROW";
+                            default:
+                                return "Unrecognized Route(RTE) Command (Cases C=0) - with A= " + A + " C= " + C + " D= " + D;
+                        }
+
+                    case 1: // If C (TMCC Command Code) == 0
+                        switch (D) {
+                            case 12:
+                                return "Route " + A + " - CLEAR";
+                            default:
+                                return "Unrecognized Route(RTE) Command (Cases C=1) - with A= " + A + " C= " + C + " D= " + D;
+                           
+                        }
+
+                default:
+                    return "Unrecognized Route(RTE) Command (Cases C) - with A= " + A + " C= " + C + " D= " + D;
                 }
+
             } else if ((val & 0xC000) == 0x0000) {
                 // TMCC1 Engine Commands
                 int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
                 switch (C) {
-                    case 0: // If C (TMCC Command Code) == 0                    
+                    case 0: // If C (TMCC Command Code) == 0
                         switch (D) {
                             case 0:
                                 return "TMCC1 - Engine " + A + " - Forward Direction";
@@ -273,24 +304,21 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 31:
                                 return "TMCC1 - Engine " + A + " - Blow Horn 2";
                             default:
-                                return "TMCC1 - Engine " + A + " - action command D=" + D;
+                                return "TMCC1 - Engine " + A + " - Unassigned FnKey TMCC1 (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
                         }
 
                     case 1: // If C (TMCC Command Code) == 1
-                        if ((D & 0x17) == 0) {
-                            return "TMCC1 - Engine " + A + " - Momentum Low";
-                        }
-                        if ((D & 0x17) == 1) {
-                            return "TMCC1 - Engine " + A + " - Momentum Medium";
-                        }
-                        if ((D & 0x17) == 2) {
-                            return "TMCC1 - Engine " + A + " - Momentum High";
-                        }
-                        if ((D & 0x17) == 3) {
-                            return "TMCC1 - Engine ID " + A + " - Set";
-                        }
-                        if ((D & 0x17) == 6) {
-                            return "TMCC1 - Engine " + A + " - Unassigned FnKey 222";
+                        switch (D & 0x17) {
+                            case 0:
+                                return "TMCC1 - Engine " + A + " - Momentum Low";
+                            case 1:
+                                return "TMCC1 - Engine " + A + " - Momentum Medium";
+                            case 2:
+                                return "TMCC1 - Engine " + A + " - Momentum High";
+                            case 3:
+                                return "TMCC1 - Engine ID " + A + " - Set";
+                            default:
+                                return "TMCC1 - Engine " + A + " - Unassigned FnKey TMCC1 (Case C=1) - with A= " + A + " C= " + C + " D= " + D;
                         }
                     
                     //$FALL-THROUGH$
@@ -302,65 +330,110 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                         return "TMCC1 (32 Speed Steps) - Engine " + A + " - Speed (Absolute) = " + D;
                 }
 
+
             } else if ((val & 0xF800) == 0xC800) {
                 // TMCC1 Train Commands
                 int A = (val / 128) & 0x0F; // A is TMCC Adddress Code
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
-                return "unrecognized train command with A=" + A + " C=" + C + " D=" + D;
+                return "Unrecognized Train(TR) Command with A= " + A + " C= " + C + " D= " + D;
+
+
             } else if ((val & 0xC000) == 0x8000) {
                 // TMCC1 Accessory Commands
                 int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
-                if ((C == 0) && (D == 0x08)) {
-                    return "Aux 1 - ACC " + A + " - OFF";
-                } else if ((C == 0) && (D == 0x09)) {
-                    return "Aux 1 - ACC " + A + " - OPTION 1";
-                } else if ((C == 0) && (D == 0x0A)) {
-                    return "Aux 1 - ACC " + A + " - OPTION 2";
-                } else if ((C == 0) && (D == 0x0B)) {
-                    return "Aux 1 - ACC " + A + " - ON";
-                } else if ((C == 0) && (D == 0x0C)) {
-                    return "Aux 2 - ACC " + A + " - OFF";
-                } else if ((C == 0) && (D == 0x0D)) {
-                    return "Aux 2 - ACC " + A + " - OPTION 1";
-                } else if ((C == 0) && (D == 0x0E)) {
-                    return "Aux 2 - ACC " + A + " - OPTION 2";
-                } else if ((C == 0) && (D == 0x0F)) {
-                    return "Aux 2 - ACC " + A + " - ON";
-//                } else if ((C == 0) && (D == 0x??)) {
-//                    return "Numeric Command - ACC " + A + " - 0-9";
-                } else if ((C == 1) && (D == 0x00)) {
-                    return "ALL ACC OFF";
-                } else if ((C == 1) && (D == 0x1F)) {
-                    return "ALL ACC ON";
-                } else if ((C == 1) && (D == 0x0B)) {
-                    return "Accessory ID " + A + " - Set";
+                switch (C) {
+                    case 0: // If C (TMCC Command Code) == 0
+                        switch (D) {
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 7:
+                            case 8:
+                                return "Aux 1 - ACC " + A + " - OFF";
+                            case 9:
+                                return "Aux 1 - ACC " + A + " - OPTION 1";
+                            case 10:
+                                return "Aux 1 - ACC " + A + " - OPTION 2";
+                            case 11:
+                                return "Aux 1 - ACC " + A + " - ON";
+                            case 12:
+                                return "Aux 2 - ACC " + A + " - OFF";
+                            case 13:
+                                return "Aux 2 - ACC " + A + " - OPTION 1";
+                            case 14:
+                                return "Aux 2 - ACC " + A + " - OPTION 2";
+                            case 15:
+                                return "Aux 2 - ACC " + A + " - ON";
+                            default:
+                                return "Unrecognized Accessory(ACC) Command (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
+                        }
+                        
+                    case 1: // If C (TMCC Command Code) == 1
+                        switch (D) {
+                            case 0:
+                                return "ALL ACC OFF";
+                            case 11:
+                                return "Accessory ID " + A + " - Set";
+                            case 15:
+                                return "ALL ACC ON";
 //                } else if ((C == 1) && (D == 0x??)) {
 //                    return "Assign Aux 1 to Group D " + A + " - 0-9";
 //                } else if ((C == 1) && (D == 0x??)) {
 //                    return "Assign Aux 2 to Group D " + A + " - 0-9"";
-                } else {
-                    return "unrecognized accessory command with A=" + A + " C=" + C + " D=" + D;
+                            default:
+                                return "Unrecognized Accessory(ACC) Command (Case C=1) - with A= " + A + " C= " + C + " D= " + D;
+                        }
+
+               default:
+                    return "Unrecognized Accessory(ACC) Command (Case C) - with A= " + A + " C= " + C + " D= " + D;
                 }
+
+
             } else if ((val & 0xF800) == 0xC000) {
                 // TMCC1 Group Commands
                 int A = (val / 128) & 0x0F; // A is TMCC Adddress Code
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
-                if ((C == 0) && (D == 0x08)) {
-                    return "GROUP - ACC " + A + " - OFF";
-                } else if ((C == 0) && (D == 0x09)) {
-                    return "GROUP - ACC " + A + " - OPTION 1";
-                } else if ((C == 0) && (D == 0x0A)) {
-                    return "GROUP - ACC " + A + " - OPTION 2";
-                } else if ((C == 0) && (D == 0x0B)) {
-                    return "GROUP - ACC " + A + " - ON";
-                } else if ((C == 1) && (D == 0x0C)) {
-                    return "GROUP - ACC " + A + " - CLEAR";
-                } else {
-                    return "unrecognized group command with A=" + A + " C=" + C + " D=" + D;
+                switch (C) {
+                    case 0: // If C (TMCC Command Code) == 0
+                        switch (D) {
+                            case 0:
+                            case 1:
+                            case 2:
+                            case 3:
+                            case 4:
+                            case 5:
+                            case 6:
+                            case 7:
+                            case 8:
+                                return "GROUP - ACC " + A + " - OFF";
+                            case 9:
+                                return "GROUP - ACC " + A + " - OPTION 1";
+                            case 10:
+                                return "GROUP - ACC " + A + " - OPTION 2";
+                            case 11:
+                                return "GROUP - ACC " + A + " - ON";
+                            default:
+                                return "Unrecognized Group(GR) Command (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
+                        }
+
+                    case 1: // If C (TMCC Command Code) == 1
+                        switch (D) {
+                            case 12:
+                                return "GROUP - ACC " + A + " - CLEAR";
+                            default:
+                                return "Unrecognized Group(GR) Command (Case C=1) - with A= " + A + " C= " + C + " D= " + D;                              
+                        }
+
+                default:
+                    return "Unrecognized Group(GR) Command (Case C) - with A= " + A + " C= " + C + " D= " + D;
                 }
             }            
         }
@@ -368,19 +441,26 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
         // TMCC Error parsing
         if (opCode == 0x00) {
-//            int A = (val / 128) & 0x7F; // A is TMCC Adddress Code
             int C = (val / 32) & 0x03; // C is TMCC Command Code
             int D = val & 0x1F; // D is TMCC Data Code
-            if ((C == 0) && (D == 0)) {
-                return "Address Must be Between 1-98 for TMCC";
-            } else if ((C == 0) && (D == 0x01)) {
-                return "CV Must Equal 1 for Programming TMCC Loco/Engine, Switch, Accessory ID#s";
-            } else if ((C == 0) && (D == 0x02)) {
-                return "CV Must Equal 2 for Programming TMCC Feature Type";
-            } else if ((C == 0) && (D == 0x03)) {
-                return "Value Entered is Not a TMCC1 Feature Type";
-            } else if ((C == 0) && (D == 0x04)) {
-                return "Value Entered is Not a TMCC2 Feature Type";                
+            switch (C) {
+                case 0: // If C (TMCC Command Code) == 0
+                    switch (D) {
+                        case 0:
+                            return "Address Must be Between 1-98 for TMCC";
+                        case 1:
+                            return "CV Must Equal 1 for Programming TMCC Loco/Engine, Switch, Accessory ID#s";
+                        case 2:
+                            return "CV Must Equal 2 for Programming TMCC Feature Type";
+                        case 3:
+                            return "Value Entered is Not a TMCC1 Feature Type";
+                        case 4:
+                            return "Value Entered is Not a TMCC2 Feature Type";
+                        default:
+                            return "Unrecognized TMCC Error (Case C=0) - with C= " + C + " D= " + D;
+                    }
+            default:
+                return "Unrecognized TMCC Error (Case C) - with C= " + C + " D= " + D;
             }
         }
         
