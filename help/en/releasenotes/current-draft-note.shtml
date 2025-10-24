@@ -499,7 +499,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>New feature, auto select car types for a train based on the locations serviced by train's route.</li>
         </ul>
 
    <h3>Panel Editor</h3>
