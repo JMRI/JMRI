@@ -43,8 +43,9 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         if (!lt.getBlockName().isEmpty()) {
             element.setAttribute("blockname", lt.getBlockName());
         }
-        element.setAttribute("slotOffset", String.valueOf(lt.getSlotOffset()));
+        element.setAttribute("slotoffset", String.valueOf(lt.getSlotOffset()));
         element.setAttribute("orientation", String.valueOf(lt.getOrientation()));
+        element.setAttribute("mainline", lt.isMainline() ? "yes" : "no");
 
         Point2D coords = pv.getCoordsCenter();
         element.setAttribute("xcen", "" + coords.getX());
@@ -71,6 +72,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
             TrackSegment t = lt.getSlotConnectOrdered(i);
             if (t != null) {
                 rElem.setAttribute("connectname", t.getId());
+                rElem.setAttribute("type", "" + jmri.jmrit.display.layoutEditor.HitPointType.TRAVERSER_SLOT_0.ordinal() + i);
             }
             String mastName = lt.getSlotList().get(i).getApproachMastName();
             if (mastName != null && !mastName.isEmpty()) {
@@ -116,6 +118,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
 
         // get center point
         String name = element.getAttribute("ident").getValue();
+        log.info("Loading layouttraverser: " + name);
         double x = 0.0;
         double y = 0.0;
         double slotOffset = 25.0;
@@ -123,11 +126,14 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         try {
             x = element.getAttribute("xcen").getFloatValue();
             y = element.getAttribute("ycen").getFloatValue();
-            if (element.getAttribute("slotOffset") != null) {
-                slotOffset = element.getAttribute("slotOffset").getDoubleValue();
+            log.info("  xcen=" + x + ", ycen=" + y);
+            if (element.getAttribute("slotoffset") != null) {
+                slotOffset = element.getAttribute("slotoffset").getDoubleValue();
+                log.info("  slotOffset=" + slotOffset);
             }
             if (element.getAttribute("orientation") != null) {
                 orientation = element.getAttribute("orientation").getIntValue();
+                log.info("  orientation=" + orientation);
             }
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert layouttraverser attributes", e);
@@ -142,33 +148,45 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         lt.setSlotOffset(slotOffset);
         lt.setOrientation(orientation);
 
-        // get remaining attribute
-        Attribute a = element.getAttribute("blockname");
+        // get remaining attributes
+        Attribute a = element.getAttribute("mainline");
+        if (a != null) {
+            lt.setMainline("yes".equalsIgnoreCase(a.getValue()));
+            log.info("  mainline=" + lt.isMainline());
+        }
+
+        a = element.getAttribute("blockname");
         if (a != null) {
             lt.tLayoutBlockName = a.getValue();
+            log.info("  blockname=" + lt.tLayoutBlockName);
         }
 
         a = element.getAttribute("turnoutControlled");
         if (a != null) {
             lt.setTurnoutControlled("yes".equalsIgnoreCase(a.getValue()));
+            log.info("  turnoutControlled=" + lt.isTurnoutControlled());
         }
 
         a = element.getAttribute("dispatcherManaged");
         if (a != null) {
             lt.setDispatcherManaged("yes".equalsIgnoreCase(a.getValue()));
+            log.info("  dispatcherManaged=" + lt.isDispatcherManaged());
             if (lt.isDispatcherManaged()) {
                 a = element.getAttribute("exitmast");
                 if (a != null) {
                     lt.tExitSignalMastName = a.getValue();
+                    log.info("  exitmast=" + lt.tExitSignalMastName);
                 }
                 a = element.getAttribute("buffermast");
                 if (a != null) {
                     lt.tBufferSignalMastName = a.getValue();
+                    log.info("  buffermast=" + lt.tBufferSignalMastName);
                 }
                 a = element.getAttribute("signalIconPlacement");
                 if (a != null) {
                     try {
                         lt.setSignalIconPlacement(a.getIntValue());
+                        log.info("  signalIconPlacement=" + lt.getSignalIconPlacement());
                     } catch (DataConversionException e) {
                         log.error("failed to convert signalIconPlacement attribute");
                     }
@@ -178,6 +196,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
 
         // load slot tracks
         List<Element> slotTrackList = element.getChildren("slot");
+        log.info("  found " + slotTrackList.size() + " slot elements");
         if (slotTrackList.size() > 0) {
             for (Element value : slotTrackList) {
                 double offset = 0.0;
@@ -185,6 +204,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                 try {
                     offset = (value.getAttribute("offset")).getFloatValue();
                     index = (value.getAttribute("index")).getIntValue();
+                    log.info("    loading slot index " + index + " with offset " + offset);
                 } catch (DataConversionException e) {
                     log.error("failed to convert slot track offset or index attributes");
                 }
@@ -192,32 +212,39 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                 a = value.getAttribute("connectname");
                 if (a != null) {
                     connectName = a.getValue();
+                    log.info("      connectname=" + connectName);
                 }
                 lt.addSlotTrack(offset, index, connectName);
                 a = value.getAttribute("approachmast");
                 if (a != null) {
                     lt.getSlotList().get(lt.getNumberSlots() - 1).approachMastName = a.getValue();
+                    log.info("      approachmast=" + a.getValue());
                 }
                 a = value.getAttribute("turnout");
                 if (lt.isTurnoutControlled() && a != null) {
+                    log.info("      turnout=" + a.getValue());
                     if (value.getAttribute("turnoutstate").getValue().equals("thrown")) {
                         lt.setSlotTurnout(index, value.getAttribute("turnout").getValue(), Turnout.THROWN);
                     } else {
                         lt.setSlotTurnout(index, value.getAttribute("turnout").getValue(), Turnout.CLOSED);
                     }
+                    log.info("      turnoutstate=" + value.getAttribute("turnoutstate").getValue());
                     a = value.getAttribute("disabled");
                     if (a != null) {
                         lt.setSlotDisabled(index, "yes".equalsIgnoreCase(a.getValue()));
+                        log.info("      disabled=" + a.getValue());
                     }
                     a = value.getAttribute("disableWhenOccupied");
                     if (a != null) {
                         lt.setSlotDisabledWhenOccupied(index, "yes".equalsIgnoreCase(a.getValue()));
+                        log.info("      disableWhenOccupied=" + a.getValue());
                     }
                 }
             }
         }
 
         loadLogixNG_Data(lv, element);
+        log.info("  finished loading traverser " + name);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserViewXml.class);

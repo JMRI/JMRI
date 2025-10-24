@@ -57,6 +57,7 @@
         <xs:element name="multisensoricon"    type="EditorMultiSensorIconType"   minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="levelxing"          type="EditorLevelXingType"         minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutturntable"    type="EditorLayoutTurntableType"   minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="layouttraverser"    type="EditorLayoutTraverserType"   minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="linkinglabel"       type="EditorLinkingLabelType"      minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="locoicon"           type="EditorLocoIconType"          minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="BlockContentsIcon"  type="EditorBlockContentsIconType" minOccurs="0" maxOccurs="unbounded" />
