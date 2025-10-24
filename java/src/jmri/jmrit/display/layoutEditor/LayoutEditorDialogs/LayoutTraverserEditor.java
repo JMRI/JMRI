@@ -135,9 +135,13 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         blockPanel.add(editLayoutTraverserBlockNameComboBox);
         editLayoutTraverserSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", ""));
         blockPanel.add(editLayoutTraverserSegmentEditBlockButton);
+
+        boolean mainlineSaved = layoutTraverser.isMainline();
         editLayoutTraverserMainlineComboBox.removeAllItems();
         editLayoutTraverserMainlineComboBox.addItem(Bundle.getMessage("Mainline"));
         editLayoutTraverserMainlineComboBox.addItem(Bundle.getMessage("NotMainline"));
+        layoutTraverser.setMainline(mainlineSaved);  // restore the current state
+
         blockPanel.add(editLayoutTraverserMainlineComboBox);
         headerPane.add(blockPanel);
 
