@@ -1504,14 +1504,18 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         switch (trainsFromButtonGroup.getSelection().getActionCommand()) {
             case "TRAINSFROMROSTER":
-                info.setRosterId(((RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem()).getId());
-                info.setDccAddress(((RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem()).getDccAddress());
+                if (rosterComboBox.getRosterEntryComboBox().getSelectedItem() instanceof RosterEntry) {
+                    info.setRosterId(((RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem()).getId());
+                    info.setDccAddress(((RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem()).getDccAddress());
+                }
                 trainInfo.setTrainsFrom(TrainsFrom.TRAINSFROMROSTER);
                 setTrainsFromOptions(trainInfo.getTrainsFrom());
                 break;
             case "TRAINSFROMOPS":
-                info.setTrainName(((Train) trainSelectBox.getSelectedItem()).toString());
-                info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
+                if (trainSelectBox.getSelectedIndex() > 0) {
+                    info.setTrainName(((Train) trainSelectBox.getSelectedItem()).toString());
+                    info.setDccAddress(String.valueOf(dccAddressSpinner.getValue()));
+                }
                 trainInfo.setTrainsFrom(TrainsFrom.TRAINSFROMOPS);
                 setTrainsFromOptions(trainInfo.getTrainsFrom());
                 break;
