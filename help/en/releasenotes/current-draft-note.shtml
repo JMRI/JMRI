@@ -501,6 +501,7 @@
         <a id="Operations" name="Operations"></a>
         <ul>
             <li>New feature, auto select car types for a train based on the locations serviced by train's route.</li>
+            <li>Major improvement to "Test Destinations" for classification / interchange and staging tracks.</li>
         </ul>
 
    <h3>Panel Editor</h3>
