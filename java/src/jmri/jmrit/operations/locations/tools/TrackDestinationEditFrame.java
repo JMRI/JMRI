@@ -250,7 +250,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
     private boolean checkDestinations() {
         // 1st check to see if all car types have a destination
-        if (!checkInterchangeCarTypes()) {
+        if (!checkDestinationCarTypes()) {
             return false;
         }
         // now check each destination
@@ -494,7 +494,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
      * Used to determine if every car type accepted by the interchange can be
      * sent to another destination.
      */
-    private boolean checkInterchangeCarTypes() {
+    private boolean checkDestinationCarTypes() {
         checkTypes: for (String type : InstanceManager.getDefault(CarTypes.class).getNames()) {
             if (!_track.isTypeNameAccepted(type)) {
                 continue;
@@ -511,22 +511,22 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         }
                     }
                 }
-                int response = JmriJOptionPane.showConfirmDialog(this,
-                        Bundle.getMessage("ErrorNoDestinatonType", type, _track.getTrackTypeName(),
-                                _track.getLocation().getName(), _track.getName()),
-                        Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
-                if (response == JmriJOptionPane.OK_OPTION) {
-                    response = JmriJOptionPane.showConfirmDialog(this,
-                            Bundle.getMessage("RemoveCarType", type, _track.getTrackTypeName(),
-                                    _track.getLocation().getName(), _track.getName()),
-                            Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.YES_NO_OPTION);
-                    if (response == JmriJOptionPane.YES_OPTION) {
-                        _track.deleteTypeName(type);
-                    }
-                    continue checkTypes;
-                }
-                return false; // done
             }
+            int response = JmriJOptionPane.showConfirmDialog(this,
+                    Bundle.getMessage("ErrorNoDestinatonType", type, _track.getTrackTypeName(),
+                            _track.getLocation().getName(), _track.getName()),
+                    Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.OK_CANCEL_OPTION);
+            if (response == JmriJOptionPane.OK_OPTION) {
+                response = JmriJOptionPane.showConfirmDialog(this,
+                        Bundle.getMessage("RemoveCarType", type, _track.getTrackTypeName(),
+                                _track.getLocation().getName(), _track.getName()),
+                        Bundle.getMessage("WarningCarMayNotMove"), JmriJOptionPane.YES_NO_OPTION);
+                if (response == JmriJOptionPane.YES_OPTION) {
+                    _track.deleteTypeName(type);
+                }
+                continue;
+            }
+            return false; // done
         }
         return true;
     }
