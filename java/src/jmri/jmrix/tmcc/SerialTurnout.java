@@ -68,7 +68,7 @@ public class SerialTurnout extends AbstractTurnout {
         }
 
         // sort out states for TMCC (ACC/Aux1)
-        if (_number > 99 && _number < 110) {
+        if (_number >= 100 && _number < 110) {
             if ((newState & Turnout.CLOSED) != 0) {
                 // first look for the double case, which we can't handle
                 if ((newState & Turnout.THROWN) != 0) {
@@ -86,7 +86,7 @@ public class SerialTurnout extends AbstractTurnout {
         }
 
         // sort out states for TMCC (ACC/Aux2)
-        if (_number > 109 && _number < 120) {
+        if (_number >= 110 && _number < 120) {
             if ((newState & Turnout.CLOSED) != 0) {
                 // first look for the double case, which we can't handle
                 if ((newState & Turnout.THROWN) != 0) {
@@ -123,7 +123,7 @@ public class SerialTurnout extends AbstractTurnout {
             }
         }
 
-        if (_number > 99 && _number < 110) {
+        if (_number >= 100 && _number < 110) {
             if (closed) {
                 m.putAsWord(0x8008 + ((_number - 100) * 128));
             } else {
@@ -131,7 +131,7 @@ public class SerialTurnout extends AbstractTurnout {
             }
         }
 
-        if (_number > 109 && _number < 120) {
+        if (_number >= 110 && _number < 120) {
             if (closed) {
                 m.putAsWord(0x800C + ((_number - 110) * 128));
             } else {
