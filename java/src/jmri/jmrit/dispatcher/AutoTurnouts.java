@@ -248,7 +248,9 @@ public class AutoTurnouts {
              this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of
              been set correctly for the train to have arrived in the first place.
              */
-            log.trace("{}:PrevBlock[{}]", prevBlock == null ?   "Null" : prevBlock.getDisplayName());
+            log.trace("curBlock {}:PrevBlock[{}]",
+                    curBlock == null ?   "Null" : curBlock.getDisplayName(),
+                    prevBlock == null ?   "Null" : prevBlock.getDisplayName());
             if (prevBlock != null) {
                 var blockName = curBlock.getUserName();
                 if (blockName != null) {
