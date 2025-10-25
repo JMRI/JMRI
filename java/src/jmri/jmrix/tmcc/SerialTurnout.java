@@ -13,7 +13,10 @@ import org.slf4j.LoggerFactory;
  * than one Turnout object pointing to a single device is not allowed.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
+
 public class SerialTurnout extends AbstractTurnout {
 
     // data members
@@ -46,20 +49,58 @@ public class SerialTurnout extends AbstractTurnout {
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
 
-        // sort out states
-        if ((newState & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if ((newState & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", newState);
-                return;
+        // sort out states for TMCC (SW/Turnout)
+        if (_number < 100) {
+            if ((newState & Turnout.CLOSED) != 0) {
+                // first look for the double case, which we can't handle
+                if ((newState & Turnout.THROWN) != 0) {
+                    // this is the disaster case!
+                    log.error("Cannot command both CLOSED and THROWN {}", newState);
+                    return;
+                } else {
+                    // send a CLOSED command
+                    sendMessage(true ^ getInverted());
+                }
             } else {
-                // send a CLOSED command
-                sendMessage(true ^ getInverted());
+                // send a THROWN command
+                sendMessage(false ^ getInverted());
             }
-        } else {
-            // send a THROWN command
-            sendMessage(false ^ getInverted());
+        }
+
+        // sort out states for TMCC (ACC/Aux1)
+        if (_number >= 100 && _number < 110) {
+            if ((newState & Turnout.CLOSED) != 0) {
+                // first look for the double case, which we can't handle
+                if ((newState & Turnout.THROWN) != 0) {
+                    // this is the disaster case!
+                    log.error("Cannot command both CLOSED and THROWN {}", newState);
+                    return;
+                } else {
+                    // send a CLOSED command
+                    sendMessage(true ^ getInverted());
+                }
+            } else {
+                // send a THROWN command
+                sendMessage(false ^ getInverted());
+            }
+        }
+
+        // sort out states for TMCC (ACC/Aux2)
+        if (_number >= 110 && _number < 120) {
+            if ((newState & Turnout.CLOSED) != 0) {
+                // first look for the double case, which we can't handle
+                if ((newState & Turnout.THROWN) != 0) {
+                    // this is the disaster case!
+                    log.error("Cannot command both CLOSED and THROWN {}", newState);
+                    return;
+                } else {
+                    // send a CLOSED command
+                    sendMessage(true ^ getInverted());
+                }
+            } else {
+                // send a THROWN command
+                sendMessage(false ^ getInverted());
+            }
         }
     }
 
@@ -73,11 +114,31 @@ public class SerialTurnout extends AbstractTurnout {
     protected void sendMessage(boolean closed) {
         SerialMessage m = new SerialMessage();
         m.setOpCode(0xFE);
-        if (closed) {
-            m.putAsWord(0x4000 + _number * 128);
-        } else {
-            m.putAsWord(0x401F + _number * 128);
+
+        if (_number < 100) {
+            if (closed) {
+                m.putAsWord(0x4000 + _number * 128);
+            } else {
+                m.putAsWord(0x401F + _number * 128);
+            }
         }
+
+        if (_number >= 100 && _number < 110) {
+            if (closed) {
+                m.putAsWord(0x8008 + ((_number - 100) * 128));
+            } else {
+                m.putAsWord(0x800B + ((_number - 100) * 128));
+            }
+        }
+
+        if (_number >= 110 && _number < 120) {
+            if (closed) {
+                m.putAsWord(0x800C + ((_number - 110) * 128));
+            } else {
+                m.putAsWord(0x800F + ((_number - 110) * 128));
+            }
+        }            
+
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
