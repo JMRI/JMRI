@@ -242,13 +242,13 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 
     private void checkDestinationsValid() {
         SwingUtilities.invokeLater(() -> {
-            if (checkInterchange())
+            if (checkDestinations())
                 JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("OkayMessage"));
             checkDestinationsButton.setEnabled(true);
         });
     }
 
-    private boolean checkInterchange() {
+    private boolean checkDestinations() {
         // 1st check to see if all car types have a destination
         if (!checkInterchangeCarTypes()) {
             return false;
