@@ -10,11 +10,11 @@ permissions:
   pull-requests: write
 
 jobs:
-  check-new-pr:
+  check-pr:
     runs-on: ubuntu-latest
     env:
       PR_LABEL: 'New PR'
-      BLOCK_HOURS: '24' // use e.g. 0.25 for testing
+      BLOCK_HOURS: '24' # use e.g. 0.25 for testing
 
     steps:
       - name: Check PR age, label if recent, and block merging if labeled
