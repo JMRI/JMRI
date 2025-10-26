@@ -241,17 +241,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     public int loadTrainFromTrainInfo(TrainInfo info) {
         return loadTrainFromTrainInfo(info, "NONE", "");
     }
-
-    /**
+	
+	/**
      * Loads a train into the Dispatcher
      * returns an integer. Messages written to log.
      * @param info  a completed TrainInfo class.
      * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
      * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
+	 *            trainName.
      * @return 0 good, -1 failure
      */
     public int loadTrainFromTrainInfo(TrainInfo info, String overRideType, String overRideValue) {
-        return loadTrainFromTrainInfo(info, overRideType, overRideValue, null)
+        return loadTrainFromTrainInfo(info, overRideType, overRideValue, null);
     }
 
     /**
@@ -260,6 +261,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param info  a completed TrainInfo class.
      * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
      * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
+	 *            trainName.
 	 * @param trainName the name for the train, to take precedence over other sources.
      * @return 0 good, -1 failure
      */
@@ -278,11 +280,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param info  a completed TrainInfo class.
      * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
      * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
+	 *            trainName.
      * @throws IllegalArgumentException validation errors.
      */
     public void loadTrainFromTrainInfoThrowsException(TrainInfo info, String overRideType, String overRideValue)
                 throws IllegalArgumentException {
-					loadTrainFromTrainInfoThrowsException(info, overRideType, overRideValue, null)
+					loadTrainFromTrainInfoThrowsException(info, overRideType, overRideValue, null);
 				}
 
     /**
@@ -291,6 +294,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param info  a completed TrainInfo class.
      * @param overRideType  "NONE", "USER", "ROSTER" or "OPERATIONS"
      * @param overRideValue  "" , dccAddress, RosterEntryName or Operations
+	 *            trainName.
      * @param trainName the name for the train, to take precedence over other sources.
      * @throws IllegalArgumentException validation errors.
      */
@@ -344,12 +348,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             default:
                 /* just leave as in traininfo */
         }
-
-        if(trainName =! null && trainName != "" && isTrainFree(trainName)) {
+		
+		if(trainName =! null && trainName != "" && isTrainFree(trainName)) {
 			// If we have specified a trainName, this takes precedence
-			trainNameToUse = trainName
+			trainNameToUse = trainName;
 		}
-                    
+		
         if (info.getDynamicTransit()) {
             // attempt to build transit
             Transit tmpTransit = createTemporaryTransit(InstanceManager.getDefault(jmri.BlockManager.class).getBlock(info.getStartBlockName()),
