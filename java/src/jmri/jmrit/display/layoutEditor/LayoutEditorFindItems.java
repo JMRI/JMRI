@@ -546,6 +546,8 @@ final public class LayoutEditorFindItems {
                 result = findLayoutSlipByName(name);
             } else if (name.startsWith("TUR")) {
                 result = findLayoutTurntableByName(name);
+            } else if (name.startsWith("TRV")) {
+                result = findLayoutTraverserByName(name);
             } else if (name.startsWith("T") || name.matches("F\\d+-S-\\d+")) {  // (this prefix has to go after "TO" & "TUR" prefixes above)
                 result = findTrackSegmentByName(name);
             } else if (name.endsWith("-EB")) {  //BUGFIX: a 3rd party JMRI exporter gets this one wrong.

@@ -523,8 +523,6 @@ public class LayoutTraverser extends LayoutTrack {
         if (HitPointType.isTraverserSlotHitType(connectionType)) {
             if ((o == null) || (o instanceof TrackSegment)) {
                 setSlotConnect((TrackSegment) o, connectionType.traverserTrackIndex());
-                models.redrawPanel();
-                models.setDirty();
             } else {
                 String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
                         getName(), connectionType, o.getName(),
