@@ -65,7 +65,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
             element.setAttribute("signalIconPlacement", "" + lt.getSignalIconPlacement());
             element.setAttribute("dispatcherManaged", "yes");
         }
-        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTraverserXml");
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTraverserViewXml");
         // add slot tracks
         for (int i = 0; i < lt.getNumberSlots(); i++) {
             Element rElem = new Element("slot");
@@ -73,7 +73,6 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
             TrackSegment t = lt.getSlotConnectOrdered(i);
             if (t != null) {
                 rElem.setAttribute("connectname", t.getId());
-                rElem.setAttribute("type", "" + jmri.jmrit.display.layoutEditor.HitPointType.TRAVERSER_SLOT_0.ordinal() + i);
             }
             String mastName = lt.getSlotList().get(i).getApproachMastName();
             if (mastName != null && !mastName.isEmpty()) {
