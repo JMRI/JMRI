@@ -337,6 +337,11 @@
       <a href="https://www.jmri.org/help/en/html/tools/LRoutes.shtml">JMRI: LRoute Documentation.</a></p>.
 
 
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
   <script src="/js/help.js"></script>
 </body>
 </html>
