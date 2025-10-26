@@ -1,12 +1,13 @@
 name: New PR
 
-on:
-  pull_request:
-    types: [opened, reopened, labeled, unlabeled, synchronize]
-
 permissions:
   issues: write
   pull-requests: write
+  contents: write
+
+on:
+  pull_request:
+    types: [opened, reopened, labeled, unlabeled, synchronize]
 
 jobs:
   check-pr:
