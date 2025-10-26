@@ -2804,6 +2804,14 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     ttv.setRayCoordsIndexed(MathUtil.granulize(ttv.getRayCoordsIndexed(rayIndex), gContext.getGridSize()), rayIndex);
                 }
             }
+            if (lt instanceof LayoutTraverser) {
+                LayoutTraverser tt = (LayoutTraverser) lt;
+                LayoutTraverserView ttv = getLayoutTraverserView(tt);
+                for (LayoutTraverser.SlotTrack st : tt.getSlotList()) {
+                    int slotIndex = st.getConnectionIndex();
+                    ttv.setSlotCoordsIndexed(MathUtil.granulize(ttv.getSlotCoordsIndexed(slotIndex), gContext.getGridSize()), slotIndex);
+                }
+            }
         }
         for (LayoutShape ls : shapes) {
             ls.setCoordsCenter(MathUtil.granulize(ls.getCoordsCenter(), gContext.getGridSize()));

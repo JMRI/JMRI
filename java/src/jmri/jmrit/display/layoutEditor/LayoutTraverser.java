@@ -490,37 +490,8 @@ public class LayoutTraverser extends LayoutTrack {
             rt.setDisabledWhenOccupied(boo);
         }
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws jmri.JmriException {
-        if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
-            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
-                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
-            log.error("will throw {}", errString); // NOI18N
-            throw new jmri.JmriException(errString);
-        }
-        if (HitPointType.isTraverserSlotHitType(connectionType)) {
-            if ((o == null) || (o instanceof TrackSegment)) {
-                setSlotConnect((TrackSegment) o, connectionType.traverserTrackIndex());
-            } else {
-                String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
-                        getName(), connectionType, o.getName(),
-                        type, o.getClass().getName()); // NOI18N
-                log.error("will throw {}", errString); // NOI18N
-                throw new jmri.JmriException(errString);
-            }
-        } else {
-            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid connection type",
-                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
-            log.error("will throw {}", errString); // NOI18N
-            throw new jmri.JmriException(errString);
-        }
-    }
-
-    /**
+	
+	/**
      * {@inheritDoc}
      */
     @Override
@@ -536,6 +507,39 @@ public class LayoutTraverser extends LayoutTrack {
         }
         return result;
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setConnection(HitPointType connectionType, @CheckForNull LayoutTrack o, HitPointType type) throws jmri.JmriException {
+        if ((type != HitPointType.TRACK) && (type != HitPointType.NONE)) {
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
+            log.error("will throw {}", errString); // NOI18N
+            throw new jmri.JmriException(errString);
+        }
+        if (HitPointType.isTraverserSlotHitType(connectionType)) {
+            if ((o == null) || (o instanceof TrackSegment)) {
+                setSlotConnect((TrackSegment) o, connectionType.traverserTrackIndex());
+                models.redrawPanel();
+                models.setDirty();
+            } else {
+                String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid object: {4}",
+                        getName(), connectionType, o.getName(),
+                        type, o.getClass().getName()); // NOI18N
+                log.error("will throw {}", errString); // NOI18N
+                throw new jmri.JmriException(errString);
+            }
+        } else {
+            String errString = MessageFormat.format("{0}.setConnection({1}, {2}, {3}); Invalid connection type",
+                    getName(), connectionType, (o == null) ? "null" : o.getName(), type); // NOI18N
+            log.error("will throw {}", errString); // NOI18N
+            throw new jmri.JmriException(errString);
+        }
+    }
+
 
     /**
      * Test if slot with this index is a mainline track or not.
@@ -628,29 +632,12 @@ public class LayoutTraverser extends LayoutTrack {
         tExitSignalMastName = null;
 
         slotList.forEach((rt) -> {
-            if (rt.connectName != null && !rt.connectName.isEmpty()) {
-                TrackSegment ts = p.getFinder().findTrackSegmentByName(rt.connectName);
-                rt.setConnect(ts);
-                if (ts != null) {
-                    // The track segment has been found, now set the connection from the track segment's side.
-                    // This creates the essential bi-directional link.
-                    HitPointType connectionType = HitPointType.traverserSlotIndexedValue(rt.getConnectionIndex());
-                    if (ts.getConnect1() == null) {
-                        log.info("  > Linking to {}.connect1", ts.getName());
-                        ts.setNewConnect1(this, connectionType);
-                        log.info("  > Successfully connected slot {} to track '{}'", rt.getConnectionIndex(), ts.getId());
-                    } else if (ts.getConnect2() == null) {
-                        log.info("  > Linking to {}.connect2", ts.getName());
-                        ts.setNewConnect2(this, connectionType);
-                        log.info("  > Successfully connected slot {} to track '{}'", rt.getConnectionIndex(), ts.getId());
-                    } else {
-                        log.error("  > Could not connect slot {} to track '{}', both connection points are already in use.", rt.getConnectionIndex(), ts.getId());
-                    }
-                }
-            }
+            log.info("calling setConnect for rt {}", rt);
+            rt.setConnect(p.getFinder().findTrackSegmentByName(rt.connectName));
             if (rt.approachMastName != null && !rt.approachMastName.isEmpty()) {
                 rt.setApproachMast(rt.approachMastName);
             }
+            log.info("called setConnect for rt {}", rt);
         });
 
         // Recalculate dimensions now that all slots are loaded

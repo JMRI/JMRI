@@ -408,23 +408,6 @@ public enum HitPointType {
         return HitPointType.values()[(TURNTABLE_RAY_0.ordinal() + i)];
     }
 
-     * Throws {@link IllegalArgumentException} if
-     * the given index value isn't valid for the TRAVERSER_SLOT entries.
-     * <p>
-     * Ideally, this would be replaced by traverser code that works
-     * directly with the enum values as a step toward using objects
-     * to implement hit points.
-     * @param i (Temporary) 0-63 index of the enum element
-     * @return Requested enum element
-     */
-    protected static HitPointType traverserSlotIndexedValue(int i) {
-        log.info("about to get traverserSlotIndexedValue {}",i);
-        if (i < 0 || i > 63) {
-            throw new IllegalArgumentException(i + " is not a valid TRAVERSER_SLOT index");
-        }
-        log.info ("got traverserSlotIndexedValue {}", HitPointType.values()[(TRAVERSER_SLOT_0.ordinal() + i)]);
-        return HitPointType.values()[(TRAVERSER_SLOT_0.ordinal() + i)];
-    }
 
     /**
      * Return an array of the valid TURNTABLE_RAY enum values.
