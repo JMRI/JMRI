@@ -2,8 +2,8 @@ name: New PR
 
 permissions:
   issues: write
-  pull-requests: write
   contents: write
+  pull-requests: write
 
 on:
   pull_request:
@@ -12,77 +12,51 @@ on:
 jobs:
   check-pr:
     runs-on: ubuntu-latest
+
     env:
       PR_LABEL: 'New PR'
-      BLOCK_HOURS: '24' # use e.g. 0.25 for testing
+      BLOCK_HOURS: '0.25' # e.g. 0.25 for testing
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Check PR age, label if recent, and block merging if labeled
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { owner, repo } = context.repo;
-            const pr = context.payload.pull_request;
-            const prNumber = pr.number;
-            const labelName = process.env.PR_LABEL;
-            const hoursLimit = parseFloat(process.env.BLOCK_HOURS);
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            // Helper function to get current labels on a PR
-            async function getPrLabels(owner, repo, prNumber) {
-              const labelsResp = await github.rest.issues.listLabelsOnIssue({
-                owner,
-                repo,
-                issue_number: prNumber
-              });
-              return labelsResp.data.map(l => l.name);
-            }
+      - name: Evaluate PR age and manage label
+        run: |
+          # Fetch PR info
+          pr_number="${{ github.event.pull_request.number }}"
+          created_at="$(gh pr view $pr_number --json createdAt --jq '.createdAt')"
+          label_name="${PR_LABEL}"
 
-            // Fetch PR details and labels
-            const { data: prDetails } = await github.rest.pulls.get({
-              owner,
-              repo,
-              pull_number: prNumber
-            });
-            var labelNames = await getPrLabels(owner, repo, prNumber);
+          # Compute PR age in hours
+          now=$(date -u +%s)
+          created=$(date -u -d "$created_at" +%s)
+          age_hours=$(echo "scale=2; ($now - $created)/3600" | bc)
+          echo "ℹ️ PR #$pr_number is ${age_hours}h old."
 
-            // 1. Add or remove label based on age
-            const now = new Date();
-            const createdAt = new Date(prDetails.created_at);
-            const ageInHours = (now - createdAt) / (1000 * 60 * 60);
-            console.log(`ℹ️ PR #${prNumber} is ${ageInHours.toFixed(2)}h old.`);
+          # Get current labels
+          labels="$(gh pr view $pr_number --json labels --jq '.labels[].name')"
 
-            if (ageInHours <= hoursLimit && !labelNames.includes(labelName)) {
-              console.log(`🔖 Adding label "${labelName}" to PR #${prNumber} as less than ${hoursLimit}h old.`);
-              try {
-                await github.rest.issues.addLabels({
-                  owner,
-                  repo,
-                  issue_number: prNumber,
-                  labels: [labelName]
-                });
-                labelNames.push(labelName); // Keep local list in sync
-              } catch (error) {
-                console.log(`⚠️ Could not add label "${labelName}": ${error.message}`);
-              }
-            } else if (ageInHours > hoursLimit && labelNames.includes(labelName)) {
-              console.log(`🔖 Removing label "${labelName}", PR age ${ageInHours.toFixed(2)}h.`);
-              try {
-                await github.rest.issues.removeLabel({
-                  owner,
-                  repo,
-                  issue_number: prNumber,
-                  name: labelName
-                });
-                labelNames = labelNames.filter(e => e !== labelName); // Update local array
-              } catch (error) {
-                console.log(`⚠️ Could not remove label "${labelName}": ${error.message}`);
-              }
-            }
+          # Check and update label state
+          if (( $(echo "$age_hours <= $BLOCK_HOURS" | bc -l) )); then
+            if ! grep -q "$label_name" <<< "$labels"; then
+              echo "🔖 Adding label '$label_name'."
+              gh issue edit "$pr_number" --add-label "$label_name"
+              fi
+            fi
 
-            // 2. Block merging if label still present
-            if (labelNames.includes(labelName)) {
-              core.setFailed(`❌ This pull request is a "${labelName}" and cannot be merged until ${hoursLimit} hours after creation.`);
-            } else {
-              console.log('✅ PR is mergeable.');
-            }
+          if (( $(echo "$age_hours <= $BLOCK_HOURS" | bc -l) )); then
+            if grep -q "$label_name" <<< "$labels"; then
+              echo "🔖 Removing label '$label_name'."
+              gh issue edit "$pr_number" --remove-label "$label_name"
+              fi
+            fi
+
+          # Block merging if label exists
+          if gh pr view $pr_number --json labels --jq '.labels[].name' | grep -qx "$label_name"; then
+            echo "❌ This PR is labeled '$label_name' and cannot be merged until ${BLOCK_HOURS}h after creation."
+            exit 1
+          else
+            echo "✅ PR is mergeable."
+          fi
