@@ -42,14 +42,22 @@ jobs:
           if (( $(echo "$age_hours <= $BLOCK_HOURS" | bc -l) )); then
             if ! grep -q "$label_name" <<< "$labels"; then
               echo "🔖 Adding label '$label_name'."
-              gh issue edit "$pr_number" --add-label "$label_name"
+              curl -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              "https://api.github.com/repos/OWNER/REPO/issues/$pr_number/labels" \
+              -d '{"labels": ["$label_name"]}'
               fi
             fi
 
           if (( $(echo "$age_hours > $BLOCK_HOURS" | bc -l) )); then
             if grep -q "$label_name" <<< "$labels"; then
               echo "🔖 Removing label '$label_name'."
-              gh issue edit "$pr_number" --remove-label "$label_name"
+              # Remove label via REST API
+              curl -X DELETE \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/$pr_number/labels/$label_name"
               fi
             fi
 
