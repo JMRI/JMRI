@@ -6,7 +6,7 @@ permissions:
   contents: read
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, reopened, labeled, unlabeled, synchronize]
 
 jobs:
@@ -15,44 +15,31 @@ jobs:
 
     env:
       PR_LABEL: 'New PR'
-      BLOCK_HOURS: '0.25' # e.g. 0.25 for testing
-      # DO NOT set GH_TOKEN here
+      BLOCK_HOURS: '0.25'
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Authenticate gh CLI
-        # Pipe the secret into gh so it can store credentials.
         run: |
-          # Login using the token provided on stdin so gh will persist the auth state.
           echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
           gh auth setup-git
-        # Note: no GH_TOKEN env exported here
 
       - name: Evaluate PR age and manage label
         run: |
           set -euo pipefail
 
-          # Fetch PR info
           pr_number="${{ github.event.pull_request.number }}"
           created_at="$(gh pr view "$pr_number" --json createdAt --jq '.createdAt')"
           label_name="${PR_LABEL}"
 
-          # Compute PR age in hours (pure Python)
           now=$(date -u +%s)
           created=$(date -u -d "$created_at" +%s)
           age_hours=$(python3 -c "print(round((${now} - ${created}) / 3600, 2))")
           echo "ℹ️ PR #$pr_number is ${age_hours}h old."
 
-          # Get current labels
           labels="$(gh pr view "$pr_number" --json labels --jq '.labels[].name')"
-
-          # Compute thresholds
           should_block=$(python3 -c "print(float(${age_hours}) <= float(${BLOCK_HOURS}))")
           should_remove=$(python3 -c "print(float(${age_hours}) > float(${BLOCK_HOURS}))")
 
-          # Add or remove label as needed using gh
           if [ "$should_block" = "True" ]; then
             if ! grep -qx "$label_name" <<< "$labels"; then
               echo "🔖 Adding label '$label_name'."
@@ -67,7 +54,6 @@ jobs:
             fi
           fi
 
-          # Block merging if label exists
           if gh pr view "$pr_number" --json labels --jq '.labels[].name' | grep -qx "$label_name"; then
             echo "❌ This PR is labeled '$label_name' and cannot be merged until ${BLOCK_HOURS}h after creation."
             exit 1
