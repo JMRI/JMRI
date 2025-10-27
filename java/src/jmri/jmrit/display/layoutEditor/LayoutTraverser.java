@@ -94,6 +94,7 @@ public class LayoutTraverser extends LayoutTrack {
     public void setDeckWidth(double w) {
         if (deckWidth != w) {
             deckWidth = w;
+            recalculateDimensions();
             models.redrawPanel();
             models.setDirty();
         }
@@ -722,7 +723,8 @@ public class LayoutTraverser extends LayoutTrack {
 
     private void recalculateDimensions() {
         int numPairs = getNumberSlots() / 2;
-        double newLength = (numPairs > 0) ? slotOffset + (slotOffset * numPairs) : slotOffset;
+        log.warn("Math.max(0f,2f*(getDeckWidth()/2f-slotOffset/2f)) {}", Math.max(0f,getDeckWidth()/2f-slotOffset));
+        double newLength = (numPairs > 0) ?  (getDeckWidth()/4f + (slotOffset * numPairs)) : slotOffset;
         setDeckLength(newLength);
     }
 

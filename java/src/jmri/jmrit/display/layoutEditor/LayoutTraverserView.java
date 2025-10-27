@@ -584,6 +584,7 @@ public class LayoutTraverserView extends LayoutTrackView {
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         float trackWidth = 2.F;
 		
+		
 		// Only draw in the appropriate pass (mainline or sideline)
         if (isMain != traverser.isMainline()) {
             return;
@@ -609,38 +610,41 @@ public class LayoutTraverserView extends LayoutTrackView {
             g2.draw(new Ellipse2D.Double(center.getX() - circleRadius, center.getY() - circleRadius, circleDiameter, circleDiameter));
 			g2.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.draw(trackControlCircleAt(center));
+			
+			// Restore original stroke and color for subsequent drawing
+            g2.setStroke(originalStroke);
+            g2.setColor(originalColor);
         }
 
         // Draw slot tracks
         for (int i = 0; i < getNumberSlots(); i++) {
-            if (!isSlotDisabled(i)) {
+            if (true) {
                 Color slotColor = null;
                 TrackSegment ts = getSlotConnectOrdered(i);
                 // A slot is mainline if the bridge is, or if the connected track is.
-                boolean slotIsMain = traverser.isMainline() || (ts != null && ts.isMainline());
-
+                boolean slotIsMain = false;
+				if (ts != null) {
+					slotIsMain = ts.isMainline();
+				}
                 // Set color for block, if any
-                if (isBlock) {
-                    LayoutBlock lb = null;
-                    // If the bridge is at this position, the slot takes on the bridge's block color
-                    if (getPosition() == getSlotIndex(i)) {
-                        lb = getLayoutBlock();
-                    } else if (ts != null) {
-                        lb = ts.getLayoutBlock();
-                    }
-                    if (lb != null) {
-                        slotColor = g2.getColor();
-                        setColorForTrackBlock(g2, lb);
-                    } else {
-                        g2.setColor(layoutEditor.getDefaultTrackColorColor());
-                    }
-                }
+				if (isBlock) {
+					if (ts == null) {
+						g2.setColor(layoutEditor.getDefaultTrackColorColor());
+					} else {
+						LayoutBlock lb = ts.getLayoutBlock();
+						if (lb != null) {
+							slotColor = g2.getColor();
+							setColorForTrackBlock(g2, lb);
+						}
+					}
+				}
 
                 // Draw if mainline/sideline matches this pass
-                if (isMain == slotIsMain) {
+                //if (isMain == slotIsMain) {
+				if(true){
                     LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
                     float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
-                    g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+                    //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
                     Point2D edgePoint = getSlotEdgePointOrdered(i);
                     Point2D anchorPoint = getSlotCoordsOrdered(i);
                     g2.draw(new Line2D.Double(edgePoint, anchorPoint));
@@ -678,8 +682,12 @@ public class LayoutTraverserView extends LayoutTrackView {
                 }
             } else {
                 g2.setColor(traverser.isMainline() ? layoutEditor.getLayoutTrackDrawingOptions().getMainRailColor()
-                                                   : layoutEditor.getLayoutTrackDrawingOptions().getSideRailColor());
+                        : layoutEditor.getLayoutTrackDrawingOptions().getSideRailColor());
             }
+            // Set the stroke for the bridge
+            LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
+            float width = traverser.isMainline() ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
+            //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
             Point2D center = getCoordsCenter();
             Rectangle2D pit = getBounds();
