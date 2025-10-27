@@ -46,7 +46,7 @@ jobs:
               fi
             fi
 
-          if (( $(echo "$age_hours <= $BLOCK_HOURS" | bc -l) )); then
+          if (( $(echo "$age_hours > $BLOCK_HOURS" | bc -l) )); then
             if grep -q "$label_name" <<< "$labels"; then
               echo "🔖 Removing label '$label_name'."
               gh issue edit "$pr_number" --remove-label "$label_name"
