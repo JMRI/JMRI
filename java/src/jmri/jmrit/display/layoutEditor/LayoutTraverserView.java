@@ -612,26 +612,39 @@ public class LayoutTraverserView extends LayoutTrackView {
         }
 
         if(true) {
-            // Draw the slot tracks, styled like the tracks they connect to
+            // Draw the slot tracks, styled like the main bridge
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             for (int i = 0; i < getNumberSlots(); i++) {
                 if (!isSlotDisabled(i)) {
                     Color slotColor = null;
                     TrackSegment ts = getSlotConnectOrdered(i);
-                    boolean slotIsMain = (ts != null) && ts.isMainline();
+                    boolean slotIsMain = traverser.isMainline();
 
                     // set color for block, if any
-                    if (isBlock && ts != null) {
-                        LayoutBlock lb = ts.getLayoutBlock();
+                    if (isBlock) {
+                        LayoutBlock lb = getLayoutBlock();
                         if (lb != null) {
-                            slotColor = g2.getColor();
                             setColorForTrackBlock(g2, lb);
+                        } else {
+                            g2.setColor(layoutEditor.getDefaultTrackColorColor());
                         }
                     }
+//                    if (isBlock) {
+//                        LayoutBlock lb = null;
+//                        if (getPosition() == getSlotIndex(i)) {
+//                            lb = getLayoutBlock();
+//                        } else if (ts != null && ts.getLayoutBlock() != null) {
+//                            lb = ts.getLayoutBlock();
+//                        }
+//                        if (lb != null) {
+//                            slotColor = g2.getColor();
+//                            setColorForTrackBlock(g2, lb);
+//                        }
+//                    }
 
                     // draw if mainline/sideline matches this pass
-//                    if (isMain == slotIsMain) {
-                    if (true) {
+                    if (isMain == slotIsMain) {
+//                    if (true) {
                         LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
                         float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
                         g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
