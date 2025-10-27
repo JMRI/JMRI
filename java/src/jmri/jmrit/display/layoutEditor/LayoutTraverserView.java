@@ -553,6 +553,7 @@ public class LayoutTraverserView extends LayoutTrackView {
     }
 
     public int getPosition() {
+        log.info("view getting position");
         return traverser.getPosition();
     }
 
@@ -581,92 +582,80 @@ public class LayoutTraverserView extends LayoutTrackView {
 
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
-        // Only draw in the appropriate pass (mainline or sideline)
+        float trackWidth = 2.F;
+		
+		// Only draw in the appropriate pass (mainline or sideline)
         if (isMain != traverser.isMainline()) {
             return;
         }
-
-        float trackWidth = 2.F;
 
         // Save original stroke and color
         Stroke originalStroke = g2.getStroke();
         Color originalColor = g2.getColor();
 
-        if (!isBlock) {
-
-            // Set stroke and color for pit outline
+        // Draw pit outline and control circles - these are static and belong to the traverser itself
+        if (!isBlock && (isMain == traverser.isMainline())) {
+            // Draw the outer pit rectangle with a thin line
             g2.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.setColor(layoutEditor.getDefaultTrackColorColor());
-
-            // Draw the outer pit rectangle
             g2.draw(getBounds());
 
-            g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            // Draw the concentric circles at the center
+            // Draw the control circles with the standard track width
+            
             double circleRadius = Math.max(traverser.getDeckWidth() / 8.f, trackWidth * 2);
             double circleDiameter = circleRadius * 2.f;
-
             Point2D center = getControlPointCenter();
+			g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.draw(new Ellipse2D.Double(center.getX() - circleRadius, center.getY() - circleRadius, circleDiameter, circleDiameter));
+			g2.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.draw(trackControlCircleAt(center));
         }
 
-        if(true) {
-            // Draw the slot tracks, styled like the main bridge
-            g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            for (int i = 0; i < getNumberSlots(); i++) {
-                if (!isSlotDisabled(i)) {
-                    Color slotColor = null;
-                    TrackSegment ts = getSlotConnectOrdered(i);
-                    boolean slotIsMain = traverser.isMainline();
+        // Draw slot tracks
+        for (int i = 0; i < getNumberSlots(); i++) {
+            if (!isSlotDisabled(i)) {
+                Color slotColor = null;
+                TrackSegment ts = getSlotConnectOrdered(i);
+                // A slot is mainline if the bridge is, or if the connected track is.
+                boolean slotIsMain = traverser.isMainline() || (ts != null && ts.isMainline());
 
-                    // set color for block, if any
-                    if (isBlock) {
-                        LayoutBlock lb = getLayoutBlock();
-                        if (lb != null) {
-                            setColorForTrackBlock(g2, lb);
-                        } else {
-                            g2.setColor(layoutEditor.getDefaultTrackColorColor());
-                        }
+                // Set color for block, if any
+                if (isBlock) {
+                    LayoutBlock lb = null;
+                    // If the bridge is at this position, the slot takes on the bridge's block color
+                    if (getPosition() == getSlotIndex(i)) {
+                        lb = getLayoutBlock();
+                    } else if (ts != null) {
+                        lb = ts.getLayoutBlock();
                     }
-//                    if (isBlock) {
-//                        LayoutBlock lb = null;
-//                        if (getPosition() == getSlotIndex(i)) {
-//                            lb = getLayoutBlock();
-//                        } else if (ts != null && ts.getLayoutBlock() != null) {
-//                            lb = ts.getLayoutBlock();
-//                        }
-//                        if (lb != null) {
-//                            slotColor = g2.getColor();
-//                            setColorForTrackBlock(g2, lb);
-//                        }
-//                    }
-
-                    // draw if mainline/sideline matches this pass
-                    if (isMain == slotIsMain) {
-//                    if (true) {
-                        LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
-                        float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
-                        g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-                        Point2D edgePoint = getSlotEdgePointOrdered(i);
-                        Point2D anchorPoint = getSlotCoordsOrdered(i);
-                        g2.draw(new Line2D.Double(edgePoint, anchorPoint));
+                    if (lb != null) {
+                        slotColor = g2.getColor();
+                        setColorForTrackBlock(g2, lb);
+                    } else {
+                        g2.setColor(layoutEditor.getDefaultTrackColorColor());
                     }
+                }
 
-                    // restore color if changed
-                    if (slotColor != null) g2.setColor(slotColor); // restore color
+                // Draw if mainline/sideline matches this pass
+                if (isMain == slotIsMain) {
+                    LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
+                    float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
+                    g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+                    Point2D edgePoint = getSlotEdgePointOrdered(i);
+                    Point2D anchorPoint = getSlotCoordsOrdered(i);
+                    g2.draw(new Line2D.Double(edgePoint, anchorPoint));
+                }
+
+                // Restore color if changed
+                if (slotColor != null) {
+                    g2.setColor(slotColor);
                 }
             }
-
-            // Restore original stroke and color
-            g2.setStroke(originalStroke);
-            g2.setColor(originalColor);
         }
 
         // Draw the sliding bridge
         int currentPositionConnectionIndex = getPosition();
         int orderedIndex = -1;
-
         if (currentPositionConnectionIndex != -1) {
             for (int i = 0; i < getNumberSlots(); i++) {
                 if (getSlotIndex(i) == currentPositionConnectionIndex) {
@@ -674,12 +663,12 @@ public class LayoutTraverserView extends LayoutTrackView {
                     break;
                 }
             }
-        } else if (getNumberSlots() > 0) {
-            orderedIndex = 0; // Default to the first slot
         }
-
-        if (orderedIndex != -1) {
-            // Set color for bridge block
+		log.warn("orderedIndex {} currentPositionConnectionIndex {}",orderedIndex, currentPositionConnectionIndex);
+        // Only draw the bridge if its mainline status matches the current pass
+        //if (orderedIndex != -1 && (isMain == traverser.isMainline())) {
+		if (orderedIndex != -1) {
+            // Set color for bridge
             if (isBlock) {
                 LayoutBlock lb = getLayoutBlock();
                 if (lb != null) {
@@ -687,6 +676,9 @@ public class LayoutTraverserView extends LayoutTrackView {
                 } else {
                     g2.setColor(layoutEditor.getDefaultTrackColorColor());
                 }
+            } else {
+                g2.setColor(traverser.isMainline() ? layoutEditor.getLayoutTrackDrawingOptions().getMainRailColor()
+                                                   : layoutEditor.getLayoutTrackDrawingOptions().getSideRailColor());
             }
 
             Point2D center = getCoordsCenter();
@@ -714,6 +706,10 @@ public class LayoutTraverserView extends LayoutTrackView {
         if (!layoutEditor.isEditable()) {
             drawTurnoutControls(g2);
         }
+
+        // Restore original stroke and color
+        g2.setStroke(originalStroke);
+        g2.setColor(originalColor);
     }
 
     @Override
