@@ -553,7 +553,6 @@ public class LayoutTraverserView extends LayoutTrackView {
     }
 
     public int getPosition() {
-        log.info("view getting position");
         return traverser.getPosition();
     }
 
@@ -668,7 +667,6 @@ public class LayoutTraverserView extends LayoutTrackView {
                 }
             }
         }
-		log.warn("orderedIndex {} currentPositionConnectionIndex {}",orderedIndex, currentPositionConnectionIndex);
         // Only draw the bridge if its mainline status matches the current pass
         //if (orderedIndex != -1 && (isMain == traverser.isMainline())) {
 		if (orderedIndex != -1) {

@@ -100,16 +100,25 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
             self.show_progress(20)
             self.tryme(self.removeSensors, "Cannot generate startup Logix: Contact Developer")
             self.show_progress(40)
+            print "A"
             self.tryme(self.updatePanels, "Cannot update Panels: Contact Developer")
-            self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
+            print "B"
+            self.get_list_of_stopping_points()
+            print "C"
+            # self.tryme(self.get_list_of_stopping_points, "Cannot get list of stopping points, Contact Developer")
             self.addSensors()
+            print "D"
             self.generateSML()
+            print "E"
             self.show_progress(60)
             self.generateSections()   # if it fails need a better fail message
+            print "F"
             # self.tryme(self.generateSections, "Cannot generate Sections: Signal Masts not set up correctly. Needs to be fixed before using Dispatcher System.")
             self.show_progress(80)
             self.tryme(self.addLogix, "Cannot generate startup Logix: Contact Developer")
+            print "G"
             self.addIcons()
+            print "H"
             self.tryme(self.retrieveForwardStoppingSensors, "Cannot retrieve Stopping Sensors: Contact Developer")
             self.setVersionNo()
             self.stop_all_threads()
@@ -637,6 +646,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
     # gets the list of stopping points (stations, sidings etc.)
     # ***********************************************************
     def get_list_of_stopping_points(self):
+        print "in get_list_of_stopping_points"
         stopping_points_set = set()
 
         # First, get stopping points from block comments
@@ -646,7 +656,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 if "stop" in comment.lower():
                     stopping_points_set.add(block.getUserName())
 
-        # Second, automatically add blocks associated with LayoutTurntables
+        # Second, automatically add blocks associated with LayoutTurntables and LayoutTraversers
         editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
         for editor in editorManager.getAll():
             if isinstance(editor, jmri.jmrit.display.layoutEditor.LayoutEditor):
@@ -656,7 +666,14 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                     if layout_block is not None and layout_block.getUserName() is not None:
                         stopping_points_set.add(layout_block.getUserName())
 
+                # The returned object is a Java Set, which needs to be converted to a list for safe iteration in Jython
+                for traverser in list(editor.getLayoutTraversers()):
+                    layout_block = traverser.getLayoutBlock()
+                    if layout_block is not None and layout_block.getUserName() is not None:
+                        stopping_points_set.add(layout_block.getUserName())
+
         self.list_of_stopping_points = sorted(list(stopping_points_set))
+        print "list of stopping points", self.list_of_stopping_points
 
     # **************************************************
     # add sensors
@@ -743,7 +760,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         self.addControlIconsAndLabels()
 
     def getCenterPointOfNearestBlockToMid(self, panel):
-
+        print "in getCenterPointOfNearestBlockToMid"
         self.index = 0
         self.blockPoints.clear()
         blocks_with_track_segments = set()
@@ -789,7 +806,20 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 if blk in self.blockPoints1:
                     pt_mid = self.blockPoints1[blk]
                     # For a turntable, the icon position is calculated relative to its own center
-                    [x_reqd, y_reqd] = self.get_icon_position(turntable, turntableView)
+                    [x_reqd, y_reqd] = self.get_turntable_icon_position(turntable, turntableView)
+                    pt_to_try = Point2D.Double(x_reqd, y_reqd)
+                    self.updateCoords1(blk, pt_to_try, pt_mid)
+
+        # Handle traversers
+        for traverserView in panel.getLayoutTraverserViews():
+            traverser = traverserView.getTraverser()
+            layoutBlock = traverser.getLayoutBlock()
+            if layoutBlock is not None:
+                blk = layoutBlock.getUserName()
+                if blk in self.blockPoints1:
+                    pt_mid = self.blockPoints1[blk]
+                    # For a traverser, the icon position is calculated relative to its own center
+                    [x_reqd, y_reqd] = self.get_traverser_icon_position(traverser, traverserView)
                     pt_to_try = Point2D.Double(x_reqd, y_reqd)
                     self.updateCoords1(blk, pt_to_try, pt_mid)
 
@@ -807,7 +837,7 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                     pt_to_try = Point2D.Double(coords.getX(), coords.getY())
                     self.updateCoords1(blk, pt_to_try, pt_mid)
 
-    def get_icon_position(self, turntable, turntableView):
+    def get_turntable_icon_position(self, turntable, turntableView):
         import math
         # print "--- Calculating icon position for turntable:", turntable.getName(), "---"
         turntable_center = turntableView.getCoordsCenter()
@@ -878,6 +908,25 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
         # print "----------------------------------------------------"
         return [x_reqd, y_reqd]
 
+    def get_traverser_icon_position(self, traverser, traverserView):
+        import math
+        print "--- Calculating icon position for traverser:", traverser.getName(), "---"
+        traverser_center = traverserView.getCoordsCenter()
+        print "traverser_center", traverser_center
+        slotOffset = traverser.getSlotOffset()
+        numberOfSlots = traverser.getNumberSlots()
+        print "numberOfSlots", numberOfSlots
+        # deckWidth = traverser.getDeckWidth()
+
+        if traverser.getOrientation() == traverser.HORIZONTAL:
+            x_reqd = int(traverser_center.getX())
+            y_reqd = int(traverser_center.getY()) + (numberOfSlots)/4.0 * slotOffset + 10
+        else:
+            x_reqd = int(traverser_center.getX()) + numberOfSlots/4.0 * slotOffset + 20
+            y_reqd = int(traverser_center.getY())
+        print "finished calculating icon position"
+        return [x_reqd, y_reqd]
+
     def updateCoords1(self, blk, pt_to_try, pt_mid):
         if blk is not None:
             if blk in self.blockPoints:
@@ -943,6 +992,16 @@ class processPanels(jmri.jmrit.automat.AbstractAutomaton):
                 blockName = layoutBlock.getUserName()
                 # The center of the turntable is its main coordinate, get it from the View
                 centerCoords = turntableView.getCoordsCenter()
+                self.updateCoords(blockName, centerCoords)
+
+        # Handle traversers
+        for traverserView in panel.getLayoutTraverserViews():
+            traverser = traverserView.getTraverser()
+            layoutBlock = traverser.getLayoutBlock()
+            if layoutBlock is not None:
+                blockName = layoutBlock.getUserName()
+                # The center of the traverser is its main coordinate, get it from the View
+                centerCoords = traverserView.getCoordsCenter()
                 self.updateCoords(blockName, centerCoords)
 
         # place the stations at the block nearest the mid-point

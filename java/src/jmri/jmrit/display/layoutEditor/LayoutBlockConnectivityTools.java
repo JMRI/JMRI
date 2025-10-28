@@ -360,7 +360,7 @@ final public class LayoutBlockConnectivityTools {
                 }
             }
         }
-        // ----- End Turntable Exit Path Check -----
+        // ----- End Traverser Exit Path Check -----
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
             log.debug("Advanced routing has not been enabled therefore we cannot use this function");

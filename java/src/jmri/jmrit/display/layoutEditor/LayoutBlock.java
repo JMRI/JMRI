@@ -2244,6 +2244,26 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             addRouteLog.debug("Block {} is a turntable block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
             return; // Do not create through paths for a turntable
         }
+
+        // Check if this block is a traverser block on ANY panel it belongs to.
+        // If so, do not create through paths.
+        boolean isTraverserBlock = false;
+        for (LayoutEditor p : panels) {
+            for (LayoutTraverser traverser : p.getLayoutTraversers()) {
+                if (traverser.getLayoutBlock() == this) {
+                    isTraverserBlock = true;
+                    break;
+                }
+            }
+            if (isTraverserBlock) {
+                break;
+            }
+        }
+
+        if (isTraverserBlock) {
+            addRouteLog.debug("Block {} is a traverser block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
+            return; // Do not create through paths for a traverser
+        }
         
         Block newAdj = adj.getBlock();
         int packetFlow = adj.getPacketFlow();

@@ -12,7 +12,7 @@ from javax.swing import JButton, JFrame, JPanel, JProgressBar, \
 
 class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
-    logLevel = 0
+    logLevel = 2
 
     def __init__(self):
         pass
@@ -97,13 +97,13 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         # self.displayMessage("about to call get_signal_mast_lists")
 
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-        if self.logLevel > 0: print "&&&& get_signal_mast_lists &&&&"
+        if self.logLevel > 0: print "&&&& get_signal_mast_lists1 &&&&"
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-
+        self.logLevel = 2
         self.get_signal_mast_lists(layoutPanels)
 
         # self.displayMessage("created signal mast list")
-
+        return
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         if self.logLevel > 0: print "&&&& produce_transits &&&&"
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
@@ -240,7 +240,9 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_signal_mast_lists(self, layoutPanels):
         global g
+        print "in get_signal_mast_lists",g.g_express.edgeSet()
         for e in g.g_express.edgeSet():
+            print "self.logLevel", self.logLevel
             if self.logLevel > 1: print "******* signal_mast_list *******"
 
             if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"

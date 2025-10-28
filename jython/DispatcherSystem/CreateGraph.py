@@ -20,6 +20,7 @@ from org.jgrapht.graph import DirectedWeightedMultigraph
 
 class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
+        print "initialising graph"
         self.g = DirectedWeightedMultigraph(DefaultWeightedEdge)
         self.g_stopping = DirectedWeightedMultigraph(DefaultWeightedEdge)
         self.g_express = DirectedWeightedMultigraph(DefaultWeightedEdge)
@@ -29,7 +30,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         self.dict_path_express = {}
         self.dict_path_name_stopping= {}
         self.dict_path_name_express= {}
-        self.logLevel = 0
+        self.logLevel = 4
         if self.logLevel > 2: print "graph block list"
         self.setup_station_block_list()
         if self.logLevel > 2: print "graph vertices"
@@ -45,7 +46,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         
     def setup_station_block_list(self):
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
-        if self.logLevel > 3: print "Block", BlockManager.getNamedBeanSet()
+        if self.logLevel > 1: print "Block", BlockManager.getNamedBeanSet()
         for block in BlockManager.getNamedBeanSet():
             #blocks with the word stop in the comment are stations
             comment = block.getComment()
@@ -65,6 +66,25 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                     station_block_name = turntable.getLayoutBlock().getUserName()
                     if station_block_name not in self.station_block_list:
                         print "Found turntable block: " + station_block_name
+                        self.station_block_list.append(station_block_name)
+                        self.station_blk_list.append(self.get_layout_block(station_block_name))
+
+        # Add any blocks associated with traversers
+        print "adding traverser blocks, before ",  'self.station_block_list' , self.station_block_list
+        for panel in jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager).getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
+            print "panel", panel
+            traversers = panel.getLayoutTraversers()
+            if traversers is None:
+                print "np traversers"
+                continue
+            else:
+                print "traversers", traversers
+            for traverser in traversers:
+                print "traverser", traverser.getLayoutBlock()
+                if traverser.getLayoutBlock() is not None:
+                    station_block_name = traverser.getLayoutBlock().getUserName()
+                    if station_block_name not in self.station_block_list:
+                        print "Found traverser block: " + station_block_name
                         self.station_block_list.append(station_block_name)
                         self.station_blk_list.append(self.get_layout_block(station_block_name))
 
