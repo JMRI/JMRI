@@ -331,6 +331,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
             // Add action listeners now that the list is complete
             for (int i = 0; i < approachMastComboBoxes.size(); i++) {
                 final int index = i; // final variable for use in lambda
+                approachMastComboBoxes.get(i).setExcludedItems(mastsUsedElsewhere);
                 approachMastComboBoxes.get(i).addActionListener(e -> {
                     SignalMast newMast = approachMastComboBoxes.get(index).getSelectedItem();
                     layoutTurntable.getRayTrackList().get(index).setApproachMast( (newMast != null) ? newMast.getSystemName() : null );
@@ -476,7 +477,7 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
                         if (ray.getConnect() != null) {
                             SignalMastIcon icon = new SignalMastIcon(layoutEditor);
                             icon.setSignalMast(mast.getDisplayName());
-                            log.info("Placing mast for turntable ray, connected to track segment: {}", ray.getConnect().getName()); // NOI18N
+                            log.debug("Placing mast for turntable ray, connected to track segment: {}", ray.getConnect().getName()); // NOI18N
                             layoutEditor.getLETools().placingBlockForTurntable(icon, placeIconsRight.isSelected(), 0.0,
                                     ray.getConnect(), layoutTurntableView.getRayCoordsIndexed(ray.getConnectionIndex()));
                             editLayoutTurntableNeedsRedraw = true;

@@ -963,6 +963,13 @@ public class LayoutTurntable extends LayoutTrack {
                             models.redrawPanel();
                             models.setDirty();
                         }
+                        // This ray is now active, so command all other rays to close.
+                        Turnout sourceTurnout = (Turnout) e.getSource();
+                        for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
+                            if (otherRay.getTurnout() != null && otherRay.getTurnout() != sourceTurnout) {
+                                otherRay.getTurnout().setCommandedState(Turnout.CLOSED);
+                            }
+                        }
                     } else if (turnoutState == Turnout.CLOSED) {
                         // This turnout is now closed. Check if all are closed.
                         boolean allClosed = true;
