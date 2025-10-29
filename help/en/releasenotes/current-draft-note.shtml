@@ -430,6 +430,9 @@
         <ul>
             <li>Update the roster XML Schema to fix a bug preventing
                 validation of the roster.xml file in some circumstances.</li>
+            <li>There is now a way to define indexed CVs in a decoder definition so
+                that the PI and SI values will be written to new values afterward, 
+                e.g. 11.12.123;0.1
         </ul>
 
    <h3>Dispatcher</h3>
