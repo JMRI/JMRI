@@ -97,12 +97,19 @@ public class JemmyUtil {
         jbo.push();
     }
 
+    /**
+     * Create a Modal Dialog Operator Thread.
+     * Button action is complete when Thread terminates.
+     * @param dialogTitle The Dialog title
+     * @param buttonText the text of the Button to press.
+     * @return the Thread.
+     */
     public static Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            jbo.pushNoBlock();
+            jbo.push(); // push waits for the button action to complete.
         });
         t.setName(dialogTitle + " Close Dialog Thread");
         t.start();
