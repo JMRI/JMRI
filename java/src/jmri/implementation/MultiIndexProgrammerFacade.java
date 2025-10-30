@@ -419,10 +419,12 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
                     storedReturnValue = value;
                     // write primary index
                     try {
-                        int tempPIafter = valuePIafter;
+                        lastValuePI = valuePIafter;
+                        lastValueSI = valueSIafter;
+
                         valuePIafter = -1;
                         state = ProgState.AFTERWRITEFIRST;
-                        prog.writeCV(indexPI, tempPIafter, this); 
+                        prog.writeCV(indexPI, lastValuePI, this); 
                     } catch (jmri.ProgrammerException e) {
                         log.error("Exception doing write PI after operation", e);
                     }   
