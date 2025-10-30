@@ -10,6 +10,7 @@ import jmri.jmrit.logixng.util.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.ThreadingUtil;
 
+
 /**
  * This action requests an update from the layout of the state of a turnout.
  *
