@@ -188,12 +188,16 @@ public class SerialThrottle extends AbstractThrottle {
         0xF8012E, // Fn37
         0xF8012E, // Fn38
         0xF8012E, // Fn39
-        0xF8012E, // Fn40
-        0xF8012E, // Fn41
-        0xF8012E, // Fn42
-        0xF8012E, // Fn43
-        0xF8012E, // Fn44
-        0xF8012E, // Fn45
+        
+        
+        0xF8000A, // Fn40
+        0xF80028, // Fn41
+        0xF80046, // Fn42
+        0xF80064, // Fn43
+        0xF8008C, // Fn44
+        0xF800C7, // Fn45
+
+        
         0xF8012E, // Fn46
         0xF8012E, // Fn47
         0xF8012E, // Fn48
@@ -371,7 +375,14 @@ public class SerialThrottle extends AbstractThrottle {
      * @param func  The number of the function being addressed
      */
     protected void sendFnToLayout(int value, int func) {
-    /**
+
+    if (speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
+        if (func == 40) {
+            setSpeedSetting(10);
+        }
+    }                          
+        
+     /**
      * Commenting out these repeat send lines in case it is
      * necessary to reinstate them after testing. These are
      * holdovers from the original "repeat 4 times to make
