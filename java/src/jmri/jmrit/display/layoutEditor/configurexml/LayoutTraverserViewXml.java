@@ -86,12 +86,12 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                 } else {
                     rElem.setAttribute("turnoutstate", "closed");
                 }
-                if (lt.isSlotDisabled(i)) {
-                    rElem.setAttribute("disabled", "yes");
-                }
-                if (lt.isSlotDisabledWhenOccupied(i)) {
-                    rElem.setAttribute("disableWhenOccupied", "yes");
-                }
+            }
+            if (lt.isSlotDisabled(i)) {
+                rElem.setAttribute("disabled", "yes");
+            }
+            if (lt.isSlotDisabledWhenOccupied(i)) {
+                rElem.setAttribute("disableWhenOccupied", "yes");
             }
             element.addContent(rElem);
         }
@@ -217,38 +217,43 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                 } catch (DataConversionException e) {
                     log.error("failed to convert slot track offset or index attributes");
                 }
-                String connectName = "";
+
                 a = value.getAttribute("connectname");
+                String connectName = (a != null) ? a.getValue() : "";
                 if (a != null) {
-                    connectName = a.getValue();
                     log.info("      connectname={}", connectName);
                 }
+
                 lt.addSlotTrack(offset, index, connectName);
+
                 a = value.getAttribute("approachmast");
                 if (a != null) {
                     lt.getSlotList().get(lt.getNumberSlots() - 1).approachMastName = a.getValue();
                     log.info("      approachmast=" + a.getValue());
                 }
+
                 a = value.getAttribute("turnout");
                 if (lt.isTurnoutControlled() && a != null) {
-                    log.info("      turnout=" + a.getValue());
-                    if (value.getAttribute("turnoutstate").getValue().equals("thrown")) {
-                        lt.setSlotTurnout(index, value.getAttribute("turnout").getValue(), Turnout.THROWN);
-                    } else {
-                        lt.setSlotTurnout(index, value.getAttribute("turnout").getValue(), Turnout.CLOSED);
+                    String turnoutName = a.getValue();
+                    log.info("      turnout=" + turnoutName);
+                    Attribute stateAttr = value.getAttribute("turnoutstate");
+                    int turnoutState = Turnout.CLOSED;
+                    if (stateAttr != null && "thrown".equalsIgnoreCase(stateAttr.getValue())) {
+                        turnoutState = Turnout.THROWN;
                     }
-                    log.info("      turnoutstate=" + value.getAttribute("turnoutstate").getValue());
-                    a = value.getAttribute("disabled");
-                    if (a != null) {
-                        lt.setSlotDisabled(index, "yes".equalsIgnoreCase(a.getValue()));
-                        log.info("      disabled=" + a.getValue());
-                    }
-                    a = value.getAttribute("disableWhenOccupied");
-                    if (a != null) {
-                        lt.setSlotDisabledWhenOccupied(index, "yes".equalsIgnoreCase(a.getValue()));
-                        log.info("      disableWhenOccupied=" + a.getValue());
+                    lt.setSlotTurnout(index, turnoutName, turnoutState);
+                    if (stateAttr != null) {
+                        log.info("      turnoutstate=" + stateAttr.getValue());
                     }
                 }
+
+                a = value.getAttribute("disabled");
+                lt.setSlotDisabled(index, (a != null) && "yes".equalsIgnoreCase(a.getValue()));
+                if (a != null) log.info("      disabled=" + a.getValue());
+
+                a = value.getAttribute("disableWhenOccupied");
+                lt.setSlotDisabledWhenOccupied(index, (a != null) && "yes".equalsIgnoreCase(a.getValue()));
+                if (a != null) log.info("      disableWhenOccupied=" + a.getValue());
             }
         }
 

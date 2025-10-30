@@ -616,8 +616,8 @@ public class LayoutTraverserView extends LayoutTrackView {
         }
 
         // Draw slot tracks
-        for (int i = 0; i < getNumberSlots(); i++) {
-            if (true) {
+        for (int i = 0; i < getNumberSlots(); i++) { // Loop through all slots
+            if (!traverser.isSlotDisabled(i)) { // Only draw if the slot is NOT disabled
                 Color slotColor = null;
                 TrackSegment ts = getSlotConnectOrdered(i);
                 // A slot is mainline if the bridge is, or if the connected track is.
@@ -638,9 +638,7 @@ public class LayoutTraverserView extends LayoutTrackView {
 					}
 				}
 
-                // Draw if mainline/sideline matches this pass
-                //if (isMain == slotIsMain) {
-				if(true){
+                if (isMain == slotIsMain) { // Draw only if mainline/sideline status matches the current pass
                     LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
                     float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
                     //g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
@@ -667,9 +665,8 @@ public class LayoutTraverserView extends LayoutTrackView {
                 }
             }
         }
-        // Only draw the bridge if its mainline status matches the current pass
-        //if (orderedIndex != -1 && (isMain == traverser.isMainline())) {
-		if (orderedIndex != -1) {
+        // Only draw the bridge if a slot is selected, it's not disabled, and its mainline status matches the current pass
+        if (orderedIndex != -1 && !traverser.isSlotDisabled(orderedIndex) && (isMain == traverser.isMainline())) {
             // Set color for bridge
             if (isBlock) {
                 LayoutBlock lb = getLayoutBlock();
@@ -736,7 +733,7 @@ public class LayoutTraverserView extends LayoutTrackView {
     @Override
     protected void highlightUnconnected(Graphics2D g2, HitPointType specificType) {
         for (int j = 0; j < getNumberSlots(); j++) {
-            if (!isSlotDisabled(j) && ((specificType == HitPointType.NONE) || (specificType == (HitPointType.traverserTrackIndexedValue(j))))) {
+            if (!traverser.isSlotDisabled(j) && ((specificType == HitPointType.NONE) || (specificType == (HitPointType.traverserTrackIndexedValue(j))))) {
                 if (getSlotConnectOrdered(j) == null) {
                     Point2D pt = getSlotCoordsOrdered(j);
                     g2.fill(trackControlCircleAt(pt));
@@ -750,7 +747,7 @@ public class LayoutTraverserView extends LayoutTrackView {
         if (isTurnoutControlled()) {
             for (int j = 0; j < getNumberSlots(); j++) {
                 if (getPosition() != getSlotIndex(j)) {
-                    SlotTrack rt = traverser.slotList.get(j);
+                    SlotTrack rt = traverser.slotList.get(j); // Get the SlotTrack object
                     if (!rt.isDisabled() && !(rt.isDisabledWhenOccupied() && rt.isOccupied())) {
                         Point2D pt = getSlotCoordsOrdered(j);
                         g2.draw(trackControlCircleAt(pt));
