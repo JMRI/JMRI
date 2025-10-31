@@ -9,7 +9,6 @@ import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
