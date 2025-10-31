@@ -63,7 +63,8 @@ public class LayoutTurntable extends LayoutTrack {
     private boolean dispatcherManaged = false;
     private boolean turnoutControlled = false;
     private double radius = 25.0;
-    private int lastKnownIndex = -1;
+    private int knownIndex = -1;
+    private int commandedIndex = -1;
 
     private int signalIconPlacement = 0; // 0: Do Not Place, 1: Left, 2: Right
 
@@ -658,7 +659,7 @@ public class LayoutTurntable extends LayoutTrack {
             boolean found = false; // assume failure (pessimist!)
             for (RayTrack rt : rayTrackList) {
                 if (rt.getConnectionIndex() == index) {
-                    lastKnownIndex = index;
+                    commandedIndex = index;
                     rt.setPosition();
                     models.redrawPanel();
                     models.setDirty();
@@ -679,7 +680,11 @@ public class LayoutTurntable extends LayoutTrack {
      * @return the turntable position
      */
     public int getPosition() {
-        return lastKnownIndex;
+        return knownIndex;
+    }
+
+    public int getCommandedPosition() {
+        return commandedIndex;
     }
 
     /**
@@ -690,7 +695,7 @@ public class LayoutTurntable extends LayoutTrack {
     public void deleteRay(@Nonnull RayTrack rayTrack) {
         TrackSegment t = null;
         if (rayTrackList == null) {
-            log.error("{}.deleteRay(null); rayTrack is null", getName());
+            log.error("{}.deleteRay(null); rayTrack is null", getName()); // NOI18N
         } else {
             t = rayTrack.getConnect();
             getRayTrackList().remove(rayTrack);
@@ -953,34 +958,23 @@ public class LayoutTurntable extends LayoutTrack {
         public void setTurnout(@Nonnull String turnoutName, int state) {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
-                mTurnoutListener = (PropertyChangeEvent e) -> {
-                    int turnoutState = getTurnout().getKnownState();
-                    if (turnoutState == Turnout.THROWN) {
-                        // This ray is now the active one.
-                        // Update the turntable's position indicator.
-                        if (lastKnownIndex != connectionIndex) {
-                            lastKnownIndex = connectionIndex;
-                            models.redrawPanel();
-                            models.setDirty();
-                        }
-                        // This ray is now active, so command all other rays to close.
-                        Turnout sourceTurnout = (Turnout) e.getSource();
-                        for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
-                            if (otherRay.getTurnout() != null && otherRay.getTurnout() != sourceTurnout) {
-                                otherRay.getTurnout().setCommandedState(Turnout.CLOSED);
+                mTurnoutListener = (PropertyChangeEvent e) -> { // Lambda expression for listener
+                    if ("KnownState".equals(e.getPropertyName())) {
+                        int turnoutState = (Integer) e.getNewValue();
+                        if (turnoutState == Turnout.THROWN) {
+                            // This ray is now the active one. Update the turntable's known position.
+                            knownIndex = connectionIndex;
+                        } else if (turnoutState == Turnout.CLOSED) {
+                            // If the currently known active ray is now closed, turntable is un-aligned.
+                            if (knownIndex == connectionIndex) {
+                                knownIndex = -1;
                             }
                         }
-                    } else if (turnoutState == Turnout.CLOSED) {
-                        // This turnout is now closed. Check if all are closed.
-                        boolean allClosed = true;
-                        for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
-                            if (otherRay.getTurnout() != null && otherRay.getTurnout().getKnownState() != Turnout.CLOSED) {
-                                allClosed = false;
-                                break;
-                            }
-                        }
-                        if (allClosed && lastKnownIndex != -1) {
-                            lastKnownIndex = -1; // All turnouts are closed, blank the bridge
+                        models.redrawPanel();
+                        models.setDirty();
+                    } else if ("CommandedState".equals(e.getPropertyName())) {
+                        if ((Integer) e.getNewValue() == Turnout.THROWN) {
+                            commandedIndex = connectionIndex;
                             models.redrawPanel();
                             models.setDirty();
                         }
@@ -1071,8 +1065,8 @@ public class LayoutTurntable extends LayoutTrack {
             if (getTurnout() != null) {
                 getTurnout().removePropertyChangeListener(mTurnoutListener);
             }
-            if (lastKnownIndex == connectionIndex) {
-                lastKnownIndex = -1;
+            if (knownIndex == connectionIndex) {
+                knownIndex = -1;
             }
         }
     }   // class RayTrack

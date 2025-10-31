@@ -13861,54 +13861,6 @@ final public class LayoutEditorTools {
     }
 
     /**
-     * Places a signal mast icon on the panel relative to a turntable ray.
-     * @param mast The SignalMast for the icon.
-     * @param layoutTurntableView The view of the turntable.
-     * @param ray The RayTrack to place the icon next to.
-     * @param placeRight True to place on the right, false for left.
-     */
-    public void placeIconOnTurntableRay(SignalMast mast, LayoutTurntableView layoutTurntableView, LayoutTurntable.RayTrack ray, boolean placeRight) {
-        if (isSignalMastOnPanel(mast)) {
-            log.warn("SignalMast icon for {} is already on the panel. Will not place a second icon.", mast.getDisplayName());
-            return;
-        }
-
-        SignalMastIcon icon = new SignalMastIcon(layoutEditor);
-        icon.setSignalMast(mast.getDisplayName());
-
-        java.awt.geom.Point2D center = layoutTurntableView.getCoordsCenter();
-        double radius = layoutTurntableView.getTurntable().getRadius();
-        double angle = Math.toRadians(ray.getAngle());
-
-        // Find the point on the circumference
-        double px = center.getX() + radius * Math.cos(angle);
-        double py = center.getY() + radius * Math.sin(angle);
-
-        int newX;
-        int newY;
-
-        if (placeRight) {
-            // Right side placement: offset along perpendicular vector (sin, -cos)
-            newX = (int) (px + (20.0 * Math.sin(angle)));
-            newY = (int) (py - (20.0 * Math.cos(angle)));
-        } else {
-            // Left side placement: offset along perpendicular vector (-sin, cos)
-            newX = (int) (px - (20.0 * Math.sin(angle)));
-            newY = (int) (py + (20.0 * Math.cos(angle)));
-        }
-
-        icon.setLocation(newX, newY);
-        // Rotate icon to be parallel with the ray
-        icon.rotate((int) (ray.getAngle() + 90));
-
-        try {
-            layoutEditor.putItem(icon);
-        } catch (Positionable.DuplicateIdException e) {
-            log.error("Failed to place SignalMast icon for {} due to duplicate ID: {}", mast.getDisplayName(), e.getMessage());
-        }
-    }
-
-    /**
      * get a signal head icon for the given signal head
      *
      * @param signalName name of a signal head.

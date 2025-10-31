@@ -873,10 +873,17 @@ public class LayoutTurntableView extends LayoutTrackView {
             if (main == isMain) {
                 g2.draw(new Line2D.Double(pt1, pt2));
             }
-            // getPosition() will return -1 if no ray is selected (all turnouts are closed).
-            // In that case, we do not draw the bridge.
-            int currentPositionIndex = (getPosition() != -1) ? getRayIndex(getPosition()) : -1;
-            if (isMain && isTurnoutControlled() && (currentPositionIndex == j)) {
+
+            int knownPosition = getPosition();
+            int commandedPosition = turntable.getCommandedPosition();
+
+            // Don't draw the bridge if animating and position is changing
+            if (layoutEditor.isAnimating() && isTurnoutControlled() && knownPosition != commandedPosition) {
+                continue;
+            }
+
+            int currentPositionIndex = (knownPosition != -1) ? getRayIndex(knownPosition) : -1;
+            if (isMain && isTurnoutControlled() && (currentPositionIndex == j) ) {
                 if (isBlock) {
                     LayoutBlock lb = getLayoutBlock();
                     if (lb != null) {
