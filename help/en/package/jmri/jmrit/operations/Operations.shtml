@@ -185,6 +185,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#Interchange">Classification/Interchange Tracks</a>
               <ul>
+                <li><a href="#InterchangeQuickService">Quick Service</a></li>
                 <li><a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain
                     Trains or Routes</a></li>
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
@@ -3126,6 +3127,32 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>Given the complexity of this type of track, it is strongly recommended that you not use
         classification/interchange tracks until you get comfortable with how the program builds
         trains and you've read and can understand the train build reports.</p>
+
+      <h3 id="InterchangeQuickService">Quick Service</h3>
+      The quick service feature for a C/I track allow you to create a Manifest or switch list
+      showing cars being moved more than once. When the quick service feature is enabled, the
+      program will create "clone cars" when building a train that delivers cars to the C/I track,
+      and place the original cars at the C/I track, allowing the train being built or another train
+      built later to have access to the cars. This is an advanced feature and is recommended for
+      operators that have gained some experience with the program.
+
+      <h3>Quick Service C/I Example</h3>
+      The following example shows how to drop off two boxcars to a location that has an industry
+      that can only be serviced using a Westbound train. The train is a turn and departs Eastbound,
+      and without the quick service feature enabled, the program would create a Manifest showing the
+      cars being delivered on the return or Westbound leg. The quick service feature will allow you
+      to create a Manifest showing the cars dropped off to a temporary track on the Eastbound leg,
+      and then moving the cars from the temporary track to the industry on the Westbound leg.
+
+      <p>
+        <img src="images/QuickServiceCI.png" alt="">
+      </p>
+
+      <p>To create this Manifest, cars need to be "routed" to the Mt Pulaski Freight House. In
+        the train's route at "Mt Pulaski" Westbound disable set outs, and only allow pick ups and
+        local moves. The temporary track "Off-Spot" has to be modified to allow pick ups using the
+        train "IL Turn", as the default for C/I tracks is not to allow the same train that spotted a
+        car to pull the car from the same C/I track.</p>
 
       <h3 id="CreateClassificationYard">How to Create a Classification Yard</h3>
       A classification yard is used to sort cars into various destinations or trains. Normally a
