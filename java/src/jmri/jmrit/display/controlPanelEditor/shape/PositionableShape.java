@@ -279,14 +279,22 @@ public abstract class PositionableShape extends PositionableJComponent implement
         getEditor().repaint();
     }
 
+    /**
+     * The custom paint method paints a border outside of the bounds.
+     * {@inheritDoc }
+     */
     @Override
     public int maxWidth() {
-        return getSize().width;
+        return getWidth() + getLineWidth();
     }
 
+    /**
+     * The custom paint method paints a border outside of the bounds.
+     * {@inheritDoc }
+     */
     @Override
     public int maxHeight() {
-        return getSize().height;
+        return getHeight() + getLineWidth();
     }
 
     @Override
