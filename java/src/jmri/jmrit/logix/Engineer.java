@@ -1114,10 +1114,11 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         Warrant newWarrant;
         long waitTime; // time to finish remaining commands
 
-        CheckForTermination(Warrant oldWar, Warrant newWar, int num, long limit) {
+        CheckForTermination(@Nonnull Warrant oldWar, @Nonnull Warrant newWar, int num, long limit) {
             oldWarrant = oldWar;
             newWarrant = newWar;
             waitTime = limit;
+            setName("CheckForTermination from " + oldWarrant.getDisplayName() + " to " + newWarrant.getDisplayName());
             if (log.isDebugEnabled()) {
                 log.debug("checkForTermination of \"{}\", before launching \"{}\". waitTime= {})",
                     oldWarrant.getDisplayName(), newWarrant.getDisplayName(), waitTime);
