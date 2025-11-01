@@ -201,10 +201,16 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 log.debug("Was able to find route via interchange ({}, {}) for car ({})", car.getDestinationName(),
                         car.getDestinationTrackName(), car);
             }
+            if (_addtoReportVeryDetailed) {
+                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterTwoTrainsSuccess", car.toString()));
+            }
             // now try 2 trains using a yard track
         } else if (setCarDestinationTwoTrainsYard(car)) {
             log.debug("Was able to find route via yard ({}, {}) for car ({}) using two trains",
                     car.getDestinationName(), car.getDestinationTrackName(), car);
+            if (_addtoReportVeryDetailed) {
+                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterTwoTrainsSuccess", car.toString()));
+            }
             // now try 3 or more trains to route car, but not through staging
         } else if (setCarDestinationMultipleTrains(car, false)) {
             log.debug("Was able to find multiple train route for car ({})", car);
@@ -517,10 +523,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                     secondTrain = _train;
                 } else {
                     if (_addtoReportVeryDetailed) {
-                        addLine(_buildReport, SEVEN, Bundle.getMessage("RouterNotFindTrain",
-                                Track.getTrackTypeName(trackType), track.getLocation().getName(),
-                                track.getName(), testCar.getDestinationName(),
-                                testCar.getDestinationTrackName()));
+                        addLine(_buildReport, SEVEN, Bundle.getMessage("RouterNotFindTrain", testCar.toString(),
+                                Track.getTrackTypeName(trackType), track.getLocation().getName(), track.getName(),
+                                testCar.getDestinationName(), testCar.getDestinationTrackName()));
                     }
                     continue;
                 }
@@ -572,10 +577,9 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                 firstTrain = tmanager.getTrainForCar(testCar, excludeTrains, _buildReport);
             }
             if (firstTrain == null && _addtoReportVeryDetailed) {
-                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterNotFindTrain",
+                addLine(_buildReport, SEVEN, Bundle.getMessage("RouterNotFindTrain", testCar.toString(),
                         testCar.getTrack().getTrackTypeName(), testCar.getTrack().getLocation().getName(),
-                        testCar.getTrack().getName(),
-                        testCar.getDestinationName(), testCar.getDestinationTrackName()));
+                        testCar.getTrack().getName(), testCar.getDestinationName(), testCar.getDestinationTrackName()));
             }
             // Can the specified train carry this car out of staging?
             if (_train != null && car.getTrack().isStaging() && !specified.equals(YES)) {
