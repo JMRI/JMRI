@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcher-traininfo.xsl" type="text/xsl"?>
+<!DOCTYPE traininfofile SYSTEM "/xml/DTD/dispatcher-traininfo.dtd">
+<traininfofile>
+  <!--Written by JMRI version 5.13.5plus+sg+2025-10-21T16:21:53Z+R3ac8e72 on Tue Oct 21 17:32:31 EDT 2025-->
+  <traininfo version="7" transitname="ML-T3" transitid="ML-T3" dynamictransit="no" trainname="" trainusername="3" rosterid="" dccaddress="3" trainintransit="yes" startblockname="ML-1" startblockid="ML" startblockseq="1" endblockname="TT3" endblockid="TT3" endblockseq="4" viablockname="" trainfromroster="no" trainfromtrains="no" trainfromuser="yes" trainfromsetlater="no" priority="5" traindetection="TRAINDETECTION_WHOLETRAIN" resetwhendone="no" delayedrestart="no" reverseatend="no" reversedelayedrestart="no" terminatewhendone="no" departuretimehr="8" departuretimemin="0" traintype="&lt;none&gt;" autorun="yes" loadatstartup="no" allocatealltheway="no" allocationmethod="3" nexttrain="None" speedfactor="1.0" maxspeed="1.0" minreliableoperatingspeed="0.0" ramprate="None" runinreverse="no" sounddecoder="no" maxtrainlengthscalemeters="30.4" trainlengthunits="TRAINLENGTH_ACTUALCM" usespeedprofile="no" stopbyspeedprofile="no" stopbyspeedprofileadjust="1.0" waittime="3.0" blockname="" fnumberlight="0" fnumberbell="1" fnumberhorn="2" />
+</traininfofile>

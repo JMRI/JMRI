@@ -103,9 +103,14 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         #need to look up the required transit in the graph
         StateVertex_start = station_from_name
         StateVertex_end = station_to_name
-        # for e in graph.edgeSet():
-        # if self.logLevel > 1: print (graph.getEdgeSource(e) + " --> " + graph.getEdgeTarget(e))
+        for e in graph.edgeSet():
+            if self.logLevel > 1: print (graph.getEdgeSource(e) + " --> " + graph.getEdgeTarget(e))
         if self.logLevel > 0: print strindex + "calling shortest path", StateVertex_start, StateVertex_end
+        # List all vertices
+        if self.logLevel > 0:
+            for vertex in graph.vertexSet():
+                print("Vertex:", vertex)
+
         paths = DijkstraShortestPath.findPathBetween(graph, StateVertex_start, StateVertex_end)
         # print strindex + "move_between_stations b"
         if paths == None:
@@ -1725,16 +1730,12 @@ class NewTrainMaster(jmri.jmrit.automat.AbstractAutomaton):
         default = "forward"
         self.od.CLOSED_OPTION = True
         while self.od.CLOSED_OPTION == True:
-            # if in_siding:
-            #     msg = "In block: " + block_name + "\n" +'What way is train facing\ntowards buffer?'
-            # else:
             msg = "In block: " + block_name + "\n" +'What way is train facing\ntowards highlighted block?'
             title = "Set Train Facing Direction"
             type = JOptionPane.QUESTION_MESSAGE
             result = self.od.customQuestionMessage2str(msg, title, "forward", "reverse")
             if self.od.CLOSED_OPTION == True:
-                self.od.displayMessage("Sorry Can't Cancel at this point")
-
+                OptionDialog().displayMessage("Sorry Can't Cancel at this point")
         if result == "reverse":
             train_direction = "forward"
         else:

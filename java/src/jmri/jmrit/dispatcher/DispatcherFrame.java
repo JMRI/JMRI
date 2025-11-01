@@ -2177,10 +2177,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
         }
 
-        as = allocateSection(at, s, ar.getSectionSeqNumber(), nextSection, nextSectionSeqNo, ar.getSectionDirection());
-        if (as != null) {
-            as.setAutoTurnoutsResponse(expectedTurnOutStates);
-        }
+        as = allocateSection(at, s, ar.getSectionSeqNumber(), nextSection, nextSectionSeqNo, ar.getSectionDirection(), expectedTurnOutStates);
 
         if (intermediateSections.size() > 1 && mastHeldAtSection != s) {
             Section tmpcur = nextSection;
@@ -2198,7 +2195,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     break;
                 }
                 Section se = intermediateSections.get(i);
-                as = allocateSection(at, tmpcur, tmpSeqNo, se, tmpNxtSeqNo, ar.getSectionDirection());
+                 // intermediateSections always have signal mast protection
+                 // so we can pass null as turnout settings.
+                as = allocateSection(at, tmpcur, tmpSeqNo, se, tmpNxtSeqNo, ar.getSectionDirection(), null);
                 tmpcur = se;
                 if (at.isAllocationReversed()) {
                     tmpSeqNo -= 1;
@@ -2234,7 +2233,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return as;
     }
 
-    private AllocatedSection allocateSection(ActiveTrain at, Section s, int seqNum, Section nextSection, int nextSectionSeqNo, int direction) {
+    private AllocatedSection allocateSection(ActiveTrain at, Section s, int seqNum, Section nextSection,
+            int nextSectionSeqNo, int direction, List<LayoutTrackExpectedState<LayoutTurnout>> expectedTurnOutStates) {
         AllocatedSection as = null;
         // allocate the section
         as = new AllocatedSection(s, at, seqNum, nextSection, nextSectionSeqNo);
@@ -2273,6 +2273,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
         }
+        as.setAutoTurnoutsResponse(expectedTurnOutStates);
         at.addAllocatedSection(as);
         allocatedSections.add(as);
         log.debug("{}: Allocated section [{}]", at.getTrainName(), as.getSection().getDisplayName(USERSYS));

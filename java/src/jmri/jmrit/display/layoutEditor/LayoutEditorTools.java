@@ -9637,10 +9637,10 @@ final public class LayoutEditorTools {
     }   //setSignalMastsDonePressed
 
 
-    Set<SignalMast> usedMasts = new HashSet<>();
+    public final Set<SignalMast> usedMasts = new HashSet<>();
 
-    void createListUsedSignalMasts() {
-        usedMasts = new HashSet<>();
+    public void createListUsedSignalMasts() {
+        usedMasts.clear();
         for (PositionablePoint po : layoutEditor.getPositionablePoints()) {
             //We allow the same sensor to be allocated in both directions.
             if (po != boundary) {
@@ -9679,6 +9679,19 @@ final public class LayoutEditorTools {
             }
             if (x.getSignalDMast() != null) {
                 usedMasts.add(x.getSignalDMast());
+            }
+        }
+        for (LayoutTurntable lt : layoutEditor.getLayoutTurntables()) {
+            if (lt.getBufferMast() != null) {
+                usedMasts.add(lt.getBufferMast());
+            }
+            if (lt.getExitSignalMast() != null) {
+                usedMasts.add(lt.getExitSignalMast());
+            }
+            for (LayoutTurntable.RayTrack ray : lt.getRayTrackList()) {
+                if (ray.getApproachMast() != null) {
+                    usedMasts.add(ray.getApproachMast());
+                }
             }
         }
     }   //createListUsedSignalMasts
@@ -9811,7 +9824,7 @@ final public class LayoutEditorTools {
         return true;
     }
 
-    private void placingBlock(PositionableIcon icon, boolean isRightSide,
+    public void placingBlock(PositionableIcon icon, boolean isRightSide,
             double fromPoint, Object obj, Point2D p) {
         if (obj instanceof TrackSegment) {
             TrackSegment ts = (TrackSegment) obj;
@@ -9819,6 +9832,37 @@ final public class LayoutEditorTools {
             if (ts.getConnect1() == layoutTurnout) {
                 endPoint = layoutEditor.getCoords(ts.getConnect2(), ts.getType2());
             } else {
+                endPoint = layoutEditor.getCoords(ts.getConnect1(), ts.getType1());
+            }
+            boolean isEast = false;
+            if (MathUtil.equals(endPoint.getX(), p.getX())) {
+                log.debug("X in both is the same");
+                if (endPoint.getY() < p.getY()) {
+                    log.debug("Y end point is less than our point");
+                    isEast = true;
+                }
+            } else if (endPoint.getX() < p.getX()) {
+                log.debug("end X point is less than our point");
+                isEast = true;
+            }
+
+            log.debug("East set is {}", isEast);
+            setIconOnPanel(ts, icon, isEast, p, endPoint, isRightSide, fromPoint);
+        }
+    }
+
+    public void placingBlockForTurntable(PositionableIcon icon, boolean isRightSide,
+                             double fromPoint, Object obj, Point2D p) {
+        if (obj instanceof TrackSegment) {
+            TrackSegment ts = (TrackSegment) obj;
+            Point2D endPoint;
+            // Determine the "other" end of the track segment by comparing coordinates
+            // with the passed-in anchor point 'p'. This is more robust than checking object references.
+            if (MathUtil.distance(layoutEditor.getCoords(ts.getConnect1(), ts.getType1()), p) < 1.0) {
+                // connect1 is at our anchor point 'p', so the other end is connect2
+                endPoint = layoutEditor.getCoords(ts.getConnect2(), ts.getType2());
+            } else {
+                // connect2 is at our anchor point 'p', so the other end is connect1
                 endPoint = layoutEditor.getCoords(ts.getConnect1(), ts.getType1());
             }
             boolean isEast = false;
