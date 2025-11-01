@@ -1,24 +1,24 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.io.File;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
-import jmri.JmriException;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.SignalMastManager;
 import jmri.jmrit.logix.PortalManager;
 import jmri.jmrit.logix.Portal;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of the CircuitBuilder class.
@@ -27,43 +27,48 @@ import org.slf4j.LoggerFactory;
  */
 public class SignalPairTest {
 
-    ControlPanelEditor cpe;
-    CircuitBuilder cb;
+    private ControlPanelEditor cpe;
+    private CircuitBuilder cb;
     private SignalMastManager mastMgr;
     private PortalManager portalMgr;
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
         getCPEandCB();
 
         jmri.SignalMast mast = mastMgr.getNamedBean("WestMainExit");
-        Assert.assertNotNull("Mast exists", mast);
+        assertNotNull( mast, "Mast exists");
         Portal portal = portalMgr.getPortal("West-WestExit");
-        Assert.assertNotNull("Portal exists", portal);
+        assertNotNull( portal, "Portal exists");
         SignalPair sp = new SignalPair(mast, portal);
-        Assert.assertNotNull("SignalPair exists", sp);
+        assertNotNull( sp, "SignalPair exists");
 
         String msg = sp.getDiscription();
-        Assert.assertNotNull("msg exists", msg);
+        assertNotNull( msg, "msg exists");
+
     }
 
     void getCPEandCB() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ResourceBundle rbxWarrant = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
+        Thread t = JemmyUtil.createModalDialogOperatorThread(
+            rbxWarrant.getString("ErrorDialogTitle"), "OK");
+
         File f = new File("java/test/jmri/jmrit/display/controlPanelEditor/valid/CircuitBuilderTest.xml");
-        try {
-            InstanceManager.getDefault(ConfigureManager.class).load(f);
-        } catch(JmriException je) {
-            log.error("SignalPairTest can't load CircuitBuilderTester.xml {}", je);
-        }
+        assertDoesNotThrow( () ->
+            InstanceManager.getDefault(ConfigureManager.class).load(f));
+
+        JUnitUtil.waitThreadTerminated(t);
+
         cpe = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("CircuitBuilderTest Editor");
-        Assert.assertNotNull("CPE exists", cpe );
+        assertNotNull( cpe, "CPE exists");
         cb = cpe.getCircuitBuilder();
-        Assert.assertNotNull("CB exists", cb );
-        //fixed: jmri.util.JUnitAppender.assertWarnMessage("getIconMap failed. family \"null\" not found in item type \"Portal\"");
+        assertNotNull( cb, "CB exists");
+
         portalMgr = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class);
-        Assert.assertNotNull("PortMgr exists", portalMgr );
+        assertNotNull( portalMgr, "PortMgr exists");
         mastMgr = InstanceManager.getDefault(SignalMastManager.class);
-        Assert.assertNotNull("MastMgr exists", mastMgr );
+        assertNotNull( mastMgr, "MastMgr exists");
     }
 
     @BeforeEach
@@ -78,7 +83,8 @@ public class SignalPairTest {
     @AfterEach
     public void tearDown() {
         if (cpe != null) {
-            cpe.dispose();
+            JUnitUtil.dispose(cpe);
+            cpe = null;
         }
         JUnitUtil.deregisterBlockManagerShutdownTask();
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
@@ -88,7 +94,11 @@ public class SignalPairTest {
                 sm.deregister((ShutDownTask)rlist.get(0));
             }
         }
+        // cleaning up nameless invisible frame created by creating a dialog with a null parent
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(SignalPairTest.class);
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalPairTest.class);
+
 }
