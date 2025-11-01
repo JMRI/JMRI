@@ -111,7 +111,7 @@ public class MultiSensorIconFrame extends JmriJFrame {
         b.addActionListener(a1 -> {
             make();
             if (isEmpty != 1){
-                removeWindows();
+                dispose();
             }
         });
         this.getContentPane().add(b);
@@ -148,11 +148,14 @@ public class MultiSensorIconFrame extends JmriJFrame {
 
     }
 
-    void removeWindows() {
+    @Override
+    public void dispose() {
         for (int i = 0; i < content.getComponentCount(); i++) {
             ((Entry) content.getComponent(i)).dispose();
         }
-        defaultsFrame.dispose();
+        if ( defaultsFrame != null ) {
+            defaultsFrame.dispose();
+        }
         super.dispose();
     }
 
