@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.setup.backup.AutoBackup;
 import jmri.jmrit.operations.setup.backup.AutoSave;
@@ -1818,6 +1819,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(STANDARD_FORMAT);
         box.addItem(TWO_COLUMN_FORMAT);
         box.addItem(TWO_COLUMN_TRACK_FORMAT);
+        OperationsPanel.padComboBox(box, TWO_COLUMN_TRACK_FORMAT.length());
         return box;
     }
 
@@ -1827,6 +1829,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(LANDSCAPE);
         box.addItem(HALFPAGE);
         box.addItem(HANDHELD);
+        OperationsPanel.padComboBox(box, LANDSCAPE.length());
         return box;
     }
 
@@ -1835,6 +1838,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(PAGE_NORMAL);
         box.addItem(PAGE_PER_TRAIN);
         box.addItem(PAGE_PER_VISIT);
+        OperationsPanel.padComboBox(box, PAGE_PER_TRAIN.length());
         return box;
     }
 
