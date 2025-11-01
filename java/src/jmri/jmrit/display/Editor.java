@@ -38,6 +38,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.DnDStringImportHandler;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
@@ -83,7 +84,7 @@ import jmri.util.swing.JmriMouseMotionListener;
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  *
  */
-abstract public class Editor extends JmriJFrameWithPermissions
+public abstract class Editor extends JmriJFrameWithPermissions
         implements JmriMouseListener, JmriMouseMotionListener, ActionListener,
                 KeyListener, VetoableChangeListener {
 
@@ -1855,11 +1856,16 @@ abstract public class Editor extends JmriJFrameWithPermissions
         return left;
     }
 
-    /* Positionable has set a new level.  Editor must change it in the target panel.
+    /**
+     * Positionable has set a new level.
+     * Editor must change it in the target panel.
+     * @param l the positionable to display.
      */
     public void displayLevelChange(Positionable l) {
-        removeFromTarget(l);
-        addToTarget(l);
+        ThreadingUtil.runOnGUI( () -> {
+            removeFromTarget(l);
+            addToTarget(l);
+        });
     }
 
     public TrainIcon addTrainIcon(String name) {
@@ -1888,14 +1894,16 @@ abstract public class Editor extends JmriJFrameWithPermissions
         }
     }
 
-    public void putItem(Positionable l) throws Positionable.DuplicateIdException {
-        l.invalidate();
-        l.setPositionable(true);
-        l.setVisible(true);
-        if (l.getToolTip() == null) {
-            l.setToolTip(new ToolTip(_defaultToolTip, l));
-        }
-        addToTarget(l);
+    public void putItem(@Nonnull Positionable l) throws Positionable.DuplicateIdException {
+        ThreadingUtil.runOnGUI( () -> {
+            l.invalidate();
+            l.setPositionable(true);
+            l.setVisible(true);
+            if (l.getToolTip() == null) {
+                l.setToolTip(new ToolTip(_defaultToolTip, l));
+            }
+            addToTarget(l);
+        });
         if (!_contents.add(l)) {
             log.error("Unable to add {} to _contents", l.getNameString());
         }
@@ -2997,17 +3005,17 @@ abstract public class Editor extends JmriJFrameWithPermissions
     /*
      * ******************* cleanup ************************
      */
-    protected void removeFromTarget(Positionable l) {
+    protected void removeFromTarget(@Nonnull Positionable l) {
+        Point p = l.getLocation();
         _targetPanel.remove((Component) l);
         _highlightcomponent = null;
-        Point p = l.getLocation();
-        int w = l.getWidth();
-        int h = l.getHeight();
+        int w = l.maxWidth();
+        int h = l.maxHeight();
         _targetPanel.revalidate();
         _targetPanel.repaint(p.x, p.y, w, h);
     }
 
-    public boolean removeFromContents(Positionable l) {
+    public boolean removeFromContents(@Nonnull Positionable l) {
         removeFromTarget(l);
         //todo check that parent == _targetPanel
         //Container parent = this.getParent();
