@@ -457,6 +457,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void testGetLayoutName() {
         e.dispose(); // remove existing instance
         e = new LayoutEditor(); // create new instance to test the default name
+        jfo = new EditorFrameOperator(e);
         // default is "My Layout"
         Assert.assertEquals("getLayoutName", "My Layout", e.getLayoutName());
     }
