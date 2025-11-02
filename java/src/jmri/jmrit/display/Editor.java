@@ -3009,8 +3009,8 @@ public abstract class Editor extends JmriJFrameWithPermissions
         Point p = l.getLocation();
         _targetPanel.remove((Component) l);
         _highlightcomponent = null;
-        int w = l.maxWidth();
-        int h = l.maxHeight();
+        int w = Math.max( l.maxWidth(), l.getWidth());
+        int h = Math.max( l.maxHeight(), l.getHeight());
         _targetPanel.revalidate();
         _targetPanel.repaint(p.x, p.y, w, h);
     }
