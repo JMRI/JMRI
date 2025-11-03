@@ -2554,7 +2554,7 @@ public class TrainBuilderBase extends TrainCommon {
             return false;
         }
         // is the track full? If so, pull immediately, prevents overloading
-        if (car.getTrack().getLength() - car.getTrack().getUsedLength() < car.getTotalKernelLength()) {
+        if (car.getTrack().getPool() == null && car.getTrack().getLength() - car.getTrack().getUsedLength() < car.getTotalKernelLength()) {
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildNoPickupLaterTrack", car.toString(), rld.getName(),
                     car.getTrackName(), rld.getId(), car.getTrack().getLength() - car.getTrack().getUsedLength(),
                     Setup.getLengthUnit().toLowerCase()));
