@@ -111,6 +111,7 @@ public class AbstractAutomaton implements Runnable {
      * Overrides the superclass method to do local accounting.
      */
     public void start() {
+        log.trace("start() invoked");
         if (currentThread != null) {
             log.error("Start with currentThread not null!");
         }
@@ -118,6 +119,7 @@ public class AbstractAutomaton implements Runnable {
         currentThread.start();
         summary.register(this);
         count = 0;
+        log.trace("start() ends");
     }
 
     private volatile boolean running = false;
@@ -133,6 +135,7 @@ public class AbstractAutomaton implements Runnable {
      */
     @Override
     public void run() {
+        log.trace("run starts with threadIsStopped {}", threadIsStopped);
         try {
             inThread = true;
             init();
@@ -144,18 +147,24 @@ public class AbstractAutomaton implements Runnable {
                 summary.loop(this);
             }
             if (threadIsStopped) {
-                log.debug("Current thread is stopped()");
+                log.debug("Current thread has been stopped()");
             } else {
                 log.debug("normal termination, handle() returned false");
             }
         } catch (StopThreadException e1) {
-            log.debug("Current thread is stopped()");
+            log.debug("Current thread is stopped() via StopThreadException");
         } catch (Exception e2) {
             log.warn("Unexpected Exception ends AbstractAutomaton thread", e2);
         } finally {
+            log.trace("setting currentThread to null");
             currentThread = null;
+            threadIsStopped = false;
+            // the next line resets the interrupted flag in this thread if set
+            // java.lang.Thread.interrupted();
+            
             done();
         }
+        log.trace("setting running to false");
         running = false;
     }
 
@@ -165,7 +174,7 @@ public class AbstractAutomaton implements Runnable {
      * Overrides superclass method to handle local accounting.
      */
     public void stop() {
-        log.trace("stop() invoked");
+        log.debug("stop() invoked");
         if (currentThread == null) {
             log.error("Stop with currentThread null!");
             return;
@@ -176,7 +185,7 @@ public class AbstractAutomaton implements Runnable {
 
         done();
         // note we don't set running = false here.  It's still running until the run() routine thinks it's not.
-        log.trace("stop() completed");
+        log.debug("stop() completed");
     }
 
     /**
@@ -185,6 +194,7 @@ public class AbstractAutomaton implements Runnable {
      * Common internal end-time processing
      */
     void done() {
+        log.trace("done invoked");
         summary.remove(this);
     }
 
