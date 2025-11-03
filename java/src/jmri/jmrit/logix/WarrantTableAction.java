@@ -24,6 +24,7 @@ import javax.swing.JTextArea;
 import jmri.InstanceManager;
 import jmri.InvokeOnGuiThread;
 import jmri.Path;
+import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -268,7 +269,7 @@ public class WarrantTableAction extends AbstractAction {
         for (OBlock block : manager.getNamedBeanSet()) {
             textArea.append(checkPathPortals(block));
         }
-        return showPathPortalErrors(textArea);
+        return ThreadingUtil.runOnGUIwithReturn( () -> showPathPortalErrors(textArea));
     }
 
     /**
