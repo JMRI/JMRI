@@ -12,6 +12,8 @@ import jmri.jmrix.AbstractThrottle;
  * considered long addresses.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
+ * with additions and edits by
+ * @author Timothy Jump Copyright (C) 2025
  */
 public class SerialThrottle extends AbstractThrottle {
 
@@ -104,20 +106,37 @@ public class SerialThrottle extends AbstractThrottle {
 
     // TMCC 1 Function Keys to trigger with TMCC1_32 and TMCC1_100 speed steps.
     private final static long[] SERIAL_FUNCTION_CODES_TMCC1 = new long[] {
+
+        // TMCC1 Remote - Buttons
         0x00000D, 0x00001D, 0x00001C, 0x000005, 0x000006, /* Fn0-4 */
-        0x000010, 0x000011, 0x000012, 0x000013, 0x000014, /* Fn5-9 */
-        0x000015, 0x000016, 0x000017, 0x000018, 0x000019, /* Fn10-14 */
-        0x000009, 0x00001E, 0x000000, 0x000003, 0x000001, /* Fn15-19 */
-        0x000004, 0x000007, 0x000047, 0x000042, 0x000028, /* Fn20-24 */
-        0x000029, 0x00002A, 0x00002B, 0x00001F, /* 25-28 */
-        
-        0x00002E, // Fn29
+
+        // TMCC1 Remote - KeyPad Buttons
+        0x000011, 0x000012, 0x000013, /* Fn5-7 */
+        0x000014, 0x000015, 0x000016, /* Fn8-10 */
+        0x000017, 0x000018, 0x000019, /* Fn11-13 */
+                  0x000010,           /* Fn14 */
+
+        // TMCC1 Remote - Buttons
+        0x000009, 0x00001E, 0x000004, 0x000007, 0x000028, /* Fn15-19 */
+        0x000029, 0x00002A, 0x00002B, 0x00001F,           /* 20-23 */
+
+        // TMCC1 RR Speed FnKeys
+        0x000064, // Fn24
+        0x000066, // Fn25
+        0x00006E, // Fn26
+        0x000071, // Fn27
+        0x000077, // Fn28
+        0x00007F, // Fn29 
+
+        // TMCC1 Aux FnKeys 
         0x00002E, // Fn30
         0x00002E, // Fn31
         0x00002E, // Fn32
         0x00002E, // Fn33
         0x00002E, // Fn34
         0x00002E, // Fn35
+
+        // TMCC1 Unused FnKeys
         0x00002E, // Fn36
         0x00002E, // Fn37
         0x00002E, // Fn38
@@ -150,7 +169,7 @@ public class SerialThrottle extends AbstractThrottle {
         0x00002E, // Fn65
         0x00002E, // Fn66
         0x00002E, // Fn67
-        0x00002E, // Fn68
+        0x00002E, // Fn68        
     };
 
     // Translate TMCC1 function numbers to line characters.
@@ -164,26 +183,49 @@ public class SerialThrottle extends AbstractThrottle {
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_32 and TMCC2_200 speed steps.
     private final static long[] SERIAL_FUNCTION_CODES_TMCC2 = new long[] {
+
+        // TMCC2 Remote - Buttons
         0xF8010D, 0xF8011D, 0xF8011C, 0xF80105, 0xF80106, /* Fn0-4 */
-        0xF80110, 0xF80111, 0xF80112, 0xF80113, 0xF80114, /* Fn5-9 */
-        0xF80115, 0xF80116, 0xF80117, 0xF80118, 0xF80119, /* Fn10-14 */
-        0xF80109, 0xF8011E, 0xF80100, 0xF80103, 0xF80101, /* Fn15-19 */
-        0xF80104, 0xF80107, 0xF80147, 0xF80142, 0xF80128, /* Fn20-24 */
-        0xF80129, 0xF8012A, 0xF8012B, 0xF8011F, /* 25-28 */
-        
-        0xF80108, // Fn29
-        0xF8010A, // Fn30
-        0xF8010B, // Fn31
-        0xF8010C, // Fn32
-        0xF8010E, // Fn33
-        0xF8010F, // Fn34
-        
+
+        // TMCC2 Remote - Keypad Buttons
+        0xF80111, 0xF80112, 0xF80113, /* Fn5-7 */
+        0xF80114, 0xF80115, 0xF80116, /* Fn8-10 */
+        0xF80117, 0xF80118, 0xF80119, /* Fn11-13 */
+                  0xF80110,           /* Fn14 */
+
+        // TMCC2 Remote - Buttons
+        0xF80109, 0xF8011E, 0xF80104, 0xF80107, 0xF80128, /* Fn15-19 */
+        0xF80129, 0xF8012A, 0xF8012B, 0xF8011F,/* 20-23 */
+
+        // TMCC2 RR Speed FnKeys
+        0xF8000A, // Fn24
+        0xF80028, // Fn25
+        0xF80046, // Fn26
+        0xF80064, // Fn27
+        0xF8008C, // Fn28
+        0xF800C7, // Fn29
+
+        // TMCC2 Extended Lighting FnKeys
+
+        //0xF8017DFB01F2FB0189L, // Fn35 Set Cab Light Auto
+
+
+        // Extended Sound Effects FnKeys
         //0xF801FBF801FCL, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
         //0xF801FC, // Fn36 Start Up Sequence 2 (Immediate Start Up)
         //0xF801FDF801FEL, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
         //0xF801FE, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
 
-        0xF8012E, // Fn35
+
+        // Aux FnKeys
+        0xF80108, // Fn30
+        0xF8010A, // Fn31
+        0xF8010B, // Fn32
+        0xF8010C, // Fn33
+        0xF8010E, // Fn34
+        0xF8010F, // Fn35
+
+        // Unused FnKeys
         0xF8012E, // Fn36
         0xF8012E, // Fn37
         0xF8012E, // Fn38
@@ -212,11 +254,6 @@ public class SerialThrottle extends AbstractThrottle {
         0xF8012E, // Fn61
         0xF8012E, // Fn62
         0xF8012E, // Fn63
-        0xF8012E, // Fn64
-        0xF8012E, // Fn65
-        0xF8012E, // Fn66
-        0xF8012E, // Fn67
-        0xF8012E, // Fn68
     };
 
     /**
@@ -244,9 +281,9 @@ public class SerialThrottle extends AbstractThrottle {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xF8);
     
-            if (value < 1) {
-                // immediate stop
-                m.putAsWord(0x0000 + (address.getNumber() << 9) + 0);
+            if (value < 0) {
+                // System HALT (immediate stop; ALL)
+                m.putAsWord(0xFF8B);
             } else {
                 // normal speed setting
                 m.putAsWord(0x0000 + (address.getNumber() << 9) + value);
@@ -273,16 +310,17 @@ public class SerialThrottle extends AbstractThrottle {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xFE);
 
-            if (value < 1) {
-                // immediate stop
-                m.putAsWord(0x0060 + address.getNumber() * 128 + 0);
+            if (value < 0) {
+                // System HALT (immediate stop; ALL)
+                m.putAsWord(0xFFFF);
             }
-            if (value > 0) {
+            if (value >= 0) {
                 // normal speed step setting
                 m.putAsWord(0x0060 + address.getNumber() * 128 + value / 3);
             }
                             
             // send to command station (send once for maximum efficiency; add extra sends if layout not responding with only one send)
+            tc.sendSerialMessage(m, null);
             tc.sendSerialMessage(m, null);
         }
 
@@ -298,9 +336,9 @@ public class SerialThrottle extends AbstractThrottle {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xF8);
     
-            if (value < 1) {
-                // immediate stop
-                m.putAsWord(0x0160 + address.getNumber() * 512 + 0);
+            if (value < 0) {
+                // System HALT (immediate stop; ALL)
+                m.putAsWord(0xFF8B);
             } else {
                 // normal speed setting
                 m.putAsWord(0x0160 + address.getNumber() * 512 + value);
@@ -323,9 +361,9 @@ public class SerialThrottle extends AbstractThrottle {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xFE);
     
-            if (value < 1) {
-                // immediate stop
-                m.putAsWord(0x0060 + address.getNumber() * 128 + 0);
+            if (value < 0) {
+                // System HALT (immediate stop; ALL)
+                m.putAsWord(0xFFFF);
             } else {
                 // normal speed setting
                 m.putAsWord(0x0060 + address.getNumber() * 128 + value);
@@ -352,15 +390,33 @@ public class SerialThrottle extends AbstractThrottle {
 
         // notify layout
         SerialMessage m = new SerialMessage();
-        if (forward) {
-            m.putAsWord(0x0000 + address.getNumber() * 128);
-        } else {
-            m.putAsWord(0x0003 + address.getNumber() * 128);
+        if (speedStepMode == jmri.SpeedStepMode.TMCC1_32 || speedStepMode == jmri.SpeedStepMode.TMCC1_100) {
+            m.setOpCode(0xFE);
+            if (forward) {
+                m.putAsWord(0x0000 + address.getNumber() * 128);
+                setSpeedSetting(0.0f);
+            } else {
+                m.putAsWord(0x0003 + address.getNumber() * 128);
+                setSpeedSetting(0.0f);
+            }
         }
+
+        if (speedStepMode == jmri.SpeedStepMode.TMCC2_32 || speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
+            m.setOpCode(0xF8);
+            if (forward) {
+                m.putAsWord(0x0100 + address.getNumber() * 512);
+                setSpeedSetting(0.0f);
+            } else {
+                m.putAsWord(0x0103 + address.getNumber() * 512);
+                setSpeedSetting(0.0f);
+            }
+        }
+
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
+
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
@@ -371,6 +427,54 @@ public class SerialThrottle extends AbstractThrottle {
      * @param func  The number of the function being addressed
      */
     protected void sendFnToLayout(int value, int func) {
+        
+
+    if (speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
+        if (func == 40) {
+            setSpeedSetting(0.055f);
+        }
+        if (func == 41) {
+            setSpeedSetting(0.205f);
+        }
+        if (func == 42) {
+            setSpeedSetting(0.355f);
+        }
+        if (func == 43) {
+            setSpeedSetting(0.505f);
+        }
+        if (func == 44) {
+            setSpeedSetting(0.705f);
+        }
+        if (func == 45) {
+            setSpeedSetting(1.0f);
+        }
+    }
+
+
+    if (speedStepMode == jmri.SpeedStepMode.TMCC1_32 || speedStepMode == jmri.SpeedStepMode.TMCC2_32) {
+        if (func == 40) {
+            setSpeedSetting(0.055f);
+        }
+        if (func == 41) {
+            setSpeedSetting(0.205f);
+        }
+        if (func == 42) {
+            setSpeedSetting(0.355f);
+        }
+        if (func == 43) {
+            setSpeedSetting(0.505f);
+        }
+        if (func == 44) {
+            setSpeedSetting(0.705f);
+        }
+        if (func == 45) {
+            setSpeedSetting(1.0f);
+        }
+    }
+ 
+
+                 
+            
     /**
      * Commenting out these repeat send lines in case it is
      * necessary to reinstate them after testing. These are
