@@ -168,7 +168,6 @@ public class ColorDialogTest {
     public void setUp() throws Positionable.DuplicateIdException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.resetProfileManager();
         startEditor();
     }
 
