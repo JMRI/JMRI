@@ -18,7 +18,7 @@ import jmri.jmrit.logix.Warrant;
  * Abstract base for user automaton classes, which provide individual bits of
  * automation.
  * <p>
- * Each individual automaton runs in a separate thread, so they can operate
+ * Each individual automaton object runs in a separate thread, so they can operate
  * independently. This class handles thread creation and scheduling, and
  * provides a number of services for the user code.
  * <p>
@@ -28,9 +28,9 @@ import jmri.jmrit.logix.Warrant;
  * it is more efficient to use the explicit wait services when waiting for some
  * specific condition.
  * <p>
- * handle() is executed repeatedly until either the Automate object is halted(),
- * or it returns "false". Returning "true" will just cause handle() to be
- * invoked again, so you can cleanly restart the Automaton by returning from
+ * handle() is executed repeatedly until either the Automate object's stop() method is called,
+ * or handle() returns "false". Returning "true" will just cause handle() to be
+ * invoked again, so you can cleanly restart the Automaton's handle processing by returning from
  * multiple points in the function.
  * <p>
  * Since handle() executes outside the GUI thread, it is important that access
@@ -38,10 +38,10 @@ import jmri.jmrit.logix.Warrant;
  * routines.
  * <p>
  * Services are provided by public member functions, described below. They must
- * only be invoked from the init and handle methods, as they must be used in a
+ * only be invoked from within the init and handle methods, as they must be used in a
  * delayable thread. If invoked from the GUI thread, for example, the program
  * will appear to hang. To help ensure this, a warning will be logged if they
- * are used before the thread starts.
+ * are used outside the proper thread.
  * <p>
  * For general use, e.g. in scripts, the most useful functions are:
  * <ul>
@@ -86,7 +86,7 @@ import jmri.jmrit.logix.Warrant;
  * Although this is named an "Abstract" class, it's actually concrete so scripts
  * can easily use some of the methods.
  *
- * @author Bob Jacobsen Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2003, 2025
  */
 public class AbstractAutomaton implements Runnable {
 
@@ -106,14 +106,15 @@ public class AbstractAutomaton implements Runnable {
     private volatile boolean threadIsStopped = false;
 
     /**
-     * Start this automat processing.
+     * Start this automat's processing loop.
      * <p>
-     * Overrides the superclass method to do local accounting.
+     * Will execute the init() method, if present, then
+     * repeatedly execute the handle() method until complete.
      */
     public void start() {
         log.trace("start() invoked");
         if (currentThread != null) {
-            log.error("Start with currentThread not null!");
+            log.error("Start with a thread already running!");
         }
         currentThread = jmri.util.ThreadingUtil.newThread(this, name);
         currentThread.start();
@@ -124,6 +125,13 @@ public class AbstractAutomaton implements Runnable {
 
     private volatile boolean running = false;
 
+    /**
+     * Is the thread in this object currently running?
+     *<p>
+     * @return true from the time the {@link #start} method is called
+     *          until the thread has completed running after 
+     *          the {@link #stop} method is called.
+     */
     public boolean isRunning() {
         return running;
     }
@@ -159,8 +167,6 @@ public class AbstractAutomaton implements Runnable {
             log.trace("setting currentThread to null");
             currentThread = null;
             threadIsStopped = false;
-            // the next line resets the interrupted flag in this thread if set
-            // java.lang.Thread.interrupted();
             
             done();
         }
@@ -169,14 +175,21 @@ public class AbstractAutomaton implements Runnable {
     }
 
     /**
-     * Stop the thread immediately.
+     * Stop the thread as soon as possible.
      * <p>
-     * Overrides superclass method to handle local accounting.
+     * This interrupts the thread, which will cause it to 
+     * terminate soon.  There's no guarantee as to how long that will
+     * take. It should be just a few milliseconds.
+     * <p>
+     * To see if the thread has terminated, check the 
+     * {@link #isRunning} status method.
+     * <p>
+     * Once the thread has terminated, it can be started again.
      */
     public void stop() {
         log.debug("stop() invoked");
         if (currentThread == null) {
-            log.error("Stop with currentThread null!");
+            log.error("Stop called with no current thread running!");
             return;
         }
 
@@ -203,13 +216,14 @@ public class AbstractAutomaton implements Runnable {
     private int count;
 
     /**
-     * Get the number of times the handle routine has executed.
+     * Get the number of times the handle routine has executed
+     * since the last time {@link #start()} was called on it.
      * <p>
-     * Used by classes such as {@link jmri.jmrit.automat.monitor} to monitor
+     * Used by classes such as those in {@link jmri.jmrit.automat.monitor} to monitor
      * progress.
      *
-     * @return the number of times {@link #handle()} has been called on this
-     *         AbstractAutomation
+     * @return the number of times {@link #handle()} has executed in this
+     *         AbstractAutomation since it was last started.
      */
     public int getCount() {
         return count;
@@ -220,6 +234,7 @@ public class AbstractAutomaton implements Runnable {
      * such as {@link jmri.jmrit.automat.monitor}.
      *
      * @return the name of this thread
+     * @see #setName(String)
      */
     public String getName() {
         return name;
@@ -229,6 +244,9 @@ public class AbstractAutomaton implements Runnable {
      * Update the name of this object.
      * <p>
      * name is not a bound parameter, so changes are not notified to listeners.
+     * <p> 
+     * If you're going to use this, it should generally be called
+     * before calling {@link #start()}.
      *
      * @param name the new name
      * @see #getName()
@@ -237,13 +255,14 @@ public class AbstractAutomaton implements Runnable {
         this.name = name;
     }
 
+    @Deprecated(since="5.13.6", forRemoval=true) // This doesn't seem to have a purpose...
     void defaultName() {
     }
 
     /**
      * User-provided initialization routine.
      * <p>
-     * This is called exactly once for each object created. This is where you
+     * This is called exactly once each time the object's start() method is called. This is where you
      * put all the code that needs to be run when your object starts up: Finding
      * sensors and turnouts, getting a throttle, etc.
      */
