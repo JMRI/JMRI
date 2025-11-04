@@ -42,7 +42,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
     private Shape _shape;
     protected Color _lineColor = Color.black;
     protected Color _fillColor = new Color(255, 255, 255, 0);
-    protected int _lineWidth = 1;
+    private int _lineWidth = 1;
     private int _degrees;
     protected AffineTransform _transform;
     private NamedBeanHandle<Sensor> _controlSensor = null;
@@ -246,7 +246,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
     public abstract Positionable deepClone();
 
     protected Positionable finishClone(PositionableShape pos) {
-        pos._lineWidth = _lineWidth;
+        pos.setLineWidth(_lineWidth);
         if (_fillColor != null) {
             pos._fillColor =
                     new Color(_fillColor.getRed(), _fillColor.getGreen(), _fillColor.getBlue(), _fillColor.getAlpha());
@@ -279,14 +279,22 @@ public abstract class PositionableShape extends PositionableJComponent implement
         getEditor().repaint();
     }
 
+    /**
+     * The custom paint method paints a border outside of the bounds.
+     * {@inheritDoc }
+     */
     @Override
     public int maxWidth() {
-        return getSize().width;
+        return getWidth() + 2 * getLineWidth(); // border on both sides
     }
 
+    /**
+     * The custom paint method paints a border outside of the bounds.
+     * {@inheritDoc }
+     */
     @Override
     public int maxHeight() {
-        return getSize().height;
+        return getHeight() + 2 * getLineWidth(); // border on both sides
     }
 
     @Override
@@ -326,7 +334,7 @@ public abstract class PositionableShape extends PositionableJComponent implement
                     evt.getPropertyName(), evt.getNewValue(), getSensorName(), hashCode());
         }
         if (!_editor.isEditable()) {
-            if (evt.getPropertyName().equals("KnownState")) {
+            if ( Sensor.PROPERTY_KNOWN_STATE.equals(evt.getPropertyName())) {
                 switch ((Integer) evt.getNewValue()) {
                     case Sensor.ACTIVE:
                         if (_doHide) {

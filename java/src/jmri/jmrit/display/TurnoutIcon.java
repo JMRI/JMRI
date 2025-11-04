@@ -150,8 +150,10 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     @Override
     public int maxHeight() {
         int max = 0;
-        for (NamedIcon namedIcon : _iconStateMap.values()) {
-            max = Math.max(namedIcon.getIconHeight(), max);
+        if (_iconStateMap != null) {
+            for (NamedIcon namedIcon : _iconStateMap.values()) {
+                max = Math.max(namedIcon.getIconHeight(), max);
+            }
         }
         return max;
     }
@@ -159,8 +161,10 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     @Override
     public int maxWidth() {
         int max = 0;
-        for (NamedIcon namedIcon : _iconStateMap.values()) {
-            max = Math.max(namedIcon.getIconWidth(), max);
+        if ( _iconStateMap != null ) {
+            for (NamedIcon namedIcon : _iconStateMap.values()) {
+                max = Math.max(namedIcon.getIconWidth(), max);
+            }
         }
         return max;
     }
