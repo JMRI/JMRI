@@ -2,15 +2,16 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.geom.Point2D;
 
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Test simple functioning of LayoutWyeView
  *
  * @author Bob Jacobsen Copyright (C) 2020
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfHeadless
 public class LayoutWyeViewTest extends LayoutTurnoutViewTest {
 
     @Test
@@ -22,7 +23,7 @@ public class LayoutWyeViewTest extends LayoutTurnoutViewTest {
         Assertions.assertNotNull(lwv);
     }
 
-    LayoutWye wye;
+    private LayoutWye wye;
 
     @Override
     @BeforeEach
