@@ -38,7 +38,7 @@ import jmri.jmrit.logix.Warrant;
  * routines.
  * <p>
  * Services are provided by public member functions, described below. They must
- * only be invoked from within the init and handle methods, as they must be used in a
+ * only be invoked from within the init() and handle() methods, as they must be used in a
  * delayable thread. If invoked from the GUI thread, for example, the program
  * will appear to hang. To help ensure this, a warning will be logged if they
  * are used outside the proper thread.
@@ -115,6 +115,7 @@ public class AbstractAutomaton implements Runnable {
         log.trace("start() invoked");
         if (currentThread != null) {
             log.error("Start with a thread already running!");
+            log.error("This causes an additional thread to be started.");
         }
         currentThread = jmri.util.ThreadingUtil.newThread(this, name);
         currentThread.start();
@@ -127,7 +128,7 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Is the thread in this object currently running?
-     *<p>
+     * 
      * @return true from the time the {@link #start} method is called
      *          until the thread has completed running after 
      *          the {@link #stop} method is called.
