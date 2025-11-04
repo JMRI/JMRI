@@ -6,7 +6,8 @@ import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of PositionableIcon.
- * 
+ * Extending classes should use DisabledIfHeadless annotation as the setUp
+ * method of this class creates an EditorScaffold.
  * @author Paul Bender Copyright (C) 2016
  */
 public class PositionableIconTest extends PositionableTestBase {
