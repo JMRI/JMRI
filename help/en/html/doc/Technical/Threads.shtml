@@ -220,7 +220,7 @@
       <p>If for some reason you can't use jvisualvm, then:</p>
 
       <ul>
-        <li>On Linux and macOS when running from a command line, type control-backspace</li>
+        <li>On Linux and macOS when running from a command line, type control-backslash</li>
 
         <li>On Linux and macOS when running detached, e.g. from startup icon,
           <ul>
