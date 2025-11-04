@@ -1,20 +1,17 @@
 package jmri.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.List;
 
-import jmri.BeanSetting;
-import jmri.Block;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.Path;
-import jmri.Sensor;
-import jmri.SignalMast;
+import jmri.*;
 import jmri.implementation.AbstractSensor;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Tests for BlockManagerXml.
@@ -27,7 +24,7 @@ import org.junit.Assert;
 public class BlockManagerXmlTest {
 
     @Test
-    public void testLoadCurrent() throws Exception {
+    public void testLoadCurrent() throws JmriException {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -40,120 +37,120 @@ public class BlockManagerXmlTest {
                 .load(new java.io.File("java/test/jmri/configurexml/load/BlockManagerXmlTest.xml"));
 
         // check existence of blocks
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
-        Assert.assertNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("no block"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB2"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB3"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB4"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB5"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB6"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB7"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB8"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB9"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB10"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB11"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB12"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthwest"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorth"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthsiding"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknortheast"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockeast"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockeastsiding"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksoutheast"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouth"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouthsiding"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouthwest"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwest"));
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwestsiding"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB1"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB2"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB3"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB4"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB5"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB6"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB7"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB8"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB9"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB10"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB11"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB12"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorthwest"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorth"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorthsiding"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknortheast"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockeast"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockeastsiding"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocksoutheast"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocksouth"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocksouthsiding"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocksouthwest"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwest"));
-//         Assert.assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwestsiding"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB1"));
+        assertNull(InstanceManager.getDefault(BlockManager.class).getBlock("no block"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB2"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB3"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB4"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB5"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB6"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB7"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB8"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB9"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB10"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB11"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB12"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blocknorthwest"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blocknorth"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blocknorthsiding"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blocknortheast"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blockeast"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blockeastsiding"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blocksoutheast"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blocksouth"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blocksouthsiding"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blocksouthwest"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blockwest"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("blockwestsiding"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB1"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB2"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB3"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB4"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB5"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB6"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB7"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB8"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB9"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB10"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB11"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("ILB12"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorthwest"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorth"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknorthsiding"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocknortheast"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockeast"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockeastsiding"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocksoutheast"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocksouth"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocksouthsiding"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blocksouthwest"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwest"));
+//         assertNotNull(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock("blockwestsiding"));
 
         // check existence of turmouts
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
-        Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no turnout"));
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT2"));
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT3"));
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT4"));
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT5"));
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT6"));
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT7"));
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT8"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
+        assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no turnout"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT2"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT3"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT4"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT5"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT6"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT7"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT8"));
 
         // check existence of memories
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0001"));
-        Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0002"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0003"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0004"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0005"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0006"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0007"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0008"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0009"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0010"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0011"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0012"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknorthwestmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknorthmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknorthsidingmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknortheastmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockeastmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockeastsidingmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocksoutheastmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocksouthmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocksouthsidingmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocksouthwestmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestmemory"));
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestsidingmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0001"));
+        assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0002"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0003"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0004"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0005"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0006"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0007"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0008"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0009"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0010"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0011"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM:AUTO:0012"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknorthwestmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknorthmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknorthsidingmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocknortheastmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockeastmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockeastsidingmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocksoutheastmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocksouthmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocksouthsidingmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blocksouthwestmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestmemory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("blockwestsidingmemory"));
 
         // check existence of sensors
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO1"));
-        Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO2"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO3"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO4"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO5"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO6"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO7"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO8"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO9"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO10"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO11"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO12"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknorthwestoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknorthoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknorthsidingoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknortheastoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockeastoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockeastsidingoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocksoutheastoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocksouthoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocksouthsidingoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocksouthwestoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestoccupied"));
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestsidingoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO1"));
+        assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO2"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO3"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO4"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO5"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO6"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO7"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO8"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO9"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO10"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO11"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("ISBO12"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknorthwestoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknorthoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknorthsidingoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocknortheastoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockeastoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockeastsidingoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocksoutheastoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocksouthoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocksouthsidingoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blocksouthwestoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestoccupied"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("blockwestsidingoccupied"));
 
         // check existence of paths between blocks
         Block[] blockstotest;
@@ -177,53 +174,53 @@ public class BlockManagerXmlTest {
 
         //  This matches up with the test file, ...
         blockstotest[0] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthwest");
-        Assert.assertNotNull(blockstotest[0]);
+        assertNotNull(blockstotest[0]);
         occupiedsensor[0] = InstanceManager.sensorManagerInstance().getSensor("blocknorthwestoccupied");
-        Assert.assertNotNull(occupiedsensor[0]);
+        assertNotNull(occupiedsensor[0]);
         blockstotest[1] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorth");
-        Assert.assertNotNull(blockstotest[1]);
+        assertNotNull(blockstotest[1]);
         occupiedsensor[1] = InstanceManager.sensorManagerInstance().getSensor("blocknorthoccupied");
-        Assert.assertNotNull(occupiedsensor[1]);
+        assertNotNull(occupiedsensor[1]);
         blockstotest[2] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknorthsiding");
-        Assert.assertNotNull(blockstotest[2]);
+        assertNotNull(blockstotest[2]);
         occupiedsensor[2] = InstanceManager.sensorManagerInstance().getSensor("blocknorthsidingoccupied");
-        Assert.assertNotNull(occupiedsensor[2]);
+        assertNotNull(occupiedsensor[2]);
         blockstotest[3] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocknortheast");
-        Assert.assertNotNull(blockstotest[3]);
+        assertNotNull(blockstotest[3]);
         occupiedsensor[3] = InstanceManager.sensorManagerInstance().getSensor("blocknortheastoccupied");
-        Assert.assertNotNull(occupiedsensor[3]);
+        assertNotNull(occupiedsensor[3]);
         blockstotest[4] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockeast");
-        Assert.assertNotNull(blockstotest[4]);
+        assertNotNull(blockstotest[4]);
         occupiedsensor[4] = InstanceManager.sensorManagerInstance().getSensor("blockeastoccupied");
-        Assert.assertNotNull(occupiedsensor[4]);
+        assertNotNull(occupiedsensor[4]);
         blockstotest[5] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockeastsiding");
-        Assert.assertNotNull(blockstotest[5]);
+        assertNotNull(blockstotest[5]);
         occupiedsensor[5] = InstanceManager.sensorManagerInstance().getSensor("blockeastsidingoccupied");
-        Assert.assertNotNull(occupiedsensor[5]);
+        assertNotNull(occupiedsensor[5]);
         blockstotest[6] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksoutheast");
-        Assert.assertNotNull(blockstotest[6]);
+        assertNotNull(blockstotest[6]);
         occupiedsensor[6] = InstanceManager.sensorManagerInstance().getSensor("blocksoutheastoccupied");
-        Assert.assertNotNull(occupiedsensor[6]);
+        assertNotNull(occupiedsensor[6]);
         blockstotest[7] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouth");
-        Assert.assertNotNull(blockstotest[7]);
+        assertNotNull(blockstotest[7]);
         occupiedsensor[7] = InstanceManager.sensorManagerInstance().getSensor("blocksouthoccupied");
-        Assert.assertNotNull(occupiedsensor[7]);
+        assertNotNull(occupiedsensor[7]);
         blockstotest[8] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouthsiding");
-        Assert.assertNotNull(blockstotest[8]);
+        assertNotNull(blockstotest[8]);
         occupiedsensor[8] = InstanceManager.sensorManagerInstance().getSensor("blocksouthsidingoccupied");
-        Assert.assertNotNull(occupiedsensor[8]);
+        assertNotNull(occupiedsensor[8]);
         blockstotest[9] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blocksouthwest");
-        Assert.assertNotNull(blockstotest[9]);
+        assertNotNull(blockstotest[9]);
         occupiedsensor[9] = InstanceManager.sensorManagerInstance().getSensor("blocksouthwestoccupied");
-        Assert.assertNotNull(occupiedsensor[9]);
+        assertNotNull(occupiedsensor[9]);
         blockstotest[10] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwest");
-        Assert.assertNotNull(blockstotest[10]);
+        assertNotNull(blockstotest[10]);
         occupiedsensor[10] = InstanceManager.sensorManagerInstance().getSensor("blockwestoccupied");
-        Assert.assertNotNull(occupiedsensor[10]);
+        assertNotNull(occupiedsensor[10]);
         blockstotest[11] = InstanceManager.getDefault(jmri.BlockManager.class).getBlock("blockwestsiding");
-        Assert.assertNotNull(blockstotest[11]);
+        assertNotNull(blockstotest[11]);
         occupiedsensor[11] = InstanceManager.sensorManagerInstance().getSensor("blockwestsidingoccupied");
-        Assert.assertNotNull(occupiedsensor[11]);
+        assertNotNull(occupiedsensor[11]);
 
         // The references are circular so the definitons are split up, ...
         expectedpreviouspaths[0] = 2;
@@ -287,16 +284,20 @@ public class BlockManagerXmlTest {
             int expectedcentrepaths = expectedpreviouspaths[testblockfocus] + expectednextpaths[testblockfocus];
             Block focusBlock = blockstotest[testblockfocus];
             Memory expectedtestmemory = InstanceManager.memoryManagerInstance().getMemory("blocknorthmemory");
-            Assert.assertNotNull(expectedtestmemory);
+            assertNotNull(expectedtestmemory);
             expectedtestmemory.setValue("Memory test: " + testblockfocus);
-            Assert.assertNotNull(expectedtestmemory);
+            assertNotNull(expectedtestmemory);
 // TODO: BOB C: Memory Test
 //            Memory actualtestmemory = (Memory) focusBlock.getValue();
 //            Assert.assertNotNull(actualtestmemory);
 //            Assert.assertEquals("Memory where Focus was: " + testblockfocus, expectedtestmemory, actualtestmemory);
-            Assert.assertEquals("Sensor where Focus was: " + testblockfocus, occupiedsensor[testblockfocus].getSystemName(), focusBlock.getSensor().getSystemName());
+            Sensor fbSensor = focusBlock.getSensor();
+            assertNotNull(fbSensor);
+            assertEquals( occupiedsensor[testblockfocus].getSystemName(),
+                fbSensor.getSystemName(), "Sensor where Focus was: " + testblockfocus);
             List<Path> testpaths = focusBlock.getPaths();
-            Assert.assertEquals("Block Path size where Block Focus was: " + testblockfocus, expectedcentrepaths, testpaths.size());
+            assertEquals( expectedcentrepaths, testpaths.size(),
+                "Block Path size where Block Focus was: " + testblockfocus);
             for (int p = 0; p < expectedpreviouspaths[testblockfocus]; p++) {
                 passprevioustest[p] = false;
             }
@@ -305,7 +306,7 @@ public class BlockManagerXmlTest {
             }
             for (int i = 0; i < testpaths.size(); i++) {
                 Block testblock = testpaths.get(i).getBlock();
-                Assert.assertNotNull(testblock);
+                assertNotNull(testblock);
                 for (int p = 0; p < expectedpreviouspaths[testblockfocus]; p++) {
                     if (testblock == previousblock[testblockfocus][p]) {
                         passprevioustest[p] = true;
@@ -319,10 +320,12 @@ public class BlockManagerXmlTest {
             }
 
             for (int p = 0; p < expectedpreviouspaths[testblockfocus]; p++) {
-                Assert.assertTrue("Block Focus was: " + testblockfocus + " previous path: " + p, passprevioustest[p]);
+                assertTrue( passprevioustest[p],
+                    "Block Focus was: " + testblockfocus + " previous path: " + p);
             }
             for (int n = 0; n < expectednextpaths[testblockfocus]; n++) {
-                Assert.assertTrue("Block Focus was: " + testblockfocus + " next path: " + n, passnexttest[n]);
+                assertTrue( passnexttest[n],
+                    "Block Focus was: " + testblockfocus + " next path: " + n);
             }
 
         }
@@ -335,7 +338,7 @@ public class BlockManagerXmlTest {
      * @throws jmri.JmriException if unanticipated exception is thrown
      */
     @Test
-    public void testStore() throws jmri.JmriException {
+    public void testStore() throws JmriException {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -347,7 +350,7 @@ public class BlockManagerXmlTest {
         Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb1", "");
 
         Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb2", "");
-        Assert.assertNotNull(b2);
+        assertNotNull(b2);
         Sensor s2 = new AbstractSensor("IS2") {
             @Override
             public void requestUpdateFromLayout() {
@@ -377,7 +380,7 @@ public class BlockManagerXmlTest {
     }
 
     @Test
-    public void testBlockAndSignalMastTest() throws Exception {
+    public void testBlockAndSignalMastTest() throws JmriException {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -390,42 +393,43 @@ public class BlockManagerXmlTest {
                 .load(new java.io.File("java/test/jmri/configurexml/loadref/BlockAndSignalMastTest.xml"));
         // in loadref because comparison not working right
 
-        Assert.assertNotNull(InstanceManager.getDefault(jmri.BlockManager.class).getBlock("IB1"));
+        assertNotNull(InstanceManager.getDefault(BlockManager.class).getBlock("IB1"));
 
-        SignalMast m1 = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0001)");
-        Assert.assertNotNull(m1);
-        SignalMast m2 = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)");
-        Assert.assertNotNull(m2);
-        SignalMast m3 = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)");
-        Assert.assertNotNull(m3);
-        SignalMast m4 = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0004)");
-        Assert.assertNotNull(m4);
-        SignalMast m5 = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0005)");
-        Assert.assertNotNull(m5);
-        SignalMast m6 = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0006)");
-        Assert.assertNotNull(m6);
-        SignalMast m7 = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0007)");
-        Assert.assertNotNull(m7);
+        SignalMast m1 = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0001)");
+        assertNotNull(m1);
+        SignalMast m2 = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)");
+        assertNotNull(m2);
+        SignalMast m3 = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)");
+        assertNotNull(m3);
+        SignalMast m4 = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0004)");
+        assertNotNull(m4);
+        SignalMast m5 = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0005)");
+        assertNotNull(m5);
+        SignalMast m6 = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0006)");
+        assertNotNull(m6);
+        SignalMast m7 = InstanceManager.getDefault(SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0007)");
+        assertNotNull(m7);
 
         // allow listeners to process, but keep it quick by looking for desired result
         JUnitUtil.waitFor(()->{
-                return (m1.getAspect().equals("Advance Approach")
-                    && m2.getAspect().equals("Clear")
-                    && m3.getAspect().equals("Clear")
-                    && m4.getAspect().equals("Clear")
-                    && m5.getAspect().equals("Approach")
-                    && m6.getAspect().equals("Stop")
-                    && m7.getAspect().equals("Stop"));
-            },"Mast state ended as \""+m1.getAspect()+"\" \""+m2.getAspect()+"\" \""+m3.getAspect()+"\" \""+m4.getAspect()+"\" \""+m5.getAspect()+"\" \""+m6.getAspect()+"\" \""+m7.getAspect()+"\", desired state AA/C/C/C/A/S/S");
+                return ( "Advance Approach".equals(m1.getAspect())
+                    && "Clear".equals(m2.getAspect())
+                    && "Clear".equals(m3.getAspect())
+                    && "Clear".equals(m4.getAspect())
+                    && "Approach".equals(m5.getAspect())
+                    && "Stop".equals(m6.getAspect())
+                    && "Stop".equals(m7.getAspect()) );
+            },"Mast state ended as \""+m1.getAspect()+"\" \""+m2.getAspect()+"\" \""+m3.getAspect()+"\" \""
+                +m4.getAspect()+"\" \""+m5.getAspect()+"\" \""+m6.getAspect()+"\" \""+m7.getAspect()+"\", desired state AA/C/C/C/A/S/S");
 
         // check for expected mast state 
-        Assert.assertEquals("Signal 1", "Advance Approach", InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0001)").getAspect());
-        Assert.assertEquals("Signal 2", "Clear",            InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0002)").getAspect());
-        Assert.assertEquals("Signal 3", "Clear",            InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0003)").getAspect());
-        Assert.assertEquals("Signal 4", "Clear",            InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0004)").getAspect());
-        Assert.assertEquals("Signal 5", "Approach",         InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0005)").getAspect());
-        Assert.assertEquals("Signal 6", "Stop",             InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0006)").getAspect());
-        Assert.assertEquals("Signal 7", "Stop",             InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast("IF$vsm:AAR-1946:SL-2-high-abs($0007)").getAspect());
+        assertEquals( "Advance Approach", m1.getAspect(), "Signal 1");
+        assertEquals( "Clear", m2.getAspect(), "Signal 2");
+        assertEquals( "Clear", m3.getAspect(), "Signal 3");
+        assertEquals( "Clear", m4.getAspect(), "Signal 4");
+        assertEquals( "Approach", m5.getAspect(), "Signal 5");
+        assertEquals( "Stop", m6.getAspect(), "Signal 6");
+        assertEquals( "Stop", m7.getAspect(), "Signal 7");
 
     }
 

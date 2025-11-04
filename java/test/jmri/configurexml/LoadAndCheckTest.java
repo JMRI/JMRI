@@ -1,14 +1,15 @@
 package jmri.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import java.io.File;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Functional checks of loading basic configuration files. When done across
@@ -24,24 +25,23 @@ public class LoadAndCheckTest {
 
     /**
      * Test a file with current schema.
-     *
-     * @throws Exception rethrows any exception
+     * @throws jmri.JmriException
      */
     @Test
-    public void testLoadFileTest() throws Exception {
+    public void testLoadFileTest() throws JmriException {
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new File("java/test/jmri/configurexml/load/LoadFileTest.xml"));
 
         // check existence of a few objects
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
-        Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
+        assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
 
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
-        Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
+        assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
 
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
-        Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
+        assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
 
         JUnitAppender.assertWarnMessage("Converting route system name IR1 to IO1");
         JUnitAppender.assertWarnMessage("System names for 1 Routes changed; this may have operational impacts.");
@@ -49,38 +49,38 @@ public class LoadAndCheckTest {
     }
 
     @Test
-    public void testLoadMultipleSystems() throws Exception {
+    public void testLoadMultipleSystems() throws JmriException {
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new File("java/test/jmri/configurexml/load/LoadMultipleSystems.xml"));
 
         // check existence of a few objects
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
-        Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
+        assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
 
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
-        Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
+        assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
 
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
-        Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
+        assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
 
     }
 
     @Test
-    public void testLoad295() throws Exception {
+    public void testLoad295() throws JmriException {
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
                 .load(new java.io.File("java/test/jmri/configurexml/load/LoadFileTest295.xml"));
 
         // check existence of a few objects
-        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
-        Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
+        assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
+        assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
 
-        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
-        Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
+        assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
+        assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
 
-        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
-        Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
+        assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
+        assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
 
         JUnitAppender.assertWarnMessage("Converting route system name IR1 to IO1");
         JUnitAppender.assertWarnMessage("System names for 1 Routes changed; this may have operational impacts.");
