@@ -1,15 +1,21 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import javax.swing.JFrame;
 
 import jmri.BlockManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+
 import org.netbeans.jemmy.QueueTool;
 import org.slf4j.event.Level;
 
@@ -18,44 +24,45 @@ import org.slf4j.event.Level;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-@DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+@DisabledIfHeadless
 public class BlockContentsIconTest {
 
     private BlockContentsIcon to = null;
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", to);
+        assertNotNull( to, "exists");
     }
 
     @Test
-    public void testShowRosterEntry() throws Exception {
-        JFrame jf = new JmriJFrame();
-        jf.setTitle("Expect Roster Entry");
+    public void testShowRosterEntry() {
+        JFrame jf = new JmriJFrame("Expect Roster Entry");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
         jf.getContentPane().add(to);
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
 
-        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
+        assertDoesNotThrow( () -> {
+            jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
+            jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1").setValue(re);
+        });
 
-        jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1").setValue(re);
         new QueueTool().waitEmpty(100);
 
-        jf.pack();
-        jf.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            jf.pack();
+            jf.setVisible(true);
+        });
         new QueueTool().waitEmpty(100);
-        Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        assertFalse(JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
 
-        jf.setVisible(false);
         JUnitUtil.dispose(jf);
     }
 
     @Test
-    public void testShowIdTag() throws Exception {
-        JFrame jf = new JmriJFrame();
-        jf.setTitle("Expect Roster Entry");
+    public void testShowIdTag() {
+        JFrame jf = new JmriJFrame("Expect Roster Entry");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
         jf.getContentPane().add(to);
@@ -67,13 +74,15 @@ public class BlockContentsIconTest {
         jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1").setValue(tag);
         new QueueTool().waitEmpty(100);
 
-        jf.pack();
-        jf.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            jf.pack();
+            jf.setVisible(true);
+        });
         new QueueTool().waitEmpty(100);
-        Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
-        Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
+        assertFalse( JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
+        assertNotNull( JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()),
+            "Label with correct text value");
 
-        jf.setVisible(false);
         JUnitUtil.dispose(jf);
     }
 

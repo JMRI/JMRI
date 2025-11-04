@@ -76,7 +76,7 @@ public class LayoutTrackEditorTest {
         JUnitUtil.initInternalSensorManager();
 
         layoutEditor = new LayoutEditor();
-        layoutEditor.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> layoutEditor.setVisible(true) );
 
     }
 
