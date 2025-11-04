@@ -205,11 +205,13 @@ final public class LayoutBlockConnectivityTools {
             for (int x = 1; x < blocklist.size(); x++) {
                 LayoutBlock facingBlock = blocklist.get(x - 1);
                 LayoutBlock protectingBlock = blocklist.get(x);
+                log.info("x {} facing block {} protecting block {}", x, facingBlock.getBlock().getUserName(), protectingBlock.getBlock().getUserName());
                 NamedBean nb = null;
                 if (T == null) {
                     nb = lbm.getFacingNamedBean(facingBlock.getBlock(), protectingBlock.getBlock(), panel);
                 } else if (T.equals(jmri.SignalMast.class)) {
                     nb = lbm.getFacingSignalMast(facingBlock.getBlock(), protectingBlock.getBlock(), panel);
+                    log.info ("x {} nb {}", x, nb);
                 } else if (T.equals(jmri.Sensor.class)) {
                     nb = lbm.getFacingSensor(facingBlock.getBlock(), protectingBlock.getBlock(), panel);
                 } else if (T.equals(jmri.SignalHead.class)) {

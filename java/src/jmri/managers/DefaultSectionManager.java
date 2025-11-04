@@ -358,9 +358,16 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
                     break;
                 }
                 for (jmri.jmrit.display.layoutEditor.LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
-                    if (slot.getConnect() != null && slot.getConnect().getLayoutBlock() == layoutBlock) {
-                        isTraverserComponent = true;
-                        break;
+//                    log.info("slot {}", slot);
+                    if (!slot.isDisabled() && slot.getConnect() != null) {
+                        jmri.jmrit.display.layoutEditor.LayoutBlock connectedBlock = slot.getConnect().getLayoutBlock();
+                        if (connectedBlock != null) {
+                            log.info("slot {} GETCONNECT LAYOUT BLOCK {} ", slot, connectedBlock.getDisplayName());
+                            if (connectedBlock == layoutBlock) {
+                                isTraverserComponent = true;
+                                break;
+                            }
+                        }
                     }
                 }
                 if (isTraverserComponent) break;

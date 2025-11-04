@@ -234,6 +234,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     public void initializeLayoutBlockPaths() {
         log.debug("start initializeLayoutBlockPaths");
 
+        log.debug("start initializeLayoutBlockPaths getNamedBeanSet {}", getNamedBeanSet());
+
         // cycle through all LayoutBlocks, completing initialization of associated jmri.Blocks
         for (LayoutBlock b : getNamedBeanSet()) {
             log.debug("Calling block '{}({})'.initializeLayoutBlock()", b.getSystemName(), b.getDisplayName());
@@ -1527,39 +1529,39 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
                 }
             }
         }
-        // ----- Begin Traverser Boundary Check -----
-        for (LayoutEditor ed : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
-            for (LayoutTraverser traverser : ed.getLayoutTraversers()) {
-                LayoutBlock traverserBlock = traverser.getLayoutBlock();
-                if (traverserBlock == null) continue;
-
-                // Check if one of the blocks is the traverser's block
-                if (traverserBlock.getBlock() == facingBlock || traverserBlock.getBlock() == protectedBlock) {
-                    Block otherBlock = (traverserBlock.getBlock() == facingBlock) ? protectedBlock : facingBlock;
-
-                    for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
-                        TrackSegment connectedTrack = slot.getConnect();
-                        if (connectedTrack != null && connectedTrack.getLayoutBlock() != null && connectedTrack.getLayoutBlock().getBlock() == otherBlock) {
-                            // We found the correct slot. Now find the mast based on direction.
-                            if (traverserBlock.getBlock() == protectedBlock) {
-                                // Path 2: Moving from Slot block INTO Traverser. The facing mast is the Approach Mast.
-                                if (T.equals(SignalMast.class)) {
-                                    return slot.getApproachMast();
-                                }
-                            } else { // traverserBlock.getBlock() == facingBlock
-                                // Path 1: Moving FROM Traverser out to Slot block. The facing mast is the exit mast for that slot.
-                                if (T.equals(SignalMast.class)) {
-                                    SignalMast exitMast = traverser.getExitSignalMast();
-                                    // This is the mast protecting the path from the traverser to the slot.
-                                    return exitMast;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        // ----- End Ttaverser Boundary Check -----
+//        // ----- Begin Traverser Boundary Check -----
+//        for (LayoutEditor ed : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+//            for (LayoutTraverser traverser : ed.getLayoutTraversers()) {
+//                LayoutBlock traverserBlock = traverser.getLayoutBlock();
+//                if (traverserBlock == null) continue;
+//
+//                // Check if one of the blocks is the traverser's block
+//                if (traverserBlock.getBlock() == facingBlock || traverserBlock.getBlock() == protectedBlock) {
+//                    Block otherBlock = (traverserBlock.getBlock() == facingBlock) ? protectedBlock : facingBlock;
+//
+//                    for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
+//                        TrackSegment connectedTrack = slot.getConnect();
+//                        if (connectedTrack != null && connectedTrack.getLayoutBlock() != null && connectedTrack.getLayoutBlock().getBlock() == otherBlock) {
+//                            // We found the correct slot. Now find the mast based on direction.
+//                            if (traverserBlock.getBlock() == protectedBlock) {
+//                                // Path 2: Moving from Slot block INTO Traverser. The facing mast is the Approach Mast.
+//                                if (T.equals(SignalMast.class)) {
+//                                    return slot.getApproachMast();
+//                                }
+//                            } else { // traverserBlock.getBlock() == facingBlock
+//                                // Path 1: Moving FROM Traverser out to Slot block. The facing mast is the exit mast for that slot.
+//                                if (T.equals(SignalMast.class)) {
+//                                    SignalMast exitMast = traverser.getExitSignalMast();
+//                                    // This is the mast protecting the path from the traverser to the slot.
+//                                    return exitMast;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        // ----- End Traverser Boundary Check -----
 
         if (!T.equals(SignalMast.class) && !T.equals(Sensor.class)) {
             log.error("Incorrect class type called, must be either SignalMast or Sensor");
@@ -2664,11 +2666,15 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             return;
         }
         firstRoutingChange = System.nanoTime();
+        log.info("A");
 
         //cycle through all LayoutBlocks, completing initialization of the layout block routing
         java.util.Enumeration<LayoutBlock> en = _tsys.elements();
 
+        log.info("en {}", en);
+
         while (en.hasMoreElements()) {
+            log.info ("B");
             en.nextElement().initializeLayoutBlockRouting();
         }
     }
@@ -2692,7 +2698,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     private boolean checking = false;
     boolean stabilised = false;
 
-    private void setRoutingStabilised() {
+    public void setRoutingStabilised() {
         if (checking) {
             return;
         }

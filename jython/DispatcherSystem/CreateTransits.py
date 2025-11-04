@@ -12,7 +12,7 @@ from javax.swing import JButton, JFrame, JPanel, JProgressBar, \
 
 class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
-    logLevel = 2
+    logLevel = 0
 
     def __init__(self):
         pass
@@ -53,7 +53,6 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 1: print "type = " , type(panel)
             if self.logLevel > 1: print "****"
             if type(panel) == jmri.jmrit.display.layoutEditor.LayoutEditor:
-                #self.create_transits_and_trainTrainInfos(panel)
                 LayoutPanels.append(panel)
         # self.displayMessage("about to call create_transits_and_trainTrainInfos");
         self.create_transits_and_trainTrainInfos(LayoutPanels)
@@ -97,22 +96,24 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         # self.displayMessage("about to call get_signal_mast_lists")
 
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-        if self.logLevel > 0: print "&&&& get_signal_mast_lists1 &&&&"
+        if self.logLevel > 0: print "&&&& get_signal_mast_lists &&&&"
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-        self.logLevel = 2
+        self.logLevel = 0
         self.get_signal_mast_lists(layoutPanels)
+        print;print
+        self.logLevel = 1
 
         # self.displayMessage("created signal mast list")
-        return
+
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-        if self.logLevel > 0: print "&&&& produce_transits &&&&"
+        if self.logLevel > -1 : print "&&&& produce_transits &&&&"
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 
         display_progress = True
         self.produce_transits(display_progress)
 
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-        if self.logLevel > 0: print "&&&& end produce_transits &&&&"
+        if self.logLevel > -1: print "&&&& end produce_transits &&&&"
         if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
 
 
@@ -171,7 +172,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 1: print "     signal_mast_name", signal_mast_name, "section_name", section_name, "found_section", found_section_name
 
         if self.logLevel > 1: print "*************"
-        if self.logLevel > 0: print "found_section", found_section_name,"signal_mast_name",signal_mast_name
+        if self.logLevel > -1: print "found_section", found_section_name,"signal_mast_name",signal_mast_name
 
         # 3) if the section has two signal masts. return the signal mast that isn't the previous signal mast
         # for stubs/sidings no signal mast will be returned, and we will start with the second signal mast
@@ -240,14 +241,15 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_signal_mast_lists(self, layoutPanels):
         global g
+        print;print
         print "in get_signal_mast_lists",g.g_express.edgeSet()
         for e in g.g_express.edgeSet():
-            print "self.logLevel", self.logLevel
+            # print "self.logLevel", self.logLevel
             if self.logLevel > 1: print "******* signal_mast_list *******"
 
-            if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-            if self.logLevel > 0: print "&&&& producing signal mast list for  &&&&", e.getItem("path_name")
-            if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+            if self.logLevel > -1: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+            if self.logLevel > -1: print "&&&& producing signal mast list for1  &&&&", e.getItem("path_name")
+            if self.logLevel > -1: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
             signal_mast_list = java.util.ArrayList()
             signal_mast_list_all = java.util.ArrayList()   #all the signal masts, possibly in a jumbled list, due to them being appended haphazardly
             signal_mast_list_view = []
@@ -255,7 +257,9 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             panelNo = 0
             no_panels_used = 0
             for panel in layoutPanels:
+                print "A", panel.getLayoutName()
                 if panel.getLayoutName() == "Dispatcher System" : continue
+                print "B", panel.getLayoutName()
                 panelNo += 1
                 if self.logLevel > 1: print "*****panel" ,panelNo,"**********panelName", panel.getLayoutName()
                 # 1) get the signal mast list excluding the last signal mast
@@ -273,12 +277,12 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                 #panel = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager).get('My Layout')
                 signal_mast_class = jmri.SignalMast
                 lbctools= jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools()
-                if self.logLevel > 1: print "layout_block_list"
+                if self.logLevel > -1: print "layout_block_list"
                 signal_mast_list_for_panel=lbctools.getBeansInPath(layout_block_list,panel,signal_mast_class)
                 #signal_mast_list_for_panel=lbctools.getBeansInPath(layout_block_list,None,signal_mast_class)
 
-                msg = "signal_mast_list_for_panel",[sm.getUserName() for sm in signal_mast_list_for_panel]
-                # self.displayMessage(msg)
+                msg = "signal_mast_list_for_panel",[sm.getUserName() for sm in signal_mast_list_for_panel],"layout_block_list", layout_block_list_name,
+                self.displayMessage(msg)
                 if self.logLevel > 0: print "signal_mast_list_for_panel",[sm.getUserName() for sm in signal_mast_list_for_panel]
                 if signal_mast_list_for_panel == [] :
                     if self.logLevel > 0: print "continuing"
@@ -371,7 +375,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                 continue                                                                                
 
             # 2b) get the last signal mast
-            if self.logLevel > 1: print "signal_mast_list",signal_mast_list
+            if self.logLevel > -1: print "about to get last signal mast: signal_mast_list",signal_mast_list
             last_block = layout_block_list[-1]
             penultimate_signal_mast = signal_mast_list[-1]
             last_signal_mast = self.get_last_signal_mast(penultimate_signal_mast, last_block)
@@ -411,6 +415,8 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
             # 4) store signal_mast_list
             e.setItem(signal_mast_list=signal_mast_list)
             e.setItem(first_signal_mast_not_present=first_signal_mast_not_present)
+
+            print "signal_mast_list", signal_mast_list
 
     def add_item_to_end_of_list(self, item, list):
         list.append(item)
@@ -699,7 +705,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
     def get_last_signal_mast(self,signal_mast,layout_block):
 
-        if self.logLevel > 0: print "get_last_signal_mast"
+        if self.logLevel > -1: print "get_last_signal_mast"
 
         # 1) get_sections containing_block_with_previous_signal_mast
 
@@ -722,7 +728,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         signal_mast_name = str(signal_mast.getUserName())
         found_section_name = None
         for section in sections:
-            if self.logLevel > 1: print "mast", signal_mast.getUserName() , "section",section.getUserName()
+            if self.logLevel > -1: print "mast", signal_mast.getUserName() , "section",section.getUserName()
             section_name = str(section.getUserName())
             test = signal_mast_name in section_name
             if self.logLevel > 0: print "signal_mast_name", signal_mast_name
@@ -738,6 +744,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         # This is a good assumption if the section has not been modified (which it should not have been) but if it has been edited by hand and not given a standard name
         # the routine will crash
         # At least we try to pick this up
+        print "found_section_name", found_section_name
         if found_section_name == None:
             self.displayMessage("There is probably a missing signal mast in block "+block.getUserName(),"Fatal Error that needs correcting")
         other_signal_mast_in_section = self.get_other_signal_mast_in_section(found_section_name, signal_mast_name)
@@ -769,6 +776,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
     def get_other_signal_mast_in_section(self, section_name, signal_mast_name):
         #a section name usually contains two names of signal masts separated by a :
         # if the section is a stub it just consists of the name of the block
+        print "get_other_signal_mast_in_section","section_name",section_name,"signal_mast_name",signal_mast_name
         if section_name.find(":") != -1:
             # get the two signal masts
             signal_masts = section_name.split(":")
@@ -786,7 +794,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         t = []
 
         if self.logLevel > 1: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-        if self.logLevel > 0: print "&&&& producing transits &&&&"
+        if self.logLevel > -1: print "&&&& producing transits &&&&"
         if self.logLevel > 1: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         i = -1
 
@@ -824,7 +832,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
                     if display_progress:
                         dpg.Update("creating transits: " + str(progress)+ "% complete")
 
-                if self.logLevel > 1: print "creating",i
+                if self.logLevel > -1: print "creating",i
                 filename_fwd = self.get_filename(e, "fwd")
                 filename_rvs = self.get_filename(e, "rvs")
                 if self.logLevel > 1: print "processing " ,filename_fwd
@@ -883,7 +891,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         if self.logLevel > 0: print "signal_mast_list", [str(sm.getUserName()) for sm in signal_mast_list]
         # self.displayMessage("create_transit" + str([str(sm.getUserName()) for sm in signal_mast_list]))
         for signal_mast in signal_mast_list:
-            if self.logLevel > 1: print "adding ", signal_mast.getUserName()
+            if self.logLevel > -1: print "adding ", signal_mast.getUserName()
             TransitCreationTool.addNamedBean(signal_mast)
             if self.logLevel > 0: print "added", signal_mast.getUserName(), "to TransitCreationTool"
         #if self.logLevel > 1: print "about to create transit"
@@ -896,7 +904,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
 
             #turn on the "transit in progress" sensor in case it has been turned off by another transit
             transit_section_list = transit.getTransitSectionList()
-            if self.logLevel > 0: print "transit_section_list", transit_section_list
+            if self.logLevel > -1: print "transit_section_list", transit_section_list
 
             #last_section = transit_section_list.get(transit_section_list.size() - 1)
             last_section = transit_section_list[-1]
@@ -919,7 +927,7 @@ class CreateTransits(jmri.jmrit.automat.AbstractAutomaton):
         #set username temporarily so that it is not overwritten by another
         if transit.getUserName() == None:
             JOptionPane.showMessageDialog(None, 'transit name null', "", JOptionPane.WARNING_MESSAGE)
-            if self.logLevel > 1: print "transit_section_list",transit_section_list
+            if self.logLevel > -1: print "transit_section_list",transit_section_list
         via = e.getItem("second_block_name")
         temp_name = transit.getUserName() + " via " + via + "_temp"
         TransitManager = jmri.InstanceManager.getDefault(jmri.TransitManager)

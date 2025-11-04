@@ -30,15 +30,16 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         self.dict_path_express = {}
         self.dict_path_name_stopping= {}
         self.dict_path_name_express= {}
-        self.logLevel = 4
+        self.logLevel = 0
         if self.logLevel > 2: print "graph block list"
         self.setup_station_block_list()
-        if self.logLevel > 2: print "graph vertices"
+        if self.logLevel > -1: print "graph vertices"
         self.setup_graph_vertices()
-        if self.logLevel > 2: print "graph inhibited blocks"
+        if self.logLevel > -1: print "graph inhibited blocks"
         self.get_list_inhibited_blocks()
+        if self.logLevel > -1: print "graph edges"
         self.setup_graph_edges()
-        if self.logLevel > 3: print "finished graph init"#
+        if self.logLevel > -1: print "finished graph init"#
 
     # **************************************************
     # Set up station block list either from manual list or from Block Table
@@ -59,7 +60,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         # Also add any blocks associated with turntables
         for panel in jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager).getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
             turntables = panel.getLayoutTurntables()
-            if turntables is None:
+            if not turntables:
                 continue
             for turntable in turntables:
                 if turntable.getLayoutBlock() is not None:
@@ -74,8 +75,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         for panel in jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager).getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
             print "panel", panel
             traversers = panel.getLayoutTraversers()
-            if traversers is None:
-                print "np traversers"
+            if not traversers:
+                print "no traversers"
                 continue
             else:
                 print "traversers", traversers
@@ -88,7 +89,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                         self.station_block_list.append(station_block_name)
                         self.station_blk_list.append(self.get_layout_block(station_block_name))
 
-        if self.logLevel > 2: print 'self.station_block_list' , self.station_block_list
+        if self.logLevel > -1: print 'self.station_block_list' , self.station_block_list
         
     def get_layout_block(self, block_name):
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -122,6 +123,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
 
     def setup_graph_edges(self):
         global le
+
+        self.logLevel = 4
 
         if self.logLevel > 3: print "*****************************"
         if self.logLevel > 2: print "****setup_graph_edges********"
@@ -189,6 +192,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             #add an edge for all paths to form the express train graph
                             path_name = [str(x.getUserName()) for x in path]
                             if self.logLevel > 1: print "path_name", path_name
+
+
                             edge = self._create_and_populate_edge(index, path, path_name, neighbor_name)
 
                             if self.Sufficient_signal_masts_in_edge(edge):
@@ -227,8 +232,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                     if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&"
                     if self.logLevel > 3: print "&& graph up to now &&"
                     if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&"
-                    #for e in self.g_express.edgeSet():
-                        #print e.to_string()
+                    for e in self.g_express.edgeSet():
+                        print e.to_string()
                     if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&"
                     if self.logLevel > 3: print "&& end graph up to now &&"
                     if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&
@@ -268,6 +273,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         Creates a new LabelledEdge and populates it with path information.
         This is a helper method to reduce code duplication.
         """
+        print "create_and_populate_edge", "path", path, "path_name", path_name, "neighbor_name", neighbor_name, "index", index
+
         global le
         edge = le()  # le = LabelledEdge() set up outside CreateGraph.py
 
@@ -276,24 +283,39 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         edge.setItem(path_name=path_name)
         edge.setItem(neighbor_name=neighbor_name)
 
+
         LayoutBlockManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
 
         firstLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[0])
-        first_block_name = firstLayoutBlock.getUserName()
-        edge.setItem(first_block_name=first_block_name)
+        print "firstLayoutBlock", firstLayoutBlock
+        if firstLayoutBlock:
+            first_block_name = firstLayoutBlock.getUserName()
+            edge.setItem(first_block_name=first_block_name)
+        else:
+            print "ERROR: firstLayoutBlock is None for path_name[0] = ", path_name[0]
 
         secondLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[1])
-        second_block_name = secondLayoutBlock.getUserName()
-        edge.setItem(second_block_name=second_block_name)
+        print "secondLayoutBlock", secondLayoutBlock
+        if secondLayoutBlock:
+            second_block_name = secondLayoutBlock.getUserName()
+            edge.setItem(second_block_name=second_block_name)
+        else:
+            print "ERROR: secondLayoutBlock is None for path_name[1] = ", path_name[1]
 
         lastLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-1])
-        last_block_name = lastLayoutBlock.getUserName()
-        edge.setItem(last_block_name=last_block_name)
+        print "lastLayoutBlock", lastLayoutBlock
+        if lastLayoutBlock:
+            last_block_name = lastLayoutBlock.getUserName()
+            edge.setItem(last_block_name=last_block_name)
+        else:
+            print "ERROR: lastLayoutBlock is None for path_name[-1] = ", path_name[-1]
 
         penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
-        penultimate_block_name = penultimateLayoutBlock.getUserName()
-        edge.setItem(penultimate_block_name=penultimate_block_name)
-
+        print "penultimateLayoutBlock", penultimateLayoutBlock
+        if penultimateLayoutBlock:
+            penultimate_block_name = penultimateLayoutBlock.getUserName()
+            edge.setItem(penultimate_block_name=penultimate_block_name)
+        print "returning _create_and_populate_edge", edge
         return edge
 
                 
@@ -513,6 +535,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
 
     def Sufficient_signal_masts_in_edge(self, e):
         global g
+        print "Sufficient_signal_masts_in_edge", e
 
         EditorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
         layoutPanels = []
@@ -531,6 +554,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         panelNo = 0
         no_panels_used = 0
         for panel in layoutPanels:
+            if panel.getLayoutName() == "Dispatcher System" : continue
             panelNo += 1
             if self.logLevel > 3: print "*****panel" ,panelNo,"**********panelName", panel.getLayoutName()
             # 1) get the signal mast list excluding the last signal mast
@@ -546,6 +570,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
             #panel = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager).get('My Layout')
             signal_mast_class = jmri.SignalMast
             lbctools= jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools()
+            print "Sufficient_signal_masts_in_edge: layout_block_list", layout_block_list
             if self.logLevel > 3: print "layout_block_list"
             signal_mast_list_for_panel=lbctools.getBeansInPath(layout_block_list,panel,signal_mast_class)
             #signal_mast_list_for_panel=lbctools.getBeansInPath(layout_block_list,None,signal_mast_class)
