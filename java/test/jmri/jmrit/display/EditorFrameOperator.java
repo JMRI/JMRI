@@ -66,7 +66,7 @@ public class EditorFrameOperator extends JFrameOperator {
 
     }
 
-    @SuppressFBWarnings( value = {"DCN_NULLPOINTER_EXCEPTION", "DE_MIGHT_IGNORE"},
+    @SuppressFBWarnings( value = {"DCN_NULLPOINTER_EXCEPTION"},
         justification = "ok for JDialog not to be present")
     private void triggerPanelHideOperators() {
         try {
@@ -81,7 +81,7 @@ public class EditorFrameOperator extends JFrameOperator {
         }
     }
 
-    @SuppressFBWarnings( value = {"DCN_NULLPOINTER_EXCEPTION", "DE_MIGHT_IGNORE"},
+    @SuppressFBWarnings( value = {"DCN_NULLPOINTER_EXCEPTION"},
         justification = "ok for JDialog not to be present")
     private void triggerDeleteYesOperators() {
         try {
