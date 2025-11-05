@@ -667,6 +667,9 @@ LogixNG: IQ:AUTO:0001
       <p>Request the current status of a specific turnout.  The action depends on whether the
       connection supports turnout state requests.</p>
 
+      <p>Depending on the accessory decoder a LocoNet request might work if the turnout feedback is
+      set to MONITORING or INDIRECT.</p>
+
       <p>As of JMRI 5.7.5, supported connection types include :</p>
       <ul>
       <li>BiDiB</li>
@@ -1861,7 +1864,9 @@ LogixNG: IQ:AUTO:0001
         alt="Chapter 5 execute program action"></a>
       </div>
 
-      <p>The <strong>Parameters</strong> tab is used to pass command line parameters to the program.</p>
+      <p>The <strong>Parameters</strong> tab is used to define the command line parameters. Each
+      parameter is a separate row.  If a parameter has arguments, those are also separate.  For
+      example, <code>cut -d : -f 1,7 /etc/passwd</code>, requires 5 entries.</p>
 
       <div style="margin-left: 2em">
         <a href="images/chapter5/execute_program_parameters.png">
