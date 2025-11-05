@@ -1,10 +1,10 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
-import javax.swing.JFrame;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,10 +15,8 @@ import org.junit.jupiter.api.*;
 public class IndicatorTurnoutIconTest extends PositionableIconTest {
 
     @Test
+    @DisabledIfHeadless
     public void testEquals() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JFrame jf = new JFrame();
-        jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
         IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);
         jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
@@ -28,51 +26,46 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
         turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         to2.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
 
-        Assert.assertTrue("identity", to.equals(to));
-        Assert.assertFalse("object (not content) equality", to2.equals(to));
-        Assert.assertFalse("object (not content) equality commutes", to.equals(to2));
+        assertTrue( to.equals(to), "identity");
+        assertFalse( to2.equals(to), "object (not content) equality");
+        assertFalse( to.equals(to2), "object (not content) equality commutes");
     }
 
     @Test
     @Override
+    @DisabledIfHeadless
     public void testClone() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        JFrame jf = new JFrame();
-        jf.getContentPane().setLayout(new java.awt.FlowLayout());
 
         IndicatorTurnoutIcon to = (IndicatorTurnoutIcon)p; 
 
         IndicatorTurnoutIcon to2 = (IndicatorTurnoutIcon) to.deepClone();
 
-        Assert.assertFalse("clone object (not content) equality", to2.equals(to));
+        assertFalse( to2.equals(to), "clone object (not content) equality");
 
-        Assert.assertTrue("class type equality", to2.getClass().equals(to.getClass()));
+        assertTrue( to2.getClass().equals(to.getClass()), "class type equality");
 
-    }
-
-    @BeforeEach
-    @Override
-    public void setUp() {
-        super.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new EditorScaffold();
-            IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);
-            jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
-            to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
-            p = to;
-        }
     }
 
     @Test
     @Disabled("unreliable on CI servers")
     @Override
+    @DisabledIfHeadless
     public void testGetAndSetPositionable() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertTrue("Defalt Positionable", p.isPositionable());
+        assertTrue( p.isPositionable(), "Defalt Positionable");
         p.setPositionable(false);
-        Assert.assertFalse("Positionable after set false", p.isPositionable());
+        assertFalse( p.isPositionable(), "Positionable after set false");
         p.setPositionable(true);
-        Assert.assertTrue("Positionable after set true", p.isPositionable());
+        assertTrue( p.isPositionable(), "Positionable after set true");
+    }
+
+    @BeforeEach
+    @Override
+    public void setUp() {
+        super.setUp(); // creates editor
+        IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);
+        jmri.Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        to.setTurnout(new jmri.NamedBeanHandle<>("IT1", turnout));
+        p = to;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconTest.class);
