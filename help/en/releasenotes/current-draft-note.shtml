@@ -503,6 +503,7 @@
         <ul>
             <li>New feature, auto select car types for a train based on the locations serviced by train's route.</li>
             <li>Major improvement to "Test Destinations" for classification / interchange and staging tracks.</li>
+            <li>Improved train routing when there's multiple locations that can pull a car.</li>
         </ul>
 
    <h3>Panel Editor</h3>

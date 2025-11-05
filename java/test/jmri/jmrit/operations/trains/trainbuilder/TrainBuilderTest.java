@@ -18549,6 +18549,57 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
+    
+    /**
+     * Tests local moves when the train is a turn.
+     */
+    @Test
+    public void testLocalMoves() {
+        Train train = tmanager.newTrain("Train Acton-Boston-Chelmsford-Boston-Acton Local Test");
+        Route route = JUnitOperationsUtil.createThreeLocationTurnRoute();
+        train.setRoute(route);
+        RouteLocation rlActon1 = route.getDepartsRouteLocation();
+        RouteLocation rlActon2 = route.getTerminatesRouteLocation();
+
+        Location acton = lmanager.getLocationByName("Acton");
+        Track actonYard1 = acton.getTrackByName("Acton Yard 1", null);
+        Track actonSpur1 = acton.getTrackByName("Acton Spur 1", null);
+
+        // two cars at Acton Yard
+        Car c1 = JUnitOperationsUtil.createAndPlaceCar("UP", "1", "Boxcar", "40", "DAB", "1958", actonYard1, 0);
+        Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", actonYard1, 1);
+
+
+        // send all cars at Acton to Acton Spur
+        c1.setFinalDestination(acton);
+        c1.setFinalDestinationTrack(actonSpur1);
+        c2.setFinalDestination(acton);
+        c2.setFinalDestinationTrack(actonSpur1);
+
+        Assert.assertTrue(new TrainBuilder().build(train));
+
+        Assert.assertEquals("car c1 destination track", actonSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", actonSpur1, c2.getDestinationTrack());
+        Assert.assertEquals("car c1 route location", rlActon1, c1.getRouteLocation());
+        Assert.assertEquals("car c2 route location", rlActon1, c2.getRouteLocation());
+        Assert.assertEquals("car c1 route destination", rlActon1, c1.getRouteDestination());
+        Assert.assertEquals("car c2 route destination", rlActon1, c2.getRouteDestination());
+        
+        // now disable local moves at the start of the route
+        train.reset();
+        rlActon1.setLocalMovesAllowed(false);
+        
+        Assert.assertTrue(new TrainBuilder().build(train));
+
+        Assert.assertEquals("car c1 destination track", actonSpur1, c1.getDestinationTrack());
+        Assert.assertEquals("car c2 destination track", actonSpur1, c2.getDestinationTrack());
+        Assert.assertEquals("car c1 route location", rlActon2, c1.getRouteLocation());
+        Assert.assertEquals("car c2 route location", rlActon2, c2.getRouteLocation());
+        Assert.assertEquals("car c1 route destination", rlActon2, c1.getRouteDestination());
+        Assert.assertEquals("car c2 route destination", rlActon2, c2.getRouteDestination());
+        
+        JUnitOperationsUtil.checkOperationsShutDownTask();
+    }
 
     @Test
     public void testHyphenFeature() {

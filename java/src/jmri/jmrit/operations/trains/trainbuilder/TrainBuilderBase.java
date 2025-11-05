@@ -1405,8 +1405,7 @@ public class TrainBuilderBase extends TrainCommon {
         }
 
         // Only track direction can cause the following message. Location
-        // direction has
-        // already been checked
+        // direction has already been checked
         addLine(_buildReport, SEVEN,
                 Bundle.getMessage("buildRsCanNotPickupUsingTrain", rs.toString(), rl.getTrainDirectionString(),
                         rs.getTrackName(), rs.getLocationName(), rl.getId()));
@@ -2529,6 +2528,10 @@ public class TrainBuilderBase extends TrainCommon {
         if (rl == rld || !rld.getName().equals(car.getLocationName())) {
             return false;
         }
+        // last route location in the route?
+        if (rld == _train.getTrainTerminatesRouteLocation() && !car.isLocalMove()) {
+            return false;
+        }
         // don't delay adding a caboose, passenger car, or car with FRED
         if (car.isCaboose() || car.isPassenger() || car.hasFred()) {
             return false;
@@ -2554,7 +2557,9 @@ public class TrainBuilderBase extends TrainCommon {
             return false;
         }
         // is the track full? If so, pull immediately, prevents overloading
-        if (car.getTrack().getLength() - car.getTrack().getUsedLength() < car.getTotalKernelLength()) {
+        if (!car.isLocalMove() &&
+                car.getTrack().getPool() == null &&
+                car.getTrack().getLength() - car.getTrack().getUsedLength() < car.getTotalKernelLength()) {
             addLine(_buildReport, SEVEN, Bundle.getMessage("buildNoPickupLaterTrack", car.toString(), rld.getName(),
                     car.getTrackName(), rld.getId(), car.getTrack().getLength() - car.getTrack().getUsedLength(),
                     Setup.getLengthUnit().toLowerCase()));

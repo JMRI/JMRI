@@ -687,7 +687,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
                 addLine(_buildReport, SEVEN,
                         Bundle.getMessage("buildNoDestTrackNewLoad", StringUtils.capitalize(track.getTrackTypeName()),
-                                track.getLocation().getName(), track.getName(), car.toString(), si.getReceiveLoadName(),
+                                track.getLocation().getName(), track.getName(), car.toString(),
+                                Track.LOAD, si.getReceiveLoadName(),
                                 status));
                 continue;
             }
@@ -1174,16 +1175,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             if (!status.startsWith(Track.LENGTH)) {
                 addLine(_buildReport, SEVEN,
                         Bundle.getMessage("buildNoDestTrackNewLoad", StringUtils.capitalize(track.getTrackTypeName()),
-                                track.getLocation().getName(), track.getName(), car.toString(), car.getLoadName(),
-                                status));
-                return false;
-            }
-            String scheduleStatus = track.checkSchedule(car);
-            if (!scheduleStatus.equals(Track.OKAY)) {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildNoDestTrackNewLoad", StringUtils.capitalize(track.getTrackTypeName()),
-                                track.getLocation().getName(), track.getName(), car.toString(), car.getLoadName(),
-                                scheduleStatus));
+                                track.getLocation().getName(), track.getName(), car.toString(),
+                                car.getLoadType().toLowerCase(), car.getLoadName(), status));
                 return false;
             }
             if (track.getAlternateTrack() == null) {
@@ -1297,7 +1290,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         if (!status.equals(Track.OKAY)) {
             addLine(_buildReport, SEVEN,
                     Bundle.getMessage("buildNoDestTrackNewLoad", StringUtils.capitalize(track.getTrackTypeName()),
-                            track.getLocation().getName(), track.getName(), car.toString(), car.getLoadName(), status));
+                            track.getLocation().getName(), track.getName(), car.toString(),
+                            car.getLoadType().toLowerCase(), car.getLoadName(), status));
             return false;
         }
         if (!track.isSpaceAvailable(car)) {
@@ -1388,7 +1382,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         Bundle.getMessage("buildNoDestTrackNewLoad",
                                 StringUtils.capitalize(car.getFinalDestinationTrack().getTrackTypeName()),
                                 car.getFinalDestination().getName(), car.getFinalDestinationTrack().getName(),
-                                car.toString(), car.getLoadName(), status));
+                                car.toString(), car.getLoadType().toLowerCase(), car.getLoadName(), status));
                 // is this car or kernel being sent to a track that is too
                 // short?
                 if (status.startsWith(Track.CAPACITY)) {
