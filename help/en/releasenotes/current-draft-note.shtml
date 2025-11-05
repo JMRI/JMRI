@@ -663,6 +663,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Fixed a bug that prevented restarting AbstractAutomaton-subclass 
+                objects in scripts.</li>
         </ul>
 
