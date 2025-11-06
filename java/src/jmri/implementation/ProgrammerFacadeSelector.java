@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Utility to load a specific ProgrammerFacade from an XML element.
  *
+ * @see jmri.jmrix.AbstractProgrammerFacade
+ *
  * @author Bob Jacobsen Copyright (C) 2013
  */
 public class ProgrammerFacadeSelector {
