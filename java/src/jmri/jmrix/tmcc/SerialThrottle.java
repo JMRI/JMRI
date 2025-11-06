@@ -121,12 +121,12 @@ public class SerialThrottle extends AbstractThrottle {
         0x000029, 0x00002A, 0x00002B, 0x00001F,           /* 20-23 */
 
         // TMCC1 RR Speed FnKeys
-        0x000064, // Fn24
-        0x000066, // Fn25
-        0x00006E, // Fn26
-        0x000071, // Fn27
-        0x000077, // Fn28
-        0x00007F, // Fn29 
+        0x000064, // Fn24 ( 4)
+        0x00006A, // Fn25 (10)
+        0x00006E, // Fn26 (14)
+        0x000072, // Fn27 (18)
+        0x000078, // Fn28 (24)
+        0x00007F, // Fn29 (31)
 
         // TMCC1 Aux FnKeys 
         0x00002E, // Fn30
@@ -428,53 +428,48 @@ public class SerialThrottle extends AbstractThrottle {
      */
     protected void sendFnToLayout(int value, int func) {
         
+        if (speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
+            if (func == 24) {
+                setSpeedSetting(0.055f);
+            }
+            if (func == 25) {
+                setSpeedSetting(0.205f);
+            }
+            if (func == 26) {
+                setSpeedSetting(0.355f);
+            }
+            if (func == 27) {
+                setSpeedSetting(0.505f);
+            }
+            if (func == 28) {
+                setSpeedSetting(0.705f);
+            }
+            if (func == 29) {
+                setSpeedSetting(1.0f);
+            }
+        }
 
-    if (speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
-        if (func == 40) {
-            setSpeedSetting(0.055f);
+        if (speedStepMode == jmri.SpeedStepMode.TMCC1_32) {
+            if (func == 24) {
+                setSpeedSetting(0.130f);
+            }
+            if (func == 25) {
+                setSpeedSetting(0.320f);
+            }
+            if (func == 26) {
+                setSpeedSetting(0.450f);
+            }
+            if (func == 27) {
+                setSpeedSetting(0.580f);
+            }
+            if (func == 28) {
+                setSpeedSetting(0.775f);
+            }
+            if (func == 29) {
+                setSpeedSetting(1.0f);
+            }
         }
-        if (func == 41) {
-            setSpeedSetting(0.205f);
-        }
-        if (func == 42) {
-            setSpeedSetting(0.355f);
-        }
-        if (func == 43) {
-            setSpeedSetting(0.505f);
-        }
-        if (func == 44) {
-            setSpeedSetting(0.705f);
-        }
-        if (func == 45) {
-            setSpeedSetting(1.0f);
-        }
-    }
 
-
-    if (speedStepMode == jmri.SpeedStepMode.TMCC1_32 || speedStepMode == jmri.SpeedStepMode.TMCC2_32) {
-        if (func == 40) {
-            setSpeedSetting(0.055f);
-        }
-        if (func == 41) {
-            setSpeedSetting(0.205f);
-        }
-        if (func == 42) {
-            setSpeedSetting(0.355f);
-        }
-        if (func == 43) {
-            setSpeedSetting(0.505f);
-        }
-        if (func == 44) {
-            setSpeedSetting(0.705f);
-        }
-        if (func == 45) {
-            setSpeedSetting(1.0f);
-        }
-    }
- 
-
-                 
-            
     /**
      * Commenting out these repeat send lines in case it is
      * necessary to reinstate them after testing. These are
