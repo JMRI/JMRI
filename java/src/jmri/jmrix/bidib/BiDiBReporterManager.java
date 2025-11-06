@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * BiDiBReporterManager implements the ReporterManager for BiDiB
  *
  * @author Paul Bender Copyright (C) 2016
- * @author Eckart Meyer Copyright (C) 2019-2025s
+ * @author Eckart Meyer Copyright (C) 2019-2025
  */
 public class BiDiBReporterManager extends jmri.managers.AbstractReporterManager {
 
