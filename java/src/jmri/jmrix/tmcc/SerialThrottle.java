@@ -470,12 +470,13 @@ public class SerialThrottle extends AbstractThrottle {
             }
         }
 
-    /**
-     * Commenting out these repeat send lines in case it is
-     * necessary to reinstate them after testing. These are
-     * holdovers from the original "repeat 4 times to make
-     * sure they're accepted" instructions.
-     */
+        /**
+        * Commenting out these repeat send lines in case it is
+        * necessary to reinstate them after testing. These are
+        * holdovers from the original "repeat 4 times to make
+        * sure they're accepted" instructions.
+        */
+
         // tc.sendSerialMessage(new SerialMessage(value), null);
         // tc.sendSerialMessage(new SerialMessage(value), null);
         // tc.sendSerialMessage(new SerialMessage(value), null);     
