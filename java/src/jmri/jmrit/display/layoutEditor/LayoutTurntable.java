@@ -1179,8 +1179,39 @@ public class LayoutTurntable extends LayoutTrack {
             Turnout t = getRayTurnout(targetRay);
             if (t != null) {
                 // Create a temporary LayoutTurnout wrapper for the dispatcher.
-                // This object is not on a panel and is for logic purposes only.
-                LayoutLHTurnout tempLayoutTurnout = new LayoutLHTurnout("TURNTABLE_WRAPPER_" + t.getSystemName(), models);
+                final int finalTargetRay = targetRay;
+                // Create a temporary LayoutTurnout wrapper for the dispatcher. This object is not
+                // on a panel and is for logic purposes only.
+                // We override getTurnout() to return a proxy Turnout that intercepts the
+                // setCommandedState call and redirects it to our high-level setPosition method.
+                LayoutLHTurnout tempLayoutTurnout = new LayoutLHTurnout("TURNTABLE_WRAPPER_" + getId(), models) { // NOI18N
+                    /**
+                     * This proxy Turnout allows us to intercept the setCommandedState call
+                     * from the dispatcher framework without modifying the dispatcher itself.
+                     */
+                    final Turnout proxyTurnout = new jmri.implementation.AbstractTurnout(t.getSystemName()) {
+                        @Override
+                        protected void forwardCommandChangeToLayout(int s) {
+                            // The dispatcher has called setCommandedState on our proxy, which
+                            // calls this method.
+                            // We intercept this and call our unified setPosition method.
+                            log.info("Dispatcher commanding turntable {} to ray {}", getId(), finalTargetRay); // NOI18N
+                            LayoutTurntable.this.setPosition(finalTargetRay);
+                        }
+
+                        @Override
+                        protected void turnoutPushbuttonLockout(boolean b) {
+                            // dispatcher doesn't use this, so we don't need to implement it
+                        }
+                    };
+
+                    @Override
+                    public Turnout getTurnout() {
+                        // Return our proxy instead of the real turnout.
+                        return proxyTurnout;
+                    }
+                };
+                // We must associate the temp layout turnout with the real turnout to satisfy the dispatcher framework
                 tempLayoutTurnout.setTurnout(t.getSystemName());
                 int requiredState = Turnout.THROWN;
 
