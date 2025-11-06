@@ -1,12 +1,18 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -27,9 +33,9 @@ public class ProxyReporterManagerTest extends AbstractProxyManagerTestBase<Proxy
         // create
         Reporter t = l.newReporter(getSystemName("sysName"), "mine");
         // check
-        Assert.assertNotNull("real object returned ", t );
-        Assert.assertTrue("user name correct ", t == l.getByUserName("mine"));
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName("sysName")));
+        assertNotNull( t, "real object returned ");
+        assertSame( t, l.getByUserName("mine"), "user name correct ");
+        assertSame( t, l.getBySystemName(getSystemName("sysName")), "system name correct ");
     }
 
     @Test
@@ -37,17 +43,17 @@ public class ProxyReporterManagerTest extends AbstractProxyManagerTestBase<Proxy
         Reporter ir211 = l.provideReporter("LR211");
         Reporter lr211 = l.provideReporter("IR211");
 
-        Assert.assertNotNull(ir211);
-        Assert.assertNotNull(lr211);
-        Assert.assertTrue(ir211 != lr211);
+        assertNotNull(ir211);
+        assertNotNull(lr211);
+        assertNotSame(ir211, lr211);
     }
 
     @Test
     public void testDefaultNotInternal() {
         Reporter lut = l.provideReporter("211");
 
-        Assert.assertNotNull(lut);
-        Assert.assertEquals("IR211", lut.getSystemName());
+        assertNotNull(lut);
+        assertEquals("IR211", lut.getSystemName());
     }
 
     @Test
@@ -57,34 +63,34 @@ public class ProxyReporterManagerTest extends AbstractProxyManagerTestBase<Proxy
         Reporter l2 = l.provideReporter("user 1");
         Reporter l3 = l.getReporter("user 1");
 
-        Assert.assertNotNull(l1);
-        Assert.assertNotNull(l2);
-        Assert.assertNotNull(l3);
-        Assert.assertEquals(l1, l2);
-        Assert.assertEquals(l3, l2);
-        Assert.assertEquals(l1, l3);
+        assertNotNull(l1);
+        assertNotNull(l2);
+        assertNotNull(l3);
+        assertEquals(l1, l2);
+        assertEquals(l3, l2);
+        assertEquals(l1, l3);
 
         Reporter l4 = l.getReporter("JLuser 1");
-        Assert.assertNull(l4);
+        assertNull(l4);
     }
 
     @Test
     public void testInstanceManagerIntegration() {
         JUnitUtil.resetInstanceManager();
-        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class));
+        assertNotNull(InstanceManager.getDefault(ReporterManager.class));
 
         JUnitUtil.initReporterManager();
 
-        Assert.assertTrue(InstanceManager.getDefault(ReporterManager.class) instanceof ProxyReporterManager);
+        assertInstanceOf( ProxyReporterManager.class, InstanceManager.getDefault(ReporterManager.class));
 
-        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class));
-        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1"));
+        assertNotNull(InstanceManager.getDefault(ReporterManager.class));
+        assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1"));
 
         ReporterManager m = new jmri.jmrix.internal.InternalReporterManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setReporterManager(m);
 
-        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("JR1"));
-        Assert.assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR2"));
+        assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("JR1"));
+        assertNotNull(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR2"));
     }
 
     @BeforeEach
@@ -92,11 +98,9 @@ public class ProxyReporterManagerTest extends AbstractProxyManagerTestBase<Proxy
         JUnitUtil.setUp();
         // create and register the manager object
         ReporterManager irman = InstanceManager.getDefault(ReporterManager.class);
-        if ( irman instanceof ProxyReporterManager ) {
-            l = (ProxyReporterManager) irman;
-        } else {
-            Assertions.fail("ReporterManager is not a ProxyReporterManager");
-        }
+        assertInstanceOf( ProxyReporterManager.class, irman,
+            "ReporterManager is not a ProxyReporterManager");
+        l = (ProxyReporterManager) irman;
     }
 
     @AfterEach
