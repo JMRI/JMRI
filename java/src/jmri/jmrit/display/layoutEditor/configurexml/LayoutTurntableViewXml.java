@@ -70,9 +70,11 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
             if (t != null) {
                 rElem.setAttribute("connectname", t.getId());
             }
-            String mastName = p.getRayTrackList().get(i).getApproachMastName();
-            if (mastName != null && !mastName.isEmpty()) {
-                rElem.setAttribute("approachmast", mastName);
+            if (dispatcherManaged) {
+                String mastName = p.getRayTrackList().get(i).getApproachMastName();
+                if (mastName != null && !mastName.isEmpty()) {
+                    rElem.setAttribute("approachmast", mastName);
+                }
             }
             rElem.setAttribute("index", "" + p.getRayIndex(i));
             if (turnoutControl && p.getRayTurnoutName(i) != null) {
@@ -188,9 +190,11 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
                 }
                 LayoutTurntable.RayTrack ray = lt.addRay(angle);
                 ray.connectName = connectName;
-                a = value.getAttribute("approachmast");
-                if (a != null) {
-                    ray.approachMastName = a.getValue();
+                if (lt.isDispatcherManaged()) {
+                    a = value.getAttribute("approachmast");
+                    if (a != null) {
+                        ray.approachMastName = a.getValue();
+                    }
                 }
                 if (lt.isTurnoutControlled() && value.getAttribute("turnout") != null) {
                     if (value.getAttribute("turnoutstate").getValue().equals("thrown")) {
