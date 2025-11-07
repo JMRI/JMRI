@@ -1200,6 +1200,15 @@ public class LayoutTurntable extends LayoutTrack {
                         }
 
                         @Override
+                        public int getKnownState() {
+                            if (LayoutTurntable.this.getPosition() == finalTargetRay) {
+                                return Turnout.THROWN;
+                            } else {
+                                return Turnout.CLOSED;
+                            }
+                        }
+
+                        @Override
                         protected void turnoutPushbuttonLockout(boolean b) {
                             // dispatcher doesn't use this, so we don't need to implement it
                         }
