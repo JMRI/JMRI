@@ -3109,6 +3109,10 @@ public class TrainBuilderBase extends TrainCommon {
                 }
                 String status = engine.checkDestination(destination, track);
                 if (status.equals(Track.OKAY)) {
+                    addLine(_buildReport, FIVE,
+                            Bundle.getMessage("buildEngineCanDrop", engine.toString(),
+                                    track.getTrackTypeName(),
+                                    track.getLocation().getName(), track.getName()));
                     addEngineToTrain(engine, rl, rld, track);
                     return true;
                 } else {
