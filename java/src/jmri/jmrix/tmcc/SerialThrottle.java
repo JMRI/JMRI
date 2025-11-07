@@ -58,9 +58,15 @@ public class SerialThrottle extends AbstractThrottle {
                     } else {
                         return 0;
                     }
-                } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_32 || getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_200) {
-                     if (number < SERIAL_FUNCTION_CODES_TMCC2.length) {
-                         return SERIAL_FUNCTION_CODES_TMCC2[number];
+                } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_32) {
+                     if (number < SERIAL_FUNCTION_CODES_TMCC2_32.length) {
+                         return SERIAL_FUNCTION_CODES_TMCC2_32[number];
+                    } else {
+                        return 0;
+                    }
+                } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_200) {
+                     if (number < SERIAL_FUNCTION_CODES_TMCC2_200.length) {
+                         return SERIAL_FUNCTION_CODES_TMCC2_200[number];
                     } else {
                         return 0;
                     }
@@ -181,31 +187,31 @@ public class SerialThrottle extends AbstractThrottle {
     //    this will be interpreted as two commands to be sequentially sent,
     //    with the upper bytes sent first.
 
-    // TMCC 2 Legacy Function Keys to trigger with TMCC2_32 and TMCC2_200 speed steps.
-    private final static long[] SERIAL_FUNCTION_CODES_TMCC2 = new long[] {
+    // TMCC 2 Legacy Function Keys to trigger with TMCC2_32 speed steps.
+    private final static long[] SERIAL_FUNCTION_CODES_TMCC2_32 = new long[] {
 
-        // TMCC2 Remote - Buttons
+        // TMCC2_32 Remote - Buttons
         0xF8010D, 0xF8011D, 0xF8011C, 0xF80105, 0xF80106, /* Fn0-4 */
 
-        // TMCC2 Remote - Keypad Buttons
+        // TMCC2_32 Remote - Keypad Buttons
         0xF80111, 0xF80112, 0xF80113, /* Fn5-7 */
         0xF80114, 0xF80115, 0xF80116, /* Fn8-10 */
         0xF80117, 0xF80118, 0xF80119, /* Fn11-13 */
                   0xF80110,           /* Fn14 */
 
-        // TMCC2 Remote - Buttons
+        // TMCC2_32 Remote - Buttons
         0xF80109, 0xF8011E, 0xF80104, 0xF80107, 0xF80128, /* Fn15-19 */
         0xF80129, 0xF8012A, 0xF8012B, 0xF8011F,/* 20-23 */
 
-        // TMCC2 RR Speed FnKeys
-        0xF8000A, // Fn24
-        0xF80028, // Fn25
-        0xF80046, // Fn26
-        0xF80064, // Fn27
-        0xF8008C, // Fn28
-        0xF800C7, // Fn29
+        // TMCC2_32 RR Speed FnKeys
+        0xF80164, // Fn24
+        0xF8016A, // Fn25
+        0xF8016E, // Fn26
+        0xF80172, // Fn27
+        0xF80178, // Fn28
+        0xF8017F, // Fn29
 
-        // TMCC2 Extended Lighting FnKeys
+        // TMCC2_32 Extended Lighting FnKeys
 
         //0xF8017DFB01F2FB0189L, // Fn35 Set Cab Light Auto
 
@@ -217,7 +223,7 @@ public class SerialThrottle extends AbstractThrottle {
         //0xF801FE, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
 
 
-        // Aux FnKeys
+        // TRMCC2_32 Aux FnKeys
         0xF80108, // Fn30
         0xF8010A, // Fn31
         0xF8010B, // Fn32
@@ -225,7 +231,82 @@ public class SerialThrottle extends AbstractThrottle {
         0xF8010E, // Fn34
         0xF8010F, // Fn35
 
-        // Unused FnKeys
+        // TRMCC2_32 Unused FnKeys
+        0xF8012E, // Fn36
+        0xF8012E, // Fn37
+        0xF8012E, // Fn38
+        0xF8012E, // Fn39
+        0xF8012E, // Fn40
+        0xF8012E, // Fn41
+        0xF8012E, // Fn42
+        0xF8012E, // Fn43
+        0xF8012E, // Fn44
+        0xF8012E, // Fn45
+        0xF8012E, // Fn46
+        0xF8012E, // Fn47
+        0xF8012E, // Fn48
+        0xF8012E, // Fn49
+        0xF8012E, // Fn50
+        0xF8012E, // Fn51
+        0xF8012E, // Fn52
+        0xF8012E, // Fn53
+        0xF8012E, // Fn54
+        0xF8012E, // Fn55
+        0xF8012E, // Fn56
+        0xF8012E, // Fn57
+        0xF8012E, // Fn58
+        0xF8012E, // Fn59
+        0xF8012E, // Fn60
+        0xF8012E, // Fn61
+        0xF8012E, // Fn62
+        0xF8012E, // Fn63
+    };
+
+    // TMCC 2 Legacy Function Keys to trigger with TMCC2_200 speed steps.
+    private final static long[] SERIAL_FUNCTION_CODES_TMCC2_200 = new long[] {
+
+        // TMCC2_200 Remote - Buttons
+        0xF8010D, 0xF8011D, 0xF8011C, 0xF80105, 0xF80106, /* Fn0-4 */
+
+        // TMCC2_200 Remote - Keypad Buttons
+        0xF80111, 0xF80112, 0xF80113, /* Fn5-7 */
+        0xF80114, 0xF80115, 0xF80116, /* Fn8-10 */
+        0xF80117, 0xF80118, 0xF80119, /* Fn11-13 */
+                  0xF80110,           /* Fn14 */
+
+        // TMCC2_200 Remote - Buttons
+        0xF80109, 0xF8011E, 0xF80104, 0xF80107, 0xF80128, /* Fn15-19 */
+        0xF80129, 0xF8012A, 0xF8012B, 0xF8011F,/* 20-23 */
+
+        // TMCC2_200 RR Speed FnKeys
+        0xF8000A, // Fn24
+        0xF80028, // Fn25
+        0xF80046, // Fn26
+        0xF80064, // Fn27
+        0xF8008C, // Fn28
+        0xF800C7, // Fn29
+
+        // TMCC2_200 Extended Lighting FnKeys
+
+        //0xF8017DFB01F2FB0189L, // Fn35 Set Cab Light Auto
+
+
+        // Extended Sound Effects FnKeys
+        //0xF801FBF801FCL, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
+        //0xF801FC, // Fn36 Start Up Sequence 2 (Immediate Start Up)
+        //0xF801FDF801FEL, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
+        //0xF801FE, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
+
+
+        // TMCC2_200 Aux FnKeys
+        0xF80108, // Fn30
+        0xF8010A, // Fn31
+        0xF8010B, // Fn32
+        0xF8010C, // Fn33
+        0xF8010E, // Fn34
+        0xF8010F, // Fn35
+
+        // TMCC2_200 Unused FnKeys
         0xF8012E, // Fn36
         0xF8012E, // Fn37
         0xF8012E, // Fn38
@@ -414,8 +495,8 @@ public class SerialThrottle extends AbstractThrottle {
 
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
-        tc.sendSerialMessage(m, null);
-        tc.sendSerialMessage(m, null);
+        // tc.sendSerialMessage(m, null);
+        // tc.sendSerialMessage(m, null);
 
         firePropertyChange(ISFORWARD, old, isForward);
     }
@@ -449,7 +530,7 @@ public class SerialThrottle extends AbstractThrottle {
             }
         }
 
-        if (speedStepMode == jmri.SpeedStepMode.TMCC1_32) {
+        if (speedStepMode == jmri.SpeedStepMode.TMCC1_32 || speedStepMode == jmri.SpeedStepMode.TMCC1_100 || speedStepMode == jmri.SpeedStepMode.TMCC2_32) {
             if (func == 24) {
                 setSpeedSetting(0.130f);
             }
