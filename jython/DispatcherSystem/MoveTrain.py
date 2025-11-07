@@ -315,6 +315,16 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
             if self.logLevel > 0: print strindex + "previous_block == next_block", previous_block == next_block, "so changing direction"
             transit_instruction = "change"
 
+        # check if current block is a turntable
+        for panel in jmri.util.JmriJFrame.getFrameList():
+            if isinstance(panel, jmri.jmrit.display.layoutEditor.LayoutEditor):
+                for turntable in panel.getLayoutTurntables():
+                    if turntable.getLayoutBlock() is not None:
+                        if (turntable.getLayoutBlock().getBlock() == current_block) and (current_block != next_block):
+                            if self.logLevel > 0: print strindex + "current_block is a turntable, so changing direction"
+                            transit_instruction = "change"
+                            break
+
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
         current_layout_block = LayoutBlockManager.getLayoutBlock(current_block)
 
