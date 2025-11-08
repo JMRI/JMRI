@@ -20,10 +20,8 @@
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
-      <personname><firstname>Timothy</firstname><surname>Jump</surname></personname>
-	  <!-- email: t1jump@gmail.com -->
-	  <!-- This decoder definition was built on the existing decoder definition -->
-	  <!-- mfg: Lionel; family name: TMCC Steam; version: 1.0; date: 2023-05-17 created by Bob Jacobsen -->
+      <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+	  <!-- with additions and edits by Timothy Jump -->
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -35,7 +33,7 @@
   <decoder>
     <family name="TMCC 1" mfg="Lionel"> <!-- Lionel has no NMRA id, but that's OK -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
-      <model model="TMCC 1" maxFnNum="28" numOuts="1"/>
+      <model model="TMCC 1" maxFnNum="68" numOuts="1"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
