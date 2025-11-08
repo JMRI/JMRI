@@ -1,9 +1,12 @@
 package jmri.configurexml;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * Checks of java bean storage.
@@ -21,42 +24,43 @@ public class DefaultJavaBeanConfigXMLTest {
     @Test
     public void testTestBean() {
         TestBean1 tb1 = new TestBean1();
-        Assert.assertTrue(tb1.equals(tb1));
+        assertTrue(tb1.equals(tb1));
 
         TestBean1 tb2 = new TestBean1();
-        Assert.assertTrue(tb1.equals(tb2));
+        assertTrue(tb1.equals(tb2));
 
         tb2.setA("foo");
         tb1.setA("bar");
-        Assert.assertFalse(tb1.equals(tb2));
+        assertFalse(tb1.equals(tb2));
 
         TestBean1 tb3 = new TestBean1();
         TestBean1 tb4 = new TestBean1();
         tb3.setB(77);
         tb4.setB(78);
-        Assert.assertFalse(tb3.equals(tb4));
+        assertFalse(tb3.equals(tb4));
     }
 
     @Test
-    public void testLoadBeanDefault() throws Exception {
+    public void testLoadBeanDefault() {
         DefaultJavaBeanConfigXML x = new DefaultJavaBeanConfigXML();
         TestBean1 start = new TestBean1();
+        TestBean1 end = assertDoesNotThrow( () ->
+            (TestBean1) x.unpack(x.store(start)));
 
-        TestBean1 end = (TestBean1) x.unpack(x.store(start));
-
-        Assert.assertTrue(start.equals(end));
+        assertTrue(start.equals(end));
     }
 
     @Test
-    public void testLoadBeanValue() throws Exception {
+    public void testLoadBeanValue() {
         DefaultJavaBeanConfigXML x = new DefaultJavaBeanConfigXML();
         TestBean1 start = new TestBean1();
         start.setA("foo");
         start.setB(88);
 
-        TestBean1 end = (TestBean1) x.unpack(x.store(start));
+        TestBean1 end = assertDoesNotThrow( () ->
+            (TestBean1) x.unpack(x.store(start)));
 
-        Assert.assertTrue(start.equals(end));
+        assertTrue(start.equals(end));
     }
 
     @BeforeEach

@@ -311,6 +311,36 @@ public class MultiIndexProgrammerFacadeTest {
     }
 
     @Test
+    public void testWriteReadDoubleIndexedWithAfter() throws jmri.ProgrammerException, InterruptedException {
+        ProgDebugger dp = new ProgDebugger();
+        Programmer p = new MultiIndexProgrammerFacade(dp, "81", "82", true, false);
+        ProgListener l = new ProgListener() {
+            @Override
+            public void programmingOpReply(int value, int status) {
+                log.debug("callback value={} status={}", value, status);
+                replied = true;
+                readValue = value;
+            }
+        };
+
+        p.writeCV("123.45.46;0.1", 12, l);
+        waitReply();
+
+        Assert.assertEquals("index 1 written", 0, dp.getCvVal(81));
+        Assert.assertEquals("index 2 written", 1, dp.getCvVal(82));
+        Assert.assertEquals("value written", 12, dp.getCvVal(123));
+
+        dp.clearHasBeenWritten(81);
+        dp.clearHasBeenWritten(82);
+
+        p.readCV("123.45.46;0.1", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+        Assert.assertEquals("index 1 written", 0, dp.getCvVal(81));
+        Assert.assertEquals("index 2 written", 1, dp.getCvVal(82));
+    }
+
+    @Test
     public void testWriteReadDoubleIndexedAltPiSi() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();

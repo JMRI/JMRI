@@ -4,7 +4,6 @@ import java.io.File;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -18,7 +17,7 @@ public class NullProfileTest {
     public void testCTor(@TempDir File folder) throws java.io.IOException {
         File profileFolder = new File(folder, "test");
         NullProfile instance = new NullProfile("test", "test", profileFolder);
-        Assert.assertNotNull("exists",instance);
+        Assertions.assertNotNull( instance, "exists");
     }
 
     @BeforeEach

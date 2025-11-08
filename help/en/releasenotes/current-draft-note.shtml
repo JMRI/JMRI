@@ -101,9 +101,7 @@
 
         <h4>MERG</h4>
             <ul>
-                <li>If you have multiple CAN-based connections defined
-                    (MERG, LCC, OpenLCB),
-                    you can now specify which one for a start-up action to use.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -128,9 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>If you have multiple CAN-based connections defined
-                    (LCC, OpenLCB, MERG),
-                    you can now specify which one for a start-up action to use.</li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -428,15 +424,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Update the roster XML Schema to fix a bug preventing
-                validation of the roster.xml file in some circumstances.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>Fix bug ActivateTrain SaveDIalog</li>
-			 <li>Correct calculating remaining length of blocks in a section.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -454,8 +448,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Fix a problem with selecting "Show ? When Unknown"
-                checkbox in turnout pop-up menu.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -478,17 +471,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>The new action <strong>ExecuteProgram</strong> has been
-              added. It lets you launch a program from JMRI.</li>
-          <li>The new action <strong>Request update of turnout</strong>
-              has been added. It's used when you want JMRI to request
-              the state of a turnout from the layout. Note that not all
-              systems support this.</li>
-          <li>The new action <strong>For each with delay</strong> has
-              been added. It's similar to <strong>For each</strong> but
-              has a delay between each item. It's useful when you need
-              to do something for example for every turnout, but where
-              you need to wait some time between each action.</li>
           <li></li>
         </ul>
 
@@ -501,9 +483,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>New feature, auto select car types for a train based on the locations serviced by train's route.</li>
-            <li>Major improvement to "Test Destinations" for classification / interchange and staging tracks.</li>
-            <li>Improved train routing when there's multiple locations that can pull a car.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -663,7 +643,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Fixed a bug that prevented restarting AbstractAutomaton-subclass 
-                objects in scripts.</li>
+            <li></li>
         </ul>
 
