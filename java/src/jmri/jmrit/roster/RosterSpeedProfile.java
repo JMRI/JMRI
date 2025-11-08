@@ -807,19 +807,10 @@ public class RosterSpeedProfile {
             log.debug("Going for deceleration");
         }
 
-        if (andStop) {
-            // effectively stop at min speed, then issue a final stop command
-            speedStep = minReliableOperatingSpeed;
-        }
-
         if (distance <= 0) {
             log.debug("Distance is less than 0 {}", distance);
-            // still need to ramp down and stop
-            addSpeedStepItem(false, new SpeedSetting(speedStep, 10, andStop));
-            if (andStop) {
-                addSpeedStepItem(true, new SpeedSetting(0.0f, 10, andStop));
-            }
-            setNextStep();
+            _throttle.setSpeedSetting(speedStep);
+            finishChange();
             return;
         }
 
@@ -1009,10 +1000,6 @@ public class RosterSpeedProfile {
                 log.warn("distance remaining is now 0, but we have not reached desired speed setting {} v {}", desiredSpeedStep, calculatingStep);
                 calculated = true;
             }
-        }
-        if (andStop) {
-            SpeedSetting ss = new SpeedSetting(0.0f, 10, andStop);
-            addSpeedStepItem(calculated, ss);
         }
     }
 

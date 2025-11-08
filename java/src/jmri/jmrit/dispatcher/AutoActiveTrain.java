@@ -2136,7 +2136,7 @@ public class AutoActiveTrain implements ThrottleListener {
                if ((throttleSetting * speedFactor) > maxSpeed) {
                    return maxSpeed;
                }
-               if ((throttleSetting * speedFactor) < minReliableOperatingSpeed && !_stoppingUsingSpeedProfile) {
+               if ((throttleSetting * speedFactor) < minReliableOperatingSpeed) {
                    return minReliableOperatingSpeed;
                }
                return (throttleSetting * speedFactor); //adjust for train's Speed Factor
