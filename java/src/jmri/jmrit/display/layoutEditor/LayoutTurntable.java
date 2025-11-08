@@ -977,6 +977,21 @@ public class LayoutTurntable extends LayoutTrack {
                             commandedIndex = connectionIndex;
                             models.redrawPanel();
                             models.setDirty();
+
+                            // This is the "Smart Listener" logic.
+                            // If this ray was commanded THROWN, ensure all other rays are commanded CLOSED.
+                            if ((Integer) e.getNewValue() == Turnout.THROWN) {
+                                log.debug("Turntable Ray {} commanded THROWN, ensuring other rays are CLOSED.", connectionIndex);
+                                for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
+                                    // Check this isn't the current ray and that it has a turnout assigned.
+                                    if (otherRay.getConnectionIndex() != connectionIndex && otherRay.getTurnout() != null) {
+                                        // Only send the command if it's not already CLOSED to avoid loops.
+                                        if (otherRay.getTurnout().getCommandedState() != Turnout.CLOSED) {
+                                            otherRay.getTurnout().setCommandedState(Turnout.CLOSED);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 };
@@ -1010,15 +1025,9 @@ public class LayoutTurntable extends LayoutTrack {
                 if (disableWhenOccupied && isOccupied()) { // isOccupied is on RayTrack, so check must be here
                     log.debug("Can not setPosition of turntable ray when it is occupied");
                 } else {
-                    // Command this turnout to THROWN
+                    // This method is now only called by manual clicks on the panel.
+                    // The listener above handles the interlocking for all command sources.
                     getTurnout().setCommandedState(Turnout.THROWN);
-
-                    // Command all other ray turnouts to CLOSED.
-                    for (RayTrack otherRay : LayoutTurntable.this.rayTrackList) {
-                        if (otherRay != this && otherRay.getTurnout() != null) {
-                            otherRay.getTurnout().setCommandedState(Turnout.CLOSED);
-                        }
-                    }
                 }
             }
         }
@@ -1179,45 +1188,14 @@ public class LayoutTurntable extends LayoutTrack {
             Turnout t = getRayTurnout(targetRay);
             if (t != null) {
                 // Create a temporary LayoutTurnout wrapper for the dispatcher.
-                final int finalTargetRay = targetRay;
-                // Create a temporary LayoutTurnout wrapper for the dispatcher. This object is not
-                // on a panel and is for logic purposes only.
-                // We override getTurnout() to return a proxy Turnout that intercepts the
-                // setCommandedState call and redirects it to our high-level setPosition method.
+                // This object is not on a panel and is for logic purposes only.
+                // We give the dispatcher our real turnout, and our "Smart Listener"
+                // on CommandedState will handle the interlocking.
                 LayoutLHTurnout tempLayoutTurnout = new LayoutLHTurnout("TURNTABLE_WRAPPER_" + getId(), models) { // NOI18N
-                    /**
-                     * This proxy Turnout allows us to intercept the setCommandedState call
-                     * from the dispatcher framework without modifying the dispatcher itself.
-                     */
-                    final Turnout proxyTurnout = new jmri.implementation.AbstractTurnout(t.getSystemName()) {
-                        @Override
-                        protected void forwardCommandChangeToLayout(int s) {
-                            // The dispatcher has called setCommandedState on our proxy, which
-                            // calls this method.
-                            // We intercept this and call our unified setPosition method.
-                            log.info("Dispatcher commanding turntable {} to ray {}", getId(), finalTargetRay); // NOI18N
-                            LayoutTurntable.this.setPosition(finalTargetRay);
-                        }
-
-                        @Override
-                        public int getKnownState() {
-                            if (LayoutTurntable.this.getPosition() == finalTargetRay) {
-                                return Turnout.THROWN;
-                            } else {
-                                return Turnout.CLOSED;
-                            }
-                        }
-
-                        @Override
-                        protected void turnoutPushbuttonLockout(boolean b) {
-                            // dispatcher doesn't use this, so we don't need to implement it
-                        }
-                    };
-
                     @Override
                     public Turnout getTurnout() {
-                        // Return our proxy instead of the real turnout.
-                        return proxyTurnout;
+                        // Return the real turnout.
+                        return t;
                     }
                 };
                 // We must associate the temp layout turnout with the real turnout to satisfy the dispatcher framework

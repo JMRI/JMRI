@@ -2533,12 +2533,12 @@ class MyTableModel (DefaultTableModel):
                 current_speed_factor_str = engine.getComment()
                 train = trains[train_name]
                 result = train["direction"]
-                print "train[direction] loading to put in dropdown", result
+                # print "train[direction] loading to put in dropdown", result
                 if result == "forward":
                     train_direction = "reverse"
                 else:
                     train_direction = "forward"
-                print "train", train, train_direction
+                # print "train", train, train_direction
             items_to_put_in_dropdown.append([train_name,block_name,train_direction, False, train_length, current_speed_factor ])
 
         # print "items_to_put_in_dropdown", items_to_put_in_dropdown
