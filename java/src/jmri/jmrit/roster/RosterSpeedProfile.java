@@ -809,7 +809,11 @@ public class RosterSpeedProfile {
 
         if (distance <= 0) {
             log.debug("Distance is less than 0 {}", distance);
-            _throttle.setSpeedSetting(speedStep);
+            if (andStop) {
+                _throttle.setSpeedSetting(0.0f);
+            } else {
+                _throttle.setSpeedSetting(speedStep);
+            }
             finishChange();
             return;
         }
