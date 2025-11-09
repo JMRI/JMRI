@@ -78,6 +78,16 @@ public class PermissionProgrammer implements jmri.Programmer {
 
     /** {@inheritDoc} */
     @Override
+    public synchronized void readCV(String CVname, ProgListener p, int startVal) throws jmri.ProgrammerException {
+        if (hasPermission()) {
+            _programmer.readCV(CVname, p, startVal);
+        } else {
+            notifyProgListenerEnd(p, 0, ProgListener.UnknownError);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (hasPermission()) {
             _programmer.confirmCV(CV, val, p);
