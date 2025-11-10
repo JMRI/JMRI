@@ -888,17 +888,14 @@ public class Car extends RollingStock {
      * 
      * @param scheduleItem The schedule item to be applied this this car
      */
-    public void loadNext(ScheduleItem scheduleItem) {
-        if (scheduleItem == null) {
-            return; // should never be null
-        }
-        // set the car's final destination and track
-        setFinalDestination(scheduleItem.getDestination());
-        setFinalDestinationTrack(scheduleItem.getDestinationTrack());
-        // bump hit count for this schedule item
-        scheduleItem.setHits(scheduleItem.getHits() + 1);
-        // set all cars in kernel same final destination
-        updateKernel();
+    public void loadCarFinalDestination(ScheduleItem scheduleItem) {
+        if (scheduleItem != null) {
+            // set the car's final destination and track
+            setFinalDestination(scheduleItem.getDestination());
+            setFinalDestinationTrack(scheduleItem.getDestinationTrack());
+            // set all cars in kernel same final destination
+            updateKernel();
+        } 
     }
 
     /**
@@ -994,6 +991,7 @@ public class Car extends RollingStock {
                 setLoadEmpty();
             }
         }
+        loadCarFinalDestination(si);
         setScheduleItemId(Car.NONE);
     }
 

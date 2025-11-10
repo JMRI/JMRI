@@ -1971,17 +1971,14 @@ public class Track extends PropertyChangeSupport {
 
     /**
      * Check to see if track has schedule and if it does will schedule the next
-     * item in the list. Load the car with the next schedule load if one exists,
-     * and set the car's final destination if there's one in the schedule.
+     * item in the list. Load the car with the next schedule load if one exists.
      * 
      * @param car The Car to be modified.
      * @return Track.OKAY or Track.SCHEDULE
      */
     public String scheduleNext(Car car) {
-        // clean up the car's final destination if sent to that destination and
-        // there isn't a schedule
-        if (getScheduleId().equals(NONE) &&
-                car.getDestination() != null &&
+        // clean up the car's final destination if sent to that destination
+        if (car.getDestination() != null &&
                 car.getDestination().equals(car.getFinalDestination()) &&
                 car.getDestinationTrack() != null &&
                 (car.getDestinationTrack().equals(car.getFinalDestinationTrack()) ||
@@ -2002,7 +1999,8 @@ public class Track extends PropertyChangeSupport {
             log.debug("Car ({}) has schedule item id ({})", car.toString(), car.getScheduleItemId());
             ScheduleItem si = car.getScheduleItem(this);
             if (si != null) {
-                car.loadNext(si);
+                // bump hit count for this schedule item
+                si.setHits(si.getHits() + 1);
                 return OKAY;
             }
             log.debug("Schedule id ({}) not valid for track ({})", car.getScheduleItemId(), getName());
@@ -2011,7 +2009,7 @@ public class Track extends PropertyChangeSupport {
         // search schedule if match mode
         if (getScheduleMode() == MATCH && !getSchedule().searchSchedule(car, this).equals(OKAY)) {
             return Bundle.getMessage("matchMessage", SCHEDULE, getScheduleName(),
-                            getSchedule().hasRandomItem() ? Bundle.getMessage("Random") : "");
+                    getSchedule().hasRandomItem() ? Bundle.getMessage("Random") : "");
         }
         ScheduleItem currentSi = getCurrentScheduleItem();
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),
@@ -2026,7 +2024,8 @@ public class Track extends PropertyChangeSupport {
                 (currentSi.getReceiveLoadName().equals(ScheduleItem.NONE) ||
                         car.getLoadName().equals(currentSi.getReceiveLoadName()))) {
             car.setScheduleItemId(currentSi.getId());
-            car.loadNext(currentSi);
+            // bump hit count for this schedule item
+            currentSi.setHits(currentSi.getHits() + 1);
             // bump schedule
             bumpSchedule();
         } else if (currentSi != null) {

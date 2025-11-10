@@ -484,7 +484,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>When a car arrives at a spur with a schedule, the car's final destination now changes when the car's load status changes.</li>
         </ul>
 
    <h3>Panel Editor</h3>
