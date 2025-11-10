@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
  * Implementation of a TMCC ThrottleManager.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
 public class SerialThrottleManager extends AbstractThrottleManager {
 

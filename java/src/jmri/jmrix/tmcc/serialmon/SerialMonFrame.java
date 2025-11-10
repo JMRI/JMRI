@@ -9,7 +9,7 @@ import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
  * Frame displaying (and logging) TMCC serial command messages.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
- * with additions and edits by
+ * with edits/additions by
  * @author Timothy Jump Copyright (C) 2025
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -99,7 +99,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 case 12:
                                     return "TMCC2 - Engine " + A + " - AUX2 Off";
                                 case 13:
-                                    return "TMCC2 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On/Off";
+                                    return "TMCC2 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On While Pressed";
                                 case 14:
                                     return "TMCC2 - Engine " + A + " - AUX2 Option 2";
                                 case 15:
@@ -271,7 +271,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 12:
                             
                             case 13:
-                                return "TMCC1 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On/Off";
+                                return "TMCC1 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On While Pressed";
                             case 14:
                             
                             case 15:
