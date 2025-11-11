@@ -4,7 +4,6 @@ import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -15,7 +14,7 @@ public class DefaultTransitManagerTest {
     @Test
     public void testCTor() {
         TransitManager t = new jmri.managers.DefaultTransitManager();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
