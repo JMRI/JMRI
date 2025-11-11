@@ -678,7 +678,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
     int numColors = 14;  // number of entries in the above arrays
 
     JCheckBox useAbsSignalMode = new JCheckBox(Bundle.getMessage("UseAbsSignalMode"));  // NOI18N
-    JCheckBox quiteFail = new JCheckBox(Bundle.getMessage("QuietFail"));  // NOI18N
+    JCheckBox quietFail = new JCheckBox(Bundle.getMessage("QuietFail"));  // NOI18N
     JCheckBox skipGuiFix = new JCheckBox(Bundle.getMessage("SkipGuiFix"));  // NOI18N
     JCheckBox dispatcherUse = new JCheckBox(Bundle.getMessage("DispatcherInt"));  // NOI18N
 
@@ -777,8 +777,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             optionsPane.add(p4);
 
             JPanel p5 = new JPanel();
-            p5.add(quiteFail);
-            quiteFail.setSelected(nxPairs.isQuietFail());
+            p5.add(quietFail);
+            quietFail.setSelected(nxPairs.isQuietFail());
             optionsPane.add(p5);
 
             JPanel p6 = new JPanel();
@@ -818,7 +818,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         nxPairs.setOverlapOption(overlapEntry.getSelectedIndex());
         nxPairs.setMemoryClearDelay((int) memoryClearDelay.getValue());
         nxPairs.setAbsSignalMode(useAbsSignalMode.isSelected());
-        nxPairs.setQuietFail(quiteFail.isSelected());
+        nxPairs.setQuietFail(quietFail.isSelected());
         nxPairs.setSkipGuiFix(skipGuiFix.isSelected());
         nxPairs.setDispatcherIntegration(dispatcherUse.isSelected());
 
