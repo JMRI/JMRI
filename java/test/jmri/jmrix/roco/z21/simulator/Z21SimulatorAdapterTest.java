@@ -107,7 +107,7 @@ public class Z21SimulatorAdapterTest {
 
     private void cannedMessageCheck(String methodName, String expectedReply) {
         // NOTE: this test uses reflection to test a private method.
-        java.lang.reflect.Method method = null;
+        java.lang.reflect.Method method;
         try {
             method = a.getClass().getDeclaredMethod(methodName);
         } catch ( NoSuchMethodException nsm) {
@@ -154,8 +154,8 @@ public class Z21SimulatorAdapterTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
 
-        assertDoesNotThrow( () ->
-            host = java.net.InetAddress.getLocalHost(), "Unable to create host localhost");
+        host = assertDoesNotThrow( () ->
+            java.net.InetAddress.getLocalHost(), "Unable to create host localhost");
         // create a new simulator.
         a = new Z21SimulatorAdapter();
     }
@@ -169,6 +169,8 @@ public class Z21SimulatorAdapterTest {
             a.getSystemConnectionMemo().dispose();
         }
         a.terminateThread();
+        JUnitUtil.waitThreadTerminated("z21.Z21TrafficController Transmit thread");
+        JUnitUtil.waitThreadTerminated("z21.Z21XNetStreamPortController$1 Transmit thread");
         // suppress two timeout messages that occur
         JUnitAppender.suppressWarnMessageStartsWith("Timeout on reply to message:");
         JUnitAppender.suppressWarnMessageStartsWith("Timeout on reply to message:");
