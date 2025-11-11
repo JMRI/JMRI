@@ -138,7 +138,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * Manually set a loco Function value.
+     * Manually set the train throttle Function value.
      * Value passed through to the Throttle.
      * @param functionNum the function number.
      * @param isSet true is on, false is off.
