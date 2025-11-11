@@ -25,6 +25,7 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.util.BusyGlassPane;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.Attribute;
@@ -115,7 +116,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     protected void installComponents() {
 
         tabPane = new jmri.util.org.mitre.jawb.swing.DetachableTabbedPane(" : "+_frameEntryId);
-
+        
         // create ShutDownTasks
         if (decoderDirtyTask == null) {
             decoderDirtyTask = new SwingShutDownTask("DecoderPro Decoder Window Check",
@@ -617,11 +618,13 @@ abstract public class PaneProgFrame extends JmriJFrame
             _rosterEntry.readFile();  // read, but don't yet process
         }
 
+        log.trace("starting to load decoderfile");
         if (pDecoderFile != null) {
             loadDecoderFile(pDecoderFile, _rosterEntry);
         } else {
             loadDecoderFromLoco(pRosterEntry);
         }
+        log.trace("end loading decoder file");
 
         // save default values
         saveDefaults();
@@ -848,7 +851,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             log.debug(" mode {} was specified", name);
             for (ProgrammingMode m : modes) {
                 if (name.equals(m.getStandardName())) {
-                    log.info("Programming mode selected: {} ({})", m, m.getStandardName());
+                    log.debug("Programming mode selected: {} ({})", m, m.getStandardName());
                     mProgrammer.setMode(m);
                     return;
                 }
@@ -1016,7 +1019,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             if (!maxFnNumOld.equals(maxFnNumNew)) {
                 if (!re.getId().equals(Bundle.getMessage("LabelNewDecoder"))) {
                     maxFnNumDirty = true;
-                    log.info("maxFnNum for \"{}\" changed from {} to {}", re.getId(), maxFnNumOld, maxFnNumNew);
+                    log.debug("maxFnNum for \"{}\" changed from {} to {}", re.getId(), maxFnNumOld, maxFnNumNew);
                     String message = java.text.MessageFormat.format(
                             SymbolicProgBundle.getMessage("StatusMaxFnNumUpdated"),
                             re.getDecoderFamily(), re.getDecoderModel(), maxFnNumNew);
@@ -1164,21 +1167,75 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // add the Info tab
+        _rPane = new RosterEntryPane(r);
+        _rPane.setMaximumSize(_rPane.getPreferredSize());
         if (root.getChild("programmer").getAttribute("showRosterPane") != null) {
             if (root.getChild("programmer").getAttribute("showRosterPane").getValue().equals("no")) {
                 makeInfoPane(r);
             } else {
-                tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), makeInfoPane(r));
+                final int i = tabPane.getTabCount();
+                tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), makeStandinComponent());
+                new javax.swing.SwingWorker<JComponent, Object>(){
+                    @Override
+                    public JComponent doInBackground() {
+                       return makeInfoPane(r);
+                    }
+                    @Override
+                    protected void done() {
+                        try {
+                            var result = get();
+                            tabPane.setComponentAt(i, result);
+                        } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                            log.error("Exception",e);
+                        }
+                    }
+                }.execute();
             }
         } else {
-            tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), makeInfoPane(r));
+            final int i = tabPane.getTabCount();
+            tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), makeStandinComponent());
+            
+            new javax.swing.SwingWorker<JComponent, Object>(){
+                @Override
+                public JComponent doInBackground() {
+                   return makeInfoPane(r);
+                }
+                @Override
+                protected void done() {
+                    try {
+                        var result = get();
+                        tabPane.setComponentAt(i, result);
+                    } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                        log.error("Exception",e);
+                    }
+                }
+            }.execute();
         }
 
         // add the Function Label tab
         if (root.getChild("programmer").getAttribute("showFnLanelPane").getValue().equals("yes")
                 && !suppressFunctionLabels.equals("yes")
             ) {
-            tabPane.addTab(Bundle.getMessage("FUNCTION LABELS"), makeFunctionLabelPane(r));
+                       
+                final int i = tabPane.getTabCount();
+                tabPane.addTab(Bundle.getMessage("FUNCTION LABELS"), makeStandinComponent());
+                
+                new javax.swing.SwingWorker<JComponent, Object>(){
+                    @Override
+                    public JComponent doInBackground() {
+                       return makeFunctionLabelPane(r);
+                    }
+                    @Override
+                    protected void done() {
+                        try {
+                            var result = get();
+                            tabPane.setComponentAt(i, result);
+                        } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                            log.error("Exception",e);
+                        }
+                    }
+                }.execute();
+            
         } else {
             // make it, just don't make it visible
             makeFunctionLabelPane(r);
@@ -1188,7 +1245,26 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (root.getChild("programmer").getAttribute("showRosterMediaPane").getValue().equals("yes")
                 && !suppressRosterMedia.equals("yes")
             ) {
-            tabPane.addTab(Bundle.getMessage("ROSTER MEDIA"), makeMediaPane(r));
+
+                final int i = tabPane.getTabCount();
+                tabPane.addTab(Bundle.getMessage("ROSTER MEDIA"), makeStandinComponent());
+                
+                new javax.swing.SwingWorker<JComponent, Object>(){
+                    @Override
+                    public JComponent doInBackground() {
+                       return makeMediaPane(r);
+                    }
+                    @Override
+                    protected void done() {
+                        try {
+                            var result = get();
+                            tabPane.setComponentAt(i, result);
+                        } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                            log.error("Exception",e);
+                        }
+                    }
+                }.execute();
+
         } else {
             // create it, just don't make it visible
             makeMediaPane(r);
@@ -1204,9 +1280,8 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // for all "pane" elements in the programmer
         List<Element> progPaneList = base.getChildren("pane");
-        if (log.isDebugEnabled()) {
-            log.debug("will process {} pane definitions", progPaneList.size());
-        }
+        log.debug("will process {} pane definitions", progPaneList.size());
+        
         for (Element temp : progPaneList) {
             // load each programmer pane
             List<Element> pnames = temp.getChildren("name");
@@ -1237,8 +1312,25 @@ abstract public class PaneProgFrame extends JmriJFrame
                 log.debug("readConfig - pane {} added", name); // these are also in RosterPrint
             }
         }
+        log.trace("done processing panes");
     }
 
+    /**
+     * Make temporary contents for a pane while loading
+     */
+    protected Component makeStandinComponent() {
+        var retval = new JPanel(){
+                            @Override
+                            public Dimension getPreferredSize() {
+                                // return a nominal size for the tabbed panes until manually resized
+                                return new java.awt.Dimension(900, 600);
+                            }
+        };
+        retval.add(new JLabel("Wait for pane contents to be loaded"));
+        return retval;
+    }
+    
+    
     /**
      * Reset all CV values to defaults stored earlier.
      * <p>
@@ -1280,72 +1372,72 @@ abstract public class PaneProgFrame extends JmriJFrame
         // create the identification pane (not configured by programmer file now; maybe later?)
 
         JPanel outer = new JPanel();
-        outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
-        JPanel body = new JPanel();
-        body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
-        JScrollPane scrollPane = new JScrollPane(body);
-
-        // add roster info
-        _rPane = new RosterEntryPane(r);
-        _rPane.setMaximumSize(_rPane.getPreferredSize());
-        body.add(_rPane);
-
-        // add the store button
-        JButton store = new JButton(Bundle.getMessage("ButtonSave"));
-        store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        store.addActionListener(e -> storeFile());
-
-        // add the reset button
-        JButton reset = new JButton(Bundle.getMessage("ButtonResetDefaults"));
-        reset.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        if (decoderAllowResetDefaults.equals("no")) {
-            reset.setEnabled(false);
-            reset.setToolTipText(Bundle.getMessage("TipButtonResetDefaultsDisabled"));
-        } else {
-            reset.setToolTipText(Bundle.getMessage("TipButtonResetDefaults"));
-            reset.addActionListener(e -> resetToDefaults());
-        }
-
-        int sizeX = Math.max(reset.getPreferredSize().width, store.getPreferredSize().width);
-        int sizeY = Math.max(reset.getPreferredSize().height, store.getPreferredSize().height);
-        store.setPreferredSize(new Dimension(sizeX, sizeY));
-        reset.setPreferredSize(new Dimension(sizeX, sizeY));
-
-        store.setToolTipText(_rosterEntry.getFileName());
-
-        JPanel buttons = new JPanel();
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
-
-        buttons.add(store);
-        buttons.add(reset);
-
-        body.add(buttons);
-        outer.add(scrollPane);
-
-        // arrange for the dcc address to be updated
-        java.beans.PropertyChangeListener dccNews = e -> updateDccAddress();
-        primaryAddr = variableModel.findVar("Short Address");
-        if (primaryAddr == null) {
-            log.debug("DCC Address monitor didn't find a Short Address variable");
-        } else {
-            primaryAddr.addPropertyChangeListener(dccNews);
-        }
-        extendAddr = variableModel.findVar("Long Address");
-        if (extendAddr == null) {
-            log.debug("DCC Address monitor didn't find an Long Address variable");
-        } else {
-            extendAddr.addPropertyChangeListener(dccNews);
-        }
-        addMode = (EnumVariableValue) variableModel.findVar("Address Format");
-        if (addMode == null) {
-            log.debug("DCC Address monitor didn't find an Address Format variable");
-        } else {
-            addMode.addPropertyChangeListener(dccNews);
-        }
-
-        // get right address to start
-        updateDccAddress();
-
+        ThreadingUtil.runOnGUI(()->{
+            outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
+            JPanel body = new JPanel();
+            body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+            JScrollPane scrollPane = new JScrollPane(body);
+    
+            // add roster info
+            body.add(_rPane);
+    
+            // add the store button
+            JButton store = new JButton(Bundle.getMessage("ButtonSave"));
+            store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+            store.addActionListener(e -> storeFile());
+    
+            // add the reset button
+            JButton reset = new JButton(Bundle.getMessage("ButtonResetDefaults"));
+            reset.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+            if (decoderAllowResetDefaults.equals("no")) {
+                reset.setEnabled(false);
+                reset.setToolTipText(Bundle.getMessage("TipButtonResetDefaultsDisabled"));
+            } else {
+                reset.setToolTipText(Bundle.getMessage("TipButtonResetDefaults"));
+                reset.addActionListener(e -> resetToDefaults());
+            }
+    
+            int sizeX = Math.max(reset.getPreferredSize().width, store.getPreferredSize().width);
+            int sizeY = Math.max(reset.getPreferredSize().height, store.getPreferredSize().height);
+            store.setPreferredSize(new Dimension(sizeX, sizeY));
+            reset.setPreferredSize(new Dimension(sizeX, sizeY));
+    
+            store.setToolTipText(_rosterEntry.getFileName());
+    
+            JPanel buttons = new JPanel();
+            buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+    
+            buttons.add(store);
+            buttons.add(reset);
+    
+            body.add(buttons);
+            outer.add(scrollPane);
+    
+            // arrange for the dcc address to be updated
+            java.beans.PropertyChangeListener dccNews = e -> updateDccAddress();
+            primaryAddr = variableModel.findVar("Short Address");
+            if (primaryAddr == null) {
+                log.debug("DCC Address monitor didn't find a Short Address variable");
+            } else {
+                primaryAddr.addPropertyChangeListener(dccNews);
+            }
+            extendAddr = variableModel.findVar("Long Address");
+            if (extendAddr == null) {
+                log.debug("DCC Address monitor didn't find an Long Address variable");
+            } else {
+                extendAddr.addPropertyChangeListener(dccNews);
+            }
+            addMode = (EnumVariableValue) variableModel.findVar("Address Format");
+            if (addMode == null) {
+                log.debug("DCC Address monitor didn't find an Address Format variable");
+            } else {
+                addMode.addPropertyChangeListener(dccNews);
+            }
+    
+            // get right address to start
+            updateDccAddress();
+        });
+        
         return outer;
     }
 
@@ -1353,70 +1445,76 @@ abstract public class PaneProgFrame extends JmriJFrame
         // create the identification pane (not configured by programmer file now; maybe later?)
 
         JPanel outer = new JPanel();
-        outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
-        JPanel body = new JPanel();
-        body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
-        JScrollPane scrollPane = new JScrollPane(body);
 
-        // add tab description
-        JLabel title = new JLabel(Bundle.getMessage("UseThisTabCustomize"));
-        title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        body.add(title);
-        body.add(new JLabel(" ")); // some padding
-
-        // add roster info
-        _flPane = new FunctionLabelPane(r);
-        //_flPane.setMaximumSize(_flPane.getPreferredSize());
-        body.add(_flPane);
-
-        // add the store button
-        JButton store = new JButton(Bundle.getMessage("ButtonSave"));
-        store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        store.addActionListener(e -> storeFile());
-
-        store.setToolTipText(_rosterEntry.getFileName());
-
-        JPanel buttons = new JPanel();
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
-
-        buttons.add(store);
-
-        body.add(buttons);
-        outer.add(scrollPane);
+        ThreadingUtil.runOnGUI(()->{
+            outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
+            JPanel body = new JPanel();
+            body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+            JScrollPane scrollPane = new JScrollPane(body);
+    
+            // add tab description
+            JLabel title = new JLabel(Bundle.getMessage("UseThisTabCustomize"));
+            title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+            body.add(title);
+            body.add(new JLabel(" ")); // some padding
+    
+            // add roster info
+            _flPane = new FunctionLabelPane(r);
+            //_flPane.setMaximumSize(_flPane.getPreferredSize());
+            body.add(_flPane);
+    
+            // add the store button
+            JButton store = new JButton(Bundle.getMessage("ButtonSave"));
+            store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+            store.addActionListener(e -> storeFile());
+    
+            store.setToolTipText(_rosterEntry.getFileName());
+    
+            JPanel buttons = new JPanel();
+            buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+    
+            buttons.add(store);
+    
+            body.add(buttons);
+            outer.add(scrollPane);
+        });
         return outer;
     }
 
     protected JPanel makeMediaPane(RosterEntry r) {
         // create the identification pane (not configured by programmer file now; maybe later?)
         JPanel outer = new JPanel();
-        outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
-        JPanel body = new JPanel();
-        body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
-        JScrollPane scrollPane = new JScrollPane(body);
 
-        // add tab description
-        JLabel title = new JLabel(Bundle.getMessage("UseThisTabMedia"));
-        title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        body.add(title);
-        body.add(new JLabel(" ")); // some padding
-
-        // add roster info
-        _rMPane = new RosterMediaPane(r);
-        _rMPane.setMaximumSize(_rMPane.getPreferredSize());
-        body.add(_rMPane);
-
-        // add the store button
-        JButton store = new JButton(Bundle.getMessage("ButtonSave"));
-        store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        store.addActionListener(e -> storeFile());
-
-        JPanel buttons = new JPanel();
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
-
-        buttons.add(store);
-
-        body.add(buttons);
-        outer.add(scrollPane);
+        ThreadingUtil.runOnGUI(()->{
+            outer.setLayout(new BoxLayout(outer, BoxLayout.Y_AXIS));
+            JPanel body = new JPanel();
+            body.setLayout(new BoxLayout(body, BoxLayout.Y_AXIS));
+            JScrollPane scrollPane = new JScrollPane(body);
+    
+            // add tab description
+            JLabel title = new JLabel(Bundle.getMessage("UseThisTabMedia"));
+            title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+            body.add(title);
+            body.add(new JLabel(" ")); // some padding
+    
+            // add roster info
+            _rMPane = new RosterMediaPane(r);
+            _rMPane.setMaximumSize(_rMPane.getPreferredSize());
+            body.add(_rMPane);
+    
+            // add the store button
+            JButton store = new JButton(Bundle.getMessage("ButtonSave"));
+            store.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+            store.addActionListener(e -> storeFile());
+    
+            JPanel buttons = new JPanel();
+            buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+    
+            buttons.add(store);
+    
+            body.add(buttons);
+            outer.add(scrollPane);
+        });
         return outer;
     }
 
@@ -1465,38 +1563,61 @@ abstract public class PaneProgFrame extends JmriJFrame
         if (log.isDebugEnabled()) {
             log.debug("newPane with enableEmpty {} showEmptyPanes {}", enableEmpty, isShowingEmptyPanes());
         }
-        // create a panel to hold columns
-        PaneProgPane p = new PaneProgPane(this, name, pane, cvModel, variableModel, modelElem, _rosterEntry, programmerPane);
-        p.setOpaque(true);
-        if (noDecoder) {
-            p.setNoDecoder();
-            cvModel.setNoDecoder();
-        }
-        // how to handle the tab depends on whether it has contents and option setting
-        int index;
-        if (enableEmpty || !p.cvList.isEmpty() || !p.varList.isEmpty()) {
-            tabPane.addTab(name, p);  // always add if not empty
-            index = tabPane.indexOfTab(name);
-            tabPane.setToolTipTextAt(index, p.getToolTipText());
-        } else if (isShowingEmptyPanes()) {
-            // here empty, but showing anyway as disabled
-            tabPane.addTab(name, p);
-            index = tabPane.indexOfTab(name);
-            tabPane.setEnabledAt(index, true); // need to enable the pane so user can see message
-            tabPane.setToolTipTextAt(index,
-                    Bundle.getMessage("TipTabEmptyNoCategory"));
-        } else {
-            // here not showing tab at all
-            index = -1;
-        }
-
-        // remember it for programming
-        paneList.add(p);
-
-        // if visible, set qualifications
-        if (index >= 0) {
-            processModifierElements(pane, p, variableModel, tabPane, index);
-        }
+        
+        // create place-keeper tab
+        tabPane.addTab(name, makeStandinComponent());
+        
+        // create a panel to hold columns via separate thread 
+        final var parent = this;
+        new javax.swing.SwingWorker<PaneProgPane, Object>(){
+            @Override
+            public PaneProgPane doInBackground() {
+               return new PaneProgPane(parent, name, pane, cvModel, variableModel, modelElem, _rosterEntry, programmerPane);
+            }
+            @Override
+            protected void done() {
+                try {
+                    var p = get();
+                    p.setOpaque(true);
+                    if (noDecoder) {
+                        p.setNoDecoder();
+                        cvModel.setNoDecoder();
+                    }
+                    // how to handle the tab depends on whether it has contents and option setting
+                    int index;
+                    if (enableEmpty || !p.cvList.isEmpty() || !p.varList.isEmpty()) {
+                        index = tabPane.indexOfTab(name);
+                        log.trace("about to setComponentAt with index = {}, name = {}", index, name);
+                        tabPane.setComponentAt(index, p);  // always add if not empty
+                        tabPane.setToolTipTextAt(index, p.getToolTipText());
+                    } else if (isShowingEmptyPanes()) {
+                        // here empty, but showing anyway as disabled
+                        index = tabPane.indexOfTab(name);
+                        log.trace("about to setComponentAt with index = {}, name = {}", index, name);
+                        tabPane.setComponentAt(index, p);
+                        tabPane.setEnabledAt(index, true); // need to enable the pane so user can see message
+                        tabPane.setToolTipTextAt(index,
+                                Bundle.getMessage("TipTabEmptyNoCategory"));
+                    } else {
+                        // here not showing tab at all
+                        index = -1;
+                        log.trace("deleted {} tab here", name);
+                        tabPane.removeTabAt(tabPane.indexOfTab(name));
+                    }
+            
+                    // remember it for programming
+                    paneList.add(p);
+            
+                    // if visible, set qualifications
+                    if (index >= 0) {
+                        processModifierElements(pane, p, variableModel, tabPane, index);
+                    }        
+                } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
+                    log.error("Exception",e);
+                }
+            }
+        }.execute();        
+        
     }
 
     /**
