@@ -146,6 +146,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public synchronized void setTargetSpeedByPass(float distance, float speed) {
+        log.debug("{}: AutoActiveTrain.setTargetSpeedByPass(distance={}, speed={}) called, passing to AutoEngineer.", _activeTrain.getTrainName(), distance, speed);
         if (distance < 0.0f) {
             _autoEngineer.setTargetSpeed(speed);
         } else {
@@ -168,6 +169,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 return;
             }
         }
+        log.debug("{}: AutoActiveTrain.setTargetSpeed(distance={}, speed={}) called, passing to AutoEngineer.", _activeTrain.getTrainName(), distance, speed);
         _autoEngineer.setTargetSpeed(distance, speed);
     }
 
@@ -1748,10 +1750,16 @@ public class AutoActiveTrain implements ThrottleListener {
     private synchronized void setTargetSpeedState(int speedState,boolean stopBySpeedProfile) {
         log.trace("{}: setTargetSpeedState:({})",_activeTrain.getTrainName(),speedState);
         _autoEngineer.slowToStop(false);
-        float stoppingDistanceAdjust =  _stopBySpeedProfileAdjust *
-                ( _activeTrain.isTransitReversed() ?
-                _currentAllocatedSection.getTransitSection().getRevStopPerCent() :
-                    _currentAllocatedSection.getTransitSection().getFwdStopPerCent()) ;
+        float stopPercent = (_activeTrain.isTransitReversed() ?
+            _currentAllocatedSection.getTransitSection().getRevStopPerCent() :
+            _currentAllocatedSection.getTransitSection().getFwdStopPerCent());
+
+        if (stopBySpeedProfile && stopPercent <= 0.0f) {
+            log.debug("Stopping percentage is 0, defaulting to 100% for speed profile stop.");
+            stopPercent = 1.0f;
+        }
+
+        float stoppingDistanceAdjust =  _stopBySpeedProfileAdjust * stopPercent;
         log.debug("stoppingDistanceAdjust[{}] isReversed[{}] stopBySpeedProfileAdjust[{}]",stoppingDistanceAdjust,
                 _activeTrain.isTransitReversed(),_stopBySpeedProfileAdjust );
         if (speedState > STOP_SPEED) {
@@ -1787,9 +1795,11 @@ public class AutoActiveTrain implements ThrottleListener {
                     setTargetSpeed(throttleSetting); // apply speed factor and max
                 } else if (throttleSetting > 0.009) {
                     if (cancelStopping) {cancelStopInCurrentSection();}
-                    setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)  * stopBySpeedProfileAdjust , throttleSetting);
+                    float calculatedDistance = _currentAllocatedSection.getLengthRemaining(_currentBlock) * stopBySpeedProfileAdjust;
+                    log.debug("{}: setTargetSpeedByProfile: Calling AutoActiveTrain.setTargetSpeed with distance={} and speed={}", _activeTrain.getTrainName(), calculatedDistance, throttleSetting);
+                    setTargetSpeed(calculatedDistance , throttleSetting);
                 } else if (useSpeedProfile && _stopBySpeedProfile) {
-                    setTargetSpeed(0.0f);
+                    log.debug("{}: setTargetSpeedByProfile: Stopping using speed profile. Calling AutoEngineer.setTargetSpeed with distance={} and speed={}", _activeTrain.getTrainName(), _currentAllocatedSection.getLengthRemaining(_currentBlock) * stopBySpeedProfileAdjust, 0.0f);
                     _stoppingUsingSpeedProfile = true;
                     _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)  * stopBySpeedProfileAdjust, 0.0f);
                 } else {
@@ -2171,6 +2181,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         public void setTargetSpeed(float distance, float speed) {
+            log.info("{}: AutoEngineer.setTargetSpeed(distance={}, speed={}) called.", _activeTrain.getTrainName(), distance, speed);
             log.debug("Set Target Speed[{}] with distance{{}] from speed[{}]",speed,distance,throttle.getSpeedSetting());
             stopAllTimers();
             if (rosterEntry != null) {

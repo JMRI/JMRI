@@ -795,7 +795,8 @@ class MoveTrain(jmri.jmrit.automat.AbstractAutomaton):
         self.trainInfo.setStopBySpeedProfileAdjust(stopbyspeedprofileadjust)
 
         # setMinReliableOperatingSpeed
-        percentage = 0.0
+        # percentage = 0.0
+        percentage = 10.5
         self.trainInfo.setMinReliableOperatingSpeed(percentage/100)
 
         # set wait for block to be clear before running transit

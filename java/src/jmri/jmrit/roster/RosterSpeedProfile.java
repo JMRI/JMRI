@@ -764,13 +764,19 @@ public class RosterSpeedProfile {
         if (_throttle.getSpeedSetting() < speed) {
             log.debug("Going for acceleration");
         } else {
-            log.debug("Going for deceleration");
+            log.debug("Going for deceleration1: distance {} speed {}", distance, speed);
         }
 
         float adjSpeed = speed;
         boolean andStop = false;
         if (speed <= 0.0) {
             andStop = true;
+        }
+        if (andStop && distance <= 0.0f) {
+            log.debug("Immediate stop requested, setting speed to 0 and finishing.");
+            _throttle.setSpeedSetting(0.0f);
+            finishChange();
+            return;
         }
         if (speed < minReliableOperatingSpeed) {
             adjSpeed = minReliableOperatingSpeed;
@@ -804,12 +810,17 @@ public class RosterSpeedProfile {
             increaseSpeed = true;
             log.debug("Going for acceleration");
         } else {
-            log.debug("Going for deceleration");
+            log.debug("Going for deceleration2: distance {} _throttle.getSpeedSetting() {}", distance, _throttle.getSpeedSetting());
         }
 
         if (distance <= 0) {
-            log.debug("Distance is less than 0 {}", distance);
-            _throttle.setSpeedSetting(speedStep);
+            log.info("RSP: Distance is less than or equal to 0 (distance {} andStop {}), setting speed immediately.", distance, andStop);
+            if (andStop) {
+                _throttle.setSpeedSetting(0.0f);
+            } else {
+                _throttle.setSpeedSetting(speedStep);
+            }
+            log.debug("Exiting calculateStepDetails early due to distance <= 0");
             finishChange();
             return;
         }
