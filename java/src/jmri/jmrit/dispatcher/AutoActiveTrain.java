@@ -137,6 +137,16 @@ public class AutoActiveTrain implements ThrottleListener {
         _autoEngineer.setIsForward(set);
     }
 
+    /**
+     * Manually set the train throttle Function value.
+     * Value passed through to the Throttle.
+     * @param functionNum the function number.
+     * @param isSet true is on, false is off.
+     */
+    public void setFunction(int functionNum, boolean isSet) {
+        _autoEngineer.setFunction(functionNum, isSet);
+    }
+
     public synchronized float getTargetSpeed() {
         return _autoEngineer.getTargetSpeed();
     }
