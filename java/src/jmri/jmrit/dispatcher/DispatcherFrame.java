@@ -3008,7 +3008,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
 
-    protected AutoTurnouts getAutoTurnoutsHelper () {
+    public AutoTurnouts getAutoTurnoutsHelper () {
         return autoTurnouts;
     }
 

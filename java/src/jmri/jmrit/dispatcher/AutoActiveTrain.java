@@ -3,11 +3,16 @@ package jmri.jmrit.dispatcher;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 import java.util.LinkedList;
 
 import javax.annotation.CheckForNull;
 
 import jmri.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
+import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.roster.RosterEntry;
@@ -527,6 +532,43 @@ public class AutoActiveTrain implements ThrottleListener {
     private PropertyChangeListener _turnoutStateListener = null;
     private boolean _stoppingByBlockOccupancy = false;    // if true, stop when _stoppingBlock goes UNOCCUPIED
     private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
+    private Turnout _turntableTurnoutNeeded = null; // The turnout controlling the turntable ray that needs to be aligned
+    private PropertyChangeListener _turntableTurnoutListener = null; // Listener for the turntable turnout
+
+    private boolean checkTurntable(AllocatedSection as) {
+        if (as != null) {
+            if (_turntableTurnoutNeeded != null && _turntableTurnoutListener != null) {
+                _turntableTurnoutNeeded.removePropertyChangeListener("KnownState", _turntableTurnoutListener);
+                _turntableTurnoutNeeded = null;
+                _turntableTurnoutListener = null;
+            }
+
+            // Delegate the complex logic of finding the turntable and its required turnout state
+            // to AutoTurnoutsHelper, similar to how checkTurn delegates to checkStateAgainstList.
+            LayoutTrackExpectedState<LayoutTurnout> turntableExpectedState =
+                _dispatcher.getAutoTurnoutsHelper().checkTurntableAlignment(as, _currentBlock, _previousBlock, _nextBlock);
+
+            if (turntableExpectedState != null) {
+                Turnout turnout = turntableExpectedState.getObject().getTurnout();
+                int requiredState = turntableExpectedState.getExpectedState();
+
+                // The turnout is not yet in the required state, so we need to wait.
+                _turntableTurnoutNeeded = turnout;
+                _turntableTurnoutListener = (PropertyChangeEvent e) -> {
+                    if ("KnownState".equals(e.getPropertyName()) && (Integer) e.getNewValue() == requiredState) {
+                        log.debug("{}: Turntable ray turnout {} reached required state {}. Resuming.", _activeTrain.getTrainName(), turnout.getDisplayName(), requiredState);
+                        _turntableTurnoutNeeded.removePropertyChangeListener("KnownState", _turntableTurnoutListener);
+                        _turntableTurnoutNeeded = null;
+                        _turntableTurnoutListener = null;
+                        setSpeedBySignal(); // Turntable aligned, re-evaluate speed.
+                    }
+                };
+                _turntableTurnoutNeeded.addPropertyChangeListener("KnownState", _turntableTurnoutListener);
+                return false; // Train must wait.
+            }
+        }
+        return true; // No turntable issue, train can proceed.
+    }
     private volatile Block _stoppingBlock = null;
     private boolean _resumingAutomatic = false;  // if true, resuming automatic mode after WORKING session
     private boolean _needSetSpeed = false;  // if true, train will set speed according to signal instead of stopping
@@ -1024,7 +1066,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         // only bother to check signal if the next allocation is ours.
         // and the turnouts have been set
-        if (checkAllocationsAhead() && checkTurn(getAllocatedSectionForSection(_nextSection))) {
+        if (checkAllocationsAhead() && checkTurn(getAllocatedSectionForSection(_nextSection)) && checkTurntable(getAllocatedSectionForSection(_nextSection))) {
             if (_activeTrain.getSignalType() == DispatcherFrame.SIGNALHEAD
                     && _controllingSignal != null) {
                 setSpeedBySignalHead();
@@ -1969,6 +2011,13 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         _turnoutStateNeeded = null;
         _turnoutStateListener = null;
+        // Remove turntable turnout listener
+        if (_turntableTurnoutNeeded != null && _turntableTurnoutListener != null) {
+            _turntableTurnoutNeeded.removePropertyChangeListener("KnownState", _turntableTurnoutListener);
+        }
+        _turntableTurnoutNeeded = null;
+        _turntableTurnoutListener = null;
+        // Remove turntable turnout listener (already handled above if active)
     }
 
 // _________________________________________________________________________________________
