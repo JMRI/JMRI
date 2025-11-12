@@ -1,10 +1,15 @@
 package jmri.jmrix.loconet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.managers.ProxyIdTagManager;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,7 +25,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t = m.createNewIdTag("LD0413276BC1", "Test Tag");
 
-        Assert.assertNotNull("TranspondingTag is not null", t);
+        assertNotNull( t, "TranspondingTag is not null");
     }
 
     @Test
@@ -29,9 +34,9 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t = m.createNewIdTag("LD0413276BC1", "Test Tag");
 
-        Assert.assertEquals("TranspondingTag system name is 'LD0413276BC1'", "LD0413276BC1", t.getSystemName());
-        Assert.assertEquals("TranspondingTag user name is 'Test Tag'", "Test Tag", t.getUserName());
-        Assert.assertEquals("TranspondingTag tag id is '0413276BC1'", "0413276BC1", t.getTagID());
+        assertEquals( "LD0413276BC1", t.getSystemName(), "TranspondingTag system name is 'LD0413276BC1'");
+        assertEquals( "Test Tag", t.getUserName(), "TranspondingTag user name is 'Test Tag'");
+        assertEquals( "0413276BC1", t.getTagID(), "TranspondingTag tag id is '0413276BC1'");
     }
 
     @Test
@@ -40,23 +45,32 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t = (TranspondingTag) m.newIdTag("LD0413276BC1", "Test Tag");
 
-        Assert.assertNotNull("Returned TranspondingTag is not null", t);
+        assertNotNull( t, "Returned TranspondingTag is not null");
 
-        Assert.assertNotNull("Get by system name is not null", m.getBySystemName("LD0413276BC1"));
-        Assert.assertNotNull("Get by user name is not null", m.getByUserName("Test Tag"));
-        Assert.assertNotNull("Get by tag id is not null", m.getByTagID("0413276BC1"));
+        assertNotNull( m.getBySystemName("LD0413276BC1"), "Get by system name is not null");
+        assertNotNull( m.getByUserName("Test Tag"), "Get by user name is not null");
+        assertNotNull( m.getByTagID("0413276BC1"), "Get by tag id is not null");
 
-        Assert.assertNotNull("Get TranspondingTag using system name is not null", m.getIdTag("LD0413276BC1"));
-        Assert.assertNotNull("Get TranspondingTag using user name is not null", m.getIdTag("Test Tag"));
-        Assert.assertNotNull("Get TranspondingTag using tag id is not null", m.getIdTag("0413276BC1"));
+        assertNotNull( m.getIdTag("LD0413276BC1"), "Get TranspondingTag using system name is not null");
+        assertNotNull( m.getIdTag("Test Tag"), "Get TranspondingTag using user name is not null");
+        assertNotNull( m.getIdTag("0413276BC1"), "Get TranspondingTag using tag id is not null");
 
-        Assert.assertTrue("Matching TranspondingTag returned from manager by system name", t.getSystemName().equals(m.getBySystemName("LD0413276BC1").getSystemName()));
-        Assert.assertTrue("Matching TranspondingTag returned from manager by user name", t.getUserName().equals(m.getByUserName("Test Tag").getUserName()));
-        Assert.assertTrue("Matching TranspondingTag returned from manager by tag id", t.getTagID().equals(m.getByTagID("0413276BC1").getTagID()));
+        var bySysName = m.getBySystemName("LD0413276BC1");
+        assertNotNull(bySysName);
+        assertTrue( t.getSystemName().equals(bySysName.getSystemName()),
+            "Matching TranspondingTag returned from manager by system name");
+        var byUsrName = m.getByUserName("Test Tag");
+        assertNotNull(byUsrName);
+        assertTrue( t.getUserName().equals(byUsrName.getUserName()),
+            "Matching TranspondingTag returned from manager by user name");
+        var byTagId = m.getByTagID("0413276BC1");
+        assertNotNull(byTagId);
+        assertTrue( t.getTagID().equals(byTagId.getTagID()),
+            "Matching TranspondingTag returned from manager by tag id");
 
-        Assert.assertNull("Null Object returned from manager by system name", m.getBySystemName("LD99999999"));
-        Assert.assertNull("Null Object returned from manager by user name", m.getBySystemName("This doesn't exist"));
-        Assert.assertNull("Null Object returned from manager by tagID", m.getBySystemName("XXXXXXXXXX"));
+        assertNull( m.getBySystemName("LD99999999"), "Null Object returned from manager by system name");
+        assertNull( m.getBySystemName("This doesn't exist"), "Null Object returned from manager by user name");
+        assertNull( m.getBySystemName("XXXXXXXXXX"), "Null Object returned from manager by tagID");
     }
 
     @Test
@@ -66,23 +80,35 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         TranspondingTag t1 = (TranspondingTag) m.newIdTag("LD0413276BC1", "Test Tag 1");
         TranspondingTag t2 = (TranspondingTag)m.newIdTag("LD0413275FCA", "Test Tag 2");
 
-        Assert.assertFalse("Created TranspondingTags are different", t1.equals(t2));
+        assertFalse( t1.equals(t2), "Created TranspondingTags are different");
 
-        Assert.assertTrue("Matching TranspondingTag returned from manager by system name", t1.equals(m.getBySystemName("LD0413276BC1")));
-        Assert.assertTrue("Matching TranspondingTag returned from manager by user name", t1.equals(m.getByUserName("Test Tag 1")));
-        Assert.assertTrue("Matching TranspondingTag returned from manager by tag id", t1.equals(m.getByTagID("0413276BC1")));
+        assertTrue( t1.equals(m.getBySystemName("LD0413276BC1")),
+            "Matching TranspondingTag returned from manager by system name");
+        assertTrue( t1.equals(m.getByUserName("Test Tag 1")),
+            "Matching TranspondingTag returned from manager by user name");
+        assertTrue( t1.equals(m.getByTagID("0413276BC1")),
+            "Matching TranspondingTag returned from manager by tag id");
 
-        Assert.assertTrue("Matching TranspondingTag returned from manager via getRfidTag using system name", t1.equals(m.getIdTag("LD0413276BC1")));
-        Assert.assertTrue("Matching TranspondingTag returned from manager via getRfidTag using user name", t1.equals(m.getIdTag("Test Tag 1")));
-        Assert.assertTrue("Matching TranspondingTag returned from manager via getRfidTag using tag id", t1.equals(m.getIdTag("0413276BC1")));
+        assertTrue( t1.equals(m.getIdTag("LD0413276BC1")),
+            "Matching TranspondingTag returned from manager via getRfidTag using system name");
+        assertTrue( t1.equals(m.getIdTag("Test Tag 1")),
+            "Matching TranspondingTag returned from manager via getRfidTag using user name");
+        assertTrue( t1.equals(m.getIdTag("0413276BC1")),
+            "Matching TranspondingTag returned from manager via getRfidTag using tag id");
 
-        Assert.assertFalse("Non-matching TranspondingTag returned from manager by system name", t2.equals(m.getBySystemName("LD0413276BC1")));
-        Assert.assertFalse("Non-matching TranspondingTag returned from manager by user name", t2.equals(m.getByUserName("Test Tag 1")));
-        Assert.assertFalse("Non-matching TranspondingTag returned from manager by tag id", t2.equals(m.getByTagID("0413276BC1")));
+        assertFalse( t2.equals(m.getBySystemName("LD0413276BC1")),
+            "Non-matching TranspondingTag returned from manager by system name");
+        assertFalse( t2.equals(m.getByUserName("Test Tag 1")),
+            "Non-matching TranspondingTag returned from manager by user name");
+        assertFalse( t2.equals(m.getByTagID("0413276BC1")),
+            "Non-matching TranspondingTag returned from manager by tag id");
 
-        Assert.assertFalse("Non-matching TranspondingTag returned from manager via getRfidTag using system name", t2.equals(m.getIdTag("LD0413276BC1")));
-        Assert.assertFalse("Non-matching TranspondingTag returned from manager via getRfidTag using user name", t2.equals(m.getIdTag("Test Tag 1")));
-        Assert.assertFalse("Non-matching TranspondingTag returned from manager via getRfidTag using tag id", t2.equals(m.getIdTag("0413276BC1")));
+        assertFalse( t2.equals(m.getIdTag("LD0413276BC1")),
+            "Non-matching TranspondingTag returned from manager via getRfidTag using system name");
+        assertFalse( t2.equals(m.getIdTag("Test Tag 1")),
+            "Non-matching TranspondingTag returned from manager via getRfidTag using user name");
+        assertFalse( t2.equals(m.getIdTag("0413276BC1")),
+            "Non-matching TranspondingTag returned from manager via getRfidTag using tag id");
     }
 
     @Test
@@ -91,16 +117,19 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         TranspondingTagManager m = (TranspondingTagManager)l;
         TranspondingTag t = (TranspondingTag) m.provideIdTag("0413276BC1");
 
-        Assert.assertNotNull("TranspondingTag is not null", t);
-        Assert.assertEquals("TranspondingTag System Name is 'LD0413276BC1'", "LD0413276BC1", t.getSystemName());
-        Assert.assertEquals("TranspondingTag display name is system name", "LD0413276BC1", t.getDisplayName());
-        Assert.assertEquals("TranspondingTag tag ID is 0413276BC1", "0413276BC1", t.getTagID());
-        Assert.assertNull("TranspondingTag user name is blank", t.getUserName());
+        assertNotNull( t, "TranspondingTag is not null");
+        assertEquals( "LD0413276BC1", t.getSystemName(),
+            "TranspondingTag System Name is 'LD0413276BC1'");
+        assertEquals( "LD0413276BC1", t.getDisplayName(),
+            "TranspondingTag display name is system name");
+        assertEquals( "0413276BC1", t.getTagID(),
+            "TranspondingTag tag ID is 0413276BC1");
+        assertNull( t.getUserName(), "TranspondingTag user name is blank");
 
         t.setUserName("Test Tag");
 
-        Assert.assertNotNull("TranspondingTag user name is not blank", t.getUserName());
-        Assert.assertEquals("TranspondingTag display name is user name", "Test Tag", t.getDisplayName());
+        assertNotNull( t.getUserName(), "TranspondingTag user name is not blank");
+        assertEquals( "Test Tag", t.getDisplayName(), "TranspondingTag display name is user name");
     }
 
     @Test
@@ -110,15 +139,21 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
         TranspondingTag t1 = (TranspondingTag)m.newIdTag("LD0413276BC1", "Test Tag 1");
         TranspondingTag t2 = (TranspondingTag)m.newIdTag("LD0413275FCA", "Test Tag 2");
 
-        Assert.assertFalse("Created TranspondingTags are different", t1.equals(t2));
+        assertFalse( t1.equals(t2), "Created TranspondingTags are different");
 
-        Assert.assertTrue("Matching TranspondingTag returned via provideTag by system name", t1.equals(m.provideIdTag("LD0413276BC1")));
-        Assert.assertTrue("Matching TranspondingTag returned via provideTag by user name", t1.equals(m.provideIdTag("Test Tag 1")));
-        Assert.assertTrue("Matching TranspondingTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413276BC1")));
+        assertTrue( t1.equals(m.provideIdTag("LD0413276BC1")),
+            "Matching TranspondingTag returned via provideTag by system name");
+        assertTrue( t1.equals(m.provideIdTag("Test Tag 1")),
+            "Matching TranspondingTag returned via provideTag by user name");
+        assertTrue( t1.equals(m.provideIdTag("0413276BC1")),
+            "Matching TranspondingTag returned via provideTag by tag ID");
 
-        Assert.assertFalse("Non-matching TranspondingTag returned via provideTag by system name", t1.equals(m.provideIdTag("LD0413275FCA")));
-        Assert.assertFalse("Non-matching TranspondingTag returned via provideTag by user name", t1.equals(m.provideIdTag("Test Tag 2")));
-        Assert.assertFalse("Non-matching TranspondingTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
+        assertFalse( t1.equals(m.provideIdTag("LD0413275FCA")),
+            "Non-matching TranspondingTag returned via provideTag by system name");
+        assertFalse( t1.equals(m.provideIdTag("Test Tag 2")),
+            "Non-matching TranspondingTag returned via provideTag by user name");
+        assertFalse( t1.equals(m.provideIdTag("0413275FCA")),
+            "Non-matching TranspondingTag returned via provideTag by tag ID");
     }
     
     @Test
@@ -133,7 +168,7 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
 
     @BeforeEach
     @Override
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -145,10 +180,10 @@ public class TranspondingTagManagerTest extends jmri.managers.DefaultIdTagManage
 
     @AfterEach
     @Override
-    public void tearDown() throws Exception {
+    public void tearDown() {
         l = null;
         InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
     // Override init method so as not to load file
