@@ -31,7 +31,7 @@
     <revision>
       <revnumber>1</revnumber><date>2023-05-17</date><authorinitials>BJ</authorinitials>
       <revremark>Initial file creation</revremark>
-      <revnumber>2</revnumber><date>2025-07-12</date><authorinitials>BJ</authorinitials>
+      <revnumber>2</revnumber><date>2025-07-12</date><authorinitials>TJ</authorinitials>
       <revremark>Decoder file copied from Lionel TMCC Steam and edited into this TMCC 2 Legacy version</revremark>
     </revision>
   </revhistory>
