@@ -186,6 +186,20 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
+          <li>A <strong>No Decoder decoder with extended addressing</strong>
+              decoder has been added. This "no decoder" definition allows
+              a roster entry to be created that does not have a physical
+              decoder of its own.
+              <br>
+              It was created to suport the Zimo MX series of funcion-only
+              decoders that allow TWO addresses to be defined for a single
+              decoder - the primary address and a secondary address.
+              Function operations will result from commands sent to EITHER
+              decoder address.
+              <br>
+              The initial "No Decoder" definition is limited to a primary
+              address of 1-127, this extended version allows the full
+              range of extended addresses to be used</li>
           <li></li>
         </ul>
 
