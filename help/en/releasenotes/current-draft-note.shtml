@@ -458,7 +458,12 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Add two options to override the changes made in PR #13857 - Entry/Exit Enhancements
+                  <ul>
+                    <li>Suppress the multi-point failed dialog</li>
+                    <li>Revert to the old GUI behavior</li>
+                  </ul>
+                </li>
             </ul>
 
     <h3>LccPro</h3>
