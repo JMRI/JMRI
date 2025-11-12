@@ -808,33 +808,6 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return null;
     }
 
-    /*
-     * addNotify removed - In linux the "setSize(dimension)" is honoured after the pack, increasing its size, overriding preferredSize
-     *                   - In windows the "setSize(dimension)" is ignored after the pack, so has no effect.
-     */
-    // handle resizing when first shown
-    // private boolean mShown = false;
-
-    // /** {@inheritDoc} */
-    /* @Override
-    public void addNotify() {
-        super.addNotify();
-        // log.debug("addNotify window ({})", getTitle());
-        if (mShown) {
-            return;
-        }
-        // resize frame to account for menubar
-        JMenuBar jMenuBar = getJMenuBar();
-        if (jMenuBar != null) {
-            int jMenuBarHeight = jMenuBar.getPreferredSize().height;
-            Dimension dimension = getSize();
-            dimension.height += jMenuBarHeight;
-            setSize(dimension);
-        }
-        mShown = true;
-    }
-*/
-
     /**
      * Set whether the frame Position is saved or not after it has been created.
      *
@@ -1050,6 +1023,10 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         synchronized (m) {
             m.remove(this);
         }
+        
+        removeWindowListener(this);
+        removeComponentListener(this);
+        
         super.dispose();
     }
 
