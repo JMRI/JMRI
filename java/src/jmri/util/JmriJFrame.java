@@ -386,6 +386,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         boolean visible = isVisible();
 
         setVisible(false);
+        log.info("super.dispose() called in undecorate()");
         super.dispose();
 
         setUndecorated(true);
@@ -1003,6 +1004,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
+        log.debug("JmriJFrame dispose invoked on {}", getTitle());
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
             if (reuseFrameSavedPosition) {
                 p.setWindowLocation(windowFrameRef, this.getLocation());

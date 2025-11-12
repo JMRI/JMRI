@@ -7,6 +7,7 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.*;
 
 import jmri.AddressedProgrammerManager;
@@ -2093,9 +2094,10 @@ abstract public class PaneProgFrame extends JmriJFrame
      * Local dispose, which also invokes parent. Note that we remove the
      * components (removeAll) before taking those apart.
      */
+    @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
-        log.info("dispose local");
+        log.debug("dispose local");
 
         // remove listeners (not much of a point, though)
         readChangesButton.removeItemListener(l1);
