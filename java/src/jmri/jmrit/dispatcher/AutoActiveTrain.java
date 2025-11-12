@@ -1039,7 +1039,7 @@ public class AutoActiveTrain implements ThrottleListener {
     protected synchronized void setSpeedBySignal() {
         log.trace("Set Speed by Signal");
         if (!canSpeedBeSetOrChecked()) {
-            log.trace("[]:cannot set speed.",getActiveTrain().getActiveTrainName());
+            log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
             return;
         }
         // only bother to check signal if the next allocation is ours.
@@ -1071,7 +1071,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     private void checkForGhost() {
         if (!canSpeedBeSetOrChecked()) {
-            log.trace("[]:cannot check for ghost.",getActiveTrain().getActiveTrainName());
+            log.trace("[{}]:cannot check for ghost.",getActiveTrain().getActiveTrainName());
             return;
         }
         if ( !(getTargetSpeed() == 0.0f || isStopping())
@@ -1110,7 +1110,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     private void setSpeedBySectionsAllocated() {
         if (!canSpeedBeSetOrChecked()) {
-            log.trace("[]:cannot set speed.",getActiveTrain().getActiveTrainName());
+            log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
             return;
         }
 
