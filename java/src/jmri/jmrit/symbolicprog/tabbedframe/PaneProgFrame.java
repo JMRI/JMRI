@@ -2012,6 +2012,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      *
      * @return false if store failed
      */
+    @InvokeOnGuiThread
     public boolean storeFile() {
         log.debug("storeFile starts");
 
@@ -2037,26 +2038,41 @@ abstract public class PaneProgFrame extends JmriJFrame
         _rosterEntry.ensureFilenameExists();
         String filename = _rosterEntry.getFileName();
 
-        // create the RosterEntry to its file
-        _rosterEntry.writeFile(cvModel, variableModel);
+        // do actual file writes in a separate thread, wait for success
+        new javax.swing.SwingWorker<Object, Object>(){
+            @Override
+            public Object doInBackground() {
+                actualFileWrites();
+                return null;
+            }
+            @Override
+            protected void done() {
+                // show OK status
+                progStatus.setText(java.text.MessageFormat.format(
+                        Bundle.getMessage("StateSaveOK"), filename));
+            }
+        }.execute();
 
         // mark this as a success
         variableModel.setFileDirty(false);
         maxFnNumDirty = false;
 
-        // and store an updated roster file
-        FileUtil.createDirectory(FileUtil.getUserFilesPath());
-        Roster.getDefault().writeRoster();
-
         // save date changed, update
         _rPane.updateGUI(_rosterEntry);
 
-        // show OK status
-        progStatus.setText(java.text.MessageFormat.format(
-                Bundle.getMessage("StateSaveOK"), filename));
         return true;
     }
 
+    @InvokeOnAnyThread
+    private void actualFileWrites() {
+        // create the RosterEntry to its file
+        _rosterEntry.writeFile(cvModel, variableModel);
+
+        // and store an updated roster file
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
+        Roster.getDefault().writeRoster();
+    }
+    
     /**
      * Local dispose, which also invokes parent. Note that we remove the
      * components (removeAll) before taking those apart.
