@@ -431,7 +431,11 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Display minimum scale speed  when activating train
+				Add basic column sorting on the traininfo selection screen, and correct missplaced columns.
+				Tidy on debug/trace in RosterSpeedProfile.
+				Make info message in allocated section to debug.
+			 </li>
         </ul>
 
     <h3>Dispatcher System</h3>

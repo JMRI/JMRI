@@ -673,7 +673,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         for (String fileName : getTrainInfoFileNames()) {
             try {
                 TrainInfo ti = readTrainInfo(fileName);
-                summaries.add(new TrainInfoFileSummary(fileName, ti.getTransitName(), ti.getTrainName(),
+                summaries.add(new TrainInfoFileSummary(fileName, ti.getTrainName(), ti.getTransitName(),
                         ti.getStartBlockName(), ti.getDestinationBlockName(), ti.getDccAddress()));
             } catch (org.jdom2.JDOMException ex) {
                 summaries.add(new TrainInfoFileSummary(fileName));
