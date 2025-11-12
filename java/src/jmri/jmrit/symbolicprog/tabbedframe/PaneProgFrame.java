@@ -624,19 +624,35 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         installComponents();
 
-        if (_rosterEntry.getFileName() != null) {
-            // set the loco file name in the roster entry
-            _rosterEntry.readFile();  // read, but don't yet process
-        }
-
-        log.trace("starting to load decoderfile");
-        if (pDecoderFile != null) {
-            loadDecoderFile(pDecoderFile, _rosterEntry);
-        } else {
-            loadDecoderFromLoco(pRosterEntry);
-        }
-        log.trace("end loading decoder file");
-
+        new javax.swing.SwingWorker<Object, Object>(){
+            @Override
+            public Object doInBackground() {
+                if (_rosterEntry.getFileName() != null) {
+                    // set the loco file name in the roster entry
+                    _rosterEntry.readFile();  // read, but don't yet process
+                }
+        
+                log.trace("starting to load decoderfile");
+                if (pDecoderFile != null) {
+                    loadDecoderFile(pDecoderFile, _rosterEntry);
+                } else {
+                    loadDecoderFromLoco(pRosterEntry);
+                }
+                log.trace("end loading decoder file");
+                return null;
+            }
+            @Override
+            protected void done() {
+                ctorPhase2();
+            }
+        }.execute();
+    }
+    
+    // This is invoked at the end of the 
+    // PaneProgFrame constructor, after the roster entry and DecoderFile
+    // have been read in
+    @InvokeOnGuiThread
+    void ctorPhase2() {
         // save default values
         saveDefaults();
 
@@ -667,7 +683,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // set the programming mode
-        if (pProg != null) {
+        if (mProgrammer != null) {
             if (InstanceManager.getOptionalDefault(AddressedProgrammerManager.class).isPresent()
                     || InstanceManager.getOptionalDefault(GlobalProgrammerManager.class).isPresent()) {
                 // go through in preference order, trying to find a mode
@@ -686,7 +702,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     }
                     // add any facades defined in the decoder file
                     pf = jmri.implementation.ProgrammerFacadeSelector
-                            .loadFacadeElements(programming, pf, getCanCacheDefault(), pProg);
+                            .loadFacadeElements(programming, pf, getCanCacheDefault(), mProgrammer);
                     log.debug("added any other FacadeElements, new programmer is {}", pf);
                     mProgrammer = pf;
                     cvModel.setProgrammer(pf);
@@ -716,7 +732,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // and build the GUI (after programmer mode because it depends on what's available)
-        loadProgrammerFile(pRosterEntry);
+        loadProgrammerFile(_rosterEntry);
 
         // optionally, add extra panes from the decoder file
         Attribute a;
@@ -753,7 +769,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         if (log.isDebugEnabled()) {  // because size elements take time
             log.debug("PaneProgFrame \"{}\" constructed for file {}, unconstrained size is {}, constrained to {}",
-                    pFrameEntryId, _rosterEntry.getFileName(), super.getPreferredSize(), getPreferredSize());
+                    _frameEntryId, _rosterEntry.getFileName(), super.getPreferredSize(), getPreferredSize());
         }
     }
 
@@ -1337,7 +1353,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                                 return new java.awt.Dimension(900, 600);
                             }
         };
-        retval.add(new JLabel("Wait for pane contents to be loaded"));
+        retval.add(new JLabel(Bundle.getMessage("STANDIN MESSAGE")));
         return retval;
     }
     
