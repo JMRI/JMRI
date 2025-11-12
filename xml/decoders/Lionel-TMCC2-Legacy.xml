@@ -22,7 +22,8 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
       <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
-      <!-- with additions and edits by -->
+    </author>
+    <author>
       <personname><firstname>Timothy</firstname><surname>Jump</surname></personname>
     </author>
   </authorgroup>
