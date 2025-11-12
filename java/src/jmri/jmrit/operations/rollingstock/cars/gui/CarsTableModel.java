@@ -611,6 +611,11 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 if (car.getDestination() != null) {
                     s = car.getDestinationName() + " (" + car.getDestinationTrackName() + ")";
                 }
+                if (log.isDebugEnabled() &&
+                        car.getDestinationTrack() != null &&
+                        car.getDestinationTrack().getSchedule() != null) {
+                    s = s + " " + car.getScheduleItemId() + " ";
+                }
                 if (car.getFinalDestination() != null) {
                     s = s + "->" + car.getFinalDestinationName(); // NOI18N
                 }
@@ -618,6 +623,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                     s = s + " (" + car.getFinalDestinationTrackName() + ")";
                 }
                 if (log.isDebugEnabled() &&
+                        !s.contains(car.getScheduleItemId()) &&
                         car.getFinalDestinationTrack() != null &&
                         car.getFinalDestinationTrack().getSchedule() != null) {
                     s = s + " " + car.getScheduleItemId();
@@ -715,7 +721,6 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 car.setSelected(((Boolean) value).booleanValue());
                 break;
             case SET_COLUMN:
-                log.debug("Set car");
                 if (csf != null) {
                     csf.dispose();
                 }
@@ -727,7 +732,6 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 });
                 break;
             case EDIT_COLUMN:
-                log.debug("Edit car");
                 if (cef != null) {
                     cef.dispose();
                 }
