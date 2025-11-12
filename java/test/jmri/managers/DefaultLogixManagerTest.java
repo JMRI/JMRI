@@ -1,9 +1,13 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.Logix;
@@ -15,11 +19,11 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
  *
  * @author Bob Jacobsen Copyright (C) 2015
  */
-public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixManager,jmri.Logix> {
+public class DefaultLogixManagerTest extends AbstractManagerTestBase<LogixManager,Logix> {
 
     @Test
     public void testCtor() {
-       Assert.assertNotNull("exists",l);
+        assertNotNull( l, "exists");
     }
 
     @Test
@@ -29,25 +33,25 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
         Logix l1 = m.createNewLogix("User name 1");
         Logix l2 = m.createNewLogix("User name 2");
 
-        Assert.assertNotNull(m.getByUserName("User name 1"));
-        Assert.assertNotNull(m.getByUserName("User name 2"));
+        assertNotNull(m.getByUserName("User name 1"));
+        assertNotNull(m.getByUserName("User name 2"));
 
-        Assert.assertTrue(l1 != l2);
-        Assert.assertTrue(! l1.equals(l2));
+        assertNotSame(l1, l2);
+        assertFalse( l1.equals(l2));
 
-        Assert.assertNotNull(m.getBySystemName(l1.getSystemName()));
-        Assert.assertNotNull(m.getBySystemName(l2.getSystemName()));
+        assertNotNull( m.getBySystemName(l1.getSystemName()));
+        assertNotNull( m.getBySystemName(l2.getSystemName()));
 
         Logix l3 = m.createNewLogix("IX03", "User name 3");
 
-        Assert.assertTrue(l1 != l3);
-        Assert.assertTrue(l2 != l3);
-        Assert.assertTrue(! l1.equals(l3));
-        Assert.assertTrue(! l2.equals(l3));
+        assertNotSame( l1, l3);
+        assertNotSame( l2, l3);
+        assertFalse( l1.equals(l3));
+        assertFalse( l2.equals(l3));
 
         // test of some fails
-        Assert.assertNull(m.createNewLogix(l1.getUserName()));
-        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));
+        assertNull(m.createNewLogix(l1.getUserName()));
+        assertNull(m.createNewLogix(l1.getSystemName(),""));
     }
 
     @Test
@@ -57,16 +61,16 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<jmri.LogixM
         Logix l1 = m.createNewLogix("IX01", "");
         Logix l2 = m.createNewLogix("IX02", "");
 
-        Assert.assertTrue(l1 != l2);
-        Assert.assertTrue(! l1.equals(l2));
+        assertNotSame( l1, l2);
+        assertFalse( l1.equals(l2));
 
-        Assert.assertNotNull(m.getBySystemName(l1.getSystemName()));
-        Assert.assertNotNull(m.getBySystemName(l2.getSystemName()));
+        assertNotNull(m.getBySystemName(l1.getSystemName()));
+        assertNotNull(m.getBySystemName(l2.getSystemName()));
 
         m.createNewLogix("IX03", "User name 3");
 
         // test of some fails
-        Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));
+        assertNull(m.createNewLogix(l1.getSystemName(),""));
     }
 
     @Test
