@@ -12,6 +12,8 @@ import javax.swing.*;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.InvokeOnAnyThread;
+import jmri.InvokeOnGuiThread;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.ShutDownTask;
@@ -34,7 +36,7 @@ import org.jdom2.Element;
 /**
  * Frame providing a command station programmer from decoder definition files.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014, 2018, 2019
+ * @author Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008, 2014, 2018, 2019, 2025
  * @author D Miller Copyright 2003, 2005
  * @author Howard G. Penny Copyright (C) 2005
  */
@@ -113,6 +115,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      */
     abstract protected JPanel getModePane();
 
+    @InvokeOnGuiThread
     protected void installComponents() {
 
         tabPane = new jmri.util.org.mitre.jawb.swing.DetachableTabbedPane(" : "+_frameEntryId);
@@ -204,31 +207,32 @@ abstract public class PaneProgFrame extends JmriJFrame
             exportSubMenu.add(new TcsUploadAction(Bundle.getMessage("MenuExportTcsCS"), cvModel, variableModel, _rosterEntry, this));
         }
 
-        // add "Import" submenu; this is hierarchical because
-        // some of the names are so long, and we expect more formats
-        JMenu speedTableSubMenu = new JMenu(Bundle.getMessage("MenuSpeedTable"));
-        fileMenu.add(speedTableSubMenu);
-        ButtonGroup SpeedTableNumbersGroup = new ButtonGroup();
-        UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
-        Object speedTableNumbersSelectionObj = upm.getProperty(SpeedTableNumbers.class.getName(), "selection");
-
-        SpeedTableNumbers speedTableNumbersSelection =
-                speedTableNumbersSelectionObj != null
-                ? SpeedTableNumbers.valueOf(speedTableNumbersSelectionObj.toString())
-                : null;
-
-        for (SpeedTableNumbers speedTableNumbers : SpeedTableNumbers.values()) {
-            JRadioButtonMenuItem rbMenuItem = new JRadioButtonMenuItem(speedTableNumbers.toString());
-            rbMenuItem.addActionListener((ActionEvent event) -> {
-                rbMenuItem.setSelected(true);
-                upm.setProperty(SpeedTableNumbers.class.getName(), "selection", speedTableNumbers.name());
-                JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MenuSpeedTable_CloseReopenWindow"));
-            });
-            rbMenuItem.setSelected(speedTableNumbers == speedTableNumbersSelection);
-            speedTableSubMenu.add(rbMenuItem);
-            SpeedTableNumbersGroup.add(rbMenuItem);
-        }
-
+        // Speed table submenu in File menu
+        ThreadingUtil.runOnGUIEventually( ()->{
+            JMenu speedTableSubMenu = new JMenu(Bundle.getMessage("MenuSpeedTable"));
+            fileMenu.add(speedTableSubMenu);
+            ButtonGroup SpeedTableNumbersGroup = new ButtonGroup();
+            UserPreferencesManager upm = InstanceManager.getDefault(UserPreferencesManager.class);
+            Object speedTableNumbersSelectionObj = upm.getProperty(SpeedTableNumbers.class.getName(), "selection");
+    
+            SpeedTableNumbers speedTableNumbersSelection =
+                    speedTableNumbersSelectionObj != null
+                    ? SpeedTableNumbers.valueOf(speedTableNumbersSelectionObj.toString())
+                    : null;
+    
+            for (SpeedTableNumbers speedTableNumbers : SpeedTableNumbers.values()) {
+                JRadioButtonMenuItem rbMenuItem = new JRadioButtonMenuItem(speedTableNumbers.toString());
+                rbMenuItem.addActionListener((ActionEvent event) -> {
+                    rbMenuItem.setSelected(true);
+                    upm.setProperty(SpeedTableNumbers.class.getName(), "selection", speedTableNumbers.name());
+                    JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("MenuSpeedTable_CloseReopenWindow"));
+                });
+                rbMenuItem.setSelected(speedTableNumbers == speedTableNumbersSelection);
+                speedTableSubMenu.add(rbMenuItem);
+                SpeedTableNumbersGroup.add(rbMenuItem);
+            }
+        });
+        
         // to control size, we need to insert a single
         // JPanel, then have it laid out with BoxLayout
         JPanel pane = new JPanel();
@@ -237,7 +241,22 @@ abstract public class PaneProgFrame extends JmriJFrame
         // general GUI config
         pane.setLayout(new BorderLayout());
 
-        // configure GUI elements
+        // configure GUI buttons
+        ThreadingUtil.runOnGUIEventually( ()->{
+            configureButtons();
+        });
+        
+        // most of the GUI is done from XML in readConfig() function
+        // which configures the tabPane
+        pane.add(tabPane, BorderLayout.CENTER);
+
+        // and put that pane into the JFrame
+        getContentPane().add(pane);
+
+    }
+
+    @InvokeOnGuiThread
+    void configureButtons() {
         // set read buttons enabled state, tooltips
         enableReadButtons();
 
@@ -298,16 +317,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                 writeAllButton.setText(Bundle.getMessage("ButtonWriteAllSheets"));
             }
         });
-
-        // most of the GUI is done from XML in readConfig() function
-        // which configures the tabPane
-        pane.add(tabPane, BorderLayout.CENTER);
-
-        // and put that pane into the JFrame
-        getContentPane().add(pane);
-
     }
-
+    
     void setProgrammingGui(JPanel bottom) {
         // see if programming mode is available
         JPanel tempModePane = null;
@@ -1368,6 +1379,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
     }
 
+    @InvokeOnAnyThread  // transfers some operations to GUI thread
     protected JPanel makeInfoPane(RosterEntry r) {
         // create the identification pane (not configured by programmer file now; maybe later?)
 
@@ -1441,6 +1453,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         return outer;
     }
 
+    @InvokeOnAnyThread  // transfers some operations to GUI thread
     protected JPanel makeFunctionLabelPane(RosterEntry r) {
         // create the identification pane (not configured by programmer file now; maybe later?)
 
@@ -1481,6 +1494,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         return outer;
     }
 
+    @InvokeOnAnyThread  // transfers some operations to GUI thread
     protected JPanel makeMediaPane(RosterEntry r) {
         // create the identification pane (not configured by programmer file now; maybe later?)
         JPanel outer = new JPanel();
@@ -2049,7 +2063,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      */
     @Override
     public void dispose() {
-        log.debug("dispose local");
+        log.info("dispose local");
 
         // remove listeners (not much of a point, though)
         readChangesButton.removeItemListener(l1);
