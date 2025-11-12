@@ -17,6 +17,8 @@ import jmri.ProgrammingMode;
  *
  * @see jmri.Programmer
  * @author Bob Jacobsen Copyright (C) 2002, 2025
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
 public class TmccOpsModeProgrammer extends TmccProgrammer implements AddressedProgrammer {
 

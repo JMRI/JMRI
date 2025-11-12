@@ -12,7 +12,7 @@ import jmri.jmrix.AbstractThrottle;
  * considered long addresses.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2006
- * with additions and edits by
+ * with edits/additions by
  * @author Timothy Jump Copyright (C) 2025
  */
 public class SerialThrottle extends AbstractThrottle {
@@ -135,16 +135,16 @@ public class SerialThrottle extends AbstractThrottle {
         0x00007F, // Fn29 (31)
 
         // TMCC1 Aux FnKeys 
-        0x00002E, // Fn30
-        0x00002E, // Fn31
-        0x00002E, // Fn32
-        0x00002E, // Fn33
-        0x00002E, // Fn34
-        0x00002E, // Fn35
+        0x000008, // Fn30 (Aux1 Off)
+        0x000009, // Fn31 (Aux1 Option 1 - On While Held)
+        0x00000A, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
+        0x00000B, // Fn33 (Aux1 On)
+        0x00000C, // Fn34 (Aux2 Off)
+        0x00000D, // Fn35 (Aux2 Option 1 - On While Held)
+        0x00000E, // Fn36 (Aux2 Option 2 - Toggle On/Toggle Off)
+        0x00000F, // Fn37 (Aux2 On)
 
         // TMCC1 Unused FnKeys
-        0x00002E, // Fn36
-        0x00002E, // Fn37
         0x00002E, // Fn38
         0x00002E, // Fn39
         0x00002E, // Fn40
@@ -175,17 +175,19 @@ public class SerialThrottle extends AbstractThrottle {
         0x00002E, // Fn65
         0x00002E, // Fn66
         0x00002E, // Fn67
-        0x00002E, // Fn68        
+        0x00002E, // Fn68
     };
 
-    // Translate TMCC1 function numbers to line characters.
-    // If the upper byte is zero, it will be replaced by 0xF8
-    //    and the address will be set in the low position.
-    // If the upper byte is non-zero, that value will be sent,
-    //    and the address will be set in the upper (TMCC2) position.
-    // If six bytes are specified (with the upper one non-zero), 
-    //    this will be interpreted as two commands to be sequentially sent,
-    //    with the upper bytes sent first.
+    /**
+    * Translate TMCC1 function numbers to line characters.
+    * If the upper byte is zero, it will be replaced by 0xF8
+    * and the address will be set in the low position.
+    * If the upper byte is non-zero, that value will be sent,
+    * and the address will be set in the upper (TMCC2) position.
+    * If six bytes are specified (with the upper one non-zero), 
+    * this will be interpreted as two commands to be sequentially sent,
+    * with the upper bytes sent first.
+    */
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_32 speed steps.
     private final static long[] SERIAL_FUNCTION_CODES_TMCC2_32 = new long[] {
@@ -204,16 +206,60 @@ public class SerialThrottle extends AbstractThrottle {
         0xF80129, 0xF8012A, 0xF8012B, 0xF8011F,/* 20-23 */
 
         // TMCC2_32 RR Speed FnKeys
-        0xF80164, // Fn24
-        0xF8016A, // Fn25
-        0xF8016E, // Fn26
-        0xF80172, // Fn27
-        0xF80178, // Fn28
-        0xF8017F, // Fn29
+        0xF80164, // Fn24 ( 4)
+        0xF8016A, // Fn25 (10)
+        0xF8016E, // Fn26 (14)
+        0xF80172, // Fn27 (18)
+        0xF80178, // Fn28 (24)
+        0xF8017F, // Fn29 (31)
 
         // TMCC2_32 Extended Lighting FnKeys
+        // Fn?? (Mars On)
+        // Fn?? (Mars Off)
 
-        //0xF8017DFB01F2FB0189L, // Fn35 Set Cab Light Auto
+        // Fn?? (Ground Lt On)
+        // Fn?? (Ground Lt Off)
+        // Fn?? (Ground Lt Auto)
+
+        // Fn?? (DogHouse On)
+        // Fn?? (DogHouse Off)
+
+        // Fn?? (Tender Marker On)
+        // Fn?? (Tender Marker Off)
+
+        // Fn?? (Loco On)
+        // Fn?? (Loco Off)
+
+        // Fn?? (Rule 17 On)
+        // Fn?? (Rule 17 Off)
+        // Fn?? (Rule 17 Auto)
+
+        // Fn?? (Ditch Lt On)
+        // Fn?? (Ditch Lt On; Pulse Off with Horn)
+        // Fn?? (Ditch Lt Off; Pulse On with Horn)
+        // Fn?? (Ditch Lt Off)
+
+        // Fn?? (Cab Lt On)
+        // Fn?? (Cab Lt Off)
+        // Fn?? (Cab Lt Auto)
+
+        // Fn?? (Loco Marker On)
+        // Fn?? (Loco Marker Off)
+
+        // Fn?? (Hazard Lt On)
+        // Fn?? (Hazard Lt Off)
+        // Fn?? (Hazard Lt Auto)
+
+        // Fn?? (Strobe Lt On - Single Flash)
+        // Fn?? (Strobe Lt On - Double Flash)
+        // Fn?? (Strobe Lt Off)
+
+        // Fn?? (Car Cabin Lt On)
+        // Fn?? (Car Cabin Lt Off)
+        // Fn?? (Car Cabin Lt Auto)
+
+
+        //0xF8017DFB01F2FB0189L, // Fn35 Set Cab Light Auto (test!!!)
 
 
         // Extended Sound Effects FnKeys
@@ -279,16 +325,16 @@ public class SerialThrottle extends AbstractThrottle {
         0xF80129, 0xF8012A, 0xF8012B, 0xF8011F,/* 20-23 */
 
         // TMCC2_200 RR Speed FnKeys
-        0xF8000A, // Fn24
-        0xF80028, // Fn25
-        0xF80046, // Fn26
-        0xF80064, // Fn27
-        0xF8008C, // Fn28
-        0xF800C7, // Fn29
+        0xF8000A, // Fn24 ( 10)
+        0xF80028, // Fn25 ( 40)
+        0xF80046, // Fn26 ( 70)
+        0xF80064, // Fn27 (100)
+        0xF8008C, // Fn28 (140)
+        0xF800C7, // Fn29 (199)
 
         // TMCC2_200 Extended Lighting FnKeys
 
-        //0xF8017DFB01F2FB0189L, // Fn35 Set Cab Light Auto
+        //0xF8017DFB01F2FB0189L, // Fn35 Set Cab Light Auto (test!!!)
 
 
         // Extended Sound Effects FnKeys
@@ -400,7 +446,7 @@ public class SerialThrottle extends AbstractThrottle {
                 m.putAsWord(0x0060 + address.getNumber() * 128 + value / 3);
             }
                             
-            // send to command station (send once for maximum efficiency; add extra sends if layout not responding with only one send)
+            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
             tc.sendSerialMessage(m, null);
             tc.sendSerialMessage(m, null);
         }
@@ -493,17 +539,16 @@ public class SerialThrottle extends AbstractThrottle {
             }
         }
 
+        // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
         tc.sendSerialMessage(m, null);
         tc.sendSerialMessage(m, null);
-        // tc.sendSerialMessage(m, null);
-        // tc.sendSerialMessage(m, null);
 
         firePropertyChange(ISFORWARD, old, isForward);
     }
 
     /**
      * Send these messages to the layout and repeat
-     * while button is on.
+     * while button is pressed/on.
      * @param value Content of message to be sent in three bytes
      * @param func  The number of the function being addressed
      */
@@ -512,63 +557,79 @@ public class SerialThrottle extends AbstractThrottle {
         if (speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
             if (func == 24) {
                 setSpeedSetting(0.055f);
+                return;
             }
             if (func == 25) {
                 setSpeedSetting(0.205f);
+                return;
             }
             if (func == 26) {
                 setSpeedSetting(0.355f);
+                return;
             }
             if (func == 27) {
                 setSpeedSetting(0.505f);
+                return;
             }
             if (func == 28) {
                 setSpeedSetting(0.705f);
+                return;
             }
             if (func == 29) {
                 setSpeedSetting(1.0f);
+                return;
             }
         }
 
         if (speedStepMode == jmri.SpeedStepMode.TMCC1_32 || speedStepMode == jmri.SpeedStepMode.TMCC1_100 || speedStepMode == jmri.SpeedStepMode.TMCC2_32) {
             if (func == 24) {
                 setSpeedSetting(0.130f);
+                return;
             }
             if (func == 25) {
                 setSpeedSetting(0.320f);
+                return;
             }
             if (func == 26) {
                 setSpeedSetting(0.450f);
+                return;
             }
             if (func == 27) {
                 setSpeedSetting(0.580f);
+                return;
             }
             if (func == 28) {
                 setSpeedSetting(0.775f);
+                return;
             }
             if (func == 29) {
                 setSpeedSetting(1.0f);
+                return;
             }
         }
 
         /**
-        * Commenting out these repeat send lines in case it is
-        * necessary to reinstate them after testing. These are
-        * holdovers from the original "repeat 4 times to make
-        * sure they're accepted" instructions.
+        * This code sends FnKey presses to the command station. 
+        * Send once is set, per the need of TMCC multi-key commands that
+        * do not work when a specific command sequence is not followed.
+        * If these multi-key commands are integrated into single FnKeys,
+        * this "send" section can be converted back to "send twice" as
+        * the other send sequences througout tmcc\SerialThrottle.java.
         */
 
-        // tc.sendSerialMessage(new SerialMessage(value), null);
-        // tc.sendSerialMessage(new SerialMessage(value), null);
-        // tc.sendSerialMessage(new SerialMessage(value), null);     
-    
-        repeatFunctionSendWhileOn(value, func); // 4th send is here
+        repeatFunctionSendWhileOn(value, func); // Single FnKey Press, Single Send; FnKey Held, Repeats FnKey while pressed.
     }
+
+    /**
+    * This code block is necessary to support the send repeats of
+    * the repeatFunctionSendWhileOn(value, func); code above.
+    * This code block "Sends Again" if FkKey is still pressed/on, and
+    * repeats per the interval set in static final int REPEAT_TIME.
+    */
 
     static final int REPEAT_TIME = 150;
 
     protected void repeatFunctionSendWhileOn(int value, int func) {
-        // Send again if function is still on and repeat in a short while
         if (getFunction(func)) {
             tc.sendSerialMessage(new SerialMessage(value), null);
             jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {

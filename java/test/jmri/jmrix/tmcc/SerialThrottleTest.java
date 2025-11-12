@@ -10,6 +10,8 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  * @author Egbert Broerse 2021
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
 public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 

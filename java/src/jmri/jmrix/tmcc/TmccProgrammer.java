@@ -15,6 +15,8 @@ import jmri.jmrix.AbstractProgrammer;
  * Made from the EasyDCC programmer
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2025
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
 public class TmccProgrammer extends AbstractProgrammer {
 
