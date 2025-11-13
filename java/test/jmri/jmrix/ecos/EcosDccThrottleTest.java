@@ -13,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.SpeedStepMode;
 import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleTest;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.ToDo;
 
@@ -449,14 +450,13 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     public void testOutOfRangeSetFunction(){
         
         instance.setFunction(-1, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
         
         instance.setFunction(32, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 32");
+        JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 32");
         
     }
-    
-    
+
     /**
      * Test of sendFunctionGroup1 method, of class AbstractThrottle.
      */
@@ -587,7 +587,9 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
                 }
             };
         }
-        InstanceManager.setDefault(ThrottleManager.class, new EcosDccThrottleManager(new EcosSystemConnectionMemo(tc)));
+        ThrottleManager tm = new EcosDccThrottleManager(memo);
+        memo.store(tm, ThrottleManager.class);
+        InstanceManager.setDefault(ThrottleManager.class, tm);
         instance = new EcosDccThrottle(new DccLocoAddress(100, true), memo, true);
         setMaxFns(MAX_FUNCTIONS);
     }
