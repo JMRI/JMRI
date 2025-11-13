@@ -1,12 +1,14 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -17,7 +19,7 @@ public class DefaultSignalGroupManagerTest extends AbstractManagerTestBase<Signa
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",l);
+        assertNotNull( l, "exists");
     }
 
     @Test
@@ -33,11 +35,14 @@ public class DefaultSignalGroupManagerTest extends AbstractManagerTestBase<Signa
     @Test
     public void testProvideByUserName(){
         SignalGroup sg = l.newSignalGroupWithUserName("Sig Group UserName");
-        Assert.assertNotNull(sg);
-        Assert.assertEquals("username returned ok",sg.getUserName(), l.provideSignalGroup("", "Sig Group UserName").getUserName());
-        Assert.assertEquals("systemname created ok","IG:AUTO:0001",sg.getSystemName());
-        Assert.assertEquals("systemname returned ok",sg,l.provideSignalGroup("IG:AUTO:0001", null));
-    
+        assertNotNull(sg);
+        assertEquals( sg.getUserName(),
+            l.provideSignalGroup("", "Sig Group UserName").getUserName(),
+            "username returned ok");
+        assertEquals( "IG:AUTO:0001", sg.getSystemName(), "systemname created ok");
+        assertEquals( sg, l.provideSignalGroup("IG:AUTO:0001", null),
+            "systemname returned ok");
+
     }
 
     @BeforeEach
