@@ -2,7 +2,6 @@ package jmri.managers;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class DefaultProgrammerManagerTest {
     @Test
     public void testCTor() {
         DefaultProgrammerManager t = new DefaultProgrammerManager();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach
