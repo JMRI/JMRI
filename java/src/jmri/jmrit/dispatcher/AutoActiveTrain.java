@@ -3,11 +3,14 @@ package jmri.jmrit.dispatcher;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 import java.util.LinkedList;
 
 import javax.annotation.CheckForNull;
 
 import jmri.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.implementation.SignalSpeedMap;
@@ -803,7 +806,6 @@ public class AutoActiveTrain implements ThrottleListener {
 
     protected void allocateAFresh() {
         //Reset initialized flag
-        log.warn("{}: allocateAFresh called. Setting _currentAllocatedSection to null.", _activeTrain.getTrainName());
         _initialized = false;
         // set direction
         _currentAllocatedSection=null;
@@ -1009,7 +1011,6 @@ public class AutoActiveTrain implements ThrottleListener {
 
     private void setNewCurrentSection(AllocatedSection as) {
         if (as.getSection() == _nextSection) {
-            log.warn("{}: setNewCurrentSection: Changing from '{}' to '{}'", _activeTrain.getTrainName(), (_currentAllocatedSection != null ? _currentAllocatedSection.getSection().getDisplayName() : "null"), as.getSection().getDisplayName());
             _previousAllocatedSection = _currentAllocatedSection;
             _currentAllocatedSection = as;
             _nextSection = as.getNextSection();
@@ -1444,81 +1445,11 @@ public class AutoActiveTrain implements ThrottleListener {
         _autoEngineer.slowToStop(false);
     }
 
-//    public static void logCaller() {
-//        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-//        // Index 0 is getStackTrace, 1 is logCaller, 2 is the caller of logCaller
-//        if (stackTrace.length > 2) {
-//            StackTraceElement caller = stackTrace[2];
-//            log.info("Called from: {}.{}({}:{})",
-//                    caller.getClassName(),
-//                    caller.getMethodName(),
-//                    caller.getFileName(),
-//                    caller.getLineNumber());
-//        }
-//    }
-
-    public static void logCaller(String packagePrefix, int depth) {
-        StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-        int count = 2;
-        for (int i = 0; i < stack.length; i++) {
-            StackTraceElement e = stack[i];
-            String className = e.getClassName();
-
-            // Skip internal JVM and logging infrastructure
-            if (className.startsWith("java.") || className.startsWith("sun.") ||
-                    className.startsWith("org.slf4j.") || className.contains("Logger")) {
-                continue;
-            }
-
-            // Filter by your application package
-            if (packagePrefix == null || className.startsWith(packagePrefix)) {
-                log.info("Caller[{}]: {}.{}({}:{})", count-2,
-                        className, e.getMethodName(), e.getFileName(), e.getLineNumber());
-                count++;
-                if (count >= depth +1) break;
-            }
-        }
-    }
-
-
-
     private synchronized void stopInCurrentSection(int task) {
-//        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-//        log.info("stackTrace {}",stackTrace);
-//        if (stackTrace.length > 2) {
-//            for (int i = 0; i < stackTrace.length; i++) {
-//                log.info("Stack[{}]: {}", i, stackTrace[i]);
-//            }
-//        }
-
-        logCaller("jmri.", 10); // Logs up to 3 relevant stack frames from your JMRI code
-
-        //        StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-//        // Index 0 is getStackTrace, 1 is logCaller, 2 is the caller of logCaller
-//        if (stackTrace.length > 2) {
-//            StackTraceElement caller = stackTrace[2];
-//            log.info("caller {}",caller);
-//            log.info("Called from: {}.{}({}:{})",
-//                    caller.getClassName(),
-//                    caller.getMethodName(),
-//                    caller.getFileName(),
-//                    caller.getLineNumber());
-//        }
-        log.warn("{}: stopInCurrentSection called. _currentAllocatedSection is currently: {}", _activeTrain.getTrainName(), (_currentAllocatedSection != null ? _currentAllocatedSection.getSection().getDisplayName() : "null"));
         if (_currentAllocatedSection == null) {
             log.error("{}: Current allocated section null on entry to stopInCurrentSection", _activeTrain.getTrainName());
             setStopNow();
             return;
-        }
-        log.debug("A");
-        log.debug("B _currentAllocatedSection.getSection()", _currentAllocatedSection.getSection());
-        log.debug("C _currentAllocatedSection.getSection().getDisplayName(USERSYS)", _currentAllocatedSection.getSection().getDisplayName(USERSYS));
-        log.debug("D task {} ", task);
-        if (_autoEngineer == null) {
-            log.error("E _autoEngineer is null, cannot getTargetSpeed()");
-        } else {
-            log.debug("E getTargetSpeed() {} ", getTargetSpeed());
-            log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(), _currentAllocatedSection.getSection().getDisplayName(USERSYS),task,getTargetSpeed());
         }
         log.debug("{}: StopInCurrentSection called for {} task[{}] targetspeed[{}]", _activeTrain.getTrainName(), _currentAllocatedSection.getSection().getDisplayName(USERSYS),task,getTargetSpeed());
         if (getTargetSpeed() == 0.0f || isStopping()) {
@@ -1859,13 +1790,7 @@ public class AutoActiveTrain implements ThrottleListener {
      * @param stopBySpeedProfile if true use speed profile
      */
     private synchronized void setTargetSpeedState(int speedState,boolean stopBySpeedProfile) {
-        log.warn("{}: setTargetSpeedState:({})",_activeTrain.getTrainName(),speedState);
-        if (_currentAllocatedSection == null) {
-            log.error("setTargetSpeedState called with a null _currentAllocatedSection. Aborting speed change.");
-            return;
-        }
-        // log.warn("_currentAllocatedSection {} ", _currentAllocatedSection);
-        // log.warn("_currentAllocatedSection.getTransitSection() {}", _currentAllocatedSection.getTransitSection());
+        log.trace("{}: setTargetSpeedState:({})",_activeTrain.getTrainName(),speedState);
         _autoEngineer.slowToStop(false);
         float stopPercent = (_activeTrain.isTransitReversed() ?
             _currentAllocatedSection.getTransitSection().getRevStopPerCent() :
