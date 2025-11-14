@@ -48,6 +48,7 @@ public class SignalEditFrameTest {
 
         SignalEditFrame sef = new SignalEditFrame("Edit mast1", m, sr, model);
         assertNotNull(sef, "Mast SEF exists");
+        sef.initComponents();
         JUnitUtil.dispose(sef);
     }
 
