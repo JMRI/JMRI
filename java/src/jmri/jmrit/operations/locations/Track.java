@@ -1963,7 +1963,7 @@ public class Track extends PropertyChangeSupport {
             return SCHEDULE + " ERROR"; // NOI18N
         }
         if (getScheduleMode() == SEQUENTIAL) {
-            return getSchedule().checkScheduleItem(si, car, this);
+            return getSchedule().checkScheduleItem(si, car, this, true);
         }
         // schedule in is match mode search entire schedule for a match
         return getSchedule().searchSchedule(car, this);
@@ -2008,14 +2008,7 @@ public class Track extends PropertyChangeSupport {
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),
                 getScheduleItemId(), getScheduleMode(), getScheduleModeName()); // NOI18N
         if (currentSi != null &&
-                (currentSi.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) ||
-                        InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
-                                .equals(currentSi.getSetoutTrainScheduleId())) &&
-                car.getTypeName().equals(currentSi.getTypeName()) &&
-                (currentSi.getRoadName().equals(ScheduleItem.NONE) ||
-                        car.getRoadName().equals(currentSi.getRoadName())) &&
-                (currentSi.getReceiveLoadName().equals(ScheduleItem.NONE) ||
-                        car.getLoadName().equals(currentSi.getReceiveLoadName()))) {
+                getSchedule().checkScheduleItem(currentSi, car, this, false).equals(OKAY)) {
             car.setScheduleItemId(currentSi.getId());
             // bump hit count for this schedule item
             currentSi.setHits(currentSi.getHits() + 1);

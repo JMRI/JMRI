@@ -152,7 +152,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public synchronized void setTargetSpeedByPass(float speed) {
-         _autoEngineer.setTargetSpeed(-1.0f, speed);
+        _autoEngineer.setTargetSpeed(-1.0f, speed);
     }
 
     public synchronized void setTargetSpeedByPass(float distance, float speed) {
@@ -1022,17 +1022,24 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
+    // Criteria for being able to set or get a speed.
+    protected boolean canSpeedBeSetOrChecked() {
+        if (_pausingActive || getAutoEngineer() == null ||
+                ((_activeTrain.getStatus() != ActiveTrain.RUNNING) &&
+                        (_activeTrain.getStatus() != ActiveTrain.WAITING) &&
+                        !_activeTrain.getStarted()) ||
+                (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
+            log.debug("{}:Train is not currently eligible for settingspeed or checking ghosts",_activeTrain.getActiveTrainName());
+            return false;
+        }
+        return true;
+    }
+
     // called by above or when resuming after stopped action
     protected synchronized void setSpeedBySignal() {
         log.trace("Set Speed by Signal");
-        if (_pausingActive
-                || ((_activeTrain.getStatus() != ActiveTrain.RUNNING)
-                    && (_activeTrain.getStatus() != ActiveTrain.WAITING)
-                    && !_activeTrain.getStarted())
-                || (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
-            // train is pausing or not RUNNING or WAITING or started and in AUTOMATIC mode
-            //   don't set speed based on controlling signal
-            log.trace("Skip Set Speed By Signal");
+        if (!canSpeedBeSetOrChecked()) {
+            log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
             return;
         }
         // only bother to check signal if the next allocation is ours.
@@ -1063,6 +1070,10 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private void checkForGhost() {
+        if (!canSpeedBeSetOrChecked()) {
+            log.trace("[{}]:cannot check for ghost.",getActiveTrain().getActiveTrainName());
+            return;
+        }
         if ( !(getTargetSpeed() == 0.0f || isStopping())
                 && _nextBlock != null
                 && _currentBlock != null
@@ -1098,6 +1109,11 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private void setSpeedBySectionsAllocated() {
+        if (!canSpeedBeSetOrChecked()) {
+            log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
+            return;
+        }
+
         if (_stoppingByBlockOccupancy && (_stoppingBlock != null && _stoppingBlock.getState() == Block.UNOCCUPIED)) {
             // we are awaiting a delayed stop
             return;

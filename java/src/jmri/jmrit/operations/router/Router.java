@@ -97,6 +97,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         c.setTrack(car.getTrack());
         c.setFinalDestination(destination);
         c.setFinalDestinationTrack(track);
+        c.setScheduleItemId(car.getScheduleItemId());
         boolean results = setDestination(c, train, buildReport);
         c.setDestination(null, null); // clear router car destinations
         c.setFinalDestinationTrack(null);
