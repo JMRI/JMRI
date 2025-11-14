@@ -34,6 +34,8 @@ public class PaneQualifierTest {
     public void testVariableNotExistsOk() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PaneProgPane jp = new PaneProgPane();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
         PaneQualifier aq = new PaneQualifier(jp,null, 0, "exists",jtp,0);
@@ -44,6 +46,8 @@ public class PaneQualifierTest {
     public void testVariableNotExistsNOk() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PaneProgPane jp = new PaneProgPane();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
         PaneQualifier aq = new PaneQualifier(jp,null, 1, "exists",jtp,0);
@@ -55,6 +59,8 @@ public class PaneQualifierTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         PaneProgPane jp = new PaneProgPane();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
         HashMap<String, CvValue> v = createCvMap();
@@ -74,6 +80,8 @@ public class PaneQualifierTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         PaneProgPane jp = new PaneProgPane();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
         HashMap<String, CvValue> v = createCvMap();
@@ -93,6 +101,8 @@ public class PaneQualifierTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         PaneProgPane jp = new PaneProgPane();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
         HashMap<String, CvValue> v = createCvMap();
@@ -117,6 +127,8 @@ public class PaneQualifierTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.Programmer p = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager.class).getAddressedProgrammer(false,42);
         PaneProgPane jp = new PaneProgPane();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
         HashMap<String, CvValue> v = createCvMap();
@@ -142,6 +154,8 @@ public class PaneQualifierTest {
     public void testVariableRefEqNotExist() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PaneProgPane jp = new PaneProgPane();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
         // test arithmetic operation when variable not found
