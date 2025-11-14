@@ -1633,7 +1633,8 @@ abstract public class PaneProgFrame extends JmriJFrame
                     // how to handle the tab depends on whether it has contents and option setting
                     int index;
                     if (enableEmpty || !p.cvList.isEmpty() || !p.varList.isEmpty()) {
-                        // System.err.println("tabPane = "+tabPane);
+                        // Was there a race condition here with qualified panes?
+                        // QualifiedVarTest attempts to invoke that, but haven't it with the following code
                         index = tabPane.indexOfTab(name);
                         tabPane.setComponentAt(tabPane.indexOfTab(name), p);  // always add if not empty
                         tabPane.setToolTipTextAt(tabPane.indexOfTab(name), p.getToolTipText());

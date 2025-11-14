@@ -30,8 +30,10 @@ public class PaneQualifier extends ArithmeticQualifier {
 
     @Override
     public void setWatchedAvailable(boolean enable) {
-        log.debug("setWatchedAvailable with {} on {} index {}", enable, name, tabs.indexOfTab(name));
-        tabs.setEnabledAt(tabs.indexOfTab(name), enable);
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+            log.debug("setWatchedAvailable with {} on {} index {}", enable, name, tabs.indexOfTab(name));
+            tabs.setEnabledAt(tabs.indexOfTab(name), enable);
+        });
     }
 
     @Override
