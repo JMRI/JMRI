@@ -104,6 +104,9 @@ abstract public class PaneProgFrame extends JmriJFrame
     ShutDownTask decoderDirtyTask;
     ShutDownTask fileDirtyTask;
 
+    // holds a count of incomplete threads launched at ctor time; goes to zero when they're done
+    public java.util.concurrent.atomic.AtomicInteger threadCount = new java.util.concurrent.atomic.AtomicInteger(0);
+    
     public RosterEntryPane getRosterPane() { return _rPane;}
     public FunctionLabelPane getFnLabelPane() { return _flPane;}
 
@@ -242,11 +245,6 @@ abstract public class PaneProgFrame extends JmriJFrame
         // general GUI config
         pane.setLayout(new BorderLayout());
 
-        // configure GUI buttons
-        ThreadingUtil.runOnGUIEventually( ()->{
-            configureButtons();
-        });
-        
         // most of the GUI is done from XML in readConfig() function
         // which configures the tabPane
         pane.add(tabPane, BorderLayout.CENTER);
@@ -254,6 +252,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         // and put that pane into the JFrame
         getContentPane().add(pane);
 
+        // configure GUI buttons
+        ThreadingUtil.runOnGUIEventually( ()->{
+            configureButtons();
+        });
+        
     }
 
     @InvokeOnGuiThread
@@ -625,6 +628,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         installComponents();
 
+        threadCount.incrementAndGet();
         new javax.swing.SwingWorker<Object, Object>(){
             @Override
             public Object doInBackground() {
@@ -645,6 +649,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             @Override
             protected void done() {
                 ctorPhase2();
+                threadCount.decrementAndGet();
             }
         }.execute();
     }
@@ -1203,6 +1208,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             } else {
                 final int i = tabPane.getTabCount();
                 tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), makeStandinComponent());
+                threadCount.incrementAndGet();
                 new javax.swing.SwingWorker<JComponent, Object>(){
                     @Override
                     public JComponent doInBackground() {
@@ -1216,6 +1222,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                         } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                             log.error("Exception",e);
                         }
+                        threadCount.decrementAndGet();
                     }
                 }.execute();
             }
@@ -1223,6 +1230,7 @@ abstract public class PaneProgFrame extends JmriJFrame
             final int i = tabPane.getTabCount();
             tabPane.addTab(Bundle.getMessage("ROSTER ENTRY"), makeStandinComponent());
             
+            threadCount.incrementAndGet();
             new javax.swing.SwingWorker<JComponent, Object>(){
                 @Override
                 public JComponent doInBackground() {
@@ -1236,6 +1244,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                     } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                         log.error("Exception",e);
                     }
+                    threadCount.decrementAndGet();
                 }
             }.execute();
         }
@@ -1248,6 +1257,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 final int i = tabPane.getTabCount();
                 tabPane.addTab(Bundle.getMessage("FUNCTION LABELS"), makeStandinComponent());
                 
+                threadCount.incrementAndGet();
                 new javax.swing.SwingWorker<JComponent, Object>(){
                     @Override
                     public JComponent doInBackground() {
@@ -1261,6 +1271,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                         } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                             log.error("Exception",e);
                         }
+                        threadCount.decrementAndGet();
                     }
                 }.execute();
             
@@ -1277,6 +1288,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 final int i = tabPane.getTabCount();
                 tabPane.addTab(Bundle.getMessage("ROSTER MEDIA"), makeStandinComponent());
                 
+                threadCount.incrementAndGet();
                 new javax.swing.SwingWorker<JComponent, Object>(){
                     @Override
                     public JComponent doInBackground() {
@@ -1290,6 +1302,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                         } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                             log.error("Exception",e);
                         }
+                        threadCount.decrementAndGet();
                     }
                 }.execute();
 
@@ -1596,10 +1609,13 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
         
         // create place-keeper tab
-        tabPane.addTab(name, makeStandinComponent());
+        ThreadingUtil.runOnGUI(() -> {
+            tabPane.addTab(name, makeStandinComponent());
+        });
         
         // create a panel to hold columns via separate thread 
         final var parent = this;
+        threadCount.incrementAndGet();
         new javax.swing.SwingWorker<PaneProgPane, Object>(){
             @Override
             public PaneProgPane doInBackground() {
@@ -1617,18 +1633,17 @@ abstract public class PaneProgFrame extends JmriJFrame
                     // how to handle the tab depends on whether it has contents and option setting
                     int index;
                     if (enableEmpty || !p.cvList.isEmpty() || !p.varList.isEmpty()) {
+                        // System.err.println("tabPane = "+tabPane);
                         index = tabPane.indexOfTab(name);
-                        log.trace("about to setComponentAt with index = {}, name = {}", index, name);
-                        tabPane.setComponentAt(index, p);  // always add if not empty
-                        tabPane.setToolTipTextAt(index, p.getToolTipText());
+                        tabPane.setComponentAt(tabPane.indexOfTab(name), p);  // always add if not empty
+                        tabPane.setToolTipTextAt(tabPane.indexOfTab(name), p.getToolTipText());
                     } else if (isShowingEmptyPanes()) {
                         // here empty, but showing anyway as disabled
                         index = tabPane.indexOfTab(name);
-                        log.trace("about to setComponentAt with index = {}, name = {}", index, name);
-                        tabPane.setComponentAt(index, p);
-                        tabPane.setEnabledAt(index, true); // need to enable the pane so user can see message
-                        tabPane.setToolTipTextAt(index,
+                        tabPane.setComponentAt(tabPane.indexOfTab(name), p);
+                        tabPane.setToolTipTextAt(tabPane.indexOfTab(name),
                                 Bundle.getMessage("TipTabEmptyNoCategory"));
+                        tabPane.setEnabledAt(tabPane.indexOfTab(name), true); // need to enable the pane so user can see message
                     } else {
                         // here not showing tab at all
                         index = -1;
@@ -1641,8 +1656,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             
                     // if visible, set qualifications
                     if (index >= 0) {
-                        processModifierElements(pane, p, variableModel, tabPane, index);
-                    }        
+                        processModifierElements(pane, p, variableModel, tabPane, name);
+                    }       
+                    threadCount.decrementAndGet(); 
                 } catch (InterruptedException | java.util.concurrent.ExecutionException e) {
                     log.error("Exception",e);
                 }
@@ -1658,13 +1674,13 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param pane Destination of any visible items
      * @param model Used to locate any needed variables
      * @param tabPane For overall GUI navigation
-     * @param index Which pane in the overall window
+     * @param name Which pane in the overall window
      */
-    protected void processModifierElements(Element e, final PaneProgPane pane, VariableTableModel model, final JTabbedPane tabPane, final int index) {
+    protected void processModifierElements(Element e, final PaneProgPane pane, VariableTableModel model, final JTabbedPane tabPane, final String name) {
         QualifierAdder qa = new QualifierAdder() {
             @Override
             protected Qualifier createQualifier(VariableValue var, String relation, String value) {
-                return new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
+                return new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, name);
             }
 
             @Override
@@ -2056,6 +2072,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         String filename = _rosterEntry.getFileName();
 
         // do actual file writes in a separate thread, wait for success
+        threadCount.incrementAndGet();
         new javax.swing.SwingWorker<Object, Object>(){
             @Override
             public Object doInBackground() {
@@ -2067,6 +2084,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 // show OK status
                 progStatus.setText(java.text.MessageFormat.format(
                         Bundle.getMessage("StateSaveOK"), filename));
+                threadCount.decrementAndGet(); 
             }
         }.execute();
 
@@ -2118,11 +2136,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         paneList.clear();
 
         // dispose of things we owned, in order of dependence
-        _rPane.dispose();
-        _flPane.dispose();
-        _rMPane.dispose();
-        variableModel.dispose();
-        cvModel.dispose();
+        // null checks are needed for (partial) testing
+        if (_rPane != null) _rPane.dispose();
+        if (_flPane != null) _flPane.dispose();
+        if (_rMPane != null) _rMPane.dispose();
+        if (variableModel != null) variableModel.dispose();
+        if (cvModel != null) cvModel.dispose();
         if (_rosterEntry != null) {
             _rosterEntry.setOpen(false);
         }

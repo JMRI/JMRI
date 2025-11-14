@@ -34,9 +34,10 @@ public class QualifiedVarTest {
         setupDoc();
         DecoderFile df = new DecoderFile("NMRA", "", "NMRA standard CV definitions", "0", "255",
                 "NMRA standard CV definitions", "0NMRA.xml", 16, 3, root);
+        var progDebug = new jmri.progdebugger.ProgDebugger();
         PaneProgFrame p = new PaneProgFrame(df, new RosterEntry(),
                 "test qualified var", "programmers/Basic.xml",
-                new jmri.progdebugger.ProgDebugger(), false) {
+                progDebug, false) {
             // dummy implementations
             @Override
             protected JPanel getModePane() {

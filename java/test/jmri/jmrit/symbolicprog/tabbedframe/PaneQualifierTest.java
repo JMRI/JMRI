@@ -38,7 +38,7 @@ public class PaneQualifierTest {
         
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
-        PaneQualifier aq = new PaneQualifier(jp,null, 0, "exists",jtp,0);
+        PaneQualifier aq = new PaneQualifier(jp,null, 0, "exists",jtp,jtp.getTitleAt(0));
         Assert.assertEquals(true, aq.currentDesiredState());
     }
 
@@ -50,7 +50,7 @@ public class PaneQualifierTest {
         
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
-        PaneQualifier aq = new PaneQualifier(jp,null, 1, "exists",jtp,0);
+        PaneQualifier aq = new PaneQualifier(jp,null, 1, "exists",jtp,jtp.getTitleAt(0));
         Assert.assertEquals(false, aq.currentDesiredState());
     }
 
@@ -71,7 +71,7 @@ public class PaneQualifierTest {
         VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
 
         // test Exists
-        PaneQualifier aq = new PaneQualifier(jp,variable, 1, "exists",jtp,0);
+        PaneQualifier aq = new PaneQualifier(jp,variable, 1, "exists",jtp,jtp.getTitleAt(0));
         Assert.assertEquals(true, aq.currentDesiredState());
     }
 
@@ -92,7 +92,7 @@ public class PaneQualifierTest {
         VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
 
         // test Exists
-        PaneQualifier aq = new PaneQualifier(jp,variable, 0, "exists",jtp,0);
+        PaneQualifier aq = new PaneQualifier(jp,variable, 0, "exists",jtp,jtp.getTitleAt(0));
         Assert.assertEquals(false, aq.currentDesiredState());
     }
 
@@ -113,7 +113,7 @@ public class PaneQualifierTest {
         VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
 
         // test "eq"
-        PaneQualifier aq = new PaneQualifier(jp,variable, 10, "eq",jtp,0);
+        PaneQualifier aq = new PaneQualifier(jp,variable, 10, "eq",jtp,jtp.getTitleAt(0));
         Assert.assertEquals(false, aq.currentDesiredState());
         cv.setValue(10);
         Assert.assertEquals(true, aq.currentDesiredState());
@@ -139,7 +139,7 @@ public class PaneQualifierTest {
         VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
 
         // test "ge"
-        PaneQualifier aq = new PaneQualifier(jp,variable, 10, "ge",jtp,0);
+        PaneQualifier aq = new PaneQualifier(jp,variable, 10, "ge",jtp,jtp.getTitleAt(0));
         Assert.assertEquals(false, aq.currentDesiredState());
         cv.setValue(10);
         Assert.assertEquals(true, aq.currentDesiredState());
@@ -159,7 +159,7 @@ public class PaneQualifierTest {
         JTabbedPane jtp = new JTabbedPane();
         jtp.add(jp);
         // test arithmetic operation when variable not found
-        PaneQualifier aq = new PaneQualifier(jp,null, 10, "eq",jtp,0);
+        PaneQualifier aq = new PaneQualifier(jp,null, 10, "eq",jtp,jtp.getTitleAt(0));
         Assert.assertEquals(true, aq.currentDesiredState()); // chosen default in this case
         jmri.util.JUnitAppender.assertErrorMessage("Arithmetic EQ operation when watched value doesn't exist");
     }
