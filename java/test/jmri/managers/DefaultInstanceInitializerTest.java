@@ -2,7 +2,6 @@ package jmri.managers;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class DefaultInstanceInitializerTest {
     @Test
     public void testCTor() {
         DefaultInstanceInitializer t = new DefaultInstanceInitializer();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

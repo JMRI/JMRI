@@ -1,5 +1,12 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.JmriException;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSignalMast;
@@ -9,7 +16,6 @@ import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -21,51 +27,56 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
     @Test
     public void testCTor() {
         DefaultSignalMastManager t = (DefaultSignalMastManager) l;
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
-    public static class MastA extends AbstractSignalMast {
+    @SuppressWarnings("ProtectedInnerClass") // accessible to DefaultSignalMastManager
+    protected static class MastA extends AbstractSignalMast {
+        @SuppressWarnings("PublicConstructorInNonPublicClass") // reflection requires public access
         public MastA(String systemName) {
             super(systemName);
         }
     }
 
-    public static class MastB extends AbstractSignalMast {
+    @SuppressWarnings("ProtectedInnerClass") // accessible to DefaultSignalMastManager
+    protected static class MastB extends AbstractSignalMast {
+        @SuppressWarnings("PublicConstructorInNonPublicClass") // reflection requires public access
         public MastB(String systemName) {
             super(systemName);
         }
     }
 
     @Test
-    public void testProvideCustomMast() throws Exception {
+    public void testProvideCustomMast() throws JmriException {
         DefaultSignalMastManager mgr = (DefaultSignalMastManager) l;
 
         SignalMast ma = mgr.provideCustomSignalMast("IM333", MastA.class);
         SignalMast mb = mgr.provideCustomSignalMast("IM444", MastB.class);
 
-        Assert.assertTrue(ma instanceof MastA);
-        Assert.assertTrue(mb instanceof MastB);
+        assertInstanceOf( MastA.class, ma);
+        assertInstanceOf( MastB.class, mb);
 
         SignalMast maa = mgr.provideCustomSignalMast("IM333", MastA.class);
-        Assert.assertSame(ma, maa);
+        assertSame(ma, maa);
         SignalMast mbb = mgr.provideCustomSignalMast("IM444", MastB.class);
-        Assert.assertSame(mb, mbb);
+        assertSame(mb, mbb);
 
         SignalMast mac = mgr.provideCustomSignalMast("IM300", MastA.class);
-        Assert.assertNotSame(ma, mac);
+        assertNotSame(ma, mac);
         SignalMast mbc = mgr.provideCustomSignalMast("IM400", MastB.class);
-        Assert.assertNotSame(mb, mbc);
+        assertNotSame(mb, mbc);
 
-        Exception ex = Assert.assertThrows(JmriException.class, () ->
+        Exception ex = assertThrows(JmriException.class, () ->
             mgr.provideCustomSignalMast("IM300", MastB.class));
-        Assert.assertTrue("system name text not in exception",ex.getMessage().contains("system name is already used"));
-        Assert.assertTrue("MastA not in exception text", ex.getMessage().contains("MastA"));
-        Assert.assertTrue("MastB not in exception text", ex.getMessage().contains("MastB"));
+        assertTrue( ex.getMessage().contains("system name is already used"),
+            "system name text not in exception");
+        assertTrue( ex.getMessage().contains("MastA"), "MastA not in exception text");
+        assertTrue( ex.getMessage().contains("MastB"), "MastB not in exception text");
 
     }
 
     @Test
-    public void testProvideRepeater() throws Exception {
+    public void testProvideRepeater() throws JmriException {
         DefaultSignalMastManager mgr = (DefaultSignalMastManager) l;
 
         SignalMast m1 = mgr.provideCustomSignalMast("IM331", MastA.class);
@@ -73,22 +84,22 @@ public class DefaultSignalMastManagerTest extends AbstractProvidingManagerTestBa
         SignalMast m3 = mgr.provideCustomSignalMast("IM333", MastA.class);
 
         SignalMastRepeater rpx = mgr.provideRepeater(m1, m2);
-        Assert.assertSame(m1, rpx.getMasterMast());
-        Assert.assertSame(m2, rpx.getSlaveMast());
+        assertSame(m1, rpx.getMasterMast());
+        assertSame(m2, rpx.getSlaveMast());
         SignalMastRepeater rpy = mgr.provideRepeater(m1, m3);
-        Assert.assertSame(m1, rpy.getMasterMast());
-        Assert.assertSame(m3, rpy.getSlaveMast());
+        assertSame(m1, rpy.getMasterMast());
+        assertSame(m3, rpy.getSlaveMast());
 
-        Assert.assertNotSame(rpx, rpy);
-        Assert.assertSame(rpx, mgr.provideRepeater(m1, m2));
-        Assert.assertSame(rpy, mgr.provideRepeater(m1, m3));
+        assertNotSame(rpx, rpy);
+        assertSame(rpx, mgr.provideRepeater(m1, m2));
+        assertSame(rpy, mgr.provideRepeater(m1, m3));
 
-        Exception ex = Assert.assertThrows(JmriException.class, () ->
+        Exception ex = assertThrows(JmriException.class, () ->
             mgr.provideRepeater(m2, m1));
         String message = ex.getMessage();
         Assertions.assertNotNull(message);
-        Assert.assertTrue("wrong way repeater not in exception text",
-            message.contains("repeater already exists the wrong way"));
+        assertTrue( message.contains("repeater already exists the wrong way"),
+            "wrong way repeater not in exception text");
         jmri.util.JUnitAppender.assertErrorMessage("Signal repeater IM332:IM331 already exists the wrong way");
     }
     

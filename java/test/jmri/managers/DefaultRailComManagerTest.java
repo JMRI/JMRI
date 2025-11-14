@@ -1,10 +1,15 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.IdTag;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -12,14 +17,14 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2017
  */
 public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
-    
+
     @Override
     @Test
     public void testIdTagCreation() {
         DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.createNewIdTag("RD0413276BC1", "Test Tag");
 
-        Assert.assertNotNull("IdTag is not null", t);
+        assertNotNull( t, "IdTag is not null");
     }
 
     @Override
@@ -28,9 +33,10 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.createNewIdTag("RD0413276BC1", "Test Tag");
 
-        Assert.assertEquals("IdTag system name is 'RD0413276BC1'", "RD0413276BC1", t.getSystemName());
-        Assert.assertEquals("IdTag user name is 'Test Tag'", "Test Tag", t.getUserName());
-        Assert.assertEquals("IdTag tag id is '0413276BC1'", "0413276BC1", t.getTagID());
+        assertEquals( "RD0413276BC1", t.getSystemName(),
+            "IdTag system name is 'RD0413276BC1'");
+        assertEquals( "Test Tag", t.getUserName(), "IdTag user name is 'Test Tag'");
+        assertEquals( "0413276BC1", t.getTagID(), "IdTag tag id is '0413276BC1'");
     }
 
     @Override
@@ -39,23 +45,37 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.newIdTag("RD0413276BC1", "Test Tag");
 
-        Assert.assertNotNull("Returned IdTag is not null", t);
+        assertNotNull( t, "Returned IdTag is not null");
 
-        Assert.assertNotNull("Get by system name is not null", m.getBySystemName("RD0413276BC1"));
-        Assert.assertNotNull("Get by user name is not null", m.getByUserName("Test Tag"));
-        Assert.assertNotNull("Get by tag id is not null", m.getByTagID("0413276BC1"));
+        assertNotNull( m.getBySystemName("RD0413276BC1"), "Get by system name is not null");
+        assertNotNull( m.getByUserName("Test Tag"), "Get by user name is not null");
+        assertNotNull( m.getByTagID("0413276BC1"), "Get by tag id is not null");
 
-        Assert.assertNotNull("Get IdTag using system name is not null", m.getIdTag("RD0413276BC1"));
-        Assert.assertNotNull("Get IdTag using user name is not null", m.getIdTag("Test Tag"));
-        Assert.assertNotNull("Get IdTag using tag id is not null", m.getIdTag("0413276BC1"));
+        assertNotNull( m.getIdTag("RD0413276BC1"), "Get IdTag using system name is not null");
+        assertNotNull( m.getIdTag("Test Tag"), "Get IdTag using user name is not null");
+        assertNotNull( m.getIdTag("0413276BC1"), "Get IdTag using tag id is not null");
 
-        Assert.assertTrue("Matching IdTag returned from manager by system name", t.getSystemName().equals(m.getBySystemName("RD0413276BC1").getSystemName()));
-        Assert.assertTrue("Matching IdTag returned from manager by user name", t.getUserName().equals(m.getByUserName("Test Tag").getUserName()));
-        Assert.assertTrue("Matching IdTag returned from manager by tag id", t.getTagID().equals(m.getByTagID("0413276BC1").getTagID()));
+        var tagBySysName = m.getBySystemName("RD0413276BC1");
+        assertNotNull(tagBySysName);
+        assertTrue( t.getSystemName().equals(tagBySysName.getSystemName()),
+            "Matching IdTag returned from manager by system name");
+        var tagByUserName = m.getByUserName("Test Tag");
+        assertNotNull(tagByUserName);
+        var tagUserName = t.getUserName();
+        assertNotNull(tagUserName);
+        assertTrue( tagUserName.equals(tagByUserName.getUserName()),
+            "Matching IdTag returned from manager by user name");
+        var tagById = m.getByTagID("0413276BC1");
+        assertNotNull(tagById);
+        assertTrue( t.getTagID().equals(tagById.getTagID()),
+            "Matching IdTag returned from manager by tag id");
 
-        Assert.assertNull("Null Object returned from manager by system name", m.getBySystemName("RD99999999"));
-        Assert.assertNull("Null Object returned from manager by user name", m.getBySystemName("This doesn't exist"));
-        Assert.assertNull("Null Object returned from manager by tagID", m.getBySystemName("XXXXXXXXXX"));
+        assertNull( m.getBySystemName("RD99999999"),
+            "Null Object returned from manager by system name");
+        assertNull( m.getBySystemName("This doesn't exist"),
+            "Null Object returned from manager by user name");
+        assertNull( m.getBySystemName("XXXXXXXXXX"),
+            "Null Object returned from manager by tagID");
     }
 
     @Override
@@ -65,23 +85,35 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         IdTag t1 = m.newIdTag("RD0413276BC1", "Test Tag 1");
         IdTag t2 = m.newIdTag("RD0413275FCA", "Test Tag 2");
 
-        Assert.assertFalse("Created IdTags are different", t1.equals(t2));
+        assertFalse( t1.equals(t2), "Created IdTags are different");
 
-        Assert.assertTrue("Matching IdTag returned from manager by system name", t1.equals(m.getBySystemName("RD0413276BC1")));
-        Assert.assertTrue("Matching IdTag returned from manager by user name", t1.equals(m.getByUserName("Test Tag 1")));
-        Assert.assertTrue("Matching IdTag returned from manager by tag id", t1.equals(m.getByTagID("0413276BC1")));
+        assertTrue( t1.equals(m.getBySystemName("RD0413276BC1")),
+            "Matching IdTag returned from manager by system name");
+        assertTrue( t1.equals(m.getByUserName("Test Tag 1")),
+            "Matching IdTag returned from manager by user name");
+        assertTrue( t1.equals(m.getByTagID("0413276BC1")),
+            "Matching IdTag returned from manager by tag id");
 
-        Assert.assertTrue("Matching IdTag returned from manager via getRfidTag using system name", t1.equals(m.getIdTag("RD0413276BC1")));
-        Assert.assertTrue("Matching IdTag returned from manager via getRfidTag using user name", t1.equals(m.getIdTag("Test Tag 1")));
-        Assert.assertTrue("Matching IdTag returned from manager via getRfidTag using tag id", t1.equals(m.getIdTag("0413276BC1")));
+        assertTrue( t1.equals(m.getIdTag("RD0413276BC1")),
+            "Matching IdTag returned from manager via getRfidTag using system name");
+        assertTrue( t1.equals(m.getIdTag("Test Tag 1")),
+            "Matching IdTag returned from manager via getRfidTag using user name");
+        assertTrue( t1.equals(m.getIdTag("0413276BC1")),
+            "Matching IdTag returned from manager via getRfidTag using tag id");
 
-        Assert.assertFalse("Non-matching IdTag returned from manager by system name", t2.equals(m.getBySystemName("RD0413276BC1")));
-        Assert.assertFalse("Non-matching IdTag returned from manager by user name", t2.equals(m.getByUserName("Test Tag 1")));
-        Assert.assertFalse("Non-matching IdTag returned from manager by tag id", t2.equals(m.getByTagID("0413276BC1")));
+        assertFalse( t2.equals(m.getBySystemName("RD0413276BC1")),
+            "Non-matching IdTag returned from manager by system name");
+        assertFalse( t2.equals(m.getByUserName("Test Tag 1")),
+            "Non-matching IdTag returned from manager by user name");
+        assertFalse( t2.equals(m.getByTagID("0413276BC1")),
+            "Non-matching IdTag returned from manager by tag id");
 
-        Assert.assertFalse("Non-matching IdTag returned from manager via getRfidTag using system name", t2.equals(m.getIdTag("RD0413276BC1")));
-        Assert.assertFalse("Non-matching IdTag returned from manager via getRfidTag using user name", t2.equals(m.getIdTag("Test Tag 1")));
-        Assert.assertFalse("Non-matching IdTag returned from manager via getRfidTag using tag id", t2.equals(m.getIdTag("0413276BC1")));
+        assertFalse( t2.equals(m.getIdTag("RD0413276BC1")),
+            "Non-matching IdTag returned from manager via getRfidTag using system name");
+        assertFalse( t2.equals(m.getIdTag("Test Tag 1")),
+            "Non-matching IdTag returned from manager via getRfidTag using user name");
+        assertFalse( t2.equals(m.getIdTag("0413276BC1")),
+            "Non-matching IdTag returned from manager via getRfidTag using tag id");
     }
 
     @Override
@@ -90,16 +122,16 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         DefaultIdTagManager m = (DefaultIdTagManager)l;
         IdTag t = m.provideIdTag("0413276BC1");
 
-        Assert.assertNotNull("IdTag is not null", t);
-        Assert.assertEquals("IdTag System Name is 'RD0413276BC1'", "RD0413276BC1", t.getSystemName());
-        Assert.assertEquals("IdTag display name is system name", "RD0413276BC1", t.getDisplayName());
-        Assert.assertEquals("IdTag tag ID is 0413276BC1", "0413276BC1", t.getTagID());
-        Assert.assertNull("IdTag user name is blank", t.getUserName());
+        assertNotNull( t, "IdTag is not null");
+        assertEquals( "RD0413276BC1", t.getSystemName(), "IdTag System Name is 'RD0413276BC1'");
+        assertEquals( "RD0413276BC1", t.getDisplayName(), "IdTag display name is system name");
+        assertEquals( "0413276BC1", t.getTagID(), "IdTag tag ID is 0413276BC1");
+        assertNull( t.getUserName(), "IdTag user name is blank");
 
         t.setUserName("Test Tag");
 
-        Assert.assertNotNull("IdTag user name is not blank", t.getUserName());
-        Assert.assertEquals("IdTag display name is user name", "Test Tag", t.getDisplayName());
+        assertNotNull( t.getUserName(), "IdTag user name is not blank");
+        assertEquals( "Test Tag", t.getDisplayName(), "IdTag display name is user name");
     }
 
     @Test
@@ -109,17 +141,32 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         IdTag t1 = m.newIdTag("RD0413276BC1", "Test Tag 1");
         IdTag t2 = m.newIdTag("RD0413275FCA", "Test Tag 2");
 
-        Assert.assertFalse("Created IdTags are different", t1.equals(t2));
+        assertFalse( t1.equals(t2), "Created IdTags are different");
 
-        Assert.assertTrue("Matching IdTag returned via provideTag by system name", t1.equals(m.provideIdTag("RD0413276BC1")));
-        Assert.assertTrue("Matching IdTag returned via provideTag by user name", t1.equals(m.provideIdTag("Test Tag 1")));
-        Assert.assertTrue("Matching IdTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413276BC1")));
+        assertTrue( t1.equals(m.provideIdTag("RD0413276BC1")),
+            "Matching IdTag returned via provideTag by system name");
+        assertTrue( t1.equals(m.provideIdTag("Test Tag 1")),
+            "Matching IdTag returned via provideTag by user name");
+        assertTrue( t1.equals(m.provideIdTag("0413276BC1")),
+            "Matching IdTag returned via provideTag by tag ID");
 
-        Assert.assertFalse("Non-matching IdTag returned via provideTag by system name", t1.equals(m.provideIdTag("RD0413275FCA")));
-        Assert.assertFalse("Non-matching IdTag returned via provideTag by user name", t1.equals(m.provideIdTag("Test Tag 2")));
-        Assert.assertFalse("Non-matching IdTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
+        assertFalse( t1.equals(m.provideIdTag("RD0413275FCA")),
+            "Non-matching IdTag returned via provideTag by system name");
+        assertFalse( t1.equals(m.provideIdTag("Test Tag 2")),
+            "Non-matching IdTag returned via provideTag by user name");
+        assertFalse( t1.equals(m.provideIdTag("0413275FCA")),
+            "Non-matching IdTag returned via provideTag by tag ID");
     }
 
+    @Test
+    @Override
+    @Disabled("No manager-specific system name validation at present")
+    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
+
+    @Test
+    @Override
+    @Disabled("No manager-specific system name validation at present")
+    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @BeforeEach
     @Override
@@ -129,19 +176,9 @@ public class DefaultRailComManagerTest extends DefaultIdTagManagerTest {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
-        jmri.InstanceManager.setDefault(jmri.IdTagManager.class,new ProxyIdTagManager());
+        InstanceManager.setDefault(jmri.IdTagManager.class,new ProxyIdTagManager());
         l = getManager();
     }
-    
-    @Test
-    @Override
-    @Disabled("No manager-specific system name validation at present")
-    public void testMakeSystemNameWithNoPrefixNotASystemName() {}
-    
-    @Test
-    @Override
-    @Disabled("No manager-specific system name validation at present")
-    public void testMakeSystemNameWithPrefixNotASystemName() {}
 
     @AfterEach
     @Override
