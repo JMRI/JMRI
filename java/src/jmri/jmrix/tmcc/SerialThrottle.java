@@ -140,8 +140,8 @@ public class SerialThrottle extends AbstractThrottle {
         0x00000A, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
         0x00000B, // Fn33 (Aux1 On)
         0x00000C, // Fn34 (Aux2 Off)
-        0x00000D, // Fn35 (Aux2 Option 1 - On While Held)
-        0x00000E, // Fn36 (Aux2 Option 2 - Toggle On/Toggle Off)
+        0x00000D, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off)
+        0x00000E, // Fn36 (Aux2 Option 2 - On While Held)
         0x00000F, // Fn37 (Aux2 On)
 
         // TMCC1 Unused FnKeys
@@ -270,16 +270,16 @@ public class SerialThrottle extends AbstractThrottle {
 
 
         // TRMCC2_32 Aux FnKeys
-        0xF80108, // Fn30
-        0xF8010A, // Fn31
-        0xF8010B, // Fn32
-        0xF8010C, // Fn33
-        0xF8010E, // Fn34
-        0xF8010F, // Fn35
+        0xF80108, // Fn30 (Aux1 Off)
+        0xF80109, // Fn31 (Aux1 Option 1 - On While Held) 
+        0xF8010A, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
+        0xF8010B, // Fn33 (Aux1 On)
+        0xF8010C, // Fn34 (Aux2 Off)
+        0xF8010D, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off) 
+        0xF8010E, // Fn36 (Aux2 Option 2 - On While Held)
+        0xF8010F, // Fn37 (Aux2 On)
 
         // TRMCC2_32 Unused FnKeys
-        0xF8012E, // Fn36
-        0xF8012E, // Fn37
         0xF8012E, // Fn38
         0xF8012E, // Fn39
         0xF8012E, // Fn40
@@ -306,6 +306,8 @@ public class SerialThrottle extends AbstractThrottle {
         0xF8012E, // Fn61
         0xF8012E, // Fn62
         0xF8012E, // Fn63
+        0xF8012E, // Fn64
+        0xF8012E, // Fn65
     };
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_200 speed steps.
@@ -345,16 +347,16 @@ public class SerialThrottle extends AbstractThrottle {
 
 
         // TMCC2_200 Aux FnKeys
-        0xF80108, // Fn30
-        0xF8010A, // Fn31
-        0xF8010B, // Fn32
-        0xF8010C, // Fn33
-        0xF8010E, // Fn34
-        0xF8010F, // Fn35
+        0xF80108, // Fn30 (Aux1 Off)
+        0xF80109, // Fn31 (Aux1 Option 1 - On While Held) 
+        0xF8010A, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
+        0xF8010B, // Fn33 (Aux1 On)
+        0xF8010C, // Fn34 (Aux2 Off)
+        0xF8010D, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off) 
+        0xF8010E, // Fn36 (Aux2 Option 2 - On While Held)
+        0xF8010F, // Fn37 (Aux2 On)
 
         // TMCC2_200 Unused FnKeys
-        0xF8012E, // Fn36
-        0xF8012E, // Fn37
         0xF8012E, // Fn38
         0xF8012E, // Fn39
         0xF8012E, // Fn40
@@ -381,6 +383,8 @@ public class SerialThrottle extends AbstractThrottle {
         0xF8012E, // Fn61
         0xF8012E, // Fn62
         0xF8012E, // Fn63
+        0xF8012E, // Fn64
+        0xF8012E, // Fn65
     };
 
     /**
