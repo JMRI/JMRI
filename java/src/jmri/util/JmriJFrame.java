@@ -386,7 +386,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         boolean visible = isVisible();
 
         setVisible(false);
-        log.info("super.dispose() called in undecorate()");
+        log.debug("super.dispose() called in undecorate()");
         super.dispose();
 
         setUndecorated(true);
