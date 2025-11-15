@@ -1824,6 +1824,11 @@ public class AutoActiveTrain implements ThrottleListener {
     private synchronized void setTargetSpeedByProfile(float speedState, float stopBySpeedProfileAdjust, boolean cancelStopping) {
         // the speed comes in as units of warrents (mph, kph, mm/s etc)
             try {
+                if (_activeTrain.getRosterEntry() == null || _activeTrain.getRosterEntry().getSpeedProfile() == null) {
+                    log.debug("Roster Entry or its speed profile is not defined, stopping train.");
+                    setTargetSpeed(0.0f);
+                    return;
+                }
                 float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile().getThrottleSettingFromSignalMapSpeed(speedState, getForward());
                 log.debug("{}: setTargetSpeedByProfile: {} SpeedState[{}]",
                         _activeTrain.getTrainName(),
@@ -1847,7 +1852,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _autoEngineer.setHalt(true);
                 }
             } catch (NullPointerException ex) {
-                log.error("setTargetSpeedByProfile crashed - Emergency Stop: ", ex );
+                log.error("setTargetSpeedByProfile crashed - Emergency Stop: {}", ex.getMessage(), ex );
                 _autoEngineer.slowToStop(false);
                 setTargetSpeed(-1.0f);
                 _autoEngineer.setHalt(true);
