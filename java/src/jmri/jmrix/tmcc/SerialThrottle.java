@@ -51,27 +51,30 @@ public class SerialThrottle extends AbstractThrottle {
 
     // Relating SERIAL_FUNCTION_CODES_TMCC1 to SpeedStepMode.TMCC1_32 and TMCC1_100;
     //    and SERIAL_FUNCTION_CODES_TMCC2 to SpeedStepMode.TMCC2_32 and TMCC2_200.
-    private long getFnValue(int number) {
-                if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC1_32 || getSpeedStepMode() == jmri.SpeedStepMode.TMCC1_100) {
-                    if (number < SERIAL_FUNCTION_CODES_TMCC1.length) {
-                        return SERIAL_FUNCTION_CODES_TMCC1[number];
-                    } else {
-                        return 0;
-                    }
-                } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_32) {
-                     if (number < SERIAL_FUNCTION_CODES_TMCC2_32.length) {
-                         return SERIAL_FUNCTION_CODES_TMCC2_32[number];
-                    } else {
-                        return 0;
-                    }
-                } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_200) {
-                     if (number < SERIAL_FUNCTION_CODES_TMCC2_200.length) {
-                         return SERIAL_FUNCTION_CODES_TMCC2_200[number];
-                    } else {
-                        return 0;
-                    }
+    private long[] getFnValueArray(int number) {
+                
+            if (number < 0) return new long[]{};
+            
+            if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC1_32 || getSpeedStepMode() == jmri.SpeedStepMode.TMCC1_100) {
+                if (number < SERIAL_FUNCTION_CODES_TMCC1.length) {
+                    return SERIAL_FUNCTION_CODES_TMCC1[number];
+                } else {
+                    return new long[]{};
                 }
-            return 0;
+            } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_32) {
+                 if (number < SERIAL_FUNCTION_CODES_TMCC2_32.length) {
+                     return SERIAL_FUNCTION_CODES_TMCC2_32[number];
+                } else {
+                    return new long[]{};
+                }
+            } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_200) {
+                 if (number < SERIAL_FUNCTION_CODES_TMCC2_200.length) {
+                     return SERIAL_FUNCTION_CODES_TMCC2_200[number];
+                } else {
+                    return new long[]{};
+                }
+            }
+            return new long[]{};
         }
 
 
@@ -81,26 +84,34 @@ public class SerialThrottle extends AbstractThrottle {
     @Override
     public void setFunction(int func, boolean value) {
         updateFunction(func, value);
-        if (func>=0 && func < SERIAL_FUNCTION_CODES_TMCC1.length) {
-            if ( getFnValue(func) > 0xFFFF ) {
-                // TMCC 2 format
-                if (getFnValue(func) > 0xFFFFFF ) {
-                    int first =  (int)(getFnValue(func) >> 24);
-                    int second = (int)(getFnValue(func) & 0xFFFFFF);
-                    // doubles are only sent once, not repeating
-                    sendOneWordOnce(first  + address.getNumber() * 512);
-                    sendOneWordOnce(second + address.getNumber() * 512);
+        
+        if (getFnValueArray(func).length >0) {
+            for (long triple : getFnValueArray(func)) {
+                // process each returned command
+                if (func>=0 && func < SERIAL_FUNCTION_CODES_TMCC1.length) {
+                    if ( triple > 0xFFFF ) {
+                        // TMCC 2 format
+                        if (triple > 0xFFFFFF ) {
+                            int first =  (int)(triple >> 24);
+                            int second = (int)(triple & 0xFFFFFF);
+                            // doubles are only sent once, not repeating
+                            sendOneWordOnce(first  + address.getNumber() * 512);
+                            sendOneWordOnce(second + address.getNumber() * 512);
+                        } else {
+                            // single message
+                            sendFnToLayout((int)triple + address.getNumber() * 512, func);
+                            }
+                    } else {
+                        // TMCC 1 format
+                        sendFnToLayout((int)triple + address.getNumber() * 128, func);
+                        }
                 } else {
-                    // single message
-                    sendFnToLayout((int)getFnValue(func) + address.getNumber() * 512, func);
-                    }
-            } else {
-                // TMCC 1 format
-                sendFnToLayout((int)getFnValue(func) + address.getNumber() * 128, func);
+                    super.setFunction(func, value);
                 }
+            }
         } else {
             super.setFunction(func, value);
-            }
+        }
     }
 
     // the argument is a long containing 3 bytes. 
@@ -111,71 +122,74 @@ public class SerialThrottle extends AbstractThrottle {
     }
 
     // TMCC 1 Function Keys to trigger with TMCC1_32 and TMCC1_100 speed steps.
-    private final static long[] SERIAL_FUNCTION_CODES_TMCC1 = new long[] {
-
+    private final static long[][] SERIAL_FUNCTION_CODES_TMCC1 = new long[][] {
         // TMCC1 Remote - Buttons
-        0x00000D, 0x00001D, 0x00001C, 0x000005, 0x000006, /* Fn0-4 */
+        {0x00000D}, /* Fn0-4 */
+        {0x00001D},
+        {0x00001C},
+        {0x000005},
+        {0x000006},
 
         // TMCC1 Remote - KeyPad Buttons
-        0x000011, 0x000012, 0x000013, /* Fn5-7 */
-        0x000014, 0x000015, 0x000016, /* Fn8-10 */
-        0x000017, 0x000018, 0x000019, /* Fn11-13 */
-                  0x000010,           /* Fn14 */
+        {0x000011}, {0x000012}, {0x000013}, /* Fn5-7 */
+        {0x000014}, {0x000015}, {0x000016}, /* Fn8-10 */
+        {0x000017}, {0x000018}, {0x000019}, /* Fn11-13 */
+                   {0x000010},              /* Fn14 */
 
         // TMCC1 Remote - Buttons
-        0x000009, 0x00001E, 0x000004, 0x000007, 0x000028, /* Fn15-19 */
-        0x000029, 0x00002A, 0x00002B, 0x00001F,           /* 20-23 */
+        {0x000009}, {0x00001E}, {0x000004}, {0x000007}, {0x000028}, /* Fn15-19 */
+        {0x000029}, {0x00002A}, {0x00002B}, {0x00001F},           /* 20-23 */
 
         // TMCC1 RR Speed FnKeys
-        0x000064, // Fn24 ( 4)
-        0x00006A, // Fn25 (10)
-        0x00006E, // Fn26 (14)
-        0x000072, // Fn27 (18)
-        0x000078, // Fn28 (24)
-        0x00007F, // Fn29 (31)
+        {0x000064}, // Fn24 ( 4)
+        {0x00006A}, // Fn25 (10)
+        {0x00006E}, // Fn26 (14)
+        {0x000072}, // Fn27 (18)
+        {0x000078}, // Fn28 (24)
+        {0x00007F}, // Fn29 (31)
 
         // TMCC1 Aux FnKeys 
-        0x000008, // Fn30 (Aux1 Off)
-        0x000009, // Fn31 (Aux1 Option 1 - On While Held)
-        0x00000A, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
-        0x00000B, // Fn33 (Aux1 On)
-        0x00000C, // Fn34 (Aux2 Off)
-        0x00000D, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off)
-        0x00000E, // Fn36 (Aux2 Option 2 - On While Held)
-        0x00000F, // Fn37 (Aux2 On)
+        {0x000008}, // Fn30 (Aux1 Off)
+        {0x000009}, // Fn31 (Aux1 Option 1 - On While Held)
+        {0x00000A}, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
+        {0x00000B}, // Fn33 (Aux1 On)
+        {0x00000C}, // Fn34 (Aux2 Off)
+        {0x00000D}, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off)
+        {0x00000E}, // Fn36 (Aux2 Option 2 - On While Held)
+        {0x00000F}, // Fn37 (Aux2 On)
 
         // TMCC1 Unused FnKeys
-        0x00002E, // Fn38
-        0x00002E, // Fn39
-        0x00002E, // Fn40
-        0x00002E, // Fn41
-        0x00002E, // Fn42
-        0x00002E, // Fn43
-        0x00002E, // Fn44
-        0x00002E, // Fn45
-        0x00002E, // Fn46
-        0x00002E, // Fn47
-        0x00002E, // Fn48
-        0x00002E, // Fn49
-        0x00002E, // Fn50
-        0x00002E, // Fn51
-        0x00002E, // Fn52
-        0x00002E, // Fn53
-        0x00002E, // Fn54
-        0x00002E, // Fn55
-        0x00002E, // Fn56
-        0x00002E, // Fn57
-        0x00002E, // Fn58
-        0x00002E, // Fn59
-        0x00002E, // Fn60
-        0x00002E, // Fn61
-        0x00002E, // Fn62
-        0x00002E, // Fn63
-        0x00002E, // Fn64
-        0x00002E, // Fn65
-        0x00002E, // Fn66
-        0x00002E, // Fn67
-        0x00002E, // Fn68
+        {0x00002E}, // Fn38
+        {0x00002E}, // Fn39
+        {0x00002E}, // Fn40
+        {0x00002E}, // Fn41
+        {0x00002E}, // Fn42
+        {0x00002E}, // Fn43
+        {0x00002E}, // Fn44
+        {0x00002E}, // Fn45
+        {0x00002E}, // Fn46
+        {0x00002E}, // Fn47
+        {0x00002E}, // Fn48
+        {0x00002E}, // Fn49
+        {0x00002E}, // Fn50
+        {0x00002E}, // Fn51
+        {0x00002E}, // Fn52
+        {0x00002E}, // Fn53
+        {0x00002E}, // Fn54
+        {0x00002E}, // Fn55
+        {0x00002E}, // Fn56
+        {0x00002E}, // Fn57
+        {0x00002E}, // Fn58
+        {0x00002E}, // Fn59
+        {0x00002E}, // Fn60
+        {0x00002E}, // Fn61
+        {0x00002E}, // Fn62
+        {0x00002E}, // Fn63
+        {0x00002E}, // Fn64
+        {0x00002E}, // Fn65
+        {0x00002E}, // Fn66
+        {0x00002E}, // Fn67
+        {0x00002E}, // Fn68
     };
 
     /**
@@ -190,28 +204,30 @@ public class SerialThrottle extends AbstractThrottle {
     */
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_32 speed steps.
-    private final static long[] SERIAL_FUNCTION_CODES_TMCC2_32 = new long[] {
-
-        // TMCC2_32 Remote - Buttons
-        0xF8010D, 0xF8011D, 0xF8011C, 0xF80105, 0xF80106, /* Fn0-4 */
+    private final static long[][] SERIAL_FUNCTION_CODES_TMCC2_32 = new long[][] {
+        {0xF8010D}, /* Fn0-4 */
+        {0xF8011D},
+        {0xF8011C},
+        {0xF80105},
+        {0xF80106},
 
         // TMCC2_32 Remote - Keypad Buttons
-        0xF80111, 0xF80112, 0xF80113, /* Fn5-7 */
-        0xF80114, 0xF80115, 0xF80116, /* Fn8-10 */
-        0xF80117, 0xF80118, 0xF80119, /* Fn11-13 */
-                  0xF80110,           /* Fn14 */
+        {0xF80111}, {0xF80112}, {0xF80113}, /* Fn5-7 */
+        {0xF80114}, {0xF80115}, {0xF80116}, /* Fn8-10 */
+        {0xF80117}, {0xF80118}, {0xF80119}, /* Fn11-13 */
+                  {0xF80110},           /* Fn14 */
 
         // TMCC2_32 Remote - Buttons
-        0xF80109, 0xF8011E, 0xF80104, 0xF80107, 0xF80128, /* Fn15-19 */
-        0xF80129, 0xF8012A, 0xF8012B, 0xF8011F,/* 20-23 */
+        {0xF80109}, {0xF8011E}, {0xF80104}, {0xF80107}, {0xF80128}, /* Fn15-19 */
+        {0xF80129}, {0xF8012A}, {0xF8012B}, {0xF8011F},/* 20-23 */
 
         // TMCC2_32 RR Speed FnKeys
-        0xF80164, // Fn24 ( 4)
-        0xF8016A, // Fn25 (10)
-        0xF8016E, // Fn26 (14)
-        0xF80172, // Fn27 (18)
-        0xF80178, // Fn28 (24)
-        0xF8017F, // Fn29 (31)
+        {0xF80164}, // Fn24 ( 4)
+        {0xF8016A}, // Fn25 (10)
+        {0xF8016E}, // Fn26 (14)
+        {0xF80172}, // Fn27 (18)
+        {0xF80178}, // Fn28 (24)
+        {0xF8017F}, // Fn29 (31)
 
         // TMCC2_32 Extended Lighting FnKeys
         // Fn?? (Mars On)
@@ -259,132 +275,131 @@ public class SerialThrottle extends AbstractThrottle {
         // Fn?? (Car Cabin Lt Auto)
 
 
-        //0xF8017DFB01F2FB0189L, // Fn35 Set Cab Light Auto (test!!!)
+        // {0xF8017D,0xFB01F2,0xFB0189L}, // Fn35 Set Cab Light Auto (test!!!)
 
 
         // Extended Sound Effects FnKeys
-        //0xF801FBF801FCL, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
-        //0xF801FC, // Fn36 Start Up Sequence 2 (Immediate Start Up)
-        //0xF801FDF801FEL, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
-        //0xF801FE, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
+        // {0xF801FB, F801FCL}, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
+        // {0xF801FC}, // Fn36 Start Up Sequence 2 (Immediate Start Up)
+        // {0xF801FD, F801FEL}, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
+        // {0xF801FE}, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
 
 
         // TRMCC2_32 Aux FnKeys
-        0xF80108, // Fn30 (Aux1 Off)
-        0xF80109, // Fn31 (Aux1 Option 1 - On While Held) 
-        0xF8010A, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
-        0xF8010B, // Fn33 (Aux1 On)
-        0xF8010C, // Fn34 (Aux2 Off)
-        0xF8010D, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off) 
-        0xF8010E, // Fn36 (Aux2 Option 2 - On While Held)
-        0xF8010F, // Fn37 (Aux2 On)
+        {0xF80108}, // Fn30 (Aux1 Off)
+        {0xF80109}, // Fn31 (Aux1 Option 1 - On While Held) 
+        {0xF8010A}, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
+        {0xF8010B}, // Fn33 (Aux1 On)
+        {0xF8010C}, // Fn34 (Aux2 Off)
+        {0xF8010D}, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off) 
+        {0xF8010E}, // Fn36 (Aux2 Option 2 - On While Held)
+        {0xF8010F}, // Fn37 (Aux2 On)
 
         // TRMCC2_32 Unused FnKeys
-        0xF8012E, // Fn38
-        0xF8012E, // Fn39
-        0xF8012E, // Fn40
-        0xF8012E, // Fn41
-        0xF8012E, // Fn42
-        0xF8012E, // Fn43
-        0xF8012E, // Fn44
-        0xF8012E, // Fn45
-        0xF8012E, // Fn46
-        0xF8012E, // Fn47
-        0xF8012E, // Fn48
-        0xF8012E, // Fn49
-        0xF8012E, // Fn50
-        0xF8012E, // Fn51
-        0xF8012E, // Fn52
-        0xF8012E, // Fn53
-        0xF8012E, // Fn54
-        0xF8012E, // Fn55
-        0xF8012E, // Fn56
-        0xF8012E, // Fn57
-        0xF8012E, // Fn58
-        0xF8012E, // Fn59
-        0xF8012E, // Fn60
-        0xF8012E, // Fn61
-        0xF8012E, // Fn62
-        0xF8012E, // Fn63
-        0xF8012E, // Fn64
-        0xF8012E, // Fn65
-    };
+        {0xF8012E}, // Fn38
+        {0xF8012E}, // Fn39
+        {0xF8012E}, // Fn40
+        {0xF8012E}, // Fn41
+        {0xF8012E}, // Fn42
+        {0xF8012E}, // Fn43
+        {0xF8012E}, // Fn44
+        {0xF8012E}, // Fn45
+        {0xF8012E}, // Fn46
+        {0xF8012E}, // Fn47
+        {0xF8012E}, // Fn48
+        {0xF8012E}, // Fn49
+        {0xF8012E}, // Fn50
+        {0xF8012E}, // Fn51
+        {0xF8012E}, // Fn52
+        {0xF8012E}, // Fn53
+        {0xF8012E}, // Fn54
+        {0xF8012E}, // Fn55
+        {0xF8012E}, // Fn56
+        {0xF8012E}, // Fn57
+        {0xF8012E}, // Fn58
+        {0xF8012E}, // Fn59
+        {0xF8012E}, // Fn60
+        {0xF8012E}, // Fn61
+        {0xF8012E}, // Fn62
+        {0xF8012E}, // Fn63
+        {0xF8012E}, // Fn64
+        {0xF8012E}, // Fn65
+};
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_200 speed steps.
-    private final static long[] SERIAL_FUNCTION_CODES_TMCC2_200 = new long[] {
-
+    private final static long[][] SERIAL_FUNCTION_CODES_TMCC2_200 = new long[][] {
         // TMCC2_200 Remote - Buttons
-        0xF8010D, 0xF8011D, 0xF8011C, 0xF80105, 0xF80106, /* Fn0-4 */
+        {0xF8010D}, {0xF8011D}, {0xF8011C}, {0xF80105}, {0xF80106}, /* Fn0-4 */
 
         // TMCC2_200 Remote - Keypad Buttons
-        0xF80111, 0xF80112, 0xF80113, /* Fn5-7 */
-        0xF80114, 0xF80115, 0xF80116, /* Fn8-10 */
-        0xF80117, 0xF80118, 0xF80119, /* Fn11-13 */
-                  0xF80110,           /* Fn14 */
+        {0xF80111}, {0xF80112}, {0xF80113}, /* Fn5-7 */
+        {0xF80114}, {0xF80115}, {0xF80116}, /* Fn8-10 */
+        {0xF80117}, {0xF80118}, {0xF80119}, /* Fn11-13 */
+                    {0xF80110},             /* Fn14 */
 
         // TMCC2_200 Remote - Buttons
-        0xF80109, 0xF8011E, 0xF80104, 0xF80107, 0xF80128, /* Fn15-19 */
-        0xF80129, 0xF8012A, 0xF8012B, 0xF8011F,/* 20-23 */
+        {0xF80109}, {0xF8011E}, {0xF80104}, {0xF80107}, {0xF80128}, /* Fn15-19 */
+        {0xF80129}, {0xF8012A}, {0xF8012B}, {0xF8011F},/* 20-23 */
 
         // TMCC2_200 RR Speed FnKeys
-        0xF8000A, // Fn24 ( 10)
-        0xF80028, // Fn25 ( 40)
-        0xF80046, // Fn26 ( 70)
-        0xF80064, // Fn27 (100)
-        0xF8008C, // Fn28 (140)
-        0xF800C7, // Fn29 (199)
+        {0xF8000A}, // Fn24 ( 10)
+        {0xF80028}, // Fn25 ( 40)
+        {0xF80046}, // Fn26 ( 70)
+        {0xF80064}, // Fn27 (100)
+        {0xF8008C}, // Fn28 (140)
+        {0xF800C7}, // Fn29 (199)
 
         // TMCC2_200 Extended Lighting FnKeys
 
-        //0xF8017DFB01F2FB0189L, // Fn35 Set Cab Light Auto (test!!!)
+        // {0xF8017D, 0xFB01F2, 0xFB0189}, // Fn35 Set Cab Light Auto (test!!!)
 
 
         // Extended Sound Effects FnKeys
-        //0xF801FBF801FCL, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
-        //0xF801FC, // Fn36 Start Up Sequence 2 (Immediate Start Up)
-        //0xF801FDF801FEL, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
-        //0xF801FE, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
+        // {0xF801FB, 0xF801FC}, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
+        // {0xF801FC}, // Fn36 Start Up Sequence 2 (Immediate Start Up)
+        // {0xF801FD, 0xF801FE}, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
+        // {0xF801FE}, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
 
 
         // TMCC2_200 Aux FnKeys
-        0xF80108, // Fn30 (Aux1 Off)
-        0xF80109, // Fn31 (Aux1 Option 1 - On While Held) 
-        0xF8010A, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
-        0xF8010B, // Fn33 (Aux1 On)
-        0xF8010C, // Fn34 (Aux2 Off)
-        0xF8010D, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off) 
-        0xF8010E, // Fn36 (Aux2 Option 2 - On While Held)
-        0xF8010F, // Fn37 (Aux2 On)
+        {0xF80108}, // Fn30 (Aux1 Off)
+        {0xF80109}, // Fn31 (Aux1 Option 1 - On While Held) 
+        {0xF8010A}, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
+        {0xF8010B}, // Fn33 (Aux1 On)
+        {0xF8010C}, // Fn34 (Aux2 Off)
+        {0xF8010D}, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off) 
+        {0xF8010E}, // Fn36 (Aux2 Option 2 - On While Held)
+        {0xF8010F}, // Fn37 (Aux2 On)
 
         // TMCC2_200 Unused FnKeys
-        0xF8012E, // Fn38
-        0xF8012E, // Fn39
-        0xF8012E, // Fn40
-        0xF8012E, // Fn41
-        0xF8012E, // Fn42
-        0xF8012E, // Fn43
-        0xF8012E, // Fn44
-        0xF8012E, // Fn45
-        0xF8012E, // Fn46
-        0xF8012E, // Fn47
-        0xF8012E, // Fn48
-        0xF8012E, // Fn49
-        0xF8012E, // Fn50
-        0xF8012E, // Fn51
-        0xF8012E, // Fn52
-        0xF8012E, // Fn53
-        0xF8012E, // Fn54
-        0xF8012E, // Fn55
-        0xF8012E, // Fn56
-        0xF8012E, // Fn57
-        0xF8012E, // Fn58
-        0xF8012E, // Fn59
-        0xF8012E, // Fn60
-        0xF8012E, // Fn61
-        0xF8012E, // Fn62
-        0xF8012E, // Fn63
-        0xF8012E, // Fn64
-        0xF8012E, // Fn65
+        {0xF8012E}, // Fn38
+        {0xF8012E}, // Fn39
+        {0xF8012E}, // Fn40
+        {0xF8012E}, // Fn41
+        {0xF8012E}, // Fn42
+        {0xF8012E}, // Fn43
+        {0xF8012E}, // Fn44
+        {0xF8012E}, // Fn45
+        {0xF8012E}, // Fn46
+        {0xF8012E}, // Fn47
+        {0xF8012E}, // Fn48
+        {0xF8012E}, // Fn49
+        {0xF8012E}, // Fn50
+        {0xF8012E}, // Fn51
+        {0xF8012E}, // Fn52
+        {0xF8012E}, // Fn53
+        {0xF8012E}, // Fn54
+        {0xF8012E}, // Fn55
+        {0xF8012E}, // Fn56
+        {0xF8012E}, // Fn57
+        {0xF8012E}, // Fn58
+        {0xF8012E}, // Fn59
+        {0xF8012E}, // Fn60
+        {0xF8012E}, // Fn61
+        {0xF8012E}, // Fn62
+        {0xF8012E}, // Fn63
+        {0xF8012E}, // Fn64
+        {0xF8012E}, // Fn65
     };
 
     /**
