@@ -54,7 +54,6 @@ import jmri.jmrit.display.layoutEditor.LayoutDoubleXOver;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -2711,20 +2710,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                             if (foundOne) {
                                 // check if the next section is allocated to the same train and has been entered
                                 ActiveTrain at = as.getActiveTrain();
-                                    // Do not release a turntable section automatically
-                                    LayoutEditor le = getLayoutEditor();
-                                    if (le != null) {
-                                        for (LayoutTurntable tt : le.getLayoutTurntables()) {
-                                            if (tt.getLayoutBlock() != null && as.getSection().getBlockList().contains(tt.getLayoutBlock().getBlock())) {
-                                                foundOne = false;
-                                            }
-                                            for (int r = 0; r < tt.getNumberRays(); r++) {
-                                                if (tt.getRayConnectOrdered(r) != null && tt.getRayConnectOrdered(r).getLayoutBlock() != null && as.getSection().getBlockList().contains(tt.getRayConnectOrdered(r).getLayoutBlock().getBlock())) {
-                                                    foundOne = false;
-                                                }
-                                            }
-                                        }
-                                    }
                                 Section ns = as.getNextSection();
                                 AllocatedSection nas = null;
                                 for (int k = 0; (k < allocatedSections.size()) && (nas == null); k++) {
