@@ -275,13 +275,13 @@ public class SerialThrottle extends AbstractThrottle {
         // Fn?? (Car Cabin Lt Auto)
 
 
-        // {0xF8017D,0xFB01F2,0xFB0189L}, // Fn35 Set Cab Light Auto (test!!!)
+        // {0xF8017D,0xFB01F2,0xFB0189}, // Fn35 Set Cab Light Auto (test!!!)
 
 
         // Extended Sound Effects FnKeys
-        // {0xF801FB, F801FCL}, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
+        // {0xF801FB, 0xF801FC}, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
         // {0xF801FC}, // Fn36 Start Up Sequence 2 (Immediate Start Up)
-        // {0xF801FD, F801FEL}, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
+        // {0xF801FD, 0xF801FE}, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
         // {0xF801FE}, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
 
 
