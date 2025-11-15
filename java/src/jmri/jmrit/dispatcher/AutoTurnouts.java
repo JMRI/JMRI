@@ -182,14 +182,14 @@ public class AutoTurnouts {
     private List<LayoutTrackExpectedState<LayoutTurnout>> turnoutUtil(Section s, int seqNum, Section nextSection,
           ActiveTrain at, boolean trustKnownTurnouts, boolean set, Section prevSection, boolean useTurnoutConnectionDelay ) {
         log.trace("{}:Checking LayoutTrackExpectedState Section[{}]  NextSection[{}] PrevSection[{}]",
-                at.getTrainName(), s.getDisplayName(),
+                at.getTrainName(), (s != null) ? s.getDisplayName() : "null",
                 nextSection== null ? "Null" : nextSection.getDisplayName(),
                 prevSection == null ? "Null" : prevSection.getDisplayName());
         // initialize response structure
         List<LayoutTrackExpectedState<LayoutTurnout>> turnoutListForAllocatedSection = new ArrayList<>();
         // validate input and initialize
         Transit tran = at.getTransit();
-        if ((seqNum > tran.getMaxSequence()) || (!tran.containsSection(s))) {
+        if ((s == null) || (seqNum > tran.getMaxSequence()) || (!tran.containsSection(s))) {
             log.error("Invalid argument when checking or setting turnouts in Section.");
             return null;
         }
