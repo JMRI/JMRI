@@ -1597,7 +1597,7 @@ public class JUnitUtil {
                  || ( name.equals("OLCB Interface dispose thread") && group.contains("main") )
                  || ( name.equals("olcbCanInterface.initialize") && group.contains("JMRI") )    // Created by JMRI but hangs due to OpenLCB lib
 
-                 || ( name.startsWith("SwingWorker-pool-1-thread-") &&
+                 || ( name.startsWith("SwingWorker-pool-") &&
                          ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
                     )
                 )) {

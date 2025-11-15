@@ -28,6 +28,8 @@ public class PaneOpsProgFrameTest {
                 "NMRA standard CV definitions", "0NMRA.xml", 16, 3, root);
         RosterEntry re = new RosterEntry();
         PaneOpsProgFrame t = new PaneOpsProgFrame(df,re,"test frame", "programmers/Basic.xml",p);
+        JUnitUtil.waitFor(()->{return t.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         Assert.assertNotNull("exists",t);
         t.dispatchEvent(new WindowEvent(t, WindowEvent.WINDOW_CLOSING));
     }
