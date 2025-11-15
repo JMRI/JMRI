@@ -1,6 +1,7 @@
 package jmri.jmrix.tmcc;
 
 import jmri.SpeedStepMode;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -347,11 +348,12 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     public void testOutOfRangeSetFunction(){
         instance.setFunction(-1, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
+        JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: -1");
 
         instance.setFunction(69, true);
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 69");
-        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 69");
+        JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 69");
+        JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 69");
     }
 
     private SerialTrafficController tcis;
