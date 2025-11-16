@@ -123,44 +123,76 @@ public class SerialThrottle extends AbstractThrottle {
 
     // TMCC 1 Function Keys to trigger with TMCC1_32 and TMCC1_100 speed steps.
     private final static long[][] SERIAL_FUNCTION_CODES_TMCC1 = new long[][] {
-        // TMCC1 Remote - Buttons
-        {0x00000D}, /* Fn0-4 */
-        {0x00001D},
-        {0x00001C},
-        {0x000005},
-        {0x000006},
 
-        // TMCC1 Remote - KeyPad Buttons
-        {0x000011}, {0x000012}, {0x000013}, /* Fn5-7 */
-        {0x000014}, {0x000015}, {0x000016}, /* Fn8-10 */
-        {0x000017}, {0x000018}, {0x000019}, /* Fn11-13 */
-                   {0x000010},              /* Fn14 */
+        // TMCC1 Remote - Defined FnKeys
+        {0x00000D}, // Fn0 (Headlamp)
+        {0x00001D}, // Fn1 (Bell)
+        {0x00001C}, // Fn2 (Horn/Whistle)
+        {0x000005}, // Fn3 (F - Open Front Coupler)
+        {0x000006}, // Fn4 (R - Open Rear Coupler)
 
-        // TMCC1 Remote - Buttons
-        {0x000009}, {0x00001E}, {0x000004}, {0x000007}, {0x000028}, /* Fn15-19 */
-        {0x000029}, {0x00002A}, {0x00002B}, {0x00001F},           /* 20-23 */
+        // TMCC1 Remote - Defined KeyPad FnKeys
+        {0x000011}, {0x000012}, {0x000013}, /* Fn5-7 */ // 1-2-3
+        {0x000014}, {0x000015}, {0x000016}, /* Fn8-10 */ // 4-5-6
+        {0x000017}, {0x000018}, {0x000019}, /* Fn11-13 */ // 7-8-9
+                    {0x000010},             /* Fn14 */ // 0
+
+        // TMCC1 Remote - Defined FnKeys
+        {0x000009}, // Fn15 (Aux1)
+        {0x00001E}, // Fn16 (Letoff Sound)
+        {0x000004}, // Fn17 (Boost)
+        {0x000007}, // Fn18 (Brake)
+        {0x000028}, // Fn19 (Momentum Low)
+        {0x000029}, // Fn20 (Momentum Medium)
+        {0x00002A}, // Fn21 (Momentum High)
+        {0x00002B}, // Fn22 (Set)
+        {0x00001F}, // Fn23 (Horn 2)
 
         // TMCC1 RR Speed FnKeys
-        {0x000064}, // Fn24 ( 4)
-        {0x00006A}, // Fn25 (10)
-        {0x00006E}, // Fn26 (14)
-        {0x000072}, // Fn27 (18)
-        {0x000078}, // Fn28 (24)
-        {0x00007F}, // Fn29 (31)
+        {0x000064}, // Fn24 ( 4)   5mph
+        {0x00006A}, // Fn25 (10)  20mph
+        {0x00006E}, // Fn26 (14)  35mph
+        {0x000072}, // Fn27 (18)  50mph
+        {0x000078}, // Fn28 (24)  70mph
+        {0x00007F}, // Fn29 (31) 100mph (or whatever speed for full throttle)
 
-        // TMCC1 Aux FnKeys 
-        {0x000008}, // Fn30 (Aux1 Off)
-        {0x000009}, // Fn31 (Aux1 Option 1 - On While Held)
-        {0x00000A}, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
-        {0x00000B}, // Fn33 (Aux1 On)
-        {0x00000C}, // Fn34 (Aux2 Off)
-        {0x00000D}, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off)
-        {0x00000E}, // Fn36 (Aux2 Option 2 - On While Held)
-        {0x00000F}, // Fn37 (Aux2 On)
+        // TMCC1 ERR - Set SpeedSteps
+        {0x000009, 0x000010, 0x000009, 0x000010, 0x000004}, // Fn30 (Set ERR 100 SpeedSteps)
+        {0x000009, 0x000010, 0x000009, 0x000010, 0x000007}, // Fn31 (Set ERR  32 SpeedSteps)
+
+        // TMCC1 Acela/Subway FnKeys
+        {0x000009, 0x000006}, // Fn32 (Open Doors - Right)
+        {0x00000D, 0x000006, 0x00000D}, // Fn33 (Close Doors - Right)
+        {0x000009, 0x000005}, // Fn34 (Open Doors - Left)
+        {0x00000D, 0x000005, 0x00000D}, // Fn35 (Close Doors - Left)
+        {0x000009, 0x000013}, // Fn36 (Pantagraph - Automatic/Prototypical)
+        {0x000009, 0x000015}, // Fn37 (Pantagraph - Down)
+        {0x000009, 0x000015}, // Fn38 (Pantagraph - Manual Mode/Cycles Through Positions)
+        {0x000009, 0x00001C}, // Fn39 (Toggle Horn - City/Country)
+        {0x000009, 0x000018}, // Fn40 (Cab Light - Off)
+        {0x000009, 0x000019}, // Fn41 (Cab Light - On)
+        {0x000009, 0x00000D, 0x000018, 0x00000D}, // Fn42 (Interior Lights - Off)
+        {0x000009, 0x00000D, 0x000019, 0x00000D}, // Fn43 (Interior Lights - On)
+
+        // TMCC1 Break-Down Unit
+
+        // TMCC1 Freight Cars
+
+        // TMCC1 Passenger Cars
+
+        // TMCC1 Crane/Boom Car
+
+        // TMCC1 Aux FnKeys
+        {0x000008}, // Fn32 (Aux1 Off)
+        {0x000009}, // Fn33 (Aux1 Option 1 - On While Held)
+        {0x00000A}, // Fn34 (Aux1 Option 2 - Toggle On/Toggle Off)
+        {0x00000B}, // Fn35 (Aux1 On)
+        {0x00000C}, // Fn36 (Aux2 Off)
+        {0x00000D}, // Fn37 (Aux2 Option 1 - Toggle On/Toggle Off)
+        {0x00000E}, // Fn38 (Aux2 Option 2 - On While Held)
+        {0x00000F}, // Fn39 (Aux2 On)
 
         // TMCC1 Unused FnKeys
-        {0x00002E}, // Fn38
-        {0x00002E}, // Fn39
         {0x00002E}, // Fn40
         {0x00002E}, // Fn41
         {0x00002E}, // Fn42
@@ -205,77 +237,80 @@ public class SerialThrottle extends AbstractThrottle {
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_32 speed steps.
     private final static long[][] SERIAL_FUNCTION_CODES_TMCC2_32 = new long[][] {
-        {0xF8010D}, /* Fn0-4 */
-        {0xF8011D},
-        {0xF8011C},
-        {0xF80105},
-        {0xF80106},
 
-        // TMCC2_32 Remote - Keypad Buttons
-        {0xF80111}, {0xF80112}, {0xF80113}, /* Fn5-7 */
-        {0xF80114}, {0xF80115}, {0xF80116}, /* Fn8-10 */
-        {0xF80117}, {0xF80118}, {0xF80119}, /* Fn11-13 */
-                  {0xF80110},           /* Fn14 */
+        // TMCC2_32 Remote - Defined FnKeys
+        {0xF8010D}, // Fn0 (Headlamp)
+        {0xF8011D}, // Fn1 (Bell)
+        {0xF8011C}, // Fn2 (Horn/Whistle)
+        {0xF80105}, // Fn3 (F - Open Front Coupler)
+        {0xF80106}, // Fn4 (R - Open Rear Coupler)
 
-        // TMCC2_32 Remote - Buttons
-        {0xF80109}, {0xF8011E}, {0xF80104}, {0xF80107}, {0xF80128}, /* Fn15-19 */
-        {0xF80129}, {0xF8012A}, {0xF8012B}, {0xF8011F},/* 20-23 */
+        // TMCC2_32 Remote - Defined KeyPad FnKeys
+        {0xF80111}, {0xF80112}, {0xF80113}, /* Fn5-7 */ // 1-2-3
+        {0xF80114}, {0xF80115}, {0xF80116}, /* Fn8-10 */ // 4-5-6
+        {0xF80117}, {0xF80118}, {0xF80119}, /* Fn11-13 */ // 7-8-9
+                    {0xF80110},             /* Fn14 */ // 0
+
+        // TMCC2_32 Remote - Defined FnKeys
+        {0xF80109}, // Fn15 (Aux1)
+        {0xF8011E}, // Fn16 (Letoff Sound)
+        {0xF80104}, // Fn17 (Boost)
+        {0xF80107}, // Fn18 (Brake)
+        {0xF80128}, // Fn19 (Momentum Low)
+        {0xF80129}, // Fn20 (Momentum Medium)
+        {0xF8012A}, // Fn21 (Momentum High)
+        {0xF8012B}, // Fn22 (Set)
+        {0xF8011F}, // Fn23 (Horn 2)
 
         // TMCC2_32 RR Speed FnKeys
-        {0xF80164}, // Fn24 ( 4)
-        {0xF8016A}, // Fn25 (10)
-        {0xF8016E}, // Fn26 (14)
-        {0xF80172}, // Fn27 (18)
-        {0xF80178}, // Fn28 (24)
-        {0xF8017F}, // Fn29 (31)
+        {0xF80164}, // Fn24 ( 4)   5mph
+        {0xF8016A}, // Fn25 (10)  20mph
+        {0xF8016E}, // Fn26 (14)  35mph
+        {0xF80172}, // Fn27 (18)  50mph
+        {0xF80178}, // Fn28 (24)  70mph
+        {0xF8017F}, // Fn29 (31) 100mph (or whatever speed for full throttle)
 
         // TMCC2_32 Extended Lighting FnKeys
-        // Fn?? (Mars On)
-        // Fn?? (Mars Off)
+        // Fn33 (Mars On)
+        // Fn34 (Mars Off)
 
-        // Fn?? (Ground Lt On)
-        // Fn?? (Ground Lt Off)
-        // Fn?? (Ground Lt Auto)
+        // Fn35 (Ground Lt On)
+        // Fn36 (Ground Lt Off)
+        // Fn37 (Ground Lt Auto)
 
-        // Fn?? (DogHouse On)
-        // Fn?? (DogHouse Off)
+        // Fn38 (DogHouse On)
+        // Fn39 (DogHouse Off)
 
-        // Fn?? (Tender Marker On)
-        // Fn?? (Tender Marker Off)
+        // Fn40 (Tender Marker On)
+        // Fn41 (Tender Marker Off)
 
-        // Fn?? (Loco On)
-        // Fn?? (Loco Off)
+        // Fn42 (Rule 17 On)
+        // Fn43 (Rule 17 Off)
+        // Fn44 (Rule 17 Auto)
 
-        // Fn?? (Rule 17 On)
-        // Fn?? (Rule 17 Off)
-        // Fn?? (Rule 17 Auto)
+        // Fn45 (Ditch Lt On)
+        // Fn46 (Ditch Lt On; Pulse Off with Horn)
+        // Fn47 (Ditch Lt Off; Pulse On with Horn)
+        // Fn48 (Ditch Lt Off)
 
-        // Fn?? (Ditch Lt On)
-        // Fn?? (Ditch Lt On; Pulse Off with Horn)
-        // Fn?? (Ditch Lt Off; Pulse On with Horn)
-        // Fn?? (Ditch Lt Off)
+        // Fn49 (Cab Lt On)
+        // Fn50 (Cab Lt Off)
+        {0xF8017D, 0xFB00F2, 0xFB0000}, // Fn51 (Cab Lt Auto)
 
-        // Fn?? (Cab Lt On)
-        // Fn?? (Cab Lt Off)
-        // Fn?? (Cab Lt Auto)
+        // Fn52 (Loco Marker On)
+        // Fn53 (Loco Marker Off)
 
-        // Fn?? (Loco Marker On)
-        // Fn?? (Loco Marker Off)
+        // Fn54 (Hazard Lt On)
+        // Fn55 (Hazard Lt Off)
+        // Fn56 (Hazard Lt Auto)
 
-        // Fn?? (Hazard Lt On)
-        // Fn?? (Hazard Lt Off)
-        // Fn?? (Hazard Lt Auto)
+        // Fn57 (Strobe Lt On - Single Flash)
+        // Fn58 (Strobe Lt On - Double Flash)
+        // Fn59 (Strobe Lt Off)
 
-        // Fn?? (Strobe Lt On - Single Flash)
-        // Fn?? (Strobe Lt On - Double Flash)
-        // Fn?? (Strobe Lt Off)
-
-        // Fn?? (Car Cabin Lt On)
-        // Fn?? (Car Cabin Lt Off)
-        // Fn?? (Car Cabin Lt Auto)
-
-
-        // {0xF8017D,0xFB01F2,0xFB0189}, // Fn35 Set Cab Light Auto (test!!!)
+        // Fn60 (Car Cabin Lt On)
+        // Fn61 (Car Cabin Lt Off)
+        // Fn62 (Car Cabin Lt Auto)
 
 
         // Extended Sound Effects FnKeys
@@ -328,26 +363,38 @@ public class SerialThrottle extends AbstractThrottle {
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_200 speed steps.
     private final static long[][] SERIAL_FUNCTION_CODES_TMCC2_200 = new long[][] {
-        // TMCC2_200 Remote - Buttons
-        {0xF8010D}, {0xF8011D}, {0xF8011C}, {0xF80105}, {0xF80106}, /* Fn0-4 */
 
-        // TMCC2_200 Remote - Keypad Buttons
-        {0xF80111}, {0xF80112}, {0xF80113}, /* Fn5-7 */
-        {0xF80114}, {0xF80115}, {0xF80116}, /* Fn8-10 */
-        {0xF80117}, {0xF80118}, {0xF80119}, /* Fn11-13 */
-                    {0xF80110},             /* Fn14 */
+        // TMCC2_200 Remote - Defined FnKeys
+        {0xF8010D}, // Fn0 (Headlamp)
+        {0xF8011D}, // Fn1 (Bell)
+        {0xF8011C}, // Fn2 (Horn/Whistle)
+        {0xF80105}, // Fn3 (F - Open Front Coupler)
+        {0xF80106}, // Fn4 (R - Open Rear Coupler)
 
-        // TMCC2_200 Remote - Buttons
-        {0xF80109}, {0xF8011E}, {0xF80104}, {0xF80107}, {0xF80128}, /* Fn15-19 */
-        {0xF80129}, {0xF8012A}, {0xF8012B}, {0xF8011F},/* 20-23 */
+        // TMCC2_200 Remote - Defined KeyPad FnKeys
+        {0xF80111}, {0xF80112}, {0xF80113}, /* Fn5-7 */ // 1-2-3
+        {0xF80114}, {0xF80115}, {0xF80116}, /* Fn8-10 */ // 4-5-6
+        {0xF80117}, {0xF80118}, {0xF80119}, /* Fn11-13 */ // 7-8-9
+                    {0xF80110},             /* Fn14 */ // 0
+
+        // TMCC2_200 Remote - Defined FnKeys
+        {0xF80109}, // Fn15 (Aux1)
+        {0xF8011E}, // Fn16 (Letoff Sound)
+        {0xF80104}, // Fn17 (Boost)
+        {0xF80107}, // Fn18 (Brake)
+        {0xF80128}, // Fn19 (Momentum Low)
+        {0xF80129}, // Fn20 (Momentum Medium)
+        {0xF8012A}, // Fn21 (Momentum High)
+        {0xF8012B}, // Fn22 (Set)
+        {0xF8011F}, // Fn23 (Horn 2)
 
         // TMCC2_200 RR Speed FnKeys
-        {0xF8000A}, // Fn24 ( 10)
-        {0xF80028}, // Fn25 ( 40)
-        {0xF80046}, // Fn26 ( 70)
-        {0xF80064}, // Fn27 (100)
-        {0xF8008C}, // Fn28 (140)
-        {0xF800C7}, // Fn29 (199)
+        {0xF8000A}, // Fn24 ( 10)   5mph
+        {0xF80028}, // Fn25 ( 40)  20mph
+        {0xF80046}, // Fn26 ( 70)  35mph
+        {0xF80064}, // Fn27 (100)  50mph
+        {0xF8008C}, // Fn28 (140)  70mph
+        {0xF800C7}, // Fn29 (199) 100mph (or whatever speed for full throttle)
 
         // TMCC2_200 Extended Lighting FnKeys
 
