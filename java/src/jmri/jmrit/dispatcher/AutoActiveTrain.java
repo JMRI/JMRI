@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import javax.annotation.CheckForNull;
 
 import jmri.*;
+import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.roster.RosterEntry;
@@ -156,6 +158,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public synchronized void setTargetSpeedByPass(float distance, float speed) {
+        log.debug("{}: AutoActiveTrain.setTargetSpeedByPass(distance={}, speed={}) called, passing to AutoEngineer.", _activeTrain.getTrainName(), distance, speed);
         if (distance < 0.0f) {
             _autoEngineer.setTargetSpeed(speed);
         } else {
@@ -178,6 +181,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 return;
             }
         }
+        log.debug("{}: AutoActiveTrain.setTargetSpeed(distance={}, speed={}) called, passing to AutoEngineer.", _activeTrain.getTrainName(), distance, speed);
         _autoEngineer.setTargetSpeed(distance, speed);
     }
 
@@ -537,9 +541,47 @@ public class AutoActiveTrain implements ThrottleListener {
     private boolean _stoppingBySensor = false;
     private Sensor _stopSensor = null;
     private PropertyChangeListener _stopSensorListener = null;
+    private Turnout _turnoutStateNeeded = null;
     private PropertyChangeListener _turnoutStateListener = null;
     private boolean _stoppingByBlockOccupancy = false;    // if true, stop when _stoppingBlock goes UNOCCUPIED
     private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
+    private Turnout _turntableTurnoutNeeded = null; // The turnout controlling the turntable ray that needs to be aligned
+    private PropertyChangeListener _turntableTurnoutListener = null; // Listener for the turntable turnout
+
+    private boolean checkTurntable(AllocatedSection as) {
+        if (as != null) {
+            if (_turntableTurnoutNeeded != null && _turntableTurnoutListener != null) {
+                _turntableTurnoutNeeded.removePropertyChangeListener("KnownState", _turntableTurnoutListener);
+                _turntableTurnoutNeeded = null;
+                _turntableTurnoutListener = null;
+            }
+
+            // Delegate the complex logic of finding the turntable and its required turnout state
+            // to AutoTurnoutsHelper, similar to how checkTurn delegates to checkStateAgainstList.
+            LayoutTrackExpectedState<LayoutTurnout> turntableExpectedState =
+                _dispatcher.getAutoTurnoutsHelper().checkTurntableAlignment(as, _currentBlock, _previousBlock, _nextBlock);
+
+            if (turntableExpectedState != null) {
+                Turnout turnout = turntableExpectedState.getObject().getTurnout();
+                int requiredState = turntableExpectedState.getExpectedState();
+
+                // The turnout is not yet in the required state, so we need to wait.
+                _turntableTurnoutNeeded = turnout;
+                _turntableTurnoutListener = (PropertyChangeEvent e) -> {
+                    if ("KnownState".equals(e.getPropertyName()) && (Integer) e.getNewValue() == requiredState) {
+                        log.debug("{}: Turntable ray turnout {} reached required state {}. Resuming.", _activeTrain.getTrainName(), turnout.getDisplayName(), requiredState);
+                        _turntableTurnoutNeeded.removePropertyChangeListener("KnownState", _turntableTurnoutListener);
+                        _turntableTurnoutNeeded = null;
+                        _turntableTurnoutListener = null;
+                        setSpeedBySignal(); // Turntable aligned, re-evaluate speed.
+                    }
+                };
+                _turntableTurnoutNeeded.addPropertyChangeListener("KnownState", _turntableTurnoutListener);
+                return false; // Train must wait.
+            }
+        }
+        return true; // No turntable issue, train can proceed.
+    }
     private volatile Block _stoppingBlock = null;
     private boolean _resumingAutomatic = false;  // if true, resuming automatic mode after WORKING session
     private boolean _needSetSpeed = false;  // if true, train will set speed according to signal instead of stopping
@@ -1044,7 +1086,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         // only bother to check signal if the next allocation is ours.
         // and the turnouts have been set
-        if (checkAllocationsAhead() && checkTurn(getAllocatedSectionForSection(_nextSection))) {
+        if (checkAllocationsAhead() && checkTurn(getAllocatedSectionForSection(_nextSection)) && checkTurntable(getAllocatedSectionForSection(_nextSection))) {
             if (_activeTrain.getSignalType() == DispatcherFrame.SIGNALHEAD
                     && _controllingSignal != null) {
                 setSpeedBySignalHead();
@@ -1180,14 +1222,18 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private boolean checkTurn(AllocatedSection as) {
         if (as != null && as.getAutoTurnoutsResponse() != null) {
-            Turnout to = _dispatcher.getAutoTurnoutsHelper().checkStateAgainstList(as.getAutoTurnoutsResponse());
-            if (to != null) {
-                // at least one turnout isnt correctly set
-                to.addPropertyChangeListener(_turnoutStateListener = (PropertyChangeEvent e) -> {
-                    if (e.getPropertyName().equals("KnownState")) {
-                        ((Turnout) e.getSource()).removePropertyChangeListener(_turnoutStateListener);
+            if (_turnoutStateNeeded  != null && _turnoutStateListener != null) {
+                _turnoutStateNeeded.removePropertyChangeListener("KnownState",_turnoutStateListener);
+                _turnoutStateNeeded = null;
+                _turnoutStateListener =null;
+            }
+            _turnoutStateNeeded = _dispatcher.getAutoTurnoutsHelper().checkStateAgainstList(as.getAutoTurnoutsResponse());
+            if (_turnoutStateNeeded != null) {
+                _turnoutStateNeeded.addPropertyChangeListener("KnownState",_turnoutStateListener = (PropertyChangeEvent e) -> {
+                    _turnoutStateNeeded.removePropertyChangeListener("KnownState",_turnoutStateListener);
+                         _turnoutStateListener=null;
+                         _turnoutStateNeeded=null;
                         setSpeedBySignal();
-                    }
                 });
                 return false;
             }
@@ -1775,10 +1821,16 @@ public class AutoActiveTrain implements ThrottleListener {
     private synchronized void setTargetSpeedState(int speedState,boolean stopBySpeedProfile) {
         log.trace("{}: setTargetSpeedState:({})",_activeTrain.getTrainName(),speedState);
         _autoEngineer.slowToStop(false);
-        float stoppingDistanceAdjust =  _stopBySpeedProfileAdjust *
-                ( _activeTrain.isTransitReversed() ?
-                _currentAllocatedSection.getTransitSection().getRevStopPerCent() :
-                    _currentAllocatedSection.getTransitSection().getFwdStopPerCent()) ;
+        float stopPercent = (_activeTrain.isTransitReversed() ?
+            _currentAllocatedSection.getTransitSection().getRevStopPerCent() :
+            _currentAllocatedSection.getTransitSection().getFwdStopPerCent());
+
+        if (stopBySpeedProfile && stopPercent <= 0.0f) {
+            log.debug("Stopping percentage is 0, defaulting to 100% for speed profile stop.");
+            stopPercent = 1.0f;
+        }
+
+        float stoppingDistanceAdjust =  _stopBySpeedProfileAdjust * stopPercent;
         log.debug("stoppingDistanceAdjust[{}] isReversed[{}] stopBySpeedProfileAdjust[{}]",stoppingDistanceAdjust,
                 _activeTrain.isTransitReversed(),_stopBySpeedProfileAdjust );
         if (speedState > STOP_SPEED) {
@@ -1804,6 +1856,11 @@ public class AutoActiveTrain implements ThrottleListener {
     private synchronized void setTargetSpeedByProfile(float speedState, float stopBySpeedProfileAdjust, boolean cancelStopping) {
         // the speed comes in as units of warrents (mph, kph, mm/s etc)
             try {
+                if (_activeTrain.getRosterEntry() == null || _activeTrain.getRosterEntry().getSpeedProfile() == null) {
+                    log.debug("Roster Entry or its speed profile is not defined, stopping train.");
+                    setTargetSpeed(0.0f);
+                    return;
+                }
                 float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile().getThrottleSettingFromSignalMapSpeed(speedState, getForward());
                 log.debug("{}: setTargetSpeedByProfile: {} SpeedState[{}]",
                         _activeTrain.getTrainName(),
@@ -1814,9 +1871,11 @@ public class AutoActiveTrain implements ThrottleListener {
                     setTargetSpeed(throttleSetting); // apply speed factor and max
                 } else if (throttleSetting > 0.009) {
                     if (cancelStopping) {cancelStopInCurrentSection();}
-                    setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)  * stopBySpeedProfileAdjust , throttleSetting);
+                    float calculatedDistance = _currentAllocatedSection.getLengthRemaining(_currentBlock) * stopBySpeedProfileAdjust;
+                    log.debug("{}: setTargetSpeedByProfile: Calling AutoActiveTrain.setTargetSpeed with distance={} and speed={}", _activeTrain.getTrainName(), calculatedDistance, throttleSetting);
+                    setTargetSpeed(calculatedDistance , throttleSetting);
                 } else if (useSpeedProfile && _stopBySpeedProfile) {
-                    setTargetSpeed(0.0f);
+                    log.debug("{}: setTargetSpeedByProfile: Stopping using speed profile. Calling AutoEngineer.setTargetSpeed with distance={} and speed={}", _activeTrain.getTrainName(), _currentAllocatedSection.getLengthRemaining(_currentBlock) * stopBySpeedProfileAdjust, 0.0f);
                     _stoppingUsingSpeedProfile = true;
                     _autoEngineer.setTargetSpeed(_currentAllocatedSection.getLengthRemaining(_currentBlock)  * stopBySpeedProfileAdjust, 0.0f);
                 } else {
@@ -1824,8 +1883,8 @@ public class AutoActiveTrain implements ThrottleListener {
                     setTargetSpeed(0.0f);
                     _autoEngineer.setHalt(true);
                 }
-            } catch (Exception ex) {
-                log.error("setTargetSpeedByProfile crashed - Emergency Stop: ", ex );
+            } catch (NullPointerException ex) {
+                log.error("setTargetSpeedByProfile crashed - Emergency Stop: {}", ex.getMessage(), ex );
                 _autoEngineer.slowToStop(false);
                 setTargetSpeed(-1.0f);
                 _autoEngineer.setHalt(true);
@@ -1981,6 +2040,18 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         _controllingSignalMast = null;
         _conSignalMastListener = null;
+        if (_turnoutStateNeeded != null && _turnoutStateListener != null) {
+            _turnoutStateNeeded.removePropertyChangeListener(_turnoutStateListener);
+        }
+        _turnoutStateNeeded = null;
+        _turnoutStateListener = null;
+        // Remove turntable turnout listener
+        if (_turntableTurnoutNeeded != null && _turntableTurnoutListener != null) {
+            _turntableTurnoutNeeded.removePropertyChangeListener("KnownState", _turntableTurnoutListener);
+        }
+        _turntableTurnoutNeeded = null;
+        _turntableTurnoutListener = null;
+        // Remove turntable turnout listener (already handled above if active)
     }
 
 // _________________________________________________________________________________________
@@ -2193,6 +2264,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         public void setTargetSpeed(float distance, float speed) {
+            log.info("{}: AutoEngineer.setTargetSpeed(distance={}, speed={}) called.", _activeTrain.getTrainName(), distance, speed);
             log.debug("Set Target Speed[{}] with distance{{}] from speed[{}]",speed,distance,throttle.getSpeedSetting());
             stopAllTimers();
             if (rosterEntry != null) {

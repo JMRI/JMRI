@@ -48,6 +48,19 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
         element.setAttribute("turnoutControlled", "" + (turnoutControl ? "yes" : "no"));
+        boolean dispatcherManaged = p.isDispatcherManaged();
+        if (dispatcherManaged) {
+            String exitMastName = p.getExitSignalMastName();
+            if (exitMastName != null && !exitMastName.isEmpty()) {
+                element.setAttribute("exitmast", exitMastName);
+            }
+            String bufferMastName = p.getBufferSignalMastName();
+            if (bufferMastName != null && !bufferMastName.isEmpty()) {
+                element.setAttribute("buffermast", bufferMastName);
+            }
+            element.setAttribute("signalIconPlacement", "" + p.getSignalIconPlacement());
+            element.setAttribute("dispatcherManaged", "yes");
+        }
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml");  // temporary until storage split
         // add ray tracks
         for (int i = 0; i < p.getNumberRays(); i++) {
@@ -56,6 +69,12 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
             TrackSegment t = p.getRayConnectOrdered(i);
             if (t != null) {
                 rElem.setAttribute("connectname", t.getId());
+            }
+            if (dispatcherManaged) {
+                String mastName = p.getRayTrackList().get(i).getApproachMastName();
+                if (mastName != null && !mastName.isEmpty()) {
+                    rElem.setAttribute("approachmast", mastName);
+                }
             }
             rElem.setAttribute("index", "" + p.getRayIndex(i));
             if (turnoutControl && p.getRayTurnoutName(i) != null) {
@@ -124,11 +143,32 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
             lt.tLayoutBlockName = a.getValue();
         }
 
-        try {
-            lt.setTurnoutControlled(element.getAttribute("turnoutControlled").getBooleanValue());
-        } catch (DataConversionException e1) {
-            log.warn("unable to convert layout turnout turnoutControlled attribute");
-        } catch (NullPointerException e) {  // considered normal if the attribute is not present
+        a = element.getAttribute("turnoutControlled");
+        if (a != null) {
+            lt.setTurnoutControlled("yes".equalsIgnoreCase(a.getValue()));
+        }
+
+        a = element.getAttribute("dispatcherManaged");
+        if (a != null) {
+            lt.setDispatcherManaged("yes".equalsIgnoreCase(a.getValue()));
+            if (lt.isDispatcherManaged()) {
+                a = element.getAttribute("exitmast");
+                if (a != null) {
+                    lt.tExitSignalMastName = a.getValue();
+                }
+                a = element.getAttribute("buffermast");
+                if (a != null) {
+                    lt.tBufferSignalMastName = a.getValue();
+                }
+                a = element.getAttribute("signalIconPlacement");
+                if (a != null) {
+                    try {
+                        lt.setSignalIconPlacement(a.getIntValue());
+                    } catch (DataConversionException e) {
+                        log.error("failed to convert signalIconPlacement attribute");
+                    }
+                }
+            }
         }
 
         // load ray tracks
@@ -148,24 +188,27 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
                 if (a != null) {
                     connectName = a.getValue();
                 }
-                lt.addRayTrack(angle, index, connectName);
+                LayoutTurntable.RayTrack ray = lt.addRay(angle);
+                ray.connectName = connectName;
+                if (lt.isDispatcherManaged()) {
+                    a = value.getAttribute("approachmast");
+                    if (a != null) {
+                        ray.approachMastName = a.getValue();
+                    }
+                }
                 if (lt.isTurnoutControlled() && value.getAttribute("turnout") != null) {
                     if (value.getAttribute("turnoutstate").getValue().equals("thrown")) {
                         lt.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.THROWN);
                     } else {
                         lt.setRayTurnout(index, value.getAttribute("turnout").getValue(), Turnout.CLOSED);
                     }
-                    try {
-                        lt.setRayDisabled(index, value.getAttribute("disabled").getBooleanValue());
-                    } catch (DataConversionException e1) {
-                        log.warn("unable to convert layout turnout disabled attribute");
-                    } catch (NullPointerException e) {  // considered normal if the attribute is not present
+                    a = value.getAttribute("disabled");
+                    if (a != null) {
+                        lt.setRayDisabled(index, "yes".equalsIgnoreCase(a.getValue()));
                     }
-                    try {
-                        lt.setRayDisabledWhenOccupied(index, value.getAttribute("disableWhenOccupied").getBooleanValue());
-                    } catch (DataConversionException e1) {
-                        log.warn("unable to convert layout turnout disableWhenOccupied attribute");
-                    } catch (NullPointerException e) {  // considered normal if the attribute is not present
+                    a = value.getAttribute("disableWhenOccupied");
+                    if (a != null) {
+                        lt.setRayDisabledWhenOccupied(index, "yes".equalsIgnoreCase(a.getValue()));
                     }
                 }
             }

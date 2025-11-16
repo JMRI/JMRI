@@ -869,13 +869,3 @@ class MyTableModel4 (DefaultTableModel):
         # print "my_match", re.match(pattern, input_string)
 
         return my_match
-
-
-
-
-
-
-
-
-
-

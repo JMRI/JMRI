@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Transit;
 import jmri.Turnout;
+import javax.annotation.CheckForNull;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutDoubleXOver;
@@ -16,6 +17,8 @@ import jmri.jmrit.display.layoutEditor.LayoutRHXOver;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -127,6 +130,49 @@ public class AutoTurnouts {
         return null;
     }
 
+    @CheckForNull
+    public LayoutTrackExpectedState<LayoutTurnout> checkTurntableAlignment(
+            AllocatedSection as, Block currentBlock, Block previousBlock, Block nextBlock) {
+
+        LayoutEditor layoutEditor = InstanceManager.getDefault(DispatcherFrame.class).getLayoutEditor();
+        if (layoutEditor == null) {
+            log.debug("No LayoutEditor associated with dispatcher, skipping turntable check.");
+            return null;
+        }
+
+        LayoutTurntable relevantTurntable = null;
+        // Iterate through all turntables in the LayoutEditor to find one relevant to the current path
+        for (LayoutTurntable tt : layoutEditor.getLayoutTurntables()) {
+            // Check if the current path involves this turntable
+            if (tt.isTurntableBoundary(currentBlock, nextBlock) || tt.isRayBlock(currentBlock) || tt.isRayBlock(nextBlock)) {
+                relevantTurntable = tt;
+                break;
+            }
+        }
+
+        if (relevantTurntable != null && relevantTurntable.isTurnoutControlled()) {
+            // We found a relevant turntable that is turnout controlled.
+            // Get the specific turnout and its required state for the current path.
+            List<LayoutTrackExpectedState<LayoutTurnout>> expectedStates =
+                    relevantTurntable.getTurnoutList(currentBlock, previousBlock, nextBlock);
+
+            if (!expectedStates.isEmpty()) {
+                // For a turntable, there should typically be only one turnout to align for a specific path.
+                LayoutTrackExpectedState<LayoutTurnout> state = expectedStates.get(0);
+                Turnout turnout = state.getObject().getTurnout();
+                int requiredState = state.getExpectedState();
+
+                if (turnout != null && turnout.getKnownState() != requiredState) {
+                    // Turntable not aligned, return the expected state to indicate waiting is needed.
+                    log.debug("Turntable {} ray turnout {} not in required state {}. Needs alignment.",
+                            relevantTurntable.getName(), turnout.getDisplayName(), requiredState);
+                    return state;
+                }
+            }
+        }
+        return null; // No turntable issue, or already aligned.
+    }
+
     /**
      * Internal method implementing the above two methods Returns 'true' if
      * turnouts are set correctly, 'false' otherwise If 'set' is 'true' this
@@ -135,6 +181,10 @@ public class AutoTurnouts {
      */
     private List<LayoutTrackExpectedState<LayoutTurnout>> turnoutUtil(Section s, int seqNum, Section nextSection,
           ActiveTrain at, boolean trustKnownTurnouts, boolean set, Section prevSection, boolean useTurnoutConnectionDelay ) {
+        log.trace("{}:Checking LayoutTrackExpectedState Section[{}]  NextSection[{}] PrevSection[{}]",
+                at.getTrainName(), (s != null) ? s.getDisplayName() : "null",
+                nextSection== null ? "Null" : nextSection.getDisplayName(),
+                prevSection == null ? "Null" : prevSection.getDisplayName());
         // initialize response structure
         List<LayoutTrackExpectedState<LayoutTurnout>> turnoutListForAllocatedSection = new ArrayList<>();
         // validate input and initialize
@@ -244,7 +294,8 @@ public class AutoTurnouts {
              this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of
              been set correctly for the train to have arrived in the first place.
              */
-
+            log.trace("curBlock {}: PrevBlock[{}]", curBlock.getDisplayName(),
+                    prevBlock == null ?   "Null" : prevBlock.getDisplayName());
             if (prevBlock != null) {
                 var blockName = curBlock.getUserName();
                 if (blockName != null) {
@@ -253,10 +304,13 @@ public class AutoTurnouts {
                         var panel = lblock.getMaxConnectedPanel();
                         if (panel != null) {
                             var connection = new ConnectivityUtil(panel);
+                            // note turnouts for turntables are added to the list in getTurnoutList
                             turnoutList = connection.getTurnoutList(curBlock, prevBlock, nextBlock, true);
                         }
                     }
                 }
+            } else {
+               log.debug("turnoutUtil - No previous block");
             }
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {
