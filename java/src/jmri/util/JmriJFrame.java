@@ -1026,8 +1026,15 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
             m.remove(this);
         }
         
-        removeWindowListener(this);
-        removeComponentListener(this);
+        // workaround for code that directly calls dispose()
+        // instead of dispatching a WINDOW_CLOSED event.  This
+        // causes the windowClosing method to not be called. This in turn is an
+        // issue because people have put code in the windowClosed method that
+        // should really be in windowClosing.
+        ThreadingUtil.runOnGUIDelayed(() -> {
+            removeWindowListener(this);
+            removeComponentListener(this);
+        }, 500);
         
         super.dispose();
     }
