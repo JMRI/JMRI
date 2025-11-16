@@ -85,8 +85,12 @@ public class SerialThrottle extends AbstractThrottle {
     public void setFunction(int func, boolean value) {
         updateFunction(func, value);
         
+        int numberOfTriple = 0; // ordinal number of triple being processed, e.g. 1, 2, 3, ...
+        
         if (getFnValueArray(func).length >0) {
             for (long triple : getFnValueArray(func)) {
+                numberOfTriple = numberOfTriple+1;
+                
                 // process each returned command
                 if (func>=0 && func < SERIAL_FUNCTION_CODES_TMCC1.length) {
                     if ( triple > 0xFFFF ) {
@@ -94,17 +98,36 @@ public class SerialThrottle extends AbstractThrottle {
                         if (triple > 0xFFFFFF ) {
                             int first =  (int)(triple >> 24);
                             int second = (int)(triple & 0xFFFFFF);
+                            accumulateChecksum(first);
+                            accumulateChecksum(second);
+                            
+                            // if this is the third triple, place the 
+                            // checksum in its lowest byte
+                            if (numberOfTriple == 3) {
+                                second = (second &0xFFFFFF00) | ( (~checksumAccumulator) & 0xFF);
+                            }
+                            
                             // doubles are only sent once, not repeating
                             sendOneWordOnce(first  + address.getNumber() * 512);
                             sendOneWordOnce(second + address.getNumber() * 512);
+                            
                         } else {
                             // single message
-                            sendFnToLayout((int)triple + address.getNumber() * 512, func);
+                            int content = (int)triple + address.getNumber() * 512;
+                            accumulateChecksum(content);
+                            
+                            // if this is the third triple, place the 
+                            // checksum in its lowest byte
+                            if (numberOfTriple == 3) {
+                                content = (content &0xFFFFFF00) | ( (~checksumAccumulator) & 0xFF);
                             }
+
+                            sendFnToLayout(content, func);
+                        }
                     } else {
                         // TMCC 1 format
                         sendFnToLayout((int)triple + address.getNumber() * 128, func);
-                        }
+                    }
                 } else {
                     super.setFunction(func, value);
                 }
@@ -114,6 +137,17 @@ public class SerialThrottle extends AbstractThrottle {
         }
     }
 
+    // accumulate the checksum values into
+    // the checksumAccumulator variable
+    //
+    // Takes the two bottom bytes _only_ and adds them to the accumulation.
+    int checksumAccumulator = 0;
+    private void accumulateChecksum(int input) {
+        int byte1 = input&0xFF;
+        int byte2 = (input >> 8)&0xFF;
+        checksumAccumulator = (checksumAccumulator + byte1+byte2) & 0xFF;
+    }
+    
     // the argument is a long containing 3 bytes. 
     // The first byte is the message opcode
     private void sendOneWordOnce(int word) {
