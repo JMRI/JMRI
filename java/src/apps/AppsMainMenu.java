@@ -10,7 +10,10 @@ import javax.swing.text.DefaultEditorKit;
 import apps.jmrit.DebugMenu;
 import apps.plaf.macosx.Application;
 
+import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.jmrit.ToolsMenu;
+import jmri.jmrit.beantable.TablesMenu;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsMenu;
@@ -51,6 +54,19 @@ public class AppsMainMenu {
         fileMenu(menuBar, wi);
         editMenu(menuBar, wi);
         toolsMenu(menuBar, wi);
+        
+        UserPreferencesManager prefMgr = InstanceManager.getNullableDefault(UserPreferencesManager.class);
+        if (prefMgr != null) {
+            Object pref = prefMgr.getProperty("jmri.jmrit.ToolsMenu", "showTablesMenu");
+            boolean showMenu = true; // Default to true
+            if (pref instanceof Boolean) {
+                showMenu = (Boolean) pref;
+            }
+            if (showMenu) {
+                tablesMenu(menuBar, wi);
+            }
+        }
+
         rosterMenu(menuBar, wi, pane);
         panelMenu(menuBar, wi);
         scriptMenu(menuBar, wi);
@@ -132,6 +148,10 @@ public class AppsMainMenu {
 
     static private void toolsMenu(JMenuBar menuBar, WindowInterface wi) {
         menuBar.add(new ToolsMenu(Bundle.getMessage("MenuTools")));  // NOI18N
+    }
+
+    static private void tablesMenu(JMenuBar menuBar, WindowInterface wi) {
+        menuBar.add(new TablesMenu());
     }
 
     /**
