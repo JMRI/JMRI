@@ -3,8 +3,8 @@ package jmri.jmrit.operations.rollingstock.engines.gui;
 import java.awt.GraphicsEnvironment;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
 import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
@@ -19,7 +19,7 @@ public class EngineRosterMenuTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EnginesTableFrame etf = new EnginesTableFrame();
+        EnginesTableFrame etf = new EnginesTableFrame(true, null, null);
         EngineRosterMenu t = new EngineRosterMenu("test menu",1,etf);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(etf);

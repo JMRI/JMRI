@@ -57,11 +57,14 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * Interpret the byte array as a sequence of characters to send.
-     *
+     * @deprecated 5.13.5, unused, requires further development.
      * @param a Array of bytes to send
      */
+    @Deprecated( since="5.13.5", forRemoval=true)
     public SerialMessage(byte[] a) {
-        super(String.valueOf(a));
+        // super(String.valueOf(a)); // Spotbug toString on array
+        // requires further development to produce correct values for hardware type.
+        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""));
         setBinary(true);
     }
 

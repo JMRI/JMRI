@@ -1,10 +1,6 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -233,6 +229,7 @@ public class HexFile {
      * Return the next TYPE_DATA record from the file
      * 
      * @return the next hex record
+     * @throws ArrayIndexOutOfBoundsException when needed
      */
     public HexRecord getNextRecord() throws ArrayIndexOutOfBoundsException {
         return hexRecords[readIndex++];
@@ -248,6 +245,7 @@ public class HexFile {
      *
      * @param addr The address
      * @return the hex record
+     * @throws ArrayIndexOutOfBoundsException when needed
      */
     public Optional<HexRecord> getRecordForAddress(int addr) throws ArrayIndexOutOfBoundsException {
         HexRecord r;

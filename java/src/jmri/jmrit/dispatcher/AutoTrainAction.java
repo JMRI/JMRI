@@ -63,7 +63,7 @@ public class AutoTrainAction {
 
     // this method is called by AutoActiveTrain when target speed goes from 0 to
     // a greater value.and the train is currently stopped
-    protected synchronized boolean isDelayedStart(float speed) {
+    protected synchronized boolean isDelayedStart(float distance, float speed) {
         for (TransitSectionAction t: _activeActionList) {
             if (t.getWhenCode() == TransitSectionAction.PRESTARTDELAY
                     && t.getTargetTransitSection().getSection() == _autoActiveTrain.getCurrentAllocatedSection().getSection()) {
@@ -72,6 +72,7 @@ public class AutoTrainAction {
                 if (t.getWaitingThread() == null) {
                     log.trace("Adding actions");
                     t.setDataWhat1Float(speed);
+                    t.setDataWhat2Float(distance);
                     checkDelay(t);
                     // now
                     Iterator<TransitSectionAction> itrA = _activeActionList.iterator();
@@ -430,7 +431,7 @@ public class AutoTrainAction {
             case TransitSectionAction.PRESTARTRESUME:
                 // set current speed either higher or lower than current value
                 log.trace("Resume After Prestart Setting Target[{}] Section:[{}]",tsa.getDataWhat1Float(),tsa.getTargetTransitSection().getSectionName());
-                _autoActiveTrain.setTargetSpeedByPass (tsa.getDataWhat1Float());
+                _autoActiveTrain.setTargetSpeedByPass (tsa.getDataWhat2Float(),tsa.getDataWhat1Float());
                 completedAction(tsa);
                 break;
             case TransitSectionAction.SETCURRENTSPEED:
@@ -469,11 +470,12 @@ public class AutoTrainAction {
                 // set light on or off
                 log.trace("Set Light Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 if (_autoActiveTrain.getAutoEngineer() != null) {
-                    log.trace("{}: setting light (F0) to {}", _activeTrain.getTrainName(), tsa.getStringWhat());
+                    log.trace("{}: setting light (F{}) to {}", _activeTrain.getTrainName(),
+                            _autoActiveTrain.getFunctionLight(), tsa.getStringWhat());
                     if (tsa.getStringWhat().equals("On")) {
-                        _autoActiveTrain.getAutoEngineer().setFunction(0, true);
+                        _autoActiveTrain.getAutoEngineer().setFunction(_autoActiveTrain.getFunctionLight(), true);
                     } else if (tsa.getStringWhat().equals("Off")) {
-                        _autoActiveTrain.getAutoEngineer().setFunction(0, false);
+                        _autoActiveTrain.getAutoEngineer().setFunction(_autoActiveTrain.getFunctionLight(), false);
                     } else {
                         log.error("Incorrect Light ON/OFF setting *{}*", tsa.getStringWhat());
                     }
@@ -484,17 +486,18 @@ public class AutoTrainAction {
                 // start bell (only works with sound decoder)
                 log.trace("Set Start Bell Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 if (_autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer() != null)) {
-                    log.trace("{}: starting bell (F1)", _activeTrain.getTrainName());
-                    _autoActiveTrain.getAutoEngineer().setFunction(1, true);
+                    log.trace("{}: starting bell (F{})", _activeTrain.getTrainName(),_autoActiveTrain.getFunctionBell());
+                    _autoActiveTrain.getAutoEngineer().setFunction(_autoActiveTrain.getFunctionBell(), true);
                 }
                 completedAction(tsa);
                 break;
             case TransitSectionAction.STOPBELL:
                 // stop bell (only works with sound decoder)
+                // start bell (only works with sound decoder)
                 log.trace("Set Stop Bell Section:[{}]",tsa.getTargetTransitSection().getSectionName());
                 if (_autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer() != null)) {
-                    log.trace("{}: stopping bell (F1)", _activeTrain.getTrainName());
-                    _autoActiveTrain.getAutoEngineer().setFunction(1, false);
+                    log.trace("{}: stopping bell (F{})", _activeTrain.getTrainName(), _autoActiveTrain.getFunctionBell());
+                    _autoActiveTrain.getAutoEngineer().setFunction(_autoActiveTrain.getFunctionBell(), false);
                 }
                 completedAction(tsa);
                 break;
@@ -668,14 +671,14 @@ public class AutoTrainAction {
             if (_tsa.getWhatCode() == TransitSectionAction.SOUNDHORN) {
                 if (_autoActiveTrain.getAutoEngineer() != null) {
                     try {
-                        _autoActiveTrain.getAutoEngineer().setFunction(2, true);
+                        _autoActiveTrain.getAutoEngineer().setFunction(_autoActiveTrain.getFunctionHorn(), true);
                         Thread.sleep(_tsa.getDataWhat1());
                     } catch (InterruptedException e) {
                         // interrupting will cause termination after turning horn off
                     }
                 }
                 if (_autoActiveTrain.getAutoEngineer() != null) {
-                    _autoActiveTrain.getAutoEngineer().setFunction(2, false);
+                    _autoActiveTrain.getAutoEngineer().setFunction(_autoActiveTrain.getFunctionHorn(), false);
                 }
             } else if (_tsa.getWhatCode() == TransitSectionAction.SOUNDHORNPATTERN) {
                 String pattern = _tsa.getStringWhat();
@@ -685,7 +688,7 @@ public class AutoTrainAction {
                 while (keepGoing && (index < pattern.length())) {
                     // sound horn
                     if (_autoActiveTrain.getAutoEngineer() != null) {
-                        _autoActiveTrain.getAutoEngineer().setFunction(2, true);
+                        _autoActiveTrain.getAutoEngineer().setFunction(_autoActiveTrain.getFunctionHorn(), true);
                         try {
                             if (pattern.charAt(index) == 's') {
                                 Thread.sleep(_tsa.getDataWhat1());
@@ -701,7 +704,7 @@ public class AutoTrainAction {
                         keepGoing = false;
                     }
                     if (_autoActiveTrain.getAutoEngineer() != null) {
-                        _autoActiveTrain.getAutoEngineer().setFunction(2, false);
+                        _autoActiveTrain.getAutoEngineer().setFunction(_autoActiveTrain.getFunctionHorn(), false);
                     } else {
                         keepGoing = false;
                     }

@@ -1,8 +1,10 @@
 package jmri.jmrix.openlcb.configurexml;
 
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.jmrix.openlcb.OlcbSignalMast;
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
@@ -101,6 +103,8 @@ public class OlcbSignalMastXmlTest {
 
         if(memo != null && memo.getInterface() !=null ) {
            memo.getInterface().dispose();
+           memo.get(OlcbEventNameStore.class).deregisterShutdownTask();
+           InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
         }
         memo = null;
         connection = null;

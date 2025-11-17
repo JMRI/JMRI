@@ -1,14 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import java.awt.GraphicsEnvironment;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.Assume;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
@@ -20,30 +20,38 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  */
 public class EditPortalDirectionTest {
 
-    OBlockManager blkMgr;
+    private OBlockManager blkMgr;
 
     @Test
+    @DisabledIfHeadless
     public void testSetup() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        Assumptions.assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"), "Ignoring intermittent test");
 
         ControlPanelEditor frame = new ControlPanelEditor("EditPortalDirectionTest");
         frame.makeCircuitMenu(true);
         CircuitBuilder cb = frame.getCircuitBuilder();
         OBlock ob1 = blkMgr.createNewOBlock("OB1", "a");
 
-        new Thread(() -> {
+        Thread t = new Thread(() -> {
             JFrameOperator jfo = new JFrameOperator("Edit Direction Arrows");
             JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("incompleteCircuit"));
             JButtonOperator jbo = new JButtonOperator(jdo, "OK");
             jbo.push();
-        }).start();
+        });
+        t.start();
 
         EditPortalDirection dFrame = new EditPortalDirection("Edit Direction Arrows", cb, ob1);
-        Assert.assertNotNull("exists", dFrame);
+        assertNotNull( dFrame, "exists");
+        JUnitUtil.waitThreadTerminated(t);
 
+        JFrameOperator jfo = new JFrameOperator("Edit Direction Arrows");
+
+        // Block circuit (OBlock) "a" has no portals . . .
+        Thread tt = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("editCiruit"), "OK");
+        new JButtonOperator(jfo, "Done").doClick();
+
+        JUnitUtil.waitThreadTerminated(tt);
         JUnitUtil.dispose(frame);
-//        JUnitUtil.dispose(dFrame);    // OK button should close dFrame
     }
 
     @BeforeEach

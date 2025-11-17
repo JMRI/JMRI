@@ -1,28 +1,39 @@
 package jmri.jmrix.dccpp.swing.packetgen;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of PacketGenAction
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfHeadless
 public class PacketGenActionTest {
 
     
     private jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = null;
 
     @Test
-    public void testMemoCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+    public void testDccPpPacketGenMemoCtor() {
         PacketGenAction action = new PacketGenAction(memo);
-        Assert.assertNotNull("exists", action);
+        Assertions.assertNotNull( action, "exists");
+    }
+
+    @Test
+    public void testPacketGenActionPerformed() {
+        PacketGenAction action = new PacketGenAction(); // default CTor
+        ThreadingUtil.runOnGUI(() -> action.actionPerformed(null));
+
+        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("PacketGenFrameTitle") + " (D)");
+        Assertions.assertNotNull(jfo);
+
+        JUnitUtil.dispose(jfo.getWindow());
+        jfo.waitClosed();
     }
 
     @BeforeEach
@@ -36,7 +47,10 @@ public class PacketGenActionTest {
     }
 
     @AfterEach
-    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    public void tearDown() {
+        memo.getDCCppTrafficController().terminateThreads();
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 }

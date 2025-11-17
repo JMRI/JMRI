@@ -59,8 +59,11 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
-    public EnginesTableModel() {
+    public EnginesTableModel(boolean showAllLocos, String locationName, String trackName) {
         super();
+        showAll = showAllLocos;
+        this.locationName = locationName;
+        this.trackName = trackName;
         engineManager.addPropertyChangeListener(this);
         updateList();
     }
@@ -193,9 +196,7 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
         removePropertyChangeEngines();
         engineList = getSelectedEngineList();
         // and add listeners back in
-        for (RollingStock rs : engineList) {
-            rs.addPropertyChangeListener(this);
-        }
+        addPropertyChangeEngines();
     }
 
     public List<Engine> getSelectedEngineList() {
@@ -248,6 +249,7 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             default:
                 list = engineManager.getByNumberList();
         }
+        filterList(list);
         return list;
     }
 
@@ -573,11 +575,15 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
         }
     }
 
+    private void addPropertyChangeEngines() {
+        for (RollingStock rs : engineManager.getList()) {
+            rs.addPropertyChangeListener(this);
+        }
+    }
+
     private void removePropertyChangeEngines() {
-        if (engineList != null) {
-            for (RollingStock rs : engineList) {
-                rs.removePropertyChangeListener(this);
-            }
+        for (RollingStock rs : engineManager.getList()) {
+            rs.removePropertyChangeListener(this);
         }
     }
 
@@ -607,6 +613,10 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             }
             if (row >= 0) {
                 fireTableRowsUpdated(row, row);
+                // next is needed when only showing engines at a location or track
+            } else if (e.getPropertyName().equals(Engine.TRACK_CHANGED_PROPERTY)) {
+                updateList();
+                fireTableDataChanged();
             }
         }
     }

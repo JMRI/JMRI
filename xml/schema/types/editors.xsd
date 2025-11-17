@@ -1429,6 +1429,7 @@
       <xs:attribute name="ver" type="xs:integer"></xs:attribute>
 
       <xs:attribute name="hidden" type="yesNoType"></xs:attribute>
+      <xs:attribute name="showunknown" type="yesNoType"></xs:attribute>
       <xs:attribute name="disabled" type="yesNoType"></xs:attribute>
       <xs:attribute name="disableWhenOccupied" type="yesNoType"></xs:attribute>
       <xs:attribute name="showtooltip" type="yesNoType"></xs:attribute>

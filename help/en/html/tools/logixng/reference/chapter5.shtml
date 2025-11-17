@@ -58,6 +58,10 @@
             </li>
 
             <li>
+              <a href="#digital_action_opspro">OperationsPro <span class="since">since 5.13.2</span></a>
+            </li>
+
+            <li>
               <a href="#digital_action_other">Other</a>
             </li>
           </ul>
@@ -658,6 +662,33 @@ LogixNG: IQ:AUTO:0001
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h4>Request update of turnout<span class="since">since 5.13.6</span></h4>
+
+      <p>Request the current status of a specific turnout.  The action depends on whether the
+      connection supports turnout state requests.</p>
+
+      <p>Depending on the accessory decoder a LocoNet request might work if the turnout feedback is
+      set to MONITORING or INDIRECT.</p>
+
+      <p>As of JMRI 5.7.5, supported connection types include :</p>
+      <ul>
+      <li>BiDiB</li>
+      <li>CBUS</li>
+      <li>C/MRI</li>
+      <li>IPOCS</li>
+      <li>Lenz XpressNet</li>
+      <li>OpenLCB</li>
+      <li>Roco Z21 CAN</li>
+      <li>XBee</li>
+      </ul>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/request_turnout_state.png">
+        <img src="images/chapter5/request_turnout_state.png" alt="Chapter 5 request turnout state"></a>
+      </div>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h4>Route</h4>
 
       <ul>
@@ -1238,7 +1269,36 @@ LogixNG: IQ:AUTO:0001
          src="images/chapter5/for_each_sample.png" alt="Chapter 5 for each"></a>
        </div>
 
-       <p>For another example, see <a href="#lob_lv">Listen on beans - Local variable</a>.</p>
+      <p>For another example, see <a href="#lob_lv">Listen on beans - Local variable</a>.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+
+      <h4 id="foreachdelay">For each with delay<span class="since">since 5.13.6</span></h4>
+
+      <p><strong>For each with delay</strong> combines <a href="#foreach">For each</a> with
+      <a href="#ExecuteDelayed">Execute delayed</a>.  Compared to <em>For each</em>, the difference
+      is that the action to be executed for each item will be delayed.  A good example is setting
+      turnouts to a known state without overloading the command station or the DCC connection.</p>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/for_each_delay.png">
+        <img src="images/chapter5/for_each_delay.png" alt="Chapter 5 for each with delay"></a>
+      </div>
+
+      <p>While the timer options work the same as <em>Execute delayed</em>, there are some potential
+      issues if either option is selected.</p>
+
+      <dl>
+        <dt>Reset timer if already started</dt>
+        <dd>Only some items will be processed if the action is run again before the previous task
+        has finished.</dd>
+
+        <dt>Use individual timers</dt>
+        <dd>There is a possibility that a lot of items will be processed at the same time.</dd>
+      </dl>
+
+      <p>For best results do not use the timer options.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1649,6 +1709,28 @@ LogixNG: IQ:AUTO:0001
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
+      <h2 id="digital_action_opspro">Digital action :: OperationsPro <span class="since">since 5.13.2</span></h2>
+
+      <div style="margin-left: 2em;">
+        <a href="images/chapter5/digital_action_opsrunauto.png"><img class="image-border" src=
+        "images/chapter5/digital_action_opsrunauto.png" alt="Chapter 5 digital action operations"></a>
+      </div>
+
+      <h4>Run automation</h4>
+
+      <p>This action is used to run an OperationsPro Automation.  These are defined using the
+      <strong>Automation</strong> tool in <strong>Trains &rArr; Tools &rArr; Automation</strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/opspro-run-automation.png">
+        <img src="images/chapter5/opspro-run-automation.png"
+        alt="Chapter 5 ops run automation"></a>
+      </div>
+
+      <p>Select an <strong>Automation</strong> from the list.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
       <h2 id="digital_action_other">Digital action :: Other</h2>
 
       <div style="margin-left: 2em;">
@@ -1760,6 +1842,47 @@ LogixNG: IQ:AUTO:0001
 
       <p>Note:  This example was used to verify that the local variable list varies depending on
       when the <strong>sub</strong> action was called.</p>
+
+      <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+      <h4 id="execute-program">Execute program<span class="since">since 5.13.6</span></h4>
+
+      <p><strong>Execute program</strong> is used to execute a program/script outside of JMRI.  The
+      program has no access to the JMRI run-time environment.  The
+      <a href="chapter6.shtml#fileasflag">File as flag</a> expression can be used to notify JMRI of
+      the program state.  Program output is not captured.  This includes print and echo statements.
+      Using <em>redirect</em> does not work. To retain output, it must be written to a file.</p>
+
+      <p>The dialog has 3 tabs. The <strong>Program</strong> tab has the name of the program and if
+      necessary, the path to the program.  This will vary depending on the operating system. In the
+      image it is a script in the <em>scripts</em> directory within the <em>user files location</em>
+      using the macOS/Linux command line format.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute_program.png">
+        <img src="images/chapter5/execute_program.png"
+        alt="Chapter 5 execute program action"></a>
+      </div>
+
+      <p>The <strong>Parameters</strong> tab is used to define the command line parameters. Each
+      parameter is a separate row.  If a parameter has arguments, those are also separate.  For
+      example, <code>cut -d : -f 1,7 /etc/passwd</code>, requires 5 entries.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute_program_parameters.png">
+        <img src="images/chapter5/execute_program_parameters.png"
+        alt="Chapter 5 execute program parameters"></a>
+      </div>
+
+      <p>The <strong>Working directory</strong> tab sets the <em>working directory</em> before
+      starting the program.  This is used for <em>relative path</em> execution and file references.
+      The  default working directory is the profile's <strong><em>User Files Location</em></strong>.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/chapter5/execute_program_directory.png">
+        <img src="images/chapter5/execute_program_directory.png"
+        alt="Chapter 5 execute program directory"></a>
+      </div>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

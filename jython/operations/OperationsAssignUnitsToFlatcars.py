@@ -107,7 +107,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
             if unit.getTypeName() == unitName:
                 print ('    Loading ({}) ({}) destination ({}, {}) final destination ({}, {})'.format(unit.toString(), unitName, unit.getDestinationName(), unit.getDestinationTrackName(), unit.getFinalDestinationName(), unit.getFinalDestinationTrackName()))
                 if not unit.getKernel() == None:
-                    print ("    (" + unit.toString() + ") assigned to kernel (" + unit.getKernelName() + ")")
+                    print ('    ({}) assigned to kernel ({})'.format(unit.toString(), unit.getKernelName()))
                     continue
                 else:
                     print ('    ({}) isn''t assigned to a kernel'.format(unit.toString()))

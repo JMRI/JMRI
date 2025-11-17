@@ -2,7 +2,6 @@ package jmri.script.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class ScriptFileChooserTest {
     @Test
     public void testCTor() {
         ScriptFileChooser t = new ScriptFileChooser();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

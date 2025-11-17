@@ -2,7 +2,6 @@ package jmri.util;
 
 import javax.swing.JMenu;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class MenuScrollerTest {
     @Test
     public void testCTor() {
         MenuScroller t = new MenuScroller(new JMenu());
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

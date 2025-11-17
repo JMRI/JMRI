@@ -9,10 +9,12 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
  */
 public class XNetFeedbackRequestCommandMessageFormatter implements XPressNetMessageFormatter {
 
+    @Override
     public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.lenz.XNetMessage && ((jmri.jmrix.lenz.XNetMessage) m).getElement(0) == XNetConstants.ACC_INFO_REQ;
     }
 
+    @Override
     public String formatMessage(jmri.jmrix.Message m) {
         String nibblekey=(((m.getElement(2) & 0x01) == 0x01) ? "FeedbackEncoderUpperNibble" : "FeedbackEncoderLowerNibble");
         return Bundle.getMessage("XNetMessageFeedbackRequest",

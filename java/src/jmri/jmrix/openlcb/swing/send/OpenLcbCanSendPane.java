@@ -112,8 +112,12 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         store = memo.get(MimicNodeStore.class);
         nodeSelector = new NodeSelector(store);
         nodeSelector.addActionListener (new ActionListener () {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setCdiButton();
+                jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{ 
+                    setCdiButton(); 
+                }, 500);
             }
         });
 
@@ -187,20 +191,26 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
         add(pane2);
-        b = new JButton("Send Request Consumers");
+        b = new JButton("Send Global Identify Events");
+        b.addActionListener(this::sendGlobalIdentifyEvents);
+        pane2.add(b);
+        b = new JButton("Send Event Produced");
+        b.addActionListener(this::sendEventPerformed);
+        pane2.add(b);
+        pane2 = new JPanel();
+        pane2.setLayout(new WrapLayout());
+        add(pane2);
+        b = new JButton("Send Identify Consumers");
         b.addActionListener(this::sendReqConsumers);
         pane2.add(b);
         b = new JButton("Send Consumer Identified");
         b.addActionListener(this::sendConsumerID);
         pane2.add(b);
-        b = new JButton("Send Request Producers");
+        b = new JButton("Send Identify Producers");
         b.addActionListener(this::sendReqProducers);
         pane2.add(b);
         b = new JButton("Send Producer Identified");
         b.addActionListener(this::sendProducerID);
-        pane2.add(b);
-        b = new JButton("Send Event Produced");
-        b.addActionListener(this::sendEventPerformed);
         pane2.add(b);
 
         // addressed messages
@@ -209,7 +219,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2 = new JPanel();
         pane2.setLayout(new WrapLayout());
         add(pane2);
-        b = new JButton("Send Request Events");
+        b = new JButton("Send Addressed Identify Events");
         b.addActionListener(this::sendRequestEvents);
         pane2.add(b);
         b = new JButton("Send PIP Request");
@@ -230,7 +240,7 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         pane2.add(new JLabel("Contents: "));
         datagramContentsField.setColumns(45);
         pane2.add(datagramContentsField);
-        b = new JButton("Send Datagram Reply");
+        b = new JButton("Send Positive Datagram Reply");
         b.addActionListener(this::sendDatagramReply);
         pane2.add(b);
 
@@ -302,16 +312,20 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
         var nodeID = nodeSelector.getSelectedNodeID();
         if (nodeID == null) { 
             cdiButton.setEnabled(false);
+            log.debug("null nodeID disables cdiButton");
             return;
         }
         var pip = store.getProtocolIdentification(nodeID);
         if (pip == null || pip.getProtocols() == null) { 
             cdiButton.setEnabled(false);
+            log.debug("null pip info disables cdiButton");
             return;
         }
-        cdiButton.setEnabled(
+        boolean setValue = 
             pip.getProtocols()
-                .contains(org.openlcb.ProtocolIdentification.Protocol.ConfigurationDescription));
+                .contains(org.openlcb.ProtocolIdentification.Protocol.ConfigurationDescription);
+        cdiButton.setEnabled(setValue);
+        log.debug("cdiButton set {} from PIP info", setValue);
     }
     
     private JPanel getSendSinglePacketJPanel() {
@@ -428,6 +442,11 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public void sendRequestSnip(java.awt.event.ActionEvent e) {
         Message m = new SimpleNodeIdentInfoRequestMessage(srcNodeID, destNodeID());
+        connection.put(m, null);
+    }
+
+    public void sendGlobalIdentifyEvents(java.awt.event.ActionEvent e) {
+        Message m = new IdentifyEventsGlobalMessage(srcNodeID);
         connection.put(m, null);
     }
 

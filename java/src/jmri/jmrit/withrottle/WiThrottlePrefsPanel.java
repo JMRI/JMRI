@@ -42,7 +42,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     JSpinner delaySpinner;
 
     JCheckBox momF2CB;
-    
+
     JCheckBox exclusiveCB;
 
     JSpinner port;
@@ -97,7 +97,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         delaySpinner.setValue(localPrefs.getEStopDelay());
 
         momF2CB.setSelected(localPrefs.isUseMomF2());
-        
+
         exclusiveCB.setSelected(localPrefs.isExclusiveUseOfAddress());
 
         port.setValue(localPrefs.getPort());
@@ -128,7 +128,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         localPrefs.setEStopDelay((Integer) delaySpinner.getValue());
 
         localPrefs.setUseMomF2(momF2CB.isSelected());
-        
+
         localPrefs.setExclusiveUseOfAddress(exclusiveCB.isSelected());
 
         int portNum;
@@ -224,6 +224,14 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
             this.startupCB.removeItemListener(this.startupItemListener);
             StartupActionsManager manager = InstanceManager.getDefault(StartupActionsManager.class);
             if (this.startupCB.isSelected()) {
+                // Delete any existing WiThrottle start up actions.
+                // Manually adding a start up action sets the start up check box active which triggers
+                // the creation of a second start up action.
+                manager.getActions(PerformActionModel.class).stream().filter((model) -> (WiThrottleCreationAction.class.getName().equals(model.getClassName()))).forEach((model) -> {
+                    this.startupActionPosition = Arrays.asList(manager.getActions()).indexOf(model);
+                    manager.removeAction(model);
+                });
+
                 PerformActionModel model = new PerformActionModel();
                 model.setClassName(WiThrottleCreationAction.class.getName());
                 if (this.startupActionPosition == -1 || this.startupActionPosition >= manager.getActions().length) {

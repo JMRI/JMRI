@@ -82,6 +82,7 @@
 <!ATTLIST track alternative		CDATA #IMPLIED> 
 <!ATTLIST track pool			CDATA #IMPLIED>
 <!ATTLIST track minLength		CDATA #IMPLIED>
+<!ATTLIST track maxLength		CDATA #IMPLIED>
 <!ATTLIST track comment			CDATA #IMPLIED>
 <!ATTLIST track blockOptions	CDATA #IMPLIED>
 <!ATTLIST track ignoreUsedPercentage	CDATA #IMPLIED>
@@ -89,6 +90,7 @@
 <!ATTLIST track blockingOrder	CDATA #IMPLIED>
 <!ATTLIST track holdCustomLoads	(true | false) "false">
 <!ATTLIST track onlyCarWithFD	(true | false) "false">
+<!ATTLIST track trackPriority	CDATA #IMPLIED>
 
 <!ATTLIST destination id			CDATA #REQUIRED>          
 <!ATTLIST destination name			CDATA #IMPLIED>

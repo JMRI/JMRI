@@ -5,10 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Date;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
@@ -38,6 +42,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
     int runPauseButtonWidth;
 
     Timebase clock;
+    private final PropertyChangeListener minuteListener = (PropertyChangeEvent evt) -> update();
 
     JButton runPauseButton;
 
@@ -82,8 +87,6 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
             aspect = (4.5 * 24. + runPauseButtonWidth) / 32.; // pick up clock prefs choice: add width of a stop/start button
         }
 
-        // listen for changes to the Timebase parameters
-        clock.addPropertyChangeListener(this);
 
         // init GUI
         m1 = new JLabel(tubes[0]);
@@ -107,10 +110,11 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
         update();
         pack();
 
+        // listen for changes to the Timebase parameters
+        clock.addPropertyChangeListener(this);
+
         // request callback to update time
-        clock.addMinuteChangeListener((java.beans.PropertyChangeEvent e) -> {
-            update();
-        });
+        clock.addMinuteChangeListener(minuteListener);
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(
@@ -184,6 +188,13 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
             clock.setRun(!clock.getRun());
             updateButtonText();
         }
+    }
+
+    @Override
+    public void dispose() {
+        clock.removeMinuteChangeListener(minuteListener);
+        clock.removePropertyChangeListener(this);
+        super.dispose();
     }
 
 }

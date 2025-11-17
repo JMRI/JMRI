@@ -694,6 +694,12 @@ delay is 500 milliseconds.
       written for each operation, in which case this should be set to false. The default is
       true.</p>
 
+      <p>In some cases, you want to reset the PI and SI values after the indexed CV
+      is read or written.  To do that, put the new values after a semicolon:
+      11.12.123;0.1 for example. Note that this only works when both PI and
+      SI are being written;  the case where just PI is used has not been
+      programmed yet.
+      
       <p>If both this and the "access to high CV" capabilities are present, this one should be
       listed second.</p>
 

@@ -398,6 +398,7 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         memo = new TamsSystemConnectionMemo(tc);
         tm = new TamsThrottleManager(memo);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
+        memo.store(tm, jmri.ThrottleManager.class);
         instance = new TamsThrottle(memo, new jmri.DccLocoAddress(1234,true));
     }
 

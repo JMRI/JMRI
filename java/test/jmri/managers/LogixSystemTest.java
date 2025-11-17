@@ -1,9 +1,11 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -37,9 +39,9 @@ public class LogixSystemTest {
         Sensor is1 = InstanceManager.getDefault(jmri.SensorManager.class).getSensor("IS1");
         Turnout it1 = InstanceManager.getDefault(jmri.TurnoutManager.class).getTurnout("IT1");
         Turnout it2 = InstanceManager.getDefault(jmri.TurnoutManager.class).getTurnout("IT2");
-        Assert.assertNotNull(is1);
-        Assert.assertNotNull(it1);
-        Assert.assertNotNull(it2);
+        assertNotNull(is1);
+        assertNotNull(it1);
+        assertNotNull(it2);
 
         // remember startup state for Turnouts, so can detect change
         int oldIt1 = it1.getState();
@@ -49,12 +51,12 @@ public class LogixSystemTest {
         is1.setState(jmri.Sensor.ACTIVE);
 
         // check for propagation (maybe needs a wait someday?)
-        Assert.assertTrue("IT1", oldIt1 != it1.getState());
-        Assert.assertTrue("IT2", oldIt2 != it2.getState());
+        assertNotSame( oldIt1, it1.getState(), "IT1");
+        assertNotSame( oldIt2, it2.getState(), "IT2");
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -64,7 +66,7 @@ public class LogixSystemTest {
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

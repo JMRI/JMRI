@@ -807,6 +807,13 @@ public class TrainBuilderBase extends TrainCommon {
                 i--;
                 continue;
             }
+            
+            // is car at interchange with destination restrictions?
+            if (!checkPickupInterchangeDestinationRestrictions(car)) {
+                _carList.remove(car);
+                i--;
+                continue;
+            }
             // note that for trains departing staging the engine and car roads,
             // types, owners, and built date were already checked.
 
@@ -1015,7 +1022,8 @@ public class TrainBuilderBase extends TrainCommon {
                 // only print out the first DISPLAY_CAR_LIMIT cars for each
                 // location
                 if (carCount < DISPLAY_CAR_LIMIT_50 && (car.getKernel() == null || car.isLead())) {
-                    if (car.getLoadPriority().equals(CarLoad.PRIORITY_LOW)) {
+                    if (car.getLoadPriority().equals(CarLoad.PRIORITY_LOW) &&
+                            car.getTrack().getTrackPriority().equals(Track.PRIORITY_NORMAL)) {
                         addLine(_buildReport, SEVEN,
                                 Bundle.getMessage("buildCarAtLocWithMoves", car.toString(), car.getTypeName(),
                                         car.getTypeExtensions(), car.getLocationName(), car.getTrackName(),
@@ -1024,7 +1032,8 @@ public class TrainBuilderBase extends TrainCommon {
                         addLine(_buildReport, SEVEN,
                                 Bundle.getMessage("buildCarAtLocWithMovesPriority", car.toString(), car.getTypeName(),
                                         car.getTypeExtensions(), car.getLocationName(), car.getTrackName(),
-                                        car.getMoves(), car.getLoadType().toLowerCase(), car.getLoadName(),
+                                        car.getTrack().getTrackPriority(), car.getMoves(),
+                                        car.getLoadType().toLowerCase(), car.getLoadName(),
                                         car.getLoadPriority()));
                     }
                     if (car.isLead()) {
@@ -1087,18 +1096,17 @@ public class TrainBuilderBase extends TrainCommon {
             Car bestCar = car;
             for (int i = _carIndex + 1; i < _carList.size(); i++) {
                 Car testCar = _carList.get(i);
-                if (testCar.getTrack() == car.getTrack()) {
+                if (testCar.getTrack() == car.getTrack() &&
+                        bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
                     log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackTypeName(), testCar.toString(),
                             testCar.getLastDate()); // NOI18N
                     if (car.getTrack().getServiceOrder().equals(Track.FIFO)) {
-                        if (bestCar.getLastMoveDate().after(testCar.getLastMoveDate()) &&
-                                bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
+                        if (bestCar.getLastMoveDate().after(testCar.getLastMoveDate())) {
                             bestCar = testCar;
                             log.debug("New best car ({})", bestCar.toString());
                         }
                     } else if (car.getTrack().getServiceOrder().equals(Track.LIFO)) {
-                        if (bestCar.getLastMoveDate().before(testCar.getLastMoveDate()) &&
-                                bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
+                        if (bestCar.getLastMoveDate().before(testCar.getLastMoveDate())) {
                             bestCar = testCar;
                             log.debug("New best car ({})", bestCar.toString());
                         }
@@ -1397,8 +1405,7 @@ public class TrainBuilderBase extends TrainCommon {
         }
 
         // Only track direction can cause the following message. Location
-        // direction has
-        // already been checked
+        // direction has already been checked
         addLine(_buildReport, SEVEN,
                 Bundle.getMessage("buildRsCanNotPickupUsingTrain", rs.toString(), rl.getTrainDirectionString(),
                         rs.getTrackName(), rs.getLocationName(), rl.getId()));
@@ -1468,6 +1475,30 @@ public class TrainBuilderBase extends TrainCommon {
             }
         }
         return true;
+    }
+    
+    /**
+     * Checks to see if an interchange track has destination restrictions.
+     * Returns true if there's at least one destination in the train's route
+     * that can service the car departing the interchange.
+     * 
+     * @param car the car being evaluated
+     * @return true if car can be pulled
+     */
+    protected boolean checkPickupInterchangeDestinationRestrictions(Car car) {
+        if (!car.getTrack().isInterchange() ||
+                car.getTrack().getDestinationOption().equals(Track.ALL_DESTINATIONS) ||
+                car.getFinalDestination() != null) {
+            return true;
+        }
+        for (RouteLocation rl : _train.getRoute().getLocationsBySequenceList()) {
+            if (car.getTrack().isDestinationAccepted(rl.getLocation())) {
+                return true;
+            }
+        }
+        addLine(_buildReport, SEVEN, Bundle.getMessage("buildExcludeCarByInterchange", car.toString(),
+                car.getTypeName(), car.getTrackType(), car.getLocationName(), car.getTrackName()));
+        return false;
     }
 
     /**
@@ -1937,8 +1968,8 @@ public class TrainBuilderBase extends TrainCommon {
                                 terminateStageTrack.getIgnoreUsedLengthPercentage(), terminateStageTrack.getLength(),
                                 Setup.getLengthUnit().toLowerCase(), terminateStageTrack.getUsedLength(),
                                 terminateStageTrack.getReserved(),
-                                terminateStageTrack.getReservedLengthDrops(),
-                                terminateStageTrack.getReservedLengthDrops() - terminateStageTrack.getReserved(),
+                                terminateStageTrack.getReservedLengthSetouts(),
+                                terminateStageTrack.getReservedLengthSetouts() - terminateStageTrack.getReserved(),
                                 terminateStageTrack.getAvailableTrackSpace()));
             }
         }
@@ -2244,8 +2275,8 @@ public class TrainBuilderBase extends TrainCommon {
                         Bundle.getMessage("buildTrackHasPlannedPickups", testTrack.getName(),
                                 testTrack.getIgnoreUsedLengthPercentage(), testTrack.getLength(),
                                 Setup.getLengthUnit().toLowerCase(), testTrack.getUsedLength(), testTrack.getReserved(),
-                                testTrack.getReservedLengthDrops(),
-                                testTrack.getReservedLengthDrops() - testTrack.getReserved(),
+                                testTrack.getReservedLengthSetouts(),
+                                testTrack.getReservedLengthPickups(),
                                 testTrack.getAvailableTrackSpace()));
             }
             String status = car.checkDestination(testDestination, testTrack);
@@ -2493,36 +2524,50 @@ public class TrainBuilderBase extends TrainCommon {
      * @throws BuildFailedException if coding issue
      */
     protected boolean checkForLaterPickUp(Car car, RouteLocation rl, RouteLocation rld) throws BuildFailedException {
-        if (rl != rld && rld.getName().equals(car.getLocationName())) {
-            // don't delay adding a caboose, passenger car, or car with FRED
-            if (car.isCaboose() || car.isPassenger() || car.hasFred()) {
-                return false;
-            }
-            // no later pick up if car is departing staging
-            if (car.getLocation().isStaging()) {
-                return false;
-            }
-            if (!checkPickUpTrainDirection(car, rld)) {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildNoPickupLaterDirection", car.toString(), rld.getName(), rld.getId()));
-                return false;
-            }
-            if (!rld.isPickUpAllowed() && !rld.isLocalMovesAllowed() ||
-                    !rld.isPickUpAllowed() && rld.isLocalMovesAllowed() && !car.isLocalMove()) {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildNoPickupLater", car.toString(), rld.getName(), rld.getId()));
-                return false;
-            }
-            if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
-                addLine(_buildReport, SEVEN,
-                        Bundle.getMessage("buildNoPickupLaterMoves", car.toString(), rld.getName(), rld.getId()));
-                return false;
-            }
-            addLine(_buildReport, SEVEN,
-                    Bundle.getMessage("buildPickupLaterOkay", car.toString(), rld.getName(), rld.getId()));
-            return true;
+        // is there another pick up location in the route?
+        if (rl == rld || !rld.getName().equals(car.getLocationName())) {
+            return false;
         }
-        return false;
+        // last route location in the route?
+        if (rld == _train.getTrainTerminatesRouteLocation() && !car.isLocalMove()) {
+            return false;
+        }
+        // don't delay adding a caboose, passenger car, or car with FRED
+        if (car.isCaboose() || car.isPassenger() || car.hasFred()) {
+            return false;
+        }
+        // no later pick up if car is departing staging
+        if (car.getLocation().isStaging()) {
+            return false;
+        }
+        if (!checkPickUpTrainDirection(car, rld)) {
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("buildNoPickupLaterDirection", car.toString(), rld.getName(), rld.getId()));
+            return false;
+        }
+        if (!rld.isPickUpAllowed() && !rld.isLocalMovesAllowed() ||
+                !rld.isPickUpAllowed() && rld.isLocalMovesAllowed() && !car.isLocalMove()) {
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("buildNoPickupLater", car.toString(), rld.getName(), rld.getId()));
+            return false;
+        }
+        if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
+            addLine(_buildReport, SEVEN,
+                    Bundle.getMessage("buildNoPickupLaterMoves", car.toString(), rld.getName(), rld.getId()));
+            return false;
+        }
+        // is the track full? If so, pull immediately, prevents overloading
+        if (!car.isLocalMove() &&
+                car.getTrack().getPool() == null &&
+                car.getTrack().getLength() - car.getTrack().getUsedLength() < car.getTotalKernelLength()) {
+            addLine(_buildReport, SEVEN, Bundle.getMessage("buildNoPickupLaterTrack", car.toString(), rld.getName(),
+                    car.getTrackName(), rld.getId(), car.getTrack().getLength() - car.getTrack().getUsedLength(),
+                    Setup.getLengthUnit().toLowerCase()));
+            return false;
+        }
+        addLine(_buildReport, SEVEN,
+                Bundle.getMessage("buildPickupLaterOkay", car.toString(), rld.getName(), rld.getId()));
+        return true;
     }
 
     /**
@@ -2740,7 +2785,7 @@ public class TrainBuilderBase extends TrainCommon {
     }
 
     private boolean isLoadRestrictionsTrain() {
-        for (Train train : trainManager.getTrainsByIdList()) {
+        for (Train train : trainManager.getList()) {
             if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
                 return true;
             }
@@ -3064,6 +3109,10 @@ public class TrainBuilderBase extends TrainCommon {
                 }
                 String status = engine.checkDestination(destination, track);
                 if (status.equals(Track.OKAY)) {
+                    addLine(_buildReport, FIVE,
+                            Bundle.getMessage("buildEngineCanDrop", engine.toString(),
+                                    track.getTrackTypeName(),
+                                    track.getLocation().getName(), track.getName()));
                     addEngineToTrain(engine, rl, rld, track);
                     return true;
                 } else {

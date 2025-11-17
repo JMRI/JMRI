@@ -80,6 +80,7 @@ public class RoutesTableFrame extends OperationsFrame {
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new RouteCopyAction());
         toolMenu.add(new SetTrainIconPositionAction());
+        toolMenu.addSeparator();
         toolMenu.add(new ExportRoutesAction());
         toolMenu.add(new ImportRoutesAction());
         toolMenu.addSeparator();

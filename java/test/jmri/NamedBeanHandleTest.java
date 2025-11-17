@@ -3,7 +3,6 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  *
@@ -15,7 +14,7 @@ public class NamedBeanHandleTest {
     public void testParmaterizedCTor(){
         Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");
         NamedBeanHandle<Turnout> t = new NamedBeanHandle<>("test handle",it);
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
        
     }
 

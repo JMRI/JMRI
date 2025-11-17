@@ -2,7 +2,7 @@ package jmri.jmrit.logixng.actions;
 
 import java.util.ArrayList;
 
-import jmri.jmrit.logixng.util.TimerUnit;
+import jmri.util.TimerUnit;
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;

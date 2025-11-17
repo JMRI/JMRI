@@ -436,7 +436,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             }
         }
         // Processes the CSV Manifest files using an external custom program.
-        if (!InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists()) {
+        if (!InstanceManager.getDefault(TrainCustomSwitchList.class).doesExcelFileExist()) {
             log.warn("Manifest creator file not found!, directory path: {}, file name: {}",
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getDirectoryPathName(),
                     InstanceManager.getDefault(TrainCustomSwitchList.class).getFileName());

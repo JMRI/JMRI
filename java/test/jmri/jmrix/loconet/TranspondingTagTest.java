@@ -1,5 +1,10 @@
 package jmri.jmrix.loconet;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -7,7 +12,6 @@ import jmri.Reporter;
 import jmri.implementation.AbstractReporter;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,19 +24,19 @@ public class TranspondingTagTest {
     @Test
     public void testCreateTranspondingTag() {
         TranspondingTag r = new TranspondingTag("ID1234");
-        Assert.assertNotNull("TranspondingTag not null", r);
+        assertNotNull( r, "TranspondingTag not null");
     }
 
     @Test
     public void testGetTranspondingTagUserName() {
         TranspondingTag r = new TranspondingTag("ID1234", "Test Tag");
-        Assert.assertEquals("TranspondingTag user name is 'Test Tag'", "Test Tag", r.getUserName());
+        assertEquals( "Test Tag", r.getUserName(), "TranspondingTag user name is 'Test Tag'");
     }
 
     @Test
     public void testGetTranspondingTagTagID() {
         TranspondingTag r = new TranspondingTag("ID1234");
-        Assert.assertEquals("TranspondingTag TagID is 1234", "1234", r.getTagID());
+        assertEquals( "1234", r.getTagID(), "TranspondingTag TagID is 1234");
     }
 
     @Test
@@ -40,28 +44,29 @@ public class TranspondingTagTest {
         TranspondingTag r = new TranspondingTag("ID1234");
         // set the entryexit property
         r.setProperty("entryexit", "exits");
-        Assert.assertEquals("TranspondingTag toString ", "ID1234", r.toString());
+        assertEquals( "ID1234", r.toString(), "TranspondingTag toString ");
     }
 
     @Test
     public void testTranspondingTagToReportString() {
         TranspondingTag r = new TranspondingTag("LD1234");
-        Assert.assertEquals("TranspondingTag toReportString ", "1234", r.toReportString());
+        assertEquals( "1234", r.toReportString(), "TranspondingTag toReportString ");
         r.setProperty("entryexit", "exits");
-        Assert.assertEquals("TranspondingTag toReportString ", "1234 exits", r.toReportString());
+        assertEquals( "1234 exits", r.toReportString(), "TranspondingTag toReportString ");
     }
 
     @Test
     public void testNotYetSeen() {
         TranspondingTag r = new TranspondingTag("ID0413276BC1");
-        Assert.assertNull("At creation, Reporter where seen is null", r.getWhereLastSeen());
-        Assert.assertNull("At creation, Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("At creation, TranspondingTag status is UNSEEN", TranspondingTag.UNSEEN, r.getState());
+        assertNull( r.getWhereLastSeen(), "At creation, Reporter where seen is null");
+        assertNull( r.getWhenLastSeen(), "At creation, Date when seen is null");
+        assertEquals( TranspondingTag.UNSEEN, r.getState(), "At creation, TranspondingTag status is UNSEEN");
 
         r.setWhereLastSeen(null);
-        Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
-        Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), TranspondingTag status is UNSEEN", TranspondingTag.UNSEEN, r.getState());
+        assertNull( r.getWhereLastSeen(), "After setWhereLastSeen(null), Reporter where seen is null");
+        assertNull( r.getWhenLastSeen(), "After setWhereLastSeen(null), Date when seen is null");
+        assertEquals( TranspondingTag.UNSEEN, r.getState(),
+            "After setWhereLastSeen(null), TranspondingTag status is UNSEEN");
     }
 
     @Test
@@ -77,39 +82,40 @@ public class TranspondingTagTest {
             public void setState(int s) {
                 state = s;
             }
-            int state = 0;
+            private int state = 0;
         };
 
         Date timeBefore = Calendar.getInstance().getTime();
-        Thread.sleep(5);
+        JUnitUtil.waitFor(5);
         r.setWhereLastSeen(rep);
-        Thread.sleep(5);
+        JUnitUtil.waitFor(5);
         Date timeAfter = Calendar.getInstance().getTime();
 
-        Assert.assertEquals("Where last seen is 'IR1'", rep, r.getWhereLastSeen());
-        Assert.assertNotNull("When last seen is not null", r.getWhenLastSeen());
-        Assert.assertEquals("Status is SEEN", TranspondingTag.SEEN, r.getState());
-        Assert.assertTrue("Time when last seen is later than 'timeBefore'", r.getWhenLastSeen().after(timeBefore));
-        Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", r.getWhenLastSeen().before(timeAfter));
+        assertEquals( rep, r.getWhereLastSeen(), "Where last seen is 'IR1'");
+        assertNotNull( r.getWhenLastSeen(), "When last seen is not null");
+        assertEquals( TranspondingTag.SEEN, r.getState(), "Status is SEEN");
+        assertTrue( r.getWhenLastSeen().after(timeBefore), "Time when last seen is later than 'timeBefore'");
+        assertTrue( r.getWhenLastSeen().before(timeAfter), "Time when last seen is earlier than 'timeAfter'");
 
         r.setWhereLastSeen(null);
-        Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
-        Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), TranspondingTag status is UNSEEN", TranspondingTag.UNSEEN, r.getState());
+        assertNull( r.getWhereLastSeen(), "After setWhereLastSeen(null), Reporter where seen is null");
+        assertNull( r.getWhenLastSeen(), "After setWhereLastSeen(null), Date when seen is null");
+        assertEquals( TranspondingTag.UNSEEN, r.getState(), "After setWhereLastSeen(null), TranspondingTag status is UNSEEN");
 
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        new TranspondingTagManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        TranspondingTagManager t = new TranspondingTagManager();
+        assertNotNull(t);
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }

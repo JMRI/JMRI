@@ -19,8 +19,13 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
-import static org.junit.Assume.assumeNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  *
@@ -80,14 +85,12 @@ public class JsonOblockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         result = service.doGet(JsonOblock.OBLOCK, "OB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(sensor1.getSystemName(), result.path(JSON.DATA).path(JsonSensor.SENSOR).asText());
-        try {
+        JsonException ex = assertThrows( JsonException.class, () -> {
             // add an invalid oblock by using a turnout name instead of an oblock name
             assertNull(manager.getOBlock("IT1"));
             service.doGet(JsonOblock.OBLOCK, "IT1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(404, ex.getCode());
-        }
+        },"Expected exception not thrown.");
+        assertEquals(404, ex.getCode());
     }
 
     @Test
@@ -113,51 +116,48 @@ public class JsonOblockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         validate(result);
         assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JsonOblock.STATUS).asInt());
         // set invalid state
-        message = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JsonOblock.STATUS, 111); // Invalid value
-        try {
-            service.doPost(JsonOblock.OBLOCK, "OB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(400, ex.getCode());
-        }
+        JsonNode messageEx = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JsonOblock.STATUS, 111); // Invalid value
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doPost(JsonOblock.OBLOCK, "OB1", messageEx,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "Expected exception not thrown.");
+        assertEquals(400, ex.getCode());
+
         assertEquals(Block.OCCUPIED, oblock1.getState());
         // set value
         message = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JSON.VALUE, "some value");
-        assertNull("Null block value", oblock1.getValue());
+        assertNull( oblock1.getValue(), "Null block value");
         service.doPost(JsonOblock.OBLOCK, "OB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-        assertEquals("Non-null block value", "some value", oblock1.getValue());
+        assertEquals( "some value", oblock1.getValue(), "Non-null block value");
         // set null value
         message = mapper.createObjectNode().put(JSON.NAME, "OB1").putNull(JSON.VALUE);
-        assertNotNull("Non-null block value", oblock1.getValue());
+        assertNotNull( oblock1.getValue(), "Non-null block value");
         service.doPost(JsonOblock.OBLOCK, "OB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-        assertNull("Null block value", oblock1.getValue());
+        assertNull( oblock1.getValue(), "Null block value");
         // set non-existing sensor
-        message = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JsonSensor.SENSOR, "IS1");
-        assertNull("No sensor", oblock1.getSensor());
-        try {
-            service.doPost(JsonOblock.OBLOCK, "OB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            assertEquals("404 Not Found", 404, ex.getCode());
-        }
+        JsonNode messageEx2 = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JsonSensor.SENSOR, "IS1");
+        assertNull( oblock1.getSensor(), "No sensor");
+        ex = assertThrows( JsonException.class, () ->
+            service.doPost(JsonOblock.OBLOCK, "OB1", messageEx2, new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "Expected exception not thrown");
+        assertEquals( 404, ex.getCode(), "404 Not Found");
+
         // set existing sensor
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
-        service.doPost(JsonOblock.OBLOCK, "OB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-        assertEquals("Block has sensor", sensor1, oblock1.getSensor());
+        service.doPost(JsonOblock.OBLOCK, "OB1", messageEx2, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        assertEquals( sensor1, oblock1.getSensor(), "Block has sensor");
         // set null sensor
         message = mapper.createObjectNode().put(JSON.NAME, "OB1").putNull(JsonSensor.SENSOR);
         service.doPost(JsonOblock.OBLOCK, "OB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-        assertNull("Oblock has no sensor", oblock1.getSensor());
+        assertNull( oblock1.getSensor(), "Oblock has no sensor");
         // reporters not copied from JsonBlockHttpServiceTest since they are not used in OBlocks
-        try {
+        ex = assertThrows( JsonException.class, () -> {
             // add an invalid oblock by using a turnout name instead of a oblock name
             assertNull(manager.getOBlock("IT1"));
-            message = mapper.createObjectNode().put(JSON.NAME, "II1").put(JsonOblock.STATUS, Block.UNOCCUPIED);
-            service.doPost(JsonOblock.OBLOCK, "IT1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(404, ex.getCode());
-        }
+            JsonNode messageEx3 = mapper.createObjectNode().put(JSON.NAME, "II1").put(JsonOblock.STATUS, Block.UNOCCUPIED);
+            service.doPost(JsonOblock.OBLOCK, "IT1", messageEx3, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        }, "Expected exception not thrown.");
+        assertEquals(404, ex.getCode());
     }
 
     @Test
@@ -169,32 +169,29 @@ public class JsonOblockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         JsonNode result = service.doPut(JsonOblock.OBLOCK, "OB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertNotNull(manager.getOBlock("OB1"));
-        try {
+        JsonException ex = assertThrows( JsonException.class, () -> {
             // add an invalid Oblock by using a turnout name instead of a Oblock name
             assertNull(manager.getOBlock("IT1"));
-            message = mapper.createObjectNode().put(JSON.NAME, "II1").put(JsonOblock.STATUS, Block.UNOCCUPIED);
-            service.doPut(JsonOblock.OBLOCK, "", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0)); // use an empty name to trigger exception
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(400, ex.getCode());
-        }
+            JsonNode messageEx = mapper.createObjectNode().put(JSON.NAME, "II1").put(JsonOblock.STATUS, Block.UNOCCUPIED);
+            service.doPut(JsonOblock.OBLOCK, "", messageEx, new JsonRequest(locale, JSON.V5, JSON.GET, 0)); // use an empty name to trigger exception
+        }, "Expected exception not thrown.");
+        assertEquals(400, ex.getCode());
     }
 
     @Test
     @Override
     public void testDoDelete() throws JsonException {
+        assumeTrue(service != null, "protect against JUnit tests in Eclipse that test this class directly");
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
         ObjectNode message = mapper.createObjectNode();
         // delete non-existent bean
-        try {
-            assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
-            service.doDelete(service.getType(), "non-existant", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals("Code is HTTP NOT FOUND", 404, ex.getCode());
-            assertEquals("Message", "Object type oblock named \"non-existant\" not found.", ex.getMessage());
-            assertEquals("ID is 42", 42, ex.getId());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            service.doDelete(service.getType(), "non-existant", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals( 404, ex.getCode(), "Code is HTTP NOT FOUND");
+        assertEquals( "Object type oblock named \"non-existant\" not found.", ex.getMessage(), "Message");
+        assertEquals( 42, ex.getId(), "ID is 42");
+
         manager.createNewOBlock("OB1", null);
         // delete existing bean (no named listener)
         assertNotNull(manager.getBySystemName("OB1"));
@@ -206,26 +203,25 @@ public class JsonOblockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
             // do nothing
         }, "OB1", "Test Listener");
         // delete existing bean (with named listener)
-        try {
-            service.doDelete(service.getType(), "OB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(409, ex.getCode());
-            assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
-            assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
-            message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
-        }
+        ex = assertThrows( JsonException.class, () ->
+            service.doDelete(service.getType(), "OB1", message,
+                new JsonRequest(locale, JSON.V5, JSON.GET, 42)),
+            "Expected exception not thrown.");
+        assertEquals(409, ex.getCode());
+        assertEquals(1, ex.getAdditionalData().path(JSON.CONFLICT).size());
+        assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
+        ObjectNode message2 = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
+
         assertNotNull(manager.getBySystemName("OB1"));
         // will throw if prior catch failed
-        service.doDelete(service.getType(), "OB1", message, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        service.doDelete(service.getType(), "OB1", message2, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         assertNull(manager.getBySystemName("OB1"));
-        try {
+        ex = assertThrows( JsonException.class, () ->
             // deleting again should throw an exception
-            service.doDelete(service.getType(), "OB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            assertEquals(404, ex.getCode());
-        }
+            service.doDelete(service.getType(), "OB1", NullNode.getInstance(),
+                new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "Expected exception not thrown.");
+        assertEquals(404, ex.getCode());
     }
 
     /**

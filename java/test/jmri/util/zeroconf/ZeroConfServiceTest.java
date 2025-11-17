@@ -8,11 +8,14 @@ import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.Assume;
-import org.junit.jupiter.api.BeforeAll;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 /**
  * Tests for the ZeroConfService class
@@ -24,14 +27,6 @@ public class ZeroConfServiceTest {
 
     private static final String HTTP = "_http._tcp.local.";
 
-    @BeforeAll
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterAll
-    public static void tearDownClass() throws Exception {
-    }
-
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();
@@ -41,7 +36,7 @@ public class ZeroConfServiceTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        JUnitUtil.resetZeroConfServiceManager();
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         
         // wait for dns threads to end
         Thread.getAllStackTraces().keySet().forEach((t) -> 
@@ -66,8 +61,8 @@ public class ZeroConfServiceTest {
     @Test
     public void testCreate_String_int() {
         ZeroConfService result = ZeroConfService.create(HTTP, 9999);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.getName());
+        assertNotNull(result);
+        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.getName());
     }
 
     /**
@@ -77,8 +72,8 @@ public class ZeroConfServiceTest {
     public void testCreate_3args() {
         HashMap<String, String> properties = new HashMap<>();
         ZeroConfService result = ZeroConfService.create(HTTP, 9999, properties);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.getName());
+        assertNotNull(result);
+        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), result.getName());
     }
 
     /**
@@ -89,8 +84,8 @@ public class ZeroConfServiceTest {
         String name = "my name"; // NOI18N
         HashMap<String, String> properties = new HashMap<>();
         ZeroConfService result = ZeroConfService.create(HTTP, name, 9999, 1, 1, properties);
-        Assert.assertNotNull(result);
-        Assert.assertEquals(name, result.getName());
+        assertNotNull(result);
+        assertEquals(name, result.getName());
     }
 
     /**
@@ -101,7 +96,7 @@ public class ZeroConfServiceTest {
         String name = "my_name";
         ZeroConfService instance = ZeroConfService.create(HTTP, name, 9999, 0, 0, new HashMap<>());
         String result = instance.getKey();
-        Assert.assertEquals(name + "." + HTTP, result);
+        assertEquals(name + "." + HTTP, result);
     }
 
     /**
@@ -110,7 +105,7 @@ public class ZeroConfServiceTest {
     @Test
     public void testGetName() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), instance.getName());
+        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), instance.getName());
     }
 
     /**
@@ -119,7 +114,7 @@ public class ZeroConfServiceTest {
     @Test
     public void testGetType() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertEquals(HTTP, instance.getType());
+        assertEquals(HTTP, instance.getType());
     }
 
     /**
@@ -129,7 +124,7 @@ public class ZeroConfServiceTest {
     public void testServiceInfo() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
         ServiceInfo result = instance.getServiceInfo();
-        Assert.assertNotNull(result);
+        assertNotNull(result);
     }
 
     /**
@@ -138,7 +133,7 @@ public class ZeroConfServiceTest {
     @Test
     public void testIsPublished() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertFalse(instance.isPublished());
+        assertFalse(instance.isPublished());
     }
 
     /**
@@ -147,13 +142,13 @@ public class ZeroConfServiceTest {
     @Test
     public void testPublish() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertFalse(instance.isPublished());
+        assertFalse(instance.isPublished());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        assumeTrue( JUnitUtil.waitFor(() -> {
             return instance.isPublished() == true;
-        }));
-        Assert.assertTrue(instance.isPublished());
+        }), "Timed out publishing ZeroConf Service");
+        assertTrue(instance.isPublished());
     }
 
     /**
@@ -162,17 +157,17 @@ public class ZeroConfServiceTest {
     @Test
     public void testStop() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        Assert.assertFalse(instance.isPublished());
+        assertFalse(instance.isPublished());
         // can fail if platform does not release earlier stopped service within 15 seconds
         instance.publish();
-        Assume.assumeTrue("Timed out publishing ZeroConf Service", JUnitUtil.waitFor(() -> {
+        assumeTrue( JUnitUtil.waitFor(() -> {
             return instance.isPublished() == true;
-        }));
-        Assert.assertTrue(instance.isPublished());
+        }), "Timed out publishing ZeroConf Service");
+        assertTrue(instance.isPublished());
         instance.stop();
         JUnitUtil.waitFor(() -> {
             return instance.isPublished() == false;
         }, "Stopping ZeroConf Service");
-        Assert.assertFalse(instance.isPublished());
+        assertFalse(instance.isPublished());
     }
 }

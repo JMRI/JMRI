@@ -1,12 +1,13 @@
 package jmri.jmrit.logixng;
 
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.Locale;
+import java.util.Map;
+
+import org.apache.commons.lang3.mutable.MutableInt;
 
 import jmri.Manager;
 import jmri.jmrit.logixng.Base.PrintTreeSettings;
-
-import org.apache.commons.lang3.mutable.MutableInt;
 
 /**
  * Manager for LogixNG
@@ -32,6 +33,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param systemName the system name
      * @param userName   the user name
      * @return a new LogixNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     LogixNG createLogixNG(String systemName, String userName)
             throws IllegalArgumentException;
@@ -43,6 +45,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param userName   the user name
      * @param inline     true if this LogixNG is an inline LogixNG
      * @return a new LogixNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     LogixNG createLogixNG(String systemName, String userName, boolean inline)
             throws IllegalArgumentException;
@@ -53,6 +56,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      *
      * @param userName the user name
      * @return a new LogixNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     LogixNG createLogixNG(String userName)
             throws IllegalArgumentException;
@@ -64,6 +68,7 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
      * @param userName  the user name
      * @param inline    true if this LogixNG is an inline LogixNG
      * @return a new LogixNG or null if unable to create
+     * @throws IllegalArgumentException when needed
      */
     LogixNG createLogixNG(String userName, boolean inline)
             throws IllegalArgumentException;

@@ -1,33 +1,34 @@
 package jmri.jmrit.display;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.junit.annotations.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@DisabledIfHeadless
 public class PositionableJComponentTest extends PositionableTestBase {
 
     @Test
     public void testCtor() {
-
-        Assert.assertNotNull("exists", p);
+        assertNotNull( p, "exists");
     }
 
     @Override
     @Test
     public void testGetAndSetViewCoordinates() {
 
-        Assert.assertFalse("Defalt View Coordinates", p.getViewCoordinates());
+        assertFalse( p.getViewCoordinates(), "Defalt View Coordinates");
         p.setViewCoordinates(true);
-        Assert.assertTrue("View Coordinates after set true", p.getViewCoordinates());
+        assertTrue( p.getViewCoordinates(), "View Coordinates after set true");
         p.setViewCoordinates(false);
-        Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
+        assertFalse( p.getViewCoordinates(), "View Coordinates after set false");
     }
 
     @Test
@@ -35,7 +36,6 @@ public class PositionableJComponentTest extends PositionableTestBase {
     @Disabled("PositionableJComponent does not support rotate")
     @ToDo("implement rotate in PositionableJComponent, then remove overriden test so parent class test can execute")
     public void testGetAndSetRotationDegrees() {
-        Assert.fail("Should support rotation but doesn't");
     }
 
     @Override

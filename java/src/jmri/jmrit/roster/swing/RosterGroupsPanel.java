@@ -396,6 +396,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         for (String g : Roster.getDefault().getRosterGroupList()) {
             root.add(new DefaultMutableTreeNode(g));
         }
+        root.add(new DefaultMutableTreeNode(Roster.NOGROUP));
     }
 
     // allow private classes to fire property change events as the RGP

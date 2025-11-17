@@ -94,7 +94,7 @@
       
       <h4>netBiDiB</h4>
       
-      <p><a href="https://bidib.org/transport/bidib_net_e.html">netBiDiB</a> allows the transport of the BiDiB protocol over a network connection (TCP). The connection is authorized once through the pairing process, so that a device cannot simply be controlled by someone else. To simplify configuration, BiDiB devices should announce themself in the network (mDNS/Bonjour) and can be selected in a combo box field in the JMRI settings for BiDiB. If this discovery is not available, automatic configuration can be switched off and the IP address of the device entered manually. The standard port number is 62875.
+      <p><a href="https://bidib.org/transport/bidib_net_e.html">netBiDiB</a> allows the transport of the BiDiB protocol over a network connection (TCP). The connection is authorized once through the pairing process, so that a device cannot simply be controlled by someone else. To simplify configuration, BiDiB devices should announce themself in the network (mDNS/Bonjour) and can be selected in a combo box field in the JMRI settings for BiDiB. If this discovery is not available, automatic configuration can be switched off and the IP address of the device entered manually. The standard port number is 62875. JMRI supports a continuous keep-alive test (local ping) so that connection drops are quickly detected. Since not all BiDiB devices support this, it can be configured in the connection settings under "Keep-Alive."
       </p>
       
       <h4>BiDiB over TCP</h4>

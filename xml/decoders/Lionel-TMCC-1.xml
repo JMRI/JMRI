@@ -16,26 +16,35 @@
     <year>2000</year>
     <year>2010</year>
     <year>2019</year>
+    <year>2025</year>
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
+      <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
+    </author>
+    <author>
       <personname><firstname>Timothy</firstname><surname>Jump</surname></personname>
-	  <!-- email: t1jump@gmail.com -->
-	  <!-- This decoder definition was built on the existing decoder definition -->
-	  <!-- mfg: Lionel; family name: TMCC Steam; version: 1.0; date: 2023-05-17 created by Bob Jacobsen -->
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>1</revnumber><date>2023-05-17</date><authorinitials>BJ</authorinitials>
+      <revnumber>1</revnumber>
+      <date>2023-05-17</date>
+      <authorinitials>BJ</authorinitials>
       <revremark>Initial file creation</revremark>
+    </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2025-07-12</date>
+      <authorinitials>TJ</authorinitials>
+      <revremark>Decoder file copied from Lionel TMCC Steam and edited into this TMCC 1 version</revremark>
     </revision>
   </revhistory>
   <decoder>
     <family name="TMCC 1" mfg="Lionel"> <!-- Lionel has no NMRA id, but that's OK -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
-      <model model="TMCC 1" maxFnNum="28" numOuts="1"/>
+      <model model="TMCC 1" maxFnNum="68" numOuts="1"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

@@ -6,8 +6,6 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a ThrottleManager for debugging.
@@ -16,8 +14,9 @@ import org.slf4j.LoggerFactory;
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
 
+    @Deprecated( since="5.13.3", forRemoval=true)
     public DebugThrottleManager() {
-        super();
+        this(jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
     }
 
     /**
@@ -84,14 +83,14 @@ public class DebugThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * What speed modes are supported by this system? value should be xor of
-     * possible modes specified by the DccThrottle interface
+     * What speed modes are supported by this system?
+     * {@inheritDoc }
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {
         return EnumSet.allOf(SpeedStepMode.class);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebugThrottleManager.class);
 
 }

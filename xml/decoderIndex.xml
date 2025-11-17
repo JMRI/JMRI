@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.11.7plus+jake+20250628T2005Z+Rd749ddd9521 on Sat Jun 28 16:06:03 EDT 2025-->
-  <decoderIndex version="647">
+  <!--Written by JMRI version 5.13.5plus+jake+20251107T1506Z+Rb4522834fdd on Fri Nov 07 10:06:51 EST 2025-->
+  <decoderIndex version="665">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -431,6 +431,9 @@
       <family name="Dual Mode" mfg="Atlas" lowVersionID="45" highVersionID="45" file="Atlas_DualMode.xml">
         <model model="Dual Mode" numOuts="2" numFns="0" />
       </family>
+      <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46" file="Atlas_H15-44_H16-44.xml">
+        <model model="H15/H16-44 (Part #520099)" numOuts="3" numFns="8" lowVersionID="46" highVersionID="46" />
+      </family>
       <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="45" highVersionID="45" comment="Factory installed decoders in Atlas N scale locomotives. NCE and Lenz rebranded by Atlas (changed Manufucturer ID to Atlas) http://www.atlasrr.com/pdf/Atlas_N-Scale_Decoder_Applications.pdf" file="Atlas_Lenz_N.xml">
         <model model="LE062XF by Lenz (Part #490299)" numOuts="2">
           <output name="1" label="A - White" />
@@ -545,6 +548,14 @@
         <model model="Dash 8-40C (Part #518299)" numOuts="4" numFns="8">
           <output name="1" label="LED 1" />
           <output name="2" label="LED 2" />
+        </model>
+        <model model="NH15-44" numOuts="6" numFns="8" comment="for Atlas H15-44,H16-44">
+          <output name="1" label="LED 1" />
+          <output name="2" label="LED 2" />
+          <output name="3" label="Pad 3" />
+          <output name="4" label="Pad 4" />
+          <output name="5" label="Pad 5" />
+          <output name="6" label="Pad 6" />
         </model>
       </family>
       <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46" file="Atlas_VO1000.xml">
@@ -2532,7 +2543,7 @@
           <output name="6" label="F4-Yellow" />
           <functionlabels>
             <functionlabel num="2" lockable="false">Horn / Whistle</functionlabel>
-            <functionlabel num="3" lockable="true">Coupler (Short Horn/Whistle)</functionlabel>
+            <functionlabel num="3" lockable="true">Coupler (Shorter Horn/Whistle)</functionlabel>
             <functionlabel num="4" lockable="true">Dyn Brakes / Open Cylinder Cocks / ( light function (turn on rear light, etc.)</functionlabel>
             <functionlabel num="5" lockable="true">Emergency Lights / Steam BlowOff</functionlabel>
             <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
@@ -2641,18 +2652,119 @@
             <functionlabel num="28" lockable="true">Notch 8</functionlabel>
           </functionlabels>
         </model>
+        <model model="SDYH167DST" numOuts="6" numFns="28" productID="SDYH167DST" comment="SDXH167ExtS Extended Steam Sound projects v7 by John McMasters">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+          <output name="5" label="F3-Brown" />
+          <output name="6" label="F4-Yellow" />
+          <functionlabels>
+            <functionlabel num="2" lockable="false">Horn / Whistle</functionlabel>
+            <functionlabel num="3" lockable="true">Coupler (Shorter Horn/Whistle)</functionlabel>
+            <functionlabel num="4" lockable="true">Air feature disable / Steam Blowdown / BR Guards W</functionlabel>
+            <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
+            <functionlabel num="5" lockable="true">Dyn Brakes / Steam Open Cylinder Cocks</functionlabel>
+            <functionlabel num="6" lockable="true">Light function / Steam Injector / BR User S2</functionlabel>
+            <functionlabel num="7" lockable="true">Alt Grade Crossing / BR User S3</functionlabel>
+            <functionlabel num="8" lockable="true">Mute (full-half-silent)]</functionlabel>
+            <functionlabel num="9" lockable="true">UnCouple - Disconnect (Short Horn/Whistle)</functionlabel>
+            <functionlabel num="10" lockable="true">Independent Brake (Brake to Stop)</functionlabel>
+            <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
+            <functionlabel num="11" lockable="true">Train Brake (Brake to Stop)</functionlabel>
+            <functionlabel num="12" lockable="true">EStop (Brake to Stop) Shutdown [disables motor movement when stopped]</functionlabel>
+            <functionlabel num="13" lockable="true">Quill / Coal or Oil Fill</functionlabel>
+            <functionlabel num="14" lockable="true">Air Pump / Compressor</functionlabel>
+            <functionlabel num="15" lockable="true">Engine Compartment Sounds / OPTION  / Hand Brake</functionlabel>
+            <functionlabel num="16" lockable="true">Water Fill / Traction Blower</functionlabel>
+            <functionlabel num="17" lockable="true">Air Dryer / Shovel Coal, Pump Oil / RESET / ABOUT</functionlabel>
+            <functionlabel num="18" lockable="true">Sander</functionlabel>
+            <functionlabel num="19" lockable="true">Air LetOff / Replace Whistle with Horn</functionlabel>
+            <functionlabel num="20" lockable="true">High Fan / Coal Grate Shaker</functionlabel>
+            <functionlabel num="21" lockable="true">Notch 1 / Steam Greaser</functionlabel>
+            <functionlabel num="22" lockable="true">Cab Sounds / User Sounds / Steam BLOWER</functionlabel>
+            <functionlabel num="23" lockable="true">Flanges</functionlabel>
+            <functionlabel num="24" lockable="true">Reverser</functionlabel>
+            <functionlabel num="25" lockable="true">AUX generator - HEP / Safety Blowdown</functionlabel>
+            <functionlabel num="26" lockable="true">Notch UP / Wheel Slip on start-up</functionlabel>
+            <functionlabel num="27" lockable="true">Notch down /(Override wheel slip)</functionlabel>
+            <functionlabel num="28" lockable="true">Notch 8 / Heavy Load / De-Sync Articulated</functionlabel>
+          </functionlabels>
+        </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
           <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
-          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
           <functionlabel num="4" lockable="true">Air feat disabled</functionlabel>
           <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
           <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
           <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN/Wheel Slip</functionlabel>
           <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
-          <functionlabel num="10" lockable="false">Xing Gate Airhorn</functionlabel>
+          <functionlabel num="9" lockable="false">Xing Gate Airhorn</functionlabel>
+          <functionlabel num="10" lockable="true">Independent Brake (Brake to Stop)</functionlabel>
+          <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
+          <functionlabel num="11" lockable="true">Train Brake (Brake to Stop)</functionlabel>
+          <functionlabel num="12" lockable="true">EStop (Brake to Stop) Shutdown [disables motor movement when stopped]</functionlabel>
+          <functionlabel num="11" lockable="false">Greaser</functionlabel>
+          <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="SFX Sound Decoders - Series 8" mfg="Digitrax" lowVersionID="211" highVersionID="212" file="Digitrax_0SFX_Series8.xml">
+        <model model="SDYH168All" numOuts="6" numFns="28" productID="SDYH168DST,SDYH588ST,DH588" comment="H0-Scale Sound Decoder, wired">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+          <output name="5" label="F3-Brown" />
+          <output name="6" label="F4-Yellow" />
+          <functionlabels>
+            <functionlabel num="2" lockable="false">Horn / Whistle</functionlabel>
+            <functionlabel num="3" lockable="true">Coupler (Shorter Horn/Whistle)</functionlabel>
+            <functionlabel num="4" lockable="true">Air feature disable / Steam Blowdown / BR Guards W</functionlabel>
+            <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
+            <functionlabel num="5" lockable="true">Dyn Brakes / Steam Open Cylinder Cocks</functionlabel>
+            <functionlabel num="6" lockable="true">Light function / Steam Injector / BR User S2</functionlabel>
+            <functionlabel num="7" lockable="true">Alt Grade Crossing / BR User S3</functionlabel>
+            <functionlabel num="8" lockable="true">Mute (full-half-silent)]</functionlabel>
+            <functionlabel num="9" lockable="true">UnCouple - Disconnect (Short Horn/Whistle)</functionlabel>
+            <functionlabel num="10" lockable="true">Independent Brake (Brake to Stop)</functionlabel>
+            <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
+            <functionlabel num="11" lockable="true">Train Brake (Brake to Stop)</functionlabel>
+            <functionlabel num="12" lockable="true">EStop (Brake to Stop) Shutdown [disables motor movement when stopped]</functionlabel>
+            <functionlabel num="13" lockable="true">Quill / Coal or Oil Fill</functionlabel>
+            <functionlabel num="14" lockable="true">Air Pump / Compressor</functionlabel>
+            <functionlabel num="15" lockable="true">Engine Compartment Sounds / OPTION  / Hand Brake</functionlabel>
+            <functionlabel num="16" lockable="true">Water Fill / Traction Blower</functionlabel>
+            <functionlabel num="17" lockable="true">Air Dryer / Shovel Coal, Pump Oil / RESET / ABOUT</functionlabel>
+            <functionlabel num="18" lockable="true">Sander</functionlabel>
+            <functionlabel num="19" lockable="true">Air LetOff / Replace Whistle with Horn</functionlabel>
+            <functionlabel num="20" lockable="true">High Fan / Coal Grate Shaker</functionlabel>
+            <functionlabel num="21" lockable="true">Notch 1 / Steam Greaser</functionlabel>
+            <functionlabel num="22" lockable="true">Cab Sounds / User Sounds / Steam BLOWER</functionlabel>
+            <functionlabel num="23" lockable="true">Flanges</functionlabel>
+            <functionlabel num="24" lockable="true">Reverser</functionlabel>
+            <functionlabel num="25" lockable="true">AUX generator - HEP / Safety Blowdown</functionlabel>
+            <functionlabel num="26" lockable="true">Notch UP / Wheel Slip on start-up</functionlabel>
+            <functionlabel num="27" lockable="true">Notch down /(Override wheel slip)</functionlabel>
+            <functionlabel num="28" lockable="true">Notch 8 / Heavy Load / De-Sync Articulated</functionlabel>
+          </functionlabels>
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air feat disabled</functionlabel>
+          <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
+          <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
+          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN/Wheel Slip</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="false">Xing Gate Airhorn</functionlabel>
+          <functionlabel num="10" lockable="true">Independent Brake (Brake to Stop)</functionlabel>
+          <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
+          <functionlabel num="11" lockable="true">Train Brake (Brake to Stop)</functionlabel>
+          <functionlabel num="12" lockable="true">EStop (Brake to Stop) Shutdown [disables motor movement when stopped]</functionlabel>
           <functionlabel num="11" lockable="false">Greaser</functionlabel>
           <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
         </functionlabels>
@@ -7521,12 +7633,12 @@
           <output name="3,14" label="Sound fade" />
           <output name="3,15" label="Disable brake sound" />
           <output name="3,16" label="Volume &amp; Mute" />
-          <output name="3,17" label="|" />
-          <output name="3,18" label="|" />
-          <output name="3,19" label="|" />
-          <output name="3,20" label="|" />
-          <output name="3,21" label="|" />
-          <output name="3,22" label="|" />
+          <output name="3,17" label="Shift Mode 1" />
+          <output name="3,18" label="Shift Mode 2" />
+          <output name="3,19" label="Shift Mode 3" />
+          <output name="3,20" label="Shift Mode 4" />
+          <output name="3,21" label="Shift Mode 5" />
+          <output name="3,22" label="Shift Mode 6" />
           <output name="3,23" label="|" />
           <output name="3,24" label="|" />
         </outputs>
@@ -12233,6 +12345,17 @@
           <output name="2" label="B - Yellow" />
         </model>
       </family>
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1.xml">
+        <!-- Lionel has no NMRA id, but that's OK -->
+        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+        </outputs>
+        <model model="TMCC 1" maxFnNum="28" numOuts="1" />
+      </family>
       <family name="TMCC Steam" mfg="Lionel" file="Lionel-TMCC-Steam.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
@@ -12243,6 +12366,17 @@
           <output name="4" label="Violet" />
         </outputs>
         <model model="TMCC Steam" maxFnNum="68" numOuts="1" />
+      </family>
+      <family name="TMCC 2 Legacy" mfg="Lionel" file="Lionel-TMCC2-Legacy.xml">
+        <!-- Lionel has no NMRA id, but that's OK -->
+        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
+        </outputs>
+        <model model="TMCC 2 Legacy" maxFnNum="68" numOuts="1" />
       </family>
       <family name="mXion" mfg="MD Electronics" file="MDE_HDD.xml">
         <model model="HDD" lowVersionID="10" highVersionID="10" />
@@ -14232,6 +14366,11 @@
       <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_sounder1909.xml">
         <model model="Diesel Sound Decoder 1909 EMD 567/645/645E/710 Alco 244/539T" numOuts="2" numFns="28" />
       </family>
+      <family name="Function Decoders" mfg="MTB Model" file="MTB_PCB_16.xml">
+        <model model="PCB-16" lowVersionID="16" highVersionID="16" />
+        <model model="PCB-17" lowVersionID="17" highVersionID="17" />
+        <model model="PCB-18" lowVersionID="18" highVersionID="18" />
+      </family>
       <family name="MTH HO PS3" mfg="MTH Electric Trains, Inc." file="MTH.xml">
         <model model="MTH HO PS3" />
       </family>
@@ -15610,6 +15749,18 @@
           <output name="3" label="FC " />
           <output name="4" label="FD " />
           <output name="5" label="FE " />
+        </model>
+      </family>
+      <family name="Rokuhan A05x" mfg="Public-domain and DIY" file="Public_Domain_Rokuhan_A05x.xml">
+        <model model="A053" numOuts="2" numFns="2">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+        </model>
+        <model model="A059" numOuts="4" numFns="4">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="3" label="Green" />
+          <output name="4" label="Violet" />
         </model>
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" modes="OPSACCEXTBYTEMODE" file="Public_Domain_dccdoma_ARD_4SERVO.xml">

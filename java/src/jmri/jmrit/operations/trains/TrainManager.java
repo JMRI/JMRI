@@ -447,7 +447,7 @@ public class TrainManager extends PropertyChangeSupport
     }
 
     public void replaceLoad(String type, String oldLoadName, String newLoadName) {
-        for (Train train : getTrainsByIdList()) {
+        for (Train train : getList()) {
             for (String loadName : train.getLoadNames()) {
                 if (loadName.equals(oldLoadName)) {
                     train.deleteLoadName(oldLoadName);
@@ -474,7 +474,7 @@ public class TrainManager extends PropertyChangeSupport
      * @return true if there's a built train
      */
     public boolean isAnyTrainBuilt() {
-        for (Train train : getTrainsByIdList()) {
+        for (Train train : getList()) {
             if (train.isBuilt()) {
                 return true;
             }
@@ -487,7 +487,7 @@ public class TrainManager extends PropertyChangeSupport
      * @return true if there's a train being built
      */
     public boolean isAnyTrainBuilding() {
-        for (Train train : getTrainsByIdList()) {
+        for (Train train : getList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
                 log.debug("Train {} is currently building", train.getName());
                 return true;
@@ -503,17 +503,18 @@ public class TrainManager extends PropertyChangeSupport
      *         destination.
      */
     public Train getTrainForCar(Car car, PrintWriter buildReport) {
-        return getTrainForCar(car, new ArrayList<>(), buildReport);
+        return getTrainForCar(car, new ArrayList<>(), buildReport, false);
     }
 
     /**
      * @param car           The car looking for a train.
      * @param excludeTrains The trains not to try.
      * @param buildReport   The optional build report for logging.
+     * @param isExcludeRoutes When true eliminate trains that have the same route in the exclude trains list.
      * @return Train that can service car from its current location to the its
      *         destination.
      */
-    public Train getTrainForCar(Car car, List<Train> excludeTrains, PrintWriter buildReport) {
+    public Train getTrainForCar(Car car, List<Train> excludeTrains, PrintWriter buildReport, boolean isExcludeRoutes) {
         addLine(buildReport, TrainCommon.BLANK_LINE);
         addLine(buildReport, Bundle.getMessage("trainFindForCar", car.toString(), car.getLocationName(),
                 car.getTrackName(), car.getDestinationName(), car.getDestinationTrackName()));
@@ -525,10 +526,12 @@ public class TrainManager extends PropertyChangeSupport
             if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
                 continue;
             }
-            for (Train t : excludeTrains) {
-                if (t != null && train.getRoute() == t.getRoute()) {
-                    addLine(buildReport, Bundle.getMessage("trainHasSameRoute", train, t));
-                    continue main;
+            if (isExcludeRoutes) {
+                for (Train t : excludeTrains) {
+                    if (t != null && train.getRoute() == t.getRoute()) {
+                        addLine(buildReport, Bundle.getMessage("trainHasSameRoute", train, t));
+                        continue main;
+                    }
                 }
             }
             // does this train service this car?
@@ -540,6 +543,20 @@ public class TrainManager extends PropertyChangeSupport
             }
         }
         return null;
+    }
+    
+    public List<Train> getExcludeTrainListForCar(Car car, PrintWriter buildReport) {
+        List<Train> excludeTrains = new ArrayList<>();
+        for (Train train : getTrainsByNameList()) {
+            if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled()) {
+                addLine(buildReport, Bundle.getMessage("trainRoutingDisabled", train.getName()));
+                excludeTrains.add(train);
+            }
+            else if (!train.isTrainAbleToService(buildReport, car)) {
+                excludeTrains.add(train);
+            }
+        }
+        return excludeTrains;
     }
 
     protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
@@ -689,7 +706,7 @@ public class TrainManager extends PropertyChangeSupport
         }
     }
 
-    private List<Train> getList() {
+    public List<Train> getList() {
         if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getList called before trains completely loaded!");
         }

@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -24,12 +25,14 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
+
 import jmri.InstanceManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JComboBoxUtil;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -231,7 +234,10 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             jmi.addActionListener((ActionEvent e) -> {
                 InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(installedLAFs.get(name));
             });
-            if ( entry.getValue().equals(UIManager.getLookAndFeel().getClass().getName())) {
+            if ( entry.getValue().equals(UIManager.getLookAndFeel().getClass().getName())
+                // matching com.github.weisj.darklaf.theme.HighContrastDarkTheme with com.github.weisj.darklaf.DarkLaf
+                || ( entry.getValue().contains("darklaf")
+                    && UIManager.getLookAndFeel().getClass().getName().contains("darklaf") ) ) {
                 jmi.setSelected(true);
             }
         }

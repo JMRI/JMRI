@@ -6,10 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Date;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.jmrit.catalog.NamedIcon;
@@ -40,6 +44,7 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
     int runPauseButtonWidth;
 
     Timebase clock;
+    private final PropertyChangeListener minuteListener = (PropertyChangeEvent evt) -> update();
 
     JButton runPauseButton;
 
@@ -98,8 +103,6 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
             aspect = (320.0 + 40.0 + 2 * 152.0 + runPauseButtonWidth) / 192.0; // pick up clock prefs choice: add width of a stop/start button
         }
 
-        // listen for changes to the Timebase parameters
-        clock.addPropertyChangeListener(this);
 
         // init GUI
         m1 = new JLabel(foldingSheets10[0]);
@@ -121,10 +124,11 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
         update();
         pack();
 
+        // listen for changes to the Timebase parameters
+        clock.addPropertyChangeListener(this);
+
         // request callback to update time
-        clock.addMinuteChangeListener((java.beans.PropertyChangeEvent e) -> {
-            update();
-        });
+        clock.addMinuteChangeListener(minuteListener);
 
         // Add component listener to handle frame resizing event
         this.addComponentListener(
@@ -197,7 +201,7 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
      * @param e unused.
      */
     @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
+    public void propertyChange(PropertyChangeEvent e) {
         updateButtonText();
     }
 
@@ -214,6 +218,13 @@ public class PragotronClockFrame extends JmriJFrame implements java.beans.Proper
             clock.setRun(!clock.getRun());
             updateButtonText();
         }
+    }
+
+    @Override
+    public void dispose() {
+        clock.removeMinuteChangeListener(minuteListener);
+        clock.removePropertyChangeListener(this);
+        super.dispose();
     }
 
 }

@@ -527,7 +527,7 @@ public abstract class AbstractBaseTestBase {
         Assert.assertTrue("PropertyChangeEvent fired", ab.get());
         Assert.assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
         Assert.assertTrue(ar.get().getNewValue() instanceof List);
-        List list = (List)ar.get().getNewValue();
+        List<?> list = (List<?>)ar.get().getNewValue();
         for (Object o : list) {
             Assert.assertTrue(o instanceof FemaleSocket);
         }

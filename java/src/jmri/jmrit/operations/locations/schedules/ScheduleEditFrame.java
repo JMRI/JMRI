@@ -6,8 +6,7 @@ import java.awt.GridBagLayout;
 import javax.swing.*;
 
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.*;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -178,13 +177,14 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         addRadioButtonAction(matchRadioButton);
 
         // set up combobox
+        OperationsPanel.padComboBox(typeBox);
         loadTypeComboBox();
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         menuBar.add(toolMenu);
-        toolMenu.add(new ScheduleCopyAction(schedule));
+        toolMenu.add(new ScheduleCopyAction(schedule, track));
         toolMenu.add(new ScheduleOptionsAction(this));
         toolMenu.add(new ScheduleResetHitsAction(schedule));
         toolMenu.addSeparator();
@@ -336,6 +336,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         OperationsXml.save();
     }
 
+    /*
+     * only load car types serviced by the track
+     */
     private void loadTypeComboBox() {
         typeBox.removeAllItems();
         for (String typeName : InstanceManager.getDefault(CarTypes.class).getNames()) {

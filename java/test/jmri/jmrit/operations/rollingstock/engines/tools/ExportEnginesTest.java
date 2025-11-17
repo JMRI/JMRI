@@ -1,8 +1,11 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
 
@@ -14,7 +17,7 @@ public class ExportEnginesTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
-        ExportEngines t = new ExportEngines();
+        ExportEngines t = new ExportEngines(null);
         Assertions.assertNotNull(t, "exists");
     }
 
@@ -22,7 +25,8 @@ public class ExportEnginesTest extends OperationsTestCase {
     @jmri.util.junit.annotations.DisabledIfHeadless
     public void testCreateFile() {
         JUnitOperationsUtil.initOperationsData();
-        ExportEngines exportEngines = new ExportEngines();
+        EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
+        ExportEngines exportEngines = new ExportEngines(engineManager.getByIdList());
 
         // should cause export complete dialog to appear
         Thread export = new Thread(exportEngines::writeOperationsEngineFile);

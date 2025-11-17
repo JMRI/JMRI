@@ -2,26 +2,24 @@ package jmri.jmrit.beantable;
 
 import java.awt.Component;
 import java.awt.Container;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
+import org.netbeans.jemmy.operators.*;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.tools.swing.ConditionalNGEditor;
-
-import jmri.util.*;
+import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
-
-import org.netbeans.jemmy.operators.*;
 
 /**
 * Tests for the LogixNGModuleTableAction Class
@@ -57,7 +55,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     }
 
     @org.junit.Ignore // Fails on Java 11
-    //@Test
+    @Test
     @Override
     @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testAddThroughDialog() {
@@ -549,7 +547,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
 */
 
     @org.junit.Ignore // Fails on Java 11
-    //@Test
+    @Test
     @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testEditModule() throws JmriException {
 
@@ -703,7 +701,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testDeleteModule() throws InterruptedException {
 
-        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction<?>) a;
 
         ThreadingUtil.runOnGUI(() -> moduleTable.actionPerformed(null)); // show table
         JFrame moduleFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGModuleTable"), true, true);  // NOI18N
@@ -732,7 +730,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testDeleteModuleWithDigitalAction() throws InterruptedException, SocketAlreadyConnectedException {
 
-        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction<?>) a;
 
         Module module102 = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");   // NOI18N
         jmri.jmrit.logixng.actions.DigitalMany digitalMany_102 =
@@ -779,7 +777,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testDeleteModuleWithTwoDigitalActions() throws InterruptedException, SocketAlreadyConnectedException {
 
-        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction<?>) a;
 
         Module module102 = InstanceManager.getDefault(ModuleManager.class).getBySystemName("IQM102");   // NOI18N
         jmri.jmrit.logixng.actions.DigitalMany digitalMany_102 =
@@ -840,7 +838,7 @@ public class LogixNGModuleTableActionTest extends AbstractTableActionBase<Module
     @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
     public void testDeleteModuleWithDigitalActionWithListenerRef() throws InterruptedException, SocketAlreadyConnectedException {
 
-        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> moduleTable = (AbstractLogixNGTableAction<?>) a;
 
         PropertyChangeListener pcl = (PropertyChangeEvent evt) -> {
             // Do nothing

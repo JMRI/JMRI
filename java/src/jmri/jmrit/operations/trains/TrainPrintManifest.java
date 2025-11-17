@@ -106,17 +106,20 @@ public class TrainPrintManifest extends TrainCommon {
     private static void print(HardcopyWriter writer, List<String> lines, boolean lastBlock) throws IOException {
         if (Setup.isPrintNoPageBreaksEnabled() &&
                 writer.getCurrentLineNumber() != 0 &&
-                writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size() - 1) {
+                writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
             writer.pageBreak();
         }
-        // check for normal page break
-        if (writer.getCurrentLineNumber() != 0 &&
-                writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
-            // eliminate blank line after normal page break
-            String s = lines.get(lines.size() -1);
+        // check for exact page break
+        if (writer.getLinesPerPage() - writer.getCurrentLineNumber() + 1 == lines.size()) {
+            // eliminate blank line after page break
+            String s = lines.get(lines.size() - 1);
             if (s.isBlank()) {
                 lines.remove(lines.size() - 1);
             }
+        }
+        // use line feed for all lines?
+        if (lastBlock && writer.getLinesPerPage() - writer.getCurrentLineNumber() < lines.size()) {
+            lastBlock = false; // yes
         }
 
         Color color = null;

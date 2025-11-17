@@ -905,7 +905,8 @@ public class SpeedTableVarValue extends VariableValue implements ChangeListener 
             if (log.isDebugEnabled()) {
                 log.debug("CV State changed to {}", cv.getState());
             }
-            setState(cv.getState());
+            log.trace("Setting state {} and notifying from {}", cv.getState(), e);
+            setState((ValueState) e.getNewValue());
         } else if (e.getPropertyName().equals("Value")) {
             // find the CV that sent this
             CvValue cv = (CvValue) e.getSource();

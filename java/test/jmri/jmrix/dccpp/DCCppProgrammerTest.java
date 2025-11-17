@@ -1,3 +1,17 @@
+package jmri.jmrix.dccpp;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import jmri.*;
+import jmri.util.JUnitUtil;
+
+import org.junit.jupiter.api.*;
+
 /**
  * DCCppProgrammerTest.java
  *
@@ -6,14 +20,6 @@
  * @author Bob Jacobsen
  * @author Mark Underwood (C) 2015
  */
-package jmri.jmrix.dccpp;
-
-import jmri.*;
-import jmri.util.JUnitUtil;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
 public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     static final int RESTART_TIME = 20;
@@ -25,35 +31,36 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Test
     @Override
     public void testDefault() {
-        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
-                programmer.getMode());
+        assertEquals( ProgrammingMode.DIRECTBYTEMODE, programmer.getMode(),
+            "Check Default");
     }
 
     @Override
     @Test
     public void testDefaultViaBestMode() {
-        Assert.assertEquals("Check Default", ProgrammingMode.DIRECTBYTEMODE,
-                ((DCCppProgrammer) programmer).getBestMode());
+        assertEquals( ProgrammingMode.DIRECTBYTEMODE,
+            ((DCCppProgrammer) programmer).getBestMode(), "Check Default");
     }
 
     @Test
     @Override
     public void testSetGetMode() {
-        Throwable throwable = Assert.assertThrows(IllegalArgumentException.class, () -> programmer.setMode(ProgrammingMode.REGISTERMODE));
-        Assertions.assertNotNull(throwable.getMessage());
+        Throwable throwable = assertThrows( IllegalArgumentException.class,
+            () -> programmer.setMode(ProgrammingMode.REGISTERMODE));
+        assertNotNull(throwable.getMessage());
     }
 
     @Override
     @Test
     public void testGetCanWriteAddress() {
-        Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
+        assertFalse( programmer.getCanWrite("1234"), "can write address");
     }
 
     @Override
     @Test
     public void testGetWriteConfirmMode() {
-        Assert.assertEquals("Write Confirm Mode", Programmer.WriteConfirmMode.DecoderReply,
-                programmer.getWriteConfirmMode("1234"));
+        assertEquals( Programmer.WriteConfirmMode.DecoderReply,
+            programmer.getWriteConfirmMode("1234"), "Write Confirm Mode");
     }
 
     @Test
@@ -61,8 +68,9 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // and do the write
         p.writeCV("29", 34, l);
         // check "prog mode" message sent
-        Assert.assertEquals("mode message sent", 1, t.outbound.size());
-        Assert.assertEquals("write message contents", "W 29 34 0 87", t.outbound.elementAt(0).toString());
+        assertEquals( 1, t.outbound.size(), "mode message sent");
+        assertEquals( "W 29 34 0 87", t.outbound.elementAt(0).toString(),
+            "write message contents");
         // send reply
         DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|87|29 34");
         t.sendTestMessage(mr1);
@@ -73,10 +81,10 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        JUnitUtil.waitFor(() -> { return !(l.getRcvdInvoked() == 0); });
+        JUnitUtil.waitFor(() -> !(l.getRcvdInvoked() == 0), "Rcvd not invoked");
         
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
-        Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
+        assertNotEquals( 0, l.getRcvdInvoked(), "Receive Called by Programmer");
+        assertEquals( 34, l.getRcvdValue(), "Direct mode received value");
     }
 
     @Test
@@ -142,8 +150,8 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // and do the read
         p.readCV("29", l);
         // check "prog mode" message sent
-        Assert.assertEquals("mode message sent", 1, t.outbound.size());
-        Assert.assertEquals("read message contents", "R 29 0 82", t.outbound.elementAt(0).toString());
+        assertEquals( 1, t.outbound.size(), "mode message sent");
+        assertEquals( "R 29 0 82", t.outbound.elementAt(0).toString(), "read message contents");
 
         // send reply
         DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|82|29 12");
@@ -155,11 +163,10 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        JUnitUtil.waitFor(() -> { return !(l.getRcvdInvoked() == 0); });
+        JUnitUtil.waitFor(() -> !(l.getRcvdInvoked() == 0), "Rcvd not invoked");
         
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
-
-        Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
+        assertNotEquals( 0, l.getRcvdInvoked(), "Receive Called by Programmer");
+        assertEquals( 12, l.getRcvdValue(), "Register mode received value");
     }
 
     @Test
@@ -174,7 +181,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // infrastructure objects
         DCCppCommandStation cs = new DCCppCommandStation();
         cs.setVersion("3.0.0"); //set the version to support startVal
-        Assert.assertTrue(cs.getVersion().equals("3.0.0"));
+        assertEquals( "3.0.0", cs.getVersion());
         t = new DCCppInterfaceScaffold(cs);
         l = new ProgListenerScaffold();
         p = new DCCppProgrammer(t) {
@@ -187,8 +194,8 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // and do the read, with 12 as startVal
         p.readCV("29", l, 12);
         // check "prog mode" message sent
-        Assert.assertEquals("mode message sent", 1, t.outbound.size());
-        Assert.assertEquals("read message contents", "V 29 12", t.outbound.elementAt(0).toString());
+        assertEquals( 1, t.outbound.size(), "mode message sent");
+        assertEquals( "V 29 12", t.outbound.elementAt(0).toString(), "read message contents");
 
         // send reply
         DCCppReply mr1 = DCCppReply.parseDCCppReply("v 29 12");
@@ -200,12 +207,12 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        JUnitUtil.waitFor(() -> { return !(l.getRcvdInvoked() == 0); });
+        JUnitUtil.waitFor(() -> !(l.getRcvdInvoked() == 0), "Rcvd not invoked");
 
         //failure in this test occurs with the next line.
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
+        assertNotEquals( 0, l.getRcvdInvoked());
 
-        Assert.assertEquals("Register mode received value", 12, l.getRcvdValue());
+        assertEquals( 12, l.getRcvdValue(), "Register mode received value");
     }
 
     @Test
@@ -272,8 +279,8 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // and do the write
         p.writeCV("300", 34, l);
         // check "prog mode" message sent
-        Assert.assertEquals("mode message sent", 1, t.outbound.size());
-        Assert.assertEquals("write message contents", "W 300 34 0 87", t.outbound.elementAt(0).toString());
+        assertEquals( 1, t.outbound.size(), "mode message sent");
+        assertEquals( "W 300 34 0 87", t.outbound.elementAt(0).toString(), "write message contents");
         // send reply
         DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|87|300 34");
         t.sendTestMessage(mr1);
@@ -284,10 +291,10 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        JUnitUtil.waitFor(() -> { return !(l.getRcvdInvoked() == 0); });
+        JUnitUtil.waitFor(() -> !(l.getRcvdInvoked() == 0), "Rcvd not invoked");
 
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
-        Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
+        assertNotEquals( 0, l.getRcvdInvoked(), "Receive Called by Programmer");
+        assertEquals( 34, l.getRcvdValue(), "Direct mode received value");
     }
 
     // this test is the same as the testReadCvSequence test, but
@@ -299,8 +306,8 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // and do the read
         p.readCV("300", l);
         // check "prog mode" message sent
-        Assert.assertEquals("mode message sent", 1, t.outbound.size());
-        Assert.assertEquals("read message contents", "R 300 0 82", t.outbound.elementAt(0).toString());
+        assertEquals( 1, t.outbound.size(), "mode message sent");
+        assertEquals( "R 300 0 82", t.outbound.elementAt(0).toString(), "read message contents");
 
         // send reply
         DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|82|300 34");
@@ -312,11 +319,11 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         // traffic controller to exit from service mode.  We just
         // need to wait a few seconds and see that the listener we
         // registered earlier received the values we expected.
-        JUnitUtil.waitFor(() -> { return !(l.getRcvdInvoked() == 0); });
+        JUnitUtil.waitFor(() -> !(l.getRcvdInvoked() == 0), "Rcvd not invoked");
 
-        Assert.assertFalse("Receive Called by Programmer", l.getRcvdInvoked() == 0);
+        assertNotEquals( 0, l.getRcvdInvoked(), "Receive Called by Programmer");
 
-        Assert.assertEquals("Direct mode received value", 34, l.getRcvdValue());
+        assertEquals( 34, l.getRcvdValue(), "Direct mode received value");
     }
 
     // Test to make sure the getCanWrite(int,string) function works correctly
@@ -329,7 +336,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         //p.setMode(ProgrammingMode.PAGEMODE);
         //Assert.assertTrue("DCC++ Base Station Can Write CV3 in paged mode", p.getCanWrite("3"));
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        Assert.assertTrue("DCC++ Base Station Can Write CV3 in direct byte mode", p.getCanWrite("3"));
+        assertTrue( p.getCanWrite("3"), "DCC++ Base Station Can Write CV3 in direct byte mode");
 
 //        p.setMode(ProgrammingMode.DIRECTBITMODE);
 //        Assert.assertFalse("DCC++ Base Station Can Not Write CV3 in direct bit mode", p.getCanWrite("3"));
@@ -339,13 +346,13 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         //p.setMode(ProgrammingMode.PAGEMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Write CV300 in paged mode", p.getCanWrite("300"));
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        Assert.assertTrue("DCC++ Base Station Can Write CV300 in direct byte mode", p.getCanWrite("300"));
+        assertTrue( p.getCanWrite("300"), "DCC++ Base Station Can Write CV300 in direct byte mode");
 
 //        p.setMode(ProgrammingMode.DIRECTBITMODE);
 //        Assert.assertFalse("DCC++ Base Station Can Not Write CV300 in direct bit mode", p.getCanWrite("300"));
 
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        Assert.assertFalse("DCC++ Base Station Can Not Write CV3000 in direct byte mode", p.getCanWrite("3000"));
+        assertFalse( p.getCanWrite("3000"), "DCC++ Base Station Can Not Write CV3000 in direct byte mode");
 
 //        p.setMode(ProgrammingMode.DIRECTBITMODE);
 //        Assert.assertFalse("DCC++ Base Station Can Not  Write CV3000 in direct bit mode", p.getCanWrite("3000"));
@@ -363,7 +370,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         //Assert.assertTrue("DCC++ Base Station Can Read CV3 in paged mode", p.getCanRead("3"));
 
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        Assert.assertTrue("DCC++ Base Station Can Read CV3 in direct byte mode", p.getCanRead("3"));
+        assertTrue( p.getCanRead("3"), "DCC++ Base Station Can Read CV3 in direct byte mode");
 
 //        p.setMode(ProgrammingMode.DIRECTBITMODE);
 //        Assert.assertFalse("DCC++ Base Station Can Not Read CV3 in direct bit mode", p.getCanRead("3"));
@@ -373,13 +380,13 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         //p.setMode(ProgrammingMode.PAGEMODE);
         //Assert.assertFalse("DCC++ Base Station Can not Read CV300 in paged mode", p.getCanRead("300"));
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        Assert.assertTrue("DCC++ Base Station Can Read CV300 in direct byte mode", p.getCanRead("300"));
+        assertTrue( p.getCanRead("300"), "DCC++ Base Station Can Read CV300 in direct byte mode");
 
 //        p.setMode(ProgrammingMode.DIRECTBITMODE);
 //        Assert.assertFalse("DCC++ Base Station Can Not Read CV300 in direct bit mode", p.getCanRead("300"));
 
         p.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        Assert.assertFalse("DCC++ Base Station Can not Read CV3000 in direct byte mode", p.getCanRead("3000"));
+        assertFalse( p.getCanRead("3000"), "DCC++ Base Station Can not Read CV3000 in direct byte mode");
 
 //        p.setMode(ProgrammingMode.DIRECTBITMODE);
 //        Assert.assertFalse("DCC++ Base Station Can not Read CV3000 in direct bit mode", p.getCanRead("3000"));

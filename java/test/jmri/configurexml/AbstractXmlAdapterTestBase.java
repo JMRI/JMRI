@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ abstract public class AbstractXmlAdapterTestBase {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull(xmlAdapter);
+        Assertions.assertNotNull(xmlAdapter);
     }
 
     abstract public void setUp();

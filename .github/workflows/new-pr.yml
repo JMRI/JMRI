@@ -1,0 +1,87 @@
+name: New PR
+
+permissions:
+  issues: write
+  pull-requests: write
+
+on:
+  pull_request_target:
+    types: [opened, reopened, labeled, unlabeled, synchronize]
+
+jobs:
+  check-pr:
+    runs-on: ubuntu-latest
+    env:
+      PR_LABEL: 'New PR'
+      BLOCK_HOURS: '24' # use e.g. 0.25 for testing
+
+    steps:
+      - name: Check PR age, label if recent, and block merging if labeled
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { owner, repo } = context.repo;
+            const pr = context.payload.pull_request;
+            const prNumber = pr.number;
+            const labelName = process.env.PR_LABEL;
+            const hoursLimit = parseFloat(process.env.BLOCK_HOURS);
+
+            // Helper function to get current labels on a PR
+            async function getPrLabels(owner, repo, prNumber) {
+              const labelsResp = await github.rest.issues.listLabelsOnIssue({
+                owner,
+                repo,
+                issue_number: prNumber
+              });
+              return labelsResp.data.map(l => l.name);
+            }
+
+            // Fetch PR details and labels
+            const { data: prDetails } = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: prNumber
+            });
+            var labelNames = await getPrLabels(owner, repo, prNumber);
+
+            // 1. Add or remove label based on age
+            const now = new Date();
+            const createdAt = new Date(prDetails.created_at);
+            const ageInHours = (now - createdAt) / (1000 * 60 * 60);
+            console.log(`ℹ️ PR #${prNumber} is ${ageInHours.toFixed(2)}h old.`);
+
+            if (ageInHours <= hoursLimit && !labelNames.includes(labelName)) {
+              console.log(`🔖 Adding label "${labelName}" to PR #${prNumber} as less than ${hoursLimit}h old.`);
+              try {
+                await github.rest.issues.addLabels({
+                  owner,
+                  repo,
+                  issue_number: prNumber,
+                  labels: [labelName]
+                });
+                labelNames.push(labelName); // Keep local list in sync
+              } catch (error) {
+                console.log(`⚠️ Could not add label "${labelName}": ${error.message}`);
+              }
+            } else if (ageInHours > hoursLimit && labelNames.includes(labelName)) {
+              console.log(`🔖 Removing label "${labelName}", PR age ${ageInHours.toFixed(2)}h.`);
+              try {
+                await github.rest.issues.removeLabel({
+                  owner,
+                  repo,
+                  issue_number: prNumber,
+                  name: labelName
+                });
+                labelNames = labelNames.filter(e => e !== labelName); // Update local array
+              } catch (error) {
+                console.log(`⚠️ Could not remove label "${labelName}": ${error.message}`);
+              }
+            }
+
+            // 2. Block merging if label still present
+            if (labelNames.includes(labelName)) {
+              core.setFailed(`❌ This pull request is a "${labelName}" and cannot be merged until ${hoursLimit} hours after creation.`);
+            } else {
+              console.log('✅ PR is mergeable.');
+            }

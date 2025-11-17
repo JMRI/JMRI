@@ -66,6 +66,7 @@ public class CarRosterMenu extends JMenu {
         
         add(importAction);
         add(exportAction);
+        addSeparator();
         add(deleteAction);
         add(resetMovesAction);
         addSeparator();

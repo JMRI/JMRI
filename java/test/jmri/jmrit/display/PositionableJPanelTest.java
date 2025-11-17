@@ -1,19 +1,24 @@
 package jmri.jmrit.display;
 
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-@DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+@DisabledIfHeadless
 public class PositionableJPanelTest extends PositionableTestBase {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", p);
+        assertNotNull( p, "exists");
     }
 
     @Test
@@ -22,17 +27,17 @@ public class PositionableJPanelTest extends PositionableTestBase {
         p.rotate(50);
         // setting rotation is currently ignored by PositionableJPanel 
         // and it's sub classes.
-        Assert.assertEquals("Degrees", 0, p.getDegrees());
+        assertEquals( 0, p.getDegrees(), "Degrees");
     }
 
     @Test
     @Override
     public void testGetAndSetViewCoordinates() {
-        Assert.assertFalse("Default View Coordinates", p.getViewCoordinates());
+        assertFalse( p.getViewCoordinates(), "Default View Coordinates");
         p.setViewCoordinates(true);
-        Assert.assertTrue("View Coordinates after set true", p.getViewCoordinates());
+        assertTrue( p.getViewCoordinates(), "View Coordinates after set true");
         p.setViewCoordinates(false);
-        Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
+        assertFalse( p.getViewCoordinates(), "View Coordinates after set false");
     }
 
     @BeforeEach

@@ -1,31 +1,29 @@
 package jmri.jmrit.display;
 
-import java.awt.GraphicsEnvironment;
-import org.junit.Assert;
-import org.junit.Assume;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
  * Test simple functioning of PositionableIcon.
- * 
+ * Extending classes should use DisabledIfHeadless annotation as the setUp
+ * method of this class creates an EditorScaffold.
  * @author Paul Bender Copyright (C) 2016
  */
 public class PositionableIconTest extends PositionableTestBase {
 
     @Test
+    @DisabledIfHeadless
     public void testCtor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("PositionableIcon Constructor", p);
+        Assertions.assertNotNull( p, "PositionableIcon Constructor");
     }
 
     @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            editor = new EditorScaffold();
-            p = new PositionableIcon(editor);
-        }
+        editor = new EditorScaffold();
+        p = new PositionableIcon(editor);
     }
 
 }

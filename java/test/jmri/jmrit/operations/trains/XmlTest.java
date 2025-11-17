@@ -133,12 +133,12 @@ public class XmlTest extends OperationsTestCase {
         TrainManager manager = InstanceManager.getDefault(TrainManager.class);
 
 
-        Assert.assertEquals("Starting Number of Trains", 0, manager.getTrainsByIdList().size());
+        Assert.assertEquals("Starting Number of Trains", 0, manager.getList().size());
         Train t1 = manager.newTrain("Test Number 1");
         Train t2 = manager.newTrain("Test Number 2");
         Train t3 = manager.newTrain("Test Number 3");
 
-        Assert.assertEquals("New Number of Trains", 3, manager.getTrainsByIdList().size());
+        Assert.assertEquals("New Number of Trains", 3, manager.getList().size());
 
         EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         Engine e1 = eManager.newRS("UP", "1");

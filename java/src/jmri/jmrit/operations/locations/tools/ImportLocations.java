@@ -66,25 +66,26 @@ public class ImportLocations extends ImportCommon {
     protected static final int FIELD_ALTERNATE_TRACK = 25;
     protected static final int FIELD_POOL_NAME = 26;
     protected static final int FIELD_TRACK_MINIMUM_POOL = 27;
-    protected static final int FIELD_TRACK_BLOCKING_ORDER = 28;
-    protected static final int FIELD_PLANNED_PICK_UPS = 29;
+    protected static final int FIELD_TRACK_MAXIMUM_POOL = 28;
+    protected static final int FIELD_TRACK_BLOCKING_ORDER = 29;
+    protected static final int FIELD_PLANNED_PICK_UPS = 30;
     // 30 - 40 not implemented
-    protected static final int FIELD_TRACK_DESTINATIONS = 30;
-    protected static final int FIELD_DESTINATIONS = 31;
-    protected static final int FIELD_HOLD_CARS_CUSTOM_LOADS = 32;
-    protected static final int FIELD_DISABLE_LOAD_CHANGE = 33;
-    protected static final int FIELD_SWAP_DEFAULT = 34;
-    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 35;
-    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 36;
-    protected static final int FIELD_GENERATE_SPUR = 37;
-    protected static final int FIELD_GENERATE_ANY_SPUR = 38;
-    protected static final int FIELD_GENERATE_STAGING = 39;
-    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 40;
+    protected static final int FIELD_TRACK_DESTINATIONS = 31;
+    protected static final int FIELD_DESTINATIONS = 32;
+    protected static final int FIELD_HOLD_CARS_CUSTOM_LOADS = 33;
+    protected static final int FIELD_DISABLE_LOAD_CHANGE = 34;
+    protected static final int FIELD_SWAP_DEFAULT = 35;
+    protected static final int FIELD_EMPTY_DEFAULT_LOADS = 36;
+    protected static final int FIELD_EMPTY_CUSTOM_LOADS = 37;
+    protected static final int FIELD_GENERATE_SPUR = 38;
+    protected static final int FIELD_GENERATE_ANY_SPUR = 39;
+    protected static final int FIELD_GENERATE_STAGING = 40;
+    protected static final int FIELD_BLOCK_CARS_BY_PICKUP = 41;
 
-    protected static final int FIELD_COMMENT = 41;
-    protected static final int FIELD_COMMENT_BOTH = 42;
-    protected static final int FIELD_COMMENT_PICKUPS = 43;
-    protected static final int FIELD_COMMENT_SETOUTS = 44;
+    protected static final int FIELD_COMMENT = 42;
+    protected static final int FIELD_COMMENT_BOTH = 43;
+    protected static final int FIELD_COMMENT_PICKUPS = 44;
+    protected static final int FIELD_COMMENT_SETOUTS = 45;
 
     @Override
     public void run() {
@@ -348,7 +349,7 @@ public class ImportLocations extends ImportCommon {
                 if (minPool.length() > 0) {
                     log.debug("setting track pool minimum: {}", minPool);
                     try {
-                        thisTrack.setMinimumLength(Integer.parseInt(minPool));
+                        thisTrack.setPoolMinimumLength(Integer.parseInt(minPool));
                     } catch (NumberFormatException exception) {
                         log.debug("Exception converting the ignore minimum to a number - value was {}", minPool);
                     }

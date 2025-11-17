@@ -9,7 +9,7 @@ import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Stack;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
-import jmri.util.*;
+import jmri.util.ThreadingUtil;
 
 /**
  * The default implementation of ConditionalNG.
@@ -145,6 +145,7 @@ public class DefaultConditionalNG extends AbstractBase
      * Executes a LogixNG Module.
      * @param module      The module to be executed
      * @param parameters  The parameters
+     * @throws IllegalArgumentException when needed
      */
     public static void executeModule(Module module, Map<String, Object> parameters)
             throws IllegalArgumentException {

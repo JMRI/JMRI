@@ -1,7 +1,5 @@
 package jmri.jmrit.beantable.oblock;
 
-import java.awt.*;
-
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Path;
@@ -10,6 +8,8 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
 
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -19,8 +19,8 @@ import org.junit.jupiter.api.*;
 public class TableFramesTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
         TableFrames tf = new TableFrames();
         Assertions.assertNotNull(tf, "exists");
@@ -28,16 +28,16 @@ public class TableFramesTest {
     }
 
     @Test
+    @DisabledIfHeadless
     public void testCTorTabbed() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(true);
         TableFrames tf = new TableFrames();
         Assertions.assertNotNull(tf, "exists");
     }
 
     @Test
+    @DisabledIfHeadless
     public void testImport() {
-        Assumptions.assumeFalse(GraphicsEnvironment.isHeadless());
         // use original _desktop interface
         InstanceManager.getDefault(GuiLafPreferencesManager.class).setOblockEditTabbed(false);
 
@@ -86,7 +86,7 @@ public class TableFramesTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
     }
 
     @AfterEach

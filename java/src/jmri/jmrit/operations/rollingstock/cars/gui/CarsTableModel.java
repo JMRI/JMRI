@@ -95,15 +95,12 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
     private int _sort = SORTBY_NUMBER;
 
     List<Car> carList = null; // list of cars
-    boolean showAllCars = true; // when true show all cars
-    public String locationName = null; // only show cars with this location
-    public String trackName = null; // only show cars with this track
     //    JTable _table;
     CarsTableFrame _frame;
 
     public CarsTableModel(boolean showAllCars, String locationName, String trackName) {
         super();
-        this.showAllCars = showAllCars;
+        showAll = showAllCars;
         this.locationName = locationName;
         this.trackName = trackName;
         carManager.addPropertyChangeListener(this);
@@ -367,11 +364,11 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
             default:
                 list = carManager.getByNumberList();
         }
-        filterList(list);
+        filterCarList(list);
         return list;
     }
 
-    private void filterList(List<Car> list) {
+    private void filterCarList(List<Car> list) {
         if (!Control.showCloneCars) {
             for (int i = 0; i < list.size(); i++) {
                 Car car = list.get(i);
@@ -381,28 +378,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 }
             }
         }
-        if (showAllCars) {
-            return;
-        }
-        for (int i = 0; i < list.size(); i++) {
-            Car car = list.get(i);
-            if (car.getLocation() == null) {
-                list.remove(i--);
-                continue;
-            }
-            // filter out cars that don't have a location name that matches
-            if (locationName != null) {
-                if (!car.getLocationName().equals(locationName)) {
-                    list.remove(i--);
-                    continue;
-                }
-                if (trackName != null) {
-                    if (!car.getTrackName().equals(trackName)) {
-                        list.remove(i--);
-                    }
-                }
-            }
-        }
+        filterList(list);
     }
 
     void initTable(JTable table, CarsTableFrame frame) {
@@ -635,6 +611,11 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 if (car.getDestination() != null) {
                     s = car.getDestinationName() + " (" + car.getDestinationTrackName() + ")";
                 }
+                if (log.isDebugEnabled() &&
+                        car.getDestinationTrack() != null &&
+                        car.getDestinationTrack().getSchedule() != null) {
+                    s = s + " " + car.getScheduleItemId() + " ";
+                }
                 if (car.getFinalDestination() != null) {
                     s = s + "->" + car.getFinalDestinationName(); // NOI18N
                 }
@@ -642,6 +623,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                     s = s + " (" + car.getFinalDestinationTrackName() + ")";
                 }
                 if (log.isDebugEnabled() &&
+                        !s.contains(car.getScheduleItemId()) &&
                         car.getFinalDestinationTrack() != null &&
                         car.getFinalDestinationTrack().getSchedule() != null) {
                     s = s + " " + car.getScheduleItemId();
@@ -739,7 +721,6 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 car.setSelected(((Boolean) value).booleanValue());
                 break;
             case SET_COLUMN:
-                log.debug("Set car");
                 if (csf != null) {
                     csf.dispose();
                 }
@@ -751,7 +732,6 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
                 });
                 break;
             case EDIT_COLUMN:
-                log.debug("Edit car");
                 if (cef != null) {
                     cef.dispose();
                 }

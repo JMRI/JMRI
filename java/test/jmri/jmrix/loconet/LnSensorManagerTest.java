@@ -1,13 +1,17 @@
 package jmri.jmrix.loconet;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnSensorManagerTurnout class.
@@ -25,7 +29,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
 
     @Test
     public void testLnSensorCreate() {
-        Assert.assertNotNull("exists", l);
+        assertNotNull( l, "exists");
     }
 
     @Test
@@ -34,8 +38,8 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         Sensor t = l.newSensor("LS22", "test");
 
         // test get
-        Assert.assertTrue(t == l.getByUserName("test"));
-        Assert.assertTrue(t == l.getBySystemName("LS22"));
+        assertSame( t, l.getByUserName("test"));
+        assertSame( t, l.getBySystemName("LS22"));
     }
 
     @Test
@@ -43,11 +47,11 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
     public void testMisses() {
         // sample turnout object
         Sensor t = l.newSensor("LS22", "test");
-        Assert.assertNotNull("exists", t);
+        assertNotNull( t, "exists");
 
         // try to get nonexistant turnouts
-        Assert.assertNull( l.getByUserName("foo"));
-        Assert.assertNull( l.getBySystemName("bar"));
+        assertNull( l.getByUserName("foo"));
+        assertNull( l.getBySystemName("bar"));
     }
 
     @Test
@@ -62,7 +66,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         lnis.sendTestMessage(m1);
 
         // see if sensor exists
-        Assert.assertNotNull( l.getBySystemName("LS44"));
+        assertNotNull( l.getBySystemName("LS44"));
     }
 
     @Test
@@ -72,50 +76,43 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
 
         Sensor o = t.newSensor("LS21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received sensor value {}", o);
-        }
+        // log.debug("created sensor {}", o);
         
-        Assert.assertNotNull(o);
-        Assert.assertTrue(o instanceof LnSensor );
+        assertNotNull(o);
+        assertInstanceOf( LnSensor.class, o);
 
         // make sure loaded into tables
 
-        Assert.assertNotNull( t.getBySystemName("LS21"));
-        Assert.assertNotNull( t.getByUserName("my name"));
+        assertNotNull( t.getBySystemName("LS21"));
+        assertNotNull( t.getByUserName("my name"));
 
     }
 
     @Test
     public void testDeprecationWarningSensorNumberFormat() {
-        boolean excep= false;
-        String s = "";
-        try {
-            s = l.createSystemName("3:5", "L");
-        } catch (jmri.JmriException e) {
-            excep = true;
-        }
-        Assert.assertEquals("no exception during createSystemName for arguments '3:5', 'L'", false, excep);
-        Assert.assertEquals("check createSystemName for arguments '3:5', 'L'", "LS37", s);
+        String s = assertDoesNotThrow( () ->
+            l.createSystemName("3:5", "L"),
+            "no exception during createSystemName for arguments '3:5', 'L'");
+        assertEquals( "LS37", s, "check createSystemName for arguments '3:5', 'L'");
         jmri.util.JUnitAppender.assertWarnMessage(
                 "LnSensorManager.createSystemName(curAddress, prefix) support for curAddress using the '3:5' format is deprecated as of JMRI 4.17.4 and will be removed in a future JMRI release.  Use the curAddress format '37' instead.");
     }
 
     @Test
     public void testSetGetRestingTime() {
-        Assert.assertEquals("check default resting time", 1250, ((LnSensorManager)l).getRestingTime());
+        assertEquals( 1250, ((LnSensorManager)l).getRestingTime(), "check default resting time");
 
         ((LnSensorManager)l).setRestingTime(600);
-        Assert.assertEquals("check 1st set of resting time", 600, ((LnSensorManager)l).getRestingTime());
-        
+        assertEquals( 600, ((LnSensorManager)l).getRestingTime(), "check 1st set of resting time");
+
         ((LnSensorManager)l).setRestingTime(500);
-        Assert.assertEquals("check 2nd set of resting time", 500, ((LnSensorManager)l).getRestingTime());
-        
+        assertEquals( 500, ((LnSensorManager)l).getRestingTime(), "check 2nd set of resting time");
+
         ((LnSensorManager)l).setRestingTime(499);
-        Assert.assertEquals("check 1st range check on set of resting time", 500, ((LnSensorManager)l).getRestingTime());
-        
+        assertEquals( 500, ((LnSensorManager)l).getRestingTime(), "check 1st range check on set of resting time");
+
         ((LnSensorManager)l).setRestingTime(200001);
-        Assert.assertEquals("check 2nd range check on set of resting time", 200000, ((LnSensorManager)l).getRestingTime());
+        assertEquals( 200000, ((LnSensorManager)l).getRestingTime(), "check 2nd range check on set of resting time");
         
     }
 
@@ -127,7 +124,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
-        Assert.assertNotNull("exists", lnis);
+        assertNotNull( lnis, "exists");
 
         // create and register the manager object
         l = new LnSensorManager(memo, false);
@@ -141,6 +138,6 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorManagerTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnSensorManagerTest.class);
 
 }

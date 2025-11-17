@@ -2,8 +2,10 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  *
@@ -15,12 +17,12 @@ public class ButtonSwatchColorChooserPanelTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",panel);
+        assertNotNull( panel, "exists");
     }
 
     @Test
     public void testGetDisplayName(){
-        Assert.assertEquals("display name",Bundle.getMessage("ButtonSwatchColorChooserName"),panel.getDisplayName());
+        assertEquals( Bundle.getMessage("ButtonSwatchColorChooserName"),panel.getDisplayName(), "display name");
     }
 
     @BeforeEach

@@ -2,7 +2,6 @@ package jmri.web.servlet.tables;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -15,7 +14,7 @@ public class TablesServletTest {
     @Test
     public void testCtor() {
         TablesServlet a = new TablesServlet();
-        Assert.assertNotNull(a);
+        Assertions.assertNotNull(a);
     }
 
     @BeforeEach

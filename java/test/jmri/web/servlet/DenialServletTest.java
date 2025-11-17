@@ -1,7 +1,5 @@
 package jmri.web.servlet;
 
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
-
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -9,10 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 
 /**
  * Tests for the jmri.web.servlet.DenialServlet class
@@ -24,7 +26,7 @@ public class DenialServletTest {
     @Test
     public void testCtor() {
         DenialServlet a = new DenialServlet();
-        Assert.assertNotNull(a);
+        assertNotNull(a);
     }
 
     @Test
@@ -32,8 +34,8 @@ public class DenialServletTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         new DenialServlet().doGet(request, response);
-        Assert.assertEquals("Response is HTML", UTF8_TEXT_HTML, response.getContentType());
-        Assert.assertEquals("Status is 403", HttpServletResponse.SC_FORBIDDEN, response.getStatus());
+        assertEquals( UTF8_TEXT_HTML, response.getContentType(), "Response is HTML");
+        assertEquals( HttpServletResponse.SC_FORBIDDEN, response.getStatus(), "Status is 403");
     }
     
     @Test
@@ -41,8 +43,8 @@ public class DenialServletTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         new DenialServlet().doPost(request, response);
-        Assert.assertEquals("Response is HTML", UTF8_TEXT_HTML, response.getContentType());
-        Assert.assertEquals("Status is 403", HttpServletResponse.SC_FORBIDDEN, response.getStatus());
+        assertEquals( UTF8_TEXT_HTML, response.getContentType(), "Response is HTML");
+        assertEquals( HttpServletResponse.SC_FORBIDDEN, response.getStatus(), "Status is 403");
     }
     
     @BeforeEach

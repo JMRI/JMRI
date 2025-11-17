@@ -50,6 +50,11 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         element.setAttribute("disabled", "" + (p.isDisabled() ? "yes" : "no"));
         element.setAttribute("disableWhenOccupied", "" + (p.isDisabledWhenOccupied() ? "yes" : "no"));
 
+        if (pv.getShowUnknown()) {
+            // only write if set to help with backward compatibility
+            element.setAttribute("showunknown", "yes");
+        }
+        
         if (p.showToolTip()) {
             element.setAttribute("showtooltip", "yes");
         }
@@ -405,6 +410,14 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
             }
         }
 
+        lv.setShowUnknown(false);
+        a = element.getAttribute("showunknown");
+        if (a != null) {
+            if ("yes".equals(a.getValue())) {
+                lv.setShowUnknown(true);
+            }
+        }
+        
         if (version == 2) {
             try {
                 x = element.getAttribute("xa").getFloatValue();

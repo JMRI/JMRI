@@ -1,5 +1,11 @@
 package jmri.jmrit.display;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.event.WindowListener;
 
 import javax.swing.JPanel;
@@ -7,10 +13,10 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.JFrame;
 
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 
 /**
  * Base class for tests for Positionable objects.
@@ -64,91 +70,91 @@ abstract public class PositionableTestBase {
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetPositionable() {
-        Assert.assertTrue("Default Positionable", p.isPositionable());
+        assertTrue( p.isPositionable(), "Default Positionable");
         p.setPositionable(false);
-        Assert.assertFalse("Positionable after set false", p.isPositionable());
+        assertFalse( p.isPositionable(), "Positionable after set false");
         p.setPositionable(true);
-        Assert.assertTrue("Positionable after set true", p.isPositionable());
+        assertTrue( p.isPositionable(), "Positionable after set true");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetEditable() {
-        Assert.assertTrue("Default Editable", p.isEditable());
+        assertTrue( p.isEditable(), "Default Editable");
         p.setEditable(false);
-        Assert.assertFalse("Editable after set false", p.isEditable());
+        assertFalse( p.isEditable(), "Editable after set false");
         p.setEditable(true);
-        Assert.assertTrue("Editable after set true", p.isEditable());
+        assertTrue( p.isEditable(), "Editable after set true");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetShowToolTip() {
-        Assert.assertTrue("Default ShowToolTip", p.showToolTip());
+        assertTrue( p.showToolTip(), "Default ShowToolTip");
         p.setShowToolTip(false);
-        Assert.assertFalse("showToolTip after set false", p.showToolTip());
+        assertFalse( p.showToolTip(), "showToolTip after set false");
         p.setShowToolTip(true);
-        Assert.assertTrue("showToolTip after set true", p.showToolTip());
+        assertTrue( p.showToolTip(), "showToolTip after set true");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetToolTip() {
-        Assert.assertNull("default tool tip", p.getToolTip());
+        assertNull( p.getToolTip(), "default tool tip");
         p.setToolTip(new ToolTip("hello",0,0,null));
-        Assert.assertNotNull("tool tip after set", p.getToolTip());
+        assertNotNull( p.getToolTip(), "tool tip after set");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetViewCoordinates() {
-        Assert.assertTrue("Default View Coordinates", p.getViewCoordinates());
+        assertTrue( p.getViewCoordinates(), "Default View Coordinates");
         p.setViewCoordinates(false);
-        Assert.assertFalse("View Coordinates after set false", p.getViewCoordinates());
+        assertFalse( p.getViewCoordinates(), "View Coordinates after set false");
         p.setViewCoordinates(true);
-        Assert.assertTrue("View Coordinates after set true", p.getViewCoordinates());
+        assertTrue( p.getViewCoordinates(), "View Coordinates after set true");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetControlling() {
-        Assert.assertTrue("Default ShowToolTip", p.isControlling());
+        assertTrue( p.isControlling(), "Default ShowToolTip");
         p.setControlling(false);
-        Assert.assertFalse("Controlling after set false", p.isControlling());
+        assertFalse( p.isControlling(), "Controlling after set false");
         p.setControlling(true);
-        Assert.assertTrue("Controlling after set true", p.isControlling());
+        assertTrue( p.isControlling(), "Controlling after set true");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetHidden() {
-        Assert.assertFalse("Default Hidden", p.isHidden());
+        assertFalse( p.isHidden(), "Default Hidden");
         p.setHidden(true);
-        Assert.assertTrue("Hidden after set true", p.isHidden());
+        assertTrue( p.isHidden(), "Hidden after set true");
         p.setHidden(false);
-        Assert.assertFalse("Hidden after set false", p.isHidden());
+        assertFalse( p.isHidden(), "Hidden after set false");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetDisplayLevel(){
         p.setDisplayLevel(2);
-        Assert.assertEquals("Display Level",2,p.getDisplayLevel());
+        assertEquals( 2, p.getDisplayLevel(), "Display Level");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetEditor(){
         Editor es = new EditorScaffold();
         p.setEditor(es);
-        Assert.assertEquals("Editor",es,p.getEditor());
+        assertEquals( es, p.getEditor(), "Editor");
         JUnitUtil.dispose(es);
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testClone() {
         p.deepClone();
 
@@ -156,69 +162,71 @@ abstract public class PositionableTestBase {
         // It should pass.
         //Assert.assertFalse("clone object (not content) equality", p.equals(p));
 
-        Assert.assertTrue("class type equality", p.getClass().equals(p.getClass()));
+        assertTrue( p.getClass().equals(p.getClass()), "class type equality");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testMaxWidth() {
-        Assert.assertTrue("Max Width",0<=p.maxWidth());
+        assertTrue( 0 <= p.maxWidth(), "Max Width");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testMaxHeight() {
-        Assert.assertTrue("Max Height",0<=p.maxHeight());
+        assertTrue( 0 <= p.maxHeight(), "Max Height");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetScale(){
-        Assert.assertEquals("Default Scale",1.0D,p.getScale(),0.0);
+        assertEquals( 1.0D, p.getScale(), 0.0, "Default Scale");
         p.setScale(5.0D);
-        Assert.assertEquals("Scale",5.0D,p.getScale(),0.0);
+        assertEquals( 5.0D, p.getScale(), 0.0, "Scale");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetAndSetRotationDegrees(){
         p.rotate(50);
-        Assert.assertEquals("Degrees",50,p.getDegrees());
+        assertEquals( 50, p.getDegrees(), "Degrees");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetTextComponent(){
-        Assert.assertNotNull("text component",p.getTextComponent());
+        assertNotNull( p.getTextComponent(), "text component");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testStoreItem(){
-        Assert.assertTrue("Store Item",p.storeItem());
+        assertTrue( p.storeItem(), "Store Item");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testDoViemMenu(){
-        Assert.assertTrue("Do Viem Menu",p.doViemMenu());
+        assertTrue( p.doViemMenu(), "Do Viem Menu");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testGetNameString(){
-        Assert.assertNotNull("Name String",p.getNameString());
+        assertNotNull( p.getNameString(), "Name String");
     }
 
     @Test
-    @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
+    @DisabledIfHeadless
     public void testShow() throws Positionable.DuplicateIdException {
 
         JFrame jf = new jmri.util.JmriJFrame("Positionable Target Panel");
         JPanel panel = new JPanel();
         jf.getContentPane().add(panel);
-        jf.pack();
-        jf.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            jf.pack();
+            jf.setVisible(true);
+        });
 
         editor.putItem(p);
         p.setDisplayLevel(jmri.jmrit.display.Editor.LABELS);
@@ -229,8 +237,10 @@ abstract public class PositionableTestBase {
 
         editor.setTitle();
 
-        editor.pack();
-        editor.setVisible(true);
+        ThreadingUtil.runOnGUI( () -> {
+            editor.pack();
+            editor.setVisible(true);
+        });
 
         // close the frame.
         EditorFrameOperator jfo = new EditorFrameOperator(jf);

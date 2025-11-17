@@ -1,8 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
-import java.awt.GraphicsEnvironment;
-
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
 
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2016
  */
+@DisabledIfHeadless
 public class MultiSensorIconFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private LayoutEditor e;
@@ -19,11 +19,9 @@ public class MultiSensorIconFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           e = new LayoutEditor();
-           frame = new MultiSensorIconFrame(e);
-        }
+        JUnitUtil.resetProfileManager();
+        e = new LayoutEditor();
+        frame = new MultiSensorIconFrame(e);
 
     }
 

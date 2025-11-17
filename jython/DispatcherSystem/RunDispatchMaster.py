@@ -151,10 +151,10 @@ class RunDispatcherMaster(jmri.jmrit.automat.AbstractAutomaton ):
 
         LocationManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
         for action in self.get_list_of_actions():
-            print "action", action
+            # print "action", action
             if LocationManager.getLocationByName(action) is None:
                 LocationManager.newLocation(action)
-                print "added", action
+                # print "added", action
 
 
     # ***********************************************************

@@ -1,8 +1,12 @@
 package jmri.progdebugger;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import jmri.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -21,8 +25,9 @@ public class DebugProgrammerManagerTest {
                 new DebugProgrammerManager());
         Programmer p = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
-        Assert.assertTrue("got service mode", p != null);
-        Assert.assertTrue("correct type", (p instanceof ProgDebugger));
+        assertNotNull( p, "got service mode");
+        assertInstanceOf(ProgDebugger.ProgDebuggerConfigurator.class,
+            p.getConfigurator(), "correct type");
     }
 
     /**
@@ -34,9 +39,8 @@ public class DebugProgrammerManagerTest {
                 new DebugProgrammerManager());
         Programmer p = InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
                 .getGlobalProgrammer();
-        Assert.assertTrue("same service mode programmer",
-                InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)
-                        .getGlobalProgrammer() == p);
+        assertSame( InstanceManager.getDefault( GlobalProgrammerManager.class).getGlobalProgrammer(),
+            p, "same service mode programmer");
     }
 
     /**
@@ -45,10 +49,11 @@ public class DebugProgrammerManagerTest {
     @Test
     public void testOpsModeRequest() {
         InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
-        Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
+        Programmer p = InstanceManager.getDefault( AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
-        Assert.assertTrue("got ops mode", p != null);
-        Assert.assertTrue("correct type", (p instanceof ProgDebugger));
+        assertNotNull( p, "got ops mode");
+        assertInstanceOf(ProgDebugger.ProgDebuggerConfigurator.class,
+            p.getConfigurator(), "correct type");
     }
 
     /**
@@ -57,11 +62,10 @@ public class DebugProgrammerManagerTest {
     @Test
     public void testOpsModeUnique() {
         InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
-        Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
+        Programmer p = InstanceManager.getDefault( AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
-        Assert.assertTrue("same ops mode programmer",
-                InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
-                        .getAddressedProgrammer(true, 777) == p);
+        assertSame( InstanceManager.getDefault( AddressedProgrammerManager.class)
+            .getAddressedProgrammer(true, 777), p, "same ops mode programmer");
     }
 
     /**
@@ -72,12 +76,10 @@ public class DebugProgrammerManagerTest {
         InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
-        Assert.assertTrue("different ops mode programmer",
-                InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
-                        .getAddressedProgrammer(true, 888) != p);
-        Assert.assertTrue("same ops mode programmer",
-                InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
-                        .getAddressedProgrammer(true, 777) == p);
+        assertNotSame( InstanceManager.getDefault(AddressedProgrammerManager.class)
+            .getAddressedProgrammer(true, 888), p, "different ops mode programmer");
+        assertSame( InstanceManager.getDefault( AddressedProgrammerManager.class)
+            .getAddressedProgrammer(true, 777), p, "same ops mode programmer");
     }
 
     @BeforeEach

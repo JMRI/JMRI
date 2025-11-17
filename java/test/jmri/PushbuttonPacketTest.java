@@ -3,7 +3,9 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the PushbuttonPacket class
@@ -16,11 +18,11 @@ public class PushbuttonPacketTest {
     public void testImmutableNames() {
         String[] c1 = PushbuttonPacket.getValidDecoderNames();
         String[] c2 = PushbuttonPacket.getValidDecoderNames();
-        Assert.assertEquals(c1.length, c2.length);
-        Assert.assertTrue(c1.length > 0);
-        Assert.assertTrue(c1[0].equals(c2[0]));
+        assertEquals(c1.length, c2.length);
+        assertTrue(c1.length > 0);
+        assertTrue(c1[0].equals(c2[0]));
         c1[0] = "foo";
-        Assert.assertTrue(!c1[0].equals(c2[0]));
+        assertTrue(!c1[0].equals(c2[0]));
     }
 
     @BeforeEach

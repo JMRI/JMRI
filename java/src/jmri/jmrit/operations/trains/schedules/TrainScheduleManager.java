@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
@@ -215,6 +216,7 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
     public JComboBox<TrainSchedule> getComboBox() {
         JComboBox<TrainSchedule> box = new JComboBox<>();
         updateComboBox(box);
+        OperationsPanel.padComboBox(box);
         return box;
     }
 
@@ -229,6 +231,7 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
         for (TrainSchedule sch : getSchedulesByIdList()) {
             box.addItem(sch);
         }
+        OperationsPanel.padComboBox(box);
         return box;
     }
 
@@ -292,7 +295,7 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
         Attribute a;
         if (e != null) {
             if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
-                InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(a.getValue());
+                setTrainScheduleActiveId(a.getValue());
             }
         }
 

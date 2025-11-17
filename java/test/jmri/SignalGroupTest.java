@@ -3,7 +3,10 @@ package jmri;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Tests for the jmri.SignalGroup class
@@ -17,35 +20,35 @@ public class SignalGroupTest {
         // provide 2 turnouts:
         Turnout it1 = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         Turnout it2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
-        Assert.assertEquals("it before", Turnout.UNKNOWN, it1.getCommandedState());
-        Assert.assertEquals("it before", Turnout.UNKNOWN, it2.getCommandedState());
+        assertEquals( Turnout.UNKNOWN, it1.getCommandedState(), "it before");
+        assertEquals( Turnout.UNKNOWN, it2.getCommandedState(), "it before");
         // provide a single output signal head with IT1 as the output:
         jmri.implementation.SingleTurnoutSignalHead sh
                 = new jmri.implementation.SingleTurnoutSignalHead("IH1",
                 new jmri.NamedBeanHandle<Turnout>("IT1", it1),
                 SignalHead.GREEN, SignalHead.DARK); // on state + off state
-        Assert.assertNotNull("SignalHead is null!", sh);
+        assertNotNull( sh, "SignalHead is null!");
         // provide a virtual signal mast:
         SignalMast sm = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
-        Assert.assertNotNull("SignalMast is null!", sm);
+        assertNotNull( sm, "SignalMast is null!");
         // provide a signal group:
         SignalGroup sg = InstanceManager.getDefault(jmri.SignalGroupManager.class).provideSignalGroup("IF12", "SignalGroup12");
-        Assert.assertNotNull("SignalGroup is null!", sg);
+        assertNotNull( sg, "SignalGroup is null!");
         // add the head to the group:
         sg.addSignalHead(sh);
         // check value of OnState
-        Assert.assertEquals("initial On state", SignalHead.GREEN, sg.getHeadOnState(sh));
+        assertEquals( SignalHead.GREEN, sg.getHeadOnState(sh), "initial On state");
         // set On state of IH1 from GREEN to LUNAR:
         sg.setHeadOnState(sh, SignalHead.LUNAR);
-        Assert.assertEquals("new On state", SignalHead.LUNAR, sg.getHeadOnState(sh));
+        assertEquals( SignalHead.LUNAR, sg.getHeadOnState(sh), "new On state");
         // set IT1 to Closed to end Unknown state:
         it1.setCommandedState(Turnout.CLOSED); // Off = IH1 Dark
         it2.setCommandedState(Turnout.CLOSED); // set the control turnout Off
         // add IT2 as a control turnout to sh with conditional state Thrown:
         sg.setHeadAlignTurnout(sh, it2, Turnout.THROWN);
-        Assert.assertEquals("group align turnout", "IT2", sg.getTurnoutNameByIndex(0, 0));
+        assertEquals( "IT2", sg.getTurnoutNameByIndex(0, 0), "group align turnout");
         sg.setSensorTurnoutOper(sh, false); // OR
-        Assert.assertEquals("group logic oper", false, sg.getSensorTurnoutOperByIndex(0));
+        assertFalse( sg.getSensorTurnoutOperByIndex(0), "group logic oper");
         // attach aspect Clear on mast sm to group
         sg.addSignalMastAspect("Clear"); // condition 1
         // set sm to Stop
@@ -57,7 +60,7 @@ public class SignalGroupTest {
 //        System.out.println("SM =" + sm.getAspect());
 //        System.out.println("IT2 =" + it2.getCommandedState());
         // check state of member head sh
-        Assert.assertEquals("sh before", Bundle.getMessage("SignalHeadStateDark"), sh.getAppearanceName());
+        assertEquals( Bundle.getMessage("SignalHeadStateDark"), sh.getAppearanceName(), "sh before");
         // now set conditional turnout
         it2.setCommandedState(Turnout.THROWN); // set the control turnout On = condition 2
         // set incuded aspect and check state of member head sh when conditional is met:
@@ -67,14 +70,15 @@ public class SignalGroupTest {
 //        System.out.println("IH1 =" + sh.getAppearanceName());
 //        System.out.println("SM =" + sm.getAspect());
 //        System.out.println("IT2 =" + it2.getCommandedState());
-        Assert.assertEquals("sh after", Bundle.getMessage("SignalHeadStateDark"), sh.getAppearanceName());
+        assertEquals( Bundle.getMessage("SignalHeadStateDark"), sh.getAppearanceName(), "sh after");
         // TODO would expect LUNAR instead, working on SignalGroup code
     }
 
     @BeforeEach
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.setUp();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initInternalTurnoutManager();
     }
 
     @AfterEach

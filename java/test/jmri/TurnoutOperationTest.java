@@ -4,7 +4,9 @@ import jmri.implementation.AbstractTurnout;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the TurnoutOperation class
@@ -14,7 +16,7 @@ import org.junit.Assert;
 public class TurnoutOperationTest {
 
     @Test
-    @SuppressWarnings("unlikely-arg-type") // String unrelated when testing Wrong type
+    @SuppressWarnings({"unlikely-arg-type", "ObjectEqualsNull", "IncompatibleEquals"}) // String unrelated when testing Wrong type
     public void testEquals() {
         TurnoutOperation to1 = new TurnoutOperation("to1"){
             @Override
@@ -41,26 +43,26 @@ public class TurnoutOperationTest {
             public TurnoutOperator getOperator(AbstractTurnout t) { return null; }
         };
         
-        Assert.assertTrue("Identity", to1.equals(to1));
+        assertTrue( to1.equals(to1), "Identity");
         
-        Assert.assertTrue("Equal name", to2.equals(to2a));
-        Assert.assertFalse("Unequal name", to1.equals(to2));
+        assertTrue( to2.equals(to2a), "Equal name");
+        assertFalse( to1.equals(to2), "Unequal name");
         
-        Assert.assertFalse("Wrong type", to1.equals("foo"));
-        Assert.assertFalse("on null", to1.equals(null));
+        assertFalse( to1.equals("foo"), "Wrong type");
+        assertFalse( to1.equals(null), "on null");
         
     }
-    
+
     @BeforeEach
-    public void setUp() throws Exception { 
-        jmri.util.JUnitUtil.setUp(); 
-        jmri.util.JUnitUtil.resetInstanceManager();
+    public void setUp() { 
+        JUnitUtil.setUp(); 
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
     }
 
     @AfterEach
-    public void tearDown() throws Exception { 
-        jmri.util.JUnitUtil.tearDown(); 
+    public void tearDown() { 
+        JUnitUtil.tearDown(); 
     }
 
 }

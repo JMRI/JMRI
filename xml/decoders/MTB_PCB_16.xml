@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd" showEmptyPanes="no" >
+    <version version="1" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20250725"/>
+    <version version="2" author="Petr Šídlo sidlo64@hotmail.com" lastUpdated="20250820"/>
+    <!-- Function decoder  -->
+    <!-- Description https://mtb-model.com -->
+    
+    <decoder>
+
+        <family name="Function Decoders" mfg="MTB Model" >  
+            <model model="PCB-16" lowVersionID="16" highVersionID="16" maxInputVolts="12V AC" maxTotalCurrent="1.0A" />
+            <model model="PCB-17" lowVersionID="17" highVersionID="17" maxInputVolts="12V AC" maxTotalCurrent="1.0A" />
+            <model model="PCB-18" lowVersionID="18" highVersionID="18" maxInputVolts="12V AC" maxTotalCurrent="1.0A" />
+        </family>
+
+        <programming direct="yes" paged="no" register="no" ops="yes" />
+        
+    <variables>
+        
+        <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+    	
+        <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+    	
+        <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction_F12.xml"/>
+    	
+        <variable item="Key" CV="15" default="0">
+            <decVal/>
+            <label>Key</label>
+            <label xml:lang="cs">Klíč</label>
+            <tooltip>Key for lock.</tooltip>
+            <tooltip xml:lang="cs">Klíč k zámku.</tooltip>
+        </variable>
+    
+        <variable item="Lock" CV="16" default="0">
+            <decVal/>
+            <label>Lock</label>
+            <label xml:lang="cs">Zámek</label>
+            <tooltip>Unlocked when Key = Lock.</tooltip>
+            <tooltip xml:lang="cs">Odemčeno když Klíč = Zámek.</tooltip>
+        </variable>
+    
+        <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
+        <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22_F12.xml"/>
+
+        <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+
+        <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+
+        <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+        
+        <xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>
+
+        <variable CV="47" item="Firmware" readOnly="yes" >
+            <decVal/>
+            <label>Firmware</label>
+            <label xml:lang="cs">Firmware</label>
+        </variable>
+
+        <variable CV="48" item="Time-off">
+            <decVal/>
+            <label>Light time-off</label>
+            <label xml:lang="cs">Čas vypnutí osvětlení</label>
+            <tooltip>Time-off is Value × 2.5 sec</tooltip>
+            <tooltip xml:lang="cs">Čas vypnutí osvětlení je Hodnota × 2,5 s</tooltip>
+        </variable>
+
+        <variable item="Magnet mode" CV="49" >
+            <enumVal>
+                <enumChoice choice="disable">
+                    <choice xml:lang="cs">zakázáno</choice>
+                </enumChoice>
+                <enumChoice choice="toggle ON OFF">
+                    <choice xml:lang="cs">přepínání ZAP VYP</choice>
+                </enumChoice>
+                <enumChoice choice="ON after 6 sec OFF">
+                    <choice xml:lang="cs">ZAP a po 6 s VYP</choice>
+                </enumChoice>
+                <enumChoice choice="ON after 12 sec OFF">
+                    <choice xml:lang="cs">ZAP a po 12 s VYP</choice>
+                </enumChoice>
+            </enumVal>
+            <label>Magnet switch mode</label>
+            <label xml:lang="cs">Režim magnetu</label>
+        </variable>
+        
+    </variables> 
+
+    <resets>
+      <factReset CV="8" default="8">
+        <label>Reset All CVs</label>
+        <label xml:lang="cs">Reset všech CV</label>
+      </factReset>
+    </resets>
+
+  </decoder>
+
+  
+    <pane>
+<!--  Pane Basic =========================================================== -->      
+  	<name>Basic</name>
+        <name xml:lang="cs">Základní</name>
+        <column>
+            <display item="Short Address" />
+            <display item="Long Address" /> 
+            <display item="Address Format" />
+            <display item="Locomotive Direction" />
+            <display item="Speed Step Mode" />
+        </column>
+        <column>
+            <display item="Manufacturer" />
+            <display item="Decoder Version" />
+            <display item="Firmware" />
+            <display item="Key" />
+            <display item="Lock" /> 
+        </column>
+    </pane>
+  
+    <pane>
+<!--  Pane Other =========================================================== -->      
+  	<name>Other</name>
+        <name xml:lang="cs">Ostatní</name>
+        <column>
+            <display item="Time-off" />
+            <display item="Magnet mode" /> 
+        </column>
+    </pane>
+
+</decoder-config>

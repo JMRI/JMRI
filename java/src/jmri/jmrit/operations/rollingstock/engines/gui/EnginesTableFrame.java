@@ -1,11 +1,11 @@
 package jmri.jmrit.operations.rollingstock.engines.gui;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.TableColumnModel;
 
 import jmri.InstanceManager;
@@ -25,16 +25,17 @@ import jmri.util.swing.JmriJOptionPane;
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2013, 2025
  */
-public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
+public class EnginesTableFrame extends OperationsFrame implements TableModelListener {
 
     public EnginesTableModel enginesTableModel;
-    javax.swing.JTable enginesTable;
+    public JTable enginesTable; // public for testing
+    boolean showAllLocos = true;
     JScrollPane enginesPane;
     EngineManager engineManager = InstanceManager.getDefault(EngineManager.class);
 
     // labels
     JLabel numEngines = new JLabel();
-    JLabel textEngines = new JLabel();
+    JLabel textEngines = new JLabel(Bundle.getMessage("engines"));
     JLabel textSep1 = new JLabel("          ");
 
     // radio buttons
@@ -62,23 +63,23 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
     JTextField findEngineTextBox = new JTextField(6);
 
-    public EnginesTableFrame() {
+    public EnginesTableFrame(boolean showAllLocos, String locationName, String trackName) {
         super(Bundle.getMessage("TitleEnginesTable"));
-        // general GUI config
+        this.showAllLocos = showAllLocos;
 
+        // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // Set up the jtable in a Scroll Pane..
-        enginesTableModel = new EnginesTableModel();
+        enginesTableModel = new EnginesTableModel(showAllLocos, locationName, trackName);
         enginesTable = new JTable(enginesTableModel);
         enginesPane = new JScrollPane(enginesTable);
         enginesPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         enginesTableModel.initTable(enginesTable, this);
 
         // load the number of engines and listen for changes
-        numEngines.setText(Integer.toString(engineManager.getNumEntries()));
-        engineManager.addPropertyChangeListener(this);
-        textEngines.setText(Bundle.getMessage("engines"));
+        updateNumEngines();
+        enginesTableModel.addTableModelListener(this);
 
         // Set up the control panel
         // row 1
@@ -188,6 +189,18 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
         group.add(sortByLast);
         group.add(sortByComment);
         
+        // sort by location
+        if (!showAllLocos) {
+            sortByLocation.doClick();
+            if (locationName != null) {
+                String title = Bundle.getMessage("TitleEnginesTable") + " " + locationName;
+                if (trackName != null) {
+                    title = title + " " + trackName;
+                }
+                setTitle(title);
+            }
+        }
+
         sortByDcc.setToolTipText(Bundle.getMessage("TipDccAddressFromRoster"));
 
         // build menu
@@ -327,7 +340,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
     @Override
     public void dispose() {
-        engineManager.removePropertyChangeListener(this);
+        enginesTableModel.removeTableModelListener(this);
         enginesTableModel.dispose();
         if (engineEditFrame != null) {
             engineEditFrame.dispose();
@@ -339,13 +352,20 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent e) {
+    public void tableChanged(TableModelEvent e) {
         if (Control.SHOW_PROPERTY) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+            log.debug("Table changed");
         }
-        if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY)) {
-            numEngines.setText(Integer.toString(engineManager.getNumEntries()));
+        updateNumEngines();
+    }
+
+    private void updateNumEngines() {
+        String count = Integer.toString(engineManager.getNumEntries());
+        if (showAllLocos) {
+            numEngines.setText(count);
+        } else {
+            int showCount = getSortByList().size();
+            numEngines.setText(showCount + "/" + count);
         }
     }
 

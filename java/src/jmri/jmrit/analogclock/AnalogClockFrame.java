@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
@@ -33,6 +35,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
 
     // GUI member declarations
     Timebase clock;
+    private final PropertyChangeListener minuteListener = (PropertyChangeEvent evt) -> update();
     double minuteAngle;
     double hourAngle;
     String amPm;
@@ -72,9 +75,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         clock.addPropertyChangeListener(AnalogClockFrame.this);
 
         // request callback to update time
-        clock.addMinuteChangeListener((java.beans.PropertyChangeEvent e) -> {
-            AnalogClockFrame.this.update();  // set new time
-        });
+        clock.addMinuteChangeListener(minuteListener);
 
     }
 
@@ -330,6 +331,13 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             clock.setRun(!clock.getRun());
             updateButtonText();
         }
+    }
+
+    @Override
+    public void dispose() {
+        clock.removeMinuteChangeListener(minuteListener);
+        clock.removePropertyChangeListener(this);
+        super.dispose();
     }
 
 }

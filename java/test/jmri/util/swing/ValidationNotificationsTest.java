@@ -2,8 +2,9 @@ package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
@@ -15,18 +16,22 @@ public class ValidationNotificationsTest {
     @Test
     public void testBinDecHexValid() {
         // Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("valid decimal 7",7, 
-            ValidationNotifications.parseBinDecHexByte("7",10,true,"NoMessage 21",null));
+        assertEquals( 7,
+            ValidationNotifications.parseBinDecHexByte("7",10,true,"NoMessage 21",null),
+            "valid decimal 7");
         
-        Assert.assertEquals("valid hex dec true 255",255, 
-            ValidationNotifications.parseBinDecHexByte("0xff",777,true,"NoMessage 24",null));
+        assertEquals( 255,
+            ValidationNotifications.parseBinDecHexByte("0xff",777,true,"NoMessage 24",null),
+            "valid hex dec true 255");
         
-        Assert.assertEquals("valid dec false 7",7, 
-            ValidationNotifications.parseBinDecHexByte("0d7",100,false,"NoMessage 27",null));
+        assertEquals( 7,
+            ValidationNotifications.parseBinDecHexByte("0d7",100,false,"NoMessage 27",null),
+            "valid dec false 7");
         
-        Assert.assertEquals("valid binary false 21",21, 
-            ValidationNotifications.parseBinDecHexByte("0b10101",40,false,"NoMessage 30",null));
-        
+        assertEquals( 21,
+            ValidationNotifications.parseBinDecHexByte("0b10101",40,false,"NoMessage 30",null),
+            "valid binary false 21");
+
     }
 
     @BeforeEach

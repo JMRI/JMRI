@@ -356,11 +356,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.removeAll();
         toolMenu.add(new LocationCopyAction(_location));
         toolMenu.add(new TrackCopyAction(null, _location));
+        toolMenu.addSeparator();
         toolMenu.add(new ChangeTracksTypeAction(this));
         if (_location != null && !_location.isStaging()) {
             toolMenu.add(new LocationTrackBlockingOrderAction(_location));
         }
         toolMenu.add(new ShowTrackMovesAction());
+        toolMenu.addSeparator();
         toolMenu.add(new EditCarTypeAction());
         if (Setup.isVsdPhysicalLocationEnabled()) {
             toolMenu.add(new SetPhysicalLocationAction(_location));
@@ -370,6 +372,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         toolMenu.add(new ModifyLocationsCarLoadsAction(_location));
         toolMenu.addSeparator();
         toolMenu.add(new ShowCarsByLocationAction(false, _location, null));
+        toolMenu.add(new ShowLocosByLocationAction(false, _location, null));
+        toolMenu.addSeparator();
         toolMenu.add(new ShowTrainsServingLocationAction(_location, null));
         toolMenu.add(new ShowRoutesServingLocationAction(_location));
         if (_location != null && _location.isStaging()) {

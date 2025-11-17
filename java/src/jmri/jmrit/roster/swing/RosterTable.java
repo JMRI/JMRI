@@ -109,6 +109,10 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         // format the last updated date time, last operated date time.
         dataTable.setDefaultRenderer(Date.class, new DateTimeCellRenderer());
 
+        // Start with two columns not visible
+        columnModel.setColumnVisible(columnModel.getColumnByModelIndex(RosterTableModel.DECODERMFGCOL), false);
+        columnModel.setColumnVisible(columnModel.getColumnByModelIndex(RosterTableModel.DECODERFAMILYCOL), false);
+
         TableColumn tc = columnModel.getColumnByModelIndex(RosterTableModel.PROTOCOL);
         columnModel.setColumnVisible(tc, false);
 
@@ -311,8 +315,16 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
                 re = entry;
                 int entries = dataTable.getRowCount();
                 for (int i = 0; i < entries; i++) {
-                    if (dataModel.getValueAt(sorter
-                        .convertRowIndexToModel(i), RosterTableModel.IDCOL).equals(re.getId())) {
+                                    
+                    // skip over entry being deleted from the group
+                    if (dataModel.getValueAt(sorter.convertRowIndexToModel(i), 
+                                                                RosterTableModel.IDCOL) == null) {
+                        continue;
+                    }
+
+                    if (dataModel.getValueAt(sorter.convertRowIndexToModel(i), 
+                                            RosterTableModel.IDCOL)
+                                    .equals(re.getId())) {
                         dataTable.addRowSelectionInterval(i, i);
                         foundIt = true;
                     }

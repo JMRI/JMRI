@@ -1,5 +1,7 @@
 package jmri.jmrix.cmri.serial;
 
+import jmri.util.StringUtil;
+
 /**
  * Contains the data payload of a CMRI serial packet.
  * <p>
@@ -39,11 +41,14 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
 
     /**
      * This ctor interprets the byte array as a sequence of characters to send.
-     *
+     * @deprecated 5.13.5, unused, requires further development.
      * @param a Array of bytes to send
      */
+    @Deprecated( since="5.13.5", forRemoval=true)
     public SerialMessage(byte[] a) {
-        super(String.valueOf(a));
+        // super(String.valueOf(a)); // Spotbug toString on array
+        // requires further development to produce correct values for hardware type.
+        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""));
     }
 
     @Override
@@ -53,7 +58,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
             if (i != 0) {
                 s.append(" ");
             }
-            s.append(jmri.util.StringUtil.twoHexFromInt(getElement(i)));
+            s.append(StringUtil.twoHexFromInt(getElement(i)));
         }
         return s.toString();
     }

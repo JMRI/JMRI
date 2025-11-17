@@ -72,7 +72,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     @Override
     public void testAddThroughDialog() {
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
 
@@ -121,7 +121,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @Test
     @Override
     public void testEditButton() {
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
 
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ101");
         Assert.assertNotNull("LogixNG exists", logixNG);
@@ -152,7 +152,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testLogixNGBrowser() {
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
 
         logixNGTable.browserPressed("IQ101");  // NOI18N
 
@@ -167,7 +167,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 setProperty("jmri.jmrit.beantable.LogixNGTableAction", "Edit Mode", "TREEEDIT");  // NOI18N
         a.actionPerformed(null);
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
         JFrameOperator logixNGFrame = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
         Assert.assertNotNull(logixNGFrame);
 
@@ -184,7 +184,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddLogixNGAutoName() {
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -210,7 +210,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testAddLogixNG() {
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
 
         logixNGTable.actionPerformed(null); // show table
         JFrame logixNGFrame = JFrameOperator.waitJFrame(Bundle.getMessage("TitleLogixNGTable"), true, true);  // NOI18N
@@ -240,7 +240,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testDeleteLogixNG() throws InterruptedException {
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
 
         ThreadingUtil.runOnGUI( () -> logixNGTable.actionPerformed(null)); // show table
         JFrameOperator logixNGFrame = new JFrameOperator(Bundle.getMessage("TitleLogixNGTable"));  // NOI18N
@@ -269,7 +269,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testDeleteLogixNGWithConditionalNG() throws InterruptedException, SocketAlreadyConnectedException {
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
 
         LogixNG logixNG_102 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");   // NOI18N
         InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_102, "IQC102", null);   // NOI18N
@@ -305,7 +305,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testDeleteLogixNGWithDigitalAction() throws InterruptedException, SocketAlreadyConnectedException {
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
 
         LogixNG logixNG_102 = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ102");   // NOI18N
         ConditionalNG conditionalNG_102 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG(logixNG_102, "IQC102", null);   // NOI18N
@@ -355,7 +355,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
     @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
     @Test
     public void testDeleteLogixNGWithDigitalActionWithListenerRef() throws InterruptedException, SocketAlreadyConnectedException {
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
 
         PropertyChangeListener pcl = (PropertyChangeEvent evt) -> {
             throw new UnsupportedOperationException("Not supported");
@@ -486,7 +486,7 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
         Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
 
         // * Add a LogixNG
-        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction) a;
+        AbstractLogixNGTableAction<?> logixNGTable = (AbstractLogixNGTableAction<?>) a;
 
         ThreadingUtil.runOnGUI( ()-> {
             logixNGTable.actionPerformed(null); // show table
@@ -627,8 +627,10 @@ public class LogixNGTableActionTest extends AbstractTableActionBase<LogixNG> {
 
         jpm = jto.callPopupOnPath(tp);
         Assert.assertNotNull(jpm);
-        // Select ExpressionTurnout
-        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add|Item|Turnout", "|");
+        // Select ActionTurnout
+        new JPopupMenuOperator(jpm).pushMenuNoBlock("Add|Item|Turnout", (caption,match)->{
+            return caption.equals(match);
+        });
 
         // We get a dialog that lets us set the system name, user name
         // and configure the action

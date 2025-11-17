@@ -10,10 +10,12 @@
 # in SchedulerMaster handle we process trains_to_be_scheduled by running run_trains(trains_to_be_scheduled)
 # run_trains sets up a thread which moves the train, and removed the train from the trains_to_be_scheduled list
 
-from javax.swing import JFrame, JPanel, JButton, BoxLayout, Box, JComponent
+from javax.swing import JFrame, JPanel, JButton, BoxLayout, Box, JComponent, BorderFactory, JLabel, JTextField
+from java.awt import GridLayout
 from java.awt import Color, Font
-from java.awt import Dimension
+from java.awt import Dimension, FlowLayout
 from java.beans import PropertyChangeEvent
+from java.awt.event import FocusAdapter, ActionListener
 from javax.swing import SwingWorker, SwingUtilities
 import os
 import copy
@@ -23,6 +25,11 @@ import time
 from org.python.core.util import StringUtil
 from threading import Thread
 from collections import Counter
+
+# from javax.swing import JFrame
+# from java.awt.event import WindowAdapter
+from java.util.concurrent import CountDownLatch
+
 
 CreateSchedulerPanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/SchedulerPanel.py')
 execfile(CreateSchedulerPanel)
@@ -36,8 +43,17 @@ execfile(CreateEditRoutePanel)
 CreateEditRoutePanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/Timetable.py')
 execfile(CreateEditRoutePanel)
 
+try:
+    basestring
+except NameError:
+    basestring = str
 
-# fast_clock_rate = 12
+if "list" in globals() and type(globals()["list"]).__name__ != "type":
+    # print(" Detected shadowed 'list' type: ", type(globals()["list"]))  # list is being used in JMRI. This enables us to use list in Jython
+    del globals()["list"]
+
+CreateEditRoutePanel = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/DisplayMqttTimetable.py')
+execfile(CreateEditRoutePanel)
 
 trains_to_be_scheduled = []
 run_train_dict = {}
@@ -49,13 +65,11 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
     def __init__(self):
         global scheduling_in_operation_gbl
-        # print "class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):"
         self.logLevel = 0
         self.frame = None
         self.f = None
         scheduling_in_operation_gbl = False
         self.od = OptionDialog()
-        # print "scheduling_in_operation_gbl 5", scheduling_in_operation_gbl
 
     def exit(self):       # called explicitly when scheduler thread is killed to stop multiple frames being visible
         try:
@@ -180,159 +194,186 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                             # print "type station_group", type(station_group.strip())
                         station_group_location_list.append([station_group.strip(), location_name])
                     station_group_location_list.append(["All Stations", location_name])
-                # station_group_location_list.append("All Stations")
-                # station_group_list.sort()
-                # station_group_list.append("All Stations")
-
-                if self.logLevel > 0: print "station list", station_list
-                # LocationsManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.locations.LocationManager)
-                # locations_list = LocationsManager.getLocationsByNameList()
-                # station_list = [str(location.getName()) for location in locations_list \
-                #                 if ".py" not in location.getName()]
-                msg = "timetables can be shown locally on this computer or\n" + \
-                      "on remote computers/tablets communicating by mqtt\n\n" + \
-                      "scheduler needs to be on and clock running"
-                if run_local_timetable_gbl == True:
-                    opt1 = "hide timetable"
-                else:
-                    opt1 = "show timetable"
-                opt4 = "set platforms and station groups"
-                opt2 = "select station for local timetable"
-                opt3 = "select station for mqtt timetable"
-                if 'timetable_triggered_gbl' not in globals():
-                    reply = OptionDialog().customQuestionMessage3str(msg, title, opt4, opt2, opt3)
-                else:
-                    reply = OptionDialog().customQuestionMessage4str(msg, title, opt1, opt4, opt2, opt3)
-                # print "reply", reply
-                if self.logLevel > 0: print "timetable_sensor active"
-                if reply == JOptionPane.CANCEL_OPTION:
-                    pass
-                elif reply == opt1:
+                repeat = True
+                while repeat:
+                    if self.logLevel > 0: print "station list", station_list
+                    msg = "timetables can be shown locally on this computer or\n" + \
+                          "on remote computers/tablets communicating by mqtt\n\n" + \
+                          "scheduler needs to be on and clock running"
+                    opt0 = "Cancel"
                     if run_local_timetable_gbl == True:
-                        run_local_timetable_gbl = False
+                        opt1 = "hide local timetable"
                     else:
-                        run_local_timetable_gbl = True
-                    # OptionDialog().displayMessage("turned timetabling off")
-                    # timetable_gbl = None
-
-                elif reply == opt4:
-                    # print "opt4"
-                    CreateAndShowGUI7()
-
-                elif reply == opt2:
-                    repeat = True
-                    select_from_stations = True
-                    while repeat == True:
-                        if "station_name_list_gbl" not in globals():
-                            station_name_list_gbl = ""
-                        list_items_no_trains = self.get_scheduled_routes("no_train")
-                        list_items_with_trains = self.get_scheduled_routes("with_train")
-                        if select_from_stations:
-                            title = "select station(s) for timetable"
-                            options = ["Cancel", "Select from Station Groups", "Show Timetable"]
-                            result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
-                        else:
-                            title = "select station_group for timetable"
-                            options = ["Cancel", "Select from Stations", "Show Timetable"]
-                            result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
-                        option = result[1]
-                        if option == "Cancel" or self.od.CLOSED_OPTION == True:
+                        opt1 = "show local timetable"
+                    opt4 = "set platforms and station groups"
+                    opt2 = "select station for local timetable"
+                    opt3 = "mqtt timetables"
+                    if 'timetable_triggered_gbl' not in globals():
+                        reply = OptionDialog().customQuestionMessage4str(msg, title, opt0, opt4, opt2, opt3)
+                    else:
+                        reply = OptionDialog().customQuestionMessage5str(msg, title, opt0, opt1, opt4, opt2, opt3)
+                    # print "reply", reply
+                    if self.logLevel > 0: print "timetable_sensor active"
+                    if reply == OptionDialog().CLOSED_OPTION or reply == opt0:
+                        repeat = False
+                    elif reply == opt1:
+                        if run_local_timetable_gbl == True:
                             run_local_timetable_gbl = False
-                            self.timetable_sensor.setKnownState(INACTIVE)
-                            repeat = False
-                        elif option == "Show Timetable":
-                            if select_from_stations:
-                                station_name_list_gbl = result[0]
-                                # get group_station_name
-                                if len(station_name_list_gbl) == 1:
-                                    group_location_gbl = station_name_list_gbl[0]   # the first and only station  station1
-                                else:
-                                    group_location_gbl = self.get_group_station_name(station_name_list_gbl)
-                            else:
-                                group_location_gbl = result[0]
-                                # get station list
-                                station_name_list = []
-                                for l in station_group_location_list:
-                                    if l[0] == group_location_gbl:
-                                        station_name_list.append(l[1])
-                                station_name_list_gbl = station_name_list
-
+                        else:
                             run_local_timetable_gbl = True
-                            self.ensure_conditions_for_timetable_to_show_are_met()
-                            repeat = False
-                        else:
-                            if select_from_stations == True:
-                                select_from_stations = False
-                            else:
-                                select_from_stations = True
-                            repeat = True
 
-                elif reply == opt3:
-                    repeat = True
-                    select_from_stations = True
-                    while repeat == True:
-                        if "station_name_list_gbl" not in globals():
-                            station_name_list_gbl = ""
-                        list_items_no_trains = self.get_scheduled_routes("no_train")
-                        list_items_with_trains = self.get_scheduled_routes("with_train")
-                        if select_from_stations:
-                            title = "select station(s) for timetable"
-                            options = ["Cancel", "Select from Station Groups", "Generate Timetable"]
-                            result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
-                        else:
-                            title = "select station_group for timetable"
-                            options = ["Cancel", "Select from Stations", "Generate Timetable"]
-                            result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
-                        option = result[1]
-                        if option == "Cancel" or self.od.CLOSED_OPTION == True:
-                            run_local_timetable_gbl = False
-                            self.timetable_sensor.setKnownState(INACTIVE)
-                            repeat = False
-                        elif option == "Generate Timetable":
+                    elif reply == opt4:
+                        gui7 = CreateAndShowGUI7()
+                        # Create a latch that waits for CreateAndShowGUI7 frame to be closed
+                        # In CreateAndShowGUI7 the latch is decremented whe  the frame is closed
+                        global latch
+                        latch = CountDownLatch(1)
+                        # Wait until the frame is closed
+                        latch.await()
+                        reply = True
+
+                    elif reply == opt2:
+                        repeat1 = True
+                        select_from_stations = True
+                        while repeat1 == True:
+                            if "station_name_list_gbl" not in globals():
+                                station_name_list_gbl = ""
+                            list_items_no_trains = self.get_scheduled_routes("no_train")
+                            list_items_with_trains = self.get_scheduled_routes("with_train")
                             if select_from_stations:
-                                station_name_list_mqtt_gbl = result[0]
-                                # get group_station_name
-                                if len(station_name_list_gbl) == 1:
-                                    group_location_mqtt_gbl = station_name_list_gbl[0]   # the first and only station  station1
-                                else:
-                                    group_location_mqtt_gbl = self.get_group_station_name(station_name_list_mqtt_gbl)
-                                    print "group_location_mqtt_gbl", group_location_mqtt_gbl
+                                title = "select station(s) for timetable"
+                                options = ["Cancel", "Select from Station Groups", "Show Timetable"]
+                                result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
                             else:
-                                group_location_mqtt_gbl = result[0]
-                                print "group_location_mqtt_gbl", group_location_mqtt_gbl
-                                # get station list
-                                station_name_list = []
-                                for l in station_group_location_list:
-                                    if l[0] == group_location_mqtt_gbl:
-                                        station_name_list.append(l[1])
-                                station_name_list_mqtt_gbl = station_name_list
-                                print "station_name_list_mqtt_gbl", station_name_list_mqtt_gbl
-
-                            # get emblem
-                            title = "Display Train Operator Emblem?"
-                            emblem_list = ["GB (British Rail)", "Germany (DB)", "No Emblem"]
-                            options = ["Cancel", "Generate Timetable"]
-                            result = self.od.ListOptions(emblem_list, title, options, preferred_size = "default")
-                            # print "result", result
-                            train_operator_emblem = result[0]
-                            option1 = result[1]
-                            if option1 == "Cancel" or self.od.CLOSED_OPTION == True:
-                                # run_local_timetable_gbl = False
+                                title = "select station_group for timetable"
+                                options = ["Cancel", "Select from Stations", "Show Timetable"]
+                                result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
+                            option = result[1]
+                            if option == "Cancel" or self.od.CLOSED_OPTION == True:
+                                run_local_timetable_gbl = False
                                 self.timetable_sensor.setKnownState(INACTIVE)
-                            else:
-                                self.generate_node_red_code(station_name_list_mqtt_gbl, group_location_mqtt_gbl, train_operator_emblem)
-                                # file = self.directory() + "train_operator_emblem.txt"
-                                self.write_list2([train_operator_emblem])
+                                repeat1 = False
+                            elif option == "Show Timetable":
+                                if select_from_stations:
+                                    station_name_list_gbl = result[0]
+                                    # get group_station_name
+                                    if len(station_name_list_gbl) == 1:
+                                        group_location_gbl = station_name_list_gbl[0]   # the first and only station  station1
+                                    else:
+                                        group_location_gbl = self.get_group_station_name(station_name_list_gbl)
+                                else:
+                                    group_location_gbl = result[0]
+                                    # get station list
+                                    station_name_list = []
+                                    for l in station_group_location_list:
+                                        if l[0] == group_location_gbl:
+                                            station_name_list.append(l[1])
+                                    station_name_list_gbl = station_name_list
 
-                            repeat = False
-                        else:
-                            if select_from_stations == True:
-                                select_from_stations = False
+                                run_local_timetable_gbl = True
+                                self.ensure_conditions_for_timetable_to_show_are_met()
+                                repeat1 = True
                             else:
+                                if select_from_stations == True:
+                                    select_from_stations = False
+                                else:
+                                    select_from_stations = True
+                                repeat1 = True
+                        repeat = True
+                    elif reply == opt3:
+                        repeat = True
+                        while repeat:
+                            title = "MQTT timetables"
+                            msg = "timetables can be shown on remote computers/tablets communicating by mqtt\n\n" + \
+                                  "scheduler needs to be on and clock running"
+                            opt0 = "Cancel"
+                            opt1 = "Generate mqtt timetable"
+                            opt2 = "View/delete mqtt timetables"
+                            opt3 = "Display mqtt timetables"
+
+                            reply = OptionDialog().customQuestionMessage4str(msg, title, opt0, opt1, opt2, opt3)
+                            if self.od.CLOSED_OPTION == True or reply == opt0:
+                                repeat = False
+                            elif reply == opt1:
                                 select_from_stations = True
-                            repeat = True
+                                if "station_name_list_gbl" not in globals():
+                                    station_name_list_gbl = ""
+                                list_items_no_trains = self.get_scheduled_routes("no_train")
+                                list_items_with_trains = self.get_scheduled_routes("with_train")
+                                if select_from_stations:
+                                    title = "select station(s) for timetable"
+                                    options = ["Cancel", "Select from Station Groups", "Generate Timetable"]
+                                    result = OptionDialog().MultipleListOptions(station_list, title, options, preferred_size = "default")
+                                else:
+                                    title = "select station_group for timetable"
+                                    options = ["Cancel", "Select from Stations", "Generate Timetable"]
+                                    result = OptionDialog().ListOptions(station_group_list, title, options, preferred_size = "default")
+                                option = result[1]
+                                if option == "Cancel" or self.od.CLOSED_OPTION == True:
+                                    run_local_timetable_gbl = False
+                                    self.timetable_sensor.setKnownState(INACTIVE)
+                                    repeat = False
+                                elif option == "Generate Timetable":
+                                    if select_from_stations:
+                                        station_name_list_mqtt_gbl = result[0]
+                                        # get group_station_name
+                                        if len(station_name_list_gbl) == 1:
+                                            group_location_mqtt_gbl = station_name_list_gbl[0]   # the first and only station  station1
+                                        else:
+                                            group_location_mqtt_gbl = self.get_group_station_name(station_name_list_mqtt_gbl)
+                                            print "group_location_mqtt_gbl", group_location_mqtt_gbl
+                                    else:
+                                        group_location_mqtt_gbl = result[0]
+                                        # print "group_location_mqtt_gbl", group_location_mqtt_gbl
+                                        # get station list
+                                        station_name_list = []
+                                        for l in station_group_location_list:
+                                            if l[0] == group_location_mqtt_gbl:
+                                                station_name_list.append(l[1])
+                                        station_name_list_mqtt_gbl = station_name_list
+                                        # print "station_name_list_mqtt_gbl", station_name_list_mqtt_gbl
 
-            self.timetable_sensor.setKnownState(INACTIVE)
+                                    # get emblem
+                                    title = "Display Train Operator Emblem?"
+                                    emblem_list = ["GB (British Rail)", "Germany (DB)", "No Emblem"]
+                                    options = ["Cancel", "Generate Timetable"]
+                                    result = self.od.ListOptions(emblem_list, title, options, preferred_size = "default")
+                                    # print "result", result
+                                    train_operator_emblem = result[0]
+                                    option1 = result[1]
+                                    if option1 == "Cancel" or self.od.CLOSED_OPTION == True:
+                                        # run_local_timetable_gbl = False
+                                        self.timetable_sensor.setKnownState(INACTIVE)
+                                    else:
+                                        self.generate_node_red_code(station_name_list_mqtt_gbl, group_location_mqtt_gbl, train_operator_emblem)
+                                        self.write_list2([train_operator_emblem])
+                                    repeat = True
+                                else:
+                                    if select_from_stations == True:
+                                        select_from_stations = False
+                                    else:
+                                        select_from_stations = True
+                                    repeat = True
+                            elif reply == opt2: # view/delete mqtt timetables
+
+                                msg = "The generated timetables are saved in the following directory \n" +\
+                                    "Delete any that are not required"
+                                OptionDialog().displayMessage(msg)
+
+                                self.view_delete_mqtt_timetables()
+                                repeat = True
+
+                            elif reply == opt3: # display mqtt timetables
+                                msg = "Will attempt to display all generated timetables in default browser \n" +\
+                                    "If Node Red is installed the timetables will be displayed \n" + \
+                                    "If MQTT is set up in jmri and mosquitto is running the timetables will work \n" +\
+                                    " when the scheduler is running"
+                                OptionDialog().displayMessage(msg)
+
+                                dmt = DisplayMqttTimetable()
+                                repeat = True
+                        repeat = True
+                self.timetable_sensor.setKnownState(INACTIVE)
 
         if self.scheduler_master_sensor.getKnownState() == ACTIVE:   # pause processing if we turn the sensor off
 
@@ -382,6 +423,36 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
         # print "F"
         return True
 
+    def mqtt_timetable_directory(self):
+        path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "mqtt_timetables"
+        if not os.path.exists(path):
+            os.makedirs(path)
+        return path + java.io.File.separator
+
+    def view_delete_mqtt_timetables(self):
+
+        dir = self.mqtt_timetable_directory()
+        j = JFileChooser(dir);
+        j.setAcceptAllFileFilterUsed(False)
+        filter = FileNameExtensionFilter("json files json", ["json"])
+        j.addChoosableFileFilter(filter);
+
+        j.setDialogTitle("Delete not wanted mqtt timetables");
+
+        ret = j.showDialog(None, "Delete");
+        if ret == JFileChooser.APPROVE_OPTION:
+            file = j.getSelectedFile()
+            if file == "" or file == None:
+                return
+            if file.exists():
+                os.remove(file.getAbsolutePath())
+                # print("File " + file.getName() + " has been deleted successfully.")
+            else:
+                print("The selected file does not exist.")
+        else:
+            print("File selection cancelled.")
+            return
+
     def get_group_station_name(self, station_name_list_gbl):
 
         # print "station_name_list_gbl", station_name_list_gbl
@@ -396,7 +467,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             print "station_name", station_name, "station_group", station_group.replace(" ", "*")
             if station_group != "" and station_group != " ":
                 station_groups.append(station_group)
-                print "appending station_groups", station_groups
+                # print "appending station_groups", station_groups
         counter = Counter(station_groups)
         print "counter", counter
         print "counter.most_common(1)", counter.most_common(1)
@@ -772,7 +843,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowTitle_22.setLayout(BoxLayout(rowTitle_22, BoxLayout.X_AXIS))
             rowTitle_23 = JPanel()
             rowTitle_23.setLayout(BoxLayout(rowTitle_23, BoxLayout.X_AXIS))
-            rowStage1Title_1 = JLabel("Sets Up Syatem to run hourly trains ")
+            rowStage1Title_1 = JLabel("Sets Up System to run hourly trains ")
             rowStage1Title_1.setFont(rowTitle_22.getFont().deriveFont(Font.BOLD, 13));
             # get_start_filename()
             # get_backup_filename()
@@ -795,59 +866,9 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
             rowTitle_33 = JPanel()
             rowTitle_33.setLayout(BoxLayout(rowTitle_33, BoxLayout.X_AXIS))
-            # rowStage1Title_1 = JLabel("Sets Up Syatem to run hourly trains ")
-            # rowStage1Title_1.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
             rowTitle_33.add(Box.createVerticalGlue())
             rowTitle_33.add(Box.createRigidArea(Dimension(30, 0)))
             rowTitle_33.add(rowStage1Title_1)
-
-            #buttons
-
-            # Separators
-            rowStage2Separator = JPanel()
-            rowStage2Separator.setLayout(BoxLayout(rowStage2Separator, BoxLayout.X_AXIS))
-            rowStage2Separator_1 = JLabel("*******************************************************************")
-            rowStage2Separator_1.add(Box.createHorizontalGlue());
-            rowStage2Separator_1.setAlignmentX(rowStage2Separator_1.LEFT_ALIGNMENT)
-            rowStage2Separator_2 = JLabel("")
-
-            rowStage2Separator.add(Box.createVerticalGlue())
-            rowStage2Separator.add(Box.createRigidArea(Dimension(20, 0)))
-            rowStage2Separator.add(rowStage2Separator_1)
-            rowStage2Separator.add(Box.createRigidArea(Dimension(20, 0)))
-            rowStage2Separator.add(rowStage2Separator_2)
-
-            rowStage1Separator = JPanel()
-            rowStage1Separator.setLayout(BoxLayout(rowStage1Separator, BoxLayout.X_AXIS))
-            rowStage1Separator_1 = JLabel("*******************************************************************")
-            rowStage1Separator_1.add(Box.createHorizontalGlue());
-            rowStage1Separator_1.setAlignmentX(rowStage1Separator_1.LEFT_ALIGNMENT)
-            rowStage1Separator_2 = JLabel("")
-
-            rowStage1Separator.add(Box.createVerticalGlue())
-            rowStage1Separator.add(Box.createRigidArea(Dimension(20, 0)))
-            rowStage1Separator.add(rowStage1Separator_1)
-            rowStage1Separator.add(Box.createRigidArea(Dimension(20, 0)))
-            rowStage1Separator.add(rowStage1Separator_2)
-
-            rowStage3Separator = JPanel()
-            rowStage3Separator.setLayout(BoxLayout(rowStage3Separator, BoxLayout.X_AXIS))
-            rowStage3Separator_1 = JLabel("*******************************************************************")
-            rowStage3Separator_1.add(Box.createHorizontalGlue());
-            rowStage3Separator_1.setAlignmentX(rowStage3Separator_1.LEFT_ALIGNMENT)
-            rowStage3Separator_3 = JLabel("")
-
-            rowStage3Separator.add(Box.createVerticalGlue())
-            rowStage3Separator.add(Box.createRigidArea(Dimension(20, 0)))
-            rowStage3Separator.add(rowStage3Separator_1)
-            rowStage3Separator.add(Box.createRigidArea(Dimension(20, 0)))
-            rowStage3Separator.add(rowStage3Separator_3)
-
-            rowStage4Separator = JPanel()
-            rowStage4Separator.setLayout(BoxLayout(rowStage4Separator, BoxLayout.X_AXIS))
-            rowStage4Separator_1 = JLabel("*******************************************************************")
-            rowStage4Separator_1.add(Box.createHorizontalGlue());
-            rowStage4Separator_1.setAlignmentX(rowStage4Separator_1.LEFT_ALIGNMENT)
 
             # buttons
 
@@ -914,7 +935,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowFStage1Button_1.add(Box.createHorizontalGlue());
             rowFStage1Button_1.setAlignmentX(rowFStage1Button_1.LEFT_ALIGNMENT)
 
-            rowStage1Button_1 = JButton("Initialisation", actionPerformed = self.CheckHourlyParameters_action)
+            rowStage1Button_1 = JButton("Initialisation", actionPerformed = self.setup_schedule_parameters_panel)
 
             stage1Button = rowStage1Button_1
 
@@ -947,6 +968,26 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowrowStage4Button_4.setAlignmentX(rowrowStage4Button_4.LEFT_ALIGNMENT)
             rowStage4Button_4 = JButton("Stop/Start", actionPerformed = self.StopStartClock_action)
             stage4Button = rowStage4Button_4
+
+            rowStage5Button = JPanel()
+            rowStage5Button.setLayout(BoxLayout(rowStage5Button, BoxLayout.X_AXIS))
+            rowrowStage5Button_5 = JLabel("<html>Initialise time, start scheduler, start time<br>Stop scheduler, stop time</html>")
+            rowrowStage5Button_5.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
+    
+            rowrowStage5Button_5.add(Box.createHorizontalGlue());
+            rowrowStage5Button_5.setAlignmentX(rowrowStage5Button_5.LEFT_ALIGNMENT)
+            rowStage5Button_5 = JButton("Initialise", actionPerformed = self.StopStartScheduler_action)
+            stage5Button = rowStage5Button_5
+
+            rowStage6Button = JPanel()
+            rowStage6Button.setLayout(BoxLayout(rowStage6Button, BoxLayout.X_AXIS))
+            rowrowStage6Button_6 = JLabel("<html>Start scheduler, start time<br>Stop scheduler, stop time</html>")
+            rowrowStage6Button_6.setFont(rowTitle_33.getFont().deriveFont(Font.BOLD, 13));
+    
+            rowrowStage6Button_6.add(Box.createHorizontalGlue());
+            rowrowStage6Button_6.setAlignmentX(rowrowStage6Button_6.LEFT_ALIGNMENT)
+            rowStage6Button_6 = JButton("   Run   ", actionPerformed = self.Running_StopStartScheduler_action)
+            stage6Button = rowStage6Button_6
 
             rowStage1Button.add(Box.createVerticalGlue())
             rowStage1Button.add(Box.createRigidArea(Dimension(20, 0)))
@@ -996,12 +1037,22 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             rowStage4Button.add(Box.createRigidArea(Dimension(20, 0)))
             rowStage4Button.add(rowrowStage4Button_4)
 
-            #Title
+            rowStage5Button.add(Box.createVerticalGlue())
+            rowStage5Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage5Button.add(rowStage5Button_5)
+            rowStage5Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage5Button.add(rowrowStage5Button_5)
+
+            rowStage6Button.add(Box.createVerticalGlue())
+            rowStage6Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage6Button.add(rowStage6Button_6)
+            rowStage6Button.add(Box.createRigidArea(Dimension(20, 0)))
+            rowStage6Button.add(rowrowStage6Button_6)
+
+        #Title
             # panel.add(self.leftJustify(rowTitle_2))
             panel.add(self.leftJustify(rowTitle_22))
-            # panel.add(self.leftJustify(rowTitle_23))
-            # panel.add(self.leftJustify(row_Title_3))
-            panel.add(self.leftJustify(rowStage1Separator))
+            panel.add(self._create_separator_row())
 
             #stage1
             panel.add(self.leftJustify(rowStage1Button))
@@ -1010,7 +1061,7 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             panel.add(self.leftJustify(rowCStage1Button))
             panel.add(self.leftJustify(rowDStage1Button))
             panel.add(self.leftJustify(rowEStage1Button))
-            panel.add(self.leftJustify(rowStage1Separator))
+            panel.add(self._create_separator_row())
 
             #stage2
             panel.add(self.leftJustify(rowStage2Button))
@@ -1020,12 +1071,32 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             panel.add(self.leftJustify(rowFStage1Button))
 
             panel.add(self.leftJustify(rowStage4Button))
-            panel.add(self.leftJustify(rowStage3Separator))
+            panel.add(self._create_separator_row())
+            panel.add(self.leftJustify(rowStage5Button))
+            panel.add(self._create_separator_row())
+            panel.add(self.leftJustify(rowStage6Button))
+            panel.add(self._create_separator_row())
 
         self.frame.pack()
         self.frame.setVisible(True)
-        self.frame.setSize(430, 350)
+        self.frame.setSize(450, 400)
         self.frame.setLocation(10,10)
+
+    def _create_separator_row(self):
+        """Creates and returns a new separator panel object."""
+        separatorPanel = JPanel()
+        separatorPanel.setLayout(BoxLayout(separatorPanel, BoxLayout.X_AXIS))
+        separatorLabel = JLabel("*******************************************************************")
+        separatorLabel.add(Box.createHorizontalGlue())
+        separatorLabel.setAlignmentX(separatorLabel.LEFT_ALIGNMENT)
+
+        separatorPanel.add(Box.createVerticalGlue())
+        separatorPanel.add(Box.createRigidArea(Dimension(20, 0)))
+        separatorPanel.add(separatorLabel)
+        separatorPanel.add(Box.createRigidArea(Dimension(20, 0)))
+        separatorPanel.add(JLabel("")) # Empty label for spacing
+
+        return self.leftJustify(separatorPanel)
 
     def leftJustify(self, panel):
         b = Box.createHorizontalBox()
@@ -1096,6 +1167,32 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
     def StopStartClock_action(self, event):
         self.swap_timebase_state_run_stop()
 
+    def StopStartScheduler_action(self, event):
+        if scheduling_in_operation_gbl == "False":   # start scheduler
+            self.ToggleSchedulingtrains_action(event)
+            # if timebase.getRun() == True:          # set time
+            self.SetTime_action(event)          # sets time and sets timebase to stop
+            # if timebase.getRun() == False:
+            self.swap_timebase_state_run_stop() # start timebase
+        else:
+            # stop scheduler (was running)
+            self.ToggleSchedulingtrains_action(event)
+            # leave time at same time as before
+            # stop timebase
+            self.set_timebase_state_stop()
+
+    def Running_StopStartScheduler_action(self, event):
+        if scheduling_in_operation_gbl == "False":   # start scheduler
+            self.ToggleSchedulingtrains_action(event)
+            if timebase.getRun() == False:
+                self.swap_timebase_state_run_stop() # start timebase
+        else:
+            # stop scheduler (was running)
+            self.ToggleSchedulingtrains_action(event)
+            # leave time at same time as before
+            # stop timebase
+            self.set_timebase_state_stop()
+
     def swap_timebase_state_run_stop(self):
         global timebase
         global tListener
@@ -1115,6 +1212,23 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                 state = "Started"
             else:
                 state = "Stopped"
+            stringToDisplay = "Stop/Start Clock:  " + state
+            rowrowStage4Button_4.setText(stringToDisplay) # Update the label
+        else:
+            # print '"rowrowStage4Button_4" not in globals()'
+            pass
+
+    def set_timebase_state_stop(self):
+        global timebase
+        global tListener
+        global fast_clock_rate
+        global rowrowStage4Button_4
+
+        timebase.removeMinuteChangeListener(tListener)
+        timebase.setRun(False)
+
+        if "rowrowStage4Button_4" in globals():
+            state = "Stopped"
             stringToDisplay = "Stop/Start Clock:  " + state
             rowrowStage4Button_4.setText(stringToDisplay) # Update the label
         else:
@@ -1197,11 +1311,8 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
                          scheduling_margin_gbl, scheduling_in_operation_gbl])
         # print "fast_clock_rate in set_default_scheduling_values", fast_clock_rate
 
-    def CheckHourlyParameters_action(self, event):
-        global rowAStage1Button_1,  rowBStage1Button_1, rowCStage1Button_1, rowDStage1Button_1, \
-            rowEStage1Button_1, rowFStage1Button_1, rowrowStage4Button_4
-        global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
-            scheduling_margin_gbl, scheduling_in_operation_gbl
+    def setup_schedule_parameters_panel(self, event):
+        """Creates and displays a panel for setting the scheduler parameters."""
         # read parameters
         [self.start_hour, self.end_hour, fast_clock_rate, self.speed_not_operational, \
          self.scheduling_margin, self.scheduling_in_operation] = self.read_list()
@@ -1214,102 +1325,175 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
             self.scheduling_margin = "10"
             self.scheduling_in_operation = "False"
 
-        # start hour
-        title = "Start Hour"
-        msg = "input hour at which scheduling will start xx:00"
-        default_value = self.start_hour
-        repeat = True
-        while repeat == True:
-            reply = OptionDialog().input(msg, title, default_value)
-            if self.is_time_format(reply) or reply.isdigit():
-                # OptionDialog().displayMessage("correct format")
-                repeat = False
-            else:
-                repeat = True
-                OptionDialog().displayMessage("wrong format must be hh:mm")
-        self.start_hour = int(str(reply).split(":")[0])
-        if self.logLevel > 0: print "start_hour", self.start_hour
+        # Create and set up the window.
+        self.params_frame = JFrame("Set Schedule Parameters") #NOI18N
+        self.params_frame.setPreferredSize(Dimension(550, 250))
 
-        # end hour
-        title = "End Hour"
-        msg = "input hour at which scheduling will end xx:00"
-        default_value = self.end_hour
-        repeat = True
-        while repeat == True:
-            reply = OptionDialog().input(msg, title, default_value)
-            if self.is_time_format(reply) or reply.isdigit():
-                # OptionDialog().displayMessage("correct format")
-                repeat = False
-            else:
-                repeat = True
-                OptionDialog().displayMessage("wrong format must be hh:mm")
-        self.end_hour = int(str(reply).split(":")[0])
-        if self.logLevel > 0: print "end_hour", self.end_hour
+        # Create and set up the panel using a simple grid layout.
+        self.params_panel = JPanel(GridLayout(0, 2, 10, 5)) # hgap, vgap
+        self.params_panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)) # top, left, bottom, right
 
-        title = "Fast Clock Speed"
-        msg = "input fast clock speed during schduled hours x10 say"
-        default_value = fast_clock_rate
-        repeat = True
-        repeat = True
-        while repeat == True:
-            reply = OptionDialog().input(msg, title, default_value)
-            reply = reply.replace("x", "")
-            if reply.isdigit():
-                # OptionDialog().displayMessage("correct format")
-                repeat = False
-            else:
-                repeat = True
-                OptionDialog().displayMessage("wrong format must be integer")
-        fast_clock_rate = int(str(reply).split(":")[0])
-        if self.logLevel > 0: print "end_hour", self.end_hour
+        # Add the widgets to the panel.
+        self.add_schedule_parameter_widgets()
 
-        # speed of running clock in non-operational times
-        title = "speed_not_operational"
-        msg = "input fast clock speed in non-operational times x100 say (max 100)"
-        default_value = self.speed_not_operational
-        repeat = True
-        while repeat == True:
-            reply = OptionDialog().input(msg, title, default_value)
-            reply = reply.replace("x", "")
-            if reply.isdigit():
-                # OptionDialog().displayMessage("correct format")
-                repeat = False
-            else:
-                repeat = True
-                OptionDialog().displayMessage("wrong format must be integer")
-        if int(reply) >100:
-            self.speed_not_operational = 100
-        else:
-            self.speed_not_operational = int(reply)
-        if self.logLevel > 0: print "speed_not_operational", self.speed_not_operational
+        # Set the panel to be the content pane of the window.
+        self.params_frame.setContentPane(self.params_panel)
 
-        # scheduling margin
-        title = "scheduling_margin: (max 20 fast mins)"
-        msg = "input scheduling margin "
-        default_value = self.scheduling_margin
-        repeat = True
-        while repeat == True:
-            reply = OptionDialog().input(msg, title, default_value)
-            reply = reply.replace("x", "")
-            if reply.isdigit():
-                # OptionDialog().displayMessage("correct format")
-                repeat = False
-            else:
-                repeat = True
-                OptionDialog().displayMessage("wrong format must be integer")
-        if int(reply) > 20:
-            self.scheduling_margin = 20
-        else:
-            self.scheduling_margin = int(reply)
-        if self.logLevel > 0: print "scheduling_margin", self.scheduling_margin
+        # Display the window.
+        self.params_frame.pack()
+        self.params_frame.setVisible(True)
 
-        scheduling_in_operation_gbl = False
+    class FieldValidator(FocusAdapter, ActionListener):
+        """
+        A listener that validates a text field when focus is lost or Enter is pressed.
+        If validation fails, it reverts the field to its previous value.
+        """
+        def __init__(self, validation_function, field):
+            self.validation_function = validation_function
+            self.field = field
+            self.old_value = None
+
+        def focusGained(self, event):
+            """Store the current value when the field gains focus."""
+            self.old_value = self.field.getText()
+
+        def _validate_and_revert(self):
+            """Helper method to run validation and revert on failure."""
+            if not self.validation_function(self.field):
+                # The validation function already shows the error message.
+                # Now, revert the text field to the last known good value.
+                self.field.setText(self.old_value)
+
+        def focusLost(self, event):
+            """Validate when focus is lost."""
+            self._validate_and_revert()
+
+        def actionPerformed(self, event):
+            """Validate when Enter is pressed."""
+            self._validate_and_revert()
+
+    def add_schedule_parameter_widgets(self):
+        """Adds labels, fields, and buttons to the parameters panel."""
+
+        global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+                     scheduling_margin_gbl, scheduling_in_operation_gbl
+
+        # --- Create Widgets ---
+        start_hour_label = JLabel("Start Hour (0-23):") #NOI18N
+        self.start_hour_field = JTextField(4)
+
+        end_hour_label = JLabel("End Hour (0-23):") #NOI18N
+        self.end_hour_field = JTextField(4)
+
+        fast_clock_label = JLabel("Fast Clock Rate (Running Period):") #NOI18N
+        self.fast_clock_field = JTextField(4)
+
+        fast_clock_off_label = JLabel("Fast Clock Rate (Non Running Period) (1-100):") #NOI18N
+        self.fast_clock_off_field = JTextField(4)
+
+        margin_label = JLabel("Scheduling Margin (Fast Mins, 0-20):") #NOI18N
+        self.margin_field = JTextField(4)
+
+        save_button = JButton("Save") #NOI18N
+        cancel_button = JButton("Cancel") #NOI18N
+
+        # --- Pre-fill fields with existing values ---
+        # This assumes the values are stored as attributes of your class.
+        # If they are globals, you would reference them directly.
+        self.start_hour_field.setText(str(self.start_hour))
+        self.end_hour_field.setText(str(self.end_hour))
+        self.fast_clock_field.setText(str(fast_clock_rate))
+        self.fast_clock_off_field.setText(str(self.speed_not_operational))
+        self.margin_field.setText(str(self.scheduling_margin))
+
+        # --- Add Listeners for real-time validation (on focus loss or Enter key) ---
+        start_hour_validator = self.FieldValidator(self.validate_start_hour, self.start_hour_field)
+        self.start_hour_field.addFocusListener(start_hour_validator)
+        self.start_hour_field.addActionListener(start_hour_validator)
+
+        end_hour_validator = self.FieldValidator(self.validate_end_hour, self.end_hour_field)
+        self.end_hour_field.addFocusListener(end_hour_validator)
+        self.end_hour_field.addActionListener(end_hour_validator)
+
+        fast_clock_validator = self.FieldValidator(self.validate_fast_clock_rate, self.fast_clock_field)
+        self.fast_clock_field.addFocusListener(fast_clock_validator)
+        self.fast_clock_field.addActionListener(fast_clock_validator)
+
+        fast_clock_off_validator = self.FieldValidator(self.validate_fast_clock_off_rate, self.fast_clock_off_field)
+        self.fast_clock_off_field.addFocusListener(fast_clock_off_validator)
+        self.fast_clock_off_field.addActionListener(fast_clock_off_validator)
+
+        margin_validator = self.FieldValidator(self.validate_margin, self.margin_field)
+        self.margin_field.addFocusListener(margin_validator)
+        self.margin_field.addActionListener(margin_validator)
+
+        # --- Add Action Listeners ---
+        save_button.actionPerformed = self.save_schedule_parameters_action
+        cancel_button.actionPerformed = self.cancel_schedule_parameters_action
+
+        # --- Add Widgets to Panel in Order, wrapping fields to control size ---
+        self.params_panel.add(start_hour_label)
+        field_panel1 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel1.add(self.start_hour_field)
+        self.params_panel.add(field_panel1)
+
+        self.params_panel.add(end_hour_label)
+        field_panel2 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel2.add(self.end_hour_field)
+        self.params_panel.add(field_panel2)
+
+        self.params_panel.add(fast_clock_label)
+        field_panel3 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel3.add(self.fast_clock_field)
+        self.params_panel.add(field_panel3)
+
+        self.params_panel.add(fast_clock_off_label)
+        field_panel4 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel4.add(self.fast_clock_off_field)
+        self.params_panel.add(field_panel4)
+
+        self.params_panel.add(margin_label)
+        field_panel5 = JPanel(FlowLayout(FlowLayout.LEFT, 10, 0))
+        field_panel5.add(self.margin_field)
+        self.params_panel.add(field_panel5)
+
+        # --- Add Buttons ---
+        # Create a panel to hold both buttons, so they can be centered together.
+        button_panel = JPanel(FlowLayout(FlowLayout.CENTER, 10, 5)) # hgap=10, vgap=5
+        button_panel.add(save_button)
+        button_panel.add(cancel_button)
+
+        # Add an empty label to the first column of the last row to push the button panel to the right.
+        self.params_panel.add(JLabel(""))
+        self.params_panel.add(button_panel)
+
+
+    def save_schedule_parameters_action(self, event):
+        """Saves the parameters back to the class and closes the window."""
+
+        global start_hour_gbl, end_hour_gbl, fast_clock_rate, speed_not_operational_gbl, \
+            scheduling_margin_gbl, scheduling_in_operation_gbl
+
+        # --- Run all validations one last time before saving ---
+        if not self.validate_start_hour(self.start_hour_field): return
+        if not self.validate_end_hour(self.end_hour_field): return
+        if not self.validate_fast_clock_rate(self.fast_clock_field): return
+        if not self.validate_fast_clock_off_rate(self.fast_clock_off_field): return
+        if not self.validate_margin(self.margin_field): return
+
+        # All validation passed, now save the values.
+        self.start_hour = int(self.start_hour_field.getText())
+        self.end_hour = int(self.end_hour_field.getText())
+        fast_clock_rate = int(self.fast_clock_field.getText())
+        self.speed_not_operational = int(self.fast_clock_off_field.getText())
+        self.scheduling_margin = int(self.margin_field.getText())
 
         items = [str(item) for item in [self.start_hour,self.end_hour, fast_clock_rate, \
                                         self.speed_not_operational, \
                                         self.scheduling_margin, scheduling_in_operation_gbl]]
         if self.logLevel > 0: print "items to write", items
         self.write_list(items)
+
         # store in globals
 
         start_hour_gbl = self.start_hour
@@ -1333,6 +1517,79 @@ class SchedulerMaster(jmri.jmrit.automat.AbstractAutomaton):
 
         stringToDisplay = "scheduling margin: " + str(scheduling_margin_gbl) + " fast mins"
         rowEStage1Button_1.setText(stringToDisplay) # Update the label
+
+        print
+        "Scheduler parameters saved."
+
+        # Close the window after saving.
+        self.params_frame.dispose()
+
+
+    def cancel_schedule_parameters_action(self, event):
+        """Closes the window without saving."""
+        self.params_frame.dispose()
+
+    # --- Validation Methods ---
+
+    def validate_start_hour(self, field):
+        """Validates the Start Hour field."""
+        try:
+            value = int(field.getText())
+            if not (0 <= value <= 23):
+                OptionDialog().displayMessage("Start Hour must be between 0 and 23.")
+                return False
+        except ValueError:
+            OptionDialog().displayMessage("Start Hour must be a valid number.")
+            return False
+        return True
+
+    def validate_end_hour(self, field):
+        """Validates the End Hour field."""
+        try:
+            value = int(field.getText())
+            if not (0 <= value <= 23):
+                OptionDialog().displayMessage("End Hour must be between 0 and 23.")
+                return False
+        except ValueError:
+            OptionDialog().displayMessage("End Hour must be a valid number.")
+            return False
+        return True
+
+    def validate_fast_clock_rate(self, field):
+        """Validates the Fast Clock Rate (Running) field."""
+        try:
+            value = int(field.getText())
+            if value <= 0:
+                OptionDialog().displayMessage("Fast Clock Rate (Running) must be a positive number.")
+                return False
+        except ValueError:
+            OptionDialog().displayMessage("Fast Clock Rate (Running) must be a valid number.")
+            return False
+        return True
+
+    def validate_fast_clock_off_rate(self, field):
+        """Validates the Fast Clock Rate (Outside Hours) field."""
+        try:
+            value = int(field.getText())
+            if not (1 <= value <= 100):
+                OptionDialog().displayMessage("Fast Clock Rate (Outside Hours) must be between 1 and 100.")
+                return False
+        except ValueError:
+            OptionDialog().displayMessage("Fast Clock Rate (Outside Hours) must be a valid number.")
+            return False
+        return True
+
+    def validate_margin(self, field):
+        """Validates the Scheduling Margin field."""
+        try:
+            value = int(field.getText())
+            if not (0 <= value <= 20):
+                OptionDialog().displayMessage("Scheduling Margin must be between 0 and 20.")
+                return False
+        except ValueError:
+            OptionDialog().displayMessage("Scheduling Margin must be a valid number.")
+            return False
+        return True
 
     def directory(self):
         path = jmri.util.FileUtil.getUserFilesPath() + "dispatcher" + java.io.File.separator + "hourlySchedule"
@@ -1696,6 +1953,7 @@ class TimeListener(java.beans.PropertyChangeListener):
         if self.logLevel > 1: print "TimeListener: process_operations_trains"
         TrainManager=jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
         train_list = TrainManager.getTrainsByTimeList()
+        train_list = [train for train in train_list if "skip" not in train.getComment()]  # exclude trains marked as 'don't schedule' in Scheduled trains table
         if self.logLevel > 0: print "train_list",train_list
         #if self.logLevel > 1: print "prev_time", self.prev_time, "curr_time", self.curr_time
         if self.logLevel > 0: print "a3"
@@ -2338,19 +2596,21 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
                         self.wait_for_scheduled_time(self.route, previous_station_index, accumulated_duration, train_to_move)
                         # done when we know the transit name
                         # print "__________________________Start__" + train_to_move + "___________________________________"
-                        success = self.check_train_in_block_for_scheduling_margin_fast_minutes(start_block, train_to_move)
+                        strpad = station_index * "  "
+                        success = self.check_train_in_block_for_scheduling_margin_fast_minutes(start_block, train_to_move, strpad)
                         if success:
                             move_train = MoveTrain(station_from, station_to, train_to_move, self.graph, mode = "scheduling", route = self.route)
                             move_train.move_between_stations(station_from, station_to, train_to_move, self.graph, mode = "scheduling")
-                            print "__________________________End____" + train_to_move + "___________________________________"
+                            transit_name = move_train.transit_name
+                            print "__________________________End____" + train_to_move + "__transit: " + transit_name
                         else:
                             print "failed to move train - no train in block - have waited for scheduling margin"
-                            print "__________________________End____" + train_to_move + "___________________________________"
-                    else:
-                        success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
-                        if success:
-                            move_train = MoveTrain(station_from, station_to, self.train_name, self.graph, route = self.route)
-                            move_train.move_between_stations(station_from, station_to, self.train_name, self.graph)
+                            transit_name = move_train.transit_name
+                            print "__________________________End____" + train_to_move + "__transit: " + transit_name
+                        # success = self.check_train_in_block_allow_manual_repositioning(train_to_move, self.station_from_name)
+                        # if success:
+                        #     move_train = MoveTrain(station_from, station_to, self.train_name, self.graph, route = self.route)
+                        #     move_train.move_between_stations(station_from, station_to, self.train_name, self.graph)
                     # move_train = None
 
                     # train has moved, if we are in departure_time_setting mode, store the journey time
@@ -2421,10 +2681,13 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
 
         return row - 1     # row number starts from 1
 
-    def check_train_in_block_for_scheduling_margin_fast_minutes(self, start_block, train_to_move):
+    def check_train_in_block_for_scheduling_margin_fast_minutes(self, start_block, train_to_move, strpad = ""):
         global scheduling_margin_gbl
+        global timebase
         # print "__________________________Start__" + train_to_move + "___________________________________"
-        # print "check_train_in_block_for_scheduling_margin_fast_minutes", start_block.getUserName(), train_to_move
+        # timehm = str(timebase.getTime().getHours()) + ":" + str(timebase.getTime().getMinutes())
+        timehm = "{:02d}:{:02d}".format(timebase.getTime().getHours(), timebase.getTime().getMinutes())
+        print timehm, strpad, "check_train", train_to_move, "in_block", start_block.getUserName(), "for", scheduling_margin_gbl, "fast_minutes"
         global fast_clock_rate
         if self.logLevel > 0: print "check_train_in_block_for_scheduling_margin_fast_minutes"
 
@@ -2432,11 +2695,11 @@ class RunRoute(jmri.jmrit.automat.AbstractAutomaton):
             train_in_block = self.blockOccupied(start_block)
             train_block_name = start_block.getValue()
             if train_in_block and (train_block_name == train_to_move):
-                # print "--" + str(train_to_move) + " train in start block" + str(start_block.getUserName())
+                # print strpad + "--" + str(train_to_move) + " train in start block " + str(start_block.getUserName())
                 return True
             else:
-                # print (str(train_to_move) + " not in start_block: " + str(start_block.getUserName()) \
-                #         + " time waited: " + str(j) + " fast minutes")
+                print (strpad + "--" + str(train_to_move) + " not in start_block: " + str(start_block.getUserName()) \
+                        + " time waited: " + str(j) + " fast minutes")
                 fast_minute = 1000*60/int(str(fast_clock_rate))
                 self.waitMsec(fast_minute)
         return False

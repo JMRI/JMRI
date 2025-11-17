@@ -1164,6 +1164,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     public class CdiListener implements PropertyChangeListener {
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             String propertyName = e.getPropertyName();
             log.debug("CdiListener event = {}", propertyName);
@@ -1189,6 +1190,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
      * When the updateSimpleNodeIdent event occurs and the compile is in progress it starts the message display process.
      */
     public class RebootListener implements PropertyChangeListener {
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             String propertyName = e.getPropertyName();
             if (_compileInProgress && propertyName.equals("updateSimpleNodeIdent")) {
@@ -1247,6 +1249,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     public class EntryListener implements PropertyChangeListener {
+        @Override
         public void propertyChange(PropertyChangeEvent e) {
             String propertyName = e.getPropertyName();
             log.debug("EntryListener event = {}", propertyName);

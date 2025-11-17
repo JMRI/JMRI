@@ -1,15 +1,16 @@
 package jmri.server.json;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
@@ -42,7 +43,7 @@ public class JSONTest {
             // UnsupportedOperationException and fail everything else by
             // re-throwing the unexpected exception to get a stack trace
             var cause = ex.getCause();
-            Assertions.assertNotNull(cause);
+            assertNotNull(cause);
             if (!cause.getClass().equals(UnsupportedOperationException.class)) {
                 throw ex;
             }
@@ -51,8 +52,8 @@ public class JSONTest {
     
     @Test
     public void testJsonVersions() {
-        assertArrayEquals("JSON protocol versions", new String[]{"v5"}, JSON.VERSIONS.toArray());
-        assertEquals("JSON protocol version is v5", JSON.JSON_PROTOCOL_VERSION, JSON.V5_PROTOCOL_VERSION);
+        assertArrayEquals( new String[]{"v5"}, JSON.VERSIONS.toArray(), "JSON protocol versions");
+        assertEquals( JSON.JSON_PROTOCOL_VERSION, JSON.V5_PROTOCOL_VERSION, "JSON protocol version is v5");
     }
 
 }

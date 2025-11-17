@@ -19,8 +19,15 @@ import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -49,27 +56,26 @@ public class JsonMessageSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance = new JsonMessageSocketService(connection);
         JsonMessageClientManager manager = InstanceManager.getDefault(JsonMessageClientManager.class);
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
-        Assert.assertNull(connection.getMessage());
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        assertNull(connection.getMessage());
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         data.put(JsonMessage.CLIENT, ""); // will not subscribe, results in JsonException
-        try {
-            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Property \"client\" must not be empty for type hello.", ex.getMessage());
-        }
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        JsonException ex = assertThrows( JsonException.class, () ->
+            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0)),
+            "Expected exception not thrown.");
+        assertEquals( HttpServletResponse.SC_BAD_REQUEST, ex.getCode(), "Code is HTTP bad request");
+        assertEquals("Property \"client\" must not be empty for type hello.", ex.getMessage());
+
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         data.put(JsonMessage.CLIENT, "client1"); // will subscribe
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
-        Assert.assertNull(connection.getMessage());
-        Assert.assertNotNull("One client", manager.getClient(connection));
-        Assert.assertEquals("One client", 1, manager.getClients(connection).size());
+        assertNull(connection.getMessage());
+        assertNotNull( manager.getClient(connection), "One client");
+        assertEquals( 1, manager.getClients(connection).size(), "One client");
         instance.onClose(); // clean up
     }
 
@@ -81,33 +87,31 @@ public class JsonMessageSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance = new JsonMessageSocketService(connection);
         JsonMessageClientManager manager = InstanceManager.getDefault(JsonMessageClientManager.class);
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
-        try {
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
+        JsonException ex = assertThrows( JsonException.class, () ->
             // missing client attribute
-            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Property \"client\" is required for type client.", ex.getMessage());
-        }
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0)),
+            "Expected exception not thrown.");
+        assertEquals( HttpServletResponse.SC_BAD_REQUEST, ex.getCode(), "Code is HTTP bad request");
+        assertEquals("Property \"client\" is required for type client.", ex.getMessage());
+
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         data.put(JsonMessage.CLIENT, ""); // will not subscribe, results in JsonException
-        try {
-            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Property \"client\" must not be empty for type client.", ex.getMessage());
-        }
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        ex = assertThrows( JsonException.class, () ->
+            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0)),
+            "Expected exception not thrown.");
+        assertEquals( HttpServletResponse.SC_BAD_REQUEST, ex.getCode(), "Code is HTTP bad request");
+        assertEquals("Property \"client\" must not be empty for type client.", ex.getMessage());
+
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         data.put(JsonMessage.CLIENT, "client1"); // will subscribe
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
-        Assert.assertNull(connection.getMessage());
-        Assert.assertNotNull("One client", manager.getClient(connection));
-        Assert.assertEquals("One client", 1, manager.getClients(connection).size());
+        assertNull(connection.getMessage());
+        assertNotNull( manager.getClient(connection), "One client");
+        assertEquals( 1, manager.getClients(connection).size(), "One client");
         instance.onClose(); // clean up
     }
 
@@ -119,41 +123,39 @@ public class JsonMessageSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance = new JsonMessageSocketService(connection);
         JsonMessageClientManager manager = InstanceManager.getDefault(JsonMessageClientManager.class);
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
-        try {
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
+        JsonException ex = assertThrows( JsonException.class, () ->
             // missing client attribute
-            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Property \"client\" is required for type client.", ex.getMessage());
-        }
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, 0)),
+            "Expected exception not thrown.");
+        assertEquals( HttpServletResponse.SC_BAD_REQUEST, ex.getCode(), "Code is HTTP bad request");
+        assertEquals("Property \"client\" is required for type client.", ex.getMessage());
+
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         data.put(JsonMessage.CLIENT, ""); // will not delete, results in JsonException
-        try {
-            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Property \"client\" must not be empty for type client.", ex.getMessage());
-        }
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        ex = assertThrows( JsonException.class, () ->
+            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, 0)),
+            "Expected exception not thrown.");
+        assertEquals( HttpServletResponse.SC_BAD_REQUEST, ex.getCode(), "Code is HTTP bad request");
+        assertEquals("Property \"client\" must not be empty for type client.", ex.getMessage());
+
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         data.put(JsonMessage.CLIENT, "client1"); // delete non-existent client (silent)
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, 0));
-        Assert.assertNull(connection.getMessage());
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        assertNull(connection.getMessage());
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0)); // add client
-        Assert.assertNull(connection.getMessage());
-        Assert.assertNotNull("One client", manager.getClient(connection));
-        Assert.assertEquals("One client", 1, manager.getClients(connection).size());
+        assertNull(connection.getMessage());
+        assertNotNull( manager.getClient(connection), "One client");
+        assertEquals( 1, manager.getClients(connection).size(), "One client");
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.DELETE, 0));
-        Assert.assertNull(connection.getMessage());
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        assertNull(connection.getMessage());
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         instance.onClose(); // clean up
     }
 
@@ -165,37 +167,35 @@ public class JsonMessageSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance = new JsonMessageSocketService(connection);
         JsonMessageClientManager manager = InstanceManager.getDefault(JsonMessageClientManager.class);
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
-        try {
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
+        JsonException ex = assertThrows( JsonException.class, () ->
             // missing client attribute
-            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Property \"client\" is required for type client.", ex.getMessage());
-        }
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0)),
+            "Expected exception not thrown.");
+        assertEquals( HttpServletResponse.SC_BAD_REQUEST, ex.getCode(), "Code is HTTP bad request");
+        assertEquals("Property \"client\" is required for type client.", ex.getMessage());
+
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         data.put(JsonMessage.CLIENT, ""); // will not subscribe, results in JsonException
-        try {
-            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("Property \"client\" must not be empty for type client.", ex.getMessage());
-        }
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        ex = assertThrows( JsonException.class, () ->
+            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0)),
+            "Expected exception not thrown.");
+        assertEquals( HttpServletResponse.SC_BAD_REQUEST, ex.getCode(), "Code is HTTP bad request");
+        assertEquals("Property \"client\" must not be empty for type client.", ex.getMessage());
+
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         data.put(JsonMessage.CLIENT, "client1"); // will subscribe
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
-        Assert.assertNull(connection.getMessage());
-        Assert.assertNotNull("One client", manager.getClient(connection));
-        Assert.assertEquals("One client", 1, manager.getClients(connection).size());
+        assertNull(connection.getMessage());
+        assertNotNull( manager.getClient(connection), "One client");
+        assertEquals( 1, manager.getClients(connection).size(), "One client");
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0)); // subscribing same client multiple times causes no change
-        Assert.assertNull(connection.getMessage());
-        Assert.assertNotNull("One client", manager.getClient(connection));
-        Assert.assertEquals("One client", 1, manager.getClients(connection).size());
+        assertNull(connection.getMessage());
+        assertNotNull( manager.getClient(connection), "One client");
+        assertEquals( 1, manager.getClients(connection).size(), "One client");
         instance.onClose(); // clean up
     }
 
@@ -208,50 +208,48 @@ public class JsonMessageSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance = new JsonMessageSocketService(connection);
         JsonMessageClientManager manager = InstanceManager.getDefault(JsonMessageClientManager.class);
-        Assert.assertNull("No clients", manager.getClient(connection));
-        Assert.assertTrue("No clients", manager.getClients(connection).isEmpty());
+        assertNull( manager.getClient(connection), "No clients");
+        assertTrue( manager.getClients(connection).isEmpty(), "No clients");
         // auto generate client
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-        JsonNode message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertEquals(type, message.path(JSON.TYPE).asText());
-        try {
-            UUID.fromString(message.path(JSON.DATA).path(type).asText());
-        } catch (IllegalArgumentException ex) {
-            Assert.fail("Client is not UUID");
-        }
-        Assert.assertNotNull("One client", manager.getClient(connection));
-        Assert.assertEquals("One client", 1, manager.getClients(connection).size());
+        JsonNode messageEx = connection.getMessage();
+        assertNotNull(messageEx);
+        assertEquals(type, messageEx.path(JSON.TYPE).asText());
+        assertDoesNotThrow( () ->
+            UUID.fromString(messageEx.path(JSON.DATA).path(type).asText()),
+            "Client is not UUID");
+
+        assertNotNull( manager.getClient(connection), "One client");
+        assertEquals( 1, manager.getClients(connection).size(), "One client");
         // list clients
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-        message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertTrue(message.isArray());
-        Assert.assertEquals("Contains one element", 1, message.size());
+        JsonNode message = connection.getMessage();
+        assertNotNull(message);
+        assertTrue(message.isArray());
+        assertEquals( 1, message.size(), "Contains one element");
         // get client
         data.put(JsonMessage.CLIENT, "");
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertFalse(message.isArray());
-        Assert.assertEquals(type, message.path(JSON.TYPE).asText());
+        assertNotNull(message);
+        assertFalse(message.isArray());
+        assertEquals(type, message.path(JSON.TYPE).asText());
         // get non-existent client
         data.put(JsonMessage.CLIENT, "client1"); // will subscribe
-        try {
-            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP not found", 404, ex.getCode());
-            Assert.assertEquals("No client \"client1\" found for with this connection.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "Expected exception not thrown.");
+        assertEquals( 404, ex.getCode(), "Code is HTTP not found");
+        assertEquals("No client \"client1\" found for with this connection.", ex.getMessage());
+
         // put client, and then get specified existent client
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertFalse(message.isArray());
-        Assert.assertEquals(type, message.path(JSON.TYPE).asText());
-        Assert.assertEquals("client1", message.path(JSON.DATA).path(JSON.CLIENT).asText());
+        assertNotNull(message);
+        assertFalse(message.isArray());
+        assertEquals(type, message.path(JSON.TYPE).asText());
+        assertEquals("client1", message.path(JSON.DATA).path(JSON.CLIENT).asText());
     }
 
     @Test
@@ -261,13 +259,11 @@ public class JsonMessageSocketServiceTest {
         Locale locale = Locale.ENGLISH;
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance = new JsonMessageSocketService(connection);
-        try {
-            instance.onList(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP bad request", HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
-            Assert.assertEquals("hello cannot be listed.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            instance.onList(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "Expected exception not thrown.");
+        assertEquals( HttpServletResponse.SC_BAD_REQUEST, ex.getCode(), "Code is HTTP bad request");
+        assertEquals("hello cannot be listed.", ex.getMessage());
     }
 
     @Test
@@ -277,22 +273,21 @@ public class JsonMessageSocketServiceTest {
         Locale locale = Locale.ENGLISH;
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance = new JsonMessageSocketService(connection);
-        try {
-            instance.onList(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
-            Assert.fail("Expected exception not thrown.");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP not found", 404, ex.getCode());
-            Assert.assertEquals("No client found for with this connection.", ex.getMessage());
-        }
+        JsonException ex = assertThrows( JsonException.class, () ->
+            instance.onList(type, data, new JsonRequest(locale, JSON.V5, JSON.GET, 0)),
+            "Expected exception not thrown.");
+        assertEquals( 404, ex.getCode(), "Code is HTTP not found");
+        assertEquals("No client found for with this connection.", ex.getMessage());
+
         data.put(JsonMessage.CLIENT, "client1"); // will subscribe
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
         data.put(JsonMessage.CLIENT, "client2"); // will subscribe
         instance.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
         instance.onList(JsonMessage.CLIENT, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         JsonNode message = connection.getMessage();
-        Assert.assertNotNull(message);
-        Assert.assertTrue(message.isArray());
-        Assert.assertEquals("Two array elements", 2, message.size());
+        assertNotNull(message);
+        assertTrue(message.isArray());
+        assertEquals( 2, message.size(), "Two array elements");
     }
 
     @Test
@@ -306,17 +301,16 @@ public class JsonMessageSocketServiceTest {
         JsonMockConnection connection2 = new JsonMockConnection((DataOutputStream) null);
         JsonMessageSocketService instance2 = new JsonMessageSocketService(connection2);
         instance1.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
-        Assert.assertEquals("connection1 is subscribed", "client", manager.getClient(connection1));
-        Assert.assertNull("connection2 is not subscribed", manager.getClient(connection2));
-        try {
-            instance2.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0));
-            Assert.fail("Expected exception not thrown");
-        } catch (JsonException ex) {
-            Assert.assertEquals("Code is HTTP conflict", 409, ex.getCode());
-            Assert.assertEquals("Client \"client\" is in use by another connection.", ex.getMessage());
-        }
-        Assert.assertEquals("connection1 is subscribed", "client", manager.getClient(connection1));
-        Assert.assertNull("connection2 is not subscribed", manager.getClient(connection2));
+        assertEquals( "client", manager.getClient(connection1), "connection1 is subscribed");
+        assertNull( manager.getClient(connection2), "connection2 is not subscribed");
+        JsonException ex = assertThrows( JsonException.class, () ->
+            instance2.onMessage(type, data, new JsonRequest(locale, JSON.V5, JSON.PUT, 0)),
+            "Expected exception not thrown");
+        assertEquals( 409, ex.getCode(), "Code is HTTP conflict");
+        assertEquals("Client \"client\" is in use by another connection.", ex.getMessage());
+
+        assertEquals( "client", manager.getClient(connection1), "connection1 is subscribed");
+        assertNull( manager.getClient(connection2), "connection2 is not subscribed");
     }
     
 }

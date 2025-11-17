@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmris.AbstractOperationsServer;
+import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.setup.backup.AutoBackup;
 import jmri.jmrit.operations.setup.backup.AutoSave;
@@ -33,14 +34,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final String NONE = "";
 
     // scale ratios from NMRA
-    private static final int Z_RATIO = 220;
-    private static final int N_RATIO = 160;
-    private static final int TT_RATIO = 120;
-    private static final int OO_RATIO = 76; // actual ratio 76.2
-    private static final int HO_RATIO = 87;
-    private static final int S_RATIO = 64;
-    private static final int O_RATIO = 48;
-    private static final int G_RATIO = 32; // NMRA #1
+    public static final int Z_RATIO = 220;
+    public static final int N_RATIO = 160;
+    public static final int TT_RATIO = 120;
+    public static final int OO_RATIO = 76; // actual ratio 76.2
+    public static final int HO_RATIO = 87;
+    public static final int S_RATIO = 64;
+    public static final int O_RATIO = 48;
+    public static final int Gauge1_RATIO = 32; // NMRA #1
+    public static final int G_24_RATIO = 24;
 
     // initial weight in milli ounces from NMRA
     private static final int Z_INITIAL_WEIGHT = 364; // not specified by NMRA
@@ -91,7 +93,8 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     public static final int S_SCALE = 8;
     public static final int On3_SCALE = 9;
     public static final int O_SCALE = 10;
-    public static final int G_SCALE = 11; // NMRA #1
+    public static final int Gauge1_SCALE = 11; // NMRA #1
+    public static final int G_24_SCALE = 12;
 
     public static final int EAST = 1; // train direction serviced by this location
     public static final int WEST = 2;
@@ -299,7 +302,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
     private String labelRfid = Bundle.getMessage("RFID");
 
     private boolean carRoutingEnabled = true; // when true enable car routing
-    private boolean carRoutingYards = true; // when true enable car routing via yard tracks
+    private boolean carRoutingYards = false; // when true enable car routing via yard tracks
     private boolean carRoutingStaging = false; // when true staging tracks can be used for car routing
     private boolean forwardToYardEnabled = true; // when true forward car to yard if track is full
     private boolean onlyActiveTrains = false; // when true only active trains are used for routing
@@ -395,7 +398,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         // true.
         if (enabled && !getDefault().autoBackup) {
             try {
-                new AutoBackup().autoBackup();
+                InstanceManager.getDefault(AutoBackup.class).autoBackup();
             } catch (IOException ex) {
                 log.debug("Autobackup after setting AutoBackup flag true", ex);
             }
@@ -1793,8 +1796,15 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
                 getDefault().addWeight = O_ADD_WEIGHT;
                 getDefault().ratioTons = O_RATIO_TONS;
                 break;
-            case G_SCALE:
-                getDefault().ratio = G_RATIO;
+
+            case Gauge1_SCALE:
+                getDefault().ratio = Gauge1_RATIO;
+                getDefault().initWeight = G_INITIAL_WEIGHT;
+                getDefault().addWeight = G_ADD_WEIGHT;
+                getDefault().ratioTons = G_RATIO_TONS;
+                break;
+            case G_24_SCALE:
+                getDefault().ratio = G_24_RATIO;
                 getDefault().initWeight = G_INITIAL_WEIGHT;
                 getDefault().addWeight = G_ADD_WEIGHT;
                 getDefault().ratioTons = G_RATIO_TONS;
@@ -1809,6 +1819,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(STANDARD_FORMAT);
         box.addItem(TWO_COLUMN_FORMAT);
         box.addItem(TWO_COLUMN_TRACK_FORMAT);
+        OperationsPanel.padComboBox(box, TWO_COLUMN_TRACK_FORMAT.length());
         return box;
     }
 
@@ -1818,6 +1829,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(LANDSCAPE);
         box.addItem(HALFPAGE);
         box.addItem(HANDHELD);
+        OperationsPanel.padComboBox(box, LANDSCAPE.length());
         return box;
     }
 
@@ -1826,6 +1838,7 @@ public class Setup extends PropertyChangeSupport implements InstanceManagerAutoD
         box.addItem(PAGE_NORMAL);
         box.addItem(PAGE_PER_TRAIN);
         box.addItem(PAGE_PER_VISIT);
+        OperationsPanel.padComboBox(box, PAGE_PER_TRAIN.length());
         return box;
     }
 

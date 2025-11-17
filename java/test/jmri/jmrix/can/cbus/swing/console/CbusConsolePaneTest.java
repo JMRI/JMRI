@@ -29,7 +29,7 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
     @DisabledIfHeadless
     public void testInitComponentsNoArgs() {
         Assertions.assertDoesNotThrow( () ->
-            ((CbusConsolePane) panel).initComponents());
+            panel.initComponents());
     }
 
     @Test

@@ -389,7 +389,15 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("blockname") != null) {
                         tInfo.setBlockName(traininfo.getAttribute("blockname").getValue());
                     }
-
+                    if (traininfo.getAttribute("fnumberlight") != null) {
+                        tInfo.setFNumberLight(Integer.parseInt(traininfo.getAttribute("fnumberlight").getValue()));
+                    }
+                    if (traininfo.getAttribute("fnumberbell") != null) {
+                        tInfo.setFNumberBell(Integer.parseInt(traininfo.getAttribute("fnumberbell").getValue()));
+                    }
+                    if (traininfo.getAttribute("fnumberhorn") != null) {
+                        tInfo.setFNumberHorn(Integer.parseInt(traininfo.getAttribute("fnumberhorn").getValue()));
+                    }
                     if (version == 1) {
                         String parseArray[];
                         // If you only have a systemname then its everything before the dash
@@ -602,6 +610,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("stopbyspeedprofileadjust", Float.toString(tf.getStopBySpeedProfileAdjust()));
         traininfo.setAttribute("waittime", Float.toString(tf.getWaitTime()));
         traininfo.setAttribute("blockname", tf.getBlockName());
+        traininfo.setAttribute("fnumberlight", Integer.toString(tf.getFNumberLight()));
+        traininfo.setAttribute("fnumberbell", Integer.toString(tf.getFNumberBell()));
+        traininfo.setAttribute("fnumberhorn", Integer.toString(tf.getFNumberHorn()));
 
         root.addContent(traininfo);
 
@@ -662,12 +673,14 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         for (String fileName : getTrainInfoFileNames()) {
             try {
                 TrainInfo ti = readTrainInfo(fileName);
-                summaries.add(new TrainInfoFileSummary(fileName, ti.getTransitName(), ti.getTrainName(),
+                summaries.add(new TrainInfoFileSummary(fileName, ti.getTrainName(), ti.getTransitName(),
                         ti.getStartBlockName(), ti.getDestinationBlockName(), ti.getDccAddress()));
             } catch (org.jdom2.JDOMException ex) {
                 summaries.add(new TrainInfoFileSummary(fileName));
             } catch (IOException ex) {
                 summaries.add(new TrainInfoFileSummary(fileName));
+            } catch (RuntimeException ex) {
+                log.error("Traininfo File [{}] unexplained error, currupted?",fileName);
             }
         }
         return summaries;

@@ -1,19 +1,15 @@
 package jmri.jmrit.logix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.Nonnull;
-
 import java.awt.Color;
 import java.util.List;
 import java.util.ListIterator;
-import jmri.DccThrottle;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.Sensor;
+
+import javax.annotation.Nonnull;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.*;
+import jmri.jmrit.logix.ThrottleSetting.*;
 import jmri.util.ThreadingUtil;
-import jmri.jmrit.logix.ThrottleSetting.Command;
-import jmri.jmrit.logix.ThrottleSetting.CommandValue;
-import jmri.jmrit.logix.ThrottleSetting.ValueType;
 
 /**
  * Execute a throttle command script for a warrant.
@@ -62,6 +58,41 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     private boolean _holdRamp = false;
     private boolean _isRamping = false;
 
+    /**
+     * Property change constant for Wait For Sync.
+     */
+    public static final String PROPERTY_WAIT_FOR_SYNC = "WaitForSync";
+
+    /**
+     * Property change constant for Speed Change.
+     */
+    public static final String PROPERTY_SPEED_CHANGE = "SpeedChange";
+
+    /**
+     * Property change constant for Memory Set Command.
+     */
+    public static final String PROPERTY_MEMORY_SET_COMMAND = "MemorySetCommand";
+
+    /**
+     * Property change constant for Speed Set Command.
+     */
+    public static final String PROPERTY_SENSOR_SET_COMMAND = "SensorSetCommand";
+
+    /**
+     * Property change constant for Sensor Wait Command.
+     */
+    public static final String PROPERTY_SENSOR_WAIT_COMMAND = "SensorWaitCommand";
+
+    /**
+     * Property change constant for Ramp Done.
+     */
+    public static final String PROPERTY_RAMP_DONE = "RampDone";
+
+    /**
+     * Create a new Engineer for a given Warrant and Throttle.
+     * @param warrant The Warrant to execute.
+     * @param throttle The Engine throttle to command.
+     */
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
         _throttle = throttle;
@@ -74,11 +105,15 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         setName("Engineer(" + _warrant.getTrainName() +")");
     }
 
+    /**
+     * Run the Warrant commands on this Engineer thread.
+     */
     @Override
     @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
     public void run() {
         if (log.isDebugEnabled()) {
-            log.debug("Engineer started warrant {} _throttle= {}", _warrant.getDisplayName(), _throttle.getClass().getName());
+            log.debug("Engineer started warrant {} _throttle= {}",
+                _warrant.getDisplayName(), _throttle.getClass().getName());
         }
         int cmdBlockIdx = 0;
         while (_idxCurrentCommand < _commands.size()) {
@@ -157,7 +192,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
 
                 synchronized (_synchLockObject) {
                     _synchBlock = _warrant.getBlockAt(cmdBlockIdx);
-                    _warrant.fireRunStatus("WaitForSync", _idxCurrentCommand - 1, _idxCurrentCommand);
+                    _warrant.fireRunStatus( PROPERTY_WAIT_FOR_SYNC, _idxCurrentCommand - 1, _idxCurrentCommand);
                     if (log.isDebugEnabled()) {
                         log.debug("{}: Wait for train to enter \"{}\".",
                                 _warrant.getDisplayName(), _synchBlock.getDisplayName());
@@ -479,9 +514,14 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * Get if Engineer is ramping up or down the speed.
+     * @return true if is ramping.
+     */
     protected boolean isRamping() {
         return _isRamping;
     }
+
     private void setIsRamping(boolean set) {
         _isRamping = set;
     }
@@ -506,11 +546,13 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         return _speedType;
     }
 
-    /*
+    /**
      * warrant.cancelDelayRamp()  called for immediate Stop commands
      * When die==true for ending the warrant run.
+     * @param die true for ending the warrant run
+     * @return true if _ramp not null and die is false and _isRamping
      */
-    synchronized protected boolean cancelRamp(boolean die) {
+    protected synchronized boolean cancelRamp(boolean die) {
         // _ramp.quit sets "stop" and notifies "waits"
         if (_ramp != null) {
             if (die) {
@@ -531,17 +573,23 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * @param speed throttle setting about to be set. Modified to sType if from script.
      * UnModified if from ThrottleRamp or stop speeds.
      */
-     protected void setSpeed(float speed) {
+    protected void setSpeed(float speed) {
         _throttle.setSpeedSetting(speed);
         // Late update to GUI is OK, this is just an informational status display
         if (!_abort) {
-            _warrant.fireRunStatus("SpeedChange", null, null);
+            _warrant.fireRunStatus( PROPERTY_SPEED_CHANGE, null, null);
         }
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("{}: _throttle.setSpeedSetting({}) called, ({}).",
                     _warrant.getDisplayName(), speed, _speedType);
+        }
     }
 
+    /**
+     * Get the current Throttle speed.
+     * If Speed is negative ( i.e. E-Stop ), sets Throttle speed to 0.
+     * @return speed setting reported by Throttle.
+     */
     protected float getSpeedSetting() {
         float speed = _throttle.getSpeedSetting();
         if (speed < 0.0f) {
@@ -551,6 +599,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         return speed;
     }
 
+    /**
+     * Get the current commanded speed as set in the Warrant script.
+     * @return the most recent commanded speed.
+     */
     protected float getScriptSpeed() {
         return _normalSpeed;
     }
@@ -576,13 +628,15 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
     }
 
-    /*
+    /**
      * Do immediate speed change.
+     * @param speedType speed type
      */
     protected synchronized void setSpeedToType(String speedType) {
         float speed = getSpeedSetting();
         if (log.isDebugEnabled())  {
-            log.debug("{}: setSpeedToType({}) speed={} scriptSpeed={}", _warrant.getDisplayName(), speedType, speed, _normalSpeed);
+            log.debug("{}: setSpeedToType({}) speed={} scriptSpeed={}",
+                _warrant.getDisplayName(), speedType, speed, _normalSpeed);
         }
         if (speedType.equals(Warrant.Stop)) {
             setStop(false);
@@ -608,9 +662,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * @param halt true if train should halt
      */
     protected synchronized void setHalt(boolean halt) {
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("{}: setHalt({}): _atHalt= {}, _waitForClear= {}",
-                  _warrant.getDisplayName(), halt, _atHalt, _waitForClear);
+                _warrant.getDisplayName(), halt, _atHalt, _waitForClear);
+        }
         if (!halt) {    // resume normal running
             _halt = false;
             if (!_atClear) {
@@ -639,9 +694,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * @param wait true if train should stop
      */
     protected void setWaitforClear(boolean wait) {
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("{}: setWaitforClear({}): _atClear= {}, throttle speed= {}, _halt= {}",
-                   _warrant.getDisplayName(), wait, _atClear,  getSpeedSetting(), _halt);
+                _warrant.getDisplayName(), wait, _atClear,  getSpeedSetting(), _halt);
+        }
         if (!wait) {    // resume normal running
             synchronized (_clearLockObject) {
                 log.debug("setWaitforClear calls notify");
@@ -653,6 +709,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
     }
 
+    /**
+     * Generate Debug Info for Warrant progression state.
+     * @return String for use in debug output.
+     */
     String debugInfo() {
         StringBuilder info = new StringBuilder("\n");
         info.append(getName()); info.append(" on warrant= "); info.append(_warrant.getDisplayName());
@@ -741,6 +801,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             _warrant.getDisplayName(), eStop, speed, _normalSpeed);
     }
 
+    /**
+     * Get the Warrant SpeedState ENUM.
+     * @return e.g. Warrant.SpeedState.RAMPING_DOWN or SpeedState.STEADY_SPEED.
+     */
     protected Warrant.SpeedState getSpeedState() {
         if (isRamping()) {
             if (_ramp._rampDown) {
@@ -752,6 +816,10 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         return Warrant.SpeedState.STEADY_SPEED;
     }
 
+    /**
+     * Get the Warrant run state.
+     * @return e.g. Warrant.WAIT_FOR_SENSOR or Warrant.RUNNING.
+     */
     protected int getRunState() {
         if (_stopPending) {
             if (_halt) {
@@ -774,6 +842,11 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         return Warrant.RUNNING;
     }
 
+    /**
+     * Stop the Engineer run.
+     * @param abort true to abort, else false.
+     * @param turnOffFunctions true to set Functions 0, 1, 2 and 3 to off ( if speed is &gt; 0 ).
+     */
     @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="quit is called another thread to clear all ramp waits")
     public void stopRun(boolean abort, boolean turnOffFunctions) {
         if (abort) {
@@ -854,18 +927,18 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      */
     private void setMemory(NamedBeanHandle<?> handle, CommandValue cmdVal) {
         NamedBean bean = handle.getBean();
-        if (!(bean instanceof jmri.Memory)) {
+        if (!(bean instanceof Memory)) {
             log.error("setMemory: {} not a Memory!", bean );
             return;
         }
-        jmri.Memory m = (jmri.Memory)bean;
+        Memory m = (Memory)bean;
         ValueType type = cmdVal.getType();
 
         if (Warrant._trace || log.isDebugEnabled()) {
             log.info("{} : Set memory", Bundle.getMessage("setMemory",
                         _warrant.getTrainName(), m.getDisplayName(), cmdVal.getText()));
         }
-        _warrant.fireRunStatus("MemorySetCommand", type.toString(), m.getDisplayName());
+        _warrant.fireRunStatus( PROPERTY_MEMORY_SET_COMMAND, type.toString(), m.getDisplayName());
         m.setValue(cmdVal.getText());
     }
 
@@ -878,18 +951,18 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             log.error("setSensor: {} not a Sensor!", bean );
             return;
         }
-        jmri.Sensor s = (Sensor)bean;
+        Sensor s = (Sensor)bean;
         ValueType type = cmdVal.getType();
         try {
             if (Warrant._trace || log.isDebugEnabled()) {
                 log.info("{} : Set Sensor", Bundle.getMessage("setSensor",
                             _warrant.getTrainName(), s.getDisplayName(), type.toString()));
             }
-            _warrant.fireRunStatus("SensorSetCommand", type.toString(), s.getDisplayName());
+            _warrant.fireRunStatus( PROPERTY_SENSOR_SET_COMMAND, type.toString(), s.getDisplayName());
             if (type == ValueType.VAL_ACTIVE) {
-                s.setKnownState(jmri.Sensor.ACTIVE);
+                s.setKnownState( Sensor.ACTIVE);
             } else if (type == ValueType.VAL_INACTIVE) {
-                s.setKnownState(jmri.Sensor.INACTIVE);
+                s.setKnownState( Sensor.INACTIVE);
             } else {
                 throw new java.lang.IllegalArgumentException("setSensor type " + type + " wrong");
             }
@@ -939,7 +1012,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                         log.info("{} : waitSensor", Bundle.getMessage("waitSensor",
                             _warrant.getTrainName(), _waitSensor.getDisplayName(), type.toString()));
                     }
-                    _warrant.fireRunStatus("SensorWaitCommand", type.toString(), _waitSensor.getDisplayName());
+                    _warrant.fireRunStatus( PROPERTY_SENSOR_WAIT_COMMAND, type.toString(), _waitSensor.getDisplayName());
                     wait();
                     if (!_abort ) {
                         String name =  _waitSensor.getDisplayName();    // save name, _waitSensor will be null 'eventually'
@@ -947,7 +1020,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
                             log.info("{} : wait Sensor Change", Bundle.getMessage("waitSensorChange",
                                     _warrant.getTrainName(), name));
                         }
-                        _warrant.fireRunStatus("SensorWaitCommand", null, name);
+                        _warrant.fireRunStatus( PROPERTY_SENSOR_WAIT_COMMAND, null, name);
                     }
                 } catch (InterruptedException ie) {
                     log.error("Engineer interrupted at waitForSensor \"{}\"", _waitSensor.getDisplayName(), ie);
@@ -979,7 +1052,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         if (log.isDebugEnabled()) {
             log.debug("propertyChange {} new value= {}", evt.getPropertyName(), evt.getNewValue());
         }
-        if ((evt.getPropertyName().equals("KnownState")
+        if (( Sensor.PROPERTY_KNOWN_STATE.equals(evt.getPropertyName())
                 && ((Number) evt.getNewValue()).intValue() == _sensorWaitState)) {
             synchronized (this) {
                     notifyAll();  // free sensor wait
@@ -1041,10 +1114,11 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         Warrant newWarrant;
         long waitTime; // time to finish remaining commands
 
-        CheckForTermination(Warrant oldWar, Warrant newWar, int num, long limit) {
+        CheckForTermination(@Nonnull Warrant oldWar, @Nonnull Warrant newWar, int num, long limit) {
             oldWarrant = oldWar;
             newWarrant = newWar;
             waitTime = limit;
+            setName("CheckForTermination from " + oldWarrant.getDisplayName() + " to " + newWarrant.getDisplayName());
             if (log.isDebugEnabled()) {
                 log.debug("checkForTermination of \"{}\", before launching \"{}\". waitTime= {})",
                     oldWarrant.getDisplayName(), newWarrant.getDisplayName(), waitTime);
@@ -1517,7 +1591,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
             }
             rampDone(stop, _endSpeedType, _endBlockIdx);
             if (!stop) {
-                _warrant.fireRunStatus("RampDone", _halt, _endSpeedType);   // normal completion of ramp
+                _warrant.fireRunStatus( PROPERTY_RAMP_DONE, _halt, _endSpeedType);   // normal completion of ramp
                 if (Warrant._trace || log.isDebugEnabled()) {
                     log.info(Bundle.getMessage("RampSpeed", _warrant.getTrainName(),
                         _endSpeedType, _warrant.getCurrentBlockName()));

@@ -2,7 +2,6 @@ package jmri.web.servlet.roster;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -14,7 +13,7 @@ public class FileMetaTest {
     @Test
     public void testCTor() {
         FileMeta t = new FileMeta();
-        Assert.assertNotNull("exists",t);
+        Assertions.assertNotNull( t, "exists");
     }
 
     @BeforeEach

@@ -126,7 +126,14 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>Added a column to the LccPro main window for the node's user-entered description.</li>
+                <li>The Send Frame tool has 
+                    <ul>
+                        <li>some button labels updated,</li>
+                        <li>a new Send Global Identify Events button,</li>
+                        <li>more reliable control of the Open CDI Editor button state and</li>
+                        <li>some clean-up of the window layout.
+                    </ul>
+                </li>
             </ul>
 
         <h4>Powerline</h4>
@@ -186,6 +193,20 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
+          <li>A <strong>No Decoder decoder with extended addressing</strong>
+              decoder has been added. This "no decoder" definition allows
+              a roster entry to be created that does not have a physical
+              decoder of its own.
+              <br>
+              It was created to suport the Zimo MX series of funcion-only
+              decoders that allow TWO addresses to be defined for a single
+              decoder - the primary address and a secondary address.
+              Function operations will result from commands sent to EITHER
+              decoder address.
+              <br>
+              The initial "No Decoder" definition is limited to a primary
+              address of 1-127, this extended version allows the full
+              range of extended addresses to be used</li>
           <li></li>
         </ul>
 
@@ -361,7 +382,7 @@
 
         <h4>Technologistic (train-O-matic)</h4>
             <ul>
-                <li>Fix for Brake function key selection (F0-F28), including "no active" value. (Lokommander II decoders)</li>
+                <li></li>
             </ul>
 
         <h4>Trix Modelleisenbahn</h4>
@@ -391,7 +412,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>See above.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -424,13 +445,18 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem causing the starting value when doing
+                CV reads to erroneously be zero.</li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+            <li>Display minimum scale speed  when activating train.</li>
+            <li>Add basic column sorting on the traininfo selection screen, and correct missplaced columns.</li>
+            <li>Tidy up debug/trace in RosterSpeedProfile.</li>
+            <li>Make info message in allocated section to debug.</li>
+            <li>Fix Exception when starting trains under inauspicious circumstances.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -453,7 +479,12 @@
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li></li>
+                <li>Add two options to override the changes made in PR #13857 - Entry/Exit Enhancements
+                  <ul>
+                    <li>Suppress the multi-point failed dialog</li>
+                    <li>Revert to the old GUI behavior</li>
+                  </ul>
+                </li>
             </ul>
 
     <h3>LccPro</h3>
@@ -471,22 +502,6 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li>It's now possible to execute some LogixNG commands when a LogixNG error occurs.
-              It's useful if JMRI run without a display and you want a notification for
-              example by a sensor. To use it, select menu item
-              <strong>Tools -> LogixNG -> Edit error handling module</strong>.</li>
-          <li><strong>Preferences -> LogixNG -> Default error handling</strong>
-              has the new option <strong>Abort without error</strong>. If it
-              is selected and there is an error in the CondtionalNG, the
-              ConditionalNG will be aborted but there will be no logging to the
-              system console. This might be useful together with the
-              <strong>Error handling module</strong>.</li>
-          <li>The category <strong>OperationsPro</strong> and the action
-              <strong>Run automation</strong> have been added. The
-              <strong>Run automation</strong> lets you run an OperationsPro
-              automation from LogixNG.</li>
-          <li>Fixed a bug in the action <strong>Program On Main</strong>
-              that caused connection specific programming modes to fail.</li>
           <li></li>
         </ul>
 
@@ -499,12 +514,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>Additional improvements to quick service tracks</li>
-            <li>Fixed a bug with alternate tracks in FIFO or LIFO mode</li>
-            <li>Printing Manifests or switch list will no longer have a page break in the middle of a locations work</li>
-            <li>Fixed the text header in the export routes tool</li>
-            <li>Enhanced the Cars and Locomotive windows, now to find a car or loco you can now use the enter key to begin the search</li>
-            <li>LogixNG has now the <strong>Run automation</strong> action that lets you run an OperationsPro automation from LogixNG.</li>
+            <li>When a car arrives at a spur with a schedule, the car's final destination now changes when the car's load status changes.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -546,7 +556,9 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>Add <strong>MemoryValuesPersistence.py</strong>. The script will write the values
+            for selected memory variables at shutdown and load them after starting PanelPro and
+            loading the layout data xml file.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -622,7 +634,7 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li>Fix OBlock java.util.MissingResourceException: Resource 'BlockUnknown' not found exception.</li>
+            <li></li>
         </ul>
 
    <h3>Web Access</h3>

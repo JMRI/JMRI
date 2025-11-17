@@ -1,6 +1,8 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -717,14 +719,63 @@ public class Car extends RollingStock {
     public void updateKernel() {
         if (isLead()) {
             for (Car car : getKernel().getCars()) {
-                car.setScheduleItemId(getScheduleItemId());
-                car.setFinalDestination(getFinalDestination());
-                car.setFinalDestinationTrack(getFinalDestinationTrack());
-                car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
-                car.setRoutePath(getRoutePath());
-                car.setWait(getWait());
-                if (InstanceManager.getDefault(CarLoads.class).containsName(car.getTypeName(), getLoadName())) {
-                    car.setLoadName(getLoadName());
+                if (car != this) {
+                    car.setScheduleItemId(getScheduleItemId());
+                    car.setFinalDestination(getFinalDestination());
+                    car.setFinalDestinationTrack(getFinalDestinationTrack());
+                    car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+                    car.setRoutePath(getRoutePath());
+                    car.setWait(getWait());
+                    if (carLoads.containsName(car.getTypeName(), getLoadName())) {
+                        car.setLoadName(getLoadName());
+                    } else {
+                        updateKernelCarCustomLoad(car);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * The non-lead car in a kernel can't use the custom load of the lead car.
+     * Determine if car has custom loads, and if the departure and arrival
+     * tracks allows one of the custom loads.
+     * 
+     * @param car the non-lead car in a kernel
+     */
+    private void updateKernelCarCustomLoad(Car car) {
+        // only update car's load if departing staging or spur
+        if (getTrack() != null) {
+            if (getTrack().isStaging() || getTrack().isSpur()) {
+                List<String> carLoadNames = carLoads.getNames(car.getTypeName());
+                List<String> okLoadNames = new ArrayList<>();
+                for (String name : carLoadNames) {
+                    if (getTrack().isLoadNameAndCarTypeShipped(name, car.getTypeName())) {
+                        if (getTrain() != null && !getTrain().isLoadNameAccepted(name, car.getTypeName())) {
+                            continue; // load not carried by train
+                        }
+                        if (getFinalDestinationTrack() != null &&
+                                getDestinationTrack() != null &&
+                                !getDestinationTrack().isSpur()) {
+                            if (getFinalDestinationTrack().isLoadNameAndCarTypeAccepted(name, car.getTypeName())) {
+                                okLoadNames.add(name);
+                            }
+                        } else if (getDestinationTrack() != null &&
+                                getDestinationTrack().isLoadNameAndCarTypeAccepted(name, car.getTypeName())) {
+                            okLoadNames.add(name);
+                        }
+                    }
+                }
+                // remove default names leaving only custom
+                okLoadNames.remove(carLoads.getDefaultEmptyName());
+                okLoadNames.remove(carLoads.getDefaultLoadName());
+                // randomly pick one of the available car loads
+                if (okLoadNames.size() > 0) {
+                    int rnd = (int) (Math.random() * okLoadNames.size());
+                    car.setLoadName(okLoadNames.get(rnd));
+                } else {
+                    log.debug("Car ({}) in kernel ({}) leaving staging ({}, {}) with load ({})", car.toString(),
+                            getKernelName(), getLocationName(), getTrackName(), car.getLoadName());
                 }
             }
         }
@@ -808,6 +859,8 @@ public class Car extends RollingStock {
         if (!status.equals(Track.OKAY)) {
             return status;
         }
+        // is car going to its final destination?
+        removeCarFinalDestination();
         // now check to see if the track has a schedule
         if (track != null && destinationTrack != track && loaded) {
             status = track.scheduleNext(this);
@@ -837,17 +890,28 @@ public class Car extends RollingStock {
      * 
      * @param scheduleItem The schedule item to be applied this this car
      */
-    public void loadNext(ScheduleItem scheduleItem) {
-        if (scheduleItem == null) {
-            return; // should never be null
+    public void loadCarFinalDestination(ScheduleItem scheduleItem) {
+        if (scheduleItem != null) {
+            // set the car's final destination and track
+            setFinalDestination(scheduleItem.getDestination());
+            setFinalDestinationTrack(scheduleItem.getDestinationTrack());
+            // set all cars in kernel same final destination
+            updateKernel();
+        } 
+    }
+    
+    /*
+     * remove the car's final destination if sent to that destination
+     */
+    private void removeCarFinalDestination() {
+        if (getDestination() != null &&
+                getDestination().equals(getFinalDestination()) &&
+                getDestinationTrack() != null &&
+                (getDestinationTrack().equals(getFinalDestinationTrack()) ||
+                        getFinalDestinationTrack() == null)) {
+            setFinalDestination(null);
+            setFinalDestinationTrack(null);
         }
-        // set the car's final destination and track
-        setFinalDestination(scheduleItem.getDestination());
-        setFinalDestinationTrack(scheduleItem.getDestinationTrack());
-        // bump hit count for this schedule item
-        scheduleItem.setHits(scheduleItem.getHits() + 1);
-        // set all cars in kernel same final destination
-        updateKernel();
     }
 
     /**
@@ -923,13 +987,16 @@ public class Car extends RollingStock {
                     toString(), track.getName());
             loadName = getNextLoadName();
         }
-        setNextLoadName(NONE);
+        setNextLoadName(NONE); // never used again
+        // car could be part of a kernel
+        if (getKernel() != null && !carLoads.containsName(getTypeName(), loadName)) {
+            loadName = NONE;
+        }
         if (!loadName.equals(NONE)) {
             setLoadName(loadName);
-            // RWE or RWL load and no destination?
-            if (getLoadName().equals(getReturnWhenEmptyLoadName()) && getFinalDestination() == null) {
+            if (getLoadName().equals(getReturnWhenEmptyLoadName())) {
                 setReturnWhenEmpty();
-            } else if (getLoadName().equals(getReturnWhenLoadedLoadName()) && getFinalDestination() == null) {
+            } else if (getLoadName().equals(getReturnWhenLoadedLoadName())) {
                 setReturnWhenLoaded();
             }
         } else {
@@ -940,6 +1007,7 @@ public class Car extends RollingStock {
                 setLoadEmpty();
             }
         }
+        loadCarFinalDestination(si);
         setScheduleItemId(Car.NONE);
     }
 
@@ -960,14 +1028,13 @@ public class Car extends RollingStock {
      * don't set return address if at the RWE address
      */
     private void setReturnWhenEmpty() {
-        if (getReturnWhenEmptyDestination() != null &&
+        if (getFinalDestination() == null &&
+                getReturnWhenEmptyDestination() != null &&
                 (getLocation() != getReturnWhenEmptyDestination() ||
                         (!getReturnWhenEmptyDestination().isStaging() &&
                                 getTrack() != getReturnWhenEmptyDestTrack()))) {
             setFinalDestination(getReturnWhenEmptyDestination());
-            if (getReturnWhenEmptyDestTrack() != null) {
-                setFinalDestinationTrack(getReturnWhenEmptyDestTrack());
-            }
+            setFinalDestinationTrack(getReturnWhenEmptyDestTrack());
             log.debug("Car ({}) has return when empty destination ({}, {}) load {}", toString(),
                     getFinalDestinationName(), getFinalDestinationTrackName(), getLoadName());
         }
@@ -990,14 +1057,13 @@ public class Car extends RollingStock {
      * don't set return address if at the RWL address
      */
     private void setReturnWhenLoaded() {
-        if (getReturnWhenLoadedDestination() != null &&
+        if (getFinalDestination() == null &&
+                getReturnWhenLoadedDestination() != null &&
                 (getLocation() != getReturnWhenLoadedDestination() ||
                         (!getReturnWhenLoadedDestination().isStaging() &&
                                 getTrack() != getReturnWhenLoadedDestTrack()))) {
             setFinalDestination(getReturnWhenLoadedDestination());
-            if (getReturnWhenLoadedDestTrack() != null) {
-                setFinalDestinationTrack(getReturnWhenLoadedDestTrack());
-            }
+            setFinalDestinationTrack(getReturnWhenLoadedDestTrack());
             log.debug("Car ({}) has return when loaded destination ({}, {}) load {}", toString(),
                     getFinalDestinationName(), getFinalDestinationTrackName(), getLoadName());
         }
@@ -1031,7 +1097,7 @@ public class Car extends RollingStock {
         setFinalDestinationTrack(getPreviousFinalDestinationTrack());
         if (isLoadGeneratedFromStaging()) {
             setLoadGeneratedFromStaging(false);
-            setLoadName(InstanceManager.getDefault(CarLoads.class).getDefaultEmptyName());
+            setLoadName(carLoads.getDefaultEmptyName());
         }
         super.reset();
         destroyClone();
@@ -1062,6 +1128,7 @@ public class Car extends RollingStock {
                 car.setPreviousFinalDestinationTrack(getPreviousFinalDestinationTrack());
                 car.setScheduleItemId(getPreviousScheduleId());
                 car.setWait(0);
+                car.setMoves(getMoves());
                 // remember the last clone destroyed
                 car.setCloneOrder(cloneCreationNumber);
             }

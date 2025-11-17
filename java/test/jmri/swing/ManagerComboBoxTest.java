@@ -1,16 +1,6 @@
 package jmri.swing;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
-
-import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
-
-import org.junit.jupiter.api.*;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
 
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -20,6 +10,15 @@ import jmri.TurnoutManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
+
+import org.junit.jupiter.api.*;
+
+import org.netbeans.jemmy.operators.JComboBoxOperator;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ManagerComboBoxTest {
 
@@ -27,57 +26,57 @@ public class ManagerComboBoxTest {
 
     @Test
     public void testSetManagers_ManagersNoSelection() {
-        assertNull("no selection", box.getSelectedItem());
-        assertEquals("no items", 0, box.getItemCount());
+        assertNull( box.getSelectedItem(), "no selection");
+        assertEquals( 0, box.getItemCount(), "no items");
         TurnoutManager defaultManager = InstanceManager.getDefault(TurnoutManager.class);
-        assertTrue("default is proxy", defaultManager instanceof ProxyManager);
+        assertInstanceOf(ProxyManager.class, defaultManager, "default is proxy");
         // checks for unchecked casts do not appear to be assertion aware
         @SuppressWarnings("unchecked")
         ProxyManager<Turnout> proxyManager = (ProxyManager<Turnout>) defaultManager;
         box.setManagers(proxyManager.getDisplayOrderManagerList());
-        assertEquals("first item is selected", 0, box.getSelectedIndex());
-        assertEquals("all items in box", 2, box.getItemCount());
+        assertEquals( 0, box.getSelectedIndex(), "first item is selected");
+        assertEquals( 2, box.getItemCount(), "all items in box");
     }
 
     @Test
     public void testSetManagers_NonproxyManager() {
-        assertNull("no selection", box.getSelectedItem());
-        assertEquals("no items", 0, box.getItemCount());
+        assertNull( box.getSelectedItem(), "no selection");
+        assertEquals( 0, box.getItemCount(), "no items");
         TurnoutManager defaultManager = InstanceManager.getDefault(TurnoutManager.class);
-        assertTrue("default is proxy", defaultManager instanceof ProxyManager);
+        assertInstanceOf(ProxyManager.class, defaultManager);
         // checks for unchecked casts do not appear to be assertion aware
         @SuppressWarnings("unchecked")
         ProxyManager<Turnout> proxyManager = (ProxyManager<Turnout>) defaultManager;
         Manager<Turnout> manager = proxyManager.getDefaultManager();
         box.setManagers(manager);
-        assertEquals("manager is selected", manager, box.getSelectedItem());
-        assertEquals("single item in box", 1, box.getItemCount());
+        assertEquals( manager, box.getSelectedItem(), "manager is selected");
+        assertEquals( 1, box.getItemCount(), "single item in box");
     }
 
     @Test
     public void testSetManagers_ProxyManager() {
-        assertNull("no selection", box.getSelectedItem());
-        assertEquals("no items", 0, box.getItemCount());
+        assertNull( box.getSelectedItem(), "no selection");
+        assertEquals( 0, box.getItemCount(), "no items");
         TurnoutManager defaultManager = InstanceManager.getDefault(TurnoutManager.class);
-        assertTrue("default is proxy", defaultManager instanceof ProxyManager);
+        assertInstanceOf(ProxyManager.class, defaultManager, "default is proxy");
         // checks for unchecked casts do not appear to be assertion aware
         @SuppressWarnings("unchecked")
         ProxyManager<Turnout> proxyManager = (ProxyManager<Turnout>) defaultManager;
         box.setManagers(defaultManager);
-        assertEquals("default is selected", proxyManager.getDefaultManager(), box.getSelectedItem());
-        assertEquals("all items in box", 2, box.getItemCount());
+        assertEquals( proxyManager.getDefaultManager(), box.getSelectedItem(), "default is selected");
+        assertEquals( 2, box.getItemCount(), "all items in box");
     }
 
     @Test
+    @DisabledIfHeadless("GUI Required")
     public void testRenderer() {
-        assumeFalse("GUI required", GraphicsEnvironment.isHeadless());
         box.setManagers(InstanceManager.getDefault(TurnoutManager.class));
         JFrame frame = new JFrame();
         frame.add(box);
         frame.pack();
         frame.setVisible(true);
         JComboBoxOperator cbo = new JComboBoxOperator(box);
-        assertEquals("Rendered without Exception", box.getSelectedItem(), cbo.getItemAt(0));
+        assertEquals( box.getSelectedItem(), cbo.getItemAt(0), "Rendered without Exception");
         frame.dispose();
     }
 
