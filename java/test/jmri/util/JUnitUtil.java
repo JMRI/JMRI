@@ -476,7 +476,7 @@ public class JUnitUtil {
      * @param name      name of condition being waited for; will appear in
      *                  Assert.fail if condition not true fast enough
      */
-    public static void waitFor(ReleaseUntil condition, String name) {
+    public static void waitFor( @Nonnull ReleaseUntil condition, @Nonnull String name) {
         waitFor( condition, () -> name);
     }
 
@@ -486,17 +486,17 @@ public class JUnitUtil {
      * To be used in tests, will fail test if the total delay is longer than
      * WAITFOR_MAX_DELAY.
      * <p>
-     * The messageSupplier is not evaluated unless there is a test failure.
+     * The messageSupplier is not evaluated unless there is a test failure so
+     * can include expensive method calls and string joins without penalty.
      * <p>
      * Typical use:
-     * <code>JUnitUtil.waitFor( () -> { return replyVariable != null;},
+     * <code>JUnitUtil.waitFor( () -> { return replyVariable != null; },
      *     () -> "replyVariable still null: " + computationallyExpensiveCall() + " or multiple Strings" );</code>
-
      * @param condition condition being waited for.
      * @param messageSupplier Failure text supplier.
      */
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
-    public static void waitFor( ReleaseUntil condition , Supplier<String> messageSupplier) {
+    public static void waitFor( @Nonnull ReleaseUntil condition , @Nonnull Supplier<String> messageSupplier) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return;
