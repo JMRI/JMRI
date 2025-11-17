@@ -1,5 +1,7 @@
 package jmri.util;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
@@ -10,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -441,7 +444,7 @@ public class JUnitUtil {
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assertions.assertFalse( unexpectedMessageSeen,
-            () -> "Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent);
+            () -> "Unexpected "+severity+" or higher messages emitted: \""+unexpectedMessageContent+"\"");
 
         // check for hanging shutdown tasks - after test for ERROR so it can complain
         checkShutDownManager();
@@ -461,20 +464,39 @@ public class JUnitUtil {
     }
 
     /**
-     * Wait for a specific condition to be true, without having to wait longer
+     * Wait for a specific condition to be true, without having to wait longer.
      * <p>
      * To be used in tests, will do an assert if the total delay is longer than
      * WAITFOR_MAX_DELAY
      * <p>
      * Typical use:
-     * <code>JUnitUtil.waitFor(()->{return replyVariable != null;},"reply not received")</code>
+     * <code>JUnitUtil.waitFor(()->{return replyVariable != null;},"reply not received");</code>
      *
      * @param condition condition being waited for
      * @param name      name of condition being waited for; will appear in
      *                  Assert.fail if condition not true fast enough
      */
+    public static void waitFor(ReleaseUntil condition, String name) {
+        waitFor( condition, () -> name);
+    }
+
+    /**
+     * Wait for a specific condition to be true, without having to wait longer.
+     * <p>
+     * To be used in tests, will fail test if the total delay is longer than
+     * WAITFOR_MAX_DELAY.
+     * <p>
+     * The messageSupplier is not evaluated unless there is a test failure.
+     * <p>
+     * Typical use:
+     * <code>JUnitUtil.waitFor( () -> { return replyVariable != null;},
+     *     () -> "replyVariable still null: " + computationallyExpensiveCall() + " or multiple Strings" );</code>
+
+     * @param condition condition being waited for.
+     * @param messageSupplier Failure text supplier.
+     */
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
-    static public void waitFor(ReleaseUntil condition, String name) {
+    public static void waitFor( ReleaseUntil condition , Supplier<String> messageSupplier) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return;
@@ -487,7 +509,7 @@ public class JUnitUtil {
                         return;
                     }
                 } catch(Exception ex) {
-                    Assertions.fail("Exception while processing condition for \"" + name + "\" ", ex);
+                    fail("Exception while processing condition for \"" + messageSupplier.get() + "\" ", ex);
                 }
                 int priority = Thread.currentThread().getPriority();
                 try {
@@ -495,14 +517,14 @@ public class JUnitUtil {
                     Thread.sleep(WAITFOR_DELAY_STEP);
                     delay += WAITFOR_DELAY_STEP;
                 } catch (InterruptedException e) {
-                    Assertions.fail("failed due to InterruptedException", e);
+                    fail("failed due to InterruptedException", e);
                 } finally {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            Assertions.fail("\"" + name + "\" did not occur in time");
+            fail("\"" + messageSupplier.get() + "\" did not occur in time");
         } catch (Exception ex) {
-            Assertions.fail("Exception while waiting for \"" + name + "\" ", ex);
+            fail("Exception while waiting for \"" + messageSupplier.get() + "\" ", ex);
         }
     }
 
