@@ -939,6 +939,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * The JmriJFrame implementation calls {@link #handleModified()}.
      */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void windowClosing(java.awt.event.WindowEvent e) {
         handleModified();
     }

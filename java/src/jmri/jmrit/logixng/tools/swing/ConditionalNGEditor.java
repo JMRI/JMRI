@@ -89,22 +89,12 @@ public class ConditionalNGEditor extends TreeEditor {
     
     /** {@inheritDoc} */
     @Override
-    public void windowClosing(WindowEvent e) {
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void dispose() {
         logixNGData.clear();
         logixNGData.put("Finish", _conditionalNG.getSystemName());  // NOI18N
         fireLogixNGEvent();    
     
         super.dispose();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void windowClosed(WindowEvent e) {
     }
     
     public void addLogixNGEventListener(ConditionalNGEventListener listener) {
