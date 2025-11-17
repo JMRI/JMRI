@@ -1,17 +1,24 @@
 package jmri.jmrit;
 
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
+import jmri.UserPreferencesManager;
 import jmri.jmrit.throttle.ThrottleCreationAction;
 import jmri.jmrit.z21server.Z21serverCreationAction;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.JmriJFrame;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.jmrit.swing.ToolsMenuAction;
@@ -99,6 +106,47 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemAudioTable"), "jmri.jmrit.beantable.AudioTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemIdTagTable"), "jmri.jmrit.beantable.IdTagTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRailComTable"), "jmri.jmrit.beantable.RailComTableAction"));
+        
+        tableMenu.add(new JSeparator());
+        JMenuItem settingsItem = new JMenuItem("Settings");
+        tableMenu.add(settingsItem);
+        settingsItem.addActionListener((ActionEvent e) -> {
+            JmriJFrame f = new JmriJFrame("Settings");
+            f.getContentPane().setLayout(new java.awt.GridBagLayout());
+            java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+            c.gridwidth = 1;
+            c.gridheight = 1;
+            c.fill = java.awt.GridBagConstraints.HORIZONTAL;
+            c.anchor = java.awt.GridBagConstraints.CENTER;
+            c.weightx = 1.0;
+
+            JCheckBox showTablesMenu = new JCheckBox("Add Table Menu to Main Menu");
+            UserPreferencesManager prefMgr = InstanceManager.getDefault(UserPreferencesManager.class);
+            Object pref = prefMgr.getProperty("jmri.jmrit.ToolsMenu", "showTablesMenu");
+            boolean showMenu = true; // Default to true
+            if (pref instanceof Boolean) {
+                showMenu = (Boolean) pref;
+            }
+            showTablesMenu.setSelected(showMenu);
+            c.gridx = 0;
+            c.gridy = 0;
+            f.getContentPane().add(showTablesMenu, c);
+
+            JButton saveButton = new JButton("Save");
+            c.gridy = 1;
+            f.getContentPane().add(saveButton, c);
+            saveButton.addActionListener((java.awt.event.ActionEvent ev) -> {
+                prefMgr.setProperty("jmri.jmrit.ToolsMenu", "showTablesMenu", showTablesMenu.isSelected());
+                JOptionPane.showMessageDialog(f,
+                        Bundle.getMessage("RestartRequiredHint"),
+                        Bundle.getMessage("RestartRequired"),
+                        JOptionPane.INFORMATION_MESSAGE);
+            });
+
+            f.pack();
+            f.setVisible(true);
+        });
+
         add(tableMenu);
 
         JMenu throttleMenu = new JMenu(Bundle.getMessage("MenuThrottles"));
