@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
