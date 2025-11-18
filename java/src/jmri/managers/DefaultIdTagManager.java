@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.*;
 
 import javax.annotation.CheckForNull;
@@ -12,6 +14,7 @@ import jmri.implementation.DefaultIdTag;
 import jmri.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
+
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -87,6 +90,8 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
      * Don't want to store this information
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method intentionally doesn't do anything")
     protected void registerSelf() {
         // override to do nothing
     }
