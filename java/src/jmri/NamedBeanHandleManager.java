@@ -201,6 +201,8 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
      * Don't want to store this information
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method intentionally doesn't do anything")
     protected void registerSelf() {
     }
 
