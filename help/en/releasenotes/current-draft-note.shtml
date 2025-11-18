@@ -676,6 +676,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Testing - JUnitUtil - waitFor condition failure text can be formed from a String Supplier, e.g. a lambda expression.
+            The expression is only evaluated ( lazily ) when the assertion fails.
+            </li>
         </ul>
 
