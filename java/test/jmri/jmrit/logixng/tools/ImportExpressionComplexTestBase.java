@@ -197,7 +197,7 @@ public abstract class ImportExpressionComplexTestBase {
         check.runTest("LogixNG is removed. Enum: "+e.name(), false);
     }
 
-    @MethodSource("getEnums")
+    @MethodSource("getEnums") // JUnit will call the method getEnums() to get the enums to test
     @ParameterizedTest(name = "Test Enum: {0}")
     public void testEnumExpression(Enum<?> e) throws JmriException {
 //        for (Enum<?> e : getEnums()) {
