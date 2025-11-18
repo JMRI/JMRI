@@ -126,7 +126,14 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li></li>
+                <li>The Send Frame tool has 
+                    <ul>
+                        <li>some button labels updated,</li>
+                        <li>a new Send Global Identify Events button,</li>
+                        <li>more reliable control of the Open CDI Editor button state and</li>
+                        <li>some clean-up of the window layout.
+                    </ul>
+                </li>
             </ul>
 
         <h4>Powerline</h4>
@@ -405,7 +412,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>See above.</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -467,7 +474,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved how the "?" is drawn for UNKNOWN turnouts (when that option is selected)</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
