@@ -270,7 +270,8 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
      */
     @Override
     public boolean provides(Class<?> c) {
-        return (get(c) != null);
+        if (get(c) != null) return true;
+        return super.provides(c);
     }
 
     /**
@@ -279,7 +280,7 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<T> T) {
-        T result = null; // nothing by default
+        T result = super.get(T);
         log.debug("* get({})", T.toString());
         if (!getDisabled()) {
             if (!configured) {
