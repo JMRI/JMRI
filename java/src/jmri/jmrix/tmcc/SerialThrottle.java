@@ -24,7 +24,7 @@ public class SerialThrottle extends AbstractThrottle {
      * @param address Loco ID
      */
     public SerialThrottle(TmccSystemConnectionMemo memo, DccLocoAddress address) {
-        super(memo, 69); // supports 69 functions
+        super(memo, 85); // supports 85 functions
         tc = memo.getTrafficController();
 
         // cache settings. It would be better to read the
@@ -86,6 +86,7 @@ public class SerialThrottle extends AbstractThrottle {
         updateFunction(func, value);
         
         int numberOfTriple = 0; // ordinal number of triple being processed, e.g. 1, 2, 3, ...
+            checksumAccumulator = 0; // zeroes out accumulated checksum after each instance
         
         if (getFnValueArray(func).length >0) {
             for (long triple : getFnValueArray(func)) {
@@ -188,17 +189,17 @@ public class SerialThrottle extends AbstractThrottle {
         {0x00006E}, // Fn26 (14)  35mph
         {0x000072}, // Fn27 (18)  50mph
         {0x000078}, // Fn28 (24)  70mph
-        {0x00007F}, // Fn29 (31) 100mph (or whatever speed for full throttle)
+        {0x00007F}, // Fn29 (31)   Full
 
         // TMCC1 ERR - Set SpeedSteps
         {0x000009, 0x000010, 0x000009, 0x000010, 0x000004}, // Fn30 (Set ERR 100 SpeedSteps)
         {0x000009, 0x000010, 0x000009, 0x000010, 0x000007}, // Fn31 (Set ERR  32 SpeedSteps)
 
         // TMCC1 Acela/Subway FnKeys
-        {0x000009, 0x000006}, // Fn32 (Open Doors - Right)
-        {0x00000D, 0x000006, 0x00000D}, // Fn33 (Close Doors - Right)
-        {0x000009, 0x000005}, // Fn34 (Open Doors - Left)
-        {0x00000D, 0x000005, 0x00000D}, // Fn35 (Close Doors - Left)
+        {0x000009, 0x000005}, // Fn32 (Open Doors - Left)
+        {0x00000D, 0x000005, 0x00000D}, // Fn33 (Close Doors - Left)
+        {0x000009, 0x000006}, // Fn34 (Open Doors - Right)
+        {0x00000D, 0x000006, 0x00000D}, // Fn35 (Close Doors - Right)
         {0x000009, 0x000013}, // Fn36 (Pantagraph - Automatic/Prototypical)
         {0x000009, 0x000015}, // Fn37 (Pantagraph - Down)
         {0x000009, 0x000015}, // Fn38 (Pantagraph - Manual Mode/Cycles Through Positions)
@@ -209,53 +210,50 @@ public class SerialThrottle extends AbstractThrottle {
         {0x000009, 0x00000D, 0x000019, 0x00000D}, // Fn43 (Interior Lights - On)
 
         // TMCC1 Break-Down Unit
+        {0x000009, 0x000004}, // Fn44 Start Breakdown Sequence
+        {0x000009, 0x000015}, // Fn45 Made It Back to the Yard
+        {0x000009, 0x000013}, // Fn46 Restart Unit/Repairs Complete
 
-        // TMCC1 Freight Cars
+        // TMCC1 Freight/Stock Cars
+        {0x000009, 0x000013}, // Fn47 Load
+        {0x000009, 0x000012}, // Fn48 Flat Wheel Sound
 
         // TMCC1 Passenger Cars
+        {0x000009, 0x000017}, // Fn49 Station PA Arrival Dialog
+        {0x000009, 0x000012}, // Fn50 Conductor Arrival Dialog
 
         // TMCC1 Crane/Boom Car
+        {0x000009, 0x000011, 0x000007}, // Fn51 Lower the Boom
+        {0x000009, 0x000011, 0x000004}, // Fn52 Raises the Boom
+        {0x000009, 0x000012, 0x000007}, // Fn53 Lowers Main/Large Hook
+        {0x000009, 0x000012, 0x000004}, // Fn54 Raises Main/Large Hook
+        {0x000017, 0x000013, 0x000007}, // Fn55 Lowers Small Hook
+        {0x000017, 0x000013, 0x000004}, // Fn56 Raises Small Hook
+        {0x000004, 0x000014}, // Fn57 Front Work Lights (Toggles On/Off)
+        {0x000004, 0x000015}, // Fn58 Rear Work Lights (Toggles On/Off)
+        {0x000004, 0x000016}, // Fn59 Launches Outriggers
+        {0x000009, 0x000017}, // Fn60 Crew Dialog Off
+        {0x000009, 0x000018}, // Fn61 All Sounds Off
+        {0x000009, 0x000019}, // Fn62 All Sounds On
+
+        // TMCC1 Unassigned FnKeys
+        {0x00002E}, // Fn63 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00002E}, // Fn64 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00002E}, // Fn65 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00002E}, // Fn66 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00002E}, // Fn67 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00002E}, // Fn68 Code to Trigger SerialMonFrame Message/Unassigned FnKey
 
         // TMCC1 Aux FnKeys
-        {0x000008}, // Fn32 (Aux1 Off)
-        {0x000009}, // Fn33 (Aux1 Option 1 - On While Held)
-        {0x00000A}, // Fn34 (Aux1 Option 2 - Toggle On/Toggle Off)
-        {0x00000B}, // Fn35 (Aux1 On)
-        {0x00000C}, // Fn36 (Aux2 Off)
-        {0x00000D}, // Fn37 (Aux2 Option 1 - Toggle On/Toggle Off)
-        {0x00000E}, // Fn38 (Aux2 Option 2 - On While Held)
-        {0x00000F}, // Fn39 (Aux2 On)
+        {0x000008}, // Fnxx (Aux1 Off)
+        {0x000009}, // Fnxx (Aux1 Option 1 - On While Held)
+        {0x00000A}, // Fnxx (Aux1 Option 2 - Toggle On/Toggle Off)
+        {0x00000B}, // Fnxx (Aux1 On)
+        {0x00000C}, // Fnxx (Aux2 Off)
+        {0x00000D}, // Fnxx (Aux2 Option 1 - Toggle On/Toggle Off)
+        {0x00000E}, // Fnxx (Aux2 Option 2 - On While Held)
+        {0x00000F}, // Fnxx (Aux2 On)
 
-        // TMCC1 Unused FnKeys
-        {0x00002E}, // Fn40
-        {0x00002E}, // Fn41
-        {0x00002E}, // Fn42
-        {0x00002E}, // Fn43
-        {0x00002E}, // Fn44
-        {0x00002E}, // Fn45
-        {0x00002E}, // Fn46
-        {0x00002E}, // Fn47
-        {0x00002E}, // Fn48
-        {0x00002E}, // Fn49
-        {0x00002E}, // Fn50
-        {0x00002E}, // Fn51
-        {0x00002E}, // Fn52
-        {0x00002E}, // Fn53
-        {0x00002E}, // Fn54
-        {0x00002E}, // Fn55
-        {0x00002E}, // Fn56
-        {0x00002E}, // Fn57
-        {0x00002E}, // Fn58
-        {0x00002E}, // Fn59
-        {0x00002E}, // Fn60
-        {0x00002E}, // Fn61
-        {0x00002E}, // Fn62
-        {0x00002E}, // Fn63
-        {0x00002E}, // Fn64
-        {0x00002E}, // Fn65
-        {0x00002E}, // Fn66
-        {0x00002E}, // Fn67
-        {0x00002E}, // Fn68
     };
 
     /**
@@ -302,97 +300,94 @@ public class SerialThrottle extends AbstractThrottle {
         {0xF8016E}, // Fn26 (14)  35mph
         {0xF80172}, // Fn27 (18)  50mph
         {0xF80178}, // Fn28 (24)  70mph
-        {0xF8017F}, // Fn29 (31) 100mph (or whatever speed for full throttle)
+        {0xF8017F}, // Fn29 (31)   Full
 
         // TMCC2_32 Extended Lighting FnKeys
-        // Fn33 (Mars On)
-        // Fn34 (Mars Off)
+        {0xF8017D, 0xFB00E8, 0xFB0000}, // Fn30 (Mars Lt On)
+        {0xF8017D, 0xFB00E9, 0xFB0000}, // Fn31 (Mars Lt Off)
 
-        // Fn35 (Ground Lt On)
-        // Fn36 (Ground Lt Off)
-        // Fn37 (Ground Lt Auto)
+        {0xF8017D, 0xFB00D0, 0xFB0000}, // Fn32 (Ground Lt On)
+        {0xF8017D, 0xFB00D1, 0xFB0000}, // Fn33 (Ground Lt Off)
+        {0xF8017D, 0xFB00D2, 0xFB0000}, // Fn34 (Ground Lt Auto)
 
-        // Fn38 (DogHouse On)
-        // Fn39 (DogHouse Off)
+        {0xF8017D, 0xFB00A0, 0xFB0000}, // Fn35 (DogHouse On)
+        {0xF8017D, 0xFB00A1, 0xFB0000}, // Fn36 (DogHouse Off)
 
-        // Fn40 (Tender Marker On)
-        // Fn41 (Tender Marker Off)
+        {0xF8017D, 0xFB00CC, 0xFB0000}, // Fn37 (Tender Marker On)
+        {0xF8017D, 0xFB00CD, 0xFB0000}, // Fn38 (Tender Marker Off)
 
-        // Fn42 (Rule 17 On)
-        // Fn43 (Rule 17 Off)
-        // Fn44 (Rule 17 Auto)
+        {0xF8017D, 0xFB00F4, 0xFB0000}, // Fn39 (Rule 17 On)
+        {0xF8017D, 0xFB00F5, 0xFB0000}, // Fn40 (Rule 17 Off)
+        {0xF8017D, 0xFB00F6, 0xFB0000}, // Fn41 (Rule 17 Auto)
 
-        // Fn45 (Ditch Lt On)
-        // Fn46 (Ditch Lt On; Pulse Off with Horn)
-        // Fn47 (Ditch Lt Off; Pulse On with Horn)
-        // Fn48 (Ditch Lt Off)
+        {0xF8017D, 0xFB00C0, 0xFB0000}, // Fn42 (Ditch Lt On)
+        {0xF8017D, 0xFB00C1, 0xFB0000}, // Fn43 (Ditch Lt On; Pulse Off with Horn)
+        {0xF8017D, 0xFB00C2, 0xFB0000}, // Fn44 (Ditch Lt Off; Pulse On with Horn)
+        {0xF8017D, 0xFB00C3, 0xFB0000}, // Fn45 (Ditch Lt Off)
 
-        // Fn49 (Cab Lt On)
-        // Fn50 (Cab Lt Off)
-        {0xF8017D, 0xFB00F2, 0xFB0000}, // Fn51 (Cab Lt Auto)
+        {0xF8017D, 0xFB00F0, 0xFB0000}, // Fn46 (Cab Lt On)
+        {0xF8017D, 0xFB00F1, 0xFB0000}, // Fn47 (Cab Lt Off)
+        {0xF8017D, 0xFB00F2, 0xFB0000}, // Fn48 (Cab Lt Auto)
 
-        // Fn52 (Loco Marker On)
-        // Fn53 (Loco Marker Off)
+        {0xF8017D, 0xFB00C8, 0xFB0000}, // Fn49 (Loco Marker On)
+        {0xF8017D, 0xFB00C9, 0xFB0000}, // Fn50 (Loco Marker Off)
 
-        // Fn54 (Hazard Lt On)
-        // Fn55 (Hazard Lt Off)
-        // Fn56 (Hazard Lt Auto)
+        {0xF8017D, 0xFB00B0, 0xFB0000}, // Fn51 (Hazard Lt On)
+        {0xF8017D, 0xFB00B1, 0xFB0000}, // Fn52 (Hazard Lt Off)
+        {0xF8017D, 0xFB00B2, 0xFB0000}, // Fn53 (Hazard Lt Auto)
 
-        // Fn57 (Strobe Lt On - Single Flash)
-        // Fn58 (Strobe Lt On - Double Flash)
-        // Fn59 (Strobe Lt Off)
+        {0xF8017D, 0xFB00E0, 0xFB0000}, // Fn54 (Strobe Lt On - Single Flash)
+        {0xF8017D, 0xFB00E1, 0xFB0000}, // Fn55 (Strobe Lt On - Double Flash)
+        {0xF8017D, 0xFB00E2, 0xFB0000}, // Fn56 (Strobe Lt Off)
 
-        // Fn60 (Car Cabin Lt On)
-        // Fn61 (Car Cabin Lt Off)
-        // Fn62 (Car Cabin Lt Auto)
+        {0xF8017D, 0xFB00F8, 0xFB0000}, // Fn57 (Car Cabin Lt On)
+        {0xF8017D, 0xFB00F9, 0xFB0000}, // Fn58 (Car Cabin Lt Off)
+        {0xF8017D, 0xFB00FA, 0xFB0000}, // Fn59 (Car Cabin Lt Auto)
 
+        // TMCC2 Subway FnKeys
+        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn60 (Open Doors - Left)
+        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn61 (Close Doors - Left)
+        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn62 (Open Doors - Right)
+        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn63 (Close Doors - Right)
+        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn64 (Pantagraph - Up/F)
+        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn65 (Pantagraph - Down/F)
+        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn66 (Pantagraph - Up/R)
+        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn67 (Pantagraph - Down/R)
+        
+        // TMCC2 Freight/Stock Cars
+        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn68 (Option1 On)
+        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn69 (Opiton1 Off)
+        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn70 (Option2 On)
+        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn71 (Option2 Off)
+        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn72 (Load)
+        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn73 (Unload)
+        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn74 (FRED On)
+        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn75 (FRED Off)
+        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn76 (Flat Wheel On)
+        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn77 (Flat Wheel Off)
+        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn78 (Game On)
+        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn79 (Game Off)
 
-        // Extended Sound Effects FnKeys
-        // {0xF801FB, 0xF801FC}, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
-        // {0xF801FC}, // Fn36 Start Up Sequence 2 (Immediate Start Up)
-        // {0xF801FD, 0xF801FE}, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
-        // {0xF801FE}, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
+        // TMCC2 Smoke System
+        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn80 (Smoke System Off)
+        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn81 (Smoke System Low)
+        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn82 (Smoke System Med)
+        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn83 (Smoke System High)
 
+        // TRMCC2_32 Unassigned FnKeys
+        {0xF8012E}, // Fn84 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fn85 Code to Trigger SerialMonFrame Message/Unassigned FnKey
 
         // TRMCC2_32 Aux FnKeys
-        {0xF80108}, // Fn30 (Aux1 Off)
-        {0xF80109}, // Fn31 (Aux1 Option 1 - On While Held) 
-        {0xF8010A}, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
-        {0xF8010B}, // Fn33 (Aux1 On)
-        {0xF8010C}, // Fn34 (Aux2 Off)
-        {0xF8010D}, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off) 
-        {0xF8010E}, // Fn36 (Aux2 Option 2 - On While Held)
-        {0xF8010F}, // Fn37 (Aux2 On)
+        {0xF80108}, // Fnxx (Aux1 Off)
+        {0xF80109}, // Fnxx (Aux1 Option 1 - On While Held) 
+        {0xF8010A}, // Fnxx (Aux1 Option 2 - Toggle On/Toggle Off)
+        {0xF8010B}, // Fnxx (Aux1 On)
+        {0xF8010C}, // Fnxx (Aux2 Off)
+        {0xF8010D}, // Fnxx (Aux2 Option 1 - Toggle On/Toggle Off) 
+        {0xF8010E}, // Fnxx (Aux2 Option 2 - On While Held)
+        {0xF8010F}, // Fnxx (Aux2 On)
 
-        // TRMCC2_32 Unused FnKeys
-        {0xF8012E}, // Fn38
-        {0xF8012E}, // Fn39
-        {0xF8012E}, // Fn40
-        {0xF8012E}, // Fn41
-        {0xF8012E}, // Fn42
-        {0xF8012E}, // Fn43
-        {0xF8012E}, // Fn44
-        {0xF8012E}, // Fn45
-        {0xF8012E}, // Fn46
-        {0xF8012E}, // Fn47
-        {0xF8012E}, // Fn48
-        {0xF8012E}, // Fn49
-        {0xF8012E}, // Fn50
-        {0xF8012E}, // Fn51
-        {0xF8012E}, // Fn52
-        {0xF8012E}, // Fn53
-        {0xF8012E}, // Fn54
-        {0xF8012E}, // Fn55
-        {0xF8012E}, // Fn56
-        {0xF8012E}, // Fn57
-        {0xF8012E}, // Fn58
-        {0xF8012E}, // Fn59
-        {0xF8012E}, // Fn60
-        {0xF8012E}, // Fn61
-        {0xF8012E}, // Fn62
-        {0xF8012E}, // Fn63
-        {0xF8012E}, // Fn64
-        {0xF8012E}, // Fn65
 };
 
     // TMCC 2 Legacy Function Keys to trigger with TMCC2_200 speed steps.
@@ -428,59 +423,94 @@ public class SerialThrottle extends AbstractThrottle {
         {0xF80046}, // Fn26 ( 70)  35mph
         {0xF80064}, // Fn27 (100)  50mph
         {0xF8008C}, // Fn28 (140)  70mph
-        {0xF800C7}, // Fn29 (199) 100mph (or whatever speed for full throttle)
+        {0xF800C7}, // Fn29 (199)   Full
 
         // TMCC2_200 Extended Lighting FnKeys
+        {0xF8017D, 0xFB00E8, 0xFB0000}, // Fn30 (Mars Lt On)
+        {0xF8017D, 0xFB00E9, 0xFB0000}, // Fn31 (Mars Lt Off)
 
-        // {0xF8017D, 0xFB01F2, 0xFB0189}, // Fn35 Set Cab Light Auto (test!!!)
+        {0xF8017D, 0xFB00D0, 0xFB0000}, // Fn32 (Ground Lt On)
+        {0xF8017D, 0xFB00D1, 0xFB0000}, // Fn33 (Ground Lt Off)
+        {0xF8017D, 0xFB00D2, 0xFB0000}, // Fn34 (Ground Lt Auto)
 
+        {0xF8017D, 0xFB00A0, 0xFB0000}, // Fn35 (DogHouse On)
+        {0xF8017D, 0xFB00A1, 0xFB0000}, // Fn36 (DogHouse Off)
 
-        // Extended Sound Effects FnKeys
-        // {0xF801FB, 0xF801FC}, // Fn35 Start Up Sequence 1 (Delayed Prime Mover, then Immediate Start Up)
-        // {0xF801FC}, // Fn36 Start Up Sequence 2 (Immediate Start Up)
-        // {0xF801FD, 0xF801FE}, // Fn37 Shut Down Sequence 1 (Delay w/ Announcement then Immediate Shut Down)
-        // {0xF801FE}, // Fn38 Shut down Sequence 2 (Immediate Shut Down)
+        {0xF8017D, 0xFB00CC, 0xFB0000}, // Fn37 (Tender Marker On)
+        {0xF8017D, 0xFB00CD, 0xFB0000}, // Fn38 (Tender Marker Off)
 
+        {0xF8017D, 0xFB00F4, 0xFB0000}, // Fn39 (Rule 17 On)
+        {0xF8017D, 0xFB00F5, 0xFB0000}, // Fn40 (Rule 17 Off)
+        {0xF8017D, 0xFB00F6, 0xFB0000}, // Fn41 (Rule 17 Auto)
+
+        {0xF8017D, 0xFB00C0, 0xFB0000}, // Fn42 (Ditch Lt On)
+        {0xF8017D, 0xFB00C1, 0xFB0000}, // Fn43 (Ditch Lt On; Pulse Off with Horn)
+        {0xF8017D, 0xFB00C2, 0xFB0000}, // Fn44 (Ditch Lt Off; Pulse On with Horn)
+        {0xF8017D, 0xFB00C3, 0xFB0000}, // Fn45 (Ditch Lt Off)
+
+        {0xF8017D, 0xFB00F0, 0xFB0000}, // Fn46 (Cab Lt On)
+        {0xF8017D, 0xFB00F1, 0xFB0000}, // Fn47 (Cab Lt Off)
+        {0xF8017D, 0xFB00F2, 0xFB0000}, // Fn48 (Cab Lt Auto)
+
+        {0xF8017D, 0xFB00C8, 0xFB0000}, // Fn49 (Loco Marker On)
+        {0xF8017D, 0xFB00C9, 0xFB0000}, // Fn50 (Loco Marker Off)
+
+        {0xF8017D, 0xFB00B0, 0xFB0000}, // Fn51 (Hazard Lt On)
+        {0xF8017D, 0xFB00B1, 0xFB0000}, // Fn52 (Hazard Lt Off)
+        {0xF8017D, 0xFB00B2, 0xFB0000}, // Fn53 (Hazard Lt Auto)
+
+        {0xF8017D, 0xFB00E0, 0xFB0000}, // Fn54 (Strobe Lt On - SingleFlash)
+        {0xF8017D, 0xFB00E1, 0xFB0000}, // Fn55 (Strobe Lt On - DoubleFlash)
+        {0xF8017D, 0xFB00E2, 0xFB0000}, // Fn56 (Strobe Lt Off)
+
+        {0xF8017D, 0xFB00F8, 0xFB0000}, // Fn57 (Car Cabin Lt On)
+        {0xF8017D, 0xFB00F9, 0xFB0000}, // Fn58 (Car Cabin Lt Off)
+        {0xF8017D, 0xFB00FA, 0xFB0000}, // Fn59 (Car Cabin Lt Auto)
+
+        // TMCC2 Subway FnKeys
+        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn60 (Open Doors - Left)
+        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn61 (Close Doors - Left)
+        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn62 (Open Doors - Right)
+        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn63 (Close Doors - Right)
+        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn64 (Pantagraph - Up/F)
+        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn65 (Pantagraph - Down/F)
+        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn66 (Pantagraph - Up/R)
+        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn67 (Pantagraph - Down/R)
+
+        // TMCC2 Freight/Stock Cars
+        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn68 (Option1 On)
+        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn69 (Opiton1 Off)
+        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn70 (Option2 On)
+        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn71 (Option2 Off)
+        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn72 (Load)
+        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn73 (Unload)
+        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn74 (FRED On)
+        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn75 (FRED Off)
+        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn76 (Flat Wheel On)
+        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn77 (Flat Wheel Off)
+        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn78 (Game On)
+        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn79 (Game Off)
+
+        // TMCC2 Smoke System
+        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn80 (Smoke System Off)
+        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn81 (Smoke System Low)
+        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn82 (Smoke System Med)
+        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn83 (Smoke System High)
+
+        // TRMCC2_200 Unassigned FnKeys
+        {0xF8012E}, // Fn84 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fn85 Code to Trigger SerialMonFrame Message/Unassigned FnKey
 
         // TMCC2_200 Aux FnKeys
-        {0xF80108}, // Fn30 (Aux1 Off)
-        {0xF80109}, // Fn31 (Aux1 Option 1 - On While Held) 
-        {0xF8010A}, // Fn32 (Aux1 Option 2 - Toggle On/Toggle Off)
-        {0xF8010B}, // Fn33 (Aux1 On)
-        {0xF8010C}, // Fn34 (Aux2 Off)
-        {0xF8010D}, // Fn35 (Aux2 Option 1 - Toggle On/Toggle Off) 
-        {0xF8010E}, // Fn36 (Aux2 Option 2 - On While Held)
-        {0xF8010F}, // Fn37 (Aux2 On)
+        {0xF80108}, // Fnxx (Aux1 Off)
+        {0xF80109}, // Fnxx (Aux1 Option 1 - On While Held) 
+        {0xF8010A}, // Fnxx (Aux1 Option 2 - Toggle On/Toggle Off)
+        {0xF8010B}, // Fnxx (Aux1 On)
+        {0xF8010C}, // Fnxx (Aux2 Off)
+        {0xF8010D}, // Fnxx (Aux2 Option 1 - Toggle On/Toggle Off) 
+        {0xF8010E}, // Fnxx (Aux2 Option 2 - On While Held)
+        {0xF8010F}, // Fnxx (Aux2 On)
 
-        // TMCC2_200 Unused FnKeys
-        {0xF8012E}, // Fn38
-        {0xF8012E}, // Fn39
-        {0xF8012E}, // Fn40
-        {0xF8012E}, // Fn41
-        {0xF8012E}, // Fn42
-        {0xF8012E}, // Fn43
-        {0xF8012E}, // Fn44
-        {0xF8012E}, // Fn45
-        {0xF8012E}, // Fn46
-        {0xF8012E}, // Fn47
-        {0xF8012E}, // Fn48
-        {0xF8012E}, // Fn49
-        {0xF8012E}, // Fn50
-        {0xF8012E}, // Fn51
-        {0xF8012E}, // Fn52
-        {0xF8012E}, // Fn53
-        {0xF8012E}, // Fn54
-        {0xF8012E}, // Fn55
-        {0xF8012E}, // Fn56
-        {0xF8012E}, // Fn57
-        {0xF8012E}, // Fn58
-        {0xF8012E}, // Fn59
-        {0xF8012E}, // Fn60
-        {0xF8012E}, // Fn61
-        {0xF8012E}, // Fn62
-        {0xF8012E}, // Fn63
-        {0xF8012E}, // Fn64
-        {0xF8012E}, // Fn65
     };
 
     /**
