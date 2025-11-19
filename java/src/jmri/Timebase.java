@@ -22,7 +22,10 @@ import jmri.time.TimeProvider;
  * current value.
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2007, 2008
+ *
+ * @deprecated Use {@code jmri.TimeProvider} instead
  */
+@Deprecated(since="5.15.1", forRemoval=false) // used in scripts
 public interface Timebase extends NamedBean {
 
     /**
