@@ -44,7 +44,7 @@ public class LogixNGTableIconXml extends PositionableLabelXml {
         JTable jTable = p.getJTable();
         TableColumnModel colModel = jTable.getColumnModel();
         for (int col=0; col < colModel.getColumnCount(); col++) {
-            if (!sb.isEmpty()) {
+            if (sb.length() > 0) {
                 sb.append(",");
             }
             sb.append(colModel.getColumn(col).getWidth());
