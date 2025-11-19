@@ -2250,37 +2250,7 @@ public abstract class Editor extends JmriJFrameWithPermissions
     }
 
     protected void addLogixNGTableEditor() {
-        IconAdder editor = new IconAdder("LogixNGTable") {
-            final JButton bSpin = new JButton(Bundle.getMessage("AddSpinner"));
-            final JButton bBox = new JButton(Bundle.getMessage("AddInputBox"));
-            final JSpinner spinner = new JSpinner(_spinCols);
-/*
-            @Override
-            protected void addAdditionalButtons(JPanel p) {
-                bSpin.addActionListener(a -> addGlobalVariableSpinner());
-                JPanel p1 = new JPanel();
-                //p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-                bBox.addActionListener(a -> addLogixNGTable());
-                ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setColumns(2);
-                spinner.setMaximumSize(spinner.getPreferredSize());
-                JPanel p2 = new JPanel();
-                p2.add(new JLabel(Bundle.getMessage("NumColsLabel")));
-                p2.add(spinner);
-                p1.add(p2);
-                p1.add(bBox);
-                p.add(p1);
-                p1 = new JPanel();
-                p1.add(bSpin);
-                p.add(p1);
-            }
-*/
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                super.valueChanged(e);
-                bSpin.setEnabled(addIconIsEnabled());
-                bBox.setEnabled(addIconIsEnabled());
-            }
-        };
+        IconAdder editor = new IconAdder("LogixNGTable");
         ActionListener addIconAction = a -> addLogixNGTable();
         JFrameItem frame = makeAddIconFrame("LogixNGTable", true, true, editor);
         _iconEditorFrame.put("LogixNGTable", frame);

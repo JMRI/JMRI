@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
-import static javax.swing.SwingConstants.CENTER;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 
