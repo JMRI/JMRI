@@ -520,6 +520,18 @@
    <h3>Panel Editor</h3>
         <a id="PE" name="PE"></a>
         <ul>
+            <li><strong>LogixNG Table</strong>s can now be added to a
+                Panel Editor. The table can be edited and that's is useful
+                if the user needs to change values in a table.<br/>
+                It's recommended to use <strong>Fixed size</strong> for
+                the LogixNG Table on the panel. To move the table, use
+                <strong>Set Location</strong> since it's not currently
+                possible to move the table on the panel using the mouse.<br/>
+                The width of the columns can be changed by dragging the
+                divider of the column headers. The new width will be
+                stored when the tables and panels file is stored.<br/>
+                The table is <u>not</u> stored when the tables and
+                panels file is stored.</li>
             <li></li>
         </ul>
 
