@@ -351,9 +351,9 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
         JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: -1");
 
-        instance.setFunction(69, true);
-        JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 69");
-        JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 69");
+        instance.setFunction(85, true);
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 85");
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Unhandled set function number: 85");
     }
 
     private SerialTrafficController tcis;
@@ -371,7 +371,7 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, tm);
         memo.store(tm, jmri.ThrottleManager.class);
         instance = new SerialThrottle(memo, new jmri.DccLocoAddress(1024, true));
-        setMaxFns(69);
+        setMaxFns(85);
     }
 
     @AfterEach

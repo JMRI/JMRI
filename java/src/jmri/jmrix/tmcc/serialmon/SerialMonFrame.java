@@ -91,17 +91,17 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 case 8:
                                     return "TMCC2 - Engine " + A + " - AUX1 Off";
                                 case 9:
-                                    return "TMCC2 - Engine " + A + " - AUX1 Option 1 (CAB AUX1 button)";
+                                    return "TMCC2 - Engine " + A + " - AUX1 Option 1 (CAB AUX1 Button; On While Pressed/On Until Next Button Pressed)";
                                 case 10:
-                                    return "TMCC2 - Engine " + A + " - AUX1 Option 2";
+                                    return "TMCC2 - Engine " + A + " - AUX1 Option 2 (Toggle On/Toggle Off)";
                                 case 11:
                                     return "TMCC2 - Engine " + A + " - AUX1 On";
                                 case 12:
                                     return "TMCC2 - Engine " + A + " - AUX2 Off";
                                 case 13:
-                                    return "TMCC2 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On While Pressed";
+                                    return "TMCC2 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 Button; Headlight Toggle On/Toggle Off)";
                                 case 14:
-                                    return "TMCC2 - Engine " + A + " - AUX2 Option 2";
+                                    return "TMCC2 - Engine " + A + " - AUX2 Option 2 (On While Pressed)";
                                 case 15:
                                     return "TMCC2 - Engine " + A + " - AUX2 On";
                                 case 16:
@@ -263,7 +263,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 8:
                             
                             case 9:
-                                return "TMCC1 - Engine " + A + " - AUX1 Option 1 (CAB AUX1 button)";
+                                return "TMCC1 - Engine " + A + " - AUX1 Option 1 (CAB AUX1 Button; On While Pressed/On Until Next Button Pressed)";
                             case 10:
                             
                             case 11:
@@ -271,7 +271,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 12:
                             
                             case 13:
-                                return "TMCC1 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On While Pressed";
+                                return "TMCC1 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 Button; Headlight Toggle On/Toggle Off)";
                             case 14:
                             
                             case 15:
@@ -363,17 +363,17 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 8:
                                 return "Aux 1 - ACC " + A + " - OFF";
                             case 9:
-                                return "Aux 1 - ACC " + A + " - OPTION 1";
+                                return "Aux 1 - ACC " + A + " - OPTION 1 (On While Pressed)";
                             case 10:
-                                return "Aux 1 - ACC " + A + " - OPTION 2";
+                                return "Aux 1 - ACC " + A + " - OPTION 2 (Toggle On/Toggle Off)";
                             case 11:
                                 return "Aux 1 - ACC " + A + " - ON";
                             case 12:
                                 return "Aux 2 - ACC " + A + " - OFF";
                             case 13:
-                                return "Aux 2 - ACC " + A + " - OPTION 1";
+                                return "Aux 2 - ACC " + A + " - OPTION 1 (Toggle On/Toggle Off)";
                             case 14:
-                                return "Aux 2 - ACC " + A + " - OPTION 2";
+                                return "Aux 2 - ACC " + A + " - OPTION 2 (On While Pressed)";
                             case 15:
                                 return "Aux 2 - ACC " + A + " - ON";
                             default:
@@ -420,9 +420,9 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 8:
                                 return "GROUP - ACC " + A + " - OFF";
                             case 9:
-                                return "GROUP - ACC " + A + " - OPTION 1";
+                                return "GROUP - ACC " + A + " - OPTION 1 (On While Pressed)";
                             case 10:
-                                return "GROUP - ACC " + A + " - OPTION 2";
+                                return "GROUP - ACC " + A + " - OPTION 2 (Toggle On/Toggle Off)";
                             case 11:
                                 return "GROUP - ACC " + A + " - ON";
                             default:
