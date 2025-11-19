@@ -687,6 +687,7 @@
             </xs:element>
           </xs:sequence>
           <xs:attribute name="num" type="xs:string"/>
+          <xs:attribute name="visible" type="xs:string"/>
           <xs:attribute name="lockable" type="xs:string"/>
         </xs:complexType>
       </xs:element>
