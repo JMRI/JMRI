@@ -2055,12 +2055,6 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
         TurnoutType type = getTurnoutType();
 
-        // Just "?" if UNKNOWN and showUnknown requesting
-        if (showUnknown && state == UNKNOWN) {
-            drawForShowUnknown(g2, pM, g2.getColor(), false);
-            return;
-        }    
-
         if (type == TurnoutType.DOUBLE_XOVER) {
             if (state != Turnout.THROWN && state != INCONSISTENT) { // unknown or continuing path - not crossed over
                 if (isMain == mainlineA) {
@@ -2333,6 +2327,18 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 }
             }
         }
+
+        // Overwrite with "?" if UNKNOWN and showUnknown requesting
+        if (showUnknown && state == UNKNOWN) {
+            // Draw the circle over the track drawing
+            //Color previousColor = g2.getColor();
+            //g2.setColor(g2.getBackground());
+            g2.fill(trackControlCircleAt(getCoordsCenter()));
+            //g2.setColor(previousColor);
+
+            drawForShowUnknown(g2, pM, g2.getColor(), true);
+            return;
+        }    
     }   // draw1
 
     /** 

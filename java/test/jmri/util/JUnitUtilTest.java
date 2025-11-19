@@ -7,6 +7,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for the jmri.util.JUnitUtil itself.  
@@ -47,6 +48,16 @@ public class JUnitUtilTest {
         JUnitUtil.setBeanStateAndWait(t, Turnout.THROWN);
         
         assertEquals(Turnout.THROWN, t.getCommandedState());
+    }
+
+    @Test
+    public void testWaitForTextNotInvoked() {
+        JUnitUtil.waitFor( () -> true, () -> "Should not call failure method " + failTest());
+    }
+
+    private String failTest() {
+        fail("Method should not have been invoked");
+        return "Should have failed Test if invoked";
     }
 
     @BeforeEach

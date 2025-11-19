@@ -474,7 +474,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved how the "?" is drawn for UNKNOWN turnouts (when that option is selected)</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -676,6 +676,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Testing - JUnitUtil - waitFor condition failure text can be formed from a String Supplier, e.g. a lambda expression.
+            The expression is only evaluated ( lazily ) when the assertion fails.
+            </li>
         </ul>
 
