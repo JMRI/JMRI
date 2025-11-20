@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -26,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist Copyright (C) 2025
  * @since 5.15.1
  */
-public final class LogixNGTableIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
+public final class LogixNGTableIcon extends PositionableJPanel {
 
     private TableModel tableModel = null;
 
@@ -82,12 +83,6 @@ public final class LogixNGTableIcon extends PositionableJPanel implements java.b
         return super.finishClone(pos);
     }
 
-    @Override
-    public void mouseExited(JmriMouseEvent e) {
-        updateNamedTable();
-        super.mouseExited(e);
-    }
-
     /**
      * Attached a named NamedTable to this display item
      *
@@ -114,14 +109,12 @@ public final class LogixNGTableIcon extends PositionableJPanel implements java.b
      * @param m The NamedTable object
      */
     public void setNamedTable(NamedBeanHandle<NamedTable> m) {
-        if (_namedTable != null) {
-            getNamedTable().removePropertyChangeListener(this);
-        }
         _namedTable = m;
         if (_namedTable != null) {
-            getNamedTable().addPropertyChangeListener(this, _namedTable.getName(), "NamedTable Icon");
-            displayState();
             setName(_namedTable.getName());
+            if (tableModel != null) {
+                tableModel.fireTableStructureChanged();
+            }
         }
     }
 
@@ -140,14 +133,6 @@ public final class LogixNGTableIcon extends PositionableJPanel implements java.b
         return _table;
     }
 
-    // update icon as state of NamedTable changes
-    @Override
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("value")) {
-            displayState();
-        }
-    }
-
     @Override
     @Nonnull
     public String getTypeString() {
@@ -163,19 +148,6 @@ public final class LogixNGTableIcon extends PositionableJPanel implements java.b
             name = getNamedTable().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
-    }
-
-    @Override
-    public void mouseMoved(JmriMouseEvent e) {
-        updateNamedTable();
-    }
-
-    private void updateNamedTable() {
-//        if (_namedTable == null) {
-//            return;
-//        }
-//        String str = _textBox.getText();
-//        getNamedTable().setValue(str);
     }
 
     @Override
@@ -210,48 +182,26 @@ public final class LogixNGTableIcon extends PositionableJPanel implements java.b
                 p.setVisible(true);
             }
         };
-
-        makeIconEditorFrame(this, "NamedTable", true, _iconEditor);
+*/
+        makeIconEditorFrame(this, "LogixNGTable", true, _iconEditor);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.namedTablePickModelInstance());
         ActionListener addIconAction = a -> editNamedTable();
         _iconEditor.makeIconPanel(false);
         _iconEditor.complete(addIconAction, false, false, true);
         _iconEditor.setSelection(getNamedTable());
-*/
     }
-/*
+
     void editNamedTable() {
         setNamedTable(_iconEditor.getTableSelection().getDisplayName());
-//        _nCols = _spinModel.getNumber().intValue();
-//        _textBox.setColumns(_nCols);
         setSize(getPreferredSize().width + 1, getPreferredSize().height);
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;
         _iconEditor = null;
         validate();
     }
-*/
-    /**
-     * Drive the current state of the display from the state of the NamedTable.
-     */
-    public void displayState() {
-//        log.debug("displayState");
-//        if (_namedTable == null) {  // leave alone if not connected yet
-//            return;
-//        }
-//        Object show = getNamedTable().getValue();
-//        if (show != null) {
-//            _textBox.setText(show.toString());
-//        } else {
-//            _textBox.setText("");
-//        }
-    }
 
     @Override
     void cleanup() {
-        if (_namedTable != null) {
-            getNamedTable().removePropertyChangeListener(this);
-        }
         if (_scrollPane != null) {
             _table.removeMouseListener(_mouseListener);
             _rowHeader.removeMouseListener(_mouseListener);
