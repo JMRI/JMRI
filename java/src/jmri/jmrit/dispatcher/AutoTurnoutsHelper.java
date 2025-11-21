@@ -26,8 +26,8 @@ public class AutoTurnoutsHelper {
      * @param currentBlock The current block the train is in.
      * @param previousBlock The previous block the train was in.
      * @param nextBlock The next block the train is heading towards.
-     * @return A {@code LayoutTrackExpectedState<LayoutTurnout>} if a turntable turnout needs to be aligned,
-     *         otherwise {@code null}.
+     * @return A LayoutTrackExpectedState<LayoutTurnout> if a turntable turnout needs to be aligned,
+     *         otherwise null.
      */
     @CheckForNull
     public LayoutTrackExpectedState<LayoutTurnout> checkTurntableAlignment(
