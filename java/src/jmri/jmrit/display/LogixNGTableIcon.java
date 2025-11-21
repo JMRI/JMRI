@@ -193,7 +193,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
     void editNamedTable() {
         setNamedTable(_iconEditor.getTableSelection().getDisplayName());
-        setSize(getPreferredSize().width + 1, getPreferredSize().height);
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;
         _iconEditor = null;
