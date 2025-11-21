@@ -6,6 +6,7 @@ import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SchemaValidatorsConfig;
 import com.networknt.schema.ValidationMessage;
+import com.networknt.schema.uri.URITranslator;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,17 +39,20 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     private final ObjectMapper mapper = new ObjectMapper();
 
     public JsonSchemaServiceCache() {
-        Map<String, String> map = new HashMap<>();
-        try {
-            for (JsonNode mapping : mapper
-                    .readTree(JsonSchemaServiceCache.class.getResource("/jmri/server/json/schema-map.json"))) {
-                map.put(mapping.get("publicURL").asText(),
-                        mapping.get("localURL").asText());
+        URITranslator translator = (uri) -> {
+            try {
+                for (JsonNode mapping : mapper
+                        .readTree(JsonSchemaServiceCache.class.getResource("/jmri/server/json/schema-map.json"))) {
+                    if (uri.toString().equals(mapping.get("publicURL").asText())) {
+                        return mapping.get("localURL").asText();
+                    }
+                }
+            } catch (IOException ex) {
+                log.error("Unable to read JMRI resources for JSON schema mapping", ex);
             }
-        } catch (IOException ex) {
-            log.error("Unable to read JMRI resources for JSON schema mapping", ex);
-        }
-        config.setUriMappings(map);
+            return uri.toString();
+        };
+        config.addUriTranslator(translator);
     }
 
     /**
