@@ -322,3 +322,4 @@ if __name__ == '__builtin__':
     RunDispatchMaster = jmri.util.FileUtil.getExternalFilename('program:jython/DispatcherSystem/RunDispatchMaster.py')
     exec(open(RunDispatchMaster).read())
     RunDispatcherMaster()
+

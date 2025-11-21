@@ -281,3 +281,4 @@ class MyWindowAdapter(WindowAdapter):
 
         #make sure the frame is not created again
         run_timetable_gbl = False
+
