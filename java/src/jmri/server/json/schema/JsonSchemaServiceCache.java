@@ -225,7 +225,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
             log.warn("Errors validating {}", node);
             errors.forEach(error -> log.warn("JSON Validation Error: {}\n\t{}\n\t{}\n\t{}", error.getCode(),
                     error.getMessage(),
-                    error.getPath(), error.getType()));
+                    error.getEvaluationPath(), error.getType()));
             throw new JsonException(server ? 500 : 400, Bundle.getMessage(request.locale, JsonException.LOGGED_ERROR),
                     request.id);
         }
