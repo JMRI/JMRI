@@ -501,7 +501,7 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
     @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, Positionable.DuplicateIdException {
         // Following line can be removed once super Tests are JUnit5, @DisabledIfHeadless not JUnit4
-        org.junit.Assume.assumeFalse( "Not Headless", GraphicsEnvironment.isHeadless());
+        Assumptions.assumeFalse( GraphicsEnvironment.isHeadless(), "Not Headless");
 
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -564,10 +564,11 @@ public class ActionPositionableTest extends AbstractDigitalActionTestBase {
     @AfterEach
     public void tearDown() {
 
-        EditorFrameOperator efo = new EditorFrameOperator(editor);
-        efo.deleteViaFileMenuWithConfirmations();
-        EditorFrameOperator.clearEditorFrameOperatorThreads();
-
+        if ( editor != null ) {
+            EditorFrameOperator efo = new EditorFrameOperator(editor);
+            efo.deleteViaFileMenuWithConfirmations();
+            EditorFrameOperator.clearEditorFrameOperatorThreads();
+        }
         editor = null;
         logixNG = null;
         positionable1 = null;
