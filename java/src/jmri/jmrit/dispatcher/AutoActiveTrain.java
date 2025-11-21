@@ -1846,7 +1846,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     setTargetSpeed(0.0f);
                     _autoEngineer.setHalt(true);
                 }
-            } catch (NullPointerException ex) {
+            } catch (Exception ex) {
                 log.error("setTargetSpeedByProfile crashed - Emergency Stop: ", ex );
                 _autoEngineer.slowToStop(false);
                 setTargetSpeed(-1.0f);
