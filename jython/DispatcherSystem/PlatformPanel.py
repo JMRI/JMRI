@@ -351,3 +351,19 @@ class MyTableModel7 (DefaultTableModel):
             return str(memory.getValue())
         else:
             return " "
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
