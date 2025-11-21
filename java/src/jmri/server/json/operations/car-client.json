@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-car-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"car\"",
@@ -172,11 +172,11 @@
             "description": "The location to return the car to when loaded or null"
         },
         "division": {
-            "type":"string",
+            "type": "string",
             "description": "division name for the car"
         },
         "block order": {
-            "type":"string",
+            "type": "string",
             "description": "blocking order for passenger car"
         },
         "status": {
@@ -197,12 +197,17 @@
         }
     },
     "additionalProperties": false,
-    "anyOf":[
+    "anyOf": [
         {
-            "required": ["name"]
+            "required": [
+                "name"
+            ]
         },
         {
-            "required": ["road", "number"]
+            "required": [
+                "road",
+                "number"
+            ]
         }
     ]
 }
