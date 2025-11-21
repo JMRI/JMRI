@@ -8,7 +8,6 @@ import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Transit;
 import jmri.Turnout;
-import javax.annotation.CheckForNull;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.jmrit.display.layoutEditor.LayoutDoubleXOver;
@@ -17,8 +16,6 @@ import jmri.jmrit.display.layoutEditor.LayoutRHXOver;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
-import jmri.jmrit.display.layoutEditor.LayoutTurntable;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -128,49 +125,6 @@ public class AutoTurnouts {
              }
         }
         return null;
-    }
-
-    @CheckForNull
-    public LayoutTrackExpectedState<LayoutTurnout> checkTurntableAlignment(
-            AllocatedSection as, Block currentBlock, Block previousBlock, Block nextBlock) {
-
-        LayoutEditor layoutEditor = InstanceManager.getDefault(DispatcherFrame.class).getLayoutEditor();
-        if (layoutEditor == null) {
-            log.debug("No LayoutEditor associated with dispatcher, skipping turntable check.");
-            return null;
-        }
-
-        LayoutTurntable relevantTurntable = null;
-        // Iterate through all turntables in the LayoutEditor to find one relevant to the current path
-        for (LayoutTurntable tt : layoutEditor.getLayoutTurntables()) {
-            // Check if the current path involves this turntable
-            if (tt.isTurntableBoundary(currentBlock, nextBlock) || tt.isRayBlock(currentBlock) || tt.isRayBlock(nextBlock)) {
-                relevantTurntable = tt;
-                break;
-            }
-        }
-
-        if (relevantTurntable != null && relevantTurntable.isTurnoutControlled()) {
-            // We found a relevant turntable that is turnout controlled.
-            // Get the specific turnout and its required state for the current path.
-            List<LayoutTrackExpectedState<LayoutTurnout>> expectedStates =
-                    relevantTurntable.getTurnoutList(currentBlock, previousBlock, nextBlock);
-
-            if (!expectedStates.isEmpty()) {
-                // For a turntable, there should typically be only one turnout to align for a specific path.
-                LayoutTrackExpectedState<LayoutTurnout> state = expectedStates.get(0);
-                Turnout turnout = state.getObject().getTurnout();
-                int requiredState = state.getExpectedState();
-
-                if (turnout != null && turnout.getKnownState() != requiredState) {
-                    // Turntable not aligned, return the expected state to indicate waiting is needed.
-                    log.debug("Turntable {} ray turnout {} not in required state {}. Needs alignment.",
-                            relevantTurntable.getName(), turnout.getDisplayName(), requiredState);
-                    return state;
-                }
-            }
-        }
-        return null; // No turntable issue, or already aligned.
     }
 
     /**
