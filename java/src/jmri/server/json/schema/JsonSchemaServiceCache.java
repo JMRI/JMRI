@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SchemaValidatorsConfig;
+import com.networknt.schema.SpecVersion;
 import com.networknt.schema.ValidationMessage;
-import com.networknt.schema.uri.URITranslator;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -32,6 +32,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
 
     private Map<String, Map<String, Set<JsonHttpService>>> services = new HashMap<>();
     private SchemaValidatorsConfig config = new SchemaValidatorsConfig();
+    private Map<String, String> schemaMappings = new HashMap<>();
     private final Map<String, Set<String>> clientTypes = new HashMap<>();
     private final Map<String, Set<String>> serverTypes = new HashMap<>();
     private final Map<String, Map<String, JsonSchema>> clientSchemas = new HashMap<>();
@@ -39,20 +40,15 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     private final ObjectMapper mapper = new ObjectMapper();
 
     public JsonSchemaServiceCache() {
-        URITranslator translator = (uri) -> {
-            try {
-                for (JsonNode mapping : mapper
-                        .readTree(JsonSchemaServiceCache.class.getResource("/jmri/server/json/schema-map.json"))) {
-                    if (uri.toString().equals(mapping.get("publicURL").asText())) {
-                        return mapping.get("localURL").asText();
-                    }
-                }
-            } catch (IOException ex) {
-                log.error("Unable to read JMRI resources for JSON schema mapping", ex);
+        try {
+            for (JsonNode mapping : mapper
+                    .readTree(JsonSchemaServiceCache.class.getResource("/jmri/server/json/schema-map.json"))) {
+                schemaMappings.put(mapping.get("publicURL").asText(),
+                        mapping.get("localURL").asText());
             }
-            return uri.toString();
-        };
-        config.addUriTranslator(translator);
+        } catch (IOException ex) {
+            log.error("Unable to read JMRI resources for JSON schema mapping", ex);
+        }
     }
 
     /**
@@ -148,7 +144,8 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
         if (result == null) {
             for (JsonHttpService service : getServices(type, request.version)) {
                 log.debug("Processing {} with {}", type, service);
-                result = JsonSchemaFactory.getInstance()
+                result = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V202012, builder -> 
+                        builder.schemaMappers(schemaMappers -> schemaMappers.mappings(schemaMappings)))
                         .getSchema(service.doSchema(type, server, request).path(JSON.DATA).path(JSON.SCHEMA), config);
                 if (result != null) {
                     map.get(request.version).put(type, result);
