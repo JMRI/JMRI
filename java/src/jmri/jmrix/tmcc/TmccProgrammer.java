@@ -88,7 +88,7 @@ public class TmccProgrammer extends AbstractProgrammer {
                 }
                 
                 if (getMode() == TmccProgrammerManager.TMCCMODE1_TRKID) {
-                    if (val > 0 && val < 10) {
+                    if (val < 10) {
                         SerialMessage m = new SerialMessage();
                         m.setOpCode(0xFE); // set the first byte/TMCC1 opcode to 0xFE
                         m.putAsWord(((val * 128) + 51200)+ _func); // set the second/third byte (address/SET command for TMCC1)
