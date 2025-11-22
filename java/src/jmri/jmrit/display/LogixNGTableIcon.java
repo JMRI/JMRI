@@ -1,20 +1,20 @@
 package jmri.jmrit.display;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
-import jmri.jmrit.logixng.NamedTable;
-import jmri.jmrit.logixng.NamedTableManager;
+import jmri.jmrit.logixng.Module;
+import jmri.jmrit.logixng.*;
 import jmri.util.swing.*;
 
 import org.slf4j.Logger;
@@ -29,10 +29,9 @@ import org.slf4j.LoggerFactory;
  */
 public final class LogixNGTableIcon extends PositionableJPanel {
 
-    private TableModel tableModel = null;
+    private TableModel _tableModel = null;
 
     // the associated NamedTable object
-    private NamedBeanHandle<NamedTable> _namedTable;
     private final JTable _table;
     private final JList<Object> _rowHeader;
     private final JScrollPane _scrollPane;
@@ -45,10 +44,11 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        setNamedTable(tableName);
+        _tableModel = new TableModel();
 
-        tableModel = new TableModel();
-        _table = new JTable(tableModel);
+        _tableModel.setTable(tableName);
+
+        _table = new JTable(_tableModel);
         _table.setCellSelectionEnabled(true);
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _table.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
@@ -74,59 +74,18 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
     @Override
     public Positionable deepClone() {
-        LogixNGTableIcon pos = new LogixNGTableIcon(_namedTable.getName(), _editor);
+        LogixNGTableIcon pos = new LogixNGTableIcon(
+                _tableModel.getTable().getDisplayName(), _editor);
         return finishClone(pos);
     }
 
     protected Positionable finishClone(LogixNGTableIcon pos) {
-        pos.setNamedTable(_namedTable.getName());
+        _tableModel.setTable(_tableModel.getTable());
         return super.finishClone(pos);
     }
 
-    /**
-     * Attached a named NamedTable to this display item
-     *
-     * @param pName Used as a system/user name to lookup the NamedTable object
-     */
-    public void setNamedTable(String pName) {
-        log.debug("setNamedTable for namedTable= {}", pName);
-        if (InstanceManager.getNullableDefault(NamedTableManager.class) != null) {
-            try {
-                NamedTable namedTable = InstanceManager.getDefault(NamedTableManager.class).getNamedTable(pName);
-                setNamedTable(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, namedTable));
-            } catch (IllegalArgumentException e) {
-                log.error("NamedTable '{}' not available, icon won't see changes", pName);
-            }
-        } else {
-            log.error("No NamedTableManager for this protocol, icon won't see changes");
-        }
-        updateSize();
-    }
-
-    /**
-     * Attached a named NamedTable to this display item
-     *
-     * @param m The NamedTable object
-     */
-    public void setNamedTable(NamedBeanHandle<NamedTable> m) {
-        _namedTable = m;
-        if (_namedTable != null) {
-            setName(_namedTable.getName());
-            if (tableModel != null) {
-                tableModel.fireTableStructureChanged();
-            }
-        }
-    }
-
-    public NamedBeanHandle<NamedTable> getNamedNamedTable() {
-        return _namedTable;
-    }
-
-    public NamedTable getNamedTable() {
-        if (_namedTable == null) {
-            return null;
-        }
-        return _namedTable.getBean();
+    public TableModel getTableModel() {
+        return _tableModel;
     }
 
     public JTable getJTable() {
@@ -142,12 +101,163 @@ public final class LogixNGTableIcon extends PositionableJPanel {
     @Override
     public String getNameString() {
         String name;
-        if (_namedTable == null) {
+        if (_tableModel.getTable() == null) {
             name = Bundle.getMessage("NotConnected");
         } else {
-            name = getNamedTable().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
+            name = _tableModel.getTable().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
+    }
+
+    private void configureLogixNGTable() {
+        NamedTable namedTable = _tableModel.getTable();
+
+        JComboBox<ModuleItem> _validateModuleComboBox;
+        _validateModuleComboBox = new JComboBox<>();
+        _validateModuleComboBox.addItem(new ModuleItem(null));
+        for (Module m : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
+//            System.out.format("Root socket type: %s%n", m.getRootSocketType().getName());
+            if ("DefaultFemaleDigitalActionSocket".equals(m.getRootSocketType().getName())
+                    && m.isVisible()) {
+                ModuleItem mi = new ModuleItem(m);
+                _validateModuleComboBox.addItem(mi);
+                Module _validateModule = _tableModel.getValidateModule();
+                if (_validateModule == m) {
+                    _validateModuleComboBox.setSelectedItem(mi);
+                }
+            }
+        }
+        JComboBoxUtil.setupComboBoxMaxRows(_validateModuleComboBox);
+
+        Map<String,Integer> columnIndexes = new HashMap<>();
+        List<String> columns = new ArrayList<>();
+        for (int col=0; col < namedTable.numColumns(); col++) {
+            String header = getObjectAsString(namedTable.getCell(0, col+1));
+            if (!header.isEmpty()) {
+                columns.add(header);
+                columnIndexes.put(header, col);
+            }
+        }
+        JList<String> columnList = new JList(columns.toArray());
+        for (String header : _tableModel._editableColumnsList) {
+            int index = columnIndexes.getOrDefault(header,-1);
+            if (index != -1) {
+                columnList.getSelectionModel().addSelectionInterval(index, index);
+            }
+        }
+        columnList.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        Map<String,Integer> rowIndexes = new HashMap<>();
+        List<String> rows = new ArrayList<>();
+        for (int row=0; row < namedTable.numRows(); row++) {
+            String header = getObjectAsString(namedTable.getCell(row+1, 0));
+            if (!header.isEmpty()) {
+                rows.add(header);
+                rowIndexes.put(header, row);
+            }
+        }
+        JList<String> rowList = new JList(rows.toArray());
+        for (String header : _tableModel._editableRowsList) {
+            int index = rowIndexes.getOrDefault(header,-1);
+            if (index != -1) {
+                rowList.getSelectionModel().addSelectionInterval(index, index);
+            }
+        }
+        rowList.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        JDialog dialog = new JDialog();
+        dialog.setTitle(Bundle.getMessage("ConfigureLogixNGTable"));
+        dialog.setLocationRelativeTo(this);
+        dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        JPanel p;
+        p = new JPanel();
+        p.setLayout(new java.awt.GridBagLayout());
+        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = java.awt.GridBagConstraints.EAST;
+        //c.gridx = 0;
+        c.gridy = 1;
+        JLabel validateLabel = new JLabel(Bundle.getMessage("LogixNGTableIcon_ValidateLogixNGModule"));
+        p.add(validateLabel, c);
+        validateLabel.setLabelFor(_validateModuleComboBox);
+        c.gridy = 2;
+        JLabel allowEditLabel = new JLabel(Bundle.getMessage("LogixNGTableIcon_AllowEditTable"));
+        JCheckBox allowEdit = new JCheckBox();
+        allowEdit.setSelected(_tableModel.isEditable());
+        p.add(allowEditLabel, c);
+        allowEditLabel.setLabelFor(allowEdit);
+        c.gridy = 3;
+        p.add(new JLabel(Bundle.getMessage("LogixNGTableIcon_EditableColumns")), c);
+        c.gridy = 5;
+        p.add(new JLabel(Bundle.getMessage("LogixNGTableIcon_EditableRows")), c);
+        c.gridx = 1;
+        c.gridy = 0;
+        p.add(Box.createHorizontalStrut(5), c);
+        c.gridx = 2;
+        c.gridy = 2;
+        c.anchor = java.awt.GridBagConstraints.WEST;
+        c.weightx = 1.0;
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        p.add(allowEdit, c);
+//        p.add(autoSystem, c);
+        c.gridx = 3;
+//        p.add(addRange, c);
+        c.gridx = 2;
+        c.gridy = 1;
+        p.add(_validateModuleComboBox, c);
+//        sys.setToolTipText(Bundle.getMessage("SysNameToolTip", "Y"));
+        c.gridy = 3;
+        p.add(new JScrollPane(columnList), c);
+//        p.add(finishLabel, c);
+        c.gridy = 4;
+        p.add(Box.createVerticalStrut(5), c);
+        c.gridy = 5;
+        p.add(new JScrollPane(rowList), c);
+//        p.add(endRange, c);
+        c.gridx = 0;
+        c.gridy = 6;
+        c.gridwidth = 3;
+        p.add(new JLabel(Bundle.getMessage("LogixNGTableIcon_EditableColumnsRowsInfo")), c);
+        add(p);
+
+        // cancel + add buttons at bottom of window
+        JPanel panelBottom = new JPanel();
+        panelBottom.setLayout(new FlowLayout(FlowLayout.TRAILING));
+
+        JButton cancel;
+        panelBottom.add(cancel = new JButton(Bundle.getMessage("ButtonCancel")));
+        cancel.addActionListener((evt) -> {
+            dialog.dispose();
+        });
+
+        JButton ok;
+//        panelBottom.add(ok = new JButton(Bundle.getMessage(addButtonLabel)));
+        panelBottom.add(ok = new JButton(Bundle.getMessage("ButtonOK")));
+        ok.addActionListener((evt) -> {
+            _tableModel.setValidateModule(_validateModuleComboBox.getItemAt(_validateModuleComboBox.getSelectedIndex())._module);
+            _tableModel.setEditable(allowEdit.isSelected());
+            _tableModel.setEditableColumns(String.join("\t", columnList.getSelectedValuesList()));
+            _tableModel.setEditableRows(String.join("\t", rowList.getSelectedValuesList()));
+            dialog.dispose();
+        });
+//        p.add(panelBottom);
+
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = 99;
+        c.anchor = java.awt.GridBagConstraints.CENTER;
+        c.fill = java.awt.GridBagConstraints.NONE;
+        p.add(panelBottom, c);
+        add(p);
+
+        dialog.getContentPane().add(p);
+        dialog.pack();
+        dialog.setModal(true);
+        dialog.setVisible(true);
     }
 
     @Override
@@ -159,40 +269,29 @@ public final class LogixNGTableIcon extends PositionableJPanel {
                 edit();
             }
         });
+
+        txt = Bundle.getMessage("ConfigureLogixNGTable");
+        popup.add(new javax.swing.AbstractAction(txt) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                configureLogixNGTable();
+            }
+        });
         return true;
     }
 
     @Override
     protected void edit() {
-/*
-        _iconEditor = new IconAdder("NamedTable") {
-            final JSpinner spinner = new JSpinner(_spinModel);
-
-            @Override
-            protected void addAdditionalButtons(JPanel p) {
-                ((JSpinner.DefaultEditor) spinner.getEditor()).getTextField().setColumns(2);
-                spinner.setMaximumSize(spinner.getPreferredSize());
-//                spinner.setValue(_textBox.getColumns());
-                JPanel p2 = new JPanel();
-                //p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
-                //p2.setLayout(new FlowLayout(FlowLayout.TRAILING));
-                p2.add(new JLabel(Bundle.getMessage("NumColsLabel")));
-                p2.add(spinner);
-                p.add(p2);
-                p.setVisible(true);
-            }
-        };
-*/
         makeIconEditorFrame(this, "LogixNGTable", true, _iconEditor);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.namedTablePickModelInstance());
         ActionListener addIconAction = a -> editNamedTable();
         _iconEditor.makeIconPanel(false);
         _iconEditor.complete(addIconAction, false, false, true);
-        _iconEditor.setSelection(getNamedTable());
+        _iconEditor.setSelection(_tableModel.getTable());
     }
 
     void editNamedTable() {
-        setNamedTable(_iconEditor.getTableSelection().getDisplayName());
+        _tableModel.setTable(_iconEditor.getTableSelection().getDisplayName());
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;
         _iconEditor = null;
@@ -206,7 +305,12 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             _rowHeader.removeMouseListener(_mouseListener);
             _scrollPane.removeMouseListener(_mouseListener);
         }
-        _namedTable = null;
+        _tableModel.setTable((NamedTable)null);
+        _tableModel.setValidateModule(null);
+    }
+
+    private static String getObjectAsString(Object o) {
+        return o != null ? o.toString() : "";
     }
 
 
@@ -216,6 +320,87 @@ public final class LogixNGTableIcon extends PositionableJPanel {
      * Table model for Tables in the Edit NamedTable pane.
      */
     public final class TableModel extends AbstractTableModel {
+
+        private NamedBeanHandle<NamedTable> _namedTable;
+        private NamedBeanHandle<Module> _validateModule;
+        private boolean _editable = false;
+        private String _editableColumns = "";
+        private String _editableRows = "";
+        List<String> _editableColumnsList;
+        List<String> _editableRowsList;
+
+        public TableModel() {
+            setEditableColumns("");
+            setEditableRows("");
+        }
+
+        public NamedTable getTable() {
+            return _namedTable != null ? _namedTable.getBean() : null;
+        }
+
+        public void setTable(String tableName) {
+            NamedTable table = null;
+            if (tableName != null) {
+                table = InstanceManager.getDefault(NamedTableManager.class)
+                        .getNamedTable(tableName);
+            }
+
+            if (table != null) {
+                _namedTable = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(table.getDisplayName(), table);
+            } else {
+                _namedTable = null;
+            }
+        }
+
+        public void setTable(NamedTable table) {
+            if (table != null) {
+                _namedTable = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(table.getDisplayName(), table);
+            } else {
+                _namedTable = null;
+            }
+            fireTableStructureChanged();
+        }
+
+        public Module getValidateModule() {
+            return _validateModule != null ? _validateModule.getBean() : null;
+        }
+
+        public void setValidateModule(Module module) {
+            if (module != null) {
+                _validateModule = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(module.getDisplayName(), module);
+            } else {
+                _validateModule = null;
+            }
+        }
+
+        public boolean isEditable() {
+            return _editable;
+        }
+
+        public void setEditable(boolean editable) {
+            _editable = editable;
+        }
+
+        public String getEditableColumns() {
+            return _editableColumns;
+        }
+
+        public void setEditableColumns(String editableColumns) {
+            _editableColumns = editableColumns;
+            _editableColumnsList = Arrays.asList(_editableColumns.split("\t"));
+        }
+
+        public String getEditableRows() {
+            return _editableRows;
+        }
+
+        public void setEditableRows(String editableRows) {
+            _editableRows = editableRows;
+            _editableRowsList = Arrays.asList(_editableRows.split("\t"));
+        }
 
         @Override
         public int getColumnCount() {
@@ -245,7 +430,19 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return true;
+            if (!_editable) {
+                return false;
+            }
+
+            String columnHeader = getObjectAsString(_namedTable.getBean().getCell(0, columnIndex+1));
+            boolean allowColumn = _editableColumns.isEmpty();
+            allowColumn |= _editableColumnsList.contains(columnHeader);
+
+            String rowHeader = getObjectAsString(_namedTable.getBean().getCell(rowIndex+1, 0));
+            boolean allowRow = _editableRows.isEmpty();
+            allowRow |= _editableRowsList.contains(rowHeader);
+
+            return allowColumn && allowRow;
         }
 
     }
@@ -253,7 +450,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
     private class RowHeaderListModel extends AbstractListModel<Object> {
         @Override
         public int getSize() {
-            return _namedTable.getBean().numRows();
+            return _tableModel.getTable().numRows();
         }
 
         @Override
@@ -261,7 +458,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             // Ensure the header has at least five characters and ensure
             // there are at least two spaces at the end since the last letter
             // doesn't fully fit at the row.
-            Object data = _namedTable.getBean().getCell(index+1, 0);
+            Object data = _tableModel.getTable().getCell(index+1, 0);
             String padding = "  ";     // Two spaces
             String str = data != null ? data.toString().concat(padding) : padding;
             return str.length() < 5 ? str.concat("     ").substring(0, 7) : str;
@@ -285,6 +482,22 @@ public final class LogixNGTableIcon extends PositionableJPanel {
                 int index, boolean isSelected, boolean cellHasFocus) {
             setText((value == null) ? "" : value.toString());
             return this;
+        }
+    }
+
+
+    private static class ModuleItem {
+
+        private final Module _module;
+
+        public ModuleItem(Module m) {
+            _module = m;
+        }
+
+        @Override
+        public String toString() {
+            if (_module == null) return "";
+            else return _module.getDisplayName();
         }
     }
 

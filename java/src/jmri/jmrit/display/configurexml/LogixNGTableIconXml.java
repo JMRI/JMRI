@@ -5,8 +5,8 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.display.*;
-import jmri.jmrit.logixng.NamedTable;
-import jmri.jmrit.logixng.NamedTableManager;
+import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.Module;
 
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -38,7 +38,15 @@ public class LogixNGTableIconXml extends PositionableLabelXml {
         Element element = new Element("logixNGTableIcon");
 
         // include attributes
-        element.setAttribute("logixNGTable", p.getNamedTable().getDisplayName());
+        element.setAttribute("logixNGTable", p.getTableModel().getTable().getDisplayName());
+
+        Module validateModule = p.getTableModel().getValidateModule();
+        if (validateModule != null) {
+            element.setAttribute("validateModule", validateModule.getDisplayName());
+        }
+        element.setAttribute("isEditable", p.getTableModel().isEditable() ? "yes" : "no");
+        element.setAttribute("editableColumns", p.getTableModel().getEditableColumns());
+        element.setAttribute("editableRows", p.getTableModel().getEditableRows());
 
         StringBuilder sb = new StringBuilder();
         JTable jTable = p.getJTable();
@@ -84,15 +92,38 @@ public class LogixNGTableIconXml extends PositionableLabelXml {
             name = attr.getValue();
         }
 
-        NamedTable m = jmri.InstanceManager.getDefault(NamedTableManager.class).getNamedTable(name);
+        NamedTable namedTable = jmri.InstanceManager.getDefault(NamedTableManager.class).getNamedTable(name);
 
-        if (m == null) {
+        if (namedTable == null) {
             log.error("LogixNG Table named '{}' not found.", attr.getValue());
             p.loadFailed();
             return;
         }
 
         LogixNGTableIcon l = new LogixNGTableIcon(name, p);
+
+        attr = element.getAttribute("validateModule");
+        if (attr != null) {
+            name = attr.getValue();
+            Module validateModule = jmri.InstanceManager.getDefault(ModuleManager.class).getModule(name);
+            l.getTableModel().setValidateModule(validateModule);
+        }
+
+        attr = element.getAttribute("isEditable");
+        if (attr != null) {
+            String value = attr.getValue();
+            l.getTableModel().setEditable("yes".equals(value));
+        }
+
+        attr = element.getAttribute("editableColumns");
+        if (attr != null) {
+            l.getTableModel().setEditableColumns(attr.getValue());
+        }
+
+        attr = element.getAttribute("editableRows");
+        if (attr != null) {
+            l.getTableModel().setEditableRows(attr.getValue());
+        }
 
         attr = element.getAttribute("columnWidths");
         if (attr != null) {
