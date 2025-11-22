@@ -17,8 +17,6 @@ import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.*;
 import jmri.util.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An icon to display a NamedTable and let the user edit it.
@@ -138,7 +136,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
                 columnIndexes.put(header, col);
             }
         }
-        JList<String> columnList = new JList(columns.toArray());
+        JList<String> columnList = new JList<>(columns.toArray(String[]::new));
         for (String header : _tableModel._editableColumnsList) {
             int index = columnIndexes.getOrDefault(header,-1);
             if (index != -1) {
@@ -156,7 +154,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
                 rowIndexes.put(header, row);
             }
         }
-        JList<String> rowList = new JList(rows.toArray());
+        JList<String> rowList = new JList<>(rows.toArray(String[]::new));
         for (String header : _tableModel._editableRowsList) {
             int index = rowIndexes.getOrDefault(header,-1);
             if (index != -1) {
@@ -502,5 +500,5 @@ public final class LogixNGTableIcon extends PositionableJPanel {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(LogixNGTableIcon.class);
+//    private final static Logger log = LoggerFactory.getLogger(LogixNGTableIcon.class);
 }
