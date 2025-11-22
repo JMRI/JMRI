@@ -61,7 +61,7 @@
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="14" lockable="false" visible="true">0</functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1   </functionlabel>
+          <functionlabel num="15" lockable="false" visible="true">   Aux1   </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
           <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
