@@ -495,6 +495,38 @@ public abstract class RollingStockManager<T extends RollingStock> extends Proper
                         .compareToIgnoreCase(r2.getRoadName() + r2.getNumber()));
         }
     }
+    
+    protected List<T> sortByTrackPriority(List<T> list) {
+        List<T> out = new ArrayList<>();
+        // sort rolling stock by track priority
+        for (T rs : list) {
+            if (rs.getTrack() != null && rs.getTrack().getTrackPriority().equals(Track.PRIORITY_HIGH)) {
+                out.add(rs);
+            }
+        }
+        for (T rs : list) {
+            if (rs.getTrack() != null && rs.getTrack().getTrackPriority().equals(Track.PRIORITY_MEDIUM)) {
+                out.add(rs);
+            }
+        }
+        for (T rs : list) {
+            if (rs.getTrack() != null && rs.getTrack().getTrackPriority().equals(Track.PRIORITY_NORMAL)) {
+                out.add(rs);
+            }
+        }
+        for (T rs : list) {
+            if (rs.getTrack() != null && rs.getTrack().getTrackPriority().equals(Track.PRIORITY_LOW)) {
+                out.add(rs);
+            }
+        }
+        // rolling stock without a track assignment
+        for (T rs : list) {
+            if (!out.contains(rs)) {
+                out.add(rs);
+            }
+        }
+        return out;
+    }
 
     /*
      * Converts build date into consistent String. Three build date formats; Two

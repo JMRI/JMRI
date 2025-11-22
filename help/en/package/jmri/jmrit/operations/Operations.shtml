@@ -447,7 +447,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               </ul></li>
 
             <li><a href="#SwitcherService">Switcher Service (Local)</a></li>
-            <li><a href="#BuildingTrains">Building Trains</a></li>
+            <li><a href="#BuildingTrains">Building Trains</a>
+              <ul>
+                <li><a href="#BuildingTrainsStaging">Building Trains from Staging</a></li>
+              </ul></li>
             <li><a href="#TrainStatus">Train Status</a></li>
             <li><a href="#BuildReports">Build Reports</a></li>
             <li><a href="#TroubleShootingBuildingTrains">Problems Building Trains How to
@@ -2326,7 +2329,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           <th>Car Load Type</th>
           <th>Train Terminates into Staging</th>
           <th>Car at Division Yard</th>
-          <th>Priority</th>
+          <th>Priority Order</th>
         </tr>
         <tr>
           <td>empty</td>
@@ -2666,10 +2669,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       delivery or shipping, the program allows you to apply a schedule to a spur. This is an
       optional feature and shouldn't be used until you become very familiar with how the program
       generates Manifests and switch lists. A schedule provides very fine control on the order types
-      of cars will be delivered to a spur. You can specify the car type, when it can be delivered,
-      the car's road and load. You can also decide the car's new load, destination, and when the car
-      is to be picked up. For example, if you wanted two SP boxcars to be delivered followed by a
-      tank car loaded with "Oil", you can create a schedule that will do exactly that.
+      of cars will be delivered to a spur. You can specify the car type, when it should be
+      delivered, along with the car's road and load. You can also decide the car's new load,
+      destination, and when the car is to be picked up. For example, if you wanted two SP boxcars to
+      be delivered followed by a tank car loaded with "Oil", you can create a schedule that will do
+      exactly that.
+      
       <p>You should note that adding schedules and custom loads is an optional feature and isn't
         needed for good car movement, and in most cases will reduce car movement. So if you want the
         most car movement don't use schedules or custom loads. This feature is here for those that
@@ -2805,10 +2810,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <h5 id="ScheduleWait">Wait</h5>
       The "Wait" field allows you determine how many trains will try to service the spur before
       picking up the car. Useful if you want a car to remain still for several operating sessions.
-      Note that the car's load won't change immediately if there's a wait count. Once the wait count
-      reaches zero, the program will switch the car load to the schedule item's ship load, or
-      whatever is appropriate if a ship load wasn't specified. Each time a train is built that could
-      service the car, the car's wait count is decremented.
+      Note that the car's load and final destination won't change immediately if there's a wait
+      count. Once the wait count reaches zero, the program will switch the car load to the schedule
+      item's ship load, or whatever is appropriate if a ship load wasn't specified. Each time a
+      train is built that could service the car, the car's wait count is decremented.
 
       <h4 id="ScheduleExample">Schedule Example</h4>
       In the schedule shown above, the schedule is operating in sequential mode and is requesting
@@ -2876,7 +2881,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       spur, set the value to 0%. Sometimes it is appropriate to overload a spur with cars or have
       cars en route to the spur, if you want this, increase the value up to 1000%. BTW 1000% means
       send 10 times the available space in cars to this spur. If you enter this value, you hopefully
-      have 10 times the spur's available track space in a storage yard that is near by!
+      have 10 times the spur's available track space in your interchanges and nearby storage tracks!
 
       <h4>Alternate Track (Off Spot)</h4>
       The second option under "Tools&rArr;Options" in the schedule window is the ability to specify
@@ -4449,7 +4454,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Empties</a> option when printing your Manifest, you will want to use the correct load type so
       that the program prints out the correct number of loads and empties in the train.
 
-      <h4>Priority</h4>
+      <h4 id="LoadPriority">Priority</h4>
       The default load priority is low and you can change the priority to medium or high for a given
       car type and load. Higher priority car loads are normally serviced before low priority. Useful
       if you need to get your reefer loaded with fruit to the market ASAP!
@@ -6580,6 +6585,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>You can also control which trains are shown in the Trains window. When the "Show All"
         checkbox is deselected, only trains that have the "Build" checkbox selected are shown.</p>
 
+      <h3 id="BuildingTrainsStaging">Building Trains from Staging</h3>
+      There are several options for controlling how trains depart staging, see
+      <a href="#DepartingStagingRoute">Departing Staging Route</a> for additional details.
+      <p>
+        When building a train from staging, the program will attempt to find destinations for all of
+        the rolling stock departing the staging track. If the program fails to find appropriate
+        destinations, it will report a build failure and prompt you to remove the rolling stock that
+        the program couldn't find destinations for. If you answer yes to the car removal, the
+        program will leave the cars in staging but without a track assignment. You should as soon as
+        possible move the cars without a staging track assignment to a another track in staging, or the
+        layout. The other option is to simply remove the cars from the layout by removing the car's
+        location in the <a href="#CarsSet">Set Car</a> window. Also on a build failure, the program
+        will ask if you want to release the rolling stock that has been assigned to the train.
+        Answering "yes" will allow another train to depart with those locomotives and cars out of
+        staging. A "no" will keep the locomotives and cars assigned to the train that failed to
+        build.
+      </p>
+
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
       </p>
@@ -6746,11 +6769,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       or the option to <a href="#TrainBuildOptions">build loco consist from single locos</a> must be
       enabled.
 
-      <p>When building a train only rolling stock at locations that are part of the train's
-        route are used. Rolling stock already assigned to trains are ignored when building new
-        trains. With regards to cars, in addition to the number of moves a car has experienced, the
-        car's load priority is also considered. The program will try and find destinations for cars
-        with higher priority loads before low priority loads.</p>
+      <p>
+        When building a train only rolling stock at locations that are part of the train's route are
+        used. Rolling stock already assigned to trains are ignored when building new trains. With
+        regards to cars, in addition to the number of moves a car has experienced, the car's <a
+          href="#TrackPriority">track</a> and <a href="#LoadPriorityload">load</a> priority is also
+        considered. The program will try and find destinations for cars with higher priority loads
+        before low priority loads.
+      </p>
 
       <p>
         The next step in the build process is to optionally assign a <a href="#CabooseFredHazardous">caboose</a>
