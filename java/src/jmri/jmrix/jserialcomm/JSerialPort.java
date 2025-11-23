@@ -324,29 +324,6 @@ public class JSerialPort implements SerialPort {
         for (com.fazecast.jSerialComm.SerialPort portID : portIDs) {
             portNameVector.addElement(portID.getSystemPortName());
         }
-        // On Linux and Mac, try to find symlinks and to use the system property purejavacomm.portnamepattern
-        if (SystemType.isLinux() || SystemType.isMacOSX()) {
-            File[] files = new File("/dev").listFiles();
-            if (files != null ) {
-                // Find symlinks linked to real ports
-                Set<String> symlinkPorts = Stream.of(files).filter(file -> !file.isDirectory()
-                        && portNameVector.contains(getSymlinkTarget(file))
-                        && !portNameVector.contains(file.getName())).map(File::getName).collect(Collectors.toSet());
-                portNameVector.addAll(symlinkPorts);
-                log.info("Adding symlink port {}", symlinkPorts);
-
-                // Let the user add additional serial ports
-                String portnamePattern = System.getProperty("purejavacomm.portnamepattern");
-                if (portnamePattern != null) {
-                    Pattern pattern = Pattern.compile(portnamePattern);
-                    Set<String> ports = Stream.of(files).filter(file -> !file.isDirectory()
-                            && pattern.matcher(file.getName()).matches()
-                            && !portNameVector.contains(file.getName())).map(File::getName).collect(Collectors.toSet());
-                    portNameVector.addAll(ports);
-                    log.info("Adding user-specified ports {} matching pattern {}", ports, portnamePattern);
-                }
-            }
-        }
         return portNameVector;
     }
 
