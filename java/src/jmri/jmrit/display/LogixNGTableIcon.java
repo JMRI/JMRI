@@ -317,7 +317,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
     /**
      * Table model for Tables in the Edit NamedTable pane.
      */
-    public final class TableModel extends AbstractTableModel {
+    public static final class TableModel extends AbstractTableModel {
 
         private NamedBeanHandle<NamedTable> _namedTable;
         private NamedBeanHandle<Module> _validateModule;
