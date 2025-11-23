@@ -150,9 +150,10 @@ which checks the dates of the control files to make sure they've been updated wh
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
-##### jSerialComm-2.10.4.jar
-- Supported serial lib since JMRI 5.7.1
+##### jSerialComm-2.12.0-20251107.134933-4.jar
+- Supported serial lib since JMRI 5.15.1
 - from https://fazecast.github.io/jSerialComm/
+- from https://central.sonatype.com/repository/maven-snapshots/com/fazecast/jSerialComm/2.12.0-SNAPSHOT/jSerialComm-2.12.0-20251107.134933-4.jar
 
 ##### purejavacomm-1.0.5.jar
 - version 1.0.5 plus custom change to the Mac M1 support (only)
