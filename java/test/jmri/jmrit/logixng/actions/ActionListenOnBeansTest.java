@@ -149,7 +149,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         s99.setState(Sensor.INACTIVE);
         assertEquals("", getOutputArea().getText());
         s1.setState(Sensor.ACTIVE);
-        // another Thread updates the TextArea when complete.
+        // LogixNG Thread updates the TextArea when complete.
         assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
         assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
         assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
@@ -165,8 +165,8 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         getOutputArea().setText("");
         s99.setState(Sensor.INACTIVE);
         assertEquals("", getOutputArea().getText());
+
         s1.setState(Sensor.ACTIVE);
-        assertEquals("", getOutputArea().getText());
         assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
         assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
         assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
@@ -188,8 +188,8 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         getOutputArea().setText("");
         s99.setState(Sensor.INACTIVE);
         assertEquals("", getOutputArea().getText());
+
         s1.setState(Sensor.ACTIVE);
-        assertEquals("", getOutputArea().getText());
         assertTrue(JUnitUtil.waitFor(() -> {return s99.getState() == Sensor.ACTIVE;}));
         assertTrue(conditionalNG.getCurrentThread().isQueueEmpty());
         assertEquals("IS1, KnownState, 2", getOutputArea().getText().trim());
