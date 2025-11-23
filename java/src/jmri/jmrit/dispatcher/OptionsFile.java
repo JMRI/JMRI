@@ -243,7 +243,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                 }
             }
         } else {
-            log.debug("No Dispatcher options file found at {}, using defaults", optionsFileName);
+            log.debug("No Dispatcher options file found at {} or {}, using defaults", defaultFileName, oldFileName);
         }
     }
 
