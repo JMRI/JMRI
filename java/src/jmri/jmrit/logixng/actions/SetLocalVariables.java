@@ -6,7 +6,8 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.*;
 
 /**
- * This action sets some local variables. It is used internally.
+ * This action sets some local variables.
+ * It is used internally.
  *
  * @author Daniel Bergqvist Copyright 2025
  */

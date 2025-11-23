@@ -145,6 +145,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.actions.RunOnce.class);
         classes.add(jmri.jmrit.logixng.actions.Sequence.class);
         classes.add(jmri.jmrit.logixng.actions.TableForEach.class);
+        classes.add(jmri.jmrit.logixng.actions.ValidationError.class);
         map.put(LogixNG_Category.FLOW_CONTROL, classes);
 
         classes = new ArrayList<>();

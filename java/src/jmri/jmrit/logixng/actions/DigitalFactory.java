@@ -86,6 +86,7 @@ public class DigitalFactory implements DigitalActionFactory {
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, TableForEach.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, Timeout.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.ITEM, TriggerRoute.class),
+                        new AbstractMap.SimpleEntry<>(LogixNG_Category.FLOW_CONTROL, ValidationError.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, WebBrowser.class),
                         new AbstractMap.SimpleEntry<>(LogixNG_Category.OTHER, WebRequest.class)
                 );

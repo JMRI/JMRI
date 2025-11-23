@@ -15,8 +15,10 @@ import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.*;
+import jmri.jmrit.logixng.implementation.*;
+import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.swing.*;
-
 
 /**
  * An icon to display a NamedTable and let the user edit it.
@@ -317,7 +319,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
     /**
      * Table model for Tables in the Edit NamedTable pane.
      */
-    public static final class TableModel extends AbstractTableModel {
+    public final class TableModel extends AbstractTableModel {
 
         private NamedBeanHandle<NamedTable> _namedTable;
         private NamedBeanHandle<Module> _validateModule;
@@ -328,6 +330,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         List<String> _editableRowsList;
 
         public TableModel() {
+            initCallModule();
             setEditableColumns("");
             setEditableRows("");
         }
@@ -423,7 +426,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
         @Override
         public void setValueAt(Object val, int row, int col) {
-            _namedTable.getBean().setCell(val, row+1, col+1);
+            callValidateModule(val, row, col);
         }
 
         @Override
@@ -443,7 +446,142 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             return allowColumn && allowRow;
         }
 
+
+
+
+        private final LogixNG validateModuleLogixNG = new DefaultLogixNG("IQ:JMRI:LogixNGTableIcon", null);
+        private final ConditionalNG validateModuleConditionalNG =
+                new DefaultConditionalNG("IQC:JMRI:LogixNGTableIcon", null, LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
+        private final DigitalCallModule validateModuleAction = new DigitalCallModule("IQDA:JMRI:LogixNGTableIcon", null);
+        private Map<String, Object> _variablesWithValues;
+        private final MyData _myData = new MyData();
+
+        private void initCallModule() {
+            validateModuleLogixNG.addConditionalNG(validateModuleConditionalNG);
+
+            DigitalMany many = new DigitalMany("IQDA:JMRI:LogixNGTableIcon", null);
+            MaleSocket maleSocketMany = new DefaultMaleDigitalActionSocket(
+                    InstanceManager.getDefault(DigitalActionManager.class), many);
+            many.setParent(maleSocketMany);
+
+            maleSocketMany.addLocalVariable("iconId", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("tableName", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("row", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("column", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("oldValue", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("newValue", SymbolTable.InitialValueType.String, null);
+
+            try {
+                validateModuleConditionalNG.getFemaleSocket().connect(maleSocketMany);
+            } catch (SocketAlreadyConnectedException e) {
+                log.error("Exception when creating error handling LogixNG: ", e);
+            }
+
+            SetLocalVariables setLocalVariables = new SetLocalVariables("IQDA:JMRI:LogixNGTableIcon", null);
+            MaleSocket maleSocketSetLocalVariables = new DefaultMaleDigitalActionSocket(
+                    InstanceManager.getDefault(DigitalActionManager.class), setLocalVariables);
+            setLocalVariables.setParent(maleSocketSetLocalVariables);
+            _variablesWithValues = setLocalVariables.getMap();
+
+            try {
+                maleSocketMany.getChild(maleSocketMany.getChildCount()-1).connect(maleSocketSetLocalVariables);
+            } catch (SocketAlreadyConnectedException e) {
+                log.error("Exception when creating error handling LogixNG: ", e);
+            }
+
+            RunFinally runFinally = new RunFinally("IQDA:JMRI:LogixNGTableIcon", null, this::handleResult, _myData);
+            MaleSocket maleSocketRunFinally = new DefaultMaleDigitalActionSocket(
+                    InstanceManager.getDefault(DigitalActionManager.class), runFinally);
+            runFinally.setParent(maleSocketRunFinally);
+
+            try {
+                maleSocketMany.getChild(maleSocketMany.getChildCount()-1).connect(maleSocketRunFinally);
+            } catch (SocketAlreadyConnectedException e) {
+                log.error("Exception when creating error handling LogixNG: ", e);
+            }
+
+            validateModuleAction.addParameter("__iconId__", SymbolTable.InitialValueType.LocalVariable, "iconId", Module.ReturnValueType.None, null);
+            validateModuleAction.addParameter("__tableName__", SymbolTable.InitialValueType.LocalVariable, "tableName", Module.ReturnValueType.None, null);
+            validateModuleAction.addParameter("__row__", SymbolTable.InitialValueType.LocalVariable, "row", Module.ReturnValueType.None, null);
+            validateModuleAction.addParameter("__column__", SymbolTable.InitialValueType.LocalVariable, "column", Module.ReturnValueType.None, null);
+            validateModuleAction.addParameter("__oldValue__", SymbolTable.InitialValueType.LocalVariable, "oldValue", Module.ReturnValueType.None, null);
+            validateModuleAction.addParameter("__newValue__", SymbolTable.InitialValueType.LocalVariable, "newValue", Module.ReturnValueType.LocalVariable, "newValue");
+            MaleSocket maleSocket = new DefaultMaleDigitalActionSocket(InstanceManager.getDefault(DigitalActionManager.class), validateModuleAction);
+            validateModuleAction.setParent(maleSocket);
+            try {
+                runFinally.getChild(0).connect(maleSocket);
+            } catch (SocketAlreadyConnectedException e) {
+                log.error("Exception when creating error handling LogixNG: ", e);
+            }
+            List<String> errors = new ArrayList<>();
+            validateModuleLogixNG.setParentForAllChildren(errors);
+            if (!errors.isEmpty()) {
+                for (String s : errors) {
+                    log.error("Error: {}", s);
+                }
+            }
+        }
+
+        private void callValidateModule(Object val, int row, int col) {
+            if (_validateModule == null) {
+                return;
+            }
+            if (!_validateModule.getBean().getRootSocket().isConnected()) {
+                return;
+            }
+            validateModuleAction.getSelectNamedBean().setNamedBean(_validateModule);
+
+            NamedTable table = _namedTable.getBean();
+            _variablesWithValues.put("iconId", LogixNGTableIcon.this.getId());
+            _variablesWithValues.put("tableName", _namedTable.getName());
+            _variablesWithValues.put("row", table.getCell(row+1, 0));
+            _variablesWithValues.put("column", table.getCell(0, col+1));
+            _variablesWithValues.put("oldValue", table.getCell(row+1, col+1));
+            _variablesWithValues.put("newValue", val);
+            _myData.setValues(_namedTable.getBean(), row, col);
+            validateModuleConditionalNG.execute();
+        }
+
+        private void handleResult(ConditionalNG conditionalNG, Exception ex, RunFinally.Data data) {
+            if (ex != null) {
+                if (ex instanceof ValidationErrorException) {
+                    JOptionPane.showMessageDialog(LogixNGTableIcon.this,
+                            ex.getMessage(),
+                            Bundle.getMessage("LogixNGTableIcon_ValidationError"),
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(LogixNGTableIcon.this,
+                            ex.getMessage(),
+                            Bundle.getMessage("LogixNGTableIcon_Error"),
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                if (!(data instanceof MyData)) {
+                    throw new IllegalArgumentException("data is not a MyData");
+                }
+                MyData myData = (MyData)data;
+                Object newValue = conditionalNG.getSymbolTable().getValue("newValue");
+                myData._namedTable.setCell(newValue, myData._row+1, myData._col+1);
+                TableModel.this.fireTableCellUpdated(myData._row, myData._col);
+            }
+        }
+
     }
+
+
+    private static class MyData implements RunFinally.Data {
+
+        private NamedTable _namedTable;
+        private int _row;
+        private int _col;
+
+        private void setValues(NamedTable namedTable, int row, int col) {
+            this._namedTable = namedTable;
+            this._row = row;
+            this._col = col;
+        }
+    }
+
 
     private class RowHeaderListModel extends AbstractListModel<Object> {
         @Override
@@ -461,7 +599,9 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             String str = data != null ? data.toString().concat(padding) : padding;
             return str.length() < 5 ? str.concat("     ").substring(0, 7) : str;
         }
+
     }
+
 
     private static final class RowHeaderRenderer extends JLabel implements ListCellRenderer<Object> {
 
@@ -500,5 +640,5 @@ public final class LogixNGTableIcon extends PositionableJPanel {
     }
 
 
-//    private final static Logger log = LoggerFactory.getLogger(LogixNGTableIcon.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableIcon.class);
 }

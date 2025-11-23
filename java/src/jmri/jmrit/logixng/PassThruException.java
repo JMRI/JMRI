@@ -10,9 +10,17 @@ import jmri.JmriException;
 public abstract class PassThruException extends JmriException {
 
     /**
-     * Creates a new instance of <code>BreakException</code> without detail message.
+     * Creates a new instance of <code>PassThruException</code> without detail message.
      */
     public PassThruException() {
+    }
+
+    /**
+     * Creates a new instance of <code>PassThruException</code> with a detail message.
+     * @param msg the message
+     */
+    public PassThruException(String msg) {
+        super(msg);
     }
 
 }
