@@ -136,7 +136,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
                 columnIndexes.put(header, col);
             }
         }
-        JList<String> columnList = new JList<>(new String[0]);
+        JList<String> columnList = new JList<>(columns.toArray(new String[0]));
         for (String header : _tableModel._editableColumnsList) {
             int index = columnIndexes.getOrDefault(header,-1);
             if (index != -1) {
