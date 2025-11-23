@@ -329,6 +329,14 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         List<String> _editableColumnsList;
         List<String> _editableRowsList;
 
+        private final LogixNG validateModuleLogixNG = new DefaultLogixNG("IQ:JMRI:LogixNGTableIcon", null);
+        private final ConditionalNG validateModuleConditionalNG =
+                new DefaultConditionalNG("IQC:JMRI:LogixNGTableIcon", null, LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
+        private final DigitalCallModule validateModuleAction = new DigitalCallModule("IQDA:JMRI:LogixNGTableIcon", null);
+        private Map<String, Object> _variablesWithValues;
+        private final MyData _myData = new MyData();
+
+
         public TableModel() {
             initCallModule();
             setEditableColumns("");
@@ -445,16 +453,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
             return allowColumn && allowRow;
         }
-
-
-
-
-        private final LogixNG validateModuleLogixNG = new DefaultLogixNG("IQ:JMRI:LogixNGTableIcon", null);
-        private final ConditionalNG validateModuleConditionalNG =
-                new DefaultConditionalNG("IQC:JMRI:LogixNGTableIcon", null, LogixNG_Thread.DEFAULT_LOGIXNG_THREAD);
-        private final DigitalCallModule validateModuleAction = new DigitalCallModule("IQDA:JMRI:LogixNGTableIcon", null);
-        private Map<String, Object> _variablesWithValues;
-        private final MyData _myData = new MyData();
 
         private void initCallModule() {
             validateModuleLogixNG.addConditionalNG(validateModuleConditionalNG);
