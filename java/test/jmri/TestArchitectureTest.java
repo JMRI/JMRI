@@ -58,7 +58,6 @@ public class TestArchitectureTest {
     @ArchTest
     public static final ArchRule junit4TestRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
         .doNotHaveFullyQualifiedName("jmri.TestArchitectureTest").and()
         .resideOutsideOfPackage("jmri.jmrit.logixng..").
             and().areNotInnerClasses() // within TestArchitectureTest
