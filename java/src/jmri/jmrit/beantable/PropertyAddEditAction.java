@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.util.Vector;
 
 import javax.swing.*;
-import javax.swing.event.*;
 
 import jmri.InvokeOnGuiThread;
 import jmri.NamedBean;
@@ -13,7 +12,7 @@ import jmri.util.swing.WrapLayout;
 /**
  * Swing Action to display an Add/Edit dialong for a specific NamedBean
  *
- * @aauthor Bob Jacobsen   Copyright (C) 2025
+ * @author Bob Jacobsen   Copyright (C) 2025
  */
  
 public class PropertyAddEditAction extends AbstractAction {
@@ -67,12 +66,14 @@ public class PropertyAddEditAction extends AbstractAction {
         frame.setVisible(true);
     }
     
+    // Show the value corresponding to the selected property name
     void selectionChanged() {
         String property = (String)selector.getSelectedItem();    
         log.debug("Selection Changed to {}", property);
         valueField.setText((String)thisBean.getProperty(property));
     }
     
+    // make the change
     void setButtonPressed() {
         // set the provided value for the selected property
         log.trace("Selected index {}", selector.getSelectedIndex());
@@ -87,7 +88,6 @@ public class PropertyAddEditAction extends AbstractAction {
         
         // and select the entry we just made
         selector.setSelectedItem(property);
-    
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PropertyAddEditAction.class);
