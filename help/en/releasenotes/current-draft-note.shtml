@@ -207,7 +207,8 @@
               The initial "No Decoder" definition is limited to a primary
               address of 1-127, this extended version allows the full
               range of extended addresses to be used</li>
-          <li></li>
+          <li>"DCCWorld.com" has been added as a manufacturer ID that DecoderPro 
+              recognizes.</li>
         </ul>
 
         <h4>AE Model</h4>

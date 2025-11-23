@@ -7,6 +7,9 @@
   <meta name="author" content="Dave Sand">
   <meta name="keywords" content="jmri LogixNG reference expression items">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <style type="text/css">
+    .sub-links {margin-left: 4em; border: 1px solid #000; list-style-type: none;}
+  </style>
 </head>
 <body>
   <!--#include virtual="/help/en/parts/Header.shtml" -->
@@ -156,14 +159,34 @@
 
       <h3 id="digital_expression_item">Digital expression :: Item</h3>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/digital_expression_item.png"><img class="image-border" src=
-        "images/chapter6/digital_expression_item.png" alt="Chapter 6 expression item list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#item_audio">Audio</a></li>
+        <li><a href="#item_block">Block</a></li>
+        <li><a href="#item_clock">Clock</a></li>
+        <li><a href="#item_conditional">Conditional</a></li>
+        <li><a href="#item_dispatcher">Dispatcher</a></li>
+        <li><a href="#EntryExitExpressions">Entry/Exit</a></li>
+        <li><a href="#item_light">Light</a></li>
+        <li><a href="#item_local_variable">Local variable</a></li>
+        <li><a href="#item_memory">Memory</a></li>
+        <li><a href="#item_oblock">OBlock</a></li>
+        <li><a href="#item_power">Power</a></li>
+        <li><a href="#item_reference">Reference</a></li>
+        <li><a href="#item_reporter">Reporter</a></li>
+        <li><a href="#script">Script</a></li>
+        <li><a href="#item_section">Section</a></li>
+        <li><a href="#item_sensor">Sensor</a></li>
+        <li><a href="#item_sensor_edge">Sensor Edge</a></li>
+        <li><a href="#item_signal_head">Signal head</a></li>
+        <li><a href="#item_signal_mast">Signal mast</a></li>
+        <li><a href="#item_transit">Transit</a></li>
+        <li><a href="#item_turnout">Turnout</a></li>
+        <li><a href="#WarrantExpression">Warrant</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Audio<span class="since">since 5.5.4</span></h5>
+      <h5 id="item_audio">Audio<span class="since">since 5.5.4</span></h5>
 
       <p>Returns true if the selected audio object has the indicated state.  The drop-down list
       contains the defined audio listeners and audio sources.</p>
@@ -181,7 +204,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Block</h5>
+      <h5 id="item_block">Block</h5>
 
       <ul>
         <li><strong>Occupied:</strong> Evaluate to true if the sensor assigned to the block is
@@ -202,7 +225,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Clock</h5>
+      <h5 id="item_clock">Clock</h5>
 
       <ul>
         <li><strong>Fast clock:</strong> Evaluate to true if the fast clock time is between two
@@ -214,7 +237,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Conditional</h5>
+      <h5 id="item_conditional">Conditional</h5>
 
       <p>If the conditional named is used in more than one Logix, the results are
       unpredictable.</p>
@@ -232,7 +255,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Dispatcher</h5>
+      <h5 id="item_dispatcher">Dispatcher</h5>
 
       <p>A Dispatcher train only exists from the time it is created until it is terminated.
       LogixNG uses the Dispatcher TrainInfo file to refer to a potential Dispatcher train.
@@ -297,7 +320,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Light</h5>
+      <h5 id="item_light">Light</h5>
 
       <ul>
         <li><strong>Off:</strong> Evaluate to true if the state of the specified light is off.</li>
@@ -310,7 +333,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Local variable</h5>
+      <h5 id="item_local_variable">Local variable</h5>
 
       <p>Compares the value of the specified local variable to either a string, a memory variable,
       another local variable or a table cell. See <a href="chapter11.shtml#tableCellSelection">
@@ -365,7 +388,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Memory</h5>
+      <h5 id="item_memory">Memory</h5>
 
       <p>Compares the value of the specified memory variable to either a string, another memory,
       variable, a local variable or a table cell. See <a href="chapter11.shtml#tableCellSelection">
@@ -420,7 +443,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>OBlock</h5>
+      <h5 id="item_oblock">OBlock</h5>
 
       <ul>
         <li><strong>Unoccupied:</strong> Evaluate to true if the specified oblock is not
@@ -444,7 +467,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Power</h5>
+      <h5 id="item_power">Power</h5>
 
       <ul>
         <li><strong>On:</strong> Evaluate to true if the power state is on.</li>
@@ -466,7 +489,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Reference</h5>
+      <h5 id="item_reference">Reference</h5>
 
       <p>If there is a possibility that a <a href="chapter7.shtml">reference</a> will refer to an
       item that does not exist or it is the wrong item type, the Reference expression can test that
@@ -485,7 +508,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Reporter</h5>
+      <h5 id="item_reporter">Reporter</h5>
 
       <p>Compare the content of one of the three Reporter data fields to a string, a memory variable
       or a local variable.  See the <strong>Memory</strong> description for a list of the
@@ -532,7 +555,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Section<span class="since">since 5.3.5</span></h5>
+      <h5 id="item_section">Section<span class="since">since 5.3.5</span></h5>
 
       <ul>
         <li><strong>Free:</strong> Evaluate to true if the state of the selected section is
@@ -547,7 +570,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Sensor</h5>
+      <h5 id="item_sensor">Sensor</h5>
 
       <ul>
         <li><strong>Inactive:</strong> Evaluate to true if the state of the specified sensor is
@@ -562,7 +585,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Sensor Edge<span class="since">since 5.1.7</span></h5>
+      <h5 id="item_sensor_edge">Sensor Edge<span class="since">since 5.1.7</span></h5>
 
       <p>Returns True if the state of the sensor goes from one predefined state to another, for
       example from "Active" to "Inactive".</p>
@@ -578,7 +601,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Signal head</h5>
+      <h5 id="item_signal_head">Signal head</h5>
 
       <ul>
         <li><strong>has appearance:</strong> Evaluate to true if the specified signal head
@@ -602,7 +625,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Signal mast</h5>
+      <h5 id="item_signal_mast">Signal mast</h5>
 
       <ul>
         <li><strong>has aspect:</strong> Evaluate to true if the specified signal mast aspect
@@ -632,7 +655,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Transit<span class="since">since 5.3.5</span></h5>
+      <h5 id="item_transit">Transit<span class="since">since 5.3.5</span></h5>
 
       <ul>
         <li><strong>Idle:</strong> Evaluate to true if the state of the selected transit is
@@ -644,7 +667,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Turnout</h5>
+      <h5 id="item_turnout">Turnout</h5>
 
       <ul>
         <li><strong>Closed:</strong> Evaluate to true if the state of the specified turnout is
@@ -681,21 +704,25 @@
 
       <h3 id="digital_expression_common">Digital expression :: Common</h3>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/digital_expression_common.png"><img class="image-border" src=
-        "images/chapter6/digital_expression_common.png" alt="Chapter 6 expression common list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#common_and">And</a></li>
+        <li><a href="#common_antecedent">Antecedent</a></li>
+        <li><a href="#digital_formula">Digital Formula</a></li>
+        <li><a href="#common_not">Not</a></li>
+        <li><a href="#common_or">Or</a></li>
+        <li><a href="#timer_id">Timer</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>And</h5>
+      <h5 id="common_and">And</h5>
 
       <p>And evaluates the child expressions and if all of them returns true, the And expression
       returns true as well.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Antecedent</h5>
+      <h5 id="common_antecedent">Antecedent</h5>
 
       <p>The Antecedent expression is mainly included to make import from Logix to LogixNG simple.
       It works exactly as Antecedent in Logix. It has a number of child expressions and an
@@ -720,7 +747,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Not</h5>
+      <h5 id="common_not">Not</h5>
 
       <p>The Not expression has one child expression and answers <strong>true</strong> if the child
       expression answers <strong>false</strong>, and <strong>false</strong> if the child expression
@@ -728,7 +755,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Or</h5>
+      <h5 id="common_or">Or</h5>
 
       <p>Or evaluates the child expressions and if at least one of them returns true, the Or
       expression returns true as well.</p>
@@ -753,15 +780,13 @@
       <h3 id="digital_expression_flow_control">Digital expression :: Flow Control
       <span class="since">since 5.1.3</span></h3>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/digital_expression_flow_control.png"><img class="image-border" src=
-        "images/chapter6/digital_expression_flow_control.png"
-        alt="Chapter 6 expression flow control list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#flow_call_module">Call module</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Call module</h5>
+      <h5 id="flow_call_module">Call module</h5>
 
       <p>Call a module and and return its true/false response. See <a href=
       "chapter10.shtml#DigitalExpressionModule">Chapter 10 - Modules</a></p>
@@ -770,14 +795,13 @@
 
       <h3 id="digital_expression_loconet">Digital expression :: LocoNet</h3>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/digital_expression_loconet.png"><img class="image-border" src=
-        "images/chapter6/digital_expression_loconet.png" alt="Chapter 6 expression loconet list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#loconet_slot_usage">Slot Usage</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Slot Usage</h5>
+      <h5 id="loconet_slot_usage">Slot Usage</h5>
 
       <p>Evaluate the LocoNet slot usage.</p>
 
@@ -790,14 +814,13 @@
 
       <h3 id="digital_expression_linux">Digital expression :: Linux</h3>
 
-      <div style="margin-left: 2em">
-        <a href="images/chapter6/digital_expression_linux.png"><img src=
-        "images/chapter6/digital_expression_linux.png" alt="Chapter 6 digital expression linux"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#linux_line_power">Linux Line Power</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Linux Line Power<span class="since">since 5.3.4</span></h5>
+      <h5 id="linux_line_power">Linux Line Power<span class="since">since 5.3.4</span></h5>
 
       <p>The Linux <strong>upower</strong> command line tool is used to determine if external power
       is active. For example, if the external power is removed, then this tool can be used to do a
@@ -818,20 +841,26 @@
 
       <h3 id="digital_expression_other">Digital expression :: Other</h3>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/digital_expression_other.png"><img class="image-border" src=
-        "images/chapter6/digital_expression_other.png" alt="Chapter 6 expression other list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#other_always_false">Always false</a></li>
+        <li><a href="#other_always_true">Always true</a></li>
+        <li><a href="#connectname">Connection name</a></li>
+        <li><a href="#fileasflag">File as flag</a></li>
+        <li><a href="#other_hold">Hold</a></li>
+        <li><a href="#LastResult">Last result of digital expression</a></li>
+        <li><a href="#other_log_data">Log data</a></li>
+        <li><a href="#other_trigger_once">Trigger once</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Always false</h5>
+      <h5 id="other_always_false">Always false</h5>
 
       <p>The False expression always answers <strong>false</strong>.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Always true</h5>
+      <h5 id="other_always_true">Always true</h5>
 
       <p>The True expression always answers <strong>true</strong>. This expression is commonly used
       as a child to the Trigger Once expression.</p>
@@ -913,7 +942,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Hold</h5>
+      <h5 id="other_hold">Hold</h5>
 
       <p>The Hold expression has two child expressions, one trigger expression and one hold
       expression. For this expression to become <strong>true</strong>, both the trigger expression
@@ -935,7 +964,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Log data</h5>
+      <h5 id="other_log_data">Log data</h5>
 
       <p>The <strong>Log data</strong> expresson works the same as the <strong>Log data</strong>
       action. See <a href="chapter5.shtml#ActionLogData">Log data action</a> for details.</p>
@@ -953,7 +982,7 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Trigger once</h5>
+      <h5 id="other_trigger_once">Trigger once</h5>
 
       <p>The TriggerOnce expression answers true one single time and then false until its child
       expression becomes False and then True again.</p>
@@ -965,19 +994,22 @@
 
       <h3 id="analog_expression_item">Analog expression :: Item</h3>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/analog_expression_item.png"><img class="image-border" src=
-        "images/chapter6/analog_expression_item.png" alt="Chapter 6 analog expression item list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#analog_constant">Analog constant</a></li>
+        <li><a href="#analog_io">AnalogIO</a></li>
+        <li><a href="#analog_local_variable">Local variable as analog value</a></li>
+        <li><a href="#analog_memory">Memory as analog value</a></li>
+        <li><a href="#MidnightMinutes">Minutes since midnight</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Analog constant</h5>
+      <h5 id="analog_constant">Analog constant</h5>
 
       <p>Return a constant as an analog value.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <h5>AnalogIO</h5>
+      <h5 id="analog_io">AnalogIO</h5>
 
       <p>AnalogIO reads the value of an AnalogIO and returns its value. There is currently two
       items that can be used with AnalogIO:</p>
@@ -994,13 +1026,13 @@
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Local variable as analog value</h5>
+      <h5 id="analog_local_variable">Local variable as analog value</h5>
 
       <p>Return value of a local variable as an analog value.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Memory as analog value</h5>
+      <h5 id="analog_memory">Memory as analog value</h5>
 
       <p>Return value of a memory variable as an analog value.</p>
 
@@ -1015,15 +1047,13 @@
 
       <h3 id="analog_expression_common">Analog expression :: Common</h3>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/analog_expression_common.png"><img class="image-border" src=
-        "images/chapter6/analog_expression_common.png" alt=
-        "Chapter 6 analog expression common list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#analog_formula">Analog formula</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
-      <h5>Analog formula</h5>
+      <h5 id="analog_formula">Analog formula</h5>
 
       <p>Return the result of a formula as an analog value.</p>
 
@@ -1031,10 +1061,11 @@
 
       <h3 id="string_expression_item">String expression :: Item</h3>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/string_expression_item.png"><img class="image-border" src=
-        "images/chapter6/string_expression_item.png" alt="Chapter 6 string expression item list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#mem_expression">Memory as string value</a></li>
+        <li><a href="#con_expression">String constant</a></li>
+        <li><a href="#sio_expression">StringIO as string value</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 
@@ -1067,14 +1098,12 @@
 
       <h3 id="string_expression_common">String expression :: Common</h3>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/string_expression_common.png"><img class="image-border" src=
-        "images/chapter6/string_expression_common.png" alt=
-        "Chapter 6 string expression common list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#common_string_formula">String formula</a></li>
+      </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
-      <h5>String formula</h5>
+      <h5 id="common_string_formula">String formula</h5>
 
       <p>Return the result of a formula as a string value.</p>
 
@@ -1087,18 +1116,51 @@
 
       <p>The combined <strong>Item</strong> list:</p>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/generic_expression_item.png"><img class="image-border" src=
-        "images/chapter6/generic_expression_item.png" alt="Chapter 6 generic expression item list"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#analog_constant">Analog constant</a></li>
+        <li><a href="#analog_io">AnalogIO</a></li>
+        <li><a href="#item_audio">Audio</a></li>
+        <li><a href="#item_block">Block</a></li>
+        <li><a href="#item_clock">Clock</a></li>
+        <li><a href="#item_conditional">Conditional</a></li>
+        <li><a href="#item_dispatcher">Dispatcher</a></li>
+        <li><a href="#EntryExitExpressions">Entry/Exit</a></li>
+        <li><a href="#item_light">Light</a></li>
+        <li><a href="#item_local_variable">Local variable</a></li>
+        <li><a href="#analog_local_variable">Local variable as analog value</a></li>
+        <li><a href="#item_memory">Memory</a></li>
+        <li><a href="#analog_memory">Memory as analog value</a></li>
+        <li><a href="#mem_expression">Memory as string value</a></li>
+        <li><a href="#MidnightMinutes">Minutes since midnight</a></li>
+        <li><a href="#item_oblock">OBlock</a></li>
+        <li><a href="#item_power">Power</a></li>
+        <li><a href="#item_reference">Reference</a></li>
+        <li><a href="#item_reporter">Reporter</a></li>
+        <li><a href="#script">Script</a></li>
+        <li><a href="#item_section">Section</a></li>
+        <li><a href="#item_sensor">Sensor</a></li>
+        <li><a href="#item_sensor_edge">Sensor Edge</a></li>
+        <li><a href="#item_signal_head">Signal head</a></li>
+        <li><a href="#item_signal_mast">Signal mast</a></li>
+        <li><a href="#con_expression">String constant</a></li>
+        <li><a href="#sio_expression">StringIO as string value</a></li>
+        <li><a href="#item_transit">Transit</a></li>
+        <li><a href="#item_turnout">Turnout</a></li>
+        <li><a href="#WarrantExpression">Warrant</a></li>
+      </ul>
 
       <p>The combined <strong>Common</strong> list:</p>
 
-      <div style="margin-left: 2em;">
-        <a href="images/chapter6/generic_expression_common.png"><img class="image-border" src=
-        "images/chapter6/generic_expression_common.png" alt=
-        "Chapter 6 generic expression common list" width="196" height="26"></a>
-      </div>
+      <ul class="sub-links">
+        <li><a href="#analog_formula">Analog formula</a></li>
+        <li><a href="#common_and">And</a></li>
+        <li><a href="#common_antecedent">Antecedent</a></li>
+        <li><a href="#digital_formula">Digital Formula</a></li>
+        <li><a href="#common_not">Not</a></li>
+        <li><a href="#common_or">Or</a></li>
+        <li><a href="#common_string_formula">String formula</a></li>
+        <li><a href="#timer_id">Timer</a></li>
+      </ul>
 
       <p>The <strong>Flow Control</strong>, <strong>LocoNet</strong> and <strong>Other</strong> lists
       are the same as Digital expression.</p>
