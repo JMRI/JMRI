@@ -48,7 +48,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
 
     // operational variables
     protected DispatcherFrame dispatcher = null;
-    private static String defaultFileName = FileUtil.getUserFilesPath() + "dispatcheroptions.xml";
+    private static String defaultFileName = FileUtil.getUserFilesPath() + "dispatcher" + FileUtil.SEPARATOR + "dispatcheroptions.xml";
+    private static String oldFileName = FileUtil.getUserFilesPath() + "dispatcheroptions.xml";
 
     public static void setDefaultFileName(String testLocation) {
         defaultFileName = testLocation;
@@ -57,7 +58,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
     private Element root = null;
 
     /**
-     * Read Dispatcher Options from a file in the user's preferences directory.
+     * Read Dispatcher Options from a file in the user's preferences directory.  The default
+     * location is within the dispatcher directory.  The previous location is also supported.
      * If the file containing Dispatcher Options does not exist, this routine returns quietly.
      * <p>The lename attribute is deprecated at 5.1.3. The current value will be retained.
      *
@@ -66,11 +68,12 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
      * @throws java.io.IOException    if dispatcher parameter not found
      */
     public void readDispatcherOptions(DispatcherFrame f) throws org.jdom2.JDOMException, java.io.IOException {
-        // check if file exists
-        if (checkFile(defaultFileName)) {
+        // check if a file exists
+        String optionsFileName = getOptionsFileLocation();
+        if (optionsFileName != null) {
             // file is present,
-            log.debug("Reading Dispatcher options from file {}", defaultFileName);
-            root = rootFromName(defaultFileName);
+            log.debug("Reading Dispatcher options from file {}", optionsFileName);
+            root = rootFromName(optionsFileName);
             dispatcher = f;
             if (root != null) {
                 // there is a file
@@ -240,8 +243,21 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                 }
             }
         } else {
-            log.debug("No Dispatcher options file found at {}, using defaults", defaultFileName);
+            log.debug("No Dispatcher options file found at {}, using defaults", optionsFileName);
         }
+    }
+
+    /**
+     * Select a file location.
+     * @return which location to use or null if none.
+     */
+    private String getOptionsFileLocation() {
+        if (checkFile(defaultFileName)) {
+            return defaultFileName;
+        } else if (checkFile(oldFileName)) {
+            return oldFileName;
+        }
+        return null;
     }
 
     /**
@@ -313,9 +329,26 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
             }
             // write content to file
             writeXML(findFile(defaultFileName), doc);
+            updateOldLocation();
         } catch (java.io.IOException ioe) {
             log.error("IO Exception {}", ioe.getMessage());
             throw (ioe);
+        }
+    }
+
+    /**
+     * To maintain backward support, the updated options file is copied to the old location.
+     */
+    private void updateOldLocation() {
+        if (checkFile(oldFileName)) {
+            log.debug("Replace {} with a copy of {}", oldFileName, defaultFileName);
+            try {
+                File source = FileUtil.getFile(defaultFileName);
+                File dest = FileUtil.getFile(oldFileName);
+                FileUtil.copy(source, dest);
+            } catch (java.io.IOException ioe) {
+                log.error("IO Exception {}", ioe.getMessage());
+            }
         }
     }
 
