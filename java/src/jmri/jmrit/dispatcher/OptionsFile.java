@@ -2,6 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.io.File;
 import java.util.Set;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ScaleManager;
@@ -11,6 +12,7 @@ import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.FileUtil;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -253,6 +255,18 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
      */
     private String getOptionsFileLocation() {
         if (checkFile(defaultFileName)) {
+            if (checkFile(oldFileName)) {
+                // Both files exist, check file modification times
+                try {
+                    long newFileTime = FileUtil.getFile(defaultFileName).lastModified();
+                    long oldFileTime = FileUtil.getFile(oldFileName).lastModified();
+                    if (oldFileTime > newFileTime) {
+                        return oldFileName;
+                    }
+                } catch (java.io.IOException ioe) {
+                    log.error("IO Exception while selecting which file to load :: {}", ioe.getMessage());
+                }
+            }
             return defaultFileName;
         } else if (checkFile(oldFileName)) {
             return oldFileName;
@@ -347,7 +361,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                 File dest = FileUtil.getFile(oldFileName);
                 FileUtil.copy(source, dest);
             } catch (java.io.IOException ioe) {
-                log.error("IO Exception {}", ioe.getMessage());
+                log.error("IO Exception while updating old file :: {}", ioe.getMessage());
             }
         }
     }
