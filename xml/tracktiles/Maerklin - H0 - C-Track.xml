@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tracktiles SYSTEM "../DTD/tracktiles.dtd">
+<?xml-stylesheet href="../XSLT/tracktiles.xsl" type="text/xsl"?>
+
+<tracktiles version="1.0">
+  <header>
+    <vendor>Märklin</vendor>
+    <code>100</code>
+    <family>C-Track</family>
+    <scale>
+      <name>H0</name>
+      <ratio>87</ratio>
+    </scale>
+    <gauge>
+      <gaugename>Standard</gaugename>
+      <gaugesize value="16.5" unit="mm"/>
+    </gauge>
+
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2025</year>
+      <holder>JMRI</holder>
+    </copyright>
+
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname>
+          <firstname>Ralf</firstname>
+          <surname>Lang</surname>
+        </personname>
+        <email>ralf.lang@ralf-lang.de</email>
+      </author>
+    </authorgroup>
+
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2025-11-24</date>
+        <authorinitials>SA</authorinitials>
+        <revremark>Initial version with straight and curved C-Track tiles</revremark>
+      </revision>
+    </revhistory>
+  </header>
+
+  <tiles>
+    <!-- Straight Track Sections -->
+    <tile>
+      <partcode>24077</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerades Gleis 77,5 mm</l10n>
+      <l10n lang="en">Straight Track 77.5 mm</l10n>
+      <l10n lang="es">Vía recta 77,5 mm</l10n>
+      <l10n lang="fr">Rail droit 77,5 mm</l10n>
+      <geometry>
+        <straight length="77.5" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24094</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerades Gleis 94,2 mm</l10n>
+      <l10n lang="en">Straight Track 94.2 mm</l10n>
+      <l10n lang="es">Vía recta 94,2 mm</l10n>
+      <l10n lang="fr">Rail droit 94,2 mm</l10n>
+      <geometry>
+        <straight length="94.2" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24172</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerades Gleis 171,7 mm</l10n>
+      <l10n lang="en">Straight Track 171.7 mm</l10n>
+      <l10n lang="es">Vía recta 171,7 mm</l10n>
+      <l10n lang="fr">Rail droit 171,7 mm</l10n>
+      <geometry>
+        <straight length="171.7" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24188</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerades Gleis 188,3 mm</l10n>
+      <l10n lang="en">Straight Track 188.3 mm</l10n>
+      <l10n lang="es">Vía recta 188,3 mm</l10n>
+      <l10n lang="fr">Rail droit 188,3 mm</l10n>
+      <geometry>
+        <straight length="188.3" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24229</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerades Gleis 229,3 mm</l10n>
+      <l10n lang="en">Straight Track 229.3 mm</l10n>
+      <l10n lang="fr">Rail droit 229,3 mm</l10n>
+      <geometry>
+        <straight length="229.3" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <!-- Curved Track Sections - Radius 1 (360mm) -->
+    <tile>
+      <partcode>24107</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R1 = 360 mm / 7,5°</l10n>
+      <l10n lang="en">Curved Track R1 = 360 mm / 7.5°</l10n>
+      <l10n lang="fr">Rail courbe R1 = 360 mm / 7,5°</l10n>
+      <geometry>
+        <curved radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24115</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R1 = 360 mm / 15°</l10n>
+      <l10n lang="en">Curved Track R1 = 360 mm / 15°</l10n>
+      <l10n lang="fr">Rail courbe R1 = 360 mm / 15°</l10n>
+      <geometry>
+        <curved radius="360.0" arc="15.0" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24130</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R1 = 360 mm / 30°</l10n>
+      <l10n lang="en">Curved Track R1 = 360 mm / 30°</l10n>
+      <l10n lang="es">Vía curva R1 = 360 mm / 30°</l10n>
+      <l10n lang="fr">Rail courbe R1 = 360 mm / 30°</l10n>
+      <geometry>
+        <curved radius="360.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <!-- Curved Track Sections - Radius 2 (437.5mm) -->
+    <tile>
+      <partcode>24206</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R2 = 437,5 mm / 5,7°</l10n>
+      <l10n lang="en">Curved Track R2 = 437.5 mm / 5.7°</l10n>
+      <l10n lang="fr">Rail courbe R2 = 437,5 mm / 5,7°</l10n>
+      <geometry>
+        <curved radius="437.5" arc="5.7" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24212</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R2 = 437,5 mm / 12,1°</l10n>
+      <l10n lang="en">Curved Track R2 = 437.5 mm / 12.1°</l10n>
+      <l10n lang="fr">Rail courbe R2 = 437,5 mm / 12,1°</l10n>
+      <geometry>
+        <curved radius="437.5" arc="12.1" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24224</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R2 = 437,5 mm / 24,3°</l10n>
+      <l10n lang="en">Curved Track R2 = 437.5 mm / 24.3°</l10n>
+      <l10n lang="es">Vía curva R2 = 437,5 mm / 24,3°</l10n>
+      <l10n lang="fr">Rail courbe R2 = 437,5 mm / 24,3°</l10n>
+      <geometry>
+        <curved radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24230</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R2 = 437,5 mm / 30°</l10n>
+      <l10n lang="en">Curved Track R2 = 437.5 mm / 30°</l10n>
+      <l10n lang="es">Vía curva R2 = 437,5 mm / 30°</l10n>
+      <l10n lang="fr">Rail courbe R2 = 437,5 mm / 30°</l10n>
+      <geometry>
+        <curved radius="437.5" arc="30.0" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <!-- Curved Track Sections - Radius 3 (515mm) -->
+    <tile>
+      <partcode>24315</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R3 = 515 mm / 15°</l10n>
+      <l10n lang="en">Curved Track R3 = 515 mm / 15°</l10n>
+      <l10n lang="fr">Rail courbe R3 = 515 mm / 15°</l10n>
+      <geometry>
+        <curved radius="515.0" arc="15.0" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24330</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R3 = 515 mm / 30°</l10n>
+      <l10n lang="en">Curved Track R3 = 515 mm / 30°</l10n>
+      <l10n lang="es">Vía curva R3 = 515 mm / 30°</l10n>
+      <l10n lang="fr">Rail courbe R3 = 515 mm / 30°</l10n>
+      <geometry>
+        <curved radius="515.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <!-- Curved Track Sections - Radius 4 (579.3mm) -->
+    <tile>
+      <partcode>24424</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R4 = 579,3 mm / 24,3°</l10n>
+      <l10n lang="en">Curved Track R4 = 579.3 mm / 24.3°</l10n>
+      <l10n lang="fr">Rail courbe R4 = 579,3 mm / 24,3°</l10n>
+      <geometry>
+        <curved radius="579.3" arc="24.3" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24430</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Gleis gebogen R4 = 579,3 mm / 30°</l10n>
+      <l10n lang="en">Curved Track R4 = 579.3 mm / 30°</l10n>
+      <l10n lang="fr">Rail courbe R4 = 579,3 mm / 30°</l10n>
+      <geometry>
+        <curved radius="579.3" arc="30.0" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <!-- Ending Tiles / Bumper Tracks -->
+    <tile>
+      <partcode>24977</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Prellbock-Gleis 77,5 mm</l10n>
+      <l10n lang="en">Bumper Track 77.5 mm</l10n>
+      <l10n lang="es">Tope 77,5 mm</l10n>
+      <l10n lang="fr">Butoir 77,5 mm</l10n>
+      <geometry>
+        <straight length="77.5" unit="mm"/>
+        <end/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24978</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Prellbock-Gleis 94,2 mm</l10n>
+      <l10n lang="en">Bumper Track 94.2 mm</l10n>
+      <l10n lang="fr">Butoir 94,2 mm</l10n>
+      <geometry>
+        <straight length="94.2" unit="mm"/>
+        <end/>
+      </geometry>
+    </tile>
+
+    <!-- Turnouts / Weichen -->
+    <tile>
+      <partcode>24611</partcode>
+      <jmritype>turnout-rh</jmritype>
+      <l10n lang="de">Rechtsweiche</l10n>
+      <l10n lang="en">Right-Hand Turnout</l10n>
+      <l10n lang="es">Desvío izq.</l10n>
+      <l10n lang="fr">Aiguillage à droite</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="171.7" lengthunit="mm"/>
+          <path direction="right" state="thrown" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24612</partcode>
+      <jmritype>turnout-lh</jmritype>
+      <l10n lang="de">Linksweiche</l10n>
+      <l10n lang="en">Left-Hand Turnout</l10n>
+      <l10n lang="es">Desvío derecho</l10n>
+      <l10n lang="fr">Aiguillage à gauche</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="171.7" lengthunit="mm"/>
+          <path direction="left" state="thrown" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24624</partcode>
+      <jmritype>turnout-rh</jmritype>
+      <l10n lang="de">Rechtsweiche schlank</l10n>
+      <l10n lang="en">Right-Hand Turnout Slim</l10n>
+      <l10n lang="fr">Aiguillage à droite mince</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="188.3" lengthunit="mm"/>
+          <path direction="right" state="thrown" radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24625</partcode>
+      <jmritype>turnout-lh</jmritype>
+      <l10n lang="de">Linksweiche schlank</l10n>
+      <l10n lang="en">Left-Hand Turnout Slim</l10n>
+      <l10n lang="fr">Aiguillage à gauche mince</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="188.3" lengthunit="mm"/>
+          <path direction="left" state="thrown" radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24630</partcode>
+      <jmritype>wye</jmritype>
+      <l10n lang="de">Dreiwegweiche</l10n>
+      <l10n lang="en">Three-Way Turnout</l10n>
+      <l10n lang="fr">Aiguillage triple</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" id="0" length="171.7" lengthunit="mm"/>
+          <path direction="left" state="thrown" id="0" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" id="1" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24640</partcode>
+      <jmritype>wye</jmritype>
+      <l10n lang="de">Bogenweiche rechts</l10n>
+      <l10n lang="en">Curved Turnout Right</l10n>
+      <l10n lang="es">Desvío derecha</l10n>
+      <l10n lang="fr">Aiguillage courbe droite</l10n>
+      <geometry>
+        <turnout>
+          <path direction="left" state="closed" radius="360.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" radius="437.5" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24649</partcode>
+      <jmritype>wye</jmritype>
+      <l10n lang="de">Bogenweiche links</l10n>
+      <l10n lang="en">Curved Turnout Left</l10n>
+      <l10n lang="fr">Aiguillage courbe gauche</l10n>
+      <geometry>
+        <turnout>
+          <path direction="right" state="closed" radius="360.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
+          <path direction="left" state="thrown" radius="437.5" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24671</partcode>
+      <jmritype>crossing</jmritype>
+      <l10n lang="de">Kreuzung</l10n>
+      <l10n lang="en">Crossing</l10n>
+      <l10n lang="es">Desvío izq.</l10n>
+      <l10n lang="fr">Croisement</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="171.7" lengthunit="mm"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24740</partcode>
+      <jmritype>crossing</jmritype>
+      <l10n lang="de">Schlanke Kreuzung</l10n>
+      <l10n lang="en">Slim Crossing</l10n>
+      <l10n lang="fr">Croisement mince</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="236.1" lengthunit="mm"/>
+          <path direction="straight" state="closed" length="236.1" lengthunit="mm"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <!-- Special function tracks -->
+
+    <tile>
+      <partcode>24994</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Schaltgleis</l10n>
+      <l10n lang="en">Switch Track</l10n>
+      <l10n lang="fr">Voie de commutation</l10n>
+      <geometry>
+        <straight length="94.2" unit="mm" function="switch" contactType="momentary"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24997</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Entkupplungsgleis</l10n>
+      <l10n lang="en">Uncoupling Track</l10n>
+      <l10n lang="fr">Voie de dételage</l10n>
+      <geometry>
+        <straight length="94.2" unit="mm" function="decoupler" powered="yes"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24194</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Schaltgleis gebogen</l10n>
+      <l10n lang="en">Curved Switch Track</l10n>
+      <l10n lang="fr">Voie de commutation courbe</l10n>
+      <geometry>
+        <curved radius="360" arc="15" radiusunit="mm" arcunit="deg" function="switch" contactType="momentary"/>
+      </geometry>
+    </tile>
+
+  </tiles>
+</tracktiles>
