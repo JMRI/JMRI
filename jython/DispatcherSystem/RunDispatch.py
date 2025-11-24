@@ -2183,4 +2183,3 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         a.actionPerformed(None)
 
 # End of class StopMaster
-
