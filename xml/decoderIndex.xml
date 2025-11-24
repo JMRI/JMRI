@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.13.6plus+t1jump+20251124T0402Z+R54c6f46b49 on Sun Nov 23 22:02:10 CST 2025-->
-  <decoderIndex version="671">
+  <!--Written by JMRI version 5.13.6plus+t1jump+20251124T1803Z+R4ed523835d on Mon Nov 24 12:03:25 CST 2025-->
+  <decoderIndex version="673">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -12349,7 +12349,7 @@
           <output name="2" label="B - Yellow" />
         </model>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - Acela.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-Acela.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -12431,7 +12431,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - Boom-Crane Cars.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-Boom_Crane-Cars.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -12513,7 +12513,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - Boxcar.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-Boxcar.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -12595,7 +12595,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - BreakDown B Unit.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-BreakDown-B-Unit.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -12677,7 +12677,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - Diesel.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-Diesel.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -12759,7 +12759,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - Dining Car.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-Dining-Car.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -12841,7 +12841,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - Livestock Car.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-LiveStock-Car.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -12923,7 +12923,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - Passenger Car.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-Passenger-Car.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -13005,7 +13005,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - Steam.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-Steam.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -13087,7 +13087,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - Subway.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-Subway.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -13169,7 +13169,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - TR_LegacyPowerMaster.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-TR_LegacyPowerMaster.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -13251,7 +13251,7 @@
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1 - TR_PowerMaster.xml">
+      <family name="TMCC 1" mfg="Lionel" file="Lionel-TMCC-1-TR_PowerMaster.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -13641,7 +13641,7 @@
           <functionlabel num="85" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 2 Legacy" mfg="Lionel" file="Lionel-TMCC2-Legacy-Livestock Car.xml">
+      <family name="TMCC 2 Legacy" mfg="Lionel" file="Lionel-TMCC2-Legacy-LiveStock Car.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
@@ -13650,7 +13650,7 @@
           <output name="3" label="Green" />
           <output name="4" label="Violet" />
         </outputs>
-        <model model="TMCC 2 Legacy Livestock Car" maxFnNum="85" numOuts="1" />
+        <model model="TMCC 2 Legacy LiveStock Car" maxFnNum="85" numOuts="1" />
         <functionlabels>
           <functionlabel num="0" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="1" lockable="false" visible="true">No Sound</functionlabel>

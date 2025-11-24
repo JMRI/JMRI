@@ -44,7 +44,7 @@
   <decoder>
     <family name="TMCC 2 Legacy" mfg="Lionel"> <!-- Lionel has no NMRA id, but that's OK -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
-      <model model="TMCC 2 Legacy Livestock Car" maxFnNum="85" numOuts="1"/>
+      <model model="TMCC 2 Legacy LiveStock Car" maxFnNum="85" numOuts="1"/>
       <functionlabels>
           <functionlabel num= "0" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num= "1" lockable="false" visible="true">No Sound</functionlabel>
