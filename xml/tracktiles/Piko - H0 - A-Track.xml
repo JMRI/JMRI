@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tracktiles SYSTEM "../DTD/tracktiles.dtd">
+<?xml-stylesheet href="../XSLT/tracktiles.xsl" type="text/xsl"?>
+
+<tracktiles version="1.0">
+  <header>
+    <vendor>Piko</vendor>
+    <code>100</code>
+    <family>A-Track</family>
+    <scale>
+      <name>H0</name>
+      <ratio>87</ratio>
+    </scale>
+    <gauge>
+      <gaugename>Standard</gaugename>
+      <gaugesize value="16.5" unit="mm"/>
+    </gauge>
+
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2025</year>
+      <holder>JMRI</holder>
+    </copyright>
+
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname>
+          <firstname>Ralf</firstname>
+          <surname>Lang</surname>
+        </personname>
+        <email>ralf.lang@ralf-lang.de</email>
+      </author>
+    </authorgroup>
+
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2025-11-24</date>
+        <authorinitials>RL</authorinitials>
+        <revremark>Initial version with Piko A-Track tiles</revremark>
+      </revision>
+    </revhistory>
+  </header>
+
+  <tiles>
+    <!-- Straight Track Sections -->
+    <tile>
+      <partcode>55400</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerade G 239 mm</l10n>
+      <l10n lang="en">Straight Track G 239 mm</l10n>
+      <l10n lang="fr">Voie droite G 239 mm</l10n>
+      <geometry>
+        <straight length="239" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55401</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerade G 231 mm</l10n>
+      <l10n lang="en">Straight Track G 231 mm</l10n>
+      <l10n lang="fr">Voie droite G 231 mm</l10n>
+      <geometry>
+        <straight length="231" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55406</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerade G 231 mm für Anschluss-Clip</l10n>
+      <l10n lang="en">Straight Track G 231 mm for Connection Clip</l10n>
+      <l10n lang="fr">Voie droite G 231 mm pour clip de connexion</l10n>
+      <geometry>
+        <straight length="231" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <!-- Curved Track Sections -->
+    <tile>
+      <partcode>55411</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Bogen R1, 360 mm</l10n>
+      <l10n lang="en">Curved Track R1, 360 mm</l10n>
+      <l10n lang="fr">Voie courbe R1, 360 mm</l10n>
+      <geometry>
+        <curved radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55412</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Bogen R2, 422 mm</l10n>
+      <l10n lang="en">Curved Track R2, 422 mm</l10n>
+      <l10n lang="fr">Voie courbe R2, 422 mm</l10n>
+      <geometry>
+        <curved radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55413</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Bogen R3, 484 mm</l10n>
+      <l10n lang="en">Curved Track R3, 484 mm</l10n>
+      <l10n lang="fr">Voie courbe R3, 484 mm</l10n>
+      <geometry>
+        <curved radius="484" arc="30" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55419</partcode>
+      <jmritype>curved</jmritype>
+      <l10n lang="de">Bogen R9, 908 mm</l10n>
+      <l10n lang="en">Curved Track R9, 908 mm</l10n>
+      <l10n lang="fr">Voie courbe R9, 908 mm</l10n>
+      <geometry>
+        <curved radius="908" arc="30" radiusunit="mm" arcunit="deg"/>
+      </geometry>
+    </tile>
+
+    <!-- Bumper/End Track -->
+    <tile>
+      <partcode>55446</partcode>
+      <jmritype>end</jmritype>
+      <l10n lang="de">Böschung Endstück mit Prellbock</l10n>
+      <l10n lang="en">Embankment End Piece with Bumper</l10n>
+      <l10n lang="fr">Butoir avec talus</l10n>
+      <geometry>
+        <straight length="82" unit="mm"/>
+        <end/>
+      </geometry>
+    </tile>
+
+    <!-- Turnouts/Switches -->
+    <tile>
+      <partcode>55420</partcode>
+      <jmritype>turnout</jmritype>
+      <l10n lang="de">Weiche links WL</l10n>
+      <l10n lang="en">Turnout Left WL</l10n>
+      <l10n lang="fr">Aiguillage à gauche WL</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
+          <path direction="diverging" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55421</partcode>
+      <jmritype>turnout</jmritype>
+      <l10n lang="de">Weiche rechts WR</l10n>
+      <l10n lang="en">Turnout Right WR</l10n>
+      <l10n lang="fr">Aiguillage à droite WR</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
+          <path direction="diverging" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55422</partcode>
+      <jmritype>turnout</jmritype>
+      <l10n lang="de">Bogenweiche links BWL</l10n>
+      <l10n lang="en">Curved Turnout Left BWL</l10n>
+      <l10n lang="fr">Aiguillage courbe à gauche BWL</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
+          <path direction="diverging" state="thrown" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55423</partcode>
+      <jmritype>turnout</jmritype>
+      <l10n lang="de">Bogenweiche rechts BWR</l10n>
+      <l10n lang="en">Curved Turnout Right BWR</l10n>
+      <l10n lang="fr">Aiguillage courbe à droite BWR</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
+          <path direction="diverging" state="thrown" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55424</partcode>
+      <jmritype>crossing</jmritype>
+      <l10n lang="de">Doppelkreuzungsweiche DKW</l10n>
+      <l10n lang="en">Double Slip Switch DKW</l10n>
+      <l10n lang="fr">Traversée jonction double DKW</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
+          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55425</partcode>
+      <jmritype>turnout</jmritype>
+      <l10n lang="de">3-Wege Weiche W3</l10n>
+      <l10n lang="en">3-Way Turnout W3</l10n>
+      <l10n lang="fr">Aiguillage triple W3</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
+          <path direction="diverging" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="diverging" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55426</partcode>
+      <jmritype>turnout</jmritype>
+      <l10n lang="de">Y-Weiche WY</l10n>
+      <l10n lang="en">Wye Turnout WY</l10n>
+      <l10n lang="fr">Aiguillage en Y WY</l10n>
+      <geometry>
+        <turnout>
+          <path direction="left" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <!-- Crossings -->
+    <tile>
+      <partcode>55440</partcode>
+      <jmritype>crossing</jmritype>
+      <l10n lang="de">Kreuzung K15</l10n>
+      <l10n lang="en">Crossing K15</l10n>
+      <l10n lang="fr">Croisement K15</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55441</partcode>
+      <jmritype>crossing</jmritype>
+      <l10n lang="de">Kreuzung K30</l10n>
+      <l10n lang="en">Crossing K30</l10n>
+      <l10n lang="fr">Croisement K30</l10n>
+      <geometry>
+        <turnout>
+          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
+        </turnout>
+      </geometry>
+    </tile>
+
+    <!-- Conversion/Adapter Tracks -->
+    <tile>
+      <partcode>55432</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Übergangsgleis Fleischmann Profi 231 mm</l10n>
+      <l10n lang="en">Adapter Track to Fleischmann Profi 231 mm</l10n>
+      <l10n lang="fr">Voie de transition Fleischmann Profi 231 mm</l10n>
+      <geometry>
+        <straight length="231" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55433</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Übergangsgleis Roco GeoLine 231 mm</l10n>
+      <l10n lang="en">Adapter Track to Roco GeoLine 231 mm</l10n>
+      <l10n lang="fr">Voie de transition Roco GeoLine 231 mm</l10n>
+      <geometry>
+        <straight length="231" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>55434</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Übergangsgleis PIKO A-Gleis ohne Bettung 231 mm</l10n>
+      <l10n lang="en">Adapter Track to PIKO A-Track without Ballast 231 mm</l10n>
+      <l10n lang="fr">Voie de transition PIKO A-Track sans ballast 231 mm</l10n>
+      <geometry>
+        <straight length="231" unit="mm"/>
+      </geometry>
+    </tile>
+
+  </tiles>
+</tracktiles>
