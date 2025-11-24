@@ -126,7 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>The Send Frame tool has 
+                <li>The Send Frame tool has
                     <ul>
                         <li>some button labels updated,</li>
                         <li>a new Send Global Identify Events button,</li>
@@ -207,7 +207,7 @@
               The initial "No Decoder" definition is limited to a primary
               address of 1-127, this extended version allows the full
               range of extended addresses to be used</li>
-          <li>"DCCWorld.com" has been added as a manufacturer ID that DecoderPro 
+          <li>"DCCWorld.com" has been added as a manufacturer ID that DecoderPro
               recognizes.</li>
         </ul>
 
@@ -458,6 +458,8 @@
             <li>Tidy up debug/trace in RosterSpeedProfile.</li>
             <li>Make info message in allocated section to debug.</li>
             <li>Fix Exception when starting trains under inauspicious circumstances.</li>
+            <li>Change the default location for the <em>dispatcheroptions.xml</em> file to the
+            <strong>dispatcher</strong> directory.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
