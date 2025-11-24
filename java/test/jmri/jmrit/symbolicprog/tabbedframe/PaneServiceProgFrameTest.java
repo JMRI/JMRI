@@ -29,6 +29,9 @@ public class PaneServiceProgFrameTest {
         RosterEntry re = new RosterEntry();
         PaneServiceProgFrame t = new PaneServiceProgFrame(df, re, "test frame", "programmers/Basic.xml", p);
         Assert.assertNotNull("exists", t);
+        
+        JUnitUtil.waitFor(()->{return t.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         t.dispatchEvent(new WindowEvent(t, WindowEvent.WINDOW_CLOSING));
     }
 

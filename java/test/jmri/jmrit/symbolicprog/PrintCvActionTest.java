@@ -31,6 +31,8 @@ public class PrintCvActionTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         CvTableModel cvtm = new CvTableModel(new JLabel(), null);
         PrintCvAction t = new PrintCvAction("Test Action", cvtm, pFrame, false, re);
         Assertions.assertNotNull(t, "exists");

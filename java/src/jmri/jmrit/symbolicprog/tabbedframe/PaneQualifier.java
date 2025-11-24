@@ -16,27 +16,29 @@ public class PaneQualifier extends ArithmeticQualifier {
 
     PaneProgPane pane;
     JTabbedPane tabs;
-    int index;
+    String name;
 
-    public PaneQualifier(PaneProgPane qualifiedPane, VariableValue watchedVal, int value, String relation, JTabbedPane tabPane, int index) {
+    public PaneQualifier(PaneProgPane qualifiedPane, VariableValue watchedVal, int value, String relation, JTabbedPane tabPane, String name) {
         super(watchedVal, value, relation);
 
         this.pane = qualifiedPane;
         this.tabs = tabPane;
-        this.index = index;
+        this.name = name;
 
         setWatchedAvailable(currentDesiredState());
     }
 
     @Override
     public void setWatchedAvailable(boolean enable) {
-        log.debug("setWatchedAvailable with {} on {}", enable, index);
-        tabs.setEnabledAt(index, enable);
+        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+            log.debug("setWatchedAvailable with {} on {} index {}", enable, name, tabs.indexOfTab(name));
+            tabs.setEnabledAt(tabs.indexOfTab(name), enable);
+        });
     }
 
     @Override
     protected boolean currentAvailableState() {
-        return tabs.isEnabledAt(index);
+        return tabs.isEnabledAt(tabs.indexOfTab(name));
     }
 
     private final static Logger log = LoggerFactory.getLogger(PaneQualifier.class);

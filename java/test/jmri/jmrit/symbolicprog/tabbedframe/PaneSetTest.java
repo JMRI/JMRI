@@ -32,6 +32,8 @@ public class PaneSetTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pc.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         PaneSet t = new PaneSet(pc, re, p);
         Assert.assertNotNull("exists", t);
         new org.netbeans.jemmy.QueueTool().waitEmpty(10);

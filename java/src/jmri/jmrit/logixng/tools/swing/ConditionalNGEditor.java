@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.tools.swing;
 
-import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.HashMap;
@@ -89,10 +88,12 @@ public class ConditionalNGEditor extends TreeEditor {
     
     /** {@inheritDoc} */
     @Override
-    public void windowClosed(WindowEvent e) {
+    public void dispose() {
         logixNGData.clear();
         logixNGData.put("Finish", _conditionalNG.getSystemName());  // NOI18N
-        fireLogixNGEvent();
+        fireLogixNGEvent();    
+    
+        super.dispose();
     }
     
     public void addLogixNGEventListener(ConditionalNGEventListener listener) {

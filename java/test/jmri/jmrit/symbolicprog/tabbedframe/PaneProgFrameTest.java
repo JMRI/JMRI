@@ -46,7 +46,8 @@ public class PaneProgFrameTest {
         // invoke
         result = null;
         p.readConfig(root, new RosterEntry());
-        Assertions.assertEquals(4, p.paneList.size(), "paneList length ");
+        
+        JUnitUtil.waitFor(()->{return p.paneList.size() == 4;}, "frame list 4");
         // three panes in root, plus roster entry pane
 
         JFrame f = jmri.util.JmriJFrame.getFrame("Programming: test frame");
@@ -68,7 +69,7 @@ public class PaneProgFrameTest {
                 return null;
             }
         };
-
+        
         // ugly, temporary way to load the decoder info
         jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest();
         t.setupDecoder();
@@ -78,6 +79,8 @@ public class PaneProgFrameTest {
         p.readConfig(root, new RosterEntry());
         p.pack();
         p.setVisible(true);
+
+        JUnitUtil.waitFor(()->{return p.threadCount.get() == 0;}, "PaneProgFrame threads done");
 
         JFrame f = jmri.util.JmriJFrame.getFrame("Editing: test frame"); // frame title starts with Editing
         Assertions.assertNotNull(f, "found frame");
@@ -179,6 +182,8 @@ public class PaneProgFrameTest {
 
         Assertions.assertEquals("31", t.model.getAttribute("maxFnNum").getValue(), "model maxFnNum ");
         Assertions.assertEquals("31", o.getChild("decoder").getAttribute("maxFnNum").getValue(), "roster entry maxFnNum ");
+
+        JUnitUtil.waitFor(()->{return p.threadCount.get() == 0;}, "PaneProgFrame threads done");
 
         p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
