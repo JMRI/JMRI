@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.13.6plus+t1jump+20251124T1803Z+R4ed523835d on Mon Nov 24 12:03:25 CST 2025-->
-  <decoderIndex version="673">
+  <!--Written by JMRI version 5.13.6plus+t1jump+20251124T1839Z+R733d657838 on Mon Nov 24 12:39:21 CST 2025-->
+  <decoderIndex version="677">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -13641,7 +13641,7 @@
           <functionlabel num="85" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
       </family>
-      <family name="TMCC 2 Legacy" mfg="Lionel" file="Lionel-TMCC2-Legacy-LiveStock Car.xml">
+      <family name="TMCC 2 Legacy" mfg="Lionel" file="Lionel-TMCC2-Legacy-LiveStock-Car.xml">
         <!-- Lionel has no NMRA id, but that's OK -->
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
