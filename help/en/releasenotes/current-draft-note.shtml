@@ -207,7 +207,8 @@
               The initial "No Decoder" definition is limited to a primary
               address of 1-127, this extended version allows the full
               range of extended addresses to be used</li>
-          <li></li>
+          <li>"DCCWorld.com" has been added as a manufacturer ID that DecoderPro 
+              recognizes.</li>
         </ul>
 
         <h4>AE Model</h4>
@@ -474,7 +475,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>Improved how the "?" is drawn for UNKNOWN turnouts (when that option is selected)</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -628,7 +629,9 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>There's a new "Property Add/Edit" in the item popup menu
+                in the various tables.  This lets you add or edit 
+                property values associated with a particular item.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -676,6 +679,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Testing - JUnitUtil - waitFor condition failure text can be formed from a String Supplier, e.g. a lambda expression.
+            The expression is only evaluated ( lazily ) when the assertion fails.
+            </li>
         </ul>
 

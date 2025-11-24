@@ -91,17 +91,17 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 case 8:
                                     return "TMCC2 - Engine " + A + " - AUX1 Off";
                                 case 9:
-                                    return "TMCC2 - Engine " + A + " - AUX1 Option 1 (CAB AUX1 button)";
+                                    return "TMCC2 - Engine " + A + " - AUX1 Option 1 (CAB AUX1 Button; On While Pressed/On Until Next Button Pressed)";
                                 case 10:
-                                    return "TMCC2 - Engine " + A + " - AUX1 Option 2";
+                                    return "TMCC2 - Engine " + A + " - AUX1 Option 2 (Toggle On/Toggle Off)";
                                 case 11:
                                     return "TMCC2 - Engine " + A + " - AUX1 On";
                                 case 12:
                                     return "TMCC2 - Engine " + A + " - AUX2 Off";
                                 case 13:
-                                    return "TMCC2 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On While Pressed";
+                                    return "TMCC2 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 Button; Headlight Toggle On/Toggle Off)";
                                 case 14:
-                                    return "TMCC2 - Engine " + A + " - AUX2 Option 2";
+                                    return "TMCC2 - Engine " + A + " - AUX2 Option 2 (On While Pressed)";
                                 case 15:
                                     return "TMCC2 - Engine " + A + " - AUX2 On";
                                 case 16:
@@ -263,7 +263,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 8:
                             
                             case 9:
-                                return "TMCC1 - Engine " + A + " - AUX1 Option 1 (CAB AUX1 button)";
+                                return "TMCC1 - Engine " + A + " - AUX1 Option 1 (CAB AUX1 Button; On While Pressed/On Until Next Button Pressed)";
                             case 10:
                             
                             case 11:
@@ -271,7 +271,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 12:
                             
                             case 13:
-                                return "TMCC1 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 button) Headlight On While Pressed";
+                                return "TMCC1 - Engine " + A + " - AUX2 Option 1 (CAB AUX2 Button; Headlight Toggle On/Toggle Off)";
                             case 14:
                             
                             case 15:
@@ -331,7 +331,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                         // return "TMCC1 - Engine " + A + " - Change Speed (Relative) by " + (D - 5);
 
                     case 3: // If C (TMCC Command Code) == 3
-                    default:    // to let the compiler know there are only 3 cases
+                    default: // to let the compiler know there are only 3 cases
                         return "TMCC1 (32 Speed Steps) - Engine " + A + " - Speed (Absolute) = " + D;
                 }
 
@@ -341,8 +341,16 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 int A = (val / 128) & 0x0F; // A is TMCC Adddress Code
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
-                return "Unrecognized Train(TR) Command with A= " + A + " C= " + C + " D= " + D;
-
+                switch (C) {
+                    case 1: // If C (TMCC Command Code) == 1
+                    default: // To let the compiler know this should be blank
+                        switch (D & 0x17) {
+                            case 3:
+                                return "TMCC1 - Track/Train ID " + A + " - Set";
+                            default:
+                                return "Unrecognized Train(TR) Command with A= " + A + " C= " + C + " D= " + D;
+                        }
+                }
 
             } else if ((val & 0xC000) == 0x8000) {
                 // TMCC1 Accessory Commands
@@ -363,17 +371,17 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 8:
                                 return "Aux 1 - ACC " + A + " - OFF";
                             case 9:
-                                return "Aux 1 - ACC " + A + " - OPTION 1";
+                                return "Aux 1 - ACC " + A + " - OPTION 1 (On While Pressed)";
                             case 10:
-                                return "Aux 1 - ACC " + A + " - OPTION 2";
+                                return "Aux 1 - ACC " + A + " - OPTION 2 (Toggle On/Toggle Off)";
                             case 11:
                                 return "Aux 1 - ACC " + A + " - ON";
                             case 12:
                                 return "Aux 2 - ACC " + A + " - OFF";
                             case 13:
-                                return "Aux 2 - ACC " + A + " - OPTION 1";
+                                return "Aux 2 - ACC " + A + " - OPTION 1 (Toggle On/Toggle Off)";
                             case 14:
-                                return "Aux 2 - ACC " + A + " - OPTION 2";
+                                return "Aux 2 - ACC " + A + " - OPTION 2 (On While Pressed)";
                             case 15:
                                 return "Aux 2 - ACC " + A + " - ON";
                             default:
@@ -400,7 +408,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     return "Unrecognized Accessory(ACC) Command (Case C) - with A= " + A + " C= " + C + " D= " + D;
                 }
 
-
             } else if ((val & 0xF800) == 0xC000) {
                 // TMCC1 Group Commands
                 int A = (val / 128) & 0x0F; // A is TMCC Adddress Code
@@ -420,9 +427,9 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 8:
                                 return "GROUP - ACC " + A + " - OFF";
                             case 9:
-                                return "GROUP - ACC " + A + " - OPTION 1";
+                                return "GROUP - ACC " + A + " - OPTION 1 (On While Pressed)";
                             case 10:
-                                return "GROUP - ACC " + A + " - OPTION 2";
+                                return "GROUP - ACC " + A + " - OPTION 2 (Toggle On/Toggle Off)";
                             case 11:
                                 return "GROUP - ACC " + A + " - ON";
                             default:
@@ -448,7 +455,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
         }
 
-
         // TMCC Error parsing
         if (opCode == 0x00) {
             int C = (val / 32) & 0x03; // C is TMCC Command Code
@@ -457,7 +463,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 case 0: // If C (TMCC Command Code) == 0
                     switch (D) {
                         case 0:
-                            return "Address Must be Between 1-98 for TMCC";
+                            return "Address Must be Between 1-98 for TMCC1 and TMCC2 ENG/SW/ACC and TMCC2 TR. Address Must be Between 1-9 for TMCC1 TR";
                         case 1:
                             return "CV Must Equal 1 for Programming TMCC Loco/Engine, Switch, Accessory ID#s";
                         case 2:

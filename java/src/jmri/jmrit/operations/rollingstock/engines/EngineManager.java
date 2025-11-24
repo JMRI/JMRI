@@ -96,19 +96,19 @@ public class EngineManager extends RollingStockManager<Engine>
     }
 
     /**
-     * return a list available engines (no assigned train) engines are ordered least
-     * recently moved to most recently moved.
+     * Returns a list of available engines (no assigned train). Engines are
+     * ordered by track priority and least recently moved to most recently
+     * moved.
      *
      * @param train The Train requesting this list.
-     *
      * @return Ordered list of engines not assigned to a train
      */
     public List<Engine> getAvailableTrainList(Train train) {
         // now build list of available engines for this route
         List<Engine> out = new ArrayList<>();
-        // get engines by moves list
-        for (RollingStock rs : getByMovesList()) {
-            Engine engine = (Engine) rs;
+        // get engines by track priority and moves
+        List<Engine> sortByPriority = sortByTrackPriority(getByMovesList());
+        for (Engine engine : sortByPriority) {
             if (engine.getTrack() != null && (engine.getTrain() == null || engine.getTrain() == train)) {
                 out.add(engine);
             }

@@ -1,5 +1,10 @@
 package jmri.jmrit.logixng.implementation;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,11 +18,8 @@ import jmri.jmrit.logixng.actions.StringActionMemory;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import org.junit.jupiter.api.*;
 
 /**
  * Test ExpressionTimer
@@ -30,9 +32,6 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     private Memory _memory;
     private MyStringActionMemory _action;
 
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
-
     @Override
     protected Manager<? extends NamedBean> getManager() {
         return InstanceManager.getDefault(StringActionManager.class);
@@ -40,20 +39,20 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
 
     @Test
     public void testBundleClass() {
-        Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage("TestBundle", "aa", "bb", "cc"));
-        Assert.assertEquals("bundle is correct", "Generic", Bundle.getMessage(Locale.US, "SocketTypeGeneric"));
-        Assert.assertEquals("bundle is correct", "Test Bundle bb aa cc", Bundle.getMessage(Locale.US, "TestBundle", "aa", "bb", "cc"));
+        assertEquals( "Test Bundle bb aa cc", Bundle.getMessage("TestBundle", "aa", "bb", "cc"), "bundle is correct");
+        assertEquals( "Generic", Bundle.getMessage(Locale.US, "SocketTypeGeneric"), "bundle is correct 2");
+        assertEquals( "Test Bundle bb aa cc", Bundle.getMessage(Locale.US, "TestBundle", "aa", "bb", "cc"), "bundle is correct 3");
     }
 
     @Test
     public void testGetName() {
-        Assert.assertTrue("String matches", "A1".equals(_femaleSocket.getName()));
+        assertTrue( "A1".equals(_femaleSocket.getName()), "String matches");
     }
 
     @Test
     public void testGetDescription() {
-        Assert.assertTrue("String matches", "!s".equals(_femaleSocket.getShortDescription()));
-        Assert.assertTrue("String matches", "!s A1".equals(_femaleSocket.getLongDescription()));
+        assertTrue( "!s".equals(_femaleSocket.getShortDescription()), "String matches");
+        assertTrue( "!s A1".equals(_femaleSocket.getLongDescription()), "String matches 2");
     }
 
     @Override
@@ -75,10 +74,10 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     }
 
     @Test
-    public void testSetValue() throws Exception {
+    public void testSetValue() throws JmriException {
         // Every test method should have an assertion
-        Assert.assertNotNull("femaleSocket is not null", _femaleSocket);
-        Assert.assertFalse("femaleSocket is not connected", _femaleSocket.isConnected());
+        assertNotNull( _femaleSocket, "femaleSocket is not null");
+        assertFalse( _femaleSocket.isConnected(), "femaleSocket is not connected");
         // Test setValue() when not connected
         ((DefaultFemaleStringActionSocket)_femaleSocket).setValue("");
     }
@@ -99,12 +98,13 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         classes = new ArrayList<>();
         map.put(LogixNG_Category.OTHER, classes);
 
-        Assert.assertTrue("maps are equal",
-                isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()));
+        assertTrue( isConnectionClassesEquals(map, _femaleSocket.getConnectableClasses()),
+            "maps are equal");
     }
 
     // The minimal setup for log4J
     @Before
+    @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -143,6 +143,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
     }
 
     @After
+    @AfterEach
     public void tearDown() {
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();
         JUnitUtil.deregisterBlockManagerShutdownTask();
@@ -151,11 +152,11 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
 
 
 
-    private class MyStringActionMemory extends StringActionMemory {
+    private static class MyStringActionMemory extends StringActionMemory {
 
-        private boolean _hasBeenSetup = false;
+        boolean _hasBeenSetup = false;
 
-        public MyStringActionMemory(String systemName) {
+        MyStringActionMemory(String systemName) {
             super(systemName, null);
         }
 
