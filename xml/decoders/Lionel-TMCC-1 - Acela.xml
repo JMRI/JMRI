@@ -46,7 +46,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
       <model model="TMCC 1 Acela" maxFnNum="68" numOuts="1"/>
       <functionlabels>
-          <functionlabel num= "0" lockable="false" visible="true">          Headlight         </functionlabel>
+          <functionlabel num= "0" lockable="false" visible="true">Toggles Lights</functionlabel>
           <functionlabel num= "1" lockable="false" visible="true">  Bell  </functionlabel>
           <functionlabel num= "2" lockable="false" visible="true">Horn</functionlabel>
           <functionlabel num= "3" lockable="false" visible="false">Unassigned</functionlabel>
