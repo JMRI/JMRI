@@ -38,37 +38,37 @@
       <revnumber>2</revnumber>
       <date>2025-07-12</date>
       <authorinitials>TJ</authorinitials>
-      <revremark>Decoder file copied from Lionel TMCC Steam and edited into this TMCC 1 version</revremark>
+      <revremark>Decoder file copied from Lionel TMCC Steam and edited into this TMCC 2 Legacy version</revremark>
     </revision>
   </revhistory>
   <decoder>
-    <family name="TMCC 1" mfg="Lionel"> <!-- Lionel has no NMRA id, but that's OK -->
+    <family name="TMCC 2 Legacy" mfg="Lionel"> <!-- Lionel has no NMRA id, but that's OK -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
-      <model model="TMCC 1 Boom-Crane Cars" maxFnNum="68" numOuts="1"/>
+      <model model="TMCC 2 Legacy TR_PowerMaster" maxFnNum="85" numOuts="1"/>
       <functionlabels>
           <functionlabel num= "0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num= "1" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num= "2" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num= "3" lockable="false" visible="true">Front-X</functionlabel>
-          <functionlabel num= "4" lockable="false" visible="true">Rear-X</functionlabel>
+          <functionlabel num= "1" lockable="false" visible="true">  Bell  </functionlabel>
+          <functionlabel num= "2" lockable="false" visible="true">Horn/Whistle</functionlabel>
+          <functionlabel num= "3" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num= "4" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num= "5" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num= "6" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num= "7" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num= "8" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num= "9" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="10" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="11" lockable="false" visible="true">Crew Dialog On</functionlabel>
+          <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">Power Off</functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">   Aux1   </functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="17" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="18" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="19" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="20" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="21" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="22" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true">Mo-L</functionlabel>
+          <functionlabel num="20" lockable="false" visible="true">Mo-M</functionlabel>
+          <functionlabel num="21" lockable="false" visible="true">Mo-H</functionlabel>
+          <functionlabel num="22" lockable="false" visible="true">    Set     </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="24" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="25" lockable="false" visible="false">Unassigned</functionlabel>
@@ -97,24 +97,41 @@
           <functionlabel num="48" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="49" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="50" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="51" lockable="false" visible="true">Boom Down</functionlabel>
-          <functionlabel num="52" lockable="false" visible="true">Boom Up</functionlabel>
-          <functionlabel num="53" lockable="false" visible="true">LgHook Down</functionlabel>
-          <functionlabel num="54" lockable="false" visible="true">LgHook Up</functionlabel>
-          <functionlabel num="55" lockable="false" visible="true">SmHook Down</functionlabel>
-          <functionlabel num="56" lockable="false" visible="true">SmHook Up</functionlabel>
-          <functionlabel num="57" lockable="false" visible="true">FWorkLts On/Off</functionlabel>
-          <functionlabel num="58" lockable="false" visible="true">RWorkLts On/Off</functionlabel>
-          <functionlabel num="59" lockable="false" visible="true">Launch OutRiggers</functionlabel>
-          <functionlabel num="60" lockable="false" visible="true">Crew Dia Off </functionlabel>
-          <functionlabel num="61" lockable="false" visible="true">Sound Off</functionlabel>
-          <functionlabel num="62" lockable="false" visible="true">Sound On</functionlabel>
+          <functionlabel num="51" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="52" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="53" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="54" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="55" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="56" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="57" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="58" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="59" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="60" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="61" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="62" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="63" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="64" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="65" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="66" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="67" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="68" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="69" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="70" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="71" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="72" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="73" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="74" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="75" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="76" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="77" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="78" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="79" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="80" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="81" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="82" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="83" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="84" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="85" lockable="false" visible="false">Unassigned</functionlabel>
       </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

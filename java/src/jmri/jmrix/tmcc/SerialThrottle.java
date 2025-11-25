@@ -202,23 +202,23 @@ public class SerialThrottle extends AbstractThrottle {
         {0x00000D, 0x000006, 0x00000D}, // Fn35 (Close Doors - Right)
         {0x000009, 0x000013}, // Fn36 (Pantagraph - Automatic/Prototypical)
         {0x000009, 0x000015}, // Fn37 (Pantagraph - Down)
-        {0x000009, 0x000015}, // Fn38 (Pantagraph - Manual Mode/Cycles Through Positions)
+        {0x000009, 0x000016}, // Fn38 (Pantagraph - Manual Mode/Cycles Through Positions)
         {0x000009, 0x00001C}, // Fn39 (Toggle Horn - City/Country)
         {0x000009, 0x000018}, // Fn40 (Cab Light - Off)
         {0x000009, 0x000019}, // Fn41 (Cab Light - On)
         {0x000009, 0x00000D, 0x000018, 0x00000D}, // Fn42 (Interior Lights - Off)
         {0x000009, 0x00000D, 0x000019, 0x00000D}, // Fn43 (Interior Lights - On)
 
-        // TMCC1 Break-Down Unit
+        // TMCC1 Break-Down B Unit
         {0x000009, 0x000004}, // Fn44 Start Breakdown Sequence
         {0x000009, 0x000015}, // Fn45 Made It Back to the Yard
         {0x000009, 0x000013}, // Fn46 Restart Unit/Repairs Complete
 
-        // TMCC1 Freight/Stock Cars
+        // TMCC1 Boxcar/Livestock Car
         {0x000009, 0x000013}, // Fn47 Load
         {0x000009, 0x000012}, // Fn48 Flat Wheel Sound
 
-        // TMCC1 Passenger Cars
+        // TMCC1 Passenger/Dining Cars
         {0x000009, 0x000017}, // Fn49 Station PA Arrival Dialog
         {0x000009, 0x000012}, // Fn50 Conductor Arrival Dialog
 
@@ -344,39 +344,47 @@ public class SerialThrottle extends AbstractThrottle {
         {0xF8017D, 0xFB00F9, 0xFB0000}, // Fn58 (Car Cabin Lt Off)
         {0xF8017D, 0xFB00FA, 0xFB0000}, // Fn59 (Car Cabin Lt Auto)
 
-        // TMCC2 Subway FnKeys
-        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn60 (Open Doors - Left)
-        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn61 (Close Doors - Left)
-        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn62 (Open Doors - Right)
-        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn63 (Close Doors - Right)
-        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn64 (Pantagraph - Up/F)
-        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn65 (Pantagraph - Down/F)
-        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn66 (Pantagraph - Up/R)
-        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn67 (Pantagraph - Down/R)
+        // TMCC2 Acela/Subway FnKeys
+        {0xF80109, 0xF80112}, // Fn60 (Crew: Report Speed - Moving)
+        {0xF80109, 0xF80115}, // Fn61 (Tower: Emergency Stop/Crew: Ack - Moving)
+        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn62 (Open Doors - Left)
+        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn63 (Close Doors - Left)
+        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn64 (Open Doors - Right)
+        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn65 (Close Doors - Right)
+        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn66 (Pantagraph - Up/F)
+        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn67 (Pantagraph - Down/F)
+        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn68 (Pantagraph - Up/R)
+        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn69 (Pantagraph - Down/R)
         
-        // TMCC2 Freight/Stock Cars
-        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn68 (Option1 On)
-        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn69 (Opiton1 Off)
-        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn70 (Option2 On)
-        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn71 (Option2 Off)
-        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn72 (Load)
-        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn73 (Unload)
-        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn74 (FRED On)
-        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn75 (FRED Off)
-        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn76 (Flat Wheel On)
-        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn77 (Flat Wheel Off)
-        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn78 (Game On)
-        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn79 (Game Off)
+        // Only TMCC1 Break-Down B Unit
+
+        // TMCC2 Boxcar/Livestock Car
+        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn70 (Option1 On)
+        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn71 (Opiton1 Off)
+        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn72 (Option2 On)
+        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn73 (Option2 Off)
+        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn74 (Load)
+        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn75 (Unload)
+        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn76 (FRED On)
+        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn77 (FRED Off)
+        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn78 (Flat Wheel On)
+        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn79 (Flat Wheel Off)
+        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn80 (Game On)
+        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn81 (Game Off)
+
+        // Only TMCC1 Passenger/Dining Cars
+
+        // Only TMCC1 Crane/Boom Car
 
         // TMCC2 Smoke System
-        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn80 (Smoke System Off)
-        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn81 (Smoke System Low)
-        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn82 (Smoke System Med)
-        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn83 (Smoke System High)
+        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn82 (Smoke System Off)
+        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn83 (Smoke System Low)
+        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn84 (Smoke System Med)
+        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn85 (Smoke System High)
 
         // TRMCC2_32 Unassigned FnKeys
-        {0xF8012E}, // Fn84 Code to Trigger SerialMonFrame Message/Unassigned FnKey
-        {0xF8012E}, // Fn85 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fnxx Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fnxx Code to Trigger SerialMonFrame Message/Unassigned FnKey
 
         // TRMCC2_32 Aux FnKeys
         {0xF80108}, // Fnxx (Aux1 Off)
@@ -467,39 +475,47 @@ public class SerialThrottle extends AbstractThrottle {
         {0xF8017D, 0xFB00F9, 0xFB0000}, // Fn58 (Car Cabin Lt Off)
         {0xF8017D, 0xFB00FA, 0xFB0000}, // Fn59 (Car Cabin Lt Auto)
 
-        // TMCC2 Subway FnKeys
-        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn60 (Open Doors - Left)
-        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn61 (Close Doors - Left)
-        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn62 (Open Doors - Right)
-        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn63 (Close Doors - Right)
-        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn64 (Pantagraph - Up/F)
-        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn65 (Pantagraph - Down/F)
-        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn66 (Pantagraph - Up/R)
-        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn67 (Pantagraph - Down/R)
+        // TMCC2 Acela/Subway FnKeys
+        {0xF80109, 0xF80112}, // Fn60 (Crew: Report Speed - Moving)
+        {0xF80109, 0xF80115}, // Fn61 (Tower: Emergency Stop/Crew: Ack - Moving)
+        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn62 (Open Doors - Left)
+        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn63 (Close Doors - Left)
+        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn64 (Open Doors - Right)
+        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn65 (Close Doors - Right)
+        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn66 (Pantagraph - Up/F)
+        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn67 (Pantagraph - Down/F)
+        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn68 (Pantagraph - Up/R)
+        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn69 (Pantagraph - Down/R)
 
-        // TMCC2 Freight/Stock Cars
-        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn68 (Option1 On)
-        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn69 (Opiton1 Off)
-        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn70 (Option2 On)
-        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn71 (Option2 Off)
-        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn72 (Load)
-        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn73 (Unload)
-        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn74 (FRED On)
-        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn75 (FRED Off)
-        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn76 (Flat Wheel On)
-        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn77 (Flat Wheel Off)
-        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn78 (Game On)
-        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn79 (Game Off)
+        // Only TMCC1 Break-Down B Unit
+
+        // TMCC2 Boxcar/Livestock Car
+        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn70 (Option1 On)
+        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn71 (Opiton1 Off)
+        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn72 (Option2 On)
+        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn73 (Option2 Off)
+        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn74 (Load)
+        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn75 (Unload)
+        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn76 (FRED On)
+        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn77 (FRED Off)
+        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn78 (Flat Wheel On)
+        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn79 (Flat Wheel Off)
+        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn80 (Game On)
+        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn81 (Game Off)
+
+        // Only TMCC1 Passenger/Dining Cars
+
+        // Only TMCC1 Crane/Boom Car
 
         // TMCC2 Smoke System
-        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn80 (Smoke System Off)
-        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn81 (Smoke System Low)
-        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn82 (Smoke System Med)
-        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn83 (Smoke System High)
+        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn82 (Smoke System Off)
+        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn83 (Smoke System Low)
+        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn84 (Smoke System Med)
+        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn85 (Smoke System High)
 
         // TRMCC2_200 Unassigned FnKeys
-        {0xF8012E}, // Fn84 Code to Trigger SerialMonFrame Message/Unassigned FnKey
-        {0xF8012E}, // Fn85 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fnxx Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fnxx Code to Trigger SerialMonFrame Message/Unassigned FnKey
 
         // TMCC2_200 Aux FnKeys
         {0xF80108}, // Fnxx (Aux1 Off)

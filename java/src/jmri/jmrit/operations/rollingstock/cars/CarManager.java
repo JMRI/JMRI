@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.*;
-import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -252,38 +251,6 @@ public class CarManager extends RollingStockManager<Car>
             }
         }
         // now load all of the remaining low priority cars
-        for (Car car : list) {
-            if (!out.contains(car)) {
-                out.add(car);
-            }
-        }
-        return out;
-    }
-
-    protected List<Car> sortByTrackPriority(List<Car> list) {
-        List<Car> out = new ArrayList<>();
-        // sort cars by track priority
-        for (Car car : list) {
-            if (car.getTrack() != null && car.getTrack().getTrackPriority().equals(Track.PRIORITY_HIGH)) {
-                out.add(car);
-            }
-        }
-        for (Car car : list) {
-            if (car.getTrack() != null && car.getTrack().getTrackPriority().equals(Track.PRIORITY_MEDIUM)) {
-                out.add(car);
-            }
-        }
-        for (Car car : list) {
-            if (car.getTrack() != null && car.getTrack().getTrackPriority().equals(Track.PRIORITY_NORMAL)) {
-                out.add(car);
-            }
-        }
-        for (Car car : list) {
-            if (car.getTrack() != null && car.getTrack().getTrackPriority().equals(Track.PRIORITY_LOW)) {
-                out.add(car);
-            }
-        }
-        // cars without a track assignment
         for (Car car : list) {
             if (!out.contains(car)) {
                 out.add(car);

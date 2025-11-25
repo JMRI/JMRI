@@ -1,5 +1,11 @@
 package jmri.jmrit.logixng.util.parser.functions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.jmrit.logixng.actions.*;
 
 import java.io.IOException;
@@ -15,9 +21,8 @@ import jmri.script.ScriptEngineSelector;
 import jmri.util.JUnitUtil;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.*;
 
 /**
  * Test LogixNG functions defined in Jython.
@@ -59,12 +64,12 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
             "jmri.InstanceManager.getDefault(jmri.jmrit.logixng.util.parser.FunctionManager).put(\"testJythonDefinedFunction\", TestJythonDefinedFunction())");
 
 
-    Memory _memory1, _memory2;
-    Memory _memoryResult;
-    LogixNG _logixNG;
-    ConditionalNG _conditionalNG;
-    MaleSocket _maleSocket;
-    DigitalFormula _formula;
+    private Memory _memory1, _memory2;
+    private Memory _memoryResult;
+    private LogixNG _logixNG;
+    private ConditionalNG _conditionalNG;
+    private MaleSocket _maleSocket;
+    private DigitalFormula _formula;
 
     @Override
     public ConditionalNG getConditionalNG() {
@@ -116,31 +121,29 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCtor() {
         DigitalFormula t = new DigitalFormula("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
         t = new DigitalFormula("IQDA321", null);
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 1", 1 == _formula.getChildCount());
+        assertEquals( 1, _formula.getChildCount(), "getChildCount() returns 1");
 
-        Assert.assertNotNull("getChild(0) returns a non null value",
-                _formula.getChild(0));
+        assertNotNull( _formula.getChild(0), "getChild(0) returns a non null value");
 
-        boolean hasThrown = false;
-        try {
-            _formula.getChild(1);
-        } catch (IndexOutOfBoundsException ex) {
-            hasThrown = true;
-            Assert.assertEquals("Error message is correct", "Index 1 out of bounds for length 1", ex.getMessage());
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
+        IndexOutOfBoundsException ex = assertThrows(IndexOutOfBoundsException.class,
+            () ->  {
+                var obj = _formula.getChild(1);
+                assertNull( obj, "should not get to here, should have thrown ex");
+                    });
+        assertNotNull(ex);
+        assertEquals( "Index 1 out of bounds for length 1", ex.getMessage(), "Error message is correct");
     }
 
     @Test
     public void testCategory() {
-        Assert.assertEquals("Category matches", LogixNG_Category.COMMON, _base.getCategory());
+        assertEquals( LogixNG_Category.COMMON, _base.getCategory(), "Category matches");
     }
 
     @Test
@@ -148,7 +151,7 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
         FunctionManager fm = InstanceManager.getDefault(FunctionManager.class);
 
         Function f = fm.get("testJythonDefinedFunction");
-        Assert.assertEquals("This module does not define any constants.", f.getConstantDescriptions());
+        assertEquals("This module does not define any constants.", f.getConstantDescriptions());
     }
 
     @Test
@@ -160,8 +163,8 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
         _memoryResult.setValue(null);
         _formula.setFormula("writeMemory(\"IMResult\", testJythonDefinedFunction(readMemory(\"IM1\"),readMemory(\"IM2\")))");
         _logixNG.execute();
-        Assert.assertEquals(6, (int)_memoryResult.getValue());
-        Assert.assertEquals(
+        assertEquals(6, (int)_memoryResult.getValue());
+        assertEquals(
                 "Digital Formula: writeMemory(\"IMResult\", testJythonDefinedFunction(readMemory(\"IM1\"),readMemory(\"IM2\")))",
                 _formula.getLongDescription());
 
@@ -170,8 +173,8 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
         _memoryResult.setValue(null);
         _formula.setFormula("writeMemory(\"IMResult\", testJythonDefinedFunction(readMemory(\"IM1\"),readMemory(\"IM2\")))");
         _logixNG.execute();
-        Assert.assertEquals(-77, (int)_memoryResult.getValue());
-        Assert.assertEquals(
+        assertEquals(-77, (int)_memoryResult.getValue());
+        assertEquals(
                 "Digital Formula: writeMemory(\"IMResult\", testJythonDefinedFunction(readMemory(\"IM1\"),readMemory(\"IM2\")))",
                 _formula.getLongDescription());
 
@@ -180,8 +183,8 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
         _memoryResult.setValue(null);
         _formula.setFormula("writeMemory(\"IMResult\", testJythonDefinedFunction(readMemory(\"IM1\"),readMemory(\"IM2\")))");
         _logixNG.execute();
-        Assert.assertEquals(20, (int)_memoryResult.getValue());
-        Assert.assertEquals(
+        assertEquals(20, (int)_memoryResult.getValue());
+        assertEquals(
                 "Digital Formula: writeMemory(\"IMResult\", testJythonDefinedFunction(readMemory(\"IM1\"),readMemory(\"IM2\")))",
                 _formula.getLongDescription());
     }
@@ -200,8 +203,8 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
         super.testMaleSocketIsActive();
     }
 
-    // The minimal setup for log4J
     @Before
+    @BeforeEach
     public void setUp() throws SocketAlreadyConnectedException, ParserException, ScriptException, JmriException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
@@ -239,11 +242,11 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
         _base = _formula;
         _baseMaleSocket = _maleSocket;
 
-        if (! _logixNG.setParentForAllChildren(new ArrayList<>())) throw new RuntimeException();
+        assertTrue( _logixNG.setParentForAllChildren(new ArrayList<>()) );
 
         Bindings bindings = new SimpleBindings();
         ScriptEngineSelector.Engine engine = _scriptEngineSelector.getSelectedEngine();
-        if (engine == null) throw new JmriException("Script engine is null");
+        assertNotNull( engine, "Script engine is null");
         engine.getScriptEngine().eval(JYTHON_FUNCTION, bindings);
 
         _logixNG.activate();
@@ -251,6 +254,7 @@ public class JythonDefinedFunctionsTest extends AbstractDigitalActionTestBase {
     }
 
     @After
+    @AfterEach
     public void tearDown() {
         _logixNG.setEnabled(false);
         jmri.jmrit.logixng.util.LogixNG_Thread.stopAllLogixNGThreads();

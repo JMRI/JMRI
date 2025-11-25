@@ -862,7 +862,17 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         menuItem.addActionListener((ActionEvent e1) -> deleteBean(rowindex, 0));
         popupMenu.add(menuItem);
 
+        menuItem = new JMenuItem(Bundle.getMessage("PropertyAddEdit"));
+        menuItem.addActionListener((ActionEvent e1) -> addEditProperty(rowindex, 0));
+        popupMenu.add(menuItem);
+
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
+    }
+
+    void addEditProperty(int row, int column) {
+        T nBean = getBySystemName(sysNameList.get(row));
+        var addEditAction = new PropertyAddEditAction(nBean);
+        addEditAction.actionPerformed(null);
     }
 
     public void copyUserName(int row, int column) {
