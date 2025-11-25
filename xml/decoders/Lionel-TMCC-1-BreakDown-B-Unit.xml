@@ -50,13 +50,13 @@
           <functionlabel num= "1" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num= "2" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num= "3" lockable="false" visible="true">Front-X</functionlabel>
-          <functionlabel num= "4" lockable="false" visible="true">Rear-X</functionlabel>
-          <functionlabel num= "5" lockable="false" visible="true">Volume Up</functionlabel>
+          <functionlabel num= "4" lockable="false" visible="true">Rear-X </functionlabel>
+          <functionlabel num= "5" lockable="false" visible="true"> Volume Up </functionlabel>
           <functionlabel num= "6" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num= "7" lockable="false" visible="true">RPM RampUp</functionlabel>
+          <functionlabel num= "7" lockable="false" visible="true">RPM RampUp </functionlabel>
           <functionlabel num= "8" lockable="false" visible="true">Volume Down</functionlabel>
           <functionlabel num= "9" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">RPM RampDown</functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">  RPM RampDown  </functionlabel>
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
@@ -90,9 +90,9 @@
           <functionlabel num="41" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="42" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="43" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="44" lockable="false" visible="true">Breakdown</functionlabel>
-          <functionlabel num="45" lockable="false" visible="true">MadeYard</functionlabel>
-          <functionlabel num="46" lockable="false" visible="true">Repairs</functionlabel>
+          <functionlabel num="44" lockable="false" visible="true"> Breakdown  </functionlabel>
+          <functionlabel num="45" lockable="false" visible="true"> MadeYard   </functionlabel>
+          <functionlabel num="46" lockable="false" visible="true">  Repairs   </functionlabel>
           <functionlabel num="47" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="48" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="49" lockable="false" visible="false">Unassigned</functionlabel>
