@@ -134,6 +134,8 @@
                         <li>some clean-up of the window layout.
                     </ul>
                 </li>
+                <li><strong>STL Editor</strong>: CDI parsing error handling has been improved.
+                Debug output has been enhanced and explained in the STL Editor help page.</li>
             </ul>
 
         <h4>Powerline</h4>
@@ -632,7 +634,7 @@
         <a id="TLae" name="TLae"></a>
         <ul>
             <li>There's a new "Property Add/Edit" in the item popup menu
-                in the various tables.  This lets you add or edit 
+                in the various tables.  This lets you add or edit
                 property values associated with a particular item.</li>
         </ul>
 
