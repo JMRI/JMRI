@@ -385,36 +385,44 @@ public final class LogixNGTableIcon extends PositionableJPanel {
                 } else {
                     header = "";
                 }
-                Pattern pattern = Pattern.compile("\\{\\{\\{(.+?)(\\:.+?)?\\}\\}\\}(.*)");
-                Matcher matcher = pattern.matcher(header);
-                if (matcher.matches()) {
-                    headerType._header = matcher.group(3);
-                    headerType._parameters = matcher.group(2);
-                    switch (matcher.group(1).toLowerCase()) {
-                        case "button":
-                            headerType._class = JButton.class;
-                            break;
-                        case "list":
-                            String comboBoxTableName = headerType._parameters.substring(1);
-                            NamedTable comboBoxTable = InstanceManager
-                                    .getDefault(NamedTableManager.class)
-                                    .getNamedTable(comboBoxTableName);
-                            if (comboBoxTable != null) {
-                                headerType._class = JComboBox.class;
-                                JComboBox comboBox = new JComboBox();
-                                for (int row=1; row <= comboBoxTable.numRows(); row++) {
-                                    comboBox.addItem(comboBoxTable.getCell(row, 1));
+                if (header.startsWith("{{{")) {
+                    Pattern pattern = Pattern.compile("\\{\\{\\{(.+?)(\\:.+?)?\\}\\}\\}(.*)");
+                    Matcher matcher = pattern.matcher(header);
+                    if (matcher.matches()) {
+                        headerType._header = matcher.group(3);
+                        headerType._parameters = matcher.group(2);
+                        headerType._type = matcher.group(1).toLowerCase();
+                        switch (headerType._type) {
+                            case "button":
+                                headerType._class = JButton.class;
+                                break;
+                            case "list":
+                                String comboBoxTableName = headerType._parameters.substring(1);
+                                NamedTable comboBoxTable = InstanceManager
+                                        .getDefault(NamedTableManager.class)
+                                        .getNamedTable(comboBoxTableName);
+                                if (comboBoxTable != null) {
+                                    headerType._class = JComboBox.class;
+                                    JComboBox<String> comboBox = new JComboBox<>();
+                                    for (int row=1; row <= comboBoxTable.numRows(); row++) {
+                                        Object val = comboBoxTable.getCell(row, 1);
+                                        String value = val != null ? val.toString() : "";
+                                        comboBox.addItem(value);
+                                    }
+                                    headerType._cellEditor = new DefaultCellEditor(comboBox);
+                                } else {
+                                    log.warn("Cannot load LogixNG Table: {}", comboBoxTableName);
                                 }
-                                headerType._cellEditor = new DefaultCellEditor(comboBox);
-                            } else {
-                                log.warn("Cannot load LogixNG Table: {}", comboBoxTableName);
-                            }
-                            break;
-                        default:
-                            log.warn("Unknown column type: {}", matcher.group(1));
+                                break;
+                            default:
+                                log.warn("Unknown column type: {}", matcher.group(1));
+                                headerType._type = null;
+                        }
+                    } else {
+                        log.warn("Unknown column definition: {}", header);
                     }
                 } else {
-                    log.warn("Unknown column definition: {}", header);
+                    _headers[col]._header = header;
                 }
             }
         }
@@ -507,24 +515,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
         @Override
         public String getColumnName(int col) {
-            Object headerObj = _namedTable.getBean().getCell(0, col+1);
-            String header;
-
-            if (headerObj != null) {
-                header = headerObj.toString();
-            } else {
-                header = "";
-            }
-            if (header.startsWith("{{{")) {
-                Pattern pattern = Pattern.compile("\\{\\{\\{(.+?)(\\:.+?)?\\}\\}\\}(.*)");
-                Matcher matcher = pattern.matcher(header);
-                if (matcher.matches()) {
-                    return matcher.group(3);
-                } else {
-                    log.warn("Unknown column definition: {}", header);
-                }
-            }
-            return header;
+            return _headers[col]._header;
         }
 
         @Override
@@ -539,26 +530,9 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
         @Override
         public Class<?> getColumnClass(int col) {
-            Object headerObj = _namedTable.getBean().getCell(0, col+1);
-            String header;
-            if (headerObj != null) {
-                header = headerObj.toString();
-            } else {
-                header = "";
-            }
-            if (header.startsWith("{{{")) {
-                Pattern pattern = Pattern.compile("\\{\\{\\{(.+?)(\\:.+?)?\\}\\}\\}(.*)");
-                Matcher matcher = pattern.matcher(header);
-                if (matcher.matches()) {
-                    switch (matcher.group(1).toLowerCase()) {
-                        case "button": return JButton.class;
-                        case "list": return JComboBox.class;
-                        default:
-                            log.warn("Unknown column type: {}", matcher.group(1));
-                    }
-                } else {
-                    log.warn("Unknown column definition: {}", header);
-                }
+            Class<?> clazz = _headers[col]._class;
+            if (clazz != null) {
+                return clazz;
             }
             return super.getColumnClass(col);
         }
@@ -592,6 +566,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             maleSocketMany.addLocalVariable("tableName", SymbolTable.InitialValueType.String, null);
             maleSocketMany.addLocalVariable("row", SymbolTable.InitialValueType.String, null);
             maleSocketMany.addLocalVariable("column", SymbolTable.InitialValueType.String, null);
+            maleSocketMany.addLocalVariable("type", SymbolTable.InitialValueType.String, null);
             maleSocketMany.addLocalVariable("oldValue", SymbolTable.InitialValueType.String, null);
             maleSocketMany.addLocalVariable("newValue", SymbolTable.InitialValueType.String, null);
 
@@ -628,6 +603,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             validateModuleAction.addParameter("__tableName__", SymbolTable.InitialValueType.LocalVariable, "tableName", Module.ReturnValueType.None, null);
             validateModuleAction.addParameter("__row__", SymbolTable.InitialValueType.LocalVariable, "row", Module.ReturnValueType.None, null);
             validateModuleAction.addParameter("__column__", SymbolTable.InitialValueType.LocalVariable, "column", Module.ReturnValueType.None, null);
+            validateModuleAction.addParameter("__type__", SymbolTable.InitialValueType.LocalVariable, "type", Module.ReturnValueType.None, null);
             validateModuleAction.addParameter("__oldValue__", SymbolTable.InitialValueType.LocalVariable, "oldValue", Module.ReturnValueType.None, null);
             validateModuleAction.addParameter("__newValue__", SymbolTable.InitialValueType.LocalVariable, "newValue", Module.ReturnValueType.LocalVariable, "newValue");
             MaleSocket maleSocket = new DefaultMaleDigitalActionSocket(InstanceManager.getDefault(DigitalActionManager.class), validateModuleAction);
@@ -660,6 +636,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             _variablesWithValues.put("tableName", _namedTable.getName());
             _variablesWithValues.put("row", table.getCell(row+1, 0));
             _variablesWithValues.put("column", table.getCell(0, col+1));
+            _variablesWithValues.put("type", _headers[col]._type);
             _variablesWithValues.put("oldValue", table.getCell(row+1, col+1));
             _variablesWithValues.put("newValue", val);
             _myData.setValues(_namedTable.getBean(), row, col);
