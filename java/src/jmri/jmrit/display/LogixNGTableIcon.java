@@ -5,11 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.JTableHeader;
+import javax.swing.table.*;
 
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
@@ -19,6 +20,8 @@ import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.implementation.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
 import jmri.util.swing.*;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 
 /**
  * An icon to display a NamedTable and let the user edit it.
@@ -44,15 +47,25 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        _tableModel = new TableModel();
-
-        _tableModel.setTable(tableName);
+        _tableModel = new TableModel(tableName);
 
         _table = new JTable(_tableModel);
         _table.setCellSelectionEnabled(true);
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _table.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
         _table.getTableHeader().setReorderingAllowed(false);
+
+        for (int col=0; col < _tableModel.getColumnCount(); col++) {
+            TableModel.HeaderType headerType = _tableModel._headers[col];
+            if (headerType._cellEditor != null) {
+                _table.getColumnModel().getColumn(col).setCellEditor(headerType._cellEditor);
+            }
+        }
+
+        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        _table.setDefaultRenderer(JButton.class, buttonRenderer);
+        TableCellEditor editButEditor = new ButtonEditor(new JButton());
+        _table.setDefaultEditor(JButton.class, editButEditor);
 
         ListModel<Object> lm = new RowHeaderListModel();
 
@@ -321,6 +334,14 @@ public final class LogixNGTableIcon extends PositionableJPanel {
      */
     public final class TableModel extends AbstractTableModel {
 
+        private class HeaderType {
+            Class<?> _class;
+            String _type;
+            String _parameters;
+            String _header;
+            TableCellEditor _cellEditor;
+        }
+
         private NamedBeanHandle<NamedTable> _namedTable;
         private NamedBeanHandle<Module> _validateModule;
         private boolean _editable = false;
@@ -335,12 +356,67 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         private final DigitalCallModule validateModuleAction = new DigitalCallModule("IQDA:JMRI:LogixNGTableIcon", null);
         private Map<String, Object> _variablesWithValues;
         private final MyData _myData = new MyData();
+        private final HeaderType[] _headers;
 
 
-        public TableModel() {
+        public TableModel(String tableName) {
             initCallModule();
             setEditableColumns("");
             setEditableRows("");
+            setTable(tableName);
+
+            if (_namedTable != null) {
+                _headers = new HeaderType[_namedTable.getBean().numColumns()];
+                initHeaders();
+            } else {
+                _headers = null;
+            }
+        }
+
+        private void initHeaders() {
+            for (int col=0; col < _namedTable.getBean().numColumns(); col++) {
+                HeaderType headerType = new HeaderType();
+                _headers[col] = headerType;
+
+                Object headerObj = _namedTable.getBean().getCell(0, col+1);
+                String header;
+                if (headerObj != null) {
+                    header = headerObj.toString();
+                } else {
+                    header = "";
+                }
+                Pattern pattern = Pattern.compile("\\{\\{\\{(.+?)(\\:.+?)?\\}\\}\\}(.*)");
+                Matcher matcher = pattern.matcher(header);
+                if (matcher.matches()) {
+                    headerType._header = matcher.group(3);
+                    headerType._parameters = matcher.group(2);
+                    switch (matcher.group(1).toLowerCase()) {
+                        case "button":
+                            headerType._class = JButton.class;
+                            break;
+                        case "list":
+                            String comboBoxTableName = headerType._parameters.substring(1);
+                            NamedTable comboBoxTable = InstanceManager
+                                    .getDefault(NamedTableManager.class)
+                                    .getNamedTable(comboBoxTableName);
+                            if (comboBoxTable != null) {
+                                headerType._class = JComboBox.class;
+                                JComboBox comboBox = new JComboBox();
+                                for (int row=1; row <= comboBoxTable.numRows(); row++) {
+                                    comboBox.addItem(comboBoxTable.getCell(row, 1));
+                                }
+                                headerType._cellEditor = new DefaultCellEditor(comboBox);
+                            } else {
+                                log.warn("Cannot load LogixNG Table: {}", comboBoxTableName);
+                            }
+                            break;
+                        default:
+                            log.warn("Unknown column type: {}", matcher.group(1));
+                    }
+                } else {
+                    log.warn("Unknown column definition: {}", header);
+                }
+            }
         }
 
         public NamedTable getTable() {
@@ -413,18 +489,42 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
         @Override
         public int getColumnCount() {
-            return _namedTable.getBean().numColumns();
+            if (_namedTable != null) {
+                return _namedTable.getBean().numColumns();
+            } else {
+                return 0;
+            }
         }
 
         @Override
         public int getRowCount() {
-            return _namedTable.getBean().numRows();
+            if (_namedTable != null) {
+                return _namedTable.getBean().numRows();
+            } else {
+                return 0;
+            }
         }
 
         @Override
         public String getColumnName(int col) {
-            Object data = _namedTable.getBean().getCell(0, col+1);
-            return data != null ? data.toString() : "<null>";
+            Object headerObj = _namedTable.getBean().getCell(0, col+1);
+            String header;
+
+            if (headerObj != null) {
+                header = headerObj.toString();
+            } else {
+                header = "";
+            }
+            if (header.startsWith("{{{")) {
+                Pattern pattern = Pattern.compile("\\{\\{\\{(.+?)(\\:.+?)?\\}\\}\\}(.*)");
+                Matcher matcher = pattern.matcher(header);
+                if (matcher.matches()) {
+                    return matcher.group(3);
+                } else {
+                    log.warn("Unknown column definition: {}", header);
+                }
+            }
+            return header;
         }
 
         @Override
@@ -435,6 +535,32 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         @Override
         public void setValueAt(Object val, int row, int col) {
             callValidateModule(val, row, col);
+        }
+
+        @Override
+        public Class<?> getColumnClass(int col) {
+            Object headerObj = _namedTable.getBean().getCell(0, col+1);
+            String header;
+            if (headerObj != null) {
+                header = headerObj.toString();
+            } else {
+                header = "";
+            }
+            if (header.startsWith("{{{")) {
+                Pattern pattern = Pattern.compile("\\{\\{\\{(.+?)(\\:.+?)?\\}\\}\\}(.*)");
+                Matcher matcher = pattern.matcher(header);
+                if (matcher.matches()) {
+                    switch (matcher.group(1).toLowerCase()) {
+                        case "button": return JButton.class;
+                        case "list": return JComboBox.class;
+                        default:
+                            log.warn("Unknown column type: {}", matcher.group(1));
+                    }
+                } else {
+                    log.warn("Unknown column definition: {}", header);
+                }
+            }
+            return super.getColumnClass(col);
         }
 
         @Override
