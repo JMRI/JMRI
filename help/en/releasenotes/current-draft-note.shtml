@@ -460,6 +460,8 @@
             <li>Fix Exception when starting trains under inauspicious circumstances.</li>
             <li>Change the default location for the <em>dispatcheroptions.xml</em> file to the
             <strong>dispatcher</strong> directory.</li>
+			<li>Optionally, limit Maximum Speed to any Block occupied by the train.</li>
+			<li>Add scroll bars to the Dispatcher Options for the smaller screens</li>
         </ul>
 
     <h3>Dispatcher System</h3>
