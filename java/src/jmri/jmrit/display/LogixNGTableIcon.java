@@ -195,7 +195,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         c.weightx = 1.0;
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         p.add(allowEdit, c);
-        c.gridx = 3;
         c.gridx = 2;
         c.gridy = 1;
         p.add(_validateModuleComboBox, c);
@@ -207,7 +206,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         c.gridx = 0;
         c.gridy = 5;
         c.gridwidth = 3;
-        p.add(new JLabel(Bundle.getMessage("LogixNGTableIcon_EditableColumnsRowsInfo")), c);
+        p.add(new JLabel(Bundle.getMessage("LogixNGTableIcon_EditableColumnsInfo")), c);
         add(p);
 
         // cancel + add buttons at bottom of window
