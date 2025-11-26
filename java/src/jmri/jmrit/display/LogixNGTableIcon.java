@@ -427,6 +427,8 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             } else {
                 _namedTable = null;
             }
+
+            fireTableStructureChanged();
         }
 
         public void setTable(NamedTable table) {
@@ -494,6 +496,9 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
         @Override
         public Object getValueAt(int row, int col) {
+            if (_namedTable == null) {
+                return null;
+            }
             return _namedTable.getBean().getCell(row+1, col+1);
         }
 

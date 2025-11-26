@@ -970,13 +970,12 @@
       <xs:attributeGroup ref="EditorCommonTextInfoGroup"></xs:attributeGroup>
 
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+      
       <xs:attribute name="logixNGTable" type="beanNameType"></xs:attribute>
       <xs:attribute name="validateModule" type="beanNameType"></xs:attribute>
       <xs:attribute name="isEditable" type="yesNoType"></xs:attribute>
       <xs:attribute name="editableColumns" type="xs:string"></xs:attribute>
       <xs:attribute name="columnWidths" type="xs:string"></xs:attribute>
-      <xs:attribute name="defaulticon" type="xs:string"></xs:attribute>
-      <xs:attribute name="selectable" type="yesNoType"></xs:attribute>
       <xs:attribute name="colWidth" type="xs:int"></xs:attribute>
 
     </xs:complexType>
