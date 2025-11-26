@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:db="http://docbook.org/ns/docbook"
+           targetNamespace="http://jmri.org/xml/tracktiles"
+           xmlns="http://jmri.org/xml/tracktiles"
+           elementFormDefault="qualified">
+
+  <xs:annotation>
+    <xs:documentation>
+      Defines XML documenting track tile specifications from various manufacturers
+      for use in JMRI Layout Editor.
+      
+      This Schema is part of JMRI. Copyright 2025.
+      
+      JMRI is free software; you can redistribute it and/or modify it under
+      the terms of version 2 of the GNU General Public License as published
+      by the Free Software Foundation. See the "COPYING" file for a copy
+      of this license.
+      
+      JMRI is distributed in the hope that it will be useful, but WITHOUT
+      ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+      FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+      for more details.
+    </xs:documentation>
+  </xs:annotation>
+
+  <!-- Import DocBook namespace for copyright, authorgroup, and revhistory -->
+  <xs:import namespace="http://docbook.org/ns/docbook" 
+             schemaLocation="http://docbook.org/xml/5.0/xsd/docbook.xsd"/>
+
+  <!-- Root element -->
+  <xs:element name="tracktiles">
+    <xs:annotation>
+      <xs:documentation>
+        Each track tiles configuration file consists of header information
+        about the manufacturer and track system, followed by individual tile definitions.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="header" type="headerType"/>
+        <xs:element name="tiles" type="tilesType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Header type -->
+  <xs:complexType name="headerType">
+    <xs:annotation>
+      <xs:documentation>The header element identifies the track system</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="vendor" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Manufacturer name, e.g., "Märklin", "Trix", "Roco"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="code" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            Model railroad scale code: 250, 200, 143, 124, 100, 83, 80, 75, 70, 60, 55, 40, 30
+            Common codes: 250=G, 200=1, 143=0, 124=TT, 100=HO, 83=S, 80=00, 55=N, 40=Z
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="family" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Product family name, e.g., "C-Track", "K-Track", "Geolinegleise"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="scale" type="scaleType"/>
+      <xs:element name="gauge" type="gaugeType"/>
+      <xs:element ref="db:copyright" minOccurs="0"/>
+      <xs:element ref="db:authorgroup" minOccurs="0"/>
+      <xs:element ref="db:revhistory" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Scale type -->
+  <xs:complexType name="scaleType">
+    <xs:annotation>
+      <xs:documentation>Scale specification</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Scale name, e.g., "H0", "N", "Z", "TT", "0"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ratio" type="xs:positiveInteger">
+        <xs:annotation>
+          <xs:documentation>Scale ratio as 1:n, e.g., "87" for 1:87 (H0)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Gauge type -->
+  <xs:complexType name="gaugeType">
+    <xs:annotation>
+      <xs:documentation>Track gauge specification</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="gaugename" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Gauge name, e.g., "Standard", "Narrow"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="gaugesize">
+        <xs:annotation>
+          <xs:documentation>Track gauge in millimeters, e.g., 16.5mm for H0, 9mm for N</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="value" type="xs:decimal" use="required"/>
+          <xs:attribute name="unit" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="mm"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Tiles container -->
+  <xs:complexType name="tilesType">
+    <xs:annotation>
+      <xs:documentation>The tiles element contains all track tile definitions</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="tile" type="tileType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Individual tile -->
+  <xs:complexType name="tileType">
+    <xs:annotation>
+      <xs:documentation>Individual tile definition</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="partcode" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Vendor part number/code, e.g., "24077", "24130"</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="jmritype" type="jmriTypeEnum">
+        <xs:annotation>
+          <xs:documentation>JMRI track type mapping</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="l10n" type="l10nType" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Localized part name, with ISO 639-1 language code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="geometry" type="geometryType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- JMRI type enumeration -->
+  <xs:simpleType name="jmriTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="straight">
+        <xs:annotation>
+          <xs:documentation>Straight track segment</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="curved">
+        <xs:annotation>
+          <xs:documentation>Curved track segment</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="bezier">
+        <xs:annotation>
+          <xs:documentation>Bezier curved track segment</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="turnout-lh">
+        <xs:annotation>
+          <xs:documentation>Left-hand turnout</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="turnout-rh">
+        <xs:annotation>
+          <xs:documentation>Right-hand turnout</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="wye">
+        <xs:annotation>
+          <xs:documentation>Wye turnout</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="crossing">
+        <xs:annotation>
+          <xs:documentation>Single crossing</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="double-crossing">
+        <xs:annotation>
+          <xs:documentation>Double crossing/scissor crossing</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Localization type -->
+  <xs:complexType name="l10nType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="lang" type="xs:language" use="required">
+          <xs:annotation>
+            <xs:documentation>ISO 639-1 language code, e.g., "de" for German, "en" for English</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <!-- Geometry type -->
+  <xs:complexType name="geometryType">
+    <xs:annotation>
+      <xs:documentation>
+        Geometric specifications for the tile.
+        Straight and curved tracks may optionally include an end element for ending/bumper tiles.
+        Turnouts use path specifications instead.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:sequence>
+        <xs:element name="straight" type="straightType"/>
+        <xs:element name="end" type="endType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:sequence>
+        <xs:element name="curved" type="curvedType"/>
+        <xs:element name="end" type="endType" minOccurs="0"/>
+      </xs:sequence>
+      <xs:element name="turnout" type="turnoutType"/>
+    </xs:choice>
+  </xs:complexType>
+
+  <!-- Straight track type -->
+  <xs:complexType name="straightType">
+    <xs:annotation>
+      <xs:documentation>Straight track with length in millimeters</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="length" type="xs:decimal" use="required"/>
+    <xs:attribute name="unit" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="mm"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="function" type="functionEnum" default="none">
+      <xs:annotation>
+        <xs:documentation>Special electrical function</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="contactType" type="contactTypeEnum">
+      <xs:annotation>
+        <xs:documentation>Type of electrical contact</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="powered" type="yesNoEnum" default="no">
+      <xs:annotation>
+        <xs:documentation>Whether track requires external power</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- Curved track type -->
+  <xs:complexType name="curvedType">
+    <xs:annotation>
+      <xs:documentation>Curved track with radius (mm) and arc angle (degrees)</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="radius" type="xs:decimal" use="required"/>
+    <xs:attribute name="arc" type="xs:decimal" use="required"/>
+    <xs:attribute name="radiusunit" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="mm"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="arcunit" use="required">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="deg"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="function" type="functionEnum" default="none">
+      <xs:annotation>
+        <xs:documentation>Special electrical function</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="contactType" type="contactTypeEnum">
+      <xs:annotation>
+        <xs:documentation>Type of electrical contact</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="powered" type="yesNoEnum" default="no">
+      <xs:annotation>
+        <xs:documentation>Whether track requires external power</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- Function enumeration -->
+  <xs:simpleType name="functionEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none">
+        <xs:annotation>
+          <xs:documentation>Standard track (default)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="switch">
+        <xs:annotation>
+          <xs:documentation>Momentary contact track (Schaltgleis) for triggering signals/accessories</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="decoupler">
+        <xs:annotation>
+          <xs:documentation>Automatic uncoupling track (Entkupplungsgleis)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="isolated">
+        <xs:annotation>
+          <xs:documentation>Electrically isolated section for block control</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Contact type enumeration -->
+  <xs:simpleType name="contactTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="momentary"/>
+      <xs:enumeration value="permanent"/>
+      <xs:enumeration value="none"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Yes/No enumeration -->
+  <xs:simpleType name="yesNoEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- End/bumper type -->
+  <xs:complexType name="endType">
+    <xs:annotation>
+      <xs:documentation>
+        End/bumper tile marker. Optional extraLength specifies additional length 
+        beyond the main track section.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="extraLength" type="xs:decimal"/>
+    <xs:attribute name="unit">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="mm"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- Turnout type -->
+  <xs:complexType name="turnoutType">
+    <xs:annotation>
+      <xs:documentation>Turnout with multiple paths</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="path" type="pathType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Path type -->
+  <xs:complexType name="pathType">
+    <xs:annotation>
+      <xs:documentation>Turnout path specification</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="direction" type="directionEnum" use="required">
+      <xs:annotation>
+        <xs:documentation>Which route the path takes</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="state" type="stateEnum" use="required">
+      <xs:annotation>
+        <xs:documentation>Turnout state for this path (closed/thrown)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="id" type="xs:string">
+      <xs:annotation>
+        <xs:documentation>Optional identifier if multiple addresses needed (default 0)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="length" type="xs:decimal">
+      <xs:annotation>
+        <xs:documentation>Length for straight paths</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="lengthunit">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="mm"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="radius" type="xs:decimal">
+      <xs:annotation>
+        <xs:documentation>Radius for curved paths</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="radiusunit">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="mm"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="arc" type="xs:decimal">
+      <xs:annotation>
+        <xs:documentation>Arc angle for curved paths</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="arcunit">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="deg"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
+  <!-- Direction enumeration -->
+  <xs:simpleType name="directionEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="leftmost"/>
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="straight"/>
+      <xs:enumeration value="right"/>
+      <xs:enumeration value="rightmost"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- State enumeration -->
+  <xs:simpleType name="stateEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="closed"/>
+      <xs:enumeration value="thrown"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>

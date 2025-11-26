@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tracktiles SYSTEM "../DTD/tracktiles.dtd">
 <?xml-stylesheet href="../XSLT/tracktiles.xsl" type="text/xsl"?>
 
-<tracktiles version="1.0">
+<tracktiles version="1.0"
+            xmlns="http://jmri.org/xml/tracktiles"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:db="http://docbook.org/ns/docbook"
+            xsi:schemaLocation="http://jmri.org/xml/tracktiles ../schema/tracktiles.xsd">
   <header>
     <vendor>Piko</vendor>
     <code>100</code>
@@ -143,22 +146,22 @@
       <l10n lang="fr">Aiguillage à gauche WL</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
-          <path direction="diverging" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" length="231" lengthunit="mm"/>
+          <path direction="left" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
 
     <tile>
-      <partcode>55421</partcode>
+      <partcode>55424</partcode>
       <jmritype>turnout</jmritype>
       <l10n lang="de">Weiche rechts WR</l10n>
       <l10n lang="en">Turnout Right WR</l10n>
       <l10n lang="fr">Aiguillage à droite WR</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
-          <path direction="diverging" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" length="231" lengthunit="mm"/>
+          <path direction="right" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -213,9 +216,9 @@
       <l10n lang="fr">Aiguillage triple W3</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
-          <path direction="diverging" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
-          <path direction="diverging" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" id="0" length="231" lengthunit="mm"/>
+          <path direction="left" state="thrown" id="1" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" id="2" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE tracktiles SYSTEM "../DTD/tracktiles.dtd">
 <?xml-stylesheet href="../XSLT/tracktiles.xsl" type="text/xsl"?>
 
-<tracktiles version="1.0">
+<tracktiles version="1.0"
+            xmlns="http://jmri.org/xml/tracktiles"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:db="http://docbook.org/ns/docbook"
+            xsi:schemaLocation="http://jmri.org/xml/tracktiles ../schema/tracktiles.xsd">
   <header>
     <vendor>Märklin</vendor>
     <code>100</code>
