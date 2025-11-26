@@ -23,14 +23,14 @@ public class DefaultAnonymousTable implements AnonymousTable {
     private final Object[][] _data;
     private final Map<String,Integer> rowNames = new HashMap<>();
     private final Map<String,Integer> columnNames = new HashMap<>();
-    
+
     public DefaultAnonymousTable(int numRows, int numColumns) {
         _numRows = numRows;
         _numColumns = numColumns;
         _data = new Object[numRows+1][numColumns+1];
         setupTable();
     }
-    
+
     /**
      * Create a new anonymous table with an existing array of cells.
      * Row 0 has the column names and column 0 has the row names.
@@ -43,15 +43,15 @@ public class DefaultAnonymousTable implements AnonymousTable {
         // Column 0 has row names
         _numColumns = data[0].length-1;
         _data = data;
-        
+
         for (int row=0; row < _data.length; row++) {
             if (_numColumns+1 != _data[row].length) {
                 throw new IllegalArgumentException("All rows in table must have same number of columns");
             }
         }
-        
+
         setupTable();
-/*        
+/*
         int i[][] = new int[15][];
         i[5] = new int[3];
         i[7] = new int[10];
@@ -61,7 +61,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
         i[7][8] = 6;
 //        i[2][2] = 7;
 //        i[2][8] = 8;
-        
+
         i = new int[15][20];
 //        i[5] = new int[3];
         i[7] = new int[10];
@@ -73,7 +73,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
         i[2][8] = 8;
 */
     }
-    
+
     private void setupTable() {
         for (int i=0; i <= _numRows; i++) {
             Object cell = _data[i][0];
@@ -81,13 +81,21 @@ public class DefaultAnonymousTable implements AnonymousTable {
                 rowNames.put(cell.toString(), i);
             }
         }
-        
+
         for (int i=0; i <= _numColumns; i++) {
             Object cell = _data[0][i];
             if (cell != null && cell instanceof String) {
                 columnNames.put(cell.toString(), i);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void storeTableAsCSV() throws FileNotFoundException {
+        throw new UnsupportedOperationException("Not supported");
     }
 
     /**
@@ -103,13 +111,37 @@ public class DefaultAnonymousTable implements AnonymousTable {
      * {@inheritDoc}
      */
     @Override
+    public void storeTableAsCSV(@Nonnull File file, boolean storeSystemUserName)
+            throws FileNotFoundException {
+        storeTableAsCSV(file, null, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void storeTableAsCSV(
             @Nonnull File file,
             @CheckForNull String systemName, @CheckForNull String userName)
             throws FileNotFoundException {
-        
+
+        storeTableAsCSV(file, systemName, userName, true);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void storeTableAsCSV(
+            @Nonnull File file,
+            @CheckForNull String systemName, @CheckForNull String userName,
+            boolean storeSystemUserName)
+            throws FileNotFoundException {
+
         try (PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)))) {
-            writer.format("%s\t%s%n", systemName, userName);
+            if (storeSystemUserName) {
+                writer.format("%s\t%s%n", systemName, userName);
+            }
             for (int row=0; row <= _numRows; row++) {
                 for (int column=0; column <= _numColumns; column++) {
                     if (column > 0) writer.print("\t");
@@ -120,7 +152,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
             }
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -152,7 +184,7 @@ public class DefaultAnonymousTable implements AnonymousTable {
     public int numColumns() {
         return _numColumns;
     }
-    
+
     /**
      * {@inheritDoc}
      */

@@ -48,6 +48,7 @@
         <xs:element name="globalVariableIcon" type="EditorGlobalVariableIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="globalVariableInputIcon" type="EditorGlobalVariableInputIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="globalVariableComboIcon" type="EditorGlobalVariableComboIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="logixNGTableIcon" type="EditorLogixNGTableIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="signalheadicon" type="EditorSignalHeadIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="signalmasticon" type="EditorSignalMastIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="reportericon" type="EditorReporterIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
