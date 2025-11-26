@@ -2653,7 +2653,6 @@ public abstract class Editor extends JmriJFrameWithPermissions
     protected LogixNGTableIcon addLogixNGTable() {
         IconAdder logixNGTableIconEditor = getIconEditor("LogixNGTable");
         LogixNGTableIcon result = new LogixNGTableIcon(logixNGTableIconEditor.getTableSelection().getDisplayName(), this);
-//        result.setNamedTable(logixNGTableIconEditor.getTableSelection().getDisplayName());
         result.setSize(result.getPreferredSize().width, result.getPreferredSize().height);
         result.setDisplayLevel(MEMORIES);
         setNextLocation(result);
