@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.annotation.Nonnull;
 import javax.swing.*;
@@ -79,17 +81,6 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         blockSensorPanel.add(blockSensorComboBox);
         blockSensorPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
         blockPropertiesPanel.add(blockSensorPanel);
-
-        JPanel tilePanel = new JPanel(leftRowLayout);
-        tilePanel.add(tilesLabel);
-        tilePanel.add(tileVendorLabel);
-        tilePanel.add(tileVendorComboBox);
-        tilePanel.add(tileFamilyLabel);
-        tilePanel.add(tileFamilyComboBox);
-        tilePanel.add(tileNameLabel);
-        tilePanel.add(tileComboBox);
-        tilePanel.setBorder(new EmptyBorder(0, 20, 0, 0));
-        blockPropertiesPanel.add(tilePanel);
 
         // Begin the tabs structure
         //
@@ -210,14 +201,60 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         floatEditIcon.add(iconGroup6);
 
         floatEditTabsPane.addTab(Bundle.getMessage("TabIcon"), null, floatEditIcon, null);
+        
+        // Set tabbed pane to expand to full width
+        floatEditTabsPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, floatEditTabsPane.getPreferredSize().height));
+        
+        // Set tabbed panel to expand to full width like tiles section
+        floatEditTabsPanel.setLayout(new BoxLayout(floatEditTabsPanel, BoxLayout.LINE_AXIS));
         floatEditTabsPanel.add(floatEditTabsPane);
         add(floatEditTabsPanel);
 
         // End the tabs structure
-        // The next 3 groups reside under the tab secton
+        // Tiles section - independent panel below tabs with border to match tabbed pane
+        JPanel floatEditTilesPanel = new JPanel();
+        floatEditTilesPanel.setLayout(new BoxLayout(floatEditTilesPanel, BoxLayout.LINE_AXIS));
+        floatEditTilesPanel.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createLineBorder(Color.GRAY),
+            "Tiles",
+            TitledBorder.LEFT,
+            TitledBorder.TOP
+        ));
+        
+        // Add glue on left to center the content
+        floatEditTilesPanel.add(Box.createHorizontalGlue());
+        
+        JPanel tilesContent = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
+        tilesContent.add(tileVendorLabel);
+        tilesContent.add(tileVendorComboBox);
+        tilesContent.add(tileFamilyLabel);
+        tilesContent.add(tileFamilyComboBox);
+        tilesContent.add(tileNameLabel);
+        tilesContent.add(tileComboBox);
+        
+        floatEditTilesPanel.add(tilesContent);
+        
+        // Add glue on right to center the content
+        floatEditTilesPanel.add(Box.createHorizontalGlue());
+        
+        // Set preferred width to match tabbed pane
+        floatEditTilesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, floatEditTilesPanel.getPreferredSize().height));
+        add(floatEditTilesPanel);
+
+        // The next 3 groups reside under the tab and tiles sections
         JPanel floatEditLocationPanel = new JPanel();
+        floatEditLocationPanel.setLayout(new BoxLayout(floatEditLocationPanel, BoxLayout.LINE_AXIS));
+        floatEditLocationPanel.setBorder(new EmptyBorder(0, 5, 0, 5)); // Add 5px margin left and right
+        
+        // Set zoom and location panels to use BoxLayout to allow expansion
+        zoomPanel.setLayout(new BoxLayout(zoomPanel, BoxLayout.LINE_AXIS));
+        locationPanel.setLayout(new BoxLayout(locationPanel, BoxLayout.LINE_AXIS));
+        
         floatEditLocationPanel.add(zoomPanel);
+        floatEditLocationPanel.add(Box.createHorizontalStrut(10)); // Add spacing between panels
         floatEditLocationPanel.add(locationPanel);
+        floatEditLocationPanel.add(Box.createHorizontalGlue()); // Glue at the end
+        
         add(floatEditLocationPanel);
 
         floatEditTabsPane.addChangeListener((e) -> {

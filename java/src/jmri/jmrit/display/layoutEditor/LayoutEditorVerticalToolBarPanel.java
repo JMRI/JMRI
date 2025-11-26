@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -121,18 +124,56 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
 
         outerBorderPanel.add(vTop11Panel);
 
-        JPanel vTop12Panel = new JPanel(verticalContentLayout);
-        vTop12Panel.add(tilesLabel);
-        vTop12Panel.add(tileVendorLabel);
-        vTop12Panel.add(tileVendorComboBox);
-        vTop12Panel.add(tileFamilyLabel);
-        vTop12Panel.add(tileFamilyComboBox);
-        vTop12Panel.add(tileNameLabel);
-        vTop12Panel.add(tileComboBox);
-        vTop12Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12Panel.getPreferredSize().height));
-        vTop12Panel.setBorder(new EmptyBorder(0, 10, 0, 0));
+        // Tiles section - create its own bordered panel at bottom of Track section
+        JPanel tilesBorderPanel = new JPanel();
+        tilesBorderPanel.setLayout(new GridBagLayout());
+        TitledBorder tilesTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, "Tiles");
+        tilesTitleBorder.setTitleJustification(TitledBorder.CENTER);
+        tilesTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
+        tilesBorderPanel.setBorder(tilesTitleBorder);
 
-        outerBorderPanel.add(vTop12Panel);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.insets = new Insets(2, 5, 2, 5);
+        tilesBorderPanel.add(tileVendorLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        tilesBorderPanel.add(tileVendorComboBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        tilesBorderPanel.add(tileFamilyLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        tilesBorderPanel.add(tileFamilyComboBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        tilesBorderPanel.add(tileNameLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        tilesBorderPanel.add(tileComboBox, gbc);
+
+        tilesBorderPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, tilesBorderPanel.getPreferredSize().height));
+        outerBorderPanel.add(tilesBorderPanel);
+
         add(outerBorderPanel);
 
         JPanel nodesBorderPanel = new JPanel();

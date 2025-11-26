@@ -102,17 +102,6 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         hTop3CenterA.setBorder(new EmptyBorder(0, 20, 0, 0));
         hTop3Center.add(hTop3CenterA);
 
-        JPanel hTop3CenterB = new JPanel(centerRowLayout);
-        hTop3CenterB.add(tilesLabel);
-        hTop3CenterB.add(tileVendorLabel);
-        hTop3CenterB.add(tileVendorComboBox);
-        hTop3CenterB.add(tileFamilyLabel);
-        hTop3CenterB.add(tileFamilyComboBox);
-        hTop3CenterB.add(tileNameLabel);
-        hTop3CenterB.add(tileComboBox);
-        hTop3CenterB.setBorder(new EmptyBorder(0, 20, 0, 0));
-        hTop3Center.add(hTop3CenterB);
-
         hTop3Panel.add(hTop3Center);
         hTop3Panel.add(Box.createHorizontalGlue());
 
@@ -124,6 +113,24 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
             hTop3Panel.add(hTop3Right);
         }
         outerBorderPanel.add(hTop3Panel);
+
+        //Row 3.5 - Tiles section (aligned below Row 4 Nodes)
+        JPanel hTop3_5Panel = new JPanel();
+        hTop3_5Panel.setLayout(new BoxLayout(hTop3_5Panel, BoxLayout.LINE_AXIS));
+
+        //Row 3.5 : Left Components - Tile selection aligned to left
+        JPanel hTop3_5Left = new JPanel(leftRowLayout);
+        hTop3_5Left.add(new JLabel(Bundle.getMessage("MakeLabel", "Tiles")));
+        hTop3_5Left.add(tileVendorLabel);
+        hTop3_5Left.add(tileVendorComboBox);
+        hTop3_5Left.add(tileFamilyLabel);
+        hTop3_5Left.add(tileFamilyComboBox);
+        hTop3_5Left.add(tileNameLabel);
+        hTop3_5Left.add(tileComboBox);
+        hTop3_5Panel.add(hTop3_5Left);
+        hTop3_5Panel.add(Box.createHorizontalGlue());
+
+        outerBorderPanel.add(hTop3_5Panel);
 
         //Row 4
         JPanel hTop4Panel = new JPanel();
