@@ -318,7 +318,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         private boolean _editable = false;
         private String _editableColumns = "";
         List<String> _editableColumnsList;
-        List<String> _editableRowsList;
 
         private final LogixNG validateModuleLogixNG = new DefaultLogixNG("IQ:JMRI:LogixNGTableIcon", null);
         private final ConditionalNG validateModuleConditionalNG =
