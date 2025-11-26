@@ -3,6 +3,8 @@ package jmri.jmrit.display;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -297,13 +299,18 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         return o != null ? o.toString() : "";
     }
 
+    @Override
+    public void remove() {
+        _tableModel.dispose();
+    }
 
     // ------------ Table Models ------------
 
     /**
      * Table model for Tables in the Edit NamedTable pane.
      */
-    public final class TableModel extends AbstractTableModel {
+    public final class TableModel extends AbstractTableModel
+            implements PropertyChangeListener {
 
         private class HeaderType {
             Class<?> _class;
@@ -400,6 +407,10 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         }
 
         public void setTable(String tableName) {
+            if (_namedTable != null) {
+                _namedTable.getBean().removePropertyChangeListener(this);
+            }
+
             NamedTable table = null;
             if (tableName != null) {
                 table = InstanceManager.getDefault(NamedTableManager.class)
@@ -409,6 +420,9 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             if (table != null) {
                 _namedTable = InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(table.getDisplayName(), table);
+                if (_namedTable != null) {
+                    _namedTable.getBean().addPropertyChangeListener(this);
+                }
             } else {
                 _namedTable = null;
             }
@@ -578,10 +592,9 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         }
 
         private void callValidateModule(Object val, int row, int col) {
-            if (_validateModule == null) {
-                return;
-            }
-            if (!_validateModule.getBean().getRootSocket().isConnected()) {
+            if (_validateModule == null ||
+                    !_validateModule.getBean().getRootSocket().isConnected()) {
+                _namedTable.getBean().setCell(val, row+1, col+1);
                 return;
             }
             validateModuleAction.getSelectNamedBean().setNamedBean(_validateModule);
@@ -619,6 +632,20 @@ public final class LogixNGTableIcon extends PositionableJPanel {
                 Object newValue = conditionalNG.getSymbolTable().getValue("newValue");
                 myData._namedTable.setCell(newValue, myData._row+1, myData._col+1);
                 TableModel.this.fireTableCellUpdated(myData._row, myData._col);
+            }
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            NamedTable.RowAndColumn rowAndColumn = new NamedTable.RowAndColumn();
+            if (NamedTable.isProperty(NamedTable.PROPERTY_CELL_CHANGED, evt.getPropertyName(), rowAndColumn)) {
+                fireTableCellUpdated(rowAndColumn._row-1, rowAndColumn._column-1);
+            }
+        }
+
+        private void dispose() {
+            if (_namedTable != null) {
+                _namedTable.getBean().removePropertyChangeListener(this);
             }
         }
 

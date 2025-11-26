@@ -308,7 +308,10 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
      */
     @Override
     public void setCell(Object value, int row, int column) {
+        Object oldValue = _internalTable.getCell(row, column);
         _internalTable.setCell(value, row, column);
+        String property = NamedTable.getProperty(PROPERTY_CELL_CHANGED, row, column);
+        firePropertyChange(property, oldValue, value);
     }
 
     /**
