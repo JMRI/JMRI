@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import java.beans.PropertyChangeEvent;
+
 import jmri.NamedBean;
 
 /**
@@ -10,25 +12,28 @@ import jmri.NamedBean;
  */
 public interface NamedTable extends Table, NamedBean {
 
-    static class RowAndColumn {
-        public int _row;
-        public int _column;
-    }
+    static class NamedTablePropertyChangeEvent extends PropertyChangeEvent {
 
-    public static final String PROPERTY_CELL_CHANGED = "CELL_CHANGED";
+        private final int _row;
+        private final int _column;
 
-    static String getProperty(String desiredProperty, int row, int column) {
-        return String.format("%s_%d_%d", desiredProperty, row, column);
-    }
-
-    static boolean isProperty(String desiredProperty, String actualProperty, RowAndColumn rowAndColumn) {
-        if (actualProperty.startsWith(desiredProperty)) {
-            String[] rowCol = actualProperty.substring(desiredProperty.length()+1).split("_");
-            rowAndColumn._row = Integer.parseInt(rowCol[0]);
-            rowAndColumn._column = Integer.parseInt(rowCol[1]);
-            return true;
+        public NamedTablePropertyChangeEvent(
+                Object source, String propertyName,
+                Object oldValue, Object newValue,
+                int row, int column) {
+            super(source, propertyName, oldValue, newValue);
+            this._row = row;
+            this._column = column;
         }
-        return false;
+
+        public int getRow() { return _row; }
+        public int getColumn() { return _column; }
     }
+
+    /**
+     * This property tells that a cell in a LogixNG Table has been changed.
+     * The property change event is of the type NamedTablePropertyChangeEvent.
+     */
+    public static final String PROPERTY_CELL_CHANGED = "CELL_CHANGED";
 
 }

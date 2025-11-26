@@ -18,6 +18,7 @@ import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.NamedTable.NamedTablePropertyChangeEvent;
 import jmri.jmrit.logixng.actions.*;
 import jmri.jmrit.logixng.implementation.*;
 import jmri.jmrit.logixng.util.LogixNG_Thread;
@@ -637,9 +638,11 @@ public final class LogixNGTableIcon extends PositionableJPanel {
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            NamedTable.RowAndColumn rowAndColumn = new NamedTable.RowAndColumn();
-            if (NamedTable.isProperty(NamedTable.PROPERTY_CELL_CHANGED, evt.getPropertyName(), rowAndColumn)) {
-                fireTableCellUpdated(rowAndColumn._row-1, rowAndColumn._column-1);
+            if (evt instanceof NamedTablePropertyChangeEvent) {
+                var tableEvt = (NamedTablePropertyChangeEvent)evt;
+                if (NamedTable.PROPERTY_CELL_CHANGED.equals(evt.getPropertyName())) {
+                    fireTableCellUpdated(tableEvt.getRow()-1, tableEvt.getColumn()-1);
+                }
             }
         }
 
