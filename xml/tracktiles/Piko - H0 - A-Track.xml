@@ -140,7 +140,7 @@
     <!-- Turnouts/Switches -->
     <tile>
       <partcode>55420</partcode>
-      <jmritype>turnout</jmritype>
+      <jmritype>turnout-lh</jmritype>
       <l10n lang="de">Weiche links WL</l10n>
       <l10n lang="en">Turnout Left WL</l10n>
       <l10n lang="fr">Aiguillage à gauche WL</l10n>
@@ -154,7 +154,7 @@
 
     <tile>
       <partcode>55424</partcode>
-      <jmritype>turnout</jmritype>
+      <jmritype>turnout-rh</jmritype>
       <l10n lang="de">Weiche rechts WR</l10n>
       <l10n lang="en">Turnout Right WR</l10n>
       <l10n lang="fr">Aiguillage à droite WR</l10n>
@@ -168,7 +168,7 @@
 
     <tile>
       <partcode>55422</partcode>
-      <jmritype>turnout</jmritype>
+      <jmritype>other</jmritype>
       <l10n lang="de">Bogenweiche links BWL</l10n>
       <l10n lang="en">Curved Turnout Left BWL</l10n>
       <l10n lang="fr">Aiguillage courbe à gauche BWL</l10n>
@@ -182,7 +182,7 @@
 
     <tile>
       <partcode>55423</partcode>
-      <jmritype>turnout</jmritype>
+      <jmritype>other</jmritype>
       <l10n lang="de">Bogenweiche rechts BWR</l10n>
       <l10n lang="en">Curved Turnout Right BWR</l10n>
       <l10n lang="fr">Aiguillage courbe à droite BWR</l10n>
@@ -196,7 +196,7 @@
 
     <tile>
       <partcode>55424</partcode>
-      <jmritype>crossing</jmritype>
+      <jmritype>slip-double</jmritype>
       <l10n lang="de">Doppelkreuzungsweiche DKW</l10n>
       <l10n lang="en">Double Slip Switch DKW</l10n>
       <l10n lang="fr">Traversée jonction double DKW</l10n>
@@ -210,7 +210,7 @@
 
     <tile>
       <partcode>55425</partcode>
-      <jmritype>turnout</jmritype>
+      <jmritype>other</jmritype>
       <l10n lang="de">3-Wege Weiche W3</l10n>
       <l10n lang="en">3-Way Turnout W3</l10n>
       <l10n lang="fr">Aiguillage triple W3</l10n>
@@ -225,7 +225,7 @@
 
     <tile>
       <partcode>55426</partcode>
-      <jmritype>turnout</jmritype>
+      <jmritype>turnout-wye</jmritype>
       <l10n lang="de">Y-Weiche WY</l10n>
       <l10n lang="en">Wye Turnout WY</l10n>
       <l10n lang="fr">Aiguillage en Y WY</l10n>

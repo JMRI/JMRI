@@ -237,7 +237,7 @@
     <!-- Ending Tiles / Bumper Tracks -->
     <tile>
       <partcode>24977</partcode>
-      <jmritype>straight</jmritype>
+      <jmritype>end</jmritype>
       <l10n lang="de">Prellbock-Gleis 77,5 mm</l10n>
       <l10n lang="en">Bumper Track 77.5 mm</l10n>
       <l10n lang="es">Tope 77,5 mm</l10n>
@@ -250,7 +250,7 @@
 
     <tile>
       <partcode>24978</partcode>
-      <jmritype>straight</jmritype>
+      <jmritype>end</jmritype>
       <l10n lang="de">Prellbock-Gleis 94,2 mm</l10n>
       <l10n lang="en">Bumper Track 94.2 mm</l10n>
       <l10n lang="fr">Butoir 94,2 mm</l10n>
@@ -321,7 +321,7 @@
 
     <tile>
       <partcode>24630</partcode>
-      <jmritype>wye</jmritype>
+      <jmritype>other</jmritype>
       <l10n lang="de">Dreiwegweiche</l10n>
       <l10n lang="en">Three-Way Turnout</l10n>
       <l10n lang="fr">Aiguillage triple</l10n>
@@ -336,7 +336,7 @@
 
     <tile>
       <partcode>24640</partcode>
-      <jmritype>wye</jmritype>
+      <jmritype>other</jmritype>
       <l10n lang="de">Bogenweiche rechts</l10n>
       <l10n lang="en">Curved Turnout Right</l10n>
       <l10n lang="es">Desvío derecha</l10n>
@@ -351,7 +351,7 @@
 
     <tile>
       <partcode>24649</partcode>
-      <jmritype>wye</jmritype>
+      <jmritype>other</jmritype>
       <l10n lang="de">Bogenweiche links</l10n>
       <l10n lang="en">Curved Turnout Left</l10n>
       <l10n lang="fr">Aiguillage courbe gauche</l10n>

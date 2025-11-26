@@ -162,10 +162,16 @@
 
   <!-- JMRI type enumeration -->
   <xs:simpleType name="jmriTypeEnum">
+    <xs:annotation>
+      <xs:documentation>
+        JMRI native track element types as used in Layout Editor.
+        These correspond to the track element types that can be placed in a layout.
+      </xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:enumeration value="straight">
         <xs:annotation>
-          <xs:documentation>Straight track segment</xs:documentation>
+          <xs:documentation>Straight track segment (LayoutTrack)</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="curved">
@@ -178,29 +184,69 @@
           <xs:documentation>Bezier curved track segment</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="turnout-lh">
-        <xs:annotation>
-          <xs:documentation>Left-hand turnout</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="turnout-rh">
         <xs:annotation>
-          <xs:documentation>Right-hand turnout</xs:documentation>
+          <xs:documentation>Right-hand turnout (LayoutRHTurnout)</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="wye">
+      <xs:enumeration value="turnout-lh">
         <xs:annotation>
-          <xs:documentation>Wye turnout</xs:documentation>
+          <xs:documentation>Left-hand turnout (LayoutLHTurnout)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="turnout-wye">
+        <xs:annotation>
+          <xs:documentation>Wye turnout (LayoutWye)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="xover-double">
+        <xs:annotation>
+          <xs:documentation>Double crossover (LayoutDoubleXOver)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="xover-rh">
+        <xs:annotation>
+          <xs:documentation>Right-hand crossover (LayoutRHXOver)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="xover-lh">
+        <xs:annotation>
+          <xs:documentation>Left-hand crossover (LayoutLHXOver)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="slip-single">
+        <xs:annotation>
+          <xs:documentation>Single slip turnout (LayoutSlip - single)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="slip-double">
+        <xs:annotation>
+          <xs:documentation>Double slip turnout (LayoutSlip - double)</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="crossing">
         <xs:annotation>
-          <xs:documentation>Single crossing</xs:documentation>
+          <xs:documentation>Level crossing (LayoutLevelXing)</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="double-crossing">
+      <xs:enumeration value="end">
         <xs:annotation>
-          <xs:documentation>Double crossing/scissor crossing</xs:documentation>
+          <xs:documentation>End bumper/buffer stop (LayoutEdgeConnector with end type)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="anchor">
+        <xs:annotation>
+          <xs:documentation>Anchor point (LayoutEdgeConnector with anchor type)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="edge">
+        <xs:annotation>
+          <xs:documentation>Edge connector (LayoutEdgeConnector)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="other">
+        <xs:annotation>
+          <xs:documentation>Other/specialized track element not directly mapped to JMRI types</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
