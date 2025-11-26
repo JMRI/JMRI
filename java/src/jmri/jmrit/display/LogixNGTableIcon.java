@@ -129,7 +129,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         _validateModuleComboBox = new JComboBox<>();
         _validateModuleComboBox.addItem(new ModuleItem(null));
         for (Module m : InstanceManager.getDefault(ModuleManager.class).getNamedBeanSet()) {
-//            System.out.format("Root socket type: %s%n", m.getRootSocketType().getName());
             if ("DefaultFemaleDigitalActionSocket".equals(m.getRootSocketType().getName())
                     && m.isVisible()) {
                 ModuleItem mi = new ModuleItem(m);
@@ -160,24 +159,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         }
         columnList.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        Map<String,Integer> rowIndexes = new HashMap<>();
-        List<String> rows = new ArrayList<>();
-        for (int row=0; row < namedTable.numRows(); row++) {
-            String header = getObjectAsString(namedTable.getCell(row+1, 0));
-            if (!header.isEmpty()) {
-                rows.add(header);
-                rowIndexes.put(header, row);
-            }
-        }
-        JList<String> rowList = new JList<>(rows.toArray(new String[0]));
-        for (String header : _tableModel._editableRowsList) {
-            int index = rowIndexes.getOrDefault(header,-1);
-            if (index != -1) {
-                rowList.getSelectionModel().addSelectionInterval(index, index);
-            }
-        }
-        rowList.setBorder(BorderFactory.createLineBorder(Color.black));
-
         JDialog dialog = new JDialog();
         dialog.setTitle(Bundle.getMessage("ConfigureLogixNGTable"));
         dialog.setLocationRelativeTo(this);
@@ -205,8 +186,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         allowEditLabel.setLabelFor(allowEdit);
         c.gridy = 3;
         p.add(new JLabel(Bundle.getMessage("LogixNGTableIcon_EditableColumns")), c);
-        c.gridy = 5;
-        p.add(new JLabel(Bundle.getMessage("LogixNGTableIcon_EditableRows")), c);
         c.gridx = 1;
         c.gridy = 0;
         p.add(Box.createHorizontalStrut(5), c);
@@ -216,23 +195,17 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         c.weightx = 1.0;
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         p.add(allowEdit, c);
-//        p.add(autoSystem, c);
         c.gridx = 3;
-//        p.add(addRange, c);
         c.gridx = 2;
         c.gridy = 1;
         p.add(_validateModuleComboBox, c);
 //        sys.setToolTipText(Bundle.getMessage("SysNameToolTip", "Y"));
         c.gridy = 3;
         p.add(new JScrollPane(columnList), c);
-//        p.add(finishLabel, c);
         c.gridy = 4;
         p.add(Box.createVerticalStrut(5), c);
-        c.gridy = 5;
-        p.add(new JScrollPane(rowList), c);
-//        p.add(endRange, c);
         c.gridx = 0;
-        c.gridy = 6;
+        c.gridy = 5;
         c.gridwidth = 3;
         p.add(new JLabel(Bundle.getMessage("LogixNGTableIcon_EditableColumnsRowsInfo")), c);
         add(p);
@@ -254,7 +227,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             _tableModel.setValidateModule(_validateModuleComboBox.getItemAt(_validateModuleComboBox.getSelectedIndex())._module);
             _tableModel.setEditable(allowEdit.isSelected());
             _tableModel.setEditableColumns(String.join("\t", columnList.getSelectedValuesList()));
-            _tableModel.setEditableRows(String.join("\t", rowList.getSelectedValuesList()));
             dialog.dispose();
         });
 //        p.add(panelBottom);
@@ -346,7 +318,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         private NamedBeanHandle<Module> _validateModule;
         private boolean _editable = false;
         private String _editableColumns = "";
-        private String _editableRows = "";
         List<String> _editableColumnsList;
         List<String> _editableRowsList;
 
@@ -362,7 +333,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
         public TableModel(String tableName) {
             initCallModule();
             setEditableColumns("");
-            setEditableRows("");
             setTable(tableName);
 
             if (_namedTable != null) {
@@ -486,15 +456,6 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             _editableColumnsList = Arrays.asList(_editableColumns.split("\t"));
         }
 
-        public String getEditableRows() {
-            return _editableRows;
-        }
-
-        public void setEditableRows(String editableRows) {
-            _editableRows = editableRows;
-            _editableRowsList = Arrays.asList(_editableRows.split("\t"));
-        }
-
         @Override
         public int getColumnCount() {
             if (_namedTable != null) {
@@ -547,11 +508,7 @@ public final class LogixNGTableIcon extends PositionableJPanel {
             boolean allowColumn = _editableColumns.isEmpty();
             allowColumn |= _editableColumnsList.contains(columnHeader);
 
-            String rowHeader = getObjectAsString(_namedTable.getBean().getCell(rowIndex+1, 0));
-            boolean allowRow = _editableRows.isEmpty();
-            allowRow |= _editableRowsList.contains(rowHeader);
-
-            return allowColumn && allowRow;
+            return allowColumn;
         }
 
         private void initCallModule() {

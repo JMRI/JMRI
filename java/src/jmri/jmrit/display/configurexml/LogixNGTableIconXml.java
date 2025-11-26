@@ -46,7 +46,6 @@ public class LogixNGTableIconXml extends PositionableLabelXml {
         }
         element.setAttribute("isEditable", p.getTableModel().isEditable() ? "yes" : "no");
         element.setAttribute("editableColumns", p.getTableModel().getEditableColumns());
-        element.setAttribute("editableRows", p.getTableModel().getEditableRows());
 
         StringBuilder sb = new StringBuilder();
         JTable jTable = p.getJTable();
@@ -118,11 +117,6 @@ public class LogixNGTableIconXml extends PositionableLabelXml {
         attr = element.getAttribute("editableColumns");
         if (attr != null) {
             l.getTableModel().setEditableColumns(attr.getValue());
-        }
-
-        attr = element.getAttribute("editableRows");
-        if (attr != null) {
-            l.getTableModel().setEditableRows(attr.getValue());
         }
 
         attr = element.getAttribute("columnWidths");
