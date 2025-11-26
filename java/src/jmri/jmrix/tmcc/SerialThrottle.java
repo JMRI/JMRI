@@ -214,7 +214,7 @@ public class SerialThrottle extends AbstractThrottle {
         {0x000009, 0x000015}, // Fn45 Made It Back to the Yard
         {0x000009, 0x000013}, // Fn46 Restart Unit/Repairs Complete
 
-        // TMCC1 Boxcar/Livestock Car
+        // TMCC1 Boxcar/LiveStock Car
         {0x000009, 0x000013}, // Fn47 Load
         {0x000009, 0x000012}, // Fn48 Flat Wheel Sound
 
@@ -534,6 +534,9 @@ public class SerialThrottle extends AbstractThrottle {
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+     int previousValue;
+     int newValue;
+
     @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed;
@@ -542,7 +545,7 @@ public class SerialThrottle extends AbstractThrottle {
             this.speedSetting = speed;
         }
         
-        // send to layout option 200 speed steps
+        // Option TMCC2_200 "Absolute" speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
 
             // TMCC2 Legacy 200 speed step mode
@@ -557,28 +560,37 @@ public class SerialThrottle extends AbstractThrottle {
             if (value < 0) {
                 // System HALT (immediate stop; ALL)
                 m.putAsWord(0xFF8B);
+
+                // send to layout (send 4 times to ensure received)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
             } else {
                 // normal speed setting
                 m.putAsWord(0x0000 + (address.getNumber() << 9) + value);
+
+                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
             }
-            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);
         }
 
-        // send to layout option 100 speed steps
+        // Option TMCC1_100 "Relative" speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC1_100) {
             
           /** 
-            * TMCC1 ERR 100 speed step mode
+            * TMCC1 MedMomentum, HighMomentum and ERR 100 speed step mode
             * purpose is to increase resolution of 32 bits
             * across 100 throttle 'clicks' by dividing value by 3            
             * and setting top speed at 32
           */
+
             int value = (int) (99 * speed); // max value to send is 99 in 100 step mode
-            if (value > 93) {
+            if (value > 99) {
                 // max possible speed step
-                value = 93;
+                value = 99;
             }
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xFE);
@@ -586,18 +598,45 @@ public class SerialThrottle extends AbstractThrottle {
             if (value < 0) {
                 // System HALT (immediate stop; ALL)
                 m.putAsWord(0xFFFF);
+
+                // send to layout (send 4 times to ensure received)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
             }
-            if (value >= 0) {
+            if (value == 0) {
                 // normal speed step setting
-                m.putAsWord(0x0060 + address.getNumber() * 128 + value / 3);
+                m.putAsWord(0x0060 + address.getNumber() * 128 + value);
+
+                // send to layout (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
             }
-                            
-            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);
+
+            if (value > 0) {
+                 newValue = value;
+                 if (newValue > previousValue) {
+                    // increase TMCC "Relative" speed +1 (repeat * valueChange46)
+                    int valueChange46 = (newValue - previousValue);
+                    for (int i = 0x0000; i < valueChange46; i++) {
+                        m.putAsWord(0x0046 + address.getNumber() * 128);
+                        tc.sendSerialMessage(m, null);
+                    }
+                }
+                if (newValue < previousValue) {
+                    // decrease TMCC "Relative" speed -1 (repeat * valueChange44)
+                    int valueChange44 = (previousValue - newValue);
+                    for (int j = 0x0000; j < valueChange44; j++) {
+                        m.putAsWord(0x0044 + address.getNumber() * 128);
+                        tc.sendSerialMessage(m, null);
+                    }
+                }
+            previousValue = newValue;                
+            }
         }
 
-        // send to layout option TMCC2 32 speed steps
+        // Option TMCC2_32 "Absolute" speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC2_32) {
 
             // TMCC2 Legacy 32 speed step mode
@@ -612,17 +651,24 @@ public class SerialThrottle extends AbstractThrottle {
             if (value < 0) {
                 // System HALT (immediate stop; ALL)
                 m.putAsWord(0xFF8B);
+
+                // send to layout (send 4 times to ensure received)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
             } else {
                 // normal speed setting
                 m.putAsWord(0x0160 + address.getNumber() * 512 + value);
+
+                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
             }
-    
-            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);           
         }
 
-        // send to layout option TMCC1 32 speed steps
+        // Option TMCC1_32 "Absolute" speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC1_32) {
 
             // TMCC1 32 speed step mode
@@ -637,14 +683,21 @@ public class SerialThrottle extends AbstractThrottle {
             if (value < 0) {
                 // System HALT (immediate stop; ALL)
                 m.putAsWord(0xFFFF);
+
+                // send to layout (send 4 times to ensure received)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
             } else {
                 // normal speed setting
                 m.putAsWord(0x0060 + address.getNumber() * 128 + value);
+
+                // send to layout (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);           
             }
-    
-            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);           
         }
                   
         synchronized(this) {
@@ -787,9 +840,9 @@ public class SerialThrottle extends AbstractThrottle {
     /*
      * Set the speed step value.
      * <p>
-     * Only 32 steps is available
+     * The speed step range is from 32 steps, to 100 steps, to 200 steps
      *
-     * @param mode only TMCC1 32, TMCC2 32, TMCC1 100 and TMCC2 200 are allowed
+     * @param mode only TMCC1_32, TMCC2_32, TMCC1_100 and TMCC2_200 are allowed
      */
     @Override
     public void setSpeedStepMode(jmri.SpeedStepMode mode) {
