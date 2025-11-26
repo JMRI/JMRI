@@ -978,7 +978,6 @@
       <xs:attribute name="defaulticon" type="xs:string"></xs:attribute>
       <xs:attribute name="selectable" type="yesNoType"></xs:attribute>
       <xs:attribute name="colWidth" type="xs:int"></xs:attribute>
-      <xs:attribute name="updateBlockValue" type="yesNoType" default="yes"></xs:attribute>
 
     </xs:complexType>
 
