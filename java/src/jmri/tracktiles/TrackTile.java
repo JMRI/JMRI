@@ -23,6 +23,11 @@ public class TrackTile extends AbstractNamedBean {
     private final String jmriType;
     private final String partCode;
     private final Map<String, String> localizations;
+    
+    // Geometry fields
+    private double length = 0.0;      // For straight tracks, in mm
+    private double radius = 0.0;      // For curved tracks, in mm
+    private double arc = 0.0;         // For curved tracks, in degrees
 
     /**
      * Create a TrackTile.
@@ -91,6 +96,60 @@ public class TrackTile extends AbstractNamedBean {
     @Nonnull
     public String getPartCode() {
         return partCode;
+    }
+
+    /**
+     * Set the length for straight track tiles.
+     * 
+     * @param length The length in millimeters
+     */
+    public void setLength(double length) {
+        this.length = length;
+    }
+
+    /**
+     * Get the length for straight track tiles.
+     * 
+     * @return The length in millimeters, or 0.0 if not set
+     */
+    public double getLength() {
+        return length;
+    }
+
+    /**
+     * Set the radius for curved track tiles.
+     * 
+     * @param radius The radius in millimeters
+     */
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    /**
+     * Get the radius for curved track tiles.
+     * 
+     * @return The radius in millimeters, or 0.0 if not set
+     */
+    public double getRadius() {
+        return radius;
+    }
+
+    /**
+     * Set the arc angle for curved track tiles.
+     * 
+     * @param arc The arc angle in degrees
+     */
+    public void setArc(double arc) {
+        this.arc = arc;
+    }
+
+    /**
+     * Get the arc angle for curved track tiles.
+     * 
+     * @return The arc angle in degrees, or 0.0 if not set
+     */
+    public double getArc() {
+        return arc;
     }
 
     /**

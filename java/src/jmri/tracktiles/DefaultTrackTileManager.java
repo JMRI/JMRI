@@ -108,6 +108,53 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
             String systemName = "TT:" + vendor + ":" + family + ":" + partCode;
             TrackTile tile = new TrackTile(systemName, vendor, family, jmriType, partCode);
 
+            // Parse geometry if present
+            NodeList geometryList = tileElement.getElementsByTagName("geometry");
+            if (geometryList.getLength() > 0) {
+                Element geometryElement = (Element) geometryList.item(0);
+                
+                // Check for straight geometry
+                NodeList straightList = geometryElement.getElementsByTagName("straight");
+                if (straightList.getLength() > 0) {
+                    Element straightElement = (Element) straightList.item(0);
+                    String lengthStr = straightElement.getAttribute("length");
+                    if (!lengthStr.isEmpty()) {
+                        try {
+                            double length = Double.parseDouble(lengthStr);
+                            tile.setLength(length);
+                        } catch (NumberFormatException e) {
+                            log.warn("Invalid length value '{}' in {}", lengthStr, xmlFile.getName());
+                        }
+                    }
+                }
+                
+                // Check for curved geometry
+                NodeList curvedList = geometryElement.getElementsByTagName("curved");
+                if (curvedList.getLength() > 0) {
+                    Element curvedElement = (Element) curvedList.item(0);
+                    String radiusStr = curvedElement.getAttribute("radius");
+                    String arcStr = curvedElement.getAttribute("arc");
+                    
+                    if (!radiusStr.isEmpty()) {
+                        try {
+                            double radius = Double.parseDouble(radiusStr);
+                            tile.setRadius(radius);
+                        } catch (NumberFormatException e) {
+                            log.warn("Invalid radius value '{}' in {}", radiusStr, xmlFile.getName());
+                        }
+                    }
+                    
+                    if (!arcStr.isEmpty()) {
+                        try {
+                            double arc = Double.parseDouble(arcStr);
+                            tile.setArc(arc);
+                        } catch (NumberFormatException e) {
+                            log.warn("Invalid arc value '{}' in {}", arcStr, xmlFile.getName());
+                        }
+                    }
+                }
+            }
+
             // Add localizations
             NodeList l10nList = tileElement.getElementsByTagName("l10n");
             for (int j = 0; j < l10nList.getLength(); j++) {
