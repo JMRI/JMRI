@@ -182,6 +182,7 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         if (!p.getSensorDName().isEmpty()) {
             element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
+        storeTrackTile(p, element);
         storeLogixNG_Data(pv, element);
         return element;
     }
@@ -465,6 +466,7 @@ public class LayoutTurnoutViewXml extends LayoutTrackViewXml {
         l.setSensorC(getElement(element, "sensorC"));
         l.setSensorD(getElement(element, "sensorD"));
 
+        loadTrackTile(l, element);
         loadLogixNG_Data(lv, element);
     }
 

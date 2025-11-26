@@ -74,6 +74,9 @@ public class PositionablePointViewXml extends LayoutTrackViewXml {
             element.setAttribute("linkpointid", p.getLinkedPointId());
         }
 
+        // Store TrackTile information
+        storeTrackTile(p, element);
+
         storeLogixNG_Data(pv, element);
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml");
         return element;
@@ -163,6 +166,9 @@ public class PositionablePointViewXml extends LayoutTrackViewXml {
                 }
             }
         }
+
+        // Load TrackTile information
+        loadTrackTile(l, element);
 
         loadLogixNG_Data(pv, element);
     }

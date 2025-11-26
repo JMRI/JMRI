@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
@@ -99,6 +100,9 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     protected JComboBox<String> tileFamilyComboBox = new JComboBox<>();
     protected JLabel tileNameLabel = new JLabel(Bundle.getMessage("MakeLabel", "Tile"));
     protected JComboBox<String> tileComboBox = new JComboBox<>();
+    protected JLabel tileCurveDirectionLabel = new JLabel(Bundle.getMessage("MakeLabel", "Curve"));
+    protected JRadioButton tileLeftButton = new JRadioButton(Bundle.getMessage("LeftAbbreviation"));
+    protected JRadioButton tileRightButton = new JRadioButton(Bundle.getMessage("RightAbbreviation"));
 
     // 3rd row of radio buttons (and any associated text fields)
     protected JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
@@ -489,6 +493,14 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         tileVendorComboBox.setToolTipText(Bundle.getMessage("MakeLabel", "SelectVendor"));
         tileFamilyComboBox.setToolTipText(Bundle.getMessage("MakeLabel", "SelectFamily"));
         tileComboBox.setToolTipText(Bundle.getMessage("MakeLabel", "SelectTile"));
+        
+        // Set up curved tile direction radio buttons
+        ButtonGroup tileCurveGroup = new ButtonGroup();
+        tileCurveGroup.add(tileLeftButton);
+        tileCurveGroup.add(tileRightButton);
+        tileLeftButton.setSelected(true); // Default to left
+        tileLeftButton.setToolTipText("Curved tiles curve to the left (counter-clockwise)");
+        tileRightButton.setToolTipText("Curved tiles curve to the right (clockwise)");
 
         // third row of edit tool bar items
         endBumperButton.setToolTipText(Bundle.getMessage("EndBumperToolTip"));
@@ -738,8 +750,9 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         // Clear existing items
         tileComboBox.removeAllItems();
         
-        // If "No Tiles" or "No Vendor" selected, add "Not a tile" only
-        if ("No Tiles".equals(selectedVendor) || "No Vendor".equals(selectedFamily)) {
+        // If "No Tiles" or "No Vendor" selected, or if either is null, add "Not a tile" only
+        if ("No Tiles".equals(selectedVendor) || "No Vendor".equals(selectedFamily) 
+                || selectedVendor == null || selectedFamily == null) {
             tileComboBox.addItem("Not a tile");
             return;
         }
@@ -1041,6 +1054,53 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
                 }   // if KEY_PRESSED event
             }   // if no modifier keys pressed
         }   // if is in edit mode
+    }
+
+    /**
+     * Check if a track tile is currently selected (not "Not a tile").
+     * 
+     * @return true if a valid tile is selected, false otherwise
+     */
+    public boolean isTileSelected() {
+        String selected = (String) tileComboBox.getSelectedItem();
+        return selected != null && !"Not a tile".equals(selected);
+    }
+
+    /**
+     * Check if the left curve direction is selected for curved tiles.
+     * 
+     * @return true if left is selected, false if right is selected
+     */
+    public boolean isTileCurveLeft() {
+        return tileLeftButton.isSelected();
+    }
+
+    /**
+     * Get the currently selected TrackTile from the toolbar combo boxes.
+     * 
+     * @return the selected TrackTile, or null if no valid tile is selected
+     */
+    @CheckForNull
+    public TrackTile getSelectedTrackTile() {
+        if (!isTileSelected()) {
+            return null;
+        }
+        
+        String vendor = (String) tileVendorComboBox.getSelectedItem();
+        String family = (String) tileFamilyComboBox.getSelectedItem();
+        String selected = (String) tileComboBox.getSelectedItem();
+        
+        if (vendor == null || family == null || selected == null) {
+            return null;
+        }
+        
+        // Parse partcode from "partcode - caption" format
+        String partCode = selected.split(" - ")[0].trim();
+        
+        // Build system name and retrieve from manager
+        String systemName = "TT:" + vendor + ":" + family + ":" + partCode;
+        TrackTileManager manager = InstanceManager.getDefault(TrackTileManager.class);
+        return manager.getBySystemName(systemName);
     }
 
     @Override

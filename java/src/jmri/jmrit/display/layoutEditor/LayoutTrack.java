@@ -6,6 +6,8 @@ import javax.annotation.Nonnull;
 
 import jmri.JmriException;
 import jmri.Turnout;
+import jmri.tracktiles.NotATile;
+import jmri.tracktiles.TrackTile;
 
 /**
  * Abstract base class for all layout track objects (PositionablePoint,
@@ -66,9 +68,29 @@ abstract public class LayoutTrack {
     public abstract String getTypeName();
 
     private String ident = "";
+    private TrackTile trackTile = NotATile.getInstance();
 
     final protected void setIdent(@Nonnull String ident) {
         this.ident = ident;
+    }
+
+    /**
+     * Get the associated TrackTile for this layout track.
+     * 
+     * @return the TrackTile, or NotATile if none is associated
+     */
+    @Nonnull
+    public TrackTile getTrackTile() {
+        return trackTile;
+    }
+
+    /**
+     * Set the associated TrackTile for this layout track.
+     * 
+     * @param trackTile the TrackTile to associate, or null to set NotATile
+     */
+    public void setTrackTile(TrackTile trackTile) {
+        this.trackTile = (trackTile != null) ? trackTile : NotATile.getInstance();
     }
 
     abstract public boolean isMainline();

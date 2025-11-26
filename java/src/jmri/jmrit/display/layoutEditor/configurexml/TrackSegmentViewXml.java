@@ -54,6 +54,9 @@ public class TrackSegmentViewXml extends LayoutTrackViewXml {
         element.setAttribute("mainline",    (trk.isMainline() ? "yes" : "no"));
         element.setAttribute("hidden",      (view.isHidden() ? "yes" : "no"));
 
+        // Store TrackTile information
+        storeTrackTile(trk, element);
+
         if (view.isArc()) {
             element.setAttribute("arc",         "yes");
             element.setAttribute("flip",        (view.isFlip() ? "yes" : "no"));
@@ -238,6 +241,9 @@ public class TrackSegmentViewXml extends LayoutTrackViewXml {
                 main, p);
         TrackSegmentView lv = new TrackSegmentView(lt, p);
         lv.setHidden(hide);
+
+        // Load TrackTile information
+        loadTrackTile(lt, element);
 
         lv.setDashed(dash);
         lv.setArc( getAttributeBooleanValue(element, "arc", false) );

@@ -110,6 +110,7 @@ public class LevelXingViewXml extends LayoutTrackViewXml {
             element.addContent(new Element("sensorD").addContent(lt.getSensorDName()));
         }
 
+        storeTrackTile(lt, element);
         storeLogixNG_Data(lv, element);
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LevelXingXml"); // temporary // getClass().getName());
         return element;
@@ -268,6 +269,7 @@ public class LevelXingViewXml extends LayoutTrackViewXml {
             }
         }
 
+        loadTrackTile(lt, element);
         loadLogixNG_Data(lv, element);
 
         p.addLayoutTrack(lt, lv);

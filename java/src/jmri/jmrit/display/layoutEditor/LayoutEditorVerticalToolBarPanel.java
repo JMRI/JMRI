@@ -171,6 +171,18 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         gbc.weightx = 1.0;
         tilesBorderPanel.add(tileComboBox, gbc);
 
+        // Add left/right radio buttons for curved tiles
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        JPanel directionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        directionPanel.add(tileLeftButton);
+        directionPanel.add(tileRightButton);
+        tilesBorderPanel.add(directionPanel, gbc);
+
         tilesBorderPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, tilesBorderPanel.getPreferredSize().height));
         outerBorderPanel.add(tilesBorderPanel);
 

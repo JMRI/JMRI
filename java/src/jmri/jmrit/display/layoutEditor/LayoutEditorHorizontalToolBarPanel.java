@@ -127,6 +127,9 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         hTop3_5Left.add(tileFamilyComboBox);
         hTop3_5Left.add(tileNameLabel);
         hTop3_5Left.add(tileComboBox);
+        hTop3_5Left.add(tileCurveDirectionLabel);
+        hTop3_5Left.add(tileLeftButton);
+        hTop3_5Left.add(tileRightButton);
         hTop3_5Panel.add(hTop3_5Left);
         hTop3_5Panel.add(Box.createHorizontalGlue());
 

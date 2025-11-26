@@ -172,6 +172,7 @@ public class LayoutSlipViewXml extends LayoutTrackViewXml {
             states.addContent(state);
         }
         element.addContent(states);
+        storeTrackTile(p, element);
         storeLogixNG_Data(pv, element);
         addClass(element);
         return element;
@@ -358,6 +359,7 @@ public class LayoutSlipViewXml extends LayoutTrackViewXml {
             }
         }
 
+        loadTrackTile(l, element);
         loadLogixNG_Data(lv, element);
     }
 

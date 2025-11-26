@@ -74,6 +74,7 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
             }
             element.addContent(rElem);
         }
+        storeTrackTile(p, element);
         storeLogixNG_Data(pv, element);
         return element;
     }
@@ -171,6 +172,7 @@ public class LayoutTurntableViewXml extends LayoutTrackViewXml {
             }
         }
 
+        loadTrackTile(lt, element);
         loadLogixNG_Data(lv, element);
     }
 
