@@ -12,7 +12,7 @@ import org.jdom2.Element;
  * Handle XML configuration for ValidationError objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
- * @author Daniel Bergqvist Copyright (C) 2022
+ * @author Daniel Bergqvist Copyright (C) 2025
  */
 public class ValidationErrorXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
