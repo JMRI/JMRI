@@ -46,36 +46,36 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
       <model model="TMCC 1 Steam" maxFnNum="68" numOuts="1"/>
       <functionlabels>
-          <functionlabel num= "0" lockable="false" visible="true">   Headlight   </functionlabel>
-          <functionlabel num= "1" lockable="false" visible="true">  Bell  </functionlabel>
+          <functionlabel num= "0" lockable="false" visible="true">    Headlight    </functionlabel>
+          <functionlabel num= "1" lockable="false" visible="true"> Bell  </functionlabel>
           <functionlabel num= "2" lockable="false" visible="true">Whistle</functionlabel>
           <functionlabel num= "3" lockable="false" visible="true">Front-X</functionlabel>
-          <functionlabel num= "4" lockable="false" visible="true">Rear-X</functionlabel>
-          <functionlabel num= "5" lockable="false" visible="true">Volume Up</functionlabel>
+          <functionlabel num= "4" lockable="false" visible="true">Rear-X </functionlabel>
+          <functionlabel num= "5" lockable="false" visible="true"> Volume Up </functionlabel>
           <functionlabel num= "6" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num= "7" lockable="false" visible="true">Steam Blowoff w/StartUp</functionlabel>
+          <functionlabel num= "7" lockable="false" visible="true"> Steam Blowoff w/StartUp </functionlabel>
           <functionlabel num= "8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num= "9" lockable="false" visible="true">Shutdown Sequence</functionlabel>
-          <functionlabel num="10" lockable="false" visible="true">Steam Letoff</functionlabel>
+          <functionlabel num= "9" lockable="false" visible="true">    Shutdown Sequence    </functionlabel>
+          <functionlabel num="10" lockable="false" visible="true">      Steam Letoff       </functionlabel>
           <functionlabel num="11" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="12" lockable="false" visible="true">Smoke/Firebox Off</functionlabel>
-          <functionlabel num="13" lockable="false" visible="true">Smoke/Firebox On; Smoke Boost</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">Reset</functionlabel>
-          <functionlabel num="15" lockable="false" visible="false">   Aux1   </functionlabel>
+          <functionlabel num="12" lockable="false" visible="true">    Smoke/Firebox Off    </functionlabel>
+          <functionlabel num="13" lockable="false" visible="true">Smoke/Firebox/Smoke Boost</functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">   Reset    </functionlabel>
+          <functionlabel num="15" lockable="false" visible="false">    Aux1    </functionlabel>
           <functionlabel num="16" lockable="false" visible="true">Steam Letoff</functionlabel>
-          <functionlabel num="17" lockable="false" visible="true">   Boost   </functionlabel>
-          <functionlabel num="18" lockable="false" visible="true">   Brake   </functionlabel>
-          <functionlabel num="19" lockable="false" visible="true">Mo-L</functionlabel>
-          <functionlabel num="20" lockable="false" visible="true">Mo-M</functionlabel>
-          <functionlabel num="21" lockable="false" visible="true">Mo-H</functionlabel>
+          <functionlabel num="17" lockable="false" visible="true">   Boost    </functionlabel>
+          <functionlabel num="18" lockable="false" visible="true">   Brake    </functionlabel>
+          <functionlabel num="19" lockable="false" visible="true"> Momentum-L </functionlabel>
+          <functionlabel num="20" lockable="false" visible="true"> Momentum-M </functionlabel>
+          <functionlabel num="21" lockable="false" visible="true"> Momentum-H </functionlabel>
           <functionlabel num="22" lockable="false" visible="true">    Set     </functionlabel>
           <functionlabel num="23" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="24" lockable="false" visible="true">     RRSpeed 5mph    </functionlabel>
-          <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph    </functionlabel>
-          <functionlabel num="26" lockable="false" visible="true">    RRSpeed 35mph    </functionlabel>
-          <functionlabel num="27" lockable="false" visible="true">    RRSpeed 50mph    </functionlabel>
-          <functionlabel num="28" lockable="false" visible="true">    RRSpeed 70mph    </functionlabel>
-          <functionlabel num="29" lockable="false" visible="true">     RRSpeed FULL    </functionlabel>
+          <functionlabel num="24" lockable="false" visible="true">    RRSpeed  5mph     </functionlabel>
+          <functionlabel num="25" lockable="false" visible="true">    RRSpeed 20mph     </functionlabel>
+          <functionlabel num="26" lockable="false" visible="true">    RRSpeed 35mph     </functionlabel>
+          <functionlabel num="27" lockable="false" visible="true">    RRSpeed 50mph     </functionlabel>
+          <functionlabel num="28" lockable="false" visible="true">    RRSpeed 70mph     </functionlabel>
+          <functionlabel num="29" lockable="false" visible="true">    RRSpeed  FULL     </functionlabel>
           <functionlabel num="30" lockable="false" visible="true">Set ERR 100 SpeedSteps</functionlabel>
           <functionlabel num="31" lockable="false" visible="true">Set ERR 32 SpeedSteps </functionlabel>
           <functionlabel num="32" lockable="false" visible="false">Unassigned</functionlabel>
