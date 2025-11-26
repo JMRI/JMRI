@@ -102,6 +102,17 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         hTop3CenterA.setBorder(new EmptyBorder(0, 20, 0, 0));
         hTop3Center.add(hTop3CenterA);
 
+        JPanel hTop3CenterB = new JPanel(centerRowLayout);
+        hTop3CenterB.add(tilesLabel);
+        hTop3CenterB.add(tileVendorLabel);
+        hTop3CenterB.add(tileVendorComboBox);
+        hTop3CenterB.add(tileFamilyLabel);
+        hTop3CenterB.add(tileFamilyComboBox);
+        hTop3CenterB.add(tileNameLabel);
+        hTop3CenterB.add(tileComboBox);
+        hTop3CenterB.setBorder(new EmptyBorder(0, 20, 0, 0));
+        hTop3Center.add(hTop3CenterB);
+
         hTop3Panel.add(hTop3Center);
         hTop3Panel.add(Box.createHorizontalGlue());
 

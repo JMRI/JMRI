@@ -17,6 +17,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.Normalizer;
 
 import jmri.util.JmriJFrame;
 
@@ -160,37 +161,121 @@ public class TrackTileTableFrame extends JmriJFrame {
         });
     }
     
+    /**
+     * Normalize text for umlaut-insensitive searching.
+     * Converts search input to match both umlaut and non-umlaut spellings in the data:
+     * - "a" → matches both "a" and "ä" 
+     * - "ae" → matches both "ae" and "ä"
+     * - "ä" → matches "ä"
+     * 
+     * @param text The search text to normalize
+     * @return Regex pattern that will match umlauts in various forms
+     */
+    private String normalizeForSearch(String text) {
+        if (text == null || text.isEmpty()) {
+            return text;
+        }
+        
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+        while (i < text.length()) {
+            char c = text.charAt(i);
+            char cLower = Character.toLowerCase(c);
+            
+            // Check for two-character umlaut replacements (ae, oe, ue)
+            if (i < text.length() - 1) {
+                String twoChar = text.substring(i, i + 2).toLowerCase();
+                if ("ae".equals(twoChar)) {
+                    result.append("(ae|ä|Ä)");
+                    i += 2;
+                    continue;
+                } else if ("oe".equals(twoChar)) {
+                    result.append("(oe|ö|Ö)");
+                    i += 2;
+                    continue;
+                } else if ("ue".equals(twoChar)) {
+                    result.append("(ue|ü|Ü)");
+                    i += 2;
+                    continue;
+                } else if ("ss".equals(twoChar)) {
+                    result.append("(ss|ß)");
+                    i += 2;
+                    continue;
+                }
+            }
+            
+            // Single character conversions
+            switch (cLower) {
+                case 'a':
+                    result.append("[aäÄ]");
+                    break;
+                case 'o':
+                    result.append("[oöÖ]");
+                    break;
+                case 'u':
+                    result.append("[uüÜ]");
+                    break;
+                case 'ä':
+                    result.append("[äaÄA]");
+                    break;
+                case 'ö':
+                    result.append("[öoÖO]");
+                    break;
+                case 'ü':
+                    result.append("[üuÜU]");
+                    break;
+                case 'ß':
+                    result.append("(ß|ss)");
+                    break;
+                default:
+                    // Escape regex special characters
+                    if ("\\[]{}()*+?.^$|".indexOf(c) >= 0) {
+                        result.append('\\');
+                    }
+                    result.append(c);
+            }
+            i++;
+        }
+        
+        return result.toString();
+    }
+    
     private void applyFilters() {
         List<RowFilter<TrackTileTableDataModel, Integer>> filters = new ArrayList<>();
         
-        // Add vendor filter
+        // Add vendor filter with umlaut support
         String vendorText = vendorFilter.getText().trim();
         if (!vendorText.isEmpty()) {
-            filters.add(RowFilter.regexFilter("(?i)" + vendorText, TrackTileTableDataModel.VENDOR_COLUMN));
+            String normalizedVendor = normalizeForSearch(vendorText);
+            filters.add(RowFilter.regexFilter("(?i)" + normalizedVendor, TrackTileTableDataModel.VENDOR_COLUMN));
         }
         
-        // Add family filter
+        // Add family filter with umlaut support
         String familyText = familyFilter.getText().trim();
         if (!familyText.isEmpty()) {
-            filters.add(RowFilter.regexFilter("(?i)" + familyText, TrackTileTableDataModel.FAMILY_COLUMN));
+            String normalizedFamily = normalizeForSearch(familyText);
+            filters.add(RowFilter.regexFilter("(?i)" + normalizedFamily, TrackTileTableDataModel.FAMILY_COLUMN));
         }
         
-        // Add type filter
+        // Add type filter with umlaut support
         String typeText = typeFilter.getText().trim();
         if (!typeText.isEmpty()) {
-            filters.add(RowFilter.regexFilter("(?i)" + typeText, TrackTileTableDataModel.JMRITYPE_COLUMN));
+            String normalizedType = normalizeForSearch(typeText);
+            filters.add(RowFilter.regexFilter("(?i)" + normalizedType, TrackTileTableDataModel.JMRITYPE_COLUMN));
         }
         
-        // Add part code filter
+        // Add part code filter with umlaut support
         String partCodeText = partCodeFilter.getText().trim();
         if (!partCodeText.isEmpty()) {
-            filters.add(RowFilter.regexFilter("(?i)" + partCodeText, TrackTileTableDataModel.PARTCODE_COLUMN));
+            String normalizedPartCode = normalizeForSearch(partCodeText);
+            filters.add(RowFilter.regexFilter("(?i)" + normalizedPartCode, TrackTileTableDataModel.PARTCODE_COLUMN));
         }
         
-        // Add caption filter
+        // Add caption filter with umlaut support
         String captionText = captionFilter.getText().trim();
         if (!captionText.isEmpty()) {
-            filters.add(RowFilter.regexFilter("(?i)" + captionText, TrackTileTableDataModel.CAPTION_COLUMN));
+            String normalizedCaption = normalizeForSearch(captionText);
+            filters.add(RowFilter.regexFilter("(?i)" + normalizedCaption, TrackTileTableDataModel.CAPTION_COLUMN));
         }
         
         // Combine all filters with AND logic

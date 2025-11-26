@@ -80,6 +80,17 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         blockSensorPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
         blockPropertiesPanel.add(blockSensorPanel);
 
+        JPanel tilePanel = new JPanel(leftRowLayout);
+        tilePanel.add(tilesLabel);
+        tilePanel.add(tileVendorLabel);
+        tilePanel.add(tileVendorComboBox);
+        tilePanel.add(tileFamilyLabel);
+        tilePanel.add(tileFamilyComboBox);
+        tilePanel.add(tileNameLabel);
+        tilePanel.add(tileComboBox);
+        tilePanel.setBorder(new EmptyBorder(0, 20, 0, 0));
+        blockPropertiesPanel.add(tilePanel);
+
         // Begin the tabs structure
         //
         // Tab 0 - Turnouts

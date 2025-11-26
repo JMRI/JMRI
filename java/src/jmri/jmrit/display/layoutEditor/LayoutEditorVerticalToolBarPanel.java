@@ -120,6 +120,19 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         vTop11Panel.setBorder(new EmptyBorder(0, 10, 0, 0));
 
         outerBorderPanel.add(vTop11Panel);
+
+        JPanel vTop12Panel = new JPanel(verticalContentLayout);
+        vTop12Panel.add(tilesLabel);
+        vTop12Panel.add(tileVendorLabel);
+        vTop12Panel.add(tileVendorComboBox);
+        vTop12Panel.add(tileFamilyLabel);
+        vTop12Panel.add(tileFamilyComboBox);
+        vTop12Panel.add(tileNameLabel);
+        vTop12Panel.add(tileComboBox);
+        vTop12Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12Panel.getPreferredSize().height));
+        vTop12Panel.setBorder(new EmptyBorder(0, 10, 0, 0));
+
+        outerBorderPanel.add(vTop12Panel);
         add(outerBorderPanel);
 
         JPanel nodesBorderPanel = new JPanel();
@@ -129,11 +142,11 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         nodesTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
         nodesBorderPanel.setBorder(nodesTitleBorder);
 
-        JPanel vTop12Panel = new JPanel(verticalContentLayout);
-        vTop12Panel.add(endBumperButton);
-        vTop12Panel.add(anchorButton);
-        vTop12Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12Panel.getPreferredSize().height));
-        nodesBorderPanel.add(vTop12Panel);
+        JPanel vTop12bPanel = new JPanel(verticalContentLayout);
+        vTop12bPanel.add(endBumperButton);
+        vTop12bPanel.add(anchorButton);
+        vTop12bPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12bPanel.getPreferredSize().height));
+        nodesBorderPanel.add(vTop12bPanel);
 
         JPanel vTop13Panel = new JPanel(verticalContentLayout);
         vTop13Panel.add(edgeButton);
