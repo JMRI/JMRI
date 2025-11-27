@@ -4,19 +4,19 @@
            targetNamespace="http://jmri.org/xml/tracktiles"
            xmlns="http://jmri.org/xml/tracktiles"
            elementFormDefault="qualified">
-
+<xs:include schemaLocation="https://www.jmri.org/xml/schema/types/general.xsd"/>
   <xs:annotation>
     <xs:documentation>
       Defines XML documenting track tile specifications from various manufacturers
       for use in JMRI Layout Editor.
-      
+
       This Schema is part of JMRI. Copyright 2025.
-      
+
       JMRI is free software; you can redistribute it and/or modify it under
       the terms of version 2 of the GNU General Public License as published
       by the Free Software Foundation. See the "COPYING" file for a copy
       of this license.
-      
+
       JMRI is distributed in the hope that it will be useful, but WITHOUT
       ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
       FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
@@ -25,7 +25,7 @@
   </xs:annotation>
 
   <!-- Import DocBook namespace for copyright, authorgroup, and revhistory -->
-  <xs:import namespace="http://docbook.org/ns/docbook" 
+  <xs:import namespace="http://docbook.org/ns/docbook"
              schemaLocation="http://docbook.org/xml/5.0/xsd/docbook.xsd"/>
 
   <!-- Root element -->
@@ -402,7 +402,7 @@
   <xs:complexType name="endType">
     <xs:annotation>
       <xs:documentation>
-        End/bumper tile marker. Optional extraLength specifies additional length 
+        End/bumper tile marker. Optional extraLength specifies additional length
         beyond the main track section.
       </xs:documentation>
     </xs:annotation>
