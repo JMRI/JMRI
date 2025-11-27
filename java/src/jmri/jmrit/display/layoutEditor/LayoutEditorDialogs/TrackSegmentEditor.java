@@ -51,6 +51,8 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
     private final JTextField editTrackSegmentConnect1OrientationField = new JTextField(8);
     private final JLabel editTrackSegmentConnect2OrientationLabel = new JLabel();
     private final JTextField editTrackSegmentConnect2OrientationField = new JTextField(8);
+    private final JLabel editTrackSegmentPathLengthLabel = new JLabel(Bundle.getMessage("PathLength") + ":");
+    private final JTextField editTrackSegmentPathLengthField = new JTextField(8);
     private final JLabel editTrackSegmentTileInfoLabel = new JLabel();
     private JButton editTrackSegmentSegmentEditBlockButton;
 
@@ -170,6 +172,15 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             editTrackSegmentConnect2OrientationField.setEditable(false);
             panel22.add(editTrackSegmentConnect2OrientationField);
             contentPane.add(panel22);
+
+            // Add path length display field (read-only)
+            JPanel panel23 = new JPanel();
+            panel23.setLayout(new FlowLayout());
+            panel23.add(editTrackSegmentPathLengthLabel);
+            editTrackSegmentPathLengthLabel.setLabelFor(editTrackSegmentPathLengthField);
+            editTrackSegmentPathLengthField.setEditable(false);
+            panel23.add(editTrackSegmentPathLengthField);
+            contentPane.add(panel23);
 
             // set up Edit Block, Done and Cancel buttons
             JPanel panel5 = new JPanel();
@@ -301,6 +312,14 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
                 editTrackSegmentConnect1OrientationField.setText("-");
                 editTrackSegmentConnect2OrientationField.setText("-");
             }
+        }
+
+        // Calculate and display default path length
+        double pathLength = trackSegment.getDefaultPathLength();
+        if (pathLength > 0.0) {
+            editTrackSegmentPathLengthField.setText(String.format("%.2f mm", pathLength));
+        } else {
+            editTrackSegmentPathLengthField.setText("-");
         }
 
         editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {
