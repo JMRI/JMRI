@@ -3683,7 +3683,7 @@ public class CreateLogixNGTreeScaffold {
 
 
         errorAction = new jmri.jmrit.logixng.actions.Error(digitalActionManager.getAutoSystemName(), null);
-        errorAction.setMessage("Some error has occurred");
+        validationError.getSelectMessage().setValue("Some error has occurred");
         maleSocket = digitalActionManager.registerAction(errorAction);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);

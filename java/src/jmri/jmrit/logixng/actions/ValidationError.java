@@ -14,6 +14,7 @@ import jmri.jmrit.logixng.util.LogixNG_SelectString;
  * Returns from a Module or a ConditionalNG with a ValidationErrorException.
  *
  * @author Daniel Bergqvist Copyright 2025
+ * @since 5.15.1
  */
 public class ValidationError extends AbstractDigitalAction
         implements PropertyChangeListener {

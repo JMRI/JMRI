@@ -503,6 +503,13 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li><strong>Warning</strong><br/>
+              Tables and panels files created with this version or later
+              and that's using the LogixNG action <strong>Error</strong>
+              cannot be opened in earlier JMRI versions.</li>
+          <li>The LogixNG action <strong>Error</strong> has an improved
+              error message which allows using a local variable or a
+              formula for the error message.</li>
           <li>LogixNG Tables can now be placed on Panel Editor panels.
               The table can be read-only, editable or that only some
               columns are editable. It's also possible to have buttons
