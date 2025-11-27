@@ -1,12 +1,6 @@
 package jmri.jmrit;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Calendar;
@@ -15,24 +9,16 @@ import java.util.Date;
 import javax.annotation.Nonnull;
 import javax.swing.JFileChooser;
 
-import jmri.InstanceManager;
-import jmri.configurexml.LoadAndStorePreferences;
-import jmri.util.FileUtil;
-import jmri.util.JmriLocalEntityResolver;
-import jmri.util.NoArchiveFileFilter;
-
-import org.jdom2.Comment;
-import org.jdom2.Content;
-import org.jdom2.DocType;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.ProcessingInstruction;
+import org.jdom2.*;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.configurexml.LoadAndStorePreferences;
+import jmri.util.*;
 
 /**
  * Handle common aspects of XML files.
@@ -129,6 +115,7 @@ public class XmlFile {
      * @throws org.jdom2.JDOMException       only when all methods have failed
      * @throws java.io.FileNotFoundException if file not found
      * @return null if not found, else root element of located file
+     * @throws IOException when needed
      */
     public Element rootFromName(String name) throws JDOMException, IOException {
         File fp = findFile(name);
@@ -161,6 +148,7 @@ public class XmlFile {
      * @throws java.io.FileNotFoundException if file not found
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
+     * @throws IOException when needed
      */
     public Element rootFromFile(File file) throws JDOMException, IOException {
         if (log.isDebugEnabled()) {
@@ -182,6 +170,7 @@ public class XmlFile {
      * @throws java.io.FileNotFoundException if file not found
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
+     * @throws IOException when needed
      */
     public Element rootFromInputStream(InputStream stream) throws JDOMException, IOException {
         return getRoot(stream);
@@ -197,6 +186,7 @@ public class XmlFile {
      * @throws FileNotFoundException   if file not found
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
+     * @throws IOException when needed
      */
     public Element rootFromURL(URL url) throws JDOMException, IOException {
         if (log.isDebugEnabled()) {

@@ -17,6 +17,8 @@ import java.util.EnumSet;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Austin Hendrix Copyright (C) 2019
+  * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
 @javax.annotation.concurrent.Immutable
 public enum SpeedStepMode {

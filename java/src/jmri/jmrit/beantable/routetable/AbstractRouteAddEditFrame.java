@@ -277,9 +277,9 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         contentPanel.add(getControlsPanel());
         contentPanel.add(getLockPanel());
         contentPanel.add(getNotesPanel());
-        contentPanel.add(getButtonPanel());
 
         getContentPane().add(new JScrollPane(contentPanel), BorderLayout.CENTER);
+        getContentPane().add(getButtonPanel(), BorderLayout.SOUTH);
 
         pack();
 
@@ -467,7 +467,8 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
 
         routeTurnoutTable.setRowSorter(rtSorter);
         routeTurnoutTable.setRowSelectionAllowed(false);
-        routeTurnoutTable.setPreferredScrollableViewportSize(new Dimension(480, 80));
+        routeTurnoutTable.setPreferredScrollableViewportSize(
+            new Dimension(400 + (int)cTurnout.getMinimumSize().getWidth(), 80));
 
         setRowHeight(routeTurnoutTable.getRowHeight());
         JComboBox<String> stateTCombo = new JComboBox<>();
@@ -483,13 +484,13 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         TableColumn sNameColumnT = routeTurnoutColumnModel.
                 getColumn(RouteOutputModel.SNAME_COLUMN);
         sNameColumnT.setResizable(true);
-        sNameColumnT.setMinWidth(75);
-        sNameColumnT.setMaxWidth(95);
+        sNameColumnT.setMinWidth(95);
+
         TableColumn uNameColumnT = routeTurnoutColumnModel.
                 getColumn(RouteOutputModel.UNAME_COLUMN);
         uNameColumnT.setResizable(true);
         uNameColumnT.setMinWidth(210);
-        uNameColumnT.setMaxWidth(260);
+
         TableColumn stateColumnT = routeTurnoutColumnModel.
                 getColumn(RouteOutputModel.STATE_COLUMN);
         stateColumnT.setCellEditor(new DefaultCellEditor(stateTCombo));
@@ -525,7 +526,9 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         RowSorterUtil.setSortOrder(rsSorter, RouteOutputModel.SNAME_COLUMN, SortOrder.ASCENDING);
         routeSensorTable.setRowSorter(rsSorter);
         routeSensorTable.setRowSelectionAllowed(false);
-        routeSensorTable.setPreferredScrollableViewportSize(new Dimension(480, 80));
+        routeSensorTable.setPreferredScrollableViewportSize(
+            new Dimension(400 + (int)sensor1.getMinimumSize().getWidth(), 80));
+
         JComboBox<String> stateSCombo = new JComboBox<>();
         stateSCombo.addItem(SET_TO_ACTIVE);
         stateSCombo.addItem(SET_TO_INACTIVE);
@@ -539,13 +542,13 @@ public abstract class AbstractRouteAddEditFrame extends JmriJFrame {
         TableColumn sNameColumnS = routeSensorColumnModel.
                 getColumn(RouteOutputModel.SNAME_COLUMN);
         sNameColumnS.setResizable(true);
-        sNameColumnS.setMinWidth(75);
-        sNameColumnS.setMaxWidth(95);
+        sNameColumnS.setMinWidth(95);
+
         TableColumn uNameColumnS = routeSensorColumnModel.
                 getColumn(RouteOutputModel.UNAME_COLUMN);
         uNameColumnS.setResizable(true);
         uNameColumnS.setMinWidth(210);
-        uNameColumnS.setMaxWidth(260);
+
         TableColumn stateColumnS = routeSensorColumnModel.
                 getColumn(RouteOutputModel.STATE_COLUMN);
         stateColumnS.setCellEditor(new DefaultCellEditor(stateSCombo));

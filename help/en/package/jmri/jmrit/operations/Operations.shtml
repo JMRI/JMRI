@@ -143,6 +143,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ModifyLocationByCarType">Modify Location by Car Type</a></li>
                 <li><a href="#ModifyLocationByCarLoad">Modify Location by Car Load</a></li>
                 <li><a href="#ShowCars">Show Cars</a></li>
+                <li><a href="#ShowLocomotives">Show Locomotives</a></li>
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing this Location</a></li>
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
                     Location</a></li>
@@ -184,6 +185,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
             <li><a href="#Interchange">Classification/Interchange Tracks</a>
               <ul>
+                <li><a href="#InterchangeQuickService">Quick Service</a></li>
                 <li><a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain
                     Trains or Routes</a></li>
                 <li><a href="#TrackDestinations">Track Destinations</a></li>
@@ -228,6 +230,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ChangeTrackType">Change Track Type</a></li>
                 <li><a href="#CopyTrack">Copy Track</a></li>
                 <li><a href="#ShowCars">Show Cars</a></li>
+                <li><a href="#ShowLocomotives">Show Locomotives</a></li>
                 <li><a href="#ShowTrainsServicingThisTrack">Show Trains Servicing this track</a></li>
               </ul></li>
 
@@ -243,6 +246,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
                 <li><a href="#ExportLocations">Export Locations</a></li>
                 <li><a href="#ImportLocations">Import Locations</a></li>
                 <li><a href="#ShowCarsLocations">Show Cars</a></li>
+                <li><a href="#ShowLocomotivesLocations">Show Locomotives</a></li>
                 <li><a href="#ShowTrainsServicingThisLocation">Show Trains Servicing
                     Location and Track</a></li>
                 <li><a href="#ShowRoutesServicingThisLocation">Show Routes Servicing
@@ -443,7 +447,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
               </ul></li>
 
             <li><a href="#SwitcherService">Switcher Service (Local)</a></li>
-            <li><a href="#BuildingTrains">Building Trains</a></li>
+            <li><a href="#BuildingTrains">Building Trains</a>
+              <ul>
+                <li><a href="#BuildingTrainsStaging">Building Trains from Staging</a></li>
+              </ul></li>
             <li><a href="#TrainStatus">Train Status</a></li>
             <li><a href="#BuildReports">Build Reports</a></li>
             <li><a href="#TroubleShootingBuildingTrains">Problems Building Trains How to
@@ -2165,8 +2172,8 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         the window shows the type of tracks at that location, the number of tracks, the total length
         of all tracks at that location, the amount of track used by your rolling stock, the quantity
         of rolling stock, and the number of pick ups and set outs of your rolling stock that are
-        scheduled for that location. The <a href="#Yardmaster">Yardmaster</a> button produces a
-        window <a href="#SwitchList">(Switch List)</a> that allows you to see the scheduled pick ups
+        planned for that location. The <a href="#Yardmaster">Yardmaster</a> button produces a
+        window <a href="#SwitchList">(Switch List)</a> that allows you to see the planned pick ups
         and set outs by train. Only trains that have work for the location are available.
       </p>
       <p>
@@ -2322,7 +2329,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           <th>Car Load Type</th>
           <th>Train Terminates into Staging</th>
           <th>Car at Division Yard</th>
-          <th>Priority</th>
+          <th>Priority Order</th>
         </tr>
         <tr>
           <td>empty</td>
@@ -2409,7 +2416,15 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           href="#SwitchList">Real Time</a>.
       <h3 id="LocationTools">Location Tools</h3>
       From the "Tools" menu found in "Edit Location" window you can access several useful functions.
-      The first is "Copy Track".
+      The first is "Copy Location".
+      
+      <h4 id="CopyLocation">Copy Location</h4>
+      This tool allows you to make a copy of an existing location and all of the tracks at that
+      location. Enter a new location name, select the location to be copied, and then press the
+      "Copy" button. If you want to move all of the rolling stock at the location being copied to
+      your new location's tracks, select the checkbox "Move Rolling Stock to New Track". You can
+      also delete all of the tracks at the location being copied, but you must also select the "Move
+      Rolling Stock to New Track" option.
 
       <h4 id="CopyTrack">Copy Track</h4>
       The copy track tool allows you to select an existing track and create a new track with the
@@ -2488,6 +2503,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       track. Note that the Export Cars tool will only export cars for a location or track, and the
       delete cars tool, when showing cars at a location or track, will only delete those cars. The
       "Reset car move counts" tool also behaves the same way.
+
+      <h4 id="ShowLocomotives">Show Locomotives</h4>
+      If you only want to view locomotives for a location or track, select "Show Locomotives" from
+      the "Tools" menu. This tool is also useful when you want to print out Locomotives for a
+      specific location or track. Note that the Export Locomotives tool will only export Locomotives
+      for a location or track, and the delete Locomotives tool, when showing Locomotives at a
+      location or track, will only delete those Locomotives. The "Reset Locomotive move counts" tool
+      also behaves the same way.
 
       <h4 id="LocationReporter">
         Id Tag Reader at this Location [only if <a href="#EnableIdentificationTagFields">Enable
@@ -2646,10 +2669,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       delivery or shipping, the program allows you to apply a schedule to a spur. This is an
       optional feature and shouldn't be used until you become very familiar with how the program
       generates Manifests and switch lists. A schedule provides very fine control on the order types
-      of cars will be delivered to a spur. You can specify the car type, when it can be delivered,
-      the car's road and load. You can also decide the car's new load, destination, and when the car
-      is to be picked up. For example, if you wanted two SP boxcars to be delivered followed by a
-      tank car loaded with "Oil", you can create a schedule that will do exactly that.
+      of cars will be delivered to a spur. You can specify the car type, when it should be
+      delivered, along with the car's road and load. You can also decide the car's new load,
+      destination, and when the car is to be picked up. For example, if you wanted two SP boxcars to
+      be delivered followed by a tank car loaded with "Oil", you can create a schedule that will do
+      exactly that.
+      
       <p>You should note that adding schedules and custom loads is an optional feature and isn't
         needed for good car movement, and in most cases will reduce car movement. So if you want the
         most car movement don't use schedules or custom loads. This feature is here for those that
@@ -2782,13 +2807,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       "Count" to the number that you wish. The maximum count is 100 and the minimum is 1. For
       example, a count of 3 is equal to entering the exact same schedule item three times in a row.
 
-      <h5>Wait</h5>
+      <h5 id="ScheduleWait">Wait</h5>
       The "Wait" field allows you determine how many trains will try to service the spur before
       picking up the car. Useful if you want a car to remain still for several operating sessions.
-      Note that the car's load won't change immediately if there's a wait count. Once the wait count
-      reaches zero, the program will switch the car load to the schedule item's ship load, or
-      whatever is appropriate if a ship load wasn't specified. Each time a train is built that could
-      service the car, the car's wait count is decremented.
+      Note that the car's load and final destination won't change immediately if there's a wait
+      count. Once the wait count reaches zero, the program will switch the car load to the schedule
+      item's ship load, or whatever is appropriate if a ship load wasn't specified. Each time a
+      train is built that could service the car, the car's wait count is decremented.
 
       <h4 id="ScheduleExample">Schedule Example</h4>
       In the schedule shown above, the schedule is operating in sequential mode and is requesting
@@ -2856,7 +2881,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       spur, set the value to 0%. Sometimes it is appropriate to overload a spur with cars or have
       cars en route to the spur, if you want this, increase the value up to 1000%. BTW 1000% means
       send 10 times the available space in cars to this spur. If you enter this value, you hopefully
-      have 10 times the spur's available track space in a storage yard that is near by!
+      have 10 times the spur's available track space in your interchanges and nearby storage tracks!
 
       <h4>Alternate Track (Off Spot)</h4>
       The second option under "Tools&rArr;Options" in the schedule window is the ability to specify
@@ -3107,6 +3132,32 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>Given the complexity of this type of track, it is strongly recommended that you not use
         classification/interchange tracks until you get comfortable with how the program builds
         trains and you've read and can understand the train build reports.</p>
+
+      <h3 id="InterchangeQuickService">Quick Service</h3>
+      The quick service feature for a C/I track allow you to create a Manifest or switch list
+      showing cars being moved more than once. When the quick service feature is enabled, the
+      program will create "clone cars" when building a train that delivers cars to the C/I track,
+      and place the original cars at the C/I track, allowing the train being built or another train
+      built later to have access to the cars. This is an advanced feature and is recommended for
+      operators that have gained some experience with the program.
+
+      <h3>Quick Service C/I Example</h3>
+      The following example shows how to drop off two boxcars to a location that has an industry
+      that can only be serviced using a Westbound train. The train is a turn and departs Eastbound,
+      and without the quick service feature enabled, the program would create a Manifest showing the
+      cars being delivered on the return or Westbound leg. The quick service feature will allow you
+      to create a Manifest showing the cars dropped off to a temporary track on the Eastbound leg,
+      and then moving the cars from the temporary track to the industry on the Westbound leg.
+
+      <p>
+        <img src="images/QuickServiceCI.png" alt="">
+      </p>
+
+      <p>To create this Manifest, cars need to be "routed" to the Mt Pulaski Freight House. In
+        the train's route at "Mt Pulaski" Westbound disable set outs, and only allow pick ups and
+        local moves. The temporary track "Off-Spot" has to be modified to allow pick ups using the
+        train "IL Turn", as the default for C/I tracks is not to allow the same train that spotted a
+        car to pull the car from the same C/I track.</p>
 
       <h3 id="CreateClassificationYard">How to Create a Classification Yard</h3>
       A classification yard is used to sort cars into various destinations or trains. Normally a
@@ -3679,6 +3730,13 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         industry. Note that the maximum number of cars in all cases is four. It is only how the cars
         are distributed that changes when entering a minimum.</p>
 
+      <p>Setting a user specified maximum track length for a track in a pool will limit the
+        track to that length. However, the program will not immediately reduce the track's length to
+        the specified maximum. When other tracks in the pool request track space, tracks with a
+        specified maximum length will reduce their lengths if possible. Once a track length is less
+        than its user specified maximum, the program will not allow the track to exceed the user
+        specified maximum length.</p>
+
       <p>
         Pooling staging tracks allows you to have <a href="#StagingMultipleTrains">multiple
           trains per physical staging track</a>. The program only allows one train per staging track,
@@ -3906,6 +3964,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       menu. Note that the Car Roster tools, Export to file, Delete cars, Reset car move counts,
       Print, and Preview will only affect the cars shown in the Cars table.
 
+      <h4 id="ShowLocomotivesLocations">Show Locomotives</h4>
+      To only view Locomotives that have a location assigned to them, select "Show Locomotives" from
+      the "Tools" menu. Note that the Locomotive Roster tools, Export to file, Delete Locomotives,
+      Reset Locomotive move counts, Print, and Preview will only affect the Locomotives shown in the
+      Locomotives table.
+
       <h4 id="ExportLocations">Export Locations</h4>
 
       Export locations provides a comma separated values (.csv) file with all of the information
@@ -3993,17 +4057,29 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         car loads</a>. In the Cars table, a car's final destination has the prefix "->" in the
       "Destination" or "Final Destination" columns.
 
-      <h4>Moves, Wait and Last Time Moved</h4>
-      You can edit the number of times a car has been moved by the program and the car's wait count
-      directly from the "Cars" window. Double click on the cell in the Cars window to change. The
-      built and owner fields can be found in the <a href="#CarsEdit">Edit Car</a> window. The last
-      time moved is set when the program delivers a car to a track.
+      <h4>Moves and Wait</h4>
+      A car's move count is incremented by the program when a car is delivered to a new track by a
+      train. A car's wait count is set by a spur's schedule. A car with a
+      <a href="#ScheduleWait">wait</a> count greater than zero will not be assigned to a train. You
+      can edit the number of times a car has been moved by the program and the car's wait count
+      directly from the "Cars" window. Double click on the cell in the Cars window to change.
+
+      <h4>Built and Owner</h4>
+      The "Built" and "Owner" radio buttons allow you to sort by the car's built date and owner names
+      respectively. The built and owner fields can be found in the
+      <a href="#CarsEdit">Edit Car</a> window.
 
       <h4>Pick up</h4>
       The "Pick up" column shows if a car has been scheduled for a pick up using a
       <a href="#Schedules">schedule</a> and <a href="#TrainSchedules">Train Schedules</a>. After a
       car is assigned to a train by the program, the car's estimated pick up time can be viewed in
-      the "Pick up" column. The format for pick up time is day:hour:minute.
+      the "Pick up" column. The format for pick up time is day:hour:minute. The "Pick up" radio
+      button also shows the car's "Set out" day and time.
+
+      <h4>Last</h4>
+      The "Last" radio button displays the date and time a car was delivered to a track by a train.
+      It also shows the "Last Train" that delivered the car, and under "Last Location" where the
+      car was pulled.
 
       <h4>Add, Find, Save Buttons</h4>
       There are three buttons located at the bottom of the Cars window. The
@@ -4378,7 +4454,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Empties</a> option when printing your Manifest, you will want to use the correct load type so
       that the program prints out the correct number of loads and empties in the train.
 
-      <h4>Priority</h4>
+      <h4 id="LoadPriority">Priority</h4>
       The default load priority is low and you can change the priority to medium or high for a given
       car type and load. Higher priority car loads are normally serviced before low priority. Useful
       if you need to get your reefer loaded with fruit to the market ASAP!
@@ -5408,6 +5484,9 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       the train or trains to service that type of car. Your Manifest would in this case only print
       "Boxcar" for the special cars. You can use this feature to control any type of car including
       Cabooses, Passenger, Buffer and MOW cars.
+
+      <p>The "Auto Select" button will deselect car types that aren't serviced by locations in
+        the train's route.</p>
 
       <h4 id="TrainRequires">Optional locomotive requirements</h4>
       You can control the number of locomotives that will be assigned to this train, and optionally,
@@ -6506,6 +6585,24 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       <p>You can also control which trains are shown in the Trains window. When the "Show All"
         checkbox is deselected, only trains that have the "Build" checkbox selected are shown.</p>
 
+      <h3 id="BuildingTrainsStaging">Building Trains from Staging</h3>
+      There are several options for controlling how trains depart staging, see
+      <a href="#DepartingStagingRoute">Departing Staging Route</a> for additional details.
+      <p>
+        When building a train from staging, the program will attempt to find destinations for all of
+        the rolling stock departing the staging track. If the program fails to find appropriate
+        destinations, it will report a build failure and prompt you to remove the rolling stock that
+        the program couldn't find destinations for. If you answer yes to the car removal, the
+        program will leave the cars in staging but without a track assignment. You should as soon as
+        possible move the cars without a staging track assignment to a another track in staging, or the
+        layout. The other option is to simply remove the cars from the layout by removing the car's
+        location in the <a href="#CarsSet">Set Car</a> window. Also on a build failure, the program
+        will ask if you want to release the rolling stock that has been assigned to the train.
+        Answering "yes" will allow another train to depart with those locomotives and cars out of
+        staging. A "no" will keep the locomotives and cars assigned to the train that failed to
+        build.
+      </p>
+
       <p style="page-break-after: always">
         <a href="#toc">[Click to go back to TOC]</a>
       </p>
@@ -6672,11 +6769,14 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
       or the option to <a href="#TrainBuildOptions">build loco consist from single locos</a> must be
       enabled.
 
-      <p>When building a train only rolling stock at locations that are part of the train's
-        route are used. Rolling stock already assigned to trains are ignored when building new
-        trains. With regards to cars, in addition to the number of moves a car has experienced, the
-        car's load priority is also considered. The program will try and find destinations for cars
-        with higher priority loads before low priority loads.</p>
+      <p>
+        When building a train only rolling stock at locations that are part of the train's route are
+        used. Rolling stock already assigned to trains are ignored when building new trains. With
+        regards to cars, in addition to the number of moves a car has experienced, the car's <a
+          href="#TrackPriority">track</a> and <a href="#LoadPriorityload">load</a> priority is also
+        considered. The program will try and find destinations for cars with higher priority loads
+        before low priority loads.
+      </p>
 
       <p>
         The next step in the build process is to optionally assign a <a href="#CabooseFredHazardous">caboose</a>

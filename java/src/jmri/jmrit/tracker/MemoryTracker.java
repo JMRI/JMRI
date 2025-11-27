@@ -1,8 +1,6 @@
 package jmri.jmrit.tracker;
 
-import jmri.Block;
-import jmri.Memory;
-import jmri.NamedBeanHandle;
+import jmri.*;
 
 /**
  * Tracks train into memory object
@@ -15,6 +13,7 @@ public class MemoryTracker {
      * Create a Tracker object, providing a list of blocks to watch
      * @param b block to track.
      * @param namePrefix system name prefix.
+     * @throws IllegalArgumentException when needed
      */
     public MemoryTracker(Block b, String namePrefix) throws IllegalArgumentException {
         block = b;

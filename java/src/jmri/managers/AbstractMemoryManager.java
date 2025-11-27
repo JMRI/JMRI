@@ -1,14 +1,14 @@
 package jmri.managers;
 
 import java.util.Objects;
-import javax.annotation.Nonnull;
+
 import javax.annotation.CheckForNull;
-import jmri.Manager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.SystemConnectionMemo;
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.*;
 
 /**
  * Abstract partial implementation of a MemoryManager.
@@ -124,6 +124,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
      * @param systemName Memory system name
      * @param userName   Memory user name
      * @return a new Memory
+     * @throws IllegalArgumentException when needed
      */
     @Nonnull
     abstract protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;

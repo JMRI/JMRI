@@ -28,7 +28,7 @@ public class ZeroConfServiceManagerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        JUnitUtil.resetZeroConfServiceManager();
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         JUnitUtil.resetProfileManager();
         // ensure the manager used for tests is also the default manager should
         // some other element involved invoke the default manager
@@ -37,7 +37,7 @@ public class ZeroConfServiceManagerTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.resetZeroConfServiceManager();
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         manager = null;
         
         // wait for dns threads to end

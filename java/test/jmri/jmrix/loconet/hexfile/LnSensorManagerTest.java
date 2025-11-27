@@ -1,5 +1,9 @@
 package jmri.jmrix.loconet.hexfile;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
@@ -7,7 +11,6 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -26,7 +29,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
 
     @Test
     public void testLnSensorCreate() {
-        Assert.assertNotNull("exists", l);
+        assertNotNull( l, "exists");
     }
 
     @Test
@@ -35,8 +38,8 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         Sensor t = l.newSensor("LS22", "test");
 
         // test get
-        Assert.assertTrue(t == l.getByUserName("test"));
-        Assert.assertTrue(t == l.getBySystemName("LS22"));
+        assertSame( t, l.getByUserName("test"));
+        assertSame( t, l.getBySystemName("LS22"));
     }
 
     @Test
@@ -44,11 +47,11 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
     public void testMisses() {
         // sample turnout object
         Sensor t = l.newSensor("LS22", "test");
-        Assert.assertNotNull("exists", t);
+        assertNotNull( t, "exists");
 
         // try to get nonexistant turnouts
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        assertNull( l.getByUserName("foo"));
+        assertNull( l.getBySystemName("bar"));
     }
 
     @Test
@@ -63,7 +66,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         lnis.sendTestMessage(m1);
 
         // see if sensor exists
-        Assert.assertNotNull(l.getBySystemName("LS44"));
+        assertNotNull(l.getBySystemName("LS44"));
     }
 
     @Test
@@ -73,10 +76,10 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
 
         Sensor o = t.newSensor("LS21", "my name");
 
-        Assert.assertNotNull(o);
+        assertNotNull(o);
 
-        Assert.assertNotNull(t.getBySystemName("LS21"));
-        Assert.assertNotNull(t.getByUserName("my name"));
+        assertNotNull(t.getBySystemName("LS21"));
+        assertNotNull(t.getByUserName("my name"));
 
     }
 
@@ -90,7 +93,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
-        Assert.assertNotNull("exists", lnis);
+        assertNotNull( lnis, "exists");
 
         // create and register the manager object
         l = new LnSensorManager(memo, false);

@@ -13,6 +13,7 @@ import javax.swing.JPopupMenu;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
@@ -399,7 +400,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
      */
     @Override
     public void remove() {
-        _editor.removeFromContents(this);
+        ThreadingUtil.runOnGUIEventually(() ->  _editor.removeFromContents(this) );
         cleanup();
         // remove from persistance by flagging inactive
         active = false;

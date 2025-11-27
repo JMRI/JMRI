@@ -859,6 +859,8 @@ public class Car extends RollingStock {
         if (!status.equals(Track.OKAY)) {
             return status;
         }
+        // is car going to its final destination?
+        removeCarFinalDestination();
         // now check to see if the track has a schedule
         if (track != null && destinationTrack != track && loaded) {
             status = track.scheduleNext(this);
@@ -888,17 +890,28 @@ public class Car extends RollingStock {
      * 
      * @param scheduleItem The schedule item to be applied this this car
      */
-    public void loadNext(ScheduleItem scheduleItem) {
-        if (scheduleItem == null) {
-            return; // should never be null
+    public void loadCarFinalDestination(ScheduleItem scheduleItem) {
+        if (scheduleItem != null) {
+            // set the car's final destination and track
+            setFinalDestination(scheduleItem.getDestination());
+            setFinalDestinationTrack(scheduleItem.getDestinationTrack());
+            // set all cars in kernel same final destination
+            updateKernel();
+        } 
+    }
+    
+    /*
+     * remove the car's final destination if sent to that destination
+     */
+    private void removeCarFinalDestination() {
+        if (getDestination() != null &&
+                getDestination().equals(getFinalDestination()) &&
+                getDestinationTrack() != null &&
+                (getDestinationTrack().equals(getFinalDestinationTrack()) ||
+                        getFinalDestinationTrack() == null)) {
+            setFinalDestination(null);
+            setFinalDestinationTrack(null);
         }
-        // set the car's final destination and track
-        setFinalDestination(scheduleItem.getDestination());
-        setFinalDestinationTrack(scheduleItem.getDestinationTrack());
-        // bump hit count for this schedule item
-        scheduleItem.setHits(scheduleItem.getHits() + 1);
-        // set all cars in kernel same final destination
-        updateKernel();
     }
 
     /**
@@ -994,6 +1007,7 @@ public class Car extends RollingStock {
                 setLoadEmpty();
             }
         }
+        loadCarFinalDestination(si);
         setScheduleItemId(Car.NONE);
     }
 

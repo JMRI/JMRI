@@ -1,20 +1,15 @@
 package jmri.jmrit.logix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.Nonnull;
-
 import java.awt.Color;
 import java.util.List;
 import java.util.ListIterator;
-import jmri.DccThrottle;
-import jmri.Memory;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.Sensor;
+
+import javax.annotation.Nonnull;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.*;
+import jmri.jmrit.logix.ThrottleSetting.*;
 import jmri.util.ThreadingUtil;
-import jmri.jmrit.logix.ThrottleSetting.Command;
-import jmri.jmrit.logix.ThrottleSetting.CommandValue;
-import jmri.jmrit.logix.ThrottleSetting.ValueType;
 
 /**
  * Execute a throttle command script for a warrant.
@@ -554,6 +549,8 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     /**
      * warrant.cancelDelayRamp()  called for immediate Stop commands
      * When die==true for ending the warrant run.
+     * @param die true for ending the warrant run
+     * @return true if _ramp not null and die is false and _isRamping
      */
     protected synchronized boolean cancelRamp(boolean die) {
         // _ramp.quit sets "stop" and notifies "waits"
@@ -633,6 +630,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
 
     /**
      * Do immediate speed change.
+     * @param speedType speed type
      */
     protected synchronized void setSpeedToType(String speedType) {
         float speed = getSpeedSetting();
@@ -1116,10 +1114,11 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         Warrant newWarrant;
         long waitTime; // time to finish remaining commands
 
-        CheckForTermination(Warrant oldWar, Warrant newWar, int num, long limit) {
+        CheckForTermination(@Nonnull Warrant oldWar, @Nonnull Warrant newWar, int num, long limit) {
             oldWarrant = oldWar;
             newWarrant = newWar;
             waitTime = limit;
+            setName("CheckForTermination from " + oldWarrant.getDisplayName() + " to " + newWarrant.getDisplayName());
             if (log.isDebugEnabled()) {
                 log.debug("checkForTermination of \"{}\", before launching \"{}\". waitTime= {})",
                     oldWarrant.getDisplayName(), newWarrant.getDisplayName(), waitTime);

@@ -109,6 +109,7 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
      *
      * @param source The source Signal Mast
      * @return source The new SML instance
+     * @throws IllegalArgumentException when needed
      */
     @Nonnull
     SignalMastLogic newSignalMastLogic(@Nonnull SignalMast source) throws IllegalArgumentException;

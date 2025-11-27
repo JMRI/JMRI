@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.13.4-SNAPSHOT</version>
+    <version>5.13.6-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -37,8 +37,8 @@
         <!-- don't load JInput during CI tests -->
         <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin>
         <ant.version>1.10.11</ant.version>
-        <junit5.version>5.9.1</junit5.version>
-        <junit.platform.version>1.9.1</junit.platform.version>
+        <junit5.version>5.13.4</junit5.version>
+        <junit.platform.version>1.13.4</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US -Dnashorn.args=--no-deprecation-warning --add-exports java.desktop/sun.awt=ALL-UNNAMED</argLine>
         <!-- define argLines to allow running surefire:test -->
@@ -1232,7 +1232,7 @@
         <dependency>
             <groupId>com.tngtech.archunit</groupId>
             <artifactId>archunit-junit5</artifactId>
-            <version>1.0.0-rc1</version>
+            <version>1.4.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>

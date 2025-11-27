@@ -1,7 +1,9 @@
 package jmri;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
 
+import com.tngtech.archunit.base.DescribedPredicate;
 import com.tngtech.archunit.core.domain.JavaMethod;
 import com.tngtech.archunit.core.domain.JavaModifier;
 import com.tngtech.archunit.lang.*;
@@ -56,9 +58,31 @@ public class TestArchitectureTest {
     @ArchTest
     public static final ArchRule junit4TestRule = noClasses().that()
         .doNotHaveFullyQualifiedName("jmri.util.junit.rules.RetryRuleTest").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrit.display.logixng.ActionPositionableTest").and()
-        .resideOutsideOfPackage("jmri.jmrit.logixng..")
+        .doNotHaveFullyQualifiedName("jmri.TestArchitectureTest").and()
+        .resideOutsideOfPackage("jmri.jmrit.logixng..").
+            and().areNotInnerClasses() // within TestArchitectureTest
         .should().dependOnClassesThat().haveFullyQualifiedName("org.junit.Test");
+
+    @ArchTest
+    public static final ArchRule methodsStartingWithTestShouldBeAnnotatedWithTest =
+        ArchRuleDefinition.methods()
+        .that(new DescribedPredicate<JavaMethod>("name starts with 'test', missing test annotations") {
+            @Override
+            public boolean test(JavaMethod method) {
+                boolean nameMatches = method.getName().toLowerCase().startsWith("test");
+                boolean noParams = method.getRawParameterTypes().isEmpty();
+                boolean notAbstract = !method.getModifiers().contains(JavaModifier.ABSTRACT);
+                boolean isVoid = method.getRawReturnType().isEquivalentTo(void.class);
+                boolean hasAnyTestAnnotation =
+                    method.isAnnotatedWith( ParameterizedTest.class) ||
+                    method.isAnnotatedWith(org.junit.Test.class); // JUnit 4
+
+                // Return true for methods that start with test, have no params, AND are missing the annotations
+                return nameMatches && noParams && notAbstract && isVoid && !hasAnyTestAnnotation;
+            }
+        })
+        // Point failures towards org.junit.jupiter.api.Test , not JU4 / Parameterized / Abstract
+        .should().beAnnotatedWith(Test.class); // JUnit 5
 
     /**
      * Please use org.junit.jupiter.api.BeforeEach

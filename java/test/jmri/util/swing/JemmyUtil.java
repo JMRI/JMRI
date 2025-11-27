@@ -1,5 +1,7 @@
 package jmri.util.swing;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.awt.Component;
 
 import javax.annotation.Nonnull;
@@ -10,8 +12,6 @@ import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 import jmri.util.JmriJFrame;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Utility Methods for Jemmy Tests.
@@ -97,12 +97,19 @@ public class JemmyUtil {
         jbo.push();
     }
 
+    /**
+     * Create a Modal Dialog Operator Thread.
+     * Button action is complete when Thread terminates.
+     * @param dialogTitle The Dialog title
+     * @param buttonText the text of the Button to press.
+     * @return the Thread.
+     */
     public static Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            jbo.pushNoBlock();
+            jbo.push(); // push waits for the button action to complete.
         });
         t.setName(dialogTitle + " Close Dialog Thread");
         t.start();
@@ -147,7 +154,7 @@ public class JemmyUtil {
                 if(comp == null){
                     return false;
                 } else if (comp instanceof JLabel ) {
-                    return name.equals(((JLabel)comp).getName());
+                    return name.equals(comp.getName());
                 } else {
                     return false;
                 }
@@ -173,7 +180,7 @@ public class JemmyUtil {
                 if(comp == null){
                     return false;
                 } else if (comp instanceof JButton ) {
-                    return name.equals(((JButton)comp).getName());
+                    return name.equals(comp.getName());
                 } else {
                     return false;
                 }

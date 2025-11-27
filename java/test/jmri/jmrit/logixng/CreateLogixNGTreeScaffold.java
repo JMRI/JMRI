@@ -23,8 +23,7 @@ import jmri.jmrix.can.cbus.logixng.SendMergCbusEvent;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.script.ScriptEngineSelector;
-import jmri.util.CompareUtil;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 
 import org.junit.*;
 
@@ -1541,6 +1540,23 @@ public class CreateLogixNGTreeScaffold {
         actionRequestUpdateOfSensor.getSelectNamedBean().setLocalVariable("index");
         actionRequestUpdateOfSensor.getSelectNamedBean().setReference("{IM1}");
         maleSocket = digitalActionManager.registerAction(actionRequestUpdateOfSensor);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
+        ActionRequestUpdateOfTurnout actionRequestUpdateOfTurnout =
+                new ActionRequestUpdateOfTurnout(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionRequestUpdateOfTurnout);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionRequestUpdateOfTurnout = new ActionRequestUpdateOfTurnout(digitalActionManager.getAutoSystemName(), null);
+        actionRequestUpdateOfTurnout.setComment("A comment");
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setNamedBean(turnout1);
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setFormula("\"IT\"+index");
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setLocalVariable("index");
+        actionRequestUpdateOfTurnout.getSelectNamedBean().setReference("{IM1}");
+        maleSocket = digitalActionManager.registerAction(actionRequestUpdateOfTurnout);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
@@ -3330,6 +3346,22 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ExecuteProgram executeProgram = new ExecuteProgram(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(executeProgram);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        executeProgram = new ExecuteProgram(digitalActionManager.getAutoSystemName(), null);
+        executeProgram.setComment("A comment");
+        executeProgram.getSelectProgram().setValue("myprogram");
+        executeProgram.getSelectParameters().getList().add("param1");
+        executeProgram.getSelectParameters().getList().add("param2");
+        executeProgram.getSelectParameters().getList().add("param3");
+        executeProgram.getSelectWorkingDirectory().setValue("myfolder");
+        maleSocket = digitalActionManager.registerAction(executeProgram);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         For actionFor =
                 new For(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(actionFor);
@@ -3384,6 +3416,56 @@ public class CreateLogixNGTreeScaffold {
             actionForEach.setUseCommonSource(true);
             actionForEach.setCommonManager(manager);
             maleSocket = digitalActionManager.registerAction(actionForEach);
+            actionManySocket.getChild(indexAction++).connect(maleSocket);
+        }
+
+
+        ForEachWithDelay actionForEachWithDelay =
+                new ForEachWithDelay(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(actionForEachWithDelay);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEachWithDelay = new ForEachWithDelay(digitalActionManager.getAutoSystemName(), null);
+        actionForEachWithDelay.setComment("A comment");
+        actionForEachWithDelay.setUseCommonSource(false);
+        actionForEachWithDelay.setCommonManager(CommonManager.Turnouts);
+        actionForEachWithDelay.setUserSpecifiedSource(ForEachWithDelay.UserSpecifiedSource.Variable);
+        actionForEachWithDelay.setFormula("turnouts");
+        actionForEachWithDelay.setDelay(100);
+        actionForEachWithDelay.setUnit(TimerUnit.Minutes);
+        actionForEachWithDelay.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEachWithDelay);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEachWithDelay = new ForEachWithDelay(digitalActionManager.getAutoSystemName(), null);
+        actionForEachWithDelay.setComment("A comment");
+        actionForEachWithDelay.setUseCommonSource(false);
+        actionForEachWithDelay.setCommonManager(CommonManager.Turnouts);
+        actionForEachWithDelay.setUserSpecifiedSource(ForEachWithDelay.UserSpecifiedSource.Memory);
+        actionForEachWithDelay.setFormula("turnouts");
+        actionForEachWithDelay.setDelay(300);
+        actionForEachWithDelay.setUnit(TimerUnit.MilliSeconds);
+        actionForEachWithDelay.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEachWithDelay);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionForEachWithDelay = new ForEachWithDelay(digitalActionManager.getAutoSystemName(), null);
+        actionForEachWithDelay.setComment("A comment");
+        actionForEachWithDelay.setUseCommonSource(false);
+        actionForEachWithDelay.setCommonManager(CommonManager.Turnouts);
+        actionForEachWithDelay.setUserSpecifiedSource(ForEachWithDelay.UserSpecifiedSource.Formula);
+        actionForEachWithDelay.setFormula("turnouts");
+        actionForEachWithDelay.setLocalVariableName("myVar");
+        maleSocket = digitalActionManager.registerAction(actionForEachWithDelay);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        for (CommonManager manager : CommonManager.values()) {
+            actionForEachWithDelay = new ForEachWithDelay(digitalActionManager.getAutoSystemName(), null);
+            actionForEachWithDelay.setComment("A comment");
+            actionForEachWithDelay.setUseCommonSource(true);
+            actionForEachWithDelay.setCommonManager(manager);
+            maleSocket = digitalActionManager.registerAction(actionForEachWithDelay);
             actionManySocket.getChild(indexAction++).connect(maleSocket);
         }
 

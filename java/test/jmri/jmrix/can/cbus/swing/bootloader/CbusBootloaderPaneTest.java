@@ -28,7 +28,7 @@ public class CbusBootloaderPaneTest extends jmri.util.swing.JmriPanelTest {
     public void testInitComponentsNoArgs() {
         // for now, just makes ure there isn't an exception.
         Assertions.assertDoesNotThrow( () -> {
-            ((CbusBootloaderPane) panel).initComponents();
+            panel.initComponents();
         });
     }
 

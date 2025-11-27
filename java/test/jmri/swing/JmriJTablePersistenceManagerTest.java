@@ -1,37 +1,26 @@
 package jmri.swing;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.swing.JTable;
 import javax.swing.SortOrder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
-import jmri.profile.NullProfile;
-import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
+
+import jmri.profile.*;
 import jmri.swing.JmriJTablePersistenceManager.TableColumnPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.node.NodeIdentity;
-
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.io.TempDir;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests the {@link jmri.swing.JmriJTablePersistenceManager}. Some tests use a
@@ -40,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  *
  * @author Randall Wood (C) 2016
  */
+@SuppressWarnings("javadoc")
 public class JmriJTablePersistenceManagerTest {
 
     /**

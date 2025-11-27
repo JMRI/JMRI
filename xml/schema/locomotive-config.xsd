@@ -204,6 +204,7 @@
                   </xs:simpleType>
                 </xs:attribute>
               <xs:attribute name="lockable" type="trueFalseType"/>
+              <xs:attribute name="visible" type="trueFalseType"/>
               <xs:attribute name="functionImage" type="xs:string"/>
               <xs:attribute name="functionImageSelected" type="xs:string"/>
             </xs:extension>

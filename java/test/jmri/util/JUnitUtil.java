@@ -1,5 +1,7 @@
 package jmri.util;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
@@ -10,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.function.Supplier;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
@@ -48,8 +51,9 @@ import jmri.util.zeroconf.MockZeroConfServiceManager;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 
 import org.slf4j.event.Level;
-import org.junit.Assert;
+
 import org.junit.jupiter.api.Assertions;
+
 import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.*;
 
@@ -439,7 +443,8 @@ public class JUnitUtil {
         String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
-        Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
+        Assertions.assertFalse( unexpectedMessageSeen,
+            () -> "Unexpected "+severity+" or higher messages emitted: \""+unexpectedMessageContent+"\"");
 
         // check for hanging shutdown tasks - after test for ERROR so it can complain
         checkShutDownManager();
@@ -459,20 +464,39 @@ public class JUnitUtil {
     }
 
     /**
-     * Wait for a specific condition to be true, without having to wait longer
+     * Wait for a specific condition to be true, without having to wait longer.
      * <p>
      * To be used in tests, will do an assert if the total delay is longer than
      * WAITFOR_MAX_DELAY
      * <p>
      * Typical use:
-     * <code>JUnitUtil.waitFor(()->{return replyVariable != null;},"reply not received")</code>
+     * <code>JUnitUtil.waitFor(()->{return replyVariable != null;},"reply not received");</code>
      *
      * @param condition condition being waited for
      * @param name      name of condition being waited for; will appear in
      *                  Assert.fail if condition not true fast enough
      */
+    public static void waitFor( @Nonnull ReleaseUntil condition, @Nonnull String name) {
+        waitFor( condition, () -> name);
+    }
+
+    /**
+     * Wait for a specific condition to be true, without having to wait longer.
+     * <p>
+     * To be used in tests, will fail test if the total delay is longer than
+     * WAITFOR_MAX_DELAY.
+     * <p>
+     * The messageSupplier is not evaluated unless there is a test failure so
+     * can include expensive method calls and string joins without penalty.
+     * <p>
+     * Typical use:
+     * <code>JUnitUtil.waitFor( () -> { return replyVariable != null; },
+     *     () -> "replyVariable still null: " + computationallyExpensiveCall() + " or multiple Strings" );</code>
+     * @param condition condition being waited for.
+     * @param messageSupplier Failure text supplier.
+     */
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
-    static public void waitFor(ReleaseUntil condition, String name) {
+    public static void waitFor( @Nonnull ReleaseUntil condition , @Nonnull Supplier<String> messageSupplier) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return;
@@ -485,7 +509,7 @@ public class JUnitUtil {
                         return;
                     }
                 } catch(Exception ex) {
-                    Assertions.fail("Exception while processing condition for \"" + name + "\" ", ex);
+                    fail("Exception while processing condition for \"" + messageSupplier.get() + "\" ", ex);
                 }
                 int priority = Thread.currentThread().getPriority();
                 try {
@@ -493,14 +517,14 @@ public class JUnitUtil {
                     Thread.sleep(WAITFOR_DELAY_STEP);
                     delay += WAITFOR_DELAY_STEP;
                 } catch (InterruptedException e) {
-                    Assertions.fail("failed due to InterruptedException", e);
+                    fail("failed due to InterruptedException", e);
                 } finally {
                     Thread.currentThread().setPriority(priority);
                 }
             }
-            Assertions.fail("\"" + name + "\" did not occur in time");
+            fail("\"" + messageSupplier.get() + "\" did not occur in time");
         } catch (Exception ex) {
-            Assertions.fail("Exception while waiting for \"" + name + "\" ", ex);
+            fail("Exception while waiting for \"" + messageSupplier.get() + "\" ", ex);
         }
     }
 
@@ -511,7 +535,7 @@ public class JUnitUtil {
      * than WAITFOR_MAX_DELAY
      * <p>
      * Typical use:
-     * <code>Assume.assumeTrue("reply not received", JUnitUtil.waitForTrue(()->{return replyVariable != null;}));</code>
+     * <code>Assumptions.assumeTrue("reply not received", JUnitUtil.waitFor(()->{return replyVariable != null;}));</code>
      *
      * @param condition condition to wait for
      * @return true if condition is met before WAITFOR_MAX_DELAY, false
@@ -1073,7 +1097,7 @@ public class JUnitUtil {
      * stopped all services it is managing.
      */
     public static void initZeroConfServiceManager() {
-        resetZeroConfServiceManager();
+        Assertions.assertTrue(JUnitUtil.resetZeroConfServiceManager());
         InstanceManager.setDefault(ZeroConfServiceManager.class, new MockZeroConfServiceManager());
     }
 
@@ -1083,6 +1107,7 @@ public class JUnitUtil {
      * stopped all services it is managing.
      * @return true when complete.
      */
+    @CheckReturnValue
     public static boolean resetZeroConfServiceManager() {
         if (! InstanceManager.containsDefault(ZeroConfServiceManager.class)) {
             return true; // not present, don't create one by asking for it.
@@ -1094,10 +1119,11 @@ public class JUnitUtil {
         waitFor( () -> manager.allServices().isEmpty(), "Stopping all ZeroConf Services");
 
         manager.dispose();
-
-        Thread t = getThreadByName( ZeroConfServiceManager.DNS_CLOSE_THREAD_NAME );
-        if ( t != null ) {
-            waitFor( () -> !t.isAlive(), "dns.close thread did not complete");
+        var threads = Thread.getAllStackTraces().keySet();
+        for (Thread t : threads) {
+            if (t.getName().startsWith(ZeroConfServiceManager.DNS_CLOSE_THREAD_NAME)) {
+                waitThreadTerminated(t);
+            }
         }
         return true;
     }
@@ -1697,7 +1723,7 @@ public class JUnitUtil {
      */
     public static AbstractButton pressButton(Container frame, String text) {
         AbstractButton button = JButtonOperator.findAbstractButton(frame, text, true, true);
-        Assert.assertNotNull(text + " Button not found", button);
+        Assertions.assertNotNull( button, () -> text + " Button not found");
         AbstractButtonOperator abo = new AbstractButtonOperator(button);
         abo.doClick();
         return button;

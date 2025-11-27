@@ -1,46 +1,46 @@
 package jmri.managers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import jmri.Memory;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<jmri.MemoryManager,jmri.Memory> {
+public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<jmri.MemoryManager,Memory> {
 
     @Test
     public void testIMthrows() {
-        try {
-            l.provideMemory("IM");
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException e) {
-            // nothing to do
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
+            l.provideMemory("IM"),
+            "Expected exception not thrown");
+        assertNotNull(e);
         JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name \"" + l.getSystemNamePrefix() + "\" is missing suffix.");
     }
 
     @Test
     public void testBlankThrows() {
-        try {
-            l.provideMemory("");
-            Assert.fail("Expected exception not thrown");
-        } catch (IllegalArgumentException e) {
-            // nothing to do
-        }
+        IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
+            l.provideMemory(""),
+            "Expected exception not thrown");
+        assertNotNull(e);
         JUnitAppender.assertErrorMessage("Invalid system name for Memory: System name must start with \"" + l.getSystemNamePrefix() + "\".");
     }
 
     @Test
     public void testCreatesiM() {
-        jmri.Memory im = l.provideMemory("iM");
-        Assert.assertNotNull("iM created",im);
-        Assert.assertEquals("correct system name","IMiM",im.getSystemName());
+        Memory im = l.provideMemory("iM");
+        assertNotNull( im, "iM created");
+        assertEquals( "IMiM", im.getSystemName(), "correct system name");
     }
     
     @Test

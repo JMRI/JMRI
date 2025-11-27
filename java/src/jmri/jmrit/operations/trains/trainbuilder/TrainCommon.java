@@ -250,7 +250,6 @@ public class TrainCommon {
 
     private void blockCarsPickups(PrintWriter file, Train train, List<Car> carList, RouteLocation rl,
             Track track, boolean isManifest) {
-        // block pick up cars, except for passenger cars
         for (RouteLocation rld : train.getTrainBlockingOrder()) {
             for (Car car : carList) {
                 if (Setup.isSortByTrackNameEnabled() &&
@@ -321,11 +320,11 @@ public class TrainCommon {
 
     /**
      * Used to determine if car is the next to be processed when producing
-     * Manifests or Switch Lists. Caboose or FRED is placed at end of the train.
-     * Passenger cars are already blocked in the car list. Passenger cars with
-     * negative block numbers are placed at the front of the train, positive
-     * numbers at the end of the train. Note that a car in train doesn't have a
-     * track assignment.
+     * Manifests or Switch Lists. Caboose or FRED is placed at end of the train
+     * unless they are also passenger cars. Passenger cars are already blocked
+     * in the car list. Passenger cars with negative block numbers are placed at
+     * the front of the train, positive numbers at the end of the train. Note
+     * that a car in train doesn't have a track assignment.
      * 
      * @param car the car being tested
      * @param rl  when in train's route the car is being pulled
@@ -345,13 +344,13 @@ public class TrainCommon {
                         !car.isCaboose() &&
                         !car.hasFred() &&
                         !car.isPassenger() ||
-                        rld == train.getTrainDepartsRouteLocation() &&
-                                car.isPassenger() &&
-                                car.getBlocking() < 0 ||
-                        rld == train.getTrainTerminatesRouteLocation() &&
-                                (car.isCaboose() ||
-                                        car.hasFred() ||
-                                        car.isPassenger() && car.getBlocking() >= 0))) {
+                        car.isPassenger() &&
+                                car.getBlocking() < 0 &&
+                                rld == train.getRoute().getBlockingLocationFrontOfTrain() ||
+                        (car.isCaboose() && !car.isPassenger() ||
+                                car.hasFred() && !car.isPassenger() ||
+                                car.isPassenger() && car.getBlocking() >= 0) &&
+                                rld == train.getRoute().getBlockingLocationRearOfTrain())) {
             return true;
         }
         return false;

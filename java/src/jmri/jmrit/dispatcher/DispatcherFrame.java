@@ -3122,7 +3122,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         _NameInAllocatedBlock = set;
     }
 
-    protected Scale getScale() {
+    public Scale getScale() {
         return _LayoutScale;
     }
 

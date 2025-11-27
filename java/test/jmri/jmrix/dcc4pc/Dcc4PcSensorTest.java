@@ -1,6 +1,7 @@
 package jmri.jmrix.dcc4pc;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.NotApplicable;
 
 import org.junit.jupiter.api.*;
 
@@ -21,10 +22,11 @@ public class Dcc4PcSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     @Override
     public void checkStatusRequestMsgSent() {}
-    
+
+    @Test
     @Override
+    @NotApplicable("status not currently updated for INCONSISTENT")
     public void testSensorSetKnownState() {
-        // status not currently updated for INCONSISTENT
     }
 
     @Override
@@ -38,6 +40,7 @@ public class Dcc4PcSensorTest extends jmri.implementation.AbstractSensorTestBase
     @AfterEach
     public void tearDown() {
         t.dispose();
+        t = null;
         JUnitUtil.tearDown();
     }
 

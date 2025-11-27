@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
+    @Test
     @Override
     public void testGetInfo() {
         super.testGetInfo();

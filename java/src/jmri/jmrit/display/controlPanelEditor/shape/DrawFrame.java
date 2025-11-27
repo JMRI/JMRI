@@ -31,6 +31,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.swing.NamedBeanComboBox;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -39,7 +40,7 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Pete Cressman Copyright (c) 2012
  */
-abstract public class DrawFrame extends jmri.util.JmriJFrame {
+abstract class DrawFrame extends jmri.util.JmriJFrame {
 
     private final Editor _editor;
     protected PositionableShape _shape;       // for use while editing
@@ -47,21 +48,21 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
     protected boolean _create;
 
     int _lineWidth;
-    Color _lineColor;
-    Color _fillColor;
-    JColorChooser _chooser;
-    JRadioButton _lineColorButon;
-    JRadioButton _fillColorButon;
-    JSlider _lineSlider;
-    JSlider _alphaSlider;
+    private Color _lineColor;
+    private Color _fillColor;
+    private JColorChooser _chooser;
+    private JRadioButton _lineColorButon;
+    private JRadioButton _fillColorButon;
+    private JSlider _lineSlider;
+    private JSlider _alphaSlider;
     private final transient NamedBeanComboBox<Sensor> _sensorBox = new NamedBeanComboBox<>(
         InstanceManager.getDefault(SensorManager.class), null, DisplayOptions.DISPLAYNAME);
-    JRadioButton _hideShape;
-    JRadioButton _changeLevel;
-    JComboBox<String> _levelComboBox;
-    JPanel _contentPanel;
+    private JRadioButton _hideShape;
+    private JRadioButton _changeLevel;
+    private JComboBox<String> _levelComboBox;
+    private final JPanel _contentPanel;
 
-    public DrawFrame(String which, String title, PositionableShape ps, Editor ed, boolean create) {
+    protected DrawFrame(String which, String title, PositionableShape ps, Editor ed, boolean create) {
         super(false, false);
         _shape = ps;
         _editor = ed;
@@ -90,22 +91,26 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
                 closingEvent(true);
             }
         });
-        super.pack();
-        if (_shape == null) {
-            Point loc = _editor.getLocationOnScreen();
-            loc.x = Math.max(loc.x + 200, 0);
-            loc.y = Math.max(loc.y, 0);
-            setLocation(loc);
-            setVisible(true);
-            setAlwaysOnTop(true);
-        }
+        ThreadingUtil.runOnGUI( () -> {
+            super.pack();
+            if (_shape == null) {
+                Point loc = _editor.getLocationOnScreen();
+                loc.x = Math.max(loc.x + 200, 0);
+                loc.y = Math.max(loc.y, 0);
+                setLocation(loc);
+                setVisible(true);
+                setAlwaysOnTop(true);
+            }
+        });
         //_shape != null finishes construction at setDisplayParams()
     }
-    private void addLabel(JPanel panel, String text) {
+
+    private static void addLabel(JPanel panel, String text) {
         JLabel label = new JLabel(text);
         label.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(label);
     }
+
     private JPanel makeCreatePanel(String type) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -484,7 +489,7 @@ abstract public class DrawFrame extends jmri.util.JmriJFrame {
     abstract void setDisplayWidth(int w);
     abstract void setDisplayHeight(int h);
 
-    abstract protected PositionableShape makeFigure(Rectangle r, Editor ed); 
+    protected abstract PositionableShape makeFigure(Rectangle r, Editor ed);
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DrawFrame.class);
 

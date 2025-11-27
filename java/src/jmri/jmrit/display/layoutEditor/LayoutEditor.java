@@ -3737,6 +3737,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     javax.swing.Timer timer = new javax.swing.Timer(150, null);
                     timer.addActionListener(new ActionListener(){
                         int count = 1;
+                        @Override
                         public void actionPerformed(ActionEvent ae){
                           if(count % 2 != 0) t.setDisabled(true);
                           else t.setDisabled(false);

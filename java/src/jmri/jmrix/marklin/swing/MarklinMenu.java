@@ -28,6 +28,12 @@ public class MarklinMenu extends JMenu {
                 add(new MarklinNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
+        
+        // Add separator and MCAN BOOT menu item
+        if (memo != null) {
+            add(new javax.swing.JSeparator());
+            add(new MarklinSendBootAction(Bundle.getMessage("MenuItemSendMCanBoot"), memo));
+        }
 
     }
 
@@ -45,7 +51,5 @@ public class MarklinMenu extends JMenu {
         String name;
         String load;
     }
-
-    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinMenu.class);
 
 }

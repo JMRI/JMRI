@@ -1,8 +1,11 @@
 package jmri.jmrix.dcc4pc;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -11,7 +14,7 @@ import org.junit.jupiter.api.*;
  */
 public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
-    Dcc4PcReporterManager rm = null;
+    private Dcc4PcReporterManager rm = null;
 
     @Override
     public String getSystemName(int i) {
@@ -29,8 +32,8 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         // create -- requires module:contact form.
         jmri.Sensor t = l.provideSensor("DS0:" + getNumToTest1());
         // check
-        Assert.assertNotNull("real object returned ", t );
-        Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t, "real object returned ");
+        assertEquals( t, l.getBySystemName(getSystemName(getNumToTest1())), "system name correct ");
     }
 
     @Override
@@ -39,8 +42,8 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         // create -- requires module:contact form.
         jmri.Sensor t = l.provideSensor("DS0:" + getNumToTest1());
         // check
-        Assert.assertNotNull("real object returned ", t );
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        assertNotNull( t, "real object returned ");
+        assertTrue( t == l.getBySystemName(getSystemName(getNumToTest1())), "system name correct ");
     }
 
     @Test
@@ -101,7 +104,7 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
         ((Dcc4PcSensorManager) l).reply(rep);
         JUnitUtil.waitFor(() -> {
             return l.provideSensor("DS0:3").getState() == jmri.Sensor.ACTIVE;}, "Sensor goes active");
-        Assert.assertEquals("sensor state after packet", jmri.Sensor.ACTIVE, l.provideSensor("DS0:3").getState());
+        assertEquals( jmri.Sensor.ACTIVE, l.provideSensor("DS0:3").getState(), "sensor state after packet");
 
     }
 
@@ -125,7 +128,7 @@ public class Dcc4PcSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @AfterEach
     public void tearDown() {
         l.dispose();
-        Assertions.assertNotNull(memo);
+        assertNotNull(memo);
         memo.getDcc4PcTrafficController().terminateThreads();
         memo.dispose();
         l = null;

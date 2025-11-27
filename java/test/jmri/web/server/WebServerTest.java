@@ -66,7 +66,7 @@ public class WebServerTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.resetZeroConfServiceManager();
+        assertTrue(JUnitUtil.resetZeroConfServiceManager());
         JUnitUtil.tearDown();
     }
 }

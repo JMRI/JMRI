@@ -122,27 +122,24 @@ public class AllocatedSection {
         if (mSection == null) {
             return length;
         }
+        int bStart = mSection.getBlockSequenceNumber(block);
         if (mSection.getState() == Section.FORWARD) {
-            for (int ix = 0;ix < mSection.getNumBlocks();ix++) {
+            for (int ix = bStart;ix < mSection.getNumBlocks();ix++) {
                 Block b = (mSection.getBlockBySequenceNumber(ix));
                 if (b != null) {
-                    if (length > 0.0f || b == block) {
-                        length += b.getLengthMm();
-                    }
+                    length += b.getLengthMm();
                 }
             }
         }
         else if (mSection.getState() == Section.REVERSE) {
-            for (int ix =  mSection.getNumBlocks()-1;ix > -1 ;ix--) {
+            for (int ix =  0 ;ix <= bStart ;ix++) {
                 Block b = (mSection.getBlockBySequenceNumber(ix));
                 if (b != null) {
-                    if (length > 0.0f || b == block) {
-                        length += b.getLengthMm();
-                    }
+                    length += b.getLengthMm();
                 }
             }
         }
-        log.debug("Remaining length in section[{}] is [{}]",mSection.getDisplayName(), length);
+        log.trace("Remaining length in section[{}] is [{}]",mSection.getDisplayName(), length);
         return length;
     }
 

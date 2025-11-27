@@ -10,11 +10,13 @@ import jmri.jmrix.lenz.XPressNetMessageFormatter;
  */
 public class XNetCommandStationRequestFormatter implements XPressNetMessageFormatter {
 
+    @Override
     public boolean handlesMessage(jmri.jmrix.Message m) {
         return m instanceof jmri.jmrix.lenz.XNetMessage &&
                 ((jmri.jmrix.lenz.XNetMessage) m).getElement(0) == XNetConstants.CS_REQUEST;
     }
 
+    @Override
     public String formatMessage(jmri.jmrix.Message m) {
         switch (m.getElement(1)) {
             case XNetConstants.EMERGENCY_OFF:

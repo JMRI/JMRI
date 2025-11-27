@@ -3,14 +3,10 @@ package jmri.implementation;
 import java.beans.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
-import javax.annotation.*;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 import jmri.*;
 
@@ -78,6 +74,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      *
      * @param newState the Turnout state command value passed
      * @return true if a Turnout.CLOSED was requested and Turnout is not set to _inverted
+     * @throws IllegalArgumentException when needed
      */
     public boolean stateChangeCheck(int newState) throws IllegalArgumentException {
         // sort out states

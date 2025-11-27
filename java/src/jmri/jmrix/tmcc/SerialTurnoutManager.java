@@ -17,7 +17,10 @@ import org.slf4j.LoggerFactory;
  * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
+
 public class SerialTurnoutManager extends AbstractTurnoutManager implements SerialListener {
 
     public SerialTurnoutManager(TmccSystemConnectionMemo memo) {
@@ -84,7 +87,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     @Override
     @Nonnull
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
-        return validateIntegerSystemNameFormat(name, 1, 99, locale);
+        return validateIntegerSystemNameFormat(name, 0, 119, locale);
     }
 
     /**
@@ -97,7 +100,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
             int num;
             try {
                 num = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
-                if (num < 0 || num > 99) {
+                if (num < 0 || num > 119) {
                     validity = NameValidity.INVALID;
                 }
             } catch (NumberFormatException ex) {

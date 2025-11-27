@@ -135,7 +135,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         p.add(loopStartLabel);
         loopStart.setPreferredSize(new JTextField(8).getPreferredSize());
         loopStart.setModel(
-                new SpinnerNumberModel(0L, 0L, Long.MAX_VALUE,1L));
+                new SpinnerNumberModel(Long.valueOf(0), Long.valueOf(0), Long.valueOf(Long.MAX_VALUE), Long.valueOf(1)));
         loopStart.addChangeListener( e ->
             loopEnd.setValue(
                     ((Long) loopStart.getValue()
@@ -146,7 +146,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         p.add(loopEndLabel);
         loopEnd.setPreferredSize(new JTextField(8).getPreferredSize());
         loopEnd.setModel(
-                new SpinnerNumberModel(0L, 0L, Long.MAX_VALUE, 1L));
+                new SpinnerNumberModel(Long.valueOf(0), Long.valueOf(0), Long.valueOf(Long.MAX_VALUE), Long.valueOf(1)));
         loopEnd.addChangeListener( e ->
             loopStart.setValue(
                     ((Long) loopEnd.getValue()

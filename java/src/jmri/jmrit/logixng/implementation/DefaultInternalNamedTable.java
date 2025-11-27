@@ -16,6 +16,8 @@ public class DefaultInternalNamedTable extends AbstractNamedTable {
      * @param user the user name or null if no user name
      * @param numRows the number or rows in the table
      * @param numColumns the number of columns in the table
+     * @throws BadUserNameException when needed
+     * @throws BadSystemNameException when needed
      */
     public DefaultInternalNamedTable(
             @Nonnull String sys, @CheckForNull String user,
@@ -31,6 +33,8 @@ public class DefaultInternalNamedTable extends AbstractNamedTable {
      * @param userName the user name
      * @param data the data in the table. Note that this data is not copied to
      * an new array but used by the table as is.
+     * @throws BadUserNameException when needed
+     * @throws BadSystemNameException when needed
      */
     public DefaultInternalNamedTable(
             @Nonnull String systemName, @CheckForNull String userName,

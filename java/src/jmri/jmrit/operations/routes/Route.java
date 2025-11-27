@@ -347,6 +347,22 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         }
         return out;
     }
+    
+    public RouteLocation getBlockingLocationFrontOfTrain() {
+        List<RouteLocation> list = getBlockingOrder();
+        if (list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
+    }
+    
+    public RouteLocation getBlockingLocationRearOfTrain() {
+        List<RouteLocation> list = getBlockingOrder();
+        if (list.size() > 0) {
+            return list.get(list.size() - 1);
+        }
+        return null;
+    }
 
     public void setBlockingOrderUp(RouteLocation rl) {
         List<RouteLocation> blockingOrder = getBlockingOrder();

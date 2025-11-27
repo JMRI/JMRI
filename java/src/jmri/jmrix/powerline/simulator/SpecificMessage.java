@@ -145,12 +145,13 @@ public class SpecificMessage extends SerialMessage {
 
     /**
      * This ctor interprets the byte array as a sequence of characters to send.
-     *
+     * @deprecated 5.13.5, unused, requires further development.
      * @param a Array of bytes to send
      * @param l length expected reply
      */
+    @Deprecated( since="5.13.5", forRemoval=true)
     public SpecificMessage(byte[] a, int l) {
-        super(a, l);
+        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""), l);
     }
 
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set

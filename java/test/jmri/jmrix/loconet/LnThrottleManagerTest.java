@@ -251,7 +251,11 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "address request message");
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
-        assertEquals(1, lnis.outbound.size(), "count is correct");
+        // Throttle request messages may be missed on 1st send so we wait for
+        // the 2nd message sent ( in 5.13.5 it's 1000ms after the 1st)
+        JUnitUtil.waitFor( () -> lnis.outbound.size() == 2, "throttle request repeated");
+        assertEquals( lnis.outbound.get(0), lnis.outbound.get(1), "2nd request matches 1st" );
+
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x60, 0x30, 0x55, 0x0, 0x0, 0x7, 0x0, 0x00, 0x0, 0x2, 0x70, 0x53});  // slot is in-use
         lnis.sendTestMessage(cmdStationReply);
@@ -270,7 +274,11 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(), "address request message");
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
-        assertEquals( 1, lnis.outbound.size(), "count is correct");
+        // Throttle request messages may be missed on 1st send so we wait for
+        // the 2nd message sent ( in 5.13.5 it's 1000ms after the 1st)
+        JUnitUtil.waitFor( () -> lnis.outbound.size() == 2, "throttle request repeated");
+        assertEquals( lnis.outbound.get(0), lnis.outbound.get(1), "2nd request matches 1st" );
+
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x8, 0x30, 0x00, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is in-use
         lnis.sendTestMessage(cmdStationReply);

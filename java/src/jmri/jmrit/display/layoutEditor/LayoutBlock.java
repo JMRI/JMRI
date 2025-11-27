@@ -4070,7 +4070,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      *
      * @param destination final block
      * @param nextBlock   adjcent block
-     * @return lenght to final, -1 if not viable
+     * @return length to final, -1 if not viable
      */
     public float getBlockLength(Block destination, Block nextBlock) {
         if ((destination == nextBlock) && (isValidNeighbour(nextBlock))) {
