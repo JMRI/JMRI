@@ -15,6 +15,15 @@
     <div id="mainContent" class="no-sidebar">
     <h1>OpenLCB: RR-CirKits Tower LCC+Q STL Editor</h1>
 
+      <ul class="snav">
+        <!-- TOC -->
+        <li><a href="#stl_editor">STL Editor</a></li>
+        <li><a href="#file_buttons">File Buttons</a></li>
+        <li><a href="#editor_buttons">Editor Buttons</a></li>
+        <li><a href="#menus">Menus</a></li>
+        <li><a href="#debugging">Debugging</a></li>
+      </ul>
+
       <p>The <strong>Tower LCC+Q</strong> node from RR-CirKits has the same I/O capabilities as the
       original Tower LCC. The logic Conditionals have been replaced by a subset of the PLC
       (programmable logic controller) language from Siemens.  The Siemens statement line language
@@ -81,10 +90,15 @@ etc.
         "images/cdi_loading.png" alt="stl cdi loading"></a>
       </div>
 
+
       <p>When the load finishes, the dialog will close.  If the node had been previously loaded,
       such as doing CDI configuration, the load is very fast and the dialog is not shown.</p>
 
-      <h3>STL Editor</h3>
+      <p>Parsing errors can occur during the CDI loading process.  See
+      <a href="#parsing_errors">Parse Errors</a> for details.</p>
+
+
+      <h3 id="stl_editor">STL Editor</h3>
       <p>The STL Editor provides an alternative method for editing the STL code.  It translates the
       code into a table that has 4 columns.  The <strong>Label</strong> column has the jump labels.
       These are one to four character words and a colon (:).  The <strong>Operator</strong>
@@ -258,7 +272,7 @@ etc.
 
       <h3>Tool Bar Buttons</h3>
 
-      <h4>File Buttons</h4>
+      <h4 id="file_buttons">File Buttons</h4>
 
       <dl>
         <dt>Load Backup</dt>
@@ -269,6 +283,10 @@ etc.
             <a href="images/load_backup.png"><img src=
             "images/load_backup.png" alt="stl load backup"></a>
           </div>
+
+          <p>Parsing errors can occur during the CDI backup loading process.  See
+          <a href="#parsing_errors">Parse Errors</a> for details.</p>
+
         </dd>
 
         <dt>Import</dt>
@@ -305,6 +323,10 @@ etc.
         <dd>
           <p>Reload the current data from the current node. If the current data has changed, a
           warning dialog will request confirmation to revert the data.</p>
+
+          <p>Parsing errors can occur during the refresh process.  See
+          <a href="#parsing_errors">Parse Errors</a> for details.</p>
+
         </dd>
 
         <dt id="storeButton">Store</dt>
@@ -367,7 +389,7 @@ etc.
         "images/revert_warning.png" alt="stl revert warning"></a>
       </div>
 
-      <h4>Editor Buttons</h4>
+      <h4 id="editor_buttons">Editor Buttons</h4>
 
       <dl>
         <dt>Add</dt>
@@ -401,7 +423,7 @@ etc.
         </dd>
       </dl>
 
-      <h3>File Menu</h3>
+      <h3 id="menus">File Menu</h3>
 
       <p>The File menu has menu items that are the same as the tool bar file buttons.</p>
 
@@ -480,6 +502,105 @@ etc.
 
       </dl>
 
+      <h3 id="debugging">Debugging</h3>
+
+      <h4 id="parsing_errors">Parsing Errors</h4>
+
+      <p>When CDI content is being loaded into the STL Editor, the content is translated from a
+      series of characters into a logical structure consisting of labels, operators, variables and
+      comments.  If the translation fails, the <strong>Parsing Errors</strong> dialog will be
+      displayed.</p>
+
+      <div style="margin-left: 2em">
+        <a href="images/parse_error_dialog.png"><img src=
+        "images/parse_error_dialog.png" alt="stl parsing error"></a>
+      </div>
+
+      <p>The input line can have up to 255 characters.  The dialog displays a portion of the line.
+      20 characters are displayed starting at the indicated number.  The item causing the error is
+      in the middle.  Any "new line" characters are replaced by the tilde character.</p>
+
+      <p>The errors in the dialog are also sent to the JMRI system console.  Instead of using a
+      screen shot when requesting help, the text from the system console is easier to read.</p>
+
+      <pre>
+ERROR - No operator found at "6", partial text = " I0.0~JCN PT2~~= Q0."
+ERROR - No operator found at "26", partial text = "1 // Here PT1 routed"
+ERROR - No operator found at "64", partial text = "~JU PTDN~~PT2: SET~A"
+ERROR - No operator found at "85", partial text = " I0.1~JCN PT3~~= Q0."
+ERROR - No operator found at "105", partial text = "2 // Here PT2 routed"
+ERROR - No operator found at "143", partial text = "~JU PTDN~~PT3: SET /"
+ERROR - No operator found at "160", partial text = "T // Here PT3 routed"
+      </pre>
+
+      <h4>JMRI Debug Option</h4>
+
+      <p>JMRI debugging can be enabled using <em><strong>jmri.jmrix.openlcb.swing.stleditor</strong></em>.
+      This can be used to modify the default_lcf.xml file or using PanelPro <strong>Debug &rArr; Display
+      / Edit Log Categories</strong>.  When debugging is enabled, additional information is sent to
+      the JMRI system console.</p>
+
+      <dl>
+        <dt>Parsing Passes</dt>
+        <dd>
+          <p>When loading CDI data, the decoding logic processes the input line 7 times to create a
+          token map of the data.  This is then used to create the logical view of the data as labels,
+          operators, variables, and comments.</p>
+
+          <pre>
+DEBUG - Find label locations
+DEBUG - Find variables and operators
+DEBUG - Find operators without variables
+DEBUG - Find jump operators and destinations
+DEBUG - Find timer word locations and load operators
+DEBUG - Find timer variable locations and S operators
+DEBUG - Find comment locations
+          </pre>
+
+          <p>If a parsing error is not obvious, knowing which of the 7 passes was active when a
+          parsing error occurred can provide useful context information.  Here is an example.</p>
+
+          <pre>
+DEBUG - Find timer variable locations and S operators
+ERROR - No operator found at "6", partial text = " I0.0~JCN PT2~~= Q0."
+DEBUG - Find comment locations
+          </pre>
+        </dd>
+
+        <dt>Decode Line</dt>
+        <dd>
+          <p>The raw line is displayed.  This is followed by the list of tokens created from the
+          line.  Here is a short example.</p>
+
+          <pre>
+DEBUG -   Token = Type: Oper, Name: SET, Start: 0, End: 3
+DEBUG -   Token = Type: Oper, Name: AN, Start: 4, End: 6
+DEBUG -   Token = Type: Var, Name: I0.0, Start: 7, End: 11
+DEBUG -   Token = Type: Oper, Name: JCN, Start: 12, End: 15
+DEBUG -   Token = Type: Dest, Name: PT2, Start: 16, End: 19
+          </pre>
+        </dd>
+
+        <dt>Encode Line</dt>
+        <dd>
+          <p>The encoded line is displayed.  This will be sent to the Tower LCC+Q when
+          <strong>Store</strong> is selected.  This is the same as the <strong>STL Preview</strong>
+          window.  Here is an example using the <strong>Store compressed</strong> option:</p>
+
+          <pre>
+DEBUG - Encoded multiLine:
+ [java] ANI0.1//Clear locks if none occupied
+ [java] ANI0.2ANI0.3ANI0.4ANI0.5RQ3.0RQ3.1JC AB1
+ [java] CLROQ3.0//Is either lock active?
+ [java] OQ3.1JC AB1
+ [java] //Lock already in use
+ [java] ANQ3.0AI0.1SQ3.0//Lock AB
+ [java] JC AB1
+ [java] ANQ3.1AI0.5//Lock BA
+ [java] SQ3.1
+          </pre>
+        </dd>
+      </dl>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

@@ -47,20 +47,20 @@
       <model model="TMCC 1 Passenger Car" maxFnNum="68" numOuts="1"/>
       <functionlabels>
           <functionlabel num= "0" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num= "1" lockable="false" visible="true">No Sound</functionlabel>
+          <functionlabel num= "1" lockable="false" visible="true">  No Sound   </functionlabel>
           <functionlabel num= "2" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num= "3" lockable="false" visible="true">Front-X</functionlabel>
-          <functionlabel num= "4" lockable="false" visible="true">Rear-X</functionlabel>
-          <functionlabel num= "5" lockable="false" visible="true">Volume Up</functionlabel>
+          <functionlabel num= "4" lockable="false" visible="true">Rear-X </functionlabel>
+          <functionlabel num= "5" lockable="false" visible="true">  Volume Up  </functionlabel>
           <functionlabel num= "6" lockable="false" visible="true">Cond Depart + 5 Scenarios</functionlabel>
           <functionlabel num= "7" lockable="false" visible="true">Sound Restart</functionlabel>
-          <functionlabel num= "8" lockable="false" visible="true">Volume Down</functionlabel>
-          <functionlabel num= "9" lockable="false" visible="true">Shutdown While Stopped</functionlabel>
+          <functionlabel num= "8" lockable="false" visible="true"> Volume Down </functionlabel>
+          <functionlabel num= "9" lockable="false" visible="true">  Shutdown While Stopped  </functionlabel>
           <functionlabel num="10" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="11" lockable="false" visible="true">Station PA - Departure</functionlabel>
+          <functionlabel num="11" lockable="false" visible="true"> Station PA - Departure  </functionlabel>
           <functionlabel num="12" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="13" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="14" lockable="false" visible="true">Reset</functionlabel>
+          <functionlabel num="14" lockable="false" visible="true">    Reset    </functionlabel>
           <functionlabel num="15" lockable="false" visible="true">High Metallic Air Release</functionlabel>
           <functionlabel num="16" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="17" lockable="false" visible="false">Unassigned</functionlabel>
@@ -96,7 +96,7 @@
           <functionlabel num="47" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="48" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="49" lockable="false" visible="true">Station PA - Arrival</functionlabel>
-          <functionlabel num="50" lockable="false" visible="true">Conductor - Arrival</functionlabel>
+          <functionlabel num="50" lockable="false" visible="true">Conductor - Arrival </functionlabel>
           <functionlabel num="51" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="52" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="53" lockable="false" visible="false">Unassigned</functionlabel>
