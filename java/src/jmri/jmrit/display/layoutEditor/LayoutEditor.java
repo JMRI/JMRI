@@ -5472,15 +5472,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return the calculated endpoint
      */
     private Point2D calculateStraightTileEndpoint(Point2D start, double angle, double lengthMM) {
-        double lengthPixels = convertMMToPixels(lengthMM);
-        
-        // Convert angle to radians and calculate offset
-        // Note: Y-axis is inverted in screen coordinates (down is positive)
-        double radians = Math.toRadians(angle);
-        double dx = lengthPixels * Math.cos(radians);
-        double dy = lengthPixels * Math.sin(radians);
-        
-        return new Point2D.Double(start.getX() + dx, start.getY() + dy);
+        return LayoutTileGeometry.calculateStraightEndpoint(start, angle, lengthMM, getLayoutUnitsPerMM());
     }
 
     /**
@@ -5495,30 +5487,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return the calculated endpoint
      */
     private Point2D calculateCurvedEndpointFromCenter(Point2D center, Point2D start, double arcDegrees, boolean curveLeft) {
-        // Calculate radius from center to start
-        double dx = start.getX() - center.getX();
-        double dy = start.getY() - center.getY();
-        double radius = Math.sqrt(dx * dx + dy * dy);
-        
-        // Current angle from center to start
-        double currentAngle = Math.toDegrees(Math.atan2(dy, dx));
-        
-        // Calculate new angle by rotating around center
-        // Left curve: counter-clockwise (add arc)
-        // Right curve: clockwise (subtract arc)
-        double newAngle;
-        if (curveLeft) {
-            newAngle = currentAngle + Math.abs(arcDegrees);
-        } else {
-            newAngle = currentAngle - Math.abs(arcDegrees);
-        }
-        
-        // Calculate endpoint at new angle on same circle
-        double newRadians = Math.toRadians(newAngle);
-        double endX = center.getX() + radius * Math.cos(newRadians);
-        double endY = center.getY() + radius * Math.sin(newRadians);
-        
-        return new Point2D.Double(endX, endY);
+        return LayoutTileGeometry.calculateCurvedEndpoint(center, start, arcDegrees, curveLeft);
     }
 
     /**
@@ -5529,17 +5498,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return the equivalent measurement in layout units
      */
     private double convertMMToPixels(double mm) {
-        // Get the current scale from layout settings
-        // Layout coordinates are in "layout units" which are zoom-independent
-        // We need to convert mm to layout units based on the grid size
-        
+        return LayoutTileGeometry.convertMMToLayoutUnits(mm, getLayoutUnitsPerMM());
+    }
+    
+    /**
+     * Get the conversion factor from millimeters to layout units.
+     * 
+     * @return the conversion factor (layout units per millimeter)
+     */
+    private double getLayoutUnitsPerMM() {
         // Typical conversion: assume 1 grid square = some real-world distance
         // For now, use a simple conversion: 1mm = 2 layout units
         // This should ideally be based on gContext.getGridSize() and scale settings
-        double layoutUnitsPerMM = 2.0;
-        
-        // Do NOT apply zoom factor - layout coordinates are zoom-independent
-        return mm * layoutUnitsPerMM;
+        return 2.0;
     }
 
     /**

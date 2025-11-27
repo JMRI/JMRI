@@ -143,4 +143,123 @@ public class LayoutTileGeometry {
             return calculateStraightOrientation(trackSegmentView, point, layoutEditor);
         }
     }
+    
+    /**
+     * Calculate the default path length for a track tile in millimeters.
+     * For straight tiles, this is the tile length.
+     * For curved tiles, this is the arc length: L = 2 * pi * radius * (arc/360).
+     * 
+     * @param tile the track tile
+     * @return the default path length in millimeters, or 0.0 if not available
+     */
+    public static double calculatePathLength(@CheckForNull jmri.tracktiles.TrackTile tile) {
+        // Check if tile information is available
+        if (tile == null || tile instanceof jmri.tracktiles.NotATile || tile instanceof jmri.tracktiles.UnknownTile) {
+            return 0.0;
+        }
+        
+        String jmriType = tile.getJmriType();
+        
+        if ("straight".equals(jmriType)) {
+            // For straight tiles, return the length
+            return tile.getLength();
+        } else if ("curved".equals(jmriType)) {
+            // For curved tiles, calculate arc length
+            return calculateArcLength(tile.getRadius(), tile.getArc());
+        }
+        
+        // For other types (turnouts, crossings), use the straight length if available
+        double length = tile.getLength();
+        return (length > 0) ? length : 0.0;
+    }
+    
+    /**
+     * Calculate the arc length for a curved segment.
+     * Formula: L = 2 * pi * radius * (arc/360)
+     * 
+     * @param radius the radius in millimeters
+     * @param arcDegrees the arc angle in degrees
+     * @return the arc length in millimeters
+     */
+    public static double calculateArcLength(double radius, double arcDegrees) {
+        return 2.0 * Math.PI * radius * (arcDegrees / 360.0);
+    }
+    
+    /**
+     * Calculate the endpoint for a straight track segment.
+     * 
+     * @param start the starting point
+     * @param angle the angle in degrees
+     * @param lengthMM the length in millimeters
+     * @param layoutUnitsPerMM the conversion factor from mm to layout units
+     * @return the calculated endpoint
+     */
+    public static Point2D calculateStraightEndpoint(
+            @Nonnull Point2D start, 
+            double angle, 
+            double lengthMM, 
+            double layoutUnitsPerMM) {
+        
+        double lengthLayoutUnits = lengthMM * layoutUnitsPerMM;
+        
+        // Convert angle to radians and calculate offset
+        double radians = Math.toRadians(angle);
+        double dx = lengthLayoutUnits * Math.cos(radians);
+        double dy = lengthLayoutUnits * Math.sin(radians);
+        
+        return new Point2D.Double(start.getX() + dx, start.getY() + dy);
+    }
+    
+    /**
+     * Calculate the endpoint for a curved track segment rotating around a center point.
+     * 
+     * @param center the center point of the curve
+     * @param start the starting point on the curve
+     * @param arcDegrees the arc angle in degrees (magnitude)
+     * @param curveLeft true for left curve (CCW rotation), false for right curve (CW rotation)
+     * @return the calculated endpoint
+     */
+    public static Point2D calculateCurvedEndpoint(
+            @Nonnull Point2D center, 
+            @Nonnull Point2D start, 
+            double arcDegrees, 
+            boolean curveLeft) {
+        
+        // Calculate radius from center to start
+        double dx = start.getX() - center.getX();
+        double dy = start.getY() - center.getY();
+        double radius = Math.sqrt(dx * dx + dy * dy);
+        
+        // Current angle from center to start
+        double currentAngle = Math.toDegrees(Math.atan2(dy, dx));
+        
+        // Calculate new angle by rotating around center
+        // Left curve: counter-clockwise (add arc)
+        // Right curve: clockwise (subtract arc)
+        double newAngle;
+        if (curveLeft) {
+            newAngle = currentAngle + Math.abs(arcDegrees);
+        } else {
+            newAngle = currentAngle - Math.abs(arcDegrees);
+        }
+        
+        // Calculate endpoint at new angle on same circle
+        double newRadians = Math.toRadians(newAngle);
+        double endX = center.getX() + radius * Math.cos(newRadians);
+        double endY = center.getY() + radius * Math.sin(newRadians);
+        
+        return new Point2D.Double(endX, endY);
+    }
+    
+    /**
+     * Convert millimeters to layout units.
+     * Layout coordinates are zoom-independent.
+     * 
+     * @param mm the measurement in millimeters
+     * @param layoutUnitsPerMM the conversion factor from mm to layout units
+     * @return the equivalent measurement in layout units
+     */
+    public static double convertMMToLayoutUnits(double mm, double layoutUnitsPerMM) {
+        return mm * layoutUnitsPerMM;
+    }
 }

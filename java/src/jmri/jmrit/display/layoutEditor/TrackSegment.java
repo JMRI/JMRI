@@ -789,28 +789,7 @@ public class TrackSegment extends LayoutTrack {
      * @return the default path length in millimeters, or 0.0 if not available
      */
     public double getDefaultPathLength() {
-        jmri.tracktiles.TrackTile tile = getTrackTile();
-        
-        // Check if tile information is available
-        if (tile == null || tile instanceof jmri.tracktiles.NotATile || tile instanceof jmri.tracktiles.UnknownTile) {
-            return 0.0;
-        }
-        
-        String jmriType = tile.getJmriType();
-        
-        if ("straight".equals(jmriType)) {
-            // For straight tiles, return the length
-            return tile.getLength();
-        } else if ("curved".equals(jmriType)) {
-            // For curved tiles, calculate arc length: L = 2 * pi * radius * (arc/360)
-            double radius = tile.getRadius();
-            double arc = tile.getArc();
-            return 2.0 * Math.PI * radius * (arc / 360.0);
-        }
-        
-        // For other types (turnouts, crossings), use the straight length if available
-        double length = tile.getLength();
-        return (length > 0) ? length : 0.0;
+        return LayoutTileGeometry.calculatePathLength(getTrackTile());
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegment.class);
