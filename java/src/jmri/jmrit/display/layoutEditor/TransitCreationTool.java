@@ -85,7 +85,10 @@ final public class TransitCreationTool {
                         // Look for a user defined section that has one block that matches the layout block
                         if (section.getSectionType() == Section.USERDEFINED) {
                             if (section.getNumBlocks() == 1 && layoutBlock.getBlock().equals(section.getEntryBlock())) {
-                                t.addTransitSection(new TransitSection(section, seqNo, Section.FORWARD));
+                                TransitSection ts = new TransitSection(section, seqNo, Section.FORWARD);
+                                ts.setFwdStopPerCent(1.0f);
+                                ts.setRevStopPerCent(1.0f);
+                                t.addTransitSection(ts);
                                 seqNo++;
                                 break;
                             }
@@ -116,7 +119,10 @@ final public class TransitCreationTool {
                     cancelTransitCreate();
                     throw new JmriException(error);
                 }
-                t.addTransitSection(new TransitSection(sec, seqNo, Section.FORWARD));
+                TransitSection ts = new TransitSection(sec, seqNo, Section.FORWARD);
+                ts.setFwdStopPerCent(1.0f);
+                ts.setRevStopPerCent(1.0f);
+                t.addTransitSection(ts);
                 seqNo++;
             }
         }
