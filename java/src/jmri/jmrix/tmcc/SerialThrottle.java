@@ -529,13 +529,15 @@ public class SerialThrottle extends AbstractThrottle {
 
     };
 
+
+     int previousValue;
+     int newValue;
+
     /**
      * Set the speed.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-     int previousValue;
-     int newValue;
 
     @Override
     public void setSpeedSetting(float speed) {
