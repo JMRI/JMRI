@@ -148,13 +148,29 @@ public class TableTest {
         }
 
         @Override
+        public void storeTableAsCSV() throws FileNotFoundException {
+            throw new UnsupportedOperationException("Not supported");
+        }
+
+        @Override
         public void storeTableAsCSV(File file) throws FileNotFoundException {
-            throw new UnsupportedOperationException("44Not supported.");
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void storeTableAsCSV(File file, boolean storeSystemUserName) throws FileNotFoundException {
+            throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
         public void storeTableAsCSV(File file, String systemName, String userName) throws FileNotFoundException {
-            throw new UnsupportedOperationException("55Not supported.");
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void storeTableAsCSV(File file, String systemName, String userName, boolean storeSystemUserName)
+                throws FileNotFoundException {
+            throw new UnsupportedOperationException("Not supported.");
         }
 
     }

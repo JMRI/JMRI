@@ -618,27 +618,25 @@ public class CoordinateEdit extends JmriJFrame {
     }
 
     public void initId(final Editor editor) {
-        PositionableLabel pLabel = (PositionableLabel) pl;
-        oldStr = pLabel.getId();
+        oldStr = pl.getId();
         textX = new JLabel();
         textX.setText(Bundle.getMessage("EnterId") + ":");
         textX.setVisible(true);
 
         xTextField = new JTextField(15);
-        xTextField.setText(pLabel.getId());
+        xTextField.setText(pl.getId());
         xTextField.setToolTipText(Bundle.getMessage("TooltipEnterId"));
 
         getContentPane().setLayout(new GridBagLayout());
         addTextItems();
 
         okButton.addActionListener(e -> {
-            PositionableLabel pp = (PositionableLabel) pl;
             String t = xTextField.getText();
             boolean hasText = (t != null && t.length() > 0);
             if (hasText) {
                 try {
-                    pp.setId(t);
-                    pp.updateSize();
+                    pl.setId(t);
+                    pl.updateSize();
                     dispose();
                 } catch (Positionable.DuplicateIdException ignore) {
                     JmriJOptionPane.showMessageDialog(editor,
@@ -648,8 +646,8 @@ public class CoordinateEdit extends JmriJFrame {
                 }
             } else {
                 try {
-                    pp.setId(null);
-                    pp.updateSize();
+                    pl.setId(null);
+                    pl.updateSize();
                     dispose();
                 } catch (Positionable.DuplicateIdException ex) {
                     // This should never happen

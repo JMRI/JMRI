@@ -2792,6 +2792,18 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
 
+        ValidationError validationError = new ValidationError(digitalActionManager.getAutoSystemName(), null);
+        maleSocket = digitalActionManager.registerAction(validationError);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        validationError = new ValidationError(digitalActionManager.getAutoSystemName(), null);
+        validationError.getSelectMessage().setValue("The value must be between 1 and 10");
+        maleSocket = digitalActionManager.registerAction(validationError);
+        maleSocket.setEnabled(false);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+
         WebBrowser webBrowser = new WebBrowser(digitalActionManager.getAutoSystemName(), null);
         maleSocket = digitalActionManager.registerAction(webBrowser);
         maleSocket.setEnabled(false);
@@ -3671,7 +3683,7 @@ public class CreateLogixNGTreeScaffold {
 
 
         errorAction = new jmri.jmrit.logixng.actions.Error(digitalActionManager.getAutoSystemName(), null);
-        errorAction.setMessage("Some error has occurred");
+        validationError.getSelectMessage().setValue("Some error has occurred");
         maleSocket = digitalActionManager.registerAction(errorAction);
         maleSocket.setEnabled(false);
         actionManySocket.getChild(indexAction++).connect(maleSocket);

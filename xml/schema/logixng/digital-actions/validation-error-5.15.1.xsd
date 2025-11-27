@@ -25,13 +25,13 @@
             "
         >
 
-    <xs:complexType name="LogixNG_DigitalAction_ErrorType">
+    <xs:complexType name="LogixNG_DigitalAction_ValidationErrorType">
       <xs:annotation>
         <xs:documentation>
-          Define the XML stucture for storing the contents of a Error class.
+          Define the XML stucture for storing the contents of a ValidationError class.
         </xs:documentation>
         <xs:appinfo>
-            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ErrorXml</jmri:usingclass>
+            <jmri:usingclass configurexml="true">jmri.jmrit.logixng.digital.actions.configurexml.ValidationErrorXml</jmri:usingclass>
         </xs:appinfo>
       </xs:annotation>
         
@@ -41,11 +41,7 @@
               <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="unbounded"/>
 
-              <xs:element name="error-message" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1"/>
-              
-              <!-- This is for backwards compability up until JMRI 5.15.1 -->
-              <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1"/>
-              <!-- This is for backwards compability up until JMRI 5.15.1 -->
+              <xs:element name="message" type="LogixNG_SelectStringType" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

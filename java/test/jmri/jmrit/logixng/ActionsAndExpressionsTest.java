@@ -287,7 +287,7 @@ public class ActionsAndExpressionsTest {
                     "AbstractDigitalAction","ActionAtomicBoolean","AbstractScriptDigitalAction","DigitalFactory",   // Digital
                     "AbstractDigitalBooleanAction","DigitalBooleanFactory",     // Boolean digital
                     "AbstractStringAction","StringFactory",         // String
-                    "SetLocalVariables"
+                    "SetLocalVariables","RunFinally"
                 });
 
 

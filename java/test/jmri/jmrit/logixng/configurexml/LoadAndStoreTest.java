@@ -14,6 +14,7 @@ import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.TransitScaffold;
+import jmri.jmrix.can.*;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.mqtt.MqttSystemConnectionMemo;
 import jmri.util.JUnitUtil;
@@ -76,6 +77,12 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initDebugCommandStation();
+
+        CanSystemConnectionMemo cbusMemo = new CanSystemConnectionMemo();
+        TrafficControllerScaffold cbusTrafficController = new TrafficControllerScaffold();
+        cbusMemo.setTrafficController(cbusTrafficController);
+        cbusMemo.setProtocol(ConfigurationManager.MERGCBUS);
+        cbusMemo.configureManagers();
 
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         SlotManager sm = new SlotManager(lnis);

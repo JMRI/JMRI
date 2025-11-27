@@ -177,11 +177,28 @@ public interface Table {
     }
 
     /**
+     * Store the table to a CSV file using the filename given when loading the
+     * CSV file.
+     * @throws java.io.FileNotFoundException if file not found
+     */
+    void storeTableAsCSV() throws FileNotFoundException;
+
+    /**
      * Store the table to a CSV file.
      * @param file the CSV file
      * @throws java.io.FileNotFoundException if file not found
      */
     void storeTableAsCSV(@Nonnull File file)
+            throws FileNotFoundException;
+
+    /**
+     * Store the table to a CSV file.
+     * @param file the CSV file
+     * @param storeSystemUserName true if to store system name and user name in
+     *                            the file, false otherwise
+     * @throws java.io.FileNotFoundException if file not found
+     */
+    void storeTableAsCSV(@Nonnull File file, boolean storeSystemUserName)
             throws FileNotFoundException;
 
     /**
@@ -198,6 +215,25 @@ public interface Table {
     void storeTableAsCSV(
             @Nonnull File file,
             @CheckForNull String systemName, @CheckForNull String userName)
+            throws FileNotFoundException;
+
+    /**
+     * Store the table to a CSV file.
+     * If system name and/or user name is not null, these values are used
+     * instead of the tables own system name and user name. If no system name
+     * and user name is given and the table is anonymous, no system name and
+     * user name is stored in the file.
+     * @param file the CSV file
+     * @param systemName the system name of the table
+     * @param userName the user name of the table
+     * @param storeSystemUserName true if to store system name and user name in
+     *                            the file, false otherwise
+     * @throws java.io.FileNotFoundException if file not found
+     */
+    void storeTableAsCSV(
+            @Nonnull File file,
+            @CheckForNull String systemName, @CheckForNull String userName,
+            boolean storeSystemUserName)
             throws FileNotFoundException;
 
 
