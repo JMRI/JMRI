@@ -104,12 +104,12 @@
     <xs:sequence>
       <xs:element name="gaugename" type="xs:string">
         <xs:annotation>
-          <xs:documentation>Gauge name, e.g., "Standard", "Narrow"</xs:documentation>
+          <xs:documentation>Gauge name, e.g., "Standard", "Narrow", "H0m", "H0e", "H0f", "H0p", "TTm"</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="gaugesize">
         <xs:annotation>
-          <xs:documentation>Track gauge in millimeters, e.g., 16.5mm for H0, 9mm for N</xs:documentation>
+          <xs:documentation>Track gauge in millimeters, e.g., 16.5mm for H0, 12 mm for TT or H0m, 9mm for N, TTm, H0e, 6.5mm for Z, H0f, TTe, Nm</xs:documentation>
         </xs:annotation>
         <xs:complexType>
           <xs:attribute name="value" type="xs:decimal" use="required"/>
