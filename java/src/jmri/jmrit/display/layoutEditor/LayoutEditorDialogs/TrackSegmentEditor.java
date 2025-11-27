@@ -11,6 +11,9 @@ import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
+import jmri.tracktiles.NotATile;
+import jmri.tracktiles.TrackTile;
+import jmri.tracktiles.UnknownTile;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -44,6 +47,11 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
     private final NamedBeanComboBox<Block> editTrackSegmentBlockNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private final JTextField editTrackSegmentArcTextField = new JTextField(5);
+    private final JLabel editTrackSegmentConnect1OrientationLabel = new JLabel();
+    private final JTextField editTrackSegmentConnect1OrientationField = new JTextField(8);
+    private final JLabel editTrackSegmentConnect2OrientationLabel = new JLabel();
+    private final JTextField editTrackSegmentConnect2OrientationField = new JTextField(8);
+    private final JLabel editTrackSegmentTileInfoLabel = new JLabel();
     private JButton editTrackSegmentSegmentEditBlockButton;
 
     private int editTrackSegmentMainlineTrackIndex;
@@ -128,6 +136,15 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
 
             contentPane.add(panel2);
 
+            // add tile information display
+            JPanel panelTile = new JPanel();
+            panelTile.setLayout(new FlowLayout());
+            JLabel tileLabel = new JLabel(Bundle.getMessage("TrackTile") + ": ");  // NOI18N
+            panelTile.add(tileLabel);
+            editTrackSegmentTileInfoLabel.setToolTipText(Bundle.getMessage("TrackTileInfoHint"));  // NOI18N
+            panelTile.add(editTrackSegmentTileInfoLabel);
+            contentPane.add(panelTile);
+
             JPanel panel20 = new JPanel();
             panel20.setLayout(new FlowLayout());
             JLabel arcLabel = new JLabel(Bundle.getMessage("SetArcAngle"));  // NOI18N
@@ -136,6 +153,23 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             panel20.add(editTrackSegmentArcTextField);
             editTrackSegmentArcTextField.setToolTipText(Bundle.getMessage("SetArcAngleHint"));  // NOI18N
             contentPane.add(panel20);
+
+            // Add orientation display fields (read-only)
+            JPanel panel21 = new JPanel();
+            panel21.setLayout(new FlowLayout());
+            panel21.add(editTrackSegmentConnect1OrientationLabel);
+            editTrackSegmentConnect1OrientationLabel.setLabelFor(editTrackSegmentConnect1OrientationField);
+            editTrackSegmentConnect1OrientationField.setEditable(false);
+            panel21.add(editTrackSegmentConnect1OrientationField);
+            contentPane.add(panel21);
+
+            JPanel panel22 = new JPanel();
+            panel22.setLayout(new FlowLayout());
+            panel22.add(editTrackSegmentConnect2OrientationLabel);
+            editTrackSegmentConnect2OrientationLabel.setLabelFor(editTrackSegmentConnect2OrientationField);
+            editTrackSegmentConnect2OrientationField.setEditable(false);
+            panel22.add(editTrackSegmentConnect2OrientationField);
+            contentPane.add(panel22);
 
             // set up Edit Block, Done and Cancel buttons
             JPanel panel5 = new JPanel();
@@ -166,11 +200,107 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         editTrackSegmentBlockNameComboBox.getEditor().setItem(block);   // Select the item via the editor, empty text field if null
         editTrackSegmentBlockNameComboBox.setEnabled(!hasNxSensorPairs(trackSegment.getLayoutBlock()));
 
+        // Update tile information display
+        TrackTile tile = trackSegment.getTrackTile();
+        if (tile instanceof NotATile) {
+            editTrackSegmentTileInfoLabel.setText(Bundle.getMessage("NoTile"));  // NOI18N
+        } else if (tile instanceof UnknownTile) {
+            editTrackSegmentTileInfoLabel.setText(Bundle.getMessage("UnknownTile") + " (" + tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode() + ")");  // NOI18N
+        } else {
+            editTrackSegmentTileInfoLabel.setText(tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode());
+        }
+
         if (trackSegmentView.isArc() && trackSegmentView.isCircle()) {
             editTrackSegmentArcTextField.setText("" + trackSegmentView.getAngle());
             editTrackSegmentArcTextField.setEnabled(true);
+            
+            // Calculate and display tangent orientations at endpoints
+            java.awt.geom.Point2D center = trackSegmentView.getCentre();
+            java.awt.geom.Point2D connect1Point = layoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
+            java.awt.geom.Point2D connect2Point = layoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
+            
+            if (center != null && connect1Point != null && connect2Point != null) {
+                // Calculate radius angle from each point to center
+                double radiusAngle1 = Math.toDegrees(Math.atan2(
+                    center.getY() - connect1Point.getY(),
+                    center.getX() - connect1Point.getX()));
+                
+                double radiusAngle2 = Math.toDegrees(Math.atan2(
+                    center.getY() - connect2Point.getY(),
+                    center.getX() - connect2Point.getX()));
+                
+                // The tangent is perpendicular to the radius
+                double arc = trackSegmentView.getAngle();
+                boolean isFlip = trackSegmentView.isFlip();
+                boolean counterClockwise = (arc > 0) != isFlip;
+                
+                double tangent1, tangent2;
+                if (counterClockwise) {
+                    // CCW motion: tangent is 90° behind the radius
+                    tangent1 = radiusAngle1 - 90.0;
+                    tangent2 = radiusAngle2 - 90.0;
+                } else {
+                    // CW motion: tangent is 90° ahead of the radius
+                    tangent1 = radiusAngle1 + 90.0;
+                    tangent2 = radiusAngle2 + 90.0;
+                }
+                
+                // Normalize to 0-360
+                tangent1 = (tangent1 % 360 + 360) % 360;
+                tangent2 = (tangent2 % 360 + 360) % 360;
+                
+                // Set labels with point IDs and coordinates
+                String connect1Id = trackSegment.getConnect1().getId();
+                String connect2Id = trackSegment.getConnect2().getId();
+                editTrackSegmentConnect1OrientationLabel.setText(
+                    String.format("%s (%.1f, %.1f) Orientation:", 
+                        connect1Id, connect1Point.getX(), connect1Point.getY()));
+                editTrackSegmentConnect2OrientationLabel.setText(
+                    String.format("%s (%.1f, %.1f) Orientation:", 
+                        connect2Id, connect2Point.getX(), connect2Point.getY()));
+                
+                // Display the tangent orientations
+                editTrackSegmentConnect1OrientationField.setText(String.format("%.2f°", tangent1));
+                editTrackSegmentConnect2OrientationField.setText(String.format("%.2f°", tangent2));
+            } else {
+                editTrackSegmentConnect1OrientationLabel.setText("Connect1 Orientation:");
+                editTrackSegmentConnect2OrientationLabel.setText("Connect2 Orientation:");
+                editTrackSegmentConnect1OrientationField.setText("-");
+                editTrackSegmentConnect2OrientationField.setText("-");
+            }
         } else {
+            // Straight segment or not a circle
             editTrackSegmentArcTextField.setEnabled(false);
+            
+            // For straight segments, calculate orientation from the two endpoints
+            java.awt.geom.Point2D connect1Point = layoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
+            java.awt.geom.Point2D connect2Point = layoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
+            
+            if (connect1Point != null && connect2Point != null) {
+                // Calculate orientation (angle from connect1 to connect2)
+                double orientation = Math.toDegrees(Math.atan2(
+                    connect2Point.getY() - connect1Point.getY(),
+                    connect2Point.getX() - connect1Point.getX()));
+                orientation = (orientation % 360 + 360) % 360; // Normalize to 0-360
+                
+                // For straight segments, orientation is the same at both ends
+                String connect1Id = trackSegment.getConnect1().getId();
+                String connect2Id = trackSegment.getConnect2().getId();
+                editTrackSegmentConnect1OrientationLabel.setText(
+                    String.format("%s (%.1f, %.1f) Orientation:", 
+                        connect1Id, connect1Point.getX(), connect1Point.getY()));
+                editTrackSegmentConnect2OrientationLabel.setText(
+                    String.format("%s (%.1f, %.1f) Orientation:", 
+                        connect2Id, connect2Point.getX(), connect2Point.getY()));
+                
+                editTrackSegmentConnect1OrientationField.setText(String.format("%.2f°", orientation));
+                editTrackSegmentConnect2OrientationField.setText(String.format("%.2f°", orientation));
+            } else {
+                editTrackSegmentConnect1OrientationLabel.setText("Connect1 Orientation:");
+                editTrackSegmentConnect2OrientationLabel.setText("Connect2 Orientation:");
+                editTrackSegmentConnect1OrientationField.setText("-");
+                editTrackSegmentConnect2OrientationField.setText("-");
+            }
         }
 
         editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {

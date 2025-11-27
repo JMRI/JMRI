@@ -3637,15 +3637,32 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             // Check if beginTrack has a connected tile that constrains orientation
                             TrackTile connectedTile = getConnectedTileAtAnchor(beginTrack);
                             LayoutTrack connectedTrack = getConnectedTrackAtAnchor(beginTrack);
-                            double angle;
+                            double angleAtBeginLocation;
                             
                             if (connectedTile != null && !(connectedTile instanceof jmri.tracktiles.NotATile) 
                                     && !(connectedTile instanceof jmri.tracktiles.UnknownTile)) {
                                 // Orientation is constrained by the connected tile
-                                angle = getConstrainedAngleFromConnectedTile(beginTrack, beginLocation, currentPoint, tile, connectedTile);
+                                // Get neighbour tile's orientation at endpoint
+                                if (connectedTrack instanceof TrackSegment) {
+                                    TrackSegmentView connectedView = getTrackSegmentView((TrackSegment) connectedTrack);
+                                    if (connectedView != null) {
+                                        // Calculate the orientation at the shared anchor point
+                                        angleAtBeginLocation = LayoutTileGeometry.calculateOrientation(connectedView, beginLocation, this);
+                                        
+                                        // Check if this is a failed calculation (returns -1)
+                                        if (angleAtBeginLocation < 0) {
+                                            // Calculation failed, fall back to free angle
+                                            angleAtBeginLocation = calculateAngle(beginLocation, currentPoint);
+                                        }
+                                    } else {
+                                        angleAtBeginLocation = calculateAngle(beginLocation, currentPoint);
+                                    }
+                                } else {
+                                    angleAtBeginLocation = calculateAngle(beginLocation, currentPoint);
+                                }
                             } else {
-                                // No constraint, calculate angle freely from begin point to current mouse position
-                                angle = calculateAngle(beginLocation, currentPoint);
+                                // No connected tile, calculate angle freely from begin point to cursor
+                                angleAtBeginLocation = calculateAngle(beginLocation, currentPoint);
                             }
                             
                             // Calculate endpoint based on tile type and geometry
@@ -3656,7 +3673,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             if ("straight".equals(jmriType)) {
                                 // Straight tile - use length
                                 double length = tile.getLength();
-                                endPoint = calculateStraightTileEndpoint(beginLocation, angle, length);
+                                endPoint = calculateStraightTileEndpoint(beginLocation, angleAtBeginLocation, length);
                             } else if ("curved".equals(jmriType)) {
                                 // Curved tile - calculate endpoint and center
                                 double radius = tile.getRadius();
@@ -3664,23 +3681,24 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 boolean curveLeft = leToolBarPanel.isTileCurveLeft();
                                 
                                 // Calculate both endpoint and center
+                                // Note: Y-axis is NOT inverted in layout coordinates (unlike screen coordinates)
                                 double radiusPixels = convertMMToPixels(radius);
-                                double centerAngle = curveLeft ? (angle + 90.0) : (angle - 90.0);
+                                double centerAngle = curveLeft ? (angleAtBeginLocation + 90.0) : (angleAtBeginLocation - 90.0);
                                 double centerRadians = Math.toRadians(centerAngle);
                                 calculatedCenter = new Point2D.Double(
                                     beginLocation.getX() + radiusPixels * Math.cos(centerRadians),
                                     beginLocation.getY() + radiusPixels * Math.sin(centerRadians)
                                 );
                                 
-                                endPoint = calculateCurvedTileEndpoint(beginLocation, angle, radius, arc, curveLeft);
+                                endPoint = calculateCurvedEndpointFromCenter(calculatedCenter, beginLocation, arc, curveLeft);
                             } else {
                                 // For other types (turnouts, crossings, etc.), just use straight length if available
                                 double length = tile.getLength();
                                 if (length > 0) {
-                                    endPoint = calculateStraightTileEndpoint(beginLocation, angle, length);
+                                    endPoint = calculateStraightTileEndpoint(beginLocation, angleAtBeginLocation, length);
                                 } else {
                                     // Default to 100mm if no length specified
-                                    endPoint = calculateStraightTileEndpoint(beginLocation, angle, 100.0);
+                                    endPoint = calculateStraightTileEndpoint(beginLocation, angleAtBeginLocation, 100.0);
                                 }
                             }
                             
@@ -3714,18 +3732,18 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                     boolean curveLeft = leToolBarPanel.isTileCurveLeft();
                                     double arc = tile.getArc();
                                     
-                                    // For left curves (CCW), we want the center on the left side of the chord
-                                    // For right curves (CW), we want the center on the right side
-                                    // The flip flag swaps pt1 and pt2, which changes which side gets the center
-                                    // We need to determine the correct flip value empirically
+                                    // JMRI calculates center from the chord (pt1 to pt2) and arc angle
+                                    // The flip flag determines which side of the chord the center is on
+                                    // For consistent behavior regardless of curve direction, always use positive arc
+                                    // and control the side with the flip flag
                                     
                                     if (curveLeft) {
-                                        // Left curve: positive arc, try flip=false first
-                                        tsv.setAngle(arc);
+                                        // Left curve: flip=false puts center on left side of chord
+                                        tsv.setAngle(Math.abs(arc));
                                         tsv.setFlip(false);
                                     } else {
-                                        // Right curve: negative arc
-                                        tsv.setAngle(-arc);
+                                        // Right curve: flip=true puts center on right side of chord
+                                        tsv.setAngle(Math.abs(arc));
                                         tsv.setFlip(true);
                                     }
                                 }
@@ -5504,66 +5522,24 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
-     * Calculate the endpoint for a curved track tile.
-     * Places the circle center perpendicular to the start tangent direction,
-     * then calculates the endpoint by rotating around that center by the arc angle.
-     * 
-     * @param start the starting point
-     * @param startTangent the tangent angle at start in degrees (orientation/direction at start)
-     * @param radiusMM the curve radius in millimeters
-     * @param arcDegrees the arc angle in degrees (θ in circular segment)
-     * @param curveLeft true for left curve (CCW), false for right curve (CW)
-     * @return the calculated endpoint
-     */
-    private Point2D calculateCurvedTileEndpoint(Point2D start, double startTangent, double radiusMM, double arcDegrees, boolean curveLeft) {
-        double radiusPixels = convertMMToPixels(radiusMM);
-        double arcMagnitude = Math.abs(arcDegrees);
-        
-        // Key insight: JMRI calculates the center from the chord (line from start to end) and arc angle.
-        // For the curve to be tangent to startTangent at the start point, we need to place the 
-        // center perpendicular to that tangent. Then calculate the endpoint by rotating around that center.
-        
-        // Step 1: Calculate correct center position - perpendicular to start tangent
-        double centerAngle = curveLeft ? (startTangent + 90.0) : (startTangent - 90.0);
-        double centerRadians = Math.toRadians(centerAngle);
-        double centerX = start.getX() + radiusPixels * Math.cos(centerRadians);
-        double centerY = start.getY() + radiusPixels * Math.sin(centerRadians);
-        
-        // Step 2: Calculate endpoint by rotating arc degrees around the center
-        // Start point is at angle (centerAngle + 180) from center
-        double startAngleFromCenter = centerAngle + 180.0;
-        double endAngleFromCenter = curveLeft ? 
-            (startAngleFromCenter + arcMagnitude) : 
-            (startAngleFromCenter - arcMagnitude);
-        
-        double endRadians = Math.toRadians(endAngleFromCenter);
-        double endX = centerX + radiusPixels * Math.cos(endRadians);
-        double endY = centerY + radiusPixels * Math.sin(endRadians);
-        
-        return new Point2D.Double(endX, endY);
-    }
-
-    /**
-     * Convert millimeters to pixels based on current layout scale and zoom.
+     * Convert millimeters to layout units (grid squares).
+     * Layout coordinates are zoom-independent, so we don't apply zoom factor.
      * 
      * @param mm the measurement in millimeters
-     * @return the equivalent measurement in pixels
+     * @return the equivalent measurement in layout units
      */
     private double convertMMToPixels(double mm) {
         // Get the current scale from layout settings
-        // For now, use a default conversion: 1mm model = 1 pixel at 100% zoom
-        // This should be adjusted based on actual layout scale settings
-        // For H0 scale (1:87), 1mm model represents 87mm real-world
+        // Layout coordinates are in "layout units" which are zoom-independent
+        // We need to convert mm to layout units based on the grid size
         
-        // Use the grid size as a reference:
-        // If gridSize represents actual distance, we can calculate pixel ratio
-        // For now, use a simple conversion: assume 1mm = 2 pixels at default zoom
-        double pixelsPerMM = 2.0;
+        // Typical conversion: assume 1 grid square = some real-world distance
+        // For now, use a simple conversion: 1mm = 2 layout units
+        // This should ideally be based on gContext.getGridSize() and scale settings
+        double layoutUnitsPerMM = 2.0;
         
-        // Apply zoom factor if available
-        double zoomFactor = getZoom();
-        
-        return mm * pixelsPerMM * zoomFactor;
+        // Do NOT apply zoom factor - layout coordinates are zoom-independent
+        return mm * layoutUnitsPerMM;
     }
 
     /**
@@ -5578,42 +5554,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         double dy = to.getY() - from.getY();
         double angleRadians = Math.atan2(dy, dx);
         return Math.toDegrees(angleRadians);
-    }
-
-    /**
-     * Calculate the tangent angle at a point on a curved track segment.
-     * The tangent is perpendicular to the radius at that point.
-     * 
-     * @param curveView the curved track segment view
-     * @param point the point on the curve
-     * @return the tangent angle in degrees at that point
-     */
-    private double calculateCurveTangentAngle(TrackSegmentView curveView, Point2D point) {
-        TrackSegment curve = curveView.getTrackSegment();
-        Point2D center = curveView.getCentreSeg();
-        
-        // Calculate the angle from point to center (radius direction)
-        double radiusAngle = calculateAngle(point, center);
-        
-        // The tangent is perpendicular to the radius
-        // For motion along the curve, the tangent depends on the arc direction
-        double arc = curveView.getAngle();
-        boolean isFlip = curveView.isFlip();
-        
-        // Determine if we're moving counter-clockwise around the circle
-        // Positive arc = CCW, but flip inverts this
-        boolean counterClockwise = (arc > 0) != isFlip;
-        
-        double tangentAngle;
-        if (counterClockwise) {
-            // CCW motion: tangent is 90° behind the radius (from point to center)
-            tangentAngle = radiusAngle - 90.0;
-        } else {
-            // CW motion: tangent is 90° ahead of the radius
-            tangentAngle = radiusAngle + 90.0;
-        }
-        
-        return tangentAngle;
     }
 
     /**
@@ -5674,99 +5614,6 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         
         // Either no connections or both connections - no constraint
         return null;
-    }
-
-    /**
-     * Calculate the constrained angle for placing a new tile when the begin anchor
-     * already has a connected tile. The angle is constrained to align with the connected tile.
-     * For curved tiles, dragging determines left/right orientation.
-     * 
-     * @param beginAnchor the starting anchor point
-     * @param beginLocation the location of the begin anchor
-     * @param mouseLocation the current mouse location
-     * @param newTile the tile being placed
-     * @param connectedTile the tile already connected to the anchor
-     * @return the constrained angle in degrees
-     */
-    private double getConstrainedAngleFromConnectedTile(LayoutTrack beginAnchor, Point2D beginLocation, 
-                                                         Point2D mouseLocation, TrackTile newTile, TrackTile connectedTile) {
-        if (!(beginAnchor instanceof PositionablePoint)) {
-            return calculateAngle(beginLocation, mouseLocation);
-        }
-        
-        PositionablePoint anchor = (PositionablePoint) beginAnchor;
-        
-        // Find which connection has the existing track
-        LayoutTrack connectedTrack = anchor.getConnect1();
-        if (connectedTrack == null) {
-            connectedTrack = anchor.getConnect2();
-        }
-        
-        if (connectedTrack == null) {
-            return calculateAngle(beginLocation, mouseLocation);
-        }
-        
-        // Get the other end of the connected track segment
-        Point2D otherEnd = null;
-        if (connectedTrack instanceof TrackSegment) {
-            TrackSegment segment = (TrackSegment) connectedTrack;
-            LayoutTrack otherTrack = (segment.getConnect1() == anchor) ? segment.getConnect2() : segment.getConnect1();
-            
-            if (otherTrack != null) {
-                LayoutTrackView otherView = getLayoutTrackView(otherTrack);
-                if (otherView != null) {
-                    otherEnd = otherView.getCoordsCenter();
-                }
-            }
-        }
-        
-        if (otherEnd == null) {
-            return calculateAngle(beginLocation, mouseLocation);
-        }
-        
-        // Calculate the angle from the connected track to the anchor
-        // For curved tracks, we need the tangent angle at the exit point, not the chord angle
-        TrackSegmentView connectedView = null;
-        if (connectedTrack instanceof TrackSegment) {
-            connectedView = getTrackSegmentView((TrackSegment) connectedTrack);
-        }
-        
-        double connectedAngle;
-        if (connectedView != null && connectedView.isCircle()) {
-            // For curved tracks, calculate the tangent angle at the connection point
-            connectedAngle = calculateCurveTangentAngle(connectedView, beginLocation);
-        } else {
-            // For straight tracks, the angle from other end to begin is the direction
-            connectedAngle = calculateAngle(otherEnd, beginLocation);
-        }
-        
-        String jmriType = newTile.getJmriType();
-        
-        if ("straight".equals(jmriType)) {
-            // For straight tiles, use the same direction (straight continuation)
-            return connectedAngle;
-        } else if ("curved".equals(jmriType)) {
-            // For curved tiles, start at the same angle but allow left/right choice
-            // Determine if mouse is to the left or right of the continuation line
-            double mouseAngle = calculateAngle(beginLocation, mouseLocation);
-            
-            // Normalize angles to 0-360
-            double normalizedConnected = (connectedAngle % 360 + 360) % 360;
-            double normalizedMouse = (mouseAngle % 360 + 360) % 360;
-            
-            // Calculate angle difference (-180 to 180)
-            double angleDiff = normalizedMouse - normalizedConnected;
-            if (angleDiff > 180) angleDiff -= 360;
-            if (angleDiff < -180) angleDiff += 360;
-            
-            // The tile starts at the connected angle
-            // The sign of angleDiff determines if it's a left or right curve
-            // This will be handled by the arc sign in calculateCurvedTileEndpoint
-            return connectedAngle;
-        }
-        
-        // For other types, use the connected angle
-        return connectedAngle;
     }
 
     /**
