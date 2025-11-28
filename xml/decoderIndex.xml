@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.13.6plus+t1jump+20251125T1807Z+R7734e446de on Tue Nov 25 12:08:02 CST 2025-->
-  <decoderIndex version="687">
+  <!--Written by JMRI version 5.13.6plus+jake+20251128T1141Z+Ra61355e9b23 on Fri Nov 28 06:41:51 EST 2025-->
+  <decoderIndex version="689">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -13930,10 +13930,10 @@
           <functionlabel num="77" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="78" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="79" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="70" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="71" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="72" lockable="false" visible="false">Unassigned</functionlabel>
-          <functionlabel num="73" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="80" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="81" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="82" lockable="false" visible="false">Unassigned</functionlabel>
+          <functionlabel num="83" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="84" lockable="false" visible="false">Unassigned</functionlabel>
           <functionlabel num="85" lockable="false" visible="false">Unassigned</functionlabel>
         </functionlabels>
