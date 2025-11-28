@@ -456,7 +456,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
-        
+
         // layout units per mm parameter
         if ((a = shared.getAttribute("layoutunitsPermm")) != null) {
             try {
@@ -466,7 +466,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
-        
+
         // grid size parameter
         if ((a = shared.getAttribute("gridSize")) != null) {
             try {

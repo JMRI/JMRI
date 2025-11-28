@@ -104,6 +104,15 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     protected JRadioButton tileLeftButton = new JRadioButton(Bundle.getMessage("LeftAbbreviation"));
     protected JRadioButton tileRightButton = new JRadioButton(Bundle.getMessage("RightAbbreviation"));
 
+    // Turnout direction radio buttons (alternative to left/right for turnouts)
+    protected JRadioButton turnoutThroatButton = new JRadioButton("Throat");
+    protected JRadioButton turnoutNormalButton = new JRadioButton("Normal/Closed");
+    protected JRadioButton turnoutThrownButton = new JRadioButton("Thrown");
+
+    // State variables to remember selections when switching between modes
+    private boolean savedLeftSelected = true;  // Remember left/right selection
+    private boolean savedThroatSelected = true; // Remember turnout direction selection
+
     // 3rd row of radio buttons (and any associated text fields)
     protected JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
     protected JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
@@ -318,9 +327,12 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
                     || audioButton.isSelected());
             log.debug("changeIconsButton is {}", e ? "enabled" : "disabled");
             changeIconsButton.setEnabled(e);
-            
+
             // Update tile combo box when radio button selection changes
             updateTileComboBox();
+
+            // Update direction button visibility based on selection
+            updateDirectionButtons();
         };
 
         turnoutRHButton.addActionListener(selectionListAction);
@@ -493,7 +505,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         tileVendorComboBox.setToolTipText(Bundle.getMessage("MakeLabel", "SelectVendor"));
         tileFamilyComboBox.setToolTipText(Bundle.getMessage("MakeLabel", "SelectFamily"));
         tileComboBox.setToolTipText(Bundle.getMessage("MakeLabel", "SelectTile"));
-        
+
         // Set up curved tile direction radio buttons
         ButtonGroup tileCurveGroup = new ButtonGroup();
         tileCurveGroup.add(tileLeftButton);
@@ -501,6 +513,21 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         tileLeftButton.setSelected(true); // Default to left
         tileLeftButton.setToolTipText("Curved tiles curve to the left (counter-clockwise)");
         tileRightButton.setToolTipText("Curved tiles curve to the right (clockwise)");
+
+        // Set up turnout direction radio buttons
+        ButtonGroup turnoutDirectionGroup = new ButtonGroup();
+        turnoutDirectionGroup.add(turnoutThroatButton);
+        turnoutDirectionGroup.add(turnoutNormalButton);
+        turnoutDirectionGroup.add(turnoutThrownButton);
+        turnoutThroatButton.setSelected(true); // Default to throat
+        turnoutThroatButton.setToolTipText("Place at turnout throat");
+        turnoutNormalButton.setToolTipText("Place on normal/closed route");
+        turnoutThrownButton.setToolTipText("Place on thrown route");
+
+        // Initially hide turnout direction buttons
+        turnoutThroatButton.setVisible(false);
+        turnoutNormalButton.setVisible(false);
+        turnoutThrownButton.setVisible(false);
 
         // third row of edit tool bar items
         endBumperButton.setToolTipText(Bundle.getMessage("EndBumperToolTip"));
@@ -650,6 +677,9 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         audioFrame = new JFrame(Bundle.getMessage("EditIcon"));
         audioFrame.getContentPane().add(audioEditor);
         audioFrame.pack();
+
+        // Initialize direction button visibility based on default selection
+        updateDirectionButtons();
     }
 
     /**
@@ -660,34 +690,34 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     private void initializeTileComboBoxes() {
         try {
             TrackTileManager manager = InstanceManager.getDefault(TrackTileManager.class);
-            
+
             // Get unique vendors from all track tiles
             Set<String> vendors = manager.getNamedBeanSet().stream()
                     .map(TrackTile::getVendor)
                     .collect(Collectors.toSet());
-            
+
             // Sort vendors alphabetically
             List<String> sortedVendors = new ArrayList<>(vendors);
             Collections.sort(sortedVendors);
-            
+
             // Populate vendor combo box with "No Tiles" at the top
             tileVendorComboBox.addItem("No Tiles");
             sortedVendors.forEach(tileVendorComboBox::addItem);
-            
+
             // Initialize family combo box with "No Vendor"
             tileFamilyComboBox.addItem("No Vendor");
-            
+
             // Set up max rows for better display
             jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(tileVendorComboBox);
             jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(tileFamilyComboBox);
             jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(tileComboBox);
-            
+
             // Add listener to update family combo box when vendor is selected
             tileVendorComboBox.addActionListener(e -> updateTileFamilyComboBox());
-            
+
             // Add listener to update tile combo box when family is selected
             tileFamilyComboBox.addActionListener(e -> updateTileComboBox());
-            
+
         } catch (Exception e) {
             log.error("Error initializing Track Tiles combo boxes", e);
         }
@@ -699,41 +729,41 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
      */
     private void updateTileFamilyComboBox() {
         String selectedVendor = (String) tileVendorComboBox.getSelectedItem();
-        
+
         // Clear existing items
         tileFamilyComboBox.removeAllItems();
-        
+
         // If "No Tiles" selected, show "No Vendor"
         if ("No Tiles".equals(selectedVendor)) {
             tileFamilyComboBox.addItem("No Vendor");
             return;
         }
-        
+
         try {
             TrackTileManager manager = InstanceManager.getDefault(TrackTileManager.class);
-            
+
             // Get unique families for the selected vendor
             Set<String> families = manager.getNamedBeanSet().stream()
                     .filter(tile -> selectedVendor.equals(tile.getVendor()))
                     .map(TrackTile::getFamily)
                     .collect(Collectors.toSet());
-            
+
             // If no families found, show "No Vendor"
             if (families.isEmpty()) {
                 tileFamilyComboBox.addItem("No Vendor");
                 return;
             }
-            
+
             // Sort families alphabetically and populate
             List<String> sortedFamilies = new ArrayList<>(families);
             Collections.sort(sortedFamilies);
             sortedFamilies.forEach(tileFamilyComboBox::addItem);
-            
+
             // Pre-select first family if available
             if (!sortedFamilies.isEmpty()) {
                 tileFamilyComboBox.setSelectedIndex(0);
             }
-            
+
         } catch (Exception e) {
             log.error("Error updating Track Tile family combo box", e);
         }
@@ -746,25 +776,25 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     private void updateTileComboBox() {
         String selectedVendor = (String) tileVendorComboBox.getSelectedItem();
         String selectedFamily = (String) tileFamilyComboBox.getSelectedItem();
-        
+
         // Clear existing items
         tileComboBox.removeAllItems();
-        
+
         // If "No Tiles" or "No Vendor" selected, or if either is null, add "Not a tile" only
-        if ("No Tiles".equals(selectedVendor) || "No Vendor".equals(selectedFamily) 
+        if ("No Tiles".equals(selectedVendor) || "No Vendor".equals(selectedFamily)
                 || selectedVendor == null || selectedFamily == null) {
             tileComboBox.addItem("Not a tile");
             return;
         }
-        
+
         try {
             TrackTileManager manager = InstanceManager.getDefault(TrackTileManager.class);
-            
+
             // Determine JMRI type filter based on selected radio button
             String jmriTypeFilter = getSelectedJmriType();
-            
+
             log.debug("Updating tiles: vendor={}, family={}, jmriType={}", selectedVendor, selectedFamily, jmriTypeFilter);
-            
+
             // Filter tiles by vendor, family, and JMRI type, then sort by part code
             List<TrackTile> filteredTiles = manager.getNamedBeanSet().stream()
                     .filter(tile -> selectedVendor.equals(tile.getVendor()))
@@ -772,18 +802,18 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
                     .filter(tile -> matchesJmriType(tile.getJmriType(), jmriTypeFilter))
                     .sorted((t1, t2) -> t1.getPartCode().compareTo(t2.getPartCode()))
                     .collect(Collectors.toList());
-            
+
             log.debug("Found {} tiles matching filters", filteredTiles.size());
-            
+
             // Always add "Not a tile" at the top
             tileComboBox.addItem("Not a tile");
-            
+
             // Populate tile combo box with part code and localized caption
             for (TrackTile tile : filteredTiles) {
                 String displayName = tile.getPartCode() + " - " + tile.getCaption("en");
                 tileComboBox.addItem(displayName);
             }
-            
+
         } catch (Exception e) {
             log.error("Error updating Track Tiles combo box", e);
         }
@@ -792,7 +822,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     /**
      * Check if a tile's JMRI type matches the filter.
      * Special handling for track segments which can be straight or curved.
-     * 
+     *
      * @param tileType The tile's JMRI type from XML
      * @param filterType The filter type from selected button, or null for no filter
      * @return true if the tile matches the filter
@@ -802,12 +832,12 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         if (filterType == null) {
             return true;
         }
-        
+
         // Track button is special - it should show both straight and curved
         if ("straight".equals(filterType)) {
             return "straight".equals(tileType) || "curved".equals(tileType);
         }
-        
+
         // All other types require exact match
         return filterType.equals(tileType);
     }
@@ -1058,7 +1088,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
 
     /**
      * Check if a track tile is currently selected (not "Not a tile").
-     * 
+     *
      * @return true if a valid tile is selected, false otherwise
      */
     public boolean isTileSelected() {
@@ -1068,7 +1098,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
 
     /**
      * Check if the left curve direction is selected for curved tiles.
-     * 
+     *
      * @return true if left is selected, false if right is selected
      */
     public boolean isTileCurveLeft() {
@@ -1076,8 +1106,95 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     }
 
     /**
+     * Get the selected turnout direction.
+     *
+     * @return "throat", "normal", or "thrown"
+     */
+    public String getTurnoutDirection() {
+        if (turnoutThroatButton.isSelected()) {
+            return "throat";
+        } else if (turnoutNormalButton.isSelected()) {
+            return "normal";
+        } else if (turnoutThrownButton.isSelected()) {
+            return "thrown";
+        }
+        return "throat"; // Default
+    }
+
+    /**
+     * Update visibility of direction radio buttons based on current selection.
+     * Show left/right for track segments, show throat/normal/thrown for turnouts.
+     */
+    private void updateDirectionButtons() {
+        boolean isTurnoutType = (turnoutRHButton.isSelected()
+                || turnoutLHButton.isSelected()
+                || turnoutWYEButton.isSelected()
+                || doubleXoverButton.isSelected()
+                || rhXoverButton.isSelected()
+                || lhXoverButton.isSelected()
+                || layoutSingleSlipButton.isSelected()
+                || layoutDoubleSlipButton.isSelected());
+
+        boolean isTrackSegment = trackButton.isSelected();
+
+        if (isTurnoutType) {
+            // Save current left/right selection
+            savedLeftSelected = tileLeftButton.isSelected();
+
+            // Hide left/right, show turnout direction buttons
+            tileLeftButton.setVisible(false);
+            tileRightButton.setVisible(false);
+            turnoutThroatButton.setVisible(true);
+            turnoutNormalButton.setVisible(true);
+            turnoutThrownButton.setVisible(true);
+
+            // Update label text for turnouts
+            tileCurveDirectionLabel.setText(Bundle.getMessage("MakeLabel", "Tiles"));
+
+            // Restore turnout selection
+            if (savedThroatSelected) {
+                turnoutThroatButton.setSelected(true);
+            } else {
+                turnoutNormalButton.setSelected(true);
+            }
+
+        } else if (isTrackSegment) {
+            // Save current turnout selection
+            savedThroatSelected = turnoutThroatButton.isSelected();
+
+            // Hide turnout direction, show left/right buttons
+            turnoutThroatButton.setVisible(false);
+            turnoutNormalButton.setVisible(false);
+            turnoutThrownButton.setVisible(false);
+            tileLeftButton.setVisible(true);
+            tileRightButton.setVisible(true);
+
+            // Update label text for curves
+            tileCurveDirectionLabel.setText(Bundle.getMessage("MakeLabel", "Curve"));
+
+            // Restore left/right selection
+            if (savedLeftSelected) {
+                tileLeftButton.setSelected(true);
+            } else {
+                tileRightButton.setSelected(true);
+            }
+
+        } else {
+            // For other types, hide all direction buttons
+            tileLeftButton.setVisible(false);
+            tileRightButton.setVisible(false);
+            turnoutThroatButton.setVisible(false);
+            turnoutNormalButton.setVisible(false);
+            turnoutThrownButton.setVisible(false);
+
+            // Keep default curve label
+            tileCurveDirectionLabel.setText(Bundle.getMessage("MakeLabel", "Curve"));
+        }
+    }
+
+    /**
      * Get the currently selected TrackTile from the toolbar combo boxes.
-     * 
+     *
      * @return the selected TrackTile, or null if no valid tile is selected
      */
     @CheckForNull
@@ -1085,18 +1202,18 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         if (!isTileSelected()) {
             return null;
         }
-        
+
         String vendor = (String) tileVendorComboBox.getSelectedItem();
         String family = (String) tileFamilyComboBox.getSelectedItem();
         String selected = (String) tileComboBox.getSelectedItem();
-        
+
         if (vendor == null || family == null || selected == null) {
             return null;
         }
-        
+
         // Parse partcode from "partcode - caption" format
         String partCode = selected.split(" - ")[0].trim();
-        
+
         // Build system name and retrieve from manager
         String systemName = "TT:" + vendor + ":" + family + ":" + partCode;
         TrackTileManager manager = InstanceManager.getDefault(TrackTileManager.class);

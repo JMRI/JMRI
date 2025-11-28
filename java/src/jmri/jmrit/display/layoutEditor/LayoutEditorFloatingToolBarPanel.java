@@ -201,10 +201,10 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         floatEditIcon.add(iconGroup6);
 
         floatEditTabsPane.addTab(Bundle.getMessage("TabIcon"), null, floatEditIcon, null);
-        
+
         // Set tabbed pane to expand to full width
         floatEditTabsPane.setMaximumSize(new Dimension(Integer.MAX_VALUE, floatEditTabsPane.getPreferredSize().height));
-        
+
         // Set tabbed panel to expand to full width like tiles section
         floatEditTabsPanel.setLayout(new BoxLayout(floatEditTabsPanel, BoxLayout.LINE_AXIS));
         floatEditTabsPanel.add(floatEditTabsPane);
@@ -213,30 +213,34 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         // End the tabs structure
         // Tiles section - independent panel below tabs with border to match tabbed pane
         JPanel floatEditTilesPanel = new JPanel();
-        floatEditTilesPanel.setLayout(new BoxLayout(floatEditTilesPanel, BoxLayout.LINE_AXIS));
+        floatEditTilesPanel.setLayout(new BoxLayout(floatEditTilesPanel, BoxLayout.Y_AXIS));
         floatEditTilesPanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createLineBorder(Color.GRAY),
             "Tiles",
             TitledBorder.LEFT,
             TitledBorder.TOP
         ));
-        
-        // Add glue on left to center the content
-        floatEditTilesPanel.add(Box.createHorizontalGlue());
-        
-        JPanel tilesContent = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
-        tilesContent.add(tileVendorLabel);
-        tilesContent.add(tileVendorComboBox);
-        tilesContent.add(tileFamilyLabel);
-        tilesContent.add(tileFamilyComboBox);
-        tilesContent.add(tileNameLabel);
-        tilesContent.add(tileComboBox);
-        
-        floatEditTilesPanel.add(tilesContent);
-        
-        // Add glue on right to center the content
-        floatEditTilesPanel.add(Box.createHorizontalGlue());
-        
+
+        // First row: tile selection controls
+        JPanel tilesRow1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
+        tilesRow1.add(tileVendorLabel);
+        tilesRow1.add(tileVendorComboBox);
+        tilesRow1.add(tileFamilyLabel);
+        tilesRow1.add(tileFamilyComboBox);
+        tilesRow1.add(tileNameLabel);
+        tilesRow1.add(tileComboBox);
+        floatEditTilesPanel.add(tilesRow1);
+
+        // Second row: direction radio buttons
+        JPanel tilesRow2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 2));
+        tilesRow2.add(tileCurveDirectionLabel);
+        tilesRow2.add(tileLeftButton);
+        tilesRow2.add(tileRightButton);
+        tilesRow2.add(turnoutThroatButton);
+        tilesRow2.add(turnoutNormalButton);
+        tilesRow2.add(turnoutThrownButton);
+        floatEditTilesPanel.add(tilesRow2);
+
         // Set preferred width to match tabbed pane
         floatEditTilesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, floatEditTilesPanel.getPreferredSize().height));
         add(floatEditTilesPanel);
@@ -245,16 +249,16 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         JPanel floatEditLocationPanel = new JPanel();
         floatEditLocationPanel.setLayout(new BoxLayout(floatEditLocationPanel, BoxLayout.LINE_AXIS));
         floatEditLocationPanel.setBorder(new EmptyBorder(0, 5, 0, 5)); // Add 5px margin left and right
-        
+
         // Set zoom and location panels to use BoxLayout to allow expansion
         zoomPanel.setLayout(new BoxLayout(zoomPanel, BoxLayout.LINE_AXIS));
         locationPanel.setLayout(new BoxLayout(locationPanel, BoxLayout.LINE_AXIS));
-        
+
         floatEditLocationPanel.add(zoomPanel);
         floatEditLocationPanel.add(Box.createHorizontalStrut(10)); // Add spacing between panels
         floatEditLocationPanel.add(locationPanel);
         floatEditLocationPanel.add(Box.createHorizontalGlue()); // Glue at the end
-        
+
         add(floatEditLocationPanel);
 
         floatEditTabsPane.addChangeListener((e) -> {

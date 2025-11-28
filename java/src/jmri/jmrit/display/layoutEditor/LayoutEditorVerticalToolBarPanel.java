@@ -181,6 +181,9 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         JPanel directionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
         directionPanel.add(tileLeftButton);
         directionPanel.add(tileRightButton);
+        directionPanel.add(turnoutThroatButton);
+        directionPanel.add(turnoutNormalButton);
+        directionPanel.add(turnoutThrownButton);
         tilesBorderPanel.add(directionPanel, gbc);
 
         tilesBorderPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, tilesBorderPanel.getPreferredSize().height));

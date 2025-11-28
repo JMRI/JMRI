@@ -39,7 +39,7 @@ public class EnterGridSizesDialog {
     private final JTextField secondaryGridSizeField = new JTextField(6);
     private final JComboBox<String> scaleComboBox = new JComboBox<>(new String[]{
             "10 mm per unit",
-            "5 mm per unit", 
+            "5 mm per unit",
             "2 mm per unit",
             "1 unit per mm",
             "2 units per mm (default)",
@@ -116,11 +116,11 @@ public class EnterGridSizesDialog {
         //Set up for Entry of Track Widths
         primaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize()));
         secondaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize2nd()));
-        
+
         //Set up current scale selection
         double currentUnitsPerMM = layoutEditor.getLayoutUnitsPerMM();
         setScaleComboSelection(currentUnitsPerMM);
-        
+
         enterGridSizesFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
@@ -128,13 +128,13 @@ public class EnterGridSizesDialog {
             }
         });
         enterGridSizesFrame.pack();
-        
+
         // Ensure minimum size to accommodate all components including the new scale dropdown
         Dimension currentSize = enterGridSizesFrame.getSize();
         Dimension minSize = new Dimension(Math.max(currentSize.width, 300), Math.max(currentSize.height, 200));
         enterGridSizesFrame.setMinimumSize(minSize);
         enterGridSizesFrame.setSize(minSize);
-        
+
         enterGridSizesFrame.setVisible(true);
         gridSizesChange = false;
         enterGridSizesOpen = true;
@@ -186,18 +186,18 @@ public class EnterGridSizesDialog {
                 layoutEditor.gContext.setGridSize((int) siz);
                 gridSizesChange = true;
             }
-            
+
             // Handle scale changes
             double newUnitsPerMM = getScaleFromComboSelection();
             if (!MathUtil.equals(layoutEditor.getLayoutUnitsPerMM(), newUnitsPerMM)) {
                 layoutEditor.setLayoutUnitsPerMM((float) newUnitsPerMM);
                 gridSizesChange = true;
             }
-            
+
             gridSizesCancelPressed(null);
         }
     }
-    
+
     /**
      * Set the scale combo box to match the current units per mm value
      */
@@ -205,7 +205,7 @@ public class EnterGridSizesDialog {
         if (MathUtil.equals(unitsPerMM, 0.1)) {
             scaleComboBox.setSelectedIndex(0); // 10 mm per unit
         } else if (MathUtil.equals(unitsPerMM, 0.2)) {
-            scaleComboBox.setSelectedIndex(1); // 5 mm per unit  
+            scaleComboBox.setSelectedIndex(1); // 5 mm per unit
         } else if (MathUtil.equals(unitsPerMM, 0.5)) {
             scaleComboBox.setSelectedIndex(2); // 2 mm per unit
         } else if (MathUtil.equals(unitsPerMM, 1.0)) {
@@ -218,7 +218,7 @@ public class EnterGridSizesDialog {
             scaleComboBox.setSelectedIndex(4); // default to 2 units per mm
         }
     }
-    
+
     /**
      * Get the units per mm value from the current combo box selection
      */

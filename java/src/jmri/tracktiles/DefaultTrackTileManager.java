@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Default implementation of TrackTileManager.
  * Manages read-only TrackTile catalog objects loaded from XML files.
- * 
+ *
  * @author Ralf Lang Copyright (C) 2025
  */
 public class DefaultTrackTileManager extends AbstractManager<TrackTile> implements TrackTileManager {
@@ -42,13 +42,13 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
      */
     private void loadCatalogs() {
         File catalogDir = new File(XmlFile.xmlDir() + "tracktiles");
-        
+
         if (!catalogDir.exists() || !catalogDir.isDirectory()) {
             log.warn("Track tiles directory not found: {}", catalogDir.getAbsolutePath());
             return;
         }
 
-        File[] xmlFiles = catalogDir.listFiles((dir, name) -> 
+        File[] xmlFiles = catalogDir.listFiles((dir, name) ->
             name.toLowerCase().endsWith(".xml") && !name.startsWith("."));
 
         if (xmlFiles == null || xmlFiles.length == 0) {
@@ -69,7 +69,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
 
     /**
      * Load a single track tile catalog file.
-     * 
+     *
      * @param xmlFile The XML file to load
      * @throws Exception if loading fails
      */
@@ -77,7 +77,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse(xmlFile);
-        
+
         doc.getDocumentElement().normalize();
 
         // Get header information
@@ -95,7 +95,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
         NodeList tileList = doc.getElementsByTagName("tile");
         for (int i = 0; i < tileList.getLength(); i++) {
             Element tileElement = (Element) tileList.item(i);
-            
+
             String partCode = getElementText(tileElement, "partcode", "");
             String jmriType = getElementText(tileElement, "jmritype", "");
 
@@ -112,7 +112,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
             NodeList geometryList = tileElement.getElementsByTagName("geometry");
             if (geometryList.getLength() > 0) {
                 Element geometryElement = (Element) geometryList.item(0);
-                
+
                 // Check for straight geometry
                 NodeList straightList = geometryElement.getElementsByTagName("straight");
                 if (straightList.getLength() > 0) {
@@ -127,14 +127,14 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                         }
                     }
                 }
-                
+
                 // Check for curved geometry
                 NodeList curvedList = geometryElement.getElementsByTagName("curved");
                 if (curvedList.getLength() > 0) {
                     Element curvedElement = (Element) curvedList.item(0);
                     String radiusStr = curvedElement.getAttribute("radius");
                     String arcStr = curvedElement.getAttribute("arc");
-                    
+
                     if (!radiusStr.isEmpty()) {
                         try {
                             double radius = Double.parseDouble(radiusStr);
@@ -143,7 +143,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                             log.warn("Invalid radius value '{}' in {}", radiusStr, xmlFile.getName());
                         }
                     }
-                    
+
                     if (!arcStr.isEmpty()) {
                         try {
                             double arc = Double.parseDouble(arcStr);

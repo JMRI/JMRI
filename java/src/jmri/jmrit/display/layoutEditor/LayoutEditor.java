@@ -3605,17 +3605,17 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
 
                 if (leToolBarPanel.turnoutRHButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.TurnoutType.RH_TURNOUT);
+                    addLayoutTurnoutWithTileSupport(LayoutTurnout.TurnoutType.RH_TURNOUT);
                 } else if (leToolBarPanel.turnoutLHButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.TurnoutType.LH_TURNOUT);
+                    addLayoutTurnoutWithTileSupport(LayoutTurnout.TurnoutType.LH_TURNOUT);
                 } else if (leToolBarPanel.turnoutWYEButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.TurnoutType.WYE_TURNOUT);
+                    addLayoutTurnoutWithTileSupport(LayoutTurnout.TurnoutType.WYE_TURNOUT);
                 } else if (leToolBarPanel.doubleXoverButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.TurnoutType.DOUBLE_XOVER);
+                    addLayoutTurnoutWithTileSupport(LayoutTurnout.TurnoutType.DOUBLE_XOVER);
                 } else if (leToolBarPanel.rhXoverButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.TurnoutType.RH_XOVER);
+                    addLayoutTurnoutWithTileSupport(LayoutTurnout.TurnoutType.RH_XOVER);
                 } else if (leToolBarPanel.lhXoverButton.isSelected()) {
-                    addLayoutTurnout(LayoutTurnout.TurnoutType.LH_XOVER);
+                    addLayoutTurnoutWithTileSupport(LayoutTurnout.TurnoutType.LH_XOVER);
                 } else if (leToolBarPanel.levelXingButton.isSelected()) {
                     addLevelXing();
                 } else if (leToolBarPanel.layoutSingleSlipButton.isSelected()) {
@@ -3785,11 +3785,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             } else if (foundTrack == null) {
                                 // Only beginTrack found, create anchor at current point and connect
                                 PositionablePoint newAnchor = findOrCreateAnchor(currentPoint);
-                                
+
                                 // Set foundTrack to the new anchor so track segment can be created
                                 foundTrack = newAnchor;
                                 foundHitPointType = HitPointType.POS_POINT;
-                                
+
                                 // Create the track segment
                                 addTrackSegment();
                                 _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -5561,13 +5561,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     private PositionablePoint findNearbyAvailableAnchor(@Nonnull Point2D point, double maxDistance) {
         PositionablePoint nearestAnchor = null;
         double nearestDistance = Double.MAX_VALUE;
-        
+
         for (PositionablePoint anchor : getPositionablePoints()) {
             // Only consider anchor points (not end bumpers or edge connectors)
             if (anchor.getType() != PositionablePoint.PointType.ANCHOR) {
                 continue;
             }
-            
+
             // Only consider anchors that have room for connections (less than 2 connections)
             int connectionCount = 0;
             if (anchor.getConnect1() != null) connectionCount++;
@@ -5575,19 +5575,61 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (connectionCount >= 2) {
                 continue;
             }
-            
+
             // Calculate distance to this anchor
             PositionablePointView anchorView = getPositionablePointView(anchor);
             Point2D anchorLocation = anchorView.getCoordsCenter();
             double distance = point.distance(anchorLocation);
-            
+
             // Check if this anchor is closer than our current best
             if (distance <= maxDistance && distance < nearestDistance) {
                 nearestAnchor = anchor;
                 nearestDistance = distance;
             }
         }
-        
+
+        return nearestAnchor;
+    }
+
+    /**
+     * Find a nearby anchor point suitable for turnout placement.
+     * Unlike findNearbyAvailableAnchor, this allows anchors with one existing connection
+     * so turnouts can align with connected tiles.
+     *
+     * @param point the reference point
+     * @param maxDistance maximum search distance
+     * @return the nearest suitable anchor point, or null if none found
+     */
+    private PositionablePoint findNearbyAnchorForTurnout(@Nonnull Point2D point, double maxDistance) {
+        PositionablePoint nearestAnchor = null;
+        double nearestDistance = Double.MAX_VALUE;
+
+        for (PositionablePoint anchor : getPositionablePoints()) {
+            // Only consider anchor points (not end bumpers or edge connectors)
+            if (anchor.getType() != PositionablePoint.PointType.ANCHOR) {
+                continue;
+            }
+
+            // For turnouts, allow anchors with 0 or 1 connections (but not 2)
+            int connectionCount = 0;
+            if (anchor.getConnect1() != null) connectionCount++;
+            if (anchor.getConnect2() != null) connectionCount++;
+            if (connectionCount >= 2) {
+                continue;
+            }
+
+            // Calculate distance to this anchor
+            PositionablePointView anchorView = getPositionablePointView(anchor);
+            Point2D anchorLocation = anchorView.getCoordsCenter();
+            double distance = point.distance(anchorLocation);
+
+            // Check if this anchor is closer than our current best
+            if (distance <= maxDistance && distance < nearestDistance) {
+                nearestAnchor = anchor;
+                nearestDistance = distance;
+            }
+        }
+
         return nearestAnchor;
     }
 
@@ -5604,7 +5646,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (nearbyAnchor != null) {
             return nearbyAnchor;
         }
-        
+
         // No nearby anchor found, create a new one
         return addAnchor(point);
     }
@@ -5781,6 +5823,57 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * Add a Layout Turnout with tile support - checks for existing anchor points when tiles are selected.
+     * If shift-clicking on an existing PositionablePoint, position the turnout so its throat connects to the anchor.
+     *
+     * @param type the turnout type
+     */
+    public void addLayoutTurnoutWithTileSupport(LayoutTurnout.TurnoutType type) {
+        // Find if there's an existing anchor point near the click location
+        PositionablePoint existingAnchor = findNearbyAnchorForTurnout(currentPoint, 15.0);
+
+        if (existingAnchor != null) {
+            log.info("Found existing anchor near click, will connect turnout throat to it");
+            
+            // Create turnout at the current click location first
+            Point2D originalCurrentPoint = currentPoint;
+            addLayoutTurnout(type);
+            
+            // Get the newly created turnout (it should be the last one added)
+            LayoutTurnout newTurnout = null;
+            LayoutTurnoutView newTurnoutView = null;
+            for (LayoutTurnout lt : getLayoutTurnouts()) {
+                LayoutTurnoutView ltv = getLayoutTurnoutView(lt);
+                if (ltv.getCoordsCenter().distance(originalCurrentPoint) < 10.0) {
+                    newTurnout = lt;
+                    newTurnoutView = ltv;
+                    break;
+                }
+            }
+            
+            if (newTurnout != null && newTurnoutView != null) {
+                // Get the turnout view to access its connection points
+                Point2D throatLocation = newTurnoutView.getCoordsA(); // A is typically the throat
+                Point2D anchorLocation = getPositionablePointView(existingAnchor).getCoordsCenter();
+                
+                // Calculate offset needed to move throat to anchor
+                Point2D offset = MathUtil.subtract(anchorLocation, throatLocation);
+                
+                // Move the turnout by this offset
+                Point2D newCenter = MathUtil.add(newTurnoutView.getCoordsCenter(), offset);
+                newTurnoutView.setCoordsCenter(newCenter);
+                
+                log.info("Moved turnout throat from ({}, {}) to anchor at ({}, {})", 
+                    throatLocation.getX(), throatLocation.getY(),
+                    anchorLocation.getX(), anchorLocation.getY());
+                
+                redrawPanel();
+            }
+        } else {
+            // No anchor found, use normal placement
+            addLayoutTurnout(type);
+        }
+    }    /**
      * Add a Layout Turnout
      *
      * @param type the turnout type
