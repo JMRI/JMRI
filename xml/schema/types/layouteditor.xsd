@@ -121,6 +121,7 @@
       <xs:attribute name="xoverlong" type="xs:float"/>
       <xs:attribute name="xoverhwid" type="xs:float"/>
       <xs:attribute name="xovershort" type="xs:float"/>
+      <xs:attribute name="layoutunitsPermm" type="xs:float"/>
       <xs:attribute name="redBackground" type="xs:integer"/>
       <xs:attribute name="greenBackground" type="xs:integer"/>
       <xs:attribute name="blueBackground" type="xs:integer"/>

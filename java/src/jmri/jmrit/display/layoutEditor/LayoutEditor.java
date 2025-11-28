@@ -3638,8 +3638,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             TrackTile connectedTile = getConnectedTileAtAnchor(beginTrack);
                             LayoutTrack connectedTrack = getConnectedTrackAtAnchor(beginTrack);
                             double angleAtBeginLocation;
-                            
-                            if (connectedTile != null && !(connectedTile instanceof jmri.tracktiles.NotATile) 
+
+                            if (connectedTile != null && !(connectedTile instanceof jmri.tracktiles.NotATile)
                                     && !(connectedTile instanceof jmri.tracktiles.UnknownTile)) {
                                 // Orientation is constrained by the connected tile
                                 // Get neighbour tile's orientation at endpoint
@@ -3648,7 +3648,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                     if (connectedView != null) {
                                         // Calculate the orientation at the shared anchor point
                                         angleAtBeginLocation = LayoutTileGeometry.calculateOrientation(connectedView, beginLocation, this);
-                                        
+
                                         // Check if this is a failed calculation (returns -1)
                                         if (angleAtBeginLocation < 0) {
                                             // Calculation failed, fall back to free angle
@@ -3664,12 +3664,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 // No connected tile, calculate angle freely from begin point to cursor
                                 angleAtBeginLocation = calculateAngle(beginLocation, currentPoint);
                             }
-                            
+
                             // Calculate endpoint based on tile type and geometry
                             Point2D endPoint;
                             Point2D calculatedCenter = null; // Store center for circles
                             String jmriType = tile.getJmriType();
-                            
+
                             if ("straight".equals(jmriType)) {
                                 // Straight tile - use length
                                 double length = tile.getLength();
@@ -3679,7 +3679,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 double radius = tile.getRadius();
                                 double arc = tile.getArc();
                                 boolean curveLeft = leToolBarPanel.isTileCurveLeft();
-                                
+
                                 // Calculate both endpoint and center
                                 // Note: Y-axis is NOT inverted in layout coordinates (unlike screen coordinates)
                                 double radiusPixels = convertMMToPixels(radius);
@@ -3689,7 +3689,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                     beginLocation.getX() + radiusPixels * Math.cos(centerRadians),
                                     beginLocation.getY() + radiusPixels * Math.sin(centerRadians)
                                 );
-                                
+
                                 endPoint = calculateCurvedEndpointFromCenter(calculatedCenter, beginLocation, arc, curveLeft);
                             } else {
                                 // For other types (turnouts, crossings, etc.), just use straight length if available
@@ -3701,42 +3701,42 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                     endPoint = calculateStraightTileEndpoint(beginLocation, angleAtBeginLocation, 100.0);
                                 }
                             }
-                            
+
                             // Snap endpoint to grid if enabled
                             if (snapToGridOnAdd || snapToGridOnMove) {
                                 endPoint = MathUtil.granulize(endPoint, gContext.getGridSize());
                             }
-                            
+
                             // Create anchor point at calculated endpoint
                             PositionablePoint newAnchor = addAnchor(endPoint);
-                            
+
                             // Set foundTrack to the new anchor so track segment can be created
                             foundTrack = newAnchor;
                             foundHitPointType = HitPointType.POS_POINT;
-                            
+
                             // Create the track segment
                             addTrackSegment();
-                            
+
                             // Store the TrackTile reference to the created track segment
                             if (newTrack != null) {
                                 newTrack.setTrackTile(tile);
                             }
-                            
+
                             // For curved tiles, configure the circle with correct flip
                             if ("curved".equals(jmriType) && newTrack != null) {
                                 TrackSegmentView tsv = getTrackSegmentView(newTrack);
                                 if (tsv != null) {
                                     tsv.setCircle(true);
-                                    
+
                                     // Determine arc sign and flip based on curve direction
                                     boolean curveLeft = leToolBarPanel.isTileCurveLeft();
                                     double arc = tile.getArc();
-                                    
+
                                     // JMRI calculates center from the chord (pt1 to pt2) and arc angle
                                     // The flip flag determines which side of the chord the center is on
                                     // For consistent behavior regardless of curve direction, always use positive arc
                                     // and control the side with the flip flag
-                                    
+
                                     if (curveLeft) {
                                         // Left curve: flip=false puts center on left side of chord
                                         tsv.setAngle(Math.abs(arc));
@@ -3748,19 +3748,19 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                     }
                                 }
                             }
-                            
+
                             // Auto-select the new anchor point
                             selectedObject = newAnchor;
                             selectedHitPointType = HitPointType.POS_POINT;
-                            
+
                             // Update cursor
                             _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                            
+
                             // Optionally, keep the new anchor as beginTrack for chaining tiles
                             beginTrack = newAnchor;
                             beginLocation = endPoint;
                             beginHitPointType = HitPointType.POS_POINT;
-                            
+
                             // Refresh display
                             redrawPanel();
                         } else {
@@ -4721,6 +4721,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     private boolean noWarnGlobalDelete = false;
 
+    // Conversion factor from millimeters to layout units
+    private double layoutUnitsPerMM = 2.0; // Default: 1mm = 2 layout units
+
     private void deleteSelectedItems() {
         if (!noWarnGlobalDelete) {
             int selectedValue = JmriJOptionPane.showOptionDialog(this,
@@ -5465,7 +5468,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Calculate the endpoint for a straight track tile based on start point, angle, and tile length.
-     * 
+     *
      * @param start the starting point
      * @param angle the angle in degrees (0 = east, 90 = south, 180 = west, 270 = north)
      * @param lengthMM the tile length in millimeters
@@ -5479,7 +5482,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Calculate the endpoint for a curved track tile that continues from an existing curve center.
      * This ensures consecutive curves with the same direction share the same center point.
      * Uses circular segment geometry where consecutive tiles rotate around the shared center.
-     * 
+     *
      * @param center the center point of the curve
      * @param start the starting point on the curve
      * @param arcDegrees the arc angle in degrees (magnitude)
@@ -5493,29 +5496,35 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     /**
      * Convert millimeters to layout units (grid squares).
      * Layout coordinates are zoom-independent, so we don't apply zoom factor.
-     * 
+     *
      * @param mm the measurement in millimeters
      * @return the equivalent measurement in layout units
      */
     private double convertMMToPixels(double mm) {
         return LayoutTileGeometry.convertMMToLayoutUnits(mm, getLayoutUnitsPerMM());
     }
-    
+
     /**
      * Get the conversion factor from millimeters to layout units.
-     * 
+     *
      * @return the conversion factor (layout units per millimeter)
      */
-    private double getLayoutUnitsPerMM() {
-        // Typical conversion: assume 1 grid square = some real-world distance
-        // For now, use a simple conversion: 1mm = 2 layout units
-        // This should ideally be based on gContext.getGridSize() and scale settings
-        return 2.0;
+    public double getLayoutUnitsPerMM() {
+        return layoutUnitsPerMM;
+    }
+
+    /**
+     * Set the conversion factor from millimeters to layout units.
+     *
+     * @param unit the conversion factor (layout units per millimeter)
+     */
+    public void setLayoutUnitsPerMM(float unit) {
+        this.layoutUnitsPerMM = unit;
     }
 
     /**
      * Calculate the angle in degrees from one point to another.
-     * 
+     *
      * @param from the starting point
      * @param to the ending point
      * @return the angle in degrees (0 = east, 90 = south, 180 = west, 270 = north)
@@ -5530,7 +5539,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     /**
      * Get the TrackTile from the track connected to an anchor point (if any).
      * Returns null if the anchor has no connections, multiple connections, or is not a PositionablePoint.
-     * 
+     *
      * @param layoutTrack the track object (should be a PositionablePoint/anchor)
      * @return the TrackTile of the connected track, or null
      */
@@ -5538,13 +5547,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (!(layoutTrack instanceof PositionablePoint)) {
             return null;
         }
-        
+
         PositionablePoint anchor = (PositionablePoint) layoutTrack;
-        
+
         // Check if exactly one track is connected
         LayoutTrack connect1 = anchor.getConnect1();
         LayoutTrack connect2 = anchor.getConnect2();
-        
+
         if (connect1 != null && connect2 == null) {
             // One connection on connect1
             return connect1.getTrackTile();
@@ -5552,7 +5561,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // One connection on connect2
             return connect2.getTrackTile();
         }
-        
+
         // Either no connections or both connections - no constraint
         return null;
     }
@@ -5560,7 +5569,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     /**
      * Get the LayoutTrack connected to an anchor point (if any).
      * Returns null if the anchor has no connections, multiple connections, or is not a PositionablePoint.
-     * 
+     *
      * @param layoutTrack the track object (should be a PositionablePoint/anchor)
      * @return the connected LayoutTrack, or null
      */
@@ -5568,13 +5577,13 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (!(layoutTrack instanceof PositionablePoint)) {
             return null;
         }
-        
+
         PositionablePoint anchor = (PositionablePoint) layoutTrack;
-        
+
         // Check if exactly one track is connected
         LayoutTrack connect1 = anchor.getConnect1();
         LayoutTrack connect2 = anchor.getConnect2();
-        
+
         if (connect1 != null && connect2 == null) {
             // One connection on connect1
             return connect1;
@@ -5582,7 +5591,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             // One connection on connect2
             return connect2;
         }
-        
+
         // Either no connections or both connections - no constraint
         return null;
     }

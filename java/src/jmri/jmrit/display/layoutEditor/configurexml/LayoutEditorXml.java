@@ -103,6 +103,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("xoverlong", Float.toString((float) p.getXOverLong()));
         panel.setAttribute("xoverhwid", Float.toString((float) p.getXOverHWid()));
         panel.setAttribute("xovershort", Float.toString((float) p.getXOverShort()));
+        panel.setAttribute("layoutunitsPermm", Float.toString((float) p.getLayoutUnitsPerMM()));
         panel.setAttribute("autoblkgenerate", "" + (p.getAutoBlockAssignment() ? "yes" : "no"));
         if (p.getBackgroundColor() != null) {
             panel.setAttribute("redBackground", "" + p.getBackgroundColor().getRed());
@@ -455,6 +456,17 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 result = false;
             }
         }
+        
+        // layout units per mm parameter
+        if ((a = shared.getAttribute("layoutunitsPermm")) != null) {
+            try {
+                panel.setLayoutUnitsPerMM(Float.parseFloat(a.getValue()));
+            } catch (NumberFormatException e) {
+                log.error("failed to convert layoutunitsPermm to float - {}", a.getValue());
+                result = false;
+            }
+        }
+        
         // grid size parameter
         if ((a = shared.getAttribute("gridSize")) != null) {
             try {
