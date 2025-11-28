@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -51,6 +53,8 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
      * Don't want to store this information
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method intentionally doesn't do anything")
     protected void registerSelf() {
     }
 

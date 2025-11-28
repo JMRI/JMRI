@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.*;
 import java.io.File;
 import java.io.IOException;
@@ -310,7 +312,8 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
 
     /** {@inheritDoc} */
     @Override
-//    @OverridingMethodsMustInvokeSuper
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Further investigation is needed to handle this correctly")
     public final void deleteBean(@Nonnull NamedTable namedTable, @Nonnull String property) throws PropertyVetoException {
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, namedTable);

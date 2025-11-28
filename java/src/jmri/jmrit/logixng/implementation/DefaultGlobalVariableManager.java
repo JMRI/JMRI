@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.*;
 import java.io.PrintWriter;
 import java.util.*;
@@ -185,7 +187,8 @@ public class DefaultGlobalVariableManager extends AbstractManager<GlobalVariable
 
     /** {@inheritDoc} */
     @Override
-//    @OverridingMethodsMustInvokeSuper
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Further investigation is needed to handle this correctly")
     public final void deleteBean(@Nonnull GlobalVariable globalVariable, @Nonnull String property) throws PropertyVetoException {
         // throws PropertyVetoException if vetoed
         fireVetoableChange(property, globalVariable);

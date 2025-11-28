@@ -1,7 +1,10 @@
 package jmri.jmrix.anyma;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.Comparator;
 import java.util.ResourceBundle;
+
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -9,6 +12,7 @@ import jmri.Manager.NameValidity;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -269,6 +273,8 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This system connection doesn't support ConsistManager from the super class")
     public boolean provides(Class<?> c) {
         return (get(c) != null);
     }
@@ -276,8 +282,10 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This system connection doesn't support ConsistManager from the super class")
     public <T> T get(Class<T> T) {
         T result = null; // nothing by default
         log.debug("* get({})", T.toString());

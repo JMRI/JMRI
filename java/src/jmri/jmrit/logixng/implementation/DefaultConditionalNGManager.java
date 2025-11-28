@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.*;
 
 import javax.annotation.Nonnull;
@@ -244,7 +246,8 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
 
     /** {@inheritDoc} */
     @Override
-//    @OverridingMethodsMustInvokeSuper
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "LogixNG is a tree that must be deleted recursively")
     public final void deleteBean(@Nonnull ConditionalNG conditionalNG, @Nonnull String property) throws PropertyVetoException {
         FemaleSocket child = conditionalNG.getFemaleSocket();
         if (child.isConnected()) {

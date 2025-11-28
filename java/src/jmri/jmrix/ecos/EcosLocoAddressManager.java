@@ -1,5 +1,7 @@
 package jmri.jmrix.ecos;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,6 +19,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import jmri.*;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.beantable.ListedTableFrame;
@@ -28,6 +32,7 @@ import jmri.jmrix.ecos.utilities.RemoveObjectFromEcos;
 import jmri.jmrix.ecos.utilities.RosterToEcos;
 import jmri.managers.AbstractManager;
 import jmri.profile.ProfileManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -325,6 +330,8 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
 
     /* Dispose is dealt with at shutdown */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This method intentionally doesn't do anything")
     public void dispose() {
     }
 
@@ -333,7 +340,7 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
             waitPrefLoad.interrupt();
         }
     }
-    
+
     protected boolean threadsRunning() {
         return ( waitPrefLoad != null ? waitPrefLoad.isAlive() : false );
     }
@@ -422,6 +429,8 @@ public class EcosLocoAddressManager extends AbstractManager<NamedBean> implement
      * track of roster entries and sync them up with the Ecos.
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Further investigation is needed to handle this correctly")
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         //If we are adding the loco to the roster from the ecos, we don't want to be adding it back to the ecos!
         if (getLocoToRoster()) {
