@@ -32,6 +32,7 @@ public enum SpeedStepMode {
     // Non-DCC speed step modes.
     MOTOROLA_28("motorola_28", 28, "SpeedStep28Motorola"), // Motorola 28 speed step mode.
     TMCC1_32("tmcc1_32", 32, "SpeedStep32TMCC1"), // Lionel TMCC 1, 32 speed step mode.
+    TMCC1TR_32("tmcc1tr_32", 32, "SpeedStep32TMCC1TR"), // Lionel TMCC 1 TR, 32 speed step mode.
     TMCC2_32("tmcc2_32", 32, "SpeedStep32TMCC2"), // Lionel TMCC 2 Legacy, 32 speed step mode.
     TMCC1_100("tmcc1_100", 100, "SpeedStep100TMCC1"), // Lionel TMCC ERR, 100 speed step mode.
     TMCC2_200("tmcc2_200", 200, "SpeedStep200TMCC2"), // Lionel TMCC 2 Legacy, 200 speed step mode.

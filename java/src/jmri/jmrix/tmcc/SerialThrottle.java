@@ -61,6 +61,12 @@ public class SerialThrottle extends AbstractThrottle {
                 } else {
                     return new long[]{};
                 }
+            } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC1TR_32) {
+                if (number < SERIAL_FUNCTION_CODES_TMCC1TR.length) {
+                    return SERIAL_FUNCTION_CODES_TMCC1TR[number];
+                } else {
+                    return new long[]{};
+                }
             } else if (getSpeedStepMode() == jmri.SpeedStepMode.TMCC2_32) {
                  if (number < SERIAL_FUNCTION_CODES_TMCC2_32.length) {
                      return SERIAL_FUNCTION_CODES_TMCC2_32[number];
@@ -255,6 +261,18 @@ public class SerialThrottle extends AbstractThrottle {
         {0x00000F}, // Fnxx (Aux2 On)
 
     };
+
+    // TMCC 1 TR Function Keys to trigger with TMCC1TR_32 speed steps.
+    private final static long[][] SERIAL_FUNCTION_CODES_TMCC1TR = new long[][] {
+
+        // TMCC1TR Remote - Defined FnKeys
+        {0x00C80D}, // Fn0 (Headlamp)
+        {0x00C81D}, // Fn1 (Bell)
+        {0x00C81C}, // Fn2 (Horn/Whistle)
+        {0x00C805}, // Fn3 (F - Open Front Coupler)
+        {0x00C806}, // Fn4 (R - Open Rear Coupler)
+    };
+
 
     /**
     * Translate TMCC1 function numbers to line characters.
@@ -667,7 +685,37 @@ public class SerialThrottle extends AbstractThrottle {
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
                 tc.sendSerialMessage(m, null);
                 tc.sendSerialMessage(m, null);
+
+        // send to layout option TMCC1TR 32 speed steps
+        if (speedStepMode == jmri.SpeedStepMode.TMCC1TR_32) {
+
+            // TMCC1TR 32 speed step mode
+            int value = (int) (32 * speed);
+            if (value > 31) {
+                // max possible speed
+                value = 31;
             }
+            SerialMessage m = new SerialMessage();
+            m.setOpCode(0xFE);
+    
+            if (value < 0) {
+                // System HALT (immediate stop; ALL)
+                m.putAsWord(0xFFFF);
+
+                // send to layout (send 4 times to ensure received)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
+            } else {
+                // normal speed setting
+                m.putAsWord(0xC860 + address.getNumber() * 128 + value);
+            }
+    
+            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+            tc.sendSerialMessage(m, null);
+            tc.sendSerialMessage(m, null);           
         }
 
         // Option TMCC1_32 "Absolute" speed steps
@@ -729,6 +777,17 @@ public class SerialThrottle extends AbstractThrottle {
             }
         }
 
+        if (speedStepMode == jmri.SpeedStepMode.TMCC1TR_32) {
+            m.setOpCode(0xFE);
+            if (forward) {
+                m.putAsWord(0xC800 + address.getNumber() * 128);
+                setSpeedSetting(0.0f);
+            } else {
+                m.putAsWord(0xC803 + address.getNumber() * 128);
+                setSpeedSetting(0.0f);
+            }
+        }
+
         if (speedStepMode == jmri.SpeedStepMode.TMCC2_32 || speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
             m.setOpCode(0xF8);
             if (forward) {
@@ -782,7 +841,7 @@ public class SerialThrottle extends AbstractThrottle {
             }
         }
 
-        if (speedStepMode == jmri.SpeedStepMode.TMCC1_32 || speedStepMode == jmri.SpeedStepMode.TMCC1_100 || speedStepMode == jmri.SpeedStepMode.TMCC2_32) {
+        if (speedStepMode == jmri.SpeedStepMode.TMCC1_32 || speedStepMode == jmri.SpeedStepMode.TMCC1TR_32 || speedStepMode == jmri.SpeedStepMode.TMCC1_100 || speedStepMode == jmri.SpeedStepMode.TMCC2_32) {
             if (func == 24) {
                 setSpeedSetting(0.130f);
                 return;
@@ -848,7 +907,7 @@ public class SerialThrottle extends AbstractThrottle {
      */
     @Override
     public void setSpeedStepMode(jmri.SpeedStepMode mode) {
-        if (mode == jmri.SpeedStepMode.TMCC1_32 || mode == jmri.SpeedStepMode.TMCC2_32 || mode == jmri.SpeedStepMode.TMCC1_100 || mode == jmri.SpeedStepMode.TMCC2_200) {
+        if (mode == jmri.SpeedStepMode.TMCC1_32 || mode == jmri.SpeedStepMode.TMCC1TR_32 || mode == jmri.SpeedStepMode.TMCC2_32 || mode == jmri.SpeedStepMode.TMCC1_100 || mode == jmri.SpeedStepMode.TMCC2_200) {
             super.setSpeedStepMode(mode);
         }
     }

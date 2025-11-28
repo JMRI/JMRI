@@ -342,6 +342,76 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 int C = (val / 32) & 0x03; // C is TMCC Command Code
                 int D = val & 0x1F; // D is TMCC Data Code
                 switch (C) {
+                    case 0: // If C (TMCC Command Code) == 0
+                        switch (D) {
+                            case 0:
+                                return "TMCC1 - Train " + A + " - Forward Direction";
+                            case 1:
+                                return "TMCC1 - Train " + A + " - Toggle Direction";
+                            case 2:
+                            
+                            case 3:
+                                return "TMCC1 - Train " + A + " - Reverse Direction";
+                            case 4:
+                                return "TMCC1 - Train " + A + " - Boost";
+                            case 5:
+                                return "TMCC1 - Train " + A + " - Open Front Coupler";
+                            case 6:
+                                return "TMCC1 - Train " + A + " - Open Rear Coupler";
+                            case 7:
+                                return "TMCC1 - Train " + A + " - Brake";
+                            case 8:
+                            
+                            case 9:
+                                return "TMCC1 - Train " + A + " - AUX1 Option 1 (CAB AUX1 Button; On While Pressed/On Until Next Button Pressed)";
+                            case 10:
+                            
+                            case 11:
+                            
+                            case 12:
+                            
+                            case 13:
+                                return "TMCC1 - Train " + A + " - AUX2 Option 1 (CAB AUX2 Button; Headlight Toggle On/Toggle Off)";
+                            case 14:
+                            
+                            case 15:
+                            
+                            case 16:
+                                return "TMCC1 - Train " + A + " - Num 0 - Reset";
+                            case 17:
+                                return "TMCC1 - Train " + A + " - Num 1 - Sound Volume Increase";
+                            case 18:
+                                return "TMCC1 - Train " + A + " - Num 2 - Crew Talk";
+                            case 19:
+                                return "TMCC1 - Train " + A + " - Num 3 - Sound On w/Start-Up Sequence";
+                            case 20:
+                                return "TMCC1 - Train " + A + " - Num 4 - Sound Volume Decrease - TMCC1 Feature Type 4";
+                            case 21:
+                                return "TMCC1 - Train " + A + " - Num 5 - Sound Off w/Shut-Down Sequence - TMCC1 Feature Type 5";
+                            case 22:
+                                return "TMCC1 - Train " + A + " - Num 6 - Steam Release/RPM Decrease - TMCC1 Feature Type 6";
+                            case 23:
+                                return "TMCC1 - Train " + A + " - Num 7 - Tower Com Announcement";
+                            case 24:
+                                return "TMCC1 - Train " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting) - TMCC1 Feature Type 8";
+                            case 25:
+                                return "TMCC1 - Train " + A + " - Num 9 - Feature On (Smoke/Aux Lighting)";
+                            case 26:
+                            
+                            case 27:
+                            
+                            case 28:
+                                return "TMCC1 - Train " + A + " - Blow Whistle/Horn 1";
+                            case 29:
+                                return "TMCC1 - Train " + A + " - Ring Bell";
+                            case 30:
+                                return "TMCC1 - Train " + A + " - Letoff Sound";
+                            case 31:
+                                return "TMCC1 - Train " + A + " - Blow Horn 2";
+                            default:
+                                return "TMCC1 - Train " + A + " - Unassigned FnKey TMCC1 (Case C=0) - with A= " + A + " C= " + C + " D= " + D;
+                        }
+
                     case 1: // If C (TMCC Command Code) == 1
                     default: // To let the compiler know this should be blank
                         switch (D & 0x17) {
