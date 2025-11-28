@@ -128,6 +128,13 @@ public class EnterGridSizesDialog {
             }
         });
         enterGridSizesFrame.pack();
+        
+        // Ensure minimum size to accommodate all components including the new scale dropdown
+        Dimension currentSize = enterGridSizesFrame.getSize();
+        Dimension minSize = new Dimension(Math.max(currentSize.width, 300), Math.max(currentSize.height, 200));
+        enterGridSizesFrame.setMinimumSize(minSize);
+        enterGridSizesFrame.setSize(minSize);
+        
         enterGridSizesFrame.setVisible(true);
         gridSizesChange = false;
         enterGridSizesOpen = true;
