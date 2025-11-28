@@ -37,6 +37,14 @@ public class EnterGridSizesDialog {
     private boolean gridSizesChange = false;
     private final JTextField primaryGridSizeField = new JTextField(6);
     private final JTextField secondaryGridSizeField = new JTextField(6);
+    private final JComboBox<String> scaleComboBox = new JComboBox<>(new String[]{
+            "10 mm per unit",
+            "5 mm per unit", 
+            "2 mm per unit",
+            "1 unit per mm",
+            "2 units per mm (default)",
+            "5 units per mm"
+    });
     private JButton gridSizesDone;
     private JButton gridSizesCancel;
 
@@ -77,6 +85,16 @@ public class EnterGridSizesDialog {
             secondaryGridSizeField.setToolTipText(Bundle.getMessage("SecondaryGridSizeHint"));
             theContentPane.add(panel2);
 
+            //setup scale selection
+            JPanel scalePanel = new JPanel();
+            scalePanel.setLayout(new FlowLayout());
+            JLabel scaleLabel = new JLabel("Scale:");
+            scalePanel.add(scaleLabel);
+            scaleLabel.setLabelFor(scaleComboBox);
+            scalePanel.add(scaleComboBox);
+            scaleComboBox.setToolTipText("Select the scale for converting millimeters to layout units");
+            theContentPane.add(scalePanel);
+
             //set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
@@ -98,6 +116,11 @@ public class EnterGridSizesDialog {
         //Set up for Entry of Track Widths
         primaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize()));
         secondaryGridSizeField.setText(Integer.toString(layoutEditor.gContext.getGridSize2nd()));
+        
+        //Set up current scale selection
+        double currentUnitsPerMM = layoutEditor.getLayoutUnitsPerMM();
+        setScaleComboSelection(currentUnitsPerMM);
+        
         enterGridSizesFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent event) {
@@ -156,7 +179,52 @@ public class EnterGridSizesDialog {
                 layoutEditor.gContext.setGridSize((int) siz);
                 gridSizesChange = true;
             }
+            
+            // Handle scale changes
+            double newUnitsPerMM = getScaleFromComboSelection();
+            if (!MathUtil.equals(layoutEditor.getLayoutUnitsPerMM(), newUnitsPerMM)) {
+                layoutEditor.setLayoutUnitsPerMM((float) newUnitsPerMM);
+                gridSizesChange = true;
+            }
+            
             gridSizesCancelPressed(null);
+        }
+    }
+    
+    /**
+     * Set the scale combo box to match the current units per mm value
+     */
+    private void setScaleComboSelection(double unitsPerMM) {
+        if (MathUtil.equals(unitsPerMM, 0.1)) {
+            scaleComboBox.setSelectedIndex(0); // 10 mm per unit
+        } else if (MathUtil.equals(unitsPerMM, 0.2)) {
+            scaleComboBox.setSelectedIndex(1); // 5 mm per unit  
+        } else if (MathUtil.equals(unitsPerMM, 0.5)) {
+            scaleComboBox.setSelectedIndex(2); // 2 mm per unit
+        } else if (MathUtil.equals(unitsPerMM, 1.0)) {
+            scaleComboBox.setSelectedIndex(3); // 1 unit per mm
+        } else if (MathUtil.equals(unitsPerMM, 2.0)) {
+            scaleComboBox.setSelectedIndex(4); // 2 units per mm (default)
+        } else if (MathUtil.equals(unitsPerMM, 5.0)) {
+            scaleComboBox.setSelectedIndex(5); // 5 units per mm
+        } else {
+            scaleComboBox.setSelectedIndex(4); // default to 2 units per mm
+        }
+    }
+    
+    /**
+     * Get the units per mm value from the current combo box selection
+     */
+    private double getScaleFromComboSelection() {
+        int selectedIndex = scaleComboBox.getSelectedIndex();
+        switch (selectedIndex) {
+            case 0: return 0.1; // 10 mm per unit
+            case 1: return 0.2; // 5 mm per unit
+            case 2: return 0.5; // 2 mm per unit
+            case 3: return 1.0; // 1 unit per mm
+            case 4: return 2.0; // 2 units per mm (default)
+            case 5: return 5.0; // 5 units per mm
+            default: return 2.0; // default
         }
     }
 
