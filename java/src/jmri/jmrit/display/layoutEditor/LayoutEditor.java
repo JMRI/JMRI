@@ -3707,8 +3707,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 endPoint = MathUtil.granulize(endPoint, gContext.getGridSize());
                             }
 
-                            // Create anchor point at calculated endpoint
-                            PositionablePoint newAnchor = addAnchor(endPoint);
+                            // Find or create anchor point at calculated endpoint
+                            // This will reuse nearby anchors within 4 pixels instead of always creating new ones
+                            PositionablePoint newAnchor = findOrCreateAnchor(endPoint);
 
                             // Set foundTrack to the new anchor so track segment can be created
                             foundTrack = newAnchor;
@@ -3776,10 +3777,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                         }
                     } else {
                         // NORMAL TRACK SEGMENT MODE (existing code)
-                        if ((beginTrack != null) && (foundTrack != null)
-                                && (beginTrack != foundTrack)) {
-                            addTrackSegment();
-                            _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                        if (beginTrack != null) {
+                            if ((foundTrack != null) && (beginTrack != foundTrack)) {
+                                // Two different connection points found, create segment between them
+                                addTrackSegment();
+                                _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                            } else if (foundTrack == null) {
+                                // Only beginTrack found, create anchor at current point and connect
+                                PositionablePoint newAnchor = findOrCreateAnchor(currentPoint);
+                                
+                                // Set foundTrack to the new anchor so track segment can be created
+                                foundTrack = newAnchor;
+                                foundHitPointType = HitPointType.POS_POINT;
+                                
+                                // Create the track segment
+                                addTrackSegment();
+                                _targetPanel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+                            }
                         }
                         beginTrack = null;
                         foundTrack = null;
@@ -5485,7 +5499,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      *
      * @param center the center point of the curve
      * @param start the starting point on the curve
-     * @param arcDegrees the arc angle in degrees (magnitude)
+     * @param arcDegrees the arc angle in degrees (signed value: positive for left curves, negative for right curves when used consistently)
      * @param curveLeft true for left curve (CCW rotation), false for right curve (CW rotation)
      * @return the calculated endpoint
      */
@@ -5534,6 +5548,65 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         double dy = to.getY() - from.getY();
         double angleRadians = Math.atan2(dy, dx);
         return Math.toDegrees(angleRadians);
+    }
+
+    /**
+     * Find a nearby anchor point within the specified maximum distance.
+     * Only considers anchor points that have free connections (less than 2 connections).
+     *
+     * @param point the target point to search around
+     * @param maxDistance the maximum distance in layout units (typically 4.0 for 4 pixels)
+     * @return the nearest available anchor point within range, or null if none found
+     */
+    private PositionablePoint findNearbyAvailableAnchor(@Nonnull Point2D point, double maxDistance) {
+        PositionablePoint nearestAnchor = null;
+        double nearestDistance = Double.MAX_VALUE;
+        
+        for (PositionablePoint anchor : getPositionablePoints()) {
+            // Only consider anchor points (not end bumpers or edge connectors)
+            if (anchor.getType() != PositionablePoint.PointType.ANCHOR) {
+                continue;
+            }
+            
+            // Only consider anchors that have room for connections (less than 2 connections)
+            int connectionCount = 0;
+            if (anchor.getConnect1() != null) connectionCount++;
+            if (anchor.getConnect2() != null) connectionCount++;
+            if (connectionCount >= 2) {
+                continue;
+            }
+            
+            // Calculate distance to this anchor
+            PositionablePointView anchorView = getPositionablePointView(anchor);
+            Point2D anchorLocation = anchorView.getCoordsCenter();
+            double distance = point.distance(anchorLocation);
+            
+            // Check if this anchor is closer than our current best
+            if (distance <= maxDistance && distance < nearestDistance) {
+                nearestAnchor = anchor;
+                nearestDistance = distance;
+            }
+        }
+        
+        return nearestAnchor;
+    }
+
+    /**
+     * Find or create an anchor point at the specified location.
+     * If an existing anchor is within 4 pixels, reuse it; otherwise create a new one.
+     *
+     * @param point the desired anchor location
+     * @return an existing nearby anchor or a newly created anchor at the specified point
+     */
+    private PositionablePoint findOrCreateAnchor(@Nonnull Point2D point) {
+        // Look for nearby anchor within 4 layout units (approximately 4 pixels)
+        PositionablePoint nearbyAnchor = findNearbyAvailableAnchor(point, 4.0);
+        if (nearbyAnchor != null) {
+            return nearbyAnchor;
+        }
+        
+        // No nearby anchor found, create a new one
+        return addAnchor(point);
     }
 
     /**

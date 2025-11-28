@@ -215,7 +215,7 @@ public class LayoutTileGeometry {
      * 
      * @param center the center point of the curve
      * @param start the starting point on the curve
-     * @param arcDegrees the arc angle in degrees (magnitude)
+     * @param arcDegrees the arc angle in degrees (signed value: positive for left curves, negative for right curves when used consistently)
      * @param curveLeft true for left curve (CCW rotation), false for right curve (CW rotation)
      * @return the calculated endpoint
      */
@@ -238,9 +238,9 @@ public class LayoutTileGeometry {
         // Right curve: clockwise (subtract arc)
         double newAngle;
         if (curveLeft) {
-            newAngle = currentAngle + Math.abs(arcDegrees);
+            newAngle = currentAngle + arcDegrees;
         } else {
-            newAngle = currentAngle - Math.abs(arcDegrees);
+            newAngle = currentAngle - arcDegrees;
         }
         
         // Calculate endpoint at new angle on same circle
