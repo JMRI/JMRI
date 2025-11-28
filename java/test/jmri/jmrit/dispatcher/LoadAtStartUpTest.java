@@ -327,6 +327,7 @@ public class LoadAtStartUpTest {
     @AfterEach
     public void tearDown() throws Exception {
 
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
