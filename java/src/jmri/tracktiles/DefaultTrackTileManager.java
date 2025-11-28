@@ -220,7 +220,6 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
 
     /** {@inheritDoc} */
     @Override
-    @Nonnull
     public char typeLetter() {
         return 'T';
     }
