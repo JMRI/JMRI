@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/tracktiles.xsl" type="text/xsl"?>
+
+<tracktiles version="1.0"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/tracktiles.xsd">
+  <header>
+    <vendor>Märklin</vendor>
+    <code>100</code>
+    <family>C-Track</family>
+    <scale>
+      <name>H0</name>
+      <ratio>87</ratio>
+    </scale>
+    <gauge>
+      <gaugename>Standard</gaugename>
+      <gaugesize value="16.5" unit="mm"/>
+    </gauge>
+
+    <copyright xmlns="http://docbook.org/ns/docbook">
+      <year>2025</year>
+      <holder>JMRI</holder>
+    </copyright>
+
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+      <author>
+        <personname>
+          <firstname>Ralf</firstname>
+          <surname>Lang</surname>
+        </personname>
+        <email>ralf.lang@ralf-lang.de</email>
+      </author>
+    </authorgroup>
+
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2025-11-24</date>
+        <authorinitials>SA</authorinitials>
+        <revremark>Initial version with straight and curved C-Track tiles</revremark>
+      </revision>
+    </revhistory>
+  </header>
+
+  <tiles>
+    <!-- Straight Track Sections -->
+    <tile>
+      <partcode>24077</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerades Gleis 77,5 mm</l10n>
+      <l10n lang="en">Straight Track 77.5 mm</l10n>
+      <l10n lang="es">Vía recta 77,5 mm</l10n>
+      <l10n lang="fr">Rail droit 77,5 mm</l10n>
+      <geometry>
+        <straight length="77.5" unit="mm"/>
+      </geometry>
+    </tile>
+
+    <tile>
+      <partcode>24094</partcode>
+      <jmritype>straight</jmritype>
+      <l10n lang="de">Gerades Gleis 94,2 mm</l10n>
+      <l10n lang="en">Straight Track 94.2 mm</l10n>
+      <l10n lang="es">Vía recta 94,2 mm</l10n>
+      <l10n lang="fr">Rail droit 94,2 mm</l10n>
+      <geometry>
+        <straight length="94.2" unit="mm"/>
+      </geometry>
+    </tile>
+
+  </tiles>
+</tracktiles>
