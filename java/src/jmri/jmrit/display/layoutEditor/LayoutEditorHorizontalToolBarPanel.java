@@ -133,6 +133,10 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
         hTop3_5Left.add(turnoutThroatButton);
         hTop3_5Left.add(turnoutNormalButton);
         hTop3_5Left.add(turnoutThrownButton);
+        hTop3_5Left.add(turnoutAButton);
+        hTop3_5Left.add(turnoutBButton);
+        hTop3_5Left.add(turnoutCButton);
+        hTop3_5Left.add(turnoutDButton);
         hTop3_5Panel.add(hTop3_5Left);
         hTop3_5Panel.add(Box.createHorizontalGlue());
 
@@ -217,6 +221,24 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
 
         hTop6Panel.add(hTop6Left);
         add(hTop6Panel);
+
+        // Initialize direction button visibility based on default selection
+        updateDirectionButtons();
+
+        // Add action listeners to update direction buttons when selection changes
+        java.awt.event.ActionListener selectionListAction = (java.awt.event.ActionEvent e) -> {
+            updateDirectionButtons();
+        };
+
+        turnoutRHButton.addActionListener(selectionListAction);
+        turnoutLHButton.addActionListener(selectionListAction);
+        turnoutWYEButton.addActionListener(selectionListAction);
+        doubleXoverButton.addActionListener(selectionListAction);
+        rhXoverButton.addActionListener(selectionListAction);
+        lhXoverButton.addActionListener(selectionListAction);
+        layoutSingleSlipButton.addActionListener(selectionListAction);
+        layoutDoubleSlipButton.addActionListener(selectionListAction);
+        trackButton.addActionListener(selectionListAction);
     }   //layoutComponents
 
     //initialize logging

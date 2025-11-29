@@ -184,12 +184,34 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         directionPanel.add(turnoutThroatButton);
         directionPanel.add(turnoutNormalButton);
         directionPanel.add(turnoutThrownButton);
+        directionPanel.add(turnoutAButton);
+        directionPanel.add(turnoutBButton);
+        directionPanel.add(turnoutCButton);
+        directionPanel.add(turnoutDButton);
         tilesBorderPanel.add(directionPanel, gbc);
 
         tilesBorderPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, tilesBorderPanel.getPreferredSize().height));
         outerBorderPanel.add(tilesBorderPanel);
 
         add(outerBorderPanel);
+
+        // Initialize direction button visibility based on default selection
+        updateDirectionButtons();
+
+        // Add action listeners to update direction buttons when selection changes
+        java.awt.event.ActionListener selectionListAction = (java.awt.event.ActionEvent e) -> {
+            updateDirectionButtons();
+        };
+
+        turnoutRHButton.addActionListener(selectionListAction);
+        turnoutLHButton.addActionListener(selectionListAction);
+        turnoutWYEButton.addActionListener(selectionListAction);
+        doubleXoverButton.addActionListener(selectionListAction);
+        rhXoverButton.addActionListener(selectionListAction);
+        lhXoverButton.addActionListener(selectionListAction);
+        layoutSingleSlipButton.addActionListener(selectionListAction);
+        layoutDoubleSlipButton.addActionListener(selectionListAction);
+        trackButton.addActionListener(selectionListAction);
 
         JPanel nodesBorderPanel = new JPanel();
         nodesBorderPanel.setLayout(new BoxLayout(nodesBorderPanel, BoxLayout.PAGE_AXIS));

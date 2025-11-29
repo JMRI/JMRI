@@ -118,7 +118,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     // State variables to remember selections when switching between modes
     private boolean savedLeftSelected = true;  // Remember left/right selection
     private boolean savedThroatSelected = true; // Remember turnout direction selection
-    private boolean savedASelected = true; // Remember A/B/C/D selection
+    private String savedConnectorSelected = "A"; // Remember A/B/C/D selection
 
     // 3rd row of radio buttons (and any associated text fields)
     protected JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
@@ -526,15 +526,27 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         turnoutDirectionGroup.add(turnoutThroatButton);
         turnoutDirectionGroup.add(turnoutNormalButton);
         turnoutDirectionGroup.add(turnoutThrownButton);
+        turnoutDirectionGroup.add(turnoutAButton);
+        turnoutDirectionGroup.add(turnoutBButton);
+        turnoutDirectionGroup.add(turnoutCButton);
+        turnoutDirectionGroup.add(turnoutDButton);
         turnoutThroatButton.setSelected(true); // Default to throat
         turnoutThroatButton.setToolTipText("Place at turnout throat");
         turnoutNormalButton.setToolTipText("Place on normal/closed route");
         turnoutThrownButton.setToolTipText("Place on thrown route");
+        turnoutAButton.setToolTipText("Place at connector A");
+        turnoutBButton.setToolTipText("Place at connector B");
+        turnoutCButton.setToolTipText("Place at connector C");
+        turnoutDButton.setToolTipText("Place at connector D");
 
-        // Initially hide turnout direction buttons
+        // Initially hide all direction buttons (will be shown based on selection)
         turnoutThroatButton.setVisible(false);
         turnoutNormalButton.setVisible(false);
         turnoutThrownButton.setVisible(false);
+        turnoutAButton.setVisible(false);
+        turnoutBButton.setVisible(false);
+        turnoutCButton.setVisible(false);
+        turnoutDButton.setVisible(false);
 
         // third row of edit tool bar items
         endBumperButton.setToolTipText(Bundle.getMessage("EndBumperToolTip"));
@@ -1140,11 +1152,12 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
      * Update visibility of direction radio buttons based on current selection.
      * Show left/right for track segments, show throat/normal/thrown for turnouts.
      */
-    private void updateDirectionButtons() {
-        boolean isTurnoutType = (turnoutRHButton.isSelected()
+    protected void updateDirectionButtons() {
+        boolean isThreeConnectorTurnout = (turnoutRHButton.isSelected()
                 || turnoutLHButton.isSelected()
-                || turnoutWYEButton.isSelected()
-                || doubleXoverButton.isSelected()
+                || turnoutWYEButton.isSelected());
+
+        boolean isFourConnectorTurnout = (doubleXoverButton.isSelected()
                 || rhXoverButton.isSelected()
                 || lhXoverButton.isSelected()
                 || layoutSingleSlipButton.isSelected()
@@ -1152,13 +1165,17 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
 
         boolean isTrackSegment = trackButton.isSelected();
 
-        if (isTurnoutType) {
+        if (isThreeConnectorTurnout) {
             // Save current left/right selection
             savedLeftSelected = tileLeftButton.isSelected();
 
-            // Hide left/right, show turnout direction buttons
+            // Hide left/right and A/B/C/D buttons, show throat/normal/thrown buttons
             tileLeftButton.setVisible(false);
             tileRightButton.setVisible(false);
+            turnoutAButton.setVisible(false);
+            turnoutBButton.setVisible(false);
+            turnoutCButton.setVisible(false);
+            turnoutDButton.setVisible(false);
             turnoutThroatButton.setVisible(true);
             turnoutNormalButton.setVisible(true);
             turnoutThrownButton.setVisible(true);
@@ -1173,10 +1190,59 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
                 turnoutNormalButton.setSelected(true);
             }
 
+        } else if (isFourConnectorTurnout) {
+            // Four-connector turnouts: show A/B/C/D buttons
+            
+            // Save current left/right selection
+            savedLeftSelected = tileLeftButton.isSelected();
+
+            // Hide left/right and throat/normal/thrown buttons
+            tileLeftButton.setVisible(false);
+            tileRightButton.setVisible(false);
+            turnoutThroatButton.setVisible(false);
+            turnoutNormalButton.setVisible(false);
+            turnoutThrownButton.setVisible(false);
+            
+            // Show A/B/C/D buttons
+            turnoutAButton.setVisible(true);
+            turnoutBButton.setVisible(true);
+            turnoutCButton.setVisible(true);
+            turnoutDButton.setVisible(true);
+
+            // Update label text for four-connector turnouts
+            tileCurveDirectionLabel.setText(Bundle.getMessage("MakeLabel", "Tiles"));
+
+            // Restore A/B/C/D selection
+            switch (savedConnectorSelected) {
+                case "A":
+                    turnoutAButton.setSelected(true);
+                    break;
+                case "B":
+                    turnoutBButton.setSelected(true);
+                    break;
+                case "C":
+                    turnoutCButton.setSelected(true);
+                    break;
+                case "D":
+                    turnoutDButton.setSelected(true);
+                    break;
+                default:
+                    turnoutAButton.setSelected(true); // fallback
+            }
+
         } else if (isTrackSegment) {
             // Save current turnout selection
             savedThroatSelected = turnoutThroatButton.isSelected();
-            savedASelected = turnoutAButton.isSelected();
+            // Save current A/B/C/D selection
+            if (turnoutAButton.isSelected()) {
+                savedConnectorSelected = "A";
+            } else if (turnoutBButton.isSelected()) {
+                savedConnectorSelected = "B";
+            } else if (turnoutCButton.isSelected()) {
+                savedConnectorSelected = "C";
+            } else if (turnoutDButton.isSelected()) {
+                savedConnectorSelected = "D";
+            }
 
             // Hide turnout direction, show left/right buttons
             turnoutThroatButton.setVisible(false);

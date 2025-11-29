@@ -239,6 +239,10 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         tilesRow2.add(turnoutThroatButton);
         tilesRow2.add(turnoutNormalButton);
         tilesRow2.add(turnoutThrownButton);
+        tilesRow2.add(turnoutAButton);
+        tilesRow2.add(turnoutBButton);
+        tilesRow2.add(turnoutCButton);
+        tilesRow2.add(turnoutDButton);
         floatEditTilesPanel.add(tilesRow2);
 
         // Set preferred width to match tabbed pane
@@ -273,6 +277,24 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         });
         floatEditTabsPane.setSelectedIndex(0);
         floatEditTurnout.add(blockPropertiesPanel);
+
+        // Initialize direction button visibility based on default selection
+        updateDirectionButtons();
+
+        // Add action listeners to update direction buttons when selection changes
+        java.awt.event.ActionListener selectionListAction = (java.awt.event.ActionEvent e) -> {
+            updateDirectionButtons();
+        };
+
+        turnoutRHButton.addActionListener(selectionListAction);
+        turnoutLHButton.addActionListener(selectionListAction);
+        turnoutWYEButton.addActionListener(selectionListAction);
+        doubleXoverButton.addActionListener(selectionListAction);
+        rhXoverButton.addActionListener(selectionListAction);
+        lhXoverButton.addActionListener(selectionListAction);
+        layoutSingleSlipButton.addActionListener(selectionListAction);
+        layoutDoubleSlipButton.addActionListener(selectionListAction);
+        trackButton.addActionListener(selectionListAction);
     }
 
     public JTabbedPane getfloatEditTabsPane() {

@@ -3619,9 +3619,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 } else if (leToolBarPanel.levelXingButton.isSelected()) {
                     addLevelXing();
                 } else if (leToolBarPanel.layoutSingleSlipButton.isSelected()) {
-                    addLayoutSlip(LayoutSlip.TurnoutType.SINGLE_SLIP);
+                    addLayoutSlipWithTileSupport(LayoutSlip.TurnoutType.SINGLE_SLIP);
                 } else if (leToolBarPanel.layoutDoubleSlipButton.isSelected()) {
-                    addLayoutSlip(LayoutSlip.TurnoutType.DOUBLE_SLIP);
+                    addLayoutSlipWithTileSupport(LayoutSlip.TurnoutType.DOUBLE_SLIP);
                 } else if (leToolBarPanel.endBumperButton.isSelected()) {
                     addEndBumper();
                 } else if (leToolBarPanel.anchorButton.isSelected()) {
@@ -6014,6 +6014,80 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * Add a Layout Slip with tile support - checks for existing anchor points when tiles are selected.
+     * If shift-clicking on an existing PositionablePoint, position the slip so the selected connector connects to the anchor.
+     *
+     * @param type the slip type
+     */
+    public void addLayoutSlipWithTileSupport(LayoutSlip.TurnoutType type) {
+        // Find if there's an existing anchor point near the click location
+        PositionablePoint existingAnchor = findNearbyAnchorForTurnout(currentPoint, 15.0);
+
+        if (existingAnchor != null) {
+            log.info("Found existing anchor near click, will connect slip to it");
+            
+            // Create slip at the current click location first
+            Point2D originalCurrentPoint = currentPoint;
+            addLayoutSlip(type);
+            
+            // Get the newly created slip (it should be the last one added)
+            LayoutSlip newSlip = null;
+            LayoutSlipView newSlipView = null;
+            for (LayoutSlip ls : getLayoutSlips()) {
+                LayoutSlipView lsv = getLayoutSlipView(ls);
+                if (lsv.getCoordsCenter().distance(originalCurrentPoint) < 10.0) {
+                    newSlip = ls;
+                    newSlipView = lsv;
+                    break;
+                }
+            }
+            
+            if (newSlip != null && newSlipView != null) {
+                // Get the selected connector from the radio buttons
+                String selectedDirection = leToolBarPanel.getTurnoutDirection();
+                
+                // Get the connector location based on which one should align
+                Point2D connectorLocation;
+                switch (selectedDirection) {
+                    case "A":
+                        connectorLocation = newSlipView.getCoordsA();
+                        break;
+                    case "B":
+                        connectorLocation = newSlipView.getCoordsB();
+                        break;
+                    case "C":
+                        connectorLocation = newSlipView.getCoordsC();
+                        break;
+                    case "D":
+                        connectorLocation = newSlipView.getCoordsD();
+                        break;
+                    default:
+                        connectorLocation = newSlipView.getCoordsA(); // fallback to A
+                }
+                
+                Point2D anchorLocation = getPositionablePointView(existingAnchor).getCoordsCenter();
+                
+                // Calculate offset needed to move selected connector to anchor
+                Point2D offset = MathUtil.subtract(anchorLocation, connectorLocation);
+                
+                // Move the slip by this offset
+                Point2D newCenter = MathUtil.add(newSlipView.getCoordsCenter(), offset);
+                newSlipView.setCoordsCenter(newCenter);
+                
+                log.info("Moved slip {} connector from ({}, {}) to anchor at ({}, {})", 
+                    selectedDirection,
+                    connectorLocation.getX(), connectorLocation.getY(),
+                    anchorLocation.getX(), anchorLocation.getY());
+                
+                redrawPanel();
+            }
+        } else {
+            // No anchor found, use normal placement
+            addLayoutSlip(type);
+        }
+    }
+
+    /**
      * Add a Layout Turnout with tile support - checks for existing anchor points when tiles are selected.
      * If shift-clicking on an existing PositionablePoint, position the turnout so its throat connects to the anchor.
      *
@@ -6050,16 +6124,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 Point2D connectorLocation;
                 switch (selectedDirection) {
                     case "throat":
+                    case "A":
                         connectorLocation = newTurnoutView.getCoordsA();
                         break;
                     case "normal":
+                    case "B":
                         connectorLocation = newTurnoutView.getCoordsB();
                         break;
                     case "thrown":
+                    case "C":
                         connectorLocation = newTurnoutView.getCoordsC();
                         break;
+                    case "D":
+                        connectorLocation = newTurnoutView.getCoordsD();
+                        break;
                     default:
-                        connectorLocation = newTurnoutView.getCoordsA(); // fallback to throat
+                        connectorLocation = newTurnoutView.getCoordsA(); // fallback to throat/A
                 }
                 
                 Point2D anchorLocation = getPositionablePointView(existingAnchor).getCoordsCenter();
