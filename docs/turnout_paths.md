@@ -1,12 +1,12 @@
-# JMRI Layout Editor Turnout Valid Routes
+# JMRI Layout Editor Turnout and Crossing Valid Routes
 
-This document describes the valid connection routes for different turnout types in JMRI's Layout Editor. Keep this file in sync when adding new turnout/slip/crossover variants such as threeway.
+This document describes the valid connection routes for different turnout types and level crossings in JMRI's Layout Editor. Keep this file in sync when adding new turnout/slip/crossover/crossing variants.
 
 ## Connection Point Layout
 
-All turnouts use connection points designated **A**, **B**, **C**, and **D**. The specific arrangement and valid routes vary by turnout type.
+All turnouts and crossings use connection points designated **A**, **B**, **C**, and **D**. The specific arrangement and valid routes vary by element type.
 
-## Valid Routes by Turnout Type
+## Valid Routes by Element Type
 
 ### Right-Hand (RH) and Left-Hand (LH) Turnouts
 
@@ -54,7 +54,7 @@ D ==**==**== C
 
 **Valid Routes:**
 - **A-B** (ROUTE_AB) - straight through, continuing route
-- **C-D** (ROUTE_CD) - straight through, continuing route  
+- **C-D** (ROUTE_CD) - straight through, continuing route
 - **A-C** (ROUTE_AC) - crossover, diverging route
 - **B-D** (ROUTE_BD) - crossover, diverging route### Right-Hand Single Crossover (RH XOver)
 
@@ -82,7 +82,7 @@ D ==**===== C
 ```
 
 **Valid Routes:**
-- **A-B** (ROUTE_AB) - straight through, continuing route  
+- **A-B** (ROUTE_AB) - straight through, continuing route
 - **C-D** (ROUTE_CD) - straight through, continuing route
 - **B-D** (ROUTE_BD) - crossover, diverging route### Single Slip
 
@@ -115,15 +115,42 @@ D ==**===== C
 
 **Valid Routes:**
 - **A-C** (ROUTE_AC) - straight through one direction
-- **B-D** (ROUTE_BD) - straight through other direction  
+- **B-D** (ROUTE_BD) - straight through other direction
 - **A-D** (ROUTE_AD) - slip crossing
 - **B-C** (ROUTE_BC) - slip crossing
+
+### Level Crossings
+
+```
+Level Crossing
+
+     C
+     |
+     |
+A ===+===B
+     |
+     |
+     D
+```
+
+**Valid Routes:**
+- **A-B** (ROUTE_AB) - straight through, continuing route  
+- **C-D** (ROUTE_CD) - crossing path, continuing route
+
+*Note: Level crossings are fixed track elements with no switching mechanism. Both routes are always available simultaneously.*
+
+**Geometry Specification:**
+- **Path A-B**: Specified with `direction="straight"` and `length` attribute
+- **Path C-D**: Specified with `direction="crossing"` and `angle` attribute for crossing angle
+  - Optional `length` attribute for crossing path length
+  - If `length` is omitted, crossing path length defaults to same as straight path
 
 ## Key Differences
 
 - **Regular turnouts** (RH, LH, Wye): One throat point (A) with two possible routes
-- **Crossovers**: Two parallel straight-through paths plus crossover connection(s)
+- **Crossovers**: Two parallel straight-through paths plus crossover connection(s)  
 - **Slips**: Two crossing paths plus slip crossing paths, with connection points arranged differently than crossovers
+- **Level crossings**: Two fixed intersecting paths (one straight, one crossing) with no switching mechanism
 
 ## Route Constants
 
@@ -138,7 +165,9 @@ The following route constants are defined in the JMRI code:
 
 This information is derived from:
 - `java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java`
-- `java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java`
-- Various turnout-specific implementation classes
+- `java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java`  
+- `java/src/jmri/jmrit/display/layoutEditor/LayoutLevelXing.java`
+- `xml/schema/tracktiles.xsd` - Track tile XML schema
+- Various turnout and crossing-specific implementation classes
 
 *Generated from JMRI source code documentation and comments.*

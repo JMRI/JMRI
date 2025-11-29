@@ -486,7 +486,7 @@
     </xs:attribute>
     <xs:attribute name="length" type="xs:decimal">
       <xs:annotation>
-        <xs:documentation>Length for straight paths</xs:documentation>
+        <xs:documentation>Length for straight paths and optionally crossing paths. If omitted for crossing paths, defaults to straight path length.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
     <xs:attribute name="lengthunit">
@@ -520,6 +520,18 @@
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
+    <xs:attribute name="angle" type="xs:decimal">
+      <xs:annotation>
+        <xs:documentation>Crossing angle for level crossings. May be combined with optional length attribute.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="angleunit">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="deg"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
   </xs:complexType>
 
   <!-- Direction enumeration -->
@@ -530,6 +542,11 @@
       <xs:enumeration value="straight"/>
       <xs:enumeration value="right"/>
       <xs:enumeration value="rightmost"/>
+      <xs:enumeration value="crossing">
+        <xs:annotation>
+          <xs:documentation>Crossing direction for level crossings</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
 

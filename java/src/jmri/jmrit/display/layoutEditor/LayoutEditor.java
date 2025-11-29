@@ -3617,7 +3617,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 } else if (leToolBarPanel.lhXoverButton.isSelected()) {
                     addLayoutTurnoutWithTileSupport(LayoutTurnout.TurnoutType.LH_XOVER);
                 } else if (leToolBarPanel.levelXingButton.isSelected()) {
-                    addLevelXing();
+                    addLevelXingWithTileSupport();
                 } else if (leToolBarPanel.layoutSingleSlipButton.isSelected()) {
                     addLayoutSlipWithTileSupport(LayoutSlip.TurnoutType.SINGLE_SLIP);
                 } else if (leToolBarPanel.layoutDoubleSlipButton.isSelected()) {
@@ -6090,6 +6090,34 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         } else {
             // No anchor found, use normal placement
             addLayoutSlip(type);
+        }
+    }
+
+    /**
+     * Add a Level Crossing with tile support.
+     */
+    public void addLevelXingWithTileSupport() {
+        // Create the level crossing using the standard method
+        addLevelXing();
+        
+        // Get the newly created level crossing
+        LevelXing newLevelXing = null;
+        for (LevelXing lx : getLevelXings()) {
+            LevelXingView lxv = getLevelXingView(lx);
+            if (lxv.getCoordsCenter().distance(currentPoint) < 10.0) {
+                newLevelXing = lx;
+                break;
+            }
+        }
+        
+        if (newLevelXing != null) {
+            // Check if a track tile is selected in the toolbar
+            TrackTile selectedTile = leToolBarPanel.getSelectedTrackTile();
+            if (selectedTile != null) {
+                newLevelXing.setTrackTile(selectedTile);
+                log.info("Assigned track tile {} to level crossing {}", 
+                    selectedTile.getPartCode(), newLevelXing.getName());
+            }
         }
     }
 

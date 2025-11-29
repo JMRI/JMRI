@@ -11,8 +11,15 @@ import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
+import jmri.tracktiles.NotATile;
+import jmri.tracktiles.TrackTile;
+import jmri.tracktiles.UnknownTile;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import java.awt.Font;
+import java.util.List;
 
 /**
  * MVC Editor component for LevelXing objects.
@@ -51,6 +58,8 @@ public class LevelXingEditor extends LayoutTurntableEditor {
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JButton editLevelXingBlock1Button;
     private JButton editLevelXingBlock2Button;
+    private final JLabel editLevelXingTileInfoLabel = new JLabel();
+    private final JTextArea editLevelXingPathLengthsArea = new JTextArea(3, 40);
 
     private boolean editLevelXingOpen = false;
     private boolean editLevelXingNeedsRedraw = false;
@@ -107,6 +116,31 @@ public class LevelXingEditor extends LayoutTurntableEditor {
             editLevelXingBlock2NameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
             contentPane.add(panel2);
 
+            // add tile information display
+            JPanel panelTile = new JPanel();
+            panelTile.setLayout(new FlowLayout());
+            JLabel tileLabel = new JLabel(Bundle.getMessage("TrackTile") + ": ");  // NOI18N
+            panelTile.add(tileLabel);
+            editLevelXingTileInfoLabel.setToolTipText(Bundle.getMessage("TrackTileInfoHint"));  // NOI18N
+            panelTile.add(editLevelXingTileInfoLabel);
+            contentPane.add(panelTile);
+
+            // add path lengths display
+            TitledBorder pathBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+            pathBorder.setTitle("Path Lengths");  // NOI18N
+            JPanel panelPathLengths = new JPanel();
+            panelPathLengths.setBorder(pathBorder);
+            panelPathLengths.setLayout(new java.awt.BorderLayout());
+            editLevelXingPathLengthsArea.setEditable(false);
+            editLevelXingPathLengthsArea.setBackground(UIManager.getColor("Panel.background"));
+            editLevelXingPathLengthsArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+            editLevelXingPathLengthsArea.setToolTipText("Calculated path lengths based on track tile geometry");  // NOI18N
+            JScrollPane pathScrollPane = new JScrollPane(editLevelXingPathLengthsArea);
+            pathScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            pathScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            panelPathLengths.add(pathScrollPane, java.awt.BorderLayout.CENTER);
+            contentPane.add(panelPathLengths);
+
             // set up Edit 1 Block and Edit 2 Block buttons
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
@@ -136,6 +170,20 @@ public class LevelXingEditor extends LayoutTurntableEditor {
         editLevelXingBlock2NameComboBox.getEditor().setItem(bm.getBlock(levelXing.getBlockNameBD()));
         editLevelXingBlock1NameComboBox.setEnabled(!hasNxSensorPairs(levelXing.getLayoutBlockAC()));  // NOI18N
         editLevelXingBlock2NameComboBox.setEnabled(!hasNxSensorPairs(levelXing.getLayoutBlockBD()));  // NOI18N
+
+        // Update tile information display
+        TrackTile tile = levelXing.getTrackTile();
+        if (tile instanceof NotATile) {
+            editLevelXingTileInfoLabel.setText(Bundle.getMessage("NoTile"));  // NOI18N
+            editLevelXingPathLengthsArea.setText("No track tile associated");
+        } else if (tile instanceof UnknownTile) {
+            editLevelXingTileInfoLabel.setText(Bundle.getMessage("UnknownTile") + " (" + tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode() + ")");  // NOI18N
+            editLevelXingPathLengthsArea.setText("Path lengths not available for unknown tiles");
+        } else {
+            editLevelXingTileInfoLabel.setText(tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode());
+            updateLevelXingPathLengthsDisplay();
+        }
+
         editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -263,6 +311,99 @@ public class LevelXingEditor extends LayoutTurntableEditor {
     }
 
     
+
+    /**
+     * Update the path lengths display area for level crossings.
+     */
+    protected void updateLevelXingPathLengthsDisplay() {
+        TrackTile tile = levelXing.getTrackTile();
+        List<String> pathLengths = calculateLevelXingPathLengths(tile);
+        
+        StringBuilder sb = new StringBuilder();
+        for (String pathLength : pathLengths) {
+            sb.append(pathLength).append("\n");
+        }
+        
+        editLevelXingPathLengthsArea.setText(sb.toString());
+        editLevelXingPathLengthsArea.setCaretPosition(0);  // Scroll to top
+    }
+
+    /**
+     * Calculate path lengths for level crossings.
+     */
+    private List<String> calculateLevelXingPathLengths(TrackTile tile) {
+        List<String> pathLengths = new java.util.ArrayList<>();
+        
+        if (tile instanceof NotATile) {
+            pathLengths.add("No track tile assigned");
+            return pathLengths;
+        }
+        
+        if (tile instanceof UnknownTile) {
+            pathLengths.add("Unknown track tile - no geometry available");
+            return pathLengths;
+        }
+        
+        if (!tile.hasPaths()) {
+            pathLengths.add("No path geometry available");
+            return pathLengths;
+        }
+
+        List<jmri.tracktiles.TrackTilePath> paths = tile.getPaths();
+        
+        for (jmri.tracktiles.TrackTilePath path : paths) {
+            StringBuilder sb = new StringBuilder();
+            
+            // For level crossings, show direction-based path names
+            if ("straight".equals(path.getDirection())) {
+                sb.append("Path A-C: ");
+            } else if ("crossing".equals(path.getDirection())) {
+                sb.append("Path B-D: ");
+            } else {
+                sb.append(path.getDirection()).append(" path: ");
+            }
+            
+            // Add length information
+            double length = path.calculateLength();
+            if (length > 0) {
+                sb.append(String.format("%.1f mm", length));
+                
+                // Add additional details for curved paths
+                if (path.isCurved()) {
+                    sb.append(String.format(" (R%.1f, ∠%.1f°)", 
+                        path.getRadius(), path.getArc()));
+                }
+            } else if (path.isCrossingWithLength()) {
+                // Crossing path with explicit length and angle
+                sb.append(String.format("%.1f mm ∠%.1f° crossing", 
+                    path.getLength(), path.getArc()));
+            } else if (path.isAngleOnly()) {
+                // This is an angle-only crossing specification
+                // For crossings, we should assume the crossing path has the same length as the straight path
+                // but we only have the crossing angle
+                sb.append(String.format("∠%.1f° crossing", path.getArc()));
+                
+                // Try to find the straight path length to use for the crossing path
+                List<jmri.tracktiles.TrackTilePath> allPaths = tile.getPaths();
+                for (jmri.tracktiles.TrackTilePath otherPath : allPaths) {
+                    if ("straight".equals(otherPath.getDirection()) && otherPath.getLength() > 0) {
+                        sb.append(String.format(" (%.1f mm)", otherPath.getLength()));
+                        break;
+                    }
+                }
+            } else {
+                sb.append("No geometry data");
+            }
+            
+            pathLengths.add(sb.toString());
+        }
+        
+        if (pathLengths.isEmpty()) {
+            pathLengths.add("No valid path geometry found");
+        }
+
+        return pathLengths;
+    }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXingEditor.class);
 }

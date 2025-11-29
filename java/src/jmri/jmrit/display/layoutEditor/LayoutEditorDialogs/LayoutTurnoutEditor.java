@@ -163,30 +163,10 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
             editLayoutTurnoutBlockButton.addActionListener(this::editLayoutTurnoutEditBlockPressed);
             contentPane.add(panel2);
 
-            // add tile information display
-            JPanel panelTile = new JPanel();
-            panelTile.setLayout(new FlowLayout());
-            JLabel tileLabel = new JLabel(Bundle.getMessage("TrackTile") + ": ");  // NOI18N
-            panelTile.add(tileLabel);
-            editLayoutTurnoutTileInfoLabel.setToolTipText(Bundle.getMessage("TrackTileInfoHint"));  // NOI18N
-            panelTile.add(editLayoutTurnoutTileInfoLabel);
-            contentPane.add(panelTile);
-
-            // add path lengths display
-            TitledBorder pathBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-            pathBorder.setTitle("Path Lengths");  // NOI18N
-            JPanel panelPathLengths = new JPanel();
-            panelPathLengths.setBorder(pathBorder);
-            panelPathLengths.setLayout(new BorderLayout());
-            editLayoutTurnoutPathLengthsArea.setEditable(false);
-            editLayoutTurnoutPathLengthsArea.setBackground(UIManager.getColor("Panel.background"));
-            editLayoutTurnoutPathLengthsArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-            editLayoutTurnoutPathLengthsArea.setToolTipText("Calculated path lengths based on track tile geometry");  // NOI18N
-            JScrollPane pathScrollPane = new JScrollPane(editLayoutTurnoutPathLengthsArea);
-            pathScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            pathScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            panelPathLengths.add(pathScrollPane, BorderLayout.CENTER);
-            contentPane.add(panelPathLengths);
+            // add tile information display (not for crossovers - they add it after Block 4)
+            if (!isXOverEditor()) {
+                addTileAndPathLengthPanels(contentPane);
+            }
 
             extendBlockBCDSetup(contentPane);
 
@@ -548,6 +528,43 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
             layoutEditor.setDirty();
             editLayoutTurnoutNeedRedraw = false;
         }
+    }
+
+    /**
+     * Check if this is a crossover editor that handles tile panels separately.
+     */
+    protected boolean isXOverEditor() {
+        return this instanceof LayoutXOverEditor;
+    }
+
+    /**
+     * Add tile information and path lengths panels.
+     */
+    protected void addTileAndPathLengthPanels(Container contentPane) {
+        // add tile information display
+        JPanel panelTile = new JPanel();
+        panelTile.setLayout(new FlowLayout());
+        JLabel tileLabel = new JLabel(Bundle.getMessage("TrackTile") + ": ");  // NOI18N
+        panelTile.add(tileLabel);
+        editLayoutTurnoutTileInfoLabel.setToolTipText(Bundle.getMessage("TrackTileInfoHint"));  // NOI18N
+        panelTile.add(editLayoutTurnoutTileInfoLabel);
+        contentPane.add(panelTile);
+
+        // add path lengths display
+        TitledBorder pathBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+        pathBorder.setTitle("Path Lengths");  // NOI18N
+        JPanel panelPathLengths = new JPanel();
+        panelPathLengths.setBorder(pathBorder);
+        panelPathLengths.setLayout(new BorderLayout());
+        editLayoutTurnoutPathLengthsArea.setEditable(false);
+        editLayoutTurnoutPathLengthsArea.setBackground(UIManager.getColor("Panel.background"));
+        editLayoutTurnoutPathLengthsArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        editLayoutTurnoutPathLengthsArea.setToolTipText("Calculated path lengths based on track tile geometry");  // NOI18N
+        JScrollPane pathScrollPane = new JScrollPane(editLayoutTurnoutPathLengthsArea);
+        pathScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        pathScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panelPathLengths.add(pathScrollPane, BorderLayout.CENTER);
+        contentPane.add(panelPathLengths);
     }
 
     /**

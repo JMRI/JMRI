@@ -247,9 +247,10 @@
       <l10n lang="en">Crossing K15</l10n>
       <l10n lang="fr">Croisement K15</l10n>
       <geometry>
-        <turnout>
-          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
-        </turnout>
+        <crossing>
+          <path direction="straight" length="239" lengthunit="mm"/>
+          <path direction="crossing" angle="90" angleunit="deg"/>
+        </crossing>
       </geometry>
     </tile>
 
@@ -260,9 +261,10 @@
       <l10n lang="en">Crossing K30</l10n>
       <l10n lang="fr">Croisement K30</l10n>
       <geometry>
-        <turnout>
-          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
-        </turnout>
+        <crossing>
+          <path direction="straight" length="239" lengthunit="mm"/>
+          <path direction="crossing" angle="90" angleunit="deg"/>
+        </crossing>
       </geometry>
     </tile>
 

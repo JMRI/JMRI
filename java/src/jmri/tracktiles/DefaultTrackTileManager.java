@@ -186,6 +186,17 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                         parsePathElement(pathElement, tile);
                     }
                 }
+                
+                // Check for crossing geometry with paths
+                NodeList crossingList = geometryElement.getElementsByTagName("crossing");
+                if (crossingList.getLength() > 0) {
+                    Element crossingElement = (Element) crossingList.item(0);
+                    NodeList pathList = crossingElement.getElementsByTagName("path");
+                    for (int k = 0; k < pathList.getLength(); k++) {
+                        Element pathElement = (Element) pathList.item(k);
+                        parsePathElement(pathElement, tile);
+                    }
+                }
             }
 
             // Add localizations
@@ -217,6 +228,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
         String lengthStr = pathElement.getAttribute("length");
         String radiusStr = pathElement.getAttribute("radius");
         String arcStr = pathElement.getAttribute("arc");
+        String angleStr = pathElement.getAttribute("angle");  // For crossings
         
         TrackTilePath path = null;
         
@@ -233,7 +245,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                 log.warn("Invalid length value '{}' in path", lengthStr);
             }
         } else if (!radiusStr.isEmpty() && !arcStr.isEmpty()) {
-            // Curved path  
+            // Curved path with radius and arc
             try {
                 double radius = Double.parseDouble(radiusStr);
                 double arc = Double.parseDouble(arcStr);
@@ -244,6 +256,29 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                     id.isEmpty() ? null : id);
             } catch (NumberFormatException e) {
                 log.warn("Invalid radius/arc values '{}'/'{}'", radiusStr, arcStr);
+            }
+        } else if (!angleStr.isEmpty()) {
+            // Crossing path with angle, optionally with length
+            try {
+                double angle = Double.parseDouble(angleStr);
+                if (!lengthStr.isEmpty()) {
+                    // Crossing with both length and angle
+                    double length = Double.parseDouble(lengthStr);
+                    path = TrackTilePath.createCrossingPath(direction,
+                        state.isEmpty() ? null : state,
+                        route.isEmpty() ? null : route,
+                        length, angle,
+                        id.isEmpty() ? null : id);
+                } else {
+                    // Angle-only crossing
+                    path = TrackTilePath.createAngleOnlyPath(direction,
+                        state.isEmpty() ? null : state,
+                        route.isEmpty() ? null : route,
+                        angle,
+                        id.isEmpty() ? null : id);
+                }
+            } catch (NumberFormatException e) {
+                log.warn("Invalid angle/length values '{}'/'{}'", angleStr, lengthStr);
             }
         }
         

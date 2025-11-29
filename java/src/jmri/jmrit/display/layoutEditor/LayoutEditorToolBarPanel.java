@@ -874,11 +874,11 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         } else if (turnoutWYEButton.isSelected()) {
             return "turnout-wye";
         } else if (doubleXoverButton.isSelected()) {
-            return "xover-double";
+            return "crossover-double";
         } else if (rhXoverButton.isSelected()) {
-            return "xover-rh";
+            return "crossover-single-rh";
         } else if (lhXoverButton.isSelected()) {
-            return "xover-lh";
+            return "crossover-single-lh";
         } else if (layoutSingleSlipButton.isSelected()) {
             return "slip-single";
         } else if (layoutDoubleSlipButton.isSelected()) {
