@@ -1,12 +1,9 @@
 package jmri.jmrix.tmcc;
 
 import java.util.Locale;
-
 import javax.annotation.Nonnull;
-
 import jmri.*;
 import jmri.managers.AbstractTurnoutManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

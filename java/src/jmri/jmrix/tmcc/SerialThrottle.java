@@ -685,8 +685,10 @@ public class SerialThrottle extends AbstractThrottle {
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
                 tc.sendSerialMessage(m, null);
                 tc.sendSerialMessage(m, null);
+            }
+        }
 
-        // send to layout option TMCC1TR 32 speed steps
+        // Option TMCC1TR_32 "Absolute" speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC1TR_32) {
 
             // TMCC1TR 32 speed step mode
@@ -711,11 +713,11 @@ public class SerialThrottle extends AbstractThrottle {
             } else {
                 // normal speed setting
                 m.putAsWord(0xC860 + address.getNumber() * 128 + value);
+
+                // send to layout (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);           
             }
-    
-            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);           
         }
 
         // Option TMCC1_32 "Absolute" speed steps

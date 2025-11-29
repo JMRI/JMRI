@@ -5,19 +5,17 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import javax.annotation.Nonnull;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Consist Manager for use with the TmccConsist class for the
  * consists it builds.
  *
  * @author Dean Cording Copyright (C) 2023
- * @author Timothy Jump Copyright (C) 2025 
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
-
-
 public class TmccConsistManager extends AbstractConsistManager {
 
     protected TmccSystemConnectionMemo adapterMemo;
@@ -105,7 +103,6 @@ public class TmccConsistManager extends AbstractConsistManager {
     public void activateConsist(LocoAddress address) {
 
         ((TmccConsist)addConsist(address)).activate();
-
     }
 
 
@@ -115,16 +112,14 @@ public class TmccConsistManager extends AbstractConsistManager {
      * This is used by a throttle in case it is controlling a consist.
      * @param address Consist address to be deactivated
      */
-//    public void deactivateConsist(LocoAddress address) {
+    public void deactivateConsist(LocoAddress address) {
 
-//        if (!consistTable.containsKey(address)) return;
+        if (!consistTable.containsKey(address))
+            return;
 
-//        ((TmccConsist)consistTable.get(address)).deactivate();
+        ((TmccConsist)consistTable.get(address)).deactivate();
+    }
 
-//    }
-
-
-
-//    private final static Logger log = LoggerFactory.getLogger(TmccConsistManager.class);
+    private final static Logger log = LoggerFactory.getLogger(TmccConsistManager.class);
 
 }

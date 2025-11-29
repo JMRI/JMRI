@@ -1,9 +1,7 @@
 package jmri.jmrix.tmcc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import javax.annotation.Nonnull;
-
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
@@ -11,10 +9,10 @@ import jmri.DccLocoAddress;
 /**
  * This is the Consist definition for a consist on a TMCC system.
  *
- * @author Timothy Jump (C) 2025
- * based on MqttConsist by @author Dean Cording Copyright (C) 2023
+ * @author Dean Cording Copyright (C) 2023
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
-
 public class TmccConsist extends jmri.implementation.DccConsist {
 
 //    private final TmccAdapter tmccAdapter;
