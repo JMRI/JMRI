@@ -2,10 +2,8 @@
 <?xml-stylesheet href="../XSLT/tracktiles.xsl" type="text/xsl"?>
 
 <tracktiles version="1.0"
-            xmlns="http://jmri.org/xml/tracktiles"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:db="http://docbook.org/ns/docbook"
-            xsi:schemaLocation="http://jmri.org/xml/tracktiles ../schema/tracktiles.xsd">
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/tracktiles.xsd">
   <header>
     <vendor>Piko</vendor>
     <code>100</code>
@@ -175,7 +173,7 @@
       <geometry>
         <turnout>
           <path direction="straight" state="closed" radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
-          <path direction="diverging" state="thrown" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
+          <path direction="left" state="thrown" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -189,7 +187,7 @@
       <geometry>
         <turnout>
           <path direction="straight" state="closed" radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
-          <path direction="diverging" state="thrown" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>

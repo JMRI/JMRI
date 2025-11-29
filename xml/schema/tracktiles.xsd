@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:db="http://docbook.org/ns/docbook"
-           targetNamespace="http://jmri.org/xml/tracktiles"
-           xmlns="http://jmri.org/xml/tracktiles"
-           elementFormDefault="qualified">
-<xs:include schemaLocation="https://www.jmri.org/xml/schema/types/general.xsd"/>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl”?>
+<xs:schema xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+        >
+
+    <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+  
   <xs:annotation>
     <xs:documentation>
       Defines XML documenting track tile specifications from various manufacturers
@@ -25,8 +33,7 @@
   </xs:annotation>
 
   <!-- Import DocBook namespace for copyright, authorgroup, and revhistory -->
-  <xs:import namespace="http://docbook.org/ns/docbook"
-             schemaLocation="http://docbook.org/xml/5.0/xsd/docbook.xsd"/>
+  <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
 
   <!-- Root element -->
   <xs:element name="tracktiles">
@@ -39,8 +46,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element name="header" type="headerType"/>
-        <xs:element name="tiles" type="tilesType" minOccurs="0"/>
-      </xs:sequence>
+        <xs:element name="tiles" type="tilesType" minOccurs="0">
+          <xs:unique name="UniquePartCode">
+            <xs:annotation><xs:documentation>Insist that the partcode element content is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath=".//tile/partcode"/>
+            <xs:field xpath="."/>
+          </xs:unique>
+        </xs:element>
+       </xs:sequence>
       <xs:attribute name="version" type="xs:string"/>
     </xs:complexType>
   </xs:element>
@@ -71,9 +84,9 @@
       </xs:element>
       <xs:element name="scale" type="scaleType"/>
       <xs:element name="gauge" type="gaugeType"/>
-      <xs:element ref="db:copyright" minOccurs="0"/>
-      <xs:element ref="db:authorgroup" minOccurs="0"/>
-      <xs:element ref="db:revhistory" minOccurs="0"/>
+      <xs:element ref="docbook:copyright" minOccurs="0"/>
+      <xs:element ref="docbook:authorgroup" minOccurs="0"/>
+      <xs:element ref="docbook:revhistory" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -131,7 +144,13 @@
       <xs:documentation>The tiles element contains all track tile definitions</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="tile" type="tileType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="tile" type="tileType" minOccurs="0" maxOccurs="unbounded">
+        <xs:unique name="UniqueL10n">
+          <xs:annotation><xs:documentation>Insist that the language attribute content is unique</xs:documentation></xs:annotation>
+          <xs:selector xpath="l10n"/>
+          <xs:field xpath="@lang"/>
+        </xs:unique>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
@@ -151,7 +170,7 @@
           <xs:documentation>JMRI track type mapping</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="l10n" type="l10nType" maxOccurs="unbounded">
+      <xs:element name="l10n" type="l10nType" minOccurs="1" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>Localized part name, with ISO 639-1 language code</xs:documentation>
         </xs:annotation>
