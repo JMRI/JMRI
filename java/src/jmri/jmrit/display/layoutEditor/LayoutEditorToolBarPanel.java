@@ -1192,7 +1192,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
 
         } else if (isFourConnectorTurnout) {
             // Four-connector turnouts: show A/B/C/D buttons
-            
+
             // Save current left/right selection
             savedLeftSelected = tileLeftButton.isSelected();
 
@@ -1202,7 +1202,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
             turnoutThroatButton.setVisible(false);
             turnoutNormalButton.setVisible(false);
             turnoutThrownButton.setVisible(false);
-            
+
             // Show A/B/C/D buttons
             turnoutAButton.setVisible(true);
             turnoutBButton.setVisible(true);
