@@ -3,7 +3,7 @@ package jmri.jmrix.tmcc;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import javax.annotation.Nonnull;
-import jmri.SpeedStepMode;
+
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.LocoAddress;
@@ -165,10 +165,10 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add head loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Head Unit/Forward Direction
-                        m.putAsWord(0x0021);
+                        m.putAsWord(0x0021 + locoAddress.getNumber() * 128);
                     } else {
                         // TMCC1 - Assign as Head Unit/Reverse Direction
-                        m.putAsWord(0x0025);
+                        m.putAsWord(0x0025 + locoAddress.getNumber() * 128);
                         
                         // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
                         tc.sendSerialMessage(m, null);
@@ -180,10 +180,10 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add rear loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Rear Unit/Forward Direction
-                        m.putAsWord(0x0023);
+                        m.putAsWord(0x0023 + locoAddress.getNumber() * 128);
                     } else {
                         // TMCC1 - Assign as Rear Unit/Reverse Direction
-                        m.putAsWord(0x0027);
+                        m.putAsWord(0x0027 + locoAddress.getNumber() * 128);
                         
                         // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
                         tc.sendSerialMessage(m, null);
@@ -195,10 +195,10 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add mid loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Mid Unit/Forward Direction
-                        m.putAsWord(0x0022);
+                        m.putAsWord(0x0022 + locoAddress.getNumber() * 128);
                     } else {
                         // TMCC1 - Assign as Mid Unit/Reverse Direction
-                        m.putAsWord(0x0026);
+                        m.putAsWord(0x0026 + locoAddress.getNumber() * 128);
                         
                         // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
                         tc.sendSerialMessage(m, null);
