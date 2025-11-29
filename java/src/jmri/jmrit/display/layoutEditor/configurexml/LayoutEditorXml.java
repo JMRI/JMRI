@@ -715,13 +715,14 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 boolean value = shared.getAttribute("openDispatcher").getBooleanValue();
                 panel.setOpenDispatcherOnLoad(value);
                 if (value) {
-                    DispatcherFrame df = InstanceManager.getDefault(DispatcherFrame.class);
-                    df.loadAtStartup();
+                    // Create the DispatcherFrame instance.
+                    // This is a trigger for LoadXmlConfigAction to call loadAtStartup.
+                    InstanceManager.getDefault(DispatcherFrame.class);
                 }
             } catch (DataConversionException e) {
                 log.warn("unable to convert openDispatcher attribute");
             } catch (NullPointerException e) {  // considered normal if the attribute is not present
-                log.debug("missing openDispatcher attribute");
+                log.debug("No openDispatcher attribute");
             }
         }
         return result;

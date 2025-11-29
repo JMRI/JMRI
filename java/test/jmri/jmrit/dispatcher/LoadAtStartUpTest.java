@@ -37,7 +37,7 @@ public class LoadAtStartUpTest {
     // Only one aat at a time
     private AutoActiveTrain aat = null;
     private static final double TOLERANCE = 0.0001;
-    
+
     private static void increaseWaitForStep() {
         JUnitUtil.WAITFOR_DELAY_STEP = 20;
     }
@@ -54,6 +54,9 @@ public class LoadAtStartUpTest {
         // load layout file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/DispatcherSMLLayout.xml");
         cm.load(f);
+
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+
         // load dispatcher, with all the correct options
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/TestTrainDispatcherOptions.xml");
         DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
@@ -318,12 +321,13 @@ public class LoadAtStartUpTest {
         } catch (IOException e) {
             throw e;
         }
-        
+
     }
 
     @AfterEach
     public void tearDown() throws Exception {
 
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
