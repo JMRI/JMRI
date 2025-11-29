@@ -293,15 +293,17 @@
 
     <tile>
       <partcode>24624</partcode>
-      <jmritype>turnout-rh</jmritype>
-      <l10n lang="de">Rechtsweiche schlank</l10n>
-      <l10n lang="en">Right-Hand Turnout Slim</l10n>
-      <l10n lang="fr">Aiguillage à droite mince</l10n>
+      <jmritype>crossover-double</jmritype>
+      <l10n lang="de">Doppelkreuzungsweiche 24,3°</l10n>
+      <l10n lang="en">Double Crossover 24.3°</l10n>
+      <l10n lang="fr">Croisement double 24,3°</l10n>
       <geometry>
-        <turnout>
-          <path direction="straight" state="closed" length="188.3" lengthunit="mm"/>
-          <path direction="right" state="thrown" radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
-        </turnout>
+        <crossover>
+          <path direction="straight" route="ac" length="188.3" lengthunit="mm"/>
+          <path direction="straight" route="bd" length="188.3" lengthunit="mm"/>
+          <path direction="crossing" route="ad" radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
+          <path direction="crossing" route="bc" radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        </crossover>
       </geometry>
     </tile>
 
@@ -351,15 +353,15 @@
 
     <tile>
       <partcode>24649</partcode>
-      <jmritype>other</jmritype>
-      <l10n lang="de">Bogenweiche links</l10n>
-      <l10n lang="en">Curved Turnout Left</l10n>
-      <l10n lang="fr">Aiguillage courbe gauche</l10n>
+      <jmritype>crossing</jmritype>
+      <l10n lang="de">Kreuzung 48,6°</l10n>
+      <l10n lang="en">Crossing 48.6°</l10n>
+      <l10n lang="fr">Croisement 48,6°</l10n>
       <geometry>
-        <turnout>
-          <path direction="right" state="closed" radius="360.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
-          <path direction="left" state="thrown" radius="437.5" arc="30.0" radiusunit="mm" arcunit="deg"/>
-        </turnout>
+        <crossing>
+          <path direction="straight" length="103.3" lengthunit="mm"/>
+          <path direction="crossing" angle="48.6" angleunit="deg"/>
+        </crossing>
       </geometry>
     </tile>
 

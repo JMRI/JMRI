@@ -284,6 +284,9 @@
         <xs:element name="end" type="endType" minOccurs="0"/>
       </xs:sequence>
       <xs:element name="turnout" type="turnoutType"/>
+      <xs:element name="crossover" type="crossoverType"/>
+      <xs:element name="slip" type="slipType"/>
+      <xs:element name="crossing" type="crossingType"/>
     </xs:choice>
   </xs:complexType>
 
@@ -426,6 +429,36 @@
     </xs:sequence>
   </xs:complexType>
 
+  <!-- Crossover type -->
+  <xs:complexType name="crossoverType">
+    <xs:annotation>
+      <xs:documentation>Crossover with route-based paths</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="path" type="pathType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Slip type -->
+  <xs:complexType name="slipType">
+    <xs:annotation>
+      <xs:documentation>Slip turnout with route-based paths</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="path" type="pathType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Crossing type -->
+  <xs:complexType name="crossingType">
+    <xs:annotation>
+      <xs:documentation>Fixed track crossing</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="path" type="pathType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <!-- Path type -->
   <xs:complexType name="pathType">
     <xs:annotation>
@@ -436,9 +469,14 @@
         <xs:documentation>Which route the path takes</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="state" type="stateEnum" use="required">
+    <xs:attribute name="state" type="stateEnum">
       <xs:annotation>
         <xs:documentation>Turnout state for this path (closed/thrown)</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="route" type="routeEnum">
+      <xs:annotation>
+        <xs:documentation>Route specification for crossovers/slips (ac/bd/ad/bc)</xs:documentation>
       </xs:annotation>
     </xs:attribute>
     <xs:attribute name="id" type="xs:string">
@@ -500,6 +538,16 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="closed"/>
       <xs:enumeration value="thrown"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Route enumeration -->
+  <xs:simpleType name="routeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ac"/>
+      <xs:enumeration value="bd"/>
+      <xs:enumeration value="ad"/>
+      <xs:enumeration value="bc"/>
     </xs:restriction>
   </xs:simpleType>
 

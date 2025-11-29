@@ -201,10 +201,12 @@
       <l10n lang="en">Double Slip Switch DKW</l10n>
       <l10n lang="fr">Traversée jonction double DKW</l10n>
       <geometry>
-        <turnout>
-          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
-          <path direction="straight" state="closed" length="239" lengthunit="mm"/>
-        </turnout>
+        <slip>
+          <path direction="straight" route="ac" length="239" lengthunit="mm"/>
+          <path direction="straight" route="bd" length="239" lengthunit="mm"/>
+          <path direction="crossing" route="ad" length="239" lengthunit="mm"/>
+          <path direction="crossing" route="bc" length="239" lengthunit="mm"/>
+        </slip>
       </geometry>
     </tile>
 
