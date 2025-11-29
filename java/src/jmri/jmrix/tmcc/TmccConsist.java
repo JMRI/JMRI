@@ -1,9 +1,12 @@
 package jmri.jmrix.tmcc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import javax.annotation.Nonnull;
+import jmri.SpeedStepMode;
 import jmri.Consist;
 import jmri.ConsistListener;
+import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
 /**
@@ -11,8 +14,9 @@ import jmri.DccLocoAddress;
  *
  * @author Dean Cording Copyright (C) 2023
  * with edits/additions by
- * @author Timothy Jump Copyright (C) 2025
+ * @author Timothy Jump (C) 2025
  */
+
 public class TmccConsist extends jmri.implementation.DccConsist {
 
 //    private final TmccAdapter tmccAdapter;
@@ -144,24 +148,71 @@ public class TmccConsist extends jmri.implementation.DccConsist {
     }
 
     /**
-     * Add a Locomotive to a Consist.
+     * Add a Locomotive to a Consist
      *
-     * @param locoAddress is the Locomotive address to add to the locomotive
-     * @param directionNormal is True if the locomotive is traveling
-     *        the same direction as the consist, or false otherwise.
+     * @param locoAddress - is the Locomotive address to add to the consist
+     * @param directionNormal - is True if the locomotive is traveling the same direction as the consist, or false otherwise.
      */
     @Override
     public synchronized void add(DccLocoAddress locoAddress, boolean directionNormal) {
-        log.debug("Add to consist address {} direction {}", locoAddress, directionNormal);
-        if (consistType == CS_CONSIST) {
-            addToConsistList(locoAddress, directionNormal);
-            if (active) {
-                publish();
+//        if (TMCC1) {
+            SerialMessage m = new SerialMessage();
+            m.setOpCode(0xFE);
+            if (!contains(locoAddress)) {
+                // TMCC has 6 commands for adding a loco to a consist, head, rear, and mid, plus direction
+                // First loco to consist
+                if (consistList.isEmpty()) {
+                    // add head loco
+                    if (!directionNormal) {
+                        // TMCC1 - Assign as Head Unit/Forward Direction
+                        m.putAsWord(0x0021);
+                    } else {
+                        // TMCC1 - Assign as Head Unit/Reverse Direction
+                        m.putAsWord(0x0025);
+                        
+                        // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                        tc.sendSerialMessage(m, null);
+                        tc.sendSerialMessage(m, null);
+                    }
+
+                // Second loco to consist
+                } else if (consistList.size() == 1) {
+                    // add rear loco
+                    if (!directionNormal) {
+                        // TMCC1 - Assign as Rear Unit/Forward Direction
+                        m.putAsWord(0x0023);
+                    } else {
+                        // TMCC1 - Assign as Rear Unit/Reverse Direction
+                        m.putAsWord(0x0027);
+                        
+                        // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                        tc.sendSerialMessage(m, null);
+                        tc.sendSerialMessage(m, null);
+                    }
+
+                // Additional loco(s) to consist
+                } else {
+                    // add mid loco
+                    if (!directionNormal) {
+                        // TMCC1 - Assign as Mid Unit/Forward Direction
+                        m.putAsWord(0x0022);
+                    } else {
+                        // TMCC1 - Assign as Mid Unit/Reverse Direction
+                        m.putAsWord(0x0026);
+                        
+                        // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                        tc.sendSerialMessage(m, null);
+                        tc.sendSerialMessage(m, null);
+                    }
+                }
+
+                // add loco to lists
+                consistList.add(locoAddress);
+                consistDir.put(locoAddress, directionNormal);
+            } else {
+                log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
             }
-        } else {
-            log.error("Consist Type Not Supported");
-            notifyConsistListeners(locoAddress, ConsistListener.NotImplemented);
-        }
+//        }
     }
 
     /**
