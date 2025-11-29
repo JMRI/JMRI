@@ -181,6 +181,10 @@ This is the next release in the 5.13 cycle. It's intended to be created from the
 
 - Verify the results of the build process.  A file will be created for English only.
 
+```
+        git status
+```
+
 - Run PanelPro and make sure help works from the Help menu.
 
 - Commit this back:
@@ -325,12 +329,12 @@ For each, if it doesn't have the right milestone set, add the current milestone 
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.13.5-SNAPSHOT/5.13.7-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.13.6-SNAPSHOT/5.13.7-SNAPSHOT/g pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=5/release.build=6/g release.properties
+        sed -i.bak s/release.build=6/release.build=7/g release.properties
 ```
  - Check that both those edits left 5.13.7 defined in the two files
  
@@ -389,11 +393,11 @@ Jenkins will be creating files shortly at the [CI server](https://builds.jmri.or
 ```
 The release-5.13.7 branch has been created.
 
-Maintainers, please set the (next series, i.e. 5.13.8) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the (next series, i.e. 5.15.1) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/5.13.7/)
 
-If you're developing any additional (post-5.13.7) changes that you want in the JMRI 5.12 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.13.7; git checkout -b myBranchName` to start your work.
+If you're developing any additional (post-5.13.7) changes that you want in the JMRI 5.14 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.13.7; git checkout -b myBranchName` to start your work.
 ```
 
 
@@ -571,9 +575,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.13.7+R339808d486.dmg](https://github.com/JMRI/JMRI/releases/download/v5.13.7/JMRI.5.13.7+R339808d486.dmg) | 50f186b57798f0df555bf6eb1fba04c3a6923b64ba3c900929478a28150d4709
-[JMRI.5.13.7+R339808d486.exe](https://github.com/JMRI/JMRI/releases/download/v5.13.7/JMRI.5.13.7+R339808d486.exe) | b7ab24f01d06ade4e4dcf32dde3b209f33b0bf080b0bbe08e616cd4c1d2cf561
-[JMRI.5.13.7+R339808d486.tgz](https://github.com/JMRI/JMRI/releases/download/v5.13.7/JMRI.5.13.7+R339808d486.tgz) | 1883c3dd797c5ebdd58b80a18c2a6afae34693e1a8a20e3d46099be1d5a13ad3
+[JMRI.5.13.7+R67aabd335d.dmg](https://github.com/JMRI/JMRI/releases/download/v5.13.7/JMRI.5.13.7+R67aabd335d.dmg) | 2e57ecdc909b200cfc4deae0ba36ca17edc3a03734ecee30f894a2f7e75b94c8
+[JMRI.5.13.7+R67aabd335d.exe](https://github.com/JMRI/JMRI/releases/download/v5.13.7/JMRI.5.13.7+R67aabd335d.exe) | 6753810cce020443c469d5edb8dc2a242d7c93a6c094b483502f3de90901aa10
+[JMRI.5.13.7+R67aabd335d.tgz](https://github.com/JMRI/JMRI/releases/download/v5.13.7/JMRI.5.13.7+R67aabd335d.tgz) | 38aec86d6bfd8acfde3acbf5da5478a3422dbb335ad794ccb305b8d48f5a90df
 
 ```
 
