@@ -5592,14 +5592,205 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
-     * Find a nearby anchor point suitable for turnout placement.
-     * Unlike findNearbyAvailableAnchor, this allows anchors with one existing connection
-     * so turnouts can align with connected tiles.
+     * Helper class to hold anchor point and connector information for turnout placement.
+     */
+    private static class AnchorConnectorInfo {
+        final PositionablePoint anchor;
+        final String connector; // "throat", "normal", "thrown", or "other"
+        final double distance;
+        
+        AnchorConnectorInfo(PositionablePoint anchor, String connector, double distance) {
+            this.anchor = anchor;
+            this.connector = connector;
+            this.distance = distance;
+        }
+    }
+    
+    /**
+     * Find a nearby anchor point and determine which turnout connector should align with it.
+     * This checks all four connector positions (A, B, C, D) and considers the selected radio button.
      *
      * @param point the reference point
      * @param maxDistance maximum search distance
-     * @return the nearest suitable anchor point, or null if none found
+     * @param type the turnout type being placed
+     * @return anchor and connector information, or null if none found
      */
+    private AnchorConnectorInfo findBestAnchorForTurnout(@Nonnull Point2D point, double maxDistance, LayoutTurnout.TurnoutType type) {
+        // Get the selected turnout direction from the toolbar
+        String selectedDirection = leToolBarPanel.getTurnoutDirection();
+        
+        log.debug("findBestAnchorForTurnout: looking for anchors near ({}, {}), selected direction: {}", 
+            point.getX(), point.getY(), selectedDirection);
+        
+        // Calculate connector positions based on turnout type and standard dimensions
+        Point2D[] connectorPoints = calculateConnectorPositions(point, type);
+        
+        log.debug("Connector positions: throat({}, {}), normal({}, {}), thrown({}, {}), other({}, {})",
+            connectorPoints[0].getX(), connectorPoints[0].getY(),
+            connectorPoints[1].getX(), connectorPoints[1].getY(),
+            connectorPoints[2].getX(), connectorPoints[2].getY(),
+            connectorPoints[3].getX(), connectorPoints[3].getY());
+        
+        AnchorConnectorInfo bestMatch = null;
+        double bestScore = Double.MAX_VALUE;
+
+        for (PositionablePoint anchor : getPositionablePoints()) {
+            // Only consider anchor points (not end bumpers or edge connectors)
+            if (anchor.getType() != PositionablePoint.PointType.ANCHOR) {
+                continue;
+            }
+
+            // For turnouts, allow anchors with 0 or 1 connections (but not 2)
+            int connectionCount = 0;
+            if (anchor.getConnect1() != null) connectionCount++;
+            if (anchor.getConnect2() != null) connectionCount++;
+            if (connectionCount >= 2) {
+                continue;
+            }
+
+            PositionablePointView anchorView = getPositionablePointView(anchor);
+            Point2D anchorLocation = anchorView.getCoordsCenter();
+            
+            log.debug("Checking anchor at ({}, {}), connections: {}", 
+                anchorLocation.getX(), anchorLocation.getY(), connectionCount);
+            
+            // Check each connector position against this anchor
+            String[] connectors = {"throat", "normal", "thrown", "other"};
+            
+            for (int i = 0; i < connectors.length; i++) {
+                double distance = connectorPoints[i].distance(anchorLocation);
+                
+                log.debug("  {} connector distance to anchor: {}", connectors[i], distance);
+                
+                if (distance > maxDistance) continue;
+                
+                // Calculate score: prefer selected direction, then by distance
+                double score = distance;
+                if (connectors[i].equals(selectedDirection)) {
+                    score -= 1000; // Strong preference for selected direction
+                    log.debug("  {} matches selected direction, score adjusted to {}", connectors[i], score);
+                }
+                
+                if (score < bestScore) {
+                    bestMatch = new AnchorConnectorInfo(anchor, connectors[i], distance);
+                    bestScore = score;
+                    log.debug("  New best match: {} connector to anchor, score: {}", connectors[i], score);
+                }
+            }
+        }
+
+        log.debug("Best match result: {}", 
+            (bestMatch != null) ? bestMatch.connector + " connector" : "none");
+        
+        return bestMatch;
+    }
+    
+    /**
+     * Calculate the four connector positions for a turnout at the given center point.
+     * This uses the same logic as the turnout view classes but without creating objects.
+     *
+     * @param center the center point of the turnout
+     * @param type the turnout type
+     * @return array of [throat, normal, thrown, other] connector positions
+     */
+    private Point2D[] calculateConnectorPositions(Point2D center, LayoutTurnout.TurnoutType type) {
+        Point2D dispA, dispB;
+        
+        // Use the same displacement calculations as LayoutTurnoutView
+        switch (type) {
+            case LH_TURNOUT:
+                dispB = new Point2D.Double(getTurnoutBX(), 0.0);
+                dispA = new Point2D.Double(getTurnoutCX(), -getTurnoutWid());
+                break;
+            case RH_TURNOUT:
+                dispB = new Point2D.Double(getTurnoutBX(), 0.0);
+                dispA = new Point2D.Double(getTurnoutCX(), getTurnoutWid());
+                break;
+            case WYE_TURNOUT:
+                dispB = new Point2D.Double(getTurnoutBX(), 0.5 * getTurnoutWid());
+                dispA = new Point2D.Double(getTurnoutBX(), -0.5 * getTurnoutWid());
+                break;
+            case DOUBLE_XOVER:
+            case RH_XOVER:
+            case LH_XOVER:
+                // For crossovers, use standard dimensions
+                dispB = new Point2D.Double(getXOverLong(), 0.0);
+                dispA = new Point2D.Double(getXOverLong(), getXOverHWid());
+                break;
+            default:
+                // Fallback to RH_TURNOUT dimensions
+                dispB = new Point2D.Double(getTurnoutBX(), 0.0);
+                dispA = new Point2D.Double(getTurnoutCX(), getTurnoutWid());
+        }
+        
+        // Calculate the four connector positions
+        Point2D[] connectors = new Point2D[4];
+        connectors[0] = MathUtil.subtract(center, dispA); // A = throat
+        connectors[1] = MathUtil.add(center, dispB);      // B = normal/continuing
+        connectors[2] = MathUtil.add(center, dispA);      // C = thrown/diverging
+        connectors[3] = MathUtil.subtract(center, dispB); // D = other
+        
+        return connectors;
+    }
+    
+    /**
+     * Get the offset of a specific connector from the turnout center.
+     * This is used to calculate where the center should be placed so a specific connector aligns with an anchor.
+     *
+     * @param connector the connector type ("throat", "normal", "thrown", "other")
+     * @param type the turnout type
+     * @return the offset vector from center to the specified connector
+     */
+    private Point2D getConnectorOffsetFromCenter(String connector, LayoutTurnout.TurnoutType type) {
+        Point2D dispA, dispB;
+        
+        // Use the same displacement calculations as LayoutTurnoutView
+        switch (type) {
+            case LH_TURNOUT:
+                dispB = new Point2D.Double(getTurnoutBX(), 0.0);
+                dispA = new Point2D.Double(getTurnoutCX(), -getTurnoutWid());
+                break;
+            case RH_TURNOUT:
+                dispB = new Point2D.Double(getTurnoutBX(), 0.0);
+                dispA = new Point2D.Double(getTurnoutCX(), getTurnoutWid());
+                break;
+            case WYE_TURNOUT:
+                dispB = new Point2D.Double(getTurnoutBX(), 0.5 * getTurnoutWid());
+                dispA = new Point2D.Double(getTurnoutBX(), -0.5 * getTurnoutWid());
+                break;
+            case DOUBLE_XOVER:
+            case RH_XOVER:
+            case LH_XOVER:
+                // For crossovers, use standard dimensions
+                dispB = new Point2D.Double(getXOverLong(), 0.0);
+                dispA = new Point2D.Double(getXOverLong(), getXOverHWid());
+                break;
+            default:
+                // Fallback to RH_TURNOUT dimensions
+                dispB = new Point2D.Double(getTurnoutBX(), 0.0);
+                dispA = new Point2D.Double(getTurnoutCX(), getTurnoutWid());
+        }
+        
+        // Return the offset for the specified connector
+        switch (connector) {
+            case "throat":
+                return MathUtil.multiply(dispA, -1.0); // A = center - dispA, so offset = -dispA
+            case "normal":
+                return dispB;                          // B = center + dispB, so offset = +dispB
+            case "thrown":
+                return dispA;                          // C = center + dispA, so offset = +dispA
+            case "other":
+                return MathUtil.multiply(dispB, -1.0); // D = center - dispB, so offset = -dispB
+            default:
+                return MathUtil.multiply(dispA, -1.0); // Default to throat
+        }
+    }
+    
+    /**
+     * Legacy method for backwards compatibility.
+     * @deprecated Use findBestAnchorForTurnout instead
+     */
+    @Deprecated
     private PositionablePoint findNearbyAnchorForTurnout(@Nonnull Point2D point, double maxDistance) {
         PositionablePoint nearestAnchor = null;
         double nearestDistance = Double.MAX_VALUE;
@@ -5833,7 +6024,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         PositionablePoint existingAnchor = findNearbyAnchorForTurnout(currentPoint, 15.0);
 
         if (existingAnchor != null) {
-            log.info("Found existing anchor near click, will connect turnout throat to it");
+            log.info("Found existing anchor near click, will connect turnout to it");
             
             // Create turnout at the current click location first
             Point2D originalCurrentPoint = currentPoint;
@@ -5852,19 +6043,37 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
             
             if (newTurnout != null && newTurnoutView != null) {
-                // Get the turnout view to access its connection points
-                Point2D throatLocation = newTurnoutView.getCoordsA(); // A is typically the throat
+                // Get the selected connector from the radio buttons
+                String selectedDirection = leToolBarPanel.getTurnoutDirection();
+                
+                // Get the connector location based on which one should align
+                Point2D connectorLocation;
+                switch (selectedDirection) {
+                    case "throat":
+                        connectorLocation = newTurnoutView.getCoordsA();
+                        break;
+                    case "normal":
+                        connectorLocation = newTurnoutView.getCoordsB();
+                        break;
+                    case "thrown":
+                        connectorLocation = newTurnoutView.getCoordsC();
+                        break;
+                    default:
+                        connectorLocation = newTurnoutView.getCoordsA(); // fallback to throat
+                }
+                
                 Point2D anchorLocation = getPositionablePointView(existingAnchor).getCoordsCenter();
                 
-                // Calculate offset needed to move throat to anchor
-                Point2D offset = MathUtil.subtract(anchorLocation, throatLocation);
+                // Calculate offset needed to move selected connector to anchor
+                Point2D offset = MathUtil.subtract(anchorLocation, connectorLocation);
                 
                 // Move the turnout by this offset
                 Point2D newCenter = MathUtil.add(newTurnoutView.getCoordsCenter(), offset);
                 newTurnoutView.setCoordsCenter(newCenter);
                 
-                log.info("Moved turnout throat from ({}, {}) to anchor at ({}, {})", 
-                    throatLocation.getX(), throatLocation.getY(),
+                log.info("Moved turnout {} connector from ({}, {}) to anchor at ({}, {})", 
+                    selectedDirection,
+                    connectorLocation.getX(), connectorLocation.getY(),
                     anchorLocation.getX(), anchorLocation.getY());
                 
                 redrawPanel();

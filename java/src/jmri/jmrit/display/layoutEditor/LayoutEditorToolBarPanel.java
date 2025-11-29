@@ -109,9 +109,16 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     protected JRadioButton turnoutNormalButton = new JRadioButton("Normal/Closed");
     protected JRadioButton turnoutThrownButton = new JRadioButton("Thrown");
 
+    // Four-connector turnout direction radio buttons (for slips and crossovers)
+    protected JRadioButton turnoutAButton = new JRadioButton("A");
+    protected JRadioButton turnoutBButton = new JRadioButton("B");
+    protected JRadioButton turnoutCButton = new JRadioButton("C");
+    protected JRadioButton turnoutDButton = new JRadioButton("D");
+
     // State variables to remember selections when switching between modes
     private boolean savedLeftSelected = true;  // Remember left/right selection
     private boolean savedThroatSelected = true; // Remember turnout direction selection
+    private boolean savedASelected = true; // Remember A/B/C/D selection
 
     // 3rd row of radio buttons (and any associated text fields)
     protected JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
@@ -1117,6 +1124,14 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
             return "normal";
         } else if (turnoutThrownButton.isSelected()) {
             return "thrown";
+        } else if (turnoutAButton.isSelected()) {
+            return "A";
+        } else if (turnoutBButton.isSelected()) {
+            return "B";
+        } else if (turnoutCButton.isSelected()) {
+            return "C";
+        } else if (turnoutDButton.isSelected()) {
+            return "D";
         }
         return "throat"; // Default
     }
@@ -1161,11 +1176,16 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         } else if (isTrackSegment) {
             // Save current turnout selection
             savedThroatSelected = turnoutThroatButton.isSelected();
+            savedASelected = turnoutAButton.isSelected();
 
             // Hide turnout direction, show left/right buttons
             turnoutThroatButton.setVisible(false);
             turnoutNormalButton.setVisible(false);
             turnoutThrownButton.setVisible(false);
+            turnoutAButton.setVisible(false);
+            turnoutBButton.setVisible(false);
+            turnoutCButton.setVisible(false);
+            turnoutDButton.setVisible(false);
             tileLeftButton.setVisible(true);
             tileRightButton.setVisible(true);
 
