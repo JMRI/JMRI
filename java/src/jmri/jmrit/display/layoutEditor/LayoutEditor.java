@@ -5950,6 +5950,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         addLayoutTrack(o, ov);
 
+        // Assign selected tile if one is selected
+        TrackTile selectedTile = leToolBarPanel.getSelectedTrackTile();
+        if (selectedTile != null) {
+            o.setTrackTile(selectedTile);
+        }
+
         setDirty();
 
         // check on layout block
@@ -6244,6 +6250,12 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         }
 
         addLayoutTrack(o, ov);
+
+        // Assign selected tile if one is selected
+        TrackTile selectedTile = leToolBarPanel.getSelectedTrackTile();
+        if (selectedTile != null) {
+            o.setTrackTile(selectedTile);
+        }
 
         setDirty();
 

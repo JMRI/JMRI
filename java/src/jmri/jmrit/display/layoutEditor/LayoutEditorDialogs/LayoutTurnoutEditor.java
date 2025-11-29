@@ -13,6 +13,9 @@ import jmri.NamedBean.DisplayOptions;
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
+import jmri.tracktiles.NotATile;
+import jmri.tracktiles.TrackTile;
+import jmri.tracktiles.UnknownTile;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -59,6 +62,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     protected JButton editLayoutTurnoutBlockDButton;
     protected final JCheckBox editLayoutTurnout2ndTurnoutCheckBox = new JCheckBox(Bundle.getMessage("SupportingTurnout"));  // NOI18N
     protected final JCheckBox editLayoutTurnout2ndTurnoutInvertCheckBox = new JCheckBox(Bundle.getMessage("SecondTurnoutInvert"));  // NOI18N
+    protected final JLabel editLayoutTurnoutTileInfoLabel = new JLabel();
 
     protected boolean editLayoutTurnoutOpen = false;
     protected boolean editLayoutTurnoutNeedRedraw = false;
@@ -158,6 +162,15 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
             editLayoutTurnoutBlockButton.addActionListener(this::editLayoutTurnoutEditBlockPressed);
             contentPane.add(panel2);
 
+            // add tile information display  
+            JPanel panelTile = new JPanel();
+            panelTile.setLayout(new FlowLayout());
+            JLabel tileLabel = new JLabel(Bundle.getMessage("TrackTile") + ": ");  // NOI18N
+            panelTile.add(tileLabel);
+            editLayoutTurnoutTileInfoLabel.setToolTipText(Bundle.getMessage("TrackTileInfoHint"));  // NOI18N
+            panelTile.add(editLayoutTurnoutTileInfoLabel);
+            contentPane.add(panelTile);
+
             extendBlockBCDSetup(contentPane);
             
             // set up Edit Block, Done and Cancel buttons
@@ -185,6 +198,16 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         editLayoutTurnoutBlockNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockName()));
         editLayoutTurnoutBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlock()));
+
+        // Update tile information display
+        TrackTile tile = layoutTurnout.getTrackTile();
+        if (tile instanceof NotATile) {
+            editLayoutTurnoutTileInfoLabel.setText(Bundle.getMessage("NoTile"));  // NOI18N
+        } else if (tile instanceof UnknownTile) {
+            editLayoutTurnoutTileInfoLabel.setText(Bundle.getMessage("UnknownTile") + " (" + tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode() + ")");  // NOI18N
+        } else {
+            editLayoutTurnoutTileInfoLabel.setText(tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode());
+        }
         
         configureCheckBoxes(bm);
 
