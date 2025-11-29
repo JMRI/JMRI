@@ -19,7 +19,7 @@ import jmri.DccLocoAddress;
 
 public class TmccConsist extends jmri.implementation.DccConsist {
 
-//    private final TmccAdapter tmccAdapter;
+    // ???????????????????????
     @Nonnull
     public String sendTopicPrefix = "cab/{0}/consist";
     private boolean active = false;
