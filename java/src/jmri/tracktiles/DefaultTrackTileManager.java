@@ -153,6 +153,39 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                         }
                     }
                 }
+                
+                // Check for turnout geometry with paths
+                NodeList turnoutList = geometryElement.getElementsByTagName("turnout");
+                if (turnoutList.getLength() > 0) {
+                    Element turnoutElement = (Element) turnoutList.item(0);
+                    NodeList pathList = turnoutElement.getElementsByTagName("path");
+                    for (int k = 0; k < pathList.getLength(); k++) {
+                        Element pathElement = (Element) pathList.item(k);
+                        parsePathElement(pathElement, tile);
+                    }
+                }
+                
+                // Check for crossover geometry with paths
+                NodeList crossoverList = geometryElement.getElementsByTagName("crossover");
+                if (crossoverList.getLength() > 0) {
+                    Element crossoverElement = (Element) crossoverList.item(0);
+                    NodeList pathList = crossoverElement.getElementsByTagName("path");
+                    for (int k = 0; k < pathList.getLength(); k++) {
+                        Element pathElement = (Element) pathList.item(k);
+                        parsePathElement(pathElement, tile);
+                    }
+                }
+                
+                // Check for slip geometry with paths
+                NodeList slipList = geometryElement.getElementsByTagName("slip");
+                if (slipList.getLength() > 0) {
+                    Element slipElement = (Element) slipList.item(0);
+                    NodeList pathList = slipElement.getElementsByTagName("path");
+                    for (int k = 0; k < pathList.getLength(); k++) {
+                        Element pathElement = (Element) pathList.item(k);
+                        parsePathElement(pathElement, tile);
+                    }
+                }
             }
 
             // Add localizations
@@ -170,6 +203,53 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
         }
 
         log.debug("Loaded {} tiles from {}", tileList.getLength(), xmlFile.getName());
+    }
+
+    /**
+     * Parse a path element from the XML and add it to the tile.
+     */
+    private void parsePathElement(Element pathElement, TrackTile tile) {
+        String direction = pathElement.getAttribute("direction");
+        String state = pathElement.getAttribute("state"); 
+        String route = pathElement.getAttribute("route");
+        String id = pathElement.getAttribute("id");
+        
+        String lengthStr = pathElement.getAttribute("length");
+        String radiusStr = pathElement.getAttribute("radius");
+        String arcStr = pathElement.getAttribute("arc");
+        
+        TrackTilePath path = null;
+        
+        if (!lengthStr.isEmpty()) {
+            // Straight path
+            try {
+                double length = Double.parseDouble(lengthStr);
+                path = new TrackTilePath(direction, 
+                    state.isEmpty() ? null : state,
+                    route.isEmpty() ? null : route, 
+                    length, 
+                    id.isEmpty() ? null : id);
+            } catch (NumberFormatException e) {
+                log.warn("Invalid length value '{}' in path", lengthStr);
+            }
+        } else if (!radiusStr.isEmpty() && !arcStr.isEmpty()) {
+            // Curved path  
+            try {
+                double radius = Double.parseDouble(radiusStr);
+                double arc = Double.parseDouble(arcStr);
+                path = new TrackTilePath(direction,
+                    state.isEmpty() ? null : state,
+                    route.isEmpty() ? null : route,
+                    radius, arc,
+                    id.isEmpty() ? null : id);
+            } catch (NumberFormatException e) {
+                log.warn("Invalid radius/arc values '{}'/'{}'", radiusStr, arcStr);
+            }
+        }
+        
+        if (path != null) {
+            tile.addPath(path);
+        }
     }
 
     /**

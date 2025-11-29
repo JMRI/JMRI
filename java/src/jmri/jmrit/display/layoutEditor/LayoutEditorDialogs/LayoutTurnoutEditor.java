@@ -23,7 +23,7 @@ import jmri.util.swing.JmriJOptionPane;
  * MVC Editor component for LayoutTurnout objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class LayoutTurnoutEditor extends LayoutTrackEditor {
 
@@ -63,6 +63,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     protected final JCheckBox editLayoutTurnout2ndTurnoutCheckBox = new JCheckBox(Bundle.getMessage("SupportingTurnout"));  // NOI18N
     protected final JCheckBox editLayoutTurnout2ndTurnoutInvertCheckBox = new JCheckBox(Bundle.getMessage("SecondTurnoutInvert"));  // NOI18N
     protected final JLabel editLayoutTurnoutTileInfoLabel = new JLabel();
+    protected final JTextArea editLayoutTurnoutPathLengthsArea = new JTextArea(4, 40);
 
     protected boolean editLayoutTurnoutOpen = false;
     protected boolean editLayoutTurnoutNeedRedraw = false;
@@ -162,7 +163,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
             editLayoutTurnoutBlockButton.addActionListener(this::editLayoutTurnoutEditBlockPressed);
             contentPane.add(panel2);
 
-            // add tile information display  
+            // add tile information display
             JPanel panelTile = new JPanel();
             panelTile.setLayout(new FlowLayout());
             JLabel tileLabel = new JLabel(Bundle.getMessage("TrackTile") + ": ");  // NOI18N
@@ -171,8 +172,24 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
             panelTile.add(editLayoutTurnoutTileInfoLabel);
             contentPane.add(panelTile);
 
+            // add path lengths display
+            TitledBorder pathBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+            pathBorder.setTitle("Path Lengths");  // NOI18N
+            JPanel panelPathLengths = new JPanel();
+            panelPathLengths.setBorder(pathBorder);
+            panelPathLengths.setLayout(new BorderLayout());
+            editLayoutTurnoutPathLengthsArea.setEditable(false);
+            editLayoutTurnoutPathLengthsArea.setBackground(UIManager.getColor("Panel.background"));
+            editLayoutTurnoutPathLengthsArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+            editLayoutTurnoutPathLengthsArea.setToolTipText("Calculated path lengths based on track tile geometry");  // NOI18N
+            JScrollPane pathScrollPane = new JScrollPane(editLayoutTurnoutPathLengthsArea);
+            pathScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            pathScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            panelPathLengths.add(pathScrollPane, BorderLayout.CENTER);
+            contentPane.add(panelPathLengths);
+
             extendBlockBCDSetup(contentPane);
-            
+
             // set up Edit Block, Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
@@ -184,7 +201,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
 
         setUpForEdit();
-        
+
         editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnoutView.isHidden());
 
         List<Turnout> currentTurnouts = new ArrayList<>();
@@ -203,12 +220,15 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         TrackTile tile = layoutTurnout.getTrackTile();
         if (tile instanceof NotATile) {
             editLayoutTurnoutTileInfoLabel.setText(Bundle.getMessage("NoTile"));  // NOI18N
+            editLayoutTurnoutPathLengthsArea.setText("No track tile associated");
         } else if (tile instanceof UnknownTile) {
             editLayoutTurnoutTileInfoLabel.setText(Bundle.getMessage("UnknownTile") + " (" + tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode() + ")");  // NOI18N
+            editLayoutTurnoutPathLengthsArea.setText("Path lengths not available for unknown tiles");
         } else {
             editLayoutTurnoutTileInfoLabel.setText(tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode());
+            updatePathLengthsDisplay(layoutTurnout);
         }
-        
+
         configureCheckBoxes(bm);
 
         boolean enable2nd = !layoutTurnout.getSecondTurnoutName().isEmpty();
@@ -225,7 +245,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
 
         setUpContinuingSense();
-        
+
         editLayoutTurnoutFrame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -413,7 +433,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
             LayoutTurnout layoutTurnout2 = null;
             int t1state = Turnout.CLOSED;
             int t2state = t1state;  // start off the same
-            
+
             // invert if 2nd is inverted
             if (layoutTurnout.isSecondTurnoutInverted()) {
                 t2state = Turnout.invertTurnoutState(t2state);
@@ -460,7 +480,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
 
         setContinuingRouteTurnoutState();
-        
+
         // check if Block changed
         newName = editLayoutTurnoutBlockNameComboBox.getSelectedItemDisplayName();
         if (newName == null) {
@@ -472,9 +492,9 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
-        
+
         checkBlock234Changed();
-                
+
         // set hidden
         boolean oldHidden = layoutTurnoutView.isHidden();
         layoutTurnoutView.setHidden(editLayoutTurnoutHiddenCheckBox.isSelected());
@@ -513,7 +533,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         }
     }
 
-    protected void checkBlock234Changed() {} 
+    protected void checkBlock234Changed() {}
 
     private void editLayoutTurnoutCancelPressed(ActionEvent a) {
         editLayoutTurnoutOpen = false;
@@ -529,7 +549,25 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
             editLayoutTurnoutNeedRedraw = false;
         }
     }
-    
+
+    /**
+     * Update the path lengths display area with calculated path information.
+     * 
+     * @param layoutTurnout The turnout to calculate paths for
+     */
+    protected void updatePathLengthsDisplay(@Nonnull LayoutTurnout layoutTurnout) {
+        List<String> pathLengths = TurnoutPathCalculator.calculatePathLengths(layoutTurnout);
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for (String pathLength : pathLengths) {
+            sb.append(pathLength).append("\n");
+        }
+        
+        editLayoutTurnoutPathLengthsArea.setText(sb.toString());
+        editLayoutTurnoutPathLengthsArea.setCaretPosition(0);  // Scroll to top
+    }
+
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnoutEditor.class);
 }

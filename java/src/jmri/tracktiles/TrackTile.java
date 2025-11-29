@@ -1,6 +1,8 @@
 package jmri.tracktiles;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -23,6 +25,7 @@ public class TrackTile extends AbstractNamedBean {
     private final String jmriType;
     private final String partCode;
     private final Map<String, String> localizations;
+    private final List<TrackTilePath> paths;
     
     // Geometry fields
     private double length = 0.0;      // For straight tracks, in mm
@@ -46,6 +49,7 @@ public class TrackTile extends AbstractNamedBean {
         this.jmriType = jmriType;
         this.partCode = partCode;
         this.localizations = new HashMap<>();
+        this.paths = new ArrayList<>();
     }
     
     /**
@@ -66,6 +70,7 @@ public class TrackTile extends AbstractNamedBean {
         this.jmriType = jmriType;
         this.partCode = partCode;
         this.localizations = new HashMap<>();
+        this.paths = new ArrayList<>();
     }
 
     /**
@@ -194,6 +199,34 @@ public class TrackTile extends AbstractNamedBean {
      */
     public boolean hasLocalizations() {
         return !localizations.isEmpty();
+    }
+    
+    /**
+     * Add a path to this track tile.
+     * 
+     * @param path the path to add
+     */
+    public void addPath(@Nonnull TrackTilePath path) {
+        paths.add(path);
+    }
+    
+    /**
+     * Get all paths for this track tile.
+     * 
+     * @return list of paths (may be empty)
+     */
+    @Nonnull
+    public List<TrackTilePath> getPaths() {
+        return new ArrayList<>(paths);
+    }
+    
+    /**
+     * Check if this track tile has path information.
+     * 
+     * @return true if at least one path exists
+     */
+    public boolean hasPaths() {
+        return !paths.isEmpty();
     }
     
     /**
