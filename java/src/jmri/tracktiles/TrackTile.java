@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.implementation.AbstractNamedBean;
@@ -15,7 +16,7 @@ import jmri.implementation.AbstractNamedBean;
  * Extends AbstractNamedBean to integrate with JMRI's Manager framework.
  * System name format: "TT:vendor:family:partcode" (e.g., "TT:Märklin:C-Track:24077")
  * User name: Optional friendly name for the tile
- * 
+ *
  * @author Ralf Lang Copyright (C) 2025
  */
 public class TrackTile extends AbstractNamedBean {
@@ -26,7 +27,7 @@ public class TrackTile extends AbstractNamedBean {
     private final String partCode;
     private final Map<String, String> localizations;
     private final List<TrackTilePath> paths;
-    
+
     // Geometry fields
     private double length = 0.0;      // For straight tracks, in mm
     private double radius = 0.0;      // For curved tracks, in mm
@@ -34,14 +35,14 @@ public class TrackTile extends AbstractNamedBean {
 
     /**
      * Create a TrackTile.
-     * 
+     *
      * @param systemName The system name in format "TT:vendor:family:partcode"
      * @param vendor     The manufacturer name (e.g., "Märklin")
      * @param family     The track family (e.g., "C-Track")
      * @param jmriType   The JMRI type (e.g., "straight", "curved", "turnout")
      * @param partCode   The manufacturer's part code (e.g., "24077")
      */
-    public TrackTile(@Nonnull String systemName, @Nonnull String vendor, @Nonnull String family, 
+    public TrackTile(@Nonnull String systemName, @Nonnull String vendor, @Nonnull String family,
                      @Nonnull String jmriType, @Nonnull String partCode) {
         super(systemName);
         this.vendor = vendor;
@@ -51,10 +52,10 @@ public class TrackTile extends AbstractNamedBean {
         this.localizations = new HashMap<>();
         this.paths = new ArrayList<>();
     }
-    
+
     /**
      * Create a TrackTile with user name.
-     * 
+     *
      * @param systemName The system name in format "TT:vendor:family:partcode"
      * @param userName   Optional user-friendly name
      * @param vendor     The manufacturer name (e.g., "Märklin")
@@ -62,7 +63,7 @@ public class TrackTile extends AbstractNamedBean {
      * @param jmriType   The JMRI type (e.g., "straight", "curved", "turnout")
      * @param partCode   The manufacturer's part code (e.g., "24077")
      */
-    public TrackTile(@Nonnull String systemName, String userName, @Nonnull String vendor, 
+    public TrackTile(@Nonnull String systemName, String userName, @Nonnull String vendor,
                      @Nonnull String family, @Nonnull String jmriType, @Nonnull String partCode) {
         super(systemName, userName);
         this.vendor = vendor;
@@ -75,7 +76,7 @@ public class TrackTile extends AbstractNamedBean {
 
     /**
      * Add a localized caption for this track tile.
-     * 
+     *
      * @param lang    Language code (e.g., "en", "de", "es")
      * @param caption Localized description
      */
@@ -105,7 +106,7 @@ public class TrackTile extends AbstractNamedBean {
 
     /**
      * Set the length for straight track tiles.
-     * 
+     *
      * @param length The length in millimeters
      */
     public void setLength(double length) {
@@ -114,7 +115,7 @@ public class TrackTile extends AbstractNamedBean {
 
     /**
      * Get the length for straight track tiles.
-     * 
+     *
      * @return The length in millimeters, or 0.0 if not set
      */
     public double getLength() {
@@ -123,7 +124,7 @@ public class TrackTile extends AbstractNamedBean {
 
     /**
      * Set the radius for curved track tiles.
-     * 
+     *
      * @param radius The radius in millimeters
      */
     public void setRadius(double radius) {
@@ -132,7 +133,7 @@ public class TrackTile extends AbstractNamedBean {
 
     /**
      * Get the radius for curved track tiles.
-     * 
+     *
      * @return The radius in millimeters, or 0.0 if not set
      */
     public double getRadius() {
@@ -141,7 +142,7 @@ public class TrackTile extends AbstractNamedBean {
 
     /**
      * Set the arc angle for curved track tiles.
-     * 
+     *
      * @param arc The arc angle in degrees
      */
     public void setArc(double arc) {
@@ -150,7 +151,7 @@ public class TrackTile extends AbstractNamedBean {
 
     /**
      * Get the arc angle for curved track tiles.
-     * 
+     *
      * @return The arc angle in degrees, or 0.0 if not set
      */
     public double getArc() {
@@ -160,7 +161,7 @@ public class TrackTile extends AbstractNamedBean {
     /**
      * Get the localized caption, preferring the given language.
      * Falls back to English, then German, then any available language.
-     * 
+     *
      * @param preferredLang The preferred language code
      * @return The caption in the best available language
      */
@@ -171,64 +172,78 @@ public class TrackTile extends AbstractNamedBean {
         if (caption != null) {
             return caption;
         }
-        
+
         // Fall back to English
         caption = localizations.get("en");
         if (caption != null) {
             return caption;
         }
-        
+
         // Fall back to German
         caption = localizations.get("de");
         if (caption != null) {
             return caption;
         }
-        
+
         // Return first available or empty string
         if (!localizations.isEmpty()) {
             return localizations.values().iterator().next();
         }
-        
+
         return "";
     }
 
     /**
      * Check if localizations are available.
-     * 
+     *
      * @return true if at least one localization exists
      */
     public boolean hasLocalizations() {
         return !localizations.isEmpty();
     }
-    
+
     /**
      * Add a path to this track tile.
-     * 
+     *
      * @param path the path to add
      */
     public void addPath(@Nonnull TrackTilePath path) {
         paths.add(path);
     }
-    
+
     /**
      * Get all paths for this track tile.
-     * 
+     *
      * @return list of paths (may be empty)
      */
     @Nonnull
     public List<TrackTilePath> getPaths() {
         return new ArrayList<>(paths);
     }
-    
+
+    /**
+     * Get a specific path by its ID.
+     *
+     * @param pathId the path ID to look for
+     * @return the path with the specified ID, or null if not found
+     */
+    @CheckForNull
+    public TrackTilePath getPathById(@Nonnull String pathId) {
+        return paths.stream()
+            .filter(path -> pathId.equals(path.getId()))
+            .findFirst()
+            .orElse(null);
+    }
+
     /**
      * Check if this track tile has path information.
-     * 
+     *
      * @return true if at least one path exists
      */
     public boolean hasPaths() {
         return !paths.isEmpty();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -237,7 +252,7 @@ public class TrackTile extends AbstractNamedBean {
         // TrackTiles are catalog items with no state
         return 0;
     }
-    
+
     /**
      * {@inheritDoc}
      */
