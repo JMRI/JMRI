@@ -156,7 +156,9 @@ public class TmccConsist extends jmri.implementation.DccConsist {
      */
     @Override
     public synchronized void add(DccLocoAddress locoAddress, boolean directionNormal) {
-//        if (TMCC1) {
+        System.out.println("add(..) with protocol "+locoAddress.getProtocol()
+                        +" "+(locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1));
+//        if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1) {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xFE);
             if (!contains(locoAddress)) {
