@@ -1,5 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -112,10 +115,32 @@ public class LayoutDoubleXOver extends LayoutXOver {
      * @param v version, unused.
      */
     public LayoutDoubleXOver(@Nonnull String id, 
-            @Nonnull LayoutEditor layoutEditor,
+            @Nonnull LayoutEditor layoutEditor, 
             int v) {
-        super(id, TurnoutType.DOUBLE_XOVER, layoutEditor, v);
+        super(id, TurnoutType.DOUBLE_XOVER, layoutEditor, 1);
+    }
+
+    @Override
+    @Nonnull
+    protected List<String> getDiagonalPaths() {
+        return Arrays.asList("AC", "BD"); // Both diagonals
+    }
+
+    @Override
+    protected String findPathForAnchor(@Nonnull String anchor) {
+        switch (anchor) {
+            case "A":
+                return "AB"; // Could also be "AC" depending on turnout state
+            case "B":
+                return "AB"; // Could also be "BD" depending on turnout state
+            case "C":
+                return "CD"; // Could also be "AC" depending on turnout state
+            case "D":
+                return "CD"; // Could also be "BD" depending on turnout state
+            default:
+                return null;
+        }
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOver.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);
 }

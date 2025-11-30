@@ -116,6 +116,28 @@ public class LayoutLHXOver extends LayoutXOver {
             int v) {
         super(id, TurnoutType.LH_XOVER, layoutEditor, 1);
     }
+
+    @Override
+    @Nonnull
+    protected java.util.List<String> getDiagonalPaths() {
+        return java.util.Arrays.asList("AC"); // Left-hand diagonal only
+    }
+
+    @Override
+    protected String findPathForAnchor(@Nonnull String anchor) {
+        switch (anchor) {
+            case "A":
+                return "AB"; // Could also be "AC" depending on turnout state
+            case "B":
+                return "AB";
+            case "C":
+                return "CD"; // Could also be "AC" depending on turnout state
+            case "D":
+                return "CD";
+            default:
+                return null;
+        }
+    }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);
 }

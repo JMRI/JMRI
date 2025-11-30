@@ -111,11 +111,33 @@ public class LayoutRHXOver extends LayoutXOver {
      * @param layoutEditor main layout editor.
      * @param v version, unused.
      */
-    public LayoutRHXOver(@Nonnull String id,
+    public LayoutRHXOver(@Nonnull String id, 
             @Nonnull LayoutEditor layoutEditor, 
             int v) {
         super(id, TurnoutType.RH_XOVER, layoutEditor, 1);
     }
+
+    @Override
+    @Nonnull
+    protected java.util.List<String> getDiagonalPaths() {
+        return java.util.Arrays.asList("BD"); // Right-hand diagonal only
+    }
+
+    @Override
+    protected String findPathForAnchor(@Nonnull String anchor) {
+        switch (anchor) {
+            case "A":
+                return "AB";
+            case "B":
+                return "AB"; // Could also be "BD" depending on turnout state
+            case "C":
+                return "CD";
+            case "D":
+                return "CD"; // Could also be "BD" depending on turnout state
+            default:
+                return null;
+        }
+    }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutRHXOver.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);
 }

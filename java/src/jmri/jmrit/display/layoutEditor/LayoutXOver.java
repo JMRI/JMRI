@@ -1,5 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.geom.Point2D;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -68,6 +72,115 @@ abstract public class LayoutXOver extends LayoutTurnout {
             @Nonnull LayoutEditor layoutEditor, 
             int v) {
         super(id, t, layoutEditor, 1);
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getAnchorPoints() {
+        return Arrays.asList("A", "B", "C", "D");
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getPathIdentifiers() {
+        // All crossovers have AB and CD, plus their specific diagonal path(s)
+        List<String> paths = new java.util.ArrayList<>();
+        paths.add("AB");
+        paths.add("CD");
+        paths.addAll(getDiagonalPaths());
+        return paths;
+    }
+
+    /**
+     * Get the diagonal path(s) specific to this crossover type.
+     * @return list of diagonal paths
+     */
+    @Nonnull
+    protected abstract List<String> getDiagonalPaths();
+
+    @Override
+    @Nonnull
+    public List<String> getAllConnectors() {
+        return Arrays.asList("A", "B", "C", "D");
+    }
+
+    @Override
+    protected String findPathForAnchor(@Nonnull String anchor) {
+        // Crossovers have multiple possible paths from each anchor
+        // Return the first available path for simplicity
+        // A more sophisticated implementation would consider turnout state
+        switch (anchor) {
+            case "A":
+                return "AB"; // Could also be "AC" depending on turnout state
+            case "B":
+                return "AB"; // Could also be "BD" depending on turnout state  
+            case "C":
+                return "CD"; // Could also be "AC" depending on turnout state
+            case "D":
+                return "CD"; // Could also be "BD" depending on turnout state
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    protected Point2D getAnchorCoordinates(@Nonnull String anchor, @Nonnull LayoutEditor layoutEditor) {
+        switch (anchor) {
+            case "A":
+                return layoutEditor.getCoords(getConnectA(), HitPointType.TURNOUT_A);
+            case "B":
+                return layoutEditor.getCoords(getConnectB(), HitPointType.TURNOUT_B);
+            case "C":
+                return layoutEditor.getCoords(getConnectC(), HitPointType.TURNOUT_C);
+            case "D":
+                return layoutEditor.getCoords(getConnectD(), HitPointType.TURNOUT_D);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    protected java.awt.geom.Point2D getOtherEndpoint(@Nonnull String pathId, @Nonnull String anchor, @Nonnull LayoutEditor layoutEditor) {
+        switch (pathId) {
+            case "AB":
+                switch (anchor) {
+                    case "A":
+                        return layoutEditor.getCoords(getConnectB(), HitPointType.TURNOUT_B);
+                    case "B":
+                        return layoutEditor.getCoords(getConnectA(), HitPointType.TURNOUT_A);
+                    default:
+                        return null;
+                }
+            case "CD":
+                switch (anchor) {
+                    case "C":
+                        return layoutEditor.getCoords(getConnectD(), HitPointType.TURNOUT_D);
+                    case "D":
+                        return layoutEditor.getCoords(getConnectC(), HitPointType.TURNOUT_C);
+                    default:
+                        return null;
+                }
+            case "AC":
+                switch (anchor) {
+                    case "A":
+                        return layoutEditor.getCoords(getConnectC(), HitPointType.TURNOUT_C);
+                    case "C":
+                        return layoutEditor.getCoords(getConnectA(), HitPointType.TURNOUT_A);
+                    default:
+                        return null;
+                }
+            case "BD":
+                switch (anchor) {
+                    case "B":
+                        return layoutEditor.getCoords(getConnectD(), HitPointType.TURNOUT_D);
+                    case "D":
+                        return layoutEditor.getCoords(getConnectB(), HitPointType.TURNOUT_B);
+                    default:
+                        return null;
+                }
+            default:
+                return null;
+        }
     }
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutXOver.class);
