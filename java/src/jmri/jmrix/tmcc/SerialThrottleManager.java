@@ -75,6 +75,21 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
+    @Override
+    public String[] getAddressTypes() {
+        return new String[]{
+            LocoAddress.Protocol.TMCC1.getPeopleName(),
+            LocoAddress.Protocol.TMCC2.getPeopleName()};
+    }
+
+    @Override
+    public LocoAddress.Protocol[] getAddressProtocolTypes() {
+        return new LocoAddress.Protocol[]{
+            LocoAddress.Protocol.TMCC1,
+            LocoAddress.Protocol.TMCC2};
+    }
+
+
     /**
      * What speed modes are supported by this system? value should be xor of
      * possible modes specifed by the DccThrottle interface
