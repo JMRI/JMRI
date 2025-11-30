@@ -816,6 +816,12 @@ public class TrackSegment extends LayoutTrack {
         return Arrays.asList("AB");
     }
 
+    @Override
+    @Nonnull
+    public List<String> getAllConnectors() {
+        return Arrays.asList("A", "B");
+    }
+
     // Orientation calculation inherited from LayoutTrack base class
 
     // Path length calculation inherited from LayoutTrack base class

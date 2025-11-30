@@ -121,6 +121,15 @@ abstract public class LayoutTrack {
     public abstract List<String> getPathIdentifiers();
 
     /**
+     * Get all connector/anchor points for this track element.
+     * This includes all points where other tracks can connect.
+     * 
+     * @return list of all connector identifiers (e.g., ["A", "B"] for track segments)
+     */
+    @Nonnull
+    public abstract List<String> getAllConnectors();
+
+    /**
      * Calculate the orientation angle at the specified anchor point.
      * This is the angle of track continuation from this anchor point.
      * 

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
@@ -1039,6 +1040,64 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public String getTypeName() {
         return Bundle.getMessage("TypeName_Turntable");
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getAnchorPoints() {
+        // Turntables have dynamic number of connection points (rays)
+        List<String> anchors = new ArrayList<>();
+        for (int i = 0; i < getRayTrackList().size(); i++) {
+            anchors.add("Ray" + i);
+        }
+        return anchors;
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getPathIdentifiers() {
+        // Turntables can have paths between any two rays
+        // For simplicity, return empty list - turntables don't have predefined paths
+        return new ArrayList<>();
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getAllConnectors() {
+        // Same as anchor points for turntables
+        return getAnchorPoints();
+    }
+
+    @Override
+    protected Point2D getAnchorCoordinates(@Nonnull String anchor, @Nonnull LayoutEditor layoutEditor) {
+        // Parse ray number from anchor like "Ray0", "Ray1", etc.
+        if (anchor.startsWith("Ray")) {
+            try {
+                int rayIndex = Integer.parseInt(anchor.substring(3));
+                if (rayIndex < getRayTrackList().size()) {
+                    // For turntables, ray connections are at the edge of the turntable circle
+                    // This would need the actual ray position calculation
+                    // For now, return null as placeholder - proper implementation would calculate ray endpoints
+                    return null;
+                }
+            } catch (NumberFormatException e) {
+                // Invalid ray number format
+            }
+        }
+        return null;
+    }
+
+    @Override
+    protected String findPathForAnchor(@Nonnull String anchor) {
+        // Turntables don't have predefined paths - each ray can connect to any other ray
+        return null;
+    }
+
+    @Override
+    protected Point2D getOtherEndpoint(@Nonnull String pathId, @Nonnull String anchor, @Nonnull LayoutEditor layoutEditor) {
+        // Turntables don't have predefined paths between rays
+        // Each ray connects to the center, so there's no "other endpoint" concept
+        return null;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurntable.class);

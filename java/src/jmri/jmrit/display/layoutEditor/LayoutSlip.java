@@ -991,5 +991,23 @@ abstract public class LayoutSlip extends LayoutTurnout {
         return getId();
     }
 
+    @Override
+    @Nonnull
+    public List<String> getAnchorPoints() {
+        return Arrays.asList("A", "B", "C", "D");
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getPathIdentifiers() {
+        return Arrays.asList("AC", "BD", "AD", "BC"); // All four possible slip paths
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getAllConnectors() {
+        return Arrays.asList("A", "B", "C", "D");
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutSlip.class);
 }

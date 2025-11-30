@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import java.awt.geom.Point2D;
 import java.text.MessageFormat;
 import java.util.*;
 
@@ -1197,6 +1198,80 @@ public class LevelXing extends LayoutTrack {
     @Override
     public String getTypeName() {
         return Bundle.getMessage("TypeName_LevelXing");
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getAnchorPoints() {
+        return Arrays.asList("A", "B", "C", "D");
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getPathIdentifiers() {
+        return Arrays.asList("AB", "CD"); // Two crossing paths
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getAllConnectors() {
+        return Arrays.asList("A", "B", "C", "D");
+    }
+
+    @Override
+    protected Point2D getAnchorCoordinates(@Nonnull String anchor, @Nonnull LayoutEditor layoutEditor) {
+        switch (anchor) {
+            case "A":
+                return layoutEditor.getCoords(getConnectA(), HitPointType.LEVEL_XING_A);
+            case "B":
+                return layoutEditor.getCoords(getConnectB(), HitPointType.LEVEL_XING_B);
+            case "C":
+                return layoutEditor.getCoords(getConnectC(), HitPointType.LEVEL_XING_C);
+            case "D":
+                return layoutEditor.getCoords(getConnectD(), HitPointType.LEVEL_XING_D);
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    protected String findPathForAnchor(@Nonnull String anchor) {
+        switch (anchor) {
+            case "A":
+            case "B":
+                return "AB";
+            case "C":
+            case "D":
+                return "CD";
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    protected Point2D getOtherEndpoint(@Nonnull String pathId, @Nonnull String anchor, @Nonnull LayoutEditor layoutEditor) {
+        switch (pathId) {
+            case "AB":
+                switch (anchor) {
+                    case "A":
+                        return layoutEditor.getCoords(getConnectB(), HitPointType.LEVEL_XING_B);
+                    case "B":
+                        return layoutEditor.getCoords(getConnectA(), HitPointType.LEVEL_XING_A);
+                    default:
+                        return null;
+                }
+            case "CD":
+                switch (anchor) {
+                    case "C":
+                        return layoutEditor.getCoords(getConnectD(), HitPointType.LEVEL_XING_D);
+                    case "D":
+                        return layoutEditor.getCoords(getConnectC(), HitPointType.LEVEL_XING_C);
+                    default:
+                        return null;
+                }
+            default:
+                return null;
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXing.class);
