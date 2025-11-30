@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-layoutBlock-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"layoutBlock\". With the excpetion of name, all properties are optional, and if specified in a post or put message, will update the layoutBlock in the server.",

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-time-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"time\"",
@@ -15,7 +15,11 @@
         "state": {
             "type": "integer",
             "description": "If present, sets the state of the fast clock",
-            "enum": [0, 2, 4]
+            "enum": [
+                0,
+                2,
+                4
+            ]
         }
     },
     "additionalProperties": false

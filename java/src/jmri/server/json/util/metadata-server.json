@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-metadata-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"metadata\"",
@@ -7,7 +7,17 @@
         "name": {
             "type": "string",
             "description": "Name of metadata element",
-            "enum": ["JMRIVERSION", "JMRIVERCANON", "JMRIVERMAJOR", "JMRIVERMINOR", "JMRIVERTEST", "JVMVERSION", "JVMVENDOR", "activeProfile", "copyright"]
+            "enum": [
+                "JMRIVERSION",
+                "JMRIVERCANON",
+                "JMRIVERMAJOR",
+                "JMRIVERMINOR",
+                "JMRIVERTEST",
+                "JVMVERSION",
+                "JVMVENDOR",
+                "activeProfile",
+                "copyright"
+            ]
         },
         "value": {
             "type": "string",
@@ -15,5 +25,8 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "value"]
+    "required": [
+        "name",
+        "value"
+    ]
 }

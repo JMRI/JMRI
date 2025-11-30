@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-audioicon-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"audioicon\"",
@@ -18,5 +18,8 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "data"]
+    "required": [
+        "name",
+        "data"
+    ]
 }

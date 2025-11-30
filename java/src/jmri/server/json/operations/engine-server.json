@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-engine-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"engine\"",
@@ -128,9 +128,9 @@
         },
         "carSubType": {
             "type": [
-            	"string",
-            	"null"
-        	],
+                "string",
+                "null"
+            ],
             "description": "The engine sub type; not displayed in manifests and switch lists"
         },
         "weight": {

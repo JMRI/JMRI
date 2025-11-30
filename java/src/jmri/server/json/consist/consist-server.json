@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-consist-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"consist\"",
@@ -15,7 +15,10 @@
         "type": {
             "type": "integer",
             "description": "Type of consist, 0 for advanced, 1 for command station",
-            "enum": [0, 1]
+            "enum": [
+                0,
+                1
+            ]
         },
         "id": {
             "type": "string",
@@ -49,10 +52,22 @@
                     }
                 },
                 "additionalProperties": false,
-                "required": ["address", "isLongAddress", "forward", "position"]
+                "required": [
+                    "address",
+                    "isLongAddress",
+                    "forward",
+                    "position"
+                ]
             }
         }
     },
     "additionalProperties": false,
-    "required": ["address", "isLongAddress", "type", "name", "sizeLimit", "engines"]
+    "required": [
+        "address",
+        "isLongAddress",
+        "type",
+        "name",
+        "sizeLimit",
+        "engines"
+    ]
 }

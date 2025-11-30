@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-memory-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"memory\"",
@@ -9,11 +9,17 @@
             "description": "System name of the memory"
         },
         "userName": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "User name of the memory"
         },
         "comment": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "Comment for the memory"
         },
         "properties": {
@@ -27,19 +33,33 @@
                         "description": "Key by which property is accessed"
                     },
                     "value": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "String value of property or null"
                     }
                 },
                 "additionalProperties": false,
-                "required": ["name", "value"]
+                "required": [
+                    "name",
+                    "value"
+                ]
             }
         },
         "value": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "The memory's value, can be idTag, Reporter, or text"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "value"]
+    "required": [
+        "name",
+        "userName",
+        "comment",
+        "value"
+    ]
 }

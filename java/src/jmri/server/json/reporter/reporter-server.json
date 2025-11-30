@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-reporter-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"reporter\"",
@@ -9,11 +9,17 @@
             "description": "System name of the reporter"
         },
         "userName": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "User name of the reporter"
         },
         "comment": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "Comment for the reporter"
         },
         "properties": {
@@ -27,7 +33,10 @@
                         "description": "Key by which property is accessed"
                     },
                     "value": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "String value of property or null"
                     }
                 }
@@ -36,21 +45,42 @@
         "state": {
             "type": "integer",
             "description": "The state of the reporter",
-            "enum": [0, 2, 4, 8]
+            "enum": [
+                0,
+                2,
+                4,
+                8
+            ]
         },
         "report": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "The current reported value as a string"
         },
         "lastReport": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "The last reported value as a string"
         },
         "value": {
-            "type": ["string"],
+            "type": [
+                "string"
+            ],
             "description": "The current reported value or <no report> or <blank>"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "state", "report", "lastReport", "value"]
+    "required": [
+        "name",
+        "userName",
+        "comment",
+        "state",
+        "report",
+        "lastReport",
+        "value"
+    ]
 }

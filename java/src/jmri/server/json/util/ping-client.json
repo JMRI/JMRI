@@ -1,9 +1,8 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-ping-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"ping\"",
-    "properties": {
-    },
+    "properties": {},
     "additionalProperties": false
 }

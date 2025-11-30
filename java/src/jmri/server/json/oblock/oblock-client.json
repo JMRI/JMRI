@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-oblock-client-message",
     "type": "object",
     "description": "Schema data object in message from client to JMRI for type \"oblock\"",
@@ -17,19 +17,49 @@
             "description": "If present, set the comment for the OBlock"
         },
         "status": {
-          "type": "integer",
-          "description": "If present, set the occupancy status of the oblock",
-          "enum": [0, 1, 2, 4, 8, 16, 18, 20, 24, 32, 34, 36, 40, 64, 66, 68, 72, 128, 130, 132, 136]
+            "type": "integer",
+            "description": "If present, set the occupancy status of the oblock",
+            "enum": [
+                0,
+                1,
+                2,
+                4,
+                8,
+                16,
+                18,
+                20,
+                24,
+                32,
+                34,
+                36,
+                40,
+                64,
+                66,
+                68,
+                72,
+                128,
+                130,
+                132,
+                136
+            ]
         },
         "warrant": {
-          "type": ["string", "null"],
-          "description": "If present, allocate Warrant for the OBlock"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, allocate Warrant for the OBlock"
         },
         "train": {
-          "type": ["string", "null"],
-          "description": "If present, set Train in Warrant for the OBlock"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set Train in Warrant for the OBlock"
         }
     },
     "additionalProperties": false,
-    "required": ["name"]
+    "required": [
+        "name"
+    ]
 }

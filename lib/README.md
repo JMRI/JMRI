@@ -173,7 +173,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 
-##### json-schema-validator-1.0.28.jar
+##### json-schema-validator-1.3.3.jar
 - JSON Schema validation library
 - from https://github.com/networknt/json-schema-validator/releases
 

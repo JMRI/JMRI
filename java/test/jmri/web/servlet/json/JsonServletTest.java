@@ -82,7 +82,8 @@ public class JsonServletTest {
         JUnitAppender.assertWarnMessage("Errors validating {\"type\":\"invalid-type\"}");
         JUnitAppender.assertWarnMessageStartingWith("JSON Validation Error: 1028");
         JUnitAppender.assertWarnMessageStartingWith("JSON Validation Error: 1008");
-        JUnitAppender.assertWarnMessageStartingWith("JSON Validation Error: 1003");
+        // As of 1.0.* this was code 1003 but by 1.3.3 it is 1029 - 
+        JUnitAppender.assertWarnMessageStartingWith("JSON Validation Error: 1029");
         // test a schema invalid message with validation off
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(false);
         response = new MockHttpServletResponse();

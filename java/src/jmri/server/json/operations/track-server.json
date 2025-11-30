@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-track-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"track\"",
@@ -32,7 +32,10 @@
             "description": "Operations Id of parent location"
         },
         "reporter": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "The system name of the reporter for this track"
         },
         "type": {
@@ -51,5 +54,14 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "carType", "comment", "length", "location", "reporter", "type"]
+    "required": [
+        "name",
+        "userName",
+        "carType",
+        "comment",
+        "length",
+        "location",
+        "reporter",
+        "type"
+    ]
 }
