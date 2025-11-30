@@ -225,40 +225,14 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             editTrackSegmentArcTextField.setText("" + trackSegmentView.getAngle());
             editTrackSegmentArcTextField.setEnabled(true);
             
-            // Calculate and display tangent orientations at endpoints
-            java.awt.geom.Point2D center = trackSegmentView.getCentre();
+            // Calculate and display orientations using model-based methods
             java.awt.geom.Point2D connect1Point = layoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
             java.awt.geom.Point2D connect2Point = layoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
             
-            if (center != null && connect1Point != null && connect2Point != null) {
-                // Calculate radius angle from each point to center
-                double radiusAngle1 = Math.toDegrees(Math.atan2(
-                    center.getY() - connect1Point.getY(),
-                    center.getX() - connect1Point.getX()));
-                
-                double radiusAngle2 = Math.toDegrees(Math.atan2(
-                    center.getY() - connect2Point.getY(),
-                    center.getX() - connect2Point.getX()));
-                
-                // The tangent is perpendicular to the radius
-                double arc = trackSegmentView.getAngle();
-                boolean isFlip = trackSegmentView.isFlip();
-                boolean counterClockwise = (arc > 0) != isFlip;
-                
-                double tangent1, tangent2;
-                if (counterClockwise) {
-                    // CCW motion: tangent is 90° behind the radius
-                    tangent1 = radiusAngle1 - 90.0;
-                    tangent2 = radiusAngle2 - 90.0;
-                } else {
-                    // CW motion: tangent is 90° ahead of the radius
-                    tangent1 = radiusAngle1 + 90.0;
-                    tangent2 = radiusAngle2 + 90.0;
-                }
-                
-                // Normalize to 0-360
-                tangent1 = (tangent1 % 360 + 360) % 360;
-                tangent2 = (tangent2 % 360 + 360) % 360;
+            if (connect1Point != null && connect2Point != null) {
+                // Use model methods for orientation calculation
+                double orientation1 = trackSegment.getConnect1Orientation(layoutEditor);
+                double orientation2 = trackSegment.getConnect2Orientation(layoutEditor);
                 
                 // Set labels with point IDs and coordinates
                 String connect1Id = trackSegment.getConnect1().getId();
@@ -270,9 +244,17 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
                     String.format("%s (%.1f, %.1f) Orientation:", 
                         connect2Id, connect2Point.getX(), connect2Point.getY()));
                 
-                // Display the tangent orientations
-                editTrackSegmentConnect1OrientationField.setText(String.format("%.2f°", tangent1));
-                editTrackSegmentConnect2OrientationField.setText(String.format("%.2f°", tangent2));
+                // Display the orientations
+                if (orientation1 >= 0) {
+                    editTrackSegmentConnect1OrientationField.setText(String.format("%.2f°", orientation1));
+                } else {
+                    editTrackSegmentConnect1OrientationField.setText("-");
+                }
+                if (orientation2 >= 0) {
+                    editTrackSegmentConnect2OrientationField.setText(String.format("%.2f°", orientation2));
+                } else {
+                    editTrackSegmentConnect2OrientationField.setText("-");
+                }
             } else {
                 editTrackSegmentConnect1OrientationLabel.setText("Connect1 Orientation:");
                 editTrackSegmentConnect2OrientationLabel.setText("Connect2 Orientation:");
@@ -283,18 +265,16 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             // Straight segment or not a circle
             editTrackSegmentArcTextField.setEnabled(false);
             
-            // For straight segments, calculate orientation from the two endpoints
+            // Calculate orientations using model-based methods
             java.awt.geom.Point2D connect1Point = layoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
             java.awt.geom.Point2D connect2Point = layoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
             
             if (connect1Point != null && connect2Point != null) {
-                // Calculate orientation (angle from connect1 to connect2)
-                double orientation = Math.toDegrees(Math.atan2(
-                    connect2Point.getY() - connect1Point.getY(),
-                    connect2Point.getX() - connect1Point.getX()));
-                orientation = (orientation % 360 + 360) % 360; // Normalize to 0-360
+                // Use model methods for orientation calculation
+                double orientation1 = trackSegment.getConnect1Orientation(layoutEditor);
+                double orientation2 = trackSegment.getConnect2Orientation(layoutEditor);
                 
-                // For straight segments, orientation is the same at both ends
+                // Set labels with point IDs and coordinates
                 String connect1Id = trackSegment.getConnect1().getId();
                 String connect2Id = trackSegment.getConnect2().getId();
                 editTrackSegmentConnect1OrientationLabel.setText(
@@ -304,8 +284,17 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
                     String.format("%s (%.1f, %.1f) Orientation:", 
                         connect2Id, connect2Point.getX(), connect2Point.getY()));
                 
-                editTrackSegmentConnect1OrientationField.setText(String.format("%.2f°", orientation));
-                editTrackSegmentConnect2OrientationField.setText(String.format("%.2f°", orientation));
+                // Display the orientations
+                if (orientation1 >= 0) {
+                    editTrackSegmentConnect1OrientationField.setText(String.format("%.2f°", orientation1));
+                } else {
+                    editTrackSegmentConnect1OrientationField.setText("-");
+                }
+                if (orientation2 >= 0) {
+                    editTrackSegmentConnect2OrientationField.setText(String.format("%.2f°", orientation2));
+                } else {
+                    editTrackSegmentConnect2OrientationField.setText("-");
+                }
             } else {
                 editTrackSegmentConnect1OrientationLabel.setText("Connect1 Orientation:");
                 editTrackSegmentConnect2OrientationLabel.setText("Connect2 Orientation:");

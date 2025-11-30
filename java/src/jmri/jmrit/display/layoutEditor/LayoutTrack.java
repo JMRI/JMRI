@@ -1,7 +1,9 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.geom.Point2D;
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.JmriException;
@@ -91,6 +93,181 @@ abstract public class LayoutTrack {
      */
     public void setTrackTile(TrackTile trackTile) {
         this.trackTile = (trackTile != null) ? trackTile : NotATile.getInstance();
+    }
+
+    /**
+     * Check if this track element has an associated tile with geometry data.
+     * 
+     * @return true if this track has tile geometry information
+     */
+    public boolean isTiled() {
+        return !(trackTile instanceof jmri.tracktiles.NotATile || trackTile instanceof jmri.tracktiles.UnknownTile);
+    }
+
+    /**
+     * Get the list of anchor point identifiers for this track element.
+     * 
+     * @return list of anchor point names (e.g., ["A", "B"] for track segments)
+     */
+    @Nonnull
+    public abstract List<String> getAnchorPoints();
+
+    /**
+     * Get the list of path identifiers for this track element.
+     * 
+     * @return list of path names (e.g., ["AB"] for track segments)
+     */
+    @Nonnull
+    public abstract List<String> getPathIdentifiers();
+
+    /**
+     * Calculate the orientation angle at the specified anchor point.
+     * This is the angle of track continuation from this anchor point.
+     * 
+     * @param anchor the anchor point identifier
+     * @param layoutEditor the layout editor for coordinate access
+     * @return the orientation angle in degrees (0-360), or -1 if calculation fails
+     */
+    public double getOrientationAtAnchor(@Nonnull String anchor, @Nonnull LayoutEditor layoutEditor) {
+        if (!isTiled()) {
+            return -1.0;
+        }
+
+        List<String> anchors = getAnchorPoints();
+        if (anchors.size() != 2) {
+            return -1.0; // Only handle two-anchor tracks for now
+        }
+
+        Point2D pointA = getAnchorCoordinates(anchors.get(0), layoutEditor);
+        Point2D pointB = getAnchorCoordinates(anchors.get(1), layoutEditor);
+        
+        if (pointA == null || pointB == null) {
+            return -1.0;
+        }
+
+        jmri.tracktiles.TrackTile tile = getTrackTile();
+        String jmriType = tile.getJmriType();
+        
+        if ("curved".equals(jmriType)) {
+            double arcDegrees = tile.getArc();
+            
+            if (arcDegrees <= 0) {
+                // Invalid curve data - fall back to straight
+                return calculateStraightTrackOrientation(pointA, pointB);
+            }
+            
+            return calculateCurvedTrackOrientation(pointA, pointB, arcDegrees, anchor, anchors);
+        }
+
+        // Straight path - return the same orientation for both anchors
+        return calculateStraightTrackOrientation(pointA, pointB);
+    }
+
+    /**
+     * Calculate orientation for a straight track. Both ends have the same orientation.
+     * Returns the direction of the track line itself (A→B direction).
+     */
+    protected double calculateStraightTrackOrientation(Point2D pointA, Point2D pointB) {
+        double trackDirection = Math.toDegrees(Math.atan2(
+            pointB.getY() - pointA.getY(),
+            pointB.getX() - pointA.getX()));
+        return (trackDirection % 360 + 360) % 360;
+    }
+
+    /**
+     * Calculate orientation for a curved track.
+     * For curved tracks:
+     * - First connector has the same orientation as the straight track direction
+     * - Second connector deviates by the arc amount
+     */
+    protected double calculateCurvedTrackOrientation(Point2D pointA, Point2D pointB, double arcDegrees, String anchor, List<String> anchors) {
+        double baseOrientation = calculateStraightTrackOrientation(pointA, pointB);
+        
+        if (anchors.get(0).equals(anchor)) {
+            // First connector maintains the base orientation
+            return baseOrientation;
+        } else {
+            // Second connector deviates by the arc amount
+            // TODO: Determine curve direction from tile data to know if it's +arc or -arc
+            double deviation = arcDegrees;
+            double orientation = baseOrientation + deviation;
+            return (orientation % 360 + 360) % 360;
+        }
+    }
+
+    /**
+     * Calculate the length of the specified path.
+     * For straight paths, returns the tile length.
+     * For curved paths, returns the calculated arc length.
+     * 
+     * @param pathId the path identifier
+     * @return the path length in millimeters, or 0.0 if not available
+     */
+    public double getPathLength(@Nonnull String pathId) {
+        if (!isTiled()) {
+            return 0.0;
+        }
+        
+        // Validate that the pathId is valid for this track type
+        if (!getPathIdentifiers().contains(pathId)) {
+            return 0.0;
+        }
+        
+        // Default implementation uses tile geometry calculation
+        // TODO: For multi-path tiles (turnouts), this may need path-specific calculations
+        return LayoutTileGeometry.calculatePathLength(getTrackTile());
+    }
+
+    /**
+     * Find the path identifier that connects to the specified anchor point.
+     * 
+     * @param anchor the anchor point identifier
+     * @return the path identifier, or null if not found
+     */
+    @CheckForNull
+    protected abstract String findPathForAnchor(@Nonnull String anchor);
+
+    /**
+     * Get the coordinates of the specified anchor point.
+     * 
+     * @param anchor the anchor point identifier
+     * @param layoutEditor the layout editor for coordinate access
+     * @return the anchor point coordinates, or null if not found
+     */
+    @CheckForNull
+    protected abstract java.awt.geom.Point2D getAnchorCoordinates(@Nonnull String anchor, @Nonnull LayoutEditor layoutEditor);
+
+    /**
+     * Get the coordinates of the other endpoint of the specified path.
+     * 
+     * @param pathId the path identifier
+     * @param anchor the anchor point we're measuring from
+     * @param layoutEditor the layout editor for coordinate access
+     * @return the other endpoint coordinates, or null if not found
+     */
+    @CheckForNull
+    protected abstract java.awt.geom.Point2D getOtherEndpoint(@Nonnull String pathId, @Nonnull String anchor, @Nonnull LayoutEditor layoutEditor);
+
+    /**
+     * Get the tile path object for the specified path identifier.
+     * 
+     * @param pathId the path identifier
+     * @return the TrackTilePath object, or null if not found
+     */
+    @CheckForNull
+    protected jmri.tracktiles.TrackTilePath getPathFromTile(@Nonnull String pathId) {
+        if (!isTiled()) {
+            return null;
+        }
+        
+        for (jmri.tracktiles.TrackTilePath path : trackTile.getPaths()) {
+            // Match by route name or state
+            if (pathId.equals(path.getRoute()) || 
+                (pathId.length() == 2 && pathId.equals(path.getDirection()))) {
+                return path;
+            }
+        }
+        return null;
     }
 
     abstract public boolean isMainline();

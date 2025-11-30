@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import java.awt.geom.Point2D;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
@@ -781,7 +782,14 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Get the default path length for this track segment in millimeters.
+     * Calculate the default path length for this track segment.
+     * For straight tiles, this is the tile length.
+     * For curved tiles, this is the arc length: L = 2 * pi * radius * (arc/360).
+     * For tracks without tile information, returns 0.0.
+     * 
+     * @return the default path length in millimeters, or 0.0 if not available
+     */
+    /**
      * For straight tiles, this is the tile length.
      * For curved tiles, this is the arc length: L = 2 * pi * radius * (arc/360).
      * For tracks without tile information, returns 0.0.
@@ -789,7 +797,86 @@ public class TrackSegment extends LayoutTrack {
      * @return the default path length in millimeters, or 0.0 if not available
      */
     public double getDefaultPathLength() {
-        return LayoutTileGeometry.calculatePathLength(getTrackTile());
+        return getPathLength("AB");
+    }
+
+    // ========================================
+    // LayoutTrack abstract method implementations  
+    // ========================================
+    
+    @Override
+    @Nonnull
+    public List<String> getAnchorPoints() {
+        return Arrays.asList("A", "B");
+    }
+
+    @Override
+    @Nonnull
+    public List<String> getPathIdentifiers() {
+        return Arrays.asList("AB");
+    }
+
+    // Orientation calculation inherited from LayoutTrack base class
+
+    // Path length calculation inherited from LayoutTrack base class
+
+    @Override
+    @CheckForNull
+    protected String findPathForAnchor(@Nonnull String anchor) {
+        if ("A".equals(anchor) || "B".equals(anchor)) {
+            return "AB";
+        }
+        return null;
+    }
+
+    @Override
+    @CheckForNull
+    protected Point2D getAnchorCoordinates(@Nonnull String anchor, @Nonnull LayoutEditor layoutEditor) {
+        switch (anchor) {
+            case "A":
+                return layoutEditor.getCoords(getConnect1(), getType1());
+            case "B":
+                return layoutEditor.getCoords(getConnect2(), getType2());
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    @CheckForNull
+    protected Point2D getOtherEndpoint(@Nonnull String pathId, @Nonnull String anchor, @Nonnull LayoutEditor layoutEditor) {
+        if (!"AB".equals(pathId)) {
+            return null;
+        }
+        
+        switch (anchor) {
+            case "A":
+                return layoutEditor.getCoords(getConnect2(), getType2());
+            case "B":
+                return layoutEditor.getCoords(getConnect1(), getType1());
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Get the orientation at connection point 1 (anchor A).
+     * 
+     * @param layoutEditor the layout editor for coordinate access
+     * @return the orientation angle in degrees (0-360), or -1 if calculation fails
+     */
+    public double getConnect1Orientation(@Nonnull LayoutEditor layoutEditor) {
+        return getOrientationAtAnchor("A", layoutEditor);
+    }
+
+    /**
+     * Get the orientation at connection point 2 (anchor B).
+     * 
+     * @param layoutEditor the layout editor for coordinate access
+     * @return the orientation angle in degrees (0-360), or -1 if calculation fails
+     */
+    public double getConnect2Orientation(@Nonnull LayoutEditor layoutEditor) {
+        return getOrientationAtAnchor("B", layoutEditor);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegment.class);

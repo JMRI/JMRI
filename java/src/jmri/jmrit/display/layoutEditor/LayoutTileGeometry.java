@@ -262,4 +262,102 @@ public class LayoutTileGeometry {
     public static double convertMMToLayoutUnits(double mm, double layoutUnitsPerMM) {
         return mm * layoutUnitsPerMM;
     }
+    
+    // ===============================================
+    // Pure Geometry Functions (Testable with minimal inputs)
+    // ===============================================
+    
+    /**
+     * Calculate orientation for a straight path between two points.
+     * Pure function - testable with just coordinate inputs.
+     *
+     * @param fromPoint the starting point
+     * @param toPoint the ending point  
+     * @return the orientation angle in degrees (0-360), pointing from fromPoint toward toPoint
+     */
+    public static double calculateStraightOrientation(@Nonnull Point2D fromPoint, @Nonnull Point2D toPoint) {
+        double angle = Math.toDegrees(Math.atan2(
+            toPoint.getY() - fromPoint.getY(),
+            toPoint.getX() - fromPoint.getX()));
+        return (angle % 360 + 360) % 360; // Normalize to 0-360
+    }
+    
+    /**
+     * Calculate tangent orientation for a curved path at a specific endpoint.
+     * Pure function - testable with just geometric inputs.
+     *
+     * @param endpoint the point where we want the tangent orientation
+     * @param center the center of the curve circle
+     * @param arcDegrees the arc angle in degrees (positive values)
+     * @param counterClockwise true for counter-clockwise curves, false for clockwise
+     * @return the tangent orientation angle in degrees (0-360)
+     */
+    public static double calculateCurvedOrientation(@Nonnull Point2D endpoint, @Nonnull Point2D center, 
+                                                   double arcDegrees, boolean counterClockwise) {
+        // Calculate radius angle from endpoint to center
+        double radiusAngle = Math.toDegrees(Math.atan2(
+            center.getY() - endpoint.getY(),
+            center.getX() - endpoint.getX()));
+
+        // The tangent is perpendicular to the radius
+        double tangent;
+        if (counterClockwise) {
+            // CCW motion: tangent is 90° behind the radius
+            tangent = radiusAngle - 90.0;
+        } else {
+            // CW motion: tangent is 90° ahead of the radius
+            tangent = radiusAngle + 90.0;
+        }
+
+        // Normalize to 0-360
+        return (tangent % 360 + 360) % 360;
+    }
+    
+    /**
+     * Calculate the center point of a circle given two points on the circle and radius.
+     * Pure function - testable with geometric inputs.
+     *
+     * @param point1 first point on the circle
+     * @param point2 second point on the circle
+     * @param radiusMM radius in millimeters  
+     * @param layoutUnitsPerMM conversion factor from mm to layout units
+     * @param preferLeft true to prefer the left-side center, false for right-side
+     * @return the center point, or null if calculation fails
+     */
+    public static Point2D calculateCircleCenter(@Nonnull Point2D point1, @Nonnull Point2D point2, 
+                                               double radiusMM, double layoutUnitsPerMM, boolean preferLeft) {
+        if (radiusMM <= 0 || layoutUnitsPerMM <= 0) {
+            return null;
+        }
+        
+        double radiusLayoutUnits = radiusMM * layoutUnitsPerMM;
+        
+        // Calculate midpoint between the two points
+        Point2D midpoint = new Point2D.Double(
+            (point1.getX() + point2.getX()) / 2.0,
+            (point1.getY() + point2.getY()) / 2.0);
+        
+        // Calculate chord length
+        double chordLength = point1.distance(point2);
+        if (chordLength >= 2.0 * radiusLayoutUnits) {
+            // Radius too small for this chord length
+            return null;
+        }
+        
+        // Calculate distance from midpoint to center
+        double midToCenter = Math.sqrt(radiusLayoutUnits * radiusLayoutUnits - 
+                                     (chordLength * chordLength) / 4.0);
+        
+        // Calculate perpendicular direction to the chord
+        double dx = point2.getX() - point1.getX();
+        double dy = point2.getY() - point1.getY();
+        double perpX = -dy / chordLength; // Perpendicular unit vector
+        double perpY = dx / chordLength;
+        
+        // Choose which side of the chord to place the center
+        double centerX = midpoint.getX() + (preferLeft ? perpX : -perpX) * midToCenter;
+        double centerY = midpoint.getY() + (preferLeft ? perpY : -perpY) * midToCenter;
+        
+        return new Point2D.Double(centerX, centerY);
+    }
 }
