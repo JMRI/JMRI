@@ -152,13 +152,15 @@ public class TmccConsist extends jmri.implementation.DccConsist {
      *
      * @param locoAddress - is the Locomotive address to add to the consist
      * @param directionNormal - is True if the locomotive is traveling the same direction as the consist, or false otherwise.
-     * @param ConsistAddress - is the Consist address assigned to the locomotive.
+//     * @param ConsistAddress - is the Consist address assigned to the locomotive.
      */
     @Override
     public synchronized void add(DccLocoAddress locoAddress, boolean directionNormal) {
-        System.out.println("add(..) with protocol "+locoAddress.getProtocol()
-                        +" "+(locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1));
-//        if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1) {
+//        System.out.println("add(..) with protocol "+locoAddress.getProtocol()
+//                        +" "+(locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1));
+
+        // TMCC1 Consist Build
+        if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1) {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xFE);
             if (!contains(locoAddress)) {
@@ -208,12 +210,64 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
                 }
 
-//                // assign consist ID to loco
-//                m.putAsWord(0x0030 + ConsistAddress.getNumber());
+                // add loco to lists
+                consistList.add(locoAddress);
 
+            } else {
+                log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
+            }
+        }
+
+        // TMCC2 Consist Build
+        if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC2) {
+            SerialMessage m = new SerialMessage();
+            m.setOpCode(0xF8);
+            if (!contains(locoAddress)) {
+                // TMCC has 6 commands for adding a loco to a consist: head, rear, and mid, plus direction
+
+                // First loco to consist
+                if (consistList.isEmpty()) {
+                    // add head loco
+                    if (!directionNormal) {
+                        // TMCC1 - Assign as Head Unit/Forward Direction
+                        m.putAsWord(0x0023 + locoAddress.getNumber() * 512);
+                    } else {
+                        // TMCC1 - Assign as Head Unit/Reverse Direction
+                        m.putAsWord(0x0022 + locoAddress.getNumber() * 512);
+                    }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-//                tc.sendSerialMessage(m, null);
-//                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
+                // Second loco to consist
+                } else if (consistList.size() == 1) {
+                    // add rear loco
+                    if (!directionNormal) {
+                        // TMCC1 - Assign as Rear Unit/Forward Direction
+                        m.putAsWord(0x0027 + locoAddress.getNumber() * 512);
+                    } else {
+                        // TMCC1 - Assign as Rear Unit/Reverse Direction
+                        m.putAsWord(0x0026 + locoAddress.getNumber() * 512);
+                    }
+                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
+                // Additional loco(s) to consist
+                } else {
+                    // add mid loco
+                    if (!directionNormal) {
+                        // TMCC1 - Assign as Mid Unit/Forward Direction
+                        m.putAsWord(0x0025 + locoAddress.getNumber() * 512);
+                    } else {
+                        // TMCC1 - Assign as Mid Unit/Reverse Direction
+                        m.putAsWord(0x0024 + locoAddress.getNumber() * 512);
+                    }
+                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
+                }
 
                 // add loco to lists
                 consistList.add(locoAddress);
@@ -221,7 +275,8 @@ public class TmccConsist extends jmri.implementation.DccConsist {
             } else {
                 log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
             }
-//        }
+        }
+
     }
 
     /**
@@ -297,7 +352,6 @@ public class TmccConsist extends jmri.implementation.DccConsist {
             consistMakeup = consistMakeup.concat(consistDir.get(address) ? "":"-")
                 .concat(String.valueOf(address.getNumber())).concat(" ");
         }
-
         return consistMakeup.trim();
 
     }
