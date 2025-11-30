@@ -1464,6 +1464,21 @@ LogixNG: IQ:AUTO:0001
       true, the next action/expression pair will be started.  The <a href="chapter6#timer_id">Timer</a>
       expression can be used to do a time based step instead of an event based step.</p>
 
+      <p>When a Sequence is created, it has one A/E pair.  To add more pairs, right click the last
+      <strong>Expression</strong> entry and select <strong>Insert new socket after</strong>. To
+      insert a new A/E pair, right click an <strong>Action</strong> item and select <strong>Insert
+      new socket before</strong> or right click an <strong>Expression</strong> item and select
+      <strong>Insert new socket after</strong>.</p>
+
+      <p>If an <strong>Action</strong> is used with a socket <strong>after</strong> or an
+      <strong>Expression</strong> is used with a socket <strong>before</strong>, the new pair will be
+      between the old pair A and E.  Now the sequence is <strong>old A &rArr; new E &rArr; new A &rArr; old E</strong>.
+      The socket names don't actually have any meaning.  It is the sequence in the editor display
+      which creates the actual A/E pairs.</p>
+
+      <p>To delete a pair, right click on the <strong>Action</strong> and select <strong>Remove socket</strong>.
+      The A/E pair has to be empty before it can be removed.</p>
+
       <div style="margin-left: 2em">
         <a href="images/chapter5/action_sequence_options.png"><img src=
         "images/chapter5/action_sequence_options.png" alt="Chapter 5 sequence options"></a>
