@@ -134,7 +134,7 @@ A ===+===B
 ```
 
 **Valid Routes:**
-- **A-B** (ROUTE_AB) - straight through, continuing route  
+- **A-B** (ROUTE_AB) - straight through, continuing route
 - **C-D** (ROUTE_CD) - crossing path, continuing route
 
 *Note: Level crossings are fixed track elements with no switching mechanism. Both routes are always available simultaneously.*
@@ -148,7 +148,7 @@ A ===+===B
 ## Key Differences
 
 - **Regular turnouts** (RH, LH, Wye): One throat point (A) with two possible routes
-- **Crossovers**: Two parallel straight-through paths plus crossover connection(s)  
+- **Crossovers**: Two parallel straight-through paths plus crossover connection(s)
 - **Slips**: Two crossing paths plus slip crossing paths, with connection points arranged differently than crossovers
 - **Level crossings**: Two fixed intersecting paths (one straight, one crossing) with no switching mechanism
 
@@ -165,9 +165,7 @@ The following route constants are defined in the JMRI code:
 
 This information is derived from:
 - `java/src/jmri/jmrit/display/layoutEditor/LayoutTurnout.java`
-- `java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java`  
+- `java/src/jmri/jmrit/display/layoutEditor/LayoutSlip.java`
 - `java/src/jmri/jmrit/display/layoutEditor/LayoutLevelXing.java`
 - `xml/schema/tracktiles.xsd` - Track tile XML schema
 - Various turnout and crossing-specific implementation classes
-
-*Generated from JMRI source code documentation and comments.*
