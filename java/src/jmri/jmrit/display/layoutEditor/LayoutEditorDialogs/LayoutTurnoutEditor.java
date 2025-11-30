@@ -63,7 +63,7 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     protected final JCheckBox editLayoutTurnout2ndTurnoutCheckBox = new JCheckBox(Bundle.getMessage("SupportingTurnout"));  // NOI18N
     protected final JCheckBox editLayoutTurnout2ndTurnoutInvertCheckBox = new JCheckBox(Bundle.getMessage("SecondTurnoutInvert"));  // NOI18N
     protected final JLabel editLayoutTurnoutTileInfoLabel = new JLabel();
-    protected final JTextArea editLayoutTurnoutPathLengthsArea = new JTextArea(4, 40);
+    private LayoutTrackGeometryWidget geometryWidget;
 
     protected boolean editLayoutTurnoutOpen = false;
     protected boolean editLayoutTurnoutNeedRedraw = false;
@@ -163,9 +163,10 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
             editLayoutTurnoutBlockButton.addActionListener(this::editLayoutTurnoutEditBlockPressed);
             contentPane.add(panel2);
 
-            // add tile information display (not for crossovers - they add it after Block 4)
+            // add geometry information display (not for crossovers - they add it after Block 4)
             if (!isXOverEditor()) {
-                addTileAndPathLengthPanels(contentPane);
+                addTileInfoPanel(contentPane);
+                addGeometryWidget(contentPane);
             }
 
             extendBlockBCDSetup(contentPane);
@@ -200,13 +201,15 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         TrackTile tile = layoutTurnout.getTrackTile();
         if (tile instanceof NotATile) {
             editLayoutTurnoutTileInfoLabel.setText(Bundle.getMessage("NoTile"));  // NOI18N
-            editLayoutTurnoutPathLengthsArea.setText("No track tile associated");
         } else if (tile instanceof UnknownTile) {
             editLayoutTurnoutTileInfoLabel.setText(Bundle.getMessage("UnknownTile") + " (" + tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode() + ")");  // NOI18N
-            editLayoutTurnoutPathLengthsArea.setText("Path lengths not available for unknown tiles");
         } else {
             editLayoutTurnoutTileInfoLabel.setText(tile.getVendor() + " / " + tile.getFamily() + " / " + tile.getPartCode());
-            updatePathLengthsDisplay(layoutTurnout);
+        }
+
+        // Update geometry widget
+        if (geometryWidget != null) {
+            geometryWidget.updateValues();
         }
 
         configureCheckBoxes(bm);
@@ -538,9 +541,9 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     }
 
     /**
-     * Add tile information and path lengths panels.
+     * Add tile information panel.
      */
-    protected void addTileAndPathLengthPanels(Container contentPane) {
+    protected void addTileInfoPanel(Container contentPane) {
         // add tile information display
         JPanel panelTile = new JPanel();
         panelTile.setLayout(new FlowLayout());
@@ -549,40 +552,14 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
         editLayoutTurnoutTileInfoLabel.setToolTipText(Bundle.getMessage("TrackTileInfoHint"));  // NOI18N
         panelTile.add(editLayoutTurnoutTileInfoLabel);
         contentPane.add(panelTile);
-
-        // add path lengths display
-        TitledBorder pathBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        pathBorder.setTitle("Path Lengths");  // NOI18N
-        JPanel panelPathLengths = new JPanel();
-        panelPathLengths.setBorder(pathBorder);
-        panelPathLengths.setLayout(new BorderLayout());
-        editLayoutTurnoutPathLengthsArea.setEditable(false);
-        editLayoutTurnoutPathLengthsArea.setBackground(UIManager.getColor("Panel.background"));
-        editLayoutTurnoutPathLengthsArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        editLayoutTurnoutPathLengthsArea.setToolTipText("Calculated path lengths based on track tile geometry");  // NOI18N
-        JScrollPane pathScrollPane = new JScrollPane(editLayoutTurnoutPathLengthsArea);
-        pathScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        pathScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panelPathLengths.add(pathScrollPane, BorderLayout.CENTER);
-        contentPane.add(panelPathLengths);
     }
 
     /**
-     * Update the path lengths display area with calculated path information.
-     * 
-     * @param layoutTurnout The turnout to calculate paths for
+     * Add the geometry widget to display orientations and path lengths.
      */
-    protected void updatePathLengthsDisplay(@Nonnull LayoutTurnout layoutTurnout) {
-        List<String> pathLengths = TurnoutPathCalculator.calculatePathLengths(layoutTurnout);
-        
-        StringBuilder sb = new StringBuilder();
-        
-        for (String pathLength : pathLengths) {
-            sb.append(pathLength).append("\n");
-        }
-        
-        editLayoutTurnoutPathLengthsArea.setText(sb.toString());
-        editLayoutTurnoutPathLengthsArea.setCaretPosition(0);  // Scroll to top
+    protected void addGeometryWidget(Container contentPane) {
+        geometryWidget = new LayoutTrackGeometryWidget(layoutTurnout, layoutEditor);
+        contentPane.add(geometryWidget);
     }
 
 

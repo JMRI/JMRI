@@ -47,14 +47,9 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
     private final NamedBeanComboBox<Block> editTrackSegmentBlockNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private final JTextField editTrackSegmentArcTextField = new JTextField(5);
-    private final JLabel editTrackSegmentConnect1OrientationLabel = new JLabel();
-    private final JTextField editTrackSegmentConnect1OrientationField = new JTextField(8);
-    private final JLabel editTrackSegmentConnect2OrientationLabel = new JLabel();
-    private final JTextField editTrackSegmentConnect2OrientationField = new JTextField(8);
-    private final JLabel editTrackSegmentPathLengthLabel = new JLabel(Bundle.getMessage("PathLength") + ":");
-    private final JTextField editTrackSegmentPathLengthField = new JTextField(8);
     private final JLabel editTrackSegmentTileInfoLabel = new JLabel();
     private JButton editTrackSegmentSegmentEditBlockButton;
+    private LayoutTrackGeometryWidget geometryWidget;
 
     private int editTrackSegmentMainlineTrackIndex;
     private int editTrackSegmentSideTrackIndex;
@@ -156,31 +151,9 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             editTrackSegmentArcTextField.setToolTipText(Bundle.getMessage("SetArcAngleHint"));  // NOI18N
             contentPane.add(panel20);
 
-            // Add orientation display fields (read-only)
-            JPanel panel21 = new JPanel();
-            panel21.setLayout(new FlowLayout());
-            panel21.add(editTrackSegmentConnect1OrientationLabel);
-            editTrackSegmentConnect1OrientationLabel.setLabelFor(editTrackSegmentConnect1OrientationField);
-            editTrackSegmentConnect1OrientationField.setEditable(false);
-            panel21.add(editTrackSegmentConnect1OrientationField);
-            contentPane.add(panel21);
-
-            JPanel panel22 = new JPanel();
-            panel22.setLayout(new FlowLayout());
-            panel22.add(editTrackSegmentConnect2OrientationLabel);
-            editTrackSegmentConnect2OrientationLabel.setLabelFor(editTrackSegmentConnect2OrientationField);
-            editTrackSegmentConnect2OrientationField.setEditable(false);
-            panel22.add(editTrackSegmentConnect2OrientationField);
-            contentPane.add(panel22);
-
-            // Add path length display field (read-only)
-            JPanel panel23 = new JPanel();
-            panel23.setLayout(new FlowLayout());
-            panel23.add(editTrackSegmentPathLengthLabel);
-            editTrackSegmentPathLengthLabel.setLabelFor(editTrackSegmentPathLengthField);
-            editTrackSegmentPathLengthField.setEditable(false);
-            panel23.add(editTrackSegmentPathLengthField);
-            contentPane.add(panel23);
+            // Add geometry widget for orientations and path lengths
+            geometryWidget = new LayoutTrackGeometryWidget(trackSegment, layoutEditor);
+            contentPane.add(geometryWidget);
 
             // set up Edit Block, Done and Cancel buttons
             JPanel panel5 = new JPanel();
@@ -224,91 +197,14 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         if (trackSegmentView.isArc() && trackSegmentView.isCircle()) {
             editTrackSegmentArcTextField.setText("" + trackSegmentView.getAngle());
             editTrackSegmentArcTextField.setEnabled(true);
-            
-            // Calculate and display orientations using model-based methods
-            java.awt.geom.Point2D connect1Point = layoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
-            java.awt.geom.Point2D connect2Point = layoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
-            
-            if (connect1Point != null && connect2Point != null) {
-                // Use model methods for orientation calculation
-                double orientation1 = trackSegment.getConnect1Orientation(layoutEditor);
-                double orientation2 = trackSegment.getConnect2Orientation(layoutEditor);
-                
-                // Set labels with point IDs and coordinates
-                String connect1Id = trackSegment.getConnect1().getId();
-                String connect2Id = trackSegment.getConnect2().getId();
-                editTrackSegmentConnect1OrientationLabel.setText(
-                    String.format("%s (%.1f, %.1f) Orientation:", 
-                        connect1Id, connect1Point.getX(), connect1Point.getY()));
-                editTrackSegmentConnect2OrientationLabel.setText(
-                    String.format("%s (%.1f, %.1f) Orientation:", 
-                        connect2Id, connect2Point.getX(), connect2Point.getY()));
-                
-                // Display the orientations
-                if (orientation1 >= 0) {
-                    editTrackSegmentConnect1OrientationField.setText(String.format("%.2f°", orientation1));
-                } else {
-                    editTrackSegmentConnect1OrientationField.setText("-");
-                }
-                if (orientation2 >= 0) {
-                    editTrackSegmentConnect2OrientationField.setText(String.format("%.2f°", orientation2));
-                } else {
-                    editTrackSegmentConnect2OrientationField.setText("-");
-                }
-            } else {
-                editTrackSegmentConnect1OrientationLabel.setText("Connect1 Orientation:");
-                editTrackSegmentConnect2OrientationLabel.setText("Connect2 Orientation:");
-                editTrackSegmentConnect1OrientationField.setText("-");
-                editTrackSegmentConnect2OrientationField.setText("-");
-            }
         } else {
             // Straight segment or not a circle
             editTrackSegmentArcTextField.setEnabled(false);
-            
-            // Calculate orientations using model-based methods
-            java.awt.geom.Point2D connect1Point = layoutEditor.getCoords(trackSegment.getConnect1(), trackSegment.getType1());
-            java.awt.geom.Point2D connect2Point = layoutEditor.getCoords(trackSegment.getConnect2(), trackSegment.getType2());
-            
-            if (connect1Point != null && connect2Point != null) {
-                // Use model methods for orientation calculation
-                double orientation1 = trackSegment.getConnect1Orientation(layoutEditor);
-                double orientation2 = trackSegment.getConnect2Orientation(layoutEditor);
-                
-                // Set labels with point IDs and coordinates
-                String connect1Id = trackSegment.getConnect1().getId();
-                String connect2Id = trackSegment.getConnect2().getId();
-                editTrackSegmentConnect1OrientationLabel.setText(
-                    String.format("%s (%.1f, %.1f) Orientation:", 
-                        connect1Id, connect1Point.getX(), connect1Point.getY()));
-                editTrackSegmentConnect2OrientationLabel.setText(
-                    String.format("%s (%.1f, %.1f) Orientation:", 
-                        connect2Id, connect2Point.getX(), connect2Point.getY()));
-                
-                // Display the orientations
-                if (orientation1 >= 0) {
-                    editTrackSegmentConnect1OrientationField.setText(String.format("%.2f°", orientation1));
-                } else {
-                    editTrackSegmentConnect1OrientationField.setText("-");
-                }
-                if (orientation2 >= 0) {
-                    editTrackSegmentConnect2OrientationField.setText(String.format("%.2f°", orientation2));
-                } else {
-                    editTrackSegmentConnect2OrientationField.setText("-");
-                }
-            } else {
-                editTrackSegmentConnect1OrientationLabel.setText("Connect1 Orientation:");
-                editTrackSegmentConnect2OrientationLabel.setText("Connect2 Orientation:");
-                editTrackSegmentConnect1OrientationField.setText("-");
-                editTrackSegmentConnect2OrientationField.setText("-");
-            }
         }
 
-        // Calculate and display default path length
-        double pathLength = trackSegment.getDefaultPathLength();
-        if (pathLength > 0.0) {
-            editTrackSegmentPathLengthField.setText(String.format("%.2f mm", pathLength));
-        } else {
-            editTrackSegmentPathLengthField.setText("-");
+        // Update geometry widget with current values
+        if (geometryWidget != null) {
+            geometryWidget.updateValues();
         }
 
         editTrackSegmentFrame.addWindowListener(new java.awt.event.WindowAdapter() {

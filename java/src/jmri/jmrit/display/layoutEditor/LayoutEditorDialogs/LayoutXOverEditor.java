@@ -14,7 +14,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTrackView;
  * MVC Editor component for LayoutXOver objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class LayoutXOverEditor extends LayoutTurnoutEditor {
 
@@ -34,7 +34,7 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         log.trace("LayoutXOverEditor.editLayoutTrack({}) of a {}", layoutTrackView, layoutTrackView.getClass());
         super.editLayoutTrack(layoutTrackView);
     }
-    
+
 
     // not used by crossover
     @Override
@@ -82,41 +82,14 @@ public class LayoutXOverEditor extends LayoutTurnoutEditor {
         editLayoutTurnoutBlockDButton.addActionListener(this::editLayoutTurnoutEditBlockDPressed);
         editLayoutTurnoutBlockDButton.setToolTipText(Bundle.getMessage("EditBlockHint", "4"));  // NOI18N
         contentPane.add(panel23);
-        
-        // Add tile information and path lengths after Block 4 for crossovers
-        addTileAndPathLengthPanels(contentPane);
-    }
-    
-    /**
-     * Add tile information and path lengths panels for crossovers.
-     */
-    protected void addTileAndPathLengthPanels(Container contentPane) {
-        // add tile information display
-        JPanel panelTile = new JPanel();
-        panelTile.setLayout(new FlowLayout());
-        JLabel tileLabel = new JLabel(Bundle.getMessage("TrackTile") + ": ");  // NOI18N
-        panelTile.add(tileLabel);
-        editLayoutTurnoutTileInfoLabel.setToolTipText(Bundle.getMessage("TrackTileInfoHint"));  // NOI18N
-        panelTile.add(editLayoutTurnoutTileInfoLabel);
-        contentPane.add(panelTile);
 
-        // add path lengths display
-        TitledBorder pathBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        pathBorder.setTitle("Path Lengths");  // NOI18N
-        JPanel panelPathLengths = new JPanel();
-        panelPathLengths.setBorder(pathBorder);
-        panelPathLengths.setLayout(new java.awt.BorderLayout());
-        editLayoutTurnoutPathLengthsArea.setEditable(false);
-        editLayoutTurnoutPathLengthsArea.setBackground(UIManager.getColor("Panel.background"));
-        editLayoutTurnoutPathLengthsArea.setFont(new java.awt.Font(java.awt.Font.MONOSPACED, java.awt.Font.PLAIN, 12));
-        editLayoutTurnoutPathLengthsArea.setToolTipText("Calculated path lengths based on track tile geometry");  // NOI18N
-        JScrollPane pathScrollPane = new JScrollPane(editLayoutTurnoutPathLengthsArea);
-        pathScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        pathScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panelPathLengths.add(pathScrollPane, java.awt.BorderLayout.CENTER);
-        contentPane.add(panelPathLengths);
+        // Add tile information and path lengths after Block 4 for crossovers
+        addTileInfoPanel(contentPane);
+        addGeometryWidget(contentPane);
     }
-    
+
+    // Crossover editors inherit the addTileInfoPanel and addGeometryWidget methods from LayoutTurnoutEditor
+
     @Override
     protected void configureCheckBoxes(BlockManager bm) {
         editLayoutTurnoutBlockBNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockBName()));
