@@ -132,7 +132,9 @@ public class DccLocoAddressSelector extends JPanel {
      * Put back to original state, clearing GUI
      */
     public void reset() {
-        box.setSelectedIndex(0);
+        if (!followingAnotherSelector) {
+            box.setSelectedIndex(0);
+        }
         text.setText("");
     }
 
@@ -231,13 +233,20 @@ public class DccLocoAddressSelector extends JPanel {
         text.setEditable(e);
         text.setEnabled(e);
         text.setFocusable(e); // to not conflict with the throttle keyboad controls
-        box.setEnabled(e);
         if (e) {
             text.setToolTipText(rb.getString("TooltipTextFieldEnabled"));
-            box.setToolTipText(rb.getString("TooltipComboBoxEnabled"));
         } else {
             text.setToolTipText(rb.getString("TooltipTextFieldDisabled"));
-            box.setToolTipText(rb.getString("TooltipComboBoxDisabled"));
+        }
+
+        // only change selection box state if not following
+        if (!followingAnotherSelector) {
+            box.setEnabled(e);
+            if (e) {
+                box.setToolTipText(rb.getString("TooltipComboBoxEnabled"));
+            } else {
+                box.setToolTipText(rb.getString("TooltipComboBoxDisabled"));
+            }
         }
     }
 
@@ -287,6 +296,8 @@ public class DccLocoAddressSelector extends JPanel {
         return box;
     }
 
+    boolean followingAnotherSelector = false;
+    
     /**
      * This Selector's protocol box will follow another DccLocoAddressSelector's
      * selected protocol, so this one's protocol choice is constrained to match.
@@ -304,6 +315,8 @@ public class DccLocoAddressSelector extends JPanel {
         var selection = selector.box.getSelectedItem();
         this.box.setSelectedItem(selection);
         this.box.setEnabled(false);
+        box.setToolTipText(rb.getString("TooltipComboBoxDisabled"));
+        followingAnotherSelector = true;
         
      }
     /*
