@@ -95,15 +95,21 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
 
         consistComboBox.addActionListener((ActionEvent e) -> consistSelected());
 
-        isAdvancedConsist.setSelected(true);
-        isAdvancedConsist.setVisible(true);
-        isAdvancedConsist.setEnabled(false);
-        isAdvancedConsist.addActionListener((ActionEvent e) -> {
+        if (consistManager.isAdvancedConsistPossible()) {
             isAdvancedConsist.setSelected(true);
-            isCSConsist.setSelected(false);
-            _Consist_Type = Consist.ADVANCED_CONSIST;
-            adrSelector.setEnabled(true);
-        });
+            isAdvancedConsist.setVisible(true);
+            isAdvancedConsist.setEnabled(false);
+            isAdvancedConsist.addActionListener((ActionEvent e) -> {
+                isAdvancedConsist.setSelected(true);
+                isCSConsist.setSelected(false);
+                _Consist_Type = Consist.ADVANCED_CONSIST;
+                adrSelector.setEnabled(true);
+            });
+        } else {
+            isAdvancedConsist.setSelected(false);
+            isAdvancedConsist.setVisible(false);
+            isCSConsist.setSelected(true);
+        }
         isCSConsist.setSelected(false);
         isCSConsist.setVisible(true);
         isCSConsist.setEnabled(false);
@@ -119,6 +125,11 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
             isCSConsist.setEnabled(true);
         }
 
+        // link the protocol selectors if required by ConsistManager
+        if (consistManager.isSingleFormConsistRequired()) {
+            locoSelector.followAnotherSelector(adrSelector);
+        }
+        
         deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.setVisible(true);
         deleteButton.setToolTipText(Bundle.getMessage("DeleteButtonToolTip"));

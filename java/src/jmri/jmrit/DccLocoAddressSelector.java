@@ -80,7 +80,7 @@ public class DccLocoAddressSelector extends JPanel {
     private boolean textUsed = false;
     private boolean panelUsed = false;
 
-    /*
+    /**
      * Get the currently selected DCC address.
      * <p>
      * This is the primary output of this class.
@@ -128,7 +128,7 @@ public class DccLocoAddressSelector extends JPanel {
     }
     boolean varFontSize = false;
 
-    /*
+    /**
      * Put back to original state, clearing GUI
      */
     public void reset() {
@@ -136,7 +136,7 @@ public class DccLocoAddressSelector extends JPanel {
         text.setText("");
     }
 
-    /* Get a JPanel containing the combined selector.
+    /** Get a JPanel containing the combined selector.
      * <p>
      * Because Swing only allows a component to be inserted in one
      * container, this can only be done once
@@ -222,7 +222,7 @@ public class DccLocoAddressSelector extends JPanel {
         }        
     }
 
-    /*
+    /**
      * Provide a common setEnable call for the GUI components in the
      * selector
      */
@@ -250,7 +250,7 @@ public class DccLocoAddressSelector extends JPanel {
         }
     }
 
-    /*
+    /**
      * Get the text field for entering the number as a separate
      * component.  
      * <p>
@@ -272,7 +272,7 @@ public class DccLocoAddressSelector extends JPanel {
         log.error(msg, new Exception("traceback"));
     }
 
-    /*
+    /**
      * Get the selector box for picking long/short as a separate
      * component.
      * Because Swing only allows a component to be inserted in one
@@ -287,6 +287,25 @@ public class DccLocoAddressSelector extends JPanel {
         return box;
     }
 
+    /**
+     * This Selector's protocol box will follow another DccLocoAddressSelector's
+     * selected protocol, so this one's protocol choice is constrained to match.
+     * At present, this can't be undone.
+     * Meant for use in e.g. the consist tool for protocols that require only
+     * one type of protocol in a consist
+     */
+     public void followAnotherSelector(DccLocoAddressSelector selector) {
+        // add a listener to the other selector
+        selector.box.addItemListener(event -> {
+            var selection = selector.box.getSelectedItem();
+            this.box.setSelectedItem(selection);
+            this.box.setEnabled(false);
+        });
+        var selection = selector.box.getSelectedItem();
+        this.box.setSelectedItem(selection);
+        this.box.setEnabled(false);
+        
+     }
     /*
      * Override the addKeyListener method in JPanel so that we can set the
      * text box as the object listening for keystrokes

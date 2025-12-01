@@ -24,6 +24,22 @@ public class TmccConsistManager extends AbstractConsistManager {
     protected TmccSystemConnectionMemo adapterMemo;
 
     /**
+     * {@inheritDoc}
+     */
+     @Override
+     public boolean isAdvancedConsistPossible() {
+        return false;
+     }
+     
+    /**
+     * {@inheritDoc}
+     */
+     @Override
+     public boolean isSingleFormConsistRequired() {
+        return true;
+     }
+     
+    /**
      * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
      * command station.
