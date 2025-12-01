@@ -262,7 +262,7 @@ public class SerialThrottle extends AbstractThrottle {
 
     };
 
-    // TMCC 1 TR Function Keys to trigger with TMCC1TR_32 speed steps.
+    // TMCC 1 TR Function Keys to trigger with TMCC1TR_32 and TMCC1TR_100 speed steps.
     private final static long[][] SERIAL_FUNCTION_CODES_TMCC1TR = new long[][] {
 
         // TMCC1TR Remote - Defined FnKeys
@@ -271,6 +271,95 @@ public class SerialThrottle extends AbstractThrottle {
         {0x00C81C}, // Fn2 (Horn/Whistle)
         {0x00C805}, // Fn3 (F - Open Front Coupler)
         {0x00C806}, // Fn4 (R - Open Rear Coupler)
+
+        // TMCC1TR Remote - Defined KeyPad FnKeys
+        {0x00C811}, {0x00C812}, {0x00C813}, /* Fn5-7 */ // 1-2-3
+        {0x00C814}, {0x00C815}, {0x00C816}, /* Fn8-10 */ // 4-5-6
+        {0x00C817}, {0x00C818}, {0x00C819}, /* Fn11-13 */ // 7-8-9
+                    {0x00C810},             /* Fn14 */ // 0
+
+        // TMCC1TR Remote - Defined FnKeys
+        {0x00C809}, // Fn15 (Aux1)
+        {0x00C81E}, // Fn16 (Letoff Sound)
+        {0x00C804}, // Fn17 (Boost)
+        {0x00C807}, // Fn18 (Brake)
+        {0x00C828}, // Fn19 (Momentum Low)
+        {0x00C829}, // Fn20 (Momentum Medium)
+        {0x00C82A}, // Fn21 (Momentum High)
+        {0x00C82B}, // Fn22 (Set)
+        {0x00C81F}, // Fn23 (Horn 2)
+
+        // TMCC1TR RR Speed FnKeys
+        {0x00C864}, // Fn24 ( 4)   5mph
+        {0x00C86A}, // Fn25 (10)  20mph
+        {0x00C86E}, // Fn26 (14)  35mph
+        {0x00C872}, // Fn27 (18)  50mph
+        {0x00C878}, // Fn28 (24)  70mph
+        {0x00C87F}, // Fn29 (31)   Full
+
+        // TMCC1TR ERR - Set SpeedSteps
+        {0x00C809, 0x00C810, 0x00C809, 0x00C810, 0x00C804}, // Fn30 (Set ERR 100 SpeedSteps)
+        {0x00C809, 0x00C810, 0x00C809, 0x00C810, 0x00C807}, // Fn31 (Set ERR  32 SpeedSteps)
+
+        // TMCC1TR Acela/Subway FnKeys
+        {0x00C809, 0x00C805}, // Fn32 (Open Doors - Left)
+        {0x00C80D, 0x00C805, 0x00C80D}, // Fn33 (Close Doors - Left)
+        {0x00C809, 0x00C806}, // Fn34 (Open Doors - Right)
+        {0x00C80D, 0x00C806, 0x00C80D}, // Fn35 (Close Doors - Right)
+        {0x00C809, 0x00C813}, // Fn36 (Pantagraph - Automatic/Prototypical)
+        {0x00C809, 0x00C815}, // Fn37 (Pantagraph - Down)
+        {0x00C809, 0x00C816}, // Fn38 (Pantagraph - Manual Mode/Cycles Through Positions)
+        {0x00C809, 0x00C81C}, // Fn39 (Toggle Horn - City/Country)
+        {0x00C809, 0x00C818}, // Fn40 (Cab Light - Off)
+        {0x00C809, 0x00C819}, // Fn41 (Cab Light - On)
+        {0x00C809, 0x00C80D, 0x00C818, 0x00C80D}, // Fn42 (Interior Lights - Off)
+        {0x00C809, 0x00C80D, 0x00C819, 0x00C80D}, // Fn43 (Interior Lights - On)
+
+        // TMCC1TR Break-Down B Unit
+        {0x00C809, 0x00C804}, // Fn44 Start Breakdown Sequence
+        {0x00C809, 0x00C815}, // Fn45 Made It Back to the Yard
+        {0x00C809, 0x00C813}, // Fn46 Restart Unit/Repairs Complete
+
+        // TMCC1TR Boxcar/LiveStock Car
+        {0x00C809, 0x00C813}, // Fn47 Load
+        {0x00C809, 0x00C812}, // Fn48 Flat Wheel Sound
+
+        // TMCC1TR Passenger/Dining Cars
+        {0x00C809, 0x00C817}, // Fn49 Station PA Arrival Dialog
+        {0x00C809, 0x00C812}, // Fn50 Conductor Arrival Dialog
+
+        // TMCC1TR Crane/Boom Car
+        {0x00C809, 0x00C811, 0x00C807}, // Fn51 Lower the Boom
+        {0x00C809, 0x00C811, 0x00C804}, // Fn52 Raises the Boom
+        {0x00C809, 0x00C812, 0x00C807}, // Fn53 Lowers Main/Large Hook
+        {0x00C809, 0x00C812, 0x00C804}, // Fn54 Raises Main/Large Hook
+        {0x00C817, 0x00C813, 0x00C807}, // Fn55 Lowers Small Hook
+        {0x00C817, 0x00C813, 0x00C804}, // Fn56 Raises Small Hook
+        {0x00C804, 0x00C814}, // Fn57 Front Work Lights (Toggles On/Off)
+        {0x00C804, 0x00C815}, // Fn58 Rear Work Lights (Toggles On/Off)
+        {0x00C804, 0x00C816}, // Fn59 Launches Outriggers
+        {0x00C809, 0x00C817}, // Fn60 Crew Dialog Off
+        {0x00C809, 0x00C818}, // Fn61 All Sounds Off
+        {0x00C809, 0x00C819}, // Fn62 All Sounds On
+
+        // TMCC1TR Unassigned FnKeys
+        {0x00C82E}, // Fn63 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00C82E}, // Fn64 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00C82E}, // Fn65 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00C82E}, // Fn66 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00C82E}, // Fn67 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0x00C82E}, // Fn68 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+
+        // TMCC1TR Aux FnKeys
+        {0x00C808}, // Fnxx (Aux1 Off)
+        {0x00C809}, // Fnxx (Aux1 Option 1 - On While Held)
+        {0x00C80A}, // Fnxx (Aux1 Option 2 - Toggle On/Toggle Off)
+        {0x00C80B}, // Fnxx (Aux1 On)
+        {0x00C80C}, // Fnxx (Aux2 Off)
+        {0x00C80D}, // Fnxx (Aux2 Option 1 - Toggle On/Toggle Off)
+        {0x00C80E}, // Fnxx (Aux2 Option 2 - On While Held)
+        {0x00C80F}, // Fnxx (Aux2 On)
+
     };
 
 
