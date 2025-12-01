@@ -105,12 +105,15 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
                 _Consist_Type = Consist.ADVANCED_CONSIST;
                 adrSelector.setEnabled(true);
             });
+            isCSConsist.setSelected(false);
         } else {
             isAdvancedConsist.setSelected(false);
             isAdvancedConsist.setVisible(false);
             isCSConsist.setSelected(true);
+            _Consist_Type = Consist.CS_CONSIST;
+            adrSelector.setEnabled((consistManager.csConsistNeedsSeperateAddress()));
         }
-        isCSConsist.setSelected(false);
+
         isCSConsist.setVisible(true);
         isCSConsist.setEnabled(false);
         isCSConsist.addActionListener((ActionEvent e) -> {
