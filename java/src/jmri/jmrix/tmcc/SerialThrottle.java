@@ -202,23 +202,23 @@ public class SerialThrottle extends AbstractThrottle {
         {0x00000D, 0x000006, 0x00000D}, // Fn35 (Close Doors - Right)
         {0x000009, 0x000013}, // Fn36 (Pantagraph - Automatic/Prototypical)
         {0x000009, 0x000015}, // Fn37 (Pantagraph - Down)
-        {0x000009, 0x000015}, // Fn38 (Pantagraph - Manual Mode/Cycles Through Positions)
+        {0x000009, 0x000016}, // Fn38 (Pantagraph - Manual Mode/Cycles Through Positions)
         {0x000009, 0x00001C}, // Fn39 (Toggle Horn - City/Country)
         {0x000009, 0x000018}, // Fn40 (Cab Light - Off)
         {0x000009, 0x000019}, // Fn41 (Cab Light - On)
         {0x000009, 0x00000D, 0x000018, 0x00000D}, // Fn42 (Interior Lights - Off)
         {0x000009, 0x00000D, 0x000019, 0x00000D}, // Fn43 (Interior Lights - On)
 
-        // TMCC1 Break-Down Unit
+        // TMCC1 Break-Down B Unit
         {0x000009, 0x000004}, // Fn44 Start Breakdown Sequence
         {0x000009, 0x000015}, // Fn45 Made It Back to the Yard
         {0x000009, 0x000013}, // Fn46 Restart Unit/Repairs Complete
 
-        // TMCC1 Freight/Stock Cars
+        // TMCC1 Boxcar/LiveStock Car
         {0x000009, 0x000013}, // Fn47 Load
         {0x000009, 0x000012}, // Fn48 Flat Wheel Sound
 
-        // TMCC1 Passenger Cars
+        // TMCC1 Passenger/Dining Cars
         {0x000009, 0x000017}, // Fn49 Station PA Arrival Dialog
         {0x000009, 0x000012}, // Fn50 Conductor Arrival Dialog
 
@@ -344,39 +344,47 @@ public class SerialThrottle extends AbstractThrottle {
         {0xF8017D, 0xFB00F9, 0xFB0000}, // Fn58 (Car Cabin Lt Off)
         {0xF8017D, 0xFB00FA, 0xFB0000}, // Fn59 (Car Cabin Lt Auto)
 
-        // TMCC2 Subway FnKeys
-        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn60 (Open Doors - Left)
-        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn61 (Close Doors - Left)
-        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn62 (Open Doors - Right)
-        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn63 (Close Doors - Right)
-        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn64 (Pantagraph - Up/F)
-        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn65 (Pantagraph - Down/F)
-        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn66 (Pantagraph - Up/R)
-        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn67 (Pantagraph - Down/R)
+        // TMCC2 Acela/Subway FnKeys
+        {0xF80109, 0xF80112}, // Fn60 (Crew: Report Speed - Moving)
+        {0xF80109, 0xF80115}, // Fn61 (Tower: Emergency Stop/Crew: Ack - Moving)
+        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn62 (Open Doors - Left)
+        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn63 (Close Doors - Left)
+        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn64 (Open Doors - Right)
+        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn65 (Close Doors - Right)
+        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn66 (Pantagraph - Up/F)
+        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn67 (Pantagraph - Down/F)
+        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn68 (Pantagraph - Up/R)
+        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn69 (Pantagraph - Down/R)
         
-        // TMCC2 Freight/Stock Cars
-        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn68 (Option1 On)
-        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn69 (Opiton1 Off)
-        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn70 (Option2 On)
-        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn71 (Option2 Off)
-        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn72 (Load)
-        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn73 (Unload)
-        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn74 (FRED On)
-        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn75 (FRED Off)
-        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn76 (Flat Wheel On)
-        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn77 (Flat Wheel Off)
-        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn78 (Game On)
-        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn79 (Game Off)
+        // Only TMCC1 Break-Down B Unit
+
+        // TMCC2 Boxcar/Livestock Car
+        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn70 (Option1 On)
+        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn71 (Opiton1 Off)
+        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn72 (Option2 On)
+        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn73 (Option2 Off)
+        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn74 (Load)
+        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn75 (Unload)
+        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn76 (FRED On)
+        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn77 (FRED Off)
+        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn78 (Flat Wheel On)
+        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn79 (Flat Wheel Off)
+        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn80 (Game On)
+        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn81 (Game Off)
+
+        // Only TMCC1 Passenger/Dining Cars
+
+        // Only TMCC1 Crane/Boom Car
 
         // TMCC2 Smoke System
-        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn80 (Smoke System Off)
-        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn81 (Smoke System Low)
-        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn82 (Smoke System Med)
-        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn83 (Smoke System High)
+        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn82 (Smoke System Off)
+        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn83 (Smoke System Low)
+        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn84 (Smoke System Med)
+        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn85 (Smoke System High)
 
         // TRMCC2_32 Unassigned FnKeys
-        {0xF8012E}, // Fn84 Code to Trigger SerialMonFrame Message/Unassigned FnKey
-        {0xF8012E}, // Fn85 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fnxx Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fnxx Code to Trigger SerialMonFrame Message/Unassigned FnKey
 
         // TRMCC2_32 Aux FnKeys
         {0xF80108}, // Fnxx (Aux1 Off)
@@ -467,39 +475,47 @@ public class SerialThrottle extends AbstractThrottle {
         {0xF8017D, 0xFB00F9, 0xFB0000}, // Fn58 (Car Cabin Lt Off)
         {0xF8017D, 0xFB00FA, 0xFB0000}, // Fn59 (Car Cabin Lt Auto)
 
-        // TMCC2 Subway FnKeys
-        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn60 (Open Doors - Left)
-        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn61 (Close Doors - Left)
-        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn62 (Open Doors - Right)
-        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn63 (Close Doors - Right)
-        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn64 (Pantagraph - Up/F)
-        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn65 (Pantagraph - Down/F)
-        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn66 (Pantagraph - Up/R)
-        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn67 (Pantagraph - Down/R)
+        // TMCC2 Acela/Subway FnKeys
+        {0xF80109, 0xF80112}, // Fn60 (Crew: Report Speed - Moving)
+        {0xF80109, 0xF80115}, // Fn61 (Tower: Emergency Stop/Crew: Ack - Moving)
+        {0xF8017C, 0xFB0020, 0xFB0000}, // Fn62 (Open Doors - Left)
+        {0xF8017C, 0xFB0021, 0xFB0000}, // Fn63 (Close Doors - Left)
+        {0xF8017C, 0xFB0022, 0xFB0000}, // Fn64 (Open Doors - Right)
+        {0xF8017C, 0xFB0023, 0xFB0000}, // Fn65 (Close Doors - Right)
+        {0xF8017C, 0xFB0010, 0xFB0000}, // Fn66 (Pantagraph - Up/F)
+        {0xF8017C, 0xFB0011, 0xFB0000}, // Fn67 (Pantagraph - Down/F)
+        {0xF8017C, 0xFB0012, 0xFB0000}, // Fn68 (Pantagraph - Up/R)
+        {0xF8017C, 0xFB0013, 0xFB0000}, // Fn69 (Pantagraph - Down/R)
 
-        // TMCC2 Freight/Stock Cars
-        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn68 (Option1 On)
-        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn69 (Opiton1 Off)
-        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn70 (Option2 On)
-        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn71 (Option2 Off)
-        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn72 (Load)
-        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn73 (Unload)
-        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn74 (FRED On)
-        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn75 (FRED Off)
-        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn76 (Flat Wheel On)
-        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn77 (Flat Wheel Off)
-        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn78 (Game On)
-        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn79 (Game Off)
+        // Only TMCC1 Break-Down B Unit
+
+        // TMCC2 Boxcar/Livestock Car
+        {0xF8017C, 0xFB0030, 0xFB0000}, // Fn70 (Option1 On)
+        {0xF8017C, 0xFB0031, 0xFB0000}, // Fn71 (Opiton1 Off)
+        {0xF8017C, 0xFB0032, 0xFB0000}, // Fn72 (Option2 On)
+        {0xF8017C, 0xFB0033, 0xFB0000}, // Fn73 (Option2 Off)
+        {0xF8017C, 0xFB0034, 0xFB0000}, // Fn74 (Load)
+        {0xF8017C, 0xFB0035, 0xFB0000}, // Fn75 (Unload)
+        {0xF8017C, 0xFB0036, 0xFB0000}, // Fn76 (FRED On)
+        {0xF8017C, 0xFB0037, 0xFB0000}, // Fn77 (FRED Off)
+        {0xF8017C, 0xFB0038, 0xFB0000}, // Fn78 (Flat Wheel On)
+        {0xF8017C, 0xFB0039, 0xFB0000}, // Fn79 (Flat Wheel Off)
+        {0xF8017C, 0xFB003A, 0xFB0000}, // Fn80 (Game On)
+        {0xF8017C, 0xFB003B, 0xFB0000}, // Fn81 (Game Off)
+
+        // Only TMCC1 Passenger/Dining Cars
+
+        // Only TMCC1 Crane/Boom Car
 
         // TMCC2 Smoke System
-        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn80 (Smoke System Off)
-        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn81 (Smoke System Low)
-        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn82 (Smoke System Med)
-        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn83 (Smoke System High)
+        {0xF8017C, 0xFB0000, 0xFB0000}, // Fn82 (Smoke System Off)
+        {0xF8017C, 0xFB0001, 0xFB0000}, // Fn83 (Smoke System Low)
+        {0xF8017C, 0xFB0002, 0xFB0000}, // Fn84 (Smoke System Med)
+        {0xF8017C, 0xFB0003, 0xFB0000}, // Fn85 (Smoke System High)
 
         // TRMCC2_200 Unassigned FnKeys
-        {0xF8012E}, // Fn84 Code to Trigger SerialMonFrame Message/Unassigned FnKey
-        {0xF8012E}, // Fn85 Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fnxx Code to Trigger SerialMonFrame Message/Unassigned FnKey
+        {0xF8012E}, // Fnxx Code to Trigger SerialMonFrame Message/Unassigned FnKey
 
         // TMCC2_200 Aux FnKeys
         {0xF80108}, // Fnxx (Aux1 Off)
@@ -513,11 +529,16 @@ public class SerialThrottle extends AbstractThrottle {
 
     };
 
+
+     int previousValue;
+     int newValue;
+
     /**
      * Set the speed.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+
     @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed;
@@ -526,7 +547,7 @@ public class SerialThrottle extends AbstractThrottle {
             this.speedSetting = speed;
         }
         
-        // send to layout option 200 speed steps
+        // Option TMCC2_200 "Absolute" speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC2_200) {
 
             // TMCC2 Legacy 200 speed step mode
@@ -541,28 +562,37 @@ public class SerialThrottle extends AbstractThrottle {
             if (value < 0) {
                 // System HALT (immediate stop; ALL)
                 m.putAsWord(0xFF8B);
+
+                // send to layout (send 4 times to ensure received)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
             } else {
                 // normal speed setting
                 m.putAsWord(0x0000 + (address.getNumber() << 9) + value);
+
+                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
             }
-            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);
         }
 
-        // send to layout option 100 speed steps
+        // Option TMCC1_100 "Relative" speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC1_100) {
             
           /** 
-            * TMCC1 ERR 100 speed step mode
+            * TMCC1 MedMomentum, HighMomentum and ERR 100 speed step mode
             * purpose is to increase resolution of 32 bits
             * across 100 throttle 'clicks' by dividing value by 3            
             * and setting top speed at 32
           */
+
             int value = (int) (99 * speed); // max value to send is 99 in 100 step mode
-            if (value > 93) {
+            if (value > 99) {
                 // max possible speed step
-                value = 93;
+                value = 99;
             }
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xFE);
@@ -570,18 +600,45 @@ public class SerialThrottle extends AbstractThrottle {
             if (value < 0) {
                 // System HALT (immediate stop; ALL)
                 m.putAsWord(0xFFFF);
+
+                // send to layout (send 4 times to ensure received)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
             }
-            if (value >= 0) {
+            if (value == 0) {
                 // normal speed step setting
-                m.putAsWord(0x0060 + address.getNumber() * 128 + value / 3);
+                m.putAsWord(0x0060 + address.getNumber() * 128 + value);
+
+                // send to layout (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
             }
-                            
-            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);
+
+            if (value > 0) {
+                 newValue = value;
+                 if (newValue > previousValue) {
+                    // increase TMCC "Relative" speed +1 (repeat * valueChange46)
+                    int valueChange46 = (newValue - previousValue);
+                    for (int i = 0x0000; i < valueChange46; i++) {
+                        m.putAsWord(0x0046 + address.getNumber() * 128);
+                        tc.sendSerialMessage(m, null);
+                    }
+                }
+                if (newValue < previousValue) {
+                    // decrease TMCC "Relative" speed -1 (repeat * valueChange44)
+                    int valueChange44 = (previousValue - newValue);
+                    for (int j = 0x0000; j < valueChange44; j++) {
+                        m.putAsWord(0x0044 + address.getNumber() * 128);
+                        tc.sendSerialMessage(m, null);
+                    }
+                }
+            previousValue = newValue;                
+            }
         }
 
-        // send to layout option TMCC2 32 speed steps
+        // Option TMCC2_32 "Absolute" speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC2_32) {
 
             // TMCC2 Legacy 32 speed step mode
@@ -596,17 +653,24 @@ public class SerialThrottle extends AbstractThrottle {
             if (value < 0) {
                 // System HALT (immediate stop; ALL)
                 m.putAsWord(0xFF8B);
+
+                // send to layout (send 4 times to ensure received)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
             } else {
                 // normal speed setting
                 m.putAsWord(0x0160 + address.getNumber() * 512 + value);
+
+                // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
             }
-    
-            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);           
         }
 
-        // send to layout option TMCC1 32 speed steps
+        // Option TMCC1_32 "Absolute" speed steps
         if (speedStepMode == jmri.SpeedStepMode.TMCC1_32) {
 
             // TMCC1 32 speed step mode
@@ -621,14 +685,21 @@ public class SerialThrottle extends AbstractThrottle {
             if (value < 0) {
                 // System HALT (immediate stop; ALL)
                 m.putAsWord(0xFFFF);
+
+                // send to layout (send 4 times to ensure received)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);
+
             } else {
                 // normal speed setting
                 m.putAsWord(0x0060 + address.getNumber() * 128 + value);
+
+                // send to layout (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(m, null);
+                tc.sendSerialMessage(m, null);           
             }
-    
-            // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
-            tc.sendSerialMessage(m, null);
-            tc.sendSerialMessage(m, null);           
         }
                   
         synchronized(this) {
@@ -771,9 +842,9 @@ public class SerialThrottle extends AbstractThrottle {
     /*
      * Set the speed step value.
      * <p>
-     * Only 32 steps is available
+     * The speed step range is from 32 steps, to 100 steps, to 200 steps
      *
-     * @param mode only TMCC1 32, TMCC2 32, TMCC1 100 and TMCC2 200 are allowed
+     * @param mode only TMCC1_32, TMCC2_32, TMCC1_100 and TMCC2_200 are allowed
      */
     @Override
     public void setSpeedStepMode(jmri.SpeedStepMode mode) {

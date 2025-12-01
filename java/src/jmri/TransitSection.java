@@ -135,8 +135,8 @@ public class TransitSection {
     private boolean mAlternate = false;
     private boolean mSafe = false;
     private String mStopAllocatingSensorName = "";
-    private float mFwdStopPerCent;
-    private float mRevStopPerCent;
+    private float mFwdStopPerCent = 1.0f;
+    private float mRevStopPerCent = 1.0f;
 
     // temporary variables and method for delayed initialization of Section
     private String tSectionName = "";

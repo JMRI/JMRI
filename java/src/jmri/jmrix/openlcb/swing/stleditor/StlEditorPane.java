@@ -807,7 +807,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             longLine = longLine + sb.toString();
         }
 
-        log.debug("MultiLine: {}", longLine);
+        log.debug("Encoded multiLine:\n{}", longLine);
 
         if (longLine.length() < 256) {
             groupRow.setMultiLine(longLine);
@@ -924,11 +924,16 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
      * @param group The CDI group.
      */
     private void createTokenMap(GroupRow group) {
+        var line = group.getMultiLine();
+        if (line.length() == 0) {
+            return;
+        }
+
         _messages.clear();
         _tokenMap = new TreeMap<>();
-        var line = group.getMultiLine();
 
         // Find label locations
+        log.debug("Find label locations");
         var matchLabel = PARSE_LABEL.matcher(line);
         while (matchLabel.find()) {
             var label = line.substring(matchLabel.start(), matchLabel.end());
@@ -936,6 +941,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         // Find variable locations and operators
+        log.debug("Find variables and operators");
         var matchVar = PARSE_VARIABLE.matcher(line);
         while (matchVar.find()) {
             var variable = line.substring(matchVar.start(), matchVar.end());
@@ -947,6 +953,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         // Find operators without variables
+        log.debug("Find operators without variables");
         var matchOper = PARSE_NOVAROPER.matcher(line);
         while (matchOper.find()) {
             var oper = line.substring(matchOper.start(), matchOper.end());
@@ -963,6 +970,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         // Find jump operators and destinations
+        log.debug("Find jump operators and destinations");
         var matchJump = PARSE_JUMP.matcher(line);
         while (matchJump.find()) {
             var jump = line.substring(matchJump.start(), matchJump.end());
@@ -983,6 +991,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         // Find timer word locations and load operator
+        log.debug("Find timer word locations and load operators");
         var matchTimerWord = PARSE_TIMERWORD.matcher(line);
         while (matchTimerWord.find()) {
             var timerWord = matchTimerWord.group(1);
@@ -998,6 +1007,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         // Find timer variable locations and S operators
+        log.debug("Find timer variable locations and S operators");
         var matchTimerVar = PARSE_TIMERVAR.matcher(line);
         while (matchTimerVar.find()) {
             var timerVar = matchTimerVar.group(1);
@@ -1009,6 +1019,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
         }
 
         // Find comment locations
+        log.debug("Find comment locations");
         var matchComment1 = PARSE_COMMENT1.matcher(line);
         while (matchComment1.find()) {
             var comment = matchComment1.group(1).trim();
@@ -1043,16 +1054,13 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
                     Bundle.getMessage("MsgParseErr", group.getName(), msgs),
                     Bundle.getMessage("TitleParseErr"),
                     JmriJOptionPane.ERROR_MESSAGE);
-            _messages.forEach((msg) -> {
-                log.error(msg);
-            });
         }
 
         // Create token debugging output
         if (log.isDebugEnabled()) {
-            log.info("Line = {}", line);
+            log.debug("Decode line:\n{}", line);
             for (Token token : _tokenMap.values()) {
-                log.info("Token = {}", token);
+                log.debug("  Token = {}", token);
             }
         }
     }
@@ -1080,8 +1088,18 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
             limit--;
             index--;
         }
-        _messages.add(Bundle.getMessage("ErrNoOper", index, line));
-        log.error("findOperator: {} :: {}", index, line);
+
+        // Format error message
+        int subStart = index < 0 ? 0 : index;
+        int subEnd = subStart + 20;
+        if (subEnd > line.length()) {
+            subEnd = line.length();
+        }
+        String fragment = line.substring(subStart, subEnd).replace("\n", "~");
+        String msg = Bundle.getMessage("ErrNoOper", index, fragment);
+        _messages.add(msg);
+        log.error(msg);
+
         return null;
     }
 
