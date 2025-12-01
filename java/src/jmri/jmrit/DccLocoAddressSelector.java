@@ -298,7 +298,7 @@ public class DccLocoAddressSelector extends JPanel {
         // add a listener to the other selector
         selector.box.addItemListener(event -> {
             var selection = selector.box.getSelectedItem();
-            this.box.setSelectedItem((selection);
+            this.box.setSelectedItem(selection);
             this.box.setEnabled(false);
         });
         var selection = selector.box.getSelectedItem();
