@@ -328,7 +328,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                     
                     //$FALL-THROUGH$
                     case 2: // If C (TMCC Command Code) == 2
-                        // return "TMCC1 - Engine " + A + " - Change Speed (Relative) by " + (D - 5);
+                        return "TMCC1 - Engine " + A + " - Change Speed (Relative) by " + (D - 5);
 
                     case 3: // If C (TMCC Command Code) == 3
                     default: // to let the compiler know there are only 3 cases

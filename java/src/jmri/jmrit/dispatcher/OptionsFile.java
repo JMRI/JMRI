@@ -2,6 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import java.io.File;
 import java.util.Set;
+
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ScaleManager;
@@ -11,6 +12,7 @@ import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.FileUtil;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -48,7 +50,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
 
     // operational variables
     protected DispatcherFrame dispatcher = null;
-    private static String defaultFileName = FileUtil.getUserFilesPath() + "dispatcheroptions.xml";
+    private static String defaultFileName = FileUtil.getUserFilesPath() + "dispatcher" + FileUtil.SEPARATOR + "dispatcheroptions.xml";
+    private static String oldFileName = FileUtil.getUserFilesPath() + "dispatcheroptions.xml";
 
     public static void setDefaultFileName(String testLocation) {
         defaultFileName = testLocation;
@@ -57,7 +60,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
     private Element root = null;
 
     /**
-     * Read Dispatcher Options from a file in the user's preferences directory.
+     * Read Dispatcher Options from a file in the user's preferences directory.  The default
+     * location is within the dispatcher directory.  The previous location is also supported.
      * If the file containing Dispatcher Options does not exist, this routine returns quietly.
      * <p>The lename attribute is deprecated at 5.1.3. The current value will be retained.
      *
@@ -66,11 +70,12 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
      * @throws java.io.IOException    if dispatcher parameter not found
      */
     public void readDispatcherOptions(DispatcherFrame f) throws org.jdom2.JDOMException, java.io.IOException {
-        // check if file exists
-        if (checkFile(defaultFileName)) {
+        // check if a file exists
+        String optionsFileName = getOptionsFileLocation();
+        if (optionsFileName != null) {
             // file is present,
-            log.debug("Reading Dispatcher options from file {}", defaultFileName);
-            root = rootFromName(defaultFileName);
+            log.debug("Reading Dispatcher options from file {}", optionsFileName);
+            root = rootFromName(optionsFileName);
             dispatcher = f;
             if (root != null) {
                 // there is a file
@@ -162,6 +167,12 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                             dispatcher.setUseTurnoutConnectionDelay(true);
                         }
                     }
+                    if (options.getAttribute("useoccupiedtrackspeed") != null) {
+                        dispatcher.setUseTurnoutConnectionDelay(false);
+                        if (options.getAttribute("useoccupiedtrackspeed").getValue().equals("yes")) {
+                            dispatcher.setUseOccupiedTrackSpeed(true);
+                        }
+                    }
                     if (options.getAttribute("minthrottleinterval") != null) {
                         String s = (options.getAttribute("minthrottleinterval")).getValue();
                         dispatcher.setMinThrottleInterval(Integer.parseInt(s));
@@ -240,8 +251,33 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                 }
             }
         } else {
-            log.debug("No Dispatcher options file found at {}, using defaults", defaultFileName);
+            log.debug("No Dispatcher options file found at {} or {}, using defaults", defaultFileName, oldFileName);
         }
+    }
+
+    /**
+     * Select a file location.
+     * @return which location to use or null if none.
+     */
+    private String getOptionsFileLocation() {
+        if (checkFile(defaultFileName)) {
+            if (checkFile(oldFileName)) {
+                // Both files exist, check file modification times
+                try {
+                    long newFileTime = FileUtil.getFile(defaultFileName).lastModified();
+                    long oldFileTime = FileUtil.getFile(oldFileName).lastModified();
+                    if (oldFileTime > newFileTime) {
+                        return oldFileName;
+                    }
+                } catch (java.io.IOException ioe) {
+                    log.error("IO Exception while selecting which file to load :: {}", ioe.getMessage());
+                }
+            }
+            return defaultFileName;
+        } else if (checkFile(oldFileName)) {
+            return oldFileName;
+        }
+        return null;
     }
 
     /**
@@ -276,6 +312,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("autoturnouts", "" + (dispatcher.getAutoTurnouts() ? "yes" : "no"));
         options.setAttribute("trustknownturnouts", "" + (dispatcher.getTrustKnownTurnouts() ? "yes" : "no"));
         options.setAttribute("useturnoutconnectiondelay", "" + (dispatcher.getUseTurnoutConnectionDelay() ? "yes" : "no"));
+        options.setAttribute("useoccupiedtrackSpeed", "" + (dispatcher.getUseOccupiedTrackSpeed() ? "yes" : "no"));
         options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
         options.setAttribute("fullramptime", "" + (dispatcher.getFullRampTime()));
         options.setAttribute("hasoccupancydetection", "" + (dispatcher.getHasOccupancyDetection() ? "yes" : "no"));
@@ -313,9 +350,26 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
             }
             // write content to file
             writeXML(findFile(defaultFileName), doc);
+            updateOldLocation();
         } catch (java.io.IOException ioe) {
             log.error("IO Exception {}", ioe.getMessage());
             throw (ioe);
+        }
+    }
+
+    /**
+     * To maintain backward support, the updated options file is copied to the old location.
+     */
+    private void updateOldLocation() {
+        if (checkFile(oldFileName)) {
+            log.debug("Replace {} with a copy of {}", oldFileName, defaultFileName);
+            try {
+                File source = FileUtil.getFile(defaultFileName);
+                File dest = FileUtil.getFile(oldFileName);
+                FileUtil.copy(source, dest);
+            } catch (java.io.IOException ioe) {
+                log.error("IO Exception while updating old file :: {}", ioe.getMessage());
+            }
         }
     }
 

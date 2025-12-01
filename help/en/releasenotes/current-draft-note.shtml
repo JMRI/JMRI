@@ -126,14 +126,7 @@
 
         <h4><a href="http://openlcb.org">OpenLCB</a> / LCC</h4>
             <ul>
-                <li>The Send Frame tool has 
-                    <ul>
-                        <li>some button labels updated,</li>
-                        <li>a new Send Global Identify Events button,</li>
-                        <li>more reliable control of the Open CDI Editor button state and</li>
-                        <li>some clean-up of the window layout.
-                    </ul>
-                </li>
+                <li></li>
             </ul>
 
         <h4>Powerline</h4>
@@ -193,22 +186,7 @@
 
     <h3>New / Updated decoder definitions</h3>
         <ul>
-          <li>A <strong>No Decoder decoder with extended addressing</strong>
-              decoder has been added. This "no decoder" definition allows
-              a roster entry to be created that does not have a physical
-              decoder of its own.
-              <br>
-              It was created to suport the Zimo MX series of funcion-only
-              decoders that allow TWO addresses to be defined for a single
-              decoder - the primary address and a secondary address.
-              Function operations will result from commands sent to EITHER
-              decoder address.
-              <br>
-              The initial "No Decoder" definition is limited to a primary
-              address of 1-127, this extended version allows the full
-              range of extended addresses to be used</li>
-          <li>"DCCWorld.com" has been added as a manufacturer ID that DecoderPro 
-              recognizes.</li>
+          <li></li>
         </ul>
 
         <h4>AE Model</h4>
@@ -413,7 +391,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li>See above.</li>
+                <li></li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -446,18 +424,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Fixed a problem causing the starting value when doing
-                CV reads to erroneously be zero.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-            <li>Display minimum scale speed  when activating train.</li>
-            <li>Add basic column sorting on the traininfo selection screen, and correct missplaced columns.</li>
-            <li>Tidy up debug/trace in RosterSpeedProfile.</li>
-            <li>Make info message in allocated section to debug.</li>
-            <li>Fix Exception when starting trains under inauspicious circumstances.</li>
+             <li></li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -475,17 +448,12 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>Improved how the "?" is drawn for UNKNOWN turnouts (when that option is selected)</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
             <ul>
-                <li>Add two options to override the changes made in PR #13857 - Entry/Exit Enhancements
-                  <ul>
-                    <li>Suppress the multi-point failed dialog</li>
-                    <li>Revert to the old GUI behavior</li>
-                  </ul>
-                </li>
+                <li></li>
             </ul>
 
     <h3>LccPro</h3>
@@ -515,7 +483,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>When a car arrives at a spur with a schedule, the car's final destination now changes when the car's load status changes.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -557,9 +525,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>Add <strong>MemoryValuesPersistence.py</strong>. The script will write the values
-            for selected memory variables at shutdown and load them after starting PanelPro and
-            loading the layout data xml file.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -629,9 +595,7 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li>There's a new "Property Add/Edit" in the item popup menu
-                in the various tables.  This lets you add or edit 
-                property values associated with a particular item.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -679,8 +643,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li>Testing - JUnitUtil - waitFor condition failure text can be formed from a String Supplier, e.g. a lambda expression.
-            The expression is only evaluated ( lazily ) when the assertion fails.
-            </li>
+            <li></li>
         </ul>
 
