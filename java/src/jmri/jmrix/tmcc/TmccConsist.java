@@ -19,7 +19,6 @@ import jmri.DccLocoAddress;
 
 public class TmccConsist extends jmri.implementation.DccConsist {
 
-    // ???????????????????????
     @Nonnull
     public String sendTopicPrefix = "cab/{0}/consist";
     private boolean active = false;
@@ -29,7 +28,6 @@ public class TmccConsist extends jmri.implementation.DccConsist {
     public TmccConsist(int address, TmccSystemConnectionMemo memo, String sendTopicPrefix) {
         super(address);
           tc = memo.getTrafficController();
-//        tmccAdapter = memo.getTmccAdapter();
         this.sendTopicPrefix = sendTopicPrefix;
         consistType = Consist.CS_CONSIST;
         log.debug("Consist {} created.", this.getConsistAddress());
@@ -40,7 +38,6 @@ public class TmccConsist extends jmri.implementation.DccConsist {
     public TmccConsist(DccLocoAddress address, TmccSystemConnectionMemo memo, String sendTopicPrefix) {
         super(address);
           tc = memo.getTrafficController();
-//        tmccAdapter = memo.getTmccAdapter();
         this.sendTopicPrefix = sendTopicPrefix;
         consistType = Consist.CS_CONSIST;
         log.debug("Consist {} created.", this.getConsistAddress());
@@ -150,14 +147,12 @@ public class TmccConsist extends jmri.implementation.DccConsist {
     /**
      * Add a Locomotive to a Consist
      *
-     * @param locoAddress - is the Locomotive address to add to the consist
+//     * @param ConsistAddress - is the Consist address to be assigned to the locomotive.
+     * @param locoAddress - is the Locomotive address to add to the consist.
      * @param directionNormal - is True if the locomotive is traveling the same direction as the consist, or false otherwise.
-//     * @param ConsistAddress - is the Consist address assigned to the locomotive.
      */
     @Override
     public synchronized void add(DccLocoAddress locoAddress, boolean directionNormal) {
-//        System.out.println("add(..) with protocol "+locoAddress.getProtocol()
-//                        +" "+(locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1));
 
         // TMCC1 Consist Build
         if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1) {
@@ -230,10 +225,10 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add head loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Head Unit/Forward Direction
-                        m.putAsWord(0x0023 + locoAddress.getNumber() * 512);
+                        m.putAsWord(0x0123 + locoAddress.getNumber() * 512);
                     } else {
                         // TMCC1 - Assign as Head Unit/Reverse Direction
-                        m.putAsWord(0x0022 + locoAddress.getNumber() * 512);
+                        m.putAsWord(0x0122 + locoAddress.getNumber() * 512);
                     }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
                 tc.sendSerialMessage(m, null);
@@ -244,10 +239,10 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add rear loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Rear Unit/Forward Direction
-                        m.putAsWord(0x0027 + locoAddress.getNumber() * 512);
+                        m.putAsWord(0x0127 + locoAddress.getNumber() * 512);
                     } else {
                         // TMCC1 - Assign as Rear Unit/Reverse Direction
-                        m.putAsWord(0x0026 + locoAddress.getNumber() * 512);
+                        m.putAsWord(0x0126 + locoAddress.getNumber() * 512);
                     }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
                 tc.sendSerialMessage(m, null);
@@ -258,10 +253,10 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add mid loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Mid Unit/Forward Direction
-                        m.putAsWord(0x0025 + locoAddress.getNumber() * 512);
+                        m.putAsWord(0x0125 + locoAddress.getNumber() * 512);
                     } else {
                         // TMCC1 - Assign as Mid Unit/Reverse Direction
-                        m.putAsWord(0x0024 + locoAddress.getNumber() * 512);
+                        m.putAsWord(0x0124 + locoAddress.getNumber() * 512);
                     }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
                 tc.sendSerialMessage(m, null);
@@ -338,8 +333,7 @@ public class TmccConsist extends jmri.implementation.DccConsist {
         active = false;
         // Clear TMCC message
         jmri.util.ThreadingUtil.runOnLayoutEventually(() ->
-//            tmccAdapter.publish(this.sendTopicPrefix.replaceFirst("\\{0\\}", 
-                String.valueOf(consistAddress.getNumber())); //, ""));
+            String.valueOf(consistAddress.getNumber())); //, ""));
 
     }
 
@@ -362,8 +356,7 @@ public class TmccConsist extends jmri.implementation.DccConsist {
     private void publish(){
         // Send TMCC message
         jmri.util.ThreadingUtil.runOnLayout(() ->
-//            tmccAdapter.publish(this.sendTopicPrefix.replaceFirst("\\{0\\}", 
-                String.valueOf(consistAddress.getNumber())); //, getConsistMakeup()));
+            String.valueOf(consistAddress.getNumber())); //, getConsistMakeup()));
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TmccConsist.class);
