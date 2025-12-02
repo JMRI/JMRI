@@ -13,15 +13,16 @@
     <div id="mainContent" class="no-sidebar">
       <h1>Adding Blocks</h1>
 
-      <p>To add a new Block, click the <strong>Add...</strong> button at the bottom left edge of
+      <p>To add a new Block, click the <strong>Add&hellip;</strong> button at the bottom left edge of
       the Block Table pane.</p>
-      <img src="images/BlockAdd.png" width="592" height="162" alt="Block editing pane">
-      <p>In the pane that opens, enter a valid System Name for the Block and if desired enter a
-      User Name. For example, a valid System Name for a LocoNet layout could be LB456. Another
-      example, a valid Internal Block system name could be IB123.<br></p>
 
-      <p>The User Name is optional, unless you check "Automatically generate System Name", and if
-      you enter one it has to be unique in your JMRI setup. See the "<a href=
+      <img src="images/BlockAdd.png" alt="Block editing pane">
+
+      <p>In the pane that opens, enter a valid System Name for the Block and if desired enter a
+      User Name. Blocks are "internal" objects with a system name prefix of IB.  While the user
+      name is optional, if the block is going to be used as a block for Layout Editor track, it must
+      have a user name. User names are also required if "Automatically generate System Name" is
+      enabled.  Both names must be unique within the Block table. See the "<a href=
       "../../../../html/doc/Technical/Names.shtml">Names</a>" Help page for more information.</p>
 
       <p>Click [Create] to complete this step. Click [Cancel] to close the pane (don't worry,
