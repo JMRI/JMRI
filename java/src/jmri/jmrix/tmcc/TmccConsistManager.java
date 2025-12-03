@@ -5,9 +5,6 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import javax.annotation.Nonnull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Consist Manager for use with the TmccConsist class for the
@@ -17,7 +14,6 @@ import org.slf4j.LoggerFactory;
  * with edits/additions by
  * @author Timothy Jump (C) 2025
  */
-
 
 public class TmccConsistManager extends AbstractConsistManager {
 
@@ -141,6 +137,6 @@ public class TmccConsistManager extends AbstractConsistManager {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TmccConsistManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TmccSystemConnectionMemo.class);
 
 }

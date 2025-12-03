@@ -158,9 +158,9 @@ public class TmccConsist extends jmri.implementation.DccConsist {
         if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1) {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xFE);
-            if (!contains(locoAddress)) {
-                // TMCC has 6 commands for adding a loco to a consist: head, rear, and mid, plus direction
 
+            // TMCC has 6 commands for adding a loco to a consist: head, rear, and mid, plus direction
+            if (!contains(locoAddress)) {
                 // First loco to consist
                 if (consistList.isEmpty()) {
                     // add head loco
@@ -217,9 +217,9 @@ public class TmccConsist extends jmri.implementation.DccConsist {
         if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC2) {
             SerialMessage m = new SerialMessage();
             m.setOpCode(0xF8);
-            if (!contains(locoAddress)) {
-                // TMCC has 6 commands for adding a loco to a consist: head, rear, and mid, plus direction
 
+            // TMCC has 6 commands for adding a loco to a consist: head, rear, and mid, plus direction
+            if (!contains(locoAddress)) {
                 // First loco to consist
                 if (consistList.isEmpty()) {
                     // add head loco
