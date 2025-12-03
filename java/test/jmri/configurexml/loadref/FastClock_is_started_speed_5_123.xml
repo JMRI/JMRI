@@ -27,77 +27,14 @@
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Dec 03 17:39:29 CET 2025" rate="1.0" startrate="5.123" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
-      <type>app</type>
-      <date>Wed Dec 03 17:51:07 CET 2025</date>
-      <filename>PanelPro (v5.13.7)</filename>
-    </operation>
-    <operation>
       <type>Load OK</type>
       <date>Wed Dec 03 17:51:16 CET 2025</date>
       <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_started_speed_1_00.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Wed Dec 03 17:50:19 CET 2025</date>
-          <filename>PanelPro (v5.13.7)</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Wed Dec 03 17:50:29 CET 2025</date>
-          <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_stopped_speed_3_27.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Wed Dec 03 17:47:58 CET 2025</date>
-              <filename>PanelPro (v5.13.7)</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Wed Dec 03 17:49:28 CET 2025</date>
-              <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_stopped_speed_1_00.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Wed Dec 03 17:40:44 CET 2025</date>
-                  <filename>PanelPro (v5.13.7)</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Wed Dec 03 17:43:11 CET 2025</date>
-                  <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_stopped_speed_1_00.xml</filename>
-                  <filehistory>
-                    <operation>
-                      <type>app</type>
-                      <date>Wed Dec 03 17:39:29 CET 2025</date>
-                      <filename>PanelPro (v5.13.7)</filename>
-                    </operation>
-                    <operation>
-                      <type>Store</type>
-                      <date>Wed Dec 03 17:40:22 CET 2025</date>
-                      <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_stopped_speed_1_00.xml</filename>
-                    </operation>
-                  </filehistory>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Wed Dec 03 17:43:50 CET 2025</date>
-                  <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_stopped_speed_1_00.xml</filename>
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Wed Dec 03 17:50:12 CET 2025</date>
-              <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_stopped_speed_3_27.xml</filename>
-            </operation>
-          </filehistory>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Wed Dec 03 17:51:00 CET 2025</date>
-          <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_started_speed_1_00.xml</filename>
-        </operation>
-      </filehistory>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Dec 03 17:51:00 CET 2025</date>
+      <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_started_speed_1_00.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
