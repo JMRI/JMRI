@@ -24,7 +24,7 @@ public class InternalTimeProviderManagerXml extends jmri.managers.configurexml.A
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // load individual turnouts
+        // load individual time providers
         return loadTimeProviders(shared, perNode);
     }
 
