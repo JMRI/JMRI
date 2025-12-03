@@ -5,8 +5,8 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.implementation.AbstractConsistManager;
 import javax.annotation.Nonnull;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -39,6 +39,7 @@ public class TmccConsistManager extends AbstractConsistManager {
         return true;
      }
      
+
     /**
      * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
@@ -132,16 +133,14 @@ public class TmccConsistManager extends AbstractConsistManager {
      * This is used by a throttle in case it is controlling a consist.
      * @param address Consist address to be deactivated
      */
-//    public void deactivateConsist(LocoAddress address) {
+    public void deactivateConsist(LocoAddress address) {
 
-//        if (!consistTable.containsKey(address)) return;
+        if (!consistTable.containsKey(address)) return;
 
-//        ((TmccConsist)consistTable.get(address)).deactivate();
+        ((TmccConsist)consistTable.get(address)).deactivate();
 
-//    }
+    }
 
-
-
-//    private final static Logger log = LoggerFactory.getLogger(TmccConsistManager.class);
+    private final static Logger log = LoggerFactory.getLogger(TmccConsistManager.class);
 
 }
