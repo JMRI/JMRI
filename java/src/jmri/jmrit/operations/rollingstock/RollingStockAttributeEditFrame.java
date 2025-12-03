@@ -161,6 +161,7 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
                 return false;
             }
         }
+        String[] item = { itemName };
         if (_attribute.equals(ROAD)) {
             if (!OperationsXml.checkFileName(itemName)) { // NOI18N
                 JmriJOptionPane.showMessageDialog(this,
@@ -168,8 +169,8 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
                         MessageFormat.format(errorMessage, new Object[] { _attribute }), JmriJOptionPane.ERROR_MESSAGE);
                 return false;
             }
+            item = itemName.split(TrainCommon.HYPHEN);
         }
-        String[] item = { itemName };
         if (_attribute.equals(TYPE)) {
             // can't have the " & " as part of the type name
             if (itemName.contains(CarLoad.SPLIT_CHAR)) {
