@@ -1810,6 +1810,15 @@
       <xs:attribute name="bezier" type="yesNoType"></xs:attribute>
       <xs:attribute name="angle" type="xs:float"></xs:attribute>
       <xs:attribute name="hideConLines" type="yesNoType"></xs:attribute>
+      
+      <!-- TrackTile attributes -->
+      <xs:attribute name="tileVendor" type="xs:string"></xs:attribute>
+      <xs:attribute name="tileFamily" type="xs:string"></xs:attribute>
+      <xs:attribute name="tilePartCode" type="xs:string"></xs:attribute>
+      <xs:attribute name="tileJmriType" type="xs:string"></xs:attribute>
+      <xs:attribute name="tileLength" type="xs:float"></xs:attribute>
+      <xs:attribute name="tileRadius" type="xs:float"></xs:attribute>
+      <xs:attribute name="tileArc" type="xs:float"></xs:attribute>
     </xs:complexType>
 
     <xs:simpleType name="HitPointType">
