@@ -18,7 +18,7 @@ public class LayoutTileMath {
      *                    north, 180 = west, 270 = south)
      * @return the calculated endpoint as a Point2D
      */
-    public Point2D calcStraightEndpoint(Point2D startPoint, double length, double orientation) {
+    public static Point2D calcStraightEndpoint(Point2D startPoint, double length, double orientation) {
         // Convert angle from degrees to radians
         double angleRadians = Math.toRadians(orientation);
 
@@ -44,7 +44,7 @@ public class LayoutTileMath {
      *                    for left turn
      * @return the calculated endpoint as a Point2D
      */
-    public Point2D calcCurveEndpoint(Point2D startPoint, double orientation, double curveRadius,
+    public static Point2D calcCurveEndpoint(Point2D startPoint, double orientation, double curveRadius,
             double curveArc, boolean curveFace) {
         // Convert angles from degrees to radians
         double orientationRadians = Math.toRadians(orientation);
@@ -79,7 +79,7 @@ public class LayoutTileMath {
      * @return the orientation angle in degrees (0 = east, 90 = north, 180 =
      *         west, 270 = south)
      */
-    public double calcStraightOrientation(Point2D startPoint, Point2D endPoint) {
+    public static double calcStraightOrientation(Point2D startPoint, Point2D endPoint) {
         // Calculate the difference vector
         double deltaX = endPoint.getX() - startPoint.getX();
         double deltaY = endPoint.getY() - startPoint.getY();
@@ -109,7 +109,8 @@ public class LayoutTileMath {
      * @return the initial orientation angle in degrees (0 = east, 90 = north,
      *         180 = west, 270 = south)
      */
-    public double calcCurveOrientation(Point2D startPoint, Point2D endPoint, double curveRadius, boolean curveFace) {
+    public static double calcCurveOrientation(Point2D startPoint, Point2D endPoint, double curveRadius,
+            boolean curveFace) {
         // Calculate the chord vector from start to end
         double chordX = endPoint.getX() - startPoint.getX();
         double chordY = endPoint.getY() - startPoint.getY();
