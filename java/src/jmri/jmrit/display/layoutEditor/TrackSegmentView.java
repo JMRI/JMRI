@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.tracktiles.TrackTile;
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriMouseEvent;
@@ -23,7 +24,7 @@ import jmri.util.swing.JmriMouseEvent;
  *
  * @author Bob Jacobsen Copyright (c) 2020
  */
-public class TrackSegmentView extends LayoutTrackView {
+public class TrackSegmentView extends LayoutTrackView implements TileSupport {
 
     public TrackSegmentView(@Nonnull TrackSegment track, @Nonnull LayoutEditor layoutEditor) {
         super(track, layoutEditor);
@@ -67,6 +68,35 @@ public class TrackSegmentView extends LayoutTrackView {
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.TrackSegmentEditor editor;
 
     final private TrackSegment trackSegment;
+
+    // TileSupport implementation
+    private TrackTile trackTile = null;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasTile() {
+        return trackTile != null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckForNull
+    public TrackTile getTile() {
+        return trackTile;
+    }
+
+    /**
+     * Set the track tile for this track segment.
+     *
+     * @param tile the track tile to associate with this segment, or null to remove association
+     */
+    public void setTile(@CheckForNull TrackTile tile) {
+        this.trackTile = tile;
+    }
 
     // temporary?
     @Nonnull

@@ -18,6 +18,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout.Geometry;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.LinkType;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout.TurnoutType;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.tracktiles.TrackTile;
 import jmri.util.IntlUtilities;
 import jmri.util.MathUtil;
 import jmri.util.swing.JmriJOptionPane;
@@ -29,7 +30,7 @@ import jmri.util.swing.JmriMouseEvent;
  * @author Bob Jacobsen Copyright (c) 2020
  *
  */
-public class LayoutTurnoutView extends LayoutTrackView {
+public class LayoutTurnoutView extends LayoutTrackView implements TileSupport {
 
     public LayoutTurnoutView(@Nonnull LayoutTurnout turnout,
             @Nonnull Point2D c, double rot,
@@ -261,7 +262,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
     public Point2D pointD = new Point2D.Double(20, 20);
 
     public boolean showUnknown = false; // if true, show "?" when state is UNKNOWN
-    
+
     private int version = 1;
 
     private final boolean useBlockSpeed = false;
@@ -270,6 +271,35 @@ public class LayoutTurnoutView extends LayoutTrackView {
     protected jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTurnoutEditor editor;
 
     final private LayoutTurnout turnout;
+
+    // TileSupport implementation
+    private TrackTile trackTile = null;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasTile() {
+        return trackTile != null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckForNull
+    public TrackTile getTile() {
+        return trackTile;
+    }
+
+    /**
+     * Set the track tile for this layout turnout.
+     *
+     * @param tile the track tile to associate with this turnout, or null to remove association
+     */
+    public void setTile(@CheckForNull TrackTile tile) {
+        this.trackTile = tile;
+    }
 
     public final LayoutTurnout getLayoutTurnout() {
         return turnout;
@@ -468,11 +498,11 @@ public class LayoutTurnoutView extends LayoutTrackView {
     public void setShowUnknown(boolean show) {
         showUnknown = show;
     }
-    
+
     public boolean getShowUnknown() {
         return showUnknown;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -1713,7 +1743,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
                 setShowUnknown(o.isSelected());
             });
-            
+
             JCheckBoxMenuItem cbmi = new JCheckBoxMenuItem(Bundle.getMessage("Disabled"));
             cbmi.setSelected(isDisabled());
             popup.add(cbmi);
@@ -2292,7 +2322,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
         } else if (isTurnoutTypeSlip()) {
             log.error("{}.draw1(...); slips should be being drawn by LayoutSlip sub-class", getName());
         } else {    // LH, RH, or WYE Turnouts
-                            
+
             // draw A<===>center
             if (isMain == mainlineA) {
                 g2.setColor(colorA);
@@ -2338,14 +2368,14 @@ public class LayoutTurnoutView extends LayoutTrackView {
 
             drawForShowUnknown(g2, pM, g2.getColor(), true);
             return;
-        }    
+        }
     }   // draw1
 
-    /** 
+    /**
      * Draw a "?" for the UNKNOWN state.
      *
      * To be invoked if getShowUnknown() is true
-     * 
+     *
      * @param g2 the graphics context to draw in
      * @param center where to center the "?"
      * @param color the base color for drawing
@@ -2354,35 +2384,35 @@ public class LayoutTurnoutView extends LayoutTrackView {
     private void drawForShowUnknown(Graphics2D g2, Point2D center, Color color, boolean complement) {
         var originalFont = g2.getFont();
         var originalColor = g2.getColor();
-                
+
         // convert color to HSV to get intensity
         int v = Math.max(Math.max(color.getBlue(), color.getGreen()), color.getRed());
-        
-        Color drawColor = color; 
-        
+
+        Color drawColor = color;
+
         if (complement) {
             drawColor = Color.BLACK;
-            if ( v < 255*0.5) { 
+            if ( v < 255*0.5) {
                 drawColor = Color.WHITE;
             }
         }
-            
+
         g2.setColor(drawColor);
-        
+
         int size = (int) layoutEditor.circleDiameter;
-        
+
         g2.setFont(new Font("SansSerif", Font.BOLD, size));
-        
+
         var metrics = g2.getFontMetrics();
         double x = center.getX() - ((double) metrics.charWidth('?'))/2; // - to move left
         double y = center.getY() + (metrics.getAscent()*0.9)/2;    // + to move down
-        
+
         g2.drawString("?", (float) x, (float) y);
-        
+
         g2.setColor(originalColor);
         g2.setFont(originalFont);
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -3107,7 +3137,7 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 if (showUnknown && getState() == UNKNOWN) {
                     drawForShowUnknown(g2, getCoordsCenter(), g2.getBackground(), true);
                     return;
-                }    
+                }
             } else {
                 g2.draw(trackControlCircleAt(getCoordsCenter()));
             }
@@ -3116,8 +3146,8 @@ public class LayoutTurnoutView extends LayoutTrackView {
                 // then restore foreground color
                 g2.setColor(foregroundColor);
             }
-            
-            
+
+
         }
     }
 
