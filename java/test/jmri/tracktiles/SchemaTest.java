@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import jmri.configurexml.SchemaTestBase;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,6 +18,8 @@ import org.junit.jupiter.params.provider.MethodSource;
  * @author Bob Jacobsen Copyright 2025
  * @since 5.17.8
  */
+@Tag("schema")
+@Tag("tracktiles")
 public class SchemaTest extends SchemaTestBase {
 
     public static Stream<Arguments> data() {
