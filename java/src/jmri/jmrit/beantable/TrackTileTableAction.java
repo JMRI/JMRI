@@ -22,13 +22,13 @@ import jmri.tracktiles.TrackTileManager;
 
 /**
  * Swing action to create and register a TrackTile table GUI.
- * 
+ *
  * @author Ralf Lang Copyright (C) 2025
  */
 public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
 
     private TrackTileManager trackTileManager = InstanceManager.getNullableDefault(TrackTileManager.class);
-    
+
     // Filter components
     private JTextField vendorFilter;
     private JTextField familyFilter;
@@ -37,7 +37,7 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
 
     /**
      * Create an action with a specific title.
-     * 
+     *
      * @param actionName title of the action
      */
     public TrackTileTableAction(String actionName) {
@@ -66,75 +66,75 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
     protected void createModel() {
         // Create our custom table model that has all the columns we want
         TrackTileTableDataModel customModel = new TrackTileTableDataModel(trackTileManager);
-        
+
         // Create a BeanTableDataModel wrapper that delegates to our custom model
         m = new BeanTableDataModel<TrackTile>() {
             @Override
             public Manager<TrackTile> getManager() {
                 return trackTileManager;
             }
-            
+
             @Override
             public TrackTile getBySystemName(@Nonnull String name) {
                 return trackTileManager.getBySystemName(name);
             }
-            
+
             @Override
             public TrackTile getByUserName(@Nonnull String name) {
                 return trackTileManager.getByUserName(name);
             }
-            
+
             @Override
             public void clickOn(TrackTile t) {
                 // Default implementation
             }
-            
+
             @Override
             public String getValue(String s) {
                 return s;
             }
-            
+
             @Override
             public String getMasterClassName() {
                 return TrackTileTableAction.class.getName();
             }
-            
+
             // Delegate table model methods to our custom model
             @Override
             public int getRowCount() {
                 return customModel.getRowCount();
             }
-            
+
             @Override
             public int getColumnCount() {
                 return customModel.getColumnCount();
             }
-            
+
             @Override
             public String getColumnName(int col) {
                 return customModel.getColumnName(col);
             }
-            
+
             @Override
             public Class<?> getColumnClass(int col) {
                 return customModel.getColumnClass(col);
             }
-            
+
             @Override
             public boolean isCellEditable(int row, int col) {
                 return customModel.isCellEditable(row, col);
             }
-            
+
             @Override
             public Object getValueAt(int row, int col) {
                 return customModel.getValueAt(row, col);
             }
-            
+
             @Override
             public void setValueAt(Object value, int row, int col) {
                 customModel.setValueAt(value, row, col);
             }
-            
+
             @Override
             public void configureTable(JTable table) {
                 customModel.configureTable(table);
@@ -220,7 +220,7 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
     protected void addPressed(ActionEvent e) {
         log.warn("TrackTileTableAction.addPressed() not implemented");
     }
-    
+
     @Override
     protected String getClassName() {
         return TrackTileTableAction.class.getName();
@@ -282,15 +282,12 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
     }
 
     /**
-     * Normalize text for umlaut-insensitive searching.
-     * Converts search input to match both umlaut and non-umlaut spellings in the data:
-     * - "a" → matches both "a" and "ä" 
-     * - "ae" → matches both "ae" and "ä"
-     * - "ä" → matches "ä"
-     * - "marklin" → matches "Märklin"
-     * - "märklin" → matches "Marklin" and "Märklin"
-     * - "maerklin" → matches "Märklin"
-     * 
+     * Normalize text for umlaut-insensitive searching. Converts search input to
+     * match both umlaut and non-umlaut spellings in the data: - "a" → matches
+     * both "a" and "ä" - "ae" → matches both "ae" and "ä" - "ä" → matches "ä" -
+     * "marklin" → matches "Märklin" - "märklin" → matches "Marklin" and
+     * "Märklin" - "maerklin" → matches "Märklin"
+     *
      * @param text The search text to normalize
      * @return Regex pattern that will match umlauts in various forms
      */
@@ -298,13 +295,13 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
         if (text == null || text.isEmpty()) {
             return text;
         }
-        
+
         StringBuilder result = new StringBuilder();
         int i = 0;
         while (i < text.length()) {
             char c = text.charAt(i);
             char cLower = Character.toLowerCase(c);
-            
+
             // Check for two-character umlaut replacements (ae, oe, ue, ss)
             if (i < text.length() - 1) {
                 String twoChar = text.substring(i, i + 2).toLowerCase();
@@ -326,7 +323,7 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
                     continue;
                 }
             }
-            
+
             // Single character conversions
             switch (cLower) {
                 case 'a':
@@ -359,12 +356,14 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
             }
             i++;
         }
-        
+
         return result.toString();
     }
 
     /**
-     * Set the table for filtering. This should be called after the table is created.
+     * Set the table for filtering. This should be called after the table is
+     * created.
+     * 
      * @param table the JTable to apply filtering to
      */
     public void setTable(JTable table) {
