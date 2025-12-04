@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xml/XSLT/tracktiles.xsl" type="text/xsl"?>
 
 <tracktiles version="1.0"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/tracktiles.xsd">
   <header>
     <vendor>Märklin</vendor>
@@ -291,7 +291,7 @@
 
     <tile>
       <partcode>24624</partcode>
-      <jmritype>crossover-double</jmritype>
+      <jmritype>xover-double</jmritype>
       <l10n lang="de">Doppelkreuzungsweiche 24,3°</l10n>
       <l10n lang="en">Double Crossover 24.3°</l10n>
       <l10n lang="fr">Croisement double 24,3°</l10n>
