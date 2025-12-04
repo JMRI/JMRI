@@ -19,8 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Default implementation of TrackTileManager.
- * Manages read-only TrackTile catalog objects loaded from XML files.
+ * Default implementation of TrackTileManager. Manages read-only TrackTile
+ * catalog objects loaded from XML files.
  *
  * @author Ralf Lang Copyright (C) 2025
  */
@@ -29,8 +29,8 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
     private static final Logger log = LoggerFactory.getLogger(DefaultTrackTileManager.class);
 
     /**
-     * Create a new DefaultTrackTileManager for the internal system.
-     * Loads all catalog data from xml/tracktiles directory.
+     * Create a new DefaultTrackTileManager for the internal system. Loads all
+     * catalog data from xml/tracktiles directory.
      */
     public DefaultTrackTileManager() {
         super();
@@ -48,8 +48,8 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
             return;
         }
 
-        File[] xmlFiles = catalogDir.listFiles((dir, name) ->
-            name.toLowerCase().endsWith(".xml") && !name.startsWith("."));
+        File[] xmlFiles =
+                catalogDir.listFiles((dir, name) -> name.toLowerCase().endsWith(".xml") && !name.startsWith("."));
 
         if (xmlFiles == null || xmlFiles.length == 0) {
             log.warn("No XML files found in: {}", catalogDir.getAbsolutePath());
@@ -113,47 +113,28 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
             if (geometryList.getLength() > 0) {
                 Element geometryElement = (Element) geometryList.item(0);
 
-                // Check for straight geometry
+                // Check for straight geometry with paths
                 NodeList straightList = geometryElement.getElementsByTagName("straight");
                 if (straightList.getLength() > 0) {
                     Element straightElement = (Element) straightList.item(0);
-                    String lengthStr = straightElement.getAttribute("length");
-                    if (!lengthStr.isEmpty()) {
-                        try {
-                            double length = Double.parseDouble(lengthStr);
-                            tile.setLength(length);
-                        } catch (NumberFormatException e) {
-                            log.warn("Invalid length value '{}' in {}", lengthStr, xmlFile.getName());
-                        }
+                    NodeList pathList = straightElement.getElementsByTagName("path");
+                    for (int k = 0; k < pathList.getLength(); k++) {
+                        Element pathElement = (Element) pathList.item(k);
+                        parsePathElement(pathElement, tile);
                     }
                 }
 
-                // Check for curved geometry
+                // Check for curved geometry with paths
                 NodeList curvedList = geometryElement.getElementsByTagName("curved");
                 if (curvedList.getLength() > 0) {
                     Element curvedElement = (Element) curvedList.item(0);
-                    String radiusStr = curvedElement.getAttribute("radius");
-                    String arcStr = curvedElement.getAttribute("arc");
-
-                    if (!radiusStr.isEmpty()) {
-                        try {
-                            double radius = Double.parseDouble(radiusStr);
-                            tile.setRadius(radius);
-                        } catch (NumberFormatException e) {
-                            log.warn("Invalid radius value '{}' in {}", radiusStr, xmlFile.getName());
-                        }
-                    }
-
-                    if (!arcStr.isEmpty()) {
-                        try {
-                            double arc = Double.parseDouble(arcStr);
-                            tile.setArc(arc);
-                        } catch (NumberFormatException e) {
-                            log.warn("Invalid arc value '{}' in {}", arcStr, xmlFile.getName());
-                        }
+                    NodeList pathList = curvedElement.getElementsByTagName("path");
+                    for (int k = 0; k < pathList.getLength(); k++) {
+                        Element pathElement = (Element) pathList.item(k);
+                        parsePathElement(pathElement, tile);
                     }
                 }
-                
+
                 // Check for turnout geometry with paths
                 NodeList turnoutList = geometryElement.getElementsByTagName("turnout");
                 if (turnoutList.getLength() > 0) {
@@ -164,7 +145,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                         parsePathElement(pathElement, tile);
                     }
                 }
-                
+
                 // Check for crossover geometry with paths
                 NodeList crossoverList = geometryElement.getElementsByTagName("crossover");
                 if (crossoverList.getLength() > 0) {
@@ -175,7 +156,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                         parsePathElement(pathElement, tile);
                     }
                 }
-                
+
                 // Check for slip geometry with paths
                 NodeList slipList = geometryElement.getElementsByTagName("slip");
                 if (slipList.getLength() > 0) {
@@ -186,7 +167,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                         parsePathElement(pathElement, tile);
                     }
                 }
-                
+
                 // Check for crossing geometry with paths
                 NodeList crossingList = geometryElement.getElementsByTagName("crossing");
                 if (crossingList.getLength() > 0) {
@@ -210,7 +191,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                 }
             }
 
-            register(tile);  // Register with AbstractManager
+            register(tile); // Register with AbstractManager
         }
 
         log.debug("Loaded {} tiles from {}", tileList.getLength(), xmlFile.getName());
@@ -221,26 +202,26 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
      */
     private void parsePathElement(Element pathElement, TrackTile tile) {
         String direction = pathElement.getAttribute("direction");
-        String state = pathElement.getAttribute("state"); 
+        String state = pathElement.getAttribute("state");
         String route = pathElement.getAttribute("route");
         String id = pathElement.getAttribute("id");
-        
+
         String lengthStr = pathElement.getAttribute("length");
         String radiusStr = pathElement.getAttribute("radius");
         String arcStr = pathElement.getAttribute("arc");
-        String angleStr = pathElement.getAttribute("angle");  // For crossings
-        
+        String angleStr = pathElement.getAttribute("angle"); // For crossings
+
         TrackTilePath path = null;
-        
+
         if (!lengthStr.isEmpty()) {
             // Straight path
             try {
                 double length = Double.parseDouble(lengthStr);
-                path = new TrackTilePath(direction, 
-                    state.isEmpty() ? null : state,
-                    route.isEmpty() ? null : route, 
-                    length, 
-                    id.isEmpty() ? null : id);
+                path = new TrackTilePath(direction,
+                        state.isEmpty() ? null : state,
+                        route.isEmpty() ? null : route,
+                        length,
+                        id.isEmpty() ? null : id);
             } catch (NumberFormatException e) {
                 log.warn("Invalid length value '{}' in path", lengthStr);
             }
@@ -250,10 +231,10 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                 double radius = Double.parseDouble(radiusStr);
                 double arc = Double.parseDouble(arcStr);
                 path = new TrackTilePath(direction,
-                    state.isEmpty() ? null : state,
-                    route.isEmpty() ? null : route,
-                    radius, arc,
-                    id.isEmpty() ? null : id);
+                        state.isEmpty() ? null : state,
+                        route.isEmpty() ? null : route,
+                        radius, arc,
+                        id.isEmpty() ? null : id);
             } catch (NumberFormatException e) {
                 log.warn("Invalid radius/arc values '{}'/'{}'", radiusStr, arcStr);
             }
@@ -265,23 +246,23 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
                     // Crossing with both length and angle
                     double length = Double.parseDouble(lengthStr);
                     path = TrackTilePath.createCrossingPath(direction,
-                        state.isEmpty() ? null : state,
-                        route.isEmpty() ? null : route,
-                        length, angle,
-                        id.isEmpty() ? null : id);
+                            state.isEmpty() ? null : state,
+                            route.isEmpty() ? null : route,
+                            length, angle,
+                            id.isEmpty() ? null : id);
                 } else {
                     // Angle-only crossing
                     path = TrackTilePath.createAngleOnlyPath(direction,
-                        state.isEmpty() ? null : state,
-                        route.isEmpty() ? null : route,
-                        angle,
-                        id.isEmpty() ? null : id);
+                            state.isEmpty() ? null : state,
+                            route.isEmpty() ? null : route,
+                            angle,
+                            id.isEmpty() ? null : id);
                 }
             } catch (NumberFormatException e) {
                 log.warn("Invalid angle/length values '{}'/'{}'", angleStr, lengthStr);
             }
         }
-        
+
         if (path != null) {
             tile.addPath(path);
         }
@@ -342,7 +323,7 @@ public class DefaultTrackTileManager extends AbstractManager<TrackTile> implemen
     /** {@inheritDoc} */
     @Override
     public int getXMLOrder() {
-        return Manager.LOGIXS + 1;  // Place after LOGIXS
+        return Manager.LOGIXS + 1; // Place after LOGIXS
     }
 
     /** {@inheritDoc} */

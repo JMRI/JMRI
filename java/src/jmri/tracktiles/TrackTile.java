@@ -13,8 +13,8 @@ import jmri.implementation.AbstractNamedBean;
 /**
  * Represents a single track tile from a manufacturer's catalog.
  * <p>
- * Extends AbstractNamedBean to integrate with JMRI's Manager framework.
- * System name format: "TT:vendor:family:partcode" (e.g., "TT:Märklin:C-Track:24077")
+ * Extends AbstractNamedBean to integrate with JMRI's Manager framework. System
+ * name format: "TT:vendor:family:partcode" (e.g., "TT:Märklin:C-Track:24077")
  * User name: Optional friendly name for the tile
  *
  * @author Ralf Lang Copyright (C) 2025
@@ -28,11 +28,6 @@ public class TrackTile extends AbstractNamedBean {
     private final Map<String, String> localizations;
     private final List<TrackTilePath> paths;
 
-    // Geometry fields
-    private double length = 0.0;      // For straight tracks, in mm
-    private double radius = 0.0;      // For curved tracks, in mm
-    private double arc = 0.0;         // For curved tracks, in degrees
-
     /**
      * Create a TrackTile.
      *
@@ -43,7 +38,7 @@ public class TrackTile extends AbstractNamedBean {
      * @param partCode   The manufacturer's part code (e.g., "24077")
      */
     public TrackTile(@Nonnull String systemName, @Nonnull String vendor, @Nonnull String family,
-                     @Nonnull String jmriType, @Nonnull String partCode) {
+            @Nonnull String jmriType, @Nonnull String partCode) {
         super(systemName);
         this.vendor = vendor;
         this.family = family;
@@ -64,7 +59,7 @@ public class TrackTile extends AbstractNamedBean {
      * @param partCode   The manufacturer's part code (e.g., "24077")
      */
     public TrackTile(@Nonnull String systemName, String userName, @Nonnull String vendor,
-                     @Nonnull String family, @Nonnull String jmriType, @Nonnull String partCode) {
+            @Nonnull String family, @Nonnull String jmriType, @Nonnull String partCode) {
         super(systemName, userName);
         this.vendor = vendor;
         this.family = family;
@@ -105,62 +100,8 @@ public class TrackTile extends AbstractNamedBean {
     }
 
     /**
-     * Set the length for straight track tiles.
-     *
-     * @param length The length in millimeters
-     */
-    public void setLength(double length) {
-        this.length = length;
-    }
-
-    /**
-     * Get the length for straight track tiles.
-     *
-     * @return The length in millimeters, or 0.0 if not set
-     */
-    public double getLength() {
-        return length;
-    }
-
-    /**
-     * Set the radius for curved track tiles.
-     *
-     * @param radius The radius in millimeters
-     */
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-
-    /**
-     * Get the radius for curved track tiles.
-     *
-     * @return The radius in millimeters, or 0.0 if not set
-     */
-    public double getRadius() {
-        return radius;
-    }
-
-    /**
-     * Set the arc angle for curved track tiles.
-     *
-     * @param arc The arc angle in degrees
-     */
-    public void setArc(double arc) {
-        this.arc = arc;
-    }
-
-    /**
-     * Get the arc angle for curved track tiles.
-     *
-     * @return The arc angle in degrees, or 0.0 if not set
-     */
-    public double getArc() {
-        return arc;
-    }
-
-    /**
-     * Get the localized caption, preferring the given language.
-     * Falls back to English, then German, then any available language.
+     * Get the localized caption, preferring the given language. Falls back to
+     * English, then German, then any available language.
      *
      * @param preferredLang The preferred language code
      * @return The caption in the best available language
@@ -230,9 +171,9 @@ public class TrackTile extends AbstractNamedBean {
     @CheckForNull
     public TrackTilePath getPathById(@Nonnull String pathId) {
         return paths.stream()
-            .filter(path -> pathId.equals(path.getId()))
-            .findFirst()
-            .orElse(null);
+                .filter(path -> pathId.equals(path.getId()))
+                .findFirst()
+                .orElse(null);
     }
 
     /**

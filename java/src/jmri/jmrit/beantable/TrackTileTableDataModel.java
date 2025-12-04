@@ -36,10 +36,15 @@ public class TrackTileTableDataModel extends javax.swing.table.AbstractTableMode
     public TrackTileTableDataModel(TrackTileManager manager) {
         super();
         this.manager = manager;
-        this.tiles = new java.util.ArrayList<>(manager.getNamedBeanSet());
         this.userLanguage = Locale.getDefault().getLanguage();
-        log.debug("TrackTileTableDataModel created with {} tiles, user language: {}", 
-                  tiles.size(), userLanguage);
+        if (manager != null) {
+            this.tiles = new java.util.ArrayList<>(manager.getNamedBeanSet());
+            log.debug("TrackTileTableDataModel created with {} tiles, user language: {}", 
+                      tiles.size(), userLanguage);
+        } else {
+            this.tiles = new java.util.ArrayList<>();
+            log.warn("TrackTileTableDataModel created with null manager");
+        }
     }
 
     @Override

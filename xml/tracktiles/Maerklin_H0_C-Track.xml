@@ -52,7 +52,9 @@
       <l10n lang="es">Vía recta 77,5 mm</l10n>
       <l10n lang="fr">Rail droit 77,5 mm</l10n>
       <geometry>
-        <straight length="77.5" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="77.5" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -64,7 +66,9 @@
       <l10n lang="es">Vía recta 94,2 mm</l10n>
       <l10n lang="fr">Rail droit 94,2 mm</l10n>
       <geometry>
-        <straight length="94.2" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="94.2" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -76,7 +80,9 @@
       <l10n lang="es">Vía recta 171,7 mm</l10n>
       <l10n lang="fr">Rail droit 171,7 mm</l10n>
       <geometry>
-        <straight length="171.7" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="171.7" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -88,7 +94,9 @@
       <l10n lang="es">Vía recta 188,3 mm</l10n>
       <l10n lang="fr">Rail droit 188,3 mm</l10n>
       <geometry>
-        <straight length="188.3" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="188.3" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -99,7 +107,9 @@
       <l10n lang="en">Straight Track 229.3 mm</l10n>
       <l10n lang="fr">Rail droit 229,3 mm</l10n>
       <geometry>
-        <straight length="229.3" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="229.3" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -111,7 +121,9 @@
       <l10n lang="en">Curved Track R1 = 360 mm / 7.5°</l10n>
       <l10n lang="fr">Rail courbe R1 = 360 mm / 7,5°</l10n>
       <geometry>
-        <curved radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -122,7 +134,9 @@
       <l10n lang="en">Curved Track R1 = 360 mm / 15°</l10n>
       <l10n lang="fr">Rail courbe R1 = 360 mm / 15°</l10n>
       <geometry>
-        <curved radius="360.0" arc="15.0" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="360.0" arc="15.0" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -134,7 +148,9 @@
       <l10n lang="es">Vía curva R1 = 360 mm / 30°</l10n>
       <l10n lang="fr">Rail courbe R1 = 360 mm / 30°</l10n>
       <geometry>
-        <curved radius="360.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="360.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -146,7 +162,9 @@
       <l10n lang="en">Curved Track R2 = 437.5 mm / 5.7°</l10n>
       <l10n lang="fr">Rail courbe R2 = 437,5 mm / 5,7°</l10n>
       <geometry>
-        <curved radius="437.5" arc="5.7" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="437.5" arc="5.7" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -157,7 +175,9 @@
       <l10n lang="en">Curved Track R2 = 437.5 mm / 12.1°</l10n>
       <l10n lang="fr">Rail courbe R2 = 437,5 mm / 12,1°</l10n>
       <geometry>
-        <curved radius="437.5" arc="12.1" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="437.5" arc="12.1" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -169,7 +189,9 @@
       <l10n lang="es">Vía curva R2 = 437,5 mm / 24,3°</l10n>
       <l10n lang="fr">Rail courbe R2 = 437,5 mm / 24,3°</l10n>
       <geometry>
-        <curved radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -181,7 +203,9 @@
       <l10n lang="es">Vía curva R2 = 437,5 mm / 30°</l10n>
       <l10n lang="fr">Rail courbe R2 = 437,5 mm / 30°</l10n>
       <geometry>
-        <curved radius="437.5" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="437.5" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -193,7 +217,9 @@
       <l10n lang="en">Curved Track R3 = 515 mm / 15°</l10n>
       <l10n lang="fr">Rail courbe R3 = 515 mm / 15°</l10n>
       <geometry>
-        <curved radius="515.0" arc="15.0" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="515.0" arc="15.0" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -205,7 +231,9 @@
       <l10n lang="es">Vía curva R3 = 515 mm / 30°</l10n>
       <l10n lang="fr">Rail courbe R3 = 515 mm / 30°</l10n>
       <geometry>
-        <curved radius="515.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="515.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -217,7 +245,9 @@
       <l10n lang="en">Curved Track R4 = 579.3 mm / 24.3°</l10n>
       <l10n lang="fr">Rail courbe R4 = 579,3 mm / 24,3°</l10n>
       <geometry>
-        <curved radius="579.3" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="579.3" arc="24.3" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -228,7 +258,9 @@
       <l10n lang="en">Curved Track R4 = 579.3 mm / 30°</l10n>
       <l10n lang="fr">Rail courbe R4 = 579,3 mm / 30°</l10n>
       <geometry>
-        <curved radius="579.3" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="579.3" arc="30.0" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -241,7 +273,9 @@
       <l10n lang="es">Tope 77,5 mm</l10n>
       <l10n lang="fr">Butoir 77,5 mm</l10n>
       <geometry>
-        <straight length="77.5" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="77.5" lengthunit="mm"/>
+        </straight>
         <end/>
       </geometry>
     </tile>
@@ -253,7 +287,9 @@
       <l10n lang="en">Bumper Track 94.2 mm</l10n>
       <l10n lang="fr">Butoir 94,2 mm</l10n>
       <geometry>
-        <straight length="94.2" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="94.2" lengthunit="mm"/>
+        </straight>
         <end/>
       </geometry>
     </tile>
@@ -268,8 +304,8 @@
       <l10n lang="fr">Aiguillage à droite</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" length="171.7" lengthunit="mm"/>
-          <path direction="right" state="thrown" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" route="ac" length="171.7" lengthunit="mm"/>
+          <path direction="right" state="thrown" route="ab" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -283,8 +319,8 @@
       <l10n lang="fr">Aiguillage à gauche</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" length="171.7" lengthunit="mm"/>
-          <path direction="left" state="thrown" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" route="ac" length="171.7" lengthunit="mm"/>
+          <path direction="left" state="thrown" route="ab" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -313,8 +349,8 @@
       <l10n lang="fr">Aiguillage à gauche mince</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" length="188.3" lengthunit="mm"/>
-          <path direction="left" state="thrown" radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" route="ac" length="188.3" lengthunit="mm"/>
+          <path direction="left" state="thrown" route="ab" radius="437.5" arc="24.3" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -327,9 +363,9 @@
       <l10n lang="fr">Aiguillage triple</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" id="0" length="171.7" lengthunit="mm"/>
-          <path direction="left" state="thrown" id="0" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
-          <path direction="right" state="thrown" id="1" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" id="0" route="ac" length="171.7" lengthunit="mm"/>
+          <path direction="left" state="thrown" id="0" route="ab" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" id="1" route="ad" radius="360.0" arc="24.3" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -343,8 +379,8 @@
       <l10n lang="fr">Aiguillage courbe droite</l10n>
       <geometry>
         <turnout>
-          <path direction="left" state="closed" radius="360.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
-          <path direction="right" state="thrown" radius="437.5" arc="30.0" radiusunit="mm" arcunit="deg"/>
+          <path direction="left" state="closed" route="ab" radius="360.0" arc="30.0" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" route="ac" radius="437.5" arc="30.0" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -357,8 +393,8 @@
       <l10n lang="fr">Croisement 48,6°</l10n>
       <geometry>
         <crossing>
-          <path direction="straight" length="103.3" lengthunit="mm"/>
-          <path direction="crossing" angle="48.6" angleunit="deg"/>
+          <path direction="straight" route="ac" length="103.3" lengthunit="mm"/>
+          <path direction="crossing" route="bd" angle="48.6" angleunit="deg"/>
         </crossing>
       </geometry>
     </tile>
@@ -371,9 +407,10 @@
       <l10n lang="es">Desvío izq.</l10n>
       <l10n lang="fr">Croisement</l10n>
       <geometry>
-        <turnout>
-          <path direction="straight" state="closed" length="171.7" lengthunit="mm"/>
-        </turnout>
+        <crossing>
+          <path direction="straight" route="ac" length="171.7" lengthunit="mm"/>
+          <path direction="crossing" route="bd" length="171.7" lengthunit="mm"/>
+        </crossing>
       </geometry>
     </tile>
 
@@ -384,10 +421,10 @@
       <l10n lang="en">Slim Crossing</l10n>
       <l10n lang="fr">Croisement mince</l10n>
       <geometry>
-        <turnout>
-          <path direction="straight" state="closed" length="236.1" lengthunit="mm"/>
-          <path direction="straight" state="closed" length="236.1" lengthunit="mm"/>
-        </turnout>
+        <crossing>
+          <path direction="straight" route="ac" length="236.1" lengthunit="mm"/>
+          <path direction="crossing" route="bd" length="236.1" lengthunit="mm"/>
+        </crossing>
       </geometry>
     </tile>
 
@@ -400,7 +437,9 @@
       <l10n lang="en">Switch Track</l10n>
       <l10n lang="fr">Voie de commutation</l10n>
       <geometry>
-        <straight length="94.2" unit="mm" function="switch" contactType="momentary"/>
+        <straight function="switch" contactType="momentary">
+          <path id="AB" direction="straight" length="94.2" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -411,7 +450,9 @@
       <l10n lang="en">Uncoupling Track</l10n>
       <l10n lang="fr">Voie de dételage</l10n>
       <geometry>
-        <straight length="94.2" unit="mm" function="decoupler" powered="yes"/>
+        <straight function="decoupler" powered="yes">
+          <path id="AB" direction="straight" length="94.2" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -422,7 +463,9 @@
       <l10n lang="en">Curved Switch Track</l10n>
       <l10n lang="fr">Voie de commutation courbe</l10n>
       <geometry>
-        <curved radius="360" arc="15" radiusunit="mm" arcunit="deg" function="switch" contactType="momentary"/>
+        <curved function="switch" contactType="momentary">
+          <path id="AB" radius="360" arc="15" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 

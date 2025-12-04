@@ -2,7 +2,7 @@
 <?xml-stylesheet href="../XSLT/tracktiles.xsl" type="text/xsl"?>
 
 <tracktiles version="1.0"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/tracktiles.xsd">
   <header>
     <vendor>Piko</vendor>
@@ -51,7 +51,9 @@
       <l10n lang="en">Straight Track G 239 mm</l10n>
       <l10n lang="fr">Voie droite G 239 mm</l10n>
       <geometry>
-        <straight length="239" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="239" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -62,7 +64,9 @@
       <l10n lang="en">Straight Track G 231 mm</l10n>
       <l10n lang="fr">Voie droite G 231 mm</l10n>
       <geometry>
-        <straight length="231" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="231" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -73,7 +77,9 @@
       <l10n lang="en">Straight Track G 231 mm for Connection Clip</l10n>
       <l10n lang="fr">Voie droite G 231 mm pour clip de connexion</l10n>
       <geometry>
-        <straight length="231" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="231" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -85,7 +91,9 @@
       <l10n lang="en">Curved Track R1, 360 mm</l10n>
       <l10n lang="fr">Voie courbe R1, 360 mm</l10n>
       <geometry>
-        <curved radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -96,7 +104,9 @@
       <l10n lang="en">Curved Track R2, 422 mm</l10n>
       <l10n lang="fr">Voie courbe R2, 422 mm</l10n>
       <geometry>
-        <curved radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -107,7 +117,9 @@
       <l10n lang="en">Curved Track R3, 484 mm</l10n>
       <l10n lang="fr">Voie courbe R3, 484 mm</l10n>
       <geometry>
-        <curved radius="484" arc="30" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="484" arc="30" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -118,7 +130,9 @@
       <l10n lang="en">Curved Track R9, 908 mm</l10n>
       <l10n lang="fr">Voie courbe R9, 908 mm</l10n>
       <geometry>
-        <curved radius="908" arc="30" radiusunit="mm" arcunit="deg"/>
+        <curved>
+          <path id="AB" radius="908" arc="30" radiusunit="mm" arcunit="deg"/>
+        </curved>
       </geometry>
     </tile>
 
@@ -130,7 +144,9 @@
       <l10n lang="en">Embankment End Piece with Bumper</l10n>
       <l10n lang="fr">Butoir avec talus</l10n>
       <geometry>
-        <straight length="82" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="82" lengthunit="mm"/>
+        </straight>
         <end/>
       </geometry>
     </tile>
@@ -144,8 +160,8 @@
       <l10n lang="fr">Aiguillage à gauche WL</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" length="231" lengthunit="mm"/>
-          <path direction="left" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" route="ac" length="231" lengthunit="mm"/>
+          <path direction="left" state="thrown" route="ab" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -158,8 +174,8 @@
       <l10n lang="fr">Aiguillage à droite WR</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" length="231" lengthunit="mm"/>
-          <path direction="right" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" route="ac" length="231" lengthunit="mm"/>
+          <path direction="right" state="thrown" route="ab" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -172,8 +188,8 @@
       <l10n lang="fr">Aiguillage courbe à gauche BWL</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
-          <path direction="left" state="thrown" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" route="ac" radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
+          <path direction="left" state="thrown" route="ab" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -186,8 +202,8 @@
       <l10n lang="fr">Aiguillage courbe à droite BWR</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
-          <path direction="right" state="thrown" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" route="ac" radius="422" arc="30" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" route="ab" radius="360" arc="30" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -216,9 +232,9 @@
       <l10n lang="fr">Aiguillage triple W3</l10n>
       <geometry>
         <turnout>
-          <path direction="straight" state="closed" id="0" length="231" lengthunit="mm"/>
-          <path direction="left" state="thrown" id="1" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
-          <path direction="right" state="thrown" id="2" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="straight" state="closed" id="0" route="ac" length="231" lengthunit="mm"/>
+          <path direction="left" state="thrown" id="1" route="ab" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" id="2" route="ad" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -231,8 +247,8 @@
       <l10n lang="fr">Aiguillage en Y WY</l10n>
       <geometry>
         <turnout>
-          <path direction="left" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
-          <path direction="right" state="thrown" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="left" state="thrown" route="ab" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
+          <path direction="right" state="thrown" route="ac" radius="908" arc="15" radiusunit="mm" arcunit="deg"/>
         </turnout>
       </geometry>
     </tile>
@@ -260,8 +276,8 @@
       <l10n lang="fr">Croisement K30</l10n>
       <geometry>
         <crossing>
-          <path direction="straight" length="239" lengthunit="mm"/>
-          <path direction="crossing" angle="90" angleunit="deg"/>
+          <path direction="straight" route="ac" length="239" lengthunit="mm"/>
+          <path direction="crossing" route="bd" angle="90" angleunit="deg"/>
         </crossing>
       </geometry>
     </tile>
@@ -274,7 +290,9 @@
       <l10n lang="en">Adapter Track to Fleischmann Profi 231 mm</l10n>
       <l10n lang="fr">Voie de transition Fleischmann Profi 231 mm</l10n>
       <geometry>
-        <straight length="231" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="231" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -285,7 +303,9 @@
       <l10n lang="en">Adapter Track to Roco GeoLine 231 mm</l10n>
       <l10n lang="fr">Voie de transition Roco GeoLine 231 mm</l10n>
       <geometry>
-        <straight length="231" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="231" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -296,7 +316,9 @@
       <l10n lang="en">Adapter Track to PIKO A-Track without Ballast 231 mm</l10n>
       <l10n lang="fr">Voie de transition PIKO A-Track sans ballast 231 mm</l10n>
       <geometry>
-        <straight length="231" unit="mm"/>
+        <straight>
+          <path id="AB" direction="straight" length="231" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 

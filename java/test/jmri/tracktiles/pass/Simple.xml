@@ -52,7 +52,9 @@
       <l10n lang="es">Vía recta 77,5 mm</l10n>
       <l10n lang="fr">Rail droit 77,5 mm</l10n>
       <geometry>
-        <straight length="77.5" unit="mm"/>
+        <straight>
+          <path direction="straight" length="77.5" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
@@ -64,7 +66,9 @@
       <l10n lang="es">Vía recta 94,2 mm</l10n>
       <l10n lang="fr">Rail droit 94,2 mm</l10n>
       <geometry>
-        <straight length="94.2" unit="mm"/>
+        <straight>
+          <path direction="straight" length="94.2" lengthunit="mm"/>
+        </straight>
       </geometry>
     </tile>
 
