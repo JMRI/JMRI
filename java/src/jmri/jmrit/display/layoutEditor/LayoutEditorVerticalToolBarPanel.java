@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -120,7 +123,95 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         vTop11Panel.setBorder(new EmptyBorder(0, 10, 0, 0));
 
         outerBorderPanel.add(vTop11Panel);
+
+        // Tiles section - create its own bordered panel at bottom of Track section
+        JPanel tilesBorderPanel = new JPanel();
+        tilesBorderPanel.setLayout(new GridBagLayout());
+        TitledBorder tilesTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, "Tiles");
+        tilesTitleBorder.setTitleJustification(TitledBorder.CENTER);
+        tilesTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
+        tilesBorderPanel.setBorder(tilesTitleBorder);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.insets = new Insets(2, 5, 2, 5);
+        tilesBorderPanel.add(tileVendorLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        tilesBorderPanel.add(tileVendorComboBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        tilesBorderPanel.add(tileFamilyLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        tilesBorderPanel.add(tileFamilyComboBox, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        tilesBorderPanel.add(tileNameLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        tilesBorderPanel.add(tileComboBox, gbc);
+
+        // Add left/right radio buttons for curved tiles
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        JPanel directionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+        directionPanel.add(tileLeftButton);
+        directionPanel.add(tileRightButton);
+        directionPanel.add(turnoutThroatButton);
+        directionPanel.add(turnoutNormalButton);
+        directionPanel.add(turnoutThrownButton);
+        directionPanel.add(turnoutAButton);
+        directionPanel.add(turnoutBButton);
+        directionPanel.add(turnoutCButton);
+        directionPanel.add(turnoutDButton);
+        tilesBorderPanel.add(directionPanel, gbc);
+
+        tilesBorderPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, tilesBorderPanel.getPreferredSize().height));
+        outerBorderPanel.add(tilesBorderPanel);
+
         add(outerBorderPanel);
+
+        // Initialize direction button visibility based on default selection
+        updateDirectionButtons();
+
+        // Add action listeners to update direction buttons when selection changes
+        java.awt.event.ActionListener selectionListAction = (java.awt.event.ActionEvent e) -> {
+            updateDirectionButtons();
+        };
+
+        turnoutRHButton.addActionListener(selectionListAction);
+        turnoutLHButton.addActionListener(selectionListAction);
+        turnoutWYEButton.addActionListener(selectionListAction);
+        doubleXoverButton.addActionListener(selectionListAction);
+        rhXoverButton.addActionListener(selectionListAction);
+        lhXoverButton.addActionListener(selectionListAction);
+        layoutSingleSlipButton.addActionListener(selectionListAction);
+        layoutDoubleSlipButton.addActionListener(selectionListAction);
+        trackButton.addActionListener(selectionListAction);
 
         JPanel nodesBorderPanel = new JPanel();
         nodesBorderPanel.setLayout(new BoxLayout(nodesBorderPanel, BoxLayout.PAGE_AXIS));
@@ -129,11 +220,11 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
         nodesTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
         nodesBorderPanel.setBorder(nodesTitleBorder);
 
-        JPanel vTop12Panel = new JPanel(verticalContentLayout);
-        vTop12Panel.add(endBumperButton);
-        vTop12Panel.add(anchorButton);
-        vTop12Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12Panel.getPreferredSize().height));
-        nodesBorderPanel.add(vTop12Panel);
+        JPanel vTop12bPanel = new JPanel(verticalContentLayout);
+        vTop12bPanel.add(endBumperButton);
+        vTop12bPanel.add(anchorButton);
+        vTop12bPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12bPanel.getPreferredSize().height));
+        nodesBorderPanel.add(vTop12bPanel);
 
         JPanel vTop13Panel = new JPanel(verticalContentLayout);
         vTop13Panel.add(edgeButton);
