@@ -12,7 +12,9 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
+import jmri.tracktiles.NotATile;
 import jmri.tracktiles.TrackTile;
+import jmri.tracktiles.TrackTilePath;
 import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriMouseEvent;
@@ -77,7 +79,7 @@ public class TrackSegmentView extends LayoutTrackView implements TileSupport {
      */
     @Override
     public boolean hasTile() {
-        return trackTile != null;
+        return (trackTile != null) && !(trackTile instanceof NotATile);
     }
 
     /**
@@ -278,6 +280,23 @@ public class TrackSegmentView extends LayoutTrackView implements TileSupport {
     }
 
     /**
+     * Set curve from associated tile - this is non-tile-safe
+     */
+    public void setCurveFromTile() {
+        if (this.hasTile()) {
+            TrackTilePath trackTilePath = trackTile.getPathById("AB");
+            if (trackTilePath.isCurved()) {
+                double radiusInLayoutUnits = trackTilePath.getRadius() / layoutEditor.getMmToGridFactor();
+                double arcAngle = trackTilePath.getArc();
+                // TODO: Find out if we need to pull flip from LayoutEditor or assume it's already correct
+                setAngle(arcAngle);
+                // Determine flip based on arc direction
+                setCircle(true);
+            }
+        }
+    }
+
+    /**
      * @return true if track segment is a bezier curve
      */
     public boolean isBezier() {
@@ -420,7 +439,7 @@ public class TrackSegmentView extends LayoutTrackView implements TileSupport {
     public double getOrientationAtA() {
         Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
         Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
-        boolean curveFace = !isFlip();
+        boolean curveFace = isFlip();
         return getOrientationOfTravel(ep1, ep2, curveFace);
     }
 
@@ -434,7 +453,7 @@ public class TrackSegmentView extends LayoutTrackView implements TileSupport {
     public double getOrientationAtB() {
         Point2D ep1 = layoutEditor.getCoords(getConnect1(), getType1());
         Point2D ep2 = layoutEditor.getCoords(getConnect2(), getType2());
-        boolean curveFace = isFlip(); // Inverted for B to A direction
+        boolean curveFace = !isFlip(); // Inverted for B to A direction
         return getOrientationOfTravel(ep2, ep1, curveFace);
     }
 
