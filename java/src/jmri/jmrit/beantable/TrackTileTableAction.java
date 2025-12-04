@@ -42,7 +42,7 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
      */
     public TrackTileTableAction(String actionName) {
         super(actionName);
-        
+
         // Try to get the TrackTileManager, but don't fail if it's not available
         try {
             trackTileManager = InstanceManager.getNullableDefault(TrackTileManager.class);
@@ -50,7 +50,7 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
             log.warn("Failed to get TrackTileManager during initialization: {}", e.getMessage());
             trackTileManager = null;
         }
-        
+
         // disable ourself if there is no primary TrackTile manager available
         if (trackTileManager == null) {
             super.setEnabled(false);
@@ -80,37 +80,75 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
             // Create a minimal dummy model to prevent null pointer exceptions
             m = new BeanTableDataModel<TrackTile>() {
                 @Override
-                public Manager<TrackTile> getManager() { return null; }
+                public Manager<TrackTile> getManager() {
+                    return null;
+                }
+
                 @Override
-                public TrackTile getBySystemName(@Nonnull String name) { return null; }
+                public TrackTile getBySystemName(@Nonnull String name) {
+                    return null;
+                }
+
                 @Override
-                public TrackTile getByUserName(@Nonnull String name) { return null; }
+                public TrackTile getByUserName(@Nonnull String name) {
+                    return null;
+                }
+
                 @Override
-                public void clickOn(TrackTile t) { }
+                public void clickOn(TrackTile t) {
+                }
+
                 @Override
-                public String getValue(String s) { return s; }
+                public String getValue(String s) {
+                    return s;
+                }
+
                 @Override
-                public String getMasterClassName() { return TrackTileTableAction.class.getName(); }
+                public String getMasterClassName() {
+                    return TrackTileTableAction.class.getName();
+                }
+
                 @Override
-                public int getRowCount() { return 0; }
+                public int getRowCount() {
+                    return 0;
+                }
+
                 @Override
-                public int getColumnCount() { return 1; }
+                public int getColumnCount() {
+                    return 1;
+                }
+
                 @Override
-                public String getColumnName(int col) { return "No Data Available"; }
+                public String getColumnName(int col) {
+                    return "No Data Available";
+                }
+
                 @Override
-                public Class<?> getColumnClass(int col) { return String.class; }
+                public Class<?> getColumnClass(int col) {
+                    return String.class;
+                }
+
                 @Override
-                public boolean isCellEditable(int row, int col) { return false; }
+                public boolean isCellEditable(int row, int col) {
+                    return false;
+                }
+
                 @Override
-                public Object getValueAt(int row, int col) { return "Track Tile Manager not available"; }
+                public Object getValueAt(int row, int col) {
+                    return "Track Tile Manager not available";
+                }
+
                 @Override
-                public void setValueAt(Object value, int row, int col) { }
+                public void setValueAt(Object value, int row, int col) {
+                }
+
                 @Override
-                public void configureTable(JTable table) { }
+                public void configureTable(JTable table) {
+                }
             };
             return;
         }
-        
+
         // Create our custom table model that has all the columns we want
         TrackTileTableDataModel customModel = new TrackTileTableDataModel(trackTileManager);
 
@@ -410,7 +448,7 @@ public class TrackTileTableAction extends AbstractTableAction<TrackTile> {
     /**
      * Set the table for filtering. This should be called after the table is
      * created.
-     * 
+     *
      * @param table the JTable to apply filtering to
      */
     public void setTable(JTable table) {
