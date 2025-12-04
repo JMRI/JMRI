@@ -814,7 +814,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * the event occurs on macOS and Java 11 or 12 and a modifier key was
      * active, true is returned. The five affected action events will drop the
      * event and process the second occurrence.
-     * 
+     *
      * @aparam event The action event.
      * @return true if the event is affected, otherwise return false.
      */
@@ -2206,7 +2206,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Select the appropriate zoom menu item based on the zoomFactor.
-     * 
+     *
      * @param zoomFactor eg. 0.5 ( 1/2 zoom ), 1.0 ( no zoom ), 2.0 ( 2x zoom )
      */
     private void selectZoomMenuItem(double zoomFactor) {
@@ -2236,7 +2236,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Set panel Zoom factor.
-     * 
+     *
      * @param zoomFactor the amount to scale, eg. 2.0 for 2x zoom.
      * @return the new scale amount (not necessarily the same as zoomFactor)
      */
@@ -2894,7 +2894,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * The LE xml load uses the string version of setScroll which went directly
      * to Editor. The string version has been added here so that LE can set the
      * scroll selection.
-     * 
+     *
      * @param value The new scroll value.
      */
     @Override
@@ -4046,7 +4046,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * Select the menu items to display for the Positionable's popup.
-     * 
+     *
      * @param pos   the item containing or requiring the context menu
      * @param event the event triggering the menu
      */
@@ -5315,6 +5315,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         TrackSegmentView tsv = new TrackSegmentView(
                 newTrack,
                 this);
+
+        // Set the selected tile from the toolbar
+        tsv.setTile(leToolBarPanel.getSelectedTrackTile());
+
         addLayoutTrack(newTrack, tsv);
 
         setDirty();
@@ -7450,7 +7454,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * <li>The panel has active edge connector links</li>
      * <li>The panel is used by EntryExit</li>
      * </ul>
-     * 
+     *
      * @return true if ok to delete
      */
     public boolean canDeletePanel() {
@@ -8312,20 +8316,20 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
      * .filter(layoutTrackClass::isInstance) //.map(layoutTrackClass::cast) //
      * TODO: Do we need this? if not dead-code-strip
      * .collect(Collectors.toList()); }
-     * 
+     *
      * // TODO: This compiles but I can't get the syntax correct to pass the
      * array of (sub-)classes public List<LayoutTrack>
      * getLayoutTracksOfClasses(@Nonnull List<Class<? extends LayoutTrack>>
      * layoutTrackClasses) { return getLayoutTracks().stream() .filter(o ->
      * layoutTrackClasses.contains(o.getClass())) .collect(Collectors.toList());
      * }
-     * 
+     *
      * // TODO: This compiles but I can't get the syntax correct to pass the
      * (sub-)class public List<LayoutTrack> getLayoutTracksOfClass(@Nonnull
      * Class<? extends LayoutTrack> layoutTrackClass) { return
      * getLayoutTracksOfClasses(new
      * ArrayList<>(Arrays.asList(layoutTrackClass))); }
-     * 
+     *
      * public List<PositionablePoint> getPositionablePoints() { return
      * getLayoutTracksOfClass(PositionablePoint); }
      */
