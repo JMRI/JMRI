@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import jmri.tracktiles.NotATile;
@@ -1228,6 +1227,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
                     turnoutDButton.setSelected(true);
                     break;
                 default:
+                    log.debug("Unexpected - Turnout {} defaulting to A", savedConnectorSelected);
                     turnoutAButton.setSelected(true); // fallback
             }
 

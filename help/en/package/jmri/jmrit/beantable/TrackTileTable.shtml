@@ -6,8 +6,8 @@ The Track Tiles Table displays a catalog of model railroad track components from
 
 The table displays the following information for each track tile:
 
-- **Vendor**: The manufacturer name (e.g., Märklin, Piko)
-- **Family**: The track system family (e.g., C-Track, A-Track)  
+- **Vendor**: The manufacturer name (e.g., M&aumlrklin, Piko)
+- **Family**: The track system family (e.g., C-Track, A-Track)
 - **Type**: The JMRI track type (straight, curved, turnout, crossing, end)
 - **Part Code**: The manufacturer's catalog part number
 - **Caption**: A localized description of the track piece
@@ -26,7 +26,7 @@ The table displays the following information for each track tile:
 
 Track tile catalogs are loaded from XML files in the `xml/tracktiles` directory. The catalog includes:
 
-- Märklin C-Track (H0 scale)
+- M&aumlrklin C-Track (H0 scale)
 - Piko A-Track (H0 scale)
 
 Additional catalogs can be added by placing properly formatted XML files in the tracktiles directory.

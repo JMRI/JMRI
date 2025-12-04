@@ -3,12 +3,10 @@ package jmri.jmrit.beantable;
 import java.util.List;
 import java.util.Locale;
 
-import javax.swing.JButton;
 import javax.swing.JTable;
 
 import jmri.tracktiles.TrackTile;
 import jmri.tracktiles.TrackTileManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +17,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TrackTileTableDataModel extends javax.swing.table.AbstractTableModel {
 
-    private final TrackTileManager manager;
     private final List<TrackTile> tiles;
     private final String userLanguage;
 
@@ -35,7 +32,6 @@ public class TrackTileTableDataModel extends javax.swing.table.AbstractTableMode
 
     public TrackTileTableDataModel(TrackTileManager manager) {
         super();
-        this.manager = manager;
         this.userLanguage = Locale.getDefault().getLanguage();
         if (manager != null) {
             this.tiles = new java.util.ArrayList<>(manager.getNamedBeanSet());
