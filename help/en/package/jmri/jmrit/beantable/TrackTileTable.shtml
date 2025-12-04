@@ -1,0 +1,41 @@
+# Track Tiles Table
+
+The Track Tiles Table displays a catalog of model railroad track components from various manufacturers. This is a read-only reference table showing available track pieces with their specifications.
+
+## Table Columns
+
+The table displays the following information for each track tile:
+
+- **Vendor**: The manufacturer name (e.g., Märklin, Piko)
+- **Family**: The track system family (e.g., C-Track, A-Track)  
+- **Type**: The JMRI track type (straight, curved, turnout, crossing, end)
+- **Part Code**: The manufacturer's catalog part number
+- **Caption**: A localized description of the track piece
+
+## Features
+
+- **Sorting**: Click on any column header to sort the table by that column
+- **Filtering**: Use the filter fields at the top to search for specific tiles
+  - Filters can be combined (e.g., filter by vendor AND type)
+  - Filters are case-insensitive and support partial matches
+  - Regular expressions are supported for advanced filtering
+- **Read-Only**: This is a reference catalog; values cannot be edited
+- **Localization**: Captions are shown in your preferred language when available
+
+## Track Tile Catalogs
+
+Track tile catalogs are loaded from XML files in the `xml/tracktiles` directory. The catalog includes:
+
+- Märklin C-Track (H0 scale)
+- Piko A-Track (H0 scale)
+
+Additional catalogs can be added by placing properly formatted XML files in the tracktiles directory.
+
+## Using Track Tiles
+
+This table serves as a reference when designing layouts in the Layout Editor. Use the part codes and specifications to:
+
+- Verify availability of specific track pieces
+- Plan track configurations
+- Match physical track inventory to layout plans
+- Cross-reference between different track systems
