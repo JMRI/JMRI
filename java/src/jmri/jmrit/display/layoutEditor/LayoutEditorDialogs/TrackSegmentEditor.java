@@ -12,6 +12,8 @@ import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.swing.NamedBeanComboBox;
+import jmri.tracktiles.NotATile;
+import jmri.tracktiles.TrackTile;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -46,6 +48,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private final JTextField editTrackSegmentArcTextField = new JTextField(5);
     private JButton editTrackSegmentSegmentEditBlockButton;
+    private JLabel tileDisplayLabel;
 
     // Orientation display fields
     private final JTextField editTrackSegmentOrientationATextField = new JTextField(10);
@@ -122,6 +125,13 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             panel33.add(editTrackSegmentHiddenCheckBox);
             contentPane.add(panel33);
 
+            // add tile display
+            JPanel tilePanel = new JPanel();
+            tilePanel.setLayout(new FlowLayout());
+            tileDisplayLabel = new JLabel();
+            tilePanel.add(tileDisplayLabel);
+            contentPane.add(tilePanel);
+
             // add orientation display fields
             JPanel panelOrientationA = new JPanel();
             panelOrientationA.setLayout(new FlowLayout());
@@ -192,6 +202,9 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentSolidIndex);
         }
         editTrackSegmentHiddenCheckBox.setSelected(trackSegmentView.isHidden());
+
+        // Update tile display
+        updateTileDisplay();
 
         // Update orientation fields with orientation values only
         double orientationA = trackSegmentView.getOrientationAtA();
@@ -316,6 +329,23 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             layoutEditor.setDirty();
             layoutEditor.redrawPanel();
             editTrackSegmentNeedsRedraw = false;
+        }
+    }
+
+    /**
+     * Update the tile display label with current tile information.
+     */
+    private void updateTileDisplay() {
+        if (trackSegmentView.hasTile()) {
+            TrackTile tile = trackSegmentView.getTile();
+            if (tile instanceof NotATile) {
+                tileDisplayLabel.setText("Not a Tile");
+            } else {
+                tileDisplayLabel.setText(String.format("Tile: %s, %s, %s", 
+                    tile.getVendor(), tile.getFamily(), tile.getPartCode()));
+            }
+        } else {
+            tileDisplayLabel.setText("Not a Tile");
         }
     }
 
