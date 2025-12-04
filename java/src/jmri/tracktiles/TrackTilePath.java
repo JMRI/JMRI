@@ -179,14 +179,14 @@ public class TrackTilePath {
     }
 
     public Point2D getPathEndpoint(Point2D startPoint, double orientation, boolean isFlip, double mmToGridFactor) {
-        System.out.println("getPathEndpoint: startPoint=" + startPoint + ", orientation=" + Math.toDegrees(orientation) + "°, isFlip=" + isFlip + ", mmToGridFactor=" + mmToGridFactor);
+        // System.out.println("getPathEndpoint: startPoint=" + startPoint + ", orientation=" + Math.toDegrees(orientation) + "°, isFlip=" + isFlip + ", mmToGridFactor=" + mmToGridFactor);
         if (isStraight()) {
             double lengthInLayoutUnits = length / mmToGridFactor;
-            System.out.println("Straight path: length=" + length + "mm, lengthInLayoutUnits=" + lengthInLayoutUnits);
+            //System.out.println("Straight path: length=" + length + "mm, lengthInLayoutUnits=" + lengthInLayoutUnits);
             return LayoutTileMath.calcStraightEndpoint(startPoint, lengthInLayoutUnits, orientation);
         } else if (isCurved()) {
             double radiusInLayoutUnits = radius / mmToGridFactor;
-            System.out.println("Curved path: radius=" + radius + "mm, radiusInLayoutUnits=" + radiusInLayoutUnits + ", arc=" + arc + "°");
+            // System.out.println("Curved path: radius=" + radius + "mm, radiusInLayoutUnits=" + radiusInLayoutUnits + ", arc=" + arc + "°");
             return LayoutTileMath.calcCurveEndpoint(startPoint, orientation, radiusInLayoutUnits, arc, isFlip);
         }
         // Throw exception for unsupported path types
