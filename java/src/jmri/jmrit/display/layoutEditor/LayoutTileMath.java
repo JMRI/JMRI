@@ -116,16 +116,33 @@ public class LayoutTileMath {
         double chordY = endPoint.getY() - startPoint.getY();
         double chordLength = Math.sqrt(chordX * chordX + chordY * chordY);
 
-        // Calculate the chord angle
+        // Calculate the chord angle (direction from start to end)
         double chordAngle = Math.atan2(chordY, chordX);
 
-        // Calculate the arc angle (central angle)
-        double halfChord = chordLength / 2.0;
-        double arcAngle = 2.0 * Math.asin(halfChord / curveRadius);
+        // Use same curve direction convention as calcCurveEndpoint
+        double curveDirection = curveFace ? -1.0 : 1.0; // right = -1 (clockwise), left = 1 (counter-clockwise)
 
-        // Determine the initial orientation based on curve direction
-        double curveDirection = curveFace ? -1.0 : 1.0; // right = -1, left = 1
-        double initialAngle = chordAngle - curveDirection * (Math.PI / 2.0 - arcAngle / 2.0);
+        // Calculate the center point of the arc
+        // For the center to be equidistant from start and end points:
+        // Distance from chord midpoint to center = sqrt(radius^2 - (chordLength/2)^2)
+        double halfChord = chordLength / 2.0;
+        double chordMidX = startPoint.getX() + chordX / 2.0;
+        double chordMidY = startPoint.getY() + chordY / 2.0;
+        double distanceToCenter = Math.sqrt(curveRadius * curveRadius - halfChord * halfChord);
+        
+        // Direction perpendicular to chord (towards center)
+        double perpAngle = chordAngle + curveDirection * Math.PI / 2.0;
+        double centerX = chordMidX + distanceToCenter * Math.cos(perpAngle);
+        double centerY = chordMidY + distanceToCenter * Math.sin(perpAngle);
+        
+        // Calculate the angle from center to start point
+        double startAngleFromCenter = Math.atan2(startPoint.getY() - centerY, startPoint.getX() - centerX);
+        
+        // The initial orientation is tangent to the circle at the start point
+        double initialAngle = startAngleFromCenter + Math.PI / 2.0;
+        if (curveFace) {
+            initialAngle -= Math.PI; // For right curves, reverse the tangent direction
+        }
 
         // Convert to degrees and normalize to 0-360 range
         double angleDegrees = Math.toDegrees(initialAngle);
