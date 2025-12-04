@@ -164,8 +164,12 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
         locoSelector.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
-                // if we start typing, set the selected index of the locoRosterbox to nothing.
-                locoRosterBox.setSelectedIndex(0);
+                if ( !consistManager.isSingleFormConsistRequired()) {
+                    // if combo boxes are not locked together, 
+                    // and if user start typing, set the selected index of the locoRosterbox to nothing
+                    // to get the user to make a decision
+                    locoRosterBox.setSelectedIndex(0);
+                }
             }
 
             @Override
