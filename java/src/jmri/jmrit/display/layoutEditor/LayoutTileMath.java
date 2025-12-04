@@ -129,15 +129,15 @@ public class LayoutTileMath {
         double chordMidX = startPoint.getX() + chordX / 2.0;
         double chordMidY = startPoint.getY() + chordY / 2.0;
         double distanceToCenter = Math.sqrt(curveRadius * curveRadius - halfChord * halfChord);
-        
+
         // Direction perpendicular to chord (towards center)
         double perpAngle = chordAngle + curveDirection * Math.PI / 2.0;
         double centerX = chordMidX + distanceToCenter * Math.cos(perpAngle);
         double centerY = chordMidY + distanceToCenter * Math.sin(perpAngle);
-        
+
         // Calculate the angle from center to start point
         double startAngleFromCenter = Math.atan2(startPoint.getY() - centerY, startPoint.getX() - centerX);
-        
+
         // The initial orientation is tangent to the circle at the start point
         double initialAngle = startAngleFromCenter + Math.PI / 2.0;
         if (curveFace) {
@@ -154,6 +154,22 @@ public class LayoutTileMath {
         }
 
         return angleDegrees;
+    }
+
+    /**
+     * Normalize an angle to the 0-360 degree range.
+     *
+     * @param angle the angle in degrees to normalize
+     * @return the normalized angle in the range [0, 360)
+     */
+    public static double normalizeAngle(double angle) {
+        while (angle < 0) {
+            angle += 360.0;
+        }
+        while (angle >= 360.0) {
+            angle -= 360.0;
+        }
+        return angle;
     }
 
 }
