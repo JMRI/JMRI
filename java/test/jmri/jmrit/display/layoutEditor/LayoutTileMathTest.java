@@ -132,6 +132,58 @@ public class LayoutTileMathTest {
     }
 
     /**
+     * Test basic calcCurveEndpoint functionality.
+     */
+    @Test
+    public void testCalcCurveEndpoint() {
+        Point2D start = new Point2D.Double(0.0, 0.0);
+        double radius = 100.0;
+
+        // Test 90-degree right turn from east direction
+        Point2D end = LayoutTileMath.calcCurveEndpoint(start, 0.0, radius, 90.0, true);
+        assertEquals(100.0, end.getX(), TOLERANCE, "90° right turn X coordinate");
+        assertEquals(-100.0, end.getY(), TOLERANCE, "90° right turn Y coordinate");
+
+        // Inverse test: from end back to start (reverse the arc with opposite orientation)
+        Point2D backToStart = LayoutTileMath.calcCurveEndpoint(end, 180.0, radius, 90.0, true);
+        assertEquals(start.getX(), backToStart.getX(), TOLERANCE, "90° right turn inverse X coordinate");
+        assertEquals(start.getY(), backToStart.getY(), TOLERANCE, "90° right turn inverse Y coordinate");
+
+        // Test 90-degree left turn from east direction
+        end = LayoutTileMath.calcCurveEndpoint(start, 0.0, radius, 90.0, false);
+        assertEquals(100.0, end.getX(), TOLERANCE, "90° left turn X coordinate");
+        assertEquals(100.0, end.getY(), TOLERANCE, "90° left turn Y coordinate");
+
+        // Inverse test: from end back to start (reverse the arc with opposite orientation)
+        backToStart = LayoutTileMath.calcCurveEndpoint(end, 180.0, radius, 90.0, false);
+        assertEquals(start.getX(), backToStart.getX(), TOLERANCE, "90° left turn inverse X coordinate");
+        assertEquals(start.getY(), backToStart.getY(), TOLERANCE, "90° left turn inverse Y coordinate");
+
+        // Test 180-degree right turn (semicircle)
+        end = LayoutTileMath.calcCurveEndpoint(start, 0.0, radius, 180.0, true);
+        assertEquals(0.0, end.getX(), TOLERANCE, "180° right turn X coordinate");
+        assertEquals(-200.0, end.getY(), TOLERANCE, "180° right turn Y coordinate");
+
+        // Inverse test: from end back to start with right turn (same direction, 180° back)
+        backToStart = LayoutTileMath.calcCurveEndpoint(end, 180.0, radius, 180.0, true);
+        assertEquals(start.getX(), backToStart.getX(), TOLERANCE, "180° right turn inverse X coordinate");
+        assertEquals(start.getY(), backToStart.getY(), TOLERANCE, "180° right turn inverse Y coordinate");
+
+        // Test 45-degree right turn from north direction
+        end = LayoutTileMath.calcCurveEndpoint(start, 90.0, radius, 45.0, true);
+        // For a right turn from north: center is at (100, 0), endpoint calculation
+        double expectedX = radius - radius * Math.cos(Math.toRadians(45.0));
+        double expectedY = radius * Math.sin(Math.toRadians(45.0));
+        assertEquals(expectedX, end.getX(), TOLERANCE, "45° right turn from north X coordinate");
+        assertEquals(expectedY, end.getY(), TOLERANCE, "45° right turn from north Y coordinate");
+
+        // Inverse test: from end back to start (reverse with opposite orientation and opposite curve direction)
+        backToStart = LayoutTileMath.calcCurveEndpoint(end, 225.0, radius, 45.0, false);
+        assertEquals(start.getX(), backToStart.getX(), TOLERANCE, "45° right turn from north inverse X coordinate");
+        assertEquals(start.getY(), backToStart.getY(), TOLERANCE, "45° right turn from north inverse Y coordinate");
+    }
+
+    /**
      * Test basic calcStraightOrientation functionality.
      */
     @Test
@@ -147,6 +199,18 @@ public class LayoutTileMathTest {
         end = new Point2D.Double(0.0, 100.0);
         orientation = LayoutTileMath.calcStraightOrientation(start, end);
         assertEquals(90.0, orientation, TOLERANCE, "North orientation");
+
+        // Test that swapping start and end points flips orientation by 180°
+        Point2D point1 = new Point2D.Double(10.0, 20.0);
+        Point2D point2 = new Point2D.Double(30.0, 40.0);
+
+        double orientation1to2 = LayoutTileMath.calcStraightOrientation(point1, point2);
+        double orientation2to1 = LayoutTileMath.calcStraightOrientation(point2, point1);
+
+        // The orientations should differ by 180 degrees
+        double difference = Math.abs(orientation1to2 - orientation2to1);
+        assertTrue(Math.abs(difference - 180.0) < TOLERANCE || Math.abs(difference - 180.0) < TOLERANCE,
+                "Swapping start and end should flip orientation by 180°, got difference: " + difference);
     }
 
     /**
@@ -205,11 +269,11 @@ public class LayoutTileMathTest {
         // Test 2: Calculate orientation from B to A (reverse direction)
         // For the reverse direction, we need to flip the curve face
         double calculatedOrientationBA = LayoutTileMath.calcCurveOrientation(pointB, pointA, radius, !curveFace);
-        
+
         // The reverse orientation should be the final orientation of the original curve + 180°
         double expectedReverseOrientation = (initialOrientation + (curveFace ? -arcAngle : arcAngle) + 180.0) % 360.0;
         if (expectedReverseOrientation < 0) expectedReverseOrientation += 360.0;
-        
+
         assertEquals(expectedReverseOrientation, calculatedOrientationBA, TOLERANCE,
                 "Calculated orientation B->A should match expected reverse orientation");
 
@@ -221,15 +285,15 @@ public class LayoutTileMathTest {
                 "Reconstructed point A Y should match original");
 
         // Test 4: Create a second curve segment from point B and verify circle continuity
-        Point2D pointC = LayoutTileMath.calcCurveEndpoint(pointB, 
+        Point2D pointC = LayoutTileMath.calcCurveEndpoint(pointB,
                 initialOrientation + (curveFace ? -arcAngle : arcAngle), radius, arcAngle, curveFace);
-        
+
         // Calculate orientation from B to C
         double orientationBC = LayoutTileMath.calcCurveOrientation(pointB, pointC, radius, curveFace);
         double expectedOrientationBC = initialOrientation + (curveFace ? -arcAngle : arcAngle);
         if (expectedOrientationBC < 0) expectedOrientationBC += 360.0;
         if (expectedOrientationBC >= 360.0) expectedOrientationBC -= 360.0;
-        
+
         assertEquals(expectedOrientationBC, orientationBC, TOLERANCE,
                 "Orientation B->C should continue the same circle");
     }
