@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Data model for Track Tiles table.
- * 
+ *
  * @author Ralf Lang Copyright (C) 2025
  */
 public class TrackTileTableDataModel extends javax.swing.table.AbstractTableModel {
@@ -22,7 +22,7 @@ public class TrackTileTableDataModel extends javax.swing.table.AbstractTableMode
     private final TrackTileManager manager;
     private final List<TrackTile> tiles;
     private final String userLanguage;
-    
+
     static public final int SYSNAME_COLUMN = 0;
     static public final int VENDOR_COLUMN = 1;
     static public final int FAMILY_COLUMN = 2;
@@ -39,8 +39,8 @@ public class TrackTileTableDataModel extends javax.swing.table.AbstractTableMode
         this.userLanguage = Locale.getDefault().getLanguage();
         if (manager != null) {
             this.tiles = new java.util.ArrayList<>(manager.getNamedBeanSet());
-            log.debug("TrackTileTableDataModel created with {} tiles, user language: {}", 
-                      tiles.size(), userLanguage);
+            log.debug("TrackTileTableDataModel created with {} tiles, user language: {}",
+                    tiles.size(), userLanguage);
         } else {
             this.tiles = new java.util.ArrayList<>();
             log.warn("TrackTileTableDataModel created with null manager");
@@ -93,9 +93,9 @@ public class TrackTileTableDataModel extends javax.swing.table.AbstractTableMode
             log.error("row index greater than tiles size");
             return null;
         }
-        
+
         TrackTile tile = tiles.get(row);
-        
+
         switch (col) {
             case SYSNAME_COLUMN:
                 return tile.getSystemName();
@@ -121,7 +121,7 @@ public class TrackTileTableDataModel extends javax.swing.table.AbstractTableMode
 
     /**
      * Configure columns for the specified table.
-     * 
+     *
      * @param table The JTable to configure
      */
     public void configureTable(JTable table) {
@@ -132,7 +132,7 @@ public class TrackTileTableDataModel extends javax.swing.table.AbstractTableMode
         table.getColumnModel().getColumn(JMRITYPE_COLUMN).setPreferredWidth(80);
         table.getColumnModel().getColumn(PARTCODE_COLUMN).setPreferredWidth(80);
         table.getColumnModel().getColumn(CAPTION_COLUMN).setPreferredWidth(300);
-        
+
         // Allow sorting
         table.setAutoCreateRowSorter(true);
     }
