@@ -152,7 +152,6 @@ public class TmccConsist extends jmri.implementation.DccConsist {
      *
      * @param locoAddress - is the Locomotive address to add to the consist
      * @param directionNormal - is True if the locomotive is traveling the same direction as the consist, or false otherwise.
-     * @param ConsistAddress - is the Consist address assigned to the locomotive.
      */
     @Override
     public synchronized void add(DccLocoAddress locoAddress, boolean directionNormal) {
