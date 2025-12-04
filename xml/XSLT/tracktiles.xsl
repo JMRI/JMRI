@@ -334,15 +334,15 @@
     <xsl:template name="synthesizeCaption">
         <xsl:value-of select="tt:jmritype"/>
         <xsl:text> </xsl:text>
-        <xsl:if test="tt:geometry/tt:straight">
-            <xsl:value-of select="tt:geometry/tt:straight/@length"/>
-            <xsl:value-of select="tt:geometry/tt:straight/@unit"/>
+        <xsl:if test="tt:geometry/tt:straight/tt:path">
+            <xsl:value-of select="tt:geometry/tt:straight/tt:path/@length"/>
+            <xsl:value-of select="tt:geometry/tt:straight/tt:path/@lengthunit"/>
         </xsl:if>
-        <xsl:if test="tt:geometry/tt:curved">
+        <xsl:if test="tt:geometry/tt:curved/tt:path">
             <xsl:text>R</xsl:text>
-            <xsl:value-of select="tt:geometry/tt:curved/@radius"/>
+            <xsl:value-of select="tt:geometry/tt:curved/tt:path/@radius"/>
             <xsl:text> </xsl:text>
-            <xsl:value-of select="tt:geometry/tt:curved/@arc"/>°
+            <xsl:value-of select="tt:geometry/tt:curved/tt:path/@arc"/>°
         </xsl:if>
     </xsl:template>
     
@@ -351,9 +351,14 @@
         <xsl:choose>
             <!-- Straight track -->
             <xsl:when test="tt:geometry/tt:straight">
-                <xsl:text>Length: </xsl:text>
-                <xsl:value-of select="tt:geometry/tt:straight/@length"/>
-                <xsl:value-of select="tt:geometry/tt:straight/@unit"/>
+                <xsl:for-each select="tt:geometry/tt:straight/tt:path">
+                    <xsl:if test="position() > 1"><br/></xsl:if>
+                    <xsl:text>Path </xsl:text>
+                    <xsl:value-of select="@id"/>
+                    <xsl:text>: Length </xsl:text>
+                    <xsl:value-of select="@length"/>
+                    <xsl:value-of select="@lengthunit"/>
+                </xsl:for-each>
                 <xsl:if test="tt:geometry/tt:straight/@function != 'none' and tt:geometry/tt:straight/@function">
                     <br/>Function: <xsl:value-of select="tt:geometry/tt:straight/@function"/>
                 </xsl:if>
@@ -370,12 +375,17 @@
             
             <!-- Curved track -->
             <xsl:when test="tt:geometry/tt:curved">
-                <xsl:text>Radius: </xsl:text>
-                <xsl:value-of select="tt:geometry/tt:curved/@radius"/>
-                <xsl:value-of select="tt:geometry/tt:curved/@radiusunit"/>
-                <xsl:text>, Arc: </xsl:text>
-                <xsl:value-of select="tt:geometry/tt:curved/@arc"/>
-                <xsl:value-of select="tt:geometry/tt:curved/@arcunit"/>
+                <xsl:for-each select="tt:geometry/tt:curved/tt:path">
+                    <xsl:if test="position() > 1"><br/></xsl:if>
+                    <xsl:text>Path </xsl:text>
+                    <xsl:value-of select="@id"/>
+                    <xsl:text>: Radius </xsl:text>
+                    <xsl:value-of select="@radius"/>
+                    <xsl:value-of select="@radiusunit"/>
+                    <xsl:text>, Arc </xsl:text>
+                    <xsl:value-of select="@arc"/>
+                    <xsl:value-of select="@arcunit"/>
+                </xsl:for-each>
                 <xsl:if test="tt:geometry/tt:curved/@function != 'none' and tt:geometry/tt:curved/@function">
                     <br/>Function: <xsl:value-of select="tt:geometry/tt:curved/@function"/>
                 </xsl:if>

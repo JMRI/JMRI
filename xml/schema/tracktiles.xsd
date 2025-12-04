@@ -312,16 +312,11 @@
   <!-- Straight track type -->
   <xs:complexType name="straightType">
     <xs:annotation>
-      <xs:documentation>Straight track with length in millimeters</xs:documentation>
+      <xs:documentation>Straight track with path specifications</xs:documentation>
     </xs:annotation>
-    <xs:attribute name="length" type="xs:decimal" use="required"/>
-    <xs:attribute name="unit" use="required">
-      <xs:simpleType>
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="mm"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:attribute>
+    <xs:sequence>
+      <xs:element name="path" type="pathType" maxOccurs="unbounded"/>
+    </xs:sequence>
     <xs:attribute name="function" type="functionEnum" default="none">
       <xs:annotation>
         <xs:documentation>Special electrical function</xs:documentation>
@@ -342,24 +337,11 @@
   <!-- Curved track type -->
   <xs:complexType name="curvedType">
     <xs:annotation>
-      <xs:documentation>Curved track with radius (mm) and arc angle (degrees)</xs:documentation>
+      <xs:documentation>Curved track with path specifications</xs:documentation>
     </xs:annotation>
-    <xs:attribute name="radius" type="xs:decimal" use="required"/>
-    <xs:attribute name="arc" type="xs:decimal" use="required"/>
-    <xs:attribute name="radiusunit" use="required">
-      <xs:simpleType>
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="mm"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:attribute>
-    <xs:attribute name="arcunit" use="required">
-      <xs:simpleType>
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="deg"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:attribute>
+    <xs:sequence>
+      <xs:element name="path" type="pathType" maxOccurs="unbounded"/>
+    </xs:sequence>
     <xs:attribute name="function" type="functionEnum" default="none">
       <xs:annotation>
         <xs:documentation>Special electrical function</xs:documentation>
@@ -483,9 +465,9 @@
     <xs:annotation>
       <xs:documentation>Turnout path specification</xs:documentation>
     </xs:annotation>
-    <xs:attribute name="direction" type="directionEnum" use="required">
+    <xs:attribute name="direction" type="directionEnum" use="optional">
       <xs:annotation>
-        <xs:documentation>Which route the path takes</xs:documentation>
+        <xs:documentation>Which route the path takes (optional for single-path tiles)</xs:documentation>
       </xs:annotation>
     </xs:attribute>
     <xs:attribute name="state" type="stateEnum">
@@ -580,6 +562,7 @@
   <!-- Route enumeration -->
   <xs:simpleType name="routeEnum">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="ab"/>
       <xs:enumeration value="ac"/>
       <xs:enumeration value="bd"/>
       <xs:enumeration value="ad"/>
