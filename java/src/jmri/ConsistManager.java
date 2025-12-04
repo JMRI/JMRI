@@ -23,7 +23,7 @@ public interface ConsistManager {
 
     /**
      * Find a Consist with this consist address, and return it. If the Consist
-     * doesn't exit, create it.
+     * doesn't exist, create it.
      *
      * @param address the consist address
      * @return an existing or new consist

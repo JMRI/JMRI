@@ -105,11 +105,11 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 case 15:
                                     return "TMCC2 - Engine " + A + " - AUX2 On";
                                 case 16:
-                                    return "TMCC2 - Engine " + A + " - Num 0 - Engine Reset - TMCC2 Feature Type 0";
+                                    return "TMCC2 - Engine " + A + " - Num 0 - Engine Reset - TMCC2 Loco Feature Type 0";
                                 case 17:
-                                    return "TMCC2 - Engine " + A + " - Num 1 - Sound Volume Increase - TMCC2 Feature Type 1";
+                                    return "TMCC2 - Engine " + A + " - Num 1 - Sound Volume Increase - TMCC2 Loco Feature Type 1";
                                 case 18:
-                                    return "TMCC2 - Engine " + A + " - Num 2 - Crew Talk - TMCC2 Feature Type 2";
+                                    return "TMCC2 - Engine " + A + " - Num 2 - Crew Talk - TMCC2 Loco Feature Type 2";
                                 case 19:
                                     return "TMCC2 - Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence/RPM Increase";
                                 case 20:
@@ -271,11 +271,11 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                                 case 15:
                                     return "TMCC2 - Train " + A + " - AUX2 On";
                                 case 16:
-                                    return "TMCC2 - Train " + A + " - Num 0 - Train Reset - TMCC2 Feature Type 0";
+                                    return "TMCC2 - Train " + A + " - Num 0 - Train Reset - TMCC2 Loco Feature Type 0";
                                 case 17:
-                                    return "TMCC2 - Train " + A + " - Num 1 - Sound Volume Increase - TMCC2 Feature Type 1";
+                                    return "TMCC2 - Train " + A + " - Num 1 - Sound Volume Increase - TMCC2 Loco Feature Type 1";
                                 case 18:
-                                    return "TMCC2 - Train " + A + " - Num 2 - Crew Talk - TMCC2 Feature Type 2";
+                                    return "TMCC2 - Train " + A + " - Num 2 - Crew Talk - TMCC2 Loco Feature Type 2";
                                 case 19:
                                     return "TMCC2 - Train " + A + " - Num 3 - Sound On w/Start-Up Sequence/RPM Increase";
                                 case 20:
@@ -455,15 +455,15 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 19:
                                 return "TMCC1 - Engine " + A + " - Num 3 - Sound On w/Start-Up Sequence";
                             case 20:
-                                return "TMCC1 - Engine " + A + " - Num 4 - Sound Volume Decrease - TMCC1 Feature Type 4";
+                                return "TMCC1 - Engine " + A + " - Num 4 - Sound Volume Decrease - TMCC1 Loco Feature Type 4";
                             case 21:
-                                return "TMCC1 - Engine " + A + " - Num 5 - Sound Off w/Shut-Down Sequence - TMCC1 Feature Type 5";
+                                return "TMCC1 - Engine " + A + " - Num 5 - Sound Off w/Shut-Down Sequence - TMCC1 Loco Feature Type 5";
                             case 22:
-                                return "TMCC1 - Engine " + A + " - Num 6 - Steam Release/RPM Decrease - TMCC1 Feature Type 6";
+                                return "TMCC1 - Engine " + A + " - Num 6 - Steam Release/RPM Decrease - TMCC1 Loco Feature Type 6";
                             case 23:
                                 return "TMCC1 - Engine " + A + " - Num 7 - Tower Com Announcement";
                             case 24:
-                                return "TMCC1 - Engine " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting) - TMCC1 Feature Type 8";
+                                return "TMCC1 - Engine " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting) - TMCC1 Loco eature Type 8";
                             case 25:
                                 return "TMCC1 - Engine " + A + " - Num 9 - Feature On (Smoke/Aux Lighting)";
                             case 26:
@@ -611,15 +611,15 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             case 19:
                                 return "TMCC1 - Train " + A + " - Num 3 - Sound On w/Start-Up Sequence";
                             case 20:
-                                return "TMCC1 - Train " + A + " - Num 4 - Sound Volume Decrease - TMCC1 Feature Type 4";
+                                return "TMCC1 - Train " + A + " - Num 4 - Sound Volume Decrease - TMCC1 Loco Feature Type 4";
                             case 21:
-                                return "TMCC1 - Train " + A + " - Num 5 - Sound Off w/Shut-Down Sequence - TMCC1 Feature Type 5";
+                                return "TMCC1 - Train " + A + " - Num 5 - Sound Off w/Shut-Down Sequence - TMCC1 Loco Feature Type 5";
                             case 22:
-                                return "TMCC1 - Train " + A + " - Num 6 - Steam Release/RPM Decrease - TMCC1 Feature Type 6";
+                                return "TMCC1 - Train " + A + " - Num 6 - Steam Release/RPM Decrease - TMCC1 Loco Feature Type 6";
                             case 23:
                                 return "TMCC1 - Train " + A + " - Num 7 - Tower Com Announcement";
                             case 24:
-                                return "TMCC1 - Train " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting) - TMCC1 Feature Type 8";
+                                return "TMCC1 - Train " + A + " - Num 8 - Feature Off (Smoke/Aux Lighting) - TMCC1 Loco Feature Type 8";
                             case 25:
                                 return "TMCC1 - Train " + A + " - Num 9 - Feature On (Smoke/Aux Lighting)";
                             case 26:
@@ -771,11 +771,11 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                         case 1:
                             return "CV Must Equal 1 for Programming TMCC Loco/Engine, Switch, Accessory, Track ID#s";
                         case 2:
-                            return "CV Must Equal 2 for Programming TMCC Feature Type";
+                            return "CV Must Equal 2 for Programming TMCC Loco Feature Type";
                         case 3:
-                            return "Value Entered is Not a TMCC1 Feature Type";
+                            return "Value Entered is Not a TMCC1 Loco Feature Type";
                         case 4:
-                            return "Value Entered is Not a TMCC2 Feature Type";
+                            return "Value Entered is Not a TMCC2 Loco Feature Type";
                         default:
                             return "Unrecognized TMCC Error (Case C=0) - with C= " + C + " D= " + D;
                     }
@@ -784,7 +784,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             }
         }
         
-        return "TMCC - CV#, Loco ID#/Address/Feature Value - Out of Range";
+        return "TMCC - CV#, Loco ID#/Address/Loco Feature Value - Out of Range";
 
     }
 }
