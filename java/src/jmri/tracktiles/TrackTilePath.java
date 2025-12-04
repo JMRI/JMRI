@@ -1,5 +1,6 @@
 package jmri.tracktiles;
-
+import java.awt.geom.Point2D;
+import jmri.jmrit.display.layoutEditor.LayoutTileMath;
 /**
  * Represents a single path through a track tile.
  * <p>
@@ -177,6 +178,20 @@ public class TrackTilePath {
         return length > 0.0 && arc > 0.0 && radius == 0.0;
     }
 
+    public Point2D getPathEndpoint(Point2D startPoint, double orientation, boolean isFlip, double mmToGridFactor) {
+        System.out.println("getPathEndpoint: startPoint=" + startPoint + ", orientation=" + Math.toDegrees(orientation) + "°, isFlip=" + isFlip + ", mmToGridFactor=" + mmToGridFactor);
+        if (isStraight()) {
+            double lengthInLayoutUnits = length / mmToGridFactor;
+            System.out.println("Straight path: length=" + length + "mm, lengthInLayoutUnits=" + lengthInLayoutUnits);
+            return LayoutTileMath.calcStraightEndpoint(startPoint, lengthInLayoutUnits, orientation);
+        } else if (isCurved()) {
+            double radiusInLayoutUnits = radius / mmToGridFactor;
+            System.out.println("Curved path: radius=" + radius + "mm, radiusInLayoutUnits=" + radiusInLayoutUnits + ", arc=" + arc + "°");
+            return LayoutTileMath.calcCurveEndpoint(startPoint, orientation, radiusInLayoutUnits, arc, isFlip);
+        }
+        // Throw exception for unsupported path types
+        throw new IllegalArgumentException("Unsupported path type for endpoint calculation");
+    }
     /**
      * Calculate the actual path length. For straight paths, returns the length.
      * For curved paths, calculates arc length from radius and arc angle.

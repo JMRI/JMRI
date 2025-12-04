@@ -19,7 +19,7 @@ import jmri.util.swing.JmriJOptionPane;
  * MVC Editor component for TrackSegment objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- * 
+ *
  */
 public class TrackSegmentEditor extends LayoutTrackEditor {
 
@@ -31,7 +31,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
         super(layoutEditor);
     }
 
-    // ********** Members and methods from LayoutTrackEditors 
+    // ********** Members and methods from LayoutTrackEditors
     // ********** specific to TrackSegment
 
     // variables for Edit Track Segment pane
@@ -46,7 +46,7 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private final JTextField editTrackSegmentArcTextField = new JTextField(5);
     private JButton editTrackSegmentSegmentEditBlockButton;
-    
+
     // Orientation display fields
     private final JTextField editTrackSegmentOrientationATextField = new JTextField(10);
     private final JTextField editTrackSegmentOrientationBTextField = new JTextField(10);
@@ -71,8 +71,8 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             this.trackSegmentView = (TrackSegmentView) layoutTrackView;
             this.trackSegment = this.trackSegmentView.getTrackSegment();
         } else {
-            log.error("editLayoutTrack received type {} content {}", 
-                    layoutTrackView.getClass(), layoutTrackView, 
+            log.error("editLayoutTrack received type {} content {}",
+                    layoutTrackView.getClass(), layoutTrackView,
                     new Exception("traceback"));
         }
         sensorList.clear();
@@ -192,14 +192,14 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
             editTrackSegmentDashedComboBox.setSelectedIndex(editTrackSegmentSolidIndex);
         }
         editTrackSegmentHiddenCheckBox.setSelected(trackSegmentView.isHidden());
-        
+
         // Update orientation fields with orientation values only
         double orientationA = trackSegmentView.getOrientationAtA();
         double orientationB = trackSegmentView.getOrientationAtB();
-        
+
         editTrackSegmentOrientationATextField.setText(String.format("%.1f°", orientationA));
         editTrackSegmentOrientationBTextField.setText(String.format("%.1f°", orientationB));
-        
+
         Block block = InstanceManager.getDefault(BlockManager.class).getBlock(trackSegment.getBlockName());
         editTrackSegmentBlockNameComboBox.getEditor().setItem(block);   // Select the item via the editor, empty text field if null
         editTrackSegmentBlockNameComboBox.setEnabled(!hasNxSensorPairs(trackSegment.getLayoutBlock()));
