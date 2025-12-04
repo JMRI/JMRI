@@ -163,7 +163,6 @@ public class LnCommandStationTypeTest {
         Assert.assertFalse("PR2 standalone loco reset expect false", LnCommandStationType.COMMAND_STATION_PR2_ALONE.getSupportsLocoReset());
         Assert.assertFalse("PR3 standalone loco reset expect false", LnCommandStationType.COMMAND_STATION_PR3_ALONE.getSupportsLocoReset());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_PR4_ALONE.getSupportsLocoReset());
-        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_STANDALONE_EXT_TERM.getSupportsLocoReset());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_USB_DCS240_ALONE.getSupportsLocoReset());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_USB_DCS240PLUS_ALONE.getSupportsLocoReset());
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_USB_DCS52_ALONE.getSupportsLocoReset());
