@@ -3717,23 +3717,23 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             // Get the "orientation at start point" either from the previous tile or from the drag direction
                             // For curved tiles this is *not* where the endpoint will be.
                             Double angle = getPreviousTileOrientation(beginTrack, true);
-                            log.warn("getPreviousTileOrientation returned: {}", angle);
+                            log.debug("getPreviousTileOrientation returned: {}", angle);
                             if (angle == null) {
                                 // Get cursor drag direction from button down to release
-                                log.warn("Calculating orientation from beginLocation={} to currentPoint={}", beginLocation, currentPoint);
+                                log.debug("Calculating orientation from beginLocation={} to currentPoint={}", beginLocation, currentPoint);
                                 angle = LayoutTileMath.calcStraightOrientation(beginLocation, currentPoint);
-                                log.warn("calcStraightOrientation returned: {}", angle);
+                                log.debug("calcStraightOrientation returned: {}", angle);
 
                                 // If calculation failed (NaN), use default east orientation
                                 if (Double.isNaN(angle) || angle == null) {
-                                    log.warn("Orientation calculation failed, using default 0° (east)");
+                                    log.debug("Orientation calculation failed, using default 0° (east)");
                                     angle = 0.0; // Default to east orientation
                                 }
 
                                 // For new tiles without previous connection, the curve direction
                                 // should be based on the toolbar setting directly
                                 // (the drag direction determines orientation, toolbar setting determines left/right)
-                                log.warn("New tile: using curve direction from toolbar: {}", curveDirection ? "left" : "right");
+                                log.debug("New tile: using curve direction from toolbar: {}", curveDirection ? "left" : "right");
                             } else {
                                 angle = angle - 180.0; // Reverse direction of B to A
                             }
@@ -3741,9 +3741,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             TrackTile tile = leToolBarPanel.getSelectedTrackTile();
                             // Track segment tiles always have only one path AB. Other types may have many paths.
                             TrackTilePath tilePath = tile.getPathById("AB");
-                            log.warn("Tile: {}, TilePath: {}, mmToGridFactor: {}", tile != null ? tile.getSystemName() : "null", tilePath != null ? tilePath.toString() : "null", mmToGridFactor);
+                            log.debug("Tile: {}, TilePath: {}, mmToGridFactor: {}", tile != null ? tile.getSystemName() : "null", tilePath != null ? tilePath.toString() : "null", mmToGridFactor);
                             Point2D endPoint = tilePath.getPathEndpoint(beginLocation, angle, !curveDirection, mmToGridFactor);
-                            log.warn("Tile mode: beginLocation={}, angle={}°, endPoint={}", beginLocation, Math.toDegrees(angle), endPoint);
+                            log.debug("Tile mode: beginLocation={}, angle={}°, endPoint={}", beginLocation, angle, endPoint);
                             // Check if there is an existing anchor point at the calculated endpoint.
                             // Side effect, populates foundTrack and foundHitPointType.
                             findLayoutTracksHitPoint(endPoint);
