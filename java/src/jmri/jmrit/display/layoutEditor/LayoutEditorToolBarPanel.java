@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.*;
+import jmri.tracktiles.NotATile;
 
 import jmri.*;
 import jmri.jmrit.logixng.GlobalVariable;
@@ -1281,12 +1282,13 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
     /**
      * Get the currently selected TrackTile from the toolbar combo boxes.
      *
-     * @return the selected TrackTile, or null if no valid tile is selected
+     * @return the selected TrackTile, or NotATile.getInstance() if no valid
+     *         tile is selected
      */
-    @CheckForNull
+    @Nonnull
     public TrackTile getSelectedTrackTile() {
         if (!isTileSelected()) {
-            return null;
+            return NotATile.getInstance();
         }
 
         String vendor = (String) tileVendorComboBox.getSelectedItem();
@@ -1294,7 +1296,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         String selected = (String) tileComboBox.getSelectedItem();
 
         if (vendor == null || family == null || selected == null) {
-            return null;
+            return NotATile.getInstance();
         }
 
         // Parse partcode from "partcode - caption" format
