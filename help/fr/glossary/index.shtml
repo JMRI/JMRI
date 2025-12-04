@@ -1443,7 +1443,7 @@
           <td class="app">I18N</td>
           <td class="en">Deselect (All)</td>
           <td class="descr">Uncheck (Check Box)</td>
-          <td class="de">(Alle) Abwählen (Kontrollkästchen)</td>
+          <td class="de">(Alle) Abw&aumlhlen (Kontrollk&aumlstchen)</td>
           <td class="it">Azzera (Tutti)</td>
           <td class="fr">(Tout) Déselectionner</td>
           <td class="en_UK">
@@ -1634,7 +1634,7 @@
           <td class="en">Select (All)</td>
           <td class="descr">
           </td>
-          <td class="de">(Alle) Markieren/Anwählen</td>
+          <td class="de">(Alle) Markieren/Anw&aumlhlen</td>
           <td class="it">Seleziona (Tutti)</td>
           <td class="fr">(Tout) Sélectionner</td>
           <td class="en_UK">

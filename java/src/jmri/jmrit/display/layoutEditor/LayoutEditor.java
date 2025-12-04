@@ -33,7 +33,7 @@ import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel.LocationFormat;
-import jmri.jmrit.display.layoutEditor.LayoutTileMath;
+
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.jmrit.logixng.GlobalVariable;
@@ -3628,25 +3628,22 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (connected == null) {
                 return null;
             }
-            if (connected instanceof TrackSegment) {
-                TrackSegment ts = (TrackSegment) connected;
-                TrackSegmentView tsv = getTrackSegmentView(ts);
-                if (tsv != null) {
-                    TrackTile tile = tsv.getTile();
-                    if (ignoreNonTile && tile == null) {
-                        return null;
-                    }
-                }
-                // Identify if connected side is a or b
-                Point2D ep1 = getCoords(((TrackSegment) connected).getConnect1(), ((TrackSegment) connected).getType1());
-                Point2D ep2 = getCoords(((TrackSegment) connected).getConnect2(), ((TrackSegment) connected).getType2());
-                if (ep1.equals(referencePoint)) {
-                    // connected at end A
-                    return tsv.getOrientationAtA();
-                } else if (ep2.equals(referencePoint)) {
-                    // connected at end B
-                    return tsv.getOrientationAtB();
-                }
+            // spotbugs says unnecessary to check if we now have a TrackSegment
+            TrackSegment ts = (TrackSegment) connected;
+            TrackSegmentView tsv = getTrackSegmentView(ts);
+            TrackTile tile = tsv.getTile();
+            if (ignoreNonTile && tile == null) {
+                return null;
+            }
+            // Identify if connected side is a or b
+            Point2D ep1 = getCoords(((TrackSegment) connected).getConnect1(), ((TrackSegment) connected).getType1());
+            Point2D ep2 = getCoords(((TrackSegment) connected).getConnect2(), ((TrackSegment) connected).getType2());
+            if (ep1.equals(referencePoint)) {
+                // connected at end A
+                return tsv.getOrientationAtA();
+            } else if (ep2.equals(referencePoint)) {
+                // connected at end B
+                return tsv.getOrientationAtB();
             }
         }
         // TODO: Handle if reference is a Turnout
@@ -3725,7 +3722,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                                 log.debug("calcStraightOrientation returned: {}", angle);
 
                                 // If calculation failed (NaN), use default east orientation
-                                if (Double.isNaN(angle) || angle == null) {
+                                if (Double.isNaN(angle)) {
                                     log.debug("Orientation calculation failed, using default 0° (east)");
                                     angle = 0.0; // Default to east orientation
                                 }
@@ -3741,32 +3738,34 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                             TrackTile tile = leToolBarPanel.getSelectedTrackTile();
                             // Track segment tiles always have only one path AB. Other types may have many paths.
                             TrackTilePath tilePath = tile.getPathById("AB");
-                            log.debug("Tile: {}, TilePath: {}, mmToGridFactor: {}", tile != null ? tile.getSystemName() : "null", tilePath != null ? tilePath.toString() : "null", mmToGridFactor);
-                            Point2D endPoint = tilePath.getPathEndpoint(beginLocation, angle, !curveDirection, mmToGridFactor);
-                            log.debug("Tile mode: beginLocation={}, angle={}°, endPoint={}", beginLocation, angle, endPoint);
-                            // Check if there is an existing anchor point at the calculated endpoint.
-                            // Side effect, populates foundTrack and foundHitPointType.
-                            findLayoutTracksHitPoint(endPoint);
-                            if (foundTrack == null) {
-                                // Not found, create an anchor point at the calculated endpoint
-                                foundTrack = addAnchor(endPoint);
-                                foundHitPointType = HitPointType.POS_POINT;
-                            }
-                            // Update currentPoint to the calculated endpoint for proper track creation
-                            currentPoint = endPoint;
-                            // Store the computed curve direction for use in track segment creation
-                            boolean actualCurveDirection = !curveDirection; // Store the inverted value used for endpoint calculation
-                            // internally should now add Track between beginTrack and foundTrack
-                            addTrackSegment();
-                            // After creating track segment, set the correct curve direction for visual rendering
-                            if (newTrack != null) {
-                                TrackSegmentView tsv = getTrackSegmentView(newTrack);
-                                if (tsv != null && tsv.hasTile()) {
-                                    TrackTile trackTile = tsv.getTile();
-                                    if (trackTile != null) {
-                                        TrackTilePath path = trackTile.getPathById("AB");
-                                        if (path != null && path.isCurved()) {
-                                            tsv.setFlip(actualCurveDirection); // Use the same direction as endpoint calculation
+                            log.debug("Tile: {}, TilePath: {}, mmToGridFactor: {}", tile.getSystemName(), tilePath != null ? tilePath.toString() : "null", mmToGridFactor);
+                            if (tilePath != null) {
+                                Point2D endPoint = tilePath.getPathEndpoint(beginLocation, angle, !curveDirection, mmToGridFactor);
+                                log.debug("Tile mode: beginLocation={}, angle={}°, endPoint={}", beginLocation, angle, endPoint);
+                                // Check if there is an existing anchor point at the calculated endpoint.
+                                // Side effect, populates foundTrack and foundHitPointType.
+                                findLayoutTracksHitPoint(endPoint);
+                                if (foundTrack == null) {
+                                    // Not found, create an anchor point at the calculated endpoint
+                                    foundTrack = addAnchor(endPoint);
+                                    foundHitPointType = HitPointType.POS_POINT;
+                                }
+                                // Update currentPoint to the calculated endpoint for proper track creation
+                                currentPoint = endPoint;
+                                // Store the computed curve direction for use in track segment creation
+                                boolean actualCurveDirection = !curveDirection; // Store the inverted value used for endpoint calculation
+                                // internally should now add Track between beginTrack and foundTrack
+                                addTrackSegment();
+                                // After creating track segment, set the correct curve direction for visual rendering
+                                if (newTrack != null) {
+                                    TrackSegmentView tsv = getTrackSegmentView(newTrack);
+                                    if (tsv != null && tsv.hasTile()) {
+                                        TrackTile trackTile = tsv.getTile();
+                                        if (trackTile != null) {
+                                            TrackTilePath path = trackTile.getPathById("AB");
+                                            if (path != null && path.isCurved()) {
+                                                tsv.setFlip(actualCurveDirection); // Use the same direction as endpoint calculation
+                                            }
                                         }
                                     }
                                 }

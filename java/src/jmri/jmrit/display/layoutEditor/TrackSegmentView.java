@@ -286,7 +286,7 @@ public class TrackSegmentView extends LayoutTrackView implements TileSupport {
         if (this.hasTile()) {
             TrackTilePath trackTilePath = trackTile.getPathById("AB");
             if (trackTilePath.isCurved()) {
-                double radiusInLayoutUnits = trackTilePath.getRadius() / layoutEditor.getMmToGridFactor();
+                // Note: radius calculation removed as it was unused
                 double arcAngle = trackTilePath.getArc();
                 // TODO: Find out if we need to pull flip from LayoutEditor or assume it's already correct
                 setAngle(arcAngle);

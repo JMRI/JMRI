@@ -5,7 +5,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.configurexml.AbstractXmlAdapter;
-import jmri.tracktiles.DefaultTrackTileManager;
 
 /**
  * Provides load and store functionality for configuring DefaultTrackTileManager.

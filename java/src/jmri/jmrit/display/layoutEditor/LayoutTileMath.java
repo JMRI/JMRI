@@ -166,7 +166,7 @@ public class LayoutTileMath {
         while (angle < 0) {
             angle += 360.0;
         }
-        while (angle >= 360.0) {
+        while ((int)angle >= 360) {
             angle -= 360.0;
         }
         return angle;

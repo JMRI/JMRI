@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -17,7 +16,6 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;
 import java.util.List;
-import java.text.Normalizer;
 
 import jmri.util.JmriJFrame;
 
