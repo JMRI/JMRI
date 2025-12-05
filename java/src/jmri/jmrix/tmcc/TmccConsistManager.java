@@ -34,7 +34,7 @@ public class TmccConsistManager extends AbstractConsistManager {
      public boolean isSingleFormConsistRequired() {
         return true;
      }
-     
+
 
     /**
      * Constructor - call the constructor for the superclass, and initialize the
@@ -94,6 +94,18 @@ public class TmccConsistManager extends AbstractConsistManager {
         consistTable.put(address, consist);
         notifyConsistListChanged();
         return consist;
+    }
+
+
+    /**
+     * Read the new TMCC Consist address.
+     */
+    LocoAddress lastSeenAddress = null;
+
+    @Override
+    public Consist getConsist(LocoAddress address) {
+    lastSeenAddress = address;
+    return super.getConsist(address);
     }
 
 
