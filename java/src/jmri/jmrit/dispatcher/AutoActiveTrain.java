@@ -1779,6 +1779,10 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private synchronized void setTargetSpeedState(int speedState,boolean stopBySpeedProfile) {
         log.trace("{}: setTargetSpeedState:({})",_activeTrain.getTrainName(),speedState);
+        if (_currentAllocatedSection == null) {
+            log.debug("_currentAllocatedSection == null in setTargetSpeedState");
+            return;
+        }
         _autoEngineer.slowToStop(false);
         float stoppingDistanceAdjust =  _stopBySpeedProfileAdjust *
                 ( _activeTrain.isTransitReversed() ?
