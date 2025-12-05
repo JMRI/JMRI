@@ -111,13 +111,19 @@ public class DccLocoAddressSelector extends JPanel {
                 // now special case, should be refactored
                 jmri.jmrix.openlcb.OpenLcbLocoAddress oa = (jmri.jmrix.openlcb.OpenLcbLocoAddress) a;
                 text.setText(oa.getNode().toString());
-                box.setSelectedItem(jmri.LocoAddress.Protocol.OPENLCB.getPeopleName());
+                if (!followingAnotherSelector) {
+                    box.setSelectedItem(jmri.LocoAddress.Protocol.OPENLCB.getPeopleName());
+                }
             } else {
                 text.setText("" + a.getNumber());
                 if (InstanceManager.getNullableDefault(jmri.ThrottleManager.class) != null) {
-                    box.setSelectedItem(InstanceManager.throttleManagerInstance().getAddressTypeString(a.getProtocol()));
+                    if (!followingAnotherSelector) {
+                        box.setSelectedItem(InstanceManager.throttleManagerInstance().getAddressTypeString(a.getProtocol()));
+                    }
                 } else {
-                    box.setSelectedItem(a.getProtocol().getPeopleName());
+                    if (!followingAnotherSelector) {
+                        box.setSelectedItem(a.getProtocol().getPeopleName());
+                    }
                 }
             }
         }
