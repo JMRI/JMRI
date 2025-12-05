@@ -8,12 +8,15 @@
     <modifier>plus</modifier>
   </jmriversion>
   <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
-    <timeProvider>
+    <InternalDateTime class="jmri.time.implementation.configurexml.InternalDateTimeXml">
       <systemName>IUInternalTimeProvider</systemName>
-    </timeProvider>
-    <timeProvider>
+      <isRunning>yes</isRunning>
+      <rate>1.0</rate>
+      <localDateTime>2021-12-02T00:00</localDateTime>
+    </InternalDateTime>
+    <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
       <systemName>IUSystemClock</systemName>
-    </timeProvider>
+    </InternalDateTime>
   </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>inactive</defaultInitialState>
