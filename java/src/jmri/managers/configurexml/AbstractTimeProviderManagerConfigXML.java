@@ -52,11 +52,10 @@ public abstract class AbstractTimeProviderManagerConfigXML extends AbstractNamed
                 String tName = t.getSystemName();
                 log.debug("system name is {}", tName);
 
-                Element elem = new Element("timeProvider");
-                elem.addContent(new Element("systemName").addContent(tName));
-                log.debug("store TimeProvider {}", tName);
-
-                storeCommon(t, elem);
+                Element elem = jmri.configurexml.ConfigXmlManager.elementFromObject(t);
+                if (elem == null) {
+                    throw new RuntimeException("Cannot load xml configurator for " + t.getClass().getName());
+                }
 /*
                 // include feedback info
                 elem.setAttribute("feedback", t.getFeedbackModeName());

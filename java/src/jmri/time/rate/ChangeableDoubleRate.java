@@ -3,7 +3,7 @@ package jmri.time.rate;
 import jmri.time.RateSetter;
 
 /**
- * A rate of integer values.
+ * A changeable rate of double values.
  *
  * @author Daniel Bergqvist (C) 2025
  */
@@ -15,8 +15,8 @@ public class ChangeableDoubleRate extends DoubleRate implements RateSetter {
 
     /** {@inheritDoc} */
     @Override
-    public void setRate(double rate) throws UnsupportedOperationException {
-        this._rate = (int) Math.round(rate);
+    public void setRate(double rate) {
+        this._rate = rate;
     }
 
 }

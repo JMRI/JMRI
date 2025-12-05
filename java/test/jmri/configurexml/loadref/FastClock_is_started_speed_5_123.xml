@@ -7,6 +7,17 @@
     <test>7</test>
     <modifier>plus</modifier>
   </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <InternalDateTime class="jmri.time.implementation.configurexml.InternalDateTimeXml">
+      <systemName>IUInternalTimeProvider</systemName>
+      <isRunning>yes</isRunning>
+      <rate>5.123</rate>
+      <localDateTime>2025-12-03T17:39:29</localDateTime>
+    </InternalDateTime>
+    <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
+      <systemName>IUSystemClock</systemName>
+    </InternalDateTime>
+  </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
@@ -24,23 +35,22 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Dec 03 17:39:29 CET 2025" rate="1.0" startrate="5.123" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Wed Dec 03 17:51:16 CET 2025</date>
-      <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_started_speed_1_00.xml</filename>
+      <date>Wed Dec 03 23:04:15 CET 2025</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/java/test/jmri/configurexml/load/FastClock_is_started_speed_5_123.xml</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Wed Dec 03 17:51:00 CET 2025</date>
-      <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_started_speed_1_00.xml</filename>
+      <date>Wed Dec 03 23:04:16 CET 2025</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/java/test/jmri/configurexml/load/FastClock_is_started_speed_5_123.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Wed Dec 03 17:51:56 CET 2025</date>
-      <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_started_speed_5_123.xml</filename>
+      <date>Wed Dec 03 23:04:16 CET 2025</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/FastClock_is_started_speed_5_123.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.13.7plus+daniel+2025-12-03T16:51:03Z+R8c76183 on Wed Dec 03 17:51:56 CET 2025-->
+  <!--Written by JMRI version 5.13.7plus+daniel+2025-12-03T22:03:40Z+R67ebdea on Wed Dec 03 23:04:16 CET 2025-->
 </layout-config>
