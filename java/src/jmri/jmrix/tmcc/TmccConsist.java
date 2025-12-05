@@ -1,7 +1,5 @@
 package jmri.jmrix.tmcc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import javax.annotation.Nonnull;
 
 import jmri.Consist;
