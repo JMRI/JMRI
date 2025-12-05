@@ -346,32 +346,12 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
         log.info("Deactivating consist {}", consistID);
         active = false;
-        // Clear TMCC message
-        jmri.util.ThreadingUtil.runOnLayoutEventually(() ->
-            String.valueOf(consistAddress.getNumber())); //, ""));
-
-    }
-
-    @SuppressFBWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "false positive")
-    private String getConsistMakeup() {
-
-        String consistMakeup = "";
-
-        for (DccLocoAddress  address : consistDir.keySet()) {
-            consistMakeup = consistMakeup.concat(consistDir.get(address) ? "":"-")
-                .concat(String.valueOf(address.getNumber())).concat(" ");
-        }
-        return consistMakeup.trim();
-
     }
 
     /**
      * Publish the consist details to the controller
      */
     private void publish(){
-        // Send TMCC message
-        jmri.util.ThreadingUtil.runOnLayout(() ->
-            String.valueOf(consistAddress.getNumber())); //, getConsistMakeup()));
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TmccConsist.class);

@@ -100,11 +100,8 @@ public class TmccConsistManager extends AbstractConsistManager {
     /**
      * Read the new TMCC Consist address.
      */
-    LocoAddress lastSeenAddress = null;
-
     @Override
     public Consist getConsist(LocoAddress address) {
-    lastSeenAddress = address;
     return super.getConsist(address);
     }
 
