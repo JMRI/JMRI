@@ -153,8 +153,10 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
         // TMCC1 Consist Build
         if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1) {
+            SerialMessage c = new SerialMessage();
             SerialMessage m = new SerialMessage();
             SerialMessage n = new SerialMessage();
+            c.setOpCode(0xFE);
             m.setOpCode(0xFE);
             n.setOpCode(0xFE);
 
@@ -165,14 +167,17 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add head loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Head Unit/Reverse Direction
+                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
                         n.putAsWord(0x0025 + locoAddress.getNumber() * 128);
                     } else {
                         // TMCC1 - Assign as Head Unit/Forward Direction
+                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
                         n.putAsWord(0x0021 + locoAddress.getNumber() * 128);
                     }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(c, null);
                 tc.sendSerialMessage(m, null);
                 tc.sendSerialMessage(n, null);
 
@@ -181,14 +186,17 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add rear loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Rear Unit/Reverse Direction
+                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
                         n.putAsWord(0x0027 + locoAddress.getNumber() * 128);
                     } else {
                         // TMCC1 - Assign as Rear Unit/Forward Direction
+                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
                         n.putAsWord(0x0023 + locoAddress.getNumber() * 128);
                     }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(c, null);
                 tc.sendSerialMessage(m, null);
                 tc.sendSerialMessage(n, null);
 
@@ -197,14 +205,17 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add mid loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Mid Unit/Reverse Direction
+                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
                         n.putAsWord(0x0026 + locoAddress.getNumber() * 128);
                     } else {
                         // TMCC1 - Assign as Mid Unit/Forward Direction
+                        c.putAsWord(0x0030 + (locoAddress.getNumber() * 128)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0030 + (locoAddress.getNumber() * 128) + consistAddress.getNumber());
                         n.putAsWord(0x0022 + locoAddress.getNumber() * 128);
                     }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(c, null);
                 tc.sendSerialMessage(m, null);
                 tc.sendSerialMessage(n, null);
 
@@ -220,8 +231,10 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
         // TMCC2 Consist Build
         if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC2) {
+            SerialMessage c = new SerialMessage();
             SerialMessage m = new SerialMessage();
             SerialMessage n = new SerialMessage();
+            c.setOpCode(0xF8);
             m.setOpCode(0xF8);
             n.setOpCode(0xF8);
 
@@ -232,14 +245,17 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add head loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Head Unit/Reverse Direction
+                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
                         n.putAsWord(0x0123 + locoAddress.getNumber() * 512);
                     } else {
                         // TMCC1 - Assign as Head Unit/Forward Direction
+                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
                         n.putAsWord(0x0122 + locoAddress.getNumber() * 512);
                     }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(c, null);
                 tc.sendSerialMessage(m, null);
                 tc.sendSerialMessage(n, null);
 
@@ -248,14 +264,17 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add rear loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Rear Unit/Reverse Direction
+                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
                         n.putAsWord(0x0127 + locoAddress.getNumber() * 512);
                     } else {
                         // TMCC1 - Assign as Rear Unit/Forward Direction
+                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
                         n.putAsWord(0x0126 + locoAddress.getNumber() * 512);
                     }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(c, null);
                 tc.sendSerialMessage(m, null);
                 tc.sendSerialMessage(n, null);
 
@@ -264,14 +283,17 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                     // add mid loco
                     if (!directionNormal) {
                         // TMCC1 - Assign as Mid Unit/Reverse Direction
+                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
                         n.putAsWord(0x0125 + locoAddress.getNumber() * 512);
                     } else {
                         // TMCC1 - Assign as Mid Unit/Forward Direction
+                        c.putAsWord(0x0130 + (locoAddress.getNumber() * 512)); // Clear residual consist ID from locomotive
                         m.putAsWord(0x0130 + (locoAddress.getNumber() * 512) + consistAddress.getNumber());
                         n.putAsWord(0x0124 + locoAddress.getNumber() * 512);
                     }
                 // send to command station (send twice is set, but number of sends may need to be adjusted depending on efficiency)
+                tc.sendSerialMessage(c, null);
                 tc.sendSerialMessage(m, null);
                 tc.sendSerialMessage(n, null);
 
@@ -284,7 +306,6 @@ public class TmccConsist extends jmri.implementation.DccConsist {
                 log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
             }
         }
-
     }
 
     /**
@@ -309,22 +330,39 @@ public class TmccConsist extends jmri.implementation.DccConsist {
     }
 
     /**
-     * Remove a Locomotive from this Consist.
-     *
+     * Remove a Locomotive from this Consist
+     * Clear Consist ID from Locomotive
      * @param locoAddress is the Locomotive address to add to the locomotive
      */
     @Override
     public synchronized void remove(DccLocoAddress locoAddress) {
         log.debug("Remove from consist address {}", locoAddress);
 
+        // TMCC1 - Clear Consist ID from Locomotive
+        if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC1) {
+            SerialMessage c = new SerialMessage();
+            c.setOpCode(0xFE);
+            c.putAsWord(0x0030 + (locoAddress.getNumber() * 128));
+            tc.sendSerialMessage(c, null);
+        }
+
+        // TMCC2 - Clear Consist ID from Locomotive
+        if (locoAddress.getProtocol() == LocoAddress.Protocol.TMCC2) {
+            SerialMessage c = new SerialMessage();
+            c.setOpCode(0xF8);
+            c.putAsWord(0x0130 + (locoAddress.getNumber() * 512));
+            tc.sendSerialMessage(c, null);
+        }
+
+        // Remove Locomotive from this Consist
         if (consistType == CS_CONSIST) {
             removeFromConsistList(locoAddress);
             if (active) {
                 publish();
             }
         } else {
-            log.error("Consist Type Not Supported");
-            notifyConsistListeners(locoAddress, ConsistListener.NotImplemented);
+                log.error("Consist Type Not Supported");
+                notifyConsistListeners(locoAddress, ConsistListener.NotImplemented);
         }
     }
 
