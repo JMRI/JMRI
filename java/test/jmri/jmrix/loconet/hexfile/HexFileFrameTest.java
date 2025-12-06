@@ -38,7 +38,8 @@ public class HexFileFrameTest {
        });
 
         p.dispose();
-        f.sourceThread.stop();
+        p.close();
+        f.sourceThread.interrupt();
         f.sourceThread.join();
         f.packets.terminateThreads();
         f.dispose();
