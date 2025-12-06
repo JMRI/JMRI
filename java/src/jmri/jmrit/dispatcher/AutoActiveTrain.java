@@ -96,7 +96,7 @@ public class AutoActiveTrain implements ThrottleListener {
     private int _currentRampRate = RAMP_NONE; // current Ramp Rate
     private boolean _pausingActive = false;   // true if train pausing thread is active
     private DispatcherFrame _dispatcher;
-
+    
     // persistent instance variables (saved with train info)
     private int _rampRate = RAMP_NONE; // default Ramp Rate
     private float _speedFactor = 1.0f; // default speed factor
@@ -137,12 +137,22 @@ public class AutoActiveTrain implements ThrottleListener {
         _autoEngineer.setIsForward(set);
     }
 
+    /**
+     * Manually set the train throttle Function value.
+     * Value passed through to the Throttle.
+     * @param functionNum the function number.
+     * @param isSet true is on, false is off.
+     */
+    public void setFunction(int functionNum, boolean isSet) {
+        _autoEngineer.setFunction(functionNum, isSet);
+    }
+
     public synchronized float getTargetSpeed() {
         return _autoEngineer.getTargetSpeed();
     }
 
     public synchronized void setTargetSpeedByPass(float speed) {
-         _autoEngineer.setTargetSpeed(-1.0f, speed);
+        _autoEngineer.setTargetSpeed(-1.0f, speed);
     }
 
     public synchronized void setTargetSpeedByPass(float distance, float speed) {
@@ -731,6 +741,10 @@ public class AutoActiveTrain implements ThrottleListener {
                 } else {
                     setStopNow();
                 }
+            } else {
+                if (!isStopping() && _dispatcher.getUseOccupiedTrackSpeed()) {
+                    setSpeedBySignal();
+                }
             }
         }
         _autoTrainAction.handleBlockStateChange(as, b);
@@ -1012,17 +1026,24 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
+    // Criteria for being able to set or get a speed.
+    protected boolean canSpeedBeSetOrChecked() {
+        if (_pausingActive || getAutoEngineer() == null ||
+                ((_activeTrain.getStatus() != ActiveTrain.RUNNING) &&
+                        (_activeTrain.getStatus() != ActiveTrain.WAITING) &&
+                        !_activeTrain.getStarted()) ||
+                (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
+            log.debug("{}:Train is not currently eligible for settingspeed or checking ghosts",_activeTrain.getActiveTrainName());
+            return false;
+        }
+        return true;
+    }
+
     // called by above or when resuming after stopped action
     protected synchronized void setSpeedBySignal() {
         log.trace("Set Speed by Signal");
-        if (_pausingActive
-                || ((_activeTrain.getStatus() != ActiveTrain.RUNNING)
-                    && (_activeTrain.getStatus() != ActiveTrain.WAITING)
-                    && !_activeTrain.getStarted())
-                || (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
-            // train is pausing or not RUNNING or WAITING or started and in AUTOMATIC mode
-            //   don't set speed based on controlling signal
-            log.trace("Skip Set Speed By Signal");
+        if (!canSpeedBeSetOrChecked()) {
+            log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
             return;
         }
         // only bother to check signal if the next allocation is ours.
@@ -1053,6 +1074,10 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private void checkForGhost() {
+        if (!canSpeedBeSetOrChecked()) {
+            log.trace("[{}]:cannot check for ghost.",getActiveTrain().getActiveTrainName());
+            return;
+        }
         if ( !(getTargetSpeed() == 0.0f || isStopping())
                 && _nextBlock != null
                 && _currentBlock != null
@@ -1088,6 +1113,11 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private void setSpeedBySectionsAllocated() {
+        if (!canSpeedBeSetOrChecked()) {
+            log.trace("[{}]:cannot set speed.",getActiveTrain().getActiveTrainName());
+            return;
+        }
+
         if (_stoppingByBlockOccupancy && (_stoppingBlock != null && _stoppingBlock.getState() == Block.UNOCCUPIED)) {
             // we are awaiting a delayed stop
             return;
@@ -1116,16 +1146,8 @@ public class AutoActiveTrain implements ThrottleListener {
                     // .getSpeed(_dispatcher.getStoppingSpeedName());
                     _activeTrain.setStatus(ActiveTrain.RUNNING);
             }
-            // get slowest speed of any entered and not released section.
-            // This then covers off HEADONLY.
-            for (AllocatedSection asE : _activeTrain.getAllocatedSectionList()) {
-                if (asE.getEntered()) {
-                    for (Block b : asE.getSection().getBlockList()) {
-                        if (getSpeedFromBlock(b) < newSpeed) {
-                            newSpeed = getSpeedFromBlock(b);
-                        }
-                    }
-                }
+            if (_dispatcher.getUseOccupiedTrackSpeed()) {
+                newSpeed = getMinSpeedOfOccupiedBlocks(newSpeed);
             }
             // see if needs to slow for next block.
             if (newSpeed > 0 && _nextBlock != null) {
@@ -1143,6 +1165,32 @@ public class AutoActiveTrain implements ThrottleListener {
             waitingOnAllocation = true;
             stopInCurrentSection(NO_TASK);
         }
+    }
+
+    // Check for speed of incoming blocks.
+    // in and out speed in is throttle percent.
+    private float getMinSpeedOfOccupiedBlocks(float speed) {
+        if (!_dispatcher.getUseOccupiedTrackSpeed()) {
+            return speed;
+        }
+        // get slowest speed of any entered and still occupied
+        // or entered but not released (HEADONLY / HEADANDTAIL
+        float newSpeed = speed;
+        for (AllocatedSection asE : _activeTrain.getAllocatedSectionList()) {
+            if (asE.getEntered()) {
+                for (Block b : asE.getSection().getBlockList()) {
+                    if (b.getState() == Block.OCCUPIED
+                            || _activeTrain.getTrainDetection() != TrainDetection.TRAINDETECTION_WHOLETRAIN ) {
+                        if (getSpeedFromBlock(b) < newSpeed) {
+                            newSpeed = getSpeedFromBlock(b);
+                        }
+                    }
+                }
+            }
+        }
+        log.trace("{}: getMinSpeedOfOccupiedBlocks Org Speed [{}] New [{}]",
+                _activeTrain.getActiveTrainName(), speed, newSpeed);
+        return newSpeed;
     }
 
     /**
@@ -1239,7 +1287,10 @@ public class AutoActiveTrain implements ThrottleListener {
                     _activeTrain.getTrainName(),
                     _controllingSignalMast.getDisplayName(USERSYS), displayedAspect, aspectSpeedStr, aspectSpeed,
                     smDestinationName, (int) smLogicSpeed);
-
+            // Adjust for occupied blocks.
+            if (_dispatcher.getUseOccupiedTrackSpeed()) {
+                speed = getMinSpeedOfOccupiedBlocks(speed);
+            }
             if (speed > -1.0f) {
                 /* We should work on the basis that the speed required in the current block/section is governed by the signalmast
                  that we have passed and not the one we are approaching when we are accelerating.

@@ -83,6 +83,28 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    /**
+     * Generate CAN BOOT command (0xB1).
+     * <p>
+     * This command is used to invoke the bootloader update sequence
+     * for Märklin devices. According to German language forum research,
+     * this is part of the software/bootloader command range used for
+     * firmware updates and device initialization.
+     * 
+     * @return MarklinMessage containing the CAN BOOT command
+     * @see <a href="https://www.stummiforum.de/t122854f7-M-rklin-CAN-Protokoll-x-B-commands-updates.html">Märklin CAN Protokoll 0x1B commands documentation</a>
+     */
+    public static MarklinMessage getCanBoot() {
+        MarklinMessage m = new MarklinMessage();
+        m.setElement(0, (0xB1 >> 7) & 0xFF);  // Command 0xB1 high bits
+        m.setElement(1, (0xB1 << 1) & 0xFF);  // Command 0xB1 low bits
+        m.setElement(2, MarklinConstants.HASHBYTE1 & 0xFF);
+        m.setElement(3, MarklinConstants.HASHBYTE2 & 0xFF);
+        m.setElement(4, 0x00 & 0xFF); // DLC = 0 for basic boot command
+        // Elements 5-12 are left as default 0x00 for this command
+        return m;
+    }
+
     //static public MarklinMessage get
     public static MarklinMessage getSetTurnout(int addr, int state, int power) {
         MarklinMessage m = new MarklinMessage();

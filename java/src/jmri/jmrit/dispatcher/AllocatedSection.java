@@ -139,7 +139,7 @@ public class AllocatedSection {
                 }
             }
         }
-        log.info("Remaining length in section[{}] is [{}]",mSection.getDisplayName(), length);
+        log.trace("Remaining length in section[{}] is [{}]",mSection.getDisplayName(), length);
         return length;
     }
 

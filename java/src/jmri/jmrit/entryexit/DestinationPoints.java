@@ -496,7 +496,9 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                             }
 
                             //Remove the first block as it is our start block
-                            routeDetails.remove(0);
+                            if (routeDetails != null && !routeDetails.isEmpty()) {
+                                routeDetails.remove(0);
+                            }
 
                             synchronized (this) {
                                 releaseMast(smSource, turnoutSettings);
@@ -1005,7 +1007,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 return;
             } else {
                 LayoutBlock startlBlock = src.getStart();
-                
+
                 List<BestPath> pathList = new ArrayList<>(2);
                 LayoutBlock protectLBlock;
                 LayoutBlock destinationLBlock;
@@ -1166,14 +1168,19 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     setActiveEntryExit(true, reverseDirection);
                 }
 
-                log.debug("[activeBean] Start setRoute thread, dp = {}", getUserName());
-                ThreadingUtil.newThread(() -> {
-                    try {
-                        setRoute(true);
-                    } catch (Exception e) {
-                        log.error("[activeBean] setRoute thread exception: {}", e.getMessage());
-                    }
-                }).start();
+                if (manager.isSkipGuiFix()) {
+                    log.debug("[activeBean] Start setRoute without thread, dp = {}", getUserName());
+                    setRoute(true);
+                } else {
+                    log.debug("[activeBean] Start setRoute thread, dp = {}", getUserName());
+                    ThreadingUtil.newThread(() -> {
+                        try {
+                            setRoute(true);
+                        } catch (Exception e) {
+                            log.error("[activeBean] setRoute thread exception: {}", e.getMessage());
+                        }
+                    }, "NX set route thread").start();
+                }
             }
         }
     }

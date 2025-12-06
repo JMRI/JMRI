@@ -1963,7 +1963,7 @@ public class Track extends PropertyChangeSupport {
             return SCHEDULE + " ERROR"; // NOI18N
         }
         if (getScheduleMode() == SEQUENTIAL) {
-            return getSchedule().checkScheduleItem(si, car, this);
+            return getSchedule().checkScheduleItem(si, car, this, true);
         }
         // schedule in is match mode search entire schedule for a match
         return getSchedule().searchSchedule(car, this);
@@ -1971,23 +1971,14 @@ public class Track extends PropertyChangeSupport {
 
     /**
      * Check to see if track has schedule and if it does will schedule the next
-     * item in the list. Load the car with the next schedule load if one exists.
+     * item in the list. Loads the car with the schedule id.
      * 
      * @param car The Car to be modified.
      * @return Track.OKAY or Track.SCHEDULE
      */
     public String scheduleNext(Car car) {
-        // clean up the car's final destination if sent to that destination
-        if (car.getDestination() != null &&
-                car.getDestination().equals(car.getFinalDestination()) &&
-                car.getDestinationTrack() != null &&
-                (car.getDestinationTrack().equals(car.getFinalDestinationTrack()) ||
-                        car.getFinalDestinationTrack() == null)) {
-            car.setFinalDestination(null);
-            car.setFinalDestinationTrack(null);
-        }
         // check for schedule, only spurs can have a schedule
-        if (getScheduleId().equals(NONE) || getSchedule() == null) {
+        if (getSchedule() == null) {
             return OKAY;
         }
         // is car part of a kernel?
@@ -1995,6 +1986,7 @@ public class Track extends PropertyChangeSupport {
             log.debug("Car ({}) is part of kernel ({}) not lead", car.toString(), car.getKernelName());
             return OKAY;
         }
+        // has the car already been assigned to this destination?
         if (!car.getScheduleItemId().equals(Car.NONE)) {
             log.debug("Car ({}) has schedule item id ({})", car.toString(), car.getScheduleItemId());
             ScheduleItem si = car.getScheduleItem(this);
@@ -2011,18 +2003,12 @@ public class Track extends PropertyChangeSupport {
             return Bundle.getMessage("matchMessage", SCHEDULE, getScheduleName(),
                     getSchedule().hasRandomItem() ? Bundle.getMessage("Random") : "");
         }
+        // found a match or in sequential mode
         ScheduleItem currentSi = getCurrentScheduleItem();
         log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),
                 getScheduleItemId(), getScheduleMode(), getScheduleModeName()); // NOI18N
         if (currentSi != null &&
-                (currentSi.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) ||
-                        InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId()
-                                .equals(currentSi.getSetoutTrainScheduleId())) &&
-                car.getTypeName().equals(currentSi.getTypeName()) &&
-                (currentSi.getRoadName().equals(ScheduleItem.NONE) ||
-                        car.getRoadName().equals(currentSi.getRoadName())) &&
-                (currentSi.getReceiveLoadName().equals(ScheduleItem.NONE) ||
-                        car.getLoadName().equals(currentSi.getReceiveLoadName()))) {
+                getSchedule().checkScheduleItem(currentSi, car, this, false).equals(OKAY)) {
             car.setScheduleItemId(currentSi.getId());
             // bump hit count for this schedule item
             currentSi.setHits(currentSi.getHits() + 1);

@@ -2,10 +2,13 @@ package jmri.jmrix.openlcb.configurexml;
 
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 import jmri.configurexml.LoadAndStoreTestBase;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Stream;
+
+import jmri.util.JUnitAppender;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -38,6 +41,12 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     @MethodSource("data")
     public void loadAndStoreTest(File file, boolean pass) throws Exception {
         super.loadLoadStoreFileCheck(file);
+        // IH1 already suppressed in super test
+        JUnitAppender.suppressErrorMessage("systemName is already registered: IH2");
+        JUnitAppender.suppressErrorMessage("systemName is already registered: IH3");
+        JUnitAppender.suppressErrorMessage("systemName is already registered: IH4");
+        JUnitAppender.suppressErrorMessage("systemName is already registered: IH5");
+
     }
 
     public LoadAndStoreTest() {

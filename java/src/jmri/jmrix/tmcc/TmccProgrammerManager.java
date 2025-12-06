@@ -13,6 +13,8 @@ import jmri.ProgrammingMode;
  *
  * @see jmri.managers.DefaultProgrammerManager
  * @author Bob Jacobsen Copyright (C) 2002, 2025
+ * with edits/additions by
+ * @author Timothy Jump Copyright (C) 2025
  */
 public class TmccProgrammerManager extends DefaultProgrammerManager {
 
@@ -26,6 +28,9 @@ public class TmccProgrammerManager extends DefaultProgrammerManager {
     static final ProgrammingMode TMCCMODE1_ENGID = new ProgrammingMode("TMCCMODE1_ENGID", Bundle.getMessage("TMCCMODE1_ENGID"));
     static final ProgrammingMode TMCCMODE2_ENGID = new ProgrammingMode("TMCCMODE2_ENGID", Bundle.getMessage("TMCCMODE2_ENGID"));
     
+    static final ProgrammingMode TMCCMODE1_TRKID = new ProgrammingMode("TMCCMODE1_TRKID", Bundle.getMessage("TMCCMODE1_TRKID"));
+    static final ProgrammingMode TMCCMODE2_TRKID = new ProgrammingMode("TMCCMODE2_TRKID", Bundle.getMessage("TMCCMODE2_TRKID"));
+
     static final ProgrammingMode TMCCMODE1_SWID = new ProgrammingMode("TMCCMODE1_SWID", Bundle.getMessage("TMCCMODE1_SWID"));
     static final ProgrammingMode TMCCMODE1_ACCID = new ProgrammingMode("TMCCMODE1_ACCID", Bundle.getMessage("TMCCMODE1_ACCID"));
 

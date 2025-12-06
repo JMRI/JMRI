@@ -231,7 +231,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Fix bug, PR4 Stand-alone Loconet</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -424,6 +424,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
+<<<<<<< HEAD
             <li>Fixed a problem causing the starting value when doing
                 CV reads to erroneously be zero.</li>
             <li>When opening a roster entry with a large decoder definition,
@@ -436,7 +437,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Defer calling "loadAtStartup" until the layout data file loading is done and
+             layout block paths have been initialized.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -489,7 +491,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li>When a car arrives at a spur with a schedule, the car's final destination now changes when the car's load status changes.</li>
+            <li></li>
         </ul>
 
    <h3>Panel Editor</h3>

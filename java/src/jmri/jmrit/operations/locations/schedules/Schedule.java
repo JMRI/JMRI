@@ -346,16 +346,13 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 InstanceManager.getDefault(TrainScheduleManager.class)
                         .getScheduleById(si.getSetoutTrainScheduleId()) == null) {
             status = Bundle.getMessage("NotValid", si.getSetoutTrainScheduleId());
-        }
-        else if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE) &&
+        } else if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE) &&
                 InstanceManager.getDefault(TrainScheduleManager.class)
                         .getScheduleById(si.getPickupTrainScheduleId()) == null) {
             status = Bundle.getMessage("NotValid", si.getPickupTrainScheduleId());
-        }
-        else if (!track.getLocation().acceptsTypeName(si.getTypeName())) {
+        } else if (!track.getLocation().acceptsTypeName(si.getTypeName())) {
             status = Bundle.getMessage("NotValid", si.getTypeName());
-        }
-        else if (!track.isTypeNameAccepted(si.getTypeName())) {
+        } else if (!track.isTypeNameAccepted(si.getTypeName())) {
             status = Bundle.getMessage("NotValid", si.getTypeName());
         }
         // check roads, accepted by track, valid road, and there's at least
@@ -373,8 +370,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                         !InstanceManager.getDefault(CarLoads.class).getNames(si.getTypeName())
                                 .contains(si.getReceiveLoadName()))) {
             status = Bundle.getMessage("NotValid", si.getReceiveLoadName());
-        }
-        else if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
+        } else if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
                 !InstanceManager.getDefault(CarLoads.class).getNames(si.getTypeName()).contains(si.getShipLoadName())) {
             status = Bundle.getMessage("NotValid", si.getShipLoadName());
         }
@@ -391,18 +387,15 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 status = Bundle.getMessage("NotValid",
                         si.getDestinationTrack() + " (" + Bundle.getMessage("Track") + ")");
 
-            }
-            else if (!si.getDestinationTrack().isTypeNameAccepted(si.getTypeName())) {
+            } else if (!si.getDestinationTrack().isTypeNameAccepted(si.getTypeName())) {
                 status = Bundle.getMessage("NotValid",
                         si.getDestinationTrack() + " (" + Bundle.getMessage("Type") + ")");
 
-            }
-            else if (!si.getRoadName().equals(ScheduleItem.NONE) &&
+            } else if (!si.getRoadName().equals(ScheduleItem.NONE) &&
                     !si.getDestinationTrack().isRoadNameAccepted(si.getRoadName())) {
                 status = Bundle.getMessage("NotValid",
                         si.getDestinationTrack() + " (" + Bundle.getMessage("Road") + ")");
-            }
-            else if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
+            } else if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
                     !si.getDestinationTrack().isLoadNameAndCarTypeAccepted(si.getShipLoadName(),
                             si.getTypeName())) {
                 status = Bundle.getMessage("NotValid",
@@ -427,7 +420,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         if (!car.getScheduleItemId().equals(Track.NONE)) {
             ScheduleItem si = getItemById(car.getScheduleItemId());
             if (si != null) {
-                String status = checkScheduleItem(si, car, track);
+                String status = checkScheduleItem(si, car, track, false);
                 if (status.equals(Track.OKAY)) {
                     track.setScheduleItemId(si.getId());
                     return Track.OKAY;
@@ -449,7 +442,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                         si.getTypeName(), si.getReceiveLoadName(), si.getDestinationName(),
                         si.getDestinationTrackName()); // NOI18N
             }
-            String status = checkScheduleItem(si, car, track);
+            String status = checkScheduleItem(si, car, track, true);
             if (status.equals(Track.OKAY)) {
                 log.debug("Found item match ({}) car ({}) type ({}) load ({}) ship ({}) destination ({}, {})",
                         si.getId(), car.toString(), car.getTypeName(), si.getReceiveLoadName(), si.getShipLoadName(),
@@ -471,7 +464,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 hasRandomItem() ? Bundle.getMessage("Random") : "");
     }
 
-    public String checkScheduleItem(ScheduleItem si, Car car, Track track) {
+    public String checkScheduleItem(ScheduleItem si, Car car, Track track, boolean isRandomChecked) {
         // if car is already assigned to this schedule item allow it to be
         // dropped off on the wrong day (car arrived late)
         if (!car.getScheduleItemId().equals(si.getId()) &&
@@ -501,12 +494,13 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         }
         // don't try the random feature if car is already assigned to this
         // schedule item
-        if (car.getFinalDestinationTrack() != track &&
+        if (isRandomChecked &&
+                car.getFinalDestinationTrack() != track &&
                 !si.getRandom().equals(ScheduleItem.NONE) &&
-                !car.getScheduleItemId().equals(si.getId())) {
-            if (!si.doRandom()) {
-                return Bundle.getMessage("scheduleRandom", Track.SCHEDULE, getName(), si.getId(), si.getRandom(), si.getCalculatedRandom());
-            }
+                !car.getScheduleItemId().equals(si.getId()) &&
+                !si.doRandom()) {
+            return Bundle.getMessage("scheduleRandom", Track.SCHEDULE, getName(), si.getId(), si.getRandom(),
+                    si.getCalculatedRandom());
         }
         return Track.OKAY;
     }

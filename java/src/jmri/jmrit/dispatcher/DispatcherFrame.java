@@ -127,17 +127,15 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(new DispatcherShutDownTask("Dispatch Shutdown"));
     }
 
-    /***
+    /**
      *  reads thru all the traininfo files found in the dispatcher directory
-     *  and loads the ones flagged as "loadAtStartup"
+     *  and loads the ones flagged as "loadAtStartup".
+     *  This is called as needed after the completion of file loading.
      */
     public void loadAtStartup() {
         log.debug("Loading saved trains flagged as LoadAtStartup");
         TrainInfoFile tif = new TrainInfoFile();
         String[] names = tif.getTrainInfoFileNames();
-        log.debug("initializing block paths early"); //TODO: figure out how to prevent the "regular" init
-        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class)
-                .initializeLayoutBlockPaths();
         if (names.length > 0) {
             for (int i = 0; i < names.length; i++) {
                 TrainInfo info;
@@ -521,6 +519,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _AutoRelease = false;
     private boolean _AutoTurnouts = false;
     private boolean _TrustKnownTurnouts = false;
+    private boolean _UseOccupiedTrackSpeed = false;
     private boolean _useTurnoutConnectionDelay = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
@@ -3025,6 +3024,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setTrustKnownTurnouts(boolean set) {
         _TrustKnownTurnouts = set;
+    }
+
+    protected boolean getUseOccupiedTrackSpeed() {
+        return _UseOccupiedTrackSpeed;
+    }
+
+    protected void setUseOccupiedTrackSpeed(boolean set) {
+        _UseOccupiedTrackSpeed = set;
     }
 
     protected boolean getUseTurnoutConnectionDelay() {

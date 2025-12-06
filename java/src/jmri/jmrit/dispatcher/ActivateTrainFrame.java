@@ -48,6 +48,7 @@ import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.jmrit.roster.swing.RosterGroupComboBox;
@@ -1089,6 +1090,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         stopBySpeedProfileCheckBox.setEnabled(b);
         stopBySpeedProfileAdjustLabel.setEnabled(b);
         stopBySpeedProfileAdjustSpinner.setEnabled(b);
+        minReliableOperatingScaleSpeedLabel.setVisible(b);
         if (!b) {
             useSpeedProfileCheckBox.setSelected(false);
             stopBySpeedProfileCheckBox.setSelected(false);
@@ -1185,7 +1187,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                   return new Dimension(super.getPreferredSize().width,
                       super.getPreferredScrollableViewportSize().height);
                 }
-              };
+            };
             DefaultTableModel tm = new DefaultTableModel(
                     new Object[]{
                             Bundle.getMessage("FileNameColumnTitle"),
@@ -1224,6 +1226,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             }
             //jp.setPreferredSize(table.getPreferredSize());
             jp.add(table);
+            table.setAutoCreateRowSorter(true);
             JScrollPane sp = new JScrollPane(table,
                             ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
                             ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -1237,7 +1240,7 @@ public class ActivateTrainFrame extends JmriJFrame {
             if (table.getSelectedRow() < 0) {
                 return;
             }
-            String selName = (String)table.getModel().getValueAt(table.getSelectedRow(),0);
+            String selName = (String)table.getModel().getValueAt( table.getRowSorter().convertRowIndexToModel(table.getSelectedRow()),0);
             if ((selName == null) || (selName.isEmpty())) {
                 return;
             }
@@ -1710,6 +1713,7 @@ public class ActivateTrainFrame extends JmriJFrame {
     private final JSpinner speedFactorSpinner = new JSpinner();
     private final JLabel minReliableOperatingSpeedLabel = new JLabel(Bundle.getMessage("MinReliableOperatingSpeedLabel"));
     private final JSpinner minReliableOperatingSpeedSpinner = new JSpinner();
+    private final JLabel minReliableOperatingScaleSpeedLabel = new JLabel();
     private final JLabel maxSpeedLabel = new JLabel(Bundle.getMessage("MaxSpeedLabel"));
     private final JSpinner maxSpeedSpinner = new JSpinner();
     private final JPanel pa2 = new JPanel();
@@ -1783,6 +1787,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         minReliableOperatingSpeedSpinner.setEditor(new JSpinner.NumberEditor(minReliableOperatingSpeedSpinner, "# %"));
         pa1.add(minReliableOperatingSpeedSpinner);
         minReliableOperatingSpeedSpinner.setToolTipText(Bundle.getMessage("MinReliableOperatingSpeedHint"));
+        minReliableOperatingSpeedSpinner.addChangeListener( e -> handleMinReliableOperatingSpeedUpdate());
+        pa1.add(minReliableOperatingScaleSpeedLabel);
         initiatePane.add(pa1);
         pa2.setLayout(new FlowLayout());
         pa2.add(rampRateLabel);
@@ -1837,6 +1843,18 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa5_FNumbers.add(fNumberHornSpinner);
         initiatePane.add(pa5_FNumbers);
         showHideAutoRunItems(autoRunBox.isSelected());   // initialize with auto run items hidden
+    }
+
+    private void handleMinReliableOperatingSpeedUpdate() {
+        float mROS = (float)minReliableOperatingSpeedSpinner.getValue();
+        minReliableOperatingScaleSpeedLabel.setText("");
+        if (useSpeedProfileCheckBox.isEnabled()) {
+            RosterEntry re = (RosterEntry) rosterComboBox.getRosterEntryComboBox().getSelectedItem();
+            if (re != null && re.getSpeedProfile() != null &&  re.getSpeedProfile().getProfileSize() > 0) {
+                float mms = re.getSpeedProfile().getSpeed(mROS, true);
+                minReliableOperatingScaleSpeedLabel.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(mms));
+            }
+        }
     }
 
     private void handlemaxTrainLengthChangeUnitsLength() {

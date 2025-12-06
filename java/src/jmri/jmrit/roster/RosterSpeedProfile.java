@@ -411,7 +411,7 @@ public class RosterSpeedProfile {
                 return speed;
             }
         }
-        log.debug("no exact match forward for {}", iSpeedStep);
+        log.trace("no exact match forward for {}", iSpeedStep);
         float lower = 0.0f;
         float higher = 0.0f;
         int highStep = iSpeedStep;
@@ -437,7 +437,7 @@ public class RosterSpeedProfile {
             }
             entry = speeds.lowerEntry(lowStep);
         }
-        log.debug("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}",
+        log.trace("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}",
                 lowStep, lower, highStep, higher, iSpeedStep);
         if (lower <= 0.0f) {      // nothing lower
             if (nothingHigher) {
@@ -474,7 +474,7 @@ public class RosterSpeedProfile {
                 return speed;
             }
         }
-        log.debug("no exact match reverse for {}", iSpeedStep);
+        log.trace("no exact match reverse for {}", iSpeedStep);
         float lower = 0.0f;
         float higher = 0.0f;
         int highStep = iSpeedStep;
@@ -500,7 +500,7 @@ public class RosterSpeedProfile {
             }
             entry = speeds.lowerEntry(lowStep);
         }
-        log.debug("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}",
+        log.trace("lowStep={}, lower={} highStep={} higher={} for iSpeedStep={}",
                 lowStep, lower, highStep, higher, iSpeedStep);
         if (lower <= 0.0f) {      // nothing lower
             if (nothingHigher) {
@@ -736,7 +736,7 @@ public class RosterSpeedProfile {
      */
     public void changeLocoSpeed(DccThrottle t, float distance, float requestedSpeed) {
         float speed = 0.0f;
-        log.debug("Call to change speed over specific distance float {} distance {}", requestedSpeed, distance);
+        log.debug("Call to change speed over specific distance: speed {} distance {}", requestedSpeed, distance);
         if (requestedSpeed  > maxOperatingSpeed) {
             speed = maxOperatingSpeed;
         } else {
@@ -755,12 +755,10 @@ public class RosterSpeedProfile {
             cancelSpeedChange();
         }
         _throttle = t;
-
-        log.debug("Desired Speed Step {} asked for {}", desiredSpeedStep, speed);
         desiredSpeedStep = speed;
 
-        log.debug("calculated current step {} required {} current {}",
-            _throttle.getSpeedSetting(), speed, _throttle.getSpeedSetting());
+        log.debug("Speed current {} required {} ",
+                _throttle.getSpeedSetting(), speed);
         if (_throttle.getSpeedSetting() < speed) {
             log.debug("Going for acceleration");
         } else {
@@ -936,12 +934,11 @@ public class RosterSpeedProfile {
                 lastStep=true;
             }
             calculatedStepInc=Math.abs(calculatedStepInc);
-            log.debug("per interval {}", timePerStep);
+            log.debug("per interval {}, increase {} lastStep {}", timePerStep, increaseSpeed,lastStep);
             //Calculate the new speed setting
             if (increaseSpeed) {
                 //if (calculatingStep + calculatedStepInc == desiredSpeedStep) {
                 if (lastStep) {
-                    // last step(s)
                     SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep, andStop);
                     addSpeedStepItem(calculated,ss);
                     calculated = true;
@@ -975,7 +972,6 @@ public class RosterSpeedProfile {
                 }
                 calculatingStep = calculatingStep - calculatedStepInc;
             }
-            log.debug("Speed Step current {} speed to set {}", _throttle.getSpeedSetting(), calculatingStep);
             SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep, andStop);
             addSpeedStepItem(calculated,ss);
             if (stopTimer == null) { //If this is the first time round then kick off the speed change
@@ -1102,6 +1098,7 @@ public class RosterSpeedProfile {
         private boolean andStop;
 
         public SpeedSetting(float step, int duration, boolean andStop) {
+            log.debug("Adding step {} duration {} andStop{}", step, duration, andStop);
             this.step = step;
             this.duration = duration;
             this.andStop = andStop;
@@ -1310,7 +1307,7 @@ public class RosterSpeedProfile {
                 }
             }
         }
-        log.debug("slowerKey={}, slowerValue={} fasterKey={} fasterValue={} for speed={}",
+        log.trace("slowerKey={}, slowerValue={} fasterKey={} fasterValue={} for speed={}",
                 slowerKey, slowerValue, fasterKey, fasterValue, speed);
         if (entry == null) {
             // faster does not exists use slower...
