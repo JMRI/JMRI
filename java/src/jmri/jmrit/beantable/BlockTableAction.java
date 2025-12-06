@@ -54,7 +54,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     protected void createModel() {
         m = new BlockTableDataModel(getManager());
     }
-    
+
     @Nonnull
     @Override
     protected Manager<Block> getManager() {
@@ -85,12 +85,12 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         inchBox.addActionListener( e -> metricSelectionChanged());
         centimeterBox.addActionListener( e -> metricSelectionChanged());
 
-        // disabling keyboard input as when focused, does not fire actionlistener 
+        // disabling keyboard input as when focused, does not fire actionlistener
         // and appears selected causing mismatch with button selected and what the table thinks is selected.
         inchBox.setFocusable(false);
         centimeterBox.setFocusable(false);
     }
-    
+
     /**
      * Add the radioButtons (only 1 may be selected).
      */
@@ -160,8 +160,13 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         valuesMenu.add(jrbmi);
         jrbmi.setSelected(_restoreRule == RestoreRule.RESTOREONLYIFALLOCCUPIED);
 
+        valuesMenu.addSeparator();
+
+        item = new JMenuItem(Bundle.getMessage("MenuItemReloadBlockValues"));
+        valuesMenu.add(item);
+        item.addActionListener(e -> reloadBlockValues());
+
         menuBar.add(valuesMenu, pos + offset + 2); // put it to the right of the Speed menu
-    
     }
 
     /**
@@ -178,10 +183,10 @@ public class BlockTableAction extends AbstractTableAction<Block> {
     /**
      * Retrieve the restore rule selection from user preferences
      *
-     * @return restoreRule 
+     * @return restoreRule
      */
     public static RestoreRule getRestoreRule() {
-        RestoreRule rr = RestoreRule.RESTOREONLYIFALLOCCUPIED; //default to previous JMRI behavior 
+        RestoreRule rr = RestoreRule.RESTOREONLYIFALLOCCUPIED; //default to previous JMRI behavior
         Object rro = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                 getProperty("jmri.jmrit.beantable.BlockTableAction", "Restore Rule");   // NOI18N
         if (rro != null) {
@@ -198,6 +203,16 @@ public class BlockTableAction extends AbstractTableAction<Block> {
         InstanceManager.getDefault(UserPreferencesManager.class)
             .setSimplePreferenceState(BLOCK_METRIC_PREF, centimeterBox.isSelected());
         ((BlockTableDataModel)m).setMetric(centimeterBox.isSelected());
+    }
+
+    private void reloadBlockValues() {
+        try {
+            new jmri.jmrit.display.layoutEditor.BlockValueFile().readBlockValues();
+        } catch (org.jdom2.JDOMException jde) {
+            log.error("JDOM Exception when retreiving block values", jde);
+        } catch (java.io.IOException ioe) {
+            log.error("I/O Exception when retreiving block values", ioe);
+        }
     }
 
     @Override
@@ -237,7 +252,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             ActionListener oklistener = this::okPressed;
             ActionListener cancellistener = this::cancelPressed;
-            
+
             AddNewBeanPanel anbp = new AddNewBeanPanel(sysName, userName,
                 numberToAddSpinner, addRangeCheckBox, _autoSystemNameCheckBox,
                 "ButtonCreate", oklistener, cancellistener, statusBar);
@@ -362,7 +377,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 statusBar.setForeground(Color.red);
                 return; // without creating
             }
-            
+
             // add first and last names to statusMessage user feedback string
             if (x == 0 || x == numberOfBlocks - 1) {
                 statusMessage.append(" ").append(sName).append(" (").append(user).append(")");
