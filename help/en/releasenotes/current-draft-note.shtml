@@ -430,7 +430,8 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Defer calling "loadAtStartup" until the layout data file loading is done and
+             layout block paths have been initialized.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
