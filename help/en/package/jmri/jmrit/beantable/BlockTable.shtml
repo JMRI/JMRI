@@ -263,9 +263,9 @@
             This is the default selection.</li>
           </ul>
 
-          <p>The <strong>Reload Block Values</strong> menu item provides the ability to reload the
-          block values on demand.  This can be useful when the track power was not on during PanelPro
-          startup.</p>
+          <p><span class="since">since 5.15.1</span>The <strong>Reload Block Values</strong> menu
+          item provides the ability to reload the block values on demand.  This can be useful when
+          the track power was not on during PanelPro startup.</p>
         </dd>
       </dl>
 
