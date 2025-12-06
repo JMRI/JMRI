@@ -117,7 +117,7 @@ public class LoadAndStoreTestBase {
             BufferedReader fileStream1 = new BufferedReader( new InputStreamReader(new FileInputStream(inFile1)));
             BufferedReader fileStream2 = new BufferedReader( new InputStreamReader(new FileInputStream(inFile2)));
         ) {
-            
+
             String line1 = fileStream1.readLine();
             String line2 = fileStream2.readLine();
             int lineNumber1 = 0, lineNumber2 = 0;
@@ -125,24 +125,24 @@ public class LoadAndStoreTestBase {
             while ((next1 = fileStream1.readLine()) != null && (next2 = fileStream2.readLine()) != null) {
                 lineNumber1++;
                 lineNumber2++;
-                
+
                 // Do we have a multi line comment? Comments in the xml file is used by LogixNG.
                 // This only happens in the first file since store() will not store comments
                 if  (next1.startsWith("<!--")) {
                     while ((next1 = fileStream1.readLine()) != null && !next1.endsWith("-->")) {
                         lineNumber1++;
                     }
-                    
+
                     // If here, we either have a line that ends with --> or we have reached end of file
                     String nullCheck = fileStream1.readLine();
                     if (nullCheck == null) {
                         break;
                     }
-                    
+
                     // If here, we have a line that ends with --> or we have reached end of file
                     continue;
                 }
-                
+
                 // where the (empty) entryexitpairs line ends up seems to be non-deterministic
                 // so if we see it in either file we just skip it
                 String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
@@ -160,15 +160,15 @@ public class LoadAndStoreTestBase {
                     }
                     lineNumber2++;
                 }
-                
+
                 // if we get to the file history...
                 String filehistory = "filehistory";
                 if (line1.contains(filehistory) && line2.contains(filehistory)) {
                     break;  // we're done!
                 }
-                
+
                 boolean match = false;  // assume failure (pessimist!)
-                
+
                 String[] startsWithStrings = {
                     "  <!--Written by JMRI version",
                     "  <timebase",      // time changes from timezone to timezone
@@ -187,7 +187,7 @@ public class LoadAndStoreTestBase {
                         break;
                     }
                 }
-                
+
                 // Screen size will vary when written out
                 if (!match) {
                     if (line1.contains("  <LayoutEditor")) {
@@ -201,7 +201,7 @@ public class LoadAndStoreTestBase {
                         line2 = filterLineUsingRegEx(line2, windowwidth_regexe);
                     }
                 }
-                
+
                 // window positions will sometimes differ based on window decorations.
                 if (!match) {
                     if (line1.contains("  <LayoutEditor") ||
@@ -216,7 +216,7 @@ public class LoadAndStoreTestBase {
                         line2 = filterLineUsingRegEx(line2, xposition_regexe);
                     }
                 }
-                
+
                 // Time will vary when written out
                 if (!match) {
                     String memory_value = "<memory value";
@@ -227,13 +227,13 @@ public class LoadAndStoreTestBase {
                         }
                     }
                 }
-                
+
                 // Dates can vary when written out
                 String date_string = "<date>";
                 if (!match && line1.contains(date_string) && line2.contains(date_string)) {
                     match = true;
                 }
-                
+
                 if (!match) {
                     // remove fontname and fontFamily attributes
                     String fontname_regexe = "( fontname=\"[^\"]*\")";
@@ -243,14 +243,14 @@ public class LoadAndStoreTestBase {
                     line1 = filterLineUsingRegEx(line1, fontFamily_regexe);
                     line2 = filterLineUsingRegEx(line2, fontFamily_regexe);
                 }
-                
+
                 if (!match && !line1.equals(line2)) {
                     log.error("match failed in LoadAndStoreTest:");
                     log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
                     log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
                     log.error("  comparing file1:\"{}\"", inFile1.getPath());
                     log.error("         to file2:\"{}\"", inFile2.getPath());
-                    Assert.assertEquals(line1, line2);
+                    Assert.assertEquals("File matches: "+inFile1.getPath(), line1, line2);
                 }
                 line1 = next1;
                 line2 = next2;
