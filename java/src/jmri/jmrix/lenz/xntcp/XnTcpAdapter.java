@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz.xntcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,11 +15,13 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.Vector;
+
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -259,6 +263,8 @@ public class XnTcpAdapter extends XNetNetworkPortController {
      * available. We only limit the number of commands queued in TCP/IP stack
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Further investigation is needed to handle this correctly")
     public boolean okToSend() {
         // If a communication error occurred, return always "true" in order to avoid program hang-up while quitting
         if (!opened) {
