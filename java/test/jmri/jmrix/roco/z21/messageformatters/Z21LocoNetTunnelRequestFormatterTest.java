@@ -1,6 +1,8 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
+import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.roco.z21.Z21Message;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,14 +12,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Paul Bender Copyright (C) 2025
  */
-public class Z21LocoNetTunnelRequestFormatterTest {
-
-    private Z21LocoNetTunnelRequestFormatter formatter;
-
-    @BeforeEach
-    public void setUp() {
-        formatter = new Z21LocoNetTunnelRequestFormatter();
-    }
+public class Z21LocoNetTunnelRequestFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
     public void testMonitorStringLocoNetMessage() {
@@ -40,6 +35,13 @@ public class Z21LocoNetTunnelRequestFormatterTest {
         Z21Message msg = new Z21Message(l);
         Assertions.assertTrue(formatter.handlesMessage(msg));
         Assertions.assertEquals("LocoNet Tunnel Message: Transponder address 10 (short) (or long address 16010) present at LR5 () (BDL16x Board ID 1 RX4 zone C or BXP88 Board ID 1 section 5 or the BXPA1 Board ID 5 section).\n", formatter.formatMessage(msg));
+    }
+
+    @BeforeEach
+    @Override
+    public void setUp() {
+        super.setUp(); // setup JUnit
+        formatter = new Z21LocoNetTunnelRequestFormatter();
     }
 
 }

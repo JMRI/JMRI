@@ -1,19 +1,20 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
+import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.roco.z21.Z21Reply;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Z21RMBusFeedbackReplyFormatter class.
  *
  * @author Paul Bender Copyright (C) 2025
  */
-public class Z21RMBusFeedbackReplyFormatterTest {
+public class Z21RMBusFeedbackReplyFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
     public void testRMBusFeedbackGroup0Formatter() {
-        Z21RMBusFeedbackReplyFormatter formatter = new Z21RMBusFeedbackReplyFormatter();
+
         byte msg[] = {(byte) 0x0F, (byte) 0x00, (byte) 0x80, (byte) 0x00, (byte) 0x00,
                 (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0x00, (byte) 0x00,
                 (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00};
@@ -35,7 +36,7 @@ public class Z21RMBusFeedbackReplyFormatterTest {
     }
         @Test
         public void testRMBusFeedbackGroup1Formatter() {
-        Z21RMBusFeedbackReplyFormatter formatter = new Z21RMBusFeedbackReplyFormatter();
+
         byte msg2[] = {(byte) 0x0F, (byte) 0x00, (byte) 0x80, (byte) 0x00,
                 (byte) 0x01, (byte) 0x00, (byte) 0xFF, (byte) 0x00, (byte) 0x00,
                 (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
@@ -55,6 +56,13 @@ public class Z21RMBusFeedbackReplyFormatterTest {
                 + "\n\tModule 20 Contact 1 Off;Contact 2 Off;Contact 3 Off;Contact 4 Off;Contact 5 Off;Contact 6 Off;Contact 7 Off;Contact 8 Off"
                 , formatter.formatMessage(message));
 
+    }
+
+    @Override
+    @BeforeEach
+    public void setUp() {
+        super.setUp(); // setup JUnit
+        formatter = new Z21RMBusFeedbackReplyFormatter();
     }
 
 }
