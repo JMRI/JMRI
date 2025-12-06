@@ -7,6 +7,8 @@ package jmri.jmrix.powerline.cm11;
  */
 public class Constants {
 
+    private Constants() {} // class only supplies static methods
+
     public static final int POLL_REQ = 0x5A;
     public static final int TIME_REQ_CP11 = 0xA5;
     public static final int TIME_REQ_CP10 = 0xA6;
@@ -24,7 +26,7 @@ public class Constants {
      * Pretty-print a header code.
      *
      * @param b header byte
-     * @return  formated as text of header byte
+     * @return  formatted as text of header byte
      */
     public static String formatHeaderByte(int b) {
         return "Dim: " + ((b >> 3) & 0x1F)
