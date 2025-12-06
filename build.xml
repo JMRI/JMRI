@@ -996,13 +996,14 @@
             <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
             <javac srcdir="@{javac.source}"
                    destdir="@{javac.target}"
-                   includeantruntime="false"
+                   source="${source_version}"
+                   target="${jre_version}"                   includeantruntime="false"
                    deprecation="@{javac.deprecation}"
                    debug="yes">
                 <compilerclasspath>
                     <pathelement path="${libdir}/ecj.jar"/>
                 </compilerclasspath>
-                <compilerarg value="--release"/><compilerarg value="${jre_version}"/>
+                <!-- <compilerarg value="-\-release"/><compilerarg value="${jre_version}"/> commented out pending module system implementation -->
                 <javac-options/>
                 <classpath refid="@{javac.classpath}"/>
             </javac>
