@@ -22,7 +22,6 @@ public class PipeListenerTest {
         Assertions.assertNotNull(t, "exists");
     }
 
-    @SuppressWarnings("deprecation")        // Thread.stop()
     @Test
     public void testWrite() throws java.io.IOException {
         JTextArea jta = new JTextArea();
@@ -49,7 +48,6 @@ public class PipeListenerTest {
         }
     }
 
-    @SuppressWarnings("deprecation")        // Thread.stop()
     @Test
     public void testWriteGuiThread() throws java.io.IOException {
         JTextArea jta = new JTextArea();
