@@ -424,7 +424,6 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-<<<<<<< HEAD
             <li>Fixed a problem causing the starting value when doing
                 CV reads to erroneously be zero.</li>
             <li>When opening a roster entry with a large decoder definition,
