@@ -38,7 +38,10 @@ public class PipeListenerTest {
         JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
 
         JUnitUtil.waitFor(()->{return testString.equals(jta.getText());}, "find text after character write");
-        t.stop();
+
+        // Close streams to force the pipelistener thread to stop
+        wr.close();
+        pr.close();
         try {
             t.join();
         } catch (InterruptedException e) {
@@ -76,7 +79,10 @@ public class PipeListenerTest {
         JUnitUtil.waitFor(()->{return !(pr.ready());},"buffer empty");
 
         JUnitUtil.waitFor(()->{return testString.equals(jta.getText());}, "find text after character write");
-        t.stop();
+
+        // Close streams to force the pipelistener thread to stop
+        wr.close();
+        pr.close();
         try {
             t.join();
         } catch (InterruptedException e) {
