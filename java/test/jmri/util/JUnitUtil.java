@@ -372,7 +372,6 @@ public class JUnitUtil {
         try {
             t.join(100); // give it a bit of time to end
             if (t.getState() != Thread.State.TERMINATED) {
-                t.stop(); // yes, we know it's deprecated, but it's the only option for Jemmy threads
                 log.warn("   Thread {} did not terminate", t.getName());
             }
         } catch (IllegalMonitorStateException | IllegalStateException | InterruptedException e) {
