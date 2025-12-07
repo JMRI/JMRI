@@ -388,7 +388,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - used to rebuild Help metadata
 
 ##### objenesis-3.3.jar
-- version 3.3
+- version 3.4
 - Mockito dependency
 
 ##### opentest4j-1.3.0.jar
@@ -450,7 +450,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 1.4.1
 
 ##### byte-buddy-1.14.15
-- version 1.14.15
+- version 1.18.2
 - Mockito dependency
 
 ##### checker-framework directory and contents
@@ -509,7 +509,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Downloaded from Maven Central 2025-09-25
 
 ##### mockito-core mockito-junit-jupiter
-- version 5.12.0
+- version 5.20.0
 
 ##### OpenIDE Utilities
 - org-openide-util-lookup-RELEASE150.jar
