@@ -24,9 +24,6 @@
       But you can't do that unless you know <em>which</em> train it is that is reaching the
       signal.</p>
 
-      <p>JMRI provides experimental tools for tracking trains as them move around on the
-      layout.</p>
-
       <h2>Basic Concepts</h2>
       Imagine a simple loop of track that's been wired with occupancy sensors on individual
       segments of track, which we'll call "Blocks". Imagine the train is in Block A, and will
@@ -49,30 +46,70 @@
       more intelligent logic that thinks about the direction and priority of trains. But it's clear
       that even straight track poses some problems.</p>
 
-      <p>Turnouts add an additional layer of complexity. Imagine a train is sitting in the Block
-      next to the normal (closed) route, and another is sitting in the reversed (thrown) route.
-      When the occupancy Sensor for the Turnout goes active, which Train has entered the Turnout
-      track? That depends on which way the Turnout is set, so the program needs to be able to
-      consider that information too.</p>
-
       <h2>JMRI Block Tools</h2>
-      JMRI provides a "Block" class to handle the tracking.
-      <p>Note that this is test code, and not all features are completely present. For example, you
-      cannot store Block objects in a Configuration file; they must be manually created in your
-      scripts. This limitations will be removed with time.</p>
 
-      <h3>Block Table</h3>
-      The <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">Block Table</a> lets you
-      see the status of your Blocks.
-      <h3>Issues</h3>
-      There is no functional requirement for a type letter in the System Name, but by convention we
-      use 'B' for 'Block'. The default implementation is not system-specific, so a system letter of
-      'I' is appropriate. This leads to system names like "IB201".
-      <p>The direction of a Block is set from the direction of the incoming train. When a train is
-      found to be coming in on a particular Path, that Path's getFromBlockDirection becomes the
-      direction of the train in this Block.</p>
+      <p>The Block table entries include a <strong>Value</strong> field.  The contents of the field will be copied
+      to the next block using block tracking.  The content of the value field can come from several
+      sources.</p>
 
-      <p>Issues:</p>
+      <ul>
+        <li>Text is entered directly in the Block table.</li>
+        <li>Double clicking on a Block Contents icon on a Panel Editor or Layout Editor panel and
+        entering text.</li>
+        <li>Using a script or LogixNG to set a value.
+        <li>Use the Dispatcher options to place names or roster entries in the starting block.
+        <li>If a <strong>Reporter</strong> is assigned to the block, it can provide a value.</li>
+        <li>Use the <strong>SetBlockValues.py</strong> script to request block values as needed.
+        <strong>Note</strong>: There is setup work needed to enable this feature. The details are
+        in the script comments.</li>
+      </ul>
+
+      <h3>blockvalues.xml</h3>
+
+      <p>Block values are <strong>not</strong> stored with the rest of the layout data.  The
+      <em>blockvalues.xml</em> file is used to provide persistence of the block values between
+      PanelPro sessions.</p>
+
+      <p>During the PanelPro shutdown, the current values of occupied blocks is written to the
+      blockvalues.xml file.</p>
+
+      <p>After PanelPro startup and layout data loading is complete, the values are read from the
+      blockvalues.xml file and applied to the blocks based on a set of rules.  The rules are based
+      on the Block Table
+      <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml#block_values_menu">Values</a>
+      menu.</p>
+
+      <h3>Block Tracking Messages</h3>
+
+      <p>There are two messages displayed on the JMRI system console when block tracking is paused.</p>
+
+      <pre>
+WARN  - count of 2 ACTIVE neighbors with proper direction can't be handled for block B-Alpha-Main but maybe it can be determined when another block becomes free
+INFO  - Block B-Alpha-Main gets LATE new value from B-Alpha-Left, direction= East
+      </pre>
+
+
+      <p>As described above, a block becoming occupied between two occupied blocks can be a problem.
+      Which block should provide the block value?  There are two scenarios based on the current
+      direction for each block.  <strong>Note</strong>: Block directions are compass directions.</p>
+
+      <dl>
+        <dt>Same Direction</dt>
+        <dd>
+          <p>Both blocks have the same general direction, &plusmn;45&deg;.  The new value comes from
+          the following block.  The messages are not displayed.</p>
+        </dd>
+
+        <dt>Different Direction</dt>
+        <dd>
+          <p>The new value comes from whichever neighbor block becomes unoccupied. This is treated
+          as the train has finished arriving.  <strong>Note</strong>: This does not work when two
+          trains are chasing each other in a circle with a limited number of blocks.  At least eight
+          blocks are required with no more than 45&deg; per block.</p>
+        </dd>
+      </dl>
+
+      <h2>Issues</h2>
 
       <ul>
         <li>Doesn't handle a train pulling in behind another well:
@@ -101,24 +138,7 @@
         reversed to go back out.</li>
       </ul>
 
-      <p>Do not assume that only one Block object uniquely represents a piece of track. To allow
-      independent development, it must be possible for multiple Block objects to take care of a
-      particular section of track.</p>
 
-      <h3>Technical Information</h3>
-      For technical information, see the Javadoc pages for
-      <ul>
-        <li>
-          <a href="https://www.jmri.org/JavaDoc/doc/jmri/Block.html">Block</a> - represents each Block
-          and its connections
-        </li>
-
-        <li>
-          <a href="https://www.jmri.org/JavaDoc/doc/jmri/Path.html">Path</a> - represents the
-          connections to and from another Block, including any Turnout settings, etc, that are
-          needed.
-        </li>
-      </ul>
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

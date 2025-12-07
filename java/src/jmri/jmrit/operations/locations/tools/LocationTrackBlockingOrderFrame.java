@@ -18,7 +18,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 
 /**
- * Frame for user edit of location
+ * Frame for user edit of a location's track blocking order.
  *
  * @author Dan Boudreau Copyright (C) 2015
  * 
