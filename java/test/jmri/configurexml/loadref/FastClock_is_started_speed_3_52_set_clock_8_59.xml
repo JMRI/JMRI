@@ -12,7 +12,7 @@
       <systemName>IUInternalTimeProvider</systemName>
       <isRunning>yes</isRunning>
       <rate>3.52</rate>
-      <localDateTime>2099-12-03T08:59</localDateTime>
+      <localDateTime>2025-12-03T07:59</localDateTime>
     </InternalDateTime>
     <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
       <systemName>IUSystemClock</systemName>
