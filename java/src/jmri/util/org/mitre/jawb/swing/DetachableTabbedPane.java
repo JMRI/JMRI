@@ -343,6 +343,7 @@ public class DetachableTabbedPane extends JTabbedPane {
   @Override
   public void insertTab (String title, Icon icon, Component comp,
                          String tip, int index) {
+    log.debug("insertTab {} at index {}", title, index);
     // the index we get is based on the number of tabs show, not the number of
     // components, so to remain consistent create the Detachable with an index
     // based on the number of detachables we have
@@ -357,6 +358,27 @@ public class DetachableTabbedPane extends JTabbedPane {
       detach (d);
     else
       attach (d);
+  }
+  
+  @Override
+  public void setComponentAt(int index, Component component) {
+    log.debug("setComponentAt name = {} index = {}", getTitleAt(index), index);
+    
+    var oldcomp = getComponentAt(index);
+    var detachable = panelToDetMap.get(oldcomp);
+    panelToDetMap.remove(oldcomp);
+    
+    panelToDetMap.put(component, detachable);
+    detachable.component = component;
+    
+    super.setComponentAt(index, component);
+  }
+
+  // just adds logging
+  @Override
+  public void addTab(String name, Component component) {
+    log.debug("addTab name = {} count = {}", name, getTabCount());
+    super.addTab(name, component);
   }
   
   /**
@@ -406,7 +428,7 @@ public class DetachableTabbedPane extends JTabbedPane {
       d.setDetached (true);
     }
   }
-  
+    
   /**
    * Bypass insertTab and add internal panel to the tabbedpane
    */
@@ -414,7 +436,7 @@ public class DetachableTabbedPane extends JTabbedPane {
     int ti;
     for (ti=0; ti<getTabCount(); ti++) {
       Detachable tabD = panelToDetMap.get (getComponentAt(ti));
-      if (tabD.index > d.index)
+      if (tabD != null && tabD.index > d.index)
         break;
     }
     d.setDetached (false);
@@ -629,5 +651,7 @@ public class DetachableTabbedPane extends JTabbedPane {
 //     frame.pack();
 //     frame.setVisible(true);
 //   }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DetachableTabbedPane.class);
 
 }

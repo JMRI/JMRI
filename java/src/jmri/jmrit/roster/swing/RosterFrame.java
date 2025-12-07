@@ -1699,6 +1699,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     @Override
     public void windowClosing(WindowEvent e) {
         closeWindow(e);
+        super.windowClosing(e);
     }
 
     /**

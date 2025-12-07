@@ -30,6 +30,8 @@ public class PrintActionTest {
                 return null;
             }
         };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
         PrintAction t = new PrintAction("Test Action", pFrame, true);
         Assert.assertNotNull("exists", t);
         pFrame.dispatchEvent(new WindowEvent(pFrame, WindowEvent.WINDOW_CLOSING));

@@ -424,7 +424,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem causing the starting value when doing
+                CV reads to erroneously be zero.</li>
+            <li>When opening a roster entry with a large decoder definition,
+                DecoderPro now defers some of the processing until later while
+                opening the tabbed programming panes sooner.  You may see a 
+                pane with "Wait for pane contents to be loaded".  The contents
+                should appear within a few seconds.</li>
         </ul>
 
    <h3>Dispatcher</h3>
