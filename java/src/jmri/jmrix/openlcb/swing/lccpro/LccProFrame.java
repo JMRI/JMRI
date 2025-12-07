@@ -1,5 +1,7 @@
 package jmri.jmrix.openlcb.swing.lccpro;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.datatransfer.Transferable;
@@ -714,6 +716,8 @@ public class LccProFrame extends TwoPaneTBWindow  {
     }
 
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "This calls closeWindow which invokes the super method")
     public void windowClosing(WindowEvent e) {
         closeWindow(e);
     }

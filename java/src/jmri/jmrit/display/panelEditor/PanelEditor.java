@@ -1,5 +1,7 @@
 package jmri.jmrit.display.panelEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -483,6 +485,8 @@ public class PanelEditor extends Editor implements ItemListener {
      * so we don't dispose it (yet).
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Don't want to close window yet")
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
     }
