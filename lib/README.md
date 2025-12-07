@@ -558,8 +558,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Used for testing only, not at runtime
 
 
-##### org.jacoco.ant-0.8.11-nodeps.jar
-- version 0.8.11
+##### org.jacoco.ant-0.8.14-nodeps.jar
+- version 0.8.14
 
 ## Older, no longer present:
 
