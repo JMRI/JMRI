@@ -250,7 +250,7 @@ public class LoadAndStoreTestBase {
                     log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
                     log.error("  comparing file1:\"{}\"", inFile1.getPath());
                     log.error("         to file2:\"{}\"", inFile2.getPath());
-                    Assert.assertEquals("File matches: "+inFile1.getPath(), line1, line2);
+                    Assert.assertEquals("File matches: "+inFile1.getPath().replaceAll("\\\\", "/"), line1, line2);
                 }
                 line1 = next1;
                 line2 = next2;
