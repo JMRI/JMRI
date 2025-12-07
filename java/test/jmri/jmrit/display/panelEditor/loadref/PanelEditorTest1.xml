@@ -10,7 +10,7 @@
   <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
     <InternalDateTime class="jmri.time.implementation.configurexml.InternalDateTimeXml">
       <systemName>IUInternalTimeProvider</systemName>
-      <isRunning>yes</isRunning>
+      <isRunning>no</isRunning>
       <rate>1.0</rate>
       <localDateTime>2021-12-02T00:00</localDateTime>
     </InternalDateTime>
