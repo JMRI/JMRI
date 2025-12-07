@@ -40,7 +40,7 @@
         <junit5.version>5.13.4</junit5.version>
         <junit.platform.version>1.13.4</junit.platform.version>
         <ant.jvm.args></ant.jvm.args>
-        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US -Dnashorn.args=--no-deprecation-warning --add-exports java.desktop/sun.awt=ALL-UNNAMED</argLine>
+        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US -Dnashorn.args=--no-deprecation-warning --add-exports java.desktop/sun.awt=ALL-UNNAMED -XX:+EnableDynamicAgentLoading</argLine>
         <!-- define argLines to allow running surefire:test -->
         <surefire.argLine></surefire.argLine>
         <failsafe.argLine></failsafe.argLine>
