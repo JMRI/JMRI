@@ -95,16 +95,25 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
 
         consistComboBox.addActionListener((ActionEvent e) -> consistSelected());
 
-        isAdvancedConsist.setSelected(true);
-        isAdvancedConsist.setVisible(true);
-        isAdvancedConsist.setEnabled(false);
-        isAdvancedConsist.addActionListener((ActionEvent e) -> {
+        if (consistManager.isAdvancedConsistPossible()) {
             isAdvancedConsist.setSelected(true);
+            isAdvancedConsist.setVisible(true);
+            isAdvancedConsist.setEnabled(false);
+            isAdvancedConsist.addActionListener((ActionEvent e) -> {
+                isAdvancedConsist.setSelected(true);
+                isCSConsist.setSelected(false);
+                _Consist_Type = Consist.ADVANCED_CONSIST;
+                adrSelector.setEnabled(true);
+            });
             isCSConsist.setSelected(false);
-            _Consist_Type = Consist.ADVANCED_CONSIST;
-            adrSelector.setEnabled(true);
-        });
-        isCSConsist.setSelected(false);
+        } else {
+            isAdvancedConsist.setSelected(false);
+            isAdvancedConsist.setVisible(false);
+            isCSConsist.setSelected(true);
+            _Consist_Type = Consist.CS_CONSIST;
+            adrSelector.setEnabled((consistManager.csConsistNeedsSeperateAddress()));
+        }
+
         isCSConsist.setVisible(true);
         isCSConsist.setEnabled(false);
         isCSConsist.addActionListener((ActionEvent e) -> {
@@ -119,6 +128,11 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
             isCSConsist.setEnabled(true);
         }
 
+        // link the protocol selectors if required by ConsistManager
+        if (consistManager.isSingleFormConsistRequired()) {
+            locoSelector.followAnotherSelector(adrSelector);
+        }
+        
         deleteButton.setText(Bundle.getMessage("ButtonDelete"));
         deleteButton.setVisible(true);
         deleteButton.setToolTipText(Bundle.getMessage("DeleteButtonToolTip"));
@@ -150,8 +164,12 @@ public class ConsistToolFrame extends JmriJFrame implements ConsistListener, Con
         locoSelector.addKeyListener(new KeyListener() {
             @Override
             public void keyPressed(KeyEvent e) {
-                // if we start typing, set the selected index of the locoRosterbox to nothing.
-                locoRosterBox.setSelectedIndex(0);
+                if ( !consistManager.isSingleFormConsistRequired()) {
+                    // if combo boxes are not locked together, 
+                    // and if user start typing, set the selected index of the locoRosterbox to nothing
+                    // to get the user to make a decision
+                    locoRosterBox.setSelectedIndex(0);
+                }
             }
 
             @Override
