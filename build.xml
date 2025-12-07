@@ -750,7 +750,7 @@
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
-                <compilerarg value="--release"/><compilerarg value="${jre_version}"/>
+                <compilerarg value="--release"/><compilerarg value="${jre_version}"/><!-- intentionally on one line, as these two go together-->
                 <compilerarg value="-proc:full"/>
                 <compilerarg value="-XDignore.symbol.file"/> <!-- suppresses sun.misc warnings on Java 9 -->
                 <compilerarg line="-encoding utf-8"/>
@@ -997,7 +997,8 @@
             <javac srcdir="@{javac.source}"
                    destdir="@{javac.target}"
                    source="${source_version}"
-                   target="${jre_version}"                   includeantruntime="false"
+                   target="${jre_version}"
+                   includeantruntime="false"
                    deprecation="@{javac.deprecation}"
                    debug="yes">
                 <compilerclasspath>
