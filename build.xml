@@ -745,13 +745,13 @@
                    includes="@{javac.includes}"
                    srcdir="@{javac.source}"
                    destdir="@{javac.target}"
-                   source="${source_version}"
-                   target="${jre_version}"
                    includeantruntime="false"
                    fork="true"
                    deprecation="@{javac.deprecation}"
                    debug="${java.debugging}">
                 <classpath refid="@{javac.classpath}"/>
+                <compilerarg value="--release"/><compilerarg value="${jre_version}"/><!-- intentionally on one line, as these two go together-->
+                <compilerarg value="-proc:full"/>
                 <compilerarg value="-XDignore.symbol.file"/> <!-- suppresses sun.misc warnings on Java 9 -->
                 <compilerarg line="-encoding utf-8"/>
                 <compilerarg value="-Xlint:unchecked"/>
@@ -844,13 +844,12 @@
         <javac compiler="modern"
                srcdir="${source}"
                destdir="${target}"
-               source="${source_version}"
-               target="${jre_version}"
                includeantruntime="false"
                fork="true"
                deprecation="on"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
+            <compilerarg value="--release"/><compilerarg value="${jre_version}"/>
             <compilerarg line="-encoding utf-8"/>
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
@@ -868,13 +867,12 @@
         <javac compiler="modern"
                srcdir="${test};${acceptancetest}"
                destdir="${testtarget}"
-               source="${source_version}"
-               target="${jre_version}"
                includeantruntime="false"
                fork="true"
                deprecation="on"
                debug="${java.debugging}">
             <classpath refid="test.class.path"/>
+            <compilerarg value="--release"/><compilerarg value="${jre_version}"/>
             <compilerarg line="-encoding utf-8"/>
             <compilerarg value="-Xlint:unchecked"/>
             <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
@@ -1006,6 +1004,7 @@
                 <compilerclasspath>
                     <pathelement path="${libdir}/ecj.jar"/>
                 </compilerclasspath>
+                <!-- <compilerarg value="-\-release"/><compilerarg value="${jre_version}"/> commented out pending module system implementation -->
                 <javac-options/>
                 <classpath refid="@{javac.classpath}"/>
             </javac>
@@ -2556,13 +2555,12 @@
           <jsr308.javac
                srcdir="${source}"
                destdir="${target}"
-               source="${source_version}"
-               target="${jre_version}"
                includeantruntime="false"
                fork="true"
                deprecation="${deprecation}"
                debug="${java.debugging}">
             <classpath refid="compile.class.path"/>
+            <compilerarg value="--release"/><compilerarg value="${jre_version}"/>
             <compilerarg line="-proc:only"/> <!-- just check, don't generate .class files -->
             <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/> <!-- don't check uses of library methods: -->
             <compilerarg line="-Xmaxerrs 5000"/>
