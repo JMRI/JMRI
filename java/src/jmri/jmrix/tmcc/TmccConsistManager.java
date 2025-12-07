@@ -57,7 +57,7 @@ public class TmccConsistManager extends AbstractConsistManager {
 
 
     /**
-     * This implementation does support advanced consists, so return true.
+     * This implementation does support command station consists, so return true.
      *
      */
     @Override
