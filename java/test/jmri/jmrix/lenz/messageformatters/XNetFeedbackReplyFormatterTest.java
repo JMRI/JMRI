@@ -1,18 +1,14 @@
 package jmri.jmrix.lenz.messageformatters;
 
-import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.lenz.XNetReply;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.*;
-
-/**
- * Tests for the XNetFeedbackReplyFormatter class.
- * @author Paul Bender Copyright (C) 2025
- */
-public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest {
+public class XNetFeedbackReplyFormatterTest {
 
     @Test
     void testTurnoutNotOperatedFeedbackMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 00 47");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -31,6 +27,7 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
 
     @Test
     void testTurnoutThrownLeftFeedbackMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 05 42");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -49,6 +46,7 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
 
     @Test
     void testTurnoutThrownRightFeedbackMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 0A 4C");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -67,6 +65,7 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
 
     @Test
     void testTurnoutInvalidPositionFeedbackMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 0F 48");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -85,6 +84,7 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
 
     @Test
     void testTurnoutNotOperatedMotionCompleteFeedbackMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 20 67");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -105,6 +105,7 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
 
     @Test
     void testTurnoutThrownLeftMotionCompleteFeedbackMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 25 62");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -125,6 +126,7 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
 
     @Test
     void testTurnoutThrownRightMotionCompleteFeedbackMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 2A 6C");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -145,6 +147,7 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
 
     @Test
     void testTurnoutInvalidPositionMotionCompleteFeedbackMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 2F 68");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -165,6 +168,7 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
 
     @Test
     void testSensorFeedbackOffMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 48 0F");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -187,6 +191,7 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
 
     @Test
     void testSensorFeedbackOnMessageHandling() {
+        XNetFeedbackReplyFormatter formatter = new XNetFeedbackReplyFormatter();
         XNetReply r = new XNetReply("42 05 57 0F");
         Assertions.assertTrue(formatter.handlesMessage(r));
         String targetString =
@@ -206,12 +211,4 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
         targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
         Assertions.assertEquals(targetString, formatter.formatMessage(r));
     }
-
-    @Override
-    @BeforeEach
-    public void setUp(){
-        super.setUp(); // setup JUnit
-        formatter = new XNetFeedbackReplyFormatter();
-    }
-
 }

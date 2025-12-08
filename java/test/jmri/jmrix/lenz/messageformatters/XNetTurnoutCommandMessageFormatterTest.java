@@ -1,10 +1,8 @@
 package jmri.jmrix.lenz.messageformatters;
 
-import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.Message;
 import jmri.jmrix.lenz.XNetMessage;
-
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests for the XNetTurnoutCommandMessageFormatter class.
  * @author Paul Bender Copyright (C) 2024
  */
-public class XNetTurnoutCommandMessageFormatterTest extends AbstractMessageFormatterTest {
+public class XNetTurnoutCommandMessageFormatterTest {
     // Test that the handlesMessage method returns true for a valid message
     @Test
     public void testHandlesMessageValid() {
-
+        XNetTurnoutCommandMessageFormatter formatter = new XNetTurnoutCommandMessageFormatter();
         XNetMessage message = XNetMessage.getTurnoutCommandMsg(5,false,true,true);
         assertTrue(formatter.handlesMessage(message));
     }
@@ -25,7 +23,7 @@ public class XNetTurnoutCommandMessageFormatterTest extends AbstractMessageForma
     // Test that the handlesMessage method returns false for an invalid message
     @Test
     public void testHandlesMessageInvalid() {
-
+        XNetTurnoutCommandMessageFormatter formatter = new XNetTurnoutCommandMessageFormatter();
         Message message = new XNetMessage("01 04 05");
         assertFalse(formatter.handlesMessage(message));
     }
@@ -33,27 +31,19 @@ public class XNetTurnoutCommandMessageFormatterTest extends AbstractMessageForma
     // Test that the formatMessage method returns the expected string
     @Test
     public void testFormatMessage() {
-
+        XNetTurnoutCommandMessageFormatter formatter = new XNetTurnoutCommandMessageFormatter();
         XNetMessage message;
         message = XNetMessage.getTurnoutCommandMsg(5,false,true,true);
-        assertEquals( "Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 1 On.",
-                formatter.formatMessage(message), "Monitor String");
+        Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 1 On.",
+                formatter.formatMessage(message));
         message = XNetMessage.getTurnoutCommandMsg(5,true,false,true);
-        assertEquals( "Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 0 On.",
-                formatter.formatMessage(message), "Monitor String");
+        Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 0 On.",
+                formatter.formatMessage(message));
         message = XNetMessage.getTurnoutCommandMsg(5,false,true,false);
-        assertEquals( "Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 1 Off.",
-                formatter.formatMessage(message), "Monitor String");
+        Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 1 Off.",
+                formatter.formatMessage(message));
         message = XNetMessage.getTurnoutCommandMsg(5,true,false,false);
-        assertEquals( "Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 0 Off.",
-                formatter.formatMessage(message), "Monitor String");
+        Assert.assertEquals("Monitor String","Accessory Decoder Operations Request: Turnout Address 5(Base Address 1,Sub Address 0) Turn Output 0 Off.",
+                formatter.formatMessage(message));
     }
-
-    @Override
-    @BeforeEach
-    public void setUp() {
-        super.setUp(); // setup JUnit
-        formatter = new XNetTurnoutCommandMessageFormatter();
-    }
-
 }

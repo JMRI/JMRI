@@ -1,20 +1,20 @@
 package jmri.jmrix.lenz.messageformatters;
 
 
-import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.lenz.XNetMessage;
-
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests of XNetFunctionGroup8OperateRequestMessageFormatter class
  *
  * @Paul Bender Copyright (C) 2024
  */
-public class XNetFunctionGroup8OperateRequestMessageFormatterTest extends AbstractMessageFormatterTest {
+public class XNetFunctionGroup8OperateRequestMessageFormatterTest {
 
     @Test
     public void testFormatMessageAllOff() {
+        XNetFunctionGroup8OperateRequestMessageFormatter formatter = new XNetFunctionGroup8OperateRequestMessageFormatter();
         XNetMessage msg = XNetMessage.getFunctionGroup8OpsMsg(1234, false,false,false,false,false,false,false,false);
 
         Assertions.assertTrue(formatter.handlesMessage(msg));
@@ -23,17 +23,10 @@ public class XNetFunctionGroup8OperateRequestMessageFormatterTest extends Abstra
 
     @Test
     public void testFormatMessageAllOn() {
+        XNetFunctionGroup8OperateRequestMessageFormatter formatter = new XNetFunctionGroup8OperateRequestMessageFormatter();
         XNetMessage msg = XNetMessage.getFunctionGroup8OpsMsg(1234, true,true,true,true,true,true,true,true);
 
         Assertions.assertTrue(formatter.handlesMessage(msg));
         Assertions.assertEquals("Mobile Decoder Operations Request: Set Function Group 8 for Address: 1234 F45 On; F46 On; F47 On; F48 On; F49 On; F50 On; F51 On; F52 On; ",formatter.formatMessage(msg));
     }
-
-    @Override
-    @BeforeEach
-    public void setUp(){
-        super.setUp(); // setup JUnit
-        formatter = new XNetFunctionGroup8OperateRequestMessageFormatter();
-    }
-
 }
