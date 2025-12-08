@@ -805,24 +805,24 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                 if (traverserBlock == null) continue;
 
                 if (this == traverserBlock) {
-                    // This is the traverser's block. Add connections to all valid ray blocks.
-                    for (int i = 0; i < traverser.getNumberRays(); i++) {
-                        TrackSegment rayConnect = traverser.getRayConnectOrdered(i);
-                        if (rayConnect != null) {
-                            LayoutBlock rayBlock = rayConnect.getLayoutBlock();
-                            if (rayBlock != null && rayBlock != this) {
-                                c.add(new LayoutConnectivity(this, rayBlock));
+                    // This is the traverser's block. Add connections to all valid slot blocks.
+                    for (int i = 0; i < traverser.getNumberSlots(); i++) {
+                        TrackSegment slotConnect = traverser.getSlotConnectOrdered(i);
+                        if (slotConnect != null) {
+                            LayoutBlock slotBlock = slotConnect.getLayoutBlock();
+                            if (slotBlock != null && slotBlock != this) {
+                                c.add(new LayoutConnectivity(this, slotBlock));
                             }
                         }
                     }
                 } else {
-                    // This might be a ray block. Check if it connects to this traverser.
-                    for (int i = 0; i < traverser.getNumberRays(); i++) {
-                        TrackSegment rayConnect = traverser.getRayConnectOrdered(i);
-                        if (rayConnect != null && rayConnect.getLayoutBlock() == this) {
-                            // This is a ray block for this traverser. Add a connection to the traverser block.
+                    // This might be a slot block. Check if it connects to this traverser.
+                    for (int i = 0; i < traverser.getNumberSlots(); i++) {
+                        TrackSegment slotConnect = traverser.getSlotConnectOrdered(i);
+                        if (slotConnect != null && slotConnect.getLayoutBlock() == this) {
+                            // This is a slot block for this traverser. Add a connection to the traverser block.
                             c.add(new LayoutConnectivity(this, traverserBlock));
-                            break; // Found our traverser, no need to check other rays
+                            break; // Found our traverser, no need to check other slots
                         }
                     }
                 }

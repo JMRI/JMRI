@@ -21,10 +21,10 @@ import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
- * MVC Editor component for PositionablePoint objects.
+ * MVC Editor component for LayoutTraverser objects.
  *
  * @author Bob Jacobsen  Copyright (c) 2020
- *
+ * @author Dave Sand Copyright (c) 2024
  */
 public class LayoutTraverserEditor extends LayoutTrackEditor {
 
@@ -44,21 +44,23 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
     private LayoutTraverserView layoutTraverserView = null;
 
     private JmriJFrame editLayoutTraverserFrame = null;
-    private final JTextField editLayoutTraverserRadiusTextField = new JTextField(8);
-    private final JTextField editLayoutTraverserAngleTextField = new JTextField(8);
+    private final JTextField deckLengthTextField = new JTextField(8);
+    private final JTextField deckWidthTextField = new JTextField(8);
+    private final JComboBox<String> orientationComboBox = new JComboBox<>();
+    private final JTextField slotOffsetTextField = new JTextField(8);
+
     private final NamedBeanComboBox<Block> editLayoutTraverserBlockNameComboBox = new NamedBeanComboBox<>(
              InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JButton editLayoutTraverserSegmentEditBlockButton;
 
-    private JPanel editLayoutTraverserRayPanel;
-    private JButton editLayoutTraverserAddRayTrackButton;
+    private JPanel editLayoutTraverserSlotPanel;
+    private JButton editLayoutTraverserAddSlotButton;
     private JCheckBox editLayoutTraverserDccControlledCheckBox;
     private JCheckBox editLayoutTraverserUseSignalMastsCheckBox;
     private JPanel signalMastParametersPanel;
     private NamedBeanComboBox<SignalMast> exitMastComboBox;
     private NamedBeanComboBox<SignalMast> bufferMastComboBox;
 
-    private String editLayoutTraverserOldRadius = "";
     private final List<NamedBeanComboBox<SignalMast>> approachMastComboBoxes = new ArrayList<>();
     private final java.util.Set<SignalMast> mastsUsedElsewhere = new java.util.HashSet<>();
     private boolean editLayoutTraverserOpen = false;
@@ -85,204 +87,155 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
         if (editLayoutTraverserOpen) {
             editLayoutTraverserFrame.setVisible(true);
-        } else // Initialize if needed
-        if (editLayoutTraverserFrame == null) {
-            editLayoutTraverserFrame = new JmriJFrame(Bundle.getMessage("EditTraverser"), false, true);  // NOI18N
-            editLayoutTraverserFrame.addHelpMenu("package.jmri.jmrit.display.EditTraverser", true);  // NOI18N
-            editLayoutTraverserFrame.setLocation(50, 30);
-
-            Container contentPane = editLayoutTraverserFrame.getContentPane();
-            JPanel headerPane = new JPanel();
-            JPanel footerPane = new JPanel();
-            headerPane.setLayout(new BoxLayout(headerPane, BoxLayout.Y_AXIS));
-            footerPane.setLayout(new BoxLayout(footerPane, BoxLayout.Y_AXIS));
-            contentPane.setLayout(new BorderLayout());
-            contentPane.add(headerPane, BorderLayout.NORTH);
-            contentPane.add(footerPane, BorderLayout.SOUTH);
-
-            // setup radius text field
-            JPanel panel1 = new JPanel();
-            panel1.setLayout(new FlowLayout());
-            JLabel radiusLabel = new JLabel(Bundle.getMessage("TraverserRadius"));  // NOI18N
-            panel1.add(radiusLabel);
-            radiusLabel.setLabelFor(editLayoutTraverserRadiusTextField);
-            panel1.add(editLayoutTraverserRadiusTextField);
-            editLayoutTraverserRadiusTextField.setToolTipText(Bundle.getMessage("TraverserRadiusHint"));  // NOI18N
-            headerPane.add(panel1);
-
-            // setup ray track angle text field
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new FlowLayout());
-            JLabel rayAngleLabel = new JLabel(Bundle.getMessage("RayAngle"));  // NOI18N
-            panel2.add(rayAngleLabel);
-            rayAngleLabel.setLabelFor(editLayoutTraverserAngleTextField);
-            panel2.add(editLayoutTraverserAngleTextField);
-            editLayoutTraverserAngleTextField.setToolTipText(Bundle.getMessage("RayAngleHint"));  // NOI18N
-            headerPane.add(panel2);
-
-            // setup block name
-            JPanel panel2a = new JPanel();
-            panel2a.setLayout(new FlowLayout());
-            JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
-            panel2a.add(blockNameLabel);
-            blockNameLabel.setLabelFor(editLayoutTraverserBlockNameComboBox);
-            LayoutEditor.setupComboBox(editLayoutTraverserBlockNameComboBox, false, true, true);
-            editLayoutTraverserBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
-            panel2a.add(editLayoutTraverserBlockNameComboBox);
-
-            // Edit Block
-            panel2a.add(editLayoutTraverserSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));  // NOI18N
-            editLayoutTraverserSegmentEditBlockButton.addActionListener(this::editLayoutTraverserEditBlockPressed);
-            editLayoutTraverserSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
-            headerPane.add(panel2a);
-
-            // setup add ray track button
-            JPanel panel3 = new JPanel();
-            panel3.setLayout(new FlowLayout());
-            panel3.add(editLayoutTraverserAddRayTrackButton = new JButton(Bundle.getMessage("AddRayTrack")));  // NOI18N
-            editLayoutTraverserAddRayTrackButton.setToolTipText(Bundle.getMessage("AddRayTrackHint"));  // NOI18N
-            editLayoutTraverserAddRayTrackButton.addActionListener((ActionEvent e) -> {
-                addRayTrackPressed(e);
-                updateRayPanel();
-            });
-
-            panel3.add(editLayoutTraverserDccControlledCheckBox = new JCheckBox(Bundle.getMessage("TraverserDCCControlled")));  // NOI18N
-            headerPane.add(panel3);
-
-            JPanel panel4 = new JPanel();
-            panel4.setLayout(new FlowLayout());
-            panel4.add(editLayoutTraverserUseSignalMastsCheckBox = new JCheckBox(Bundle.getMessage("TraverserUseSignalMasts"))); // NOI18N
-            headerPane.add(panel4);
-
-            // setup signal mast parameters panel
-            signalMastParametersPanel = new JPanel();
-            signalMastParametersPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TraverserSignalMastAssignmentsTitle"))); // NOI18N
-            exitMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(exitMastComboBox, false, true, true);
-            exitMastComboBox.setEditable(false);
-            exitMastComboBox.setAllowNull(true);
-            bufferMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(bufferMastComboBox, false, true, true);
-            bufferMastComboBox.setEditable(false);
-            bufferMastComboBox.setAllowNull(true);
-
-            // set up Done and Cancel buttons
-            JPanel panel5 = new JPanel();
-            panel5.setLayout(new FlowLayout());
-            addDoneCancelButtons(panel5, editLayoutTraverserFrame.getRootPane(),
-                    this::editLayoutTraverserDonePressed, this::traverserEditCancelPressed);
-            footerPane.add(panel5);
-
-            editLayoutTraverserRayPanel = new JPanel();
-            editLayoutTraverserRayPanel.setLayout(new BoxLayout(editLayoutTraverserRayPanel, BoxLayout.Y_AXIS));
-            JScrollPane rayScrollPane = new JScrollPane(editLayoutTraverserRayPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-            contentPane.add(rayScrollPane, BorderLayout.CENTER);
+            return;
         }
+        editLayoutTraverserFrame = new JmriJFrame(Bundle.getMessage("EditTraverser"), false, true);  // NOI18N
+        editLayoutTraverserFrame.addHelpMenu("package.jmri.jmrit.display.EditTraverser", true);  // NOI18N
+        editLayoutTraverserFrame.setLocation(50, 30);
 
-        editLayoutTraverserBlockNameComboBox.setSelectedIndex(-1);
-        LayoutBlock lb = layoutTraverser.getLayoutBlock();
-        if (lb != null) {
-            Block blk = lb.getBlock();
-            if (blk != null) {
-                editLayoutTraverserBlockNameComboBox.setSelectedItem(blk);
-            }
-        }
+        Container contentPane = editLayoutTraverserFrame.getContentPane();
+        JPanel headerPane = new JPanel();
+        JPanel footerPane = new JPanel();
+        headerPane.setLayout(new BoxLayout(headerPane, BoxLayout.Y_AXIS));
+        footerPane.setLayout(new BoxLayout(footerPane, BoxLayout.Y_AXIS));
+        contentPane.setLayout(new BorderLayout());
+        contentPane.add(headerPane, BorderLayout.NORTH);
+        contentPane.add(footerPane, BorderLayout.SOUTH);
 
+        // Geometry Panel
+        JPanel geometryPanel = new JPanel();
+        geometryPanel.setLayout(new FlowLayout());
+        geometryPanel.add(new JLabel(Bundle.getMessage("Length")));
+        geometryPanel.add(deckLengthTextField);
+        geometryPanel.add(new JLabel(Bundle.getMessage("Width")));
+        geometryPanel.add(deckWidthTextField);
+        geometryPanel.add(new JLabel(Bundle.getMessage("Orientation")));
+        orientationComboBox.addItem(Bundle.getMessage("Horizontal"));
+        orientationComboBox.addItem(Bundle.getMessage("Vertical"));
+        geometryPanel.add(orientationComboBox);
+        headerPane.add(geometryPanel);
+
+        // Slot Panel
+        JPanel slotPanel = new JPanel();
+        slotPanel.setLayout(new FlowLayout());
+        slotPanel.add(new JLabel(Bundle.getMessage("SlotOffset")));
+        slotPanel.add(slotOffsetTextField);
+        editLayoutTraverserAddSlotButton = new JButton(Bundle.getMessage("AddSlot"));
+        slotPanel.add(editLayoutTraverserAddSlotButton);
+        headerPane.add(slotPanel);
+
+        // Block Name Panel
+        JPanel blockPanel = new JPanel();
+        blockPanel.setLayout(new FlowLayout());
+        blockPanel.add(new JLabel(Bundle.getMessage("BlockID")));
+        LayoutEditor.setupComboBox(editLayoutTraverserBlockNameComboBox, false, true, true);
+        blockPanel.add(editLayoutTraverserBlockNameComboBox);
+        editLayoutTraverserSegmentEditBlockButton = new JButton(Bundle.getMessage("EditBlock", ""));
+        blockPanel.add(editLayoutTraverserSegmentEditBlockButton);
+        headerPane.add(blockPanel);
+
+        // Controls Panel
+        JPanel controlsPanel = new JPanel();
+        controlsPanel.setLayout(new FlowLayout());
+        editLayoutTraverserDccControlledCheckBox = new JCheckBox(Bundle.getMessage("TraverserDCCControlled"));
+
+        controlsPanel.add(editLayoutTraverserDccControlledCheckBox);
+        editLayoutTraverserUseSignalMastsCheckBox = new JCheckBox(Bundle.getMessage("TraverserUseSignalMasts"));
+        controlsPanel.add(editLayoutTraverserUseSignalMastsCheckBox);
+        headerPane.add(controlsPanel);
+
+        // setup signal mast parameters panel
+        signalMastParametersPanel = new JPanel();
+        signalMastParametersPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TraverserSignalMastAssignmentsTitle"))); // NOI18N
+        exitMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
+        LayoutEditor.setupComboBox(exitMastComboBox, false, true, true);
+        exitMastComboBox.setEditable(false);
+        exitMastComboBox.setAllowNull(true);
+        bufferMastComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), null, DisplayOptions.DISPLAYNAME);
+        LayoutEditor.setupComboBox(bufferMastComboBox, false, true, true);
+        bufferMastComboBox.setEditable(false);
+        bufferMastComboBox.setAllowNull(true);
+
+        // set up Done and Cancel buttons
+        JPanel donePanel = new JPanel();
+        donePanel.setLayout(new FlowLayout());
+        addDoneCancelButtons(donePanel, editLayoutTraverserFrame.getRootPane(),
+                this::editLayoutTraverserDonePressed, this::traverserEditCancelPressed);
+        footerPane.add(donePanel);
+
+        editLayoutTraverserSlotPanel = new JPanel();
+        editLayoutTraverserSlotPanel.setLayout(new BoxLayout(editLayoutTraverserSlotPanel, BoxLayout.Y_AXIS));
+        JScrollPane slotScrollPane = new JScrollPane(editLayoutTraverserSlotPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        contentPane.add(slotScrollPane, BorderLayout.CENTER);
+
+        // Set initial values
+        deckLengthTextField.setText(String.valueOf(layoutTraverser.getDeckLength()));
+        deckWidthTextField.setText(String.valueOf(layoutTraverser.getDeckWidth()));
+        orientationComboBox.setSelectedIndex(layoutTraverser.getOrientation());
+        slotOffsetTextField.setText("0.0");
+
+        editLayoutTraverserBlockNameComboBox.setSelectedItem(layoutTraverser.getLayoutBlock() != null ? layoutTraverser.getLayoutBlock().getBlock() : null);
         editLayoutTraverserDccControlledCheckBox.setSelected(layoutTraverser.isTurnoutControlled());
         editLayoutTraverserUseSignalMastsCheckBox.setSelected(layoutTraverser.isDispatcherManaged());
-        editLayoutTraverserDccControlledCheckBox.addActionListener((ActionEvent e) -> {
+
+        // Add listeners
+        editLayoutTraverserAddSlotButton.addActionListener(this::addSlotTrackPressed);
+        editLayoutTraverserSegmentEditBlockButton.addActionListener(this::editLayoutTraverserEditBlockPressed);
+        editLayoutTraverserDccControlledCheckBox.addActionListener(e -> {
             layoutTraverser.setTurnoutControlled(editLayoutTraverserDccControlledCheckBox.isSelected());
-
-            for (Component comp : editLayoutTraverserRayPanel.getComponents()) {
-                if (comp instanceof TraverserRayPanel) {
-                    TraverserRayPanel trp = (TraverserRayPanel) comp;
-                    trp.showTurnoutDetails();
-                }
-            }
-            editLayoutTraverserFrame.pack();
+            updateSlotPanel();
+        });
+        editLayoutTraverserUseSignalMastsCheckBox.addActionListener(e -> {
+            layoutTraverser.setDispatcherManaged(editLayoutTraverserUseSignalMastsCheckBox.isSelected());
+            updateSlotPanel();
         });
 
-        signalMastParametersPanel.setVisible(layoutTraverser.isDispatcherManaged());
-        editLayoutTraverserUseSignalMastsCheckBox.addActionListener((ActionEvent e) -> {
-            boolean isSelected = editLayoutTraverserUseSignalMastsCheckBox.isSelected();
-            layoutTraverser.setDispatcherManaged(isSelected); // Update the model
-            signalMastParametersPanel.setVisible(layoutTraverser.isDispatcherManaged());
-            updateRayPanel(); // Rebuild to show/hide mast details, which also handles visibility
-            editLayoutTraverserFrame.pack();
-        });
 
-        // Cache the list of masts used on other parts of the layout.
-        // This is the performance-critical change, preventing a full layout scan on every click.
-        mastsUsedElsewhere.clear();
-        layoutEditor.getLETools().createListUsedSignalMasts();
-        mastsUsedElsewhere.addAll(layoutEditor.getLETools().usedMasts);
 
-        // Remove masts assigned to the current traverser from the "used elsewhere" list
-        if (layoutTraverser.getBufferMast() != null) {
-            mastsUsedElsewhere.remove(layoutTraverser.getBufferMast());
-        }
-        if (layoutTraverser.getExitSignalMast() != null) {
-            mastsUsedElsewhere.remove(layoutTraverser.getExitSignalMast());
-        }
-        for (LayoutTraverser.RayTrack ray : layoutTraverser.getRayTrackList()) {
-            if (ray.getApproachMast() != null) {
-                mastsUsedElsewhere.remove(ray.getApproachMast());
-            }
-        }
 
-        exitMastComboBox.setExcludedItems(mastsUsedElsewhere);
-        exitMastComboBox.addActionListener(e -> {
-            SignalMast newMast = exitMastComboBox.getSelectedItem();
-            layoutTraverser.setExitSignalMast( (newMast != null) ? newMast.getSystemName() : null );
-        });
 
-        bufferMastComboBox.setExcludedItems(mastsUsedElsewhere);
-        bufferMastComboBox.addActionListener(e -> {
-            SignalMast newMast = bufferMastComboBox.getSelectedItem();
-            layoutTraverser.setBufferSignalMast( (newMast != null) ? newMast.getSystemName() : null );
-        });
 
-        // Set up for Edit
-        editLayoutTraverserRadiusTextField.setText(" " + layoutTraverser.getRadius());
-        editLayoutTraverserOldRadius = editLayoutTraverserRadiusTextField.getText();
-        editLayoutTraverserAngleTextField.setText("0");
+
+
+
+
+
+
+        updateSlotPanel();
         editLayoutTraverserFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 traverserEditCancelPressed(null);
             }
         });
-        updateRayPanel();
-        SignalMast exitMast = layoutTraverser.getExitSignalMast();
-        SignalMast bufferMast = layoutTraverser.getBufferMast();
-        if (exitMast != null) {
-            exitMastComboBox.setSelectedItem(exitMast);
-        }
-        if (bufferMast != null) {
-            bufferMastComboBox.setSelectedItem(bufferMast);
-        }
-
         editLayoutTraverserFrame.pack();
         editLayoutTraverserFrame.setVisible(true);
         editLayoutTraverserOpen = true;
-    }   // editLayoutTraverser
+    }
+
+    private void addSlotTrackPressed(ActionEvent e) {
+        try {
+            double offset = Double.parseDouble(slotOffsetTextField.getText());
+            layoutTraverser.addSlot(offset);
+            updateSlotPanel();
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+        } catch (NumberFormatException ex) {
+            JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame, Bundle.getMessage("EntryError"), Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     @InvokeOnGuiThread
     private void editLayoutTraverserEditBlockPressed(ActionEvent a) {
-         // check if a block name has been entered
          String newName = editLayoutTraverserBlockNameComboBox.getSelectedItemDisplayName();
          if (newName == null) {
              newName = "";
          }
          if ((layoutTraverser.getBlockName().isEmpty())
                  || !layoutTraverser.getBlockName().equals(newName)) {
-             // get new block, or null if block has been removed
              layoutTraverser.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
              editLayoutTraverserNeedsRedraw = true;
-             ///layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-             ///layoutTraverser.updateBlockInfo();
          }
-         // check if a block exists to edit
          LayoutBlock blockToEdit = layoutTraverser.getLayoutBlock();
          if (blockToEdit == null) {
              JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
@@ -295,16 +248,14 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
          editLayoutTraverserNeedsRedraw = true;
      }
 
-    // Remove old rays and add them back in
-    private void updateRayPanel() {
-        // Create list of turnouts to be retained in the NamedBeanComboBox
+    private void updateSlotPanel() {
         traverserTurnouts.clear();
-        layoutTraverser.getRayTrackList().forEach(rt -> traverserTurnouts.add(rt.getTurnout()));
+        layoutTraverser.getSlotList().forEach(rt -> traverserTurnouts.add(rt.getTurnout()));
 
-        editLayoutTraverserRayPanel.removeAll();
-        editLayoutTraverserRayPanel.setLayout(new BoxLayout(editLayoutTraverserRayPanel, BoxLayout.Y_AXIS));
-        for (LayoutTraverser.RayTrack rt : layoutTraverser.getRayTrackList()) {
-            editLayoutTraverserRayPanel.add(new TraverserRayPanel(rt));
+        editLayoutTraverserSlotPanel.removeAll();
+        editLayoutTraverserSlotPanel.setLayout(new BoxLayout(editLayoutTraverserSlotPanel, BoxLayout.Y_AXIS));
+        for (LayoutTraverser.SlotTrack rt : layoutTraverser.getSlotList()) {
+            editLayoutTraverserSlotPanel.add(new TraverserSlotPanel(rt));
         }
 
         // Rebuild signal mast panel
@@ -314,10 +265,10 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         if (layoutTraverser.isDispatcherManaged()) {
             signalMastParametersPanel.setLayout(new BoxLayout(signalMastParametersPanel, BoxLayout.Y_AXIS));
 
-            // Add approach masts for each ray
-            for (LayoutTraverser.RayTrack rt : layoutTraverser.getRayTrackList()) {
+            // Add approach masts for each Slot
+            for (LayoutTraverser.SlotTrack rt : layoutTraverser.getSlotList()) {
                 JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT));
-                p.add(new JLabel(Bundle.getMessage("ApproachMastRay", rt.getConnectionIndex() + 1)));
+                p.add(new JLabel(Bundle.getMessage("ApproachMastSlot", rt.getConnectionIndex() + 1)));
                 NamedBeanComboBox<SignalMast> combo = new NamedBeanComboBox<>(
                         InstanceManager.getDefault(SignalMastManager.class), rt.getApproachMast(), DisplayOptions.DISPLAYNAME);
                 LayoutEditor.setupComboBox(combo, false, true, true);
@@ -333,7 +284,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                 final int index = i; // final variable for use in lambda
                 approachMastComboBoxes.get(i).addActionListener(e -> {
                     SignalMast newMast = approachMastComboBoxes.get(index).getSelectedItem();
-                    layoutTraverser.getRayTrackList().get(index).setApproachMast( (newMast != null) ? newMast.getSystemName() : null );
+                    layoutTraverser.getSlotList().get(index).setApproachMast( (newMast != null) ? newMast.getSystemName() : null );
                 });
             }
             if (!approachMastComboBoxes.isEmpty()) {
@@ -391,138 +342,49 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             mastPanel.add(bufferMastComboBox, c);
 
             signalMastParametersPanel.add(mastPanel);
-            editLayoutTraverserRayPanel.add(signalMastParametersPanel);
+            editLayoutTraverserSlotPanel.add(signalMastParametersPanel);
         }
-        editLayoutTraverserRayPanel.revalidate();
-        editLayoutTraverserRayPanel.repaint();
+
+        editLayoutTraverserSlotPanel.revalidate();
+        editLayoutTraverserSlotPanel.repaint();
         editLayoutTraverserFrame.pack();
     }
 
-    private void saveRayPanelDetail() {
-        for (Component comp : editLayoutTraverserRayPanel.getComponents()) {
-            if (comp instanceof TraverserRayPanel) {
-                TraverserRayPanel trp = (TraverserRayPanel) comp;
-                trp.updateDetails();
+    private void saveSlotPanelDetail() {
+        for (Component comp : editLayoutTraverserSlotPanel.getComponents()) {
+            if (comp instanceof TraverserSlotPanel) {
+                TraverserSlotPanel tsp = (TraverserSlotPanel) comp;
+                tsp.updateDetails();
             }
         }
     }
 
-    private void addRayTrackPressed(ActionEvent a) {
-        double ang = 0.0;
+    private void editLayoutTraverserDonePressed(ActionEvent a) {
         try {
-            ang = Float.parseFloat(editLayoutTraverserAngleTextField.getText());
-        } catch (Exception e) {
-            JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame, Bundle.getMessage("EntryError") + ": "
-                    + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),
-                    JmriJOptionPane.ERROR_MESSAGE);
+            layoutTraverser.setDeckLength(Double.parseDouble(deckLengthTextField.getText()));
+            layoutTraverser.setDeckWidth(Double.parseDouble(deckWidthTextField.getText()));
+            layoutTraverser.setOrientation(orientationComboBox.getSelectedIndex());
+        } catch (NumberFormatException e) {
+            JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame, Bundle.getMessage("EntryError"), Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
             return;
         }
-        layoutTraverser.addRay(ang);
-        layoutEditor.redrawPanel();
-        layoutEditor.setDirty();
-        editLayoutTraverserNeedsRedraw = false;
-    }
 
-    private void editLayoutTraverserDonePressed(ActionEvent a) {
-        // check if Block changed
         String newName = editLayoutTraverserBlockNameComboBox.getSelectedItemDisplayName();
         if (newName == null) {
             newName = "";
         }
-
         if ((layoutTraverser.getBlockName().isEmpty()) || !layoutTraverser.getBlockName().equals(newName)) {
-            // get new block, or null if block has been removed
             layoutTraverser.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutTraverserNeedsRedraw = true;
-            ///layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
-            ///layoutTraverser.updateBlockInfo();
         }
 
-        layoutTraverser.setDispatcherManaged(editLayoutTraverserUseSignalMastsCheckBox.isSelected());
-        if (editLayoutTraverserUseSignalMastsCheckBox.isSelected()) {
-            String exitMastName = exitMastComboBox.getSelectedItemDisplayName();
-            String bufferMastName = bufferMastComboBox.getSelectedItemDisplayName();
-            layoutTraverser.setExitSignalMast(exitMastName);
-            layoutTraverser.setBufferSignalMast(bufferMastName);
-
-            for (int i = 0; i < approachMastComboBoxes.size(); i++) {
-                LayoutTraverser.RayTrack ray = layoutTraverser.getRayTrackList().get(i);
-                NamedBeanComboBox<SignalMast> combo = approachMastComboBoxes.get(i);
-                ray.setApproachMast(combo.getSelectedItemDisplayName());
-            }
-
-            // Always remove any existing icons for this traverser's approach masts first.
-            // This ensures that moving icons from right-to-left works correctly.
-            List<SignalMastIcon> iconsToRemove = new ArrayList<>();
-            for (Positionable p : layoutEditor.getContents()) {
-                if (p instanceof SignalMastIcon) {
-                    SignalMastIcon icon = (SignalMastIcon) p;
-                    if (layoutTraverser.isApproachMast(icon.getSignalMast())) {
-                        iconsToRemove.add(icon);
-                    }
-                }
-            }
-            for (SignalMastIcon icon : iconsToRemove) {
-                icon.remove();
-                editLayoutTraverserNeedsRedraw = true;
-            }
-
-            // Now, if requested, place the new icons.
-            if (!doNotPlaceIcons.isSelected()) { // placeIconsLeft or placeIconsRight is selected
-                for (int i = 0; i < approachMastComboBoxes.size(); i++) {
-                    LayoutTraverser.RayTrack ray = layoutTraverser.getRayTrackList().get(i);
-                    SignalMast mast = approachMastComboBoxes.get(i).getSelectedItem();
-                    if (mast != null) {
-                        if (ray.getConnect() != null) {
-                            SignalMastIcon icon = new SignalMastIcon(layoutEditor);
-                            icon.setSignalMast(mast.getDisplayName());
-                            log.info("Placing mast for traverser ray, connected to track segment: {}", ray.getConnect().getName()); // NOI18N
-                            layoutEditor.getLETools().placingBlockForTurntable(icon, placeIconsRight.isSelected(), 0.0,
-                                    ray.getConnect(), layoutTraverserView.getRayCoordsIndexed(ray.getConnectionIndex()));
-                            editLayoutTraverserNeedsRedraw = true;
-                        }
-                    }
-                }
-            }
-
-            // Save placement selection
-            int placementSelection;
-            if (placeIconsLeft.isSelected()) {
-                placementSelection = 1;
-            } else if (placeIconsRight.isSelected()) {
-                placementSelection = 2;
-            } else {
-                placementSelection = 0;
-            }
-            layoutTraverser.setSignalIconPlacement(placementSelection);
-        }
-
-        // check if new radius was entered
-        String str = editLayoutTraverserRadiusTextField.getText();
-        if (!str.equals(editLayoutTraverserOldRadius)) {
-            double rad = 0.0;
-            try {
-                rad = Float.parseFloat(str);
-            } catch (Exception e) {
-                JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
-                        + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                        JmriJOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            layoutTraverser.setRadius(rad);
-            editLayoutTraverserNeedsRedraw = true;
-        }
-        // clean up
-        saveRayPanelDetail();
+        saveSlotPanelDetail();
         editLayoutTraverserOpen = false;
         editLayoutTraverserFrame.setVisible(false);
         editLayoutTraverserFrame.dispose();
         editLayoutTraverserFrame = null;
-        if (editLayoutTraverserNeedsRedraw) {
-            layoutEditor.redrawPanel();
-            layoutEditor.setDirty();
-            editLayoutTraverserNeedsRedraw = false;
-        }
+        layoutEditor.redrawPanel();
+        layoutEditor.setDirty();
     }
 
     private void traverserEditCancelPressed(ActionEvent a) {
@@ -537,151 +399,97 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         }
     }
 
-    /*===================*\
-    | Traverser Ray Panel |
-    \*===================*/
-    public class TraverserRayPanel extends JPanel {
+    public class TraverserSlotPanel extends JPanel {
 
-        // variables for Edit Traverser ray pane
-        private LayoutTraverser.RayTrack rayTrack = null;
-        private final JPanel rayTurnoutPanel;
+        private LayoutTraverser.SlotTrack slotTrack;
+        private final JPanel slotTurnoutPanel;
         private final NamedBeanComboBox<Turnout> turnoutNameComboBox;
-        private final TitledBorder rayTitledBorder;
-        private final JComboBox<String> rayTurnoutStateComboBox;
-        private final JLabel rayTurnoutStateLabel;
-        private final JTextField rayAngleTextField;
-        private final int[] rayTurnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
+        private final TitledBorder slotTitledBorder;
+        private final JComboBox<String> slotTurnoutStateComboBox;
+        private final JLabel slotTurnoutStateLabel;
+        private final JTextField slotOffsetTextField;
+        private final int[] slotTurnoutStateValues = new int[]{Turnout.CLOSED, Turnout.THROWN};
         private final DecimalFormat twoDForm = new DecimalFormat("#.00");
 
-        /**
-         * constructor method.
-         * @param rayTrack the single ray track to edit.
-         */
-        public TraverserRayPanel(@Nonnull LayoutTraverser.RayTrack rayTrack) {
-            this.rayTrack = rayTrack;
+        public TraverserSlotPanel(@Nonnull LayoutTraverser.SlotTrack slotTrack) {
+            this.slotTrack = slotTrack;
 
             JPanel top = new JPanel();
-
-            JLabel rayAngleLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("RayAngle")));
-            top.add(rayAngleLabel);
-            top.add(rayAngleTextField = new JTextField(5));
-            rayAngleLabel.setLabelFor(rayAngleTextField);
-
-            rayAngleTextField.addFocusListener(new FocusListener() {
-                @Override
-                public void focusGained(FocusEvent e) {
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    try {
-                        Float.parseFloat(rayAngleTextField.getText());
-                    } catch (Exception ex) {
-                        JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
-                                + ex + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
-                                JmriJOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-            );
+            top.add(new JLabel(Bundle.getMessage("SlotOffset")));
+            top.add(slotOffsetTextField = new JTextField(5));
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             this.add(top);
 
             turnoutNameComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class));
-            turnoutNameComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
             LayoutEditor.setupComboBox(turnoutNameComboBox, false, true, false);
-            turnoutNameComboBox.setSelectedItem(rayTrack.getTurnout());
+            turnoutNameComboBox.setSelectedItem(slotTrack.getTurnout());
             turnoutNameComboBox.addPopupMenuListener(
                     layoutEditor.newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox, traverserTurnouts));
             String turnoutStateThrown = InstanceManager.turnoutManagerInstance().getThrownText();
             String turnoutStateClosed = InstanceManager.turnoutManagerInstance().getClosedText();
             String[] turnoutStates = new String[]{turnoutStateClosed, turnoutStateThrown};
 
-            rayTurnoutStateComboBox = new JComboBox<>(turnoutStates);
-            rayTurnoutStateLabel = new JLabel(Bundle.getMessage("TurnoutState"));  // NOI18N
-            rayTurnoutPanel = new JPanel();
+            slotTurnoutStateComboBox = new JComboBox<>(turnoutStates);
+            slotTurnoutStateLabel = new JLabel(Bundle.getMessage("TurnoutState"));
+            slotTurnoutPanel = new JPanel();
 
-            rayTurnoutPanel.setBorder(new EtchedBorder());
-            JLabel turnoutLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"))); // NOI18N
-            rayTurnoutPanel.add(turnoutLabel);
-            turnoutLabel.setLabelFor(turnoutNameComboBox);
-            rayTurnoutPanel.add(turnoutNameComboBox);
-            rayTurnoutPanel.add(rayTurnoutStateLabel);
-            rayTurnoutStateLabel.setLabelFor(rayTurnoutStateComboBox);
-            rayTurnoutPanel.add(rayTurnoutStateComboBox);
-            if (rayTrack.getTurnoutState() == Turnout.CLOSED) {
-                rayTurnoutStateComboBox.setSelectedItem(turnoutStateClosed);
+            slotTurnoutPanel.setBorder(new EtchedBorder());
+            slotTurnoutPanel.add(new JLabel(Bundle.getMessage("BeanNameTurnout")));
+            slotTurnoutPanel.add(turnoutNameComboBox);
+            slotTurnoutPanel.add(slotTurnoutStateLabel);
+            slotTurnoutPanel.add(slotTurnoutStateComboBox);
+            if (slotTrack.getTurnoutState() == Turnout.CLOSED) {
+                slotTurnoutStateComboBox.setSelectedItem(turnoutStateClosed);
             } else {
-                rayTurnoutStateComboBox.setSelectedItem(turnoutStateThrown);
+                slotTurnoutStateComboBox.setSelectedItem(turnoutStateThrown);
             }
-            this.add(rayTurnoutPanel);
+            this.add(slotTurnoutPanel);
 
-            JButton deleteRayButton;
-            top.add(deleteRayButton = new JButton(Bundle.getMessage("ButtonDelete")));  // NOI18N
-            deleteRayButton.setToolTipText(Bundle.getMessage("DeleteRayTrack"));  // NOI18N
-            deleteRayButton.addActionListener((ActionEvent e) -> {
+            JButton deleteSlotButton = new JButton(Bundle.getMessage("ButtonDelete"));
+            top.add(deleteSlotButton);
+            deleteSlotButton.addActionListener((ActionEvent e) -> {
                 delete();
-                updateRayPanel();
+                updateSlotPanel();
             });
-            rayTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-
-            this.setBorder(rayTitledBorder);
+            slotTitledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
+            this.setBorder(slotTitledBorder);
 
             showTurnoutDetails();
 
-            rayAngleTextField.setText(twoDForm.format(rayTrack.getAngle()));
-            int rayNumber = rayTrack.getConnectionIndex() + 1;
-            rayTitledBorder.setTitle(Bundle.getMessage("Ray") + " : " + rayNumber);  // NOI18N
-            if (rayTrack.getConnect() == null) {
-                rayTitledBorder.setTitle(Bundle.getMessage("MakeLabel",
-                        Bundle.getMessage("Unconnected")) + " "
-                        + rayNumber);  // NOI18N
-            } else if (rayTrack.getConnect().getLayoutBlock() != null) {
-                rayTitledBorder.setTitle(Bundle.getMessage("MakeLabel",
-                        Bundle.getMessage("Connected")) + " "
-                        + rayTrack.getConnect().getLayoutBlock().getDisplayName()
-                        + " (" + Bundle.getMessage("Ray") + " " + rayNumber + ")");  // NOI18N
-            }
+            slotOffsetTextField.setText(twoDForm.format(slotTrack.getOffset()));
+            int slotNumber = slotTrack.getConnectionIndex() + 1;
+            slotTitledBorder.setTitle(Bundle.getMessage("Slot") + " : " + slotNumber);
         }
 
         private void delete() {
             int n = JmriJOptionPane.showConfirmDialog(null,
-                    Bundle.getMessage("Question7"), // NOI18N
-                    Bundle.getMessage("WarningTitle"), // NOI18N
+                    Bundle.getMessage("Question7"),
+                    Bundle.getMessage("WarningTitle"),
                     JmriJOptionPane.YES_NO_OPTION);
             if (n == JmriJOptionPane.YES_OPTION) {
-                layoutTraverser.deleteRay(rayTrack);
+                layoutTraverser.deleteSlot(slotTrack);
             }
         }
 
         private void updateDetails() {
-            if (turnoutNameComboBox == null || rayTurnoutStateComboBox == null) {
-                return;
+            try {
+                slotTrack.setOffset(Double.parseDouble(slotOffsetTextField.getText()));
+            } catch (NumberFormatException e) {
+                // ignore
             }
-            String turnoutName = turnoutNameComboBox.getSelectedItemDisplayName();
-            if (turnoutName == null) {
-                turnoutName = "";
-            }
-            rayTrack.setTurnout(turnoutName, rayTurnoutStateValues[rayTurnoutStateComboBox.getSelectedIndex()]);
-            if (!rayAngleTextField.getText().equals(twoDForm.format(rayTrack.getAngle()))) {
-                try {
-                    double ang = Float.parseFloat(rayAngleTextField.getText());
-                    rayTrack.setAngle(ang);
-                } catch (Exception e) {
-                    log.error("Angle is not in correct format so will skip {}", rayAngleTextField.getText());  // NOI18N
+            if (layoutTraverser.isTurnoutControlled()) {
+                String turnoutName = turnoutNameComboBox.getSelectedItemDisplayName();
+                if (turnoutName == null) {
+                    turnoutName = "";
                 }
+                slotTrack.setTurnout(turnoutName, slotTurnoutStateValues[slotTurnoutStateComboBox.getSelectedIndex()]);
             }
         }
 
         private void showTurnoutDetails() {
-            boolean vis = layoutTraverser.isTurnoutControlled();
-            rayTurnoutPanel.setVisible(vis);
-            turnoutNameComboBox.setVisible(vis);
-            rayTurnoutStateComboBox.setVisible(vis);
-            rayTurnoutStateLabel.setVisible(vis);
+            slotTurnoutPanel.setVisible(layoutTraverser.isTurnoutControlled());
         }
     }
-
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserEditor.class);
 }

@@ -9701,9 +9701,9 @@ final public class LayoutEditorTools {
             if (lt.getExitSignalMast() != null) {
                 usedMasts.add(lt.getExitSignalMast());
             }
-            for (LayoutTraverser.RayTrack ray : lt.getRayTrackList()) {
-                if (ray.getApproachMast() != null) {
-                    usedMasts.add(ray.getApproachMast());
+            for (LayoutTraverser.SlotTrack slot : lt.getSlotList()) {
+                if (slot.getApproachMast() != null) {
+                    usedMasts.add(slot.getApproachMast());
                 }
             }
         }

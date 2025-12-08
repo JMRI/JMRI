@@ -2942,8 +2942,8 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
         LayoutTraverserView ltv = new LayoutTraverserView(lt, pt, this);
         addLayoutTrack(lt, ltv);
         // Initialise with a couple of tracks
-        lt.addRay(0.0);
-        lt.addRay(180.0);
+        lt.addSlot(10.0);
+        lt.addSlot(50.0);
         setDirty();
     }
 
@@ -6757,10 +6757,10 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
         // remove connections if any
         LayoutTraverserView ov = getLayoutTraverserView(o);
-        for (int j = 0; j < o.getNumberRays(); j++) {
-            TrackSegment t = ov.getRayConnectOrdered(j);
+        for (int j = 0; j < o.getNumberSlots(); j++) {
+            TrackSegment t = ov.getSlotConnectOrdered(j);
             if (t != null) {
-                substituteAnchor(ov.getRayCoordsIndexed(j), o, t);
+                substituteAnchor(ov.getSlotCoordsIndexed(j), o, t);
             }
         }
         return removeLayoutTrackAndRedraw(o);
@@ -6866,7 +6866,7 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                     ((LayoutTurntable) o).setRayConnect(null, type.turntableTrackIndex());
                 }
                 if (HitPointType.isTraverserRayHitType(type)) {
-                    ((LayoutTraverser) o).setRayConnect(null, type.traverserTrackIndex());
+                    ((LayoutTraverser) o).setSlotConnect(null, type.traverserTrackIndex());
                 }
                 break;
             }
@@ -9210,11 +9210,11 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
                 }
                 for (LayoutTraverser lx : getLayoutTraversers()) {
                     if (lx.isTurnoutControlled()) {
-                        for (int i = 0; i < lx.getNumberRays(); i++) {
-                            if (nb.equals(lx.getRayTurnout(i))) {
+                        for (int i = 0; i < lx.getNumberSlots(); i++) {
+                            if (nb.equals(lx.getSlotTurnout(i))) {
                                 found = true;
                                 message.append("<li>");
-                                message.append(Bundle.getMessage("VetoRayTraverserControl", lx.getId()));
+                                message.append(Bundle.getMessage("VetoSlotTraverserControl", lx.getId()));
                                 message.append("</li>");
                                 break;
                             }
@@ -9344,9 +9344,9 @@ final public class LayoutEditor extends PanelEditor implements MouseWheelListene
 
                 for (LayoutTraverser lx : getLayoutTraversers()) {
                     if (lx.isTurnoutControlled()) {
-                        for (int i = 0; i < lx.getNumberRays(); i++) {
-                            if (nb.equals(lx.getRayTurnout(i))) {
-                                lx.setRayTurnout(i, null, NamedBean.UNKNOWN);
+                        for (int i = 0; i < lx.getNumberSlots(); i++) {
+                            if (nb.equals(lx.getSlotTurnout(i))) {
+                                lx.setSlotTurnout(i, null, NamedBean.UNKNOWN);
                             }
                         }
                     }

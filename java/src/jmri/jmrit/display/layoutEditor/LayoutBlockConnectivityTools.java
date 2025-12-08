@@ -329,18 +329,18 @@ final public class LayoutBlockConnectivityTools {
             for (LayoutTraverser traverser : panel.getLayoutTraversers()) {
                 // Check if the path starts from this traverser's block
                 if (traverser.getLayoutBlock() == currentBlock) {
-                    // A path from a traverser is valid if the destination is a ray block or a neighbor of a ray block.
-                    for (int i = 0; i < traverser.getNumberRays(); i++) {
-                        TrackSegment track = traverser.getRayConnectOrdered(i);
+                    // A path from a traverser is valid if the destination is a slot block or a neighbor of a slot block.
+                    for (int i = 0; i < traverser.getNumberSlots(); i++) {
+                        TrackSegment track = traverser.getSlotConnectOrdered(i);
                         if (track != null && track.getLayoutBlock() != null) {
-                            LayoutBlock rayBlock = track.getLayoutBlock();
-                            // First, check if the ray block itself is the destination.
-                            if (rayBlock == destBlock) {
+                            LayoutBlock slotBlock = track.getLayoutBlock();
+                            // First, check if the slot block itself is the destination.
+                            if (slotBlock == destBlock) {
                                 return true;
                             }
-                            // Next, check if the destination block is a valid neighbor of this ray block.
-                            for (int j = 0; j < rayBlock.getNumberOfNeighbours(); j++) {
-                                Block neighbor = rayBlock.getNeighbourAtIndex(j);
+                            // Next, check if the destination block is a valid neighbor of this slot block.
+                            for (int j = 0; j < slotBlock.getNumberOfNeighbours(); j++) {
+                                Block neighbor = slotBlock.getNeighbourAtIndex(j);
                                 if (neighbor != null && neighbor == destBlock.getBlock()) {
                                     return true;
                                 }
@@ -962,24 +962,24 @@ final public class LayoutBlockConnectivityTools {
                     // Path 1: From traverser's Exit Mast to the next mast on a ray's track
                     SignalMast exitMast = traverser.getExitSignalMast();
                     if (exitMast != null) {
-                        for (LayoutTraverser.RayTrack ray : traverser.getRayTrackList()) {
-                            TrackSegment track = ray.getConnect();
+                        for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
+                            TrackSegment track = slot.getConnect();
                             if (track != null && track.getLayoutBlock() != null) {
-                                LayoutBlock rayBlock = track.getLayoutBlock();
-                                // Find the block connected to the ray that is NOT the traverser, then find the mast protecting it.
-                                for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
-                                    Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                                LayoutBlock slotBlock = track.getLayoutBlock();
+                                // Find the block connected to the slot that is NOT the traverser, then find the mast protecting it.
+                                for (int i = 0; i < slotBlock.getNumberOfNeighbours(); i++) {
+                                    Block neighbor = slotBlock.getNeighbourAtIndex(i);
                                     if (neighbor != traverserBlock.getBlock()) {
-                                        SignalMast nextMast = lbm.getFacingSignalMast(rayBlock.getBlock(), neighbor, panel);
+                                        SignalMast nextMast = lbm.getFacingSignalMast(slotBlock.getBlock(), neighbor, panel);
                                         if (nextMast != null) {
                                             retPairs.computeIfAbsent(exitMast, k -> new ArrayList<>()).add(nextMast);
                                         }
-                                        break; // Assume only one exit from the ray block
+                                        break; // Assume only one exit from the slot block
                                     }
                                 }
-                                // Also check for a buffer mast at the end of this ray's block
-                                if (rayBlock.getNumberOfNeighbours() == 1) { // Only connected to the traverser block
-                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(rayBlock.getBlock(), panel);
+                                // Also check for a buffer mast at the end of this slot's block
+                                if (slotBlock.getNumberOfNeighbours() == 1) { // Only connected to the traverser block
+                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(slotBlock.getBlock(), panel);
                                     if (bufferMast != null) {
                                         if (log.isDebugEnabled()) {
                                             log.debug("Found traverser exit to buffer mast path: {} -> {}", exitMast.getDisplayName(), bufferMast.getDisplayName());
@@ -993,26 +993,26 @@ final public class LayoutBlockConnectivityTools {
 
 
                     // Path 2 & 3: Paths involving Approach and Buffer masts
-                    for (LayoutTraverser.RayTrack ray : traverser.getRayTrackList()) {
-                        SignalMast approachMast = ray.getApproachMast();
+                    for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
+                        SignalMast approachMast = slot.getApproachMast();
                         if (approachMast == null) { // this is logged elsewhere
                             continue;
                         }
                         traverserMasts.add(approachMast);
 
-                        // Path 2: From a remote mast on the layout to this ray's Approach Mast
-                        TrackSegment track = ray.getConnect();
+                        // Path 2: From a remote mast on the layout to this slot's Approach Mast
+                        TrackSegment track = slot.getConnect();
                         if (track != null && track.getLayoutBlock() != null && traverserBlock != null) {
-                            LayoutBlock rayBlock = track.getLayoutBlock();
-                            // Find the block connected to the ray that is NOT the traverser, then find the mast protecting the ray from it.
-                            for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
-                                Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                            LayoutBlock slotBlock = track.getLayoutBlock();
+                            // Find the block connected to the slot that is NOT the traverser, then find the mast protecting the slot from it.
+                            for (int i = 0; i < slotBlock.getNumberOfNeighbours(); i++) {
+                                Block neighbor = slotBlock.getNeighbourAtIndex(i);
                                 if (neighbor != traverserBlock.getBlock()) {
-                                    SignalMast remoteMast = lbm.getFacingSignalMast(neighbor, rayBlock.getBlock(), panel);
+                                    SignalMast remoteMast = lbm.getFacingSignalMast(neighbor, slotBlock.getBlock(), panel);
                                     if (remoteMast != null) {
                                         retPairs.computeIfAbsent(remoteMast, k -> new ArrayList<>()).add(approachMast);
                                     }
-                                    // Assume only one entry to the ray block
+                                    // Assume only one entry to the slot block
                                     break;
                                 }
                             }
@@ -1150,19 +1150,19 @@ final public class LayoutBlockConnectivityTools {
                     if (sourceMast.equals(traverser.getExitSignalMast())) {
                         List<NamedBean> destinations = new ArrayList<>();
                         LayoutBlock traverserBlock = traverser.getLayoutBlock();
-                        for (int i = 0; i < traverser.getNumberRays(); i++) {
-                            TrackSegment track = traverser.getRayConnectOrdered(i);
+                        for (int i = 0; i < traverser.getNumberSlots(); i++) {
+                            TrackSegment track = traverser.getSlotConnectOrdered(i);
                             if (track != null && track.getLayoutBlock() != null) {
-                                LayoutBlock rayBlock = track.getLayoutBlock();
-                                for (int j = 0; j < rayBlock.getNumberOfNeighbours(); j++) {
-                                    Block neighbor = rayBlock.getNeighbourAtIndex(j);
+                                LayoutBlock slotBlock = track.getLayoutBlock();
+                                for (int j = 0; j < slotBlock.getNumberOfNeighbours(); j++) {
+                                    Block neighbor = slotBlock.getNeighbourAtIndex(j);
                                     if (neighbor != traverserBlock.getBlock()) {
-                                        SignalMast nextMast = lbm.getFacingSignalMast(rayBlock.getBlock(), neighbor, panel);
+                                        SignalMast nextMast = lbm.getFacingSignalMast(slotBlock.getBlock(), neighbor, panel);
                                         if (nextMast != null) destinations.add(nextMast);
                                     }
                                 }
-                                if (rayBlock.getNumberOfNeighbours() == 1) { // End of line buffer
-                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(rayBlock.getBlock(), panel);
+                                if (slotBlock.getNumberOfNeighbours() == 1) { // End of line buffer
+                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(slotBlock.getBlock(), panel);
                                     if (bufferMast != null) destinations.add(bufferMast);
                                 }
                             }
