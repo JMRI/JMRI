@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
+  <jmriversion>
+    <major>5</major>
+    <minor>13</minor>
+    <test>5</test>
+    <modifier>plus</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>inactive</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS100</systemName>
+      <userName>TT</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS101</systemName>
+      <userName>TT1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS102</systemName>
+      <userName>TT2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS103</systemName>
+      <userName>TT3</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS104</systemName>
+      <userName>ML</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS105</systemName>
+      <userName>StopAlloc</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS106</systemName>
+      <userName>Return</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1400</systemName>
+      <userName>1501-A</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1401</systemName>
+      <userName>1501-B</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1402</systemName>
+      <userName>1502-A</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1403</systemName>
+      <userName>1502-B</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1404</systemName>
+      <userName>1503-A</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1405</systemName>
+      <userName>1503-B</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1500</systemName>
+    </turnout>
+    <turnout feedback="TWOSENSOR" sensor1="1501-A" sensor2="1501-B" inverted="false" automate="Off">
+      <systemName>IT1501</systemName>
+    </turnout>
+    <turnout feedback="TWOSENSOR" sensor1="1502-A" sensor2="1502-B" inverted="false" automate="Off">
+      <systemName>IT1502</systemName>
+    </turnout>
+    <turnout feedback="TWOSENSOR" sensor1="1503-A" sensor2="1503-B" inverted="false" automate="Off">
+      <systemName>IT1503</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="3:00 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="BBABR">
+      <systemName>IMLayoutBaseName</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB:AUTO:0001">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>TT</userName>
+    </block>
+    <block systemName="IB:AUTO:0002">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>TT1</userName>
+    </block>
+    <block systemName="IB:AUTO:0003">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>TT3</userName>
+    </block>
+    <block systemName="IB:AUTO:0004">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>TT2</userName>
+    </block>
+    <block systemName="IB:AUTO:0005">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>ML</userName>
+    </block>
+    <block systemName="IB:AUTO:0001" length="200.0" curve="0">
+      <systemName>IB:AUTO:0001</systemName>
+      <userName>TT</userName>
+      <speed>Slow</speed>
+      <permissive>no</permissive>
+      <occupancysensor>TT</occupancysensor>
+      <path todir="0" fromdir="0" block="IB:AUTO:0002" />
+      <path todir="0" fromdir="0" block="IB:AUTO:0003" />
+      <path todir="0" fromdir="0" block="IB:AUTO:0004" />
+    </block>
+    <block systemName="IB:AUTO:0002" length="200.0" curve="0">
+      <systemName>IB:AUTO:0002</systemName>
+      <userName>TT1</userName>
+      <speed>Slow</speed>
+      <permissive>no</permissive>
+      <occupancysensor>IS101</occupancysensor>
+      <path todir="0" fromdir="0" block="IB:AUTO:0001" />
+    </block>
+    <block systemName="IB:AUTO:0003" length="200.0" curve="0">
+      <systemName>IB:AUTO:0003</systemName>
+      <userName>TT3</userName>
+      <speed>Slow</speed>
+      <permissive>no</permissive>
+      <occupancysensor>IS103</occupancysensor>
+      <path todir="0" fromdir="0" block="IB:AUTO:0001" />
+    </block>
+    <block systemName="IB:AUTO:0004" length="200.0" curve="0">
+      <systemName>IB:AUTO:0004</systemName>
+      <userName>TT2</userName>
+      <speed>Slow</speed>
+      <permissive>no</permissive>
+      <occupancysensor>IS102</occupancysensor>
+      <path todir="0" fromdir="0" block="IB:AUTO:0001" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0005" />
+    </block>
+    <block systemName="IB:AUTO:0005" length="200.0" curve="0">
+      <systemName>IB:AUTO:0005</systemName>
+      <userName>ML</userName>
+      <speed>Slow</speed>
+      <permissive>no</permissive>
+      <occupancysensor>IS104</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0004" />
+    </block>
+  </blocks>
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml">
+    <layoutblock systemName="ILB1" occupancysensor="TT" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB1</systemName>
+      <userName>TT</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB2" occupancysensor="IS101" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB2</systemName>
+      <userName>TT1</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB3" occupancysensor="IS103" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB3</systemName>
+      <userName>TT3</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB4" occupancysensor="IS102" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB4</systemName>
+      <userName>TT2</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB5" occupancysensor="IS104" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB5</systemName>
+      <userName>ML</userName>
+    </layoutblock>
+  </layoutblocks>
+  <sections class="jmri.configurexml.SectionManagerXml">
+    <section systemName="IY:AUTO:0001" userName="ML" creationtype="userdefined">
+      <systemName>IY:AUTO:0001</systemName>
+      <userName>ML</userName>
+      <blockentry sName="IB:AUTO:0005" order="0" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0005" direction="8" fixed="no" fromblockdirection="Southeast" />
+    </section>
+    <section systemName="IY:AUTO:0003" userName="TT1" creationtype="userdefined">
+      <systemName>IY:AUTO:0003</systemName>
+      <userName>TT1</userName>
+      <blockentry sName="IB:AUTO:0002" order="0" />
+      <entrypoint fromblock="IB:AUTO:0001" toblock="IB:AUTO:0002" direction="4" fixed="no" fromblockdirection="None" />
+    </section>
+    <section systemName="IY:AUTO:0004" userName="TT2" creationtype="userdefined">
+      <systemName>IY:AUTO:0004</systemName>
+      <userName>TT2</userName>
+      <blockentry sName="IB:AUTO:0004" order="0" />
+      <entrypoint fromblock="IB:AUTO:0005" toblock="IB:AUTO:0004" direction="4" fixed="no" fromblockdirection="Northwest" />
+      <entrypoint fromblock="IB:AUTO:0001" toblock="IB:AUTO:0004" direction="8" fixed="no" fromblockdirection="None" />
+    </section>
+    <section systemName="IY:AUTO:0005" userName="TT3" creationtype="userdefined">
+      <systemName>IY:AUTO:0005</systemName>
+      <userName>TT3</userName>
+      <blockentry sName="IB:AUTO:0003" order="0" />
+      <entrypoint fromblock="IB:AUTO:0001" toblock="IB:AUTO:0003" direction="4" fixed="no" fromblockdirection="None" />
+    </section>
+    <section systemName="IY:AUTO:0006" userName="TT" creationtype="userdefined">
+      <systemName>IY:AUTO:0006</systemName>
+      <userName>TT</userName>
+      <blockentry sName="IB:AUTO:0001" order="0" />
+      <entrypoint fromblock="IB:AUTO:0004" toblock="IB:AUTO:0001" direction="4" fixed="no" fromblockdirection="None" />
+      <entrypoint fromblock="IB:AUTO:0002" toblock="IB:AUTO:0001" direction="8" fixed="no" fromblockdirection="None" />
+      <entrypoint fromblock="IB:AUTO:0003" toblock="IB:AUTO:0001" direction="8" fixed="no" fromblockdirection="None" />
+    </section>
+  </sections>
+  <transits class="jmri.configurexml.TransitManagerXml">
+    <transit systemName="IZ:AUTO:0001" userName="ML-T3">
+      <systemName>IZ:AUTO:0001</systemName>
+      <userName>ML-T3</userName>
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0">
+        <transitsectionaction whencode="1" whatcode="12" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS105" whatstring2="" />
+      </transitsection>
+      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="StopAlloc" fwdstoppercent="1.0" revstoppercent="1.0">
+        <transitsectionaction whencode="6" whatcode="12" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS105" whatstring2="" />
+        <transitsectionaction whencode="5" whatcode="13" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS105" whatstring2="" />
+      </transitsection>
+      <transitsection sectionname="IY:AUTO:0005" sequence="4" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+    </transit>
+    <transit systemName="IZ:AUTO:0002" userName="T1-ML">
+      <systemName>IZ:AUTO:0002</systemName>
+      <userName>T1-ML</userName>
+      <transitsection sectionname="IY:AUTO:0003" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0">
+        <transitsectionaction whencode="1" whatcode="12" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS105" whatstring2="" />
+      </transitsection>
+      <transitsection sectionname="IY:AUTO:0006" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="StopAlloc" fwdstoppercent="1.0" revstoppercent="1.0">
+        <transitsectionaction whencode="5" whatcode="13" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS105" whatstring2="" />
+        <transitsectionaction whencode="6" whatcode="12" whendata="0" whenstring="" whatdata1="0" whatdata2="0" whatstring="IS105" whatstring2="" />
+      </transitsection>
+      <transitsection sectionname="IY:AUTO:0004" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+    </transit>
+    <transit systemName="IZ:AUTO:0003" userName="TT-ML">
+      <systemName>IZ:AUTO:0003</systemName>
+      <userName>TT-ML</userName>
+      <transitsection sectionname="IY:AUTO:0006" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+    </transit>
+  </transits>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <meters class="jmri.managers.configurexml.AbstractMeterManagerXml">
+    <meter>
+      <systemName>LVDCS240+(s/n5382)InputCurrent</systemName>
+    </meter>
+    <meter>
+      <systemName>LVDCS240+(s/n5382)Voltage</systemName>
+    </meter>
+  </meters>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Oct 17 16:29:11 EDT 2025" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="1055" y="384" windowheight="457" windowwidth="430" panelheight="249" panelwidth="383" sliders="no" scrollable="none" editable="no" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclesize="4" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutTrackDrawingOptions name="My Layout" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTrackDrawingOptionsXml">
+      <mainBallastColor>#000000</mainBallastColor>
+      <mainBallastWidth>0</mainBallastWidth>
+      <mainBlockLineDashPercentageX10>0</mainBlockLineDashPercentageX10>
+      <mainBlockLineWidth>4</mainBlockLineWidth>
+      <mainRailColor>#404040</mainRailColor>
+      <mainRailCount>1</mainRailCount>
+      <mainRailGap>0</mainRailGap>
+      <mainRailWidth>2</mainRailWidth>
+      <mainTieColor>#000000</mainTieColor>
+      <mainTieGap>0</mainTieGap>
+      <mainTieLength>0</mainTieLength>
+      <mainTieWidth>0</mainTieWidth>
+      <sideBallastColor>#000000</sideBallastColor>
+      <sideBallastWidth>0</sideBallastWidth>
+      <sideBlockLineDashPercentageX10>0</sideBlockLineDashPercentageX10>
+      <sideBlockLineWidth>2</sideBlockLineWidth>
+      <sideRailColor>#404040</sideRailColor>
+      <sideRailCount>1</sideRailCount>
+      <sideRailGap>0</sideRailGap>
+      <sideRailWidth>1</sideRailWidth>
+      <sideTieColor>#000000</sideTieColor>
+      <sideTieGap>0</sideTieGap>
+      <sideTieLength>0</sideTieLength>
+      <sideTieWidth>0</sideTieWidth>
+    </layoutTrackDrawingOptions>
+    <sensoricon sensor="1501-A" x="190" y="90" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="1501-B" x="200" y="90" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="1502-A" x="210" y="130" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="1502-B" x="220" y="130" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="1503-A" x="140" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="1503-B" x="150" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="TT" x="100" y="100" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="TT1" x="200" y="50" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="TT2" x="250" y="150" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="TT3" x="100" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="ML" x="290" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <sensoricon sensor="Return" x="90" y="30" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="110" y="20" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Return" fontFamily="Adwaita Sans" fontname="Adwaita Sans" size="15" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="120" y="90" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="TT" fontFamily="Adwaita Sans" fontname="Adwaita Sans" size="15" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="220" y="40" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="TT1" fontFamily="Adwaita Sans" fontname="Adwaita Sans" size="15" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="260" y="130" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="TT2" fontFamily="Adwaita Sans" fontname="Adwaita Sans" size="15" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="120" y="180" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="TT3" fontFamily="Adwaita Sans" fontname="Adwaita Sans" size="15" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="310" y="150" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="ML" fontFamily="Adwaita Sans" fontname="Adwaita Sans" size="15" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <sensoricon sensor="StopAlloc" x="240" y="100" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/tracksegments/circuit-empty.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps />
+    </sensoricon>
+    <positionablelabel x="260" y="90" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="StopAlloc" fontFamily="Adwaita Sans" fontname="Adwaita Sans" size="15" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <tracksegment ident="T1" blockname="TT3" connect1name="EB3" type1="POS_POINT" connect2name="TUR2" type2="TURNTABLE_RAY_2" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T2" blockname="TT1" connect1name="TUR2" type1="TURNTABLE_RAY_0" connect2name="EB4" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T3" blockname="TT2" connect1name="TUR2" type1="TURNTABLE_RAY_1" connect2name="A3" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T4" blockname="ML" connect1name="A3" type1="POS_POINT" connect2name="EB1" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="EB4" type="END_BUMPER" x="176.0" y="26.0" connect1name="T2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="END_BUMPER" x="62.0" y="187.0" connect1name="T1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="ANCHOR" x="272.0" y="184.0" connect1name="T3" connect2name="T4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB1" type="END_BUMPER" x="329.0" y="183.0" connect1name="T4" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <layoutturntable ident="TUR2" blockname="TT" radius="25.0" xcen="176.0" ycen="128.0" turnoutControlled="yes" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurntableXml">
+      <raytrack angle="0.0" connectname="T2" index="0" turnout="IT1501" turnoutstate="thrown" />
+      <raytrack angle="120.0" connectname="T3" index="1" turnout="IT1502" turnoutstate="thrown" />
+      <raytrack angle="240.0" connectname="T1" index="2" turnout="IT1503" turnoutstate="thrown" />
+    </layoutturntable>
+  </LayoutEditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Wed Oct 22 14:49:02 EDT 2025</date>
+      <filename>PanelPro (v5.13.5)</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Oct 22 14:55:08 EDT 2025</date>
+      <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Wed Oct 22 12:55:44 EDT 2025</date>
+          <filename>PanelPro (v5.13.5)</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Wed Oct 22 12:56:20 EDT 2025</date>
+          <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Wed Oct 22 09:20:04 EDT 2025</date>
+              <filename>PanelPro (v5.13.5)</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Wed Oct 22 09:20:58 EDT 2025</date>
+              <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Wed Oct 22 08:52:40 EDT 2025</date>
+                  <filename>PanelPro (v5.13.5)</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Wed Oct 22 08:55:07 EDT 2025</date>
+                  <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Tue Oct 21 17:25:13 EDT 2025</date>
+                      <filename>PanelPro (v5.13.5)</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Tue Oct 21 17:26:10 EDT 2025</date>
+                      <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Tue Oct 21 15:08:00 EDT 2025</date>
+                          <filename>PanelPro (v5.13.5)</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Tue Oct 21 15:08:34 EDT 2025</date>
+                          <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Tue Oct 21 15:41:05 EDT 2025</date>
+                          <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Tue Oct 21 17:48:09 EDT 2025</date>
+                      <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Wed Oct 22 08:58:11 EDT 2025</date>
+                  <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Wed Oct 22 09:22:20 EDT 2025</date>
+              <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Wed Oct 22 13:02:33 EDT 2025</date>
+          <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed Oct 22 15:00:29 EDT 2025</date>
+      <filename>/home/sg/JMRI-Files/JMRI-Layouts/SignalMasts/DistpatcherTurnTable.xml</filename>
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 5.13.5plus+sg+2025-10-22T12:44:22Z+R3ac8e72 on Wed Oct 22 15:00:29 EDT 2025-->
+</layout-config>

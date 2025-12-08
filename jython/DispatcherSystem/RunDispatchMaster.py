@@ -161,13 +161,26 @@ class RunDispatcherMaster(jmri.jmrit.automat.AbstractAutomaton ):
     # gets the list of stopping points (stations, sidings etc.)
     # ***********************************************************
     def get_list_of_stopping_points(self):
-        list_of_stopping_points = []
+        stopping_points_set = set()
+
+        # First, get stopping points from block comments
         for block in blocks.getNamedBeanSet():
             comment = block.getComment()
             if comment != None:
                 if "stop" in comment.lower():
-                    list_of_stopping_points.append(block.getUserName())
-        return list_of_stopping_points
+                    stopping_points_set.add(block.getUserName())
+
+        # Second, automatically add blocks associated with LayoutTurntables
+        editorManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager)
+        for editor in editorManager.getAll():
+            if isinstance(editor, jmri.jmrit.display.layoutEditor.LayoutEditor):
+                # The returned object is a Java Set, which needs to be converted to a list for safe iteration in Jython
+                for turntable in list(editor.getLayoutTurntables()):
+                    layout_block = turntable.getLayoutBlock()
+                    if layout_block is not None and layout_block.getUserName() is not None:
+                        stopping_points_set.add(layout_block.getUserName())
+
+        return sorted(list(stopping_points_set))
 
 
     def action_directory_in_DispatcherSystem(self):
@@ -196,4 +209,3 @@ class RunDispatcherMaster(jmri.jmrit.automat.AbstractAutomaton ):
 
         python_files.extend(python_files2)
         return python_files
-
