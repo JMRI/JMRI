@@ -251,16 +251,16 @@
         <pathelement location="${libdir}/swingx-core-1.6.5-1.jar"/>
 
         <!-- //BiDiB client library -->
-        <pathelement location="${libdir}/jbidibc-core-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-messages-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-netbidib-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-jserialcomm-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-serial-2.0.29.jar"/>
-        <pathelement location="${libdir}/jbidibc-simulation-2.0.29.jar"/>
-        <pathelement location="${libdir}/bidibwizard-common-2.0.30.jar"/>
-        <pathelement location="${libdir}/bidibwizard-model-2.0.30.jar"/>
-        <pathelement location="${libdir}/bidibwizard-simulation-2.0.30.jar"/>
+        <pathelement location="${libdir}/jbidibc-core-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-messages-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-netbidib-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-net-serial-over-tcp-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-jserialcomm-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-serial-2.0.40.jar"/>
+        <pathelement location="${libdir}/jbidibc-simulation-2.0.40.jar"/>
+        <pathelement location="${libdir}/bidibwizard-common-2.0.44.jar"/>
+        <pathelement location="${libdir}/bidibwizard-model-2.0.44.jar"/>
+        <pathelement location="${libdir}/bidibwizard-simulation-2.0.44.jar"/>
         <!-- BiDiB dependencies -->
         <pathelement location="${libdir}/commons-collections4-4.4.jar"/>
         <pathelement location="${libdir}/eventbus-1.4.jar"/>
