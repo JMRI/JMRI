@@ -56,8 +56,10 @@
 
         <li>
           <p><strong>User Name</strong> - The user name of the Block. The user name of a Block
-          created here may be set to any text. The user name for a Block created by Layout Editor
-          is set by Layout Editor and should not be changed.</p>
+          created here may be set to any text.  Before changing or removing a block user name, a
+          check is made to see if the user name is used by a Layout Editor panel.  If so, a warning
+          is displayed.  For changing the user name, if <strong>Yes</strong> is selected, the panel
+          references will also be changed.</p>
         </li>
 
         <li>
@@ -82,27 +84,27 @@
         the system and triggering other events in the system. Such false triggers could be due to a
         dirty piece of track or electrical interference.</li>
 
-        <li>The <strong>Use Global Debounce Values</strong> check box, allows you to select if the
-        sensor will use the default sensor debounce values if configured.</li>
+        <li><p>The <strong>Use Global Debounce Values</strong> check box, allows you to select if
+        the sensor will use the default sensor debounce values if configured.</p></li>
 
-        <li><strong>Inactive Delay</strong> and <strong>Active Delay</strong> allow you to specify
+        <li><p><strong>Inactive Delay</strong> and <strong>Active Delay</strong> allow you to specify
         the amount of time in milliseconds that the system waits before registering the state
-        change of a sensor.</li>
+        change of a sensor.</p></li>
       </ul>
 
       <h2 id="reporter">Reporter</h2>
       <img src="images/BlocksEditReporterTab.png" width="460" height="62" alt="reporter tab">
       <ul>
         <li>
-          <strong>Reporter</strong> Set the Reporter assigned to this Block. See the <a href=
+          <p><strong>Reporter</strong> Set the Reporter assigned to this Block. See the <a href=
           "ReporterTable.shtml">Reporter Table</a>. Selecting a Reporter and clicking
-          <strong>Apply</strong> puts the Reporter Value into the Block value.
+          <strong>Apply</strong> puts the Reporter Value into the Block value.</p>
         </li>
 
         <li>
           <strong>Use Current</strong> If we consider the scenario whereby we want to track a train
-          around the layout, typically this is achieved via the use of Memory objects associated
-          with Blocks. Until the train is known, we have nothing to track. Typically, we can
+          around the layout, this is achieved by assigning the reporter to the blocks.
+          Until the train is known, we have nothing to track. Typically, we can
           manually type in the Train ID into a panel and then this is tracked around the layout
           based on Block occupancy. If, however, we have an attached device that can provide us
           with the Train ID, such as an RFID reader, we no longer need to manually type in the
@@ -133,7 +135,7 @@
 
       <p>Describe the geometry of the Block using the fields shown.</p>
 
-      <p><img src="images/BlocksEditPhysicalTab.png" width="460" height="191" alt="physical tab">
+      <p><img src="images/BlocksEditPhysicalTab.png" alt="physical tab">
       </p>
 
       <table>
@@ -201,12 +203,15 @@
         In the drop down list, you are presented a set of named fixed speeds that have been
         predefined in the signalSpeed.xml file, in addition to a global option.<br>
         It is also possible to enter a numerical value to represent a speed. The global value is
-        set via the <strong>Speeds</strong> menu option.</li>
+        set via the <a href="BlockTable#block_speed_menu">Speeds</a> menu option.</li>
 
         <li><strong>Permissive</strong> - The Permissive option is used to identify Blocks that can
         be entered by another Train while it is already occupied. This option is used with certain
         automation tools and Logix to help determine if a Train can enter an occupied Block and
         what Aspect should be displayed on its Signal Mast.</li>
+
+        <li><strong>Ghost</strong> - The Ghost option is used by Dispatcher to simulate block
+        occupancy for blocks that don't have real occupancy sensors.</li>
       </ul>
 
       <h2 id="usage">Usage</h2>

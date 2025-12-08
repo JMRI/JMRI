@@ -33,8 +33,12 @@ public enum SpeedStepMode {
     MOTOROLA_28("motorola_28", 28, "SpeedStep28Motorola"), // Motorola 28 speed step mode.
     TMCC1_32("tmcc1_32", 32, "SpeedStep32TMCC1"), // Lionel TMCC 1, 32 speed step mode.
     TMCC2_32("tmcc2_32", 32, "SpeedStep32TMCC2"), // Lionel TMCC 2 Legacy, 32 speed step mode.
-    TMCC1_100("tmcc1_100", 100, "SpeedStep100TMCC1"), // Lionel TMCC ERR, 100 speed step mode.
+    TMCC1_100("tmcc1_100", 100, "SpeedStep100TMCC1"), // Lionel TMCC 1, 100 "relative" speed step mode.
     TMCC2_200("tmcc2_200", 200, "SpeedStep200TMCC2"), // Lionel TMCC 2 Legacy, 200 speed step mode.
+    TMCC1TR_32("tmcc1tr_32", 32, "SpeedStep32TMCC1TR"), // Lionel TMCC 1 TR, 32 speed step mode.
+    TMCC2TR_32("tmcc2tr_32", 32, "SpeedStep32TMCC2TR"), // Lionel TMCC 2 Legacy TR, 32 speed step mode.
+    TMCC1TR_100("tmcc1tr_100", 100, "SpeedStep100TMCC1TR"), // Lionel TMCC 1 TR, 100 "relative" speed step mode.
+    TMCC2TR_200("tmcc2tr_200", 200, "SpeedStep200TMCC2TR"), // Lionel TMCC 2 Legacy TR, 200 speed step mode.
     INCREMENTAL("incremental", 1, 1.0f, "SpeedStepIncremental");
 
     SpeedStepMode(String name, int numSteps, String description) {

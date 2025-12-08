@@ -13,31 +13,36 @@
     <div id="mainContent">
       <h1>Hardware Support: Lionel TMCC</h1>
 
-      <h2 id="hardware">Supported Hardware</h2>
+	  <br>
 
-      <h3>Command Station</h3>
+      <h2 id="hardware">Getting Started with TMCC using JMRI</h2>
+
+      <h3>TMCC Command Stations</h3>
 
       <p>Lionel TMCC 1 or TMCC 2 Legacy thru the serial port on the Command Base 1, Command Base 1L, or Command Base 992.
 	  Via WiFi to Command Base 992 and Command Base 3. Note: Connecting to the Command Base 1L will require an LCS SER2 serial converter.
       Connecting to the Command Base 992 may require the Y-cable included with the Lionel Legacy Command Set. </p>
 
-      <h2 id="limitations">Limitations</h2>
+      <h3>Limitations</h3>
 
-      <p>As of JMRI v 5.13.5, Lionel TMCC Train(TR) commands and some Legacy Engine(ENG) extended commands are still under development.</p>
+      <p>As of JMRI v 5.15.1, Lionel TMCC 1 and TMCC 2 Legacy should be fully supported. If anything seems missing please make a suggestion
+      via the <a href="https://groups.io/g/jmriusers">JMRIusers list.</a>.
 
-      <h2 id="connecting">Connecting</h2>
+      <h3>Connecting via Cable</h3>
 
-      <h3>DB9 Serial Cable</h3>
-
-      <p>First, connect your computer's serial port to the TMCC command station using a DB9 serial
+      <p>Connect your computer via serial port to a TMCC command station using a DB9 serial
       cable. This should be a "straight-through" or "modem" cable, <em>not</em> a "crossover" or
-      "null-modem" cable. if your computer doesn't have a built-in serial port, you can use a
+      "null-modem" cable. If your computer doesn't have a built-in serial port, use a USB port with a
       USB-serial adapter, but make sure you install the correct drivers if needed. Recent Mac OS
       distributions and Windows versions have the drivers already there for some adaptors.</p>
 	  
+	  <h3>Connecting via WiFi</h3>
+
+      <p>Follow the instructions in the Lionel Legacy Control System or Command Base 3 Manual.</p>
+
 	  <h3>Setting Up JMRI</h3>
 
-      <p>Next, configure the JMRI program for TMCC:</p>
+      <p>Configure the JMRI program for TMCC:</p>
 
       <ul>
         <li>Start your JMRI-based program (DecoderPro, PanelPro, etc).</li>
@@ -59,14 +64,10 @@
         <li>Restart the program. You should be up and running.</li>
       </ul>
 	  
-	  <h3>WiFi</h3>
-
-      <p>Follow the instructions in the Lionel Legacy Control System or Command Base 3 Manual.</p>
-
 	  <br>
-	  <h2>Programming Mode</h2>
+	  <h2>Programming ID#s and Feature Types</h2>
 
-      <p>To Program ID#s/Addresses for Engines(ENG), Switches(SW) or Accessories(ACC):</p>
+      <p>To Program ID#s/Addresses for Engines(ENG), Track (TR), Switches(SW) or Accessories(ACC):</p>
 
       <ul>
         <li>Follow the target device instructions to set it into "Program" mode.</li>
@@ -118,13 +119,13 @@
       selecting the proper speed step mode for operation. The choices are:</p>
 
       <ul>
-        <li>32 Speed Steps (TMCC 1).</li>
+        <li>32 Speed Steps (TMCC 1 - Absolute).</li>
 
-        <li>32 Speed Steps (TMCC 2 Legacy).</li>
+        <li>32 Speed Steps (TMCC 2 Legacy - Absolute).</li>
 
-        <li>100 Speed Steps (TMCC 1 ERR).</li>
+        <li>100 Speed Steps (TMCC 1 - Relative).</li>
 
-        <li>200 Speed Steps (TMCC 2 Legacy).</li>
+        <li>200 Speed Steps (TMCC 2 Legacy - Absolute).</li>
       </ul>
 
 	  <p>The arrow keys on the keyboard may also be used to adjust locomotive speed (left arrow - speed increase; right arrow - speed decrease).
@@ -157,11 +158,11 @@
 	  
         <dl>
 	  
-        <dt>F0 </dt><dd>Headlights On / Off (Equivalent to Aux2 Option 2 Operation)</dd>
+        <dt>F0 </dt><dd>Headlights Toggle On / Off (Equivalent to Aux2 Option 2 Operation)</dd>
 
         <dt>F1 </dt><dd>Bell</dd>
 
-        <dt>F2 </dt><dd>Whistle 1 (Steam) / Horn 1 (Diesel)</dd>
+        <dt>F2 </dt><dd>Whistle (Steam) / Horn 1 (Diesel)</dd>
 
         <dt>F3 </dt><dd>Open Front Coupler</dd>
 
@@ -183,25 +184,25 @@
 
         <dl>
 
-        <dt>F5</dt><dd>Num 0; Preface needed for sending specified commands (TBD)</dd>
+        <dt>F5</dt><dd>Num 1; Volume Up</dd>
 
-        <dt>F6</dt><dd>Num 1; Volume Up</dd>
+        <dt>F6</dt><dd>Num 2; Crew Talk</dd>
 
-        <dt>F7</dt><dd>Num 2; Crew Talk</dd>
+        <dt>F7</dt><dd>Num 3; Activate Sound Card and Play Start up Sounds</dd>
 
-        <dt>F8</dt><dd>Num 3; Activate Sound Card and Play Start up Sounds</dd>
+        <dt>F8</dt><dd>Num 4; Volume Down</dd>
 
-        <dt>F9</dt><dd>Num 4; Volume Down</dd>
+        <dt>F9</dt><dd>Num 5; Deactivate Sound Card after Playing Shut Down Sounds</dd>
 
-        <dt>F10</dt><dd>Num 5; Deactivate Sound Card after Playing Shut Down Sounds</dd>
+        <dt>F10</dt><dd>Num 6; Steam Release (Steam) / Air Horn and RPM Decrease (Diesel)</dd>
 
-        <dt>F11</dt><dd>Num 6; Steam Release (Steam) / Air Horn and RPM Decrease (Diesel)</dd>
+        <dt>F11</dt><dd>Num 7; Tower Comm</dd>
 
-        <dt>F12</dt><dd>Num 7; Tower Comm</dd>
+        <dt>F12</dt><dd>Num 8; Smoke and Firebox OFF on Steam / Auxilliary Lighting OFF on Diesel</dd>
 
-        <dt>F13</dt><dd>Num 8; Smoke and Firebox OFF on Steam / Auxilliary Lighting OFF on Diesel</dd>
+        <dt>F13</dt><dd>Num 9; Smoke and Firebox ON on Steam) / Auxilliary Lighting ON on Diesel</dd>
 
-        <dt>F14</dt><dd>Num 9; Smoke and Firebox ON on Steam) / Auxilliary Lighting ON on Diesel</dd>
+        <dt>F14</dt><dd>Num 0; Reset</dd>
 
         </dl>
 
@@ -221,40 +222,182 @@
 
         <dt>F16</dt><dd>Let Off Sound</dd>
 
-        <dt>F17</dt><dd>Forward</dd>
+        <dt>F17</dt><dd>Boost</dd>
 
-        <dt>F18</dt><dd>Reverse</dd>
+        <dt>F18</dt><dd>Brake</dd>
 
-        <dt>F19</dt><dd>Toggle Direction</dd>
+        <dt>F19</dt><dd>Momentum Low</dd>
 
-        <dt>F20</dt><dd>Boost</dd>
+        <dt>F20</dt><dd>Momentum Medium</dd>
 
-        <dt>F21</dt><dd>Brake</dd>
+        <dt>F21</dt><dd>Momentum High</dd>
 
-        <dt>F22</dt><dd>Increse Speed (Relative) 2 Steps</dd>
+        <dt>F22</dt><dd>Set</dd>
 
-        <dt>F23</dt><dd>Decrease Speed (Relative) -3 Steps</dd>
+        <dt>F23</dt><dd>Horn 2</dd>
 
-        <dt>F24</dt><dd>Momentum Low</dd>
+        <dt>F24</dt><dd>RR Speed 5mph</dd>
 
-        <dt>F25</dt><dd>Momentum Medium</dd>
+        <dt>F25</dt><dd>RR Speed 20mph</dd>
 
-        <dt>F26</dt><dd>Momentum High</dd>
+        <dt>F26</dt><dd>RR Speed 35mph</dd>
 
-        <dt>F27</dt><dd>Set</dd>
+        <dt>F27</dt><dd>RR Speed 50mph</dd>
+
+        <dt>F28</dt><dd>RR Speed 70mph</dd>
+
+        <dt>F29</dt><dd>RR Speed Full</dd>
 
         </dl>
 	  
-      <p>Any Accessory/Other component that uses the TMCC Engine(ENG) ID#/Address should also work with the above function buttons; however,
+      <p>Any Accessory/Other component that uses the TMCC Engine(ENG) ID#/Address format should also work with the above function buttons; however,
       the function buttons above may not allign with the expected functions of the target device. Consult the manual that came with the Accessory
-      ( Crane Car, etc. ) to determine what the Aux1 buttons do for that item and label the JMRI function buttons accordingly.</p>
+      ( Crane Car, etc. ) to determine how the above button layout aligns.</p>
+      
+      <p>Also note there are specified decoder files for the various TMCC rolling stock ( Crane Car, Boxcar, Acela Train, etc. ) with associated FnKey
+      layouts specific to each. These can be found through the Add New Loco process. After the new decoder/rolling stock item is added, go to the
+      Labels and Media button (bottom right), open this and then select the X (upper right) to close. This will prompt you to Save (which you should do)
+      and then the custom FnKey layout will appear when you open the throttle.</p>
+      
+      <p>Per the RR Speeds: The speed values set are guesses at this point. As you work with these, please provide feedback via the <a href="https://groups.io/g/jmriusers">JMRIusers list.</a>
+      as to any adjustments that need to be made.</p>       
+
+	  <h3>TMCC 1 and TMCC 2 Legacy Extended Functions</h3>
+
+      <p>With JMRI, we've tried to simplify access to TMCC Extended Functions. Rather than the combination of button presses needed when using a TMCC remote,
+      most extended functons within JMRI are set up under single FnKeys.</p>
+
+	  <h3>TMCC 1 Extended Functions</h3>
+
+	  </style>	  
+	  
+        <dl>
+	  
+        <dt>F30 </dt><dd>Set ERR 100 Speed Steps</dd>
+
+        <dt>F31 </dt><dd>Set ERR 32 Speed Steps</dd>
+
+        <dt></dt><dd></dd>
+
+        </dl>
 
 	  <h3>TMCC 2 Legacy Extended Functions</h3>
 
-      <p>Extended TMCC 2 Legacy Functions are under development.
-	  If you have suggestions for usage of additional function keys,
-      please make a suggestion via the
-      <a href="https://groups.io/g/jmriusers">JMRIusers list.</a></p>.
+	  </style>	  
+	  
+        <dl>
+	  
+        <dt>F30 </dt><dd>Mars Light On</dd>
+
+        <dt>F31 </dt><dd>Mars Light Off</dd>
+
+        <dt>F32 </dt><dd>Ground Light On</dd>
+
+        <dt>F33 </dt><dd>Ground Light Off</dd>
+
+        <dt>F34 </dt><dd>Ground Light Auto</dd>
+
+        <dt>F35 </dt><dd>Dog House Light On</dd>
+
+        <dt>F36 </dt><dd>Dog House Light Off</dd>
+
+        <dt>F37 </dt><dd>Tender Marker On</dd>
+
+        <dt>F38 </dt><dd>Tender Marker Off</dd>
+
+        <dt>F39 </dt><dd>Rule 17 On</dd>
+
+        <dt>F40 </dt><dd>Rule 17 Off</dd>
+
+        <dt>F41 </dt><dd>Rule 17 Auto</dd>
+
+        <dt>Etc. </dt><dd></dd>
+
+        <dt></dt><dd></dd>
+
+        </dl>
+
+      <p>As with other rolling stock, there are specified decoder files for the various TMCC 1 and TMCC 2 Legacy locomotives. These all have
+      associated FnKey layouts specific to each. These can be found through the Add New Loco process, and after the new decoder/rolling stock
+      item is added, go to the Labels and Media button (bottom right), open this and then select the X (upper right) to close. This will prompt
+      you to Save (which you should do) and then the custom FnKey layout will appear when you open the throttle.</p>
+
+	  <p>If you have suggestions for changes to the FnKey layout, or additional function keys, please post these via the <a href="https://groups.io/g/jmriusers">JMRIusers list.</a></p>.
+	  
+	  <br>
+
+	  <h2>Track(TR) Operation</h2>
+
+      <p>With TMCC, "Track" relates to devices that control power to the track (PowerMasters and Transformers). Some of these allow programming of
+      ID#s and remote control. To operate Track(TR) using JMRI:</p>
+     
+      <ul>
+        <li>Start DecoderPro.</li>
+
+        <li>Go to Actions/Single CV Programmer (*Actions is a tab at the top).</li>
+
+        <li>Follow the directions above to set the ID#s for the Track(TR) componenents.</li>
+        *Reference the user manual for the Track(TR) device for any specific details related to setting up the ID#.
+
+        <li>Follow the process to Add New Loco and select the appropriate Track(TR) device.</li>
+
+        <li>To utilize the pre-set FnKey definitions, open Labels and Media (button, bottom right) and use the X (upper right) to close this window.</li>
+        *This will prompt you to Save (which you should do) and then the custom FnKey layout will appear when you open the throttle.
+
+        <li>You are now ready to use the throttle to control the Track(TR) device.</li>
+	  </ul>
+
+      <p>If you have questions about using Track(TR) please post these via the <a href="https://groups.io/g/jmriusers">JMRIusers list.</a></p>.
+	  
+      
+      <br>
+
+	  <h2>Train(TR) Operation</h2>
+
+      <p>With TMCC, "Train" relates to lash-ups or consists. These are managed in JMRI through DecoderPro and the TMCC Consisting Tool (a variation
+      of the JRMI Consisting Tool). The proceedures using the JRMI TMCC Consisting Tool are streamlined relative to how a lash-up is constructed
+      using a TMCC remote. There is no need for the TR button, et.al. To manage consists using the TMCC Consisting Tool:</p>
+     
+      <ul>
+        <li>Start DecoderPro.</li>
+
+        <li>Go to Actions/Consisting Tool (*Actions is a tab at the top).</li>
+
+        <li>Select the type of consist (TMCC1 or TMCC2) in the top line next to Consist.</li>
+
+        <li>Enter an ID# for the consist (This is the TR ID# in TMCC).</li>
+
+        <li>In Line 2, enter the number of the loco to be added to the consist or use the drop-down to select a loco from the roster.</li>
+        *TMCC1 and TMCC2 locos should not be mixed in a consist unless TMCC2 locos are set to TMCC1 format.
+        
+        <li>Select the Add button.</li>
+        *Locos are added to the consist in order starting with Head, then Rear, then Mid (multiple mid locos can be added).<div>
+        The Head loco is not given a Direction option. It will always be set to Forward. Direction can be set for Rear and Mid locos. 
+        
+        <li>Continue to select locos and Add them until the desired consist is complete.</li>
+
+        <li>If needed, use the Delete button next to a loco to remove it from the consist.</li>
+        *Locos only store one consist ID#. When locos are added to the consist, the consist ID is automatically assigned to the loco.<div>
+        When locos are removed from the consist the assigned consist ID# is automatically cleard from the loco. Likewise, if the entire consist<div>
+        is deleted, the assigned consist ID is cleared from all locos in the consist list.<div>
+        This only works if the locos are on the track and powered (see TMCC User Manuals for how to build a lash-up).<div>
+        As an added precaution against residual consist IDs in locos, the TMCC Consisting Tool automatically clears consist IDs from locos<div>
+        when they are added to a consist.
+
+        <li>Once the consist build is complete, select Throttle at the bottom of the Consisting Tool.</li>
+
+        <li>A TMCC throttle will open with the Consist ID# at the top.</li>
+        *If you want a consist throttle to load with pre-set FnKeys, set the Consist ID# the same as the Eng ID# of the Head Loco (first loco added to the consist).
+ 
+        <li>Use the SpeedStep drop-down in the throttle to select the appropriate TR speed profile for the consist.</li>
+
+        <li>You can now control the consist.</li>
+
+      </ul>
+
+      <p>Go here to learn more about the <a href="https://www.jmri.org/help/en/html/tools/consisttool/ConsistTool.shtml">JMRI: Consisting Tool.</a>
+
+      <p>If you have questions about using the TMCC Consisting Tool please post these via the <a href="https://groups.io/g/jmriusers">JMRIusers list.</a></p>.
 	  
 	  <br>
 
@@ -301,7 +444,10 @@
       </ul>
 
       <p>Learn more about using JMRI Turnouts here:
-      <a href="https://www.jmri.org/help/en/html/tools/Turnouts.shtml">JMRI: Turnouts Documentation.</a></p>.
+      <a href="https://www.jmri.org/help/en/html/tools/Turnouts.shtml">JMRI: Turnouts Documentation.</a>.</p>
+
+      Questions about using Switch(SW) or Accessory(ACC)? Please post these via the <a href="https://groups.io/g/jmriusers">JMRIusers list.</a></p>.
+
 
 	  <br>
 
@@ -311,7 +457,7 @@
       with one command. In JMRI, both TMCC Route(RTE) and Group(GR) functions are handeld through the JMRI Route tool. Follow the instructions
       below to set up TMCC Route(RTE) and Group(GR) elements.</p>
 
-      <h3>TMCC Switch(SW)</h3>
+      <h3>TMCC Route(RTE)/TMCC Group(GR)</h3>
 	  
       <ul>
         <li>Start PanelPro.</li>
@@ -334,7 +480,14 @@
       <a href="https://www.jmri.org/help/en/html/tools/Routes.shtml">JMRI: Routes Documentation.</a>.
 
       <p>For more fun, explore JMRI LRoutes here:
-      <a href="https://www.jmri.org/help/en/html/tools/LRoutes.shtml">JMRI: LRoute Documentation.</a></p>.
+      <a href="https://www.jmri.org/help/en/html/tools/LRoutes.shtml">JMRI: LRoute Documentation.</a>.
+
+      <p>If you find anything missing, have suggestions or comments, please send these along via the
+      <a href="https://groups.io/g/jmriusers">JMRIusers list.</a></p>.
+      
+
+
+
 
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

@@ -231,7 +231,7 @@
 
         <h4>Digitrax</h4>
             <ul>
-                <li></li>
+                <li>Fix bug, PR4 Stand-alone Loconet</li>
             </ul>
 
         <h4>Doehler &amp; Haas</h4>
@@ -424,13 +424,20 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed a problem causing the starting value when doing
+                CV reads to erroneously be zero.</li>
+            <li>When opening a roster entry with a large decoder definition,
+                DecoderPro now defers some of the processing until later while
+                opening the tabbed programming panes sooner.  You may see a 
+                pane with "Wait for pane contents to be loaded".  The contents
+                should appear within a few seconds.</li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
+             <li>Defer calling "loadAtStartup" until the layout data file loading is done and
+             layout block paths have been initialized.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -643,6 +650,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>(Developer) Updated build.xml so Ant builds work with Java 25</li>
         </ul>
 

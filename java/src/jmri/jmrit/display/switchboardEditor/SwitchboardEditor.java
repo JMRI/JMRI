@@ -1,5 +1,7 @@
 package jmri.jmrit.display.switchboardEditor;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -1676,6 +1678,8 @@ public class SwitchboardEditor extends Editor {
      * so we don't dispose it (yet).
      */
     @Override
+    @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
+            justification = "Just hiding the window, not actually closing it")
     public void windowClosing(java.awt.event.WindowEvent e) {
         setVisible(false);
         setAllEditable(false);

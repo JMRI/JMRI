@@ -372,7 +372,6 @@ public class JUnitUtil {
         try {
             t.join(100); // give it a bit of time to end
             if (t.getState() != Thread.State.TERMINATED) {
-                t.stop(); // yes, we know it's deprecated, but it's the only option for Jemmy threads
                 log.warn("   Thread {} did not terminate", t.getName());
             }
         } catch (IllegalMonitorStateException | IllegalStateException | InterruptedException e) {
@@ -1619,7 +1618,7 @@ public class JUnitUtil {
                  || ( name.equals("OLCB Interface dispose thread") && group.contains("main") )
                  || ( name.equals("olcbCanInterface.initialize") && group.contains("JMRI") )    // Created by JMRI but hangs due to OpenLCB lib
 
-                 || ( name.startsWith("SwingWorker-pool-1-thread-") &&
+                 || ( name.startsWith("SwingWorker-pool-") &&
                          ( group.contains("FailOnTimeoutGroup") || group.contains("main") )
                     )
                 )) {

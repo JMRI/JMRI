@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.InstanceManager;
 
 /**
  * Controls for operations developers. Debug Property changes and instance
@@ -85,6 +86,11 @@ public class Control {
     public static int speedHpt = 36;
     
     public static boolean showCloneCars = true;
+    
+    public static void setMaxCharLength(int length) {
+        max_len_string_attibute = length;
+        InstanceManager.getDefault(OperationsSetupXml.class).setDirty(true);
+    }
 
     // must synchronize changes with operation-config.dtd
     public static Element store() {

@@ -48,6 +48,7 @@ import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
 import jmri.util.CvUtil;
 import jmri.util.StringUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
@@ -213,6 +214,9 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Construct the Pane from the XML definition element.
      *
+     * In case this is invoked from off the Swing/AWT thread, 
+     * it defers to that thread in a granular manner.
+     *
      * @param parent       The parent pane
      * @param name         Name to appear on tab of pane
      * @param pane         The JDOM Element for the pane definition
@@ -244,11 +248,10 @@ public class PaneProgPane extends javax.swing.JPanel
         setToolTipText(jmri.util.jdom.LocaleSelector.getAttribute(pane, "tooltip"));
 
         // find out whether to display "label" (false) or "item" (true)
-        boolean showItem = false;
         Attribute nameFmt = pane.getAttribute("nameFmt");
-        if (nameFmt != null && nameFmt.getValue().equals("item")) {
+        final boolean showItem = (nameFmt != null && nameFmt.getValue().equals("item"));
+        if (showItem) {
             log.debug("Pane {} will show items, not labels, from decoder file", name);
-            showItem = true;
         }
         // put the columns left to right in a panel
         JPanel p = new JPanel();
@@ -259,26 +262,34 @@ public class PaneProgPane extends javax.swing.JPanel
         // for all "column" elements ...
         List<Element> colList = pane.getChildren("column");
         for (Element element : colList) {
-            // load each column
-            p.add(newColumn(element, showItem, modelElem));
+            ThreadingUtil.runOnGUI(() -> {
+                // load each column
+                p.add(newColumn(element, showItem, modelElem));
+            });
         }
         // for all "row" elements ...
         List<Element> rowList = pane.getChildren("row");
         for (Element element : rowList) {
-            // load each row
-            p.add(newRow(element, showItem, modelElem));
+            ThreadingUtil.runOnGUI(() -> {
+                // load each row
+                p.add(newRow(element, showItem, modelElem));
+            });
         }
         // for all "grid" elements ...
         List<Element> gridList = pane.getChildren("grid");
         for (Element element : gridList) {
-            // load each grid
-            p.add(newGrid(element, showItem, modelElem));
+            ThreadingUtil.runOnGUI(() -> {
+                // load each grid
+                p.add(newGrid(element, showItem, modelElem));
+            });
         }
         // for all "group" elements ...
         List<Element> groupList = pane.getChildren("group");
         for (Element element : groupList) {
-            // load each group
-            p.add(newGroup(element, showItem, modelElem));
+            ThreadingUtil.runOnGUI(() -> {
+                // load each group
+                p.add(newGroup(element, showItem, modelElem));
+            });
         }
 
         // explain why pane is empty

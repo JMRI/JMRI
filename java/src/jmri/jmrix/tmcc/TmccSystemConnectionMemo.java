@@ -105,6 +105,8 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
         ThrottleManager throttleManager = getThrottleManager();
         store(throttleManager,ThrottleManager.class);
         InstanceManager.setThrottleManager(getThrottleManager());
+        InstanceManager.store(getConsistManager(), ConsistManager.class);
+
         register();
     }
 
@@ -133,6 +135,22 @@ public class TmccSystemConnectionMemo extends DefaultSystemConnectionMemo implem
 
     public void setProgrammerManager(TmccProgrammerManager p) {
         store(p, DefaultProgrammerManager.class);
+    }
+
+    @Override
+    public TmccConsistManager getConsistManager() {
+        if (getDisabled()) {
+            return null;
+        }
+        return (TmccConsistManager) classObjectMap.computeIfAbsent(ConsistManager.class,(Class<?> c) -> {
+                    var t = new TmccConsistManager(this);
+                    return t;
+                });
+    }
+
+    @Override
+    public void setConsistManager(@Nonnull ConsistManager c) {
+        store(c,ConsistManager.class);
     }
 
     @Override
