@@ -18,8 +18,6 @@ from org.jgrapht.graph import DefaultEdge
 from org.jgrapht.graph import DefaultWeightedEdge
 from org.jgrapht.graph import DirectedWeightedMultigraph
 
-
-
 class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
     def __init__(self):
         self.g = DirectedWeightedMultigraph(DefaultWeightedEdge)
@@ -32,14 +30,14 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         self.dict_path_name_stopping= {}
         self.dict_path_name_express= {}
         self.logLevel = 0
-        if self.logLevel > 0: print "graph __init__"
+        if self.logLevel > 2: print "graph block list"
         self.setup_station_block_list()
-        if self.logLevel > 0: print "__init__2"
+        if self.logLevel > 2: print "graph vertices"
         self.setup_graph_vertices()
-        if self.logLevel > 0: print "__init__3"
+        if self.logLevel > 2: print "graph inhibited blocks"
         self.get_list_inhibited_blocks()
         self.setup_graph_edges()
-        if self.logLevel > 0: print "finished graph init"#
+        if self.logLevel > 3: print "finished graph init"#
 
     # **************************************************
     # Set up station block list either from manual list or from Block Table
@@ -47,7 +45,7 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         
     def setup_station_block_list(self):
         BlockManager = jmri.InstanceManager.getDefault(jmri.BlockManager)
-        if self.logLevel > 0: print "Block", BlockManager.getNamedBeanSet()
+        if self.logLevel > 3: print "Block", BlockManager.getNamedBeanSet()
         for block in BlockManager.getNamedBeanSet():
             #blocks with the word stop in the comment are stations
             comment = block.getComment()
@@ -56,7 +54,21 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                     station_block_name = block.getUserName()
                     self.station_block_list.append(station_block_name)
                     self.station_blk_list.append(self.get_layout_block(station_block_name))
-        if self.logLevel > 0: print 'self.station_block_list' , self.station_block_list
+
+        # Also add any blocks associated with turntables
+        for panel in jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager).getAll(jmri.jmrit.display.layoutEditor.LayoutEditor):
+            turntables = panel.getLayoutTurntables()
+            if turntables is None:
+                continue
+            for turntable in turntables:
+                if turntable.getLayoutBlock() is not None:
+                    station_block_name = turntable.getLayoutBlock().getUserName()
+                    if station_block_name not in self.station_block_list:
+                        print "Found turntable block: " + station_block_name
+                        self.station_block_list.append(station_block_name)
+                        self.station_blk_list.append(self.get_layout_block(station_block_name))
+
+        if self.logLevel > 2: print 'self.station_block_list' , self.station_block_list
         
     def get_layout_block(self, block_name):
         LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
@@ -66,44 +78,58 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
     def setup_graph_vertices(self):
 
         for station_block_name in self.station_block_list:
-            if self.logLevel > 0: print "station_block_name",station_block_name
+            station_block_name = station_block_name
+            if self.logLevel > 1: print "station_block_name",station_block_name
             lblk = self.get_layout_block(station_block_name)
-            if self.logLevel > 0: print "lblk",lblk
-            self.g.addVertex(lblk)
-            self.g_express.addVertex(station_block_name)
-            self.g_stopping.addVertex(station_block_name)
-        if self.logLevel > 0: print 'end setup_graph_vertices"
+            if self.logLevel > 1: print "lblk",lblk
+            if lblk != None:
+                self.g.addVertex(lblk)
+                self.g_express.addVertex(station_block_name)
+                if self.logLevel > 2: print station_block_name , ",",
+                self.g_stopping.addVertex(station_block_name)
+            else:
+                self.displayMessage("Probably trying to set a station for non-existant block. Examine the stop comments in the blocks")
+                xxxxstopxxxxx   # stop the program with non-python statement
+
+        if self.logLevel > 2: print
+        if self.logLevel > 3: print 'end setup_graph_vertices"
+        # except Exception, e:
+        #     print "help"
+        #     print("Probably trying to set a station (look at stop comments in the blocks) for non-existant block")
+        # finally:
+        #     pass
+
 
     def setup_graph_edges(self):
         global le
 
-        if self.logLevel > 0: print "*****************************"
-        if self.logLevel > 0: print "****setup_graph_edges********"
-        if self.logLevel > 0: print "*****************************"
+        if self.logLevel > 3: print "*****************************"
+        if self.logLevel > 2: print "****setup_graph_edges********"
+        if self.logLevel > 3: print "*****************************"
         LayoutBlockConnectivityTools=jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools()
         index = 0
-        if self.logLevel > 0: print "self.station_block_list", self.station_block_list
+        if self.logLevel > 3: print "self.station_block_list", self.station_block_list
         for station in self.station_block_list:
-            if self.logLevel > 0: print "*********************"
-            if self.logLevel > 0: print "station = " ,station
-            if self.logLevel > 0: print "*********************"
+            if self.logLevel > 1: print "*********************"
+            if self.logLevel > 1: print "station = " ,station
+            if self.logLevel > 1: print "*********************"
             station_block = self.get_layout_block(station)
             station_block_name = station_block.getUserName()
-            if self.logLevel > 0: print "station_block_name",station_block_name
-            if self.logLevel > 0: print "no neighbors", station_block.getNumberOfNeighbours()
+            if self.logLevel > 3: print "station_block_name",station_block_name
+            if self.logLevel > 2: print "number of neighbors", station_block.getNumberOfNeighbours()
             for i in range(station_block.getNumberOfNeighbours()):
-                if self.logLevel > 0: print "+++++++++++++++++++++++++"
+                if self.logLevel > 1: print "+++++++++++++++++++++++++"
                 neighbor_name = station_block.getNeighbourAtIndex(i).getDisplayName()
-                if self.logLevel > 0: print "neighbor_name",neighbor_name
+                if self.logLevel > 1: print "neighbor_name",neighbor_name
                 other_stations = [block for block in self.station_block_list if block not in [station]]
-                if self.logLevel > 0: print "other_stations",other_stations
+                if self.logLevel > 3: print "other_stations",other_stations
                 j = 0
                 for destination in other_stations:
                     index +=1
                     j += 1
-                    if self.logLevel > 0: print "--------------------------"
-                    if self.logLevel > 0: print "destination", j ,destination
-                    if self.logLevel > 0: print "--------------------------"
+                    if self.logLevel > 3: print "--------------------------"
+                    if self.logLevel > 3: print "destination", j ,destination
+                    if self.logLevel > 3: print "--------------------------"
                     sourceLayoutBlock = station_block
                     destinationLayoutBlock  = self.get_layout_block(destination)
                     protectingLayoutBlock = self.get_layout_block(neighbor_name)
@@ -111,13 +137,13 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                     pathMethod = LayoutBlockConnectivityTools.Routing.NONE
                     path = []
                     success = False
-                    if self.logLevel > 0: print "\nbefore: sourceLayoutBlock", sourceLayoutBlock.getUserName(), \
-                        "destinationLayoutBlock", destinationLayoutBlock.getUserName()
+                    if self.logLevel > 1: print "trying: ", sourceLayoutBlock.getUserName(), \
+                        " --> ", destinationLayoutBlock.getUserName()
                     try:
                         [path, path_weight] = self.get_optimal_path(sourceLayoutBlock, destinationLayoutBlock, protectingLayoutBlock, validateOnly, pathMethod)    #take account of inhibited directions
                         path_name = [str(x.getUserName()) for x in path]
 
-                        if self.logLevel > 0: print path, path_name
+                        if self.logLevel > 3: print path, path_name
                         success = True
 
                     except jmri.JmriException as e:
@@ -133,151 +159,122 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                             x = "yes"
                         else:
                             x = "no"
-                        if self.logLevel > 0: print "after:  sourceLayoutBlock.getUserName()", sourceLayoutBlock.getUserName(), \
-                              "destinationLayoutBlock.getUserName", destinationLayoutBlock.getUserName() , x
+                        if x == "yes":
+                            if self.logLevel > 1: print "found: ", sourceLayoutBlock.getUserName(), \
+                                  " --> ", destinationLayoutBlock.getUserName() , x,
                         if sourceLayoutBlock.getUserName() == "SidingBottomLHS" and \
                                 destinationLayoutBlock.getUserName() == "SidingMiddlleRHS":
-                            if self.logLevel > 0: print "for SidingBottomLHS path is " , path_name
+                            if self.logLevel > 3: print "for SidingBottomLHS path is " , path_name
                         if path != [] and path != None :
                             #add an edge for all paths to form the express train graph
                             path_name = [str(x.getUserName()) for x in path]
-                            edge = le()     # le = LabelledEdge() set up outside CreateGraph.py
-                            ####################################################################
-                            #
-                            # Nomenclature
-                            #
-                            # In JGraphT items can be associated with edges uaing the notation:
-                            #     edge.setItem(item_name = variable)
-                            #
-                            #  The value can then be retrieved elsewhere in the program using:
-                            #     variable = edge.getItem(item_name)
-                            #
-                            #  in the uses below the item has the same name as the variable
-                            #
-                            ####################################################################
-                            edge.setItem(index = index)
-                            edge.setItem(path = path)
-                            edge.setItem(path_name = path_name)
-                            #edge.setItem(neighbor_name = neighbor_name)
-                            if self.logLevel > 0: print edge.to_string()
-                            if self.logLevel > 0: print "\nadding edge ", station_block_name, destination
-                            if self.logLevel > 0: print edge.to_string()
-                            if self.logLevel > 0: print "got here 4a2"
+                            if self.logLevel > 1: print "path_name", path_name
+                            edge = self._create_and_populate_edge(index, path, path_name, neighbor_name)
+
                             if self.Sufficient_signal_masts_in_edge(edge):
                                 self.g_express.addEdge(station_block_name,destination, edge)
                                 self.g_express.setEdgeWeight(edge, path_weight)
-                                #print "edge", edge , "pweight", pweight
-                                if self.logLevel > 0: print "got here 4a"
-                                if self.logLevel > 0: print edge.to_string()
-                                edge.setItem(index = index)
-                                edge.setItem(path = path)
-                                edge.setItem(path_name = path_name)
-                                edge.setItem(neighbor_name = neighbor_name)
-                                LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
-                                firstLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[0])
-                                first_block_name = firstLayoutBlock.getUserName()
-                                edge.setItem(first_block_name = first_block_name)
-                                secondLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[1])
-                                second_block_name = secondLayoutBlock.getUserName()
-                                edge.setItem(second_block_name = second_block_name)
-                                lastLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-1])
-                                last_block_name = lastLayoutBlock.getUserName()
-                                edge.setItem(last_block_name = last_block_name)
-                                penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
-                                penultimate_block_name = penultimateLayoutBlock.getUserName()
-                                edge.setItem(penultimate_block_name = penultimate_block_name)
-                                #edge.setItem(path_weight = path_weight)
 
-                                if self.logLevel > 0: print "path weight", path_weight
-                                LayoutBlockManager=jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
-                                penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
-                                penultimate_block_name = penultimateLayoutBlock.getUserName()
-                                edge.setItem(penultimate_block_name = penultimate_block_name)
-                                if self.logLevel > 0: print edge.to_string()
-                                if self.logLevel > 0: print "got here 4a3"
-                                if self.logLevel > 0: print "self.g_express",self.g_express
+                                if self.logLevel > 3: print edge.to_string()
+                                if self.logLevel > 3: print "got here 4a3"
+                                if self.logLevel > 3: print "self.g_express",self.g_express
 
                                 #add only edges for paths that do not go through a station for stopping train graph
                                 through_stations = [str(block_name) for block_name in self.station_block_list if block_name not in [station,destination]]
-                                # if self.logLevel > 0: print "path", path_name
-                                # if self.logLevel > 0: print "all through_stations not at start and end", through_stations
-                                # if self.logLevel > 0: print "through stations check" ,[item in through_stations for item in path_name]
-                                # if self.logLevel > 0: print "through stations in path" ,[ item  for item in path_name  if item in through_stations]
+                                # if self.logLevel > 3: print "path", path_name
+                                # if self.logLevel > 3: print "all through_stations not at start and end", through_stations
+                                # if self.logLevel > 3: print "through stations check" ,[item in through_stations for item in path_name]
+                                # if self.logLevel > 3: print "through stations in path" ,[ item  for item in path_name  if item in through_stations]
                                 path_blocks_are_through_stations = [item in through_stations for item in path_name]
-                                if self.logLevel > 0: print "any through stations" ,any(path_blocks_are_through_stations)
-                                if self.logLevel > 0: print "not any through stations" , not any(path_blocks_are_through_stations)
+                                if self.logLevel > 3: print "any through stations" ,any(path_blocks_are_through_stations)
+                                if self.logLevel > 3: print "not any through stations" , not any(path_blocks_are_through_stations)
                                 if not any(path_blocks_are_through_stations):
                                     #add to stopping graph
-                                    if self.logLevel > 0: print "adding to stopping graph"
-                                    edge = le()     # le = LabelledEdge() set up outside class
+                                    if self.logLevel > 3: print "adding to stopping graph"
+                                    edge = self._create_and_populate_edge(index, path, path_name, neighbor_name)
                                     self.g_stopping.addEdge(station_block_name,destination,edge)
                                     self.g_stopping.setEdgeWeight(edge, path_weight)
-                                    path_name = [str(x.getUserName()) for x in path]
-                                    edge.setItem(index = index)
-                                    edge.setItem(path = path)
-                                    edge.setItem(path_name = path_name)
-                                    edge.setItem(neighbor_name = neighbor_name)
-                                    firstLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[0])
-                                    first_block_name = firstLayoutBlock.getUserName()
-                                    edge.setItem(first_block_name = first_block_name)
-                                    secondLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[1])
-                                    second_block_name = secondLayoutBlock.getUserName()
-                                    edge.setItem(second_block_name = second_block_name)
-                                    lastLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-1])
-                                    last_block_name = lastLayoutBlock.getUserName()
-                                    edge.setItem(last_block_name = last_block_name)
-                                    penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
-                                    penultimate_block_name = penultimateLayoutBlock.getUserName()
-                                    edge.setItem(penultimate_block_name = penultimate_block_name)
-                                    if self.logLevel > 0: print edge.to_string()
+                                    if self.logLevel > 3: print edge.to_string()
                                 else:
-                                    if self.logLevel > 0: print "not adding to stopping graph as insufficient masts", "edge " , path_name
+                                    if self.logLevel > 3: print "not adding to stopping graph as insufficient masts", "edge " , path_name
                             else:
-                                if self.logLevel > 0: print "not adding to stopping graph"
+                                if self.logLevel > 3: print "not adding to stopping graph"
                                 pass
-                            if self.logLevel > 0: print "*********************************"    
+                            if self.logLevel > 3: print "*********************************"    
                         else:
-                            if self.logLevel > 0: print "got here 4b"
+                            if self.logLevel > 3: print "got here 4b"
                             pass
-                    if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
-                    if self.logLevel > 0: print "&& graph up to now &&"
-                    if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
+                    if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&"
+                    if self.logLevel > 3: print "&& graph up to now &&"
+                    if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&"
                     #for e in self.g_express.edgeSet():
                         #print e.to_string()
-                    if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
-                    if self.logLevel > 0: print "&& end graph up to now &&"
-                    if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&
+                    if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&"
+                    if self.logLevel > 3: print "&& end graph up to now &&"
+                    if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&
                     
-        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
-        if self.logLevel > 0: print "&& express"
-        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"        
+        if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&"
+        if self.logLevel > 2: print "&& express"
+        if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&"        
 
         for e in self.g_express.edgeSet():
-            if self.logLevel > 0: print (self.g_express.getEdgeSource(e) + " --> " + self.g_express.getEdgeTarget(e))
+            if self.logLevel > 2: print (self.g_express.getEdgeSource(e) + " --> " + self.g_express.getEdgeTarget(e))
         
-        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&"
-        if self.logLevel > 0: print "&& stopping"
-        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&" 
+        if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&"
+        if self.logLevel > 2: print "&& stopping"
+        if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&" 
                     
         for e in self.g_stopping.edgeSet():
-            if self.logLevel > 0: print (self.g_stopping.getEdgeSource(e) + " --> " + self.g_stopping.getEdgeTarget(e))                 
+            if self.logLevel > 2: print (self.g_stopping.getEdgeSource(e) + " --> " + self.g_stopping.getEdgeTarget(e))
 
         #set the indicators for the train to reverse
         for e in self.g_stopping.edgeSet():
             
-            if self.logLevel > 0: print "edge = ",e
+            if self.logLevel > 3: print "edge = ",e
 
             try:
-                if self.logLevel > 0: print e, "Target", e.getTarget()
-                if self.logLevel > 0: print e, "Source", e.getSource()
+                if self.logLevel > 3: print e, "Target", e.getTarget()
+                if self.logLevel > 3: print e, "Source", e.getSource()
                 opposite_direction_edge = self.g_stopping.getEdge(e.getTarget(),e.getSource())
                 opposite_direction_neighbor_name = opposite_direction_edge.getItem("neighbor_name")
                 e.setItem(opposite_direction_neighbor_name=opposite_direction_neighbor_name)
-                if self.logLevel > 0: print "set opposite direction neighbor_name for edge" , e.to_string()
+                if self.logLevel > 3: print "set opposite direction neighbor_name for edge" , e.to_string()
             except:
-                if self.logLevel > 0: print "unable to set opposite direction neighbor_name for edge" , e.to_string()
+                if self.logLevel > 3: print "unable to set opposite direction neighbor_name for edge" , e.to_string()
                 continue
+                
+    def _create_and_populate_edge(self, index, path, path_name, neighbor_name):
+        """
+        Creates a new LabelledEdge and populates it with path information.
+        This is a helper method to reduce code duplication.
+        """
+        global le
+        edge = le()  # le = LabelledEdge() set up outside CreateGraph.py
 
+        edge.setItem(index=index)
+        edge.setItem(path=path)
+        edge.setItem(path_name=path_name)
+        edge.setItem(neighbor_name=neighbor_name)
+
+        LayoutBlockManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
+
+        firstLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[0])
+        first_block_name = firstLayoutBlock.getUserName()
+        edge.setItem(first_block_name=first_block_name)
+
+        secondLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[1])
+        second_block_name = secondLayoutBlock.getUserName()
+        edge.setItem(second_block_name=second_block_name)
+
+        lastLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-1])
+        last_block_name = lastLayoutBlock.getUserName()
+        edge.setItem(last_block_name=last_block_name)
+
+        penultimateLayoutBlock = LayoutBlockManager.getLayoutBlock(path_name[-2])
+        penultimate_block_name = penultimateLayoutBlock.getUserName()
+        edge.setItem(penultimate_block_name=penultimate_block_name)
+
+        return edge
 
                 
     def path_weight(self, path):
@@ -309,9 +306,9 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         # print "in get_optimal_pathc"
         weight = self.path_weight(path)
         # print "weight", weight
-        if self.logLevel > 0: print "*****************"
+        if self.logLevel > 3: print "*****************"
         msg = "path is not null" if path != [] else "path is null"
-        if self.logLevel > 0: print sourceLayoutBlock.getUserName(), destinationLayoutBlock.getUserName(), msg
+        if self.logLevel > 3: print sourceLayoutBlock.getUserName(), destinationLayoutBlock.getUserName(), msg
         # print
         # print "in get_optimal_path d"
         # print "first path name", path_name
@@ -463,8 +460,8 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
     def write_list(self, a_list):
         # store list in binary file so 'wb' mode
         file = self.directory() + "blockDirections.txt"
-        if self.logLevel > 0: print "block_info" , a_list
-        if self.logLevel > 0: print "file"  +file
+        if self.logLevel > 3: print "block_info" , a_list
+        if self.logLevel > 3: print "file"  +file
         with open(file, 'wb') as fp:
             for items in a_list:
                 i = 0
@@ -503,10 +500,10 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
             if type(panel) == jmri.jmrit.display.layoutEditor.LayoutEditor:
                 layoutPanels.append(panel)
 
-        if self.logLevel > 1: print "******* signal_mast_list *******"
-        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-        if self.logLevel > 0: print "&&&& producing signal mast list for  &&&&", e.getItem("path_name")
-        if self.logLevel > 0: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+        if self.logLevel > 3: print "******* signal_mast_list *******"
+        if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
+        if self.logLevel > 3: print "&&&& producing signal mast list for  &&&&", e.getItem("path_name")
+        if self.logLevel > 3: print "&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
         signal_mast_list = java.util.ArrayList()
         signal_mast_list_all = java.util.ArrayList()   #all the signal masts, possibly in a jumbled list, due to them being appended haphazardly
         signal_mast_list_view = []
@@ -515,27 +512,27 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
         no_panels_used = 0
         for panel in layoutPanels:
             panelNo += 1
-            if self.logLevel > 0: print "*****panel" ,panelNo,"**********panelName", panel.getLayoutName()
+            if self.logLevel > 3: print "*****panel" ,panelNo,"**********panelName", panel.getLayoutName()
             # 1) get the signal mast list excluding the last signal mast
 
-            #if self.logLevel > 1: print "stopping",g.dict_path_stopping
-            if self.logLevel > 1: print "edge = " , e.to_string()
+            #if self.logLevel > 3: print "stopping",g.dict_path_stopping
+            if self.logLevel > 3: print "edge = " , e.to_string()
             #layout_block_list = g.dict_path_stopping[e]
             layout_block_list = e.getItem("path")
-            if self.logLevel > 1: print "layout_block_list",layout_block_list
+            if self.logLevel > 3: print "layout_block_list",layout_block_list
             layout_block_list_name = e.getItem("path_name")
-            if self.logLevel > 1: print "layout_block_list_name",layout_block_list_name
+            if self.logLevel > 3: print "layout_block_list_name",layout_block_list_name
             #get the list of signal masts
             #panel = jmri.InstanceManager.getDefault(jmri.jmrit.display.EditorManager).get('My Layout')
             signal_mast_class = jmri.SignalMast
             lbctools= jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools()
-            if self.logLevel > 0: print "layout_block_list"
+            if self.logLevel > 3: print "layout_block_list"
             signal_mast_list_for_panel=lbctools.getBeansInPath(layout_block_list,panel,signal_mast_class)
             #signal_mast_list_for_panel=lbctools.getBeansInPath(layout_block_list,None,signal_mast_class)
 
-            if self.logLevel > 1: print "signal_mast_list_for_panel",[sm.getUserName() for sm in signal_mast_list_for_panel]
+            if self.logLevel > 3: print "signal_mast_list_for_panel",[sm.getUserName() for sm in signal_mast_list_for_panel]
             if signal_mast_list_for_panel == [] :
-                if self.logLevel > 0: print "continuing"
+                if self.logLevel > 3: print "continuing"
                 continue   #ignore panels where list of signal masts is blank
 
             no_panels_used += 1
@@ -544,27 +541,38 @@ class StationGraph(jmri.jmrit.automat.AbstractAutomaton):
                 signal_mast_list = signal_mast_list_for_panel
             signal_mast_list_all.addAll([sm for sm in signal_mast_list_for_panel])
             #remove duplicates
-            if self.logLevel > 0: print "signal_mast_list_all with dups", signal_mast_list_all
+            if self.logLevel > 3: print "signal_mast_list_all with dups", signal_mast_list_all
             signal_mast_list_all = java.util.ArrayList(java.util.LinkedHashSet(signal_mast_list_all))
 
-            if self.logLevel > 0: print "signal_mast_list_all without dups", signal_mast_list_all
-            #if self.logLevel > 1: print "signal_mast_list",[sm.getUserName() for sm in signal_mast_list]
-            if self.logLevel > 0: print "signalmast list ", [sm.getUserName() for sm in signal_mast_list]
-            if self.logLevel > 0: print "signal_mast_list_views ", signal_mast_list_views
-        if self.logLevel > 0: print
-        if self.logLevel > 0: print "signal_mast_list_all", signal_mast_list_all
-        if self.logLevel > 0: print "signal_mast_list_all", [s.getUserName() for s in signal_mast_list_all]
-        if self.logLevel > 0: print "no_panels_used", no_panels_used
+            if self.logLevel > 3: print "signal_mast_list_all without dups", signal_mast_list_all
+            #if self.logLevel > 3: print "signal_mast_list",[sm.getUserName() for sm in signal_mast_list]
+            if self.logLevel > 3: print "signalmast list ", [sm.getUserName() for sm in signal_mast_list]
+            if self.logLevel > 3: print "signal_mast_list_views ", signal_mast_list_views
+        if self.logLevel > 3: print
+        if self.logLevel > 3: print "signal_mast_list_all", signal_mast_list_all
+        if self.logLevel > 3: print "signal_mast_list_all", [s.getUserName() for s in signal_mast_list_all]
+        if self.logLevel > 3: print "no_panels_used", no_panels_used
 
         if signal_mast_list_all.size() == 0 :
             return False
         else:
             return True
 
-
-                          
-
-# r.Setup_station_block_list
+    def displayMessage(self, msg, title = ""):
+        self.CLOSED_OPTION = False
+        s = JOptionPane.showOptionDialog(None,
+                                         msg,
+                                         title,
+                                         JOptionPane.YES_NO_OPTION,
+                                         JOptionPane.PLAIN_MESSAGE,
+                                         None,
+                                         ["OK"],
+                                         None)
+        #JOptionPane.showMessageDialog(None, msg, 'Message', JOptionPane.WARNING_MESSAGE)
+        if s == JOptionPane.CLOSED_OPTION:
+            self.CLOSED_OPTION = True
+            return
+        return s
 
 # /**
  # * Custom edge class labeled with relationship type.
@@ -599,32 +607,32 @@ class LabelledEdge(DefaultWeightedEdge):
             self.dict[key]=value
         
     def getItem(self, item):
-        if self.logLevel > 0: print self.dict
-        if self.logLevel > 0: print "item = ", item
+        if self.logLevel > 3: print self.dict
+        if self.logLevel > 3: print "item = ", item
         return self.dict[item]
         
     def getTarget(self):
         line = self.toString()
         line = line.lstrip("( ").rstrip(" )").split(" : ")
-        if self.logLevel > 0: print "Target line", line
+        if self.logLevel > 3: print "Target line", line
         target = str(line[1])
-        if self.logLevel > 0: print "Target =", target
+        if self.logLevel > 3: print "Target =", target
         return target 
         
     def getSource(self):
         line = self.toString()
         line = line.lstrip("( ").rstrip(" )").split(" : ")
-        if self.logLevel > 0: print "Source line", line
+        if self.logLevel > 3: print "Source line", line
         source = str(line[0])
-        if self.logLevel > 0: print "Source =", source
+        if self.logLevel > 3: print "Source =", source
         return source
     
     def to_string_one_line(self):
         item_list = ""
         for item, value in self.dict.items():
             item_list = item_list + str(item) + " = " + str(value) +" : "
-            if self.logLevel > 0: print "item_list", item_list
-        if self.logLevel > 0: print item_list    
+            if self.logLevel > 3: print "item_list", item_list
+        if self.logLevel > 3: print item_list    
      
         return "*****to_string*****(" + self.getSource() + " : " + self.getTarget()  + " : " + item_list.rstrip(": ") + ")"    
 
@@ -632,8 +640,7 @@ class LabelledEdge(DefaultWeightedEdge):
         item_list = "\n"
         for item, value in self.dict.items():
             item_list = item_list + str(item) + " = " + str(value) +" :\n "
-            if self.logLevel > 0: print "item_list", item_list
-        if self.logLevel > 0: print item_list    
+            if self.logLevel > 3: print "item_list", item_list
+        if self.logLevel > 3: print item_list    
     
         return "*****to_string*****(\n" + self.getSource() + " : " + self.getTarget()  + " : " + item_list.rstrip(": ") + ")*****to_string end*******"
-        
