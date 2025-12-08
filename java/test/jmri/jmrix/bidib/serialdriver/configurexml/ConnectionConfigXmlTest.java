@@ -13,7 +13,6 @@ import jmri.util.JUnitUtil;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-@org.junit.jupiter.api.Disabled("Temporary disable jSerialComm for testing --- Note: bidib.jbidibc.jserialcomm uses separate jSerialComm!!!")
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
     // The minimal setup for log4J

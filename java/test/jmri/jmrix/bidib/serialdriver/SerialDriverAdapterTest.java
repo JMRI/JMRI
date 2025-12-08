@@ -6,10 +6,9 @@ import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBSimulatorAdapter class
- *
+ * 
  * @author  Eckart Meyer  Copyright (C) 2020
  */
-@Disabled("Temporary disable jSerialComm for testing --- Note: bidib.jbidibc.jserialcomm uses separate jSerialComm!!!")
 public class SerialDriverAdapterTest {
 
     @Test
