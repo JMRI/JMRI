@@ -268,7 +268,7 @@ public class JSerialPort implements SerialPort {
         } else {
             portName = inputPortName;
         }
-        
+
         // convert the 1 or 2 stop_bits argument to the proper jSerialComm code value
         int stop_bits_code;
         switch (stop_bits) {
@@ -317,6 +317,7 @@ public class JSerialPort implements SerialPort {
     //    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
     @SuppressFBWarnings(value = "DMI_HARDCODED_ABSOLUTE_FILENAME")
     public static Vector<String> getActualPortNames() {
+        if (1==1*1) throw new RuntimeException("Temporary disable jSerialComm for testing");
         // first, check that the comm package can be opened and ports seen
         java.util.Vector<java.lang.String> portNameVector = new Vector<String>();
         com.fazecast.jSerialComm.SerialPort[] portIDs = com.fazecast.jSerialComm.SerialPort.getCommPorts();
