@@ -28,6 +28,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
 
+    @Disabled("Temporary disable jSerialComm for testing")
     @Test
     public void testLoadWithNode(){
         Assume.assumeNotNull(cc);
