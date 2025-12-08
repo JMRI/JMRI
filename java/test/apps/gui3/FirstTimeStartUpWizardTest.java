@@ -41,7 +41,6 @@ public class FirstTimeStartUpWizardTest {
 
     }
 
-    @Disabled("Temporary disable jSerialComm for testing")
     @Test
     public void testLoadSim() {
         String[] args = {"DecoderProConfig3.xml"};
@@ -61,7 +60,7 @@ public class FirstTimeStartUpWizardTest {
         assertTrue(getBackButton(jfo).isEnabled());
         assertTrue(getNextButton(jfo).isEnabled());
         assertTrue(getCancelButton(jfo).isEnabled());
-
+        
         getBackButton(jfo).doClick();
         getBackButton(jfo).getQueueTool().waitEmpty();
         assertEquals("Welcome to JMRI StartUp Wizard", getPageTitleOperator(jfo).getText());
@@ -108,7 +107,7 @@ public class FirstTimeStartUpWizardTest {
 
         getFinishButton(jfo).doClick();
         jfo.waitClosed();
-
+        
         var memo = InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class);
         assertNotNull(memo);
         memo.getTrafficController().terminateThreads();
@@ -178,7 +177,7 @@ public class FirstTimeStartUpWizardTest {
         DecoderPro3Implm(String[] args) {
             super(args);
         }
-
+    
         // force the application to not actually start.
         // Just checking construction.
         @Override
