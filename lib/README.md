@@ -150,7 +150,7 @@ which checks the dates of the control files to make sure they've been updated wh
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
-##### jSerialComm-2.10.4.jar
+##### jSerialComm-2.11.4.jar
 - Supported serial lib since JMRI 5.7.1
 - from https://fazecast.github.io/jSerialComm/
 
