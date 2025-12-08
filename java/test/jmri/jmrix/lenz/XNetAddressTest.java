@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz;
 
-import org.junit.Assert;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -9,10 +10,11 @@ import org.junit.jupiter.api.*;
  */
 public class XNetAddressTest {
 
+    // no Ctor test, tested class only supplies static methods
+
     @Test
-    public void testCTor() {
-        XNetAddress t = new XNetAddress();
-        Assert.assertNotNull("exists", t);
+    public void testXNetAddressConstants() {
+        assertEquals( 1024, XNetAddress.MAXSENSORADDRESS);
     }
 
     @BeforeEach
