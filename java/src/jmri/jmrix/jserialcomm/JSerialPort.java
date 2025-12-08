@@ -268,7 +268,7 @@ public class JSerialPort implements SerialPort {
         } else {
             portName = inputPortName;
         }
-
+        
         // convert the 1 or 2 stop_bits argument to the proper jSerialComm code value
         int stop_bits_code;
         switch (stop_bits) {
