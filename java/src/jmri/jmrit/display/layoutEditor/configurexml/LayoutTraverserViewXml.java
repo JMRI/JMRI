@@ -51,6 +51,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
         element.setAttribute("xcen", "" + coords.getX());
         element.setAttribute("ycen", "" + coords.getY());
         element.setAttribute("turnoutControlled", "" + (turnoutControl ? "yes" : "no"));
+        element.setAttribute("deckwidth", "" + lt.getDeckWidth());
         boolean dispatcherManaged = lt.isDispatcherManaged();
         if (dispatcherManaged) {
             String exitMastName = lt.getExitSignalMastName();
@@ -64,7 +65,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
             element.setAttribute("signalIconPlacement", "" + lt.getSignalIconPlacement());
             element.setAttribute("dispatcherManaged", "yes");
         }
-        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTraverserViewXml");
+        element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutTraverserXml");
         // add slot tracks
         for (int i = 0; i < lt.getNumberSlots(); i++) {
             Element rElem = new Element("slot");
@@ -154,6 +155,15 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
             lt.setMainline("yes".equalsIgnoreCase(a.getValue()));
             log.info("  mainline=" + lt.isMainline());
         }
+        a = element.getAttribute("deckwidth");
+        if (a != null) {
+            try {
+                lt.setDeckWidth(a.getDoubleValue());
+                log.info("  deckwidth={}", lt.getDeckWidth());
+            } catch (DataConversionException e) {
+                log.warn("Could not parse deckwidth attribute!");
+            }
+        }
 
         a = element.getAttribute("blockname");
         if (a != null) {
@@ -212,7 +222,7 @@ public class LayoutTraverserViewXml extends LayoutTrackViewXml {
                 a = value.getAttribute("connectname");
                 if (a != null) {
                     connectName = a.getValue();
-                    log.info("      connectname=" + connectName);
+                    log.info("      connectname={}", connectName);
                 }
                 lt.addSlotTrack(offset, index, connectName);
                 a = value.getAttribute("approachmast");

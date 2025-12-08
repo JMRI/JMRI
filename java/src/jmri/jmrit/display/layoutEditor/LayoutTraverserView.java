@@ -117,6 +117,21 @@ public class LayoutTraverserView extends LayoutTrackView {
         }
     }
 
+    /**
+     * Get the center of the control point, which is on an edge of the traverser.
+     * @return The center point for the control circles.
+     */
+    private Point2D getControlPointCenter() {
+        Point2D center = getCoordsCenter();
+        Rectangle2D bounds = getBounds();
+        if (getOrientation() == LayoutTraverser.HORIZONTAL) {
+            // Top edge for a horizontal (tall) traverser
+            return new Point2D.Double(center.getX(), bounds.getMinY());
+        } else {
+            // Left edge for a vertical (wide) traverser
+            return new Point2D.Double(bounds.getMinX(), center.getY());
+        }
+    }
     public TrackSegment getSlotConnectIndexed(int index) {
         return traverser.getSlotConnectIndexed(index);
     }
@@ -360,7 +375,7 @@ public class LayoutTraverserView extends LayoutTrackView {
 
         // check the center point
         if (!requireUnconnected) {
-            p = getCoordsCenter();
+            p = getControlPointCenter();
             distance = MathUtil.distance(p, hitPoint);
             if (distance < minDistance) {
                 minDistance = distance;
@@ -580,29 +595,48 @@ public class LayoutTraverserView extends LayoutTrackView {
 
             // Set stroke and color for pit outline
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-            g2.setColor(layoutEditor.getDefaultTrackColorColor());
+            g2.setColor(originalColor);
 
             // Draw the outer pit rectangle
             g2.draw(getBounds());
 
             // Draw the concentric circles at the center
-            double circleRadius = Math.max(traverser.getDeckWidth() / 4.f, trackWidth * 2);
+            double circleRadius = Math.max(traverser.getDeckWidth() / 8.f, trackWidth * 2);
             double circleDiameter = circleRadius * 2.f;
 
-            Point2D center = getCoordsCenter();
+            Point2D center = getControlPointCenter();
             g2.draw(new Ellipse2D.Double(center.getX() - circleRadius, center.getY() - circleRadius, circleDiameter, circleDiameter));
             g2.draw(trackControlCircleAt(center));
 
-            // Draw the slot tracks
-            if (isBlock) {
-                g2.setColor(layoutEditor.getDefaultTrackColorColor());
-                g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-                for (int i = 0; i < getNumberSlots(); i++) {
-                    if (!isSlotDisabled(i)) {
+            // Draw the slot tracks, styled like the tracks they connect to
+            g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+            for (int i = 0; i < getNumberSlots(); i++) {
+                if (!isSlotDisabled(i)) {
+                    Color slotColor = null;
+                    TrackSegment ts = getSlotConnectOrdered(i);
+                    boolean slotIsMain = (ts != null) && ts.isMainline();
+
+                    // set color for block, if any
+                    if (isBlock && ts != null) {
+                        LayoutBlock lb = ts.getLayoutBlock();
+                        if (lb != null) {
+                            slotColor = g2.getColor();
+                            setColorForTrackBlock(g2, lb);
+                        }
+                    }
+
+                    // draw if mainline/sideline matches this pass
+                    if (isMain == slotIsMain) {
+                        LayoutTrackDrawingOptions ltdo = layoutEditor.getLayoutTrackDrawingOptions();
+                        float width = isMain ? ltdo.getMainBlockLineWidth() : ltdo.getSideBlockLineWidth();
+                        g2.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
                         Point2D edgePoint = getSlotEdgePointOrdered(i);
                         Point2D anchorPoint = getSlotCoordsOrdered(i);
                         g2.draw(new Line2D.Double(edgePoint, anchorPoint));
                     }
+
+                    // restore color if changed
+                    if (slotColor != null) g2.setColor(slotColor); // restore color
                 }
             }
 

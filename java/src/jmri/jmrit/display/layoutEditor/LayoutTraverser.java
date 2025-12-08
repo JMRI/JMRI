@@ -51,7 +51,7 @@ public class LayoutTraverser extends LayoutTrack {
     private boolean dispatcherManaged = false;
     private boolean turnoutControlled = false;
     private double deckLength = 100.0;
-    private double deckWidth = 20.0;
+    private double deckWidth = 50.0;
     private int orientation = HORIZONTAL;
     private boolean mainline = false;
     private int lastKnownIndex = -1;
@@ -91,7 +91,13 @@ public class LayoutTraverser extends LayoutTrack {
     public double getDeckLength() { return deckLength; }
     private void setDeckLength(double l) { deckLength = l; }
     public double getDeckWidth() { return deckWidth; }
-    private void setDeckWidth(double w) { deckWidth = w; }
+    public void setDeckWidth(double w) {
+        if (deckWidth != w) {
+            deckWidth = w;
+            models.redrawPanel();
+            models.setDirty();
+        }
+    }
     public int getOrientation() { return orientation; }
     public void setOrientation(int o) {
         if (orientation != o) {
@@ -713,9 +719,7 @@ public class LayoutTraverser extends LayoutTrack {
     private void recalculateDimensions() {
         int numPairs = getNumberSlots() / 2;
         double newLength = (numPairs > 0) ? slotOffset + (slotOffset * numPairs) : slotOffset;
-        double newWidth = slotOffset * 2.0;
         setDeckLength(newLength);
-        setDeckWidth(newWidth);
     }
 
     public void moveSlotPairUp(int pairIndex) {

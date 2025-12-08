@@ -110,7 +110,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         deckLengthTextField.setEnabled(false);
         geometryPanel.add(deckLengthTextField);
         geometryPanel.add(new JLabel(Bundle.getMessage("Width")));
-        deckWidthTextField.setEnabled(false);
         geometryPanel.add(deckWidthTextField);
         geometryPanel.add(new JLabel(Bundle.getMessage("Orientation")));
         orientationComboBox.addItem(Bundle.getMessage("Horizontal"));
@@ -430,6 +429,17 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
     private void editLayoutTraverserDonePressed(ActionEvent a) {
         layoutTraverser.setOrientation(orientationComboBox.getSelectedIndex());
+        try {
+            double width = Double.parseDouble(deckWidthTextField.getText());
+            if (layoutTraverser.getDeckWidth() != width) {
+                layoutTraverser.setDeckWidth(width);
+                editLayoutTraverserNeedsRedraw = true;
+            }
+        } catch (NumberFormatException ex) {
+            JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame, Bundle.getMessage("EntryError") + ": "
+                    + ex, Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         String newName = editLayoutTraverserBlockNameComboBox.getSelectedItemDisplayName();
         if (newName == null) {
@@ -440,6 +450,44 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             editLayoutTraverserNeedsRedraw = true;
         }
         layoutTraverser.setMainline(editLayoutTraverserMainlineComboBox.getSelectedIndex() == 0);
+
+        if (layoutTraverser.isDispatcherManaged()) {
+            // Always remove any existing icons for this traverser's approach masts first.
+            // This ensures that moving icons from right-to-left works correctly.
+            List<SignalMastIcon> iconsToRemove = new ArrayList<>();
+            for (Positionable p : layoutEditor.getContents()) {
+                if (p instanceof SignalMastIcon) {
+                    SignalMastIcon icon = (SignalMastIcon) p;
+                    if (layoutTraverser.isApproachMast(icon.getSignalMast())) {
+                        iconsToRemove.add(icon);
+                    }
+                }
+            }
+            for (SignalMastIcon icon : iconsToRemove) {
+                icon.remove();
+                editLayoutTraverserNeedsRedraw = true;
+            }
+
+            // Now, if requested, place the new icons.
+            if (!doNotPlaceIcons.isSelected()) { // placeIconsLeft or placeIconsRight is selected
+                for (int i = 0; i < approachMastComboBoxes.size(); i++) {
+                    LayoutTraverser.SlotTrack slot = layoutTraverser.getSlotList().get(i);
+                    SignalMast mast = approachMastComboBoxes.get(i).getSelectedItem();
+                    if (mast != null) {
+                        if (slot.getConnect() != null) {
+                            SignalMastIcon icon = new SignalMastIcon(layoutEditor);
+                            icon.setSignalMast(mast.getDisplayName());
+                            log.debug("Placing mast for traverser slot, connected to track segment: {}", slot.getConnect().getName()); // NOI18N
+                            // Note: Using the turntable placement logic as it is suitable for this purpose.
+                            layoutEditor.getLETools().placingBlockForTurntable(icon, placeIconsRight.isSelected(),
+                                    0.0,
+                                    slot.getConnect(), layoutTraverserView.getSlotCoordsOrdered(i));
+                            editLayoutTraverserNeedsRedraw = true;
+                        }
+                    }
+                }
+            }
+        }
 
         saveSlotPanelDetail();
         editLayoutTraverserOpen = false;

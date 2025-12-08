@@ -618,6 +618,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         // this so that individual item flags are set as saved
         panel.initView();
 
+
         // load the contents
         for (Element item : shared.getChildren()) {
             // get the class, hence the adapter object to do loading
