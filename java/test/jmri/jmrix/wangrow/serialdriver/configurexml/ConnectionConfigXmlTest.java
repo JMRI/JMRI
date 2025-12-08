@@ -16,14 +16,13 @@ import jmri.util.JUnitAppender;
  */
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
-    @Disabled("Temporary disable jSerialComm for testing")
     @Test
     @Override
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
         super.loadTest();
         JUnitAppender.suppressWarnMessage("Couldn't find option \"Eprom\", can't set to \"2006 or later\"");
     }
-
+    
     @BeforeEach
     @Override
     public void setUp() {

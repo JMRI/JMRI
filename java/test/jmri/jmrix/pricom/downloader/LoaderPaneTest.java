@@ -8,7 +8,6 @@ import org.junit.jupiter.api.*;
  *
  * @author Bob Jacobsen Copyright 2005
  */
-@Disabled("Temporary disable jSerialComm for testing")
 public class LoaderPaneTest {
 
     @Test

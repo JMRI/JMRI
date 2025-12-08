@@ -13,7 +13,6 @@ import jmri.jmrix.can.adapters.loopback.ConnectionConfig;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-@Disabled("Temporary disable jSerialComm for testing")
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSimulatorConnectionConfigXmlTestBase {
 
     /**
@@ -23,7 +22,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
     @Override
     protected void testReconnectXml(jmri.jmrix.ConnectionConfig cc,org.jdom2.Element e){
     }
-
+    
     @BeforeEach
     @Override
     public void setUp() {

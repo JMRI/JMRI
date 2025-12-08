@@ -12,7 +12,6 @@ import javax.swing.JPanel;
  */
 abstract public class AbstractSerialConnectionConfigTestBase extends jmri.jmrix.AbstractConnectionConfigTestBase {
 
-    @Disabled("Temporary disable jSerialComm for testing")
     @Test
     @Override
     public void testLoadDetails(){

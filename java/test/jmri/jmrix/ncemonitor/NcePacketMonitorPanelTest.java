@@ -13,7 +13,6 @@ import jmri.jmrix.nce.NceTrafficController;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-@Disabled("Temporary disable jSerialComm for testing")
 public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
 
     private NceSystemConnectionMemo memo = null;

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-@Disabled("Temporary disable jSerialComm for testing")
 public class LoaderFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @BeforeEach
