@@ -11,330 +11,351 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>2022</year>
-		<holder>JMRI</holder>
-	</copyright>
-	<authorgroup xmlns="http://docbook.org/ns/docbook">
-		<author>
-			<personname>
-				<firstname>Ulrich</firstname>
-				<surname>Gerlach</surname>
-			</personname>
-		</author>
-	</authorgroup>
-	<revhistory xmlns="http://docbook.org/ns/docbook">
-		<revision>
-			<revnumber>1</revnumber>
-			<date>2022-11-11</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
-		</revision>
-		<revision>
-			<revnumber>2</revnumber>
-			<date>2023-12-03</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add English translations</revremark>
-		</revision>
-		<revision>
-			<revnumber>3</revnumber>
-			<date>2024-03-27</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Extend to A7</revremark>
-		</revision>
-	</revhistory>
-	<name>Piko 2/2</name>
-	<column>
-		<label>
-			<text>&gt;&gt; Decoder Programming Lock &lt;&lt;</text>
-			<text xml:lang="de">&gt;&gt; Decoder Programmiersperre &lt;&lt;</text>
-			<text xml:lang="nl">Decoder Programmeerslot</text>
-			<text xml:lang="cs">Zámek programování dekodéru</text>
-		</label>
-		<label>
-			<text>  </text>
-		</label>
-		<display item="Decoder Lock ID"/>
-		<display item="Decoder Lock Index"/>
-		<label>
-			<text>  </text>
-		</label>
-		<!-- ** CVs 160-163 ** -->
-		<separator/>
-		<label>
-			<text>&gt;&gt; Sound parameters &lt;&lt;</text>
-			<text xml:lang="de">&gt;&gt; Soundparameter &lt;&lt;</text>
-		</label>
-		<label>
-			<text>  </text>
-		</label>
-		<display item="Globale Lautstärke"/>
-		<display item="CV160"/>
-		<display item="CV161"/>
-		<display item="CV162"/>
-		<display item="CV163"/>
-		<label>
-			<text>  </text>
-		</label>
-		<!-- CVs 47 -->
-		<separator/>
-		<label>
-			<text>&gt;&gt; Special functions &lt;&lt;</text>
-			<text xml:lang="de">&gt;&gt; Spezialfunktionen &lt;&lt;</text>
-		</label>
-		<label>
-			<text>  </text>
-		</label>
-		<display item="Spezialfunktionen"/>
-		<label>
-			<text>  </text>
-		</label>
-		<display item="SUSI Bit 0"/>
-		<display item="SUSI Bit 1"/>
-		<display item="SUSI Bit 2"/>
-		<display item="SUSI Bit 3"/>
-		<display item="SUSI Bit 4"/>
-		<display item="SUSI Bit 5"/>
-	</column>
-	<column>
-		<row>
-			<!-- BEGIN - SUSI Sendeoption 1+2 Grid in Piko2-->
-			<grid gridy="3" weightx="1" ipadx="1">
-				<!--SUSI Bit header-->
-				<griditem gridx="0" gridy="2" anchor="LINE_END">
-					<label>
-						<text>Bit 0</text>
-					</label>
-				</griditem>
-				<griditem gridx="1" gridy="2" anchor="CENTER">
-					<label>
-						<text>1</text>
-					</label>
-				</griditem>
-				<griditem gridx="2" gridy="2" anchor="CENTER">
-					<label>
-						<text>2</text>
-					</label>
-				</griditem>
-				<griditem gridx="3" gridy="2" anchor="CENTER">
-					<label>
-						<text>3</text>
-					</label>
-				</griditem>
-				<griditem gridx="4" gridy="2" anchor="CENTER">
-					<label>
-						<text>4</text>
-					</label>
-				</griditem>
-				<griditem gridx="5" gridy="2" anchor="CENTER">
-					<label>
-						<text>5</text>
-					</label>
-				</griditem>
-				<griditem gridx="6" gridy="2" anchor="CENTER">
-					<label>
-						<text>6</text>
-					</label>
-				</griditem>
-				<griditem gridx="7" gridy="2" anchor="CENTER">
-					<label>
-						<text>7</text>
-					</label>
-				</griditem>
-				<griditem gridx="0" gridy="3" anchor="LINE_END">
-					<display item="SUSI 115 Bit 0" format="checkbox">
-						<label>SUSI Send option 1 (CV 115):</label>
-						<label xml:lang="de">SUSI Sendeoption 1 (CV 115):</label>
-						<label xml:lang="nl">Activeer functie in SUSI:</label>
-						<label xml:lang="cs">Aktivujte funkci v SUSI:</label>
-					</display>
-				</griditem>
-				<griditem gridx="1" gridy="3" anchor="CENTER">
-					<display item="SUSI 115 Bit 1" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="3" anchor="CENTER">
-					<display item="SUSI 115 Bit 2" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="3" anchor="CENTER">
-					<display item="SUSI 115 Bit 3" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="3" anchor="CENTER">
-					<display item="SUSI 115 Bit 4" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="3" anchor="CENTER">
-					<display item="SUSI 115 Bit 5" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="3" anchor="CENTER">
-					<display item="SUSI 115 Bit 6" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="3" anchor="CENTER">
-					<display item="SUSI 115 Bit 7" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="0" gridy="4" anchor="LINE_END">
-					<display item="SUSI 116 Bit 0" format="checkbox">
-						<label>SUSI Send option 2 (CV 116):</label>
-						<label xml:lang="de">SUSI Sendeoption 2 (CV 116):</label>
-						<label xml:lang="nl">Activeer functie in SUSI:</label>
-						<label xml:lang="cs">Aktivujte funkci v SUSI:</label>
-					</display>
-				</griditem>
-				<griditem gridx="1" gridy="4" anchor="CENTER">
-					<display item="SUSI 116 Bit 1" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="2" gridy="4" anchor="CENTER">
-					<display item="SUSI 116 Bit 2" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="3" gridy="4" anchor="CENTER">
-					<display item="SUSI 116 Bit 3" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="4" gridy="4" anchor="CENTER">
-					<display item="SUSI 116 Bit 4" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="5" gridy="4" anchor="CENTER">
-					<display item="SUSI 116 Bit 5" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="6" gridy="4" anchor="CENTER">
-					<display item="SUSI 116 Bit 6" format="checkbox" label=""/>
-				</griditem>
-				<griditem gridx="7" gridy="4" anchor="CENTER">
-					<display item="SUSI 116 Bit 7" format="checkbox" label=""/>
-				</griditem>
-				<!--end Grid-->
-				<griditem gridx="0" gridy="5" anchor="LINE_START">
-					<display item="SUSI Taktrate"/>
-				</griditem>
-			</grid>
-		</row>
-		<label>
-			<text>  </text>
-		</label>
-		<row>
-			<!--		<display item="SUSI Taktrate"/>-->
-		</row>
-		<separator/>
-		<label>
-			<text>&gt;&gt; Servo 1 - 4 &lt;&lt;</text>
-			<text xml:lang="de">&gt;&gt; Servo 1 - 4 &lt;&lt;</text>
-		</label>
-		<label>
-			<text>  </text>
-		</label>
-		<label>
-			<text>Setting of servos 1 - 4 (CV 202 - CV 222) not implemented</text>
-			<text xml:lang="de">Einstellung der Servo 1 - 4 (CV 202 - CV 222) noch nicht implementiert</text>
-		</label>
-		<label>
-			<text>  </text>
-		</label>
-		<!-- BEGIN - PWM Phase Grid -->
-		<grid gridy="2" weightx="1" ipadx="1">
-			<!-- BEGIN - Row 1 (headers)-->
-			<!--		<group exclude="PIKO46550-18">
-								<!{1}**Piko SmartDecoder XP5.1**{1}>
-								<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
-									<label>
-										<text>AUX0</text>
-									</label>
-								</griditem>
-								<griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER">
-									<label>
-										<text>AUX1</text>
-									</label>
-								</griditem>
-								<griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER">
-									<label>
-										<text>AUX2</text>
-									</label>
-								</griditem>
-							</group>-->
-			<!-- BEGIN - Row 2 (checkboxes)-->
-			<griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
-				<display item="PWM Phase A0" format="checkbox">
-					<label>Flip PWM Phase:</label>
-					<label xml:lang="de">PWM Phase 180:</label>
-					<label xml:lang="nl">PWM Fase omkeren:</label>
-					<label xml:lang="cs">Otočit fázi PWM:</label>
-				</display>
-			</griditem>
-			<griditem gridx="1" gridy="1" gridwidth="1" anchor="CENTER">
-				<display item="PWM Phase A1" format="checkbox" label=""/>
-			</griditem>
-			<griditem gridx="2" gridy="1" gridwidth="1" anchor="CENTER">
-				<display item="PWM Phase A2" format="checkbox" label=""/>
-			</griditem>
-		</grid>
-		<label>
-			<text>  </text>
-		</label>
-		<separator/>
-		<label>
-			<text>&gt;&gt; Special Light Effects &lt;&lt;</text>
-			<text xml:lang="de">&gt;&gt; Spezial Licht Effekte &lt;&lt;</text>
-			<text xml:lang="cs">Zvláštní světelné efekty</text>
-		</label>
-		<label>
-			<text>  </text>
-		</label>
-		<grid gridy="6" weightx="1" ipadx="4">
-			<griditem gridx="0" gridy="0" anchor="LINE_END">
-				<display item="Light Energy Start"/>
-			</griditem>
-			<griditem gridx="0" gridy="1" anchor="LINE_END">
-				<display item="Light Energy Time"/>
-			</griditem>
-			<griditem gridx="0" gridy="2" anchor="LINE_END">
-				<display item="Light Neon Time"/>
-			</griditem>
-			<griditem gridx="0" gridy="3" anchor="LINE_END">
-				<display item="Intervall BG1"/>
-			</griditem>
-			<griditem gridx="0" gridy="4" anchor="LINE_END">
-				<display item="Intervall BG2"/>
-			</griditem>
-			<griditem gridx="0" gridy="5" anchor="LINE_END">
-				<display item="Intervall BG3"/>
-			</griditem>
-			<griditem gridx="0" gridy="6" anchor="LINE_END">
-				<display item="Intervall BG4"/>
-			</griditem>
-			<griditem gridx="1" gridy="0" anchor="LINE_END">
-				<display item="Light Blend Time"/>
-			</griditem>
-			<griditem gridx="1" gridy="1" anchor="LINE_END">
-				<display item="Light Blend Time2"/>
-			</griditem>
-			<griditem gridx="1" gridy="2" anchor="LINE_END">
-				<display item="Speedlevel Ax=Off"/>
-			</griditem>
-			<griditem gridx="1" gridy="3" anchor="LINE_END">
-				<display item="Auto Off F0v"/>
-			</griditem>
-			<griditem gridx="1" gridy="4" anchor="LINE_END">
-				<display item="Auto Off F0h"/>
-			</griditem>
-			<griditem gridx="1" gridy="5" anchor="LINE_END">
-				<display item="Auto Off A1"/>
-			</griditem>
-			<griditem gridx="1" gridy="6" anchor="LINE_END">
-				<display item="Auto Off A2"/>
-			</griditem>
-			<group include="PIKO56505-22,PIKO56508-16">
-				<griditem gridx="1" gridy="7" anchor="LINE_END">
-					<display item="Auto Off A3"/>
-				</griditem>
-				<griditem gridx="1" gridy="8" anchor="LINE_END">
-					<display item="Auto Off A4"/>
-				</griditem>
-				<griditem gridx="1" gridy="9" anchor="LINE_END">
-					<display item="Auto Off A5"/>
-				</griditem>
-				<griditem gridx="1" gridy="10" anchor="LINE_END">
-					<display item="Auto Off A6"/>
-				</griditem>
-				<griditem gridx="1" gridy="11" anchor="LINE_END">
-					<display item="Auto Off A7"/>
-				</griditem>
-			</group>
-		</grid>
-	</column>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2022</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Ulrich</firstname>
+                <surname>Gerlach</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2022-11-11</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-12-03</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add English translations</revremark>
+        </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2024-03-27</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Extend to A7</revremark>
+        </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2025-12-06</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add Decoder BR80 36537 / 36505 Spur G</revremark>
+        </revision>
+    </revhistory>
+    <name>Piko 2/2</name>
+    <column>
+        <label>
+            <text>&gt;&gt; Decoder Programming Lock &lt;&lt;</text>
+            <text xml:lang="de">&gt;&gt; Decoder Programmiersperre &lt;&lt;</text>
+            <text xml:lang="nl">Decoder Programmeerslot</text>
+            <text xml:lang="cs">Zámek programování dekodéru</text>
+        </label>
+        <label>
+            <text>  </text>
+        </label>
+        <display item="Decoder Lock ID"/>
+        <display item="Decoder Lock Index"/>
+        <label>
+            <text>  </text>
+        </label>
+        <!-- ** CVs 160-163 ** -->
+        <separator/>
+        <label>
+            <text>&gt;&gt; Sound parameters &lt;&lt;</text>
+            <text xml:lang="de">&gt;&gt; Soundparameter &lt;&lt;</text>
+        </label>
+        <label>
+            <text>  </text>
+        </label>
+        <display item="Globale Lautstärke"/>
+        <display item="CV160"/>
+        <display item="CV161"/>
+        <display item="CV162"/>
+        <display item="CV163"/>
+        <label>
+            <text>  </text>
+        </label>
+        <!-- CVs 47 -->
+        <separator/>
+        <label>
+            <text>&gt;&gt; Special functions &lt;&lt;</text>
+            <text xml:lang="de">&gt;&gt; Spezialfunktionen &lt;&lt;</text>
+        </label>
+        <label>
+            <text>  </text>
+        </label>
+        <display item="Spezialfunktionen"/>
+        <label>
+            <text>  </text>
+        </label>
+        <display item="SUSI Bit 0"/>
+        <display item="SUSI Bit 1"/>
+        <display item="SUSI Bit 2"/>
+        <display item="SUSI Bit 3"/>
+        <display item="SUSI Bit 4"/>
+        <display item="SUSI Bit 5"/>
+        <label>
+            <text>  </text>
+        </label>
+        <group include="PIKO36505-G,PIKO36537-G">
+            <display item="Energy buffer"/>
+            <display item="Energy Buffer Bit 7"/>
+            <display item="Energy Buffer Time"/>
+            <display item="True speed factor"/>
+        </group>
+    </column>
+    <column>
+        <row>
+            <!-- BEGIN - SUSI Sendeoption 1+2 Grid in Piko2-->
+            <grid gridy="3" weightx="1" ipadx="1">
+                <!--SUSI Bit header-->
+                <griditem gridx="0" gridy="2" anchor="LINE_END">
+                    <label>
+                        <text>Bit 0 </text>
+                    </label>
+                </griditem>
+                <griditem gridx="1" gridy="2" anchor="CENTER">
+                    <label>
+                        <text>1</text>
+                    </label>
+                </griditem>
+                <griditem gridx="2" gridy="2" anchor="CENTER">
+                    <label>
+                        <text>2</text>
+                    </label>
+                </griditem>
+                <griditem gridx="3" gridy="2" anchor="CENTER">
+                    <label>
+                        <text>3</text>
+                    </label>
+                </griditem>
+                <griditem gridx="4" gridy="2" anchor="CENTER">
+                    <label>
+                        <text>4</text>
+                    </label>
+                </griditem>
+                <griditem gridx="5" gridy="2" anchor="CENTER">
+                    <label>
+                        <text>5</text>
+                    </label>
+                </griditem>
+                <griditem gridx="6" gridy="2" anchor="CENTER">
+                    <label>
+                        <text>6</text>
+                    </label>
+                </griditem>
+                <griditem gridx="7" gridy="2" anchor="CENTER">
+                    <label>
+                        <text>7</text>
+                    </label>
+                </griditem>
+                <griditem gridx="0" gridy="3" anchor="LINE_END">
+                    <display item="SUSI 115 Bit 0" format="checkbox">
+                        <label>SUSI Send option 1 (CV 115):</label>
+                        <label xml:lang="de">SUSI Sendeoption 1 (CV 115):</label>
+                        <label xml:lang="nl">Activeer functie in SUSI:</label>
+                        <label xml:lang="cs">Aktivujte funkci v SUSI:</label>
+                    </display>
+                </griditem>
+                <griditem gridx="1" gridy="3" anchor="CENTER">
+                    <display item="SUSI 115 Bit 1" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="2" gridy="3" anchor="CENTER">
+                    <display item="SUSI 115 Bit 2" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="3" gridy="3" anchor="CENTER">
+                    <display item="SUSI 115 Bit 3" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="4" gridy="3" anchor="CENTER">
+                    <display item="SUSI 115 Bit 4" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="5" gridy="3" anchor="CENTER">
+                    <display item="SUSI 115 Bit 5" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="6" gridy="3" anchor="CENTER">
+                    <display item="SUSI 115 Bit 6" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="7" gridy="3" anchor="CENTER">
+                    <display item="SUSI 115 Bit 7" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="0" gridy="4" anchor="LINE_END">
+                    <display item="SUSI 116 Bit 0" format="checkbox">
+                        <label>SUSI Send option 2 (CV 116):</label>
+                        <label xml:lang="de">SUSI Sendeoption 2 (CV 116):</label>
+                        <label xml:lang="nl">Activeer functie in SUSI:</label>
+                        <label xml:lang="cs">Aktivujte funkci v SUSI:</label>
+                    </display>
+                </griditem>
+                <griditem gridx="1" gridy="4" anchor="CENTER">
+                    <display item="SUSI 116 Bit 1" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="2" gridy="4" anchor="CENTER">
+                    <display item="SUSI 116 Bit 2" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="3" gridy="4" anchor="CENTER">
+                    <display item="SUSI 116 Bit 3" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="4" gridy="4" anchor="CENTER">
+                    <display item="SUSI 116 Bit 4" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="5" gridy="4" anchor="CENTER">
+                    <display item="SUSI 116 Bit 5" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="6" gridy="4" anchor="CENTER">
+                    <display item="SUSI 116 Bit 6" format="checkbox" label=""/>
+                </griditem>
+                <griditem gridx="7" gridy="4" anchor="CENTER">
+                    <display item="SUSI 116 Bit 7" format="checkbox" label=""/>
+                </griditem>
+                <!--end Grid-->
+                <griditem gridx="0" gridy="5" anchor="LINE_START">
+                    <display item="SUSI Taktrate"/>
+                </griditem>
+            </grid>
+        </row>
+        <label>
+            <text>  </text>
+        </label>
+        <row>
+            <!--        <display item="SUSI Taktrate"/>-->
+        </row>
+        <separator/>
+        <label>
+            <text>&gt;&gt; Servo 1 - 4 &lt;&lt;</text>
+            <text xml:lang="de">&gt;&gt; Servo 1 - 4 &lt;&lt;</text>
+        </label>
+        <label>
+            <text>  </text>
+        </label>
+        <label>
+            <text>Setting of servos 1 - 4 (CV 202 - CV 222) not implemented</text>
+            <text xml:lang="de">Einstellung der Servo 1 - 4 (CV 202 - CV 222) noch nicht implementiert</text>
+        </label>
+        <label>
+            <text>  </text>
+        </label>
+        <!-- BEGIN - PWM Phase Grid -->
+        <grid gridy="2" weightx="1" ipadx="1">
+            <!-- BEGIN - Row 1 (headers)-->
+            <!--        <group exclude="PIKO46550-18">
+                                <!{1}**Piko SmartDecoder XP5.1**{1}>
+                                <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+                                    <label>
+                                        <text>AUX0</text>
+                                    </label>
+                                </griditem>
+                                <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER">
+                                    <label>
+                                        <text>AUX1</text>
+                                    </label>
+                                </griditem>
+                                <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER">
+                                    <label>
+                                        <text>AUX2</text>
+                                    </label>
+                                </griditem>
+                            </group>-->
+            <!-- BEGIN - Row 2 (checkboxes)-->
+            <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+                <display item="PWM Phase A0" format="checkbox">
+                    <label>Flip PWM Phase:</label>
+                    <label xml:lang="de">PWM Phase 180:</label>
+                    <label xml:lang="nl">PWM Fase omkeren:</label>
+                    <label xml:lang="cs">Otočit fázi PWM:</label>
+                </display>
+            </griditem>
+            <griditem gridx="1" gridy="1" gridwidth="1" anchor="CENTER">
+                <display item="PWM Phase A1" format="checkbox" label=""/>
+            </griditem>
+            <griditem gridx="2" gridy="1" gridwidth="1" anchor="CENTER">
+                <display item="PWM Phase A2" format="checkbox" label=""/>
+            </griditem>
+        </grid>
+        <label>
+            <text>  </text>
+        </label>
+        <separator/>
+        <label>
+            <text>&gt;&gt; Special Light Effects &lt;&lt;</text>
+            <text xml:lang="de">&gt;&gt; Spezial Licht Effekte &lt;&lt;</text>
+            <text xml:lang="cs">Zvláštní světelné efekty</text>
+        </label>
+        <label>
+            <text>  </text>
+        </label>
+        <grid gridy="6" weightx="1" ipadx="4">
+            <griditem gridx="0" gridy="0" anchor="LINE_END">
+                <display item="Light Energy Start"/>
+            </griditem>
+            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                <display item="Light Energy Time"/>
+            </griditem>
+            <griditem gridx="0" gridy="2" anchor="LINE_END">
+                <display item="Light Neon Time"/>
+            </griditem>
+            <griditem gridx="0" gridy="3" anchor="LINE_END">
+                <display item="Intervall BG1"/>
+            </griditem>
+            <griditem gridx="0" gridy="4" anchor="LINE_END">
+                <display item="Intervall BG2"/>
+            </griditem>
+            <griditem gridx="0" gridy="5" anchor="LINE_END">
+                <display item="Intervall BG3"/>
+            </griditem>
+            <griditem gridx="0" gridy="6" anchor="LINE_END">
+                <display item="Intervall BG4"/>
+            </griditem>
+            <griditem gridx="1" gridy="0" anchor="LINE_END">
+                <display item="Light Blend Time"/>
+            </griditem>
+            <griditem gridx="1" gridy="1" anchor="LINE_END">
+                <display item="Light Blend Time2"/>
+            </griditem>
+            <griditem gridx="1" gridy="2" anchor="LINE_END">
+                <display item="Speedlevel Ax=Off"/>
+            </griditem>
+            <griditem gridx="1" gridy="3" anchor="LINE_END">
+                <display item="Auto Off F0v"/>
+            </griditem>
+            <griditem gridx="1" gridy="4" anchor="LINE_END">
+                <display item="Auto Off F0h"/>
+            </griditem>
+            <griditem gridx="1" gridy="5" anchor="LINE_END">
+                <display item="Auto Off A1"/>
+            </griditem>
+            <griditem gridx="1" gridy="6" anchor="LINE_END">
+                <display item="Auto Off A2"/>
+            </griditem>
+            <group include="PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO36537-G">
+                <griditem gridx="1" gridy="7" anchor="LINE_END">
+                    <display item="Auto Off A3"/>
+                </griditem>
+                <griditem gridx="1" gridy="8" anchor="LINE_END">
+                    <display item="Auto Off A4"/>
+                </griditem>
+                <griditem gridx="1" gridy="9" anchor="LINE_END">
+                    <display item="Auto Off A5"/>
+                </griditem>
+                <griditem gridx="1" gridy="10" anchor="LINE_END">
+                    <display item="Auto Off A6"/>
+                </griditem>
+                <griditem gridx="1" gridy="11" anchor="LINE_END">
+                    <display item="Auto Off A7"/>
+                </griditem>
+                <griditem gridx="1" gridy="12" anchor="LINE_END">
+                    <display item="Auto Off A8"/>
+                </griditem>
+                <griditem gridx="1" gridy="13" anchor="LINE_END">
+                    <display item="Auto Off A9"/>
+                </griditem>
+            </group>
+        </grid>
+    </column>
 </pane>

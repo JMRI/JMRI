@@ -12,183 +12,189 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>2022</year>
-		<holder>JMRI</holder>
-	</copyright>
-	<authorgroup xmlns="http://docbook.org/ns/docbook">
-		<author>
-			<personname>
-				<firstname>Ulrich</firstname>
-				<surname>Gerlach</surname>
-			</personname>
-		</author>
-	</authorgroup>
-	<revhistory xmlns="http://docbook.org/ns/docbook">
-		<revision>
-			<revnumber>1</revnumber>
-			<date>2022-11-11</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
-		</revision>
-		<revision>
-			<revnumber>2</revnumber>
-			<date>2023-10-20</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add decoder</revremark>
-		</revision>
-		<revision>
-			<revnumber>3</revnumber>
-			<date>2023-12-03</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add English translations</revremark>
-		</revision>
-		<revision>
-			<revnumber>4</revnumber>
-			<date>2024-04-01</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add Decoder ML4000</revremark>
-		</revision>
-	</revhistory>
-	<name>Motor</name>
-	<column>
-		<row>
-			<column>
-				<label>
-					<text> </text>
-				</label>
-				<label>
-					<text>&gt;&gt; Errors or Information (Read-Only) &lt;&lt;</text>
-					<text xml:lang="de">&gt;&gt; Fehler oder Information (Read-Only) &lt;&lt;</text>
-					<text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
-					<text xml:lang="nl">Fouten en ov. informatie (Alleen Lezen)</text>
-					<text xml:lang="cs">Chyby nebo Informace (Pouze pro čtení)</text>
-				</label>
-				<label>
-					<text>        </text>
-				</label>
-				<display item="Error register"/>
-				<label>
-					<text> </text>
-				</label>
-			</column>
-			<column>
-				<label>
-					<text>        </text>
-				</label>
-			</column>
-			<column>
-				<label>
-					<text> </text>
-				</label>
-				<label>
-					<text> </text>
-				</label>
-				<label>
-					<text>&gt;&gt; Decoder Programming Lock &lt;&lt;</text>
-					<text xml:lang="de">          &gt;&gt; Decoder Programmiersperre &lt;&lt;</text>
-					<text xml:lang="nl">          Decoder Programmeerslot</text>
-					<text xml:lang="cs">          Zámek programování dekodéru</text>
-				</label>
-				<label>
-					<text> </text>
-				</label>
-				<display item="Decoder Lock ID"/>
-				<display item="Decoder Lock Index"/>
-				<label>
-					<text> </text>
-				</label>
-			</column>
-		</row>
-		<separator/>
-		<label>
-			<text> </text>
-		</label>
-		<group include="PIKO40501-18,PIKO46440-18,PIKO46442-16,PIKO46443-22">
-			<!--Piko SmartDecoder 4.1-->
-			<row>
-				<column>
-					<label>
-						<text>&gt;&gt; PSD 4.2 Config 2 CV 51-58, 200-202) &lt;&lt;</text>
-						<text xml:lang="de">               &gt;&gt; SmartDecoder 4.1 Konfiguration 2 (CV 51-58, 200-202) &lt;&lt;</text>
-					</label>
-					<display item="Motor Control" format="checkbox"/>
-					<display item="Motor Control PIDSX"/>
-					<display item="Dynamic Pulse Duration" format="checkbox"/>
-					<label>
-						<text> </text>
-					</label>
-					<display item="EMF Option min Periode"/>
-					<display item="EMF Option max Periode"/>
-					<display item="Motor Regelung Speed 1"/>
-					<display item="Motor Regelung Speed 2"/>
-					<display item="EMF Static Config"/>
-					<display item="EMF Dynamic Config"/>
-					<display item="EMF Droop Config"/>
-					<display item="EMF Option 3"/>
-					<display item="EMF Option 2"/>
-					<label>
-						<text> </text>
-					</label>
-					<separator/>
-					<label>
-						<text> </text>
-					</label>
-					<display item="Short circuit supervision"/>
-					<label>
-						<text> </text>
-					</label>
-					<display item="Shutdown Temperature"/>
-					<display item="Function Outputs Short Constant"/>
-					<display item="Motor Output Short Constant"/>
-					<display item="Lights Short circuit supervision"/>
-					<display item="Short circuit supervision 1" format="checkbox"/>
-					<display item="Short circuit supervision 2" format="checkbox"/>
-					<display item="Short circuit supervision 3" format="checkbox"/>
-				</column>
-			</row>
-		</group>
-		<group include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
-			<!--Piko SmartDecoder XP5.1-->
-			<row>
-				<column>
-					<label>
-						<text>&gt;&gt; Motor Management Settings XP5.1 CV 62 &lt;&lt;</text>
-						<text xml:lang="de">&gt;&gt; Motorregelung PSD XP5.1 CV 62 &lt;&lt;</text>
-						<text xml:lang="nl">Motorregeling</text>
-						<text xml:lang="cs">Správa nastavení motoru</text>
-					</label>
-					<display item="Motorregelung CV62 Bit 0"/>
-					<display item="Motorregelung CV62 Bit 1"/>
-					<display item="Motorregelung CV62 Bit 2"/>
-					<display item="Motorregelung CV62 Bit 3"/>
-					<display item="Motorregelung CV62 Bit 4"/>
-					<display item="Motorregelung CV62 Bit 5"/>
-					<display item="Motorregelung CV62 Bit 6"/>
-					<display item="Motorregelung CV62 Bit 7"/>
-					<label>
-						<text>      </text>
-					</label>
-					<label>
-						<text>&gt;&gt; Motor Management Settings XP5.1 CV 240-250 &lt;&lt;</text>
-						<text xml:lang="de">&gt;&gt; Motorregelung PSD XP5.1 CV 240-250 &lt;&lt;</text>
-						<text xml:lang="nl">Motorregeling</text>
-						<text xml:lang="cs">Správa nastavení motoru</text>
-					</label>
-					<display item="Motor Management 1"/>
-					<display item="Motor Management 2"/>
-					<display item="Motor Management 3"/>
-					<display item="Motor Management 4"/>
-					<display item="Motor Management 5"/>
-					<display item="Motor Management 6"/>
-					<display item="Motor Management 7"/>
-					<display item="Motor Management 8"/>
-					<display item="Motor Management 9"/>
-					<label>
-						<text>      </text>
-					</label>
-				</column>
-			</row>
-		</group>
-	</column>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2022</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Ulrich</firstname>
+                <surname>Gerlach</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2022-11-11</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-10-20</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add decoder</revremark>
+        </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2023-12-03</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add English translations</revremark>
+        </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2024-04-01</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add Decoder ML4000</revremark>
+        </revision>
+        <revision>
+            <revnumber>5</revnumber>
+            <date>2025-12-06</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add Decoder BR80 36537 / 36505 Spur G</revremark>
+        </revision>
+    </revhistory>
+    <name>Motor</name>
+    <column>
+        <row>
+            <column>
+                <label>
+                    <text> </text>
+                </label>
+                <label>
+                    <text>&gt;&gt; Errors or Information (Read-Only) &lt;&lt;</text>
+                    <text xml:lang="de">&gt;&gt; Fehler oder Information (Read-Only) &lt;&lt;</text>
+                    <text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
+                    <text xml:lang="nl">Fouten en ov. informatie (Alleen Lezen)</text>
+                    <text xml:lang="cs">Chyby nebo Informace (Pouze pro čtení)</text>
+                </label>
+                <label>
+                    <text>        </text>
+                </label>
+                <display item="Error register"/>
+                <label>
+                    <text> </text>
+                </label>
+            </column>
+            <column>
+                <label>
+                    <text>        </text>
+                </label>
+            </column>
+            <column>
+                <label>
+                    <text> </text>
+                </label>
+                <label>
+                    <text> </text>
+                </label>
+                <label>
+                    <text>&gt;&gt; Decoder Programming Lock &lt;&lt;</text>
+                    <text xml:lang="de">          &gt;&gt; Decoder Programmiersperre &lt;&lt;</text>
+                    <text xml:lang="nl">          Decoder Programmeerslot</text>
+                    <text xml:lang="cs">          Zámek programování dekodéru</text>
+                </label>
+                <label>
+                    <text> </text>
+                </label>
+                <display item="Decoder Lock ID"/>
+                <display item="Decoder Lock Index"/>
+                <label>
+                    <text> </text>
+                </label>
+            </column>
+        </row>
+        <separator/>
+        <label>
+            <text> </text>
+        </label>
+        <group include="PIKO40501-18,PIKO46440-18,PIKO46442-16,PIKO46443-22">
+            <!--Piko SmartDecoder 4.1-->
+            <row>
+                <column>
+                    <label>
+                        <text>&gt;&gt; PSD 4.2 Config 2 CV 51-58, 200-202) &lt;&lt;</text>
+                        <text xml:lang="de">               &gt;&gt; SmartDecoder 4.1 Konfiguration 2 (CV 51-58, 200-202) &lt;&lt;</text>
+                    </label>
+                    <display item="Motor Control" format="checkbox"/>
+                    <display item="Motor Control PIDSX"/>
+                    <display item="Dynamic Pulse Duration" format="checkbox"/>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <display item="EMF Option min Periode"/>
+                    <display item="EMF Option max Periode"/>
+                    <display item="Motor Regelung Speed 1"/>
+                    <display item="Motor Regelung Speed 2"/>
+                    <display item="EMF Static Config"/>
+                    <display item="EMF Dynamic Config"/>
+                    <display item="EMF Droop Config"/>
+                    <display item="EMF Option 3"/>
+                    <display item="EMF Option 2"/>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <separator/>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <display item="Short circuit supervision"/>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <display item="Shutdown Temperature"/>
+                    <display item="Function Outputs Short Constant"/>
+                    <display item="Motor Output Short Constant"/>
+                    <display item="Lights Short circuit supervision"/>
+                    <display item="Short circuit supervision 1" format="checkbox"/>
+                    <display item="Short circuit supervision 2" format="checkbox"/>
+                    <display item="Short circuit supervision 3" format="checkbox"/>
+                </column>
+            </row>
+        </group>
+        <group include="PIKO46505-18,PIKO46540-18,PIKO46548-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22,PIKO36505-G,PIKO36537-G">
+            <!--Piko SmartDecoder XP5.1-->
+            <row>
+                <column>
+                    <label>
+                        <text>&gt;&gt; Motor Management Settings XP5.1 CV 62 &lt;&lt;</text>
+                        <text xml:lang="de">&gt;&gt; Motorregelung PSD XP5.1 CV 62 &lt;&lt;</text>
+                        <text xml:lang="nl">Motorregeling</text>
+                        <text xml:lang="cs">Správa nastavení motoru</text>
+                    </label>
+                    <display item="Motorregelung CV62 Bit 0"/>
+                    <display item="Motorregelung CV62 Bit 1"/>
+                    <display item="Motorregelung CV62 Bit 2"/>
+                    <display item="Motorregelung CV62 Bit 3"/>
+                    <display item="Motorregelung CV62 Bit 4"/>
+                    <display item="Motorregelung CV62 Bit 5"/>
+                    <display item="Motorregelung CV62 Bit 6"/>
+                    <display item="Motorregelung CV62 Bit 7"/>
+                    <label>
+                        <text>      </text>
+                    </label>
+                    <label>
+                        <text>&gt;&gt; Motor Management Settings XP5.1 CV 240-250 &lt;&lt;</text>
+                        <text xml:lang="de">&gt;&gt; Motorregelung PSD XP5.1 CV 240-250 &lt;&lt;</text>
+                        <text xml:lang="nl">Motorregeling</text>
+                        <text xml:lang="cs">Správa nastavení motoru</text>
+                    </label>
+                    <display item="Motor Management 1"/>
+                    <display item="Motor Management 2"/>
+                    <display item="Motor Management 3"/>
+                    <display item="Motor Management 4"/>
+                    <display item="Motor Management 5"/>
+                    <display item="Motor Management 6"/>
+                    <display item="Motor Management 7"/>
+                    <display item="Motor Management 8"/>
+                    <display item="Motor Management 9"/>
+                    <label>
+                        <text>      </text>
+                    </label>
+                </column>
+            </row>
+        </group>
+    </column>
 </pane>

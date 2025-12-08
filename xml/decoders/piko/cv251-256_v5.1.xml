@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2022 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2025</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Ulrich</firstname>
+                <surname>Gerlach</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2025-12-06</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+        </revision>
+    </revhistory>
+    <variable item="Energy buffer" CV="251" default="132" readOnly="yes">
+        <decVal max="255"/>
+        <label>Energy buffer (CV 251)</label>
+        <label xml:lang="de">Energiespeicher (CV 251)</label>
+        <tooltip>Bit 0 - 3 Support time in 0.5s increments, Bit7 = On</tooltip>
+        <tooltip xml:lang="de">Bit 0 - 3 Stützzeit in 0,5s Schritten, Bit7 = Ein</tooltip>
+    </variable>
+    <variable item="True speed factor" CV="252" default="50">
+        <decVal max="255"/>
+        <label>True speed factor (CV 252)</label>
+        <label xml:lang="de">Echtgeschwindigkeitsfaktor (CV 252)</label>
+        <tooltip>Proportional speed factor</tooltip>
+        <tooltip xml:lang="de">(0-255)</tooltip>
+    </variable>
+    <variable item="Energy Buffer Bit 7" CV="251" default="1" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Energy Buffer On</label>
+        <label xml:lang="de">Energiespeicher Aktiv</label>
+        <tooltip>(0 / 1)</tooltip>
+        <tooltip xml:lang="de">(Aus = 0 / Ein = 1)</tooltip>
+    </variable>
+    <variable item="Energy Buffer Time" CV="251" default="4" mask="XXXXVVVV">
+        <decVal max="15"/>
+        <label>Support time in 0.5 steps</label>
+        <label xml:lang="de">Energiespeicherzeit in 0,5s</label>
+        <tooltip>max 7.5 sek (0 - 15)</tooltip>
+        <tooltip xml:lang="de">Stützzeit in 0,5 sek Schritten (0 - 15)</tooltip>
+    </variable>
+    <variable item="G-Decoder config Bit 0" CV="236" default="0" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Volume control via potentiometer on scale G decoder</label>
+        <label xml:lang="de">Lautstärkeregelung über Poti bei Spur G-Decodern</label>
+        <tooltip>(0 / 1)</tooltip>
+        <tooltip xml:lang="de">(Aus = 0 / Ein = 1)</tooltip>
+    </variable>
+</variables>
