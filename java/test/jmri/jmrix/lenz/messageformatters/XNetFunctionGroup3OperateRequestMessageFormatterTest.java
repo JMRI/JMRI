@@ -1,20 +1,20 @@
 package jmri.jmrix.lenz.messageformatters;
 
 
+import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.lenz.XNetMessage;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests of XNetFunctionGroup3OperateRequestMessageFormatter class
  *
  * @Paul Bender Copyright (C) 2024
  */
-public class XNetFunctionGroup3OperateRequestMessageFormatterTest {
+public class XNetFunctionGroup3OperateRequestMessageFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
     public void testFormatMessageAllOff() {
-        XNetFunctionGroup3OperateRequestMessageFormatter formatter = new XNetFunctionGroup3OperateRequestMessageFormatter();
         XNetMessage msg = XNetMessage.getFunctionGroup3OpsMsg(1234, false,false,false,false);
 
         Assertions.assertTrue(formatter.handlesMessage(msg));
@@ -23,10 +23,17 @@ public class XNetFunctionGroup3OperateRequestMessageFormatterTest {
 
     @Test
     public void testFormatMessageAllOn() {
-        XNetFunctionGroup3OperateRequestMessageFormatter formatter = new XNetFunctionGroup3OperateRequestMessageFormatter();
         XNetMessage msg = XNetMessage.getFunctionGroup3OpsMsg(1234, true,true,true,true);
 
         Assertions.assertTrue(formatter.handlesMessage(msg));
         Assertions.assertEquals("Mobile Decoder Operations Request: Set Function Group 3 for Address: 1234 F9 On; F10 On; F11 On; F12 On; ",formatter.formatMessage(msg));
     }
+
+    @Override
+    @BeforeEach
+    public void setUp(){
+        super.setUp(); // setup JUnit
+        formatter = new XNetFunctionGroup3OperateRequestMessageFormatter();
+    }
+
 }

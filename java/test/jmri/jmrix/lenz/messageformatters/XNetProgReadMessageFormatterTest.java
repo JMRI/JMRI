@@ -1,18 +1,19 @@
 package jmri.jmrix.lenz.messageformatters;
 
+import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.lenz.XNetMessage;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the XNetProgReadMessageFormatter class
  * @author Paul Bender Copyright (C) 2024
  */
-public class XNetProgReadMessageFormatterTest {
+public class XNetProgReadMessageFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
     void handlesRegisterModeReadRequest(){
-        XNetProgReadMessageFormatter formatter = new XNetProgReadMessageFormatter();
+
         XNetMessage msg = XNetMessage.getReadRegisterMsg(5);
         Assertions.assertTrue(formatter.handlesMessage(msg));
         Assertions.assertEquals("Service Mode Request: Read Register 5", formatter.formatMessage(msg));
@@ -20,7 +21,7 @@ public class XNetProgReadMessageFormatterTest {
 
     @Test
     void handlesPagedModeReadRequest(){
-        XNetProgReadMessageFormatter formatter = new XNetProgReadMessageFormatter();
+
         XNetMessage msg = XNetMessage.getReadPagedCVMsg(29);
         Assertions.assertTrue(formatter.handlesMessage(msg));
         Assertions.assertEquals("Service Mode Request: Read CV 29 in Paged Mode", formatter.formatMessage(msg));
@@ -28,7 +29,7 @@ public class XNetProgReadMessageFormatterTest {
 
     @Test
     void handlesCVModeReadRequest(){
-        XNetProgReadMessageFormatter formatter = new XNetProgReadMessageFormatter();
+
         XNetMessage msg = XNetMessage.getReadDirectCVMsg(29);
         Assertions.assertTrue(formatter.handlesMessage(msg));
         Assertions.assertEquals("Service Mode Request: Read CV 29 in Direct Mode", formatter.formatMessage(msg));
@@ -36,7 +37,7 @@ public class XNetProgReadMessageFormatterTest {
 
     @Test
     void handlesV36CVModeReadRequest(){
-        XNetProgReadMessageFormatter formatter = new XNetProgReadMessageFormatter();
+
         XNetMessage msg = XNetMessage.getReadDirectCVMsg(300);
         Assertions.assertTrue(formatter.handlesMessage(msg));
         Assertions.assertEquals("Service Mode Request (V3.6): Read CV 300 in Direct Mode", formatter.formatMessage(msg));
@@ -50,4 +51,12 @@ public class XNetProgReadMessageFormatterTest {
         Assertions.assertTrue(formatter.handlesMessage(msg));
         Assertions.assertEquals("Service Mode Request (V3.6): Read CV 1024 in Direct Mode", formatter.formatMessage(msg));
     }
+
+    @Override
+    @BeforeEach
+    public void setUp(){
+        super.setUp(); // setup JUnit
+        formatter = new XNetProgReadMessageFormatter();
+    }
+
 }

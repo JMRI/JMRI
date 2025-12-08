@@ -1,6 +1,8 @@
 package jmri.jmrix.lenz.messageformatters;
 
+import jmri.jmrix.AbstractMessageFormatterTest;
 import jmri.jmrix.lenz.XNetReply;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,13 +12,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author Paul Bender Copyright (C) 2025
  */
-public class XNetCommandStationInfoResponseFormatterTest {
-
-    XNetCommandStationInfoResponseFormatter formatter;
-    @BeforeEach
-    public void setUp() {
-        formatter = new XNetCommandStationInfoResponseFormatter();
-    }
+public class XNetCommandStationInfoResponseFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
     public void testToMonitorStringBCEmergencyOff(){
@@ -100,6 +96,13 @@ public class XNetCommandStationInfoResponseFormatterTest {
         XNetReply r = new XNetReply("61 86 E7");
         Assertions.assertTrue(formatter.handlesMessage(r));
         Assertions.assertEquals(Bundle.getMessage("XNetReplyV1DHErrorNonZeroSpeed"), formatter.formatMessage(r));
+    }
+
+    @Override
+    @BeforeEach
+    public void setUp(){
+        super.setUp(); // setup JUnit
+        formatter = new XNetCommandStationInfoResponseFormatter();
     }
 
 }
