@@ -5,13 +5,13 @@ import jmri.jmrix.*;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.io.*;
-//import java.util.Set;
+import java.util.Set;
 import java.util.Vector;
-//import java.util.regex.Pattern;
-//import java.util.stream.Collectors;
-//import java.util.stream.Stream;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-//import jmri.util.SystemType;
+import jmri.util.SystemType;
 
 /**
  * Implementation of serial port using jSerialComm.
@@ -317,8 +317,6 @@ public class JSerialPort implements SerialPort {
     //    @SuppressWarnings("UseOfObsoleteCollectionType") // historical interface
     @SuppressFBWarnings(value = "DMI_HARDCODED_ABSOLUTE_FILENAME")
     public static Vector<String> getActualPortNames() {
-        throw new RuntimeException("Temporary disable jSerialComm for testing");
-/*
         // first, check that the comm package can be opened and ports seen
         java.util.Vector<java.lang.String> portNameVector = new Vector<String>();
         com.fazecast.jSerialComm.SerialPort[] portIDs = com.fazecast.jSerialComm.SerialPort.getCommPorts();
@@ -350,7 +348,6 @@ public class JSerialPort implements SerialPort {
             }
         }
         return portNameVector;
-*/
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JSerialPort.class);
