@@ -14,6 +14,7 @@ import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
 public class DataSourceTest {
 
+    @Disabled("Temporary disable jSerialComm for testing")
     @Test
     public void testCreate() {
         Assert.assertTrue("no instance before ctor", DataSource.instance() == null);

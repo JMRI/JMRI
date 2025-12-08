@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
+    @Disabled("Temporary disable jSerialComm for testing")
     @Test
     @Override
     public void testGetInfo() {

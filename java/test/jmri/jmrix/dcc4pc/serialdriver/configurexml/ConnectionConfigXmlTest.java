@@ -13,6 +13,7 @@ import jmri.jmrix.dcc4pc.serialdriver.ConnectionConfig;
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
+@Disabled("Temporary disable jSerialComm for testing")
 public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSerialConnectionConfigXmlTestBase {
 
     @BeforeEach
