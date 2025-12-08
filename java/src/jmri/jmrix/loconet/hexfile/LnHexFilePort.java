@@ -31,7 +31,8 @@ import static jmri.jmrix.loconet.lnsvf1.Lnsv1MessageContents.Sv1Command;
  */
 public class LnHexFilePort extends LnPortController implements Runnable {
 
-    volatile BufferedReader sFile = null;
+    volatile private BufferedReader sFile = null;
+    volatile private boolean exit;
 
     public LnHexFilePort() {
         this(new HexFileSystemConnectionMemo());
@@ -75,6 +76,14 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         }
     }
 
+    /**
+     * Tell this class to exit.
+     * Note that the caller must also interrupt the thread after this call.
+     */
+    public void close() {
+        exit = true;
+    }
+
     @Override
     public void connect() {
         jmri.jmrix.loconet.hexfile.HexFileFrame f
@@ -108,6 +117,9 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                         wait(100);
                     }
                 } catch (InterruptedException e) {
+                    if (exit) {
+                        return;
+                    }
                     log.info("LnHexFilePort.run: woken from sleep"); // NOI18N
                     if (sFile == null) {
                         log.error("LnHexFilePort.run: unexpected InterruptedException, exiting"); // NOI18N
@@ -163,6 +175,9 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                 log.info("LnHexFilePort.run: normal finish to file"); // NOI18N
 
             } catch (InterruptedException e) {
+                if (exit) {
+                    return;
+                }
                 if (sFile != null) { // changed in another thread before the interrupt
                     log.info("LnHexFilePort.run: user selected new file"); // NOI18N
                     // swallow the exception since we have handled its intent
