@@ -8,6 +8,8 @@ package jmri.jmrix.powerline.insteon2412s;
  */
 public class Constants {
 
+    private Constants() {} // class only supplies static methods
+
     public static final int HEAD_STX = 0x02;
 
     public static final int POLL_REQ_STD = 0x50;
@@ -56,9 +58,9 @@ public class Constants {
     public static final int FLAG_MASK_MSGTYPE = 0xE0;
 
     /**
-     * Pretty-print a header code
+     * Pretty-print a header code.
      * @param b header value
-     * @return  formated translation of header value
+     * @return  formatted translation of header value
      */
     public static String formatHeaderByte(int b) {
         return "Dim: " + ((b >> 3) & 0x1F)
