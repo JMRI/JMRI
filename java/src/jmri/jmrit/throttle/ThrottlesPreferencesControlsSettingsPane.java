@@ -1,5 +1,7 @@
 package jmri.jmrit.throttle;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -447,6 +449,8 @@ public class ThrottlesPreferencesControlsSettingsPane extends JPanel {
         }
     }
 
+    @SuppressFBWarnings(value = "SIC_INNER_SHOULD_BE_STATIC", 
+                justification="SpotBugs says should be static; compiler differs in opinion")
     final private class ShortCutTextField extends JTextField {
         ShortCutsField shortCutsField;
 
