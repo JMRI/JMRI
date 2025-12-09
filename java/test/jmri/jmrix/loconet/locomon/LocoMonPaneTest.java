@@ -23,13 +23,6 @@ import static org.assertj.core.api.Assertions.*;
  *
  * @author Bob Jacobsen   Copyright 2015
  */
-@org.junit.jupiter.api.Disabled("Temporary disable class for testing")
-/*
-This class fails when running on Java 25 with the following errors:
-LocoMonPaneTest.testFilterMultiple:73 - TimeoutExpired Wait event queue staying empty for 100 (QueueTool.WaitQueueEmptyTimeout)
-LocoMonPaneTest.testFilterNot:47 - TimeoutExpired Wait event queue staying empty for 100 (QueueTool.WaitQueueEmptyTimeout)
-LocoMonPaneTest.testFilterSimple:60 - TimeoutExpired Wait event queue staying empty for 100 (QueueTool.WaitQueueEmptyTimeout)
-*/
 public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
     @Test
@@ -38,7 +31,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         assertThat(thrown).isNull();
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI( () -> ((LocoMonPane)pane).message(m));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertThat(getFrameTextONGUIThread()).withFailMessage("shows message").isEqualTo("Set speed of loco in slot 7 to 0.\n");
     }
 
@@ -51,7 +44,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI( () -> ((LocoMonPane)pane).message(m));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertThat(getFrameTextONGUIThread()).withFailMessage("shows message").isEqualTo("Set speed of loco in slot 7 to 0.\n");
     }
 
@@ -64,7 +57,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI( () -> ((LocoMonPane)pane).message(m));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertThat(getFrameTextONGUIThread()).withFailMessage("shows message").isEqualTo("");
     }
 
@@ -77,7 +70,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         LocoNetMessage m = new LocoNetMessage(new int[]{0xA0, 0x07, 0x00, 0x58});
         ThreadingUtil.runOnGUI(()->((LocoMonPane)pane).message(m));
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertThat(getFrameTextONGUIThread()).withFailMessage("shows message").isEqualTo("");
     }
 
