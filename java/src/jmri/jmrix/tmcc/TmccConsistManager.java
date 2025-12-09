@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
  * Consist Manager for use with the TmccConsist class for the
  * consists it builds.
  *
+ * Based on MqttConsistManager by
  * @author Dean Cording Copyright (C) 2023
  * with edits/additions by
  * @author Timothy Jump (C) 2025

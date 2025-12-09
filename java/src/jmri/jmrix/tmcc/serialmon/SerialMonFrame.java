@@ -783,8 +783,9 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                 return "Unrecognized TMCC Error (Case C) - with C= " + C + " D= " + D;
             }
         }
-        
-        return "TMCC - CV#, Loco ID#/Address/Loco Feature Value - Out of Range";
+
+        return "TMCC - Direct Command Sent";
+//        return "TMCC - CV#, Loco ID#/Address/Loco Feature Value - Out of Range";
 
     }
 }
