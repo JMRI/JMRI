@@ -47,7 +47,6 @@ public class SprogIIUpdateFrame
      * {@inheritDoc}
      * @param v SPROG version to be decoded
      */
-    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD")
     @Override
     synchronized public void notifyVersion(SprogVersion v) {
         sv = v;

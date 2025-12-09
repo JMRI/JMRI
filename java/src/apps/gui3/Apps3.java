@@ -103,8 +103,6 @@ public abstract class Apps3 extends AppsBase {
      * For compatability with adding in buttons to the toolbar using the
      * existing createbuttonmodel
      */
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "only one application at a time")
     protected static void setButtonSpace() {
         _buttonSpace = new JPanel();
         _buttonSpace.setLayout(new FlowLayout(FlowLayout.LEFT));

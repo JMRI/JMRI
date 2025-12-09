@@ -45,7 +45,6 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
         }
     }
 
-    @SuppressFBWarnings(value="DM_EXIT", justification="Errors should terminate the application")
     protected void systemExit(){
         System.exit(126);
     }

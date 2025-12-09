@@ -1113,8 +1113,6 @@ public class BlockBossLogic extends Siglet implements java.beans.VetoableChangeL
      * @return never null
      */
     @Nonnull
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-                        justification="enforced dynamically, too hard to prove statically")
     public static BlockBossLogic getStoppedObject(String signal) {
         // As a static requirement, the signal head must exist, but
         // we can't express that statically.  We test it dynamically.

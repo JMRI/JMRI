@@ -570,7 +570,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      *                              existing speed.
      *
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         log.debug("setSpeedSetting: called with speed {} for LocoNet slot {} allowDup {} allowDupOnStop {}",

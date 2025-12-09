@@ -146,8 +146,6 @@ public class BeanTableFrame<E extends NamedBean> extends jmri.util.JmriJFrame {
      * @param comp {@link Component} to add
      * @param c    Class name
      */
-    @SuppressFBWarnings(value = "UUF_UNUSED_FIELD",
-            justification = "param c is required in the listedtableframe")
     protected void addToBottomBox(Component comp, String c) {
        bottomBox.add(comp);
     }

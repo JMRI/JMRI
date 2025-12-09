@@ -591,7 +591,6 @@ public class Engine implements ReadingListener {
     }
 
     // for now, we only allow one Engine
-    @SuppressFBWarnings(value = "MS_PKGPROTECT") // for tests
     static volatile protected Engine _instance = null;
 
     @SuppressFBWarnings(value = "LI_LAZY_INIT_UPDATE_STATIC") // see comment in method

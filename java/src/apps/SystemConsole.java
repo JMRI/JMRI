@@ -378,8 +378,6 @@ public final class SystemConsole {
     /**
      * Method to redirect the system streams to the console
      */
-    @SuppressFBWarnings(value = "DM_DEFAULT_ENCODING",
-            justification = "Can only be called from the same instance so default encoding OK")
     private void redirectSystemStreams(PrintStream out, PrintStream err) {
         System.setOut(out);
         System.setErr(err);

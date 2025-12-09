@@ -617,8 +617,9 @@ public class Ash2_2Algorithm extends AbstractCalculator {
             this.vs = vs;
         }
         int code;
+        double x, y, z, vs;
         @SuppressFBWarnings(value = "UUF_UNUSED_FIELD")
-        double x, y, z, t, vs;
+        double t;
     }
 
     private final static Logger log = LoggerFactory.getLogger(Ash2_2Algorithm.class);
