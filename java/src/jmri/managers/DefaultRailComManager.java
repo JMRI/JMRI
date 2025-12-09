@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.IdTag;

@@ -18,7 +18,6 @@ import javax.annotation.Nonnull;
 
 import javax.swing.*;
 import javax.swing.table.*;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;

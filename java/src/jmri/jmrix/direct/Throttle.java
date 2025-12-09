@@ -1,6 +1,5 @@
 package jmri.jmrix.direct;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;

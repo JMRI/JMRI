@@ -1,7 +1,6 @@
 package jmri.jmrix.bidib;
 
 import java.util.BitSet;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.SpeedStepMode;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;

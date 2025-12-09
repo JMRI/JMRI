@@ -1,6 +1,5 @@
 package jmri.jmrix.tams;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.LinkedList;
 import java.util.Queue;
 import jmri.DccLocoAddress;

@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.ds64;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;

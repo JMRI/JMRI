@@ -1,7 +1,5 @@
 package jmri.util.exceptionhandler;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import java.awt.GraphicsEnvironment;
 
 import jmri.util.swing.ExceptionContext;

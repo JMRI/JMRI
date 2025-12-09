@@ -2,8 +2,6 @@ package jmri.jmrix.sprog.update;
 
 import static jmri.jmrix.sprog.SprogConstants.TC_BOOT_REPLY_TIMEOUT;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;

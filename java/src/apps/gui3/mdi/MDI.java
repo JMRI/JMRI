@@ -1,6 +1,5 @@
 package apps.gui3.mdi;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Application;
 import jmri.util.swing.mdi.MdiMainFrame;
 
