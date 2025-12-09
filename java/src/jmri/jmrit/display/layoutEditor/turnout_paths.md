@@ -28,16 +28,16 @@ A ==**== B       A ==**== B
 
 ```
    Wye
-      B
+      C
      //
 A ==**
      \\
-      C
+      B
 ```
 
 **Valid Routes:**
-- **A-B** (ROUTE_AB) - throat to one route
-- **A-C** (ROUTE_AC) - throat to other route
+- **A-C** (ROUTE_AC) - throat to left leg route (thrown)
+- **A-B** (ROUTE_AB) - throat to right leg route (closed)
 
 *Note: Both B and C are diverging routes; no "straight through" path exists.*
 
@@ -56,7 +56,9 @@ D ==**==**== C
 - **A-B** (ROUTE_AB) - straight through, continuing route
 - **C-D** (ROUTE_CD) - straight through, continuing route
 - **A-C** (ROUTE_AC) - crossover, diverging route
-- **B-D** (ROUTE_BD) - crossover, diverging route### Right-Hand Single Crossover (RH XOver)
+- **B-D** (ROUTE_BD) - crossover, diverging route
+
+### Right-Hand Single Crossover (RH XOver)
 
 ```
 Right-hand Crossover
@@ -84,7 +86,9 @@ D ==**===== C
 **Valid Routes:**
 - **A-B** (ROUTE_AB) - straight through, continuing route
 - **C-D** (ROUTE_CD) - straight through, continuing route
-- **B-D** (ROUTE_BD) - crossover, diverging route### Single Slip
+- **B-D** (ROUTE_BD) - crossover, diverging route
+
+### Single Slip
 
 ```
 \\      //
@@ -101,7 +105,7 @@ D ==**===== C
 - **B-D** (ROUTE_BD) - straight through other direction
 - **A-D** (ROUTE_AD) - slip crossing
 
-### Single Slip
+### Double Slip
 
 ```
 \\      //
