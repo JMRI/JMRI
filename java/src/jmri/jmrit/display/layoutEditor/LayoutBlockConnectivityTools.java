@@ -284,6 +284,45 @@ final public class LayoutBlockConnectivityTools {
      *                            routing is not enabled.
      */
     public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, List<LayoutBlock> destBlockn1, Routing pathMethod) throws jmri.JmriException {
+        // ----- Begin Turntable Exit Path Check -----
+        // This handles the special case for a path exiting a turntable (Path 1), where the protecting block (a ray)
+        // can be the same as the destination's facing block.
+        for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+            for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+                // Check if the path starts from this turntable's block
+                if (turntable.getLayoutBlock() == currentBlock) {
+                    // A path from a turntable is valid if the destination is a ray block or a neighbor of a ray block.
+                    for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                        TrackSegment track = ray.getConnect();
+                        if (track != null && track.getLayoutBlock() != null) {
+                            LayoutBlock rayBlock = track.getLayoutBlock();
+                            // First, check if the ray block itself is the destination.
+                            if (rayBlock == destBlock) {
+                                return true;
+                            }
+                            // Next, check if the destination block is a valid neighbor of this ray block.
+                            for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
+                                Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                                if (neighbor != null && neighbor == destBlock.getBlock()) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // ----- Begin Turntable Siding Path Check (Path 3) -----
+        // This handles the special case for a path entering a turntable to a buffer stop,
+        // where the destination block is the turntable itself.
+        for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+            for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+                if (turntable.getLayoutBlock() == destBlock) {
+                    return true;
+                }
+            }
+        }
+        // ----- End Turntable Exit Path Check -----
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         if (!lbm.isAdvancedRoutingEnabled()) {
             log.debug("Advanced routing has not been enabled therefore we cannot use this function");
@@ -404,7 +443,6 @@ final public class LayoutBlockConnectivityTools {
         /*LayoutBlock destProt = null;
          if(!dest.getProtectingBlocks().isEmpty()){
          destProt = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(dest.getProtectingBlocks().get(0));
-         // log.info(dest.getProtectingBlocks());
          }*/
          
         List<LayoutBlock> destList = new ArrayList<>();
@@ -784,9 +822,99 @@ final public class LayoutBlockConnectivityTools {
      */
     public HashMap<NamedBean, List<NamedBean>> discoverValidBeanPairs(LayoutEditor editor, Class<?> T, Routing pathMethod) {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+
+        // ----- Begin Turntable Path Discovery -----
         HashMap<NamedBean, List<NamedBean>> retPairs = new HashMap<>();
+        List<SignalMast> turntableMasts = new ArrayList<>();
+        if (T == SignalMast.class) {
+            for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+                for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+                    if (!turntable.isDispatcherManaged()) {
+                        continue;
+                    }
+                    LayoutBlock turntableBlock = turntable.getLayoutBlock();
+
+                    // Add all turntable-related masts to a list for exclusion from general discovery
+                    if (turntable.getExitSignalMast() != null) turntableMasts.add(turntable.getExitSignalMast());
+                    if (turntable.getBufferMast() != null) turntableMasts.add(turntable.getBufferMast());
+
+                    // Path 1: From turntable's Exit Mast to the next mast on a ray's track
+                    SignalMast exitMast = turntable.getExitSignalMast();
+                    if (exitMast != null) {
+                        for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                            TrackSegment track = ray.getConnect();
+                            if (track != null && track.getLayoutBlock() != null) {
+                                LayoutBlock rayBlock = track.getLayoutBlock();
+                                // Find the block connected to the ray that is NOT the turntable, then find the mast protecting it.
+                                for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
+                                    Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                                    if (neighbor != turntableBlock.getBlock()) {
+                                        SignalMast nextMast = lbm.getFacingSignalMast(rayBlock.getBlock(), neighbor, panel);
+                                        if (nextMast != null) {
+                                            retPairs.computeIfAbsent(exitMast, k -> new ArrayList<>()).add(nextMast);
+                                        }
+                                        break; // Assume only one exit from the ray block
+                                    }
+                                }
+                                // Also check for a buffer mast at the end of this ray's block
+                                if (rayBlock.getNumberOfNeighbours() == 1) { // Only connected to the turntable block
+                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(rayBlock.getBlock(), panel);
+                                    if (bufferMast != null) {
+                                        if (log.isDebugEnabled()) {
+                                            log.debug("Found turntable exit to buffer mast path: {} -> {}", exitMast.getDisplayName(), bufferMast.getDisplayName());
+                                        }
+                                        retPairs.computeIfAbsent(exitMast, k -> new ArrayList<>()).add(bufferMast);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+                    // Path 2 & 3: Paths involving Approach and Buffer masts
+                    for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                        SignalMast approachMast = ray.getApproachMast();
+                        if (approachMast == null) { // this is logged elsewhere
+                            continue;
+                        }
+                        turntableMasts.add(approachMast);
+
+                        // Path 2: From a remote mast on the layout to this ray's Approach Mast
+                        TrackSegment track = ray.getConnect();
+                        if (track != null && track.getLayoutBlock() != null && turntableBlock != null) {
+                            LayoutBlock rayBlock = track.getLayoutBlock();
+                            // Find the block connected to the ray that is NOT the turntable, then find the mast protecting the ray from it.
+                            for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
+                                Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                                if (neighbor != turntableBlock.getBlock()) {
+                                    SignalMast remoteMast = lbm.getFacingSignalMast(neighbor, rayBlock.getBlock(), panel);
+                                    if (remoteMast != null) {
+                                        retPairs.computeIfAbsent(remoteMast, k -> new ArrayList<>()).add(approachMast);
+                                    }
+                                    // Assume only one entry to the ray block
+                                    break;
+                                }
+                            }
+                        }
+
+                        // Path 3: From this ray's Approach Mast to the turntable's Buffer Mast (a siding path)
+                        SignalMast bufferMast = turntable.getBufferMast();
+                        if (bufferMast != null) {
+                            retPairs.computeIfAbsent(approachMast, k -> new ArrayList<>()).add(bufferMast);
+                        }
+                    }
+                }
+            }
+        }
+        // ----- End Turntable Path Discovery -----
+
+        // ----- Begin General Path Discovery (excluding turntable masts) -----
         List<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
         beanList.forEach((fp) -> {
+            // Skip any mast that has already been handled by the turntable-specific logic above
+            if (turntableMasts.contains(fp.getBean())) {
+                return; // continue to next fp in forEach
+            }
             fp.getProtectingBlocks().stream().map((block) -> {
                 if (log.isDebugEnabled()) {
                     try {
@@ -803,7 +931,7 @@ final public class LayoutBlockConnectivityTools {
                 LayoutBlock lProtecting = lbm.getLayoutBlock(block);
                 NamedBean source = fp.getBean();
                 try {
-                    retPairs.put(source, discoverPairDest(source, lProtecting, lFacing, beanList, pathMethod));
+                    retPairs.computeIfAbsent(source, k -> new ArrayList<>()).addAll(discoverPairDest(source, lProtecting, lFacing, beanList, pathMethod));
                 } catch (JmriException ex) {
                     log.error("exception in retPairs.put", ex);
                 }
@@ -831,7 +959,59 @@ final public class LayoutBlockConnectivityTools {
         if (log.isDebugEnabled()) {
             log.debug("discover pairs from source {}", source.getDisplayName());
         }
+
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+
+        // First, check if the source is a turntable mast. If so, handle it specially.
+        if (T == SignalMast.class) {
+            if (! (source instanceof SignalMast)) {
+                throw new IllegalArgumentException("source is not a SignalMast: " + (source != null ? source.getClass().getName() : "null"));
+            }
+            SignalMast sourceMast = (SignalMast) source;
+            for (LayoutEditor panel : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+                for (LayoutTurntable turntable : panel.getLayoutTurntables()) {
+                    if (!turntable.isDispatcherManaged()) {
+                        continue;
+                    }
+
+                    // Case 1: Source is the turntable's Exit Mast
+                    if (sourceMast.equals(turntable.getExitSignalMast())) {
+                        log.debug("Source is an exit mast for turntable {}", turntable.getName());
+                        List<NamedBean> destinations = new ArrayList<>();
+                        LayoutBlock turntableBlock = turntable.getLayoutBlock();
+                        for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                            TrackSegment track = ray.getConnect();
+                            if (track != null && track.getLayoutBlock() != null) {
+                                LayoutBlock rayBlock = track.getLayoutBlock();
+                                for (int i = 0; i < rayBlock.getNumberOfNeighbours(); i++) {
+                                    Block neighbor = rayBlock.getNeighbourAtIndex(i);
+                                    if (neighbor != turntableBlock.getBlock()) {
+                                        SignalMast nextMast = lbm.getFacingSignalMast(rayBlock.getBlock(), neighbor, panel);
+                                        if (nextMast != null) destinations.add(nextMast);
+                                    }
+                                }
+                                if (rayBlock.getNumberOfNeighbours() == 1) { // End of line buffer
+                                    SignalMast bufferMast = lbm.getSignalMastAtEndBumper(rayBlock.getBlock(), panel);
+                                    if (bufferMast != null) destinations.add(bufferMast);
+                                }
+                            }
+                        }
+                        return destinations;
+                    }
+
+                    // Case 2: Source is an Approach Mast for one of the rays
+                    for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                        if (sourceMast.equals(ray.getApproachMast())) {
+                            log.info("Source is an approach mast for turntable {}", turntable.getName());
+                            List<NamedBean> destinations = new ArrayList<>();
+                            if (turntable.getBufferMast() != null) destinations.add(turntable.getBufferMast());
+                            return destinations;
+                        }
+                    }
+                }
+            }
+        }
+
         LayoutBlock lFacing = lbm.getFacingBlockByNamedBean(source, editor);
         List<LayoutBlock> lProtecting = lbm.getProtectingBlocksByNamedBean(source, editor);
         List<NamedBean> ret = new ArrayList<>();
