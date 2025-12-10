@@ -1,6 +1,6 @@
 package jmri.jmrix.bidib;
 
-import jmri.util.JUnitAppender;
+//import jmri.util.JUnitAppender;
 
 import org.junit.jupiter.api.*;
 

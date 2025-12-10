@@ -71,6 +71,7 @@ public class TestBiDiBTrafficController extends BiDiBTrafficController {
         node.setFeature(new Feature(BidibLibrary.FEATURE_CTRL_INPUT_COUNT, 32));
         nodes.put(uid & 0x0000FFFFFFFFFFL, node);
         //log.warn("new node2: {}", node);
+        log.trace("bidibNode: {}", bidibNode);
     }
 
     @Override
