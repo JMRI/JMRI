@@ -12,177 +12,190 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>2022</year>
-		<holder>JMRI</holder>
-	</copyright>
-	<authorgroup xmlns="http://docbook.org/ns/docbook">
-		<author>
-			<personname>
-				<firstname>Ulrich</firstname>
-				<surname>Gerlach</surname>
-			</personname>
-		</author>
-	</authorgroup>
-	<revhistory xmlns="http://docbook.org/ns/docbook">
-		<revision>
-			<revnumber>1</revnumber>
-			<date>2022-11-11</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
-		</revision>
-		<revision>
-			<revnumber>2</revnumber>
-			<date>2023-10-20</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add decoder</revremark>
-		</revision>
-		<revision>
-			<revnumber>3</revnumber>
-			<date>2024-04-01</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add Decoder ML4000</revremark>
-		</revision>
-	</revhistory>
-	<!-- Piko Smart Decoder 4.1 -->
-	<variable item="Error register" CV="30" default="0" include="PIKO40501-18,PIKO46440-18,PIKO46442-16,PIKO46443-22">
-		<enumVal>
-			<enumChoice choice="No error" value="0">
-				<choice>No error</choice>
-				<choice xml:lang="de">kein Fehler</choice>
-				<choice xml:lang="it">Nessun Errore</choice>
-				<choice xml:lang="nl">Geen fout</choice>
-				<choice xml:lang="cs">Bez chyby</choice>
-			</enumChoice>
-			<enumChoice choice="Function output short circuit">
-				<choice>Function output short circuit</choice>
-				<choice xml:lang="de">Fehler Funktionsausgang</choice>
-				<choice xml:lang="it">Corto-Circuito Functione</choice>
-				<choice xml:lang="nl">Fout in functie-uitgang</choice>
-				<choice xml:lang="cs">Zkrat na funkčním výstupu</choice>
-			</enumChoice>
-			<enumChoice choice="Motor short circuit">
-				<choice>Motor short circuit</choice>
-				<choice xml:lang="de">Fehler Motor (Kurzschluss)</choice>
-				<choice xml:lang="it">Corto-Circuito Motore</choice>
-				<choice xml:lang="nl">Fout in motor</choice>
-				<choice xml:lang="cs">Zkrat na motoru</choice>
-			</enumChoice>
-			<enumChoice choice="Motor+Light short circuit">
-				<choice>Motor+Functions short circuit</choice>
-				<choice xml:lang="de">Fehler Motor+Funktionen</choice>
-				<choice xml:lang="it">Corto-Circuito Motore e Functione</choice>
-				<choice xml:lang="nl">Fout in Moter+Functie</choice>
-				<choice xml:lang="cs">Zkrat na motoru + funkčním výstupu</choice>
-			</enumChoice>
-			<enumChoice choice="Temperature error">
-				<choice>Temperature Error</choice>
-				<choice xml:lang="de">Temperaturüberschreitung</choice>
-				<choice xml:lang="nl">Temperatuuroverschrijding</choice>
-				<choice xml:lang="cs">Chyba teploty</choice>
-			</enumChoice>
-			<enumChoice choice="Functions+Temperature Error">
-				<choice>Functions+Temperature Error</choice>
-				<choice xml:lang="de">Fehler Funktionen+Temperatur</choice>
-				<choice xml:lang="it">Corto-Circuito Functione e Temperature</choice>
-				<choice xml:lang="nl">Fout in Functie+Temperatuuroverschrijding</choice>
-				<choice xml:lang="cs">Zkrat funkčním výstupu + Chyba teploty</choice>
-			</enumChoice>
-			<enumChoice choice="Motor+Temperature error">
-				<choice>Motor+Temperature error</choice>
-				<choice xml:lang="de">Fehler Motor+Temperatur</choice>
-				<choice xml:lang="it">Corto-Circuito Motore e Temperature</choice>
-				<choice xml:lang="nl">Fout in Moter+Temperatuuroverschrijding</choice>
-				<choice xml:lang="cs">Zkrat na motoru + Chyba teploty</choice>
-			</enumChoice>
-			<enumChoice choice="Motor+Temperature+Light error">
-				<choice>Motor+Temperature+Light error</choice>
-				<choice xml:lang="de">Fehler Motor+Funktionen und Temperatur</choice>
-				<choice xml:lang="it">Corto-Circuito Motore e Functione e Temperature</choice>
-				<choice xml:lang="nl">Fout in Moter+Functie+Temperatuuroverschrijding</choice>
-				<choice xml:lang="cs">Zkrat na motoru + funkčním výstupu + Chyba teploty</choice>
-			</enumChoice>
-		</enumVal>
-		<label>Error register</label>
-		<label xml:lang="de">Inhalt Fehlerspeicher</label>
-		<label xml:lang="it">Errore registro</label>
-		<label xml:lang="nl">Fout-register</label>
-		<label xml:lang="cs">Registr chyby</label>
-		<tooltip>0 = No error (reset error register)</tooltip>
-		<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
-		<tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>
-		<tooltip xml:lang="nl">0 = Geen fout (reset het Fout-register)</tooltip>
-		<tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
-	</variable>
-	<!-- Piko Smart Decoder XP5.1 -->
-	<variable item="Error register" CV="30" default="0" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22">
-		<enumVal>
-			<enumChoice choice="No error" value="0">
-				<choice>No error</choice>
-				<choice xml:lang="de">kein Fehler</choice>
-				<choice xml:lang="it">Nessun Errore</choice>
-				<choice xml:lang="nl">Geen fout</choice>
-				<choice xml:lang="cs">Bez chyby</choice>
-			</enumChoice>
-			<enumChoice choice="Motor short circuit">
-				<choice>Motor short circuit</choice>
-				<choice xml:lang="de">Fehler Motor (Kurzschluss)</choice>
-				<choice xml:lang="it">Corto-Circuito Motore</choice>
-				<choice xml:lang="nl">Fout in motor</choice>
-				<choice xml:lang="cs">Zkrat na motoru</choice>
-			</enumChoice>
-			<enumChoice choice="Temperature error">
-				<choice>Temperature Error</choice>
-				<choice xml:lang="de">Temperaturüberschreitung</choice>
-				<choice xml:lang="it">Temperature</choice>
-				<choice xml:lang="nl">Temperatuuroverschrijding</choice>
-				<choice xml:lang="cs">Chyba teploty</choice>
-			</enumChoice>
-			<enumChoice choice="Motor+Temperature error">
-				<choice>Motor+Temperature error</choice>
-				<choice xml:lang="de">Fehler Motor+Temperatur</choice>
-				<choice xml:lang="it">Corto-Circuito Motore e Temperature</choice>
-				<choice xml:lang="nl">Fout in Moter+Temperatuuroverschrijding</choice>
-				<choice xml:lang="cs">Zkrat na motoru + Chyba teploty</choice>
-			</enumChoice>
-			<enumChoice choice="Function output short circuit">
-				<choice>Function output short circuit</choice>
-				<choice xml:lang="de">Fehler Funktionsausgang</choice>
-				<choice xml:lang="it">Corto-Circuito Functione</choice>
-				<choice xml:lang="nl">Fout in functie-uitgang</choice>
-				<choice xml:lang="cs">Zkrat na funkčním výstupu</choice>
-			</enumChoice>
-			<enumChoice choice="Motor+Light short circuit">
-				<choice>Motor+Functions short circuit</choice>
-				<choice xml:lang="de">Fehler Motor+Funktionen</choice>
-				<choice xml:lang="it">Corto-Circuito Motore e Functione</choice>
-				<choice xml:lang="nl">Fout in Moter+Functie</choice>
-				<choice xml:lang="cs">Zkrat na motoru + funkčním výstupu</choice>
-			</enumChoice>
-			<enumChoice choice="Functions+Temperature Error">
-				<choice>Functions+Temperature Error</choice>
-				<choice xml:lang="de">Fehler Funktionen+Temperatur</choice>
-				<choice xml:lang="it">Corto-Circuito Functione e Temperature</choice>
-				<choice xml:lang="nl">Fout in Functie+Temperatuuroverschrijding</choice>
-				<choice xml:lang="cs">Zkrat funkčním výstupu + Chyba teploty</choice>
-			</enumChoice>
-			<enumChoice choice="Motor+Temperature+Light error">
-				<choice>Motor+Temperature+Light error</choice>
-				<choice xml:lang="de">Fehler Motor+Funktionen und Temperatur</choice>
-				<choice xml:lang="it">Corto-Circuito Motore e Functione e Temperature</choice>
-				<choice xml:lang="nl">Fout in Moter+Functie+Temperatuuroverschrijding</choice>
-				<choice xml:lang="cs">Zkrat na motoru + funkčním výstupu + Chyba teploty</choice>
-			</enumChoice>
-		</enumVal>
-		<label>Error register</label>
-		<label xml:lang="de">Inhalt Fehlerspeicher</label>
-		<label xml:lang="it">Errore registro</label>
-		<label xml:lang="nl">Fout-register</label>
-		<label xml:lang="cs">Registr chyby</label>
-		<tooltip>0 = No error (reset error register)</tooltip>
-		<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
-		<tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>
-		<tooltip xml:lang="nl">0 = Geen fout (reset het Fout-register)</tooltip>
-		<tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
-	</variable>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2022</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Ulrich</firstname>
+                <surname>Gerlach</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2022-11-11</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Initial version for Piko SmartDecoder 4.1 and XP5.1</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-10-20</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add decoder</revremark>
+        </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2024-04-01</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add Decoder ML4000</revremark>
+        </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2025-12-06</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add Decoder BR80 36537 / 36505 Spur G</revremark>
+        </revision>
+    </revhistory>
+    <!-- Piko Smart Decoder 4.1 -->
+    <variable item="Error register" CV="30" default="0" include="PIKO40501-18,PIKO46440-18,PIKO46442-16,PIKO46443-22">
+        <enumVal>
+            <enumChoice choice="No error" value="0">
+                <choice>No error</choice>
+                <choice xml:lang="de">kein Fehler</choice>
+                <choice xml:lang="it">Nessun Errore</choice>
+                <choice xml:lang="nl">Geen fout</choice>
+                <choice xml:lang="cs">Bez chyby</choice>
+            </enumChoice>
+            <enumChoice choice="Function output short circuit">
+                <choice>Function output short circuit</choice>
+                <choice xml:lang="de">Fehler Funktionsausgang</choice>
+                <choice xml:lang="it">Corto-Circuito Functione</choice>
+                <choice xml:lang="nl">Fout in functie-uitgang</choice>
+                <choice xml:lang="cs">Zkrat na funkčním výstupu</choice>
+            </enumChoice>
+            <enumChoice choice="Motor short circuit">
+                <choice>Motor short circuit</choice>
+                <choice xml:lang="de">Fehler Motor (Kurzschluss)</choice>
+                <choice xml:lang="it">Corto-Circuito Motore</choice>
+                <choice xml:lang="nl">Fout in motor</choice>
+                <choice xml:lang="cs">Zkrat na motoru</choice>
+            </enumChoice>
+            <enumChoice choice="Motor+Light short circuit">
+                <choice>Motor+Functions short circuit</choice>
+                <choice xml:lang="de">Fehler Motor+Funktionen</choice>
+                <choice xml:lang="it">Corto-Circuito Motore e Functione</choice>
+                <choice xml:lang="nl">Fout in Moter+Functie</choice>
+                <choice xml:lang="cs">Zkrat na motoru + funkčním výstupu</choice>
+            </enumChoice>
+            <enumChoice choice="Temperature error">
+                <choice>Temperature Error</choice>
+                <choice xml:lang="de">Temperaturüberschreitung</choice>
+                <choice xml:lang="nl">Temperatuuroverschrijding</choice>
+                <choice xml:lang="cs">Chyba teploty</choice>
+            </enumChoice>
+            <enumChoice choice="Functions+Temperature Error">
+                <choice>Functions+Temperature Error</choice>
+                <choice xml:lang="de">Fehler Funktionen+Temperatur</choice>
+                <choice xml:lang="it">Corto-Circuito Functione e Temperature</choice>
+                <choice xml:lang="nl">Fout in Functie+Temperatuuroverschrijding</choice>
+                <choice xml:lang="cs">Zkrat funkčním výstupu + Chyba teploty</choice>
+            </enumChoice>
+            <enumChoice choice="Motor+Temperature error">
+                <choice>Motor+Temperature error</choice>
+                <choice xml:lang="de">Fehler Motor+Temperatur</choice>
+                <choice xml:lang="it">Corto-Circuito Motore e Temperature</choice>
+                <choice xml:lang="nl">Fout in Moter+Temperatuuroverschrijding</choice>
+                <choice xml:lang="cs">Zkrat na motoru + Chyba teploty</choice>
+            </enumChoice>
+            <enumChoice choice="Motor+Temperature+Light error">
+                <choice>Motor+Temperature+Light error</choice>
+                <choice xml:lang="de">Fehler Motor+Funktionen und Temperatur</choice>
+                <choice xml:lang="it">Corto-Circuito Motore e Functione e Temperature</choice>
+                <choice xml:lang="nl">Fout in Moter+Functie+Temperatuuroverschrijding</choice>
+                <choice xml:lang="cs">Zkrat na motoru + funkčním výstupu + Chyba teploty</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Error register</label>
+        <label xml:lang="de">Inhalt Fehlerspeicher</label>
+        <label xml:lang="it">Errore registro</label>
+        <label xml:lang="nl">Fout-register</label>
+        <label xml:lang="cs">Registr chyby</label>
+        <tooltip>0 = No error (reset error register)</tooltip>
+        <tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
+        <tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>
+        <tooltip xml:lang="nl">0 = Geen fout (reset het Fout-register)</tooltip>
+        <tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
+    </variable>
+    <!-- Piko Smart Decoder XP5.1 -->
+    <variable item="Error register" CV="30" default="0" include="PIKO46505-18,PIKO46540-18,PIKO46548-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22,PIKO36505-G,PIKO36537-G">
+        <enumVal>
+            <enumChoice choice="No error" value="0">
+                <choice>No error</choice>
+                <choice xml:lang="de">kein Fehler</choice>
+                <choice xml:lang="it">Nessun Errore</choice>
+                <choice xml:lang="nl">Geen fout</choice>
+                <choice xml:lang="cs">Bez chyby</choice>
+            </enumChoice>
+            <enumChoice choice="Motor short circuit">
+                <choice>Motor short circuit</choice>
+                <choice xml:lang="de">Fehler Motor (Kurzschluss)</choice>
+                <choice xml:lang="it">Corto-Circuito Motore</choice>
+                <choice xml:lang="nl">Fout in motor</choice>
+                <choice xml:lang="cs">Zkrat na motoru</choice>
+            </enumChoice>
+            <enumChoice choice="Temperature error">
+                <choice>Temperature Error</choice>
+                <choice xml:lang="de">Temperaturüberschreitung</choice>
+                <choice xml:lang="it">Temperature</choice>
+                <choice xml:lang="nl">Temperatuuroverschrijding</choice>
+                <choice xml:lang="cs">Chyba teploty</choice>
+            </enumChoice>
+            <enumChoice choice="Motor+Temperature error">
+                <choice>Motor+Temperature error</choice>
+                <choice xml:lang="de">Fehler Motor+Temperatur</choice>
+                <choice xml:lang="it">Corto-Circuito Motore e Temperature</choice>
+                <choice xml:lang="nl">Fout in Moter+Temperatuuroverschrijding</choice>
+                <choice xml:lang="cs">Zkrat na motoru + Chyba teploty</choice>
+            </enumChoice>
+            <enumChoice choice="Function output short circuit">
+                <choice>Function output short circuit</choice>
+                <choice xml:lang="de">Fehler Funktionsausgang</choice>
+                <choice xml:lang="it">Corto-Circuito Functione</choice>
+                <choice xml:lang="nl">Fout in functie-uitgang</choice>
+                <choice xml:lang="cs">Zkrat na funkčním výstupu</choice>
+            </enumChoice>
+            <enumChoice choice="Motor+Light short circuit">
+                <choice>Motor+Functions short circuit</choice>
+                <choice xml:lang="de">Fehler Motor+Funktionen</choice>
+                <choice xml:lang="it">Corto-Circuito Motore e Functione</choice>
+                <choice xml:lang="nl">Fout in Moter+Functie</choice>
+                <choice xml:lang="cs">Zkrat na motoru + funkčním výstupu</choice>
+            </enumChoice>
+            <enumChoice choice="Functions+Temperature Error">
+                <choice>Functions+Temperature Error</choice>
+                <choice xml:lang="de">Fehler Funktionen+Temperatur</choice>
+                <choice xml:lang="it">Corto-Circuito Functione e Temperature</choice>
+                <choice xml:lang="nl">Fout in Functie+Temperatuuroverschrijding</choice>
+                <choice xml:lang="cs">Zkrat funkčním výstupu + Chyba teploty</choice>
+            </enumChoice>
+            <enumChoice choice="Motor+Temperature+Light error">
+                <choice>Motor+Temperature+Light error</choice>
+                <choice xml:lang="de">Fehler Motor+Funktionen und Temperatur</choice>
+                <choice xml:lang="it">Corto-Circuito Motore e Functione e Temperature</choice>
+                <choice xml:lang="nl">Fout in Moter+Functie+Temperatuuroverschrijding</choice>
+                <choice xml:lang="cs">Zkrat na motoru + funkčním výstupu + Chyba teploty</choice>
+            </enumChoice>
+            <enumChoice choice="Soundflash error">
+                <choice>Soundflash error</choice>
+                <choice xml:lang="de">Soundflash Fehler</choice>
+                <choice xml:lang="it">Errore Soundflash</choice>
+                <choice xml:lang="nl">Soundflash-fout</choice>
+                <choice xml:lang="cs">Chyba zvukového blesku</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Error register</label>
+        <label xml:lang="de">Inhalt Fehlerspeicher</label>
+        <label xml:lang="it">Errore registro</label>
+        <label xml:lang="nl">Fout-register</label>
+        <label xml:lang="cs">Registr chyby</label>
+        <tooltip>0 = No error (reset error register)</tooltip>
+        <tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
+        <tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>
+        <tooltip xml:lang="nl">0 = Geen fout (reset het Fout-register)</tooltip>
+        <tooltip xml:lang="cs">0 = žádná chyba (reset registru chyb)</tooltip>
+    </variable>
 </variables>
