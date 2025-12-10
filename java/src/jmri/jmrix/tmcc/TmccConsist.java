@@ -10,6 +10,7 @@ import jmri.DccLocoAddress;
 /**
  * This is the Consist definition for a consist on a TMCC system.
  *
+ * Based on MqttConsist by
  * @author Dean Cording Copyright (C) 2023
  * with edits/additions by
  * @author Timothy Jump (C) 2025

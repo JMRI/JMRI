@@ -119,7 +119,7 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>4.8.6.2</version>
+                        <version>4.9.8.2</version>
                         <configuration>
                             <plugins>
                                 <plugin>
@@ -477,7 +477,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.8.6.2</version>
+                <version>4.9.2</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
                     <plugins>
@@ -725,7 +725,7 @@
                         <!-- our web production Javadocs are made with Ant, not Maven, this is not a problem -->
                         <!-- <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson-databind.version}/</link> -->
                         <!-- <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link> -->
-                        <!-- <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.8.6/</link> -->
+                        <!-- <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.9.8.2/</link> -->
                         <!-- <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link> -->
                         <!-- <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link> -->
                         <!-- <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link> -->
@@ -1532,7 +1532,7 @@
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>4.8.6</version>
+            <version>4.9.8</version>
         </dependency>
         <dependency>
             <groupId>xerces</groupId>
