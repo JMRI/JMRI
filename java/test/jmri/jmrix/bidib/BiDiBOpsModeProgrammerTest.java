@@ -43,8 +43,8 @@ public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
         // test may require further setup?
         //JUnitAppender.suppressWarnMessageStartsWith(
         //    "The node is no longer registered. Skip send message to node:");
-        JUnitAppender.suppressErrorMessageStartsWith(
-            "writePom async failed on node:"); //since jbidibc 2.0.18
+        //JUnitAppender.suppressErrorMessageStartsWith(
+        //    "writePom async failed on node:"); //since jbidibc 2.0.18
     }
 
     @Override
