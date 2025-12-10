@@ -1,8 +1,10 @@
 package jmri.jmrix.rfid.protocol.olimex;
 
-import jmri.jmrix.AbstractMRReply;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.Assert.assertEquals;
+import jmri.jmrix.AbstractMRReply;
 
 import org.junit.jupiter.api.*;
 
@@ -15,8 +17,8 @@ import org.junit.jupiter.api.*;
  */
 public class OlimexRfid1356mifareProtocolTest {
 
-    AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\r\n-C4178b55\r\n");
-    AbstractMRReply msgInvalidStandalone = new AbstractMRReplyImpl("\r\n+4178b55C\r\n>");
+    private final AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\r\n-C4178b55\r\n");
+    private final AbstractMRReply msgInvalidStandalone = new AbstractMRReplyImpl("\r\n+4178b55C\r\n>");
 
     /**
      * Test of getMaxSize method, of class OlimexRfid1356mifareProtocol.
@@ -50,7 +52,7 @@ public class OlimexRfid1356mifareProtocolTest {
     @Test
     public void testProvidesChecksum() {
         OlimexRfid1356mifareProtocol instance = new OlimexRfid1356mifareProtocol();
-        assertEquals(false, instance.providesChecksum());
+        assertFalse( instance.providesChecksum());
     }
 
     /**
@@ -68,8 +70,8 @@ public class OlimexRfid1356mifareProtocolTest {
     @Test
     public void testIsValid() {
         OlimexRfid1356mifareProtocol instance = new OlimexRfid1356mifareProtocol();
-        assertEquals(true, instance.isValid(msgStandalone));
-        assertEquals(false, instance.isValid(msgInvalidStandalone));
+        assertTrue( instance.isValid(msgStandalone));
+        assertFalse( instance.isValid(msgInvalidStandalone));
     }
 
     /**
@@ -78,7 +80,7 @@ public class OlimexRfid1356mifareProtocolTest {
     @Test
     public void testEndOfMessage() {
         OlimexRfid1356mifareProtocol instance = new OlimexRfid1356mifareProtocol();
-        assertEquals(true, instance.endOfMessage(msgStandalone));
+        assertTrue( instance.endOfMessage(msgStandalone));
     }
 
     /**
@@ -101,11 +103,7 @@ public class OlimexRfid1356mifareProtocolTest {
         assertEquals(expResult, instance.toMonitorString(msgStandalone));
     }
 
-    class AbstractMRReplyImpl extends AbstractMRReply {
-
-        AbstractMRReplyImpl() {
-            super();
-        }
+    private static class AbstractMRReplyImpl extends AbstractMRReply {
 
         AbstractMRReplyImpl(String s) {
             super(s);
@@ -119,12 +117,12 @@ public class OlimexRfid1356mifareProtocolTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 
