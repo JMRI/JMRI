@@ -1,14 +1,10 @@
 package jmri.jmrix.lenz.xntcp;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+import java.io.*;
 
 import jmri.util.JUnitUtil;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of XnTcpAdapter that eases
@@ -18,7 +14,7 @@ import org.slf4j.LoggerFactory;
  */
 class XnTcpPortControllerScaffold extends XnTcpAdapter {
 
-    private final static Logger log = LoggerFactory.getLogger(XnTcpPortControllerScaffold.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XnTcpPortControllerScaffold.class);
 
     public java.util.Vector<String> getPortNames() {
         return null;
@@ -40,22 +36,24 @@ class XnTcpPortControllerScaffold extends XnTcpAdapter {
         return new int[] {};
     }
 
-    PipedInputStream otempIPipe;
-    PipedOutputStream otempOPipe;
+    private PipedInputStream otempIPipe;
+    private PipedOutputStream otempOPipe;
 
-    PipedInputStream itempIPipe;
-    PipedOutputStream itempOPipe;
+    private PipedInputStream itempIPipe;
+    private PipedOutputStream itempOPipe;
 
-    protected XnTcpPortControllerScaffold() throws Exception {
-        otempIPipe = new PipedInputStream(200);
-        tostream = new DataInputStream(otempIPipe);
-        otempOPipe = new PipedOutputStream(otempIPipe);
-        ostream = new DataOutputStream(otempOPipe);
+    protected XnTcpPortControllerScaffold() {
+        assertDoesNotThrow( () -> {
+            otempIPipe = new PipedInputStream(200);
+            tostream = new DataInputStream(otempIPipe);
+            otempOPipe = new PipedOutputStream(otempIPipe);
+            ostream = new DataOutputStream(otempOPipe);
 
-        itempIPipe = new PipedInputStream(200);
-        istream = new DataInputStream(itempIPipe);
-        itempOPipe = new PipedOutputStream(itempIPipe);
-        tistream = new DataOutputStream(itempOPipe);
+            itempIPipe = new PipedInputStream(200);
+            istream = new DataInputStream(itempIPipe);
+            itempOPipe = new PipedOutputStream(itempIPipe);
+            tistream = new DataOutputStream(itempOPipe);
+        });
     }
 
     public void flush() {
@@ -68,7 +66,7 @@ class XnTcpPortControllerScaffold extends XnTcpAdapter {
 
             JUnitUtil.waitFor(JUnitUtil.WAITFOR_DEFAULT_DELAY);
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Exception during flush", e);
         }
     }

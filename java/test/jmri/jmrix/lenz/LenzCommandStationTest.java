@@ -1,9 +1,14 @@
 package jmri.jmrix.lenz;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-import org.junit.Assert;
 
 /**
  * LenzCommandStationTest.java
@@ -18,7 +23,7 @@ public class LenzCommandStationTest {
     public void testCtor() {
 
         LenzCommandStation c = new LenzCommandStation();
-        Assert.assertNotNull(c);
+        assertNotNull(c);
     }
 
     @Test
@@ -33,7 +38,8 @@ public class LenzCommandStationTest {
         r.setElement(3, 0x00);
         r.setElement(4, 0x74);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(3.6f, c.getCommandStationSoftwareVersion(), 0.0);
+        assertEquals(3.6f, c.getCommandStationSoftwareVersion(), 0.0);
+
         // test a version that is not BCD
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
@@ -41,18 +47,20 @@ public class LenzCommandStationTest {
         r.setElement(3, 0x00);
         r.setElement(4, 0xCF);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
+        assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
+
         // make sure the command station version doesn't change when we send
         // the wrong message type.
         r = new XNetReply("01 04 05");
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
+        assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
+
         // make sure the command station type doesn't change if we send
         // the right prefix (0x63) but a message that doesn't contain the
         // version (2nd byte is not 0x21).
         r = new XNetReply("63 10 05 0C 7A"); // this is a service mode response. 
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
+        assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
 
     }
 
@@ -68,7 +76,8 @@ public class LenzCommandStationTest {
         r.setElement(3, 0x00);
         r.setElement(4, 0x74);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(0x36, c.getCommandStationSoftwareVersionBCD(), 0.0);
+        assertEquals(0x36, c.getCommandStationSoftwareVersionBCD(), 0.0);
+
         // test a version that is not BCD
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
@@ -76,7 +85,7 @@ public class LenzCommandStationTest {
         r.setElement(3, 0x00);
         r.setElement(4, 0xCF);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals(0x8D, c.getCommandStationSoftwareVersionBCD(), 0.0);
+        assertEquals(0x8D, c.getCommandStationSoftwareVersionBCD(), 0.0);
     }
 
     @Test
@@ -90,32 +99,35 @@ public class LenzCommandStationTest {
         r.setElement(3, 0x00); // type is LZV100
         r.setElement(4, 0x74);
         c.setCommandStationType(r);
-        Assert.assertEquals(0, c.getCommandStationType());
+        assertEquals(0, c.getCommandStationType());
+
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
         r.setElement(3, 0x01); // type is LH200 
         r.setElement(4, 0x75);
         c.setCommandStationType(r);
-        Assert.assertEquals(1, c.getCommandStationType());
+        assertEquals(1, c.getCommandStationType());
+
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
         r.setElement(3, 0x02); // type is Compact 
         r.setElement(4, 0x76);
         c.setCommandStationType(r);
-        Assert.assertEquals(2, c.getCommandStationType());
+        assertEquals(2, c.getCommandStationType());
+
         // make sure the command station type doesn't change when we send 
         // the wrong message type.
         r = new XNetReply("01 04 05");
         c.setCommandStationType(r);
-        Assert.assertEquals(2, c.getCommandStationType());
+        assertEquals(2, c.getCommandStationType());
         // make sure the command station type doesn't change if we send
         // the right prefix (0x63) but a message that doesn't contain the
         // version (2nd byte is not 0x21).
         r = new XNetReply("63 10 05 0C 7A"); // this is a service mode response. 
         c.setCommandStationType(r);
-        Assert.assertEquals(2, c.getCommandStationType());
+        assertEquals(2, c.getCommandStationType());
     }
 
     @Test
@@ -124,9 +136,9 @@ public class LenzCommandStationTest {
         // value.
         LenzCommandStation c = new LenzCommandStation();
         c.setCommandStationSoftwareVersion(3.6f);
-        Assert.assertEquals(3.6f, c.getCommandStationSoftwareVersion(), 0.0);
+        assertEquals(3.6f, c.getCommandStationSoftwareVersion(), 0.0);
         c.setCommandStationSoftwareVersion(8.13f);
-        Assert.assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
+        assertEquals(8.13f, c.getCommandStationSoftwareVersion(), 0.0);
     }
 
     @Test
@@ -135,13 +147,13 @@ public class LenzCommandStationTest {
         // value.
         LenzCommandStation c = new LenzCommandStation();
         c.setCommandStationType(XNetConstants.CS_TYPE_LZ100);
-        Assert.assertEquals(XNetConstants.CS_TYPE_LZ100, c.getCommandStationType());
+        assertEquals(XNetConstants.CS_TYPE_LZ100, c.getCommandStationType());
         c.setCommandStationType(XNetConstants.CS_TYPE_LH200);
-        Assert.assertEquals(XNetConstants.CS_TYPE_LH200, c.getCommandStationType());
+        assertEquals(XNetConstants.CS_TYPE_LH200, c.getCommandStationType());
         c.setCommandStationType(XNetConstants.CS_TYPE_COMPACT);
-        Assert.assertEquals(XNetConstants.CS_TYPE_COMPACT, c.getCommandStationType());
+        assertEquals(XNetConstants.CS_TYPE_COMPACT, c.getCommandStationType());
         c.setCommandStationType(XNetConstants.CS_TYPE_MULTIMAUS);
-        Assert.assertEquals(XNetConstants.CS_TYPE_MULTIMAUS, c.getCommandStationType());
+        assertEquals(XNetConstants.CS_TYPE_MULTIMAUS, c.getCommandStationType());
     }
 
     @Test
@@ -156,7 +168,8 @@ public class LenzCommandStationTest {
         r.setElement(4, 0x74);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals("hardware type: 0 software version: 54", c.getVersionString());
+        assertEquals("hardware type: 0 software version: 54", c.getVersionString());
+
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
@@ -164,7 +177,8 @@ public class LenzCommandStationTest {
         r.setElement(4, 0x75);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals("hardware type: 1 software version: 54", c.getVersionString());
+        assertEquals("hardware type: 1 software version: 54", c.getVersionString());
+
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
@@ -172,7 +186,7 @@ public class LenzCommandStationTest {
         r.setElement(4, 0x76);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertEquals("hardware type: 2 software version: 54", c.getVersionString());
+        assertEquals("hardware type: 2 software version: 54", c.getVersionString());
     }
 
     @Test
@@ -187,7 +201,8 @@ public class LenzCommandStationTest {
         r.setElement(4, 0x74);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertTrue(c.isOpsModePossible());
+        assertTrue(c.isOpsModePossible());
+
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
@@ -195,7 +210,8 @@ public class LenzCommandStationTest {
         r.setElement(4, 0x75);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertFalse(c.isOpsModePossible());
+        assertFalse(c.isOpsModePossible());
+
         r.setElement(0, 0x63);
         r.setElement(1, 0x21);
         r.setElement(2, 0x36);
@@ -203,39 +219,39 @@ public class LenzCommandStationTest {
         r.setElement(4, 0x76);
         c.setCommandStationType(r);
         c.setCommandStationSoftwareVersion(r);
-        Assert.assertFalse(c.isOpsModePossible());
+        assertFalse(c.isOpsModePossible());
     }
 
     @Test
-    public void testGetDCCAddressLow() {
-        Assert.assertEquals(0x42, LenzCommandStation.getDCCAddressLow(0x0042));
-        Assert.assertEquals(0x42, LenzCommandStation.getDCCAddressLow(0x1042));
+    public void testGetCsDCCAddressLow() {
+        assertEquals(0x42, LenzCommandStation.getDCCAddressLow(0x0042));
+        assertEquals(0x42, LenzCommandStation.getDCCAddressLow(0x1042));
     }
 
     @Test
-    public void testGetDCCAddressHigh() {
-        Assert.assertEquals(0x00, LenzCommandStation.getDCCAddressHigh(0x0042));
-        Assert.assertEquals(0xD0, LenzCommandStation.getDCCAddressHigh(0x1042));
+    public void testGetCsDCCAddressHigh() {
+        assertEquals(0x00, LenzCommandStation.getDCCAddressHigh(0x0042));
+        assertEquals(0xD0, LenzCommandStation.getDCCAddressHigh(0x1042));
     }
 
     @Test
     public void testGetUserName() {
         LenzCommandStation c = new LenzCommandStation();
-        Assert.assertEquals("XpressNet", c.getUserName()); // default.
+        assertEquals("XpressNet", c.getUserName()); // default.
         XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(new XNetInterfaceScaffold(c));
         c.setSystemConnectionMemo(memo);
         memo.setUserName("ABC");
-        Assert.assertEquals("ABC", c.getUserName());
+        assertEquals("ABC", c.getUserName());
     }
 
     @Test
     public void testGetSystemPrefix() {
         LenzCommandStation c = new LenzCommandStation();
-        Assert.assertEquals("X", c.getSystemPrefix()); // default.
+        assertEquals("X", c.getSystemPrefix()); // default.
         XNetSystemConnectionMemo memo = new XNetSystemConnectionMemo(new XNetInterfaceScaffold(c));
         c.setSystemConnectionMemo(memo);
         memo.setSystemPrefix("ABC");
-        Assert.assertEquals("ABC", c.getSystemPrefix());
+        assertEquals("ABC", c.getSystemPrefix());
     }
 
     @Test
@@ -244,14 +260,14 @@ public class LenzCommandStationTest {
         // sending without setting the traffic controller should
         // generate an error message.
         c.sendPacket(jmri.NmraPacket.opsCvWriteByte(100, true, 29, 5), 1);
-        jmri.util.JUnitAppender.assertErrorMessage("Send Packet Called without setting traffic controller");
+        JUnitAppender.assertErrorMessage("Send Packet Called without setting traffic controller");
 
         XNetInterfaceScaffold xis = new XNetInterfaceScaffold(c);
         c.setTrafficController(xis);
         c.sendPacket(jmri.NmraPacket.opsCvWriteByte(100, true, 29, 5), 1);
 
-        Assert.assertEquals(1, xis.outbound.size());
-        Assert.assertEquals("packet message contents", "E6 30 C0 64 EC 1C 05 87", xis.outbound.elementAt(0).toString());
+        assertEquals(1, xis.outbound.size());
+        assertEquals( "E6 30 C0 64 EC 1C 05 87", xis.outbound.elementAt(0).toString(), "packet message contents");
     }
 
     @BeforeEach
@@ -261,7 +277,7 @@ public class LenzCommandStationTest {
 
     @AfterEach
     public void tearDown() {
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        // JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
