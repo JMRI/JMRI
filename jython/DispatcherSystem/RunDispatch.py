@@ -2090,7 +2090,10 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         #button_sensor_name MoveToblock8_stored
         #block_name block8
         block_name = button_sensor_name.replace("MoveTo","").replace("_stored","").replace("_"," ")
-        return block_name
+        for block in blocks.getNamedBeanSet():
+            if block.getUserName().replace("_"," ") == block_name:
+                break
+        return block.getUserName()
 
     def get_button_sensor_given_block_name(self, block_name):
         button_sensor_name = "MoveTo"+block_name.replace(" ","_") +"_stored"
@@ -2180,4 +2183,3 @@ class DispatchMaster(jmri.jmrit.automat.AbstractAutomaton):
         a.actionPerformed(None)
 
 # End of class StopMaster
-

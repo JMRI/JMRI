@@ -161,7 +161,7 @@
 
         <h4>TAMS</h4>
             <ul>
-                <li></li>
+                <li>The <strong>LD-W-32.2</strong> decoder has been added.</li>
             </ul>
 
         <h4>TMCC</h4>
@@ -651,5 +651,9 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>(Developer) Updated build.xml so Ant builds work with Java 25</li>
+            <li>(Developer) Updated SpotBugs checker to version 4.9.8.  If you use Ant
+                to do SpotBugs checks locally, i.e. by running "ant spotbugs-check",
+                you will need to update your local version to 4.9.8.  See our
+                <a href="https://www.jmri.org/help/en/html/doc/Technical/SpotBugs.shtml">SpotBugs page</a>.
         </ul>
 

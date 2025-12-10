@@ -18,6 +18,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.util.ThreadingUtil;
 
@@ -2499,6 +2500,52 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     }
                 }
             }
+            // ----- Begin Turntable Alignment Check -----
+            // For paths onto a turntable, we must add a condition for the turntable's alignment. The
+            // turnout that controls the turntable position is associated with the specific ray track.
+            // Each ray track can have a control turnout assigned. Setting this turnout to a specific
+            // state (usually THROWN) is the command to align the turntable to that ray.
+            // The following logic adds a CONDITION to the Signal Mast Logic, requiring that the
+            // correct ray's turnout is in its required state before the signal will clear.
+            // This does NOT command the turnout to move; it only checks its state for the interlocking.
+            Set<LayoutEditor> layout = InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class);
+            for (LayoutEditor lay : layout) {
+                for (LayoutTurntable turntable : lay.getLayoutTurntables()) {
+                    // Check for a path from an Approach Mast to the Buffer Mast (Path 3).
+                    // The destination block is the turntable block, and the destination mast is the buffer mast.
+                    if (turntable.getLayoutBlock() == destinationBlock && turntable.getBufferMast() == destinationSignalMast) {
+                        // The source mast's facing block is the ray block for this path.
+                        for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                            if (ray.getConnect() != null && ray.getConnect().getLayoutBlock() == DefaultSignalMastLogic.this.facingBlock) {
+                                // This is the correct ray. Get its control turnout and required state.
+                                Turnout rayTurnout = ray.getTurnout();
+                                int requiredState = ray.getTurnoutState();
+                                if (rayTurnout != null) {
+                                    turnoutSettings.put(rayTurnout, requiredState);
+                                }
+                                break; // Found the ray, no need to check others.
+                            }
+                        }
+                    }
+                    // Check for a path from the Exit Mast to a remote mast (Path 1).
+                    // The source mast is the turntable's exit mast.
+                    if (turntable.getExitSignalMast() == getSourceMast()) {
+                        // The protecting block is the ray block for this path.
+                        for (LayoutTurntable.RayTrack ray : turntable.getRayTrackList()) {
+                            if (ray.getConnect() != null && ray.getConnect().getLayoutBlock() == protectingBlock) {
+                                // This is the correct ray. Get its control turnout and required state.
+                                Turnout rayTurnout = ray.getTurnout();
+                                int requiredState = ray.getTurnoutState();
+                                if (rayTurnout != null) {
+                                    turnoutSettings.put(rayTurnout, requiredState);
+                                }
+                                break; // Found the ray, no need to check others.
+                            }
+                        }
+                    }
+                }
+            }
+            // ----- End Turntable Alignment Check -----
             if (useLayoutEditorTurnouts) {
                 setAutoTurnouts(turnoutSettings);
             }
