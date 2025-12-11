@@ -379,9 +379,9 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     private void savePreviousManifestFile(String name) {
         if (Setup.isSaveTrainManifestsEnabled()) {
             // create the manifest backup directory
-            createFile(getBackupManifestDirectoryName() + "x", false); // no backup
+            createFile(getBackupManifestDirectoryName(), false); // no backup
             // now create unique backup directory for each train manifest
-            createFile(getBackupManifestDirectoryName(name) + "x", false); // no backup
+            createFile(getBackupManifestDirectoryName(name), false); // no backup
             // get old manifest file
             File file = findFile(getDefaultManifestFileName(name));
             if (file == null) {
@@ -406,9 +406,9 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     private void savePreviousSwitchListFile(String name) {
         if (Setup.isSaveTrainManifestsEnabled()) {
             // create the switch list backup directory
-            createFile(getBackupSwitchListDirectoryName() + "x", false); // no backup
+            createFile(getBackupSwitchListDirectoryName(), false); // no backup
             // now create unique backup directory for location
-            createFile(getBackupSwitchListDirectoryName(name) + "x", false); // no backup
+            createFile(getBackupSwitchListDirectoryName(name), false); // no backup
             // get old switch list file
             File file = findFile(getDefaultSwitchListName(name));
             if (file == null) {
@@ -436,9 +436,9 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     public void savePreviousBuildStatusFile(String name) {
         if (Setup.isSaveTrainManifestsEnabled()) {
             // create the build status backup directory
-            createFile(getBackupBuildStatusDirectoryName() + "x", false); // no backup
+            createFile(getBackupBuildStatusDirectoryName(), false); // no backup
             // now create unique backup directory for each train
-            createFile(getBackupBuildStatusDirectoryName(name) + "x", false); // no backup
+            createFile(getBackupBuildStatusDirectoryName(name), false); // no backup
             // get old build status file for this train
             File file = findFile(defaultBuildReportFileName(name));
             if (file == null) {
