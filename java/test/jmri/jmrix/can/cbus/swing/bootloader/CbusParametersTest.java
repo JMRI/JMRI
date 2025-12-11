@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.swing.bootloader;
 
-import org.junit.Assert;
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.*;
 
 /**
@@ -13,8 +14,18 @@ public class CbusParametersTest {
     @Test
     public void testCTor() {
         CbusParameters p = new CbusParameters();
-        Assert.assertNotNull("exists",p);
-        Assert.assertTrue("Param Data length", p.paramData.length == 33);
+        Assertions.assertNotNull( p, "exists");
+        Assertions.assertEquals( 33, p.paramData.length, "Param Data length");
     }
-    
+
+    @BeforeEach
+    public void setUp() {
+        JUnitUtil.setUp();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
 }

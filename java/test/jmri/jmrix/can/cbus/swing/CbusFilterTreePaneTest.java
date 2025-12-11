@@ -78,11 +78,11 @@ public class CbusFilterTreePaneTest {
 
     private void sendAllOpcs( boolean shouldFilter, boolean reply) {
         for ( int i=0; i<= 0xFF; i++) {
-            if ( shouldFilter ) {
+            //if ( shouldFilter ) {
+            //    sendFrameOpc(i, reply);
+            //} else {
                 sendFrameOpc(i, reply);
-            } else {
-                sendFrameOpc(i, reply);
-            }
+            //}
         }
     }
 
