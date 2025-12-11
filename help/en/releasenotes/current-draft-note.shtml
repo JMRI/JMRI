@@ -309,6 +309,11 @@
                 <li></li>
             </ul>
 
+        <h4>Piko decoders</h4>
+            <ul>
+                <li>Add scale G decoders, support new firmware versions</li>
+            </ul>
+
         <h4>Public Domain and DIY decoders</h4>
             <ul>
                 <li></li>
@@ -428,7 +433,7 @@
                 CV reads to erroneously be zero.</li>
             <li>When opening a roster entry with a large decoder definition,
                 DecoderPro now defers some of the processing until later while
-                opening the tabbed programming panes sooner.  You may see a 
+                opening the tabbed programming panes sooner.  You may see a
                 pane with "Wait for pane contents to be loaded".  The contents
                 should appear within a few seconds.</li>
         </ul>
@@ -532,7 +537,8 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li></li>
+            <li>The <strong>TransitActionsReport.py</strong> has been added. It is used to display
+            the transit section actions.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -620,7 +626,10 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>JSON Schema support has been upgraded from draft-04 to draft-2020-12, 
+                providing improved validation capabilities and modern schema features 
+                for JSON API responses. This includes updates to 95 JSON schema files 
+                and the underlying NetworkNT JSON Schema Validator library (from 1.0.28 to 1.3.3).</li>
         </ul>
 
     <h3>Where Used</h3>

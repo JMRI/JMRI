@@ -1,14 +1,14 @@
 package jmri.jmrit.whereused;
 
+import java.io.IOException;
 import java.nio.file.Path;
 
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.Sensor;
+import jmri.*;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -78,7 +78,7 @@ public class WhereUsedCollectorsTest {
     protected Path tempDir;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() throws IOException, JmriException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir.toFile()));
         JUnitUtil.initConfigureManager();

@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-signalHead-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"signalHead\"",
@@ -13,7 +13,10 @@
             "description": "User name of the signalHead"
         },
         "comment": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "Comment for the signalHead"
         },
         "properties": {
@@ -27,12 +30,18 @@
                         "description": "Key by which property is accessed"
                     },
                     "value": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "String value of property or null"
                     }
                 },
                 "additionalProperties": false,
-                "required": ["name", "value"]
+                "required": [
+                    "name",
+                    "value"
+                ]
             }
         },
         "aspect": {
@@ -61,5 +70,14 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "lit", "held", "state", "appearance", "appearanceName"]
+    "required": [
+        "name",
+        "userName",
+        "comment",
+        "lit",
+        "held",
+        "state",
+        "appearance",
+        "appearanceName"
+    ]
 }

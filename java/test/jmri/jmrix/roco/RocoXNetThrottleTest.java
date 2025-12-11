@@ -1,5 +1,8 @@
 package jmri.jmrix.roco;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
@@ -7,7 +10,6 @@ import jmri.jmrix.lenz.XNetThrottle;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -23,7 +25,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     public void testCtor() {
         // infrastructure objects
         RocoXNetThrottle t = new RocoXNetThrottle(memo, tc);
-        Assert.assertNotNull(t);
+        assertNotNull(t);
     }
 
     // run the throttle through the initialization sequence,
@@ -60,8 +62,8 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     @Test
     @Timeout(1000)
     @Override
-    public void testCtorWithArg() throws Exception {
-        Assert.assertNotNull(instance);
+    public void testCtorWithArg() {
+        assertNotNull(instance);
     }
 
     // Test the initialization sequence.
@@ -69,42 +71,42 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     @Test
     @Timeout(1000)
     @Disabled("Test requires further development")
-    public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
+    public void testInitSequenceNormalUnitSpeedStep128() {
     }
 
     @Override
     @Test
     @Timeout(1000)
     @Disabled("Test requires further development")
-    public void initSequenceNormalUnitSpeedStep14() throws Exception {
+    public void initSequenceNormalUnitSpeedStep14() {
     }
 
     @Override
     @Test
     @Timeout(1000)
     @Disabled("Test requires further development")
-    public void initSequenceMUAddress28SpeedStep() throws Exception {
+    public void initSequenceMUAddress28SpeedStep() {
     }
 
     @Override
     @Test
     @Timeout(1000)
     @Disabled("Test requires further development")
-    public void initSequenceMuedUnitSpeedStep128() throws Exception {
+    public void initSequenceMuedUnitSpeedStep128() {
     }
 
     @Override
     @Test
     @Timeout(1000)
     @Disabled("Test requires further development")
-    public void initSequenceDHUnitSpeedStep27() throws Exception {
+    public void initSequenceDHUnitSpeedStep27() {
     }
 
     @Override
     @NotApplicable("only one software version for Roco")
     @Test
     @Timeout(1000)
-    public void testSendFunctionGroup5v35() throws Exception {
+    public void testSendFunctionGroup5v35() {
     }
 
     @Override
@@ -153,7 +155,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     @NotApplicable("not supported by Roco")
     @Test
     @Timeout(1000)
-    public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
+    public void testSendFunctionHighMomentaryStatusRequest() {
     }
 
     @Override
@@ -173,7 +175,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     @Override
     @Test
     @Timeout(1000)
-    public void sendEmergencyStop() throws Exception {
+    public void testSendEmergencyStop() {
         int n = tc.outbound.size();
         RocoXNetThrottle t = (RocoXNetThrottle) instance;
         initThrottle(t, n);
@@ -187,7 +189,8 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
         // outbound size to change.
 
         //The first thing on the outbound queue should be a throttle set speed message.
-        Assert.assertEquals("Throttle Emergency Stop Message", "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString());
+        assertEquals( "E4 13 00 03 00 F4", tc.outbound.elementAt(n).toString(),
+            "Throttle Emergency Stop Message");
 
         // And the response to this message is a command successfully received message.
         XNetReply m = new XNetReply();
@@ -202,7 +205,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
 
     @Override
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
         tc = new XNetInterfaceScaffold(new RocoCommandStation());
         tc.getCommandStation().setCommandStationSoftwareVersion(new XNetReply("63 21 35 10 67"));
@@ -214,7 +217,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
 
     @Override
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         // no need to dispose of instance
         if (memo.getThrottleManager() != null) {
             memo.getThrottleManager().dispose();

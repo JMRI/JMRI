@@ -12,875 +12,934 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>2022</year>
-		<holder>JMRI</holder>
-	</copyright>
-	<authorgroup xmlns="http://docbook.org/ns/docbook">
-		<author>
-			<personname>
-				<firstname>Ulrich</firstname>
-				<surname>Gerlach</surname>
-			</personname>
-		</author>
-	</authorgroup>
-	<revhistory xmlns="http://docbook.org/ns/docbook">
-		<revision>
-			<revnumber>1</revnumber>
-			<date>2022-11-11</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
-		</revision>
-		<revision>
-			<revnumber>2</revnumber>
-			<date>2023-07-19</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Sound BR83TT, BR93TT, CV indexing modified</revremark>
-		</revision>
-		<revision>
-			<revnumber>3</revnumber>
-			<date>2023-10-20</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Changes for Pane layout</revremark>
-		</revision>
-		<revision>
-			<revnumber>4</revnumber>
-			<date>2023-12-03</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add English translations</revremark>
-		</revision>
-		<revision>
-			<revnumber>5</revnumber>
-			<date>2024-04-01</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add Decoder ML4000</revremark>
-		</revision>
-	</revhistory>
-	<!-- Declaration of the "switch" CV, not for direct use but for checking value -->
-	<variable item="Bank_Switch_31" CV="31" default="0">
-		<enumVal>
-			<enumChoice choice="No Bank" value="0">
-				<choice>Bank  0 - (No Bank selected)</choice>
-				<choice xml:lang="de">Bank  0 - CV31 (Keine Bank)</choice>
-				<choice xml:lang="nl">CV31 = 0</choice>
-				<choice xml:lang="cs">CV31 = 0</choice>
-			</enumChoice>
-			<!-- not maintained 
-			<enumChoice choice="Bank 15" value="15">
-				<choice>Bank 15 - Hardware</choice>
-				<choice xml:lang="de">Bank 15 - CV31</choice>
-				<choice xml:lang="nl">Bank 15 - CV31</choice>
-				<choice xml:lang="cs">Banka 15 - CV31</choice>
-			</enumChoice>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2022</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Ulrich</firstname>
+                <surname>Gerlach</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2022-11-11</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-07-19</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Sound BR83TT, BR93TT, CV indexing modified</revremark>
+        </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2023-10-20</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Changes for Pane layout</revremark>
+        </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2023-12-03</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add English translations</revremark>
+        </revision>
+        <revision>
+            <revnumber>5</revnumber>
+            <date>2024-04-01</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add Decoder ML4000</revremark>
+        </revision>
+        <revision>
+            <revnumber>6</revnumber>
+            <date>2025-12-06</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add Decoder BR80 36537 / 36505 Spur G</revremark>
+        </revision>
+    </revhistory>
+    <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
+    <variable item="Bank_Switch_31" CV="31" default="0">
+        <enumVal>
+            <enumChoice choice="No Bank" value="0">
+                <choice>Bank  0 - (No Bank selected)</choice>
+                <choice xml:lang="de">Bank  0 - CV31 (Keine Bank)</choice>
+                <choice xml:lang="nl">CV31 = 0</choice>
+                <choice xml:lang="cs">CV31 = 0</choice>
+            </enumChoice>
+<!-- not maintained 
+            <enumChoice choice="Bank 15" value="15">
+                <choice>Bank 15 - Hardware</choice>
+                <choice xml:lang="de">Bank 15 - CV31</choice>
+                <choice xml:lang="nl">Bank 15 - CV31</choice>
+                <choice xml:lang="cs">Banka 15 - CV31</choice>
+            </enumChoice>
 -->
-			<enumChoice choice="Bank 16" value="16">
-				<choice>Bank 16 - Sound / Volume</choice>
-				<choice xml:lang="de">Bank 16 - CV31 (Sound Lautstärke)</choice>
-				<choice xml:lang="nl">Bank 16 - CV31 (Gedeeld)</choice>
-				<choice xml:lang="cs">Banka 16 - CV31 (Všeobecné)</choice>
-			</enumChoice>
-			<enumChoice choice="Bank 17" value="17">
-				<choice>Bank 17 - Extended Function Mapping</choice>
-				<choice xml:lang="de">Bank 17 - CV31 (Erw. Funktionsmapping)</choice>
-				<choice xml:lang="nl">Bank 17 - CV31</choice>
-				<choice xml:lang="cs">Banka 17 - CV31</choice>
-			</enumChoice>
-			<enumChoice choice="Bank 18" value="18">
-				<choice>Bank 18 - Effect Function Outputs</choice>
-				<choice xml:lang="de">Bank 18 - CV31 (Effekte Funktionsausgänge)</choice>
-				<choice xml:lang="nl">Bank 18 - CV31 (Fn-toetsen)</choice>
-				<choice xml:lang="cs">Banka 18 - CV31 (Fn tlačítka)</choice>
-			</enumChoice>
-		</enumVal>
-		<label>CV Bank (CV31)</label>
-		<label xml:lang="de">CV Bank (CV31)</label>
-		<label xml:lang="nl">CV31</label>
-		<label xml:lang="cs">CV31</label>
-		<tooltip>Setting that determines which bank is programmed. Reset to "No Bank" when done!</tooltip>
-		<tooltip xml:lang="de">Anzeige der zuletzt programmierten Bank. Zurückstellen nach "Keine Bank" wenn fertig!</tooltip>
-		<tooltip xml:lang="cs">Nastavení programování banky. Po dokončení obnovte na &quot;Žádná banka&quot;!</tooltip>
-	</variable>
-	<variable item="Bank_Switch_32" CV="32" default="0">
-		<enumVal>
-			<enumChoice choice="Zeiger = 0" value="0">
-				<choice>Pointer CV32 = 0</choice>
-				<choice xml:lang="de">Zeiger = 0</choice>
-			</enumChoice>
-			<enumChoice choice="Zeiger = 1" value="1">
-				<choice>Pointer CV32 = 1</choice>
-				<choice xml:lang="de">Zeiger = 1</choice>
-			</enumChoice>
-		</enumVal>
-		<label>CV Bank (CV32)</label>
-		<label xml:lang="de">CV Bank (CV32)</label>
-		<label xml:lang="nl">CV32</label>
-		<label xml:lang="cs">CV32</label>
-		<tooltip xml:lang="de">CV32=0: Bank 0 257-512 geöffnet / CV32=1: nur bei CV31 = 17</tooltip>
-	</variable>
-	<!-- Bank 2 variables -->
-	<!--CVs 257.16.0, 315.16.0-->
-	<variable item="Bank C Sound Setting 1" CV="257.31=16.32=0" default="200" tooltip="0-255">
-		<decVal max="255"/>
-		<label>Overall Sound Volume</label>
-		<label xml:lang="de">Gesamtlautstärke</label>
-		<label xml:lang="nl">Geluidsvolume</label>
-		<label xml:lang="cs">Hlasitost zvuku</label>
-	</variable>
-	<variable item="Bank C Sound Setting 2" CV="258.31=16.32=0" default="0" tooltip="0-255">
-		<decVal max="255"/>
-		<label>Sound fader Volume</label>
-		<label xml:lang="de">Lautstärke Tunnelmodus</label>
-		<label xml:lang="nl">...</label>
-		<label xml:lang="cs">...</label>
-	</variable>
-	<variable item="Bank C Sound Setting 3" CV="259.31=16.32=0" default="192" tooltip="0-255">
-		<decVal max="255"/>
-		<label>Volume control step 3</label>
-		<label xml:lang="de">Lautstärkeregelung Stufe 3</label>
-		<label xml:lang="nl">...</label>
-		<label xml:lang="cs">...</label>
-	</variable>
-	<variable item="Bank C Sound Setting 4" CV="260.31=16.32=0" default="128" tooltip="0-255">
-		<decVal max="255"/>
-		<label>Volume control step 2</label>
-		<label xml:lang="de">Lautstärkeregelung Stufe 2</label>
-		<label xml:lang="nl">...</label>
-		<label xml:lang="cs">...</label>
-	</variable>
-	<variable item="Bank C Sound Setting 5" CV="261.31=16.32=0" default="64" tooltip="0-255">
-		<decVal max="255"/>
-		<label>Volume control step 1</label>
-		<label xml:lang="de">Lautstärkeregelung Stufe 1</label>
-		<label xml:lang="nl">...</label>
-		<label xml:lang="cs">...</label>
-	</variable>
-	<variable item="Bank C Sound Setting 6" CV="270.31=16.32=0" default="15" tooltip="0-63">
-		<decVal/>
-		<label>Sound Option CV</label>
-		<label xml:lang="de">Sound Option CV</label>
-		<label xml:lang="nl">...</label>
-		<label xml:lang="cs">...</label>
-		<tooltip>Switching sound flags on and off (0-63)</tooltip>
-		<tooltip xml:lang="de">Ein- und Ausschalten von Soundflags (0-63)</tooltip>
-	</variable>
-	<variable item="Bank C Sound Setting 6 Bit0" CV="270.31=16.32=0" mask="XXXXXXXV" default="1" tooltip="Bit0 = 1 Drive-Stop">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>Drive-Stop (Bit 0)</label>
-	</variable>
-	<variable item="Bank C Sound Setting 6 Bit1" CV="270.31=16.32=0" mask="XXXXXXVX" default="1" tooltip="Bit1 = 1 Drive-Slow ">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>Drive-Slow (Bit 1)</label>
-	</variable>
-	<variable item="Bank C Sound Setting 6 Bit2" CV="270.31=16.32=0" mask="XXXXXVXX" default="1" tooltip="Bit2 = 1 Drive-Hold ">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>Drive-Hold (Bit 2)</label>
-	</variable>
-	<variable item="Bank C Sound Setting 6 Bit3" CV="270.31=16.32=0" mask="XXXXVXXX" default="1" tooltip="Bit3 = 1 Drive-Lock">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>Drive-Lock (Bit 3)</label>
-		<tooltip>Bit3 = 1 Start-up interlock prevents premature start-up with sound in digital mode</tooltip>
-		<tooltip xml:lang="de">Bit3 = 1 Anfahrtssperre verhindert vorzeitiges Anfahren bei Sound im Digitalbetrieb</tooltip>
-	</variable>
-	<variable item="Bank C Sound Setting 6 Bit4" CV="270.31=16.32=0" mask="XXXVXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>Coupling sound controls digital coupling (Bit 4)</label>
-		<label xml:lang="de">Kupplungssound steuert Digitalkupplung (Bit 4)</label>
-	</variable>
-	<variable item="Bank C Sound Setting 6 Bit5" CV="270.31=16.32=0" mask="XXVXXXXX" default="0">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>Drive-Lock analog (Bit 5)</label>
-		<tooltip>Bit5 = 1 Start-up interlock prevents premature start-up with sound in analog mode</tooltip>
-		<tooltip xml:lang="de">Bit5 = 1 Anfahrtssperre verhindert vorzeitiges Anfahren bei Sound im Analogbetrieb</tooltip>
-	</variable>
-	<variable item="Bank C Sound Setting 7" CV="273.31=16.32=0" default="15" tooltip="0-255">
-		<decVal max="255"/>
-		<label>Flange squeal speed</label>
-		<label xml:lang="de">Geschwindigkeit Kurvenquietschen über</label>
-		<label xml:lang="nl">...</label>
-		<label xml:lang="cs">...</label>
-		<tooltip>Speed threshold above which activates flange squeal</tooltip>
-		<tooltip xml:lang="de">Geschwindigkeitsschwelle über der das Quietschen ausgelöst wird</tooltip>
-	</variable>
-	<variable item="Bank C Sound Setting 8" CV="274.31=16.32=0" default="50" tooltip="0-255">
-		<decVal/>
-		<label>Brake squeal speed</label>
-		<label xml:lang="de">Geschwindigkeit Bremsenquietschen unter</label>
-		<label xml:lang="nl">...</label>
-		<label xml:lang="cs">...</label>
-		<tooltip>Speed threshold below which activates brake squeal</tooltip>
-		<tooltip xml:lang="de">Geschwindigkeitsschwelle unter der das Quietschen ausgelöst wird</tooltip>
-	</variable>
-	<!-- Piko Info: Lautstärken 0-255 der Einzelgeräusche -->
-	<!-- CV 289-317 PIKO46540-18 BR55 TT Lautstärke       -->
-	<!-- CV 289-315 PIKO46550-18 BR83 TT Lautstärke       -->
-	<!-- CV 289-317 PIKO46551-18 BR93 TT Lautstärke       -->
-	<!-- CV 289-312 PIKO56627-22 ML4000 H0 Lautstärke       -->
-	<!-- CV 289-317 PIKO46505-18 allgemein Lautstärke     -->
-	<variable item="Bank E Sound Setting 1" CV="289.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S1:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 1</label>
-		<tooltip>Sound Slot #1 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #1 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #1 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 1" CV="289.31=16.32=0" default="150" include="PIKO46540-18,PIKO46550-18,PIKO46551-18">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S1: Motor 1</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 1</label>
-		<tooltip>Sound Slot #1 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #1 Lautstärke - Motor 1</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #1 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 1" CV="289.31=16.32=0" default="180" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Prime Movers</label>
-		<label xml:lang="de">Vol. S1: Motor</label>
-		<tooltip>Sound Slot #1 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #1 Lautstärke - Motor 1</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 2" CV="290.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S2:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 2</label>
-		<tooltip xml:lang="de">Sound Slot #2 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #2 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 2" CV="290.31=16.32=0" default="128" include="PIKO46540-18,PIKO46550-18,PIKO46551-18">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S2: Motor 2</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 2</label>
-		<tooltip xml:lang="de">Sound Slot #2 Lautstärke - Motor 2</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #2 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 2" CV="290.31=16.32=0" default="200" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Horn</label>
-		<label xml:lang="de">Vol. S2: Horn lang</label>
-		<tooltip>Sound Slot #2 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #2 Lautstärke - Horn lang</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 3" CV="291.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S3:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 3</label>
-		<tooltip xml:lang="de">Sound Slot #3 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #3 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 3" CV="291.31=16.32=0" default="70" include="PIKO46550-18,PIKO46551-18">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S3: Rollen</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 3</label>
-		<tooltip xml:lang="de">Sound Slot #3 Lautstärke - Rollen</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #3 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 3" CV="291.31=16.32=0" default="60" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Bell</label>
-		<label xml:lang="de">Vol. S3: Glocke</label>
-		<tooltip>Sound Slot #3 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #3 Lautstärke - Glocke</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 3" CV="291.31=16.32=0" default="192" include="PIKO46540-18">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S3: Pfeife kurz</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 3</label>
-		<tooltip xml:lang="de">Sound Slot #3 Lautstärke - Pfeife kurz</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #3 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 4" CV="292.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46551-18">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S4:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 4</label>
-		<tooltip xml:lang="de">Sound Slot #4 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #4 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 4" CV="292.31=16.32=0" default="255" include="PIKO46540-18,PIKO46550-18">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S4: Pfeife lang</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 4</label>
-		<tooltip xml:lang="de">Sound Slot #4 Lautstärke - Pfeife lang</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #4 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 4" CV="292.31=16.32=0" default="30" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Sander Valve</label>
-		<label xml:lang="de">Vol. S4: Sanden</label>
-		<tooltip>Sound Slot #4 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #4 Lautstärke - Sanden</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 5" CV="293.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S5:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 5</label>
-		<tooltip xml:lang="de">Sound Slot #5 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #5 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 5" CV="293.31=16.32=0" default="192" include="PIKO46540-18">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S5: Luftpumpe</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 5</label>
-		<tooltip xml:lang="de">Sound Slot #5 Lautstärke - Luftpumpe</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #5 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 5" CV="293.31=16.32=0" default="255" include="PIKO46550-18,PIKO46551-18">
-		<decVal max="255"/>
-		<label xml:lang="de">Vol. S5: Pfeife kurz</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 5</label>
-		<tooltip xml:lang="de">Sound Slot #5 Lautstärke - Pfeife kurz</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #5 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 5" CV="293.31=16.32=0" default="30" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Cab Chatter #1</label>
-		<label xml:lang="de">Vol. S5: Funk 1</label>
-		<tooltip>Sound Slot #5 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #4 Lautstärke - Funk 1</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 6" CV="294.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S6:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 6</label>
-		<tooltip xml:lang="de">Sound Slot #6 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #6 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 6" CV="294.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S6: Wasserpumpe</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 6</label>
-		<tooltip xml:lang="de">Sound Slot #6 Lautstärke - Wasserpumpe</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #6 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 6" CV="294.31=16.32=0" default="60" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S6: Luftpumpe</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 6</label>
-		<tooltip xml:lang="de">Sound Slot #6 Lautstärke - Luftpumpe</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #6 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 7" CV="295.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S7:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 7</label>
-		<tooltip xml:lang="de">Sound Slot #7 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #7 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 7" CV="295.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S7: Injektor</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 7</label>
-		<tooltip xml:lang="de">Sound Slot #7 Lautstärke - Injektor</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #7 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 7" CV="295.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S7: Wasserpumpe</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 7</label>
-		<tooltip xml:lang="de">Sound Slot #7 Lautstärke - Wasserpumpe</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #7 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 7" CV="295.31=16.32=0" default="200" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Short Horn</label>
-		<label xml:lang="de">Vol. S7: Horn kurz</label>
-		<tooltip>Sound Slot #7 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #7 Lautstärke - Horn kurz</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 8" CV="296.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S8:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 8</label>
-		<tooltip xml:lang="de">Sound Slot #8 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #8 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 8" CV="296.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S8: Kohle schaufeln</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 8</label>
-		<tooltip xml:lang="de">Sound Slot #8 Lautstärke - Kohle schaufeln</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #8 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 8" CV="296.31=16.32=0" default="128" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S8: Injektor</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 8</label>
-		<tooltip xml:lang="de">Sound Slot #8 Lautstärke - Injektor</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #8 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 8" CV="296.31=16.32=0" default="50" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Curve Squeal</label>
-		<label xml:lang="de">Vol. S8: Kurvenquietschen</label>
-		<tooltip>Sound Slot #8 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #8 Lautstärke - Kurvenquietschen</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 9" CV="297.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S9:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 9</label>
-		<tooltip xml:lang="de">Sound Slot #9 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #9 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 9" CV="297.31=16.32=0" default="192" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S9: Führerstandstür</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 9</label>
-		<tooltip xml:lang="de">Sound Slot #9 Lautstärke - Führerstandstür</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #9 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 9" CV="297.31=16.32=0" default="50" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S9: Kohle schaufeln</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 9</label>
-		<tooltip xml:lang="de">Sound Slot #9 Lautstärke - Kohle schaufeln</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #9 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 10" CV="298.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S10:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 10</label>
-		<tooltip xml:lang="de">Sound Slot #10 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #10 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 10" CV="298.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S10: Führerstandsfenster</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 10</label>
-		<tooltip xml:lang="de">Sound Slot #10 Lautstärke - Führerstandsfenster</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #10 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 10" CV="298.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S10: Führerstandstür</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 10</label>
-		<tooltip xml:lang="de">Sound Slot #10 Lautstärke - Führerstandstür</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #10 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 10" CV="298.31=16.32=0" default="60" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Coupler</label>
-		<label xml:lang="de">Vol. S10: Kuppeln</label>
-		<tooltip>Sound Slot #10 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #10 Lautstärke - Kuppeln</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 11" CV="299.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S11:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 11</label>
-		<tooltip xml:lang="de">Sound Slot #11 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #11 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 11" CV="299.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S11: Dampf ablassen</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 11</label>
-		<tooltip xml:lang="de">Sound Slot #11 Lautstärke - Dampf ablassen</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #11 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 11" CV="299.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S11: Führerstandsfenster</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 11</label>
-		<tooltip xml:lang="de">Sound Slot #11 Lautstärke - Führerstandsfenster</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #11 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 11" CV="299.31=16.32=0" default="200" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Grade Crossing Horn</label>
-		<label xml:lang="de">Vol. S11: Horn Bahnübergang</label>
-		<tooltip>Sound Slot #11 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #11 Lautstärke - Horn Bahnübergang</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 12" CV="300.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S12:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 12</label>
-		<tooltip xml:lang="de">Sound Slot #12 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #12 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 12" CV="300.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S12: Notbremse</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 12</label>
-		<tooltip xml:lang="de">Sound Slot #12 Lautstärke - Notbremse</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #12 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 12" CV="300.31=16.32=0" default="55" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S12: Zylinderdampf</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 12</label>
-		<tooltip xml:lang="de">Sound Slot #12 Lautstärke - Zylinderdampf ablassen</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #12 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 13" CV="301.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S13:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 13</label>
-		<tooltip xml:lang="de">Sound Slot #13 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #13 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 13" CV="301.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S13: Zugbremse</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 13</label>
-		<tooltip xml:lang="de">Sound Slot #13 Lautstärke - Zugbremse</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #13 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 13" CV="301.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S13: Notbremse</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 13</label>
-		<tooltip xml:lang="de">Sound Slot #13 Lautstärke - Notbremse</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #13 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 14" CV="302.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S14:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 14</label>
-		<tooltip xml:lang="de">Sound Slot #14 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #14 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 14" CV="302.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S14: Kuppeln</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 14</label>
-		<tooltip xml:lang="de">Sound Slot #14 Lautstärke - Kuppeln</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #14 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 14" CV="302.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S14: Zugbremse</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 14</label>
-		<tooltip xml:lang="de">Sound Slot #14 Lautstärke - Zugbremse</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #14 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 14" CV="302.31=16.32=0" default="50" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Brake Squeal</label>
-		<label xml:lang="de">Vol. S14: Bremsenquietschen</label>
-		<tooltip>Sound Slot #14 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #14 Lautstärke - Bremsenquietschen</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 15" CV="303.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S15:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 15</label>
-		<tooltip xml:lang="de">Sound Slot #15 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #15 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 15" CV="303.31=16.32=0" default="192" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S15: Sicherheitsventil</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 15</label>
-		<tooltip xml:lang="de">Sound Slot #15 Lautstärke - Sicherheitsventil</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #15 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 15" CV="303.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S15: Kuppeln</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 15</label>
-		<tooltip xml:lang="de">Sound Slot #15 Lautstärke - Kuppeln</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #15 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 16" CV="304.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S16:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 16</label>
-		<tooltip xml:lang="de">Sound Slot #16 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #16 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 16" CV="304.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S16: Abschlammen</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 16</label>
-		<tooltip xml:lang="de">Sound Slot #16 Lautstärke - Abschlammen</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #16 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 16" CV="304.31=16.32=0" default="100" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S16: Sicherheitsventil</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 16</label>
-		<tooltip xml:lang="de">Sound Slot #16 Lautstärke - Sicherheitsventil</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #16 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 16" CV="304.31=16.32=0" default="30" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Air Compressor</label>
-		<label xml:lang="de">Vol. S16: Kompressor</label>
-		<tooltip>Sound Slot #16 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #16 Lautstärke - Kompressor</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 17" CV="305.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S17:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 17</label>
-		<tooltip xml:lang="de">Sound Slot #17 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #17 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 17" CV="305.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S17: Sanden</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 17</label>
-		<tooltip xml:lang="de">Sound Slot #17 Lautstärke - Sanden</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #17 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 17" CV="305.31=16.32=0" default="25" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S17: Ausschlacken</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 17</label>
-		<tooltip xml:lang="de">Sound Slot #17 Lautstärke - Ausschlacken</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #17 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 17" CV="305.31=16.32=0" default="40" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Radiator Fan</label>
-		<label xml:lang="de">Vol. S17: Lüfter</label>
-		<tooltip>Sound Slot #17 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #17 Lautstärke - Lüfter</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 18" CV="306.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S18:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 18</label>
-		<tooltip xml:lang="de">Sound Slot #18 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #18 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 18" CV="306.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S18: Kurvenquietschen</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 18</label>
-		<tooltip xml:lang="de">Sound Slot #18 Lautstärke - Kurvenquietschen</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #18 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 18" CV="306.31=16.32=0" default="50" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S18: Sanden</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 18</label>
-		<tooltip xml:lang="de">Sound Slot #18 Lautstärke - Sanden</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #18 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 18" CV="306.31=16.32=0" default="200" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Air Release</label>
-		<label xml:lang="de">Vol. S18: Druckluftventil</label>
-		<tooltip>Sound Slot #18 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #18 Lautstärke - Druckluftventil</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 19" CV="307.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S19:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 19</label>
-		<tooltip xml:lang="de">Sound Slot #19 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #19 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 19" CV="307.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S19: Schienenstöße</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 19</label>
-		<tooltip xml:lang="de">Sound Slot #19 Lautstärke - Schienenstöße</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #19 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 19" CV="307.31=16.32=0" default="255" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S19: Kurvenquietschen</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 19</label>
-		<tooltip xml:lang="de">Sound Slot #19 Lautstärke - Kurvenquietschen</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #19 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 20" CV="308.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S20: </label>
-		<label xml:lang="cs">Banka E nastavení zvuku 20</label>
-		<tooltip xml:lang="de">Sound Slot #20 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #20 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 20" CV="308.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S20: Luftpumpe autom.</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 20</label>
-		<tooltip xml:lang="de">Sound Slot #20 Lautstärke - Luftpumpe autom.</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #20 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 20" CV="308.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S20: Schienenstöße</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 20</label>
-		<tooltip xml:lang="de">Sound Slot #20 Lautstärke - Schienenstöße</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #20 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 20" CV="308.31=16.32=0" default="30" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Cab Chatter #2</label>
-		<label xml:lang="de">Vol. S20: Funk 2</label>
-		<tooltip>Sound Slot #20 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #20 Lautstärke - Funk 2</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 21" CV="309.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16">
-		<decVal/>
-		<label xml:lang="de">Vol. S21:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 21</label>
-		<tooltip xml:lang="de">Sound Slot #21 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #21 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 21" CV="309.31=16.32=0" default="60" include="PIKO46540-18,PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S21: Glocke</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 21</label>
-		<tooltip xml:lang="de">Sound Slot #21 Lautstärke - Glocke</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #21 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 22" CV="310.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S22:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 22</label>
-		<tooltip xml:lang="de">Sound Slot #22: Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #22 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 22" CV="310.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S22: Generator</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 22</label>
-		<tooltip xml:lang="de">Sound Slot #22: Generator</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #22 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 22" CV="310.31=16.32=0" default="150" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Dynamic Brake</label>
-		<label xml:lang="de">Vol. S22: Dynamische Bremse</label>
-		<tooltip>Sound Slot #22 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #22 Lautstärke - Dynamische Bremse</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 23" CV="311.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S23:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 23</label>
-		<tooltip xml:lang="de">Sound Slot #23 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #23 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 23" CV="311.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S23: Bremsenquietschen</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 23</label>
-		<tooltip xml:lang="de">Sound Slot #23 Lautstärke - Bremsenquietschen</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #23 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 23" CV="311.31=16.32=0" default="100" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Direction Turner</label>
-		<label xml:lang="de">Vol. S23: Richtungswender</label>
-		<tooltip>Sound Slot #23 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #23 Lautstärke - Richtungswender</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 24" CV="312.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S24:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 24</label>
-		<tooltip xml:lang="de">Sound Slot #24 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #24 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 24" CV="312.31=16.32=0" default="255" include="PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S24: Pfeife mittel</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 24</label>
-		<tooltip xml:lang="de">Sound Slot #24 Lautstärke - Pfeife mittel</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #24 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 24" CV="312.31=16.32=0" default="255" include="PIKO56627-22">
-		<decVal max="255"/>
-		<label>Volume Double Horn</label>
-		<label xml:lang="de">Vol. S24: Doppelhorn</label>
-		<tooltip>Sound Slot #24 Volume</tooltip>
-		<tooltip xml:lang="de">Sound Slot #24 Lautstärke - Doppelhorn</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 25" CV="313.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46540-18,PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S25:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 25</label>
-		<tooltip xml:lang="de">Sound Slot #25 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #25 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 26" CV="314.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46540-18,PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S26:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 26</label>
-		<tooltip xml:lang="de">Sound Slot #26 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #26 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 27" CV="315.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46540-18,PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S27:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 27</label>
-		<tooltip xml:lang="de">Sound Slot #27 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #27 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 28" CV="316.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46540-18,PIKO46550-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S28:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 28</label>
-		<tooltip xml:lang="de">Sound Slot #28 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #28 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 28" CV="316.31=16.32=0" default="150" include="PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S28: Bahnhofsdurchsage 1</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 28</label>
-		<tooltip xml:lang="de">Sound Slot #28 Lautstärke - Bahnhofsdurchsage 1</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #28 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 29" CV="317.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46540-18,PIKO46550-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S29:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 29</label>
-		<tooltip xml:lang="de">Sound Slot #29 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #29 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 29" CV="317.31=16.32=0" default="150" include="PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S29: Bahnhofsdurchsage 2</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 29</label>
-		<tooltip xml:lang="de">Sound Slot #29 Lautstärke - Bahnhofsdurchsage 2</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #29 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 30" CV="318.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S30:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 30</label>
-		<tooltip xml:lang="de">Sound Slot #30 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #30 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 30" CV="318.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S30: Bremsenquietschen</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 30</label>
-		<tooltip xml:lang="de">Sound Slot #30 Lautstärke - Bremsenquietschen</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #30 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 31" CV="319.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S31:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 31</label>
-		<tooltip xml:lang="de">Sound Slot #31 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #31 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 31" CV="319.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S31: n.V.</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 31</label>
-		<tooltip xml:lang="de">Sound Slot #31 Lautstärke - n.V.</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #31 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 32" CV="320.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO46550-18,PIKO46551-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S32:</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 32</label>
-		<tooltip xml:lang="de">Sound Slot #32 Lautstärke - </tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #32 Hlasitost.</tooltip>
-	</variable>
-	<variable item="Bank E Sound Setting 32" CV="320.31=16.32=0" default="128" include="PIKO46540-18">
-		<decVal/>
-		<label xml:lang="de">Vol. S32: Zufallsgeräusche</label>
-		<label xml:lang="cs">Banka E nastavení zvuku 32</label>
-		<tooltip xml:lang="de">Sound Slot #32 Lautstärke - Zufallsgeräusche</tooltip>
-		<tooltip xml:lang="cs">Zvukový slot #32 Hlasitost.</tooltip>
-	</variable>
+            <enumChoice choice="Bank 16" value="16">
+                <choice>Bank 16 - Sound / Volume</choice>
+                <choice xml:lang="de">Bank 16 - CV31 (Sound Lautstärke)</choice>
+                <choice xml:lang="nl">Bank 16 - CV31 (Gedeeld)</choice>
+                <choice xml:lang="cs">Banka 16 - CV31 (Všeobecné)</choice>
+            </enumChoice>
+            <enumChoice choice="Bank 17" value="17">
+                <choice>Bank 17 - Extended Function Mapping</choice>
+                <choice xml:lang="de">Bank 17 - CV31 (Erw. Funktionsmapping)</choice>
+                <choice xml:lang="nl">Bank 17 - CV31</choice>
+                <choice xml:lang="cs">Banka 17 - CV31</choice>
+            </enumChoice>
+            <enumChoice choice="Bank 18" value="18">
+                <choice>Bank 18 - Effect Function Outputs</choice>
+                <choice xml:lang="de">Bank 18 - CV31 (Effekte Funktionsausgänge)</choice>
+                <choice xml:lang="nl">Bank 18 - CV31 (Fn-toetsen)</choice>
+                <choice xml:lang="cs">Banka 18 - CV31 (Fn tlačítka)</choice>
+            </enumChoice>
+        </enumVal>
+        <label>CV Bank (CV31)</label>
+        <label xml:lang="de">CV Bank (CV31)</label>
+        <label xml:lang="nl">CV31</label>
+        <label xml:lang="cs">CV31</label>
+        <tooltip>Setting that determines which bank is programmed. Reset to "No Bank" when done!</tooltip>
+        <tooltip xml:lang="de">Anzeige der zuletzt programmierten Bank. Zurückstellen nach "Keine Bank" wenn fertig!</tooltip>
+        <tooltip xml:lang="cs">Nastavení programování banky. Po dokončení obnovte na &quot;Žádná banka&quot;!</tooltip>
+    </variable>
+    <variable item="Bank_Switch_32" CV="32" default="0">
+        <enumVal>
+            <enumChoice choice="Zeiger = 0" value="0">
+                <choice>Pointer CV32 = 0</choice>
+                <choice xml:lang="de">Zeiger = 0</choice>
+            </enumChoice>
+            <enumChoice choice="Zeiger = 1" value="1">
+                <choice>Pointer CV32 = 1</choice>
+                <choice xml:lang="de">Zeiger = 1</choice>
+            </enumChoice>
+        </enumVal>
+        <label>CV Bank (CV32)</label>
+        <label xml:lang="de">CV Bank (CV32)</label>
+        <label xml:lang="nl">CV32</label>
+        <label xml:lang="cs">CV32</label>
+        <tooltip xml:lang="de">CV32=0: Bank 0 257-512 geöffnet / CV32=1: nur bei CV31 = 17</tooltip>
+    </variable>
+    <!-- Bank 2 variables -->
+    <!--CVs 257.16.0, 315.16.0-->
+    <variable item="Bank C Sound Setting 1" CV="257.31=16.32=0" default="200" tooltip="0-255">
+        <decVal max="255"/>
+        <label>Overall Sound Volume</label>
+        <label xml:lang="de">Gesamtlautstärke</label>
+        <label xml:lang="nl">Geluidsvolume</label>
+        <label xml:lang="cs">Hlasitost zvuku</label>
+    </variable>
+    <variable item="Bank C Sound Setting 2" CV="258.31=16.32=0" default="0" tooltip="0-255">
+        <decVal max="255"/>
+        <label>Sound fader Volume</label>
+        <label xml:lang="de">Lautstärke Tunnelmodus</label>
+        <label xml:lang="nl">...</label>
+        <label xml:lang="cs">...</label>
+    </variable>
+    <variable item="Bank C Sound Setting 3" CV="259.31=16.32=0" default="192" tooltip="0-255">
+        <decVal max="255"/>
+        <label>Volume control step 3</label>
+        <label xml:lang="de">Lautstärkeregelung Stufe 3</label>
+        <label xml:lang="nl">...</label>
+        <label xml:lang="cs">...</label>
+    </variable>
+    <variable item="Bank C Sound Setting 4" CV="260.31=16.32=0" default="128" tooltip="0-255">
+        <decVal max="255"/>
+        <label>Volume control step 2</label>
+        <label xml:lang="de">Lautstärkeregelung Stufe 2</label>
+        <label xml:lang="nl">...</label>
+        <label xml:lang="cs">...</label>
+    </variable>
+    <variable item="Bank C Sound Setting 5" CV="261.31=16.32=0" default="64" tooltip="0-255">
+        <decVal max="255"/>
+        <label>Volume control step 1</label>
+        <label xml:lang="de">Lautstärkeregelung Stufe 1</label>
+        <label xml:lang="nl">...</label>
+        <label xml:lang="cs">...</label>
+    </variable>
+    <variable item="Bank C Sound Setting 6" CV="270.31=16.32=0" default="15" tooltip="0-63">
+        <decVal/>
+        <label>Sound Option CV</label>
+        <label xml:lang="de">Sound Option CV</label>
+        <label xml:lang="nl">...</label>
+        <label xml:lang="cs">...</label>
+        <tooltip>Switching sound flags on and off (0-63)</tooltip>
+        <tooltip xml:lang="de">Ein- und Ausschalten von Soundflags (0-63)</tooltip>
+    </variable>
+    <variable item="Bank C Sound Setting 6 Bit0" CV="270.31=16.32=0" mask="XXXXXXXV" default="1" tooltip="Bit0 = 1 Drive-Stop">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Drive-Stop (Bit 0)</label>
+    </variable>
+    <variable item="Bank C Sound Setting 6 Bit1" CV="270.31=16.32=0" mask="XXXXXXVX" default="1" tooltip="Bit1 = 1 Drive-Slow ">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Drive-Slow (Bit 1)</label>
+    </variable>
+    <variable item="Bank C Sound Setting 6 Bit2" CV="270.31=16.32=0" mask="XXXXXVXX" default="1" tooltip="Bit2 = 1 Drive-Hold ">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Drive-Hold (Bit 2)</label>
+    </variable>
+    <variable item="Bank C Sound Setting 6 Bit3" CV="270.31=16.32=0" mask="XXXXVXXX" default="1" tooltip="Bit3 = 1 Drive-Lock">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Drive-Lock (Bit 3)</label>
+        <tooltip>Bit3 = 1 Start-up interlock prevents premature start-up with sound in digital mode</tooltip>
+        <tooltip xml:lang="de">Bit3 = 1 Anfahrtssperre verhindert vorzeitiges Anfahren bei Sound im Digitalbetrieb</tooltip>
+    </variable>
+    <variable item="Bank C Sound Setting 6 Bit4" CV="270.31=16.32=0" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Coupling sound controls digital coupling (Bit 4)</label>
+        <label xml:lang="de">Kupplungssound steuert Digitalkupplung (Bit 4)</label>
+    </variable>
+    <variable item="Bank C Sound Setting 6 Bit5" CV="270.31=16.32=0" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Drive-Lock analog (Bit 5)</label>
+        <tooltip>Bit5 = 1 Start-up interlock prevents premature start-up with sound in analog mode</tooltip>
+        <tooltip xml:lang="de">Bit5 = 1 Anfahrtssperre verhindert vorzeitiges Anfahren bei Sound im Analogbetrieb</tooltip>
+    </variable>
+    <variable item="Bank C Sound Setting 7" CV="273.31=16.32=0" default="15" tooltip="0-255">
+        <decVal max="255"/>
+        <label>Flange squeal speed</label>
+        <label xml:lang="de">Geschwindigkeit Kurvenquietschen über</label>
+        <label xml:lang="nl">...</label>
+        <label xml:lang="cs">...</label>
+        <tooltip>Speed threshold above which activates flange squeal</tooltip>
+        <tooltip xml:lang="de">Geschwindigkeitsschwelle über der das Quietschen ausgelöst wird</tooltip>
+    </variable>
+    <variable item="Bank C Sound Setting 8" CV="274.31=16.32=0" default="50" tooltip="0-255">
+        <decVal/>
+        <label>Brake squeal speed</label>
+        <label xml:lang="de">Geschwindigkeit Bremsenquietschen unter</label>
+        <label xml:lang="nl">...</label>
+        <label xml:lang="cs">...</label>
+        <tooltip>Speed threshold below which activates brake squeal</tooltip>
+        <tooltip xml:lang="de">Geschwindigkeitsschwelle unter der das Quietschen ausgelöst wird</tooltip>
+    </variable>
+    <!-- Piko Info: Lautstärken 0-255 der Einzelgeräusche -->
+    <!-- CV 289-317 PIKO46540-18 BR55 TT Lautstärke       -->
+    <!-- CV 289-315 PIKO46550-18 BR83 TT Lautstärke       -->
+    <!-- CV 289-317 PIKO46551-18 BR93 TT Lautstärke       -->
+    <!-- CV 289-312 PIKO56627-22 ML4000 H0 Lautstärke     -->
+    <!-- CV 289-317 PIKO36537-G  BR80 G Lautstärke        -->
+    <!-- CV 289-317 PIKO46505-18 allgemein Lautstärke     -->
+    <!-- CV 289-317 PIKO56505-22 allgemein Lautstärke     -->
+    <!-- CV 289-317 PIKO46508-16 allgemein Lautstärke     -->
+    <!-- CV 289-317 PIKO36505-G allgemein Lautstärke      -->
+    <variable item="Bank E Sound Setting 1" CV="289.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S1:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 1</label>
+        <tooltip>Sound Slot #1 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #1 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #1 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 1" CV="289.31=16.32=0" default="150" include="PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S1: Motor 1</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 1</label>
+        <tooltip>Sound Slot #1 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #1 Lautstärke - Motor 1</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #1 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 1" CV="289.31=16.32=0" default="180" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Prime Movers</label>
+        <label xml:lang="de">Vol. S1: Motor</label>
+        <tooltip>Sound Slot #1 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #1 Lautstärke - Motor 1</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 2" CV="290.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S2:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 2</label>
+        <tooltip xml:lang="de">Sound Slot #2 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #2 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 2" CV="290.31=16.32=0" default="128" include="PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S2: Motor 2</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 2</label>
+        <tooltip xml:lang="de">Sound Slot #2 Lautstärke - Motor 2</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #2 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 2" CV="290.31=16.32=0" default="200" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Horn</label>
+        <label xml:lang="de">Vol. S2: Horn lang</label>
+        <tooltip>Sound Slot #2 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #2 Lautstärke - Horn lang</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 3" CV="291.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S3:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 3</label>
+        <tooltip xml:lang="de">Sound Slot #3 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #3 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 3" CV="291.31=16.32=0" default="70" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S3: Rollen</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 3</label>
+        <tooltip xml:lang="de">Sound Slot #3 Lautstärke - Rollen</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #3 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 3" CV="291.31=16.32=0" default="60" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Bell</label>
+        <label xml:lang="de">Vol. S3: Glocke</label>
+        <tooltip>Sound Slot #3 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #3 Lautstärke - Glocke</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 3" CV="291.31=16.32=0" default="192" include="PIKO46540-18">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S3: Pfeife kurz</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 3</label>
+        <tooltip xml:lang="de">Sound Slot #3 Lautstärke - Pfeife kurz</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #3 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 4" CV="292.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46551-18">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S4:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 4</label>
+        <tooltip xml:lang="de">Sound Slot #4 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #4 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 4" CV="292.31=16.32=0" default="255" include="PIKO46540-18,PIKO46550-18,PIKO36537-G">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S4: Pfeife lang</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 4</label>
+        <tooltip xml:lang="de">Sound Slot #4 Lautstärke - Pfeife lang</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #4 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 4" CV="292.31=16.32=0" default="30" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Sander Valve</label>
+        <label xml:lang="de">Vol. S4: Sanden</label>
+        <tooltip>Sound Slot #4 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #4 Lautstärke - Sanden</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 5" CV="293.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S5:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 5</label>
+        <tooltip xml:lang="de">Sound Slot #5 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #5 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 5" CV="293.31=16.32=0" default="192" include="PIKO46540-18">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S5: Luftpumpe</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 5</label>
+        <tooltip xml:lang="de">Sound Slot #5 Lautstärke - Luftpumpe</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #5 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 5" CV="293.31=16.32=0" default="255" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal max="255"/>
+        <label xml:lang="de">Vol. S5: Pfeife kurz</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 5</label>
+        <tooltip xml:lang="de">Sound Slot #5 Lautstärke - Pfeife kurz</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #5 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 5" CV="293.31=16.32=0" default="30" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Cab Chatter #1</label>
+        <label xml:lang="de">Vol. S5: Funk 1</label>
+        <tooltip>Sound Slot #5 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #4 Lautstärke - Funk 1</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 6" CV="294.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S6:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 6</label>
+        <tooltip xml:lang="de">Sound Slot #6 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #6 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 6" CV="294.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S6: Wasserpumpe</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 6</label>
+        <tooltip xml:lang="de">Sound Slot #6 Lautstärke - Wasserpumpe</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #6 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 6" CV="294.31=16.32=0" default="60" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S6: Luftpumpe</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 6</label>
+        <tooltip xml:lang="de">Sound Slot #6 Lautstärke - Luftpumpe</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #6 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 7" CV="295.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S7:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 7</label>
+        <tooltip xml:lang="de">Sound Slot #7 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #7 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 7" CV="295.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S7: Injektor</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 7</label>
+        <tooltip xml:lang="de">Sound Slot #7 Lautstärke - Injektor</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #7 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 7" CV="295.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S7: Wasserpumpe</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 7</label>
+        <tooltip xml:lang="de">Sound Slot #7 Lautstärke - Wasserpumpe</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #7 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 7" CV="295.31=16.32=0" default="200" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Short Horn</label>
+        <label xml:lang="de">Vol. S7: Horn kurz</label>
+        <tooltip>Sound Slot #7 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #7 Lautstärke - Horn kurz</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 8" CV="296.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S8:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 8</label>
+        <tooltip xml:lang="de">Sound Slot #8 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #8 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 8" CV="296.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S8: Kohle schaufeln</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 8</label>
+        <tooltip xml:lang="de">Sound Slot #8 Lautstärke - Kohle schaufeln</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #8 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 8" CV="296.31=16.32=0" default="128" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S8: Injektor</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 8</label>
+        <tooltip xml:lang="de">Sound Slot #8 Lautstärke - Injektor</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #8 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 8" CV="296.31=16.32=0" default="50" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Curve Squeal</label>
+        <label xml:lang="de">Vol. S8: Kurvenquietschen</label>
+        <tooltip>Sound Slot #8 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #8 Lautstärke - Kurvenquietschen</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 9" CV="297.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S9:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 9</label>
+        <tooltip xml:lang="de">Sound Slot #9 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #9 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 9" CV="297.31=16.32=0" default="192" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S9: Führerstandstür</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 9</label>
+        <tooltip xml:lang="de">Sound Slot #9 Lautstärke - Führerstandstür</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #9 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 9" CV="297.31=16.32=0" default="50" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S9: Kohle schaufeln</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 9</label>
+        <tooltip xml:lang="de">Sound Slot #9 Lautstärke - Kohle schaufeln</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #9 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 10" CV="298.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S10:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 10</label>
+        <tooltip xml:lang="de">Sound Slot #10 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #10 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 10" CV="298.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S10: Führerstandsfenster</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 10</label>
+        <tooltip xml:lang="de">Sound Slot #10 Lautstärke - Führerstandsfenster</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #10 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 10" CV="298.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S10: Führerstandstür</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 10</label>
+        <tooltip xml:lang="de">Sound Slot #10 Lautstärke - Führerstandstür</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #10 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 10" CV="298.31=16.32=0" default="60" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Coupler</label>
+        <label xml:lang="de">Vol. S10: Kuppeln</label>
+        <tooltip>Sound Slot #10 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #10 Lautstärke - Kuppeln</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 11" CV="299.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S11:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 11</label>
+        <tooltip xml:lang="de">Sound Slot #11 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #11 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 11" CV="299.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S11: Dampf ablassen</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 11</label>
+        <tooltip xml:lang="de">Sound Slot #11 Lautstärke - Dampf ablassen</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #11 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 11" CV="299.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S11: Führerstandsfenster</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 11</label>
+        <tooltip xml:lang="de">Sound Slot #11 Lautstärke - Führerstandsfenster</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #11 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 11" CV="299.31=16.32=0" default="200" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Grade Crossing Horn</label>
+        <label xml:lang="de">Vol. S11: Horn Bahnübergang</label>
+        <tooltip>Sound Slot #11 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #11 Lautstärke - Horn Bahnübergang</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 12" CV="300.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S12:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 12</label>
+        <tooltip xml:lang="de">Sound Slot #12 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #12 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 12" CV="300.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S12: Notbremse</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 12</label>
+        <tooltip xml:lang="de">Sound Slot #12 Lautstärke - Notbremse</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #12 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 12" CV="300.31=16.32=0" default="55" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S12: Zylinderdampf</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 12</label>
+        <tooltip xml:lang="de">Sound Slot #12 Lautstärke - Zylinderdampf ablassen</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #12 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 13" CV="301.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S13:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 13</label>
+        <tooltip xml:lang="de">Sound Slot #13 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #13 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 13" CV="301.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S13: Zugbremse</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 13</label>
+        <tooltip xml:lang="de">Sound Slot #13 Lautstärke - Zugbremse</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #13 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 13" CV="301.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S13: Notbremse</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 13</label>
+        <tooltip xml:lang="de">Sound Slot #13 Lautstärke - Notbremse</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #13 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 14" CV="302.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S14:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 14</label>
+        <tooltip xml:lang="de">Sound Slot #14 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #14 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 14" CV="302.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S14: Kuppeln</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 14</label>
+        <tooltip xml:lang="de">Sound Slot #14 Lautstärke - Kuppeln</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #14 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 14" CV="302.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S14: Zugbremse</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 14</label>
+        <tooltip xml:lang="de">Sound Slot #14 Lautstärke - Zugbremse</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #14 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 14" CV="302.31=16.32=0" default="50" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Brake Squeal</label>
+        <label xml:lang="de">Vol. S14: Bremsenquietschen</label>
+        <tooltip>Sound Slot #14 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #14 Lautstärke - Bremsenquietschen</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 15" CV="303.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S15:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 15</label>
+        <tooltip xml:lang="de">Sound Slot #15 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #15 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 15" CV="303.31=16.32=0" default="192" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S15: Sicherheitsventil</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 15</label>
+        <tooltip xml:lang="de">Sound Slot #15 Lautstärke - Sicherheitsventil</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #15 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 15" CV="303.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S15: Kuppeln</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 15</label>
+        <tooltip xml:lang="de">Sound Slot #15 Lautstärke - Kuppeln</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #15 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 16" CV="304.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S16:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 16</label>
+        <tooltip xml:lang="de">Sound Slot #16 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #16 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 16" CV="304.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S16: Abschlammen</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 16</label>
+        <tooltip xml:lang="de">Sound Slot #16 Lautstärke - Abschlammen</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #16 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 16" CV="304.31=16.32=0" default="100" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S16: Sicherheitsventil</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 16</label>
+        <tooltip xml:lang="de">Sound Slot #16 Lautstärke - Sicherheitsventil</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #16 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 16" CV="304.31=16.32=0" default="30" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Air Compressor</label>
+        <label xml:lang="de">Vol. S16: Kompressor</label>
+        <tooltip>Sound Slot #16 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #16 Lautstärke - Kompressor</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 17" CV="305.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S17:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 17</label>
+        <tooltip xml:lang="de">Sound Slot #17 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #17 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 17" CV="305.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S17: Sanden</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 17</label>
+        <tooltip xml:lang="de">Sound Slot #17 Lautstärke - Sanden</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #17 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 17" CV="305.31=16.32=0" default="25" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S17: Ausschlacken</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 17</label>
+        <tooltip xml:lang="de">Sound Slot #17 Lautstärke - Ausschlacken</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #17 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 17" CV="305.31=16.32=0" default="40" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Radiator Fan</label>
+        <label xml:lang="de">Vol. S17: Lüfter</label>
+        <tooltip>Sound Slot #17 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #17 Lautstärke - Lüfter</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 18" CV="306.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S18:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 18</label>
+        <tooltip xml:lang="de">Sound Slot #18 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #18 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 18" CV="306.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S18: Kurvenquietschen</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 18</label>
+        <tooltip xml:lang="de">Sound Slot #18 Lautstärke - Kurvenquietschen</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #18 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 18" CV="306.31=16.32=0" default="50" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S18: Sanden</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 18</label>
+        <tooltip xml:lang="de">Sound Slot #18 Lautstärke - Sanden</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #18 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 18" CV="306.31=16.32=0" default="200" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Air Release</label>
+        <label xml:lang="de">Vol. S18: Druckluftventil</label>
+        <tooltip>Sound Slot #18 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #18 Lautstärke - Druckluftventil</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 19" CV="307.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S19:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 19</label>
+        <tooltip xml:lang="de">Sound Slot #19 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #19 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 19" CV="307.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S19: Schienenstöße</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 19</label>
+        <tooltip xml:lang="de">Sound Slot #19 Lautstärke - Schienenstöße</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #19 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 19" CV="307.31=16.32=0" default="255" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S19: Kurvenquietschen</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 19</label>
+        <tooltip xml:lang="de">Sound Slot #19 Lautstärke - Kurvenquietschen</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #19 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 20" CV="308.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S20: </label>
+        <label xml:lang="cs">Banka E nastavení zvuku 20</label>
+        <tooltip xml:lang="de">Sound Slot #20 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #20 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 20" CV="308.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S20: Luftpumpe autom.</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 20</label>
+        <tooltip xml:lang="de">Sound Slot #20 Lautstärke - Luftpumpe autom.</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #20 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 20" CV="308.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S20: Schienenstöße</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 20</label>
+        <tooltip xml:lang="de">Sound Slot #20 Lautstärke - Schienenstöße</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #20 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 20" CV="308.31=16.32=0" default="30" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Cab Chatter #2</label>
+        <label xml:lang="de">Vol. S20: Funk 2</label>
+        <tooltip>Sound Slot #20 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #20 Lautstärke - Funk 2</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 21" CV="309.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S21:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 21</label>
+        <tooltip xml:lang="de">Sound Slot #21 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #21 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 21" CV="309.31=16.32=0" default="60" include="PIKO46540-18,PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S21: Glocke</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 21</label>
+        <tooltip xml:lang="de">Sound Slot #21 Lautstärke - Glocke</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #21 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 22" CV="310.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S22:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 22</label>
+        <tooltip xml:lang="de">Sound Slot #22: Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #22 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 22" CV="310.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S22: Generator</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 22</label>
+        <tooltip xml:lang="de">Sound Slot #22: Generator</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #22 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 22" CV="310.31=16.32=0" default="150" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Dynamic Brake</label>
+        <label xml:lang="de">Vol. S22: Dynamische Bremse</label>
+        <tooltip>Sound Slot #22 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #22 Lautstärke - Dynamische Bremse</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 23" CV="311.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S23:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 23</label>
+        <tooltip xml:lang="de">Sound Slot #23 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #23 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 23" CV="311.31=16.32=0" default="200" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S23: Bremsenquietschen</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 23</label>
+        <tooltip xml:lang="de">Sound Slot #23 Lautstärke - Bremsenquietschen</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #23 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 23" CV="311.31=16.32=0" default="100" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Direction Turner</label>
+        <label xml:lang="de">Vol. S23: Richtungswender</label>
+        <tooltip>Sound Slot #23 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #23 Lautstärke - Richtungswender</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 24" CV="312.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S24:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 24</label>
+        <tooltip xml:lang="de">Sound Slot #24 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #24 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 24" CV="312.31=16.32=0" default="255" include="PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S24: Pfeife mittel</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 24</label>
+        <tooltip xml:lang="de">Sound Slot #24 Lautstärke - Pfeife mittel</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #24 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 24" CV="312.31=16.32=0" default="255" include="PIKO56627-22">
+        <decVal max="255"/>
+        <label>Volume Double Horn</label>
+        <label xml:lang="de">Vol. S24: Doppelhorn</label>
+        <tooltip>Sound Slot #24 Volume</tooltip>
+        <tooltip xml:lang="de">Sound Slot #24 Lautstärke - Doppelhorn</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 25" CV="313.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46540-18,PIKO46550-18,PIKO46551-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S25:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 25</label>
+        <tooltip xml:lang="de">Sound Slot #25 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #25 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 25" CV="313.31=16.32=0" default="200" include="PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S25: Druckluft ablassen</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 25</label>
+        <tooltip xml:lang="de">Sound Slot #25 Lautstärke - Druckluft ablassen</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #25 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 26" CV="314.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46540-18,PIKO46550-18,PIKO46551-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S26:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 26</label>
+        <tooltip xml:lang="de">Sound Slot #26 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #26 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 26" CV="314.31=16.32=0" default="200" include="PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S26: Schaffnerpfiff</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 26</label>
+        <tooltip xml:lang="de">Sound Slot #26 Lautstärke - Schaffnerpfiff</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #26 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 27" CV="315.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46540-18,PIKO46550-18,PIKO46551-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S27:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 27</label>
+        <tooltip xml:lang="de">Sound Slot #27 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #27 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 27" CV="315.31=16.32=0" default="150" include="PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S27: Luftpumpe autom.</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 27</label>
+        <tooltip xml:lang="de">Sound Slot #27 Lautstärke - Luftpumpe automatisch</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #27 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 28" CV="316.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46540-18,PIKO46550-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S28:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 28</label>
+        <tooltip xml:lang="de">Sound Slot #28 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #28 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 28" CV="316.31=16.32=0" default="200" include="PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S28: Speisepumpe</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 28</label>
+        <tooltip xml:lang="de">Sound Slot #28 Lautstärke - Speisepumpe</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #28 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 28" CV="316.31=16.32=0" default="150" include="PIKO46551-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S28: Bahnhofsdurchsage 1</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 28</label>
+        <tooltip xml:lang="de">Sound Slot #28 Lautstärke - Bahnhofsdurchsage 1</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #28 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 29" CV="317.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46540-18,PIKO46550-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S29:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 29</label>
+        <tooltip xml:lang="de">Sound Slot #29 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #29 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 29" CV="317.31=16.32=0" default="200" include="PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S29: Luftklappe</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 29</label>
+        <tooltip xml:lang="de">Sound Slot #29 Lautstärke - Luftklappe</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #29 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 29" CV="317.31=16.32=0" default="150" include="PIKO46551-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S29: Bahnhofsdurchsage 2</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 29</label>
+        <tooltip xml:lang="de">Sound Slot #29 Lautstärke - Bahnhofsdurchsage 2</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #29 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 30" CV="318.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46550-18,PIKO46551-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S30:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 30</label>
+        <tooltip xml:lang="de">Sound Slot #30 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #30 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 30" CV="318.31=16.32=0" default="200" include="PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S30: Seitenfenster</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 30</label>
+        <tooltip xml:lang="de">Sound Slot #30 Lautstärke - Seitenfenster</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #30 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 30" CV="318.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S30: Bremsenquietschen</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 30</label>
+        <tooltip xml:lang="de">Sound Slot #30 Lautstärke - Bremsenquietschen</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #30 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 31" CV="319.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46550-18,PIKO46551-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S31:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 31</label>
+        <tooltip xml:lang="de">Sound Slot #31 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #31 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 31" CV="319.31=16.32=0" default="200" include="PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S31: Schmierung</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 31</label>
+        <tooltip xml:lang="de">Sound Slot #31 Lautstärke - Schmierung</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #31 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 31" CV="319.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S31: n.V.</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 31</label>
+        <tooltip xml:lang="de">Sound Slot #31 Lautstärke - n.V.</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #31 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 32" CV="320.31=16.32=0" default="128" include="PIKO46505-18,PIKO56505-22,PIKO56508-16,PIKO36505-G,PIKO46550-18,PIKO46551-18,PIKO36537-G">
+        <decVal/>
+        <label xml:lang="de">Vol. S32:</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 32</label>
+        <tooltip xml:lang="de">Sound Slot #32 Lautstärke - </tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #32 Hlasitost.</tooltip>
+    </variable>
+    <variable item="Bank E Sound Setting 32" CV="320.31=16.32=0" default="128" include="PIKO46540-18">
+        <decVal/>
+        <label xml:lang="de">Vol. S32: Zufallsgeräusche</label>
+        <label xml:lang="cs">Banka E nastavení zvuku 32</label>
+        <tooltip xml:lang="de">Sound Slot #32 Lautstärke - Zufallsgeräusche</tooltip>
+        <tooltip xml:lang="cs">Zvukový slot #32 Hlasitost.</tooltip>
+    </variable>
 </variables>
