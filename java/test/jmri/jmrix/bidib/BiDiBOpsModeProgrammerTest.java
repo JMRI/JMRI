@@ -36,7 +36,6 @@ public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
         //Assert.assertTrue("can write address", programmer.getCanWrite("1234"));
     }
 
-    @Disabled("Test is not working after upgrade of upgrade of BiDi library")
     @Test
     @Override
     public void testWriteCVNullListener() throws jmri.ProgrammerException {
