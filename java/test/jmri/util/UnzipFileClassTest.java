@@ -19,7 +19,7 @@ public class UnzipFileClassTest  {
     // no testCtor as tested class only supplies static methods
 
     @Test
-    public void testFileNotFoundError() throws Exception {
+    public void testFileNotFoundError() {
         assertNotNull(tempDir);
         
         Exception ex = assertThrows(FileNotFoundException.class, () -> {
