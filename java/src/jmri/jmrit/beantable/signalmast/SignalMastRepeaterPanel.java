@@ -345,8 +345,6 @@ public class SignalMastRepeaterPanel extends JmriPanel {
             }
         }
 
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DB_DUPLICATE_SWITCH_CLAUSES",
-                                justification="better to keep cases in column order rather than to combine")
         @Override
         public void setValueAt(Object type, int r, int c) {
             switch (c) {

@@ -173,7 +173,7 @@ which checks the dates of the control files to make sure they've been updated wh
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 
-##### json-schema-validator-1.0.28.jar
+##### json-schema-validator-1.3.3.jar
 - JSON Schema validation library
 - from https://github.com/networknt/json-schema-validator/releases
 
@@ -547,10 +547,10 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - From FindBugs 3.0.0 from http://findbugs.sourceforge.net
 - Only needed at compile/build time, not runtime
 
-##### spotbugs-annotations-4.8.6.jar
-- From SpotBugs 4.8.6
+##### spotbugs-annotations-4.9.8.jar
+- From SpotBugs 4.9.8
 - Only needed at compile/build time, not runtime
-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.8.6
+- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs-annotations/4.9.8
 
 ##### picocontainer-2.15.jar
 - version 2.15

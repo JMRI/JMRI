@@ -12,134 +12,147 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-	<copyright xmlns="http://docbook.org/ns/docbook">
-		<year>2022</year>
-		<holder>JMRI</holder>
-	</copyright>
-	<authorgroup xmlns="http://docbook.org/ns/docbook">
-		<author>
-			<personname>
-				<firstname>Ulrich</firstname>
-				<surname>Gerlach</surname>
-			</personname>
-		</author>
-	</authorgroup>
-	<revhistory xmlns="http://docbook.org/ns/docbook">
-		<revision>
-			<revnumber>1</revnumber>
-			<date>2022-11-11</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
-		</revision>
-		<revision>
-			<revnumber>2</revnumber>
-			<date>2023-12-03</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add English translations</revremark>
-		</revision>
-		<revision>
-			<revnumber>3</revnumber>
-			<date>2025-02-13</date>
-			<authorinitials>UG</authorinitials>
-			<revremark>Add CV250 bit3 and bit4</revremark>
-		</revision>
-	</revhistory>
-	<variable item="Motor Management 1" CV="240" default="16">
-		<decVal max="32"/>
-		<label>Measurement gaps (CV 240)</label>
-		<label xml:lang="de">Messlücke (CV 240)</label>
-		<tooltip>Distance measurement in measuring gap, measurement BEMF motor offset</tooltip>
-		<tooltip xml:lang="de">Abstand Messung in Messlücke, Messung BEMF Motor Offset (0-32)</tooltip>
-	</variable>
-	<variable item="Motor Management 2" CV="241" default="200">
-		<decVal/>
-		<label>Control factor DC digital (CV 241)</label>
-		<label xml:lang="de">Regelfaktor DC digital (CV 241)</label>
-		<tooltip>Proportional increasing Limit DC digital</tooltip>
-		<tooltip xml:lang="de">Proportional steigend Limit DC digital (0-255)</tooltip>
-	</variable>
-	<variable item="Motor Management 3" CV="242" default="40">
-		<decVal/>
-		<label>Control factor AC analog (CV 242)</label>
-		<label xml:lang="de">Regelfaktor AC analog (CV 242)</label>
-		<tooltip>Proportional increasing Limit AC analog</tooltip>
-		<tooltip xml:lang="de">Proportional steigend Limit AC analog (0-255)</tooltip>
-	</variable>
-	<variable item="Motor Management 4" CV="243" default="0">
-		<decVal max="50"/>
-		<label>Minimum control package width (CV 243)</label>
-		<label xml:lang="de">Minimale Steuerpaketbreite (CV 243)</label>
-		<tooltip>Offset controller, control</tooltip>
-		<tooltip xml:lang="de">Offset Regler, Ansteuerung (0-255)</tooltip>
-	</variable>
-	<variable item="Motor Management 5" CV="244" default="200">
-		<decVal/>
-		<label>Control factor DC digital (CV 244)</label>
-		<label xml:lang="de">Regelfaktor DC digital (CV 244)</label>
-		<tooltip>Proportional decreasing Limit DC digital</tooltip>
-		<tooltip xml:lang="de">Proportional fallend Limit DC digital (0-255)</tooltip>
-	</variable>
-	<variable item="Motor Management 6" CV="245" default="220">
-		<decVal/>
-		<label>Control factor AC analog (CV 245)</label>
-		<label xml:lang="de">Regelfaktor AC analog (CV 245)</label>
-		<tooltip>Proportional decreasing Limit AC analog</tooltip>
-		<tooltip xml:lang="de">Proportional fallend Limit AC analog (0-255)</tooltip>
-	</variable>
-	<variable item="Motor Management 7" CV="246" default="0">
-		<decVal/>
-		<label>Rapid reduction of the control current (CV 246)</label>
-		<label xml:lang="de">Schnelles Absenken des Steuerstroms (CV 246)</label>
-		<tooltip>Fast lowering of the control current</tooltip>
-		<tooltip xml:lang="de">Differenz Schnelles Absenken des Steuerstroms (0-255)</tooltip>
-	</variable>
-	<variable item="Motor Management 8" CV="247" default="0">
-		<decVal/>
-		<label>Damping the upward swing (CV 247)</label>
-		<label xml:lang="de">Dämpfen des Aufschwingens (CV 247)</label>
-		<tooltip>Damping of the upswing during spinning</tooltip>
-		<tooltip xml:lang="de">Dämpfen des Aufschwingens beim Schleudern (0-255)</tooltip>
-	</variable>
-	<variable item="Motor Management 9" CV="250" default="0">
-		<decVal max="31"/>
-		<label>Extended central station compatibility (CV 250)</label>
-		<label xml:lang="de">Erweiterte Zentralen Kompatibilität (CV 250)</label>
-		<tooltip>Enhanced Central Station Compatibility bit 0 - 4</tooltip>
-		<tooltip xml:lang="de">Erweiterte Zentralen Kompatibilität Bit 0 bis Bit 4 (0-31)</tooltip>
-	</variable>
-	<variable item="Motor Management 9 Bit 0" CV="250" default="0" mask="XXXXXXXV">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>DCC Legacy Registermodus</label>
-		<label xml:lang="de">Funktionen bleiben gespeichert</label>
-		<tooltip>DCC Legacy Command Register Mode with Paged Mode for NCE Power Cab (0 / 1)</tooltip>
-		<tooltip xml:lang="de">Funktionen bleiben gespeichert, auch wenn die verwendete Zentrale die Adressierung abschaltet oder einen RESET sendet (0 / 1)</tooltip>
-	</variable>
-	<variable item="Motor Management 9 Bit 1" CV="250" default="0" mask="XXXXXXVX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>DCC 28 Stop Command</label>
-		<label xml:lang="de">DCC 28 Stopp Befehl</label>
-		<tooltip>DCC28 stop commands are also accepted in DCC128 mode for NCE Power Cab (0 / 1)</tooltip>
-		<tooltip xml:lang="de">DCC28 Stopp Befehle werden auch im DCC128 Mode akzeptiert (0 / 1)</tooltip>
-	</variable>
-	<variable item="Motor Management 9 Bit 2" CV="250" default="0" mask="XXXXXVXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>DCC Legacy Registermodus</label>
-		<label xml:lang="de">Programmiergleisbefehl ohne Wiederholung</label>
-		<tooltip>Programming track accept commands even without repetition (0 / 1)</tooltip>
-		<tooltip xml:lang="de">Programmiergleis Befehle auch ohne Wiederholung akzeptieren (0 / 1)</tooltip>
-	</variable>
-	<variable item="Motor Management 9 Bit 3" CV="250" default="0" mask="XXXXVXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>Function Reset</label>
-		<label xml:lang="de">Funktionen bei Reset</label>
-		<tooltip>Do not reset functions after DCC reset (Activate in case of problems with Z21) (0 / 1)</tooltip>
-		<tooltip xml:lang="de">Funkktionen nach DCC-Reset nicht zurücksetzen (Aktivieren bei Problemen mit Z21) (0 / 1)</tooltip>
-	</variable>
-	<variable item="Motor Management 9 Bit 4" CV="250" default="0" mask="XXXVXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-		<label>Light buffering analogue mode</label>
-		<label xml:lang="de">Lichtpufferung Analog Modus</label>
-		<tooltip>(0 / 1)</tooltip>
-		<tooltip xml:lang="de">(0 / 1)</tooltip>
-	</variable>
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2022</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Ulrich</firstname>
+                <surname>Gerlach</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2022-11-11</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Initial version for Piko SmartDecoder XP5.1</revremark>
+        </revision>
+        <revision>
+            <revnumber>2</revnumber>
+            <date>2023-12-03</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add English translations</revremark>
+        </revision>
+        <revision>
+            <revnumber>3</revnumber>
+            <date>2025-02-13</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add CV250 bit3 and bit4</revremark>
+        </revision>
+        <revision>
+            <revnumber>4</revnumber>
+            <date>2025-06-12</date>
+            <authorinitials>UG</authorinitials>
+            <revremark>Add CV250 bit5</revremark>
+        </revision>
+    </revhistory>
+    <variable item="Motor Management 1" CV="240" default="16">
+        <decVal max="32"/>
+        <label>Measurement gaps (CV 240)</label>
+        <label xml:lang="de">Messlücke (CV 240)</label>
+        <tooltip>Distance measurement in measuring gap, measurement BEMF motor offset</tooltip>
+        <tooltip xml:lang="de">Abstand Messung in Messlücke, Messung BEMF Motor Offset (0-32)</tooltip>
+    </variable>
+    <variable item="Motor Management 2" CV="241" default="200">
+        <decVal/>
+        <label>Control factor DC digital (CV 241)</label>
+        <label xml:lang="de">Regelfaktor DC digital (CV 241)</label>
+        <tooltip>Proportional increasing Limit DC digital</tooltip>
+        <tooltip xml:lang="de">Proportional steigend Limit DC digital (0-255)</tooltip>
+    </variable>
+    <variable item="Motor Management 3" CV="242" default="40">
+        <decVal/>
+        <label>Control factor AC analog (CV 242)</label>
+        <label xml:lang="de">Regelfaktor AC analog (CV 242)</label>
+        <tooltip>Proportional increasing Limit AC analog</tooltip>
+        <tooltip xml:lang="de">Proportional steigend Limit AC analog (0-255)</tooltip>
+    </variable>
+    <variable item="Motor Management 4" CV="243" default="0">
+        <decVal max="50"/>
+        <label>Minimum control package width (CV 243)</label>
+        <label xml:lang="de">Minimale Steuerpaketbreite (CV 243)</label>
+        <tooltip>Offset controller, control</tooltip>
+        <tooltip xml:lang="de">Offset Regler, Ansteuerung (0-255)</tooltip>
+    </variable>
+    <variable item="Motor Management 5" CV="244" default="200">
+        <decVal/>
+        <label>Control factor DC digital (CV 244)</label>
+        <label xml:lang="de">Regelfaktor DC digital (CV 244)</label>
+        <tooltip>Proportional decreasing Limit DC digital</tooltip>
+        <tooltip xml:lang="de">Proportional fallend Limit DC digital (0-255)</tooltip>
+    </variable>
+    <variable item="Motor Management 6" CV="245" default="220">
+        <decVal/>
+        <label>Control factor AC analog (CV 245)</label>
+        <label xml:lang="de">Regelfaktor AC analog (CV 245)</label>
+        <tooltip>Proportional decreasing Limit AC analog</tooltip>
+        <tooltip xml:lang="de">Proportional fallend Limit AC analog (0-255)</tooltip>
+    </variable>
+    <variable item="Motor Management 7" CV="246" default="0">
+        <decVal/>
+        <label>Rapid reduction of the control current (CV 246)</label>
+        <label xml:lang="de">Schnelles Absenken des Steuerstroms (CV 246)</label>
+        <tooltip>Fast lowering of the control current</tooltip>
+        <tooltip xml:lang="de">Differenz Schnelles Absenken des Steuerstroms (0-255)</tooltip>
+    </variable>
+    <variable item="Motor Management 8" CV="247" default="0">
+        <decVal/>
+        <label>Damping the upward swing (CV 247)</label>
+        <label xml:lang="de">Dämpfen des Aufschwingens (CV 247)</label>
+        <tooltip>Damping of the upswing during spinning</tooltip>
+        <tooltip xml:lang="de">Dämpfen des Aufschwingens beim Schleudern (0-255)</tooltip>
+    </variable>
+    <variable item="Motor Management 9" CV="250" default="0">
+        <decVal max="31"/>
+        <label>Extended central station compatibility (CV 250)</label>
+        <label xml:lang="de">Erweiterte Zentralen Kompatibilität (CV 250)</label>
+        <tooltip>Enhanced Central Station Compatibility bit 0 - 4</tooltip>
+        <tooltip xml:lang="de">Erweiterte Zentralen Kompatibilität Bit 0 bis Bit 4 (0-31)</tooltip>
+    </variable>
+    <variable item="Motor Management 9 Bit 0" CV="250" default="0" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>DCC Legacy Registermodus</label>
+        <label xml:lang="de">Funktionen bleiben gespeichert</label>
+        <tooltip>DCC Legacy Command Register Mode with Paged Mode for NCE Power Cab (0 / 1)</tooltip>
+        <tooltip xml:lang="de">Funktionen bleiben gespeichert, auch wenn die verwendete Zentrale die Adressierung abschaltet oder einen RESET sendet (0 / 1)</tooltip>
+    </variable>
+    <variable item="Motor Management 9 Bit 1" CV="250" default="0" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>DCC 28 Stop Command</label>
+        <label xml:lang="de">DCC 28 Stopp Befehl</label>
+        <tooltip>DCC28 stop commands are also accepted in DCC128 mode for NCE Power Cab (0 / 1)</tooltip>
+        <tooltip xml:lang="de">DCC28 Stopp Befehle werden auch im DCC128 Mode akzeptiert (0 / 1)</tooltip>
+    </variable>
+    <variable item="Motor Management 9 Bit 2" CV="250" default="0" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>DCC Legacy Registermodus</label>
+        <label xml:lang="de">Programmiergleisbefehl ohne Wiederholung</label>
+        <tooltip>Programming track accept commands even without repetition (0 / 1)</tooltip>
+        <tooltip xml:lang="de">Programmiergleis Befehle auch ohne Wiederholung akzeptieren (0 / 1)</tooltip>
+    </variable>
+    <variable item="Motor Management 9 Bit 3" CV="250" default="0" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Function Reset</label>
+        <label xml:lang="de">Funktionen bei Reset</label>
+        <tooltip>Do not reset functions after DCC reset (Activate in case of problems with Z21) (0 / 1)</tooltip>
+        <tooltip xml:lang="de">Funktionen nach DCC-Reset nicht zurücksetzen (Aktivieren bei Problemen mit Z21) (0 / 1)</tooltip>
+    </variable>
+    <variable item="Motor Management 9 Bit 4" CV="250" default="0" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Light buffering analogue mode</label>
+        <label xml:lang="de">Lichtpufferung Analog Modus</label>
+        <tooltip>(0 / 1)</tooltip>
+        <tooltip xml:lang="de">(0 / 1)</tooltip>
+    </variable>
+    <variable item="Motor Management 9 Bit 5" CV="250" default="0" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Linearisation 28 speed settings</label>
+        <label xml:lang="de">Linearisierung 28 Fahrstufen</label>
+        <tooltip>(0 / 1)</tooltip>
+        <tooltip xml:lang="de">(0 / 1)</tooltip>
+    </variable>
 </variables>

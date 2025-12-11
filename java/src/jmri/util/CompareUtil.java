@@ -148,6 +148,8 @@ public class CompareUtil {
      *                        false otherwise
      * @return true if values compare per _memoryOperation; false otherwise
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+                justification = "User explicitly requested check for equality with EQUAL case")
     public static boolean compareNumber(boolean requireNumber, CompareOperation oper, Object value1, Object value2, boolean caseInsensitive) {
         String s1;
         String s2;

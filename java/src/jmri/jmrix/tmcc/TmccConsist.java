@@ -10,6 +10,7 @@ import jmri.DccLocoAddress;
 /**
  * This is the Consist definition for a consist on a TMCC system.
  *
+ * Based on MqttConsist by
  * @author Dean Cording Copyright (C) 2023
  * with edits/additions by
  * @author Timothy Jump (C) 2025
@@ -221,8 +222,8 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
                 }
 
-                // add loco to lists
-                consistList.add(locoAddress);
+                // Add Loco to Consist List
+                addToConsistList(locoAddress, directionNormal);
 
             } else {
                 log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
@@ -299,8 +300,8 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
                 }
 
-                // add loco to lists
-                consistList.add(locoAddress);
+                // Add Loco to Consist List
+                addToConsistList(locoAddress, directionNormal);
 
             } else {
                 log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
