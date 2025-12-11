@@ -1,7 +1,10 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-server-message",
-    "type": ["object", "array"],
+    "type": [
+        "object",
+        "array"
+    ],
     "description": "Message from JMRI to client",
     "definitions": {
         "jmri-json-server-message": {
@@ -31,7 +34,13 @@
                         },
                         "method": {
                             "type": "string",
-                            "enum": ["get", "put", "post", "delete", "list"],
+                            "enum": [
+                                "get",
+                                "put",
+                                "post",
+                                "delete",
+                                "list"
+                            ],
                             "description": "HTTP Method equivalent advisory to the client to inform the client of a need to take an action on an object (for example, will be \"delete\" if advising a client that the client should delete an object that was deleted by the server); will not be present on objects merely being updated or added"
                         },
                         "id": {
@@ -40,7 +49,10 @@
                         }
                     },
                     "additionalProperties": false,
-                    "required": ["type", "data"]
+                    "required": [
+                        "type",
+                        "data"
+                    ]
                 },
                 {
                     "type": "object",
@@ -49,11 +61,16 @@
                         "type": {
                             "type": "string",
                             "description": "Message type",
-                            "enum": ["pong", "goodbye"]
+                            "enum": [
+                                "pong",
+                                "goodbye"
+                            ]
                         }
                     },
                     "additionalProperties": false,
-                    "required": ["type"]
+                    "required": [
+                        "type"
+                    ]
                 }
             ]
         }

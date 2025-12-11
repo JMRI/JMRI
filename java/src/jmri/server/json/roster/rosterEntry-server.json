@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-rosterEntry-server-message",
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"rosterEntry\"",
@@ -45,7 +45,10 @@
             "description": "Maximum speed of the rosterEntry as a percentage"
         },
         "shuntingFunction": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "Function key that triggers shunting capability"
         },
         "owner": {
@@ -53,7 +56,10 @@
             "description": "Owner of device in rosterEntry"
         },
         "dateModified": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "The date this rosterEntry was last modified in ISO 8601 format"
         },
         "comment": {
@@ -61,11 +67,17 @@
             "description": "Comment for the rosterEntry"
         },
         "icon": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "URL of icon for the rosterEntry"
         },
         "image": {
-            "type": ["string", "null"],
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "URL of icon for the rosterEntry"
         },
         "functionKeys": {
@@ -79,7 +91,10 @@
                         "description": "Function key"
                     },
                     "label": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "Label for function key"
                     },
                     "lockable": {
@@ -87,16 +102,28 @@
                         "description": "\"false\" if key is momentary, \"true\" otherwise"
                     },
                     "icon": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "URL of icon for function key when not selected or pressed"
                     },
                     "selectedIcon": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "URL of icon for function key when selected or pressed"
                     }
                 },
                 "additionalProperties": false,
-                "required": ["name", "label", "lockable", "icon", "selectedIcon"]
+                "required": [
+                    "name",
+                    "label",
+                    "lockable",
+                    "icon",
+                    "selectedIcon"
+                ]
             }
         },
         "rosterGroups": {
@@ -118,7 +145,10 @@
                         "description": "Key by which attribute is accessed"
                     },
                     "value": {
-                        "type": ["string", "null"],
+                        "type": [
+                            "string",
+                            "null"
+                        ],
                         "description": "String value of attribute or null"
                     }
                 }
@@ -126,5 +156,24 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "address", "isLongAddress", "road", "number", "mfg", "model", "decoderModel", "decoderFamily", "maxSpeedPct", "dateModified", "owner", "comment", "icon", "image", "functionKeys", "rosterGroups", "attributes"]
+    "required": [
+        "name",
+        "address",
+        "isLongAddress",
+        "road",
+        "number",
+        "mfg",
+        "model",
+        "decoderModel",
+        "decoderFamily",
+        "maxSpeedPct",
+        "dateModified",
+        "owner",
+        "comment",
+        "icon",
+        "image",
+        "functionKeys",
+        "rosterGroups",
+        "attributes"
+    ]
 }
