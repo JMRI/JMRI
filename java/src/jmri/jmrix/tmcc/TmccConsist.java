@@ -222,8 +222,8 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
                 }
 
-                // add loco to lists
-                consistList.add(locoAddress);
+                // Add Loco to Consist List
+                addToConsistList(locoAddress, directionNormal);
 
             } else {
                 log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
@@ -300,8 +300,8 @@ public class TmccConsist extends jmri.implementation.DccConsist {
 
                 }
 
-                // add loco to lists
-                consistList.add(locoAddress);
+                // Add Loco to Consist List
+                addToConsistList(locoAddress, directionNormal);
 
             } else {
                 log.error("Loco {} is already part of this consist {}", locoAddress, getConsistAddress());
