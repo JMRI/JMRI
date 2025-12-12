@@ -618,6 +618,7 @@ public class SlotManagerTest {
         // LONG_ACK: The Slot Write command was accepted blind (no response will be sent).
         slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x40}));
         JUnitUtil.waitFor(releaseTestDelay);
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( -1, value, "reply value");
 
