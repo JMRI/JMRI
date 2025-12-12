@@ -744,6 +744,7 @@ public class SlotManagerTest {
         assertEquals( -999, status, "no immediate reply");
         JUnitUtil.waitFor(releaseTestDelay);
         log.debug("checking..");
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( -1, value, "reply value");
         assertEquals( 3, lnis.outbound.size(), "three messages sent");
