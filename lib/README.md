@@ -177,6 +177,11 @@ which checks the dates of the control files to make sure they've been updated wh
 - JSON Schema validation library
 - from https://github.com/networknt/json-schema-validator/releases
 
+##### itu-1.14.0.jar
+- Internet Time Utility date-time parser and formatter
+- Required by json-schema-validator-1.3.3
+- from https://mvnrepository.com/artifact/com.ethlo.time/itu/1.14.0 12/12/2025
+
 ##### org.eclipse.paho.client.mqttv3-1.2.5.jar
  - Eclipse Paho library  https://www.eclipse.org/paho/
  - mqtt-client-0.4.0.jar starting in JMRI 4.11.5, move to 1.2.5 in JMRI 4.21.3
