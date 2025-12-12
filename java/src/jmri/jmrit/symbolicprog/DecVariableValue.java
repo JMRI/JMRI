@@ -153,15 +153,17 @@ public class DecVariableValue extends VariableValue
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int transfer = Math.max(newVal - _offset, 0); // prevent negative values, especially in tests outside UI
+
+        newVal = newVal - _offset;
         if (_factor != 0) {
-            transfer = transfer / _factor;
+            newVal = newVal / _factor;
         } else {
             // ignore division
             log.error("Variable param 'factor' = 0 not valid; Decoder definition needs correction");
         }
-        int newCvVal = setValueInCV(oldCvVal, transfer, getMask(), _maxVal);
-        log.debug("newVal={} transfer={} newCvVal ={}", newVal, transfer, newCvVal);
+        
+        int newCvVal = setValueInCV(oldCvVal, newVal, getMask(), _maxVal);
+        log.debug("newVal={} newCvVal ={}", newVal, newCvVal);
         if (oldCvVal != newCvVal) {
             cv.setValue(newCvVal);
         }
