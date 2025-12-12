@@ -173,9 +173,14 @@ which checks the dates of the control files to make sure they've been updated wh
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 
-##### json-schema-validator-1.0.28.jar
+##### json-schema-validator-1.3.3.jar
 - JSON Schema validation library
 - from https://github.com/networknt/json-schema-validator/releases
+
+##### itu-1.14.0.jar
+- Internet Time Utility date-time parser and formatter
+- Required by json-schema-validator-1.3.3
+- from https://mvnrepository.com/artifact/com.ethlo.time/itu/1.14.0 12/12/2025
 
 ##### org.eclipse.paho.client.mqttv3-1.2.5.jar
  - Eclipse Paho library  https://www.eclipse.org/paho/
@@ -411,8 +416,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 2.6
 - batik related
 
-##### BiDiB protocol implementation: jbidibc-*-2.0.29.jar, bidibwizard-*-2.0.30.jar
-- version 2.0.29 / 2.0.30
+##### BiDiB protocol implementation: jbidibc-*-2.0.40.jar, bidibwizard-*-2.0.44.jar
+- version 2.0.40 / 2.0.44
 - bidibwizard*.jar supports the BiDiB connection simulation
 
 ##### commons-collections4-4.4.jar

@@ -173,7 +173,6 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
      *
      * @param speed Number from 0 to 1, or less than zero for emergency stop
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public void setSpeedSetting(float speed) {
         float oldSpeed;

@@ -237,7 +237,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     /** 
      * {@inheritDoc} 
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     @Override
     public void reply(EcosReply m) {
         int resultCode = m.getResultCode();

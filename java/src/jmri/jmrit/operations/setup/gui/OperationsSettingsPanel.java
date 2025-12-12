@@ -771,6 +771,8 @@ public class OperationsSettingsPanel extends OperationsPreferencesPanel implemen
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+                justification = "Checking for previously-set value")
     public boolean isDirty() {
         if (// set car types
         (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE)) ||

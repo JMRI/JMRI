@@ -386,6 +386,8 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
      }
      */
     @SuppressWarnings("deprecation") // Date.getTime
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+                justification = "OK to compare floating point from user-selected rate")
     public void update() {
         Date now = clock.getTime();
         if (runMenu != null) {

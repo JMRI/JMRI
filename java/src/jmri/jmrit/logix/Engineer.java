@@ -438,7 +438,8 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * @param endBlockIdx BlockOrder index of the block where ramp is to end.
      *        -1 if an end block is not specified.
      */
-    @SuppressFBWarnings(value="SLF4J_FORMAT_SHOULD_BE_CONST", justification="False assumption")
+    @SuppressFBWarnings(value={"SLF4J_FORMAT_SHOULD_BE_CONST","FE_FLOATING_POINT_EQUALITY"}, 
+                            justification="False assumption; Not result of calculation")
     protected synchronized void rampSpeedTo(@Nonnull String endSpeedType, int endBlockIdx) {
         float speed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType);
         if (log.isDebugEnabled()) {
