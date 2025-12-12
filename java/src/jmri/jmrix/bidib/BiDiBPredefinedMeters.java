@@ -8,6 +8,7 @@ import jmri.implementation.MeterUpdateTask;
 
 import org.bidib.jbidibc.core.DefaultMessageListener;
 import org.bidib.jbidibc.core.MessageListener;
+import org.bidib.jbidibc.messages.CurrentValue;
 import org.bidib.jbidibc.messages.Node;
 import org.bidib.jbidibc.messages.message.BoostQueryMessage;
 import org.bidib.jbidibc.messages.utils.NodeUtils;
@@ -151,11 +152,11 @@ public class BiDiBPredefinedMeters {
             // to listen messages related to track power.
             messageListener = new DefaultMessageListener() {
                 @Override
-                public void boosterDiag(byte[] address, int messageNum, int current, int voltage, int temperature) {
+                public void boosterDiag(byte[] address, int messageNum, CurrentValue current, int voltage, int temperature) {
                     log.info("METER booster diag was signalled: node addr: {}, current: {}, voltage: {}, temperature: {}",
                             address, current, voltage, temperature);
                     try {
-                        setCurrent(address, current * 1.0f);
+                        setCurrent(address, current.getCurrent() * 1.0f);
                         setVoltage(address, voltage * 100.0f); //units of 100mV
                     } catch (JmriException e) {
                         log.error("exception thrown by setCurrent or setVoltage", e);

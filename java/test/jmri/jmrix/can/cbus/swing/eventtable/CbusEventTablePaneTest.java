@@ -222,6 +222,8 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         assertTrue(getSendEventButtonEnabled(jfo));
 
         panel.dispose();
+
+        JUnitUtil.dispose(jfo.getWindow());
  
     }
 

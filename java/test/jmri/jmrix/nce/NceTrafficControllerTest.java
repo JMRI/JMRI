@@ -1,13 +1,12 @@
 package jmri.jmrix.nce;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
+
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -19,7 +18,7 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
 
     @Test
     @Disabled("Test disabled until threading can be resolved")
-    public void testSendAscii() throws Exception {
+    public void testSendAscii() throws IOException {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
             @Override
@@ -46,17 +45,17 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         m.setElement(1, '1');
         m.setElement(2, '2');
         c.sendNceMessage(m, new NceListenerScaffold());
-        Assert.assertEquals("total length ", 4, tostream.available());
-        Assert.assertEquals("Char 0", (byte)'0', tostream.readByte());
-        Assert.assertEquals("Char 1", (byte)'1', tostream.readByte());
-        Assert.assertEquals("Char 2", (byte)'2', tostream.readByte());
-        Assert.assertEquals("EOM", 0x0d, tostream.readByte());
-        Assert.assertEquals("remaining ", 0, tostream.available());
+        assertEquals( 4, tostream.available(), "total length ");
+        assertEquals( (byte)'0', tostream.readByte(), "Char 0");
+        assertEquals( (byte)'1', tostream.readByte(), "Char 1");
+        assertEquals( (byte)'2', tostream.readByte(), "Char 2");
+        assertEquals( 0x0d, tostream.readByte(), "EOM");
+        assertEquals( 0, tostream.available(), "remaining ");
     }
 
     @Test
     @Disabled("Test disabled until threading can be resolved")
-    public void testSendBinary() throws Exception {
+    public void testSendBinary() throws IOException {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
             @Override
@@ -83,16 +82,16 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         m.setElement(1, 0x12);
         m.setElement(2, 0x34);
         c.sendNceMessage(m, new NceListenerScaffold());
-        Assert.assertEquals("total length ", 3, tostream.available());
-        Assert.assertEquals("Char 0", 0x81, 0xFF & tostream.readByte());
-        Assert.assertEquals("Char 1", 0x12, tostream.readByte());
-        Assert.assertEquals("Char 2", 0x34, tostream.readByte());
-        Assert.assertEquals("remaining ", 0, tostream.available());
+        assertEquals( 3, tostream.available(), "total length ");
+        assertEquals( 0x81, 0xFF & tostream.readByte(), "Char 0");
+        assertEquals( 0x12, tostream.readByte(), "Char 1");
+        assertEquals( 0x34, tostream.readByte(), "Char 2");
+        assertEquals( 0, tostream.available(), "remaining ");
     }
 
     @Test
     @Disabled("Test disabled until threading can be resolved")
-    public void testMonitor() throws Exception {
+    public void testMonitor() throws IOException {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
             @Override
@@ -124,17 +123,17 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         c.sendNceMessage(m, new NceListenerScaffold());
 
         // check it arrived at monitor
-        Assert.assertEquals("total length ", 4, tostream.available());
-        Assert.assertEquals("Char 0", (byte)'0', tostream.readByte());
-        Assert.assertEquals("Char 1", (byte)'1', tostream.readByte());
-        Assert.assertEquals("Char 2", (byte)'2', tostream.readByte());
-        Assert.assertEquals("EOM", 0x0d, tostream.readByte());
-        Assert.assertEquals("remaining ", 0, tostream.available());
+        assertEquals( 4, tostream.available(), "total length ");
+        assertEquals( (byte)'0', tostream.readByte(), "Char 0");
+        assertEquals( (byte)'1', tostream.readByte(), "Char 1");
+        assertEquals( (byte)'2', tostream.readByte(), "Char 2");
+        assertEquals( 0x0d, tostream.readByte(), "EOM");
+        assertEquals( 0, tostream.available(), "remaining");
     }
 
     @Test
     @Disabled("Test disabled until threading can be resolved")
-    public void xtestRcvReply() throws Exception {
+    public void xtestRcvReply() throws IOException {
         NceTrafficController c = new NceTrafficController() {
             // skip timeout message
             @Override
@@ -166,7 +165,7 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         c.sendNceMessage(m, l);
         // that's already tested, so don't do here.
 
-        Assert.assertTrue( m == l.rcvdMsg);
+        assertEquals( m, l.rcvdMsg);
 
         // now send reply
         tistream.write('R');
@@ -184,21 +183,23 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         // drive the mechanism
         c.handleOneIncomingReply();
         JUnitUtil.waitFor( () -> { return l.rcvdReply != null; }, "Reply received");
-        Assert.assertEquals("first char of reply ", 'R', l.rcvdReply.getOpCode());
+        assertEquals( 'R', l.rcvdReply.getOpCode(), "first char of reply ");
     }
 
     // internal class to simulate a NcePortController
     private class NcePortControllerScaffold extends NcePortController {
 
-        protected NcePortControllerScaffold() throws Exception {
+        protected NcePortControllerScaffold() {
             super(null);
-            PipedInputStream tempPipe;
-            tempPipe = new PipedInputStream();
-            tostream = new DataInputStream(tempPipe);
-            ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
-            tempPipe = new PipedInputStream();
-            istream = new DataInputStream(tempPipe);
-            tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            assertDoesNotThrow( () -> {
+                PipedInputStream tempPipe;
+                tempPipe = new PipedInputStream();
+                tostream = new DataInputStream(tempPipe);
+                ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+                tempPipe = new PipedInputStream();
+                istream = new DataInputStream(tempPipe);
+                tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+            });
         }
 
         @Override
@@ -261,8 +262,8 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     @Override
     @AfterEach
     public void tearDown() {
+        tc.terminateThreads();
         tc = null;
-        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

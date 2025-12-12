@@ -2953,7 +2953,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     /*
      * if there is sufficient room calculate a wait time, otherwise ramp immediately.
      */
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH", justification="Write unexpected error and fall through")
     synchronized private boolean doDelayRamp(float availDist, float changeDist, int idxSpeedChange, String speedType, int cmdStartIdx) {
         String pendingSpeedType = _engineer.getSpeedType(true); // current or pending speed type
         if (pendingSpeedType.equals(speedType)) {

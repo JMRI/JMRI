@@ -29,7 +29,6 @@
         <Or>
 			<!-- Temporary disable these until we have decided what to do about them -->
            <Bug pattern="AA_ASSERTION_OF_ARGUMENTS" /> <!-- 16 cases -->
-           <Bug pattern="FE_FLOATING_POINT_EQUALITY" /> <!-- 4 cases -->
            <Bug pattern="PA_PUBLIC_MUTABLE_OBJECT_ATTRIBUTE" /> <!-- 93 cases -->
            <Bug pattern="URF_UNREAD_FIELD" /> <!-- 112 cases -->
            <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 50 cases -->

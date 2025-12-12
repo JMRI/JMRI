@@ -1,5 +1,11 @@
 package jmri.jmrix.can.cbus.node;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -8,7 +14,6 @@ import jmri.jmrix.can.cbus.*;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 /**
@@ -20,72 +25,73 @@ public class CbusNodeNVManagerTest {
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists",t);
+        assertNotNull( t, "exists");
     }
 
     @Test
     public void testSetNvs() {
 
-        Assert.assertArrayEquals(new int[]{3,-1,-1,-1}, t.getNvArray());
+        assertArrayEquals(new int[]{3,-1,-1,-1}, t.getNvArray());
 
-        Assert.assertTrue("3 NVs Outstanding",t.getOutstandingNvCount()==3);
+        assertEquals( 3, t.getOutstandingNvCount(), "3 NVs Outstanding");
 
 
         t.setNV(1, 12);
 
-        Assert.assertArrayEquals(new int[]{3,12,-1,-1}, t.getNvArray());
-        Assert.assertTrue("2 NVs Outstanding",t.getOutstandingNvCount()==2);
+        assertArrayEquals(new int[]{3,12,-1,-1}, t.getNvArray());
+        assertEquals( 2, t.getOutstandingNvCount(), "2 NVs Outstanding");
 
 
         t.setNV(-44, 20);
-        JUnitAppender.checkForMessageStartingWith("Attempted to set NV -44");
+        JUnitAppender.assertErrorMessage("Attempted to set Invalid NV -44 on Node 7423");
 
         t.setNV(777, 20);
-        JUnitAppender.checkForMessageStartingWith("Attempted to set NV 777");
+        JUnitAppender.assertErrorMessage("Attempted to set Invalid NV 777 on Node 7423");
 
         t.setNV(2, -11);
-        JUnitAppender.checkForMessageStartingWith(
-        "Attempted to set NV 2 Invalid Value -11 on Node 7423");
+        JUnitAppender.assertErrorMessage(
+            "Attempted to set NV 2 Invalid Value -11 on Node 7423");
 
         t.setNV(2, 588);
-        JUnitAppender.checkForMessageStartingWith(
-        "Attempted to set NV 2 Invalid Value 588 on Node 7423");
+        JUnitAppender.assertErrorMessage(
+            "Attempted to set NV 2 Invalid Value 588 on Node 7423");
 
         t.setNV(0, 77);
-        JUnitAppender.checkForMessageStartingWith(
-        "Node 7423 NV Count mismatch. Parameters report 3 NVs, received set for 77 NVs");
+        JUnitAppender.assertErrorMessage(
+            "Node 7423 NV Count mismatch. Parameters report 3 NVs, received set for 77 NVs");
 
         t.reset();
 
         t.setNV(1, 12);
-        JUnitAppender.checkForMessageStartingWith(
-        "Attempted to set NV 1 on a null NV Array on Node 7423");
+        JUnitAppender.assertErrorMessage(
+            "Attempted to set NV 1 on a null NV Array on Node 7423");
 
-        Assert.assertTrue("-1 NVs Outstanding Array unset",t.getOutstandingNvCount()==-1);
+        assertEquals( -1, t.getOutstandingNvCount(), "-1 NVs Outstanding Array unset");
 
     }
 
     @Test
     public void testGetNextRequest(){
 
-        Assert.assertEquals("Starting outbound frames 0",0,tcis.outbound.size());
+        assertEquals( 0, tcis.outbound.size(), "Starting outbound frames 0");
 
-        Assert.assertFalse("Node has no active Timers",nodeToEdit.getNodeTimerManager().hasActiveTimers());
+        assertFalse( nodeToEdit.getNodeTimerManager().hasActiveTimers(), "Node has no active Timers");
 
         t.setNV(2, 44);
 
         t.sendNextNVToFetch();
 
-        Assert.assertEquals("1 outbound frame sent",1,tcis.outbound.size());
+        assertEquals( 1, tcis.outbound.size(), "1 outbound frame sent");
 
-        Assert.assertEquals("Request for Node 7423 NV1", "[5f8] 71 1C FF 01",
-        tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( "[5f8] 71 1C FF 01",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Request for Node 7423 NV1");
 
-        Assert.assertTrue("Node has active Timer",nodeToEdit.getNodeTimerManager().hasActiveTimers());
+        assertTrue( nodeToEdit.getNodeTimerManager().hasActiveTimers(), "Node has active Timer");
 
         t.sendNextNVToFetch();
 
-        Assert.assertEquals("Still only 1 outbound frame sent",1,tcis.outbound.size());
+        assertEquals( 1, tcis.outbound.size(), "Still only 1 outbound frame sent");
 
         CanReply r = new CanReply(0x12);
         r.setNumDataElements(5);
@@ -97,48 +103,50 @@ public class CbusNodeNVManagerTest {
 
         nodeToEdit.getCanListener().reply(r);
 
-        Assert.assertArrayEquals(new int[]{3,77,44,-1}, t.getNvArray());
+        assertArrayEquals(new int[]{3,77,44,-1}, t.getNvArray());
 
-        Assert.assertFalse("Node has no active Timers",nodeToEdit.getNodeTimerManager().hasActiveTimers());
+        assertFalse( nodeToEdit.getNodeTimerManager().hasActiveTimers(), "Node has no active Timers");
 
         t.sendNextNVToFetch();
 
-        Assert.assertEquals("2 outbound frames sent",2,tcis.outbound.size());
-        Assert.assertEquals("Request for Node 7423 NV3", "[5f8] 71 1C FF 03",
-        tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( 2, tcis.outbound.size(), "2 outbound frames sent");
+        assertEquals( "[5f8] 71 1C FF 03",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Request for Node 7423 NV3");
 
         r.setElement(3, 0x03); // NV1
         r.setElement(4, 250); // Value 250
 
         nodeToEdit.getCanListener().reply(r);
 
-        Assert.assertArrayEquals(new int[]{3,77,44,250}, t.getNvArray());
+        assertArrayEquals(new int[]{3,77,44,250}, t.getNvArray());
 
         t.sendNextNVToFetch();
-        Assert.assertEquals("Still just 2 outbound frames sent",2,tcis.outbound.size());
+        assertEquals( 2, tcis.outbound.size(), "Still just 2 outbound frames sent");
 
     }
 
     @Test
     public void testSendNvSToNode() {
 
-        Assert.assertFalse("Node has no active Timers",nodeToEdit.getNodeTimerManager().hasActiveTimers());
-        Assert.assertFalse("Node has no active outstanding teach NVs",t.teachOutstandingNvs());
+        assertFalse( nodeToEdit.getNodeTimerManager().hasActiveTimers(), "Node has no active Timers");
+        assertFalse( t.teachOutstandingNvs(), "Node has no active outstanding teach NVs");
 
         t.setNV(2, 79);
-        Assert.assertArrayEquals(new int[]{3,-1,79,-1}, t.getNvArray());
+        assertArrayEquals(new int[]{3,-1,79,-1}, t.getNvArray());
 
         t.sendNvsToNode(new int[]{3,250,79,44});
 
-        Assert.assertTrue("Node has active outstanding teach NVs",t.teachOutstandingNvs());
+        assertTrue( t.teachOutstandingNvs(), "Node has active outstanding teach NVs");
 
 
-        Assert.assertTrue("Node has active Timer",nodeToEdit.getNodeTimerManager().hasActiveTimers());
+        assertTrue( nodeToEdit.getNodeTimerManager().hasActiveTimers(), "Node has active Timer");
 
-        Assert.assertEquals("1 outbound frame sent",1,tcis.outbound.size());
+        assertEquals( 1, tcis.outbound.size(), "1 outbound frame sent");
 
-        Assert.assertEquals("Node 7423 Sets NV1 to 250", "[5f8] 96 1C FF 01 FA",
-        tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( "[5f8] 96 1C FF 01 FA",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Node 7423 Sets NV1 to 250");
 
         // also forward this outgoing message to Node Canlistener
         CanMessage m = new CanMessage(0x12);
@@ -151,11 +159,11 @@ public class CbusNodeNVManagerTest {
 
         nodeToEdit.getCanListener().message(m);
 
-        Assert.assertArrayEquals(new int[]{3,250,79,-1}, t.getNvArray());
+        assertArrayEquals(new int[]{3,250,79,-1}, t.getNvArray());
 
         t.sendNextNvToNode();
 
-        Assert.assertEquals("Still only 1 outbound frame sent",1,tcis.outbound.size());
+        assertEquals( 1, tcis.outbound.size(), "Still only 1 outbound frame sent");
 
         CanReply r = new CanReply(0x12);
         r.setNumDataElements(3);
@@ -165,25 +173,26 @@ public class CbusNodeNVManagerTest {
 
         nodeToEdit.getCanListener().reply(r);
 
-        Assert.assertEquals("2 outbound frames sent",2,tcis.outbound.size());
+        assertEquals( 2, tcis.outbound.size(), "2 outbound frames sent");
 
-        Assert.assertEquals("Node 7423 Sets NV3 to 44", "[5f8] 96 1C FF 03 2C",
-        tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        assertEquals( "[5f8] 96 1C FF 03 2C",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString(),
+            "Node 7423 Sets NV3 to 44");
 
         m.setElement(3, 0x03);
         m.setElement(4, 0x2C);
 
         nodeToEdit.getCanListener().message(m);
 
-        Assert.assertArrayEquals(new int[]{3,250,79,44}, t.getNvArray());
+        assertArrayEquals(new int[]{3,250,79,44}, t.getNvArray());
 
-        Assert.assertTrue("Node has active outstanding teach NVs",t.teachOutstandingNvs());
+        assertTrue( t.teachOutstandingNvs(), "Node has active outstanding teach NVs");
 
         nodeToEdit.getCanListener().reply(r);
 
-        Assert.assertFalse("Node has no active Timers after write confirm",nodeToEdit.getNodeTimerManager().hasActiveTimers());
+        assertFalse( nodeToEdit.getNodeTimerManager().hasActiveTimers(), "Node has no active Timers after write confirm");
 
-        Assert.assertFalse("Node has active outstanding teach NVs",t.teachOutstandingNvs());
+        assertFalse( t.teachOutstandingNvs(), "Node has active outstanding teach NVs");
 
 
     }
