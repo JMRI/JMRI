@@ -28,6 +28,7 @@
         <jogamp.version>2.5.0</jogamp.version>
         <openlcb.version>0.8.6</openlcb.version>
         <netbeans.version>RELEASE150</netbeans.version>
+        <spotbugs.version>4.9.8.2</spotbugs.version>
         <jacoco.version>0.8.14</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
@@ -119,7 +120,7 @@
                     <plugin>
                         <groupId>com.github.spotbugs</groupId>
                         <artifactId>spotbugs-maven-plugin</artifactId>
-                        <version>4.9.8.2</version>
+                        <version>${spotbugs.version}</version>
                         <configuration>
                             <plugins>
                                 <plugin>
@@ -480,7 +481,7 @@
             <plugin>
                 <groupId>com.github.spotbugs</groupId>
                 <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.9.2</version>
+                <version>${spotbugs.version}</version>
                 <!-- configured to fail on medium priority bugs (needs to be done two places)-->
                 <configuration>
                     <plugins>
@@ -728,7 +729,7 @@
                         <!-- our web production Javadocs are made with Ant, not Maven, this is not a problem -->
                         <!-- <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson-databind.version}/</link> -->
                         <!-- <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link> -->
-                        <!-- <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/4.9.8.2/</link> -->
+                        <!-- <link>https://javadoc.io/static/com.github.spotbugs/spotbugs-annotations/${spotbugs.version}/</link> -->
                         <!-- <link>https://javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.1/</link> -->
                         <!-- <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link> -->
                         <!-- <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link> -->
