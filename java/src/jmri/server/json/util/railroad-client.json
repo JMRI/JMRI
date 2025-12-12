@@ -1,13 +1,13 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "jmri-json-railroad-client-message",
-  "type": "object",
-  "description": "Schema data object in message from client to JMRI for type \"railroad\"",
-  "properties": {
-    "name": {
-      "type": "string",
-      "description": "Railroad name the client wants to update on the server"
-    }
-  },
-  "additionalProperties": false
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "jmri-json-railroad-client-message",
+    "type": "object",
+    "description": "Schema data object in message from client to JMRI for type \"railroad\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "Railroad name the client wants to update on the server"
+        }
+    },
+    "additionalProperties": false
 }

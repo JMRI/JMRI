@@ -330,7 +330,6 @@ public class Path implements Comparable<Path> {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", justification = "equals operator should actually check for equality")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
