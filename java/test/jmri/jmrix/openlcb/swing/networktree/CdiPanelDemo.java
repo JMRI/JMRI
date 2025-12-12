@@ -70,7 +70,7 @@ public class CdiPanelDemo {
             f.pack();
             f.setVisible(true);
         });
-        new QueueTool().waitEmpty(100); // pause for CDI to render
+        new QueueTool().waitEmpty(); // pause for CDI to render
         JFrameOperator jfo = new JFrameOperator(f.getTitle());
         Assertions.assertNotNull(jfo);
 
@@ -85,7 +85,7 @@ public class CdiPanelDemo {
         ThreadingUtil.runOnGUI( () -> {
             f.setVisible(true);
         });
-        new QueueTool().waitEmpty(100); // pause for CDI to render
+        new QueueTool().waitEmpty(); // pause for CDI to render
         JFrameOperator jfo = new JFrameOperator(f.getTitle());
         Assertions.assertNotNull(jfo);
         JUnitUtil.dispose(f);
@@ -99,7 +99,7 @@ public class CdiPanelDemo {
         ThreadingUtil.runOnGUI( () -> {
             f.setVisible(true);
         });
-        new QueueTool().waitEmpty(100); // pause for CDI to render
+        new QueueTool().waitEmpty(); // pause for CDI to render
         JFrameOperator jfo = new JFrameOperator(f.getTitle());
         Assertions.assertNotNull(jfo);
         JUnitUtil.dispose(f);
@@ -111,7 +111,7 @@ public class CdiPanelDemo {
         JFrame f = makeFrameFromFile("java/test/jmri/jmrix/openlcb/NMRAnetDatabaseTrainNode.xml");
         f.setTitle("Locomotive CDI Demonstration");
         ThreadingUtil.runOnGUI( () -> f.setVisible(true));
-        new QueueTool().waitEmpty(100); // pause for CDI to render
+        new QueueTool().waitEmpty(); // pause for CDI to render
         JFrameOperator jfo = new JFrameOperator(f.getTitle());
         Assertions.assertNotNull(jfo);
         JUnitUtil.dispose(f);
@@ -168,12 +168,12 @@ public class CdiPanelDemo {
 
     public static void main(String args[]) throws InterruptedException {
         var tests = new CdiPanelDemo();
-        
+
         tests.setUp();
         tests.testDisplaySample1();
-        
+
         Thread.sleep(360000);
-        
+
         tests.tearDown();
     }
 }

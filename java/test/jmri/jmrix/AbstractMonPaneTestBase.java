@@ -131,14 +131,14 @@ public abstract class AbstractMonPaneTestBase extends jmri.util.swing.JmriPanelT
         s.enterTextInEntryField("foo");
         s.clickEnterButton();
         s.clickFreezeButton();
-        
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertTrue(s.getFreezeButtonState());
 
         s.enterTextInEntryField("bar");
         s.clickEnterButton();
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         assertEquals("foo\n", getFrameTextONGUIThread());
 
