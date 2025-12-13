@@ -48,13 +48,13 @@ public class BlockContentsIconTest {
             jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1").setValue(re);
         });
 
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         ThreadingUtil.runOnGUI( () -> {
             jf.pack();
             jf.setVisible(true);
         });
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         assertFalse(JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
 
         JUnitUtil.dispose(jf);
@@ -72,13 +72,13 @@ public class BlockContentsIconTest {
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
         jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1").setValue(tag);
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
 
         ThreadingUtil.runOnGUI( () -> {
             jf.pack();
             jf.setVisible(true);
         });
-        new QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty();
         assertFalse( JUnitAppender.unexpectedMessageSeen(Level.WARN), "No Warn Level or higher Messages");
         assertNotNull( JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()),
             "Label with correct text value");

@@ -150,7 +150,7 @@ which checks the dates of the control files to make sure they've been updated wh
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
 
-##### jSerialComm-2.10.4.jar
+##### jSerialComm-2.11.4.jar
 - Supported serial lib since JMRI 5.7.1
 - from https://fazecast.github.io/jSerialComm/
 
@@ -393,7 +393,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - used to rebuild Help metadata
 
 ##### objenesis-3.3.jar
-- version 3.3
+- version 3.4
 - Mockito dependency
 
 ##### opentest4j-1.3.0.jar
@@ -455,7 +455,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 1.4.1
 
 ##### byte-buddy-1.14.15
-- version 1.14.15
+- version 1.18.2
 - Mockito dependency
 
 ##### checker-framework directory and contents
@@ -514,7 +514,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Downloaded from Maven Central 2025-09-25
 
 ##### mockito-core mockito-junit-jupiter
-- version 5.12.0
+- version 5.20.0
 
 ##### OpenIDE Utilities
 - org-openide-util-lookup-RELEASE150.jar
@@ -563,8 +563,8 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - Used for testing only, not at runtime
 
 
-##### org.jacoco.ant-0.8.11-nodeps.jar
-- version 0.8.11
+##### org.jacoco.ant-0.8.14-nodeps.jar
+- version 0.8.14
 
 ## Older, no longer present:
 

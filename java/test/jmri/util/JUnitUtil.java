@@ -1397,7 +1397,8 @@ public class JUnitUtil {
      */
     private static void resetWindows(boolean warn, boolean error, String testLocation ) {
         // close any open remaining windows from earlier tests
-        for (Frame frame : Frame.getFrames()) {
+        Frame[] frames = Frame.getFrames();
+        for (Frame frame : frames) {
             if (frame.isDisplayable()) {
                 if (frame.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible frame created by creating a dialog with a null parent {} {}.";
@@ -1417,7 +1418,8 @@ public class JUnitUtil {
                 JUnitUtil.dispose(frame);
             }
         }
-        for (Window window : Window.getWindows()) {
+        Window[] windows = Window.getWindows();
+        for (Window window : windows) {
             if (window.isDisplayable()) {
                 if (window.getClass().getName().equals("javax.swing.SwingUtilities$SharedOwnerFrame")) {
                     String message = "Cleaning up nameless invisible window created by creating a dialog with a null parent {} {}.";

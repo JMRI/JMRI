@@ -103,7 +103,7 @@ public class TreePaneDemo {
         if (!GraphicsEnvironment.isHeadless()) {
             frame.setVisible(false);
             frame.dispose();
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+            new org.netbeans.jemmy.QueueTool().waitEmpty();  //pause for frame to close
         }
         jmri.util.JUnitUtil.tearDown();
         store = null;

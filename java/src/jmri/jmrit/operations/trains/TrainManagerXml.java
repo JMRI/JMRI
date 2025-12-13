@@ -95,7 +95,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             log.debug("{} file could not be read", name);
             return;
         }
-        
+
         if (!root.getName().equals("operations-config")) {
             log.warn("OperationsPro train file corrupted");
             return;
@@ -112,18 +112,18 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
 
         log.debug("Trains have been loaded!");
         //        InstanceManager.getDefault(TrainLogger.class).enableTrainLogging(Setup.isTrainLoggerEnabled());
-        
+
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByIdList()) {
             if (train.getStatusCode() == Train.CODE_BUILDING) {
                 log.warn("Reseting train ({}), was building when saved", train.getName());
                 train.reset();
             }
         }
-        
+
         setDirty(false); // clear dirty flag
-        
+
         // loading complete run startup scripts
-        InstanceManager.getDefault(TrainManager.class).runStartUpScripts();       
+        InstanceManager.getDefault(TrainManager.class).runStartUpScripts();
         InstanceManager.getDefault(AutomationManager.class).runStartupAutomation();
     }
 
@@ -229,7 +229,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     public String getBackupSwitchListDirectoryName(String name) {
         return getBackupSwitchListDirectoryName() + File.separator + name + File.separator;
     }
-    
+
     public String getBackupBuildStatusFileName(String name, String lastModified) {
         return getBackupBuildStatusDirectoryName()
                 + name
@@ -240,7 +240,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
                 + lastModified
                 + ".txt";// NOI18N
     }
-    
+
     public String getBackupBuildStatusDirectoryName() {
         return OperationsXml.getFileLocation()
                 + OperationsXml.getOperationsDirectoryName()
@@ -248,7 +248,7 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
                 + BUILD_STATUS_BACKUPS
                 + File.separator;
     }
-    
+
     public String getBackupBuildStatusDirectoryName(String name) {
         return getBackupBuildStatusDirectoryName() + File.separator + name + File.separator;
     }
@@ -379,9 +379,9 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     private void savePreviousManifestFile(String name) {
         if (Setup.isSaveTrainManifestsEnabled()) {
             // create the manifest backup directory
-            createFile(getBackupManifestDirectoryName() + " ", false); // no backup
+            createFile(getBackupManifestDirectoryName(), false); // no backup
             // now create unique backup directory for each train manifest
-            createFile(getBackupManifestDirectoryName(name) + " ", false); // no backup
+            createFile(getBackupManifestDirectoryName(name), false); // no backup
             // get old manifest file
             File file = findFile(getDefaultManifestFileName(name));
             if (file == null) {
@@ -406,9 +406,9 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
     private void savePreviousSwitchListFile(String name) {
         if (Setup.isSaveTrainManifestsEnabled()) {
             // create the switch list backup directory
-            createFile(getBackupSwitchListDirectoryName() + " ", false); // no backup
+            createFile(getBackupSwitchListDirectoryName(), false); // no backup
             // now create unique backup directory for location
-            createFile(getBackupSwitchListDirectoryName(name) + " ", false); // no backup
+            createFile(getBackupSwitchListDirectoryName(name), false); // no backup
             // get old switch list file
             File file = findFile(getDefaultSwitchListName(name));
             if (file == null) {
@@ -426,19 +426,19 @@ public class TrainManagerXml extends OperationsXml implements InstanceManagerAut
             }
         }
     }
-    
+
     /**
      * Save previous train build status file in a separate directory called
      * BuildStatusBackups. Each build status is saved in a unique directory using
-     * the train's name. 
+     * the train's name.
      * @param name train's name
      */
     public void savePreviousBuildStatusFile(String name) {
         if (Setup.isSaveTrainManifestsEnabled()) {
             // create the build status backup directory
-            createFile(getBackupBuildStatusDirectoryName() + " ", false); // no backup
+            createFile(getBackupBuildStatusDirectoryName(), false); // no backup
             // now create unique backup directory for each train
-            createFile(getBackupBuildStatusDirectoryName(name) + " ", false); // no backup
+            createFile(getBackupBuildStatusDirectoryName(name), false); // no backup
             // get old build status file for this train
             File file = findFile(defaultBuildReportFileName(name));
             if (file == null) {
