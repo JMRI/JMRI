@@ -332,7 +332,7 @@ public class FileUtilSupportTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() throws IOException {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         this.instance = FileUtilSupport.getDefault();

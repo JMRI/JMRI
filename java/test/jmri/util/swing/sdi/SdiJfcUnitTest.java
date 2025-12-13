@@ -27,7 +27,7 @@ public class SdiJfcUnitTest {
 
     @Test
     @DisabledIfHeadless
-    public void testShowAndClose() throws Exception {
+    public void testShowAndClose() {
 
         JmriNamedPaneAction a = new JmriNamedPaneAction("Action",
                 new JmriJFrameInterface(),

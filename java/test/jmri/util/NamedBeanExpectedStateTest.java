@@ -30,10 +30,9 @@ public class NamedBeanExpectedStateTest {
 
     /**
      * Test of setExpectedState method, of class NamedBeanExpectedState.
-     * @throws java.lang.Exception on test error.
      */
     @Test
-    public void testSetExpectedState() throws Exception {
+    public void testSetExpectedState() {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         NamedBeanExpectedState<Sensor> instance = new NamedBeanExpectedState<>(sm.provideSensor("IS12"), 3);
         assertEquals(3, instance.getExpectedState().intValue());

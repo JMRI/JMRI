@@ -82,7 +82,7 @@ public class LoggingUtilTest {
         assertTrue(JUnitAppender.verifyNoBacklog());
     }
 
-     @Test
+    @Test
     public void testInfoOnceArguments() {
         assertTrue(LoggingUtil.infoOnce(log, "Test {} {}", "A", "B"));
         JUnitAppender.assertMessage("Test A B", Level.INFO );
@@ -151,12 +151,12 @@ public class LoggingUtilTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
     @AfterEach
-    public void tearDown() throws Exception {
+    public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 
