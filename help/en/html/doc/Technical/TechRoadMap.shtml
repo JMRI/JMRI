@@ -152,7 +152,7 @@
           <td style="text-align:center">(Intended) 5.14</td>
           <td>Production version, culmination of Fall 2025 series</td>
           <td style="text-align:center">December 2025</td>
-          <td style="text-align:center"><b>11 required<br/>21 recommended</b></td>
+          <td style="text-align:center"><b>11 required<br/>17 recommended</b></td>
           <td style="text-align:center"><b>11 or later</b></td>
         </tr>
 
@@ -164,10 +164,18 @@
           <td style="text-align:center"><b>11 or later</b></td>
         </tr>
 
+        <tr>
+          <td style="text-align:center">(Intended) 5.18</td>
+          <td>Production version, culmination of Fall 2026 series</td>
+          <td style="text-align:center">December 2026</td>
+          <td style="text-align:center"><b>11 required<br/>21 recommended</b></td>
+          <td style="text-align:center"><b>11 or later</b></td>
+        </tr>
+
 
       </table>
 
-      <h3>Java and JMRI in the Near Future</h3>
+      <h3>Java and JMRI</h3>
       <p>The 4.1.* series of test releases in Fall 2015 started the requirement for Java 8. This
       continued through the following release series. Java 8 continued to be the requirement
       through the Fall of 2021.
@@ -198,12 +206,13 @@
       and because it's easier to install Java 17 on some OSs.</p>
       
       <p>Java 21 in 2023 was the LTS release after Java 17.  We expect 
-      that we will have enough confidence in it to start recommending 
-      it for use with JMRI 5.13.1 in July 2025. That JMRI release
+      We gave confidence in it to that we started recommending 
+      it for use with JMRI 5.15.1 in December 2025. That JMRI release
       will continue to be compatible with Java 11.
       
-      <p>Following Java 21, the next Java LTS release is expected to be
-      Java 25 in September 2025.
+      <p>Following Java 21, the next Java LTS release was
+      Java 25 in September 2025. Work on validating that for use 
+      with JMRI is proceeding.
       
       <p>For more information on compatibility, see the
       <a href="JVMCapabilities.shtml#compatibilty">compatibility discussion</a>.
