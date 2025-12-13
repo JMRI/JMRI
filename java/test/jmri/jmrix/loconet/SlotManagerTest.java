@@ -4,9 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import jmri.NmraPacket;
-import jmri.ProgListener;
-import jmri.ProgrammerException;
-import jmri.ProgrammingMode;
+import jmri.*;
 import jmri.jmrix.loconet.SlotMapEntry.SlotType;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
