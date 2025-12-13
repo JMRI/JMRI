@@ -60,8 +60,14 @@ public abstract class OperationsXml extends XmlFile {
                         log.error("Directory wasn't created");
                     }
                 }
-                if (file.createNewFile()) {
-                    log.debug("File created {}", fullPathName);
+                if (fullPathName.replaceAll("\\\\", "/").endsWith("/")) {
+                    if (file.mkdirs()) {
+                        log.debug("Directory created {}", fullPathName);
+                    }
+                } else {
+                    if (file.createNewFile()) {
+                        log.debug("File created {}", fullPathName);
+                    }
                 }
             } else {
                 file = new File(fullPathName);

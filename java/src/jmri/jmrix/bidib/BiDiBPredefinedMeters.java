@@ -36,12 +36,12 @@ public class BiDiBPredefinedMeters {
     private boolean enabled = false;  // disable by default; prevent polling when not being used.
 
     public BiDiBPredefinedMeters(BiDiBSystemConnectionMemo memo) {
-        
+
         _memo = memo;
         tc = _memo.getBiDiBTrafficController();
-        
+
         updateTask = new UpdateTask(-1);
-        
+
 //        // scan nodes list for booster nodes
         Map<Long, Node> nodes = tc.getNodeList();
         for(Map.Entry<Long, Node> entry : nodes.entrySet()) {
@@ -76,7 +76,7 @@ public class BiDiBPredefinedMeters {
         InstanceManager.getDefault(MeterManager.class).deregister(meter);
         updateTask.dispose(meter);
     }
-    
+
     public void dispose() {
         for(Map.Entry<Integer, Meter> entry : currentMeters.entrySet()) {
             disposeMeter(entry.getValue());
@@ -94,24 +94,24 @@ public class BiDiBPredefinedMeters {
 
 
     private class UpdateTask extends MeterUpdateTask {
-    
+
         MessageListener messageListener = null;
-        
+
         public UpdateTask(int interval) {
             super(interval);
             createBoosterDiagListener();
         }
-    
-        @Override 
+
+        @Override
         public void enable(){
             enabled = true;
             // TODO: set feature to enable booster diag messages - and switch it off by default somewhere
-            tc.addMessageListener(messageListener);        
+            tc.addMessageListener(messageListener);
             log.info("Enabled meter.");
             super.enable();
         }
 
-        @Override 
+        @Override
         public void disable(){
             if (!enabled) return;
             super.disable();
@@ -120,7 +120,7 @@ public class BiDiBPredefinedMeters {
             tc.removeMessageListener(messageListener);
             log.info("Disabled meter.");
         }
-        
+
         private void setCurrent(byte[] address, double value) throws JmriException {
             Meter meter = currentMeters.get(NodeUtils.convertAddress(address));
             log.trace("setCurrent - addr: {}, Meter: {}, value: {}", address, meter, value);
@@ -167,7 +167,7 @@ public class BiDiBPredefinedMeters {
 
 
     }
-    
+
     private static final Logger log = LoggerFactory.getLogger(BiDiBPredefinedMeters.class);
 
 }

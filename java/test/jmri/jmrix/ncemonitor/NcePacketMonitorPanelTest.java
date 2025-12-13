@@ -2,7 +2,6 @@ package jmri.jmrix.ncemonitor;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -19,7 +18,7 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
     @Override
-    public void testInitComponents() throws Exception {
+    public void testInitComponents() {
         // this test currently only verifies there is no exception thrown.
         ((NcePacketMonitorPanel) panel).initComponents(memo);
         // also check that dispose doesn't cause an exception
@@ -27,7 +26,7 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Test
-    public void testInitContext() throws Exception {
+    public void testInitContext() {
         // this test currently only verifies there is no exception thrown.
         ((NcePacketMonitorPanel) panel).initContext(memo);
         // also check that dispose doesn't cause an exception
@@ -35,16 +34,16 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @Test
-    public void testGetTitleAfterInit() throws Exception {
+    public void testGetTitleAfterInit() {
         ((NcePacketMonitorPanel) panel).initComponents(memo);
-        Assert.assertEquals("Title","NCE: DCC Packet Analyzer",panel.getTitle());
+        Assertions.assertEquals("NCE: DCC Packet Analyzer",panel.getTitle(), "Title");
     }
 
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
 
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
@@ -55,7 +54,10 @@ public class NcePacketMonitorPanelTest extends jmri.util.swing.JmriPanelTest {
 
     @AfterEach
     @Override
-    public void tearDown() {        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    public void tearDown() {
+        memo.getNceTrafficController().terminateThreads();
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
 }

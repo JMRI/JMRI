@@ -8,13 +8,13 @@ import jmri.util.JUnitUtil;
 
 /**
  * Tests for the BiDiBOpsModeProgrammer class
- * 
+ *
  * @author  Eckart Meyer  Copyright (C) 2020
  */
 public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
-    
+
     private BiDiBSystemConnectionMemo memo;
-    
+
     @Override
     @Test
     public void testGetCanRead() {
@@ -56,7 +56,7 @@ public class BiDiBOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgra
         memo.setBiDiBTrafficController(new TestBiDiBTrafficController(new BiDiBInterfaceScaffold()));
         programmer = new BiDiBOpsModeProgrammer(5, memo.getBiDiBTrafficController());
     }
-    
+
     @Override
     @AfterEach
     public void tearDown() {
