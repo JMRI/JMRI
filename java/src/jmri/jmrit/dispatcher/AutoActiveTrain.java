@@ -1525,6 +1525,7 @@ public class AutoActiveTrain implements ThrottleListener {
         cancelStoppingBySensor();
         _stoppingByBlockOccupancy = false;
         _stoppingBlock = null;
+        _stoppingUsingSpeedProfile = false;
         _autoEngineer.slowToStop(false);
     }
 
