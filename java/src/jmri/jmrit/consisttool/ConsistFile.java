@@ -70,7 +70,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
         hasProtocol = consist.getAttribute(PROTOCOL);
         DccLocoAddress consistAddress;
         
-        if (isCLong != null) {
+        if (hasProtocol != null) {
             log.debug("adding consist {} with protocol set to {}.", cnumber, hasProtocol.getValue());
             try {
                 int number = Integer.parseInt(cnumber.getValue());
