@@ -572,6 +572,7 @@ public class SlotManagerTest {
         // not clear what to wait for here; content doesn't change
         JUnitUtil.waitFor(releaseTestDelay);
         log.debug("checking..");
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( -1, value, "reply value");
 
@@ -595,6 +596,7 @@ public class SlotManagerTest {
         // provide LONG_ACK: Function not implemented, no reply will follow.
         slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x7F}));
         JUnitUtil.waitFor(releaseTestDelay);
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( -1, value, "reply value");
 
@@ -867,6 +869,7 @@ public class SlotManagerTest {
         assertEquals( -999, status, "no immediate reply");
         JUnitUtil.waitFor(releaseTestDelay);
         log.debug("checking..");
+        JUnitUtil.waitFor(() -> status == 0, "reply status");
         assertEquals( 0, status, "reply status");
         assertEquals( 55, value, "reply value");
 
