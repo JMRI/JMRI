@@ -563,6 +563,8 @@ public class AutoActiveTrain implements ThrottleListener {
     private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
     // Distance stop is armed (waiting to start at the section's first occupied block)
     private boolean _distanceStopPending = false;
+    // If true, the pending distance stop is an approach-to-min (hold until sensor), not a stop-to-zero
+    private boolean _distanceStopPendingToMin = false;
     private float _distanceStopPendingMm = 0.0f;
     private int _distanceStopPendingTask = NO_TASK;
     private volatile Block _stoppingBlock = null;
@@ -666,14 +668,15 @@ public class AutoActiveTrain implements ThrottleListener {
                  if (enter == b) {
                      float mm = _distanceStopPendingMm;
                      int taskPending = _distanceStopPendingTask;
+                     boolean toMin = _distanceStopPendingToMin;
                      _distanceStopPending = false;
-    
-                     _stoppingUsingSpeedProfile = true;     // commit to distance-based braking
-                     cancelStopInCurrentSection();          // cancel any other stop mode/ramping
-    
-                     Runnable controller = new DistanceStopController(mm, taskPending);
+                     _distanceStopPendingToMin = false;
+                     _stoppingUsingSpeedProfile = true;         // commit to distance-based braking
+                     cancelStopInCurrentSection();              // cancel any other stop mode/ramping
+                     Runnable controller = new DistanceStopController(mm, taskPending, toMin);
                      Thread t = jmri.util.ThreadingUtil.newThread(controller, "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
                      t.start();
+
                  }
              }
             if (b == _nextBlock || _nextBlock == null) {
@@ -1601,57 +1604,134 @@ public class AutoActiveTrain implements ThrottleListener {
          * ======================================================================= */
         try {
             boolean distanceEnabled = (_stopByDistanceMm > 0.0f);
-            // Direction-aware profile availability (HEAD stop needs speeds for current direction)
+            // Direction-aware profile availability (we must have speeds for the current direction)
             boolean profileAvailable = false;
             if (re != null && re.getSpeedProfile() != null) {
                 boolean forward = _autoEngineer.getIsForward();
-                profileAvailable = forward ? re.getSpeedProfile().hasForwardSpeeds() : re.getSpeedProfile().hasReverseSpeeds();
+                profileAvailable = forward ? re.getSpeedProfile().hasForwardSpeeds()
+                                           : re.getSpeedProfile().hasReverseSpeeds();
             }
         
-            if (distanceEnabled && profileAvailable && !_stoppingUsingSpeedProfile && !_distanceStopPending) {
-                // Compute requested travel distance from the section ENTRY to the stop point
-                final float distanceMm = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
-            
-                // Decide whether to start NOW (if we've already passed the ENTRY event) or ARM and wait for it
-                Block enter = (_currentAllocatedSection != null) ? _currentAllocatedSection.getEnterBlock(_previousAllocatedSection) : null;
-            
-                // Case A: No distinct enter block, or the enter block is already OCCUPIED -> start NOW from CURRENT position
+            // Resolve the section's stopping sensor for the current travel direction (do not mutate _stopSensor yet)
+            Sensor stopSensorCandidate = null;
+            if (_currentAllocatedSection != null) {
+                if (_currentAllocatedSection.getSection().getState() == Section.FORWARD) {
+                    stopSensorCandidate = _currentAllocatedSection.getSection().getForwardStoppingSensor();
+                } else {
+                    stopSensorCandidate = _currentAllocatedSection.getSection().getReverseStoppingSensor();
+                }
+            }
+        
+            // Combined mode = user opted into Stop-by-Distance, profile is available, and a stopping sensor is present & in use
+            boolean combinedMode = distanceEnabled && profileAvailable && (_useStopSensor) && (stopSensorCandidate != null);
+        
+            if ((distanceEnabled && profileAvailable) && !_stoppingUsingSpeedProfile && !_distanceStopPending) {
+        
+                // Compute requested travel distance from section entry to stop reference
+                final float distanceMmBase = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
+        
+                if (combinedMode) {
+                    // --- New combined behaviour ---
+                    // We will decelerate to MinimumReliableOperatingSpeed within distanceMmBase, then hold until the stop sensor fires.
+        
+                    // Decide whether to start NOW (already past the section entry) or ARM to start at the entry block
+                    Block enter = (_currentAllocatedSection != null)
+                            ? _currentAllocatedSection.getEnterBlock(_previousAllocatedSection)
+                            : null;
+        
+                    if (enter == null || enter.getState() == Block.OCCUPIED) {
+                        // Start immediately from current position (adjust remaining distance if we’re already partway in)
+                        float remainingMm = distanceMmBase;
+                        if (_currentAllocatedSection != null && _currentBlock != null) {
+                            float sectionLen = _currentAllocatedSection.getActualLength();
+                            float lenRemaining = _currentAllocatedSection.getLengthRemaining(_currentBlock);
+                            float progressed = Math.max(0.0f, sectionLen - lenRemaining);
+                            remainingMm = distanceMmBase - progressed;
+                        }
+                        if (remainingMm <= 0.0f) {
+                            // Already at/inside the target – assert crawl and fall through to sensor wait
+                            float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, _autoEngineer.getIsForward());
+                            float thrMin = throttleForSpeedMms(vMin, _autoEngineer.getIsForward());
+                            _autoEngineer.setSpeedImmediate(clampThrottle(thrMin));
+                        } else {
+                            // Plan a decel to min (NOT to zero), and do not finish with stop here
+                            _stoppingUsingSpeedProfile = true;        // suppress setSpeedBySignal until done
+                            cancelStopInCurrentSection();              // cancel any other ramping/stop modes
+                            Runnable controller = new DistanceStopController(remainingMm, task, /*toMinOnly*/ true);
+                            Thread t = jmri.util.ThreadingUtil.newThread(controller,
+                                    "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
+                            t.start();
+                        }
+        
+                        // Now arm the stop sensor, but do NOT pre-lower to a generic stopping speed
+                        _stopSensor = stopSensorCandidate;
+                        if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
+                            setStopNow();  // sensor is already made – stop immediately
+                        } else {
+                            _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
+                                handleStopSensorChange(e);
+                            });
+                            _stoppingBySensor = true;
+                        }
+                        return; // combined branch handled
+                    }
+        
+                    // Not yet at the section entry: arm a pending approach-to-min plan and the stop sensor listener now
+                    _distanceStopPending = true;
+                    _distanceStopPendingToMin = true;
+                    _distanceStopPendingMm = distanceMmBase;
+                    _distanceStopPendingTask = task;
+        
+                    _stopSensor = stopSensorCandidate;
+                    if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
+                        setStopNow();
+                    } else {
+                        _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
+                            handleStopSensorChange(e);
+                        });
+                        _stoppingBySensor = true;
+                    }
+                    return; // wait for entry OCCUPIED to start the approach-to-min plan
+                }
+        
+                // --- Legacy pure distance stop (ramp to ZERO at the distance) ---
+                // Case A/B logic (start now or arm pending), just like before.
+                Block enter = (_currentAllocatedSection != null)
+                        ? _currentAllocatedSection.getEnterBlock(_previousAllocatedSection)
+                        : null;
+        
                 if (enter == null || enter.getState() == Block.OCCUPIED) {
-                    float remainingMm = distanceMm;
-            
-                    // Estimate how far we've already progressed from the section entry:
-                    // progressed ≈ sectionActualLength - lengthRemaining(currentBlock)
+                    float remainingMm = distanceMmBase;
                     if (_currentAllocatedSection != null && _currentBlock != null) {
                         float sectionLen = _currentAllocatedSection.getActualLength();
                         float lenRemaining = _currentAllocatedSection.getLengthRemaining(_currentBlock);
                         float progressed = Math.max(0.0f, sectionLen - lenRemaining);
-                        remainingMm = distanceMm - progressed;
+                        remainingMm = distanceMmBase - progressed;
                     }
-            
-                    // If we are already beyond the target point, stop immediately; else start the distance controller now
                     if (remainingMm <= 0.0f) {
                         setStopNow();
                     } else {
-                        _stoppingUsingSpeedProfile = true;      // commit to distance-based braking
-                        cancelStopInCurrentSection();           // cancel any other stop mode/ramping
-                        Runnable controller = new DistanceStopController(remainingMm, task);
-                        Thread t = jmri.util.ThreadingUtil.newThread(controller, "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
+                        _stoppingUsingSpeedProfile = true;
+                        cancelStopInCurrentSection();
+                        Runnable controller = new DistanceStopController(remainingMm, task /*, toMinOnly = false*/);
+                        Thread t = jmri.util.ThreadingUtil.newThread(controller,
+                                "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
                         t.start();
                     }
                     return;
                 }
-            
-                // Case B: We have not reached the ENTRY yet -> ARM and start exactly on the ENTRY OCCUPIED event
+        
+                // Arm pending pure distance stop
                 _distanceStopPending = true;
-                _distanceStopPendingMm = distanceMm;
+                _distanceStopPendingToMin = false;
+                _distanceStopPendingMm = distanceMmBase;
                 _distanceStopPendingTask = task;
                 return;
             }
-
         } catch (Exception ex) {
             log.warn("{}: custom stop-by-distance failed; reverting to legacy stop", _activeTrain.getTrainName(), ex);
         }
-         // =======================================================================
+        // =======================================================================
          // Do not exit before destination stop logic;
          // only bail out if the train is already at zero AND no profile/distance stop is requested.
          if (getTargetSpeed() == 0.0f && !_stopBySpeedProfile && _stopByDistanceMm <= 0.0f) {
@@ -2250,176 +2330,185 @@ public class AutoActiveTrain implements ThrottleListener {
     }
     
 
+
     private class DistanceStopController implements Runnable {
         private final float TargetDistanceMm;
         private final int Task;
+        private final boolean ToMinOnly; // true = approach-to-min only (hold until sensor); false = stop-to-zero
     
         DistanceStopController(float distanceMm, int task) {
+            this(distanceMm, task, false);
+        }
+        DistanceStopController(float distanceMm, int task, boolean toMinOnly) {
             this.TargetDistanceMm = (distanceMm > 0.0f ? distanceMm : 0.0f);
             this.Task = task;
+            this.ToMinOnly = toMinOnly;
         }
+
     
-        @Override public void run() {
-            try {
-                final boolean forward = _autoEngineer.getIsForward();
-        
-                // Seed physics from the ACTUAL throttle setting (Fix #2 retained)
-                float throttleNow = clampThrottle(getThrottle().getSpeedSetting()); // actual
-                float v0 = speedMmsFromThrottle(throttleNow, forward);
-        
-                final float s = TargetDistanceMm;
-                if (s <= 0.0f) {
+
+    @Override public void run() {
+        try {
+            final boolean forward = _autoEngineer.getIsForward();
+
+            // Seed current physics from ACTUAL throttle setting
+            float throttleNow = clampThrottle(getThrottle().getSpeedSetting());
+            float v0 = speedMmsFromThrottle(throttleNow, forward);
+
+            final float s = TargetDistanceMm;
+            if (s <= 0.0f) {
+                if (ToMinOnly) {
+                    // Assert crawl, then let sensor listener do the final stop
+                    float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, forward);
+                    float thrMin = throttleForSpeedMms(vMin, forward);
+                    _autoEngineer.setSpeedImmediate(clampThrottle(thrMin));
+                    return;
+                } else {
                     _autoEngineer.setSpeedImmediate(0.0f);
-                    Runnable waitForStop = new WaitForTrainToStop(Task);
-                    Thread tWait = jmri.util.ThreadingUtil.newThread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
+                    Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(Task),
+                            "Wait for stop " + getActiveTrain().getActiveTrainName());
                     tWait.start();
                     return;
                 }
-                
-                 // Compensate for roster overrun when cutting throttle to 0 (coast after zero)
-                 float overrunSec = 0.0f;
-                 if (re != null && re.getSpeedProfile() != null) {
-                     overrunSec = _autoEngineer.getIsForward()
-                         ? re.getSpeedProfile().getOverRunTimeForward()
-                         : re.getSpeedProfile().getOverRunTimeReverse();
-                     if (overrunSec < 0.0f) overrunSec = 0.0f;
-                 }
-       
-                // Respect Dispatcher cadence; use it as our step duration base
-                final long baseMs = Math.max(_dispatcher.getMinThrottleInterval(), 50); // 50 ms floor to keep a modest resolution
-                final float dt = baseMs / 1000.0f;
-        
-                // Clamp initial speed to [vMin..vMax]
-                final float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, forward);
-                final float vMax = speedMmsFromThrottle(_maxSpeed, forward);
-                float sAdjusted = s - (vMin * overrunSec);
-                if (sAdjusted < Math.max(0.0f, 0.5f * vMin)) { // do not overcompensate
-                    sAdjusted = Math.max(0.0f, 0.5f * vMin);
-                }
-                v0 = clamp(v0, vMin, vMax);
-        
-                // Physics: constant deceleration to zero over distance s
-                final float a = (v0 > 0.0f) ? -(v0 * v0) / (2.0f * s) : 0.0f;
-
-                 // Build our queue: list of throttle [%] and durations [ms] using exact kinematics and mid-step mapping
-                 java.util.LinkedList<Float> throttleSteps = new java.util.LinkedList<>();
-                 java.util.LinkedList<Integer> durationSteps = new java.util.LinkedList<>();
-    
-                 float travelled = 0.0f;
-                 float v = v0;                          // current speed along the decel curve (mm/s)
-                 final float absA = Math.abs(a);        // a is negative (or zero)
-    
-                 // Use baseMs normally, but allow a short, bounded tail slice for crisp final fit
-                 final int tailMs = Math.max(20, (int)Math.floor(_dispatcher.getMinThrottleInterval() / 2.0));
-                 final float tailDt = tailMs / 1000.0f;
-   
-                while (travelled < sAdjusted) {
-                    float remaining = sAdjusted - travelled;
-    
-                     // If the final fraction is small enough to finish at vMin, do that precisely
-                     if (vMin > 0.0f && remaining <= vMin * tailDt) {
-                        float dtTail = remaining / vMin;
-                        // Bound for write latency: subtract up to half a step interval
-                        float latencySecTail = Math.min(dtTail * 0.5f, Math.max(0.0f, (baseMs / 2000.0f)));
-                        dtTail = Math.max(0.001f, dtTail - latencySecTail);
-                        int lastMs = Math.max(1, Math.round(dtTail * 1000.0f));
-                        
-                        float thrApplied = throttleForSpeedMms(vMin, forward);
-                        throttleSteps.add(clampThrottle(thrApplied));
-                        durationSteps.add(lastMs);
-                        travelled = sAdjusted;
-                        break;
-                     }
-    
-                     // Default step duration
-                     float dtSec = dt;
-    
-                     // If constant decel would cross vMin within this step, split so we land exactly on vMin
-                     if (a != 0.0f && v > vMin) {
-                         float tToMin = (v - vMin) / absA;          // time from current v to vMin
-                         if (tToMin > 0.0f && tToMin < dtSec) {
-                             dtSec = tToMin;                        // take a short step to hit vMin exactly
-                         }
-                     }
-    
-                     // Predict next speed and compute mid-step speed for throttle mapping
-                     float vNext = v + a * dtSec;
-                     float vStepStart = Math.max(v, vMin);
-                     float vStepEnd   = Math.max(vNext, vMin);
-                     float vMid       = 0.5f * (vStepStart + vStepEnd);
-    
-                     // Exact distance increment under constant acceleration (or constant vMin)
-                     float deltaS;
-                     if (a != 0.0f && v > vMin && vNext >= vMin) {
-                         deltaS = v * dtSec + 0.5f * a * dtSec * dtSec;  // kinematics
-                         v = vNext;
-                     } else {
-                         // At/holding vMin
-                         deltaS = vMin * dtSec;
-                         v = vMin;
-                     }
-    
-                     // If this step would overshoot, convert the remaining distance to a short final slice at current vMid
-                     if (deltaS > remaining && vMid > 0.0f) {
-                        float dtFinal = remaining / vMid;
-                        // Bound for write latency: subtract up to half a step interval
-                        float latencySec = Math.min(dtFinal * 0.5f, Math.max(0.0f, (baseMs / 2000.0f)));
-                        dtFinal = Math.max(0.001f, dtFinal - latencySec);
-                        int msFinal = Math.max(1, Math.round(dtFinal * 1000.0f));
-                        
-                        float thrApplied = throttleForSpeedMms(vMid, forward);
-                        throttleSteps.add(clampThrottle(thrApplied));
-                        durationSteps.add(msFinal);
-                        travelled = sAdjusted;
-                        break;
-                     }
-    
-                     // Normal step with mid-step throttle and planned duration
-                    int ms = Math.max(1, Math.round(dtSec * 1000.0f));
-                    float thrApplied = (vMid <= 0.0f) ? 0.0f : throttleForSpeedMms(vMid, forward);
-                    // Pre-divide by speedFactor to get the command that yields thrApplied after applyMaxThrottleAndFactor()
-                    float thrCmd = (_speedFactor > 0.0f) ? (thrApplied / _speedFactor) : thrApplied;
-                    // Clamp command so that after factoring it stays within [minReliableOperatingSpeed, maxSpeed]
-                    float cmdMin = (_speedFactor > 0.0f) ? (_minReliableOperatingSpeed / _speedFactor) : _minReliableOperatingSpeed;
-                    float cmdMax = (_speedFactor > 0.0f) ? (_maxSpeed / _speedFactor) : _maxSpeed;
-                    thrCmd = clampThrottle(clamp(thrCmd, cmdMin, cmdMax));
-                    
-                    throttleSteps.add(thrCmd);
-                    durationSteps.add(ms);
-
-                     travelled += deltaS;
-    
-                     // Safety: if v is numerically zero but we haven't finished, bail to avoid an infinite loop
-                     if (v <= 0.0f && travelled < s) {
-                         break;
-                     }
-                 }
-                 // Append a zero throttle step to assert stop
-                 throttleSteps.add(0.0f);
-                 durationSteps.add((int) baseMs);
-    
-                 // Convert to primitive arrays
-                 int n = throttleSteps.size();
-                 float[] thrArr = new float[n];
-                 int[] durArr = new int[n];
-                 for (int i = 0; i < n; i++) { thrArr[i] = throttleSteps.get(i); durArr[i] = Math.max(1, durationSteps.get(i)); }
-                log.debug("{}: planned steps N={} baseMs={} v0={} vMin={} vMax={} sAdjusted={} (orig s={})",
-                    _activeTrain.getTrainName(), n, baseMs, v0, vMin, vMax, sAdjusted, s);
-    
-                 // Drive the plan using the existing queue/timer
-                 _autoEngineer.runPlannedSpeedSchedule(thrArr, durArr);
-    
-                 // Start the watcher that will terminate the ActiveTrain when the loco is fully stopped
-                 Runnable waitForStop = new WaitForTrainToStop(Task);
-                 Thread tWait = jmri.util.ThreadingUtil.newThread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
-                 tWait.start(); 
-                // Wait-for-stop and cleanup are done by WaitForTrainToStop -> executeStopTasks
-            } catch (Exception ex) {
-                log.warn("{}: DistanceStopController failed; issuing emergency stop", _activeTrain.getTrainName(), ex);
-                _autoEngineer.setSpeedImmediate(0.0f);
             }
-            // Do NOT clear _stoppingUsingSpeedProfile here; executeStopTasks() clears it after the stop is confirmed.
+
+            // Overrun compensation only when stopping to ZERO (not for approach-to-min)
+            float overrunSec = 0.0f;
+            if (!ToMinOnly && re != null && re.getSpeedProfile() != null) {
+                overrunSec = _autoEngineer.getIsForward()
+                        ? re.getSpeedProfile().getOverRunTimeForward()
+                        : re.getSpeedProfile().getOverRunTimeReverse();
+                if (overrunSec < 0.0f) overrunSec = 0.0f;
+            }
+
+            final long baseMs = Math.max(_dispatcher.getMinThrottleInterval(), 50);
+            final float dt = baseMs / 1000.0f;
+
+            final float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, forward);
+            final float vMax = speedMmsFromThrottle(_maxSpeed, forward);
+
+            float sAdjusted = ToMinOnly ? s : (s - (vMin * overrunSec));
+            if (sAdjusted < Math.max(0.0f, 0.5f * vMin)) {
+                sAdjusted = Math.max(0.0f, 0.5f * vMin);
+            }
+
+            v0 = clamp(v0, vMin, vMax);
+
+            // If stopping to ZERO, decel all the way; else decel to vMin and hold
+            final float a = (v0 > 0.0f) ? -(v0 * v0) / (2.0f * sAdjusted) : 0.0f;
+
+            java.util.LinkedList<Float> throttleSteps = new java.util.LinkedList<>();
+            java.util.LinkedList<Integer> durationSteps = new java.util.LinkedList<>();
+
+            float travelled = 0.0f;
+            float v = v0;
+
+            final int tailMs = Math.max(20, (int) Math.floor(_dispatcher.getMinThrottleInterval() / 2.0));
+            final float tailDt = tailMs / 1000.0f;
+
+            while (travelled < sAdjusted) {
+                float remaining = sAdjusted - travelled;
+
+                if (ToMinOnly && vMin > 0.0f && remaining <= vMin * tailDt) {
+                    // Short, precise final slice to land exactly at vMin
+                    float dtTail = remaining / vMin;
+                    float latencySecTail = Math.min(dtTail * 0.5f, Math.max(0.0f, (baseMs / 2000.0f)));
+                    dtTail = Math.max(0.001f, dtTail - latencySecTail);
+                    int lastMs = Math.max(1, Math.round(dtTail * 1000.0f));
+                    float thrApplied = throttleForSpeedMms(vMin, forward);
+                    throttleSteps.add(clampThrottle(thrApplied));
+                    durationSteps.add(lastMs);
+                    travelled = sAdjusted;
+                    break;
+                }
+
+                float dtSec = dt;
+
+                if (!ToMinOnly && a != 0.0f && v > 0.0f) {
+                    // No special split here; normal constant decel to zero case falls through
+                } else if (a != 0.0f && v > vMin) {
+                    // Approach-to-min: split the step to hit vMin precisely
+                    float tToMin = (v - vMin) / Math.abs(a);
+                    if (tToMin > 0.0f && tToMin < dtSec) {
+                        dtSec = tToMin;
+                    }
+                }
+
+                float vNext = v + a * dtSec;
+                float vStepStart = ToMinOnly ? Math.max(v, vMin) : v;
+                float vStepEnd   = ToMinOnly ? Math.max(vNext, vMin) : Math.max(vNext, 0.0f);
+                float vMid = 0.5f * (vStepStart + vStepEnd);
+
+                float deltaS;
+                if (!ToMinOnly) {
+                    deltaS = v * dtSec + 0.5f * a * dtSec * dtSec;
+                    v = Math.max(0.0f, vNext);
+                } else if (a != 0.0f && v > vMin && vNext >= vMin) {
+                    deltaS = v * dtSec + 0.5f * a * dtSec * dtSec;
+                    v = vNext;
+                } else {
+                    deltaS = vMin * dtSec;
+                    v = vMin;
+                }
+
+                if (deltaS > remaining && vMid > 0.0f) {
+                    float dtFinal = remaining / vMid;
+                    float latencySec = Math.min(dtFinal * 0.5f, Math.max(0.0f, (baseMs / 2000.0f)));
+                    dtFinal = Math.max(0.001f, dtFinal - latencySec);
+                    int msFinal = Math.max(1, Math.round(dtFinal * 1000.0f));
+                    float thrApplied = throttleForSpeedMms(vMid, forward);
+                    throttleSteps.add(clampThrottle(thrApplied));
+                    durationSteps.add(msFinal);
+                    travelled = sAdjusted;
+                    break;
+                }
+
+                int ms = Math.max(1, Math.round(dtSec * 1000.0f));
+                float thrApplied = (vMid <= 0.0f) ? 0.0f : throttleForSpeedMms(vMid, forward);
+                // Pre-divide for SpeedFactor so final effective throttle is what we computed
+                float thrCmd = (_speedFactor > 0.0f) ? (thrApplied / _speedFactor) : thrApplied;
+                float cmdMin = (_speedFactor > 0.0f) ? (_minReliableOperatingSpeed / _speedFactor) : _minReliableOperatingSpeed;
+                float cmdMax = (_speedFactor > 0.0f) ? (_maxSpeed / _speedFactor) : _maxSpeed;
+                thrCmd = clampThrottle(clamp(thrCmd, cmdMin, cmdMax));
+                throttleSteps.add(thrCmd);
+                durationSteps.add(ms);
+                travelled += deltaS;
+
+                if (!ToMinOnly && v <= 0.0f && travelled < s) {
+                    break;
+                }
+            }
+
+            // Append a final zero step ONLY for stop-to-zero mode
+            if (!ToMinOnly) {
+                throttleSteps.add(0.0f);
+                durationSteps.add((int) baseMs);
+            }
+
+            // Execute the plan
+            int n = throttleSteps.size();
+            float[] thrArr = new float[n];
+            int[] durArr = new int[n];
+            for (int i = 0; i < n; i++) {
+                thrArr[i] = throttleSteps.get(i);
+                durArr[i] = Math.max(1, durationSteps.get(i));
+            }
+            _autoEngineer.runPlannedSpeedSchedule(thrArr, durArr);
+
+            // If we planned a stop-to-zero, wait-for-stop and then finish tasks;
+            // for approach-to-min we just return (sensor listener will stop us)
+            if (!ToMinOnly) {
+                Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(Task),
+                        "Wait for stop " + getActiveTrain().getActiveTrainName());
+                tWait.start();
+            }
+        } catch (Exception ex) {
+            log.warn("{}: DistanceStopController failed; issuing emergency stop",
+                     _activeTrain.getTrainName(), ex);
+            _autoEngineer.setSpeedImmediate(0.0f);
         }
+        // Do NOT clear _stoppingUsingSpeedProfile here; executeStopTasks() clears it after a full stop.
+    }
 }
 
 
