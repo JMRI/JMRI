@@ -2388,7 +2388,6 @@ public class AutoActiveTrain implements ThrottleListener {
                     durationSteps.add(ms);
 
                      travelled += deltaS;
-                     t += dtSec;
     
                      // Safety: if v is numerically zero but we haven't finished, bail to avoid an infinite loop
                      if (v <= 0.0f && travelled < s) {
