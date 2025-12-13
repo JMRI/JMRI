@@ -36,6 +36,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
     private static final String CONSISTID = "id"; // NOI18N
     private static final String CONSISTNUMBER = "consistNumber"; // NOI18N
     private static final String DCCLOCOADDRESS = "dccLocoAddress"; // NOI18N
+    private static final String PROTOCOL = "protocol"; // NOI18N
     private static final String LONGADDRESS = "longAddress"; // NOI18N
     private static final String LOCODIR = "locoDir"; // NOI18N
     private static final String LOCONAME = "locoName"; // NOI18N
@@ -59,14 +60,27 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
     private void consistFromXml(Element consist) {
         Attribute cnumber;
         Attribute isCLong;
+        Attribute hasProtocol;
         Consist newConsist;
 
         // Read the consist address from the file and create the
         // consisit in memory if it doesn't exist already.
         cnumber = consist.getAttribute(CONSISTNUMBER);
         isCLong = consist.getAttribute(LONGADDRESS);
+        hasProtocol = consist.getAttribute(PROTOCOL);
         DccLocoAddress consistAddress;
+        
         if (isCLong != null) {
+            log.debug("adding consist {} with protocol set to {}.", cnumber, hasProtocol.getValue());
+            try {
+                int number = Integer.parseInt(cnumber.getValue());
+                consistAddress = new DccLocoAddress(number, 
+                        jmri.DccLocoAddress.Protocol.getByShortName(hasProtocol.getValue()));
+            } catch (NumberFormatException e) {
+                log.debug("Consist number not an integer");
+                return;
+            }
+        } else if (isCLong != null) {
             log.debug("adding consist {} with longAddress set to {}.", cnumber, isCLong.getValue());
             try {
                 int number = Integer.parseInt(cnumber.getValue());
@@ -170,7 +184,16 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
         DccLocoAddress address;
         Attribute number = loco.getAttribute(DCCLOCOADDRESS);
         Attribute isLong = loco.getAttribute(LONGADDRESS);
-        if (isLong != null ) {
+        Attribute hasProtocol = loco.getAttribute(PROTOCOL);
+
+        if (hasProtocol != null) {
+            log.debug("adding loco with protocol set to {}.", hasProtocol.getValue());
+            var protocol = jmri.LocoAddress.Protocol.getByShortName(hasProtocol.getValue());
+            address = new DccLocoAddress(
+                    Integer.parseInt(number.getValue()),
+                    protocol);
+            
+        } else if (isLong != null ) {
             // use the values from the file
             address = new DccLocoAddress(
                     Integer.parseInt(number.getValue()),
@@ -196,8 +219,13 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
         e.setAttribute(CONSISTID, consist.getConsistID());
         e.setAttribute(CONSISTNUMBER, "" + consist.getConsistAddress()
                 .getNumber());
+        
+        log.debug("writing long address {} from protocol {}", consist.getConsistAddress()
+                .isLongAddress(), consist.getConsistAddress()
+                .getProtocol());
         e.setAttribute(LONGADDRESS, consist.getConsistAddress()
                 .isLongAddress() ? "yes" : "no");
+        e.setAttribute(PROTOCOL, consist.getConsistAddress().getProtocol().getShortName());
         e.setAttribute("type", consist.getConsistType() == Consist.ADVANCED_CONSIST ? "DAC" : "CSAC");
         ArrayList<DccLocoAddress> addressList = consist.getConsistList();
 
@@ -205,6 +233,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
             DccLocoAddress locoaddress = addressList.get(i);
             Element eng = new Element("loco");
             eng.setAttribute(DCCLOCOADDRESS, "" + locoaddress.getNumber());
+            eng.setAttribute(PROTOCOL, locoaddress.getProtocol().getShortName());
             eng.setAttribute(LONGADDRESS, locoaddress.isLongAddress() ? "yes" : "no");
             eng.setAttribute(LOCODIR, consist.getLocoDirection(locoaddress) ? NORMAL : REVERSE);
             int position = consist.getPosition(locoaddress);
