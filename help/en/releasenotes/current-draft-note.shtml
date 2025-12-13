@@ -575,7 +575,8 @@
         <a id="Scripting" name="Scripting"></a>
         <ul>
             <li>The <strong>TransitActionsReport.py</strong> has been added. It is used to display
-            the transit section actions.</li>
+            the transit section actions.  When the script is run, a dialog displays the list of
+            transits.  If none are selected, a complete report is created.</li>
         </ul>
 
     <h3>Signals</h3>
@@ -663,9 +664,9 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li>JSON Schema support has been upgraded from draft-04 to draft-2020-12, 
-                providing improved validation capabilities and modern schema features 
-                for JSON API responses. This includes updates to 95 JSON schema files 
+            <li>JSON Schema support has been upgraded from draft-04 to draft-2020-12,
+                providing improved validation capabilities and modern schema features
+                for JSON API responses. This includes updates to 95 JSON schema files
                 and the underlying NetworkNT JSON Schema Validator library (from 1.0.28 to 1.3.3).</li>
         </ul>
 
