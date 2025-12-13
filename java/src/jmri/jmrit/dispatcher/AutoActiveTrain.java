@@ -2306,7 +2306,6 @@ public class AutoActiveTrain implements ThrottleListener {
                  java.util.LinkedList<Integer> durationSteps = new java.util.LinkedList<>();
     
                  float travelled = 0.0f;
-                 float t = 0.0f;
                  float v = v0;                          // current speed along the decel curve (mm/s)
                  final float absA = Math.abs(a);        // a is negative (or zero)
     
