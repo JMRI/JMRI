@@ -1602,105 +1602,44 @@ public class AutoActiveTrain implements ThrottleListener {
          * TODO (future): extend to signal stop points inside sections using the same controller,
          * with an explicit per-section stop origin.
          * ======================================================================= */
-        try {
-            boolean distanceEnabled = (_stopByDistanceMm > 0.0f);
-            // Direction-aware profile availability (we must have speeds for the current direction)
-            boolean profileAvailable = false;
-            if (re != null && re.getSpeedProfile() != null) {
-                boolean forward = _autoEngineer.getIsForward();
-                profileAvailable = forward ? re.getSpeedProfile().hasForwardSpeeds()
-                                           : re.getSpeedProfile().hasReverseSpeeds();
+        boolean distanceEnabled = (_stopByDistanceMm > 0.0f);
+        // Direction-aware profile availability (we must have speeds for the current direction)
+        boolean profileAvailable = false;
+        if (re != null && re.getSpeedProfile() != null) {
+            boolean forward = _autoEngineer.getIsForward();
+            profileAvailable = forward ? re.getSpeedProfile().hasForwardSpeeds()
+                                       : re.getSpeedProfile().hasReverseSpeeds();
+        }
+    
+        // Resolve the section's stopping sensor for the current travel direction (do not mutate _stopSensor yet)
+        Sensor stopSensorCandidate = null;
+        if (_currentAllocatedSection != null) {
+            if (_currentAllocatedSection.getSection().getState() == Section.FORWARD) {
+                stopSensorCandidate = _currentAllocatedSection.getSection().getForwardStoppingSensor();
+            } else {
+                stopSensorCandidate = _currentAllocatedSection.getSection().getReverseStoppingSensor();
             }
-        
-            // Resolve the section's stopping sensor for the current travel direction (do not mutate _stopSensor yet)
-            Sensor stopSensorCandidate = null;
-            if (_currentAllocatedSection != null) {
-                if (_currentAllocatedSection.getSection().getState() == Section.FORWARD) {
-                    stopSensorCandidate = _currentAllocatedSection.getSection().getForwardStoppingSensor();
-                } else {
-                    stopSensorCandidate = _currentAllocatedSection.getSection().getReverseStoppingSensor();
-                }
-            }
-        
-            // Combined mode = user opted into Stop-by-Distance, profile is available, and a stopping sensor is present & in use
-            boolean combinedMode = distanceEnabled && profileAvailable && (_useStopSensor) && (stopSensorCandidate != null);
-        
-            if ((distanceEnabled && profileAvailable) && !_stoppingUsingSpeedProfile && !_distanceStopPending) {
-        
-                // Compute requested travel distance from section entry to stop reference
-                final float distanceMmBase = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
-        
-                if (combinedMode) {
-                    // --- New combined behaviour ---
-                    // We will decelerate to MinimumReliableOperatingSpeed within distanceMmBase, then hold until the stop sensor fires.
-        
-                    // Decide whether to start NOW (already past the section entry) or ARM to start at the entry block
-                    Block enter = (_currentAllocatedSection != null)
-                            ? _currentAllocatedSection.getEnterBlock(_previousAllocatedSection)
-                            : null;
-        
-                    if (enter == null || enter.getState() == Block.OCCUPIED) {
-                        // Start immediately from current position (adjust remaining distance if we’re already partway in)
-                        float remainingMm = distanceMmBase;
-                        if (_currentAllocatedSection != null && _currentBlock != null) {
-                            float sectionLen = _currentAllocatedSection.getActualLength();
-                            float lenRemaining = _currentAllocatedSection.getLengthRemaining(_currentBlock);
-                            float progressed = Math.max(0.0f, sectionLen - lenRemaining);
-                            remainingMm = distanceMmBase - progressed;
-                        }
-                        if (remainingMm <= 0.0f) {
-                            // Already at/inside the target – assert crawl and fall through to sensor wait
-                            float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, _autoEngineer.getIsForward());
-                            float thrMin = throttleForSpeedMms(vMin, _autoEngineer.getIsForward());
-                            _autoEngineer.setSpeedImmediate(clampThrottle(thrMin));
-                        } else {
-                            // Plan a decel to min (NOT to zero), and do not finish with stop here
-                            _stoppingUsingSpeedProfile = true;        // suppress setSpeedBySignal until done
-                            cancelStopInCurrentSection();              // cancel any other ramping/stop modes
-                            Runnable controller = new DistanceStopController(remainingMm, task, /*toMinOnly*/ true);
-                            Thread t = jmri.util.ThreadingUtil.newThread(controller,
-                                    "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
-                            t.start();
-                        }
-        
-                        // Now arm the stop sensor, but do NOT pre-lower to a generic stopping speed
-                        _stopSensor = stopSensorCandidate;
-                        if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
-                            setStopNow();  // sensor is already made – stop immediately
-                        } else {
-                            _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
-                                handleStopSensorChange(e);
-                            });
-                            _stoppingBySensor = true;
-                        }
-                        return; // combined branch handled
-                    }
-        
-                    // Not yet at the section entry: arm a pending approach-to-min plan and the stop sensor listener now
-                    _distanceStopPending = true;
-                    _distanceStopPendingToMin = true;
-                    _distanceStopPendingMm = distanceMmBase;
-                    _distanceStopPendingTask = task;
-        
-                    _stopSensor = stopSensorCandidate;
-                    if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
-                        setStopNow();
-                    } else {
-                        _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
-                            handleStopSensorChange(e);
-                        });
-                        _stoppingBySensor = true;
-                    }
-                    return; // wait for entry OCCUPIED to start the approach-to-min plan
-                }
-        
-                // --- Legacy pure distance stop (ramp to ZERO at the distance) ---
-                // Case A/B logic (start now or arm pending), just like before.
+        }
+    
+        // Combined mode = user opted into Stop-by-Distance, profile is available, and a stopping sensor is present & in use
+        boolean combinedMode = distanceEnabled && profileAvailable && (_useStopSensor) && (stopSensorCandidate != null);
+    
+        if ((distanceEnabled && profileAvailable) && !_stoppingUsingSpeedProfile && !_distanceStopPending) {
+    
+            // Compute requested travel distance from section entry to stop reference
+            final float distanceMmBase = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
+    
+            if (combinedMode) {
+                // --- New combined behaviour ---
+                // We will decelerate to MinimumReliableOperatingSpeed within distanceMmBase, then hold until the stop sensor fires.
+    
+                // Decide whether to start NOW (already past the section entry) or ARM to start at the entry block
                 Block enter = (_currentAllocatedSection != null)
                         ? _currentAllocatedSection.getEnterBlock(_previousAllocatedSection)
                         : null;
-        
+    
                 if (enter == null || enter.getState() == Block.OCCUPIED) {
+                    // Start immediately from current position (adjust remaining distance if we’re already partway in)
                     float remainingMm = distanceMmBase;
                     if (_currentAllocatedSection != null && _currentBlock != null) {
                         float sectionLen = _currentAllocatedSection.getActualLength();
@@ -1709,28 +1648,86 @@ public class AutoActiveTrain implements ThrottleListener {
                         remainingMm = distanceMmBase - progressed;
                     }
                     if (remainingMm <= 0.0f) {
-                        setStopNow();
+                        // Already at/inside the target – assert crawl and fall through to sensor wait
+                        float vMin = speedMmsFromThrottle(_minReliableOperatingSpeed, _autoEngineer.getIsForward());
+                        float thrMin = throttleForSpeedMms(vMin, _autoEngineer.getIsForward());
+                        _autoEngineer.setSpeedImmediate(clampThrottle(thrMin));
                     } else {
-                        _stoppingUsingSpeedProfile = true;
-                        cancelStopInCurrentSection();
-                        Runnable controller = new DistanceStopController(remainingMm, task /*, toMinOnly = false*/);
+                        // Plan a decel to min (NOT to zero), and do not finish with stop here
+                        _stoppingUsingSpeedProfile = true;        // suppress setSpeedBySignal until done
+                        cancelStopInCurrentSection();              // cancel any other ramping/stop modes
+                        Runnable controller = new DistanceStopController(remainingMm, task, /*toMinOnly*/ true);
                         Thread t = jmri.util.ThreadingUtil.newThread(controller,
                                 "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
                         t.start();
                     }
-                    return;
+    
+                    // Now arm the stop sensor, but do NOT pre-lower to a generic stopping speed
+                    _stopSensor = stopSensorCandidate;
+                    if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
+                        setStopNow();  // sensor is already made – stop immediately
+                    } else {
+                        _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
+                            handleStopSensorChange(e);
+                        });
+                        _stoppingBySensor = true;
+                    }
+                    return; // combined branch handled
                 }
-        
-                // Arm pending pure distance stop
+    
+                // Not yet at the section entry: arm a pending approach-to-min plan and the stop sensor listener now
                 _distanceStopPending = true;
-                _distanceStopPendingToMin = false;
+                _distanceStopPendingToMin = true;
                 _distanceStopPendingMm = distanceMmBase;
                 _distanceStopPendingTask = task;
+    
+                _stopSensor = stopSensorCandidate;
+                if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
+                    setStopNow();
+                } else {
+                    _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
+                        handleStopSensorChange(e);
+                    });
+                    _stoppingBySensor = true;
+                }
+                return; // wait for entry OCCUPIED to start the approach-to-min plan
+            }
+    
+            // --- Legacy pure distance stop (ramp to ZERO at the distance) ---
+            // Case A/B logic (start now or arm pending), just like before.
+            Block enter = (_currentAllocatedSection != null)
+                    ? _currentAllocatedSection.getEnterBlock(_previousAllocatedSection)
+                    : null;
+    
+            if (enter == null || enter.getState() == Block.OCCUPIED) {
+                float remainingMm = distanceMmBase;
+                if (_currentAllocatedSection != null && _currentBlock != null) {
+                    float sectionLen = _currentAllocatedSection.getActualLength();
+                    float lenRemaining = _currentAllocatedSection.getLengthRemaining(_currentBlock);
+                    float progressed = Math.max(0.0f, sectionLen - lenRemaining);
+                    remainingMm = distanceMmBase - progressed;
+                }
+                if (remainingMm <= 0.0f) {
+                    setStopNow();
+                } else {
+                    _stoppingUsingSpeedProfile = true;
+                    cancelStopInCurrentSection();
+                    Runnable controller = new DistanceStopController(remainingMm, task /*, toMinOnly = false*/);
+                    Thread t = jmri.util.ThreadingUtil.newThread(controller,
+                            "DistanceStopPlanner " + getActiveTrain().getActiveTrainName());
+                    t.start();
+                }
                 return;
             }
-        } catch (Exception ex) {
-            log.warn("{}: custom stop-by-distance failed; reverting to legacy stop", _activeTrain.getTrainName(), ex);
+    
+            // Arm pending pure distance stop
+            _distanceStopPending = true;
+            _distanceStopPendingToMin = false;
+            _distanceStopPendingMm = distanceMmBase;
+            _distanceStopPendingTask = task;
+            return;
         }
+
         // =======================================================================
          // Do not exit before destination stop logic;
          // only bail out if the train is already at zero AND no profile/distance stop is requested.
@@ -2418,7 +2415,6 @@ public class AutoActiveTrain implements ThrottleListener {
                     float thrApplied = throttleForSpeedMms(vMin, forward);
                     throttleSteps.add(clampThrottle(thrApplied));
                     durationSteps.add(lastMs);
-                    travelled = sAdjusted;
                     break;
                 }
 
@@ -2459,7 +2455,6 @@ public class AutoActiveTrain implements ThrottleListener {
                     float thrApplied = throttleForSpeedMms(vMid, forward);
                     throttleSteps.add(clampThrottle(thrApplied));
                     durationSteps.add(msFinal);
-                    travelled = sAdjusted;
                     break;
                 }
 
@@ -2502,7 +2497,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         "Wait for stop " + getActiveTrain().getActiveTrainName());
                 tWait.start();
             }
-        } catch (Exception ex) {
+        } catch (RuntimeException ex) {
             log.warn("{}: DistanceStopController failed; issuing emergency stop",
                      _activeTrain.getTrainName(), ex);
             _autoEngineer.setSpeedImmediate(0.0f);

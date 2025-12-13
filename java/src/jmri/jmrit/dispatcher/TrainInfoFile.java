@@ -82,8 +82,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     if (traininfo.getAttribute("version") != null ) {
                         try {
                             version = traininfo.getAttribute("version").getIntValue();
-                        }
-                        catch(Exception ex) {
+                        } catch (org.jdom2.DataConversionException ex) {
                             log.error("Traininfo file version number not an integer: assuming version 1");
                             version = 1;
                         }
@@ -399,7 +398,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                                  }
                              }
                          }
-                     } catch (Exception ex) {
+                     } catch (org.jdom2.DataConversionException ex) {
                          // Malformed value => leave unset for backward compatibility
                      }
                  }
@@ -432,7 +431,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             try {
                                 tInfo.setStartBlockSeq(Integer.parseInt(parseArray[parseArray.length -1]));
                             }
-                            catch (Exception Ex) {
+                            catch (NumberFormatException Ex) {
                                 log.error("Invalid StartBlockSequence{}",parseArray[parseArray.length -1]);
                             }
                         }
@@ -445,7 +444,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             try {
                                 tInfo.setDestinationBlockSeq(Integer.parseInt(parseArray[parseArray.length -1]));
                             }
-                            catch (Exception Ex) {
+                            catch (NumberFormatException Ex) {
                                 log.error("Invalid StartBlockSequence{}",parseArray[parseArray.length -1]);
                             }
                         }
@@ -477,7 +476,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             try {
                                 tInfo.setStartBlockSeq(traininfo.getAttribute("startblockseq").getIntValue());
                             }
-                            catch (Exception ex) {
+                            catch (org.jdom2.DataConversionException ex) {
                                 log.error("Start block sequence invalid when reading TrainInfoFile");
                             }
                         } else {
@@ -488,7 +487,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             try {
                                 tInfo.setDestinationBlockSeq(traininfo.getAttribute("endblockseq").getIntValue());
                             }
-                            catch (Exception ex) {
+                            catch (org.jdom2.DataConversionException ex) {
                                 log.error("Destination block sequence invalid when reading TrainInfoFile {}", name);
                             }
                         } else {
